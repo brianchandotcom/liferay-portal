@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.document.library.content.model.DLContent">
+		<field name="contentId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="repositoryId" type="long" />
+		<field name="path" type="String" />
+		<field name="version" type="String" />
+		<field name="data" type="Blob" />
+		<field name="size" type="long" />
+	</model>
+</model-hints>

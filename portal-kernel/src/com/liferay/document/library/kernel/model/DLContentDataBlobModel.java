@@ -24,7 +24,10 @@ import java.sql.Blob;
  * @author Brian Wing Shun Chan
  * @see DLContent
  * @generated
+ *
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.document.library.content.model.DLContentDataBlobModel}
  */
+@Deprecated
 @ProviderType
 public class DLContentDataBlobModel {
 	public DLContentDataBlobModel() {

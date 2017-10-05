@@ -290,17 +290,6 @@ create table Country (
 	active_ BOOLEAN
 );
 
-create table DLContent (
-	contentId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	repositoryId LONG,
-	path_ VARCHAR(255) null,
-	version VARCHAR(75) null,
-	data_ BLOB,
-	size_ LONG
-);
-
 create table DLFileEntry (
 	uuid_ VARCHAR(75) null,
 	fileEntryId LONG not null primary key,

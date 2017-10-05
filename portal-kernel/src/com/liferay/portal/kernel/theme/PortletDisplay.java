@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconMenu;
 import com.liferay.portal.kernel.portlet.toolbar.PortletToolbar;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -801,6 +803,13 @@ public class PortletDisplay implements Cloneable, Serializable {
 
 		if (_urlBack == null) {
 			_urlBack = StringPool.BLANK;
+		}
+		else if (_urlBack.length() > Http.URL_MAXIMUM_LENGTH) {
+			_urlBack = HttpUtil.shortenURL(_urlBack);
+
+			if (_urlBack.length() > Http.URL_MAXIMUM_LENGTH) {
+				_urlBack = StringPool.BLANK;
+			}
 		}
 	}
 

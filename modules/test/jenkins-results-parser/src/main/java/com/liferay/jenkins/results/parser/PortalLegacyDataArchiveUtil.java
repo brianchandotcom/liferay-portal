@@ -21,10 +21,12 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
-import java.util.TreeSet;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -44,7 +46,8 @@ public class PortalLegacyDataArchiveUtil {
 		Properties buildProperties = new Properties();
 
 		try (FileInputStream fileInputStream = new FileInputStream(
-			new File(portalLegacyRepositoryDirectory, "build.properties"))) {
+				new File(
+					portalLegacyRepositoryDirectory, "build.properties"))) {
 
 			buildProperties.load(fileInputStream);
 		}
@@ -71,6 +74,19 @@ public class PortalLegacyDataArchiveUtil {
 			}
 		}
 
+		Comparator<File> fileComparator = new Comparator<File>() {
+
+			public int compare(File file1, File file2) {
+				String path1 = file1.getAbsolutePath();
+				String path2 = file2.getAbsolutePath();
+
+				return path1.compareTo(path2);
+			}
+
+		};
+
+		Collections.sort(portalLegacyDataArchives, fileComparator);
+
 		return portalLegacyDataArchives;
 	}
 
@@ -78,7 +94,7 @@ public class PortalLegacyDataArchiveUtil {
 			String portalLegacyRepositoryDirectory, String portalVersion)
 		throws DocumentException, FileNotFoundException, IOException {
 
-		Set<String> dataArchiveNames = new TreeSet<>();
+		Set<String> dataArchiveNames = new HashSet<>();
 
 		List<File> testcaseFiles = JenkinsResultsParserUtil.findFiles(
 			new File(portalLegacyRepositoryDirectory, portalVersion),
@@ -111,7 +127,7 @@ public class PortalLegacyDataArchiveUtil {
 				databaseNamesPortalVersionKey);
 		}
 
-		return new TreeSet<>(
+		return new HashSet<>(
 			Arrays.asList(dataArchiveDatabaseNames.split(",")));
 	}
 
@@ -119,14 +135,14 @@ public class PortalLegacyDataArchiveUtil {
 		String dataArchivePortalVersions = buildProperties.getProperty(
 			"data.archive.portal.versions");
 
-		return new TreeSet<>(
+		return new HashSet<>(
 			Arrays.asList(dataArchivePortalVersions.split(",")));
 	}
 
 	private static Set<String> _getPoshiPropertyValues(
 		Element element, String targetPoshiPropertyName) {
 
-		Set<String> poshiPropertyValues = new TreeSet<>();
+		Set<String> poshiPropertyValues = new HashSet<>();
 
 		List<Element> childElements = element.elements();
 

@@ -82,7 +82,7 @@ public class PortalLegacyDataArchiveUtil {
 
 		List<File> testcaseFiles = JenkinsResultsParserUtil.findFiles(
 			new File(portalLegacyRepositoryDirectory, portalVersion),
-			".*.testcase");
+			".*\\.testcase");
 
 		for (File testcaseFile : testcaseFiles) {
 			Document document = Dom4JUtil.parse(

@@ -164,15 +164,9 @@ public class JenkinsReportUtil {
 			String axisName = JenkinsResultsParserUtil.combine(
 				"AXIS_VARIABLE=", axisBuild.getAxisNumber());
 
-			Element trAxisInfoElement = Dom4JUtil.getNewElement(
-				"tr", tableElement);
-
-			List<Element> axisInfoElements = getCommonBuildInfoElementList(
-				build, axisName, "td");
-
-			for (Element axisInfoElement : axisInfoElements) {
-				trAxisInfoElement.add(axisInfoElement);
-			}
+			Dom4JUtil.getNewElement(
+				"tr", tableElement,
+				(Object[])getCommonBuildInfoElements(build, axisName, "td"));
 		}
 	}
 
@@ -202,10 +196,9 @@ public class JenkinsReportUtil {
 
 			Element trBatchElement = Dom4JUtil.getNewElement("tr");
 
-			List<Element> batchInfoElements = getCommonBuildInfoElementList(
-				batchBuild, batchName, "th");
+			for (Element batchInfoElement : getCommonBuildInfoElements(
+					batchBuild, batchName, "th")) {
 
-			for (Element batchInfoElement : batchInfoElements) {
 				trBatchElement.add(batchInfoElement);
 			}
 
@@ -342,78 +335,66 @@ public class JenkinsReportUtil {
 		return scriptElement;
 	}
 
-	protected static List<Element> getCommonBuildInfoElementList(
-		Build build, String buildName, String elementTag) {
+	protected static Element[] getCommonBuildInfoElements(
+		Build build, String buildName, String tagName) {
 
 		String buildURL = build.getBuildURL();
 
 		String buildConsoleURL = buildURL + "console";
 
-		String buildTestReportURL = buildURL + "testReport";
+		List<Element> elements = new ArrayList<>();
 
-		long buildDuration = build.getDuration();
+		elements.add(
+			Dom4JUtil.getNewElement(
+				tagName, null,
+				Dom4JUtil.getNewAnchorElement(
+					buildConsoleURL, null, "Console")));
+
+		elements.add(
+			Dom4JUtil.getNewElement(
+				tagName, null,
+				JenkinsResultsParserUtil.toDurationString(
+					build.getDuration())));
+
+		elements.add(
+			Dom4JUtil.getNewElement(
+				tagName, null,
+				Dom4JUtil.getNewAnchorElement(buildURL, null, buildName)));
 
 		Date buildStartDate = new Date(build.getStartTimestamp());
 
-		Element buildConsoleElement = Dom4JUtil.getNewElement(
-			elementTag, null,
-			Dom4JUtil.getNewAnchorElement(buildConsoleURL, null, "Console"));
+		elements.add(
+			Dom4JUtil.getNewElement(
+				tagName, null, buildStartDate.toLocaleString()));
 
-		Element buildDurationElement = Dom4JUtil.getNewElement(
-			elementTag, null,
-			JenkinsResultsParserUtil.toDurationString(buildDuration));
+		String buildTestReportURL = buildURL + "testReport";
 
-		Element buildNameElement = Dom4JUtil.getNewElement(
-			elementTag, null,
-			Dom4JUtil.getNewAnchorElement(buildURL, null, buildName));
-
-		Element buildStartTimeElement = Dom4JUtil.getNewElement(
-			elementTag, null, buildStartDate.toLocaleString());
-
-		Element buildTestReportElement = Dom4JUtil.getNewElement(
-			elementTag, null,
-			Dom4JUtil.getNewAnchorElement(
-				buildTestReportURL, null, "Test Report"));
-
-		Element buildStatusElement = Dom4JUtil.getNewElement(elementTag);
+		elements.add(
+			Dom4JUtil.getNewElement(
+				tagName, null,
+				Dom4JUtil.getNewAnchorElement(
+					buildTestReportURL, null, "Test Report")));
 
 		String status = build.getStatus();
 
 		if (status != null) {
-			buildStatusElement.addText(StringUtils.upperCase(status));
+			status = StringUtils.upperCase(status);
 		}
 		else {
-			buildStatusElement.addText("");
+			status = "";
 		}
 
-		Element buildResultElement = Dom4JUtil.getNewElement(elementTag);
+		elements.add(Dom4JUtil.getNewElement(tagName, null, status));
 
 		String result = build.getResult();
 
-		if (result != null) {
-			buildResultElement.addText(result);
-		}
-		else {
-			buildResultElement.addText("");
+		if (result == null) {
+			result = "";
 		}
 
-		List<Element> elementList = new ArrayList();
+		elements.add(Dom4JUtil.getNewElement(tagName, null, result));
 
-		elementList.add(buildNameElement);
-
-		elementList.add(buildConsoleElement);
-
-		elementList.add(buildTestReportElement);
-
-		elementList.add(buildStartTimeElement);
-
-		elementList.add(buildDurationElement);
-
-		elementList.add(buildStatusElement);
-
-		elementList.add(buildResultElement);
-
-		return elementList;
+		return elements.toArray(new Element[elements.size()]);
 	}
 
 	protected static Element getLongestAxisElement(
@@ -738,10 +719,9 @@ public class JenkinsReportUtil {
 
 		Element trTopLevelElement = Dom4JUtil.getNewElement("tr");
 
-		List<Element> topLevelInfoElements = getCommonBuildInfoElementList(
-			topLevelBuild, topLevelName, "th");
+		for (Element topLevelInfoElement : getCommonBuildInfoElements(
+				topLevelBuild, topLevelName, "th")) {
 
-		for (Element topLevelInfoElement : topLevelInfoElements) {
 			trTopLevelElement.add(topLevelInfoElement);
 		}
 

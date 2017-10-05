@@ -150,13 +150,22 @@ public class CentralSubrepository {
 			_subrepositoryName, "/commits/", subrepositoryUpstreamCommit,
 			"/statuses");
 
-		JSONArray statusesJSONArray = new JSONArray(
-			JenkinsResultsParserUtil.toString(url, true));
+		for (int i = 0; i < 15; i++) {
+			JSONArray statusesJSONArray = new JSONArray(
+				JenkinsResultsParserUtil.toString(
+					JenkinsResultsParserUtil.combine(
+						url, "?page=", String.valueOf(i + 1)),
+					true));
 
-		if (statusesJSONArray != null) {
-			for (int i = 0; i < statusesJSONArray.length(); i++) {
+			if ((statusesJSONArray == null) ||
+				(statusesJSONArray.length() == 0)) {
+
+				break;
+			}
+
+			for (int j = 0; j < statusesJSONArray.length(); j++) {
 				JSONObject statusesJSONObject = statusesJSONArray.getJSONObject(
-					i);
+					j);
 
 				String context = statusesJSONObject.getString("context");
 

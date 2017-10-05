@@ -14,7 +14,7 @@
 
 package com.liferay.source.formatter;
 
-import com.liferay.portal.kernel.nio.charset.CharsetDecoderUtil;
+import com.liferay.petra.nio.CharsetDecoderUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;

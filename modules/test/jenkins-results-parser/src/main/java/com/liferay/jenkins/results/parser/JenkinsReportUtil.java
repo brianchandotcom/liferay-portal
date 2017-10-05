@@ -151,25 +151,6 @@ public class JenkinsReportUtil {
 		return headElement;
 	}
 
-	protected static void addAxisInfoToTableElement(
-		List<Build> builds, Element tableElement) {
-
-		for (Build build : builds) {
-			if (!(build instanceof AxisBuild)) {
-				continue;
-			}
-
-			AxisBuild axisBuild = (AxisBuild)build;
-
-			String axisName = JenkinsResultsParserUtil.combine(
-				"AXIS_VARIABLE=", axisBuild.getAxisNumber());
-
-			Dom4JUtil.getNewElement(
-				"tr", tableElement,
-				(Object[])getCommonBuildInfoElements(build, axisName, "td"));
-		}
-	}
-
 	protected static Element getBatchInfoTableElement(
 		List<Build> batchBuilds, String statusCountCaption) {
 
@@ -204,9 +185,9 @@ public class JenkinsReportUtil {
 
 			tableElement.add(trBatchElement);
 
-			List<Build> axisBuilds = batchBuild.getDownstreamBuilds(null);
-
-			addAxisInfoToTableElement(axisBuilds, tableElement);
+			Dom4JUtil.addToElement(
+				tableElement,
+				(Object[])getDownstreamBuildInfoElements(batchBuild.getDownstreamBuilds(null)));
 		}
 
 		return tableElement;
@@ -398,6 +379,30 @@ public class JenkinsReportUtil {
 		return elements.toArray(new Element[elements.size()]);
 	}
 
+	protected static Element[] getDownstreamBuildInfoElements(
+		List<Build> downstreamBuilds) {
+
+		List<Element> elements = new ArrayList<>(downstreamBuilds.size());
+
+		for (Build build : downstreamBuilds) {
+			if (!(build instanceof AxisBuild)) {
+				continue;
+			}
+
+			AxisBuild axisBuild = (AxisBuild)build;
+
+			String axisName = JenkinsResultsParserUtil.combine(
+				"AXIS_VARIABLE=", axisBuild.getAxisNumber());
+
+			elements.add(
+				Dom4JUtil.getNewElement(
+					"tr", null,
+					(Object[])getCommonBuildInfoElements(build, axisName, "td")));
+		}
+
+		return elements.toArray(new Element[elements.size()]);
+	}
+
 	protected static Element getLongestAxisElement(
 		Map<String, Build> axisBuilds) {
 
@@ -423,7 +428,7 @@ public class JenkinsReportUtil {
 
 				String axisNumber = ((AxisBuild)axisBuild).getAxisNumber();
 
-				longestAxisName = "AXIS_VARAIBLE=" + axisNumber;
+				longestAxisName = "AXIS_VARIABLE=" + axisNumber;
 
 				longestAxisParentName =
 					axisBuild.getParentBuild().getDisplayName();

@@ -31,7 +31,8 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -95,7 +96,7 @@ public class CSSBuilderTest {
 				_docrootDirName, false, ".sass-cache/",
 				_PORTAL_COMMON_CSS_DIR_NAME, 6, new String[0], "jni")) {
 
-			cssBuilder.execute(Arrays.asList(new String[] {"/css"}));
+			cssBuilder.execute(Collections.singletonList("/css"));
 		}
 
 		String outputCssFilePath =
@@ -109,7 +110,7 @@ public class CSSBuilderTest {
 				_docrootDirName, false, ".sass-cache/",
 				_PORTAL_COMMON_CSS_DIR_NAME, 6, new String[0], "jni")) {
 
-			cssBuilder.execute(Arrays.asList(new String[] {"/css"}));
+			cssBuilder.execute(Collections.singletonList("/css"));
 		}
 
 		outputCssFileContent = _read(outputCssFilePath);
@@ -180,7 +181,7 @@ public class CSSBuilderTest {
 				_docrootDirName, false, ".sass-cache/", portalCommonCssPath, 6,
 				new String[0], compiler)) {
 
-			cssBuilder.execute(Arrays.asList(new String[] {"/css"}));
+			cssBuilder.execute(Collections.singletonList("/css"));
 		}
 
 		String expectedTestContent = _read(

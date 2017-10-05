@@ -152,22 +152,21 @@ public class JenkinsReportUtil {
 	}
 
 	protected static void addAxisInfoToTableElement(
-		List<Build> axisBuilds, Element tableElement) {
+		List<Build> builds, Element tableElement) {
 
-		for (Build axisBuild : axisBuilds) {
+		for (Build build : builds) {
+			if (!(build instanceof AxisBuild)) {
+				continue;
+			}
+
 			String axisName = "AXIS_VARIABLE=";
 
-			try {
-				axisName = axisName + ((AxisBuild)axisBuild).getAxisNumber();
-			}
-			catch (ClassCastException cce) {
-				cce.printStackTrace();
-			}
+			axisName = axisName + ((AxisBuild)build).getAxisNumber();
 
 			Element trAxisInfoElement = Dom4JUtil.getNewElement("tr");
 
 			List<Element> axisInfoElements = getCommonBuildInfoElementList(
-				axisBuild, axisName, "td");
+				build, axisName, "td");
 
 			for (Element axisInfoElement : axisInfoElements) {
 				trAxisInfoElement.add(axisInfoElement);

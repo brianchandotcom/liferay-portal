@@ -26,25 +26,27 @@ import java.nio.charset.CodingErrorAction;
  */
 public class CharsetDecoderUtil {
 
-	public static CharBuffer decode(String charsetName, byte[] bytes) {
-		return decode(charsetName, ByteBuffer.wrap(bytes));
-	}
-
-	public static CharBuffer decode(
-		String charsetName, byte[] bytes, int offset, int length) {
-
-		return decode(charsetName, ByteBuffer.wrap(bytes, offset, length));
-	}
-
 	public static CharBuffer decode(String charsetName, ByteBuffer byteBuffer) {
 		try {
-			CharsetDecoder charsetDecoder = getCharsetDecoder(charsetName);
+			CharsetDecoder charsetDecoder = getCharsetDecoder(
+				charsetName, CodingErrorAction.REPLACE);
 
 			return charsetDecoder.decode(byteBuffer);
 		}
 		catch (CharacterCodingException cce) {
 			throw new Error(cce);
 		}
+	}
+
+	public static CharBuffer decode(
+			String charsetName, CodingErrorAction codingErrorAction,
+			ByteBuffer byteBuffer)
+		throws CharacterCodingException {
+
+		CharsetDecoder charsetDecoder = getCharsetDecoder(
+			charsetName, codingErrorAction);
+
+		return charsetDecoder.decode(byteBuffer);
 	}
 
 	public static CharsetDecoder getCharsetDecoder(String charsetName) {

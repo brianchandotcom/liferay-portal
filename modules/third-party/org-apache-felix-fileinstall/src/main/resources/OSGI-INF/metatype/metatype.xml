@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<metatype:MetaData xmlns:metatype="http://www.osgi.org/xmlns/metatype/v1.0.0"
+				   localization="content/Language">
+	<OCD description="FileInstaller"
+	   name="org-apache-felix-fileinstall-ocd-name"
+	   id="org.apache.felix.fileinstall">
+
+		<AD default="load"  id="felix.fileinstall.dir" name="Poll directory" required="true" type="String" />
+		<AD default="2000"  id="felix.fileinstall.poll" name="Poll interval" required="false" type="String" />
+		<AD default="0"  id="felix.fileinstall.log.level" name="Log level" required="false" type="String" />
+		<AD default="true"  id="felix.fileinstall.bundles.new.start" name="Start new bundles?" required="false" type="String" />
+		<AD default=""  id="felix.fileinstall.filter" name="File name filter" required="false" type="String" />
+		<AD default="tmp"  id="felix.fileinstall.tmpdir" name="Temp directory" required="false" type="String" />
+		<AD default="false"  id="felix.fileinstall.noInitialDelay" name="No initial delay" required="false" type="String" />
+		<AD default="false"  id="felix.fileinstall.bundles.startTransient" name="Start bundles transiently" required="false" type="String" />
+		<AD default="true" id="felix.fileinstall.bundles.startActivationPolicy" name="Use the bundle activation policy when starting" required="false" type="String" />
+		<AD default="0"  id="felix.fileinstall.start.level" name="Bundles start level" required="false" type="String" />
+	</OCD>
+	<Designate pid="org.apache.felix.fileinstall">
+		<Object ocdref="org.apache.felix.fileinstall" />
+	</Designate>
+</metatype:MetaData>

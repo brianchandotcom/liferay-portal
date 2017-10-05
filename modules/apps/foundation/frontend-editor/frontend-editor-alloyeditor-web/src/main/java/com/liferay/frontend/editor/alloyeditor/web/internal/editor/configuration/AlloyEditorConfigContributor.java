@@ -69,6 +69,8 @@ public class AlloyEditorConfigContributor
 
 		jsonObject.put(
 			"toolbars", getToolbarsJSONObject(themeDisplay.getLocale()));
+
+		jsonObject.put("entities", Boolean.FALSE);
 	}
 
 	protected JSONObject getStyleFormatJSONObject(

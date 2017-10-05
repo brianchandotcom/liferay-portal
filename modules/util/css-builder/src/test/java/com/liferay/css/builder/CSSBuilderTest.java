@@ -146,20 +146,7 @@ public class CSSBuilderTest {
 		}
 	}
 
-	private static void _changeContentInPath(
-			Path path, String s, String replacement)
-		throws Exception {
-
-		Charset charset = StandardCharsets.UTF_8;
-
-		String content = new String(Files.readAllBytes(path), charset);
-
-		content = content.replace(s, replacement);
-
-		Files.write(path, content.getBytes(charset));
-	}
-
-	private void _assertMatchesCount(
+	private static void _assertMatchesCount(
 		Pattern pattern, String s, int expectedCount) {
 
 		int count = 0;
@@ -173,7 +160,20 @@ public class CSSBuilderTest {
 		Assert.assertEquals(expectedCount, count);
 	}
 
-	private String _read(String fileName) throws Exception {
+	private static void _changeContentInPath(
+			Path path, String s, String replacement)
+		throws Exception {
+
+		Charset charset = StandardCharsets.UTF_8;
+
+		String content = new String(Files.readAllBytes(path), charset);
+
+		content = content.replace(s, replacement);
+
+		Files.write(path, content.getBytes(charset));
+	}
+
+	private static String _read(String fileName) throws Exception {
 		Path path = Paths.get(fileName);
 
 		String s = new String(Files.readAllBytes(path), StringPool.UTF8);

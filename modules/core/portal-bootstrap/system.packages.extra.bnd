@@ -350,6 +350,7 @@ Import-Package: !*
 	@lib/com.liferay.petra.concurrent.jar,\
 	@lib/com.liferay.petra.lang.jar,\
 	@lib/com.liferay.petra.memory.jar,\
+	@lib/com.liferay.petra.nio.jar,\
 	@lib/com.liferay.registry.api.jar
 -removeheaders:\
 	Private-Package,\

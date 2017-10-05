@@ -581,8 +581,20 @@
 		<execute macro="UserBar#gotoDashboard" />
 
 		<execute function="AssertTextPresent" locator1="Home#PAGE_1" value1="Welcome" />
-		<execute function="AssertTextNotPresent" locator1="Home#PAGE_2" value1="Home" />
-		<execute function="AssertTextNotPresent" locator1="Home#PAGE_3" value1="Wiki" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="Home#PAGE_2" />
+			<then>
+				<execute function="AssertTextNotEquals" locator1="Home#PAGE_2" value1="Home" />
+			</then>
+		</if>
+
+		<if>
+			<condition function="IsElementPresent" locator1="Home#PAGE_3" />
+			<then>
+				<execute function="AssertTextNotEquals" locator1="Home#PAGE_3" value1="Wiki" />
+			</then>
+		</if>
 
 		<execute macro="User#logoutPG" />
 
@@ -596,14 +608,38 @@
 		<var name="key_pageName" value="Welcome" />
 
 		<execute function="AssertTextPresent" locator1="Home#PAGE_1" value1="Welcome" />
-		<execute function="AssertTextNotPresent" locator1="Home#PAGE_2" value1="Home" />
-		<execute function="AssertTextNotPresent" locator1="Home#PAGE_3" value1="Wiki" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="Home#PAGE_2" />
+			<then>
+				<execute function="AssertTextNotEquals" locator1="Home#PAGE_2" value1="Home" />
+			</then>
+		</if>
+
+		<if>
+			<condition function="IsElementPresent" locator1="Home#PAGE_3" />
+			<then>
+				<execute function="AssertTextNotEquals" locator1="Home#PAGE_3" value1="Wiki" />
+			</then>
+		</if>
 
 		<execute macro="UserBar#gotoDashboard" />
 
 		<execute function="AssertTextPresent" locator1="Home#PAGE_1" value1="Welcome" />
-		<execute function="AssertTextNotPresent" locator1="Home#PAGE_2" value1="Home" />
-		<execute function="AssertTextNotPresent" locator1="Home#PAGE_3" value1="Wiki" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="Home#PAGE_2" />
+			<then>
+				<execute function="AssertTextNotEquals" locator1="Home#PAGE_2" value1="Home" />
+			</then>
+		</if>
+
+		<if>
+			<condition function="IsElementPresent" locator1="Home#PAGE_3" />
+			<then>
+				<execute function="AssertTextNotEquals" locator1="Home#PAGE_3" value1="Wiki" />
+			</then>
+		</if>
 
 		<execute macro="User#logoutPG" />
 
@@ -641,8 +677,20 @@
 		<execute macro="UserBar#gotoDashboard" />
 
 		<execute function="AssertTextPresent" locator1="Home#PAGE_1" value1="Welcome" />
-		<execute function="AssertTextNotPresent" locator1="Home#PAGE_2" value1="Home" />
-		<execute function="AssertTextNotPresent" locator1="Home#PAGE_3" value1="Wiki" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="Home#PAGE_2" />
+			<then>
+				<execute function="AssertTextNotEquals" locator1="Home#PAGE_2" value1="Home" />
+			</then>
+		</if>
+
+		<if>
+			<condition function="IsElementPresent" locator1="Home#PAGE_3" />
+			<then>
+				<execute function="AssertTextNotEquals" locator1="Home#PAGE_3" value1="Wiki" />
+			</then>
+		</if>
 
 		<execute macro="User#logoutPG" />
 

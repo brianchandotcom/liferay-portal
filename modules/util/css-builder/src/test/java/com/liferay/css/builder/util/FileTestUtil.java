@@ -17,7 +17,9 @@ package com.liferay.css.builder.util;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -81,6 +83,22 @@ public class FileTestUtil {
 				}
 
 			});
+	}
+
+	public static String read(Class<?> clazz, String name) throws IOException {
+		ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+
+		try (InputStream inputStream = clazz.getResourceAsStream(name)) {
+			byte[] bytes = new byte[1024];
+			int length = 0;
+
+			while ((length = inputStream.read(bytes)) > 0) {
+				byteArrayOutputStream.write(bytes, 0, length);
+			}
+		}
+
+		return byteArrayOutputStream.toString(StandardCharsets.UTF_8.name());
 	}
 
 	public static String read(Path path) throws IOException {

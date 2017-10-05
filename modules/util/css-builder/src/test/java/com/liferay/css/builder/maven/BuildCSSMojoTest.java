@@ -14,146 +14,82 @@
 
 package com.liferay.css.builder.maven;
 
+import com.liferay.css.builder.CSSBuilderTest;
+import com.liferay.css.builder.util.FileTestUtil;
 import com.liferay.maven.executor.MavenExecutor;
+import com.liferay.portal.kernel.util.StringUtil;
 
-import java.io.File;
 import java.io.IOException;
 
 import java.nio.charset.StandardCharsets;
-import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.StandardCopyOption;
-import java.nio.file.attribute.BasicFileAttributes;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 
 /**
- * @author Christopher Bryan Boyd
- * @author Gregory Amerson
+ * @author Andrea Di Giorgi
  */
-public class BuildCSSMojoTest {
+public class BuildCSSMojoTest extends CSSBuilderTest {
 
 	@ClassRule
 	public static final MavenExecutor mavenExecutor = new MavenExecutor();
 
-	@Before
-	public void setUp() throws Exception {
-		File testCss = testCaseTemporaryFolder.newFolder("css");
-		File testPom = testCaseTemporaryFolder.newFile("pom.xml");
-
-		File testScssFile = new File(testCss, "test.scss");
-
-		Path dependenciesFolder = Paths.get(
-			"src/test/resources/com/liferay/css/builder/maven/dependencies");
-
-		Files.copy(
-			dependenciesFolder.resolve("css/test.scss"), testScssFile.toPath(),
-			StandardCopyOption.COPY_ATTRIBUTES,
-			StandardCopyOption.REPLACE_EXISTING);
-
-		_preparePomXml(dependenciesFolder, testPom.toPath());
-	}
-
-	@Test
-	public void testNoCssFilesAreGeneratedInSrcFolder() throws Exception {
-		File testFolder = testCaseTemporaryFolder.getRoot();
-
-		_executeMaven(testFolder.toPath());
-
-		Assert.assertFalse(_hasCssFilesInPath(testFolder.toPath()));
-	}
-
-	@Rule
-	public final TemporaryFolder testCaseTemporaryFolder =
-		new TemporaryFolder();
-
-	private static final void _executeMaven(final Path projectDir)
+	@Override
+	protected void executeCSSBuilder(
+			String dirName, Path docrootDirPath, boolean generateSourceMap,
+			String outputDirName, Path portalCommonPath, int precision,
+			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
 		throws Exception {
 
-		Path currentPath = Paths.get(".").toAbsolutePath();
-
-		Path repoPath = currentPath.resolve("../../../.m2").normalize();
-
-		final String mavenRepoPath = repoPath.toString();
-
-		final String mavenRepoArgument = String.format(
-			"-Dmaven.repo.local=%s", mavenRepoPath);
+		_preparePomXml(
+			dirName, docrootDirPath, generateSourceMap, outputDirName,
+			portalCommonPath, precision, rtlExcludedPathRegexps,
+			sassCompilerClassName);
 
 		MavenExecutor.Result result = mavenExecutor.execute(
-			projectDir.toFile(), mavenRepoArgument, "css-builder:build");
+			docrootDirPath.toFile(), "css-builder:build");
 
 		Assert.assertEquals(result.output, 0, result.exitCode);
 	}
 
-	private static final boolean _hasCssFilesInPath(final Path dirPath)
-		throws IOException {
-
-		final boolean[] foundCssFile = new boolean[1];
-
-		SimpleFileVisitor<Path> visitor = new SimpleFileVisitor<Path>() {
-
-			@Override
-			public FileVisitResult preVisitDirectory(
-					Path path, BasicFileAttributes attrs)
-				throws IOException {
-
-				File dir = path.toFile();
-
-				String dirName = dir.getName();
-
-				if (dirName.equals(".sass-cache")) {
-					return FileVisitResult.SKIP_SUBTREE;
-				}
-
-				return super.preVisitDirectory(path, attrs);
-			}
-
-			@Override
-			public FileVisitResult visitFile(
-					Path path, BasicFileAttributes attrs)
-				throws IOException {
-
-				File file = path.toFile();
-
-				String fileName = file.getName();
-
-				if (fileName.endsWith(".css")) {
-					foundCssFile[0] = true;
-
-					return FileVisitResult.TERMINATE;
-				}
-
-				return super.visitFile(path, attrs);
-			}
-
-		};
-
-		Files.walkFileTree(dirPath, visitor);
-
-		return foundCssFile[0];
-	}
-
 	private static void _preparePomXml(
-			Path dependenciesFolder, Path testPomPath)
+			String dirName, Path docrootDirPath, boolean generateSourceMap,
+			String outputDirName, Path portalCommonPath, int precision,
+			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
 		throws IOException {
 
-		Path pomTemplatePath = Paths.get(
-			dependenciesFolder.toString(), "pom_xml.tmpl");
-
-		String content = new String(Files.readAllBytes(pomTemplatePath));
+		String content = FileTestUtil.read(
+			BuildCSSMojoTest.class, "dependencies/pom_xml.tmpl");
 
 		content = _replace(
 			content, "[$CSS_BUILDER_VERSION$]", _CSS_BUILDER_VERSION);
 
-		Files.write(testPomPath, content.getBytes(StandardCharsets.UTF_8));
+		content = _replace(content, "[$CSS_BUILDER_DIR_NAMES$]", dirName);
+		content = _replace(
+			content, "[$CSS_BUILDER_DOCROOT_DIR_NAME$]",
+			String.valueOf(docrootDirPath.toAbsolutePath()));
+		content = _replace(
+			content, "[$CSS_BUILDER_GENERATE_SOURCE_MAP$]",
+			String.valueOf(generateSourceMap));
+		content = _replace(
+			content, "[$CSS_BUILDER_OUTPUT_DIR_NAME$]", outputDirName);
+		content = _replace(
+			content, "[$CSS_BUILDER_PORTAL_COMMON_PATH$]",
+			String.valueOf(portalCommonPath.toAbsolutePath()));
+		content = _replace(
+			content, "[$CSS_BUILDER_PRECISION$]", String.valueOf(precision));
+		content = _replace(
+			content, "[$CSS_BUILDER_RTL_EXCLUDED_PATH_REGEXPS$]",
+			StringUtil.merge(rtlExcludedPathRegexps));
+		content = _replace(
+			content, "[$CSS_BUILDER_SASS_COMPILER_CLASS_NAME$]",
+			sassCompilerClassName);
+
+		Path pomXmlPath = docrootDirPath.resolve("pom.xml");
+
+		Files.write(pomXmlPath, content.getBytes(StandardCharsets.UTF_8));
 	}
 
 	private static String _replace(String s, String key, String value) {

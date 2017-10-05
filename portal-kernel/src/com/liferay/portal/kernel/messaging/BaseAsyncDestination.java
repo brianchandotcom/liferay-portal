@@ -195,6 +195,10 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 		_maximumQueueSize = maximumQueueSize;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public void setRejectedExecutionHandler(
 		RejectedExecutionHandler rejectedExecutionHandler) {
 
@@ -219,6 +223,10 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected RejectedExecutionHandler createRejectionExecutionHandler() {
 		return new RejectedExecutionHandler() {
 
@@ -246,6 +254,10 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 	protected abstract void dispatch(
 		Set<MessageListener> messageListeners, Message message);
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected ThreadPoolExecutor getThreadPoolExecutor() {
 		return _threadPoolExecutor;
 	}

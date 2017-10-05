@@ -184,10 +184,9 @@ public class CSSBuilderTest {
 
 		Assert.assertEquals(expectedTestContent, actualTestPartialContent);
 
-		File partialCSSFile = new File(
-			Paths.get("/css/.sass-cache/_partial.css").toString());
-
-		Assert.assertFalse(partialCSSFile.exists());
+		Assert.assertFalse(
+			Files.exists(
+				_docrootDirPath.resolve("css/.sass-cache/_partial.css")));
 
 		String expectedTestRtlContent = FileTestUtil.read(
 			_dependenciesDirPath.resolve("expected/test_rtl.css"));

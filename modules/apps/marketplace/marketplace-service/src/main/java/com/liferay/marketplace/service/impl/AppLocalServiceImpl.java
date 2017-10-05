@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -251,11 +250,9 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 			throw new NoSuchFileException();
 		}
 
-		InputStream inputStream = null;
-
-		try {
-			inputStream = DLStoreUtil.getFileAsStream(
-				app.getCompanyId(), CompanyConstants.SYSTEM, app.getFilePath());
+		try (InputStream inputStream = DLStoreUtil.getFileAsStream(
+				app.getCompanyId(), CompanyConstants.SYSTEM,
+				app.getFilePath())) {
 
 			if (inputStream == null) {
 				throw new IOException(
@@ -298,8 +295,6 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 			_log.error(e, e);
 		}
 		finally {
-			StreamUtil.cleanUp(inputStream);
-
 			clearInstalledAppsCache();
 		}
 	}
@@ -432,34 +427,18 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 	}
 
 	protected Properties getMarketplaceProperties(File liferayPackageFile) {
-		InputStream inputStream = null;
-		ZipFile zipFile = null;
-
-		try {
-			zipFile = new ZipFile(liferayPackageFile);
-
+		try (ZipFile zipFile = new ZipFile(liferayPackageFile)) {
 			ZipEntry zipEntry = zipFile.getEntry(
 				"liferay-marketplace.properties");
 
-			inputStream = zipFile.getInputStream(zipEntry);
+			try (InputStream inputStream = zipFile.getInputStream(zipEntry)) {
+				String propertiesString = StringUtil.read(inputStream);
 
-			String propertiesString = StringUtil.read(inputStream);
-
-			return PropertiesUtil.load(propertiesString);
+				return PropertiesUtil.load(propertiesString);
+			}
 		}
 		catch (IOException ioe) {
 			return null;
-		}
-		finally {
-			if (zipFile != null) {
-				try {
-					zipFile.close();
-				}
-				catch (IOException ioe) {
-				}
-			}
-
-			StreamUtil.cleanUp(inputStream);
 		}
 	}
 

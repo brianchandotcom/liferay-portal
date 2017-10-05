@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -343,18 +342,13 @@ public class BlogsEntryStagedModelDataHandler
 					entry.getSmallImageId() + StringPool.PERIOD +
 						entry.getSmallImageType();
 
-				InputStream inputStream = null;
-
-				try {
-					inputStream = portletDataContext.getZipEntryAsInputStream(
-						smallImagePath);
+				try (InputStream inputStream =
+						portletDataContext.getZipEntryAsInputStream(
+							smallImagePath)) {
 
 					smallImageSelector = new ImageSelector(
 						FileUtil.getBytes(inputStream), smallImageFileName,
 						MimeTypesUtil.getContentType(smallImageFileName), null);
-				}
-				finally {
-					StreamUtil.cleanUp(inputStream);
 				}
 			}
 			else if (entry.getSmallImageFileEntryId() != 0) {
@@ -554,33 +548,10 @@ public class BlogsEntryStagedModelDataHandler
 				(FileEntry)portletDataContext.getZipEntryAsObject(path);
 
 			if (fileEntryId == fileEntry.getFileEntryId()) {
-				InputStream inputStream = null;
+				String binPath = attachmentElement.attributeValue("bin-path");
 
-				try {
-					String binPath = attachmentElement.attributeValue(
-						"bin-path");
-
-					if (Validator.isNull(binPath) &&
-						portletDataContext.isPerformDirectBinaryImport()) {
-
-						try {
-							inputStream = FileEntryUtil.getContentStream(
-								fileEntry);
-						}
-						catch (NoSuchFileException nsfe) {
-
-							// LPS-52675
-
-							if (_log.isDebugEnabled()) {
-								_log.debug(nsfe, nsfe);
-							}
-						}
-					}
-					else {
-						inputStream =
-							portletDataContext.getZipEntryAsInputStream(
-								binPath);
-					}
+				try (InputStream inputStream = _getImageSelectorInputStream(
+						binPath, portletDataContext, fileEntry)) {
 
 					if (inputStream == null) {
 						if (_log.isWarnEnabled()) {
@@ -596,13 +567,36 @@ public class BlogsEntryStagedModelDataHandler
 						FileUtil.getBytes(inputStream), fileEntry.getFileName(),
 						fileEntry.getMimeType(), null);
 				}
-				finally {
-					StreamUtil.cleanUp(inputStream);
-				}
 			}
 		}
 
 		return null;
+	}
+
+	private InputStream _getImageSelectorInputStream(
+			String binPath, PortletDataContext portletDataContext,
+			FileEntry fileEntry)
+		throws Exception {
+
+		if (Validator.isNull(binPath) &&
+			portletDataContext.isPerformDirectBinaryImport()) {
+
+			try {
+				return FileEntryUtil.getContentStream(fileEntry);
+			}
+			catch (NoSuchFileException nsfe) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(nsfe, nsfe);
+				}
+
+				return null;
+			}
+		}
+
+		return portletDataContext.getZipEntryAsInputStream(binPath);
 	}
 
 	private void _importFriendlyURLEntries(

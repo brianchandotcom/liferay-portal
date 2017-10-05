@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.PermissionCheckerUtil;
 import com.liferay.portlet.messageboards.util.MBMailMessage;
@@ -38,6 +37,7 @@ import com.liferay.portlet.messageboards.util.MBUtil;
 import com.liferay.portlet.messageboards.util.MailingListThreadLocal;
 import com.liferay.util.mail.MailEngine;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.List;
@@ -254,9 +254,13 @@ public class MailingListMessageListener extends BaseMessageListener {
 			for (ObjectValuePair<String, InputStream> inputStreamOVP :
 					inputStreamOVPs) {
 
-				InputStream inputStream = inputStreamOVP.getValue();
-
-				StreamUtil.cleanUp(inputStream);
+				try (InputStream inputStream = inputStreamOVP.getValue()) {
+				}
+				catch (IOException ioe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(ioe, ioe);
+					}
+				}
 			}
 		}
 	}

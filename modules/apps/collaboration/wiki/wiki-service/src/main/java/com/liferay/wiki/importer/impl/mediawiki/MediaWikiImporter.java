@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.ProgressTrackerThreadLocal;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -434,9 +433,13 @@ public class MediaWikiImporter implements WikiImporter {
 			for (ObjectValuePair<String, InputStream> inputStreamOVP :
 					inputStreamOVPs) {
 
-				InputStream inputStream = inputStreamOVP.getValue();
-
-				StreamUtil.cleanUp(inputStream);
+				try (InputStream inputStream = inputStreamOVP.getValue()) {
+				}
+				catch (IOException ioe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(ioe, ioe);
+					}
+				}
 			}
 		}
 

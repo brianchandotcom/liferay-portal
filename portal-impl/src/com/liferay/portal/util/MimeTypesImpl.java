@@ -21,11 +21,10 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypes;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
@@ -92,19 +91,16 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 			return getContentType(fileName);
 		}
 
-		InputStream is = null;
-
-		try {
-			is = TikaInputStream.get(file);
-
+		try (InputStream is = TikaInputStream.get(file)) {
 			return getContentType(is, fileName);
 		}
-		catch (FileNotFoundException fnfe) {
-			return getContentType(fileName);
+		catch (IOException ioe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(ioe, ioe);
+			}
 		}
-		finally {
-			StreamUtil.cleanUp(is);
-		}
+
+		return getContentType(fileName);
 	}
 
 	@Override
@@ -115,11 +111,8 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 
 		String contentType = null;
 
-		TikaInputStream tikaInputStream = null;
-
-		try {
-			tikaInputStream = TikaInputStream.get(
-				new CloseShieldInputStream(inputStream));
+		try (TikaInputStream tikaInputStream = TikaInputStream.get(
+				new CloseShieldInputStream(inputStream))) {
 
 			Metadata metadata = new Metadata();
 
@@ -149,9 +142,6 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 			_log.error(e, e);
 
 			contentType = ContentTypes.APPLICATION_OCTET_STREAM;
-		}
-		finally {
-			StreamUtil.cleanUp(tikaInputStream);
 		}
 
 		return contentType;

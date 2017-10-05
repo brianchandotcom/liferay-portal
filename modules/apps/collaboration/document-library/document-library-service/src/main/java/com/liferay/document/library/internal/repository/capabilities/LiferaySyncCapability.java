@@ -14,9 +14,9 @@
 
 package com.liferay.document.library.internal.repository.capabilities;
 
-import com.liferay.document.library.kernel.model.DLSyncConstants;
-import com.liferay.document.library.kernel.model.DLSyncEvent;
-import com.liferay.document.library.kernel.service.DLSyncEventLocalService;
+import com.liferay.document.library.sync.constants.DLSyncConstants;
+import com.liferay.document.library.sync.model.DLSyncEvent;
+import com.liferay.document.library.sync.service.DLSyncEventLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;

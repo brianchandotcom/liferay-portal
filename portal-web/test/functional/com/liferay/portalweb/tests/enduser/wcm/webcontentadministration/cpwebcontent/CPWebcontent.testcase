@@ -557,7 +557,7 @@
 
 		<execute macro="WebContent#addWithStructureCP">
 			<var name="fieldName" value="WebContent" />
-			<var name="WebContentSelectWCFile" value="WC WebContent 1 Title" />
+			<var name="webContentSelectWCFile" value="WC WebContent 1 Title" />
 			<var name="webContentTitle" value="WC WebContent 2 Title" />
 		</execute>
 

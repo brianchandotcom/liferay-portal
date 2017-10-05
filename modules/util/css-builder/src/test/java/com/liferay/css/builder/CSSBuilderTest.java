@@ -32,7 +32,6 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -92,12 +91,9 @@ public class CSSBuilderTest {
 
 		_changeContentInPath(fragmentFileToChange, "brown", "khaki");
 
-		try (CSSBuilder cssBuilder = new CSSBuilder(
-				_docrootDirName, false, ".sass-cache/",
-				_PORTAL_COMMON_CSS_DIR_NAME, 6, new String[0], "jni")) {
-
-			cssBuilder.execute(Collections.singletonList("/css"));
-		}
+		executeCSSBuilder(
+			"/css", _docrootDirName, false, ".sass-cache/",
+			_PORTAL_COMMON_CSS_DIR_NAME, 6, new String[0], "jni");
 
 		String outputCssFilePath =
 			_docrootDirName + "/css/.sass-cache/test_import_change.css";
@@ -106,12 +102,9 @@ public class CSSBuilderTest {
 
 		_changeContentInPath(fragmentFileToChange, "khaki", "brown");
 
-		try (CSSBuilder cssBuilder = new CSSBuilder(
-				_docrootDirName, false, ".sass-cache/",
-				_PORTAL_COMMON_CSS_DIR_NAME, 6, new String[0], "jni")) {
-
-			cssBuilder.execute(Collections.singletonList("/css"));
-		}
+		executeCSSBuilder(
+			"/css", _docrootDirName, false, ".sass-cache/",
+			_PORTAL_COMMON_CSS_DIR_NAME, 6, new String[0], "jni");
 
 		outputCssFileContent = _read(outputCssFilePath);
 
@@ -136,6 +129,21 @@ public class CSSBuilderTest {
 	@Test
 	public void testCssBuilderWithRubyAndPortalCommonJar() throws Exception {
 		_testCssBuilder("ruby", _PORTAL_COMMON_CSS_DIR_NAME);
+	}
+
+	protected void executeCSSBuilder(
+			String dirName, String docrootDirName, boolean generateSourceMap,
+			String outputDirName, String portalCommonPath, int precision,
+			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
+		throws Exception {
+
+		try (CSSBuilder cssBuilder = new CSSBuilder(
+				docrootDirName, generateSourceMap, outputDirName,
+				portalCommonPath, precision, rtlExcludedPathRegexps,
+				sassCompilerClassName)) {
+
+			cssBuilder.execute(Collections.singletonList(dirName));
+		}
 	}
 
 	private static void _changeContentInPath(
@@ -177,12 +185,9 @@ public class CSSBuilderTest {
 	private void _testCssBuilder(String compiler, String portalCommonCssPath)
 		throws Exception {
 
-		try (CSSBuilder cssBuilder = new CSSBuilder(
-				_docrootDirName, false, ".sass-cache/", portalCommonCssPath, 6,
-				new String[0], compiler)) {
-
-			cssBuilder.execute(Collections.singletonList("/css"));
-		}
+		executeCSSBuilder(
+			"/css", _docrootDirName, false, ".sass-cache/", portalCommonCssPath,
+			6, new String[0], compiler);
 
 		String expectedTestContent = _read(
 			_docrootDirName + "/expected/test.css");

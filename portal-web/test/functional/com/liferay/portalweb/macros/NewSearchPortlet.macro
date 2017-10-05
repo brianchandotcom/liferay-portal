@@ -32,8 +32,6 @@
 	</command>
 
 	<command name="search">
-		<execute function="AssertElementPresent" locator1="Search#NEW_SEARCH_PORTLET_SEARCH_FIELD" />
-
 		<execute function="Type" locator1="Search#NEW_SEARCH_PORTLET_SEARCH_FIELD" value1="${searchTerm}" />
 
 		<execute function="KeyPress" locator1="Search#NEW_SEARCH_PORTLET_SEARCH_FIELD" value1="\RETURN" />

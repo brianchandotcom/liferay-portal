@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.portal.increment;
+package com.liferay.portal.internal.increment;
 
-import com.liferay.portal.kernel.concurrent.BatchablePipe;
 import com.liferay.portal.kernel.increment.Increment;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
@@ -35,9 +34,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, with no direct replacement
  */
-@Deprecated
 public class BufferedIncrementProcessor {
 
 	public BufferedIncrementProcessor(

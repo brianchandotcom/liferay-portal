@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.portal.increment;
+package com.liferay.portal.internal.increment;
 
-import com.liferay.portal.kernel.concurrent.IncreasableEntry;
 import com.liferay.portal.kernel.increment.Increment;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -25,9 +24,7 @@ import org.aopalliance.intercept.MethodInvocation;
 
 /**
  * @author Zsolt Berentey
- * @deprecated As of 7.0.0, with no direct replacement
  */
-@Deprecated
 public class BufferedIncreasableEntry<K, T>
 	extends IncreasableEntry<K, Increment<T>> {
 

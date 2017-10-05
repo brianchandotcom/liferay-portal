@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.increment;
+package com.liferay.portal.internal.increment;
 
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
@@ -23,9 +23,7 @@ import com.liferay.portal.util.PropsUtil;
 
 /**
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, with no direct replacement
  */
-@Deprecated
 public class BufferedIncrementConfiguration {
 
 	public BufferedIncrementConfiguration(String configuration) {

@@ -43,7 +43,6 @@ public class PortalLegacyDataArchiveUtil {
 
 		File buildPropertiesFile = new File(
 			portalLegacyRepositoryDirectory, "build.properties");
-
 		Properties buildProperties = new Properties();
 
 		try (FileInputStream fileInputStream = new FileInputStream(

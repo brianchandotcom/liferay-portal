@@ -14,20 +14,20 @@
 
 package com.liferay.petra.executor;
 
-import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
+import com.liferay.petra.concurrent.NoticeableExecutorService;
 
 /**
  * @author Shuyang Zhou
  */
 public interface PortalExecutorManager {
 
-	public ThreadPoolExecutor getPortalExecutor(String name);
+	public NoticeableExecutorService getPortalExecutor(String name);
 
-	public ThreadPoolExecutor getPortalExecutor(
+	public NoticeableExecutorService getPortalExecutor(
 		String name, boolean createIfAbsent);
 
-	public ThreadPoolExecutor registerPortalExecutor(
-		String name, ThreadPoolExecutor threadPoolExecutor);
+	public NoticeableExecutorService registerPortalExecutor(
+		String name, NoticeableExecutorService executorService);
 
 	public void shutdown();
 

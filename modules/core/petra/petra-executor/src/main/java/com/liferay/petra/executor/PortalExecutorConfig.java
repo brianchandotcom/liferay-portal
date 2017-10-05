@@ -14,11 +14,11 @@
 
 package com.liferay.petra.executor;
 
-import com.liferay.portal.kernel.concurrent.RejectedExecutionHandler;
-import com.liferay.portal.kernel.concurrent.ThreadPoolHandler;
-import com.liferay.portal.kernel.util.NamedThreadFactory;
+import com.liferay.petra.concurrent.ThreadPoolHandler;
 
 import java.io.Serializable;
+
+import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
@@ -29,23 +29,19 @@ public class PortalExecutorConfig implements Serializable {
 
 	public PortalExecutorConfig(
 		String name, int corePoolSize, int maxPoolSize, long keepAliveTime,
-		TimeUnit timeUnit, boolean allowCoreThreadTimeout, int maxQueueSize,
+		TimeUnit timeUnit, int maxQueueSize, ThreadFactory threadFactory,
 		RejectedExecutionHandler rejectedExecutionHandler,
-		ThreadPoolHandler threadPoolHandler, int priority,
-		ClassLoader contextClassLoader) {
+		ThreadPoolHandler threadPoolHandler) {
 
 		_name = name;
 		_corePoolSize = corePoolSize;
 		_maxPoolSize = maxPoolSize;
 		_keepAliveTime = keepAliveTime;
 		_timeUnit = timeUnit;
-		_allowCoreThreadTimeout = allowCoreThreadTimeout;
 		_maxQueueSize = maxQueueSize;
+		_threadFactory = threadFactory;
 		_rejectedExecutionHandler = rejectedExecutionHandler;
 		_threadPoolHandler = threadPoolHandler;
-
-		_threadFactory = new NamedThreadFactory(
-			name, priority, contextClassLoader);
 	}
 
 	public int getCorePoolSize() {
@@ -84,13 +80,8 @@ public class PortalExecutorConfig implements Serializable {
 		return _timeUnit;
 	}
 
-	public boolean isAllowCoreThreadTimeout() {
-		return _allowCoreThreadTimeout;
-	}
-
 	private static final long serialVersionUID = 1L;
 
-	private final boolean _allowCoreThreadTimeout;
 	private final int _corePoolSize;
 	private final long _keepAliveTime;
 	private final int _maxPoolSize;

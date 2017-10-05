@@ -43,10 +43,11 @@ public class PortalLegacyDataArchiveUtil {
 
 		Properties buildProperties = new Properties();
 
-		FileInputStream fileInputStream = new FileInputStream(
-			new File(portalLegacyRepositoryDirectory, "build.properties"));
+		try (FileInputStream fileInputStream = new FileInputStream(
+			new File(portalLegacyRepositoryDirectory, "build.properties"))) {
 
-		buildProperties.load(fileInputStream);
+			buildProperties.load(fileInputStream);
+		}
 
 		Set<String> portalVersions = _getPortalVersions(buildProperties);
 

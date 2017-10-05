@@ -18,7 +18,12 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PermissionedModel;
 import com.liferay.portal.kernel.model.ResourceBlockPermissionsContainer;
+import com.liferay.portal.kernel.service.PermissionedModelLocalService;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
+import com.liferay.portal.kernel.service.ResourceBlockLocalService;
 import com.liferay.portal.kernel.service.ResourceBlockLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourceBlockPermissionLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.test.rule.ExpectedDBType;
@@ -304,6 +309,29 @@ public class ResourceBlockLocalServiceTest {
 
 		_assertResourceBlockReferenceCount(
 			permissionedModel.getResourceBlockId(), _REFERENCE_COUNT);
+	}
+
+	@Test
+	public void testResourceBlockIsNotImplemented() throws Exception {
+		List<PersistedModelLocalService> persistedModelLocalServices =
+			PersistedModelLocalServiceRegistryUtil.
+				getPersistedModelLocalServices();
+
+		for (PersistedModelLocalService persistedModelLocalService :
+				persistedModelLocalServices) {
+
+			Class<?> clazz = persistedModelLocalService.getClass();
+
+			Assert.assertFalse(
+				"Resource Block should not be implemented by " +
+					clazz.getName(),
+				(persistedModelLocalService instanceof
+					PermissionedModelLocalService) &&
+				!(persistedModelLocalService instanceof
+					ResourceBlockLocalService) &&
+				!(persistedModelLocalService instanceof
+					ResourceBlockPermissionLocalService));
+		}
 	}
 
 	private void _addResourceBlock(long resourceBlockId, long referenceCount)

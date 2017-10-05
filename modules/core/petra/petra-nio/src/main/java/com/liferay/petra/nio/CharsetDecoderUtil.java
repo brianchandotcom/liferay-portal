@@ -28,10 +28,7 @@ public class CharsetDecoderUtil {
 
 	public static CharBuffer decode(String charsetName, ByteBuffer byteBuffer) {
 		try {
-			CharsetDecoder charsetDecoder = getCharsetDecoder(
-				charsetName, CodingErrorAction.REPLACE);
-
-			return charsetDecoder.decode(byteBuffer);
+			return decode(charsetName, CodingErrorAction.REPLACE, byteBuffer);
 		}
 		catch (CharacterCodingException cce) {
 			throw new Error(cce);

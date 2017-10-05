@@ -14,6 +14,16 @@
 
 package com.liferay.css.builder;
 
+import com.beust.jcommander.Parameter;
+
+import java.io.File;
+
+import java.nio.file.Paths;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author Andrea Di Giorgi
  */
@@ -21,7 +31,7 @@ public class CSSBuilderArgs {
 
 	public static final boolean APPEND_CSS_IMPORT_TIMESTAMPS = true;
 
-	public static final String DIR_NAME = "/";
+	public static final String DIR_NAME = new String("/");
 
 	public static final String DOCROOT_DIR_NAME = "src/META-INF/resources";
 
@@ -29,12 +39,12 @@ public class CSSBuilderArgs {
 
 	public static final int PRECISION = 9;
 
-	public String[] getDirNames() {
+	public List<String> getDirNames() {
 		return _dirNames;
 	}
 
-	public String getDocrootDirName() {
-		return _docrootDirName;
+	public File getDocrootDir() {
+		return _docrootDir;
 	}
 
 	public String getOutputDirName() {
@@ -49,7 +59,7 @@ public class CSSBuilderArgs {
 		return _precision;
 	}
 
-	public String[] getRtlExcludedPathRegexps() {
+	public List<String> getRtlExcludedPathRegexps() {
 		return _rtlExcludedPathRegexps;
 	}
 
@@ -76,11 +86,11 @@ public class CSSBuilderArgs {
 	}
 
 	public void setDirNames(String[] dirNames) {
-		_dirNames = dirNames;
+		_dirNames = Arrays.asList(dirNames);
 	}
 
-	public void setDocrootDirName(String docrootDirName) {
-		_docrootDirName = docrootDirName;
+	public void setDocrootDir(File docrootDir) {
+		_docrootDir = docrootDir;
 	}
 
 	public void setGenerateSourceMap(boolean generateSourceMap) {
@@ -99,12 +109,13 @@ public class CSSBuilderArgs {
 		_precision = precision;
 	}
 
-	public void setRtlExcludedPathRegexps(String rtlExcludedPathRegexps) {
-		setRtlExcludedPathRegexps(_split(rtlExcludedPathRegexps));
+	public void setRtlExcludedPathRegexps(List<String> rtlExcludedPathRegexps) {
+		_rtlExcludedPathRegexps = rtlExcludedPathRegexps;
 	}
 
-	public void setRtlExcludedPathRegexps(String[] rtlExcludedPathRegexps) {
-		_rtlExcludedPathRegexps = rtlExcludedPathRegexps;
+	public void setRtlExcludedPathRegexps(String rtlExcludedPathRegexps) {
+		setRtlExcludedPathRegexps(
+			Arrays.asList(_split(rtlExcludedPathRegexps)));
 	}
 
 	public void setSassCompilerClassName(String sassCompilerClassName) {
@@ -115,14 +126,59 @@ public class CSSBuilderArgs {
 		return s.split(",");
 	}
 
+	@Parameter(
+		description = "Whether to append the current timestamp to the URLs in the @import CSS at-rules.",
+		names = "sass.append.css.import.timestamps"
+	)
 	private boolean _appendCssImportTimestamps = APPEND_CSS_IMPORT_TIMESTAMPS;
-	private String[] _dirNames = {DIR_NAME};
-	private String _docrootDirName = DOCROOT_DIR_NAME;
+
+	@Parameter(
+		description = "The name of the directories, relative to docrootDir, which contain the SCSS files to compile. All sub-directories are searched for SCSS files as well.",
+		names = "sass.dir"
+	)
+	private List<String> _dirNames = Arrays.asList(DIR_NAME);
+
+	@Parameter(
+		description = "If the java plugin is applied: The first resources directory of the main source set (by default: src/main/resources).\nIf the war plugin is applied: project.webAppDir.\nOtherwise: null",
+		names = "sass.docroot.dir"
+	)
+	private File _docrootDir = Paths.get(".", DOCROOT_DIR_NAME).toFile();
+
+	@Parameter(
+		description = "Whether to generate source maps for easier debugging.",
+		names = "sass.generate.source.map"
+	)
 	private boolean _generateSourceMap;
+
+	@Parameter(
+		description = "The name of the sub-directories where the SCSS files are compiled to. " +
+			"For each directory that contains SCSS files, a sub-directory with this name is created. ",
+		names = "sass.output.dir"
+	)
 	private String _outputDirName = OUTPUT_DIR_NAME;
+
+	@Parameter(
+		description = "The value of the portalCommonDir property if set; otherwise portalCommonFile.",
+		names = {"sass.portal.common.path", "sass.portal.common.dir"}
+	)
 	private String _portalCommonPath;
+
+	@Parameter(
+		description = "The numeric precision of numbers in Sass.",
+		names = "sass.precision"
+	)
 	private int _precision = PRECISION;
-	private String[] _rtlExcludedPathRegexps = new String[0];
-	private String _sassCompilerClassName;
+
+	@Parameter(
+		description = "The SCSS file patterns to exclude when converting for right-to-left (RTL) support.",
+		names = "sass.rtl.excluded.path.regexps"
+	)
+	private List<String> _rtlExcludedPathRegexps = new ArrayList<>();
+
+	@Parameter(
+		description = "The type of Sass compiler to use. Supported values are \"jni\" and \"ruby\". If not set, defaults to \"jni\".",
+		names = "sass.compiler.class.name"
+	)
+	private String _sassCompilerClassName = "jni";
 
 }

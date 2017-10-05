@@ -25,7 +25,7 @@ configurations {
 }
 
 dependencies {
-	compileInclude group: "com.beust", name: "jcommander", version: "1.48"
+	compileInclude group: "com.beust", name: "jcommander", version: "1.72"
 
 	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: mavenDistributionVersion
 

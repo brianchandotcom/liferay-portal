@@ -24,7 +24,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -127,13 +127,21 @@ public class CSSBuilderTest {
 			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
 		throws Exception {
 
-		try (CSSBuilder cssBuilder = new CSSBuilder(
-				String.valueOf(docrootDirPath.toAbsolutePath()),
-				generateSourceMap, outputDirName,
-				String.valueOf(portalCommonPath.toAbsolutePath()), precision,
-				rtlExcludedPathRegexps, sassCompilerClassName)) {
+		CSSBuilderArgs cssBuilderArgs = new CSSBuilderArgs();
 
-			cssBuilder.execute(Collections.singletonList(dirName));
+		cssBuilderArgs.setDirNames(new String[] {dirName});
+		cssBuilderArgs.setDocrootDir(docrootDirPath.toFile());
+		cssBuilderArgs.setGenerateSourceMap(generateSourceMap);
+		cssBuilderArgs.setOutputDirName(outputDirName);
+		cssBuilderArgs.setPortalCommonPath(
+			String.valueOf(portalCommonPath.toAbsolutePath()));
+		cssBuilderArgs.setPrecision(precision);
+		cssBuilderArgs.setRtlExcludedPathRegexps(
+			Arrays.asList(rtlExcludedPathRegexps));
+		cssBuilderArgs.setSassCompilerClassName(sassCompilerClassName);
+
+		try (CSSBuilder cssBuilder = new CSSBuilder(cssBuilderArgs)) {
+			cssBuilder.execute();
 		}
 	}
 

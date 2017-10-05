@@ -365,7 +365,8 @@ public class JenkinsReportUtil {
 
 		elements.add(
 			Dom4JUtil.getNewElement(
-				tagName, null, buildStartDate.toLocaleString()));
+				tagName, null,
+				JenkinsResultsParserUtil.toDateString(buildStartDate)));
 
 		String buildTestReportURL = buildURL + "testReport";
 

@@ -1424,7 +1424,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	 *             SortFieldTranslator}
 	 */
 	@Deprecated
-
 	protected String doGetSortField(String orderByCol) {
 		return orderByCol;
 	}

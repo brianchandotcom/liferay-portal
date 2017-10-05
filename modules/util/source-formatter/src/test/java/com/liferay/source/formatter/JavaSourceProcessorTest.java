@@ -276,6 +276,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testJavaTermMetadataIncorrectLineBreaks() throws Exception {
+		test("JavaTermMetadataIncorrectLineBreaks.testjava");
+	}
+
+	@Test
 	public void testJavaVariableFinalableFields1() throws Exception {
 		test("JavaVariableFinalableFields1.testjava");
 	}

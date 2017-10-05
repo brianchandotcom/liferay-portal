@@ -17,6 +17,8 @@ package com.liferay.css.builder.ant;
 import com.liferay.css.builder.CSSBuilderArgs;
 import com.liferay.css.builder.CSSBuilderInvoker;
 
+import java.io.File;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
@@ -38,7 +40,7 @@ public class BuildCSSTask extends Task {
 			BuildCSSTask.class.getClassLoader());
 
 		try {
-			CSSBuilderInvoker.invoke(project.getBaseDir(), _cssBuilderArgs);
+			CSSBuilderInvoker.invoke(_cssBuilderArgs);
 		}
 		catch (Exception e) {
 			throw new BuildException(e);
@@ -59,7 +61,8 @@ public class BuildCSSTask extends Task {
 	}
 
 	public void setDocrootDirName(String docrootDirName) {
-		_cssBuilderArgs.setDocrootDirName(docrootDirName);
+		_cssBuilderArgs.setDocrootDir(
+			new File(getProject().getBaseDir(), docrootDirName));
 	}
 
 	public void setGenerateSourceMap(boolean generateSourceMap) {

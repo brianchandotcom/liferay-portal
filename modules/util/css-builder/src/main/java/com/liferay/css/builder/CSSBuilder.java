@@ -14,12 +14,13 @@
 
 package com.liferay.css.builder;
 
+import com.beust.jcommander.JCommander;
+import com.beust.jcommander.JCommander.Builder;
+
 import com.liferay.portal.kernel.regex.PatternFactory;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.rtl.css.RTLCSSConverter;
 import com.liferay.sass.compiler.SassCompiler;
 import com.liferay.sass.compiler.SassCompilerException;
@@ -39,10 +40,13 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -61,72 +65,53 @@ import org.apache.tools.ant.DirectoryScanner;
 public class CSSBuilder implements AutoCloseable {
 
 	public static void main(String[] args) throws Exception {
-		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
+		Map<String, String> argMap = new HashMap<>();
 
-		List<String> dirNames = new ArrayList<>();
+		for (int x = 0; x < args.length; x++) {
+			if (args[x].indexOf('=') != args[x].length() - 1) {
+				String[] arg = args[x].replace('=', ' ').split(" ");
 
-		String dirName = GetterUtil.getString(
-			arguments.get("sass.dir"), CSSBuilderArgs.DIR_NAME);
+				if (arg.length == 2) {
+					if (arg[0].startsWith("sass.dir.")) {
+						arg[0] = "sass.dir";
+					}
 
-		if (Validator.isNotNull(dirName)) {
-			dirNames.add(dirName);
-		}
-		else {
-			for (int i = 0;; i++) {
-				dirName = arguments.get("sass.dir." + i);
-
-				if (Validator.isNotNull(dirName)) {
-					dirNames.add(dirName);
-				}
-				else {
-					break;
+					argMap.put(arg[0], arg[1]);
 				}
 			}
 		}
 
-		boolean appendCssImportTimestamps = GetterUtil.getBoolean(
-			arguments.get("sass.append.css.import.timestamps"),
-			CSSBuilderArgs.APPEND_CSS_IMPORT_TIMESTAMPS);
-		String docrootDirName = GetterUtil.getString(
-			arguments.get("sass.docroot.dir"), CSSBuilderArgs.DOCROOT_DIR_NAME);
-		boolean generateSourceMap = GetterUtil.getBoolean(
-			arguments.get("sass.generate.source.map"));
-		String outputDirName = GetterUtil.getString(
-			arguments.get("sass.output.dir"), CSSBuilderArgs.OUTPUT_DIR_NAME);
+		Collection<String> argsCollection = new ArrayList<>();
 
-		String portalCommonPath = arguments.get("sass.portal.common.path");
-
-		if (Validator.isNull(portalCommonPath)) {
-			portalCommonPath = arguments.get("sass.portal.common.dir");
+		for (Entry<String, String> entry : argMap.entrySet()) {
+			argsCollection.add(entry.getKey());
+			argsCollection.add(entry.getValue());
 		}
 
-		int precision = GetterUtil.getInteger(
-			arguments.get("sass.precision"), CSSBuilderArgs.PRECISION);
-		String[] rtlExcludedPathRegexps = StringUtil.split(
-			arguments.get("sass.rtl.excluded.path.regexps"));
-		String sassCompilerClassName = arguments.get(
-			"sass.compiler.class.name");
+		String[] argsArray = argsCollection.toArray(new String[0]);
 
-		try (CSSBuilder cssBuilder = new CSSBuilder(
-				appendCssImportTimestamps, docrootDirName, generateSourceMap,
-				outputDirName, portalCommonPath, precision,
-				rtlExcludedPathRegexps, sassCompilerClassName)) {
+		CSSBuilderArgs cssBuilderArgs = new CSSBuilderArgs();
 
-			cssBuilder.execute(dirNames);
+		Builder builder = JCommander.newBuilder();
+
+		builder.addObject(cssBuilderArgs);
+
+		JCommander commander = builder.build();
+
+		commander.parse(argsArray);
+
+		try (CSSBuilder cssBuilder = new CSSBuilder(cssBuilderArgs)) {
+			cssBuilder.execute();
 		}
 		catch (Exception e) {
-			ArgumentsUtil.processMainException(arguments, e);
+			throw e;
 		}
 	}
 
-	public CSSBuilder(
-			boolean appendCssImportTimestamps, String docrootDirName,
-			boolean generateSourceMap, String outputDirName,
-			String portalCommonPath, int precision,
-			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
-		throws Exception {
+	public CSSBuilder(CSSBuilderArgs cssBuilderArgs) throws Exception {
+		_cssBuilderArgs = cssBuilderArgs;
 
-		File portalCommonDir = new File(portalCommonPath);
+		File portalCommonDir = new File(_cssBuilderArgs.getPortalCommonPath());
 
 		if (portalCommonDir.isFile()) {
 			portalCommonDir = _unzipPortalCommon(portalCommonDir);
@@ -137,28 +122,15 @@ public class CSSBuilder implements AutoCloseable {
 			_cleanPortalCommonDir = false;
 		}
 
-		_appendCssImportTimestamps = appendCssImportTimestamps;
-		_docrootDirName = docrootDirName;
-		_generateSourceMap = generateSourceMap;
-		_outputDirName = outputDirName;
 		_portalCommonDirName = portalCommonDir.getCanonicalPath();
-		_precision = precision;
+
+		String[] rtlExcludedPathRegexps =
+			_cssBuilderArgs.getRtlExcludedPathRegexps().toArray(new String[0]);
+
 		_rtlExcludedPathPatterns = PatternFactory.compile(
 			rtlExcludedPathRegexps);
 
-		_initSassCompiler(sassCompilerClassName);
-	}
-
-	public CSSBuilder(
-			String docrootDirName, boolean generateSourceMap,
-			String outputDirName, String portalCommonPath, int precision,
-			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
-		throws Exception {
-
-		this(
-			true, docrootDirName, generateSourceMap, outputDirName,
-			portalCommonPath, precision, rtlExcludedPathRegexps,
-			sassCompilerClassName);
+		_initSassCompiler(_cssBuilderArgs.getSassCompilerClassName());
 	}
 
 	@Override
@@ -170,11 +142,15 @@ public class CSSBuilder implements AutoCloseable {
 		_sassCompiler.close();
 	}
 
-	public void execute(List<String> dirNames) throws Exception {
+	public void execute() throws Exception {
 		List<String> fileNames = new ArrayList<>();
 
-		for (String dirName : dirNames) {
-			_collectSassFiles(fileNames, dirName, _docrootDirName);
+		String docrootDirName = _cssBuilderArgs.getDocrootDir().toString();
+
+		for (String dirName : _cssBuilderArgs.getDirNames()) {
+			List<String> sassFiles = _collectSassFiles(dirName, docrootDirName);
+
+			fileNames.addAll(sassFiles);
 		}
 
 		for (String fileName : fileNames) {
@@ -200,11 +176,13 @@ public class CSSBuilder implements AutoCloseable {
 		return false;
 	}
 
-	private void _collectSassFiles(
-			List<String> fileNames, String dirName, String docrootDirName)
+	private List<String> _collectSassFiles(
+			String dirName, String docrootDirName)
 		throws Exception {
 
-		String basedir = docrootDirName.concat(dirName);
+		final List<String> fileNames = new ArrayList<>();
+
+		String basedir = Paths.get(docrootDirName, dirName).toString();
 
 		String[] scssFiles = _getScssFiles(basedir);
 
@@ -218,7 +196,7 @@ public class CSSBuilder implements AutoCloseable {
 				basedir, scssFragments);
 
 			if (oldestSassModifiedTime > newestFragmentModifiedTime) {
-				return;
+				return fileNames;
 			}
 		}
 
@@ -229,6 +207,8 @@ public class CSSBuilder implements AutoCloseable {
 
 			fileNames.add(_normalizeFileName(dirName, fileName));
 		}
+
+		return fileNames;
 	}
 
 	private void _deltree(String dirName) throws IOException {
@@ -355,13 +335,15 @@ public class CSSBuilder implements AutoCloseable {
 	private void _initSassCompiler(String sassCompilerClassName)
 		throws Exception {
 
+		int precision = _cssBuilderArgs.getPrecision();
+
 		if (Validator.isNull(sassCompilerClassName) ||
 			sassCompilerClassName.equals("jni")) {
 
 			try {
 				System.setProperty("jna.nosys", Boolean.TRUE.toString());
 
-				_sassCompiler = new JniSassCompiler(_precision);
+				_sassCompiler = new JniSassCompiler(precision);
 
 				System.out.println("Using native Sass compiler");
 			}
@@ -369,12 +351,12 @@ public class CSSBuilder implements AutoCloseable {
 				System.out.println(
 					"Unable to load native compiler, falling back to Ruby");
 
-				_sassCompiler = new RubySassCompiler(_precision);
+				_sassCompiler = new RubySassCompiler(precision);
 			}
 		}
 		else {
 			try {
-				_sassCompiler = new RubySassCompiler(_precision);
+				_sassCompiler = new RubySassCompiler(precision);
 
 				System.out.println("Using Ruby Sass compiler");
 			}
@@ -384,7 +366,7 @@ public class CSSBuilder implements AutoCloseable {
 
 				System.setProperty("jna.nosys", Boolean.TRUE.toString());
 
-				_sassCompiler = new JniSassCompiler(_precision);
+				_sassCompiler = new JniSassCompiler(precision);
 			}
 		}
 	}
@@ -401,7 +383,7 @@ public class CSSBuilder implements AutoCloseable {
 
 			File file = new File(fileName);
 			File cacheFile = CSSBuilderUtil.getOutputFile(
-				fileName, _outputDirName);
+				fileName, _cssBuilderArgs.getOutputDirName());
 
 			if (file.lastModified() != cacheFile.lastModified()) {
 				return true;
@@ -421,7 +403,9 @@ public class CSSBuilder implements AutoCloseable {
 	}
 
 	private String _parseSass(String fileName) throws SassCompilerException {
-		String filePath = _docrootDirName.concat(fileName);
+		File sassFile = new File(_cssBuilderArgs.getDocrootDir(), fileName);
+
+		String filePath = sassFile.toPath().toString();
 
 		String cssBasePath = filePath;
 
@@ -440,13 +424,13 @@ public class CSSBuilder implements AutoCloseable {
 
 		String css = _sassCompiler.compileFile(
 			filePath, _portalCommonDirName + File.pathSeparator + cssBasePath,
-			_generateSourceMap, filePath + ".map");
+			_cssBuilderArgs.isGenerateSourceMap(), filePath + ".map");
 
 		return CSSBuilderUtil.parseStaticTokens(css);
 	}
 
 	private void _parseSassFile(String fileName) throws Exception {
-		File file = new File(_docrootDirName, fileName);
+		File file = new File(_cssBuilderArgs.getDocrootDir(), fileName);
 
 		if (!file.exists()) {
 			return;
@@ -465,7 +449,8 @@ public class CSSBuilder implements AutoCloseable {
 		String rtlCustomFileName = CSSBuilderUtil.getRtlCustomFileName(
 			fileName);
 
-		File rtlCustomFile = new File(_docrootDirName, rtlCustomFileName);
+		File rtlCustomFile = new File(
+			_cssBuilderArgs.getDocrootDir(), rtlCustomFileName);
 
 		if (rtlCustomFile.exists()) {
 			rtlContent += _parseSass(rtlCustomFileName);
@@ -522,7 +507,7 @@ public class CSSBuilder implements AutoCloseable {
 	private void _writeOutputFile(String fileName, String content, boolean rtl)
 		throws Exception {
 
-		if (_appendCssImportTimestamps) {
+		if (_cssBuilderArgs.isAppendCssImportTimestamps()) {
 			content = CSSBuilderUtil.parseCSSImports(content);
 		}
 
@@ -532,18 +517,20 @@ public class CSSBuilder implements AutoCloseable {
 			String rtlFileName = CSSBuilderUtil.getRtlCustomFileName(fileName);
 
 			outputFileName = CSSBuilderUtil.getOutputFileName(
-				rtlFileName, _outputDirName, StringPool.BLANK);
+				rtlFileName, _cssBuilderArgs.getOutputDirName(),
+				StringPool.BLANK);
 		}
 		else {
 			outputFileName = CSSBuilderUtil.getOutputFileName(
-				fileName, _outputDirName, StringPool.BLANK);
+				fileName, _cssBuilderArgs.getOutputDirName(), StringPool.BLANK);
 		}
 
-		File outputFile = new File(_docrootDirName, outputFileName);
+		File outputFile = new File(
+			_cssBuilderArgs.getDocrootDir(), outputFileName);
 
 		_write(outputFile, content);
 
-		File file = new File(_docrootDirName, fileName);
+		File file = new File(_cssBuilderArgs.getDocrootDir(), fileName);
 
 		outputFile.setLastModified(file.lastModified());
 	}
@@ -556,13 +543,9 @@ public class CSSBuilder implements AutoCloseable {
 
 	private static RTLCSSConverter _rtlCSSConverter;
 
-	private final boolean _appendCssImportTimestamps;
 	private final boolean _cleanPortalCommonDir;
-	private final String _docrootDirName;
-	private final boolean _generateSourceMap;
-	private final String _outputDirName;
+	private final CSSBuilderArgs _cssBuilderArgs;
 	private final String _portalCommonDirName;
-	private final int _precision;
 	private final Pattern[] _rtlExcludedPathPatterns;
 	private SassCompiler _sassCompiler;
 

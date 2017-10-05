@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.nio.charset;
+package com.liferay.petra.nio;
 
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;

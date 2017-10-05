@@ -2268,9 +2268,9 @@
 			<var name="userEmailAddress" value="userea2@liferay.com" />
 		</execute>
 
-		<var name="key_pageName" value="USA Ice Hockey Team Blog" />
-
-		<execute function="AssertTextNotPresent" locator1="Home#PAGE" value1="USA Ice Hockey Team Blog" />
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE">
+			<var name="key_pageName" value="USA Ice Hockey Team Blog" />
+		</execute>
 
 		<execute macro="User#logoutPG" />
 

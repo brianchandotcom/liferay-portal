@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import java.lang.reflect.Field;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -237,6 +238,32 @@ public class AsyncBrokerTest {
 			defaultNoticeableFutures.toString(), 1,
 			defaultNoticeableFutures.size());
 		Assert.assertTrue(noticeableFuture.cancel(true));
+		Assert.assertTrue(defaultNoticeableFutures.isEmpty());
+
+		boolean[] newMarker = new boolean[1];
+
+		noticeableFuture = asyncBroker.post(_KEY, newMarker);
+
+		Assert.assertNotNull(noticeableFuture);
+
+		Assert.assertTrue(Arrays.toString(newMarker), newMarker[0]);
+		Assert.assertSame(noticeableFuture, asyncBroker.post(_KEY, newMarker));
+		Assert.assertFalse(Arrays.toString(newMarker), newMarker[0]);
+		Assert.assertTrue(noticeableFuture.cancel(true));
+		Assert.assertTrue(defaultNoticeableFutures.isEmpty());
+
+		DefaultNoticeableFuture<String> defaultNoticeableFuture =
+			new DefaultNoticeableFuture<>();
+
+		Assert.assertNull(asyncBroker.post(_KEY, defaultNoticeableFuture));
+		Assert.assertSame(
+			defaultNoticeableFuture, defaultNoticeableFutures.get(_KEY));
+		Assert.assertSame(defaultNoticeableFuture, asyncBroker.post(_KEY));
+
+		Assert.assertEquals(
+			defaultNoticeableFutures.toString(), 1,
+			defaultNoticeableFutures.size());
+		Assert.assertTrue(defaultNoticeableFuture.cancel(true));
 		Assert.assertTrue(defaultNoticeableFutures.isEmpty());
 	}
 

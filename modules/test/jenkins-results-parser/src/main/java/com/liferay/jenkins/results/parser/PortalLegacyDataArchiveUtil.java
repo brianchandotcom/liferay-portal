@@ -115,8 +115,6 @@ public class PortalLegacyDataArchiveUtil {
 	}
 
 	private static Set<String> _getPortalVersions(Properties buildProperties) {
-		Set<String> portalVersions = new TreeSet<>();
-
 		String dataArchivePortalVersions = buildProperties.getProperty(
 			"data.archive.portal.versions");
 
@@ -127,7 +125,7 @@ public class PortalLegacyDataArchiveUtil {
 	private static Set<String> _getPoshiPropertyValues(
 		Element element, String targetPoshiPropertyName) {
 
-		Set<String> poshiPropertyValues = new TreeSet();
+		Set<String> poshiPropertyValues = new TreeSet<>();
 
 		List<Element> childElements = element.elements();
 

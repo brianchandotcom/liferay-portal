@@ -226,7 +226,7 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testAddAndDeleteCompanyWithLayoutSetPrototype()
-		throws Exception {
+		throws Throwable {
 
 		Company company = addCompany();
 
@@ -234,15 +234,28 @@ public class CompanyLocalServiceTest {
 
 		long userId = UserLocalServiceUtil.getDefaultUserId(companyId);
 
-		Group group = GroupTestUtil.addGroup(
+		final Group group = GroupTestUtil.addGroup(
 			companyId, userId, GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 		LayoutSetPrototype layoutSetPrototype = addLayoutSetPrototype(
 			companyId, userId, RandomTestUtil.randomString());
 
-		SitesUtil.updateLayoutSetPrototypesLinks(
-			group, layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
-			false);
+		final long layoutSetPrototypeId =
+			layoutSetPrototype.getLayoutSetPrototypeId();
+
+		TransactionInvokerUtil.invoke(
+			_transactionConfig,
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					SitesUtil.updateLayoutSetPrototypesLinks(
+						group, layoutSetPrototypeId, 0, true, false);
+
+					return null;
+				}
+
+			});
 
 		addUser(
 			companyId, userId, group.getGroupId(),
@@ -259,7 +272,7 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testAddAndDeleteCompanyWithLayoutSetPrototypeLinkedUserGroup()
-		throws Exception {
+		throws Throwable {
 
 		Company company = addCompany();
 
@@ -270,15 +283,27 @@ public class CompanyLocalServiceTest {
 		Group group = GroupTestUtil.addGroup(
 			companyId, userId, GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
-		UserGroup userGroup = UserGroupTestUtil.addUserGroup(
+		final UserGroup userGroup = UserGroupTestUtil.addUserGroup(
 			group.getGroupId());
 
-		LayoutSetPrototype layoutSetPrototype = addLayoutSetPrototype(
+		final LayoutSetPrototype layoutSetPrototype = addLayoutSetPrototype(
 			companyId, userId, RandomTestUtil.randomString());
 
-		SitesUtil.updateLayoutSetPrototypesLinks(
-			userGroup.getGroup(), layoutSetPrototype.getLayoutSetPrototypeId(),
-			0, true, false);
+		TransactionInvokerUtil.invoke(
+			_transactionConfig,
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					SitesUtil.updateLayoutSetPrototypesLinks(
+						userGroup.getGroup(),
+						layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
+						false);
+
+					return null;
+				}
+
+			});
 
 		CompanyLocalServiceUtil.deleteCompany(companyId);
 	}

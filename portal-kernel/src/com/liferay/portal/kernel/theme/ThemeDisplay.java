@@ -1436,10 +1436,9 @@ public class ThemeDisplay
 	}
 
 	public void setLanguageId(String languageId) {
-
 		_languageId = languageId;
 
-		_layoutFriendlyURLs= null;
+		_layoutFriendlyURLs = null;
 	}
 
 	public void setLayout(Layout layout) {

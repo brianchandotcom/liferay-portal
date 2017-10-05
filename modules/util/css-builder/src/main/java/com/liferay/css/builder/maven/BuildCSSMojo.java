@@ -70,8 +70,6 @@ public class BuildCSSMojo extends AbstractMojo {
 				}
 			}
 
-			_cssBuilderArgs.setOutputDirName(".sass-cache/");
-
 			if (_buildContext.isIncremental()) {
 				Scanner scanner = _buildContext.newScanner(_baseDir);
 
@@ -127,7 +125,7 @@ public class BuildCSSMojo extends AbstractMojo {
 	}
 
 	/**
-	 * @parameter default-value="/"
+	 * @parameter default-value=".sass-cache/"
 	 */
 	public void setOutputDirName(String outputDirName) {
 		_cssBuilderArgs.setOutputDirName(outputDirName);

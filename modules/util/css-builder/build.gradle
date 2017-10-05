@@ -31,7 +31,6 @@ copyPortalCommonCSSJar {
 }
 
 configurations {
-	mavenDistribution
 	mavenCompile {
 		extendsFrom compile
 	}

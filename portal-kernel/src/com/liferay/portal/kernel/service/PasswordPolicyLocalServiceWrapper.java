@@ -315,6 +315,14 @@ public class PasswordPolicyLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.PasswordPolicy getPasswordPolicy(
+		long companyId, boolean defaultPolicy)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _passwordPolicyLocalService.getPasswordPolicy(companyId,
+			defaultPolicy);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PasswordPolicy getPasswordPolicy(
 		long companyId, long[] organizationIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _passwordPolicyLocalService.getPasswordPolicy(companyId,

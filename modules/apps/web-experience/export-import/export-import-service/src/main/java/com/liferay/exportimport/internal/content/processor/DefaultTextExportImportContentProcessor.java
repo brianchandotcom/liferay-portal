@@ -729,13 +729,21 @@ public class DefaultTextExportImportContentProcessor
 
 				urlSB.append(StringPool.AT);
 
-				if (urlGroup.isStagedRemotely()) {
+				if (urlGroup.isStaged()) {
+					Group liveGroup = urlGroup.getLiveGroup();
+
+					urlSB.append(liveGroup.getUuid());
+				}
+				else if (urlGroup.isStagedRemotely()) {
 					String remoteGroupUuid = urlGroup.getTypeSettingsProperty(
 						"remoteGroupUUID");
 
 					if (Validator.isNotNull(remoteGroupUuid)) {
 						urlSB.append(remoteGroupUuid);
 					}
+				}
+				else if (group.getGroupId() == urlGroup.getGroupId()) {
+					urlSB.append(urlGroup.getFriendlyURL());
 				}
 				else {
 					urlSB.append(urlGroup.getUuid());
@@ -1069,9 +1077,8 @@ public class DefaultTextExportImportContentProcessor
 				_groupLocalService.fetchGroupByUuidAndCompanyId(
 					groupUuid, portletDataContext.getCompanyId());
 
-			if (groupFriendlyUrlGroup == null) {
-
-				// Fall back to the current group if the group is not found
+			if ((groupFriendlyUrlGroup == null) ||
+				groupUuid.startsWith(StringPool.SLASH)) {
 
 				content = StringUtil.replaceFirst(
 					content, _DATA_HANDLER_GROUP_FRIENDLY_URL,

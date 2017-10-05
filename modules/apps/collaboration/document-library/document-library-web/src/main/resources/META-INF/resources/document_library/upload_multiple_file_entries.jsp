@@ -80,8 +80,8 @@ if (portletTitleBasedNavigation) {
 									decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
 
 									deleteFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>" name="/document_library/upload_multiple_file_entries"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE_TEMP %>" /><portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= DLFileEntryConstants.getClassName() %>" />',
-									fileDescription: '<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>',
-									maxFileSize: '<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) %> B',
+									fileDescription: '<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>',
+									maxFileSize: '<%= dlConfiguration.fileMaxSize() %> B',
 									metadataContainer: '#<portlet:namespace />commonFileMetadataContainer',
 									metadataExplanationContainer: '#<portlet:namespace />metadataExplanationContainer',
 									namespace: '<portlet:namespace />',

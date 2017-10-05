@@ -14,10 +14,15 @@
 
 package com.liferay.document.library.internal.upgrade;
 
+import com.liferay.document.library.internal.upgrade.v1_0_1.UpgradeDLConfiguration;
+import com.liferay.document.library.internal.upgrade.v1_0_1.UpgradeDLFileEntryConfiguration;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Miguel Pastor
@@ -34,6 +39,18 @@ public class DLServiceUpgradeProcess implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.document.library.service", "0.0.1", "1.0.0",
 			new DummyUpgradeStep());
+
+		registry.register(
+			"com.liferay.document.library.service", "1.0.0", "1.0.1",
+			new UpgradeDLConfiguration(_configurationAdmin, _prefsProps),
+			new UpgradeDLFileEntryConfiguration(
+				_configurationAdmin, _prefsProps));
 	}
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference
+	private PrefsProps _prefsProps;
 
 }

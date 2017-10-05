@@ -113,22 +113,22 @@ public class CSSBuilderTest {
 
 	@Test
 	public void testCssBuilderWithJni() throws Exception {
-		_testCssBuilder("jni", _PORTAL_COMMON_CSS_DIR_NAME);
+		_testCssBuilder(_PORTAL_COMMON_CSS_DIR_NAME, "jni");
 	}
 
 	@Test
 	public void testCssBuilderWithJniAndPortalCommonJar() throws Exception {
-		_testCssBuilder("jni", _PORTAL_COMMON_CSS_JAR_FILE_NAME);
+		_testCssBuilder(_PORTAL_COMMON_CSS_JAR_FILE_NAME, "jni");
 	}
 
 	@Test
 	public void testCssBuilderWithRuby() throws Exception {
-		_testCssBuilder("ruby", _PORTAL_COMMON_CSS_DIR_NAME);
+		_testCssBuilder(_PORTAL_COMMON_CSS_DIR_NAME, "ruby");
 	}
 
 	@Test
 	public void testCssBuilderWithRubyAndPortalCommonJar() throws Exception {
-		_testCssBuilder("ruby", _PORTAL_COMMON_CSS_DIR_NAME);
+		_testCssBuilder(_PORTAL_COMMON_CSS_DIR_NAME, "ruby");
 	}
 
 	protected void executeCSSBuilder(
@@ -182,12 +182,13 @@ public class CSSBuilderTest {
 			s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
 	}
 
-	private void _testCssBuilder(String compiler, String portalCommonCssPath)
+	private void _testCssBuilder(
+			String portalCommonCssPath, String sassCompilerClassName)
 		throws Exception {
 
 		executeCSSBuilder(
 			"/css", _docrootDirName, false, ".sass-cache/", portalCommonCssPath,
-			6, new String[0], compiler);
+			6, new String[0], sassCompilerClassName);
 
 		String expectedTestContent = _read(
 			_docrootDirName + "/expected/test.css");

@@ -19,7 +19,7 @@
 		<execute function="AssertLocation" value1="http://localhost:8080/web/guest/${searchPage}?q=${searchTerm}&amp;type=${typeURL}" />
 	</command>
 
-	<command name="check">
+	<command name="checkFacetOption">
 		<execute function="Check" locator1="Checkbox#ANY_CHECKBOX">
 			<var name="checkboxName" value="${facetOption}" />
 		</execute>
@@ -37,8 +37,12 @@
 		<execute function="KeyPress" locator1="Search#NEW_SEARCH_PORTLET_SEARCH_FIELD" value1="\RETURN" />
 	</command>
 
-	<command name="uncheck">
+	<command name="uncheckFacetOption">
 		<execute function="Uncheck" locator1="Checkbox#ANY_CHECKBOX">
+			<var name="checkboxName" value="${facetOption}" />
+		</execute>
+
+		<execute function="AssertNotChecked" locator1="Checkbox#ANY_CHECKBOX">
 			<var name="checkboxName" value="${facetOption}" />
 		</execute>
 	</command>

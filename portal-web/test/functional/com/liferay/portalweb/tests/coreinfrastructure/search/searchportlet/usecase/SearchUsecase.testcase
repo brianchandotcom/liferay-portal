@@ -1113,7 +1113,7 @@
 			<var name="searchTerm" value="${searchTerm}" />
 		</execute>
 
-		<execute macro="NewSearchPortlet#check">
+		<execute macro="NewSearchPortlet#checkFacetOption">
 			<var name="facetOption" value="${searchAssetType}" />
 		</execute>
 

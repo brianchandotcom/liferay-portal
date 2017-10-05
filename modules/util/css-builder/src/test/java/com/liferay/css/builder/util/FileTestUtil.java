@@ -17,11 +17,15 @@ package com.liferay.css.builder.util;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.io.IOException;
+
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 /**
  * @author Andrea Di Giorgi
@@ -30,7 +34,7 @@ public class FileTestUtil {
 
 	public static void changeContentInPath(
 			Path path, String s, String replacement)
-		throws Exception {
+		throws IOException {
 
 		Charset charset = StandardCharsets.UTF_8;
 
@@ -41,10 +45,46 @@ public class FileTestUtil {
 		Files.write(path, content.getBytes(charset));
 	}
 
-	public static String read(String fileName) throws Exception {
-		Path path = Paths.get(fileName);
+	public static void copyDir(Path rootDirPath, Path rootDestinationDirPath)
+		throws IOException {
 
-		String s = new String(Files.readAllBytes(path), StringPool.UTF8);
+		Files.createDirectories(rootDestinationDirPath);
+
+		Files.walkFileTree(
+			rootDirPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+						Path dirPath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					Path relativePath = rootDirPath.relativize(dirPath);
+
+					Files.createDirectories(
+						rootDestinationDirPath.resolve(relativePath));
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					Path relativePath = rootDirPath.relativize(path);
+
+					Files.copy(
+						path, rootDestinationDirPath.resolve(relativePath));
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+	}
+
+	public static String read(Path path) throws IOException {
+		String s = new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
 
 		return StringUtil.replace(
 			s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);

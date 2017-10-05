@@ -283,7 +283,8 @@ public abstract class BaseJSONWebServiceClientImpl
 	public <V, T> List<V> doGetToList(
 			Class<T> clazz, String url, Map<String, String> parameters,
 			Map<String, String> headers)
-		throws JSONWebServiceInvocationException {
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException {
 
 		String json = doGet(url, parameters, headers);
 
@@ -302,14 +303,15 @@ public abstract class BaseJSONWebServiceClientImpl
 			return objectMapper.readValue(json, javaType);
 		}
 		catch (IOException ioe) {
-			throw new JSONWebServiceInvocationException(ioe);
+			throw _getJSONWebServiceSerializeException(json, clazz);
 		}
 	}
 
 	@Override
 	public <V, T> List<V> doGetToList(
 			Class<T> clazz, String url, String... parametersArray)
-		throws JSONWebServiceInvocationException {
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException {
 
 		Map<String, String> parameters = new HashMap<String, String>();
 
@@ -324,7 +326,8 @@ public abstract class BaseJSONWebServiceClientImpl
 	@Override
 	public <T> T doGetToObject(
 			Class<T> clazz, String url, String... parametersArray)
-		throws JSONWebServiceInvocationException {
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException {
 
 		String json = doGet(url, parametersArray);
 
@@ -336,7 +339,7 @@ public abstract class BaseJSONWebServiceClientImpl
 			return objectMapper.readValue(json, clazz);
 		}
 		catch (IOException ioe) {
-			throw new JSONWebServiceInvocationException(ioe);
+			throw _getJSONWebServiceSerializeException(json, clazz);
 		}
 	}
 
@@ -395,7 +398,8 @@ public abstract class BaseJSONWebServiceClientImpl
 	}
 
 	public String doPostAsJSON(String url, Object object)
-		throws JSONWebServiceInvocationException {
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException {
 
 		try {
 			String json = objectMapper.writeValueAsString(object);
@@ -403,7 +407,7 @@ public abstract class BaseJSONWebServiceClientImpl
 			return doPostAsJSON(url, json);
 		}
 		catch (IOException ioe) {
-			throw new JSONWebServiceInvocationException(ioe);
+			throw _getJSONWebServiceSerializeException(object);
 		}
 	}
 
@@ -437,7 +441,8 @@ public abstract class BaseJSONWebServiceClientImpl
 	@Override
 	public <T> T doPostToObject(
 			Class<T> clazz, String url, String... parametersArray)
-		throws JSONWebServiceInvocationException {
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException {
 
 		String json = doPost(url, parametersArray);
 
@@ -449,7 +454,7 @@ public abstract class BaseJSONWebServiceClientImpl
 			return objectMapper.readValue(json, clazz);
 		}
 		catch (IOException ioe) {
-			throw new JSONWebServiceInvocationException(ioe);
+			throw _getJSONWebServiceSerializeException(json, clazz);
 		}
 	}
 
@@ -1008,6 +1013,31 @@ public abstract class BaseJSONWebServiceClientImpl
 		}
 
 		return credentialsProvider;
+	}
+
+	private JSONWebServiceSerializeException
+		_getJSONWebServiceSerializeException(Object object) {
+
+		StringBuffer sb = new StringBuffer();
+
+		sb.append("Not able to serialize  ");
+		sb.append("object with type ");
+		sb.append(object.getClass());
+
+		return new JSONWebServiceSerializeException(sb.toString());
+	}
+
+	private <T> JSONWebServiceSerializeException
+		_getJSONWebServiceSerializeException(String json, Class<T> clazz) {
+
+		StringBuffer sb = new StringBuffer();
+
+		sb.append("Not able to deserialize ");
+		sb.append(json);
+		sb.append(" into object with type ");
+		sb.append(clazz.getName());
+
+		return new JSONWebServiceSerializeException(sb.toString());
 	}
 
 	private Credentials _getProxyCredentials() {

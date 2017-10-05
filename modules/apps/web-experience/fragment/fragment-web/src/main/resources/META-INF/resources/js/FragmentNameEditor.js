@@ -52,8 +52,8 @@ class FragmentNameEditor extends Component {
 					const uriString = uri.toString();
 
 					if (Liferay.SPA) {
-						Liferay.SPA.app.navigate(uriString);
 						this.disposeInternal();
+						Liferay.SPA.app.navigate(uriString);
 					} else {
 						location.href = uriString;
 					}

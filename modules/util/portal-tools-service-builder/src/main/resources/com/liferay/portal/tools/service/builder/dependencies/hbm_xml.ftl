@@ -128,7 +128,7 @@
 					dynamic-update="true"
 				</#if>
 
-				lazy="true" name="${apiPackagePath}.model.${entity.name}${blobColumn.methodName}BlobModel" table="${entity.table}"
+				name="${apiPackagePath}.model.${entity.name}${blobColumn.methodName}BlobModel" lazy="true" table="${entity.table}"
 			>
 				<#assign column = entity.getPKList()?first />
 

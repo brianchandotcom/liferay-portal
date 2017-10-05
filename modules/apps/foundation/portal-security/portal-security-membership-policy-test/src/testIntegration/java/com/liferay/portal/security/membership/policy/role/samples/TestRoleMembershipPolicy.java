@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.membershippolicy.BaseRoleMembershipPolicy;
 import com.liferay.portal.kernel.security.membershippolicy.MembershipPolicyException;
+import com.liferay.portal.kernel.security.membershippolicy.RoleMembershipPolicy;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.security.membership.policy.role.BaseRoleMembershipPolicyTestCase;
 
@@ -27,9 +28,15 @@ import java.util.Map;
 
 import org.junit.Assert;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Roberto Díaz
  */
+@Component(
+	immediate = true, property = {"service.ranking:Integer=1"},
+	service = RoleMembershipPolicy.class
+)
 public class TestRoleMembershipPolicy extends BaseRoleMembershipPolicy {
 
 	@Override

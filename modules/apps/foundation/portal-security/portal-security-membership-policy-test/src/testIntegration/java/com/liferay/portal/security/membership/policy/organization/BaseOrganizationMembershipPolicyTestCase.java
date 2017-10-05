@@ -17,20 +17,12 @@ package com.liferay.portal.security.membership.policy.organization;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicy;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.security.membership.policy.BaseMembershipPolicyTestCase;
-import com.liferay.portal.security.membership.policy.organization.samples.TestOrganizationMembershipPolicy;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import org.junit.After;
 import org.junit.Before;
@@ -69,18 +61,6 @@ public abstract class BaseOrganizationMembershipPolicyTestCase
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("service.ranking", 1);
-
-		ServiceRegistration<?> serviceRegistration = registry.registerService(
-			OrganizationMembershipPolicy.class,
-			new TestOrganizationMembershipPolicy(), properties);
-
-		serviceRegistrations.add(serviceRegistration);
 
 		organization = OrganizationTestUtil.addOrganization();
 	}

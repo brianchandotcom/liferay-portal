@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.security.membershippolicy.BaseSiteMembershipPolicy;
 import com.liferay.portal.kernel.security.membershippolicy.MembershipPolicyException;
+import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicy;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.security.membership.policy.site.BaseSiteMembershipPolicyTestCase;
@@ -33,9 +34,16 @@ import java.util.Map;
 
 import org.junit.Assert;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Roberto Díaz
  */
+@Component(
+	immediate = true,
+	property = {"service.ranking:Integer=" + Integer.MAX_VALUE},
+	service = SiteMembershipPolicy.class
+)
 public class TestSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 
 	@Override

@@ -73,7 +73,7 @@ public class CSSBuilderTest {
 	}
 
 	@Test
-	public void testCssBuilderWithFragmentChange() throws Exception {
+	public void testCSSBuilderWithFragmentChange() throws Exception {
 		Path fragmentChangePath = _docrootDirPath.resolve(
 			"css/_import_change.scss");
 
@@ -100,23 +100,23 @@ public class CSSBuilderTest {
 	}
 
 	@Test
-	public void testCssBuilderWithJni() throws Exception {
-		_testCssBuilder(_portalCommonDirPath, "jni");
+	public void testCSSBuilderWithJni() throws Exception {
+		_testCSSBuilder(_portalCommonDirPath, "jni");
 	}
 
 	@Test
-	public void testCssBuilderWithJniAndPortalCommonJar() throws Exception {
-		_testCssBuilder(_portalCommonJarPath, "jni");
+	public void testCSSBuilderWithJniAndPortalCommonJar() throws Exception {
+		_testCSSBuilder(_portalCommonJarPath, "jni");
 	}
 
 	@Test
-	public void testCssBuilderWithRuby() throws Exception {
-		_testCssBuilder(_portalCommonDirPath, "ruby");
+	public void testCSSBuilderWithRuby() throws Exception {
+		_testCSSBuilder(_portalCommonDirPath, "ruby");
 	}
 
 	@Test
-	public void testCssBuilderWithRubyAndPortalCommonJar() throws Exception {
-		_testCssBuilder(_portalCommonJarPath, "ruby");
+	public void testCSSBuilderWithRubyAndPortalCommonJar() throws Exception {
+		_testCSSBuilder(_portalCommonJarPath, "ruby");
 	}
 
 	@Rule
@@ -152,7 +152,7 @@ public class CSSBuilderTest {
 		Assert.assertEquals(expectedCount, count);
 	}
 
-	private void _testCssBuilder(
+	private void _testCSSBuilder(
 			Path portalCommonPath, String sassCompilerClassName)
 		throws Exception {
 
@@ -167,16 +167,15 @@ public class CSSBuilderTest {
 
 		Assert.assertEquals(expectedTestContent, actualTestContent);
 
-		String actualTestCssImportContent = FileTestUtil.read(
+		String actualTestImportContent = FileTestUtil.read(
 			_docrootDirPath.resolve("css/.sass-cache/test_css_import.css"));
 
-		_assertMatchesCount(_cssImportPattern, actualTestCssImportContent, 3);
+		_assertMatchesCount(_cssImportPattern, actualTestImportContent, 3);
 
-		String actualTestCssImportRtlContent = FileTestUtil.read(
+		String actualTestImportRtlContent = FileTestUtil.read(
 			_docrootDirPath.resolve("css/.sass-cache/test_css_import_rtl.css"));
 
-		_assertMatchesCount(
-			_cssImportPattern, actualTestCssImportRtlContent, 3);
+		_assertMatchesCount(_cssImportPattern, actualTestImportRtlContent, 3);
 
 		Assert.assertEquals(expectedTestContent, actualTestContent);
 
@@ -185,10 +184,10 @@ public class CSSBuilderTest {
 
 		Assert.assertEquals(expectedTestContent, actualTestPartialContent);
 
-		File partialCssFile = new File(
+		File partialCSSFile = new File(
 			Paths.get("/css/.sass-cache/_partial.css").toString());
 
-		Assert.assertFalse(partialCssFile.exists());
+		Assert.assertFalse(partialCSSFile.exists());
 
 		String expectedTestRtlContent = FileTestUtil.read(
 			_dependenciesDirPath.resolve("expected/test_rtl.css"));

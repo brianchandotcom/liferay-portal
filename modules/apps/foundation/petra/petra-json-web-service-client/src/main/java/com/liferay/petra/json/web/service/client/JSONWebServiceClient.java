@@ -16,6 +16,8 @@ package com.liferay.petra.json.web.service.client;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.fasterxml.jackson.databind.Module;
+
 import java.security.KeyStore;
 
 import java.util.List;
@@ -122,6 +124,8 @@ public interface JSONWebServiceClient {
 	public int getHostPort();
 
 	public String getProtocol();
+
+	public void registerModule(Module module);
 
 	public void resetHttpClient();
 

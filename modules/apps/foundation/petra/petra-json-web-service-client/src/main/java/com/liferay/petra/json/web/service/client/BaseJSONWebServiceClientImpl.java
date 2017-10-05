@@ -16,6 +16,7 @@ package com.liferay.petra.json.web.service.client;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
@@ -293,14 +294,14 @@ public abstract class BaseJSONWebServiceClientImpl
 		}
 
 		try {
-			TypeFactory typeFactory = objectMapper.getTypeFactory();
+			TypeFactory typeFactory = _objectMapper.getTypeFactory();
 
 			List<V> list = new ArrayList<V>();
 
 			JavaType javaType = typeFactory.constructCollectionType(
 				list.getClass(), clazz);
 
-			return objectMapper.readValue(json, javaType);
+			return _objectMapper.readValue(json, javaType);
 		}
 		catch (IOException ioe) {
 			throw _getJSONWebServiceSerializeException(json, clazz);
@@ -336,7 +337,7 @@ public abstract class BaseJSONWebServiceClientImpl
 		}
 
 		try {
-			return objectMapper.readValue(json, clazz);
+			return _objectMapper.readValue(json, clazz);
 		}
 		catch (IOException ioe) {
 			throw _getJSONWebServiceSerializeException(json, clazz);
@@ -402,7 +403,7 @@ public abstract class BaseJSONWebServiceClientImpl
 			   JSONWebServiceSerializeException {
 
 		try {
-			String json = objectMapper.writeValueAsString(object);
+			String json = _objectMapper.writeValueAsString(object);
 
 			return doPostAsJSON(url, json);
 		}
@@ -451,7 +452,7 @@ public abstract class BaseJSONWebServiceClientImpl
 		}
 
 		try {
-			return objectMapper.readValue(json, clazz);
+			return _objectMapper.readValue(json, clazz);
 		}
 		catch (IOException ioe) {
 			throw _getJSONWebServiceSerializeException(json, clazz);
@@ -560,6 +561,11 @@ public abstract class BaseJSONWebServiceClientImpl
 	}
 
 	@Override
+	public void registerModule(Module module) {
+		_objectMapper.registerModule(module);
+	}
+
+	@Override
 	public void resetHttpClient() {
 		destroy();
 
@@ -658,10 +664,10 @@ public abstract class BaseJSONWebServiceClientImpl
 	}
 
 	protected BaseJSONWebServiceClientImpl() {
-		objectMapper.configure(
+		_objectMapper.configure(
 			DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-		objectMapper.enableDefaultTypingAsProperty(
+		_objectMapper.enableDefaultTypingAsProperty(
 			ObjectMapper.DefaultTyping.JAVA_LANG_OBJECT, "class");
 	}
 
@@ -964,8 +970,6 @@ public abstract class BaseJSONWebServiceClientImpl
 		return json;
 	}
 
-	protected ObjectMapper objectMapper = new ObjectMapper();
-
 	private CredentialsProvider _getCredentialsProvider() {
 		if ((isNull(_login) || isNull(_password)) &&
 			(isNull(_proxyLogin) || isNull(_proxyPassword))) {
@@ -1103,6 +1107,7 @@ public abstract class BaseJSONWebServiceClientImpl
 	private String _oAuthAccessToken;
 	private String _oAuthConsumerKey;
 	private String _oAuthConsumerSecret;
+	private ObjectMapper _objectMapper = new ObjectMapper();
 	private String _password;
 	private String _protocol = "http";
 	private String _proxyAuthType;

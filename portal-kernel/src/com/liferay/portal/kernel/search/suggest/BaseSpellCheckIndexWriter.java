@@ -14,11 +14,11 @@
 
 package com.liferay.portal.kernel.search.suggest;
 
+import com.liferay.petra.nio.CharsetEncoderUtil;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.nio.charset.CharsetEncoderUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;

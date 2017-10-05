@@ -233,6 +233,14 @@
 		</execute>
 	</command>
 
+	<command name="gotoViewSource">
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="View Source">
+			<var name="key_menuItem" value="View Source" />
+		</execute>
+	</command>
+
 	<command name="gotoViewStatus">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 

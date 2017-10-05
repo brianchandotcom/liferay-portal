@@ -2844,6 +2844,173 @@
 		</execute>
 	</command>
 
+	<command name="ViewSourceContainsNoGarbageData" priority="4">
+		<property name="testray.component.names" value="Web Content Administration" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoManageStructures" />
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="structureDescription" value="WC Structure Description" />
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Image" />
+			<var name="fieldFieldLabel" value="Image" />
+			<var name="fieldName" value="image" />
+		</execute>
+
+		<execute macro="WebContentStructures#saveCP">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoManageTemplates" />
+
+		<execute macro="WebContentTemplates#addCP">
+			<var name="templateDescription" value="WC Template Description" />
+			<var name="templateLanguage" value="ftl" />
+			<var name="templateName" value="WC Template Name" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addStructure">
+			<var name="structureName" value="WC Structure Name" />
+			<var name="templateFieldNames" value="Text" />
+			<var name="templateFieldNames" value="Image" />
+			<var name="templateLanguage" value="ftl" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="WebContent#addWithStructureCP">
+			<var name="structureName" value="WC Structure Name" />
+			<var name="templateName" value="WC Template Name" />
+			<var name="webContentText" value="WC WebContent Text" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="title" />
+			<var name="fieldValue" value="English (United States) Title" />
+		</execute>
+
+		<execute macro="ItemSelector#gotoItemSelectorViaSelectButton" />
+
+		<execute macro="ItemSelector#uploadFile">
+			<var name="navTab" value="Documents and Media" />
+			<var name="uploadFileName" value="Document_3.png" />
+		</execute>
+
+		<execute macro="FormFields#editTextAlt">
+			<var name="fieldName" value="image" />
+			<var name="fieldValue" value="English (United States) Image Description" />
+		</execute>
+
+		<execute macro="WebContent#addLocale">
+			<var name="language" value="Spanish (Spain)" />
+			<var name="locale" value="es-ES" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="title" />
+			<var name="fieldValue" value="Spanish (Spain) Title" />
+		</execute>
+
+		<execute macro="FormFields#editTextAlt">
+			<var name="fieldName" value="image" />
+			<var name="fieldValue" value="Spanish (Spain) Image Description" />
+		</execute>
+
+		<execute macro="WebContent#selectLocale">
+			<var name="locale" value="en-US" />
+		</execute>
+
+		<execute macro="FormFields#viewTextValue">
+			<var name="fieldName" value="title" />
+			<var name="fieldValue" value="English (United States) Title" />
+		</execute>
+
+		<execute macro="FormFields#viewTextValueAlt">
+			<var name="fieldName" value="image" />
+			<var name="fieldValue" value="English (United States) Image Description" />
+		</execute>
+
+		<execute macro="WebContent#selectLocale">
+			<var name="locale" value="es-ES" />
+		</execute>
+
+		<execute macro="FormFields#viewTextValue">
+			<var name="fieldName" value="title" />
+			<var name="fieldValue" value="Spanish (Spain) Title" />
+		</execute>
+
+		<execute macro="FormFields#viewTextValueAlt">
+			<var name="fieldName" value="image" />
+			<var name="fieldValue" value="Spanish (Spain) Image Description" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="English (United States) Title" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoViewSource" />
+
+		<execute function="AssertElementNotPresent" locator1="WC#SOURCE_GARBAGE_DATA" />
+	</command>
+
 	<command name="WebContentAdministrationDataValidation" priority="4">
 		<property name="testray.component.names" value="Web Content Administration" />
 

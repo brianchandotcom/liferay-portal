@@ -16,7 +16,6 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -38,25 +37,44 @@ import org.dom4j.Element;
 public class PortalLegacyDataArchiveUtil {
 
 	public static List<File> getPortalLegacyDataArchives(
-			String portalLegacyRepositoryDirectory)
-		throws DocumentException, FileNotFoundException, IOException {
+		String portalLegacyRepositoryDirectory) {
 
 		List<File> portalLegacyDataArchives = new ArrayList<>();
+
+		File buildPropertiesFile = new File(
+			portalLegacyRepositoryDirectory, "build.properties");
 
 		Properties buildProperties = new Properties();
 
 		try (FileInputStream fileInputStream = new FileInputStream(
-				new File(
-					portalLegacyRepositoryDirectory, "build.properties"))) {
+				buildPropertiesFile)) {
 
 			buildProperties.load(fileInputStream);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to load ", buildPropertiesFile.getPath()),
+				ioe);
 		}
 
 		Set<String> portalVersions = _getPortalVersions(buildProperties);
 
 		for (String portalVersion : portalVersions) {
-			Set<String> dataArchiveNames = _getDataArchiveNames(
-				portalLegacyRepositoryDirectory, portalVersion);
+			Set<String> dataArchiveNames;
+
+			try {
+				dataArchiveNames = _getDataArchiveNames(
+					portalLegacyRepositoryDirectory, portalVersion);
+			}
+			catch (DocumentException | IOException e) {
+				throw new RuntimeException(
+					JenkinsResultsParserUtil.combine(
+						"Unable to get data archive names in ",
+						portalLegacyRepositoryDirectory, " for portal version ",
+						portalVersion),
+					e);
+			}
 
 			Set<String> databaseNames = _getDatabaseNames(
 				buildProperties, portalVersion);
@@ -92,7 +110,7 @@ public class PortalLegacyDataArchiveUtil {
 
 	private static Set<String> _getDataArchiveNames(
 			String portalLegacyRepositoryDirectory, String portalVersion)
-		throws DocumentException, FileNotFoundException, IOException {
+		throws DocumentException, IOException {
 
 		Set<String> dataArchiveNames = new HashSet<>();
 

@@ -24,7 +24,9 @@ import java.util.function.Supplier;
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.petra.lang.CentralizedThreadLocal}
  */
+@Deprecated
 public class InitialThreadLocal<T> extends CentralizedThreadLocal<T> {
 
 	public InitialThreadLocal(String name, Supplier<T> supplier) {

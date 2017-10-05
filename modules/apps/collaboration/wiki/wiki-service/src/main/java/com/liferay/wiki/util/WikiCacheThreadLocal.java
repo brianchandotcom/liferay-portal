@@ -14,7 +14,7 @@
 
 package com.liferay.wiki.util;
 
-import com.liferay.portal.kernel.util.InitialThreadLocal;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 
 /**
  * @author Jorge Ferrer
@@ -30,7 +30,8 @@ public class WikiCacheThreadLocal {
 	}
 
 	private static final ThreadLocal<Boolean> _clearCache =
-		new InitialThreadLocal<>(
-			WikiCacheThreadLocal.class + "._clearCache", () -> Boolean.TRUE);
+		new CentralizedThreadLocal<>(
+			WikiCacheThreadLocal.class + "._clearCache", () -> Boolean.TRUE,
+			false);
 
 }

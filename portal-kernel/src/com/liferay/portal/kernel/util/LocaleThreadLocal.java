@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
+
 import java.util.Locale;
 
 /**
@@ -46,12 +48,13 @@ public class LocaleThreadLocal {
 	}
 
 	private static final ThreadLocal<Locale> _defaultLocale =
-		new AutoResetThreadLocal<>(LocaleThreadLocal.class + "._defaultLocale");
+		new CentralizedThreadLocal<>(
+			LocaleThreadLocal.class + "._defaultLocale");
 	private static final ThreadLocal<Locale> _siteDefaultLocale =
-		new AutoResetThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			LocaleThreadLocal.class + "._siteDefaultLocale");
 	private static final ThreadLocal<Locale> _themeDisplayLocale =
-		new AutoResetThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			LocaleThreadLocal.class + "._themeDisplayLocale");
 
 }

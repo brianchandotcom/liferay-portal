@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.cache.transactional;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.SkipReplicationThreadLocal;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.transaction.TransactionDefinition;
 import com.liferay.portal.kernel.transaction.TransactionLifecycleListener;
 import com.liferay.portal.kernel.transaction.TransactionStatus;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.InitialThreadLocal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 
@@ -264,16 +264,16 @@ public class TransactionalPortalCacheHelper {
 
 	private static final ThreadLocal<List<List<PortalCacheMap>>>
 		_backupPortalCacheMapsThreadLocal =
-			new InitialThreadLocal<>(
+			new CentralizedThreadLocal<>(
 				TransactionalPortalCacheHelper.class.getName() +
 					"._backupPortalCacheMapsThreadLocal",
-				ArrayList::new);
+				ArrayList::new, false);
 	private static final ThreadLocal<List<PortalCacheMap>>
 		_portalCacheMapsThreadLocal =
-			new InitialThreadLocal<>(
+			new CentralizedThreadLocal<>(
 				TransactionalPortalCacheHelper.class.getName() +
 					"._portalCacheMapsThreadLocal",
-				ArrayList::new);
+				ArrayList::new, false);
 	private static volatile Boolean _transactionalCacheEnabled;
 
 	private static class UncommittedBuffer {

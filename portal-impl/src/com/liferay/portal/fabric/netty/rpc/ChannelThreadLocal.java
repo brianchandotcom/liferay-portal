@@ -14,7 +14,7 @@
 
 package com.liferay.portal.fabric.netty.rpc;
 
-import com.liferay.portal.kernel.util.CentralizedThreadLocal;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 
 import io.netty.channel.Channel;
 

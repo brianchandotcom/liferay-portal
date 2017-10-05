@@ -16,7 +16,7 @@ package com.liferay.portal.search.buffer;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -104,17 +104,9 @@ public class IndexerRequestBuffer {
 	}
 
 	private static final ThreadLocal<List<IndexerRequestBuffer>>
-		_indexerRequestBuffersThreadLocal =
-			new AutoResetThreadLocal<List<IndexerRequestBuffer>>(
-				IndexerRequestBuffer.class +
-					"._indexerRequestBuffersThreadLocal") {
-
-				@Override
-				protected List<IndexerRequestBuffer> initialValue() {
-					return new ArrayList<>();
-				}
-
-			};
+		_indexerRequestBuffersThreadLocal = new CentralizedThreadLocal<>(
+			IndexerRequestBuffer.class + "._indexerRequestBuffersThreadLocal",
+			ArrayList::new);
 
 	private final LinkedHashMap<IndexerRequest, IndexerRequest>
 		_indexerRequests = new LinkedHashMap<>();

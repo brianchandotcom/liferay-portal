@@ -14,8 +14,7 @@
 
 package com.liferay.portal.security.ldap.internal;
 
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
-import com.liferay.portal.kernel.util.InitialThreadLocal;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.StringPool;
 
 /**
@@ -41,12 +40,12 @@ public class UserImportTransactionThreadLocal {
 	}
 
 	private static final ThreadLocal<String> _originalEmailAddress =
-		new AutoResetThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			UserImportTransactionThreadLocal.class + "._originalEmailAddress",
-			() -> StringPool.BLANK);
+			() -> StringPool.BLANK, false);
 	private static final ThreadLocal<Boolean> _originatesFromImport =
-		new InitialThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			UserImportTransactionThreadLocal.class + "._originatesFromImport",
-			() -> Boolean.FALSE);
+			() -> Boolean.FALSE, false);
 
 }

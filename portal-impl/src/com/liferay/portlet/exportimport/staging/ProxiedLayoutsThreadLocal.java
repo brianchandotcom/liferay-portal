@@ -16,9 +16,9 @@ package com.liferay.portlet.exportimport.staging;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.util.Map;
@@ -47,7 +47,7 @@ public class ProxiedLayoutsThreadLocal {
 
 	private static final
 		ThreadLocal<ObjectValuePair<ServiceContext, Map<Layout, Object>>>
-			_proxiedLayouts = new AutoResetThreadLocal<>(
+			_proxiedLayouts = new CentralizedThreadLocal<>(
 				ProxiedLayoutsThreadLocal.class + "._proxiedLayouts");
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
+
 /**
  * @author Preston Crary
  */
@@ -28,7 +30,7 @@ public class VerifyThreadLocal {
 	}
 
 	private static final ThreadLocal<Boolean> _verifyInProgress =
-		new AutoResetThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			VerifyThreadLocal.class + "._verifyInProgress",
 			() -> Boolean.FALSE);
 

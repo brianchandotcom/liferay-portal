@@ -14,12 +14,13 @@
 
 package com.liferay.portal.kernel.security.permission;
 
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Function;
 
 /**
  * @author Brian Wing Shun Chan
@@ -104,29 +105,20 @@ public class PermissionThreadLocal {
 	}
 
 	private static final ThreadLocal<Boolean> _addResource =
-		new AutoResetThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			PermissionThreadLocal.class + "._addResource", () -> Boolean.TRUE);
 	private static final ThreadLocal<Set<String>> _flushResourceBlockEnabled =
-		new AutoResetThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			PermissionThreadLocal.class + "._flushResourceBlockEnabled",
 			HashSet::new);
 	private static final ThreadLocal<Set<String>>
-		_flushResourcePermissionEnabled = new AutoResetThreadLocal<>(
+		_flushResourcePermissionEnabled = new CentralizedThreadLocal<>(
 			PermissionThreadLocal.class +
 				"._flushResourcePermissionEnabled",
 			HashSet::new);
-
 	private static final ThreadLocal<PermissionChecker> _permissionChecker =
-		new AutoResetThreadLocal<PermissionChecker>(
-			PermissionThreadLocal.class + "._permissionChecker") {
-
-			@Override
-			protected PermissionChecker copy(
-				PermissionChecker permissionChecker) {
-
-				return permissionChecker;
-			}
-
-		};
+		new CentralizedThreadLocal<>(
+			PermissionThreadLocal.class + "._permissionChecker", null,
+			Function.identity(), true);
 
 }

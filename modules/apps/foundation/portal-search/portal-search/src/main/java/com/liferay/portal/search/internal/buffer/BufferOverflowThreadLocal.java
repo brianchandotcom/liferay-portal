@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.internal.buffer;
 
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 
 /**
  * @author Michael C. Han
@@ -30,7 +30,7 @@ public class BufferOverflowThreadLocal {
 	}
 
 	private static final ThreadLocal<Boolean> _overflowMode =
-		new AutoResetThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			BufferOverflowThreadLocal.class + "._overflowMode",
 			() -> Boolean.FALSE);
 

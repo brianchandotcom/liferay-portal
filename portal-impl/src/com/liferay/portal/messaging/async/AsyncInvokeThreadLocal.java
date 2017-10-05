@@ -14,7 +14,7 @@
 
 package com.liferay.portal.messaging.async;
 
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 
 /**
  * @author Shuyang Zhou
@@ -30,7 +30,7 @@ public class AsyncInvokeThreadLocal {
 	}
 
 	private static final ThreadLocal<Boolean> _enabled =
-		new AutoResetThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			AsyncInvokeThreadLocal.class + "._enabled", () -> Boolean.FALSE);
 
 }

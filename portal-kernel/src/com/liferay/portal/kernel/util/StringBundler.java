@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.Writer;

@@ -16,7 +16,9 @@
 			</then>
 		</if>
 
-		<execute function="AssertLocation" value1="http://localhost:8080/web/guest/${searchPage}?q=${searchTerm}&amp;type=${typeURL}" />
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute function="AssertLocation" value1="${portalURL}/web/guest/${searchPage}?q=${searchTerm}&amp;type=${typeURL}" />
 	</command>
 
 	<command name="checkFacetOption">

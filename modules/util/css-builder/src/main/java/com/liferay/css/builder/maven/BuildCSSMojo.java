@@ -82,11 +82,11 @@ public class BuildCSSMojo extends AbstractMojo {
 				String[] includedFiles = scanner.getIncludedFiles();
 
 				if (ArrayUtil.isNotEmpty(includedFiles)) {
-					CSSBuilderInvoker.invoke(_baseDir, _cssBuilderArgs);
+					CSSBuilderInvoker.invoke(_cssBuilderArgs);
 				}
 			}
 			else {
-				CSSBuilderInvoker.invoke(_baseDir, _cssBuilderArgs);
+				CSSBuilderInvoker.invoke(_cssBuilderArgs);
 			}
 		}
 		catch (Exception e) {
@@ -114,7 +114,7 @@ public class BuildCSSMojo extends AbstractMojo {
 	 * @parameter default-value="${project.build.directory}/${project.build.finalName}"
 	 */
 	public void setDocrootDirName(String docrootDirName) {
-		_cssBuilderArgs.setDocrootDirName(docrootDirName);
+		_cssBuilderArgs.setDocrootDir(new File(_baseDir, docrootDirName));
 	}
 
 	/**

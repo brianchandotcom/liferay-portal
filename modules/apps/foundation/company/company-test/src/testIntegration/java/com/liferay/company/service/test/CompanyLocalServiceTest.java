@@ -72,6 +72,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.portal.test.rule.callback.SybaseDump;
 import com.liferay.portal.test.rule.callback.SybaseDumpTransactionLog;
 import com.liferay.portal.util.PortalInstances;
@@ -114,6 +115,7 @@ public class CompanyLocalServiceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
+			PermissionCheckerTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
 	public void resetBackgroundTaskThreadLocal() throws Exception {

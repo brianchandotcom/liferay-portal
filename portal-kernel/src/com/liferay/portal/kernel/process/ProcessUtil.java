@@ -34,12 +34,27 @@ import java.util.concurrent.atomic.AtomicMarkableReference;
  */
 public class ProcessUtil {
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *			   CollectorOutputProcessor#INSTANCE}
+	 */
+	@Deprecated
 	public static final CollectorOutputProcessor COLLECTOR_OUTPUT_PROCESSOR =
 		new CollectorOutputProcessor();
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *			   ConsumerOutputProcessor#INSTANCE}
+	 */
+	@Deprecated
 	public static final ConsumerOutputProcessor CONSUMER_OUTPUT_PROCESSOR =
 		new ConsumerOutputProcessor();
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *			   EchoOutputProcessor#INSTANCE}
+	 */
+	@Deprecated
 	public static final EchoOutputProcessor ECHO_OUTPUT_PROCESSOR =
 		new EchoOutputProcessor();
 

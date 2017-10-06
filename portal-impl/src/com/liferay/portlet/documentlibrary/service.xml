@@ -332,61 +332,6 @@
 		<reference entity="DLFileVersion" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFolder" package-path="com.liferay.portlet.documentlibrary" />
 	</entity>
-	<entity human-name="document library file rank" local-service="true" name="DLFileRank" remote-service="false">
-
-		<!-- PK fields -->
-
-		<column name="fileRankId" primary="true" type="long" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="createDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column name="fileEntryId" type="long" />
-		<column name="active" type="boolean" />
-
-		<!-- Order -->
-
-		<order by="desc">
-			<order-column name="createDate" />
-		</order>
-
-		<!-- Finders -->
-
-		<finder name="UserId" return-type="Collection">
-			<finder-column name="userId" />
-		</finder>
-		<finder name="FileEntryId" return-type="Collection">
-			<finder-column name="fileEntryId" />
-		</finder>
-		<finder name="G_U" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="userId" />
-		</finder>
-		<finder name="G_U_A" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="userId" />
-			<finder-column name="active" />
-		</finder>
-		<finder name="C_U_F" return-type="DLFileRank">
-			<finder-column name="companyId" />
-			<finder-column name="userId" />
-			<finder-column name="fileEntryId" />
-		</finder>
-
-		<!-- References -->
-
-		<reference entity="Layout" package-path="com.liferay.portal" />
-		<reference entity="DLFolder" package-path="com.liferay.portlet.documentlibrary" />
-	</entity>
 	<entity human-name="document library file shortcut" local-service="true" name="DLFileShortcut" remote-service="true" trash-enabled="true" uuid="true">
 
 		<!-- PK fields -->

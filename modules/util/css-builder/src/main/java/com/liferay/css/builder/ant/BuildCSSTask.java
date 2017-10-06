@@ -20,7 +20,6 @@ import com.liferay.css.builder.CSSBuilderInvoker;
 import java.io.File;
 
 import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 
 /**
@@ -30,7 +29,6 @@ public class BuildCSSTask extends Task {
 
 	@Override
 	public void execute() throws BuildException {
-		Project project = getProject();
 
 		Thread currentThread = Thread.currentThread();
 

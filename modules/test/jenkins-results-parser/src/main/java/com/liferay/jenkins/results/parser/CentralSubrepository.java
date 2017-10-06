@@ -43,8 +43,16 @@ public class CentralSubrepository {
 
 		_subrepositoryName = _getSubrepositoryName();
 
-		_subrepositoryDirectory =
-			"/opt/dev/projects/github/" + _subrepositoryName + "-private";
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("/opt/dev/projects/github/");
+		sb.append(_subrepositoryName);
+
+		if (!_subrepositoryName.endsWith("-private")) {
+			sb.append("-private");
+		}
+
+		_subrepositoryDirectory = sb.toString();
 
 		_subrepositoryUpstreamBranchName =
 			_getSubrepositoryUpstreamBranchName();

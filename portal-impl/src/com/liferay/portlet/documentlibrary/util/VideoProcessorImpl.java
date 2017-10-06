@@ -32,12 +32,13 @@ import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessChannel;
 import com.liferay.portal.kernel.process.ProcessException;
-import com.liferay.portal.kernel.process.ProcessExecutorUtil;
+import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -352,7 +353,7 @@ public class VideoProcessorImpl
 								DL_FILE_ENTRY_THUMBNAIL_VIDEO_FRAME_PERCENTAGE);
 
 					ProcessChannel<String> processChannel =
-						ProcessExecutorUtil.execute(
+						_processExecutor.execute(
 							ClassPathUtil.getPortalProcessConfig(),
 							processCallable);
 
@@ -529,7 +530,7 @@ public class VideoProcessorImpl
 							PropsKeys.XUGGLER_FFPRESET, true));
 
 				ProcessChannel<String> processChannel =
-					ProcessExecutorUtil.execute(
+					_processExecutor.execute(
 						ClassPathUtil.getPortalProcessConfig(),
 						processCallable);
 
@@ -627,6 +628,11 @@ public class VideoProcessorImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		VideoProcessorImpl.class);
+
+	private static volatile ProcessExecutor _processExecutor =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			ProcessExecutor.class, VideoProcessorImpl.class, "_processExecutor",
+			true);
 
 	private final List<Long> _fileVersionIds = new Vector<>();
 	private final Set<String> _videoMimeTypes = SetUtil.fromArray(

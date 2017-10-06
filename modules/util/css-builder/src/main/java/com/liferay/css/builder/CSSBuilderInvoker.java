@@ -23,9 +23,6 @@ public class CSSBuilderInvoker {
 		try (CSSBuilder cssBuilder = new CSSBuilder(cssBuilderArgs)) {
 			cssBuilder.execute();
 		}
-		catch (Exception e) {
-			throw e;
-		}
 	}
 
 }

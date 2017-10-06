@@ -26,6 +26,12 @@
 								'liferay-kaleo-designer-utils'
 							]
 						},
+						'liferay-kaleo-designer-field-normalizer': {
+							path: 'field_normalizer.js',
+							requires: [
+								'liferay-kaleo-designer-remote-services'
+							]
+						},
 						'liferay-kaleo-designer-nodes': {
 							path: 'nodes.js',
 							requires: [

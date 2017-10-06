@@ -1,27 +1,21 @@
 AUI.add(
 	'liferay-portlet-kaleo-designer',
 	function(A) {
-		var AArray = A.Array;
 		var DiagramBuilder = A.DiagramBuilder;
 		var Lang = A.Lang;
 		var XMLDefinition = Liferay.KaleoDesignerXMLDefinition;
 		var XMLFormatter = new Liferay.XMLFormatter();
-		var XMLUtil = Liferay.XMLUtil;
 		var FieldNormalizer = Liferay.KaleoDesignerFieldNormalizer;
 
 		var KaleoDesignerEditors = Liferay.KaleoDesignerEditors;
-		var KaleoDesignerRemoteServices = Liferay.KaleoDesignerRemoteServices;
 		var KaleoDesignerStrings = Liferay.KaleoDesignerStrings;
 
 		var isNull = Lang.isNull;
 		var isObject = Lang.isObject;
-		var isValue = Lang.isValue;
 
 		var jsonParse = Liferay.KaleoDesignerUtils.jsonParse;
 		var uniformRandomInt = Liferay.KaleoDesignerUtils.uniformRandomInt;
 		var serializeDefinition = Liferay.KaleoDesignerXMLDefinitionSerializer;
-
-		var COL_TYPES_ASSIGNMENT = ['address', 'receptionType', 'resourceActions', 'roleId', 'roleType', 'scriptedAssignment', 'scriptedRecipient', 'taskAssignees', 'user', 'userId'];
 
 		var DEFAULT_LANGUAGE = 'groovy';
 
@@ -245,222 +239,6 @@ AUI.add(
 						];
 					},
 
-					_normalizeToActions: function(data) {
-						var instance = this;
-
-						var actions = {};
-
-						data = data || {};
-
-						data.forEach(
-							function(item1, index1, collection1) {
-								A.each(
-									item1,
-									function(item2, index2, collection2) {
-										if (isValue(item2)) {
-											if (index2 === 'script') {
-												item2 = Lang.trim(item2);
-											}
-
-											instance._put(actions, index2, item2);
-										}
-									}
-								);
-							}
-						);
-
-						return actions;
-					},
-
-					_normalizeToAssignments: function(data) {
-						var instance = this;
-
-						var assignments = {
-							assignmentType: [STR_BLANK]
-						};
-
-						if (data && data.length) {
-							COL_TYPES_ASSIGNMENT.forEach(
-								function(item1, index1, collection1) {
-									var assignmentValue = AArray(data[0][item1]);
-
-									assignmentValue.forEach(
-										function(item2, index2, collection2) {
-											if (isObject(item2)) {
-												A.each(
-													item2,
-													function(item3, index3, collection3) {
-														instance._put(assignments, index3, item3);
-
-														if (isValue(item3)) {
-															assignments.assignmentType = AArray(item1);
-														}
-													}
-												);
-											}
-											else {
-												if (isValue(item2)) {
-													assignments.assignmentType = AArray(item1);
-												}
-
-												instance._put(assignments, item1, item2);
-											}
-										}
-									);
-								}
-							);
-						}
-
-						if (assignments.assignmentType == 'roleId') {
-							instance._populateRole(assignments);
-						}
-						else if (assignments.assignmentType == 'user') {
-							instance._populateUser(assignments);
-						}
-
-						return assignments;
-					},
-
-					_normalizeToDelays: function(data) {
-						var instance = this;
-
-						var delays = {};
-
-						data = data || {};
-
-						data.forEach(
-							function(item1, index1, collection1) {
-								A.each(
-									item1,
-									function(item2, index2, collection2) {
-										if (isValue(item2)) {
-											instance._put(delays, index2, item2);
-										}
-									}
-								);
-							}
-						);
-
-						return delays;
-					},
-
-					_normalizeToNotifications: function(data) {
-						var instance = this;
-
-						var notifications = {};
-
-						data = data || {};
-
-						data.forEach(
-							function(item1, index1, collection1) {
-								A.each(
-									item1,
-									function(item2, index2, collection2) {
-										if (isValue(item2)) {
-											if (index2 === 'recipients') {
-												if (item2[0] && item2[0].receptionType) {
-													instance._put(notifications,'receptionType', item2[0].receptionType);
-												}
-
-												item2 = instance._normalizeToAssignments(item2);
-											}
-
-											instance._put(notifications, index2, item2);
-										}
-									}
-								);
-							}
-						);
-
-						return notifications;
-					},
-
-					_normalizeToTaskTimers: function(data) {
-						var instance = this;
-
-						var taskTimers = {};
-
-						data = data || {};
-
-						data.forEach(
-							function(item1, index1, collection1) {
-								A.each(
-									item1,
-									function(item2, index2, collection2) {
-										if (isValue(item2)) {
-											if (index2 === 'delay' || index2 === 'recurrence') {
-												return;
-											}
-											else if (index2 === 'timerNotifications') {
-												item2 = instance._normalizeToNotifications(item2);
-											}
-											else if (index2 === 'timerActions') {
-												item2 = instance._normalizeToActions(item2);
-											}
-											else if (index2 === 'reassignments') {
-												item2 = instance._normalizeToAssignments(item2);
-											}
-
-											instance._put(taskTimers, index2, item2);
-										}
-									}
-								);
-
-								var delays = item1.delay.concat(item1.recurrence);
-
-								instance._put(taskTimers, 'delay', instance._normalizeToDelays(delays));
-							}
-						);
-
-						return taskTimers;
-					},
-
-					_populateRole: function(assignments) {
-						KaleoDesignerRemoteServices.getRole(
-							assignments.roleId,
-							function(data) {
-								AArray.each(
-									data,
-									function(item) {
-										if (item) {
-											var index = assignments.roleId.indexOf(item.roleId);
-
-											assignments.roleNameAC[index] = item.name;
-										}
-									}
-								);
-							}
-						);
-					},
-
-					_populateUser: function(assignments) {
-						KaleoDesignerRemoteServices.getUser(
-							assignments.userId,
-							function(data) {
-								AArray.each(
-									data,
-									function(item) {
-										if (item) {
-											var index = assignments.userId.indexOf(item.userId);
-
-											assignments.emailAddress[index] = item.emailAddress;
-											assignments.fullName[index] = item.fullName;
-											assignments.screenName[index] = item.screenName;
-										}
-									}
-								);
-							}
-						);
-					},
-
-					_put: function(obj, key, value) {
-						var instance = this;
-
-						obj[key] = obj[key] || [];
-
-						obj[key].push(value);
-					},
-
 					_renderContentTabs: function() {
 						var instance = this;
 
@@ -574,17 +352,17 @@ AUI.add(
 
 										fields.push(
 											{
-												actions: instance._normalizeToActions(item.actions),
-												assignments: instance._normalizeToAssignments(item.assignments),
+												actions: FieldNormalizer.normalizeToActions(item.actions),
+												assignments: FieldNormalizer.normalizeToAssignments(item.assignments),
 												description: description,
 												fields: [{}],
 												initial: item.initial,
 												metadata: metadata,
 												name: item.name,
-												notifications: instance._normalizeToNotifications(item.notifications),
+												notifications: FieldNormalizer.normalizeToNotifications(item.notifications),
 												script: item.script,
 												scriptLanguage: item.scriptLanguage || DEFAULT_LANGUAGE,
-												taskTimers: instance._normalizeToTaskTimers(item.taskTimers),
+												taskTimers: FieldNormalizer.normalizeToTaskTimers(item.taskTimers),
 												type: type,
 												xy: metadata.xy
 											}
@@ -702,6 +480,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-ace-editor', 'aui-ace-editor-mode-xml', 'aui-tpl-snippets-deprecated', 'datasource', 'datatype-xml', 'event-valuechange', 'io-form', 'liferay-kaleo-designer-editors', 'liferay-kaleo-designer-nodes', 'liferay-kaleo-designer-remote-services', 'liferay-kaleo-designer-utils', 'liferay-kaleo-designer-xml-definition', 'liferay-kaleo-designer-xml-util', 'liferay-util-window', 'liferay-xml-formatter']
+		requires: ['aui-ace-editor', 'aui-ace-editor-mode-xml', 'aui-tpl-snippets-deprecated', 'datasource', 'datatype-xml', 'event-valuechange', 'io-form', 'liferay-kaleo-designer-editors', 'liferay-kaleo-designer-field-normalizer', 'liferay-kaleo-designer-nodes', 'liferay-kaleo-designer-utils', 'liferay-kaleo-designer-xml-definition', 'liferay-kaleo-designer-xml-definition-serializer', 'liferay-util-window']
 	}
 );

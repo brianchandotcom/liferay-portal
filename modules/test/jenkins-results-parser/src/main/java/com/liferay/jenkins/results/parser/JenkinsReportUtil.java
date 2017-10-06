@@ -329,26 +329,13 @@ public class JenkinsReportUtil {
 		elements.add(
 			Dom4JUtil.getNewElement(
 				tagName, null,
-				Dom4JUtil.getNewAnchorElement(
-					buildConsoleURL, null, "Console")));
-
-		elements.add(
-			Dom4JUtil.getNewElement(
-				tagName, null,
-				JenkinsResultsParserUtil.toDurationString(
-					build.getDuration())));
-
-		elements.add(
-			Dom4JUtil.getNewElement(
-				tagName, null,
 				Dom4JUtil.getNewAnchorElement(buildURL, null, buildName)));
 
-		Date buildStartDate = new Date(build.getStartTimestamp());
-
 		elements.add(
 			Dom4JUtil.getNewElement(
 				tagName, null,
-				JenkinsResultsParserUtil.toDateString(buildStartDate)));
+				Dom4JUtil.getNewAnchorElement(
+					buildConsoleURL, null, "Console")));
 
 		String buildTestReportURL = buildURL + "testReport";
 
@@ -357,6 +344,19 @@ public class JenkinsReportUtil {
 				tagName, null,
 				Dom4JUtil.getNewAnchorElement(
 					buildTestReportURL, null, "Test Report")));
+
+		Date buildStartDate = new Date(build.getStartTimestamp());
+
+		elements.add(
+			Dom4JUtil.getNewElement(
+				tagName, null,
+				JenkinsResultsParserUtil.toDateString(buildStartDate)));
+
+		elements.add(
+			Dom4JUtil.getNewElement(
+				tagName, null,
+				JenkinsResultsParserUtil.toDurationString(
+					build.getDuration())));
 
 		String status = build.getStatus();
 

@@ -543,49 +543,6 @@
 		<execute macro="DMPortlet#viewDefaultPG" />
 	</command>
 
-	<command name="AddGoogleDoc" priority="5">
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavTab">
-			<var name="navTab" value="Miscellaneous" />
-		</execute>
-
-		<execute macro="PortalSettings#configureGoogleApps">
-			<var method="TestPropsUtil#get('google.api.key')" name="googleAppsAPIKey" />
-			<var method="TestPropsUtil#get('google.client.id')" name="googleClientID" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Portlet#clickPortletPlusIconPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Google Docs">
-			<var name="key_menuItem" value="Google Docs" />
-		</execute>
-
-		<execute macro="GoogleDoc#gotoDrive">
-			<var method="TestPropsUtil#get('email.address.3')" name="userEmailAddress" />
-			<var method="TestPropsUtil#get('email.password.3')" name="userPassword" />
-			<var name="windowTitle" value="Documents and Media Page - Liferay" />
-		</execute>
-
-		<execute macro="GoogleDoc#selectDocument">
-			<var name="googleDocName" value="taco.jpg" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="DMDocument#viewPG">
-			<var name="dmDocumentTitle" value="taco.jpg" />
-		</execute>
-	</command>
-
 	<command name="AddSubFolderImageAndDocument" priority="4">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
@@ -933,53 +890,6 @@
 		</execute>
 	</command>
 
-	<command name="DeleteGoogleDoc" priority="5">
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavTab">
-			<var name="navTab" value="Miscellaneous" />
-		</execute>
-
-		<execute macro="PortalSettings#configureGoogleApps">
-			<var method="TestPropsUtil#get('google.api.key')" name="googleAppsAPIKey" />
-			<var method="TestPropsUtil#get('google.client.id')" name="googleClientID" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Portlet#clickPortletPlusIconPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Google Docs">
-			<var name="key_menuItem" value="Google Docs" />
-		</execute>
-
-		<execute macro="GoogleDoc#gotoDrive">
-			<var method="TestPropsUtil#get('email.address.3')" name="userEmailAddress" />
-			<var method="TestPropsUtil#get('email.password.3')" name="userPassword" />
-			<var name="windowTitle" value="Documents and Media Page - Liferay" />
-		</execute>
-
-		<execute macro="GoogleDoc#selectDocument">
-			<var name="googleDocName" value="taco.jpg" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="DMDocument#deletePG">
-			<var name="dmDocumentTitle" value="taco.jpg" />
-		</execute>
-	</command>
-
 	<command name="DeleteSubFolder" priority="5">
 		<property name="portal.acceptance" value="true" />
 
@@ -1063,6 +973,57 @@
 
 		<execute macro="DMDocument#downloadPG">
 			<var name="dmDocumentTitle" value="/D/M/Document Title" />
+		</execute>
+	</command>
+
+	<command name="EditAndDeleteGoogleDoc" priority="5">
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Instance Settings" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Miscellaneous" />
+		</execute>
+
+		<execute macro="PortalSettings#configureGoogleApps">
+			<var method="TestPropsUtil#get('google.api.key')" name="googleAppsAPIKey" />
+			<var method="TestPropsUtil#get('google.client.id')" name="googleClientID" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Portlet#clickPortletPlusIconPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Google Docs">
+			<var name="key_menuItem" value="Google Docs" />
+		</execute>
+
+		<execute macro="GoogleDoc#gotoDrive">
+			<var method="TestPropsUtil#get('email.address.3')" name="userEmailAddress" />
+			<var method="TestPropsUtil#get('email.password.3')" name="userPassword" />
+			<var name="windowTitle" value="Documents and Media Page - Liferay" />
+		</execute>
+
+		<execute macro="GoogleDoc#selectDocument">
+			<var name="googleDocName" value="taco.jpg" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentTitle" value="taco.jpg" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#deletePG">
+			<var name="dmDocumentTitle" value="taco.jpg" />
 		</execute>
 	</command>
 
@@ -1214,70 +1175,6 @@
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
 			<var name="dmDocumentVersionNumber" value="1.1" />
-		</execute>
-	</command>
-
-	<command name="EditGoogleDoc" priority="5">
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavTab">
-			<var name="navTab" value="Miscellaneous" />
-		</execute>
-
-		<execute macro="PortalSettings#configureGoogleApps">
-			<var method="TestPropsUtil#get('google.api.key')" name="googleAppsAPIKey" />
-			<var method="TestPropsUtil#get('google.client.id')" name="googleClientID" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
-
-		<execute macro="Portlet#clickPortletPlusIconPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Google Docs">
-			<var name="key_menuItem" value="Google Docs" />
-		</execute>
-
-		<execute macro="GoogleDoc#gotoDrive">
-			<var method="TestPropsUtil#get('email.address.3')" name="userEmailAddress" />
-			<var method="TestPropsUtil#get('email.password.3')" name="userPassword" />
-			<var name="windowTitle" value="Documents and Media Page - Liferay" />
-		</execute>
-
-		<execute macro="GoogleDoc#selectDocument">
-			<var name="googleDocName" value="taco.jpg" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="DMDocument#viewPG">
-			<var name="dmDocumentTitle" value="taco.jpg" />
-		</execute>
-
-		<execute function="AssertClick" locator1="Button#ANY" value1="Edit">
-			<var name="key_text" value="Edit" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="GoogleDoc#gotoDrive">
-			<var method="TestPropsUtil#get('email.address.3')" name="userEmailAddress" />
-			<var method="TestPropsUtil#get('email.password.3')" name="userPassword" />
-		</execute>
-
-		<execute macro="GoogleDoc#selectDocument">
-			<var name="googleDocName" value="taco2.png" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="DMDocument#viewDocumentTitleCmdPG">
-			<var name="dmDocumentTitle" value="taco2.png" />
 		</execute>
 	</command>
 

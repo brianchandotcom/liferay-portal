@@ -27,6 +27,7 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -595,7 +596,7 @@ public class TopLevelBuild extends BaseBuild {
 
 		Dom4JUtil.addToElement(
 			bodyElement, h1Element, h2Element,
-			JenkinsReportUtil.getSummaryElement(
+			getJenkinsReportSummaryElement(
 				topLevelBuild, axisBuilds, batchBuilds, testResults),
 			getJenkinsReportTimelineElement(topLevelBuild, axisBuilds),
 			getJenkinsReportTopLevelTableElement(topLevelBuild),
@@ -642,6 +643,45 @@ public class TopLevelBuild extends BaseBuild {
 			headElement, Dom4JUtil.getNewElement("style", null, style));
 
 		return headElement;
+	}
+
+	protected Element getJenkinsReportSummaryElement(
+		Build topLevelBuild, Map<String, Build> axisBuilds,
+		Map<String, Build> batchBuilds, Map<String, TestResult> testResults) {
+
+		Element buildTimeElement = Dom4JUtil.getNewElement(
+			"p", null, "Build Time: ",
+			JenkinsResultsParserUtil.toDurationString(
+				topLevelBuild.getDuration()));
+
+		Element ciUsageElement = getJenkinsReportTotalCIUsageElement(
+			axisBuilds);
+
+		Element longestAxisElement = JenkinsReportUtil.getLongestAxisElement(
+			axisBuilds);
+
+		Element longestBatchElement = JenkinsReportUtil.getLongestBatchElement(
+			batchBuilds);
+
+		Element longestTestElement = JenkinsReportUtil.getLongestTestElement(
+			testResults);
+
+		Date startTime = new Date(topLevelBuild.getStartTimestamp());
+
+		Element startTimeElement = Dom4JUtil.getNewElement(
+			"p", null, "Start Time: ", startTime.toLocaleString());
+
+		Element vmUsageElement = getJenkinsReportTotalVMUSageElement(
+			axisBuilds);
+
+		Element divElement = Dom4JUtil.getNewElement("div");
+
+		Dom4JUtil.addToElement(
+			divElement, startTimeElement, buildTimeElement, ciUsageElement,
+			vmUsageElement, longestBatchElement, longestAxisElement,
+			longestTestElement);
+
+		return divElement;
 	}
 
 	protected Element getJenkinsReportTimelineElement(
@@ -752,6 +792,36 @@ public class TopLevelBuild extends BaseBuild {
 		topLevelTableElement.add(trTopLevelElement);
 
 		return topLevelTableElement;
+	}
+
+	protected Element getJenkinsReportTotalCIUsageElement(
+		Map<String, Build> axisBuilds) {
+
+		long totalTime = 0;
+
+		for (Build axisBuild : axisBuilds.values()) {
+			long axisDuration = axisBuild.getDuration();
+
+			totalTime = totalTime + axisDuration;
+		}
+
+		long hoursTotalTime = totalTime / 3600000;
+
+		Element totalCIUsageElement = Dom4JUtil.getNewElement(
+			"p", null, "Total CI Usage: " + hoursTotalTime + " server hours");
+
+		return totalCIUsageElement;
+	}
+
+	protected Element getJenkinsReportTotalVMUSageElement(
+		Map<String, Build> axisBuilds) {
+
+		long totalVMUsed = axisBuilds.size();
+
+		Element totalVMUsageElement = Dom4JUtil.getNewElement(
+			"p", null, "Total VM used: " + totalVMUsed + " slaves");
+
+		return totalVMUsageElement;
 	}
 
 	protected Element getJobSummaryListElement() {

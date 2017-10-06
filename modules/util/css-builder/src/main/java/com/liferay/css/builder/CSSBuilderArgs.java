@@ -161,7 +161,7 @@ public class CSSBuilderArgs {
 
 	@Parameter(
 		description = "The META-INF/resources directory of the Liferay Frontend Common CSS artifact. This is required in order to make Bourbon and other CSS libraries available to the compilation.",
-		names = {"sass.portal.common.path", "sass.portal.common.dir"}
+		names = {"sass.portal.common.dir", "sass.portal.common.path"}
 	)
 	private File _portalCommonPath;
 

@@ -16,6 +16,7 @@ package com.liferay.lcs.rest.client.internal;
 
 import com.liferay.lcs.rest.client.LCSRole;
 import com.liferay.lcs.rest.client.LCSRoleClient;
+import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
 import com.liferay.portal.kernel.util.StringPool;
@@ -23,13 +24,13 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
  */
 @Component(immediate = true, service = LCSRoleClient.class)
-public class LCSRoleClientImpl
-	extends BaseLCSServiceImpl implements LCSRoleClient {
+public class LCSRoleClientImpl implements LCSRoleClient {
 
 	@Override
 	public boolean hasUserLCSAdministratorLCSRole(long lcsProjectId) {
@@ -44,7 +45,7 @@ public class LCSRoleClientImpl
 			sb.append(StringPool.SLASH);
 			sb.append("false");
 
-			List<LCSRole> lcsRoles = jsonWebServiceClient.doGetToList(
+			List<LCSRole> lcsRoles = _jsonWebServiceClient.doGetToList(
 				LCSRole.class, sb.toString());
 
 			if (lcsRoles.isEmpty()) {
@@ -62,5 +63,8 @@ public class LCSRoleClientImpl
 	}
 
 	private static final String _URL_LCS_ROLE = "/o/osb-lcs-rest/LCSRole";
+
+	@Reference(target = "(component.name=OSBLCSJSONWebServiceClient)")
+	private JSONWebServiceClient _jsonWebServiceClient;
 
 }

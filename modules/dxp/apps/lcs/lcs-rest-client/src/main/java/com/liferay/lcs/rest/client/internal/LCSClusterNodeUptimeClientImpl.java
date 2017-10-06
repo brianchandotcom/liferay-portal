@@ -15,23 +15,25 @@
 package com.liferay.lcs.rest.client.internal;
 
 import com.liferay.lcs.rest.client.LCSClusterNodeUptimeClient;
+import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Riccardo Ferrari
  */
 @Component(immediate = true, service = LCSClusterNodeUptimeClient.class)
 public class LCSClusterNodeUptimeClientImpl
-	extends BaseLCSServiceImpl implements LCSClusterNodeUptimeClient {
+	implements LCSClusterNodeUptimeClient {
 
 	@Override
 	public void updateLCSClusterNodeUptime(String key) {
 		try {
-			jsonWebServiceClient.doPut(
+			_jsonWebServiceClient.doPut(
 				_URL_LCS_CLUSTER_NODE_UPTIME, "key", key);
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
@@ -46,7 +48,7 @@ public class LCSClusterNodeUptimeClientImpl
 	@Override
 	public void updateLCSClusterNodeUptimes(String key, String uptimesJSON) {
 		try {
-			jsonWebServiceClient.doPut(
+			_jsonWebServiceClient.doPut(
 				_URL_LCS_CLUSTER_NODE_UPTIME, "key", key, "uptimesJSON",
 				uptimesJSON);
 		}
@@ -57,5 +59,8 @@ public class LCSClusterNodeUptimeClientImpl
 
 	private static final String _URL_LCS_CLUSTER_NODE_UPTIME =
 		"/o/osb-lcs-rest/LCSClusterNodeUptime";
+
+	@Reference(target = "(component.name=OSBLCSJSONWebServiceClient)")
+	private JSONWebServiceClient _jsonWebServiceClient;
 
 }

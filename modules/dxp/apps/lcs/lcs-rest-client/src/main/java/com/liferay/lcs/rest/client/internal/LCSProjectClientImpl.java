@@ -16,6 +16,7 @@ package com.liferay.lcs.rest.client.internal;
 
 import com.liferay.lcs.rest.client.LCSProject;
 import com.liferay.lcs.rest.client.LCSProjectClient;
+import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
 
@@ -23,18 +24,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
  */
 @Component(immediate = true, service = LCSProjectClient.class)
-public class LCSProjectClientImpl
-	extends BaseLCSServiceImpl implements LCSProjectClient {
+public class LCSProjectClientImpl implements LCSProjectClient {
 
 	@Override
 	public LCSProject addDefaultLCSProject() {
 		try {
-			return jsonWebServiceClient.doPostToObject(
+			return _jsonWebServiceClient.doPostToObject(
 				LCSProject.class, _URL_LCS_PROJECT);
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
@@ -48,7 +49,7 @@ public class LCSProjectClientImpl
 	@Override
 	public LCSProject getLCSProject(String key) {
 		try {
-			return jsonWebServiceClient.doGetToObject(
+			return _jsonWebServiceClient.doGetToObject(
 				LCSProject.class, _URL_LCS_PROJECT + "/find", "key", key);
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
@@ -64,7 +65,7 @@ public class LCSProjectClientImpl
 		List<LCSProject> remoteLCSProjects = null;
 
 		try {
-			remoteLCSProjects = jsonWebServiceClient.doGetToList(
+			remoteLCSProjects = _jsonWebServiceClient.doGetToList(
 				LCSProject.class, _URL_LCS_PROJECT + "/find", "manage", "true");
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
@@ -84,5 +85,8 @@ public class LCSProjectClientImpl
 	}
 
 	private static final String _URL_LCS_PROJECT = "/o/osb-lcs-rest/LCSProject";
+
+	@Reference(target = "(component.name=OSBLCSJSONWebServiceClient)")
+	private JSONWebServiceClient _jsonWebServiceClient;
 
 }

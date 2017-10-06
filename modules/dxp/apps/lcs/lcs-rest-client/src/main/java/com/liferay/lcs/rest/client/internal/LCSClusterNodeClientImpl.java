@@ -20,6 +20,7 @@ import com.liferay.lcs.rest.client.LCSClusterNodeClient;
 import com.liferay.lcs.rest.client.exception.DuplicateLCSClusterNodeNameException;
 import com.liferay.lcs.rest.client.exception.NoSuchLCSSubscriptionEntryException;
 import com.liferay.lcs.rest.client.exception.RequiredLCSClusterNodeNameException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
@@ -31,14 +32,14 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ivica Cardic
  * @author Igor Beslic
  */
 @Component(immediate = true, service = LCSClusterNodeClient.class)
-public class LCSClusterNodeClientImpl
-	extends BaseLCSServiceImpl implements LCSClusterNodeClient {
+public class LCSClusterNodeClientImpl implements LCSClusterNodeClient {
 
 	@Override
 	public LCSClusterNode addLCSClusterNode(
@@ -58,7 +59,7 @@ public class LCSClusterNodeClientImpl
 		}
 
 		try {
-			return jsonWebServiceClient.doPostToObject(
+			return _jsonWebServiceClient.doPostToObject(
 				LCSClusterNode.class, _URL_LCS_CLUSTER_NODE, "buildNumber",
 				String.valueOf(buildNumber), "name", name, "description",
 				description, "heartbeatInterval",
@@ -100,7 +101,7 @@ public class LCSClusterNodeClientImpl
 		}
 
 		try {
-			return jsonWebServiceClient.doPostToObject(
+			return _jsonWebServiceClient.doPostToObject(
 				LCSClusterNode.class, _URL_LCS_CLUSTER_NODE, "buildNumber",
 				String.valueOf(buildNumber), "name", name, "description",
 				description, "lcsClusterEntryId",
@@ -125,7 +126,7 @@ public class LCSClusterNodeClientImpl
 	@Override
 	public LCSClusterNode fetchLCSClusterNode(String key) {
 		try {
-			return jsonWebServiceClient.doGetToObject(
+			return _jsonWebServiceClient.doGetToObject(
 				LCSClusterNode.class,
 				_URL_LCS_CLUSTER_NODE + StringPool.SLASH + key);
 		}
@@ -159,7 +160,7 @@ public class LCSClusterNodeClientImpl
 			sb.append(StringPool.SLASH);
 			sb.append(-1);
 
-			remoteLCSClusterNodes = jsonWebServiceClient.doGetToList(
+			remoteLCSClusterNodes = _jsonWebServiceClient.doGetToList(
 				LCSClusterNode.class, sb.toString(), "lcsClusterEntryId",
 				String.valueOf(lcsClusterEntryId));
 		}
@@ -194,7 +195,7 @@ public class LCSClusterNodeClientImpl
 			sb.append(StringPool.SLASH);
 			sb.append(end);
 
-			remoteLCSClusterNodes = jsonWebServiceClient.doGetToList(
+			remoteLCSClusterNodes = _jsonWebServiceClient.doGetToList(
 				LCSClusterNode.class, sb.toString(), "status",
 				String.valueOf(status));
 		}
@@ -217,7 +218,7 @@ public class LCSClusterNodeClientImpl
 	@Override
 	public void mergeStatus(String key, int status) {
 		try {
-			jsonWebServiceClient.doPut(
+			_jsonWebServiceClient.doPut(
 				_URL_LCS_CLUSTER_NODE, "key", key, "status",
 				String.valueOf(status), "merge", String.valueOf(true));
 		}
@@ -229,7 +230,7 @@ public class LCSClusterNodeClientImpl
 	@Override
 	public void updateBuildNumber(String key, int buildNumber) {
 		try {
-			jsonWebServiceClient.doPut(
+			_jsonWebServiceClient.doPut(
 				_URL_LCS_CLUSTER_NODE + "/updateBuildNumber", "key", key,
 				"buildNumber", String.valueOf(buildNumber));
 		}
@@ -241,7 +242,7 @@ public class LCSClusterNodeClientImpl
 	@Override
 	public void updateStatus(String key, int status) {
 		try {
-			jsonWebServiceClient.doPut(
+			_jsonWebServiceClient.doPut(
 				_URL_LCS_CLUSTER_NODE, "key", key, "status",
 				String.valueOf(status), "merge", String.valueOf(true));
 		}
@@ -255,7 +256,7 @@ public class LCSClusterNodeClientImpl
 		String key) {
 
 		try {
-			jsonWebServiceClient.doPut(_URL_LCS_CLUSTER_NODE, "key", key);
+			_jsonWebServiceClient.doPut(_URL_LCS_CLUSTER_NODE, "key", key);
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
 			throw new RuntimeException(jsonwsie);
@@ -267,7 +268,7 @@ public class LCSClusterNodeClientImpl
 		String key, String siblingKeys) {
 
 		try {
-			jsonWebServiceClient.doPut(
+			_jsonWebServiceClient.doPut(
 				_URL_LCS_CLUSTER_NODE, "key", key, "siblingKeys", siblingKeys);
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
@@ -292,5 +293,8 @@ public class LCSClusterNodeClientImpl
 
 	private static final String _URL_LCS_CLUSTER_NODE =
 		"/o/osb-lcs-rest/LCSClusterNode";
+
+	@Reference(target = "(component.name=OSBLCSJSONWebServiceClient)")
+	private JSONWebServiceClient _jsonWebServiceClient;
 
 }

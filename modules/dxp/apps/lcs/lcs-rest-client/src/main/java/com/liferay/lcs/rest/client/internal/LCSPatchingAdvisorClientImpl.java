@@ -15,18 +15,19 @@
 package com.liferay.lcs.rest.client.internal;
 
 import com.liferay.lcs.rest.client.LCSPatchingAdvisorClient;
+import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Riccardo Ferrari
  */
 @Component(immediate = true, service = LCSPatchingAdvisorClient.class)
-public class LCSPatchingAdvisorClientImpl
-	extends BaseLCSServiceImpl implements LCSPatchingAdvisorClient {
+public class LCSPatchingAdvisorClientImpl implements LCSPatchingAdvisorClient {
 
 	@Override
 	public List<String> getInstallablePatchIds(
@@ -51,10 +52,13 @@ public class LCSPatchingAdvisorClientImpl
 			}
 		}
 
-		return jsonWebServiceClient.doGetToList(String.class, sb.toString());
+		return _jsonWebServiceClient.doGetToList(String.class, sb.toString());
 	}
 
 	private static final String _URL_PATCHING_ADVISOR =
 		"/o/osb-lcs-rest/LCSPatchingAdvisor";
+
+	@Reference(target = "(component.name=OSBLCSJSONWebServiceClient)")
+	private JSONWebServiceClient _jsonWebServiceClient;
 
 }

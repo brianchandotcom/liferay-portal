@@ -16,6 +16,7 @@ package com.liferay.lcs.rest.client.internal;
 
 import com.liferay.lcs.rest.client.LCSSubscriptionEntry;
 import com.liferay.lcs.rest.client.LCSSubscriptionEntryClient;
+import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
 import com.liferay.portal.kernel.util.StringPool;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,14 +34,14 @@ import org.slf4j.LoggerFactory;
  */
 @Component(immediate = true, service = LCSSubscriptionEntryClient.class)
 public class LCSSubscriptionEntryClientImpl
-	extends BaseLCSServiceImpl implements LCSSubscriptionEntryClient {
+	implements LCSSubscriptionEntryClient {
 
 	@Override
 	public void addCorpProjectLCSSubscriptionEntries(
 			long corpProjectId, String lcsSubscriptionEntriesJSON)
 		throws JSONWebServiceInvocationException {
 
-		jsonWebServiceClient.doPost(
+		_jsonWebServiceClient.doPost(
 			_URL_LCS_SUBSCRIPTION_ENTRY, "corpProjectId",
 			String.valueOf(corpProjectId), "lcsSubscriptionEntriesJSON",
 			lcsSubscriptionEntriesJSON);
@@ -59,7 +61,7 @@ public class LCSSubscriptionEntryClientImpl
 	@Override
 	public LCSSubscriptionEntry fetchLCSSubscriptionEntry(String key) {
 		try {
-			return jsonWebServiceClient.doGetToObject(
+			return _jsonWebServiceClient.doGetToObject(
 				LCSSubscriptionEntry.class,
 				_URL_LCS_SUBSCRIPTION_ENTRY + "/find/" + key);
 		}
@@ -79,7 +81,7 @@ public class LCSSubscriptionEntryClientImpl
 	public void incrementServerUsed(String key)
 		throws JSONWebServiceInvocationException {
 
-		jsonWebServiceClient.doPost(
+		_jsonWebServiceClient.doPost(
 			_URL_LCS_SUBSCRIPTION_ENTRY + StringPool.SLASH + key +
 				"/incrementServerUsed");
 	}
@@ -89,5 +91,8 @@ public class LCSSubscriptionEntryClientImpl
 
 	private static final Logger _logger = LoggerFactory.getLogger(
 		LCSSubscriptionEntryClientImpl.class);
+
+	@Reference(target = "(component.name=OSBLCSJSONWebServiceClient)")
+	private JSONWebServiceClient _jsonWebServiceClient;
 
 }

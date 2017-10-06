@@ -15,21 +15,22 @@
 package com.liferay.lcs.rest.client.internal;
 
 import com.liferay.lcs.rest.client.LCSMembersClient;
+import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Riccardo Ferrari
  */
 @Component(immediate = true, service = LCSMembersClient.class)
-public class LCSMembersClientImpl
-	extends BaseLCSServiceImpl implements LCSMembersClient {
+public class LCSMembersClientImpl implements LCSMembersClient {
 
 	@Override
 	public void sendMonitoringUnavailableEmail(String key) {
 		try {
-			jsonWebServiceClient.doPut(
+			_jsonWebServiceClient.doPut(
 				_URL_LCS_MEMBERS_SEND_MONITORING_UNAVAILABLE_EMAIL, "key", key);
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
@@ -40,7 +41,7 @@ public class LCSMembersClientImpl
 	@Override
 	public void sendPatchingToolUnavailableEmail(String key) {
 		try {
-			jsonWebServiceClient.doPut(
+			_jsonWebServiceClient.doPut(
 				_URL_LCS_MEMBERS_SEND_PATCHING_TOOL_UNAVAILABLE_EMAIL, "key",
 				key);
 		}
@@ -52,7 +53,7 @@ public class LCSMembersClientImpl
 	@Override
 	public void sendServerManuallyShutdownEmail(String key) {
 		try {
-			jsonWebServiceClient.doPut(
+			_jsonWebServiceClient.doPut(
 				_URL_LCS_MEMBERS_SEND_SERVER_MANUALLY_SHUTDOWN_EMAIL, "key",
 				key);
 		}
@@ -64,7 +65,7 @@ public class LCSMembersClientImpl
 	@Override
 	public void sendServerUnexpectedlyShutdownEmail(String key) {
 		try {
-			jsonWebServiceClient.doPut(
+			_jsonWebServiceClient.doPut(
 				_URL_LCS_MEMBERS_SEND_SERVER_UNEXPECTEDLY_SHUTDOWN_EMAIL, "key",
 				key);
 		}
@@ -90,5 +91,8 @@ public class LCSMembersClientImpl
 	private static final String
 		_URL_LCS_MEMBERS_SEND_SERVER_UNEXPECTEDLY_SHUTDOWN_EMAIL =
 			_URL_LCS_MEMBERS + "/sendServerUnexpectedlyShutdownEmail";
+
+	@Reference(target = "(component.name=OSBLCSJSONWebServiceClient)")
+	private JSONWebServiceClient _jsonWebServiceClient;
 
 }

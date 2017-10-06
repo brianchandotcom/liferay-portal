@@ -16,6 +16,7 @@ package com.liferay.lcs.rest.client.internal;
 
 import com.liferay.lcs.rest.client.LCSMetadata;
 import com.liferay.lcs.rest.client.LCSMetadataClient;
+import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 import com.liferay.portal.kernel.util.StringPool;
@@ -26,13 +27,13 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Riccardo Ferrari
  */
 @Component(immediate = true, service = LCSMetadataClient.class)
-public class LCSMetadataClientImpl
-	extends BaseLCSServiceImpl implements LCSMetadataClient {
+public class LCSMetadataClientImpl implements LCSMetadataClient {
 
 	@Override
 	public int getSupportedLCSPortlet(
@@ -59,7 +60,7 @@ public class LCSMetadataClientImpl
 				sb.append(StringPool.SLASH);
 				sb.append(portalEdition);
 
-				LCSMetadata lcsMetadata = jsonWebServiceClient.doGetToObject(
+				LCSMetadata lcsMetadata = _jsonWebServiceClient.doGetToObject(
 					LCSMetadata.class, sb.toString());
 
 				_supportedLCSPortletMap.put(
@@ -101,5 +102,8 @@ public class LCSMetadataClientImpl
 
 	private static final Map<String, Integer> _supportedLCSPortletMap =
 		new HashMap<String, Integer>();
+
+	@Reference(target = "(component.name=OSBLCSJSONWebServiceClient)")
+	private JSONWebServiceClient _jsonWebServiceClient;
 
 }

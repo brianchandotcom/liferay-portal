@@ -1,0 +1,43 @@
+{namespace NavigationMenuFieldset}
+
+/**
+ * This renders the main element of NavigationMenuFieldset.
+ */
+{template .render}
+	{@param fields: list<?>}
+	{@param name: string}
+	{@param? namespace: string}
+
+	<div class="card navigation-menu-fieldset">
+		<fieldset class="panel-body">
+			<div class="field-name">
+				<label class="control-label" for="{$namespace}fieldsetName">
+					{msg desc=""}name{/msg}
+				</label>
+				<input class="form-control" id="{$namespace}fieldsetName" name="{$namespace}fieldsetName" type="text" value="{$name}"/>
+			</div>
+
+			{foreach $field in $fields}
+				<div class="fieldset-field">
+					<label class="control-label" for="{$namespace}{$field.name}">
+						{msg desc=""}{$field.label}{/msg}
+					</label>
+
+					<input class="form-control" data-fieldname="{$field.name}" id="{$namespace}{$field.name}" name="{$namespace}{$field.name}" type="text" value="{$field.value}" />
+
+					{if $field.description}
+						<label class="text-muted control-label" for="{$namespace}{$field.name}">
+							{msg desc=""}{$field.description}{/msg}
+						</label>
+					{/if}
+				</div>
+			{/foreach}
+
+			<div class="button-holder">
+				<button class="btn btn-lg btn-primary btn-default" type="button">
+					<span class="lft-btn-laber">{msg desc=""}add-to-menu{/msg}</span>
+				</button>
+			</div>
+		</fieldset>
+	</div>
+{/template}

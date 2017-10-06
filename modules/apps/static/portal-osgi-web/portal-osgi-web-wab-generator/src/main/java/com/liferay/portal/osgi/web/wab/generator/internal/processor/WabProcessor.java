@@ -27,7 +27,6 @@ import aQute.bnd.osgi.Resource;
 import aQute.bnd.version.Version;
 
 import com.liferay.ant.bnd.jsp.JspAnalyzerPlugin;
-import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.events.GlobalStartupAction;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
@@ -257,7 +256,7 @@ public class WabProcessor {
 		throws IOException {
 
 		try {
-			FileUtil.write(file, XMLUtil.formatXML(document));
+			FileUtil.write(file, document.formattedString("  "));
 		}
 		catch (Exception e) {
 			throw new IOException(e);

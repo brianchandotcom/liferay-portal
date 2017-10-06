@@ -966,7 +966,6 @@
 		<execute macro="FormsAdminNavigator#gotoRules" />
 
 		<execute macro="FormRules#viewNoRules" />
-
 	</command>
 
 	<command name="ViewRuleConditionOperatorFieldOptions" priority="2">

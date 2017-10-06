@@ -18,15 +18,14 @@ import com.liferay.portal.configuration.persistence.listener.ConfigurationModelL
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerProvider;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.io.ReaderInputStream;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.StringReader;
 
 import java.security.AccessController;
 import java.security.PrivilegedActionException;
@@ -591,10 +590,9 @@ public class ConfigurationPersistenceManager
 	protected Dictionary<?, ?> toDictionary(String dictionaryString)
 		throws IOException {
 
-		InputStream inputStream = new ReaderInputStream(
-			new StringReader(dictionaryString));
-
-		return ConfigurationHandler.read(inputStream);
+		return ConfigurationHandler.read(
+			new UnsyncByteArrayInputStream(
+				dictionaryString.getBytes(StringPool.UTF8)));
 	}
 
 	private Dictionary<?, ?> _copyDictionary(Dictionary<?, ?> dictionary) {

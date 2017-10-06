@@ -925,13 +925,7 @@ public class LayoutImportController implements ImportController {
 			long sourceGroupId = GetterUtil.getLong(
 				headerElement.attributeValue("group-id"));
 
-			boolean companySourceGroup = false;
-
-			if (sourceCompanyGroupId == sourceGroupId) {
-				companySourceGroup = true;
-			}
-
-			if (group.isCompany() ^ companySourceGroup) {
+			if (group.isCompany() ^ (sourceCompanyGroupId == sourceGroupId)) {
 				throw new LARTypeException(LARTypeException.TYPE_COMPANY_GROUP);
 			}
 		}

@@ -47,10 +47,10 @@ public class SQLLengthTest {
 		_db = DBManagerUtil.getDB();
 
 		_db.runSQL(
-			"create table SQLLengthTest (id LONG not null primary key, data " +
-				"VARCHAR(255) null)");
+			"create table SQLLengthTest (data VARCHAR(255) not null primary " +
+				"key)");
 
-		_db.runSQL("insert into SQLLengthTest values (1, 'Hello World')");
+		_db.runSQL("insert into SQLLengthTest values ('Hello World')");
 	}
 
 	@AfterClass
@@ -60,20 +60,17 @@ public class SQLLengthTest {
 
 	@Test
 	public void testLength() throws Exception {
-		String sql = _db.buildSQL("select LENGTH(data) from SQLLengthTest");
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps = con.prepareStatement(
+				SQLTransformer.transform(
+					"select LENGTH(data) from SQLLengthTest"));
+			ResultSet rs = ps.executeQuery()) {
 
-		sql = SQLTransformer.transform(sql);
+			Assert.assertTrue(rs.next());
 
-		try (Connection connection = DataAccess.getUpgradeOptimizedConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				sql);
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+			Assert.assertEquals(11, rs.getInt(1));
 
-			Assert.assertTrue(resultSet.next());
-
-			Assert.assertEquals(11, resultSet.getLong(1));
-
-			Assert.assertFalse(resultSet.next());
+			Assert.assertFalse(rs.next());
 		}
 	}
 

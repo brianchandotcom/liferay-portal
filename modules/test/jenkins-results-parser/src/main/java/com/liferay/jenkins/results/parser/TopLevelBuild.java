@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
@@ -37,6 +38,7 @@ import java.util.regex.Pattern;
 
 import org.dom4j.Element;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -186,9 +188,9 @@ public class TopLevelBuild extends BaseBuild {
 
 	@Override
 	public Element getJenkinsReportElement() {
-		Element headElement = JenkinsReportUtil.getHTMLHeadElement();
+		Element headElement = getJenkinsReportHeadElement();
 
-		Element bodyElement = JenkinsReportUtil.getHTMLBodyElement(this);
+		Element bodyElement = getJenkinsReportBodyElement(this);
 
 		Element jenkinsReportElement = Dom4JUtil.getNewElement("html");
 
@@ -528,6 +530,120 @@ public class TopLevelBuild extends BaseBuild {
 			topLevelBuild.getJobName(), "/",
 			Integer.toString(topLevelBuild.getBuildNumber()), "/",
 			topLevelBuild.getJobName(), "/git.", repositoryType, ".properties");
+	}
+
+	protected Element getJenkinsReportBodyElement(TopLevelBuild topLevelBuild) {
+		Map<String, Build> axisBuilds = new TreeMap<>();
+		Map<String, Build> batchBuilds = new TreeMap<>();
+		Map<String, TestResult> testResults = new TreeMap<>();
+
+		for (Build batchBuild : topLevelBuild.getDownstreamBuilds(null)) {
+			String batchBuildDisplayName = batchBuild.getDisplayName();
+
+			if (batchBuildDisplayName == null) {
+				return null;
+			}
+
+			batchBuilds.put(batchBuild.getDisplayName(), batchBuild);
+
+			for (Build axisBuild : batchBuild.getDownstreamBuilds(null)) {
+				String axisKey =
+					batchBuild.getDisplayName() + "/" +
+						JenkinsResultsParserUtil.getAxisVariable(
+							axisBuild.getBuildURL());
+
+				axisBuilds.put(axisKey, axisBuild);
+
+				for (TestResult testResult : axisBuild.getTestResults(null)) {
+					String displayName = testResult.getDisplayName();
+
+					if (displayName != null) {
+						testResults.put(
+							testResult.getDisplayName(), testResult);
+					}
+				}
+			}
+		}
+
+		Element h1Element = Dom4JUtil.getNewElement("h1");
+
+		String buildURL = topLevelBuild.getBuildURL();
+
+		Dom4JUtil.addToElement(
+			h1Element, "Jenkins report for ",
+			Dom4JUtil.getNewAnchorElement(buildURL, buildURL));
+
+		JSONObject jobJSONObject = topLevelBuild.getBuildJSONObject();
+
+		String jobDescription = "";
+
+		try {
+			jobDescription = jobJSONObject.getString("description");
+		}
+		catch (JSONException jsone) {
+			jsone.printStackTrace();
+		}
+
+		Element h2Element = Dom4JUtil.getNewElement("h2");
+
+		Dom4JUtil.addToElement(h2Element, jobDescription);
+
+		Element bodyElement = Dom4JUtil.getNewElement("body");
+
+		Dom4JUtil.addToElement(
+			bodyElement, h1Element, h2Element,
+			JenkinsReportUtil.getSummaryElement(
+				topLevelBuild, axisBuilds, batchBuilds, testResults),
+			JenkinsReportUtil.getTimelineElement(topLevelBuild, axisBuilds),
+			JenkinsReportUtil.getTopLevelTableElement(topLevelBuild),
+			JenkinsReportUtil.getBatchReportElement(batchBuilds));
+
+		return bodyElement;
+	}
+
+	protected Element getJenkinsReportHeadElement() {
+		Element headElement = Dom4JUtil.getNewElement("head");
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("caption, table, td, th {");
+
+		sb.append("text-align: left;");
+
+		sb.append("padding: .5em;");
+
+		sb.append("white-space: nowrap;");
+
+		sb.append("}");
+
+		sb.append("th:first-child {");
+
+		sb.append("text-indent: 1em;");
+
+		sb.append("}");
+
+		sb.append("td:first-child {");
+
+		sb.append("text-indent: 4em;");
+
+		sb.append("}");
+
+		sb.append("td {");
+
+		sb.append("}");
+
+		sb.append("caption {");
+
+		sb.append("font-size: 150%;");
+
+		sb.append("font-weight: bold;");
+
+		sb.append("}");
+
+		Dom4JUtil.addToElement(
+			headElement, Dom4JUtil.getNewElement("style", null, sb.toString()));
+
+		return headElement;
 	}
 
 	protected Element getJobSummaryListElement() {

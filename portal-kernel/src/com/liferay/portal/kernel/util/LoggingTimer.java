@@ -36,8 +36,10 @@ public class LoggingTimer implements Closeable {
 	public void close() {
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Completed " + _name + " in " +
-					(System.currentTimeMillis() - _startTime) + " ms");
+				StringBundler.concat(
+					"Completed ", _name, " in ",
+					String.valueOf(System.currentTimeMillis() - _startTime),
+					" ms"));
 		}
 	}
 

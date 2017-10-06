@@ -74,9 +74,10 @@ public class InstancePool {
 			catch (Exception e2) {
 				if (logErrors) {
 					_log.error(
-						"Unable to load " + className +
-							" with the portal class loader or the current " +
-								"context class loader",
+						StringBundler.concat(
+							"Unable to load ", className,
+							" with the portal class loader or the current ",
+							"context class loader"),
 						e2);
 				}
 			}

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.jdbc.RowMapper;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.Collections;
 import java.util.List;
@@ -47,8 +48,9 @@ public class CachelessTableMapperImpl
 
 		getTableMappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(
 			leftBasePersistence.getDataSource(),
-			"SELECT * FROM " + tableName + " WHERE " + leftColumnName +
-				" = ? AND " + rightColumnName + " = ?",
+			StringBundler.concat(
+				"SELECT * FROM ", tableName, " WHERE ", leftColumnName,
+				" = ? AND ", rightColumnName, " = ?"),
 			RowMapper.COUNT, ParamSetter.BIGINT, ParamSetter.BIGINT);
 
 		leftToRightPortalCache = new DummyPortalCache(

@@ -19,6 +19,7 @@ import com.liferay.petra.memory.FinalizeAction;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.lang.ref.Reference;
 import java.lang.reflect.Field;
@@ -155,8 +156,10 @@ public class AsyncBroker<K, V> {
 
 				if (noticeableFuture.cancel(true) && _log.isWarnEnabled()) {
 					_log.warn(
-						"Cancelled orphan noticeable future " +
-							noticeableFuture + " with key " + _key);
+						StringBundler.concat(
+							"Cancelled orphan noticeable future ",
+							String.valueOf(noticeableFuture), " with key ",
+							String.valueOf(_key)));
 				}
 			}
 			catch (Exception e) {

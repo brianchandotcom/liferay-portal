@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,43 +60,51 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 		addTableMappingSqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
 			dataSource,
-			"INSERT INTO " + tableName + " (" + companyColumnName + ", " +
-				leftColumnName + ", " + rightColumnName + ") VALUES (?, ?, ?)",
+			StringBundler.concat(
+				"INSERT INTO ", tableName, " (", companyColumnName, ", ",
+				leftColumnName, ", ", rightColumnName, ") VALUES (?, ?, ?)"),
 			ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT);
 		deleteLeftPrimaryKeyTableMappingsSqlUpdate =
 			SqlUpdateFactoryUtil.getSqlUpdate(
 				dataSource,
-				"DELETE FROM " + tableName + " WHERE " + leftColumnName +
-					" = ?",
+				StringBundler.concat(
+					"DELETE FROM ", tableName, " WHERE ", leftColumnName,
+					" = ?"),
 				ParamSetter.BIGINT);
 		deleteRightPrimaryKeyTableMappingsSqlUpdate =
 			SqlUpdateFactoryUtil.getSqlUpdate(
 				dataSource,
-				"DELETE FROM " + tableName + " WHERE " + rightColumnName +
-					" = ?",
+				StringBundler.concat(
+					"DELETE FROM ", tableName, " WHERE ", rightColumnName,
+					" = ?"),
 				ParamSetter.BIGINT);
 		deleteTableMappingSqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
 			dataSource,
-			"DELETE FROM " + tableName + " WHERE " + leftColumnName +
-				" = ? AND " + rightColumnName + " = ?",
+			StringBundler.concat(
+				"DELETE FROM ", tableName, " WHERE ", leftColumnName,
+				" = ? AND ", rightColumnName, " = ?"),
 			ParamSetter.BIGINT, ParamSetter.BIGINT);
 		getLeftPrimaryKeysSqlQuery =
 			MappingSqlQueryFactoryUtil.getMappingSqlQuery(
 				dataSource,
-				"SELECT " + leftColumnName + " FROM " + tableName + " WHERE " +
-					rightColumnName + " = ?",
+				StringBundler.concat(
+					"SELECT ", leftColumnName, " FROM ", tableName, " WHERE ",
+					rightColumnName, " = ?"),
 				RowMapper.PRIMARY_KEY, ParamSetter.BIGINT);
 		getRightPrimaryKeysSqlQuery =
 			MappingSqlQueryFactoryUtil.getMappingSqlQuery(
 				dataSource,
-				"SELECT " + rightColumnName + " FROM " + tableName + " WHERE " +
-					leftColumnName + " = ?",
+				StringBundler.concat(
+					"SELECT ", rightColumnName, " FROM ", tableName, " WHERE ",
+					leftColumnName, " = ?"),
 				RowMapper.PRIMARY_KEY, ParamSetter.BIGINT);
 
 		leftToRightPortalCache = MultiVMPoolUtil.getPortalCache(
-			TableMapper.class.getName() + "-" + tableName + "-LeftToRight");
+			StringBundler.concat(
+				TableMapper.class.getName(), "-", tableName, "-LeftToRight"));
 		rightToLeftPortalCache = MultiVMPoolUtil.getPortalCache(
-			TableMapper.class.getName() + "-" + tableName + "-RightToLeft");
+			StringBundler.concat(
+				TableMapper.class.getName(), "-", tableName, "-RightToLeft"));
 	}
 
 	@Override

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.SyncThrowableThread;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -245,12 +246,14 @@ public class ProcessUtilTest {
 		collectorFuture.cancel(true);
 
 		Assert.assertEquals(
-			Echo.buildMessage(true, 0) + "\n" + Echo.buildMessage(true, 1) +
-				"\n",
+			StringBundler.concat(
+				Echo.buildMessage(true, 0), "\n", Echo.buildMessage(true, 1),
+				"\n"),
 			new String(objectValuePair.getKey()));
 		Assert.assertEquals(
-			Echo.buildMessage(false, 0) + "\n" + Echo.buildMessage(false, 1) +
-				"\n",
+			StringBundler.concat(
+				Echo.buildMessage(false, 0), "\n", Echo.buildMessage(false, 1),
+				"\n"),
 			new String(objectValuePair.getValue()));
 	}
 

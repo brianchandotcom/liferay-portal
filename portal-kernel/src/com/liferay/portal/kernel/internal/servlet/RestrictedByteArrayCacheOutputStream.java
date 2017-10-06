@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.internal.servlet;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -37,8 +39,10 @@ public class RestrictedByteArrayCacheOutputStream extends OutputStream {
 
 		if (initialCacheSize > cacheCapacity) {
 			throw new IllegalArgumentException(
-				"Initial cache size " + initialCacheSize +
-					" is larger than cache capacity " + cacheCapacity);
+				StringBundler.concat(
+					"Initial cache size ", String.valueOf(initialCacheSize),
+					" is larger than cache capacity ",
+					String.valueOf(cacheCapacity)));
 		}
 
 		this.outputStream = outputStream;

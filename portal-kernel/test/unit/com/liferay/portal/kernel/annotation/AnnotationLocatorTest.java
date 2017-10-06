@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.annotation;
 
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
@@ -499,7 +500,9 @@ public class AnnotationLocatorTest {
 					Mix actualMix = (Mix)actualAnnotation;
 
 					Assert.assertEquals(
-						"@Mix : " + method.getName() + "()@" + clazz.getName(),
+						StringBundler.concat(
+							"@Mix : ", method.getName(), "()@",
+							clazz.getName()),
 						expectedMix.value(), actualMix.value());
 				}
 				else if (expectedAnnotation.annotationType() == Method.class) {
@@ -507,8 +510,9 @@ public class AnnotationLocatorTest {
 					Method actualMethod = (Method)actualAnnotation;
 
 					Assert.assertEquals(
-						"@Method : " + method.getName() + "()@" +
-							clazz.getName(),
+						StringBundler.concat(
+							"@Method : ", method.getName(), "()@",
+							clazz.getName()),
 						expectedType.value(), actualMethod.value());
 				}
 				else {
@@ -516,7 +520,9 @@ public class AnnotationLocatorTest {
 					Type actualType = (Type)actualAnnotation;
 
 					Assert.assertEquals(
-						"@Type : " + method.getName() + "()@" + clazz.getName(),
+						StringBundler.concat(
+							"@Type : ", method.getName(), "()@",
+							clazz.getName()),
 						expectedType.value(), actualType.value());
 				}
 			}
@@ -545,8 +551,9 @@ public class AnnotationLocatorTest {
 						Mix actualMix = (Mix)actualAnnotation;
 
 						Assert.assertEquals(
-							"@Mix : " + method.getName() + "()@" +
-								clazz.getName(),
+							StringBundler.concat(
+								"@Mix : ", method.getName(), "()@",
+								clazz.getName()),
 							expectedMix.value(), actualMix.value());
 					}
 					else if (expectedAnnotation.annotationType() ==
@@ -556,8 +563,9 @@ public class AnnotationLocatorTest {
 						Method actualMethod = (Method)actualAnnotation;
 
 						Assert.assertEquals(
-							"@Method : " + method.getName() + "()@" +
-								clazz.getName(),
+							StringBundler.concat(
+								"@Method : ", method.getName(), "()@",
+								clazz.getName()),
 							expectedType.value(), actualMethod.value());
 					}
 					else {
@@ -565,8 +573,9 @@ public class AnnotationLocatorTest {
 						Type actualType = (Type)actualAnnotation;
 
 						Assert.assertEquals(
-							"@Type : " + method.getName() + "()@" +
-								clazz.getName(),
+							StringBundler.concat(
+								"@Type : ", method.getName(), "()@",
+								clazz.getName()),
 							expectedType.value(), actualType.value());
 					}
 				}
@@ -595,7 +604,8 @@ public class AnnotationLocatorTest {
 			}
 
 			Assert.assertEquals(
-				"@Method : " + method.getName() + "()@" + clazz.getName(),
+				StringBundler.concat(
+					"@Method : ", method.getName(), "()@", clazz.getName()),
 				expectedMethodValue, methodAnnotation.value());
 
 			try {
@@ -628,7 +638,8 @@ public class AnnotationLocatorTest {
 			}
 
 			Assert.assertEquals(
-				"@Mix : " + method.getName() + "()@" + clazz.getName(),
+				StringBundler.concat(
+					"@Mix : ", method.getName(), "()@", clazz.getName()),
 				expectedMixValue, mixAnnotation.value());
 
 			try {
@@ -661,7 +672,8 @@ public class AnnotationLocatorTest {
 			}
 
 			Assert.assertEquals(
-				"@Type : " + method.getName() + "()@" + clazz.getName(),
+				StringBundler.concat(
+					"@Type : ", method.getName(), "()@", clazz.getName()),
 				expectedTypeValue, typeAnnotation.value());
 
 			try {

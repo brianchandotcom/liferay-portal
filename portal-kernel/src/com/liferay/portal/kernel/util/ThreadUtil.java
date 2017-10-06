@@ -103,8 +103,9 @@ public class ThreadUtil {
 				System.getProperty("java.vm.version");
 
 		StringBundler sb = new StringBundler(
-			"Full thread dump of " + jvm + " on " + String.valueOf(new Date()) +
-				"\n\n");
+			StringBundler.concat(
+				"Full thread dump of ", jvm, " on ", String.valueOf(new Date()),
+				"\n\n"));
 
 		Map<Thread, StackTraceElement[]> stackTraces =
 			Thread.getAllStackTraces();

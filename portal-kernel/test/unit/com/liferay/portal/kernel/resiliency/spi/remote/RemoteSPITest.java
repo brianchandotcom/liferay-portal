@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -847,8 +848,9 @@ public class RemoteSPITest {
 			LogRecord logRecord = logRecords.get(0);
 
 			Assert.assertEquals(
-				"Not unregistering SPI " + mockSPI + " with foreign MPI null " +
-					"versus " + MPIHelperUtil.getMPI(),
+				StringBundler.concat(
+					"Not unregistering SPI ", String.valueOf(mockSPI),
+					" with foreign MPI null versus ", MPIHelperUtil.getMPI()),
 				logRecord.getMessage());
 		}
 

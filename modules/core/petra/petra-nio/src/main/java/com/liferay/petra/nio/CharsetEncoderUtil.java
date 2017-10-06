@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.nio.charset;
+package com.liferay.petra.nio;
 
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
@@ -23,40 +23,42 @@ import java.nio.charset.CodingErrorAction;
 
 /**
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.petra.nio.CharsetEncoderUtil}
  */
-@Deprecated
 public class CharsetEncoderUtil {
-
-	public static ByteBuffer encode(
-		String charsetName, char[] chars, int offset, int length) {
-
-		return encode(charsetName, CharBuffer.wrap(chars, offset, length));
-	}
 
 	public static ByteBuffer encode(String charsetName, CharBuffer charBuffer) {
 		try {
-			CharsetEncoder charsetEncoder = getCharsetEncoder(charsetName);
-
-			return charsetEncoder.encode(charBuffer);
+			return encode(charsetName, CodingErrorAction.REPLACE, charBuffer);
 		}
 		catch (CharacterCodingException cce) {
 			throw new Error(cce);
 		}
 	}
 
-	public static ByteBuffer encode(String charsetName, String string) {
-		return encode(charsetName, CharBuffer.wrap(string));
+	public static ByteBuffer encode(
+			String charsetName, CodingErrorAction codingErrorAction,
+			CharBuffer charBuffer)
+		throws CharacterCodingException {
+
+		CharsetEncoder charsetEncoder = getCharsetEncoder(
+			charsetName, codingErrorAction);
+
+		return charsetEncoder.encode(charBuffer);
 	}
 
 	public static CharsetEncoder getCharsetEncoder(String charsetName) {
+		return getCharsetEncoder(charsetName, CodingErrorAction.REPLACE);
+	}
+
+	public static CharsetEncoder getCharsetEncoder(
+		String charsetName, CodingErrorAction codingErrorAction) {
+
 		Charset charset = Charset.forName(charsetName);
 
 		CharsetEncoder charsetEncoder = charset.newEncoder();
 
-		charsetEncoder.onMalformedInput(CodingErrorAction.REPLACE);
-		charsetEncoder.onUnmappableCharacter(CodingErrorAction.REPLACE);
+		charsetEncoder.onMalformedInput(codingErrorAction);
+		charsetEncoder.onUnmappableCharacter(codingErrorAction);
 
 		return charsetEncoder;
 	}

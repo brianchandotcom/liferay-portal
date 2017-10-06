@@ -16,6 +16,8 @@ package com.liferay.lcs.rest.client.internal;
 
 import com.liferay.lcs.rest.client.LCSPatchingAdvisorClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
+import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
@@ -32,7 +34,8 @@ public class LCSPatchingAdvisorClientImpl implements LCSPatchingAdvisorClient {
 	@Override
 	public List<String> getInstallablePatchIds(
 			String key, int patchingToolVersion, String[] installedPatchIds)
-		throws Exception {
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException {
 
 		StringBuilder sb = new StringBuilder(
 			6 + installedPatchIds.length * 2 - 1);

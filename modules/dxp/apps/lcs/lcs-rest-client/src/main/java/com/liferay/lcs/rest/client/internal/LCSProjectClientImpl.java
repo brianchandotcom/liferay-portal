@@ -33,47 +33,32 @@ import org.osgi.service.component.annotations.Reference;
 public class LCSProjectClientImpl implements LCSProjectClient {
 
 	@Override
-	public LCSProject addDefaultLCSProject() {
-		try {
-			return _jsonWebServiceClient.doPostToObject(
-				LCSProject.class, _URL_LCS_PROJECT);
-		}
-		catch (JSONWebServiceInvocationException jsonwsie) {
-			throw new RuntimeException(jsonwsie);
-		}
-		catch (JSONWebServiceSerializeException jsonwsse) {
-			throw new RuntimeException(jsonwsse);
-		}
+	public LCSProject addDefaultLCSProject()
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException {
+
+		return _jsonWebServiceClient.doPostToObject(
+			LCSProject.class, _URL_LCS_PROJECT);
 	}
 
 	@Override
-	public LCSProject getLCSProject(String key) {
-		try {
-			return _jsonWebServiceClient.doGetToObject(
-				LCSProject.class, _URL_LCS_PROJECT + "/find", "key", key);
-		}
-		catch (JSONWebServiceInvocationException jsonwsie) {
-			throw new RuntimeException(jsonwsie);
-		}
-		catch (JSONWebServiceSerializeException jsonwsse) {
-			throw new RuntimeException(jsonwsse);
-		}
+	public LCSProject getLCSProject(String key)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException {
+
+		return _jsonWebServiceClient.doGetToObject(
+			LCSProject.class, _URL_LCS_PROJECT + "/find", "key", key);
 	}
 
 	@Override
-	public List<LCSProject> getUserManageableLCSProjects() {
+	public List<LCSProject> getUserManageableLCSProjects()
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException {
+
 		List<LCSProject> remoteLCSProjects = null;
 
-		try {
-			remoteLCSProjects = _jsonWebServiceClient.doGetToList(
-				LCSProject.class, _URL_LCS_PROJECT + "/find", "manage", "true");
-		}
-		catch (JSONWebServiceInvocationException jsonwsie) {
-			throw new RuntimeException(jsonwsie);
-		}
-		catch (JSONWebServiceSerializeException jsonwsse) {
-			throw new RuntimeException(jsonwsse);
-		}
+		remoteLCSProjects = _jsonWebServiceClient.doGetToList(
+			LCSProject.class, _URL_LCS_PROJECT + "/find", "manage", "true");
 
 		List<LCSProject> lcsProjects = new ArrayList<LCSProject>();
 

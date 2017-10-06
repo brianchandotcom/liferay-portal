@@ -18,8 +18,6 @@ import com.liferay.lcs.rest.client.LCSClusterNodeUptimeClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -31,30 +29,19 @@ public class LCSClusterNodeUptimeClientImpl
 	implements LCSClusterNodeUptimeClient {
 
 	@Override
-	public void updateLCSClusterNodeUptime(String key) {
-		try {
-			_jsonWebServiceClient.doPut(
-				_URL_LCS_CLUSTER_NODE_UPTIME, "key", key);
-		}
-		catch (JSONWebServiceInvocationException jsonwsie) {
-			if (jsonwsie.getStatus() == HttpServletResponse.SC_NOT_FOUND) {
-				return;
-			}
+	public void updateLCSClusterNodeUptime(String key)
+		throws JSONWebServiceInvocationException {
 
-			throw new RuntimeException(jsonwsie);
-		}
+		_jsonWebServiceClient.doPut(_URL_LCS_CLUSTER_NODE_UPTIME, "key", key);
 	}
 
 	@Override
-	public void updateLCSClusterNodeUptimes(String key, String uptimesJSON) {
-		try {
-			_jsonWebServiceClient.doPut(
-				_URL_LCS_CLUSTER_NODE_UPTIME, "key", key, "uptimesJSON",
-				uptimesJSON);
-		}
-		catch (JSONWebServiceInvocationException jsonwsie) {
-			throw new RuntimeException(jsonwsie);
-		}
+	public void updateLCSClusterNodeUptimes(String key, String uptimesJSON)
+		throws JSONWebServiceInvocationException {
+
+		_jsonWebServiceClient.doPut(
+			_URL_LCS_CLUSTER_NODE_UPTIME, "key", key, "uptimesJSON",
+			uptimesJSON);
 	}
 
 	private static final String _URL_LCS_CLUSTER_NODE_UPTIME =

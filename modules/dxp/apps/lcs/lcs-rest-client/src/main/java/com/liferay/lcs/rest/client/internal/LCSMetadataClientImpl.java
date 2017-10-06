@@ -18,13 +18,11 @@ import com.liferay.lcs.rest.client.LCSMetadata;
 import com.liferay.lcs.rest.client.LCSMetadataClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
-import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,8 +34,9 @@ import org.osgi.service.component.annotations.Reference;
 public class LCSMetadataClientImpl implements LCSMetadataClient {
 
 	@Override
-	public int getSupportedLCSPortlet(
-		String buildNumber, String portalEdition) {
+	public int getSupportedLCSPortlet(String buildNumber, String portalEdition)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException {
 
 		StringBuilder sb = new StringBuilder(5);
 
@@ -50,51 +49,25 @@ public class LCSMetadataClientImpl implements LCSMetadataClient {
 		Integer supportedLCSPortlet = _supportedLCSPortletMap.get(
 			sb.toString());
 
-		if (supportedLCSPortlet == null) {
-			try {
-				sb = new StringBuilder(5);
-
-				sb.append(_URL_LCS_METADATA);
-				sb.append(StringPool.SLASH);
-				sb.append(buildNumber);
-				sb.append(StringPool.SLASH);
-				sb.append(portalEdition);
-
-				LCSMetadata lcsMetadata = _jsonWebServiceClient.doGetToObject(
-					LCSMetadata.class, sb.toString());
-
-				_supportedLCSPortletMap.put(
-					sb.toString(), lcsMetadata.getSupportedLCSPortlet());
-
-				return lcsMetadata.getSupportedLCSPortlet();
-			}
-			catch (Exception e) {
-				if (e instanceof JSONWebServiceInvocationException) {
-					JSONWebServiceInvocationException jsonwsie =
-						(JSONWebServiceInvocationException)e;
-
-					if (jsonwsie.getStatus() ==
-							HttpServletResponse.SC_NOT_FOUND) {
-
-						return -1;
-					}
-				}
-				else if (e instanceof JSONWebServiceTransportException) {
-					JSONWebServiceTransportException jsonwste =
-						(JSONWebServiceTransportException)e;
-
-					if (jsonwste.getStatus() ==
-							HttpServletResponse.SC_NOT_FOUND) {
-
-						return -1;
-					}
-				}
-
-				throw new RuntimeException(e);
-			}
+		if (supportedLCSPortlet != null) {
+			return supportedLCSPortlet;
 		}
 
-		return supportedLCSPortlet;
+		sb = new StringBuilder(5);
+
+		sb.append(_URL_LCS_METADATA);
+		sb.append(StringPool.SLASH);
+		sb.append(buildNumber);
+		sb.append(StringPool.SLASH);
+		sb.append(portalEdition);
+
+		LCSMetadata lcsMetadata = _jsonWebServiceClient.doGetToObject(
+			LCSMetadata.class, sb.toString());
+
+		_supportedLCSPortletMap.put(
+			sb.toString(), lcsMetadata.getSupportedLCSPortlet());
+
+		return lcsMetadata.getSupportedLCSPortlet();
 	}
 
 	private static final String _URL_LCS_METADATA =

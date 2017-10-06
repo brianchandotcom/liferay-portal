@@ -14,6 +14,11 @@
 
 package com.liferay.lcs.rest.client;
 
+import com.liferay.lcs.rest.client.exception.DuplicateLCSClusterEntryNameException;
+import com.liferay.lcs.rest.client.exception.RequiredLCSClusterEntryNameException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
+
 import java.util.List;
 
 /**
@@ -22,12 +27,20 @@ import java.util.List;
 public interface LCSClusterEntryClient {
 
 	public LCSClusterEntry addLCSClusterEntry(
-		long lcsProjectId, String name, String description, String location,
-		String subscriptionType, int type);
+			long lcsProjectId, String name, String description, String location,
+			String subscriptionType, int type)
+		throws DuplicateLCSClusterEntryNameException,
+			   JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException,
+			   RequiredLCSClusterEntryNameException;
 
-	public LCSClusterEntry getLCSClusterEntry(long lcsClusterEntryId);
+	public LCSClusterEntry getLCSClusterEntry(long lcsClusterEntryId)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException;
 
 	public List<LCSClusterEntry> getLCSProjectManageableLCSClusterEntries(
-		long lcsProjectId, int localLCSClusterEntryType);
+			long lcsProjectId, int localLCSClusterEntryType)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException;
 
 }

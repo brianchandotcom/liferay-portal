@@ -26,6 +26,7 @@ public interface LCSMessageClient {
 		throws JSONWebServiceInvocationException;
 
 	public void deleteCorpProjectLCSMessage(
-		long corpProjectId, long sourceMessageId);
+			long corpProjectId, long sourceMessageId)
+		throws JSONWebServiceInvocationException;
 
 }

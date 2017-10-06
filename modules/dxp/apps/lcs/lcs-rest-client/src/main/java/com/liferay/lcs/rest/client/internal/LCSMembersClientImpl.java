@@ -28,50 +28,36 @@ import org.osgi.service.component.annotations.Reference;
 public class LCSMembersClientImpl implements LCSMembersClient {
 
 	@Override
-	public void sendMonitoringUnavailableEmail(String key) {
-		try {
-			_jsonWebServiceClient.doPut(
-				_URL_LCS_MEMBERS_SEND_MONITORING_UNAVAILABLE_EMAIL, "key", key);
-		}
-		catch (JSONWebServiceInvocationException jsonwsie) {
-			throw new RuntimeException(jsonwsie);
-		}
+	public void sendMonitoringUnavailableEmail(String key)
+		throws JSONWebServiceInvocationException {
+
+		_jsonWebServiceClient.doPut(
+			_URL_LCS_MEMBERS_SEND_MONITORING_UNAVAILABLE_EMAIL, "key", key);
 	}
 
 	@Override
-	public void sendPatchingToolUnavailableEmail(String key) {
-		try {
-			_jsonWebServiceClient.doPut(
-				_URL_LCS_MEMBERS_SEND_PATCHING_TOOL_UNAVAILABLE_EMAIL, "key",
-				key);
-		}
-		catch (JSONWebServiceInvocationException jsonwsie) {
-			throw new RuntimeException(jsonwsie);
-		}
+	public void sendPatchingToolUnavailableEmail(String key)
+		throws JSONWebServiceInvocationException {
+
+		_jsonWebServiceClient.doPut(
+			_URL_LCS_MEMBERS_SEND_PATCHING_TOOL_UNAVAILABLE_EMAIL, "key", key);
 	}
 
 	@Override
-	public void sendServerManuallyShutdownEmail(String key) {
-		try {
-			_jsonWebServiceClient.doPut(
-				_URL_LCS_MEMBERS_SEND_SERVER_MANUALLY_SHUTDOWN_EMAIL, "key",
-				key);
-		}
-		catch (JSONWebServiceInvocationException jsonwsie) {
-			throw new RuntimeException(jsonwsie);
-		}
+	public void sendServerManuallyShutdownEmail(String key)
+		throws JSONWebServiceInvocationException {
+
+		_jsonWebServiceClient.doPut(
+			_URL_LCS_MEMBERS_SEND_SERVER_MANUALLY_SHUTDOWN_EMAIL, "key", key);
 	}
 
 	@Override
-	public void sendServerUnexpectedlyShutdownEmail(String key) {
-		try {
-			_jsonWebServiceClient.doPut(
-				_URL_LCS_MEMBERS_SEND_SERVER_UNEXPECTEDLY_SHUTDOWN_EMAIL, "key",
-				key);
-		}
-		catch (JSONWebServiceInvocationException jsonwsie) {
-			throw new RuntimeException(jsonwsie);
-		}
+	public void sendServerUnexpectedlyShutdownEmail(String key)
+		throws JSONWebServiceInvocationException {
+
+		_jsonWebServiceClient.doPut(
+			_URL_LCS_MEMBERS_SEND_SERVER_UNEXPECTEDLY_SHUTDOWN_EMAIL, "key",
+			key);
 	}
 
 	private static final String _URL_LCS_MEMBERS = "/o/osb-lcs-rest/LCSMembers";

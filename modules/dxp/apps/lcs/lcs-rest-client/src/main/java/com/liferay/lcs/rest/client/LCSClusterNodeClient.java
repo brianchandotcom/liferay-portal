@@ -14,6 +14,13 @@
 
 package com.liferay.lcs.rest.client;
 
+import com.liferay.lcs.rest.client.exception.DuplicateLCSClusterNodeNameException;
+import com.liferay.lcs.rest.client.exception.NoSuchLCSSubscriptionEntryException;
+import com.liferay.lcs.rest.client.exception.RequiredLCSClusterNodeNameException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
+
 import java.util.List;
 
 /**
@@ -23,32 +30,56 @@ import java.util.List;
 public interface LCSClusterNodeClient {
 
 	public LCSClusterNode addLCSClusterNode(
-		long lcsClusterEntryId, String name, String description,
-		int buildNumber, long heartbeatInterval, long lastHeartbeat, String key,
-		String location, int patchingToolVersion, String portalEdition,
-		int processorCoresTotal, String protocolVersion);
+			long lcsClusterEntryId, String name, String description,
+			int buildNumber, long heartbeatInterval, long lastHeartbeat,
+			String key, String location, int patchingToolVersion,
+			String portalEdition, int processorCoresTotal,
+			String protocolVersion)
+		throws DuplicateLCSClusterNodeNameException,
+			   JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException,
+			   NoSuchLCSSubscriptionEntryException,
+			   RequiredLCSClusterNodeNameException;
 
 	public LCSClusterNode addLCSClusterNode(
-		long lcsClusterEntryId, String name, String description,
-		int buildNumber, String key, String location, int processorCoresTotal);
+			long lcsClusterEntryId, String name, String description,
+			int buildNumber, String key, String location,
+			int processorCoresTotal)
+		throws DuplicateLCSClusterNodeNameException,
+			   JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException,
+			   NoSuchLCSSubscriptionEntryException,
+			   RequiredLCSClusterNodeNameException;
 
-	public LCSClusterNode fetchLCSClusterNode(String key);
+	public LCSClusterNode fetchLCSClusterNode(String key)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException,
+			   JSONWebServiceTransportException;
 
 	public List<LCSClusterNode> getLCSClusterEntryLCSClusterNodes(
-		long lcsClusterEntryId);
+			long lcsClusterEntryId)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException;
 
 	public List<LCSClusterNode> getLCSClusterNodes(
-		int status, int start, int end);
+			int status, int start, int end)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException;
 
-	public void mergeStatus(String key, int status);
+	public void mergeStatus(String key, int status)
+		throws JSONWebServiceInvocationException;
 
-	public void updateBuildNumber(String key, int buildNumber);
+	public void updateBuildNumber(String key, int buildNumber)
+		throws JSONWebServiceInvocationException;
 
-	public void updateStatus(String key, int status);
+	public void updateStatus(String key, int status)
+		throws JSONWebServiceInvocationException;
 
 	public void verifyLCSClusterEntryLCSClusterNodesPropertiesDifferences(
-		String key);
+			String key)
+		throws JSONWebServiceInvocationException;
 
-	public void verifyLCSClusterNodeClusterLink(String key, String siblingKeys);
+	public void verifyLCSClusterNodeClusterLink(String key, String siblingKeys)
+		throws JSONWebServiceInvocationException;
 
 }

@@ -59,7 +59,10 @@ public class LCSSubscriptionEntryClientImpl
 	}
 
 	@Override
-	public LCSSubscriptionEntry fetchLCSSubscriptionEntry(String key) {
+	public LCSSubscriptionEntry fetchLCSSubscriptionEntry(String key)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException {
+
 		try {
 			return _jsonWebServiceClient.doGetToObject(
 				LCSSubscriptionEntry.class,
@@ -70,10 +73,7 @@ public class LCSSubscriptionEntryClientImpl
 				return null;
 			}
 
-			throw new RuntimeException(jsonwsie);
-		}
-		catch (JSONWebServiceSerializeException jsonwsse) {
-			throw new RuntimeException(jsonwsse);
+			throw jsonwsie;
 		}
 	}
 

@@ -38,8 +38,12 @@ public class LCSClusterEntryClientImpl implements LCSClusterEntryClient {
 
 	@Override
 	public LCSClusterEntry addLCSClusterEntry(
-		long lcsProjectId, String name, String description, String location,
-		String subscriptionType, int type) {
+			long lcsProjectId, String name, String description, String location,
+			String subscriptionType, int type)
+		throws DuplicateLCSClusterEntryNameException,
+			   JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException,
+			   RequiredLCSClusterEntryNameException {
 
 		validate(lcsProjectId, name);
 
@@ -51,60 +55,41 @@ public class LCSClusterEntryClientImpl implements LCSClusterEntryClient {
 			location = null;
 		}
 
-		try {
-			return _jsonWebServiceClient.doPostToObject(
-				LCSClusterEntry.class, _URL_LCS_CLUSTER_ENTRY, "lcsProjectId",
-				String.valueOf(lcsProjectId), "name", name, "description",
-				description, "location", location, "subscriptionType",
-				subscriptionType, "type", String.valueOf(type));
-		}
-		catch (JSONWebServiceInvocationException jsonwsie) {
-			throw new RuntimeException(jsonwsie);
-		}
-		catch (JSONWebServiceSerializeException jsonwsse) {
-			throw new RuntimeException(jsonwsse);
-		}
+		return _jsonWebServiceClient.doPostToObject(
+			LCSClusterEntry.class, _URL_LCS_CLUSTER_ENTRY, "lcsProjectId",
+			String.valueOf(lcsProjectId), "name", name, "description",
+			description, "location", location, "subscriptionType",
+			subscriptionType, "type", String.valueOf(type));
 	}
 
 	@Override
-	public LCSClusterEntry getLCSClusterEntry(long lcsClusterEntryId) {
-		try {
-			return _jsonWebServiceClient.doGetToObject(
-				LCSClusterEntry.class,
-				_URL_LCS_CLUSTER_ENTRY + StringPool.SLASH + lcsClusterEntryId);
-		}
-		catch (JSONWebServiceInvocationException jsonwsie) {
-			throw new RuntimeException(jsonwsie);
-		}
-		catch (JSONWebServiceSerializeException jsonwsse) {
-			throw new RuntimeException(jsonwsse);
-		}
+	public LCSClusterEntry getLCSClusterEntry(long lcsClusterEntryId)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException {
+
+		return _jsonWebServiceClient.doGetToObject(
+			LCSClusterEntry.class,
+			_URL_LCS_CLUSTER_ENTRY + StringPool.SLASH + lcsClusterEntryId);
 	}
 
 	@Override
 	public List<LCSClusterEntry> getLCSProjectManageableLCSClusterEntries(
-		long lcsProjectId, int localLCSClusterEntryType) {
+			long lcsProjectId, int localLCSClusterEntryType)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException {
 
 		List<LCSClusterEntry> remoteLcsClusterEntries = null;
 
-		try {
-			StringBuilder sb = new StringBuilder(5);
+		StringBuilder sb = new StringBuilder(5);
 
-			sb.append(_URL_LCS_CLUSTER_ENTRY);
-			sb.append("/find/");
-			sb.append(lcsProjectId);
-			sb.append(StringPool.SLASH);
-			sb.append("true");
+		sb.append(_URL_LCS_CLUSTER_ENTRY);
+		sb.append("/find/");
+		sb.append(lcsProjectId);
+		sb.append(StringPool.SLASH);
+		sb.append("true");
 
-			remoteLcsClusterEntries = _jsonWebServiceClient.doGetToList(
-				LCSClusterEntry.class, sb.toString());
-		}
-		catch (JSONWebServiceInvocationException jsonwsie) {
-			throw new RuntimeException(jsonwsie);
-		}
-		catch (JSONWebServiceSerializeException jsonwsse) {
-			throw new RuntimeException(jsonwsse);
-		}
+		remoteLcsClusterEntries = _jsonWebServiceClient.doGetToList(
+			LCSClusterEntry.class, sb.toString());
 
 		List<LCSClusterEntry> lcsClusterEntries =
 			new ArrayList<LCSClusterEntry>();
@@ -120,7 +105,12 @@ public class LCSClusterEntryClientImpl implements LCSClusterEntryClient {
 		return lcsClusterEntries;
 	}
 
-	protected void validate(long lcsProjectId, String lcsClusterEntryName) {
+	protected void validate(long lcsProjectId, String lcsClusterEntryName)
+		throws DuplicateLCSClusterEntryNameException,
+			   JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException,
+			   RequiredLCSClusterEntryNameException {
+
 		if ((lcsClusterEntryName == null) || lcsClusterEntryName.equals("")) {
 			throw new RequiredLCSClusterEntryNameException();
 		}
@@ -138,21 +128,15 @@ public class LCSClusterEntryClientImpl implements LCSClusterEntryClient {
 	}
 
 	private List<LCSClusterEntry> _getLCSProjectLCSClusterEntries(
-		long lcsProjectId) {
+			long lcsProjectId)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException {
 
 		List<LCSClusterEntry> remoteLcsClusterEntries = null;
 
-		try {
-			remoteLcsClusterEntries = _jsonWebServiceClient.doGetToList(
-				LCSClusterEntry.class,
-				_URL_LCS_CLUSTER_ENTRY + "/find/" + lcsProjectId);
-		}
-		catch (JSONWebServiceInvocationException jsonwsie) {
-			throw new RuntimeException(jsonwsie);
-		}
-		catch (JSONWebServiceSerializeException jsonwsse) {
-			throw new RuntimeException(jsonwsse);
-		}
+		remoteLcsClusterEntries = _jsonWebServiceClient.doGetToList(
+			LCSClusterEntry.class,
+			_URL_LCS_CLUSTER_ENTRY + "/find/" + lcsProjectId);
 
 		List<LCSClusterEntry> lcsClusterEntries =
 			new ArrayList<LCSClusterEntry>();

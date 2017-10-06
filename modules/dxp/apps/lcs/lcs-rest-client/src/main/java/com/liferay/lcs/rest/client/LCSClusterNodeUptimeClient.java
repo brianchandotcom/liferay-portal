@@ -14,13 +14,17 @@
 
 package com.liferay.lcs.rest.client;
 
+import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+
 /**
  * @author Riccardo Ferrari
  */
 public interface LCSClusterNodeUptimeClient {
 
-	public void updateLCSClusterNodeUptime(String key);
+	public void updateLCSClusterNodeUptime(String key)
+		throws JSONWebServiceInvocationException;
 
-	public void updateLCSClusterNodeUptimes(String key, String uptimesJSON);
+	public void updateLCSClusterNodeUptimes(String key, String uptimesJSON)
+		throws JSONWebServiceInvocationException;
 
 }

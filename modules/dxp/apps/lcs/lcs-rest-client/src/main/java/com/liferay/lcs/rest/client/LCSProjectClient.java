@@ -14,6 +14,9 @@
 
 package com.liferay.lcs.rest.client;
 
+import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
+
 import java.util.List;
 
 /**
@@ -21,10 +24,16 @@ import java.util.List;
  */
 public interface LCSProjectClient {
 
-	public LCSProject addDefaultLCSProject();
+	public LCSProject addDefaultLCSProject()
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException;
 
-	public LCSProject getLCSProject(String key);
+	public LCSProject getLCSProject(String key)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException;
 
-	public List<LCSProject> getUserManageableLCSProjects();
+	public List<LCSProject> getUserManageableLCSProjects()
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException;
 
 }

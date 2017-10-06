@@ -14,11 +14,16 @@
 
 package com.liferay.lcs.rest.client;
 
+import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
+
 /**
  * @author Ivica Cardic
  */
 public interface LCSRoleClient {
 
-	public boolean hasUserLCSAdministratorLCSRole(long lcsProjectId);
+	public boolean hasUserLCSAdministratorLCSRole(long lcsProjectId)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException;
 
 }

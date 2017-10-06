@@ -35,7 +35,9 @@ public class LCSClusterEntryTokenClientImpl
 
 	@Override
 	public LCSClusterEntryToken fetchLCSClusterEntryToken(
-		long lcsClusterEntryTokenId) {
+			long lcsClusterEntryTokenId)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException {
 
 		try {
 			LCSClusterEntryToken lcsClusterEntryToken =
@@ -51,10 +53,7 @@ public class LCSClusterEntryTokenClientImpl
 				return null;
 			}
 
-			throw new RuntimeException(jsonwsie);
-		}
-		catch (JSONWebServiceSerializeException jsonwsse) {
-			throw new RuntimeException(jsonwsse);
+			throw jsonwsie;
 		}
 	}
 

@@ -14,6 +14,9 @@
 
 package com.liferay.lcs.rest.client;
 
+import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
+
 /**
  * @author Riccardo Ferrari
  */
@@ -21,6 +24,7 @@ public interface LCSPatchingAdvisorClient {
 
 	public java.util.List<String> getInstallablePatchIds(
 			String key, int patchingToolVersion, String[] installedPatchIds)
-		throws Exception;
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException;
 
 }

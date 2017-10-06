@@ -14,17 +14,23 @@
 
 package com.liferay.lcs.rest.client;
 
+import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+
 /**
  * @author Riccardo Ferrari
  */
 public interface LCSMembersClient {
 
-	public void sendMonitoringUnavailableEmail(String key);
+	public void sendMonitoringUnavailableEmail(String key)
+		throws JSONWebServiceInvocationException;
 
-	public void sendPatchingToolUnavailableEmail(String key);
+	public void sendPatchingToolUnavailableEmail(String key)
+		throws JSONWebServiceInvocationException;
 
-	public void sendServerManuallyShutdownEmail(String key);
+	public void sendServerManuallyShutdownEmail(String key)
+		throws JSONWebServiceInvocationException;
 
-	public void sendServerUnexpectedlyShutdownEmail(String key);
+	public void sendServerUnexpectedlyShutdownEmail(String key)
+		throws JSONWebServiceInvocationException;
 
 }

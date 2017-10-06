@@ -15,6 +15,7 @@
 package com.liferay.lcs.rest.client;
 
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
 
 /**
  * @author Igor Beslic
@@ -25,7 +26,9 @@ public interface LCSSubscriptionEntryClient {
 			long corpProjectId, String lcsSubscriptionEntriesJSON)
 		throws JSONWebServiceInvocationException;
 
-	public LCSSubscriptionEntry fetchLCSSubscriptionEntry(String key);
+	public LCSSubscriptionEntry fetchLCSSubscriptionEntry(String key)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException;
 
 	public void incrementServerUsed(String key)
 		throws JSONWebServiceInvocationException;

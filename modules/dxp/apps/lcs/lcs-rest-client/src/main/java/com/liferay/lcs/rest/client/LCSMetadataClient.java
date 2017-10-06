@@ -14,11 +14,16 @@
 
 package com.liferay.lcs.rest.client;
 
+import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
+
 /**
  * @author Riccardo Ferrari
  */
 public interface LCSMetadataClient {
 
-	public int getSupportedLCSPortlet(String buildNumber, String portalEdition);
+	public int getSupportedLCSPortlet(String buildNumber, String portalEdition)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException;
 
 }

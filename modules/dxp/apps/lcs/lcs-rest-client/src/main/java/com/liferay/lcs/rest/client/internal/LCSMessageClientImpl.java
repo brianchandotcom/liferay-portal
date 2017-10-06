@@ -41,16 +41,12 @@ public class LCSMessageClientImpl implements LCSMessageClient {
 
 	@Override
 	public void deleteCorpProjectLCSMessage(
-		long corpProjectId, long sourceMessageId) {
+			long corpProjectId, long sourceMessageId)
+		throws JSONWebServiceInvocationException {
 
-		try {
-			_jsonWebServiceClient.doDelete(
-				_URL_LCS_MESSAGE + StringPool.SLASH + corpProjectId +
-					StringPool.SLASH + sourceMessageId);
-		}
-		catch (JSONWebServiceInvocationException jsonwsie) {
-			throw new RuntimeException(jsonwsie);
-		}
+		_jsonWebServiceClient.doDelete(
+			_URL_LCS_MESSAGE + StringPool.SLASH + corpProjectId +
+				StringPool.SLASH + sourceMessageId);
 	}
 
 	private static final String _URL_LCS_MESSAGE = "/o/osb-lcs-rest/LCSMessage";

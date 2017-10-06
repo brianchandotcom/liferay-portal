@@ -33,33 +33,28 @@ import org.osgi.service.component.annotations.Reference;
 public class LCSRoleClientImpl implements LCSRoleClient {
 
 	@Override
-	public boolean hasUserLCSAdministratorLCSRole(long lcsProjectId) {
-		try {
-			StringBuilder sb = new StringBuilder(7);
+	public boolean hasUserLCSAdministratorLCSRole(long lcsProjectId)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException {
 
-			sb.append(_URL_LCS_ROLE);
-			sb.append("/find/");
-			sb.append(lcsProjectId);
-			sb.append(StringPool.SLASH);
-			sb.append("true");
-			sb.append(StringPool.SLASH);
-			sb.append("false");
+		StringBuilder sb = new StringBuilder(7);
 
-			List<LCSRole> lcsRoles = _jsonWebServiceClient.doGetToList(
-				LCSRole.class, sb.toString());
+		sb.append(_URL_LCS_ROLE);
+		sb.append("/find/");
+		sb.append(lcsProjectId);
+		sb.append(StringPool.SLASH);
+		sb.append("true");
+		sb.append(StringPool.SLASH);
+		sb.append("false");
 
-			if (lcsRoles.isEmpty()) {
-				return false;
-			}
+		List<LCSRole> lcsRoles = _jsonWebServiceClient.doGetToList(
+			LCSRole.class, sb.toString());
 
-			return true;
+		if (lcsRoles.isEmpty()) {
+			return false;
 		}
-		catch (JSONWebServiceInvocationException jsonwsie) {
-			throw new RuntimeException(jsonwsie);
-		}
-		catch (JSONWebServiceSerializeException jsonwsse) {
-			throw new RuntimeException(jsonwsse);
-		}
+
+		return true;
 	}
 
 	private static final String _URL_LCS_ROLE = "/o/osb-lcs-rest/LCSRole";

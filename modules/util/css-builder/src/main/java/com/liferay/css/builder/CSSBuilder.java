@@ -139,9 +139,9 @@ public class CSSBuilder implements AutoCloseable {
 	}
 
 	public void execute() throws Exception {
-		final List<String> fileNames = new ArrayList<>();
+		List<String> fileNames = new ArrayList<>();
 
-		final File docrootDir = _cssBuilderArgs.getDocrootDir();
+		File docrootDir = _cssBuilderArgs.getDocrootDir();
 
 		for (String dirName : _cssBuilderArgs.getDirNames()) {
 			List<String> sassFileNames = _collectSassFiles(dirName, docrootDir);
@@ -172,11 +172,10 @@ public class CSSBuilder implements AutoCloseable {
 		return false;
 	}
 
-	private List<String> _collectSassFiles(
-			String dirName, final File docrootDir)
+	private List<String> _collectSassFiles(String dirName, File docrootDir)
 		throws Exception {
 
-		final List<String> fileNames = new ArrayList<>();
+		List<String> fileNames = new ArrayList<>();
 
 		String basedir = new File(docrootDir, dirName).toString();
 

@@ -263,28 +263,23 @@ public class ProcessUtilTest {
 
 		SyncThrowableThread<Void> syncThrowableThread =
 			new SyncThrowableThread<>(
-				new Callable<Void>() {
+				() -> {
+					while (true) {
+						for (Thread thread : ThreadUtil.getThreads()) {
+							if ((thread != null) &&
+								threadName.equals(thread.getName())) {
 
-					@Override
-					public Void call() throws Exception {
-						while (true) {
-							for (Thread thread : ThreadUtil.getThreads()) {
-								if ((thread != null) &&
-									threadName.equals(thread.getName())) {
+								thread.interrupt();
 
-									thread.interrupt();
-
-									return null;
-								}
+								return null;
 							}
 						}
 					}
-
 				});
 
 		syncThrowableThread.start();
 
-		final Future<?> future = ProcessUtil.execute(
+		Future<?> future = ProcessUtil.execute(
 			new OutputProcessor<Void, Void>() {
 
 				@Override
@@ -308,7 +303,7 @@ public class ProcessUtilTest {
 		catch (ExecutionException ee) {
 			Throwable throwable = ee.getCause();
 
-			Assert.assertEquals(ProcessException.class, throwable.getClass());
+			Assert.assertSame(ProcessException.class, throwable.getClass());
 			Assert.assertEquals(
 				"Forcibly killed subprocess on interruption",
 				throwable.getMessage());
@@ -348,7 +343,7 @@ public class ProcessUtilTest {
 		catch (ProcessException pe) {
 			Throwable throwable = pe.getCause();
 
-			Assert.assertEquals(IOException.class, throwable.getClass());
+			Assert.assertSame(IOException.class, throwable.getClass());
 		}
 	}
 
@@ -371,10 +366,6 @@ public class ProcessUtilTest {
 
 	private static class DummyJob implements Callable<Void> {
 
-		public DummyJob() {
-			_countDownLatch = new CountDownLatch(1);
-		}
-
 		@Override
 		public Void call() throws Exception {
 			_countDownLatch.countDown();
@@ -386,6 +377,10 @@ public class ProcessUtilTest {
 
 		public void waitUntilStarted() throws InterruptedException {
 			_countDownLatch.await();
+		}
+
+		private DummyJob() {
+			_countDownLatch = new CountDownLatch(1);
 		}
 
 		private final CountDownLatch _countDownLatch;

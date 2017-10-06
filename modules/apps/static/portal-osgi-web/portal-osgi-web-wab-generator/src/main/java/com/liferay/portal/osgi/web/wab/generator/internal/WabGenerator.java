@@ -93,10 +93,11 @@ public class WabGenerator
 
 		registerArtifactUrlTransformer(bundleContext);
 
-		final Set<String> requiredForStartupWars = getRequiredForStartupWars(
-			Paths.get(PropsValues.LIFERAY_HOME, "osgi/war"));
+		final Set<String> requiredForStartupContextPaths =
+			getRequiredForStartupContextPaths(
+				Paths.get(PropsValues.LIFERAY_HOME, "osgi/war"));
 
-		if (requiredForStartupWars.isEmpty()) {
+		if (requiredForStartupContextPaths.isEmpty()) {
 			return;
 		}
 
@@ -113,7 +114,7 @@ public class WabGenerator
 					_log.debug("Activated bundle " + location);
 				}
 
-				if (requiredForStartupWars.remove(
+				if (requiredForStartupContextPaths.remove(
 						_http.getParameter(
 							location, "Web-ContextPath", false))) {
 
@@ -122,7 +123,7 @@ public class WabGenerator
 							"Bundle " + location + " is required for startup");
 					}
 
-					if (requiredForStartupWars.isEmpty()) {
+					if (requiredForStartupContextPaths.isEmpty()) {
 						countDownLatch.countDown();
 					}
 				}
@@ -134,7 +135,8 @@ public class WabGenerator
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Bundles required for startup: " + requiredForStartupWars);
+				"Bundles required for startup: " +
+					requiredForStartupContextPaths);
 		}
 
 		bundleTracker.open();
@@ -147,7 +149,7 @@ public class WabGenerator
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Waiting on startup required bundles to activate: " +
-						requiredForStartupWars);
+						requiredForStartupContextPaths);
 			}
 		}
 
@@ -165,10 +167,10 @@ public class WabGenerator
 		_serviceRegistration = null;
 	}
 
-	protected Set<String> getRequiredForStartupWars(Path path)
+	protected Set<String> getRequiredForStartupContextPaths(Path path)
 		throws IOException {
 
-		Set<String> contextNames = new HashSet<>();
+		Set<String> contextPaths = new HashSet<>();
 
 		try (DirectoryStream<Path> directoryStream =
 				Files.newDirectoryStream(path.toRealPath(), "*.war")) {
@@ -197,14 +199,14 @@ public class WabGenerator
 
 					URL url = ArtifactURLUtil.transform(uri.toURL());
 
-					contextNames.add(
+					contextPaths.add(
 						_http.getParameter(
 							url.toString(), "Web-ContextPath", false));
 				}
 			}
 		}
 
-		return contextNames;
+		return contextPaths;
 	}
 
 	protected void registerArtifactUrlTransformer(BundleContext bundleContext) {

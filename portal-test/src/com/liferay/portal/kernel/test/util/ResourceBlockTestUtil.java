@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.service.ResourceBlockLocalServiceUtil;
 
 /**
  * @author Alberto Chaparro
+ * @deprecated As of 3.1.0, with no direct replacement
  */
+@Deprecated
 public class ResourceBlockTestUtil {
 
 	public static ResourceBlock addResourceBlock(long groupId, String name)

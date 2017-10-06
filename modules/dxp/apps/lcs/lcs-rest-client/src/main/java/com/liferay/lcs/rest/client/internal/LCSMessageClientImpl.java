@@ -32,7 +32,7 @@ public class LCSMessageClientImpl
 			long corpProjectId, long sourceMessageId, String content, int type)
 		throws JSONWebServiceInvocationException {
 
-		doPost(
+		jsonWebServiceClient.doPost(
 			_URL_LCS_MESSAGE, "corpProjectId", String.valueOf(corpProjectId),
 			"sourceMessageId", String.valueOf(sourceMessageId), "content",
 			content, "type", String.valueOf(type));
@@ -43,7 +43,7 @@ public class LCSMessageClientImpl
 		long corpProjectId, long sourceMessageId) {
 
 		try {
-			doDelete(
+			jsonWebServiceClient.doDelete(
 				_URL_LCS_MESSAGE + StringPool.SLASH + corpProjectId +
 					StringPool.SLASH + sourceMessageId);
 		}

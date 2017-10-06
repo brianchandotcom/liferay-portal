@@ -14,7 +14,6 @@
 
 package com.liferay.lcs.rest.client.internal;
 
-import com.liferay.petra.json.web.service.client.BaseJSONWebServiceClientHandler;
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 
 import org.osgi.service.component.annotations.Reference;
@@ -23,21 +22,19 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ivica Cardic
  * @author Igor Beslic
  */
-public abstract class BaseLCSServiceImpl
-	extends BaseJSONWebServiceClientHandler {
+public abstract class BaseLCSServiceImpl {
 
-	@Override
 	public JSONWebServiceClient getJSONWebServiceClient() {
-		return _jsonWebServiceClient;
+		return jsonWebServiceClient;
 	}
 
 	public void setJSONWebServiceClient(
 		JSONWebServiceClient jsonWebServiceClient) {
 
-		_jsonWebServiceClient = jsonWebServiceClient;
+		this.jsonWebServiceClient = jsonWebServiceClient;
 	}
 
 	@Reference(target = "(component.name=OSBLCSJSONWebServiceClient)")
-	private JSONWebServiceClient _jsonWebServiceClient;
+	protected JSONWebServiceClient jsonWebServiceClient;
 
 }

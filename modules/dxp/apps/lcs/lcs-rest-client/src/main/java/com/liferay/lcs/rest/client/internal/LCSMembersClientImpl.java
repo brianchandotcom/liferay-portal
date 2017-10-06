@@ -29,7 +29,7 @@ public class LCSMembersClientImpl
 	@Override
 	public void sendMonitoringUnavailableEmail(String key) {
 		try {
-			doPut(
+			jsonWebServiceClient.doPut(
 				_URL_LCS_MEMBERS_SEND_MONITORING_UNAVAILABLE_EMAIL, "key", key);
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
@@ -40,7 +40,7 @@ public class LCSMembersClientImpl
 	@Override
 	public void sendPatchingToolUnavailableEmail(String key) {
 		try {
-			doPut(
+			jsonWebServiceClient.doPut(
 				_URL_LCS_MEMBERS_SEND_PATCHING_TOOL_UNAVAILABLE_EMAIL, "key",
 				key);
 		}
@@ -52,7 +52,7 @@ public class LCSMembersClientImpl
 	@Override
 	public void sendServerManuallyShutdownEmail(String key) {
 		try {
-			doPut(
+			jsonWebServiceClient.doPut(
 				_URL_LCS_MEMBERS_SEND_SERVER_MANUALLY_SHUTDOWN_EMAIL, "key",
 				key);
 		}
@@ -64,7 +64,7 @@ public class LCSMembersClientImpl
 	@Override
 	public void sendServerUnexpectedlyShutdownEmail(String key) {
 		try {
-			doPut(
+			jsonWebServiceClient.doPut(
 				_URL_LCS_MEMBERS_SEND_SERVER_UNEXPECTEDLY_SHUTDOWN_EMAIL, "key",
 				key);
 		}

@@ -17,6 +17,7 @@ package com.liferay.lcs.rest.client.internal;
 import com.liferay.lcs.rest.client.LCSRole;
 import com.liferay.lcs.rest.client.LCSRoleClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
@@ -43,7 +44,8 @@ public class LCSRoleClientImpl
 			sb.append(StringPool.SLASH);
 			sb.append("false");
 
-			List<LCSRole> lcsRoles = doGetToList(LCSRole.class, sb.toString());
+			List<LCSRole> lcsRoles = jsonWebServiceClient.doGetToList(
+				LCSRole.class, sb.toString());
 
 			if (lcsRoles.isEmpty()) {
 				return false;
@@ -53,6 +55,9 @@ public class LCSRoleClientImpl
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
 			throw new RuntimeException(jsonwsie);
+		}
+		catch (JSONWebServiceSerializeException jsonwsse) {
+			throw new RuntimeException(jsonwsse);
 		}
 	}
 

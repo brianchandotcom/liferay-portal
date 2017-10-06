@@ -51,7 +51,7 @@ public class LCSPatchingAdvisorClientImpl
 			}
 		}
 
-		return doGetToList(String.class, sb.toString());
+		return jsonWebServiceClient.doGetToList(String.class, sb.toString());
 	}
 
 	private static final String _URL_PATCHING_ADVISOR =

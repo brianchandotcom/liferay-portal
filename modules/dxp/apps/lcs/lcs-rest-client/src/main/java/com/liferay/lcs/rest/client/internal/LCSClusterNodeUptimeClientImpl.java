@@ -31,7 +31,8 @@ public class LCSClusterNodeUptimeClientImpl
 	@Override
 	public void updateLCSClusterNodeUptime(String key) {
 		try {
-			doPut(_URL_LCS_CLUSTER_NODE_UPTIME, "key", key);
+			jsonWebServiceClient.doPut(
+				_URL_LCS_CLUSTER_NODE_UPTIME, "key", key);
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
 			if (jsonwsie.getStatus() == HttpServletResponse.SC_NOT_FOUND) {
@@ -45,7 +46,7 @@ public class LCSClusterNodeUptimeClientImpl
 	@Override
 	public void updateLCSClusterNodeUptimes(String key, String uptimesJSON) {
 		try {
-			doPut(
+			jsonWebServiceClient.doPut(
 				_URL_LCS_CLUSTER_NODE_UPTIME, "key", key, "uptimesJSON",
 				uptimesJSON);
 		}

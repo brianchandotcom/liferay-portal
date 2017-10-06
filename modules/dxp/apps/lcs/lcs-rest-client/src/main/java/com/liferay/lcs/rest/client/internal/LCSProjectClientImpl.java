@@ -17,6 +17,7 @@ package com.liferay.lcs.rest.client.internal;
 import com.liferay.lcs.rest.client.LCSProject;
 import com.liferay.lcs.rest.client.LCSProjectClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,21 +34,28 @@ public class LCSProjectClientImpl
 	@Override
 	public LCSProject addDefaultLCSProject() {
 		try {
-			return doPostToObject(LCSProject.class, _URL_LCS_PROJECT);
+			return jsonWebServiceClient.doPostToObject(
+				LCSProject.class, _URL_LCS_PROJECT);
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
 			throw new RuntimeException(jsonwsie);
+		}
+		catch (JSONWebServiceSerializeException jsonwsse) {
+			throw new RuntimeException(jsonwsse);
 		}
 	}
 
 	@Override
 	public LCSProject getLCSProject(String key) {
 		try {
-			return doGetToObject(
+			return jsonWebServiceClient.doGetToObject(
 				LCSProject.class, _URL_LCS_PROJECT + "/find", "key", key);
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
 			throw new RuntimeException(jsonwsie);
+		}
+		catch (JSONWebServiceSerializeException jsonwsse) {
+			throw new RuntimeException(jsonwsse);
 		}
 	}
 
@@ -56,11 +64,14 @@ public class LCSProjectClientImpl
 		List<LCSProject> remoteLCSProjects = null;
 
 		try {
-			remoteLCSProjects = doGetToList(
+			remoteLCSProjects = jsonWebServiceClient.doGetToList(
 				LCSProject.class, _URL_LCS_PROJECT + "/find", "manage", "true");
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
 			throw new RuntimeException(jsonwsie);
+		}
+		catch (JSONWebServiceSerializeException jsonwsse) {
+			throw new RuntimeException(jsonwsse);
 		}
 
 		List<LCSProject> lcsProjects = new ArrayList<LCSProject>();

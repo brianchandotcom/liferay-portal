@@ -59,7 +59,7 @@ public class LCSMetadataClientImpl
 				sb.append(StringPool.SLASH);
 				sb.append(portalEdition);
 
-				LCSMetadata lcsMetadata = doGetToObject(
+				LCSMetadata lcsMetadata = jsonWebServiceClient.doGetToObject(
 					LCSMetadata.class, sb.toString());
 
 				_supportedLCSPortletMap.put(

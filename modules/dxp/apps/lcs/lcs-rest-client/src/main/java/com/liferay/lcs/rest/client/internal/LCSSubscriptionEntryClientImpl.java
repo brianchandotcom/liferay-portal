@@ -17,6 +17,7 @@ package com.liferay.lcs.rest.client.internal;
 import com.liferay.lcs.rest.client.LCSSubscriptionEntry;
 import com.liferay.lcs.rest.client.LCSSubscriptionEntryClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
 import com.liferay.portal.kernel.util.StringPool;
 
 import javax.servlet.http.HttpServletResponse;
@@ -38,7 +39,7 @@ public class LCSSubscriptionEntryClientImpl
 			long corpProjectId, String lcsSubscriptionEntriesJSON)
 		throws JSONWebServiceInvocationException {
 
-		doPost(
+		jsonWebServiceClient.doPost(
 			_URL_LCS_SUBSCRIPTION_ENTRY, "corpProjectId",
 			String.valueOf(corpProjectId), "lcsSubscriptionEntriesJSON",
 			lcsSubscriptionEntriesJSON);
@@ -58,7 +59,7 @@ public class LCSSubscriptionEntryClientImpl
 	@Override
 	public LCSSubscriptionEntry fetchLCSSubscriptionEntry(String key) {
 		try {
-			return doGetToObject(
+			return jsonWebServiceClient.doGetToObject(
 				LCSSubscriptionEntry.class,
 				_URL_LCS_SUBSCRIPTION_ENTRY + "/find/" + key);
 		}
@@ -69,13 +70,16 @@ public class LCSSubscriptionEntryClientImpl
 
 			throw new RuntimeException(jsonwsie);
 		}
+		catch (JSONWebServiceSerializeException jsonwsse) {
+			throw new RuntimeException(jsonwsse);
+		}
 	}
 
 	@Override
 	public void incrementServerUsed(String key)
 		throws JSONWebServiceInvocationException {
 
-		doPost(
+		jsonWebServiceClient.doPost(
 			_URL_LCS_SUBSCRIPTION_ENTRY + StringPool.SLASH + key +
 				"/incrementServerUsed");
 	}

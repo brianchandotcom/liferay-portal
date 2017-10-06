@@ -14,15 +14,12 @@
 
 package com.liferay.portal.kernel.process;
 
-import com.liferay.portal.kernel.concurrent.AbortPolicy;
 import com.liferay.portal.kernel.concurrent.BaseFutureListener;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
-import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
-import com.liferay.portal.kernel.concurrent.ThreadPoolHandlerAdapter;
-import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
 
@@ -30,8 +27,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
-import java.util.concurrent.RejectedExecutionException;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicMarkableReference;
 
 /**
@@ -65,29 +60,21 @@ public class ProcessUtil {
 
 		ProcessBuilder processBuilder = new ProcessBuilder(arguments);
 
+		String threadNamePrefix = _buildThreadNamePrefix(arguments);
+
 		try {
 			Process process = processBuilder.start();
 
-			ThreadPoolExecutor threadPoolExecutor = _getThreadPoolExecutor();
+			NoticeableFuture<O> stdOutNoticeableFuture = _submit(
+				threadNamePrefix.concat("StdOut"),
+				new ProcessStdOutCallable<>(outputProcessor, process));
 
-			try {
-				NoticeableFuture<O> stdOutNoticeableFuture =
-					threadPoolExecutor.submit(
-						new ProcessStdOutCallable<>(outputProcessor, process));
+			NoticeableFuture<E> stdErrNoticeableFuture = _submit(
+				threadNamePrefix.concat("StdErr"),
+				new ProcessStdErrCallable<>(outputProcessor, process));
 
-				NoticeableFuture<E> stdErrNoticeableFuture =
-					threadPoolExecutor.submit(
-						new ProcessStdErrCallable<>(outputProcessor, process));
-
-				return _wrapNoticeableFuture(
-					stdOutNoticeableFuture, stdErrNoticeableFuture, process);
-			}
-			catch (RejectedExecutionException ree) {
-				process.destroy();
-
-				throw new ProcessException(
-					"Cancelled execution because of a concurrent destroy", ree);
-			}
+			return _wrapNoticeableFuture(
+				stdOutNoticeableFuture, stdErrNoticeableFuture, process);
 		}
 		catch (IOException ioe) {
 			throw new ProcessException(ioe);
@@ -101,38 +88,43 @@ public class ProcessUtil {
 		return execute(outputProcessor, Arrays.asList(arguments));
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public void destroy() {
-		if (_threadPoolExecutor == null) {
-			return;
-		}
-
-		synchronized (ProcessUtil.class) {
-			if (_threadPoolExecutor != null) {
-				_threadPoolExecutor.shutdownNow();
-
-				_threadPoolExecutor = null;
-			}
-		}
 	}
 
-	private static ThreadPoolExecutor _getThreadPoolExecutor() {
-		if (_threadPoolExecutor != null) {
-			return _threadPoolExecutor;
+	private static String _buildThreadNamePrefix(List<String> arguments) {
+		StringBundler sb = new StringBundler(arguments.size() * 2 + 1);
+
+		sb.append(StringPool.OPEN_BRACKET);
+
+		for (String argument : arguments) {
+			sb.append(argument);
+			sb.append(StringPool.SPACE);
 		}
 
-		synchronized (ProcessUtil.class) {
-			if (_threadPoolExecutor == null) {
-				_threadPoolExecutor = new ThreadPoolExecutor(
-					0, Integer.MAX_VALUE, 60, TimeUnit.SECONDS, true,
-					Integer.MAX_VALUE, new AbortPolicy(),
-					new NamedThreadFactory(
-						ProcessUtil.class.getName(), Thread.MIN_PRIORITY,
-						PortalClassLoaderUtil.getClassLoader()),
-					new ThreadPoolHandlerAdapter());
-			}
-		}
+		sb.setStringAt(StringPool.CLOSE_BRACKET, sb.index() - 1);
 
-		return _threadPoolExecutor;
+		sb.append("-");
+
+		return sb.toString();
+	}
+
+	private static <T> NoticeableFuture<T> _submit(
+		String threadName, Callable<T> callable) {
+
+		DefaultNoticeableFuture<T> defaultNoticeableFuture =
+			new DefaultNoticeableFuture<>(callable);
+
+		Thread thread = new Thread(defaultNoticeableFuture, threadName);
+
+		thread.setDaemon(true);
+
+		thread.start();
+
+		return defaultNoticeableFuture;
 	}
 
 	private static <O, E> NoticeableFuture<ObjectValuePair<O, E>>
@@ -226,8 +218,6 @@ public class ProcessUtil {
 
 		return defaultNoticeableFuture;
 	}
-
-	private static volatile ThreadPoolExecutor _threadPoolExecutor;
 
 	private static class ProcessStdErrCallable<T> implements Callable<T> {
 

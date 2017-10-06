@@ -16,12 +16,16 @@ package com.liferay.portal.kernel.servlet;
 
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Tina Tian
  */
 public interface PortletResponseHeadersHelper {
+
+	public RequestDispatcher getReloadHeadersRequestDispatcher(
+		RequestDispatcher requestDispatcher);
 
 	public void transferHeaders(
 		Map<String, Object> headers, HttpServletResponse httpServletResponse);

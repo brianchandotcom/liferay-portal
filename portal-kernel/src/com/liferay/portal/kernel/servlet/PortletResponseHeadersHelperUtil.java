@@ -18,12 +18,20 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Tina Tian
  */
 public class PortletResponseHeadersHelperUtil {
+
+	public static RequestDispatcher getReloadHeadersRequestDispatcher(
+		RequestDispatcher requestDispatcher) {
+
+		return _getPortletResponseHeadersHelper().
+			getReloadHeadersRequestDispatcher(requestDispatcher);
+	}
 
 	public static void transferHeaders(
 		Map<String, Object> headers, HttpServletResponse httpServletResponse) {

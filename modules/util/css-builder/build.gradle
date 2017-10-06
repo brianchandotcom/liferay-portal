@@ -57,6 +57,7 @@ dependencies {
 	provided group: "org.apache.maven", name: "maven-core", version: "3.2.5"
 	provided group: "org.apache.maven", name: "maven-plugin-api", version: "3.2.5"
 
+	testCompile group: "org.apache.ant", name: "ant-testutil", version: "1.9.7"
 	testCompile project(":test:maven-executor")
 }
 

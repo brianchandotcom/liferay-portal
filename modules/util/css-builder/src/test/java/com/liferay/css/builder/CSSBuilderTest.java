@@ -17,7 +17,6 @@ package com.liferay.css.builder;
 import com.liferay.css.builder.util.FileTestUtil;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.net.URL;
 
@@ -62,7 +61,7 @@ public class CSSBuilderTest {
 	}
 
 	@Before
-	public void setUp() throws IOException {
+	public void setUp() throws Exception {
 		File docrootDir = temporaryFolder.getRoot();
 
 		_docrootDirPath = docrootDir.toPath();

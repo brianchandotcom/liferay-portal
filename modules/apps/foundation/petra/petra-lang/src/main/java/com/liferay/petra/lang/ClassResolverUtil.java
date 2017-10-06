@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.petra.lang;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,56 +37,6 @@ public class ClassResolverUtil {
 			else {
 				throw cnfe;
 			}
-		}
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
-	public static Class<?> resolveByContextClassLoader(String className) {
-		Thread thread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = thread.getContextClassLoader();
-
-		try {
-			return Class.forName(className, false, contextClassLoader);
-		}
-		catch (ClassNotFoundException cnfe) {
-			throw new RuntimeException(cnfe);
-		}
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
-	public static Class<?> resolveByPortalClassLoader(String className) {
-		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
-
-		try {
-			return Class.forName(className, false, portalClassLoader);
-		}
-		catch (ClassNotFoundException cnfe) {
-			throw new RuntimeException(cnfe);
-		}
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
-	public static Class<?> resolveByPortletClassLoader(
-		String className, String servletContextName) {
-
-		ClassLoader classLoader = ClassLoaderPool.getClassLoader(
-			servletContextName);
-
-		try {
-			return Class.forName(className, false, classLoader);
-		}
-		catch (ClassNotFoundException cnfe) {
-			throw new RuntimeException(cnfe);
 		}
 	}
 

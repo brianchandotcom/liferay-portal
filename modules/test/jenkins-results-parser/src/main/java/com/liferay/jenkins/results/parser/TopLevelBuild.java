@@ -37,6 +37,8 @@ import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
+
 import org.dom4j.Element;
 
 import org.json.JSONException;
@@ -596,7 +598,7 @@ public class TopLevelBuild extends BaseBuild {
 			JenkinsReportUtil.getSummaryElement(
 				topLevelBuild, axisBuilds, batchBuilds, testResults),
 			getJenkinsReportTimelineElement(topLevelBuild, axisBuilds),
-			JenkinsReportUtil.getTopLevelTableElement(topLevelBuild),
+			getJenkinsReportTopLevelTableElement(topLevelBuild),
 			JenkinsReportUtil.getBatchReportElement(batchBuilds));
 
 		return bodyElement;
@@ -704,6 +706,52 @@ public class TopLevelBuild extends BaseBuild {
 			divElement, canvasElement, scriptElement, chartJSScriptElement);
 
 		return divElement;
+	}
+
+	protected Element getJenkinsReportTopLevelTableElement(
+		Build topLevelBuild) {
+
+		Element topLevelTableElement = Dom4JUtil.getNewElement("table");
+
+		String status = topLevelBuild.getStatus();
+
+		String result = topLevelBuild.getResult();
+
+		if (result != null) {
+			topLevelTableElement.add(
+				Dom4JUtil.getNewElement(
+					"caption", null,
+					"Top Level Build - <strong>" + result + "</strong>"));
+		}
+		else {
+			topLevelTableElement.add(
+				Dom4JUtil.getNewElement(
+					"caption", null,
+					"Top Level Build - <strong>" +
+						StringUtils.upperCase(status) + "</strong>"));
+		}
+
+		topLevelTableElement.add(
+			JenkinsReportUtil.getTableColumnHeaderElement());
+
+		String jobName = topLevelBuild.getJobName();
+
+		String topLevelName = topLevelBuild.getDisplayName();
+
+		topLevelName = topLevelName.replace(jobName + "/", "");
+
+		Element trTopLevelElement = Dom4JUtil.getNewElement("tr");
+
+		for (Element topLevelInfoElement :
+				JenkinsReportUtil.getCommonBuildInfoElements(
+					topLevelBuild, topLevelName, "th")) {
+
+			trTopLevelElement.add(topLevelInfoElement);
+		}
+
+		topLevelTableElement.add(trTopLevelElement);
+
+		return topLevelTableElement;
 	}
 
 	protected Element getJobSummaryListElement() {

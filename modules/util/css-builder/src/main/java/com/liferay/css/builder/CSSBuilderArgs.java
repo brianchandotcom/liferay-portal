@@ -101,12 +101,12 @@ public class CSSBuilderArgs {
 		_outputDirName = outputDirName;
 	}
 
-	public void setPortalCommonPath(String portalCommonPathName) {
-		_portalCommonPath = new File(portalCommonPathName);
-	}
-
 	public void setPortalCommonPath(File portalCommonPath) {
 		_portalCommonPath = portalCommonPath;
+	}
+
+	public void setPortalCommonPath(String portalCommonPathName) {
+		_portalCommonPath = new File(portalCommonPathName);
 	}
 
 	public void setPrecision(int precision) {

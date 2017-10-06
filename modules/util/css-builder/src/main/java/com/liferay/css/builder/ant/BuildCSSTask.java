@@ -18,6 +18,7 @@ import com.liferay.css.builder.CSSBuilderArgs;
 import com.liferay.css.builder.CSSBuilderInvoker;
 
 import java.io.File;
+
 import java.nio.file.Path;
 
 import org.apache.tools.ant.BuildException;
@@ -60,26 +61,23 @@ public class BuildCSSTask extends Task {
 	}
 
 	public void setDocrootDir(File docrootDir) {
-		if (docrootDir.isAbsolute())
-		{
+		if (docrootDir.isAbsolute()) {
 			_cssBuilderArgs.setDocrootDir(docrootDir);
 		}
-		else
-		{
+		else {
 			Project project = getProject();
-			
+
 			Path docrootDirPath = docrootDir.toPath();
-			
+
 			File baseDirFile = project.getBaseDir();
-			
+
 			Path baseDirPath = baseDirFile.toPath();
-			
+
 			Path absoluteBaseDirPath = baseDirPath.resolve(docrootDirPath);
 
 			File absoluteBaseDirFile = absoluteBaseDirPath.toFile();
-			
+
 			_cssBuilderArgs.setDocrootDir(absoluteBaseDirFile);
-		
 		}
 	}
 

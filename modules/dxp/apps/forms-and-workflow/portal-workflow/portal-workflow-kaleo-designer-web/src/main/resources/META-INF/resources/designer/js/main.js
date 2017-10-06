@@ -29,18 +29,6 @@ AUI.add(
 
 		var DEFAULT_LANGUAGE = 'groovy';
 
-		var SCHEMA_FIELDS_PATH = ['results', '0', 'name'];
-
-		var SCHEMA_MAP_RESULTS = {
-			resultFields: [
-				{
-					key: 'name',
-					locator: 'Name[@language-id="' + themeDisplay.getLanguageId() + '"]'
-				}
-			],
-			resultListLocator: 'root'
-		};
-
 		var STR_BLANK = '';
 
 		var PropertyListFormatter = Liferay.KaleoDesignerUtils.PropertyListFormatter;
@@ -215,14 +203,6 @@ AUI.add(
 						);
 
 						return output.meta;
-					},
-
-					getLocalizedName: function(name) {
-						var doc = A.DataType.XML.parse(name);
-
-						var schema = A.DataSchema.XML.apply(SCHEMA_MAP_RESULTS, doc);
-
-						return A.Object.getValue(schema, SCHEMA_FIELDS_PATH);
 					},
 
 					sanitizeDefinitionXML: function(val) {

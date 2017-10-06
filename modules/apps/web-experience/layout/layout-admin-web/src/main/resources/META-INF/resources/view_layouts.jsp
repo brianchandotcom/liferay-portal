@@ -65,6 +65,40 @@ renderResponse.setTitle(LanguageUtil.get(request, "pages"));
 </portlet:actionURL>
 
 <aui:form action="<%= deleteLayoutURL %>" cssClass="container-fluid-1280" name="fm">
+	<liferay-ui:search-container
+		id="pages"
+		searchContainer="<%= viewLayoutsDisplayContext.getLayoutsSearchContainer() %>"
+	>
+		<liferay-ui:search-container-row
+			className="com.liferay.portal.kernel.model.Layout"
+			keyProperty="plid"
+			modelVar="curLayout"
+		>
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				name="layout"
+				value="<%= HtmlUtil.escape(curLayout.getName(locale)) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				name="path"
+			>
+				<%= HtmlUtil.escape(viewLayoutsDisplayContext.getPath(curLayout, locale)) %> <strong><%= HtmlUtil.escape(curLayout.getName(locale)) %></strong>
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-date
+				name="create-date"
+				property="createDate"
+			/>
+
+			<liferay-ui:search-container-column-jsp
+				path="/layout_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator displayStyle="<%= viewLayoutsDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
+	</liferay-ui:search-container>
 </aui:form>
 
 <c:if test="<%= viewLayoutsDisplayContext.isShowAddRootLayoutButton() %>">

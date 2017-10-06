@@ -35,7 +35,6 @@ import com.liferay.document.library.kernel.service.persistence.DLFileShortcutPer
 import com.liferay.document.library.kernel.service.persistence.DLFileVersionPersistence;
 import com.liferay.document.library.kernel.service.persistence.DLFolderFinder;
 import com.liferay.document.library.kernel.service.persistence.DLFolderPersistence;
-import com.liferay.document.library.kernel.service.persistence.DLSyncEventPersistence;
 
 import com.liferay.expando.kernel.service.persistence.ExpandoValuePersistence;
 
@@ -1237,44 +1236,6 @@ public abstract class DLAppHelperLocalServiceBaseImpl
 		this.dlFolderFinder = dlFolderFinder;
 	}
 
-	/**
-	 * Returns the dl sync event local service.
-	 *
-	 * @return the dl sync event local service
-	 */
-	public com.liferay.document.library.kernel.service.DLSyncEventLocalService getDLSyncEventLocalService() {
-		return dlSyncEventLocalService;
-	}
-
-	/**
-	 * Sets the dl sync event local service.
-	 *
-	 * @param dlSyncEventLocalService the dl sync event local service
-	 */
-	public void setDLSyncEventLocalService(
-		com.liferay.document.library.kernel.service.DLSyncEventLocalService dlSyncEventLocalService) {
-		this.dlSyncEventLocalService = dlSyncEventLocalService;
-	}
-
-	/**
-	 * Returns the dl sync event persistence.
-	 *
-	 * @return the dl sync event persistence
-	 */
-	public DLSyncEventPersistence getDLSyncEventPersistence() {
-		return dlSyncEventPersistence;
-	}
-
-	/**
-	 * Sets the dl sync event persistence.
-	 *
-	 * @param dlSyncEventPersistence the dl sync event persistence
-	 */
-	public void setDLSyncEventPersistence(
-		DLSyncEventPersistence dlSyncEventPersistence) {
-		this.dlSyncEventPersistence = dlSyncEventPersistence;
-	}
-
 	public void afterPropertiesSet() {
 	}
 
@@ -1437,8 +1398,4 @@ public abstract class DLAppHelperLocalServiceBaseImpl
 	protected DLFolderPersistence dlFolderPersistence;
 	@BeanReference(type = DLFolderFinder.class)
 	protected DLFolderFinder dlFolderFinder;
-	@BeanReference(type = com.liferay.document.library.kernel.service.DLSyncEventLocalService.class)
-	protected com.liferay.document.library.kernel.service.DLSyncEventLocalService dlSyncEventLocalService;
-	@BeanReference(type = DLSyncEventPersistence.class)
-	protected DLSyncEventPersistence dlSyncEventPersistence;
 }

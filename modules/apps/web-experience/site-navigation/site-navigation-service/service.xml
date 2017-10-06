@@ -71,6 +71,9 @@
 		<finder name="SiteNavigationMenuId" return-type="Collection">
 			<finder-column name="siteNavigationMenuId" />
 		</finder>
+		<finder name="ParentSiteNavigationMenuItemId" return-type="Collection">
+			<finder-column name="parentSiteNavigationMenuItemId" />
+		</finder>
 
 		<!-- References -->
 

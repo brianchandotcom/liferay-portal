@@ -14,12 +14,12 @@
 
 package com.liferay.portal.kernel.io;
 
+import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.util.ClassLoaderPool;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

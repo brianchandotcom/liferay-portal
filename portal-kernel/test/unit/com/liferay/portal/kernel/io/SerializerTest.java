@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.io;
 
+import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.portal.kernel.io.Serializer.BufferNode;
 import com.liferay.portal.kernel.io.Serializer.BufferQueue;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
-import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;

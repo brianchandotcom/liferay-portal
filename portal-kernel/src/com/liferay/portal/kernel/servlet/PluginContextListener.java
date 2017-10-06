@@ -14,12 +14,12 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
-import com.liferay.portal.kernel.util.ClassLoaderPool;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextAttributeEvent;

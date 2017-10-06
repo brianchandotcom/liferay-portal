@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 
 import java.util.ArrayList;

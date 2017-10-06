@@ -15,12 +15,15 @@
 package com.liferay.layout.admin.web.internal.display.context;
 
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminPortletKeys;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -34,6 +37,11 @@ public class ViewLayoutsDisplayContext extends BaseLayoutDisplayContext {
 		LiferayPortletResponse liferayPortletResponse) {
 
 		super(liferayPortletRequest, liferayPortletResponse);
+	}
+
+	public PortletURL getAddLayoutURL() {
+		return super.getAddLayoutURL(
+			LayoutConstants.DEFAULT_PLID, isPrivatePages());
 	}
 
 	public String getDisplayStyle() {
@@ -97,6 +105,22 @@ public class ViewLayoutsDisplayContext extends BaseLayoutDisplayContext {
 		portletURL.setParameter("orderByType", getOrderByType());
 
 		return portletURL;
+	}
+
+	public boolean isPrivatePages() {
+		if (Objects.equals(getNavigation(), "private-pages")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isPublicPages() {
+		if (Objects.equals(getNavigation(), "public-pages")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private String _displayStyle;

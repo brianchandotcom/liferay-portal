@@ -59,3 +59,14 @@ renderResponse.setTitle(LanguageUtil.get(request, "pages"));
 		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedPages" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
+
+<c:if test="<%= viewLayoutsDisplayContext.isShowAddRootLayoutButton() %>">
+
+	<%
+	PortletURL addLayoutURL = viewLayoutsDisplayContext.getAddLayoutURL();
+	%>
+
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "page") %>' url="<%= addLayoutURL.toString() %>" />
+	</liferay-frontend:add-menu>
+</c:if>

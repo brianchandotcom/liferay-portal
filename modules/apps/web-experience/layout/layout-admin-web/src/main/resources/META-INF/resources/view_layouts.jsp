@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+ViewLayoutsDisplayContext viewLayoutsDisplayContext = new ViewLayoutsDisplayContext(liferayPortletRequest, liferayPortletResponse);
+
 renderResponse.setTitle(LanguageUtil.get(request, "pages"));
 %>
 
@@ -25,3 +27,35 @@ renderResponse.setTitle(LanguageUtil.get(request, "pages"));
 		<aui:nav-item label="pages" selected="<%= true %>" />
 	</aui:nav>
 </aui:nav-bar>
+
+<liferay-frontend:management-bar
+	disabled="<%= false %>"
+	includeCheckBox="<%= true %>"
+	searchContainerId="pages"
+>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= viewLayoutsDisplayContext.getPortletURL() %>"
+			selectedDisplayStyle="<%= viewLayoutsDisplayContext.getDisplayStyle() %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"public-pages", "private-pages"} %>'
+			portletURL="<%= viewLayoutsDisplayContext.getPortletURL() %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= viewLayoutsDisplayContext.getOrderByCol() %>"
+			orderByType="<%= viewLayoutsDisplayContext.getOrderByType() %>"
+			orderColumns="<%= viewLayoutsDisplayContext.getOrderColumns() %>"
+			portletURL="<%= viewLayoutsDisplayContext.getPortletURL() %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+
+	<liferay-frontend:management-bar-action-buttons>
+		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedPages" label="delete" />
+	</liferay-frontend:management-bar-action-buttons>
+</liferay-frontend:management-bar>

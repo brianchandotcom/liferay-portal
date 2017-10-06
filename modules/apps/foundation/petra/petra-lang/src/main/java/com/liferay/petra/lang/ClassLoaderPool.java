@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
-
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+package com.liferay.petra.lang;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -38,11 +36,9 @@ public class ClassLoaderPool {
 	 * @return the class loader associated with the context name
 	 */
 	public static ClassLoader getClassLoader(String contextName) {
-		PortalRuntimePermission.checkGetBeanProperty(ClassLoaderPool.class);
-
 		ClassLoader classLoader = null;
 
-		if ((contextName != null) && !contextName.equals(StringPool.NULL)) {
+		if ((contextName != null) && !contextName.equals("null")) {
 			classLoader = _classLoaders.get(contextName);
 		}
 
@@ -69,28 +65,24 @@ public class ClassLoaderPool {
 	 */
 	public static String getContextName(ClassLoader classLoader) {
 		if (classLoader == null) {
-			return StringPool.NULL;
+			return "null";
 		}
 
 		String contextName = _contextNames.get(classLoader);
 
 		if (contextName == null) {
-			contextName = StringPool.NULL;
+			contextName = "null";
 		}
 
 		return contextName;
 	}
 
 	public static void register(String contextName, ClassLoader classLoader) {
-		PortalRuntimePermission.checkGetBeanProperty(ClassLoaderPool.class);
-
 		_classLoaders.put(contextName, classLoader);
 		_contextNames.put(classLoader, contextName);
 	}
 
 	public static void unregister(ClassLoader classLoader) {
-		PortalRuntimePermission.checkGetBeanProperty(ClassLoaderPool.class);
-
 		String contextName = _contextNames.remove(classLoader);
 
 		if (contextName != null) {
@@ -99,8 +91,6 @@ public class ClassLoaderPool {
 	}
 
 	public static void unregister(String contextName) {
-		PortalRuntimePermission.checkGetBeanProperty(ClassLoaderPool.class);
-
 		ClassLoader classLoader = _classLoaders.remove(contextName);
 
 		if (classLoader != null) {

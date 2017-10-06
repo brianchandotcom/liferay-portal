@@ -187,7 +187,8 @@ public class JenkinsReportUtil {
 
 			Dom4JUtil.addToElement(
 				tableElement,
-				(Object[])getDownstreamBuildInfoElements(batchBuild.getDownstreamBuilds(null)));
+				(Object[])getDownstreamBuildInfoElements(
+					batchBuild.getDownstreamBuilds(null)));
 		}
 
 		return tableElement;
@@ -397,7 +398,8 @@ public class JenkinsReportUtil {
 			elements.add(
 				Dom4JUtil.getNewElement(
 					"tr", null,
-					(Object[])getCommonBuildInfoElements(build, axisName, "td")));
+					(Object[])getCommonBuildInfoElements(
+						build, axisName, "td")));
 		}
 
 		return elements.toArray(new Element[elements.size()]);

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.servlet.PortletResponseHeadersHelperUtil;
 import com.liferay.portal.kernel.servlet.URLEncoder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -458,54 +459,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 	}
 
 	public void transferHeaders(HttpServletResponse response) {
-		for (Map.Entry<String, Object> entry : _headers.entrySet()) {
-			String name = entry.getKey();
-			Object values = entry.getValue();
-
-			if (values instanceof Integer[]) {
-				Integer[] intValues = (Integer[])values;
-
-				for (int value : intValues) {
-					if (response.containsHeader(name)) {
-						response.addIntHeader(name, value);
-					}
-					else {
-						response.setIntHeader(name, value);
-					}
-				}
-			}
-			else if (values instanceof Long[]) {
-				Long[] dateValues = (Long[])values;
-
-				for (long value : dateValues) {
-					if (response.containsHeader(name)) {
-						response.addDateHeader(name, value);
-					}
-					else {
-						response.setDateHeader(name, value);
-					}
-				}
-			}
-			else if (values instanceof String[]) {
-				String[] stringValues = (String[])values;
-
-				for (String value : stringValues) {
-					if (response.containsHeader(name)) {
-						response.addHeader(name, value);
-					}
-					else {
-						response.setHeader(name, value);
-					}
-				}
-			}
-			else if (values instanceof Cookie[]) {
-				Cookie[] cookies = (Cookie[])values;
-
-				for (Cookie cookie : cookies) {
-					response.addCookie(cookie);
-				}
-			}
-		}
+		PortletResponseHeadersHelperUtil.transferHeaders(_headers, response);
 	}
 
 	@Override

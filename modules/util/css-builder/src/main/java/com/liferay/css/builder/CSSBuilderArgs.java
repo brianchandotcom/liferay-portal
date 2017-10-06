@@ -153,8 +153,7 @@ public class CSSBuilderArgs {
 	private boolean _generateSourceMap;
 
 	@Parameter(
-		description = "The name of the sub-directories where the SCSS files are compiled to. " +
-			"For each directory that contains SCSS files, a sub-directory with this name is created. ",
+		description = "The name of the sub-directories where the SCSS files are compiled to. For each directory that contains SCSS files, a sub-directory with this name is created.",
 		names = "sass.output.dir"
 	)
 	private String _outputDirName = OUTPUT_DIR_NAME;

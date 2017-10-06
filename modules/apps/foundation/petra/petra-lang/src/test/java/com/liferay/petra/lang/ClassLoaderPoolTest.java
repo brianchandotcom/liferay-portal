@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.petra.lang;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
@@ -38,10 +38,6 @@ public class ClassLoaderPoolTest {
 
 	@Before
 	public void setUp() {
-		Class<?> clazz = getClass();
-
-		PortalClassLoaderUtil.setClassLoader(clazz.getClassLoader());
-
 		_classLoaders = ReflectionTestUtil.getFieldValue(
 			ClassLoaderPool.class, "_classLoaders");
 
@@ -69,8 +65,7 @@ public class ClassLoaderPoolTest {
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		Assert.assertSame(
-			contextClassLoader,
-			ClassLoaderPool.getClassLoader(StringPool.NULL));
+			contextClassLoader, ClassLoaderPool.getClassLoader("null"));
 		Assert.assertSame(
 			contextClassLoader, ClassLoaderPool.getClassLoader(null));
 	}
@@ -92,10 +87,9 @@ public class ClassLoaderPoolTest {
 		ClassLoaderPool.register(_CONTEXT_NAME, classLoader);
 
 		Assert.assertEquals(
-			StringPool.NULL,
+			"null",
 			ClassLoaderPool.getContextName(new URLClassLoader(new URL[0])));
-		Assert.assertEquals(
-			StringPool.NULL, ClassLoaderPool.getContextName(null));
+		Assert.assertEquals("null", ClassLoaderPool.getContextName(null));
 	}
 
 	@Test
@@ -120,40 +114,28 @@ public class ClassLoaderPoolTest {
 		Assert.assertEquals(_CONTEXT_NAME, _contextNames.get(classLoader));
 	}
 
-	@Test
+	@Test(expected = NullPointerException.class)
 	public void testRegisterWithNullClassLoader() {
-		try {
-			ClassLoaderPool.register(StringPool.BLANK, null);
-
-			Assert.fail();
-		}
-		catch (NullPointerException npe) {
-		}
+		ClassLoaderPool.register("null", null);
 	}
 
-	@Test
+	@Test(expected = NullPointerException.class)
 	public void testRegisterWithNullContextName() {
-		try {
-			ClassLoaderPool.register(null, null);
-
-			Assert.fail();
-		}
-		catch (NullPointerException npe) {
-		}
+		ClassLoaderPool.register(null, null);
 	}
 
 	@Test
 	public void testUnregisterWithInvalidClassLoader() {
 		ClassLoaderPool.unregister(new URLClassLoader(new URL[0]));
 
-		assertEmptyMaps();
+		_assertEmptyMaps();
 	}
 
 	@Test
 	public void testUnregisterWithInvalidContextName() {
 		ClassLoaderPool.unregister(_CONTEXT_NAME);
 
-		assertEmptyMaps();
+		_assertEmptyMaps();
 	}
 
 	@Test
@@ -164,7 +146,7 @@ public class ClassLoaderPoolTest {
 
 		ClassLoaderPool.unregister(classLoader);
 
-		assertEmptyMaps();
+		_assertEmptyMaps();
 	}
 
 	@Test
@@ -175,12 +157,12 @@ public class ClassLoaderPoolTest {
 
 		ClassLoaderPool.unregister(_CONTEXT_NAME);
 
-		assertEmptyMaps();
+		_assertEmptyMaps();
 	}
 
-	protected void assertEmptyMaps() {
-		Assert.assertTrue(_contextNames.isEmpty());
-		Assert.assertTrue(_classLoaders.isEmpty());
+	private void _assertEmptyMaps() {
+		Assert.assertTrue(_contextNames.toString(), _contextNames.isEmpty());
+		Assert.assertTrue(_classLoaders.toString(), _classLoaders.isEmpty());
 	}
 
 	private static final String _CONTEXT_NAME = "contextName";

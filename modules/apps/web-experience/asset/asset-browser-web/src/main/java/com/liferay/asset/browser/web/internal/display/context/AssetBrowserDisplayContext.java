@@ -374,8 +374,34 @@ public class AssetBrowserDisplayContext {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter("groupId", String.valueOf(getGroupId()));
-		portletURL.setParameter(
-			"selectedGroupIds", StringUtil.merge(getSelectedGroupIds()));
+
+		long[] selectedGroupIds = StringUtil.split(
+			ParamUtil.getString(_request, "selectedGroupIds"), 0L);
+
+		if (selectedGroupIds.length == 0) {
+			long sharedContentCompanyId = ParamUtil.getLong(
+				_request, "sharedContentCompanyId");
+			long shareContentSiteGroupId = ParamUtil.getLong(
+				_request, "shareContentSiteGroupId");
+			long sharedContentUserId = ParamUtil.getLong(
+				_request, "sharedContentUserId");
+
+			portletURL.setParameter(
+				"sharedContentCompanyId",
+				String.valueOf(sharedContentCompanyId));
+
+			portletURL.setParameter(
+				"shareContentSiteGroupId",
+				String.valueOf(shareContentSiteGroupId));
+
+			portletURL.setParameter(
+				"sharedContentUserId", String.valueOf(sharedContentUserId));
+		}
+		else {
+			portletURL.setParameter(
+				"selectedGroupIds", StringUtil.merge(getSelectedGroupIds()));
+		}
+
 		portletURL.setParameter(
 			"refererAssetEntryId", String.valueOf(getRefererAssetEntryId()));
 		portletURL.setParameter("typeSelection", getTypeSelection());
@@ -409,6 +435,24 @@ public class AssetBrowserDisplayContext {
 	public long[] getSelectedGroupIds() {
 		long[] selectedGroupIds = StringUtil.split(
 			ParamUtil.getString(_request, "selectedGroupIds"), 0L);
+
+		if (selectedGroupIds.length == 0) {
+			long sharedContentCompanyId = ParamUtil.getLong(
+				_request, "sharedContentCompanyId");
+			long sharedContentSiteGroupId = ParamUtil.getLong(
+				_request, "sharedContentSiteGroupId");
+			long sharedContentUserId = ParamUtil.getLong(
+				_request, "sharedContentUserId");
+
+			try {
+				selectedGroupIds = PortalUtil.getSharedContentSiteGroupIds(
+					sharedContentCompanyId, sharedContentSiteGroupId,
+					sharedContentUserId);
+			}
+			catch (PortalException pe) {
+				pe.printStackTrace();
+			}
+		}
 
 		return selectedGroupIds;
 	}

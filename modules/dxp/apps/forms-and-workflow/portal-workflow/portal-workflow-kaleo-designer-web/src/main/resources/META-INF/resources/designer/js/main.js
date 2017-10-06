@@ -5,17 +5,17 @@ AUI.add(
 		var AObject = A.Object;
 		var DiagramBuilder = A.DiagramBuilder;
 		var Lang = A.Lang;
+		var XMLDefinition = Liferay.KaleoDesignerXMLDefinition;
 		var XMLFormatter = new Liferay.XMLFormatter();
 		var XMLUtil = Liferay.XMLUtil;
+		var FieldNormalizer = Liferay.KaleoDesignerFieldNormalizer;
 
 		var KaleoDesignerEditors = Liferay.KaleoDesignerEditors;
 		var KaleoDesignerRemoteServices = Liferay.KaleoDesignerRemoteServices;
 		var KaleoDesignerStrings = Liferay.KaleoDesignerStrings;
 
 		var isNull = Lang.isNull;
-		var isNumber = Lang.isNumber;
 		var isObject = Lang.isObject;
-		var isString = Lang.isString;
 		var isValue = Lang.isValue;
 
 		var cdata = Liferay.KaleoDesignerUtils.cdata;
@@ -24,8 +24,6 @@ AUI.add(
 		var uniformRandomInt = Liferay.KaleoDesignerUtils.uniformRandomInt;
 
 		var COL_TYPES_ASSIGNMENT = ['address', 'receptionType', 'resourceActions', 'roleId', 'roleType', 'scriptedAssignment', 'scriptedRecipient', 'taskAssignees', 'user', 'userId'];
-
-		var COL_TYPES_FIELD = ['condition', 'fork', 'join', 'join-xor', 'state', 'task'];
 
 		var DEFAULT_LANGUAGE = 'groovy';
 
@@ -73,37 +71,12 @@ AUI.add(
 						setter: '_setDefinition'
 					},
 
-					definitionDescription: {
-						validator: isString,
-						value: STR_BLANK
-					},
-
-					definitionName: {
-						validator: isString,
-						valueFn: function() {
-							return KaleoDesignerStrings.definition + uniformRandomInt(0, 100);
-						}
-					},
-
-					definitionVersion: {
-						validator: isNumber,
-						value: 1
-					},
-
 					portletNamespace: {
 						value: STR_BLANK
 					},
 
 					portletResourceNamespace: {
 						value: STR_BLANK
-					},
-
-					xmlNamespace: {
-						value: {
-							'xmlns': 'urn:liferay.com:liferay-workflow_7.0.0',
-							'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
-							'xsi:schemaLocation': 'urn:liferay.com:liferay-workflow_7.0.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_0_0.xsd'
-						}
 					}
 				},
 
@@ -114,14 +87,14 @@ AUI.add(
 				UI_ATTRS: ['definition'],
 
 				prototype: {
-					initializer: function() {
+					initializer: function(config) {
 						var instance = this;
 
-						var metadata = instance.getDefinitionMetadata();
-
-						if (metadata) {
-							instance.setAttrs(metadata);
-						}
+						instance.definition = new XMLDefinition(
+							{
+								value: config.definition
+							}
+						);
 
 						instance.after('render', instance._afterRenderKaleoDesigner);
 
@@ -135,7 +108,7 @@ AUI.add(
 
 						var connectors = [];
 
-						instance.forEachDefinitionField(
+						instance.definition.forEachField(
 							function(tagName, fieldData) {
 								fieldData.results.forEach(
 									function(item1, index1, collection1) {
@@ -174,50 +147,6 @@ AUI.add(
 						instance._fixTableWidth();
 					},
 
-					forEachDefinitionField: function(fn) {
-						var instance = this;
-
-						COL_TYPES_FIELD.forEach(
-							function(item, index, collection) {
-								var fieldData = instance._translateXMLToJSON(item);
-
-								if (fn && !fieldData.error) {
-									fn.call(instance, item, fieldData);
-								}
-							}
-						);
-					},
-
-					getDefinitionMetadata: function() {
-						var instance = this;
-
-						var output = A.DataSchema.XML.apply(
-							{
-								metaFields: {
-									definitionDescription: '//workflow-definition/description',
-									definitionName: '//workflow-definition/name',
-									definitionVersion: '//workflow-definition/version'
-								}
-							},
-							instance.definitionDoc
-						);
-
-						return output.meta;
-					},
-
-					sanitizeDefinitionXML: function(val) {
-						var instance = this;
-
-						val = decodeURIComponent(val);
-
-						val = val.replace(/\s*(<!\[CDATA\[)/g, '$1');
-						val = val.replace(/(\]\]>)\s*/g, '$1');
-
-						instance._updateXMLNamespace(val);
-
-						return val.replace(/(<workflow-definition)[^>]*(>)/, '$1$2');
-					},
-
 					showEditor: function() {
 						var instance = this;
 
@@ -230,6 +159,8 @@ AUI.add(
 						}
 
 						var content = instance.get('definition');
+
+						var definition = instance.definition;
 
 						if (!content || instance.validateDefinition(content)) {
 							content = instance.toFormattedXML();
@@ -257,10 +188,10 @@ AUI.add(
 
 						var json = instance.toJSON();
 
-						var definitionDescription = instance.get('definitionDescription');
-						var definitionName = A.Escape.html(instance.get('definitionName'));
-						var definitionVersion = instance.get('definitionVersion');
-						var xmlNamespace = instance.get('xmlNamespace');
+						var definitionDescription = instance.xmlDeserializer.get('definitionDescription');
+						var definitionName = A.Escape.html(instance.xmlDeserializer.get('definitionName'));
+						var definitionVersion = instance.xmlDeserializer.get('definitionVersion');
+						var xmlNamespace = instance.xmlDeserializer.get('xmlNamespace');
 
 						var buffer = [];
 
@@ -742,306 +673,6 @@ AUI.add(
 						];
 					},
 
-					_getSchemaActions: function(key, tagName) {
-						var instance = this;
-
-						return {
-							key: key || 'actions',
-							schema: {
-								resultFields: [
-									{
-										key: 'description',
-										locator: 'description'
-									},
-									{
-										key: 'executionType',
-										locator: 'execution-type'
-									},
-									{
-										key: 'name',
-										locator: 'name'
-									},
-									{
-										key: 'priority',
-										locator: 'priority'
-									},
-									{
-										key: 'script',
-										locator: 'script'
-									},
-									{
-										key: 'scriptLanguage',
-										locator: 'script-language'
-									}
-								],
-								resultListLocator: tagName || 'action'
-							}
-						};
-					},
-
-					_getSchemaAssignments: function(key, tagName) {
-						var instance = this;
-
-						return {
-							key: key || 'assignments',
-							schema: {
-								resultFields: [
-									{
-										key: 'address',
-										locator: 'address'
-									},
-									{
-										key: 'resourceActions',
-										schema: {
-											resultFields: [
-												{
-													key: 'resourceAction',
-													locator: 'resource-action'
-												}
-											],
-											resultListLocator: 'resource-actions'
-										}
-									},
-									{
-										key: 'roleId',
-										schema: {
-											resultFields: [
-												{
-													key: 'roleId',
-													locator: 'role-id'
-												},
-												{
-													key: 'roleNameAC',
-													locator: 'role-name-ac'
-												}
-											],
-											resultListLocator: 'role'
-										}
-									},
-									{
-										key: 'roleType',
-										schema: {
-											resultFields: [
-												{
-													key: 'autoCreate',
-													locator: 'auto-create'
-												},
-												{
-													key: 'roleName',
-													locator: 'name'
-												},
-												{
-													key: 'roleType',
-													locator: 'role-type'
-												}
-											],
-											resultListLocator: 'role'
-										}
-									},
-									{
-										key: 'scriptedAssignment',
-										schema: {
-											resultFields: [
-												{
-													key: 'script',
-													locator: 'script'
-												},
-												{
-													key: 'scriptLanguage',
-													locator: 'script-language'
-												}
-											],
-											resultListLocator: 'scripted-assignment'
-										}
-									},
-									{
-										key: 'scriptedRecipient',
-										schema: {
-											resultFields: [
-												{
-													key: 'script',
-													locator: 'script'
-												},
-												{
-													key: 'scriptLanguage',
-													locator: 'script-language'
-												}
-											],
-											resultListLocator: 'scripted-recipient'
-										}
-									},
-									{
-										key: 'taskAssignees',
-										locator: 'assignees'
-									},
-									{
-										key: 'user',
-										schema: {
-											resultFields: [
-												{
-													key: 'emailAddress',
-													locator: 'email-address'
-												},
-												{
-													key: 'fullName',
-													locator: 'full-name'
-												},
-												{
-													key: 'screenName',
-													locator: 'screen-name'
-												},
-												{
-													key: 'userId',
-													locator: 'user-id'
-												}
-											],
-											resultListLocator: 'user'
-										}
-									},
-									{
-										key: 'receptionType',
-										locator: '@receptionType'
-									}
-								],
-								resultListLocator: tagName || 'assignments'
-							}
-						};
-					},
-
-					_getSchemaNotifications: function(key, tagName, assignmentKey, assignmentTagName) {
-						var instance = this;
-
-						assignmentKey = assignmentKey || 'recipients';
-						assignmentTagName = assignmentTagName || 'recipients';
-
-						return {
-							key: key || 'notifications',
-							schema: {
-								resultFields: [
-									{
-										key: 'description',
-										locator: 'description'
-									},
-									{
-										key: 'executionType',
-										locator: 'execution-type'
-									},
-									{
-										key: 'name',
-										locator: 'name'
-									},
-									{
-										key: 'notificationTypes',
-										schema: {
-											resultFields: [
-												{
-													key: 'notificationType',
-													locator: '.'
-												}
-											],
-											resultListLocator: 'notification-type'
-										}
-									},
-									{
-										key: 'template',
-										locator: 'template'
-									},
-									{
-										key: 'templateLanguage',
-										locator: 'template-language'
-									},
-									instance._getSchemaAssignments(assignmentKey, assignmentTagName)
-								],
-								resultListLocator: tagName || 'notification'
-							}
-						};
-					},
-
-					_getSchemaTaskTimers: function(key, tagNode) {
-						var instance = this;
-
-						return {
-							key: key || 'taskTimers',
-							schema: {
-								resultFields: [
-									{
-										key: 'blocking',
-										locator: 'blocking'
-									},
-									{
-										key: 'delay',
-										schema: {
-											resultFields: [
-												{
-													key: 'duration',
-													locator: 'duration'
-												},
-												{
-													key: 'scale',
-													locator: 'scale'
-												}
-											],
-											resultListLocator: 'delay'
-										}
-									},
-									{
-										key: 'description',
-										locator: 'description'
-									},
-									{
-										key: 'name',
-										locator: 'name'
-									},
-									{
-										key: 'recurrence',
-										schema: {
-											resultFields: [
-												{
-													key: 'duration',
-													locator: 'duration'
-												},
-												{
-													key: 'scale',
-													locator: 'scale'
-												}
-											],
-											resultListLocator: 'recurrence'
-										}
-									},
-									instance._getSchemaActions('timerActions', 'timer-action'),
-									instance._getSchemaAssignments('reassignments', 'reassignments'),
-									instance._getSchemaNotifications('timerNotifications', 'timer-notification')
-								],
-								resultListLocator: tagNode || 'task-timer'
-							}
-						};
-					},
-
-					_getSchemaTransitions: function(key, tagName) {
-						var instance = this;
-
-						return {
-							key: key || 'transitions',
-							schema: {
-								resultFields: [
-									{
-										key: 'default',
-										locator: 'default'
-									},
-									{
-										key: 'name',
-										locator: 'name'
-									},
-									{
-										key: 'target',
-										locator: 'target'
-									}
-								],
-								resultListLocator: tagName || 'transition'
-							}
-						};
-					},
-
 					_normalizeToActions: function(data) {
 						var instance = this;
 
@@ -1330,9 +961,11 @@ AUI.add(
 					_setDefinition: function(val) {
 						var instance = this;
 
-						val = instance.sanitizeDefinitionXML(val);
-
-						instance.definitionDoc = A.DataType.XML.parse(val);
+						instance.definition = new XMLDefinition(
+							{
+								value: val
+							}
+						);
 
 						return val;
 					},
@@ -1342,7 +975,7 @@ AUI.add(
 
 						var fields = [];
 
-						instance.forEachDefinitionField(
+						instance.definition.forEachField(
 							function(tagName, fieldData) {
 								fieldData.results.forEach(
 									function(item, index, collection) {
@@ -1392,32 +1025,6 @@ AUI.add(
 						return fields;
 					},
 
-					_translateXMLToJSON: function(tagName) {
-						var instance = this;
-
-						var schema = {
-							resultFields: [
-								'description',
-								'initial',
-								'metadata',
-								'name',
-								'script',
-								{
-									key: 'scriptLanguage',
-									locator: 'script-language'
-								},
-								instance._getSchemaActions(),
-								instance._getSchemaAssignments(),
-								instance._getSchemaNotifications(),
-								instance._getSchemaTaskTimers(),
-								instance._getSchemaTransitions()
-							],
-							resultListLocator: tagName
-						};
-
-						return A.DataSchema.XML.apply(schema, instance.definitionDoc);
-					},
-
 					_uiSetAvailableFields: function(val) {
 						var instance = this;
 
@@ -1445,29 +1052,6 @@ AUI.add(
 
 						if (instance.get('rendered')) {
 							instance.connectDefinitionFields();
-						}
-					},
-
-					_updateXMLNamespace: function(definition) {
-						var instance = this;
-
-						var workflowDefinition = /(<workflow-definition)[^>]*(>)/.exec(definition);
-
-						if (workflowDefinition) {
-							var xmlns = /xmlns="([^"]*)"/.exec(workflowDefinition);
-							var xmlnsXsi = /xmlns:xsi="([^"]*)"/.exec(workflowDefinition);
-							var xsiSchemaLocation = /xsi:schemaLocation="([^"]*)"/.exec(workflowDefinition);
-
-							if (xmlns && xmlnsXsi && xsiSchemaLocation) {
-								instance.set(
-									'xmlNamespace',
-									{
-										'xmlns': xmlns[1],
-										'xmlns:xsi': xmlnsXsi[1],
-										'xsi:schemaLocation': xsiSchemaLocation[1]
-									}
-								);
-							}
 						}
 					}
 				}
@@ -1546,6 +1130,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-ace-editor', 'aui-ace-editor-mode-xml', 'aui-tpl-snippets-deprecated', 'dataschema-xml', 'datasource', 'datatype-xml', 'event-valuechange', 'io-form', 'liferay-kaleo-designer-autocomplete-util', 'liferay-kaleo-designer-editors', 'liferay-kaleo-designer-nodes', 'liferay-kaleo-designer-remote-services', 'liferay-kaleo-designer-utils', 'liferay-kaleo-designer-xml-util', 'liferay-util-window', 'liferay-xml-formatter']
+		requires: ['aui-ace-editor', 'aui-ace-editor-mode-xml', 'aui-tpl-snippets-deprecated', 'datasource', 'datatype-xml', 'event-valuechange', 'io-form', 'liferay-kaleo-designer-autocomplete-util', 'liferay-kaleo-designer-editors', 'liferay-kaleo-designer-nodes', 'liferay-kaleo-designer-remote-services', 'liferay-kaleo-designer-utils', 'liferay-kaleo-designer-xml-definition', 'liferay-kaleo-designer-xml-util', 'liferay-util-window', 'liferay-xml-formatter']
 	}
 );

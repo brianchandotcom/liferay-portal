@@ -52,6 +52,14 @@
 							path: 'utils.js',
 							requires: []
 						},
+						'liferay-kaleo-designer-xml-definition': {
+							path: 'xml_definition.js',
+							requires: [
+								'aui-base',
+								'dataschema-xml',
+								'datatype-xml'
+							]
+						},
 						'liferay-kaleo-designer-xml-util': {
 							path: 'xml_util.js',
 							requires: [

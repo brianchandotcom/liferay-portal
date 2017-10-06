@@ -231,7 +231,9 @@ public class ExecutePoshiElement extends BasePoshiElement {
 			return false;
 		}
 
-		if (readableSyntax.startsWith("property ")) {
+		if (readableSyntax.startsWith("echo(") ||
+			readableSyntax.startsWith("property ")) {
+
 			return false;
 		}
 

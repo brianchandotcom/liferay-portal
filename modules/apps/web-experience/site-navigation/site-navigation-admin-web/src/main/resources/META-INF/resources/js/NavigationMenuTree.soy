@@ -1,0 +1,18 @@
+{namespace NavigationMenuTree}
+
+/**
+ * This renders the main element of NavigationMenuTree.
+ */
+{template .render}
+	{@param? namespace: string}
+
+	<div class="navigation-menu-tree">
+		<fieldset class="panel-body">
+			<div class="element-tree" id="{$namespace}layoutContainer" ref="treeContainer">
+				<div class="button-holder">
+					<button class="btn btn-lg btn-default" type="button">{msg desc=""}select{/msg}</button>
+				</div>
+			</div>
+		</fieldset>
+	</div>
+{/template}

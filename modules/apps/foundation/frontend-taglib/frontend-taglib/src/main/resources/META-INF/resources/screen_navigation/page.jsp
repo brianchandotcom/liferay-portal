@@ -72,15 +72,11 @@ List<ScreenNavigationEntry> screenNavigationEntries = (List<ScreenNavigationEntr
 		</c:if>
 
 		<div class="<%= (screenNavigationEntries.size() > 1) ? "col-md-9" : "col-md-12" %>">
-			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset>
 
-					<%
-					selectedScreenNavigationEntry.render(request, response);
-					%>
+			<%
+			selectedScreenNavigationEntry.render(request, response);
+			%>
 
-				</aui:fieldset>
-			</aui:fieldset-group>
 		</div>
 	</div>
 </div>

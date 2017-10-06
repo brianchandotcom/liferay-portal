@@ -518,7 +518,19 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public Element getJenkinsReportBuildInfoElement(
+		Build build, String buildName, boolean isThElement) {
+
+		return null;
+	}
+
+	@Override
 	public Element getJenkinsReportElement() {
+		return null;
+	}
+
+	@Override
+	public Element getJenkinsReportTableColumnHeaderElement() {
 		return null;
 	}
 
@@ -611,6 +623,16 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return latestStartTimestamp;
+	}
+
+	@Override
+	public Element getLongestRunningDownstreamBuild() {
+		return null;
+	}
+
+	@Override
+	public Element getLongestRunningTestElement() {
+		return null;
 	}
 
 	@Override

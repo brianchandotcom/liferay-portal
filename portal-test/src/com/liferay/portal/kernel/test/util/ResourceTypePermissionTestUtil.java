@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.service.ResourceTypePermissionLocalServiceUtil;
 
 /**
  * @author Alberto Chaparro
+ * @deprecated As of 3.1.0, with no direct replacement
  */
+@Deprecated
 public class ResourceTypePermissionTestUtil {
 
 	public static ResourceTypePermission addResourceTypePermission(

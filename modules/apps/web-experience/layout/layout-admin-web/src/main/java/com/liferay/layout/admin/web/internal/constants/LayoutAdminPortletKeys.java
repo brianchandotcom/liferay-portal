@@ -31,4 +31,7 @@ public class LayoutAdminPortletKeys {
 	public static final String MY_PAGES =
 		"com_liferay_layout_admin_web_portlet_MyPagesPortlet";
 
+	public static final String VIEW_LAYOUTS =
+		"com_liferay_layout_admin_web_portlet_ViewLayoutsPortlet";
+
 }

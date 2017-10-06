@@ -34,18 +34,19 @@ import com.liferay.portal.kernel.process.TerminationProcessException;
 import com.liferay.portal.kernel.util.ClassLoaderObjectInputStream;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.EOFException;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.io.StreamCorruptedException;
 import java.io.WriteAbortedException;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -388,19 +389,17 @@ public class LocalProcessExecutor implements ProcessExecutor {
 				}
 			}
 			catch (StreamCorruptedException sce) {
-				File file = File.createTempFile(
-					"corrupted-stream-dump-" + System.currentTimeMillis(),
-					".log");
+				Path path = Files.createTempFile(
+					"corrupted-stream-dump-", ".log");
 
 				_log.error(
 					"Dumping content of corrupted object input stream to " +
-						file.getAbsolutePath(),
+						path.toAbsolutePath(),
 					sce);
 
-				FileOutputStream fileOutputStream = new FileOutputStream(file);
-
-				StreamUtil.transfer(
-					unsyncBufferedInputStream, fileOutputStream);
+				Files.copy(
+					unsyncBufferedInputStream, path,
+					StandardCopyOption.REPLACE_EXISTING);
 
 				throw new ProcessException(
 					"Corrupted object input stream", sce);

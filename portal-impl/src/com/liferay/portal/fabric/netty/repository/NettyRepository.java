@@ -193,17 +193,14 @@ public class NettyRepository implements Repository<Channel> {
 
 		final Path cachedLocalFilePath = pathMap.get(remoteFilePath);
 
-		final DefaultNoticeableFuture<FileResponse> defaultNoticeableFuture =
-			new DefaultNoticeableFuture<>();
+		boolean[] newMarker = new boolean[1];
 
 		NoticeableFuture<FileResponse> noticeableFuture = asyncBroker.post(
-			remoteFilePath, defaultNoticeableFuture);
+			remoteFilePath, newMarker);
 
-		if (noticeableFuture == null) {
-			noticeableFuture = defaultNoticeableFuture;
-
+		if (newMarker[0]) {
 			NettyUtil.scheduleCancellation(
-				channel, defaultNoticeableFuture, getFileTimeout);
+				channel, noticeableFuture, getFileTimeout);
 
 			ChannelFuture channelFuture = channel.writeAndFlush(
 				new FileRequest(
@@ -220,7 +217,7 @@ public class NettyRepository implements Repository<Channel> {
 						}
 
 						if (channelFuture.isCancelled()) {
-							defaultNoticeableFuture.cancel(true);
+							noticeableFuture.cancel(true);
 
 							return;
 						}

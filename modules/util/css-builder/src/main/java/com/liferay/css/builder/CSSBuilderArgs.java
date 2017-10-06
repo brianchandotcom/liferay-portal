@@ -18,8 +18,6 @@ import com.beust.jcommander.Parameter;
 
 import java.io.File;
 
-import java.nio.file.Paths;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -146,7 +144,7 @@ public class CSSBuilderArgs {
 		description = "The base directory that contains the SCSS files to compile.",
 		names = "sass.docroot.dir"
 	)
-	private File _docrootDir = Paths.get(".", DOCROOT_DIR_NAME).toFile();
+	private File _docrootDir = new File(DOCROOT_DIR_NAME);
 
 	@Parameter(
 		description = "Whether to generate source maps for easier debugging.",

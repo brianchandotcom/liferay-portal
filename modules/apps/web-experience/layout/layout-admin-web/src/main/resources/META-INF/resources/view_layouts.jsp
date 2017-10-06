@@ -60,6 +60,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "pages"));
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
+<portlet:actionURL name="/delete_layout" var="deleteLayoutURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
+<aui:form action="<%= deleteLayoutURL %>" cssClass="container-fluid-1280" name="fm">
+</aui:form>
+
 <c:if test="<%= viewLayoutsDisplayContext.isShowAddRootLayoutButton() %>">
 
 	<%
@@ -70,3 +77,14 @@ renderResponse.setTitle(LanguageUtil.get(request, "pages"));
 		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "page") %>' url="<%= addLayoutURL.toString() %>" />
 	</liferay-frontend:add-menu>
 </c:if>
+
+<aui:script sandbox="<%= true %>">
+	$('#<portlet:namespace />deleteSelectedPages').on(
+		'click',
+		function() {
+			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+				submitForm($(document.<portlet:namespace />fm));
+			}
+		}
+	);
+</aui:script>

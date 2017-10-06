@@ -15,7 +15,6 @@
 package com.liferay.css.builder;
 
 import com.beust.jcommander.JCommander;
-import com.beust.jcommander.JCommander.Builder;
 
 import com.liferay.portal.kernel.regex.PatternFactory;
 import com.liferay.portal.kernel.util.StringPool;
@@ -61,22 +60,23 @@ import org.apache.tools.ant.DirectoryScanner;
  * @author Eduardo Lundgren
  * @author Shuyang Zhou
  * @author David Truong
+ * @author Christopher Bryan Boyd
  */
 public class CSSBuilder implements AutoCloseable {
 
 	public static void main(String[] args) throws Exception {
 		Map<String, String> argMap = new HashMap<>();
 
-		for (int x = 0; x < args.length; x++) {
-			if (args[x].indexOf('=') != args[x].length() - 1) {
-				String[] arg = args[x].replace('=', ' ').split(" ");
+		for (String arg : args) {
+			if (arg.indexOf('=') != (arg.length() - 1)) {
+				String[] argSplit = arg.replace('=', ' ').split(" ");
 
-				if (arg.length == 2) {
-					if (arg[0].startsWith("sass.dir.")) {
-						arg[0] = "sass.dir";
+				if (argSplit.length == 2) {
+					if (argSplit[0].startsWith("sass.dir.")) {
+						argSplit[0] = "sass.dir";
 					}
 
-					argMap.put(arg[0], arg[1]);
+					argMap.put(argSplit[0], argSplit[1]);
 				}
 			}
 		}
@@ -92,26 +92,19 @@ public class CSSBuilder implements AutoCloseable {
 
 		CSSBuilderArgs cssBuilderArgs = new CSSBuilderArgs();
 
-		Builder builder = JCommander.newBuilder();
+		JCommander jcommander = new JCommander(cssBuilderArgs);
 
-		builder.addObject(cssBuilderArgs);
-
-		JCommander commander = builder.build();
-
-		commander.parse(argsArray);
+		jcommander.parse(argsArray);
 
 		try (CSSBuilder cssBuilder = new CSSBuilder(cssBuilderArgs)) {
 			cssBuilder.execute();
-		}
-		catch (Exception e) {
-			throw e;
 		}
 	}
 
 	public CSSBuilder(CSSBuilderArgs cssBuilderArgs) throws Exception {
 		_cssBuilderArgs = cssBuilderArgs;
 
-		File portalCommonDir = new File(_cssBuilderArgs.getPortalCommonPath());
+		File portalCommonDir = _cssBuilderArgs.getPortalCommonPath();
 
 		if (portalCommonDir.isFile()) {
 			portalCommonDir = _unzipPortalCommon(portalCommonDir);
@@ -124,8 +117,11 @@ public class CSSBuilder implements AutoCloseable {
 
 		_portalCommonDirName = portalCommonDir.getCanonicalPath();
 
-		String[] rtlExcludedPathRegexps =
-			_cssBuilderArgs.getRtlExcludedPathRegexps().toArray(new String[0]);
+		List<String> rtlExcludedPathRegexpsList =
+			_cssBuilderArgs.getRtlExcludedPathRegexps();
+
+		String[] rtlExcludedPathRegexps = rtlExcludedPathRegexpsList.toArray(
+			new String[0]);
 
 		_rtlExcludedPathPatterns = PatternFactory.compile(
 			rtlExcludedPathRegexps);
@@ -143,14 +139,14 @@ public class CSSBuilder implements AutoCloseable {
 	}
 
 	public void execute() throws Exception {
-		List<String> fileNames = new ArrayList<>();
+		final List<String> fileNames = new ArrayList<>();
 
-		String docrootDirName = _cssBuilderArgs.getDocrootDir().toString();
+		final File docrootDir = _cssBuilderArgs.getDocrootDir();
 
 		for (String dirName : _cssBuilderArgs.getDirNames()) {
-			List<String> sassFiles = _collectSassFiles(dirName, docrootDirName);
+			List<String> sassFileNames = _collectSassFiles(dirName, docrootDir);
 
-			fileNames.addAll(sassFiles);
+			fileNames.addAll(sassFileNames);
 		}
 
 		for (String fileName : fileNames) {
@@ -177,12 +173,12 @@ public class CSSBuilder implements AutoCloseable {
 	}
 
 	private List<String> _collectSassFiles(
-			String dirName, String docrootDirName)
+			String dirName, final File docrootDir)
 		throws Exception {
 
 		final List<String> fileNames = new ArrayList<>();
 
-		String basedir = Paths.get(docrootDirName, dirName).toString();
+		String basedir = new File(docrootDir, dirName).toString();
 
 		String[] scssFiles = _getScssFiles(basedir);
 

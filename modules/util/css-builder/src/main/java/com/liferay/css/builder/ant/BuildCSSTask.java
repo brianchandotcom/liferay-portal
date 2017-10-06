@@ -18,8 +18,10 @@ import com.liferay.css.builder.CSSBuilderArgs;
 import com.liferay.css.builder.CSSBuilderInvoker;
 
 import java.io.File;
+import java.nio.file.Path;
 
 import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 
 /**
@@ -29,7 +31,6 @@ public class BuildCSSTask extends Task {
 
 	@Override
 	public void execute() throws BuildException {
-
 		Thread currentThread = Thread.currentThread();
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
@@ -58,9 +59,28 @@ public class BuildCSSTask extends Task {
 		_cssBuilderArgs.setDirNames(dirNames);
 	}
 
-	public void setDocrootDirName(String docrootDirName) {
-		_cssBuilderArgs.setDocrootDir(
-			new File(getProject().getBaseDir(), docrootDirName));
+	public void setDocrootDir(File docrootDir) {
+		if (docrootDir.isAbsolute())
+		{
+			_cssBuilderArgs.setDocrootDir(docrootDir);
+		}
+		else
+		{
+			Project project = getProject();
+			
+			Path docrootDirPath = docrootDir.toPath();
+			
+			File baseDirFile = project.getBaseDir();
+			
+			Path baseDirPath = baseDirFile.toPath();
+			
+			Path absoluteBaseDirPath = baseDirPath.resolve(docrootDirPath);
+
+			File absoluteBaseDirFile = absoluteBaseDirPath.toFile();
+			
+			_cssBuilderArgs.setDocrootDir(absoluteBaseDirFile);
+		
+		}
 	}
 
 	public void setGenerateSourceMap(boolean generateSourceMap) {

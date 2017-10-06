@@ -17,7 +17,7 @@ package com.liferay.lcs.rest.client.exception;
 /**
  * @author Igor Beslic
  */
-public class DuplicateLCSClusterEntryNameException extends RuntimeException {
+public class DuplicateLCSClusterEntryNameException extends Exception {
 
 	public DuplicateLCSClusterEntryNameException() {
 	}

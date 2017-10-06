@@ -17,7 +17,7 @@ package com.liferay.lcs.rest.client.exception;
 /**
  * @author Igor Beslic
  */
-public class RequiredLCSClusterEntryNameException extends RuntimeException {
+public class RequiredLCSClusterEntryNameException extends Exception {
 
 	public RequiredLCSClusterEntryNameException() {
 	}

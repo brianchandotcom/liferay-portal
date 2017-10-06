@@ -17,7 +17,7 @@ package com.liferay.lcs.rest.client.exception;
 /**
  * @author Mladen Cikara
  */
-public class NoSuchLCSSubscriptionEntryException extends RuntimeException {
+public class NoSuchLCSSubscriptionEntryException extends Exception {
 
 	public NoSuchLCSSubscriptionEntryException() {
 	}

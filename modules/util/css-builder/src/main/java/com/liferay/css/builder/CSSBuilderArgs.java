@@ -31,7 +31,7 @@ public class CSSBuilderArgs {
 
 	public static final boolean APPEND_CSS_IMPORT_TIMESTAMPS = true;
 
-	public static final String DIR_NAME = new String("/");
+	public static final String DIR_NAME = "/";
 
 	public static final String DOCROOT_DIR_NAME = "src/META-INF/resources";
 
@@ -51,7 +51,7 @@ public class CSSBuilderArgs {
 		return _outputDirName;
 	}
 
-	public String getPortalCommonPath() {
+	public File getPortalCommonPath() {
 		return _portalCommonPath;
 	}
 
@@ -101,7 +101,11 @@ public class CSSBuilderArgs {
 		_outputDirName = outputDirName;
 	}
 
-	public void setPortalCommonPath(String portalCommonPath) {
+	public void setPortalCommonPath(String portalCommonPathName) {
+		_portalCommonPath = new File(portalCommonPathName);
+	}
+
+	public void setPortalCommonPath(File portalCommonPath) {
 		_portalCommonPath = portalCommonPath;
 	}
 
@@ -139,7 +143,7 @@ public class CSSBuilderArgs {
 	private List<String> _dirNames = Arrays.asList(DIR_NAME);
 
 	@Parameter(
-		description = "If the java plugin is applied: The first resources directory of the main source set (by default: src/main/resources).\nIf the war plugin is applied: project.webAppDir.\nOtherwise: null",
+		description = "The base directory that contains the SCSS files to compile.",
 		names = "sass.docroot.dir"
 	)
 	private File _docrootDir = Paths.get(".", DOCROOT_DIR_NAME).toFile();
@@ -158,10 +162,10 @@ public class CSSBuilderArgs {
 	private String _outputDirName = OUTPUT_DIR_NAME;
 
 	@Parameter(
-		description = "The value of the portalCommonDir property if set; otherwise portalCommonFile.",
+		description = "The META-INF/resources directory of the Liferay Frontend Common CSS artifact. This is required in order to make Bourbon and other CSS libraries available to the compilation.",
 		names = {"sass.portal.common.path", "sass.portal.common.dir"}
 	)
-	private String _portalCommonPath;
+	private File _portalCommonPath;
 
 	@Parameter(
 		description = "The numeric precision of numbers in Sass.",

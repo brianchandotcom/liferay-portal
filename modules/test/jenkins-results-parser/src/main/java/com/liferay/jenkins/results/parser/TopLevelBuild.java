@@ -660,7 +660,7 @@ public class TopLevelBuild extends BaseBuild {
 		Element longestAxisElement = JenkinsReportUtil.getLongestAxisElement(
 			axisBuilds);
 
-		Element longestBatchElement = JenkinsReportUtil.getLongestBatchElement(
+		Element longestBatchElement = getLongestRunningBatchElement(
 			batchBuilds);
 
 		Element longestTestElement = JenkinsReportUtil.getLongestTestElement(
@@ -866,6 +866,48 @@ public class TopLevelBuild extends BaseBuild {
 		}
 
 		return jobSummaryListElement;
+	}
+
+	protected Element getLongestRunningBatchElement(
+		Map<String, Build> batchBuilds) {
+
+		String jobName = "Unavailable";
+
+		long longestBatchDuration = 0;
+
+		String longestBatchName = "Unavailable";
+
+		String longestBatchURL = "Unavailable";
+
+		Set<String> batchBuildsKeySet = batchBuilds.keySet();
+
+		for (String key : batchBuildsKeySet) {
+			Build build = batchBuilds.get(key);
+
+			long batchDuration = build.getDuration();
+
+			if (longestBatchDuration < batchDuration) {
+				longestBatchDuration = batchDuration;
+
+				jobName = build.getJobName();
+
+				longestBatchName = build.getDisplayName();
+
+				longestBatchURL = build.getBuildURL();
+			}
+		}
+
+		String longestBatchDisplayName = longestBatchName.replace(
+			jobName + "/", "");
+
+		Element longestBatchElement = Dom4JUtil.getNewElement(
+			"p", null, "Longest Batch: ",
+			Dom4JUtil.getNewAnchorElement(
+				longestBatchURL, longestBatchDisplayName),
+			" in: ",
+			JenkinsResultsParserUtil.toDurationString(longestBatchDuration));
+
+		return longestBatchElement;
 	}
 
 	protected Element getMoreDetailsElement() {

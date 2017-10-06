@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.process.CollectorOutputProcessor;
 import com.liferay.portal.kernel.process.OutputProcessor;
 import com.liferay.portal.kernel.process.ProcessUtil;
 
@@ -91,7 +92,7 @@ public class HeapUtil {
 
 	private static void _checkJMap(int processId) throws Exception {
 		Future<ObjectValuePair<byte[], byte[]>> future = ProcessUtil.execute(
-			ProcessUtil.COLLECTOR_OUTPUT_PROCESSOR, "jmap", "-histo:live",
+			CollectorOutputProcessor.INSTANCE, "jmap", "-histo:live",
 			String.valueOf(processId));
 
 		ObjectValuePair<byte[], byte[]> objectValuePair = future.get();
@@ -113,7 +114,7 @@ public class HeapUtil {
 
 	private static void _checkJPS(int processId) throws Exception {
 		Future<ObjectValuePair<byte[], byte[]>> future = ProcessUtil.execute(
-			ProcessUtil.COLLECTOR_OUTPUT_PROCESSOR, "jps");
+			CollectorOutputProcessor.INSTANCE, "jps");
 
 		ObjectValuePair<byte[], byte[]> objectValuePair = future.get();
 

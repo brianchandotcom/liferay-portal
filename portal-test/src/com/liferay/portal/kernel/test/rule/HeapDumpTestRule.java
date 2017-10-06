@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.test.rule;
 
-import com.liferay.portal.kernel.process.ProcessUtil;
+import com.liferay.portal.kernel.process.EchoOutputProcessor;
 import com.liferay.portal.kernel.test.GCUtil;
 import com.liferay.portal.kernel.util.HeapUtil;
 
@@ -51,7 +51,7 @@ public class HeapDumpTestRule implements TestRule {
 				Future<?> future = HeapUtil.heapDump(
 					_live, true,
 					description.toString() + "-" + date + "-before.bin",
-					ProcessUtil.ECHO_OUTPUT_PROCESSOR);
+					EchoOutputProcessor.INSTANCE);
 
 				future.get();
 
@@ -64,7 +64,7 @@ public class HeapDumpTestRule implements TestRule {
 					future = HeapUtil.heapDump(
 						_live, true,
 						description.toString() + "-" + date + "-after.bin",
-						ProcessUtil.ECHO_OUTPUT_PROCESSOR);
+						EchoOutputProcessor.INSTANCE);
 
 					future.get();
 				}

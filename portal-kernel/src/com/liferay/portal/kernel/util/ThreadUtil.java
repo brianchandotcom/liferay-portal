@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.process.CollectorOutputProcessor;
 import com.liferay.portal.kernel.process.ProcessUtil;
 
 import java.util.Date;
@@ -77,7 +78,7 @@ public class ThreadUtil {
 		try {
 			NoticeableFuture<ObjectValuePair<byte[], byte[]>> noticeableFuture =
 				ProcessUtil.execute(
-					ProcessUtil.COLLECTOR_OUTPUT_PROCESSOR, "jstack", "-l",
+					CollectorOutputProcessor.INSTANCE, "jstack", "-l",
 					String.valueOf(HeapUtil.getProcessId()));
 
 			ObjectValuePair<byte[], byte[]> objectValuePair =

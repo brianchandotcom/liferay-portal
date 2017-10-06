@@ -14,8 +14,8 @@
 
 package com.liferay.css.builder.maven;
 
+import com.liferay.css.builder.CSSBuilder;
 import com.liferay.css.builder.CSSBuilderArgs;
-import com.liferay.css.builder.CSSBuilderInvoker;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.io.File;
@@ -82,11 +82,11 @@ public class BuildCSSMojo extends AbstractMojo {
 				String[] includedFiles = scanner.getIncludedFiles();
 
 				if (ArrayUtil.isNotEmpty(includedFiles)) {
-					CSSBuilderInvoker.invoke(_cssBuilderArgs);
+					_execute();
 				}
 			}
 			else {
-				CSSBuilderInvoker.invoke(_cssBuilderArgs);
+				_execute();
 			}
 		}
 		catch (Exception e) {
@@ -157,6 +157,12 @@ public class BuildCSSMojo extends AbstractMojo {
 	 */
 	public void setSassCompilerClassName(String sassCompilerClassName) {
 		_cssBuilderArgs.setSassCompilerClassName(sassCompilerClassName);
+	}
+
+	private void _execute() throws Exception {
+		try (CSSBuilder cssBuilder = new CSSBuilder(_cssBuilderArgs)) {
+			cssBuilder.execute();
+		}
 	}
 
 	private Artifact _resolveArtifact(ComponentDependency componentDependency)

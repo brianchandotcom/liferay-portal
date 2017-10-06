@@ -14,8 +14,8 @@
 
 package com.liferay.css.builder.ant;
 
+import com.liferay.css.builder.CSSBuilder;
 import com.liferay.css.builder.CSSBuilderArgs;
-import com.liferay.css.builder.CSSBuilderInvoker;
 
 import java.io.File;
 
@@ -39,8 +39,8 @@ public class BuildCSSTask extends Task {
 		currentThread.setContextClassLoader(
 			BuildCSSTask.class.getClassLoader());
 
-		try {
-			CSSBuilderInvoker.invoke(_cssBuilderArgs);
+		try (CSSBuilder cssBuilder = new CSSBuilder(_cssBuilderArgs)) {
+			cssBuilder.execute();
 		}
 		catch (Exception e) {
 			throw new BuildException(e);

@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.process;
 import com.liferay.portal.kernel.concurrent.AbortPolicy;
 import com.liferay.portal.kernel.concurrent.BaseFutureListener;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
-import com.liferay.portal.kernel.concurrent.FutureListener;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.concurrent.ThreadPoolHandlerAdapter;
@@ -74,11 +73,11 @@ public class ProcessUtil {
 			try {
 				NoticeableFuture<O> stdOutNoticeableFuture =
 					threadPoolExecutor.submit(
-						new ProcessStdOutCallable<O>(outputProcessor, process));
+						new ProcessStdOutCallable<>(outputProcessor, process));
 
 				NoticeableFuture<E> stdErrNoticeableFuture =
 					threadPoolExecutor.submit(
-						new ProcessStdErrCallable<E>(outputProcessor, process));
+						new ProcessStdErrCallable<>(outputProcessor, process));
 
 				return _wrapNoticeableFuture(
 					stdOutNoticeableFuture, stdErrNoticeableFuture, process);
@@ -138,35 +137,29 @@ public class ProcessUtil {
 
 	private static <O, E> NoticeableFuture<ObjectValuePair<O, E>>
 		_wrapNoticeableFuture(
-			final NoticeableFuture<O> stdOutNoticeableFuture,
-			final NoticeableFuture<E> stdErrNoticeableFuture,
-			final Process process) {
+			NoticeableFuture<O> stdOutNoticeableFuture,
+			NoticeableFuture<E> stdErrNoticeableFuture, Process process) {
 
-		final DefaultNoticeableFuture<ObjectValuePair<O, E>>
-			defaultNoticeableFuture = new DefaultNoticeableFuture<>();
+		DefaultNoticeableFuture<ObjectValuePair<O, E>> defaultNoticeableFuture =
+			new DefaultNoticeableFuture<>();
 
 		defaultNoticeableFuture.addFutureListener(
-			new FutureListener<ObjectValuePair<O, E>>() {
-
-				@Override
-				public void complete(Future<ObjectValuePair<O, E>> future) {
-					if (!future.isCancelled()) {
-						return;
-					}
-
-					stdOutNoticeableFuture.cancel(true);
-
-					stdErrNoticeableFuture.cancel(true);
-
-					process.destroy();
+			future -> {
+				if (!future.isCancelled()) {
+					return;
 				}
 
+				stdOutNoticeableFuture.cancel(true);
+
+				stdErrNoticeableFuture.cancel(true);
+
+				process.destroy();
 			});
 
-		final AtomicMarkableReference<O> stdOutReference =
+		AtomicMarkableReference<O> stdOutReference =
 			new AtomicMarkableReference<>(null, false);
 
-		final AtomicMarkableReference<E> stdErrReference =
+		AtomicMarkableReference<E> stdErrReference =
 			new AtomicMarkableReference<>(null, false);
 
 		stdOutNoticeableFuture.addFutureListener(
@@ -194,7 +187,7 @@ public class ProcessUtil {
 
 					if (markHolder[0]) {
 						defaultNoticeableFuture.set(
-							new ObjectValuePair<O, E>(stdOut, stdErr));
+							new ObjectValuePair<>(stdOut, stdErr));
 					}
 				}
 
@@ -225,7 +218,7 @@ public class ProcessUtil {
 
 					if (markHolder[0]) {
 						defaultNoticeableFuture.set(
-							new ObjectValuePair<O, E>(stdOut, stdErr));
+							new ObjectValuePair<>(stdOut, stdErr));
 					}
 				}
 
@@ -238,16 +231,16 @@ public class ProcessUtil {
 
 	private static class ProcessStdErrCallable<T> implements Callable<T> {
 
-		public ProcessStdErrCallable(
+		@Override
+		public T call() throws Exception {
+			return _outputProcessor.processStdErr(_process.getErrorStream());
+		}
+
+		private ProcessStdErrCallable(
 			OutputProcessor<?, T> outputProcessor, Process process) {
 
 			_outputProcessor = outputProcessor;
 			_process = process;
-		}
-
-		@Override
-		public T call() throws Exception {
-			return _outputProcessor.processStdErr(_process.getErrorStream());
 		}
 
 		private final OutputProcessor<?, T> _outputProcessor;
@@ -256,13 +249,6 @@ public class ProcessUtil {
 	}
 
 	private static class ProcessStdOutCallable<T> implements Callable<T> {
-
-		public ProcessStdOutCallable(
-			OutputProcessor<T, ?> outputProcessor, Process process) {
-
-			_outputProcessor = outputProcessor;
-			_process = process;
-		}
 
 		@Override
 		public T call() throws Exception {
@@ -285,6 +271,13 @@ public class ProcessUtil {
 						"Forcibly killed subprocess on interruption", ie);
 				}
 			}
+		}
+
+		private ProcessStdOutCallable(
+			OutputProcessor<T, ?> outputProcessor, Process process) {
+
+			_outputProcessor = outputProcessor;
+			_process = process;
 		}
 
 		private final OutputProcessor<T, ?> _outputProcessor;

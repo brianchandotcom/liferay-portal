@@ -14,37 +14,32 @@
 
 package com.liferay.portal.kernel.process;
 
-import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.SyncThrowableThread;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.ThreadUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
-import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -58,55 +53,9 @@ public class ProcessUtilTest {
 	public static final CodeCoverageAssertor codeCoverageAssertor =
 		CodeCoverageAssertor.INSTANCE;
 
-	@After
-	public void tearDown() throws Exception {
-		ExecutorService executorService = _getExecutorService();
-
-		if (executorService != null) {
-			executorService.shutdownNow();
-
-			executorService.awaitTermination(10, TimeUnit.SECONDS);
-
-			_nullOutThreadPoolExecutor();
-		}
-	}
-
 	@Test
-	public void testConcurrentCreateExecutorService() throws Exception {
-		final AtomicReference<ExecutorService> atomicReference =
-			new AtomicReference<>();
-
-		SyncThrowableThread<Void> syncThrowableThread =
-			new SyncThrowableThread<>(
-				new Callable<Void>() {
-
-					@Override
-					public Void call() throws Exception {
-						ExecutorService executorService =
-							_invokeGetThreadPoolExecutor();
-
-						atomicReference.set(executorService);
-
-						return null;
-					}
-
-				});
-
-		ExecutorService executorService = null;
-
-		synchronized (ProcessUtil.class) {
-			syncThrowableThread.start();
-
-			while (syncThrowableThread.getState() != Thread.State.BLOCKED);
-
-			executorService = _invokeGetThreadPoolExecutor();
-		}
-
-		syncThrowableThread.sync();
-
-		Assert.assertSame(executorService, atomicReference.get());
-
-		_invokeGetThreadPoolExecutor();
+	public void testConstructor() {
+		new ProcessUtil();
 	}
 
 	@Test
@@ -117,84 +66,6 @@ public class ProcessUtilTest {
 		ProcessUtil processUtil = new ProcessUtil();
 
 		processUtil.destroy();
-
-		Assert.assertNull(_getExecutorService());
-
-		// Idle destroy
-
-		ExecutorService executorService = _invokeGetThreadPoolExecutor();
-
-		Assert.assertNotNull(executorService);
-
-		Assert.assertNotNull(_getExecutorService());
-
-		processUtil.destroy();
-
-		Assert.assertNull(_getExecutorService());
-
-		// Busy destroy
-
-		executorService = _invokeGetThreadPoolExecutor();
-
-		Assert.assertNotNull(executorService);
-
-		Assert.assertNotNull(_getExecutorService());
-
-		DummyJob dummyJob = new DummyJob();
-
-		Future<Void> future = executorService.submit(dummyJob);
-
-		dummyJob.waitUntilStarted();
-
-		processUtil.destroy();
-
-		try {
-			future.get();
-
-			Assert.fail();
-		}
-		catch (ExecutionException ee) {
-			Throwable throwable = ee.getCause();
-
-			Assert.assertTrue(throwable instanceof InterruptedException);
-		}
-
-		Assert.assertNull(_getExecutorService());
-
-		// Concurrent destroy
-
-		_invokeGetThreadPoolExecutor();
-
-		final ProcessUtil referenceProcessUtil = processUtil;
-
-		Thread thread = new Thread() {
-
-			@Override
-			public void run() {
-				referenceProcessUtil.destroy();
-			}
-
-		};
-
-		synchronized (ProcessUtil.class) {
-			thread.start();
-
-			while (thread.getState() != Thread.State.BLOCKED);
-
-			processUtil.destroy();
-		}
-
-		thread.join();
-
-		_invokeGetThreadPoolExecutor();
-
-		processUtil.destroy();
-
-		// Destroy after destroyed
-
-		processUtil.destroy();
-
-		Assert.assertNull(_getExecutorService());
 	}
 
 	@Test
@@ -322,27 +193,6 @@ public class ProcessUtilTest {
 	}
 
 	@Test
-	public void testExecuteAfterShutdown() throws Exception {
-		ExecutorService executorService = _invokeGetThreadPoolExecutor();
-
-		executorService.shutdown();
-
-		try {
-			ProcessUtil.execute(
-				ProcessUtil.LOGGING_OUTPUT_PROCESSOR,
-				_buildArguments(Echo.class, "2"));
-
-			Assert.fail();
-		}
-		catch (ProcessException pe) {
-			Throwable throwable = pe.getCause();
-
-			Assert.assertEquals(
-				RejectedExecutionException.class, throwable.getClass());
-		}
-	}
-
-	@Test
 	public void testFuture() throws Exception {
 
 		// Time out on standard error processing
@@ -406,8 +256,10 @@ public class ProcessUtilTest {
 
 	@Test
 	public void testInterruptPause() throws Exception {
-		final CountDownLatch countDownLatch = new CountDownLatch(1);
-		final Thread mainThread = Thread.currentThread();
+		String threadName = ReflectionTestUtil.invoke(
+			ProcessUtil.class, "_buildThreadNamePrefix",
+			new Class<?>[] {List.class},
+			Arrays.asList(_buildArguments(Pause.class))) + "StdOut";
 
 		SyncThrowableThread<Void> syncThrowableThread =
 			new SyncThrowableThread<>(
@@ -415,15 +267,17 @@ public class ProcessUtilTest {
 
 					@Override
 					public Void call() throws Exception {
-						countDownLatch.await();
+						while (true) {
+							for (Thread thread : ThreadUtil.getThreads()) {
+								if ((thread != null) &&
+									threadName.equals(thread.getName())) {
 
-						while (mainThread.getState() != Thread.State.WAITING);
+									thread.interrupt();
 
-						ExecutorService executorService = _getExecutorService();
-
-						executorService.shutdownNow();
-
-						return null;
+									return null;
+								}
+							}
+						}
 					}
 
 				});
@@ -447,8 +301,6 @@ public class ProcessUtilTest {
 			_buildArguments(Pause.class));
 
 		try {
-			countDownLatch.countDown();
-
 			future.get();
 
 			Assert.fail();
@@ -513,33 +365,6 @@ public class ProcessUtilTest {
 		Collections.addAll(argumentsList, arguments);
 
 		return argumentsList.toArray(new String[argumentsList.size()]);
-	}
-
-	private static ThreadPoolExecutor _getExecutorService() throws Exception {
-		Field field = ProcessUtil.class.getDeclaredField("_threadPoolExecutor");
-
-		field.setAccessible(true);
-
-		return (ThreadPoolExecutor)field.get(null);
-	}
-
-	private static ThreadPoolExecutor _invokeGetThreadPoolExecutor()
-		throws Exception {
-
-		Method method = ProcessUtil.class.getDeclaredMethod(
-			"_getThreadPoolExecutor");
-
-		method.setAccessible(true);
-
-		return (ThreadPoolExecutor)method.invoke(method);
-	}
-
-	private static void _nullOutThreadPoolExecutor() throws Exception {
-		Field field = ProcessUtil.class.getDeclaredField("_threadPoolExecutor");
-
-		field.setAccessible(true);
-
-		field.set(null, null);
 	}
 
 	private static final String _CLASS_PATH;

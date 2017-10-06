@@ -50,6 +50,7 @@ dependencies {
 	testLibs group: "org.osgi", name: "org.osgi.service.log", version: "1.3.0"
 	testLibs project(":apps:foundation:petra:petra-concurrent")
 	testLibs project(":apps:foundation:petra:petra-memory")
+	testLibs project(":core:petra:petra-executor")
 	testLibs project(":core:petra:petra-nio")
 }
 

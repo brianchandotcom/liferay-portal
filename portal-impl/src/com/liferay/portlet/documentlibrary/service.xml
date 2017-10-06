@@ -38,7 +38,6 @@
 		<reference entity="DLFileShortcut" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFileVersion" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFolder" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="DLSyncEvent" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="ExpandoValue" package-path="com.liferay.portlet.expando" />
 		<reference entity="RatingsEntry" package-path="com.liferay.portlet.ratings" />
 		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
@@ -684,38 +683,6 @@
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
 		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
-	</entity>
-	<entity local-service="true" name="DLSyncEvent" remote-service="false">
-
-		<!-- PK fields -->
-
-		<column name="syncEventId" primary="true" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="modifiedTime" type="long" />
-
-		<!-- Other fields -->
-
-		<column name="event" type="String" />
-		<column name="type" type="String" />
-		<column name="typePK" type="long" />
-
-		<!-- Order -->
-
-		<order by="asc">
-			<order-column name="modifiedTime" />
-		</order>
-
-		<!-- Finder methods -->
-
-		<finder name="ModifiedTime" return-type="Collection">
-			<finder-column comparator="&gt;" name="modifiedTime" />
-		</finder>
-		<finder name="TypePK" return-type="DLSyncEvent" unique="true">
-			<finder-column name="typePK" />
-		</finder>
 	</entity>
 	<entity local-service="true" name="DLTrash" remote-service="true">
 		<reference entity="DLAppHelper" package-path="com.liferay.portlet.documentlibrary" />

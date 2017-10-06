@@ -40,6 +40,18 @@
 		</execute>
 	</command>
 
+	<command name="editSecurityCredential">
+		<execute function="Type" locator1="SystemSettings#SECURITY_CREDENTIAL_FIELD" value1="${securityCredential}" />
+
+		<var name="key_fieldName" value="securityPrincipal" />
+
+		<execute function="Type" locator1="FormFields#TEXT_MULTILINE_FIELD" value1="test" />
+
+		<execute function="AssertElementPresent" locator1="SystemSettings#SECURITY_CREDENTIAL_FIELD" />
+
+		<execute function="SikuliAssertElementPresent" locator1="SystemSettings#SECURITY_CREDENTIAL_HIDDEN_IMAGE" />
+	</command>
+
 	<command name="editTextAreaSetting">
 		<var name="key_fieldName" value="${settingName}" />
 

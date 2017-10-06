@@ -24,6 +24,17 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SECURITY_CREDENTIAL_FIELD</td>
+	<td>//div[contains(@data-fieldname,'securityCredential')]//input[@type='password' and @value='secret']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SECURITY_CREDENTIAL_HIDDEN_IMAGE</td>
+	<td>portal/screenshots/foundation/ldap_server_security_credential.png</td>
+	<td></td>
+</tr>
+<!--WEB_CONTENT-->
+<tr>
 	<td>SERVER_ENABLED</td>
 	<td>//input[contains(@id,'serverEnabled')]</td>
 	<td></td>

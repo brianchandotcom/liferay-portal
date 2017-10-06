@@ -117,4 +117,24 @@
 
 		<execute function="AssertConsoleTextNotPresent" value1="Unable to encrypt blank password" />
 	</command>
+
+	<command name="ViewHiddenSecurityCredential" priority="4">
+		<description message="This is a use case for LPS-73381." />
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="System Settings" />
+		</execute>
+
+		<execute macro="SystemSettings#gotoCategory">
+			<var name="category" value="Foundation" />
+		</execute>
+
+		<execute macro="SystemSettings#editConfiguration">
+			<var name="configurationName" value="LDAP Servers" />
+		</execute>
+
+		<execute macro="SystemSettings#editSecurityCredential">
+			<var name="securityCredential" value="123456" />
+		</execute>
+	</command>
 </definition>

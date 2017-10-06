@@ -94,7 +94,8 @@ public class PortletDataHandlerControl {
 
 	public String getHelpMessage(Locale locale, String action) {
 		String helpMessage = LanguageUtil.get(
-			locale, action + "-" + _controlLabel + "-help", StringPool.BLANK);
+			locale, StringBundler.concat(action, "-", _controlLabel, "-help"),
+			StringPool.BLANK);
 
 		if (Validator.isNull(helpMessage)) {
 			helpMessage = LanguageUtil.get(

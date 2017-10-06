@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.language;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.FileInputStream;
@@ -265,7 +266,9 @@ public class LanguagePropertyTest {
 
 		if (!invalidFileNames.isEmpty()) {
 			Assert.fail(
-				"Special key \"" + key + "\" is found in: " + invalidFileNames);
+				StringBundler.concat(
+					"Special key \"", key, "\" is found in: ",
+					String.valueOf(invalidFileNames)));
 		}
 	}
 
@@ -286,8 +289,9 @@ public class LanguagePropertyTest {
 
 		if (!invalidFileNames.isEmpty()) {
 			Assert.fail(
-				"Invalid values for key \"" + key + "\" are found in: " +
-					invalidFileNames);
+				StringBundler.concat(
+					"Invalid values for key \"", key, "\" are found in: ",
+					String.valueOf(invalidFileNames)));
 		}
 	}
 

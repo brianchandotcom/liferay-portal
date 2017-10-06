@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.Date;
 
@@ -97,8 +98,9 @@ public class SchedulerEventMessageListenerWrapper
 				catch (SchedulerException se) {
 					if (_log.isInfoEnabled()) {
 						_log.info(
-							"Unable to delete job " + jobName + " in group " +
-								groupName,
+							StringBundler.concat(
+								"Unable to delete job ", jobName, " in group ",
+								groupName),
 							se);
 					}
 				}

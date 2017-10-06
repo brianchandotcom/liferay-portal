@@ -1288,9 +1288,10 @@ public class LocalProcessExecutorTest {
 
 			Assert.assertTrue(
 				errLog.startsWith(
-					"[" + returnWithoutExitProcessCallable.toString() + "]" +
+					StringBundler.concat(
+						"[", returnWithoutExitProcessCallable.toString(), "]",
 						new ProcessException(
-							DummyExceptionProcessCallable.class.getName())));
+							DummyExceptionProcessCallable.class.getName()))));
 		}
 
 		Future<String> processFuture =
@@ -1331,7 +1332,8 @@ public class LocalProcessExecutorTest {
 		String propertyKey = "test-key";
 		String propertyValue = "test-value";
 
-		arguments.add("-D" + propertyKey + "=" + propertyValue);
+		arguments.add(
+			StringBundler.concat("-D", propertyKey, "=", propertyValue));
 
 		builder.setArguments(arguments);
 

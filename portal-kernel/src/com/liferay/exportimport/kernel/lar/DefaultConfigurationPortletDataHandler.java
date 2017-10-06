@@ -115,8 +115,10 @@ public class DefaultConfigurationPortletDataHandler
 				if (Validator.isNull(uuid)) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to get UUID for class " + className +
-								" with primary key " + primaryKeyLong);
+							StringBundler.concat(
+								"Unable to get UUID for class ", className,
+								" with primary key ",
+								String.valueOf(primaryKeyLong)));
 					}
 
 					continue;

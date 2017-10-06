@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -221,9 +222,11 @@ public class AssetRendererFactoryRegistryUtil {
 				(classNameAssetRendererFactory != null)) {
 
 				_log.warn(
-					"Replacing " + classNameAssetRendererFactory +
-						" for class name " + className + " with " +
-							assetRendererFactory);
+					StringBundler.concat(
+						"Replacing ",
+						String.valueOf(classNameAssetRendererFactory),
+						" for class name ", className, " with ",
+						String.valueOf(assetRendererFactory)));
 			}
 
 			String type = assetRendererFactory.getType();
@@ -234,8 +237,10 @@ public class AssetRendererFactoryRegistryUtil {
 
 			if (_log.isWarnEnabled() && (typeAssetRendererFactory != null)) {
 				_log.warn(
-					"Replacing " + typeAssetRendererFactory + " for type " +
-						type + " with " + assetRendererFactory);
+					StringBundler.concat(
+						"Replacing ", String.valueOf(typeAssetRendererFactory),
+						" for type ", type, " with ",
+						String.valueOf(assetRendererFactory)));
 			}
 
 			return assetRendererFactory;

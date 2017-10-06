@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.NotSerializableException;
 
@@ -142,9 +143,10 @@ public class NonSerializableObjectRequestWrapper
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to set WebLogic class loader flag for attribute " +
-						attributeName + " in servlet request " +
-							servletRequest);
+					StringBundler.concat(
+						"Unable to set WebLogic class loader flag for ",
+						"attribute ", attributeName, " in servlet request ",
+						String.valueOf(servletRequest)));
 			}
 		}
 	}

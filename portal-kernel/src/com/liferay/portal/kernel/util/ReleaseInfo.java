@@ -133,10 +133,10 @@ public class ReleaseInfo {
 
 	public static final String getReleaseInfo() {
 		if (_releaseInfo == null) {
-			_releaseInfo =
-				_RELEASE_INFO_PREFIX + _NAME + " " + _VERSION_DISPLAY_NAME +
-					" (" + _CODE_NAME + " / Build " + _BUILD + " / " + _DATE +
-						")" + _RELEASE_INFO_SUFFIX;
+			_releaseInfo = StringBundler.concat(
+				_RELEASE_INFO_PREFIX, _NAME, " ", _VERSION_DISPLAY_NAME, " (",
+				_CODE_NAME, " / Build ", _BUILD, " / ", _DATE, ")",
+				_RELEASE_INFO_SUFFIX);
 		}
 
 		return _releaseInfo;

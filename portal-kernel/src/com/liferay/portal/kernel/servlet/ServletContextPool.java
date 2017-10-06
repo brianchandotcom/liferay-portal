@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.servlet;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.Map;
 import java.util.Set;
@@ -41,7 +42,10 @@ public class ServletContextPool {
 		boolean value = _servletContexts.containsKey(servletContextName);
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Contains key " + servletContextName + " " + value);
+			_log.debug(
+				StringBundler.concat(
+					"Contains key ", servletContextName, " ",
+					String.valueOf(value)));
 		}
 
 		return value;
@@ -52,7 +56,10 @@ public class ServletContextPool {
 			servletContextName);
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Get " + servletContextName + " " + servletContext);
+			_log.debug(
+				StringBundler.concat(
+					"Get ", servletContextName, " ",
+					String.valueOf(servletContext)));
 		}
 
 		return servletContext;
@@ -66,7 +73,10 @@ public class ServletContextPool {
 		String servletContextName, ServletContext servletContext) {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Put " + servletContextName + " " + servletContext);
+			_log.debug(
+				StringBundler.concat(
+					"Put ", servletContextName, " ",
+					String.valueOf(servletContext)));
 		}
 
 		_servletContexts.put(servletContextName, servletContext);
@@ -86,7 +96,10 @@ public class ServletContextPool {
 			servletContextName);
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Remove " + servletContextName + " " + servletContext);
+			_log.debug(
+				StringBundler.concat(
+					"Remove ", servletContextName, " ",
+					String.valueOf(servletContext)));
 		}
 
 		return servletContext;

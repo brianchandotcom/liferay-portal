@@ -2085,7 +2085,7 @@
 		<execute macro="FormsAdmin#viewDateEntry">
 			<var name="fieldLabel" value="New Date" />
 			<var name="fieldName" value="Date" />
-			<var name="fieldValue" value="05/02/2016" />
+			<var name="fieldValue" value="5/2/16" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewCheckboxEntry">
@@ -2178,7 +2178,7 @@
 		<execute macro="FormsAdmin#viewDateEntry">
 			<var name="fieldLabel" value="New Date" />
 			<var name="fieldName" value="Date" />
-			<var name="fieldValue" value="05/02/2016" />
+			<var name="fieldValue" value="5/2/16" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewCheckboxEntry">
@@ -2499,7 +2499,7 @@
 		<execute macro="FormsAdmin#viewDateEntry">
 			<var name="fieldLabel" value="Date" />
 			<var name="fieldName" value="Date" />
-			<var name="fieldValue" value="05/02/2016" />
+			<var name="fieldValue" value="5/2/16" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewCheckboxEntry">

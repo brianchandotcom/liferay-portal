@@ -19,20 +19,15 @@ AUI.add(
 
 		var STR_SELECTED_ASSET_ADDON_ENTRIES = 'selectedAssetAddonEntries';
 
-		var TPL_SELECT_LIST = '<ul class="list-inline list-unstyled">{entries}</ul>';
+		var TPL_SELECT_LIST = '<ul class="list-inline list-unstyled row">{entries}</ul>';
 
-		var TPL_STR_SELECTED_ASSET_ADDON_ENTRY = '<li>' +
-				'<label>' +
-					'<input {checked} class="toggle-card" data-key={key} data-label={label} type="checkbox">' +
-					'<div class="toggle-card-container">' +
-						'<div class="toggle-card-cell">' +
-							'<div class="toggle-card-icon">' +
-								'<span class="icon-{icon} toggle-card-off"></span>' +
-								'<span class="icon-ok toggle-card-on"></span>' +
-							'</div>' +
-							'<div class="toggle-card-label">' +
-								'<span>{label}</span>' +
-							'</div>' +
+		var TPL_STR_SELECTED_ASSET_ADDON_ENTRY = '<li class="col-md-6 form-check form-check-card">' +
+				'<label class="form-check-label">' +
+					'<input {checked} class="form-check-input sr-only" data-key={key} data-label={label} type="checkbox">' +
+					'<div class="card p-3">' +
+						'<div class="card-row">' +
+							'<div class="flex-col icon-{icon} mr-2"></div>' +
+							'<div class="flex-col">{label}</div>' +
 						'</div>' +
 					'</div>' +
 				'</label>' +

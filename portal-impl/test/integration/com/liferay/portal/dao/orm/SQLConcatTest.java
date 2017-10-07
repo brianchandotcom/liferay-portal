@@ -47,10 +47,10 @@ public class SQLConcatTest {
 		_db = DBManagerUtil.getDB();
 
 		_db.runSQL(
-			"create table SQLConcatTest (id LONG not null primary key, data " +
-				"VARCHAR(10) null)");
+			"create table SQLConcatTest (data VARCHAR(10) not null primary " +
+				"key)");
 
-		_db.runSQL("insert into SQLConcatTest (id, data) values (1, 'test')");
+		_db.runSQL("insert into SQLConcatTest values ('test')");
 	}
 
 	@AfterClass
@@ -60,93 +60,47 @@ public class SQLConcatTest {
 
 	@Test
 	public void testConcat() throws Exception {
-		String sql = _db.buildSQL(
-			"select CONCAT('This is a ', data) from SQLConcatTest where id = " +
-				"1");
-
-		sql = SQLTransformer.transform(sql);
-
-		try (Connection connection = DataAccess.getUpgradeOptimizedConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				sql);
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			Assert.assertTrue(resultSet.next());
-
-			Assert.assertEquals("This is a test", resultSet.getString(1));
-
-			Assert.assertFalse(resultSet.next());
-		}
+		_assertConcat(
+			"select CONCAT('This is a ', data) from SQLConcatTest",
+			"This is a test");
 	}
 
 	@Test
 	public void testConcatWithManyExpressions() throws Exception {
-		String sql = _db.buildSQL(
-			"select CONCAT('This ', 'is ', 'a ', data, ' with ', 'seven ', " +
-				"'expressions') from SQLConcatTest where id = 1");
-
-		sql = SQLTransformer.transform(sql);
-
-		try (Connection connection = DataAccess.getUpgradeOptimizedConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				sql);
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			Assert.assertTrue(resultSet.next());
-
-			Assert.assertEquals(
-				"This is a test with seven expressions",
-				resultSet.getString(1));
-
-			Assert.assertFalse(resultSet.next());
-		}
+		_assertConcat(
+			"select CONCAT('This ', 'is ', 'a ', data, ' with ', 'seven '" +
+				", 'expressions') from SQLConcatTest",
+			"This is a test with seven expressions");
 	}
 
 	@Test
 	public void testConcatWithNestedConcats() throws Exception {
-		String sql = _db.buildSQL(
-			"select CONCAT('This ', 'is ', 'a ', CONCAT(data, ' for ', " +
-				"CONCAT('nested ', 'concats'))) from SQLConcatTest where id " +
-					"= 1");
-
-		sql = SQLTransformer.transform(sql);
-
-		try (Connection connection = DataAccess.getUpgradeOptimizedConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				sql);
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			Assert.assertTrue(resultSet.next());
-
-			Assert.assertEquals(
-				"This is a test for nested concats", resultSet.getString(1));
-
-			Assert.assertFalse(resultSet.next());
-		}
+		_assertConcat(
+			"select CONCAT('This ', 'is ', 'a ', CONCAT(data, ' for '" +
+				", CONCAT('nested ', 'concats'))) from SQLConcatTest",
+			"This is a test for nested concats");
 	}
 
 	@Test
 	public void testConcatWithParentheses() throws Exception {
-		String sql = _db.buildSQL(
-			"select CONCAT('This ( ', 'is ( ', '(a) ', (REPLACE(data, " +
-				"'test', 'test to ensure parentheses are parsed " +
-					"correctly'))) from SQLConcatTest where id = 1");
+		_assertConcat(
+			"select CONCAT('This ( ', 'is ( ', '(a) ', (REPLACE(data, 'test'" +
+				", 'test to ensure parentheses are parsed correctly'))) from " +
+					"SQLConcatTest",
+			"This ( is ( (a) test to ensure parentheses are parsed correctly");
+	}
 
-		sql = SQLTransformer.transform(sql);
+	private void _assertConcat(String query, String expected) throws Exception {
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps = con.prepareStatement(
+				SQLTransformer.transform(query));
+			ResultSet rs = ps.executeQuery()) {
 
-		try (Connection connection = DataAccess.getUpgradeOptimizedConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				sql);
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+			Assert.assertTrue(rs.next());
 
-			Assert.assertTrue(resultSet.next());
+			Assert.assertEquals(expected, rs.getString(1));
 
-			Assert.assertEquals(
-				"This ( is ( (a) test to ensure parentheses are parsed " +
-					"correctly",
-				resultSet.getString(1));
-
-			Assert.assertFalse(resultSet.next());
+			Assert.assertFalse(rs.next());
 		}
 	}
 

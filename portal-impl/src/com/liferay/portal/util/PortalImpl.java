@@ -8122,7 +8122,6 @@ public class PortalImpl implements Portal {
 	protected void setThemeDisplayI18n(
 		ThemeDisplay themeDisplay, Locale locale) {
 
-		String i18nLanguageId = null;
 		String i18nPath = null;
 
 		if ((I18nFilter.getLanguageIds().contains(locale.toString()) &&
@@ -8130,11 +8129,10 @@ public class PortalImpl implements Portal {
 			 !locale.equals(LocaleUtil.getDefault())) ||
 			(PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2)) {
 
-			i18nLanguageId = locale.toString();
 			i18nPath = buildI18NPath(locale);
 		}
 
-		themeDisplay.setI18nLanguageId(i18nLanguageId);
+		themeDisplay.setI18nLanguageId(locale.toString());
 		themeDisplay.setI18nPath(i18nPath);
 		themeDisplay.setLocale(locale);
 	}

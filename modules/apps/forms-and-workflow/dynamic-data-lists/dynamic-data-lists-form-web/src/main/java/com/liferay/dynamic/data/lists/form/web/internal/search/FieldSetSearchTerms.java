@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,22 +11,23 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/admin/init.jsp" %>
+package com.liferay.dynamic.data.lists.form.web.internal.search;
 
-<%
-PortletURL portletURL = ddlFormAdminDisplayContext.getPortletURL();
+import com.liferay.portal.kernel.dao.search.DAOParamUtil;
 
-int delta = ParamUtil.getInteger(request, "delta");
+import javax.portlet.PortletRequest;
 
-if (delta > 0) {
-	portletURL.setParameter("delta", String.valueOf(delta));
+/**
+ * @author Leonardo Barros
+ */
+public class FieldSetSearchTerms extends FieldSetDisplayTerms {
+
+	public FieldSetSearchTerms(PortletRequest portletRequest) {
+		super(portletRequest);
+
+		description = DAOParamUtil.getString(portletRequest, DESCRIPTION);
+		name = DAOParamUtil.getString(portletRequest, NAME);
+	}
+
 }
-%>
-
-<liferay-frontend:management-bar-display-buttons
-	displayViews="<%= ddlFormAdminDisplayContext.getDisplayViews() %>"
-	portletURL="<%= portletURL %>"
-	selectedDisplayStyle="<%= ddlFormAdminDisplayContext.getDisplayStyle() %>"
-/>

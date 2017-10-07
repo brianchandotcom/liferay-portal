@@ -91,7 +91,7 @@ class FragmentPreview extends Component {
 	_updatePreview() {
 		this._previewContent =
 			'data:text/html;charset=utf-8,' +
-			encodeURI(`
+			encodeURIComponent(`
 			<!DOCTYPE html>
 			<html>
 			<head>

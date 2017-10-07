@@ -1,7 +1,7 @@
 AUI.add(
 	'liferay-ddl-portlet',
 	function(A) {
-		var LayoutSerializer = Liferay.DDL.LayoutSerializer;
+		var LayoutSerializer = Liferay.DDM.LayoutSerializer;
 
 		var Settings = Liferay.DDL.Settings;
 
@@ -21,9 +21,6 @@ AUI.add(
 					alert: {
 					},
 
-					context: {
-					},
-
 					defaultLanguageId: {
 						value: themeDisplay.getDefaultLanguageId()
 					},
@@ -36,7 +33,6 @@ AUI.add(
 					},
 
 					formBuilder: {
-						valueFn: '_valueFormBuilder'
 					},
 
 					localizedDescription: {
@@ -59,7 +55,6 @@ AUI.add(
 					},
 
 					ruleBuilder: {
-						valueFn: '_valueRuleBuilder'
 					},
 
 					rules: {
@@ -91,7 +86,7 @@ AUI.add(
 							instance._eventHandlers = [];
 						}
 
-						if (window.DDLRuleBuilder) {
+						if (window.DDMRuleBuilder) {
 							instance._onRuleBuilderLoaded();
 						}
 						else {
@@ -882,30 +877,6 @@ AUI.add(
 						localizedName[editingLanguageId] = name;
 
 						instance._setName(name);
-					},
-
-					_valueFormBuilder: function() {
-						var instance = this;
-
-						return new Liferay.DDL.FormBuilder(
-							{
-								context: instance.get('context'),
-								defaultLanguageId: instance.get('defaultLanguageId'),
-								editingLanguageId: instance.get('editingLanguageId')
-							}
-						);
-					},
-
-					_valueRuleBuilder: function() {
-						var instance = this;
-
-						return new Liferay.DDL.FormBuilderRuleBuilder(
-							{
-								formBuilder: instance.get('formBuilder'),
-								rules: instance.get('rules'),
-								visible: false
-							}
-						);
 					}
 				}
 			}
@@ -915,6 +886,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-tooltip', 'io-base', 'liferay-alert', 'liferay-ddl-form-builder', 'liferay-ddl-form-builder-copy-publish-form-url-popover', 'liferay-ddl-form-builder-definition-serializer', 'liferay-ddl-form-builder-layout-serializer', 'liferay-ddl-form-builder-rule-builder', 'liferay-portlet-base', 'liferay-util-window', 'querystring-parse']
+		requires: ['aui-tooltip', 'io-base', 'liferay-alert', 'liferay-ddm-form-builder', 'liferay-ddl-form-builder-copy-publish-form-url-popover', 'liferay-ddm-form-builder-definition-serializer', 'liferay-ddm-form-builder-layout-serializer', 'liferay-ddm-form-builder-rule-builder', 'liferay-portlet-base', 'liferay-util-window', 'querystring-parse']
 	}
 );

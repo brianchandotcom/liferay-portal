@@ -1,5 +1,5 @@
 <definition component-name="portal-workflow">
-	<property name="custom.properties" value="minifier.enabled=false" />
+	<property name="custom.properties" value="minifier.enabled=true" />
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
 	<property name="testray.component.names" value="Dynamic Data Lists,Workflow,Forms" />
@@ -171,7 +171,7 @@
 
 	<command name="ViewDateAssetDetails" priority="5">
 		<description message="This is a use case LPS-61197." />
-		<property name="portal.acceptance" value="quarantine" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -300,7 +300,7 @@
 
 	<command name="ViewEntryWithConditionalVisibilityFromSelectAndRadio" priority="5">
 		<description message="This is a use case for LPS-65270." />
-		<property name="portal.acceptance" value="quarantine" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Navigator#openURL" />
 

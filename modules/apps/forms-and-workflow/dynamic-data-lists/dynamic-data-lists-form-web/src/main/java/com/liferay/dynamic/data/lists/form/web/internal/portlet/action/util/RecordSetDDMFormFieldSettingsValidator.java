@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.lists.form.web.internal.portlet.action.util;
 
 import com.liferay.dynamic.data.lists.form.web.RecordSetDDMFormFieldSettingsException;
-import com.liferay.dynamic.data.lists.form.web.internal.util.DDMFormTemplateContextVisitor;
+import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormContextVisitor;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationException;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
@@ -91,10 +91,10 @@ public class RecordSetDDMFormFieldSettingsValidator {
 
 		fieldSettingsDDMFormValues.setAvailableLocales(availableLocales);
 
-		DDMFormTemplateContextVisitor ddmFormTemplateContextVisitor =
-			new DDMFormTemplateContextVisitor(jsonObject.getJSONArray("pages"));
+		DDMFormContextVisitor ddmFormContextVisitor = new DDMFormContextVisitor(
+			jsonObject.getJSONArray("pages"));
 
-		ddmFormTemplateContextVisitor.onVisitField(
+		ddmFormContextVisitor.onVisitField(
 			new Consumer<JSONObject>() {
 
 				@Override
@@ -161,7 +161,7 @@ public class RecordSetDDMFormFieldSettingsValidator {
 
 			});
 
-		ddmFormTemplateContextVisitor.visit();
+		ddmFormContextVisitor.visit();
 
 		return fieldSettingsDDMFormValues;
 	}
@@ -203,10 +203,10 @@ public class RecordSetDDMFormFieldSettingsValidator {
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			serializedFormBuilderContext);
 
-		DDMFormTemplateContextVisitor ddmFormTemplateContextVisitor =
-			new DDMFormTemplateContextVisitor(jsonObject.getJSONArray("pages"));
+		DDMFormContextVisitor ddmFormContextVisitor = new DDMFormContextVisitor(
+			jsonObject.getJSONArray("pages"));
 
-		ddmFormTemplateContextVisitor.onVisitField(
+		ddmFormContextVisitor.onVisitField(
 			new Consumer<JSONObject>() {
 
 				@Override
@@ -244,7 +244,7 @@ public class RecordSetDDMFormFieldSettingsValidator {
 
 			});
 
-		ddmFormTemplateContextVisitor.visit();
+		ddmFormContextVisitor.visit();
 
 		return fieldNamePropertiesMap;
 	}

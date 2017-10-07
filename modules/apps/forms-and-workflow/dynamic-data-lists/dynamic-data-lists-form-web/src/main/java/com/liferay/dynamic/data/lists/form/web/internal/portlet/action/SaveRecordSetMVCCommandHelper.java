@@ -15,18 +15,15 @@
 package com.liferay.dynamic.data.lists.form.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.lists.exception.RecordSetSettingsRedirectURLException;
-import com.liferay.dynamic.data.lists.form.web.internal.converter.DDLFormRuleDeserializer;
-import com.liferay.dynamic.data.lists.form.web.internal.converter.DDLFormRuleToDDMFormRuleConverter;
 import com.liferay.dynamic.data.lists.form.web.internal.portlet.action.util.RecordSetDDMFormFieldSettingsValidator;
-import com.liferay.dynamic.data.lists.form.web.internal.util.DDLFormBuilderContextToDDMForm;
-import com.liferay.dynamic.data.lists.form.web.internal.util.DDLFormBuilderContextToDDMFormLayout;
-import com.liferay.dynamic.data.lists.form.web.internal.util.DDMFormTemplateContextToDDMFormValues;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.exception.StructureLayoutException;
+import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormContextDeserializer;
+import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormContextDeserializerRequest;
 import com.liferay.dynamic.data.mapping.form.values.query.DDMFormValuesQuery;
 import com.liferay.dynamic.data.mapping.form.values.query.DDMFormValuesQueryFactory;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
@@ -201,8 +198,9 @@ public class SaveRecordSetMVCCommandHelper {
 			String serializedFormBuilderContext = ParamUtil.getString(
 				portletRequest, "serializedFormBuilderContext");
 
-			return ddlFormBuilderContextToDDMForm.deserialize(
-				serializedFormBuilderContext);
+			return ddmFormBuilderContextToDDMForm.deserialize(
+				DDMFormContextDeserializerRequest.with(
+					serializedFormBuilderContext));
 		}
 		catch (PortalException pe) {
 			throw new StructureDefinitionException(pe);
@@ -216,8 +214,9 @@ public class SaveRecordSetMVCCommandHelper {
 			String serializedFormBuilderContext = ParamUtil.getString(
 				portletRequest, "serializedFormBuilderContext");
 
-			return ddlFormBuilderContextToDDMFormLayout.deserialize(
-				serializedFormBuilderContext);
+			return ddmFormBuilderContextToDDMFormLayout.deserialize(
+				DDMFormContextDeserializerRequest.with(
+					serializedFormBuilderContext));
 		}
 		catch (PortalException pe) {
 			throw new StructureLayoutException(pe);
@@ -252,11 +251,11 @@ public class SaveRecordSetMVCCommandHelper {
 		String settingsContext = ParamUtil.getString(
 			portletRequest, "serializedSettingsContext");
 
-		DDMForm ddmForm = DDMFormFactory.create(DDLRecordSetSettings.class);
-
 		DDMFormValues settingsDDMFormValues =
 			ddmFormTemplateContextToDDMFormValues.deserialize(
-				ddmForm, settingsContext);
+				DDMFormContextDeserializerRequest.with(
+					DDMFormFactory.create(DDLRecordSetSettings.class),
+					settingsContext));
 
 		return settingsDDMFormValues;
 	}
@@ -458,24 +457,24 @@ public class SaveRecordSetMVCCommandHelper {
 	}
 
 	@Reference
-	protected DDLFormBuilderContextToDDMForm ddlFormBuilderContextToDDMForm;
-
-	@Reference
-	protected DDLFormBuilderContextToDDMFormLayout
-		ddlFormBuilderContextToDDMFormLayout;
-
-	@Reference
-	protected DDLFormRuleDeserializer ddlFormRuleDeserializer;
-
-	@Reference
-	protected DDLFormRuleToDDMFormRuleConverter
-		ddlFormRulesToDDMFormRulesConverter;
-
-	@Reference
 	protected DDLRecordSetService ddlRecordSetService;
 
-	@Reference
-	protected DDMFormTemplateContextToDDMFormValues
+	@Reference(
+		target = "(dynamic.data.mapping.form.builder.context.deserializer.type=form)"
+	)
+	protected DDMFormContextDeserializer<DDMForm>
+		ddmFormBuilderContextToDDMForm;
+
+	@Reference(
+		target = "(dynamic.data.mapping.form.builder.context.deserializer.type=formLayout)"
+	)
+	protected DDMFormContextDeserializer<DDMFormLayout>
+		ddmFormBuilderContextToDDMFormLayout;
+
+	@Reference(
+		target = "(dynamic.data.mapping.form.builder.context.deserializer.type=formValues)"
+	)
+	protected DDMFormContextDeserializer<DDMFormValues>
 		ddmFormTemplateContextToDDMFormValues;
 
 	@Reference

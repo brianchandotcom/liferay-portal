@@ -187,10 +187,6 @@ gradle.beforeProject {
 			}
 
 			if (System.getenv("JENKINS_HOME")) {
-				buildCSS {
-					jvmArgs "-Xss4m"
-				}
-
 				startTestableTomcat {
 					deleteLiferayHome = false
 				}

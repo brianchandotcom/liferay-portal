@@ -14,10 +14,11 @@
 
 package com.liferay.gradle.plugins.internal;
 
-import com.liferay.gradle.plugins.BasePortalToolDefaultsPlugin;
+import com.liferay.gradle.plugins.BaseDefaultsPlugin;
 import com.liferay.gradle.plugins.css.builder.BuildCSSTask;
 import com.liferay.gradle.plugins.css.builder.CSSBuilderPlugin;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.util.PortalTools;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
@@ -31,7 +32,7 @@ import org.gradle.api.tasks.TaskContainer;
  * @author Andrea Di Giorgi
  */
 public class CSSBuilderDefaultsPlugin
-	extends BasePortalToolDefaultsPlugin<CSSBuilderPlugin> {
+	extends BaseDefaultsPlugin<CSSBuilderPlugin> {
 
 	public static final Plugin<Project> INSTANCE =
 		new CSSBuilderDefaultsPlugin();
@@ -40,12 +41,7 @@ public class CSSBuilderDefaultsPlugin
 	protected void configureDefaults(
 		Project project, CSSBuilderPlugin cssBuilderPlugin) {
 
-		super.configureDefaults(project, cssBuilderPlugin);
-
-		addPortalToolDependencies(
-			project, CSSBuilderPlugin.PORTAL_COMMON_CSS_CONFIGURATION_NAME,
-			_FRONTEND_COMMON_CSS_NAME);
-
+		_addDependenciesPortalCommonCSS(project);
 		_configureTasksBuildCSS(project);
 	}
 
@@ -54,17 +50,18 @@ public class CSSBuilderDefaultsPlugin
 		return CSSBuilderPlugin.class;
 	}
 
-	@Override
-	protected String getPortalToolConfigurationName() {
-		return CSSBuilderPlugin.CSS_BUILDER_CONFIGURATION_NAME;
-	}
-
-	@Override
-	protected String getPortalToolName() {
-		return _PORTAL_TOOL_NAME;
-	}
-
 	private CSSBuilderDefaultsPlugin() {
+	}
+
+	private void _addDependenciesPortalCommonCSS(Project project) {
+		String version = PortalTools.getVersion(
+			project, _FRONTEND_COMMON_CSS_NAME);
+
+		if (Validator.isNotNull(version)) {
+			GradleUtil.addDependency(
+				project, CSSBuilderPlugin.PORTAL_COMMON_CSS_CONFIGURATION_NAME,
+				PortalTools.GROUP, _FRONTEND_COMMON_CSS_NAME, version);
+		}
 	}
 
 	private void _configureTaskBuildCSS(BuildCSSTask buildCSSTask) {
@@ -114,7 +111,5 @@ public class CSSBuilderDefaultsPlugin
 
 	private static final String _FRONTEND_COMMON_CSS_NAME =
 		"com.liferay.frontend.css.common";
-
-	private static final String _PORTAL_TOOL_NAME = "com.liferay.css.builder";
 
 }

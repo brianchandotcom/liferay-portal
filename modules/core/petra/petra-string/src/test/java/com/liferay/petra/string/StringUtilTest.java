@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -33,10 +34,20 @@ public class StringUtilTest {
 
 	@ClassRule
 	public static final CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+		new CodeCoverageAssertor() {
+
+			@Override
+			public void appendAssertClasses(List<Class<?>> assertClasses) {
+				assertClasses.add(CharPool.class);
+				assertClasses.add(StringPool.class);
+			}
+
+		};
 
 	@Test
-	public void testConstructor() {
+	public void testConstructors() {
+		new CharPool();
+		new StringPool();
 		new StringUtil();
 	}
 

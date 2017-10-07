@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE liferay-social PUBLIC "-//Liferay//DTD Social 6.1.0//EN" "http://www.liferay.com/dtd/liferay-social_6_1_0.dtd">
+
+<liferay-social>
+	<activity>
+		<model-name>test-model</model-name>
+		<activity-type>1</activity-type>
+		<language-key>CREATE</language-key>
+		<log-activity>true</log-activity>
+		<contribution-value>1</contribution-value>
+		<contribution-limit enabled="false" />
+		<participation-value>2</participation-value>
+		<participation-limit enabled="false" />
+	</activity>
+	<activity>
+		<model-name>test-model</model-name>
+		<activity-type>2</activity-type>
+		<language-key>VOTE</language-key>
+		<log-activity>true</log-activity>
+		<contribution-value>1</contribution-value>
+		<contribution-limit period="period">2</contribution-limit>
+		<participation-value>1</participation-value>
+		<participation-limit period="day">5</participation-limit>
+		<counter>
+			<name>asset.test.2</name>
+			<owner-type>asset</owner-type>
+		</counter>
+		<counter>
+			<name>user.test.2</name>
+			<owner-type>actor</owner-type>
+		</counter>
+	</activity>
+</liferay-social>

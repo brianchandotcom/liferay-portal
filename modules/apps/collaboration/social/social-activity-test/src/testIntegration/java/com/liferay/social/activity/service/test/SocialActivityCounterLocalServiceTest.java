@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.social.service;
+package com.liferay.social.activity.service.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.social.util.test.SocialActivityTestUtil;
+import com.liferay.social.activity.service.test.util.SocialActivityTestUtil;
 import com.liferay.social.kernel.model.SocialActivityCounter;
 import com.liferay.social.kernel.model.SocialActivityCounterConstants;
 import com.liferay.social.kernel.model.SocialActivityLimit;
@@ -33,10 +34,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Zsolt Berentey
  */
+@RunWith(Arquillian.class)
 @Sync
 public class SocialActivityCounterLocalServiceTest
 	extends BaseSocialActivityTestCase {

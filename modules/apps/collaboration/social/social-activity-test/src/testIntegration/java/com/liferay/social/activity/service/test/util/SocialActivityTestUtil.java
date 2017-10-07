@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.social.util.test;
+package com.liferay.social.activity.service.test.util;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;

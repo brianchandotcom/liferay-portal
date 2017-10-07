@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.io.Serializable;
 
@@ -92,8 +91,7 @@ public class LayoutSetStagingHandler
 					Class<?> layoutSetBranchClass = _layoutSetBranch.getClass();
 
 					method = layoutSetBranchClass.getMethod(
-						methodName,
-						ReflectionUtil.getParameterTypes(arguments));
+						methodName, method.getParameterTypes());
 
 					bean = _layoutSetBranch;
 				}

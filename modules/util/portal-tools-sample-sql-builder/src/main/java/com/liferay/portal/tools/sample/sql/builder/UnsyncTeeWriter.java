@@ -12,16 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.kernel.io.unsync;
+package com.liferay.portal.tools.sample.sql.builder;
 
 import java.io.IOException;
 import java.io.Writer;
 
 /**
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, with no direct replacement
  */
-@Deprecated
 public class UnsyncTeeWriter extends Writer {
 
 	public UnsyncTeeWriter(Writer writer1, Writer writer2) {

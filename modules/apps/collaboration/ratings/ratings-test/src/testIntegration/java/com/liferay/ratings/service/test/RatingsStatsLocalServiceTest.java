@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.ratings.service;
+package com.liferay.ratings.service.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -34,10 +35,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Sergio González
  */
+@RunWith(Arquillian.class)
 public class RatingsStatsLocalServiceTest {
 
 	@ClassRule

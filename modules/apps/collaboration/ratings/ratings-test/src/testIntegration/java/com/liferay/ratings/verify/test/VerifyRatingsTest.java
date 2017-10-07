@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.verify;
+package com.liferay.ratings.verify.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -21,6 +22,8 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.verify.VerifyProcess;
+import com.liferay.portal.verify.VerifyRatings;
 import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
 import com.liferay.portlet.ratings.util.test.RatingsTestUtil;
 import com.liferay.ratings.kernel.model.RatingsEntry;
@@ -36,10 +39,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Alberto Chaparro
  */
+@RunWith(Arquillian.class)
 public class VerifyRatingsTest extends BaseVerifyProcessTestCase {
 
 	@ClassRule

@@ -34,6 +34,8 @@ configurations {
 	mavenCompile {
 		extendsFrom compile
 	}
+
+	mavenDistribution
 }
 
 dependencies {
@@ -47,11 +49,16 @@ dependencies {
 
 	mavenCompile group: "com.liferay", name: "com.liferay.frontend.css.common", version: "2.0.4"
 
+	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: "3.3.9"
+
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "org.apache.maven", name: "maven-artifact", version: "3.2.5"
 	provided group: "org.apache.maven", name: "maven-core", version: "3.2.5"
 	provided group: "org.apache.maven", name: "maven-plugin-api", version: "3.2.5"
+
+	testCompile group: "org.apache.ant", name: "ant-testutil", version: "1.9.7"
+	testCompile project(":test:maven-executor")
 }
 
 formatSource {
@@ -64,7 +71,19 @@ liferay {
 
 test {
 	dependsOn copyPortalCommonCSSJar
+	dependsOn install
 	dependsOn unzipPortalCommonCSS
+
+	doFirst {
+		systemProperty "maven.distribution.file.name", configurations.mavenDistribution.singleFile
+	}
+
+	systemProperty "css.builder.version", jar.version
+	systemProperty "http.proxyHost", System.properties["http.proxyHost"]
+	systemProperty "http.proxyPort", System.properties["http.proxyPort"]
+	systemProperty "maven.debug", System.properties["maven.debug"]
+	systemProperty "maven.repo.local", System.properties["maven.repo.local"]
+	systemProperty "repository.url", System.properties["repository.url"]
 }
 
 unzipPortalCommonCSS {

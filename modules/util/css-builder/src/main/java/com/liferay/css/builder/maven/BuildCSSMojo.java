@@ -125,7 +125,7 @@ public class BuildCSSMojo extends AbstractMojo {
 	}
 
 	/**
-	 * @parameter default-value="/"
+	 * @parameter default-value=".sass-cache/"
 	 */
 	public void setOutputDirName(String outputDirName) {
 		_cssBuilderArgs.setOutputDirName(outputDirName);

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<taskdef resource="com/liferay/css/builder/ant/taskdefs.properties" />
+
+	<target name="build-css">
+		<build-css
+			dirNames="${build.css.dir.names}"
+			docrootDirName="${build.docroot.dir.name}"
+			generateSourceMap="${build.css.generate.source.maps}"
+			outputDirName="${build.css.output.dir.name}"
+			portalCommonPath="${build.css.portal.common.path}"
+			precision="${build.css.precision}"
+			rtlExcludedPathRegexps="${build.css.rtl.excluded.path.regexps}"
+			sassCompilerClassName="${build.css.sass.compiler.class.name}"
+		/>
+	</target>
+</project>

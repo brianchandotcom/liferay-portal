@@ -50,10 +50,10 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -481,9 +481,9 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 				if (Validator.isNotNull(viewURL) &&
 					!Objects.equals(viewURL, noSuchEntryRedirect)) {
 
-					viewURL = HttpUtil.setParameter(
+					viewURL = _http.setParameter(
 						viewURL, "redirect",
-						PortalUtil.getCurrentURL(liferayPortletRequest));
+						_portal.getCurrentURL(liferayPortletRequest));
 				}
 			}
 			catch (Exception e) {
@@ -923,6 +923,12 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 	private GroupLocalService _groupLocalService;
 
 	@Reference
+	private Http _http;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

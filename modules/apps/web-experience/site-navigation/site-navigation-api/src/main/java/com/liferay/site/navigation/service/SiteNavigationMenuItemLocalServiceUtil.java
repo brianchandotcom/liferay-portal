@@ -255,6 +255,12 @@ public class SiteNavigationMenuItemLocalServiceUtil {
 		return getService().getSiteNavigationMenuItems(siteNavigationMenuId);
 	}
 
+	public static java.util.List<com.liferay.site.navigation.model.SiteNavigationMenuItem> getSiteNavigationMenuItemsByParent(
+		long parentSiteNavigationMenuItemId) {
+		return getService()
+				   .getSiteNavigationMenuItemsByParent(parentSiteNavigationMenuItemId);
+	}
+
 	/**
 	* Returns the number of site navigation menu items.
 	*

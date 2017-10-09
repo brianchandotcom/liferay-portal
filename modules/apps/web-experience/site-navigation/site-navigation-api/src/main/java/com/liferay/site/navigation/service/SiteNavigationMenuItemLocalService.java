@@ -228,6 +228,10 @@ public interface SiteNavigationMenuItemLocalService extends BaseLocalService,
 	public List<SiteNavigationMenuItem> getSiteNavigationMenuItems(
 		long siteNavigationMenuId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SiteNavigationMenuItem> getSiteNavigationMenuItemsByParent(
+		long parentSiteNavigationMenuItemId);
+
 	/**
 	* Returns the number of site navigation menu items.
 	*

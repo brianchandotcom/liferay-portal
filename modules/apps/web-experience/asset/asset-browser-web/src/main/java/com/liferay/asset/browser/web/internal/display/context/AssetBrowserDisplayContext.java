@@ -238,7 +238,7 @@ public class AssetBrowserDisplayContext {
 		return _eventName;
 	}
 
-	public long[] getFilterGroupIds() {
+	public long[] getFilterGroupIds() throws PortalException {
 		long[] filterGroupIds = getSelectedGroupIds();
 
 		if (getGroupId() > 0) {
@@ -370,36 +370,23 @@ public class AssetBrowserDisplayContext {
 		return new String[] {"modified-date", "title"};
 	}
 
-	public PortletURL getPortletURL() {
+	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter("groupId", String.valueOf(getGroupId()));
 
-		long[] selectedGroupIds = StringUtil.split(
-			ParamUtil.getString(_request, "selectedGroupIds"), 0L);
+		long[] selectedGroupIds = getSelectedGroupIds();
 
-		if (selectedGroupIds.length == 0) {
-			long sharedContentCompanyId = ParamUtil.getLong(
-				_request, "sharedContentCompanyId");
-			long shareContentSiteGroupId = ParamUtil.getLong(
-				_request, "shareContentSiteGroupId");
-			long sharedContentUserId = ParamUtil.getLong(
-				_request, "sharedContentUserId");
-
+		if (selectedGroupIds.length > 0) {
 			portletURL.setParameter(
-				"sharedContentCompanyId",
-				String.valueOf(sharedContentCompanyId));
-
-			portletURL.setParameter(
-				"shareContentSiteGroupId",
-				String.valueOf(shareContentSiteGroupId));
-
-			portletURL.setParameter(
-				"sharedContentUserId", String.valueOf(sharedContentUserId));
+				"selectedGroupIds", StringUtil.merge(selectedGroupIds));
 		}
-		else {
+
+		long selectedGroupId = ParamUtil.getLong(_request, "selectedGroupId");
+
+		if (selectedGroupId > 0) {
 			portletURL.setParameter(
-				"selectedGroupIds", StringUtil.merge(getSelectedGroupIds()));
+				"selectedGroupId", String.valueOf(selectedGroupId));
 		}
 
 		portletURL.setParameter(
@@ -432,29 +419,22 @@ public class AssetBrowserDisplayContext {
 		return _refererAssetEntryId;
 	}
 
-	public long[] getSelectedGroupIds() {
+	public long[] getSelectedGroupIds() throws PortalException {
 		long[] selectedGroupIds = StringUtil.split(
 			ParamUtil.getString(_request, "selectedGroupIds"), 0L);
 
-		if (selectedGroupIds.length == 0) {
-			long sharedContentCompanyId = ParamUtil.getLong(
-				_request, "sharedContentCompanyId");
-			long sharedContentSiteGroupId = ParamUtil.getLong(
-				_request, "sharedContentSiteGroupId");
-			long sharedContentUserId = ParamUtil.getLong(
-				_request, "sharedContentUserId");
-
-			try {
-				selectedGroupIds = PortalUtil.getSharedContentSiteGroupIds(
-					sharedContentCompanyId, sharedContentSiteGroupId,
-					sharedContentUserId);
-			}
-			catch (PortalException pe) {
-				pe.printStackTrace();
-			}
+		if (selectedGroupIds.length > 0) {
+			return selectedGroupIds;
 		}
 
-		return selectedGroupIds;
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long selectedGroupId = ParamUtil.getLong(_request, "selectedGroupId");
+
+		return PortalUtil.getSharedContentSiteGroupIds(
+			themeDisplay.getCompanyId(), selectedGroupId,
+			themeDisplay.getUserId());
 	}
 
 	public int[] getStatuses() {
@@ -480,7 +460,7 @@ public class AssetBrowserDisplayContext {
 		return _subtypeSelectionId;
 	}
 
-	public int getTotal() {
+	public int getTotal() throws PortalException {
 		return getTotal(getFilterGroupIds());
 	}
 
@@ -518,7 +498,7 @@ public class AssetBrowserDisplayContext {
 		return _typeSelection;
 	}
 
-	public boolean isDisabledManagementBar() {
+	public boolean isDisabledManagementBar() throws PortalException {
 		if (getTotal(getSelectedGroupIds()) > 0) {
 			return false;
 		}

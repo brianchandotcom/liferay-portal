@@ -238,6 +238,11 @@ public class SamlIdpSpConnectionLocalServiceImpl
 			samlIdpSpConnection.setMetadataUrl(metadataUrl);
 
 			metadataXmlInputStream = _metadataUtil.getMetadata(metadataUrl);
+
+			if (metadataXmlInputStream == null) {
+				throw new SamlIdpSpConnectionMetadataUrlException(
+					"Unable to get metadata from " + metadataUrl);
+			}
 		}
 
 		String metadataXml = StringPool.BLANK;

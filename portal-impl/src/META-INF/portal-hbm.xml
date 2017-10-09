@@ -1305,7 +1305,7 @@
 		<one-to-one access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" cascade="save-update" class="com.liferay.document.library.kernel.model.DLContentDataBlobModel" constrained="true" name="dataBlobModel" outer-join="false" />
 		<property column="size_" name="size" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
-	<class lazy="true" name="com.liferay.document.library.kernel.model.DLContentDataBlobModel" table="DLContent">
+	<class name="com.liferay.document.library.kernel.model.DLContentDataBlobModel" lazy="true" table="DLContent">
 		<id column="contentId" name="contentId">
 			<generator class="foreign">
 				<param name="property">com.liferay.portlet.documentlibrary.model.impl.DLContentImpl</param>

@@ -264,7 +264,7 @@
 			<var name="templateLanguage" value="ftl" />
 		</execute>
 
-		<execute macro="PortletEntry#save" />
+		<execute macro="WebContentTemplates#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -404,7 +404,7 @@
 			<var name="templateLanguage" value="ftl" />
 		</execute>
 
-		<execute macro="PortletEntry#save" />
+		<execute macro="WebContentTemplates#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -541,7 +541,7 @@
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
-		<execute macro="PortletEntry#save" />
+		<execute macro="WebContentTemplates#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -638,7 +638,7 @@
 			<var name="templateLanguage" value="ftl" />
 		</execute>
 
-		<execute macro="PortletEntry#save" />
+		<execute macro="WebContentTemplates#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -1007,7 +1007,7 @@
 			<var name="templateLanguage" value="ftl" />
 		</execute>
 
-		<execute macro="PortletEntry#save" />
+		<execute macro="WebContentTemplates#save" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
@@ -1096,7 +1096,7 @@
 			<var name="templateLanguage" value="ftl" />
 		</execute>
 
-		<execute macro="PortletEntry#save" />
+		<execute macro="WebContentTemplates#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -1192,7 +1192,7 @@
 			<var name="templateFieldNames" value="Text" />
 		</execute>
 
-		<execute macro="PortletEntry#save" />
+		<execute macro="WebContentTemplates#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -2053,7 +2053,7 @@
 			<var name="templateFieldNames" value="Text" />
 		</execute>
 
-		<execute macro="PortletEntry#save" />
+		<execute macro="WebContentTemplates#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -2228,7 +2228,7 @@
 			<var name="structureName" value="Test Structure" />
 		</execute>
 
-		<execute macro="PortletEntry#save" />
+		<execute macro="WebContentTemplates#save" />
 
 		<execute macro="Navigator#openURL" />
 

@@ -330,7 +330,7 @@
 			<var name="templateLanguage" value="ftl" />
 		</execute>
 
-		<execute macro="PortletEntry#save" />
+		<execute macro="WebContentTemplates#save" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Web Content Display Page" />
@@ -415,7 +415,7 @@
 			<var name="templateLanguage" value="ftl" />
 		</execute>
 
-		<execute macro="PortletEntry#save" />
+		<execute macro="WebContentTemplates#save" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Web Content Page" />

@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.webserver;
+package com.liferay.document.library.webserver.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webdav.methods.Method;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.webserver.WebServerServlet;
 import com.liferay.portal.webserver.test.BaseWebServerTestCase;
 
 import java.util.Arrays;
@@ -42,12 +44,14 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Alexander Chow
  */
+@RunWith(Arquillian.class)
 public class WebServerRangeTest extends BaseWebServerTestCase {
 
 	@ClassRule

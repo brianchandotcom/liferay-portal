@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.sample.sql.builder;
+package com.liferay.portal.tools.sample.sql.builder.io;
 
 import com.liferay.portal.kernel.test.SyncThrowableThread;
 

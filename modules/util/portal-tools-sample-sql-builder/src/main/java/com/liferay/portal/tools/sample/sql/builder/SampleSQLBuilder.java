@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolDependencies;
+import com.liferay.portal.tools.sample.sql.builder.io.CharPipe;
+import com.liferay.portal.tools.sample.sql.builder.io.UnsyncTeeWriter;
 
 import java.io.File;
 import java.io.FileInputStream;

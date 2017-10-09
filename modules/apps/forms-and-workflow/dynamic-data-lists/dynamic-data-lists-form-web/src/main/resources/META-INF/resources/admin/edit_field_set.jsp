@@ -113,6 +113,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-fie
 			ddmStructureId="<%= ddlFormAdminDisplayContext.getDDMStrucutureId() %>"
 			defaultLanguageId="<%= ddlFormAdminDisplayContext.getDefaultLanguageId() %>"
 			editingLanguageId="<%= ddlFormAdminDisplayContext.getDefaultLanguageId() %>"
+			fieldSetsClassNameId="<%= PortalUtil.getClassNameId(DDLRecordSet.class) %>"
 			refererPortletNamespace="<%= liferayPortletResponse.getNamespace() %>"
 			showPagination="<%= false %>"
 		/>

@@ -38,7 +38,7 @@ renderResponse.setTitle(((category == null) ? LanguageUtil.get(request, "add-new
 	<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= editCategoryURL %>" name="fm">
+<aui:form action="<%= editCategoryURL %>" cssClass="container-fluid-1280" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="categoryId" type="hidden" value="<%= categoryId %>" />
 	<aui:input name="parentCategoryId" type="hidden" value="<%= parentCategoryId %>" />
@@ -48,23 +48,27 @@ renderResponse.setTitle(((category == null) ? LanguageUtil.get(request, "add-new
 
 	<aui:model-context bean="<%= category %>" model="<%= AssetCategory.class %>" />
 
-	<aui:input autoFocus="<%= true %>" label="name" name="title" placeholder="name" />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:input autoFocus="<%= true %>" label="name" name="title" placeholder="name" />
 
-	<aui:input name="description" placeholder="description" />
+			<aui:input name="description" placeholder="description" />
 
-	<c:if test="<%= assetCategoriesDisplayContext.isFlattenedNavigationAllowed() %>">
-		<aui:field-wrapper label="parent-category">
-			<liferay-asset:asset-categories-selector categoryIds="<%= String.valueOf(parentCategoryId) %>" hiddenInput="parentCategoryId" singleSelect="<%= true %>" />
-		</aui:field-wrapper>
-	</c:if>
+			<c:if test="<%= assetCategoriesDisplayContext.isFlattenedNavigationAllowed() %>">
+				<aui:field-wrapper label="parent-category">
+					<liferay-asset:asset-categories-selector categoryIds="<%= String.valueOf(parentCategoryId) %>" hiddenInput="parentCategoryId" singleSelect="<%= true %>" />
+				</aui:field-wrapper>
+			</c:if>
 
-	<c:if test="<%= category == null %>">
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" markupView="lexicon" persistState="<%= true %>" title="permissions">
-			<liferay-ui:input-permissions
-				modelName="<%= AssetCategory.class.getName() %>"
-			/>
-		</liferay-ui:panel>
-	</c:if>
+			<c:if test="<%= category == null %>">
+				<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" markupView="lexicon" persistState="<%= true %>" title="permissions">
+					<liferay-ui:input-permissions
+						modelName="<%= AssetCategory.class.getName() %>"
+					/>
+				</liferay-ui:panel>
+			</c:if>
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

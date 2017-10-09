@@ -45,42 +45,36 @@ List<ScreenNavigationEntry> screenNavigationEntries = (List<ScreenNavigationEntr
 	</aui:nav-bar>
 </c:if>
 
-<div class="container-fluid-1280">
-	<div class="row">
-		<c:if test="<%= screenNavigationEntries.size() > 1 %>">
-			<div class="col-md-3">
-				<ul class="main-content-nav nav nav-nested">
+<div class="row">
+	<c:if test="<%= screenNavigationEntries.size() > 1 %>">
+		<div class="col-md-3">
+			<ul class="main-content-nav nav nav-nested">
 
-					<%
-					for (ScreenNavigationEntry screenNavigationEntry : screenNavigationEntries) {
-						PortletURL screenNavigationEntryURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
+				<%
+				for (ScreenNavigationEntry screenNavigationEntry : screenNavigationEntries) {
+					PortletURL screenNavigationEntryURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
 
-						screenNavigationEntryURL.setParameter("screenNavigationCategoryKey", screenNavigationEntry.getCategoryKey());
-						screenNavigationEntryURL.setParameter("screenNavigationEntryKey", screenNavigationEntry.getEntryKey());
-					%>
+					screenNavigationEntryURL.setParameter("screenNavigationCategoryKey", screenNavigationEntry.getCategoryKey());
+					screenNavigationEntryURL.setParameter("screenNavigationEntryKey", screenNavigationEntry.getEntryKey());
+				%>
 
-						<li class="<%= Objects.equals(selectedScreenNavigationEntry.getEntryKey(), screenNavigationEntry.getEntryKey()) ? "active" : StringPool.BLANK %>">
-							<a href="<%= screenNavigationEntryURL %>"><%= screenNavigationEntry.getLabel(themeDisplay.getLocale()) %></a>
-						</li>
+					<li class="<%= Objects.equals(selectedScreenNavigationEntry.getEntryKey(), screenNavigationEntry.getEntryKey()) ? "active" : StringPool.BLANK %>">
+						<a href="<%= screenNavigationEntryURL %>"><%= screenNavigationEntry.getLabel(themeDisplay.getLocale()) %></a>
+					</li>
 
-					<%
-					}
-					%>
+				<%
+				}
+				%>
 
-				</ul>
-			</div>
-		</c:if>
-
-		<div class="<%= (screenNavigationEntries.size() > 1) ? "col-md-9" : "col-md-12" %>">
-			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset>
-
-					<%
-					selectedScreenNavigationEntry.render(request, response);
-					%>
-
-				</aui:fieldset>
-			</aui:fieldset-group>
+			</ul>
 		</div>
+	</c:if>
+
+	<div class="<%= (screenNavigationEntries.size() > 1) ? "col-md-9" : "col-md-12" %>">
+
+		<%
+		selectedScreenNavigationEntry.render(request, response);
+		%>
+
 	</div>
 </div>

@@ -38,14 +38,14 @@ import org.osgi.service.component.annotations.Deactivate;
 public class ScreenNavigationRegistry {
 
 	public <T> List<ScreenNavigationCategory> getScreenNavigationCategories(
-		String screenNavigationId, User user, T screenModelBean) {
+		String screenNavigationId, User user, T context) {
 
 		return ListUtil.filter(
 			_screenNavigationCategoriesMap.getService(screenNavigationId),
 			screenNavigationCategory -> {
 				List<ScreenNavigationEntry> screenNavigationEntries =
 					getScreenNavigationEntries(
-						screenNavigationCategory, user, screenModelBean);
+						screenNavigationCategory, user, context);
 
 				return ListUtil.isNotEmpty(screenNavigationEntries);
 			});
@@ -53,7 +53,7 @@ public class ScreenNavigationRegistry {
 
 	public <T> List<ScreenNavigationEntry> getScreenNavigationEntries(
 		ScreenNavigationCategory screenNavigationCategory, User user,
-		T screenModelBean) {
+		T context) {
 
 		String key = _getKey(
 			screenNavigationCategory.getScreenNavigationKey(),
@@ -62,7 +62,7 @@ public class ScreenNavigationRegistry {
 		return ListUtil.filter(
 			_screenNavigationEntriesMap.getService(key),
 			screenNavigationEntry -> screenNavigationEntry.isVisible(
-				user, screenModelBean));
+				user, context));
 	}
 
 	@Activate

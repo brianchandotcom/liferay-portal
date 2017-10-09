@@ -36,7 +36,7 @@ public interface ScreenNavigationEntry<T> {
 
 	public String getScreenNavigationKey();
 
-	public default boolean isVisible(User user, T screenModelBean) {
+	public default boolean isVisible(User user, T context) {
 		return true;
 	}
 

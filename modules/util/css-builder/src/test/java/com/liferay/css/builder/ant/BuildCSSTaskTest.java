@@ -63,7 +63,7 @@ public class BuildCSSTaskTest extends CSSBuilderTest {
 
 		project.setProperty("build.css.dir.names", dirName);
 		project.setProperty(
-			"build.docroot.dir.name",
+			"build.docroot.dir",
 			String.valueOf(docrootDirPath.toAbsolutePath()));
 		project.setProperty(
 			"build.css.generate.source.maps",

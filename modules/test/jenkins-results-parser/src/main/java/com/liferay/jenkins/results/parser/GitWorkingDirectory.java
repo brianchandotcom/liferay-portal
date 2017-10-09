@@ -413,7 +413,7 @@ public class GitWorkingDirectory {
 	}
 
 	public Branch getBranch(String branchName, Remote remote) {
-		if (remote == null) {
+		if (branchName.equals("HEAD") && (remote == null)) {
 			ExecutionResult executionResult = executeBashCommands(
 				"git rev-parse --abbrev-ref " + branchName);
 
@@ -423,22 +423,20 @@ public class GitWorkingDirectory {
 
 			System.out.println(executionResult.getStandardOut());
 
-			if (branchName.equals("HEAD")) {
-				branchName = executionResult.getStandardOut();
+			branchName = executionResult.getStandardOut();
 
-				branchName = branchName.trim();
+			branchName = branchName.trim();
 
-				if (branchName.isEmpty()) {
-					return null;
-				}
+			if (branchName.isEmpty()) {
+				return null;
 			}
 
 			return new Branch(branchName, null, getBranchSha(branchName));
 		}
 
-		List<Branch> remoteBranches = getRemoteBranches(remote);
+		List<Branch> branches = getBranches(remote);
 
-		for (Branch branch : remoteBranches) {
+		for (Branch branch : branches) {
 			if (branchName.equals(branch.getName())) {
 				return branch;
 			}
@@ -455,7 +453,9 @@ public class GitWorkingDirectory {
 				localBranchNames.size());
 
 			for (String localBranchName : localBranchNames) {
-				localBranches.add(getBranch(localBranchName, null));
+				localBranches.add(
+					new Branch(
+						localBranchName, null, getBranchSha(localBranchName)));
 			}
 
 			return localBranches;

@@ -93,7 +93,13 @@ public class SamlIdpSpConnectionLocalServiceImpl
 
 			samlIdpSpConnection.setMetadataUrl(metadataUrl);
 
-			metadataXmlInputStream = _metadataUtil.getMetadata(metadataUrl);
+			try {
+				metadataXmlInputStream = _metadataUtil.getMetadata(metadataUrl);
+			}
+			catch (Exception e) {
+				throw new SamlIdpSpConnectionMetadataUrlException(
+					"Unable to get metadata from " + metadataUrl, e);
+			}
 		}
 
 		if (metadataXmlInputStream == null) {
@@ -237,7 +243,13 @@ public class SamlIdpSpConnectionLocalServiceImpl
 
 			samlIdpSpConnection.setMetadataUrl(metadataUrl);
 
-			metadataXmlInputStream = _metadataUtil.getMetadata(metadataUrl);
+			try {
+				metadataXmlInputStream = _metadataUtil.getMetadata(metadataUrl);
+			}
+			catch (Exception e) {
+				throw new SamlIdpSpConnectionMetadataUrlException(
+					"Unable to get metadata from " + metadataUrl, e);
+			}
 
 			if (metadataXmlInputStream == null) {
 				throw new SamlIdpSpConnectionMetadataUrlException(

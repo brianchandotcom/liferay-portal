@@ -69,21 +69,21 @@ String redirect = ParamUtil.getString(request, "redirect", assetCategoriesDispla
 long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
 %>
 
-<aui:fieldset-group markupView="lexicon">
-	<aui:fieldset>
-		<portlet:actionURL name="editProperties" var="editPropertiesURL">
-			<portlet:param name="mvcPath" value="/edit_category.jsp" />
-			<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />
-		</portlet:actionURL>
+<portlet:actionURL name="editProperties" var="editPropertiesURL">
+	<portlet:param name="mvcPath" value="/edit_category.jsp" />
+	<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />
+</portlet:actionURL>
 
-		<aui:form action="<%= editPropertiesURL %>" name="fm">
-			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-			<aui:input name="categoryId" type="hidden" value="<%= categoryId %>" />
+<aui:form action="<%= editPropertiesURL %>" name="fm">
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="categoryId" type="hidden" value="<%= categoryId %>" />
 
-			<liferay-ui:error exception="<%= CategoryPropertyKeyException.class %>" message="please-enter-a-valid-property-key" />
-			<liferay-ui:error exception="<%= CategoryPropertyValueException.class %>" message="please-enter-a-valid-property-value" />
-			<liferay-ui:error exception="<%= DuplicateCategoryPropertyException.class %>" message="please-enter-a-unique-property-key" />
+	<liferay-ui:error exception="<%= CategoryPropertyKeyException.class %>" message="please-enter-a-valid-property-key" />
+	<liferay-ui:error exception="<%= CategoryPropertyValueException.class %>" message="please-enter-a-valid-property-value" />
+	<liferay-ui:error exception="<%= DuplicateCategoryPropertyException.class %>" message="please-enter-a-unique-property-key" />
 
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
 			<div id="<portlet:namespace />categoryPropertiesId">
 				<p class="text-muted">
 					<liferay-ui:message key="properties-are-a-way-to-add-more-detailed-information-to-a-specific-category" />
@@ -113,15 +113,15 @@ long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
 			</div>
 
 			<aui:input name="categoryPropertiesIndexes" type="hidden" value="<%= StringUtil.merge(categoryPropertiesIndexes) %>" />
+		</aui:fieldset>
+	</aui:fieldset-group>
 
-			<aui:button-row>
-				<aui:button cssClass="btn-lg" type="submit" />
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" type="submit" />
 
-				<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
-			</aui:button-row>
-		</aui:form>
-	</aui:fieldset>
-</aui:fieldset-group>
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+	</aui:button-row>
+</aui:form>
 
 <aui:script use="liferay-auto-fields">
 	var autoFields = new Liferay.AutoFields(

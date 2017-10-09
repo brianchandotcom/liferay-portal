@@ -33,23 +33,23 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(((category == null) ? LanguageUtil.get(request, "add-new-category") : category.getTitle(locale)));
 %>
 
-<aui:fieldset-group markupView="lexicon">
-	<aui:fieldset>
-		<portlet:actionURL name="editCategory" var="editCategoryURL">
-			<portlet:param name="mvcPath" value="/edit_category.jsp" />
-			<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />
-		</portlet:actionURL>
+<portlet:actionURL name="editCategory" var="editCategoryURL">
+	<portlet:param name="mvcPath" value="/edit_category.jsp" />
+	<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />
+</portlet:actionURL>
 
-		<aui:form action="<%= editCategoryURL %>" name="fm">
-			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-			<aui:input name="categoryId" type="hidden" value="<%= categoryId %>" />
-			<aui:input name="parentCategoryId" type="hidden" value="<%= parentCategoryId %>" />
+<aui:form action="<%= editCategoryURL %>" name="fm">
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="categoryId" type="hidden" value="<%= categoryId %>" />
+	<aui:input name="parentCategoryId" type="hidden" value="<%= parentCategoryId %>" />
 
-			<liferay-ui:error exception="<%= AssetCategoryNameException.class %>" message="please-enter-a-valid-name" />
-			<liferay-ui:error exception="<%= DuplicateCategoryException.class %>" message="please-enter-a-unique-name" />
+	<liferay-ui:error exception="<%= AssetCategoryNameException.class %>" message="please-enter-a-valid-name" />
+	<liferay-ui:error exception="<%= DuplicateCategoryException.class %>" message="please-enter-a-unique-name" />
 
-			<aui:model-context bean="<%= category %>" model="<%= AssetCategory.class %>" />
+	<aui:model-context bean="<%= category %>" model="<%= AssetCategory.class %>" />
 
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
 			<aui:input autoFocus="<%= true %>" label="name" name="title" placeholder="name" />
 
 			<aui:input name="description" placeholder="description" />
@@ -67,12 +67,12 @@ renderResponse.setTitle(((category == null) ? LanguageUtil.get(request, "add-new
 					/>
 				</liferay-ui:panel>
 			</c:if>
+		</aui:fieldset>
+	</aui:fieldset-group>
 
-			<aui:button-row>
-				<aui:button cssClass="btn-lg" type="submit" />
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" type="submit" />
 
-				<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
-			</aui:button-row>
-		</aui:form>
-	</aui:fieldset>
-</aui:fieldset-group>
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+	</aui:button-row>
+</aui:form>

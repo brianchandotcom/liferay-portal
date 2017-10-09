@@ -125,6 +125,10 @@
 	.basic-search {
 		max-width: 220px;
 
+		@include media-breakpoint-up(md) {
+			min-width: 220px;
+		}
+
 		@include media-breakpoint-down($scaling-breakpoint-down) {
 			max-width: none;
 		}

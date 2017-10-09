@@ -2156,7 +2156,7 @@ belong to a different sub-repository.
 
 ### Added
 - [LPS-74749]: Update the [Liferay Gradle Plugins] dependency to version 3.4.71.
-- [LPS-74892]: For OSGi modules, publish an additional `sources-commercial` jar.
+- [LPS-74892]: For OSGi modules, publish an additional `sources-commercial` JAR.
 If the module is public, the original copyright in the source files is replaced
 with a commercial copyright.
 

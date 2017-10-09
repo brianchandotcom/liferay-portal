@@ -2503,8 +2503,8 @@ to version 2.1.2.
 ## 3.4.70 - 2017-09-25
 
 ### Added
-- [LPS-74884]: Exclude `node_modules` directory in Idea's `.iml` file to speed
-up indexing.
+- [LPS-74884]: Exclude the `node_modules` directory in IDEA's `.iml` file to
+speed up indexing.
 
 ## 3.4.71 - 2017-09-26
 

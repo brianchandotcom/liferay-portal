@@ -83,6 +83,15 @@ public class GitWorkingDirectory {
 
 		_repositoryName = repositoryName;
 
+		if (!_privateOnlyRepositories.contains(_repositoryName)) {
+			if (upstreamBranchName.equals("master")) {
+				setUpstreamRemoteToPublicRepository();
+			}
+			else {
+				setUpstreamRemoteToPrivateRepository();
+			}
+		}
+
 		_repositoryUsername = loadRepositoryUsername();
 	}
 
@@ -111,7 +120,7 @@ public class GitWorkingDirectory {
 					executionResult.getStandardError()));
 		}
 
-		return getRemote(false, remoteName);
+		return getRemote(remoteName);
 	}
 
 	public boolean branchExists(String branchName, Remote remote) {
@@ -567,7 +576,9 @@ public class GitWorkingDirectory {
 	}
 
 	public Remote getRemote(String name) {
-		return getRemote(true, name);
+		Map<String, Remote> remotes = getRemotes();
+
+		return remotes.get(name);
 	}
 
 	public Set<String> getRemoteNames() {
@@ -774,7 +785,7 @@ public class GitWorkingDirectory {
 	}
 
 	public boolean remoteExists(String remoteName) {
-		if (getRemote(false, remoteName) != null) {
+		if (getRemote(remoteName) != null) {
 			return true;
 		}
 
@@ -1062,39 +1073,6 @@ public class GitWorkingDirectory {
 			"Real Git directory could not be found in " + gitFile.getPath());
 	}
 
-	protected Remote getRemote(boolean createUpstreamPublic, String name) {
-		Map<String, Remote> remotes = getRemotes();
-
-		Remote remote = remotes.get(name);
-
-		if (createUpstreamPublic) {
-			if ((remote == null) && name.equals("upstream-public")) {
-				Remote upstreamGitRemote = remotes.get("upstream");
-
-				String upstreamRemoteURL = upstreamGitRemote.getRemoteURL();
-
-				upstreamRemoteURL = upstreamRemoteURL.replace("-ee", "");
-				upstreamRemoteURL = upstreamRemoteURL.replace("-private", "");
-
-				return addRemote(true, "upstream-public", upstreamRemoteURL);
-			}
-
-			if (name.equals("upstream")) {
-				String upstreamRemoteURL = remote.getRemoteURL();
-
-				if ((_repositoryName == null) ||
-					upstreamRemoteURL.contains(_repositoryName + ".git")) {
-
-					return remote;
-				}
-
-				return getRemote("upstream-public");
-			}
-		}
-
-		return remote;
-	}
-
 	protected List<Branch> getRemoteBranches(Remote remote) {
 		ExecutionResult executionResult = executeBashCommands(
 			1, 1000 * 60,
@@ -1156,7 +1134,7 @@ public class GitWorkingDirectory {
 	}
 
 	protected String loadRepositoryName() {
-		Remote remote = getRemote(false, "upstream");
+		Remote remote = getRemote("upstream");
 
 		String remoteURL = remote.getRemoteURL();
 
@@ -1195,6 +1173,31 @@ public class GitWorkingDirectory {
 		int y = remoteURL.indexOf("/");
 
 		return remoteURL.substring(x, y);
+	}
+
+	protected void setUpstreamRemoteToPrivateRepository() {
+		Remote upstreamRemote = getRemote("upstream");
+
+		String remoteURL = upstreamRemote.getRemoteURL();
+
+		if (!remoteURL.contains("-ee") && !remoteURL.contains("-private")) {
+			remoteURL.replace(".git", "-private.git");
+
+			addRemote(true, "upstream", remoteURL);
+		}
+	}
+
+	protected void setUpstreamRemoteToPublicRepository() {
+		Remote upstreamRemote = getRemote("upstream");
+
+		String remoteURL = upstreamRemote.getRemoteURL();
+
+		if (remoteURL.contains("-ee") || remoteURL.contains("-private")) {
+			remoteURL = remoteURL.replace("-ee", "");
+			remoteURL = remoteURL.replace("-private", "");
+
+			addRemote(true, "upstream", remoteURL);
+		}
 	}
 
 	protected void setWorkingDirectory(String workingDirectoryPath)
@@ -1287,6 +1290,12 @@ public class GitWorkingDirectory {
 		"gitdir\\: (.*\\.git)");
 	private static final Pattern _gitLsRemotePattern = Pattern.compile(
 		"(?<sha>[^\\s]{40}+)[\\s]+refs/heads/(?<name>[^\\s]+)");
+	private static final List<String> _privateOnlyRepositories = Arrays.asList(
+		new String[] {
+			"liferay-jenkins-ee", "liferay-jenkins-tools-private",
+			"liferay-plugins-ee", "liferay-portal-ee",
+			"liferay-qa-portal-legacy-ee", "liferay-release-tool-ee"
+		});
 
 	private File _gitDirectory;
 	private final String _repositoryName;

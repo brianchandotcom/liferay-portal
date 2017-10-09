@@ -320,12 +320,7 @@ public class InputAssetLinksDisplayContext {
 		long groupId = _getAssetBrowserGroupId(assetRendererFactory);
 
 		portletURL.setParameter("groupId", String.valueOf(groupId));
-		portletURL.setParameter(
-			"selectedGroupIds",
-			StringUtil.merge(
-				PortalUtil.getSharedContentSiteGroupIds(
-					_themeDisplay.getCompanyId(), groupId,
-					_themeDisplay.getUserId())));
+		portletURL.setParameter("selectedGroupId", String.valueOf(groupId));
 
 		if (_assetEntryId > 0) {
 			portletURL.setParameter(

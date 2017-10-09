@@ -7,7 +7,7 @@
 	<target name="build-css">
 		<build-css
 			dirNames="${build.css.dir.names}"
-			docrootDirName="${build.docroot.dir.name}"
+			docrootDir="${build.docroot.dir}"
 			generateSourceMap="${build.css.generate.source.maps}"
 			outputDirName="${build.css.output.dir.name}"
 			portalCommonPath="${build.css.portal.common.path}"

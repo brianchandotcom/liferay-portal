@@ -793,8 +793,7 @@ public class TopLevelBuild extends BaseBuild {
 		Element ciUsageElement = getJenkinsReportTotalCIUsageElement(
 			axisBuilds);
 
-		Element longestAxisElement = JenkinsReportUtil.getLongestAxisElement(
-			axisBuilds);
+		Element longestAxisElement = getLongestRunningDownstreamBuildElement();
 
 		Element longestBatchElement = getLongestRunningBatchElement(
 			downstreamBuilds);

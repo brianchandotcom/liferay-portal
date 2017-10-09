@@ -9,8 +9,8 @@ AUI.add(
 
 		var KaleoDesignerEditors = Liferay.KaleoDesignerEditors;
 		var KaleoDesignerStrings = Liferay.KaleoDesignerStrings;
+		var XMLUtil = Liferay.XMLUtil;
 
-		var isNull = Lang.isNull;
 		var isObject = Lang.isObject;
 
 		var jsonParse = Liferay.KaleoDesignerUtils.jsonParse;
@@ -162,7 +162,7 @@ AUI.add(
 
 						var definition = instance.definition;
 
-						if (!content || instance.validateDefinition(content)) {
+						if (!content || XMLUtil.validateDefinition(content)) {
 							content = serializeDefinition(
 								definition.get('xmlNamespace'),
 								definition.getAttrs(['description', 'name', 'version']),
@@ -171,20 +171,6 @@ AUI.add(
 						}
 
 						editor.set('value', content);
-					},
-
-					validateDefinition: function(definition) {
-						var instance = this;
-
-						var doc = A.DataType.XML.parse(definition);
-
-						var valid = true;
-
-						if (isNull(doc) || isNull(doc.documentElement) || A.one(doc).one('parsererror')) {
-							valid = false;
-						}
-
-						return valid;
 					},
 
 					_afterRenderKaleoDesigner: function() {
@@ -480,6 +466,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-ace-editor', 'aui-ace-editor-mode-xml', 'aui-tpl-snippets-deprecated', 'datasource', 'datatype-xml', 'event-valuechange', 'io-form', 'liferay-kaleo-designer-editors', 'liferay-kaleo-designer-field-normalizer', 'liferay-kaleo-designer-nodes', 'liferay-kaleo-designer-utils', 'liferay-kaleo-designer-xml-definition', 'liferay-kaleo-designer-xml-definition-serializer', 'liferay-util-window']
+		requires: ['aui-ace-editor', 'aui-ace-editor-mode-xml', 'aui-tpl-snippets-deprecated', 'datasource', 'datatype-xml', 'event-valuechange', 'io-form', 'liferay-kaleo-designer-editors', 'liferay-kaleo-designer-field-normalizer', 'liferay-kaleo-designer-nodes', 'liferay-kaleo-designer-utils', 'liferay-kaleo-designer-xml-definition', 'liferay-kaleo-designer-xml-definition-serializer', 'liferay-kaleo-designer-xml-util', 'liferay-util-window']
 	}
 );

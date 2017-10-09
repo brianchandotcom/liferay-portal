@@ -4,6 +4,7 @@ AUI.add(
 		var Lang = A.Lang;
 		var LString = Lang.String;
 
+		var isNull = Lang.isNull;
 		var isValue = Lang.isValue;
 
 		var BUFFER_ATTR = [null, '="', null, '" '];
@@ -114,6 +115,18 @@ AUI.add(
 				);
 
 				return formatted;
+			},
+
+			validateDefinition: function(definition) {
+				var doc = A.DataType.XML.parse(definition);
+
+				var valid = true;
+
+				if (isNull(doc) || isNull(doc.documentElement) || A.one(doc).one('parsererror')) {
+					valid = false;
+				}
+
+				return valid;
 			}
 		};
 

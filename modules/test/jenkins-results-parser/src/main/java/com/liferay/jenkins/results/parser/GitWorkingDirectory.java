@@ -885,6 +885,11 @@ public class GitWorkingDirectory {
 			return _fetchRemoteURL;
 		}
 
+		public String toString() {
+			return JenkinsResultsParserUtil.combine(
+				getName(), " (", getRemoteURL(), ")");
+		}
+
 		private Remote(
 			GitWorkingDirectory gitWorkingDirectory,
 			String[] remoteInputLines) {
@@ -1099,7 +1104,7 @@ public class GitWorkingDirectory {
 		if (executionResult.getExitValue() != 0) {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
-					"Unable to get remote branches from ", remote.getName(),
+					"Unable to get remote branches from ", remote.toString(),
 					"\n", executionResult.getStandardError()));
 		}
 

@@ -31,14 +31,10 @@ import com.liferay.sass.compiler.ruby.internal.RubySassCompiler;
 import java.io.File;
 import java.io.IOException;
 
-import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.nio.file.attribute.FileTime;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -51,8 +47,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-
-import org.apache.tools.ant.DirectoryScanner;
 
 /**
  * @author Brian Wing Shun Chan
@@ -130,7 +124,7 @@ public class CSSBuilder implements AutoCloseable {
 	@Override
 	public void close() throws Exception {
 		if (_cleanPortalCommonDir) {
-			_deltree(_portalCommonDirName);
+			FileUtil.deltree(Paths.get(_portalCommonDirName));
 		}
 
 		_sassCompiler.close();
@@ -237,66 +231,13 @@ public class CSSBuilder implements AutoCloseable {
 		return fileNames;
 	}
 
-	private void _deltree(String dirName) throws IOException {
-		Files.walkFileTree(
-			Paths.get(dirName),
-			new SimpleFileVisitor<Path>() {
-
-				@Override
-				public FileVisitResult postVisitDirectory(
-						Path dirPath, IOException ioe)
-					throws IOException {
-
-					Files.delete(dirPath);
-
-					return FileVisitResult.CONTINUE;
-				}
-
-				@Override
-				public FileVisitResult visitFile(
-						Path path, BasicFileAttributes basicFileAttributes)
-					throws IOException {
-
-					Files.delete(path);
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
-	}
-
-	private String[] _getFilesFromDirectory(
-		String baseDir, String[] includes, String[] excludes) {
-
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
-		directoryScanner.setBasedir(baseDir);
-		directoryScanner.setExcludes(excludes);
-		directoryScanner.setIncludes(includes);
-
-		directoryScanner.scan();
-
-		return directoryScanner.getIncludedFiles();
-	}
-
-	private long _getLastModifiedTime(Path path) {
-		try {
-			FileTime fileTime = Files.getLastModifiedTime(path);
-
-			return fileTime.toMillis();
-		}
-		catch (IOException ioe) {
-			return -1;
-		}
-	}
-
 	private long _getNewestModifiedTime(String baseDir, String[] fileNames) {
 		Stream<String> stream = Stream.of(fileNames);
 
 		return stream.map(
 			fileName -> Paths.get(baseDir, fileName)
 		).map(
-			this::_getLastModifiedTime
+			FileUtil::getLastModifiedTime
 		).max(
 			Comparator.naturalOrder()
 		).orElse(
@@ -310,7 +251,7 @@ public class CSSBuilder implements AutoCloseable {
 		return stream.map(
 			fileName -> Paths.get(baseDir, fileName)
 		).map(
-			this::_getLastModifiedTime
+			FileUtil::getLastModifiedTime
 		).min(
 			Comparator.naturalOrder()
 		).orElse(
@@ -349,13 +290,13 @@ public class CSSBuilder implements AutoCloseable {
 			String[]::new
 		);
 
-		return _getFilesFromDirectory(baseDir, includes, excludes);
+		return FileUtil.getFilesFromDirectory(baseDir, includes, excludes);
 	}
 
 	private String[] _getScssFragments(String baseDir) {
 		String[] includes = {"**\\\\_*.scss"};
 
-		return _getFilesFromDirectory(baseDir, includes, _EXCLUDES);
+		return FileUtil.getFilesFromDirectory(baseDir, includes, _EXCLUDES);
 	}
 
 	private void _initSassCompiler(String sassCompilerClassName)
@@ -518,18 +459,6 @@ public class CSSBuilder implements AutoCloseable {
 		return portalCommonCssDirPath.toFile();
 	}
 
-	private void _write(File file, String content) throws Exception {
-		File parentFile = file.getParentFile();
-
-		if (!parentFile.exists()) {
-			parentFile.mkdirs();
-		}
-
-		Path path = Paths.get(file.toURI());
-
-		Files.write(path, content.getBytes(StringPool.UTF8));
-	}
-
 	private void _writeOutputFile(String fileName, String content, boolean rtl)
 		throws Exception {
 
@@ -554,7 +483,7 @@ public class CSSBuilder implements AutoCloseable {
 		File outputFile = new File(
 			_cssBuilderArgs.getDocrootDir(), outputFileName);
 
-		_write(outputFile, content);
+		FileUtil.write(outputFile, content);
 
 		File file = new File(_cssBuilderArgs.getDocrootDir(), fileName);
 

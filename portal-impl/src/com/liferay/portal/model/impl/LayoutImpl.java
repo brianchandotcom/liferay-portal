@@ -450,7 +450,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 			}
 			else {
-				portlet = new PortletWrapper(portlet) {
+				embeddedPortlet = new PortletWrapper(portlet) {
 
 					@Override
 					public boolean getStatic() {

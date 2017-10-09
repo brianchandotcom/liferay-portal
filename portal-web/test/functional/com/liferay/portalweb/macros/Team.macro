@@ -9,11 +9,6 @@
 		</execute>
 	</command>
 
-	<command name="_searchCP">
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${searchTerm}" />
-		<execute function="KeyPress" locator1="TextInput#SEARCH" value1="\RETURN" />
-	</command>
-
 	<command name="addCP">
 		<execute macro="LexiconEntry#gotoAdd" />
 
@@ -29,7 +24,7 @@
 		<var name="key_teamName" value="${teamName}" />
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute macro="Team#_searchCP">
+		<execute macro="Search#searchCP">
 			<var name="searchTerm" value="${teamName}" />
 		</execute>
 
@@ -49,7 +44,7 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute macro="Team#_searchCP">
+		<execute macro="Search#searchCP">
 			<var name="searchTerm" value="${userScreenName}" />
 		</execute>
 
@@ -87,7 +82,7 @@
 	<command name="assignUserGroups">
 		<var name="key_teamName" value="${teamName}" />
 
-		<execute macro="Team#_searchCP">
+		<execute macro="Search#searchCP">
 			<var name="searchTerm" value="${teamName}" />
 		</execute>
 
@@ -109,7 +104,7 @@
 
 		<var name="key_cardText" value="${userGroupName}" />
 
-		<execute macro="Team#_searchCP">
+		<execute macro="Search#searchCP">
 			<var name="searchTerm" value="${userGroupName}" />
 		</execute>
 
@@ -232,7 +227,7 @@
 			<var name="navItem" value="${membershipType}s" />
 		</execute>
 
-		<execute macro="Team#_searchCP">
+		<execute macro="Search#searchCP">
 			<var name="searchTerm" value="${searchTerm}" />
 		</execute>
 
@@ -242,9 +237,9 @@
 				<execute function="AssertElementPresent" locator1="Message#EMPTY_INFO" />
 			</then>
 			<else>
-				<execute function="AssertElementPresent" locator1="Card#SPECIFIC_LARGE_TEXT">
-					<var method="StringUtil#unquote('${searchTerm}')" name="key_cardText" />
-				</execute>
+				<var method="StringUtil#unquote('${searchTerm}')" name="name" />
+
+				<execute function="AssertTextEquals#assertPartialText" locator1="ContentRow#ENTRY_CONTENT_ROW_1" value1="${name}" />
 			</else>
 		</if>
 	</command>

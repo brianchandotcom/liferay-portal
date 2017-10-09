@@ -119,6 +119,7 @@
 	</command>
 
 	<command name="ViewHiddenSecurityCredential" priority="4">
+		<property name="test.name.skip.portal.instance" value="AuthenticationUsecase#ViewHiddenSecurityCredential" />
 		<description message="This is a use case for LPS-73381." />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">

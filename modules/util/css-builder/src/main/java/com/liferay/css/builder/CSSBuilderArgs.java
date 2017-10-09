@@ -120,6 +120,10 @@ public class CSSBuilderArgs {
 		_sassCompilerClassName = sassCompilerClassName;
 	}
 
+	protected boolean isHelp() {
+		return _help;
+	}
+
 	private String[] _split(String s) {
 		return s.split(",");
 	}
@@ -147,6 +151,12 @@ public class CSSBuilderArgs {
 		names = "sass.generate.source.map"
 	)
 	private boolean _generateSourceMap;
+
+	@Parameter(
+		description = "Print this message.", help = true,
+		names = {"-h", "--help"}
+	)
+	private boolean _help;
 
 	@Parameter(
 		description = "The name of the sub-directories where the SCSS files are compiled to. For each directory that contains SCSS files, a sub-directory with this name is created.",

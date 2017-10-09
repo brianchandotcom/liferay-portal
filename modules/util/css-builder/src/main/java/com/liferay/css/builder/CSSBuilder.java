@@ -15,7 +15,9 @@
 package com.liferay.css.builder;
 
 import com.beust.jcommander.JCommander;
+import com.beust.jcommander.ParameterException;
 
+import com.liferay.css.builder.internal.util.FileUtil;
 import com.liferay.portal.kernel.regex.PatternFactory;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -39,13 +41,11 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -65,39 +65,35 @@ import org.apache.tools.ant.DirectoryScanner;
 public class CSSBuilder implements AutoCloseable {
 
 	public static void main(String[] args) throws Exception {
-		Map<String, String> argMap = new HashMap<>();
+		CSSBuilderArgs cssBuilderArgs = new CSSBuilderArgs();
 
-		for (String arg : args) {
-			if (arg.indexOf('=') != (arg.length() - 1)) {
-				String[] argSplit = arg.replace('=', ' ').split(" ");
+		JCommander jCommander = new JCommander(cssBuilderArgs);
 
-				if (argSplit.length == 2) {
-					if (argSplit[0].startsWith("sass.dir.")) {
-						argSplit[0] = "sass.dir";
-					}
+		try {
+			File jarFile = FileUtil.getJarFile();
 
-					argMap.put(argSplit[0], argSplit[1]);
+			if (jarFile.isFile()) {
+				jCommander.setProgramName("java -jar " + jarFile.getName());
+			}
+			else {
+				jCommander.setProgramName(CSSBuilder.class.getName());
+			}
+
+			jCommander.parse(_getArgs(args));
+
+			if (cssBuilderArgs.isHelp()) {
+				_printHelp(jCommander);
+			}
+			else {
+				try (CSSBuilder cssBuilder = new CSSBuilder(cssBuilderArgs)) {
+					cssBuilder.execute();
 				}
 			}
 		}
+		catch (ParameterException pe) {
+			System.err.println(pe.getMessage());
 
-		Collection<String> argsCollection = new ArrayList<>();
-
-		for (Entry<String, String> entry : argMap.entrySet()) {
-			argsCollection.add(entry.getKey());
-			argsCollection.add(entry.getValue());
-		}
-
-		String[] argsArray = argsCollection.toArray(new String[0]);
-
-		CSSBuilderArgs cssBuilderArgs = new CSSBuilderArgs();
-
-		JCommander jcommander = new JCommander(cssBuilderArgs);
-
-		jcommander.parse(argsArray);
-
-		try (CSSBuilder cssBuilder = new CSSBuilder(cssBuilderArgs)) {
-			cssBuilder.execute();
+			_printHelp(jCommander);
 		}
 	}
 
@@ -170,6 +166,39 @@ public class CSSBuilder implements AutoCloseable {
 		}
 
 		return false;
+	}
+
+	private static String[] _getArgs(String[] args) {
+		Map<String, String> argsMap = new HashMap<>();
+
+		for (String arg : args) {
+			if (arg.indexOf('=') != (arg.length() - 1)) {
+				String[] argSplit = arg.replace('=', ' ').split(" ");
+
+				if (argSplit.length == 2) {
+					if (argSplit[0].startsWith("sass.dir.")) {
+						argSplit[0] = "sass.dir";
+					}
+
+					argsMap.put(argSplit[0], argSplit[1]);
+				}
+			}
+		}
+
+		args = new String[argsMap.size() * 2];
+
+		int i = 0;
+
+		for (Map.Entry<String, String> entry : argsMap.entrySet()) {
+			args[i++] = entry.getKey();
+			args[i++] = entry.getValue();
+		}
+
+		return args;
+	}
+
+	private static void _printHelp(JCommander jCommander) throws Exception {
+		jCommander.usage();
 	}
 
 	private List<String> _collectSassFiles(String dirName, File docrootDir)

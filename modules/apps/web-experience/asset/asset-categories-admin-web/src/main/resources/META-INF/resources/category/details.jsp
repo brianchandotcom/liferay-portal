@@ -38,7 +38,7 @@ renderResponse.setTitle(((category == null) ? LanguageUtil.get(request, "add-new
 	<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= editCategoryURL %>" name="fm">
+<aui:form action="<%= editCategoryURL %>" cssClass="container-fluid-1280" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="categoryId" type="hidden" value="<%= categoryId %>" />
 	<aui:input name="parentCategoryId" type="hidden" value="<%= parentCategoryId %>" />

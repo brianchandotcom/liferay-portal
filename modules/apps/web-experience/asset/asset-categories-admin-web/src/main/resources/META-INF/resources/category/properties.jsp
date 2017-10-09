@@ -74,7 +74,7 @@ long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
 	<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= editPropertiesURL %>" name="fm">
+<aui:form action="<%= editPropertiesURL %>" cssClass="container-fluid-1280" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="categoryId" type="hidden" value="<%= categoryId %>" />
 

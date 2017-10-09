@@ -38,9 +38,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -72,7 +70,7 @@ public class CSSBuilder implements AutoCloseable {
 				jCommander.setProgramName(CSSBuilder.class.getName());
 			}
 
-			jCommander.parse(_getArgs(args));
+			jCommander.parse(args);
 
 			if (cssBuilderArgs.isHelp()) {
 				_printHelp(jCommander);
@@ -162,35 +160,6 @@ public class CSSBuilder implements AutoCloseable {
 		}
 
 		return false;
-	}
-
-	private static String[] _getArgs(String[] args) {
-		Map<String, String> argsMap = new HashMap<>();
-
-		for (String arg : args) {
-			if (arg.indexOf('=') != (arg.length() - 1)) {
-				String[] argSplit = arg.replace('=', ' ').split(" ");
-
-				if (argSplit.length == 2) {
-					if (argSplit[0].startsWith("sass.dir.")) {
-						argSplit[0] = "sass.dir";
-					}
-
-					argsMap.put(argSplit[0], argSplit[1]);
-				}
-			}
-		}
-
-		args = new String[argsMap.size() * 2];
-
-		int i = 0;
-
-		for (Map.Entry<String, String> entry : argsMap.entrySet()) {
-			args[i++] = entry.getKey();
-			args[i++] = entry.getValue();
-		}
-
-		return args;
 	}
 
 	private static void _printHelp(JCommander jCommander) throws Exception {

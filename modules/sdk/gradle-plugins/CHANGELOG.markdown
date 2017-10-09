@@ -2616,6 +2616,7 @@ to version 2.3.2.
 [Liferay Gradle Plugins Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-source-formatter
 [Liferay Gradle Plugins Soy]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-soy
 [Liferay Gradle Plugins TLD Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-tld-formatter
+[Liferay Gradle Plugins TLDDoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-tlddoc-builder
 [Liferay Gradle Plugins Test Integration]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-test-integration
 [Liferay Gradle Plugins Theme Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-theme-builder
 [Liferay Gradle Plugins Upgrade Table Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-upgrade-table-builder
@@ -2669,6 +2670,7 @@ to version 2.3.2.
 [LPS-68504]: https://issues.liferay.com/browse/LPS-68504
 [LPS-68564]: https://issues.liferay.com/browse/LPS-68564
 [LPS-68598]: https://issues.liferay.com/browse/LPS-68598
+[LPS-68611]: https://issues.liferay.com/browse/LPS-68611
 [LPS-68618]: https://issues.liferay.com/browse/LPS-68618
 [LPS-68666]: https://issues.liferay.com/browse/LPS-68666
 [LPS-68779]: https://issues.liferay.com/browse/LPS-68779

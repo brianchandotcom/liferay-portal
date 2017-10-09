@@ -2237,6 +2237,7 @@ version 1.1.7.
 [Liferay Gradle Plugins Dependency Checker]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-dependency-checker
 [Liferay Gradle Plugins Lang Merger]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-lang-merger
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
+[Liferay Gradle Plugins Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-source-formatter
 [Liferay Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/source-formatter
 [LPS-52675]: https://issues.liferay.com/browse/LPS-52675
 [LPS-53392]: https://issues.liferay.com/browse/LPS-53392
@@ -2440,6 +2441,7 @@ version 1.1.7.
 [LPS-74104]: https://issues.liferay.com/browse/LPS-74104
 [LPS-74110]: https://issues.liferay.com/browse/LPS-74110
 [LPS-74126]: https://issues.liferay.com/browse/LPS-74126
+[LPS-74139]: https://issues.liferay.com/browse/LPS-74139
 [LPS-74143]: https://issues.liferay.com/browse/LPS-74143
 [LPS-74155]: https://issues.liferay.com/browse/LPS-74155
 [LPS-74207]: https://issues.liferay.com/browse/LPS-74207

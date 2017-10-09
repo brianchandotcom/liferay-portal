@@ -15,6 +15,7 @@
 package com.liferay.css.builder;
 
 import com.beust.jcommander.Parameter;
+import com.beust.jcommander.Parameters;
 
 import java.io.File;
 
@@ -25,6 +26,7 @@ import java.util.List;
 /**
  * @author Andrea Di Giorgi
  */
+@Parameters(separators = " =")
 public class CSSBuilderArgs {
 
 	public static final boolean APPEND_CSS_IMPORT_TIMESTAMPS = true;

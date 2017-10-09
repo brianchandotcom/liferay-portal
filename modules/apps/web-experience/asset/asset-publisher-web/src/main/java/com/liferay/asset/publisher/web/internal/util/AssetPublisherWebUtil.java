@@ -56,7 +56,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -102,7 +102,7 @@ public class AssetPublisherWebUtil {
 			int assetEntryOrder)
 		throws Exception {
 
-		String portletId = PortalUtil.getPortletId(portletRequest);
+		String portletId = _portal.getPortletId(portletRequest);
 
 		String rootPortletId = PortletIdCodec.decodePortletName(portletId);
 
@@ -349,7 +349,7 @@ public class AssetPublisherWebUtil {
 		definitionTerms.put(
 			"[$PORTLET_NAME$]",
 			HtmlUtil.escape(
-				PortalUtil.getPortletTitle(
+				_portal.getPortletTitle(
 					AssetPublisherPortletKeys.ASSET_PUBLISHER,
 					themeDisplay.getLocale())));
 
@@ -379,7 +379,7 @@ public class AssetPublisherWebUtil {
 	public String getEmailFromAddress(
 		PortletPreferences portletPreferences, long companyId) {
 
-		return PortalUtil.getEmailFromAddress(
+		return _portal.getEmailFromAddress(
 			portletPreferences, companyId,
 			_assetPublisherPortletInstanceConfiguration.emailFromAddress());
 	}
@@ -387,7 +387,7 @@ public class AssetPublisherWebUtil {
 	public String getEmailFromName(
 		PortletPreferences portletPreferences, long companyId) {
 
-		return PortalUtil.getEmailFromName(
+		return _portal.getEmailFromName(
 			portletPreferences, companyId,
 			_assetPublisherPortletInstanceConfiguration.emailFromName());
 	}
@@ -654,6 +654,9 @@ public class AssetPublisherWebUtil {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;

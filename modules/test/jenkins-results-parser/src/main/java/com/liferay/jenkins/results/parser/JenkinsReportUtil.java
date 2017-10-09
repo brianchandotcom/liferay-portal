@@ -164,31 +164,16 @@ public class JenkinsReportUtil {
 		}
 
 		for (Build batchBuild : batchBuilds) {
-			String jobName = batchBuild.getJobName();
-
-			String batchName = batchBuild.getDisplayName();
-
-			if (batchName.contains("-dist(")) {
-				batchName = batchName.replace(jobName, "dist");
-			}
-			else {
-				batchName = batchName.replace(jobName + "/", "");
-			}
-
 			Element trBatchElement = Dom4JUtil.getNewElement("tr");
 
-			for (Element batchInfoElement : getCommonBuildInfoElements(
-					batchBuild, batchName, "th")) {
-
-				trBatchElement.add(batchInfoElement);
-			}
+			trBatchElement.add(batchBuild.getJenkinsReportBuildInfoElement());
 
 			tableElement.add(trBatchElement);
 
-			Dom4JUtil.addToElement(
-				tableElement,
-				(Object[])getDownstreamBuildInfoElements(
-					batchBuild.getDownstreamBuilds(null)));
+			for (Build downstreamBuild : batchBuild.getDownstreamBuilds(null)) {
+				tableElement.add(
+					downstreamBuild.getJenkinsReportBuildInfoElement());
+			}
 		}
 
 		return tableElement;
@@ -727,11 +712,7 @@ public class JenkinsReportUtil {
 
 		Element trTopLevelElement = Dom4JUtil.getNewElement("tr");
 
-		for (Element topLevelInfoElement : getCommonBuildInfoElements(
-				topLevelBuild, topLevelName, "th")) {
-
-			trTopLevelElement.add(topLevelInfoElement);
-		}
+		trTopLevelElement.add(topLevelBuild.getJenkinsReportBuildInfoElement());
 
 		topLevelTableElement.add(trTopLevelElement);
 

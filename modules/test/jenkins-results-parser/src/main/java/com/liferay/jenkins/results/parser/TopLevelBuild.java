@@ -782,22 +782,8 @@ public class TopLevelBuild extends BaseBuild {
 
 		topLevelTableElement.add(getJenkinsReportTableColumnHeaderElement());
 
-		String jobName = topLevelBuild.getJobName();
-
-		String topLevelName = topLevelBuild.getDisplayName();
-
-		topLevelName = topLevelName.replace(jobName + "/", "");
-
-		Element trTopLevelElement = Dom4JUtil.getNewElement("tr");
-
-		for (Element topLevelInfoElement :
-				JenkinsReportUtil.getCommonBuildInfoElements(
-					topLevelBuild, topLevelName, "th")) {
-
-			trTopLevelElement.add(topLevelInfoElement);
-		}
-
-		topLevelTableElement.add(trTopLevelElement);
+		topLevelTableElement.add(
+			topLevelBuild.getJenkinsReportBuildInfoElement());
 
 		return topLevelTableElement;
 	}

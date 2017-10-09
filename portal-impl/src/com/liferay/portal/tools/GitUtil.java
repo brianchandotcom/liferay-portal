@@ -197,12 +197,18 @@ public class GitUtil {
 
 		List<String> fileNames = new ArrayList<>();
 
+		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
+			"git rev-parse HEAD");
+
+		String latestCommitId = unsyncBufferedReader.readLine();
+
+		unsyncBufferedReader = getGitCommandReader(
+			"git diff --diff-filter=AM --name-only " + commitId + " " +
+				latestCommitId);
+
 		String line = null;
 
 		int gitLevel = getGitLevel(baseDirName);
-
-		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
-			"git diff --diff-filter=AM --name-only " + commitId);
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			if (StringUtil.count(line, CharPool.SLASH) >= gitLevel) {

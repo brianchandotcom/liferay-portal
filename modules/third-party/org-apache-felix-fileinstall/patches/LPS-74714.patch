@@ -1,0 +1,23 @@
+diff --git a/OSGI-INF/metatype/metatype.xml b/OSGI-INF/metatype/metatype.xml
+index 58bda2d..441543a 100644
+--- a/OSGI-INF/metatype/metatype.xml
++++ b/OSGI-INF/metatype/metatype.xml
+@@ -17,10 +17,10 @@
+  specific language governing permissions and limitations
+  under the License.
+ -->
+-<metatype:MetaData xmlns:metatype="http://www.osgi.org/xmlns/metatype/v1.0.0">
++<metatype:MetaData xmlns:metatype="http://www.osgi.org/xmlns/metatype/v1.0.0" localization="content/Language">
+   
+   <OCD description="FileInstaller" 
+-       name="org.apache.felix.fileinstall"
++       name="org-apache-felix-fileinstall-ocd-name"
+        id="org.apache.felix.fileinstall">
+        
+     <AD name="Poll directory"  id="felix.fileinstall.dir" required="true" type="String" default="load"/>   
+@@ -40,3 +40,4 @@
+     </Designate>
+   
+ </metatype:MetaData>
++<!-- @generated -->
+\ No newline at end of file

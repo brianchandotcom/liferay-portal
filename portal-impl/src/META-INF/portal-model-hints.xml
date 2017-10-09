@@ -291,15 +291,6 @@
 		</field>
 		<field name="lastPublishDate" type="Date" />
 	</model>
-	<model name="com.liferay.document.library.kernel.model.DLFileRank">
-		<field name="fileRankId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="createDate" type="Date" />
-		<field name="fileEntryId" type="long" />
-		<field name="active" type="boolean" />
-	</model>
 	<model name="com.liferay.document.library.kernel.model.DLFileShortcut">
 		<field name="uuid" type="String" />
 		<field name="fileShortcutId" type="long" />

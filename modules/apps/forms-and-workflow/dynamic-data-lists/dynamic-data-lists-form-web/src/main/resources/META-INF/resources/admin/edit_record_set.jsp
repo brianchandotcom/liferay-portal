@@ -147,6 +147,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 			ddmStructureId="<%= ddlFormAdminDisplayContext.getDDMStrucutureId() %>"
 			defaultLanguageId="<%= ddlFormAdminDisplayContext.getDefaultLanguageId() %>"
 			editingLanguageId="<%= ddlFormAdminDisplayContext.getDefaultLanguageId() %>"
+			fieldSetsClassNameId="<%= PortalUtil.getClassNameId(DDLRecordSet.class) %>"
 			refererPortletNamespace="<%= liferayPortletResponse.getNamespace() %>"
 		/>
 

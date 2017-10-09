@@ -103,10 +103,6 @@ public class CSSBuilderArgs {
 		_portalCommonPath = portalCommonPath;
 	}
 
-	public void setPortalCommonPath(String portalCommonPathName) {
-		_portalCommonPath = new File(portalCommonPathName);
-	}
-
 	public void setPrecision(int precision) {
 		_precision = precision;
 	}

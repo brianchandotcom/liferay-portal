@@ -64,9 +64,7 @@ public class BuildCSSMojo extends AbstractMojo {
 
 					Artifact artifact = _resolveArtifact(componentDependency);
 
-					File file = artifact.getFile();
-
-					_cssBuilderArgs.setPortalCommonPath(file.getAbsolutePath());
+					_cssBuilderArgs.setPortalCommonPath(artifact.getFile());
 				}
 			}
 
@@ -134,7 +132,7 @@ public class BuildCSSMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
-	public void setPortalCommonPath(String portalCommonPath) {
+	public void setPortalCommonPath(File portalCommonPath) {
 		_cssBuilderArgs.setPortalCommonPath(portalCommonPath);
 	}
 

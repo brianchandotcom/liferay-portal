@@ -89,7 +89,7 @@ public class BuildCSSTask extends Task {
 		_cssBuilderArgs.setOutputDirName(outputDirName);
 	}
 
-	public void setPortalCommonPath(String portalCommonPath) {
+	public void setPortalCommonPath(File portalCommonPath) {
 		_cssBuilderArgs.setPortalCommonPath(portalCommonPath);
 	}
 

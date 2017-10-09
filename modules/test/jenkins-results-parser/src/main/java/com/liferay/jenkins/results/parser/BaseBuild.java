@@ -27,6 +27,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -37,6 +38,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.lang.StringUtils;
 
 import org.dom4j.Element;
 
@@ -518,10 +521,78 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public Element getJenkinsReportBuildInfoElement(
-		Build build, String buildName, boolean isThElement) {
+	public Element getJenkinsReportBuildInfoElement() {
+		return getJenkinsReportBuildInfoElement(this, getDisplayName(), true);
+	}
 
-		return null;
+	@Override
+	public Element getJenkinsReportBuildInfoElement(
+		Build build, String buildName, boolean tableHeaderElement) {
+
+		String buildURL = build.getBuildURL();
+
+		String buildConsoleURL = buildURL + "console";
+
+		String tagName = "td";
+
+		if (tableHeaderElement) {
+			tagName = "th";
+		}
+
+		Element trElement = Dom4JUtil.getNewElement("tr");
+
+		trElement.add(
+			Dom4JUtil.getNewElement(
+				tagName, null,
+				Dom4JUtil.getNewAnchorElement(buildURL, null, buildName)));
+
+		trElement.add(
+			Dom4JUtil.getNewElement(
+				tagName, null,
+				Dom4JUtil.getNewAnchorElement(
+					buildConsoleURL, null, "Console")));
+
+		String buildTestReportURL = buildURL + "testReport";
+
+		trElement.add(
+			Dom4JUtil.getNewElement(
+				tagName, null,
+				Dom4JUtil.getNewAnchorElement(
+					buildTestReportURL, null, "Test Report")));
+
+		Date buildStartDate = new Date(build.getStartTimestamp());
+
+		trElement.add(
+			Dom4JUtil.getNewElement(
+				tagName, null,
+				JenkinsResultsParserUtil.toDateString(buildStartDate)));
+
+		trElement.add(
+			Dom4JUtil.getNewElement(
+				tagName, null,
+				JenkinsResultsParserUtil.toDurationString(
+					build.getDuration())));
+
+		String status = build.getStatus();
+
+		if (status != null) {
+			status = StringUtils.upperCase(status);
+		}
+		else {
+			status = "";
+		}
+
+		trElement.add(Dom4JUtil.getNewElement(tagName, null, status));
+
+		String result = build.getResult();
+
+		if (result == null) {
+			result = "";
+		}
+
+		trElement.add(Dom4JUtil.getNewElement(tagName, null, result));
+
+		return trElement;
 	}
 
 	@Override

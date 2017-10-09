@@ -75,7 +75,7 @@ public interface Build {
 	public String getJDK();
 
 	public Element getJenkinsReportBuildInfoElement(
-		Build build, String buildName, boolean isThElement);
+		Build build, String buildName, boolean tableHeaderElement);
 
 	public Element getJenkinsReportElement();
 

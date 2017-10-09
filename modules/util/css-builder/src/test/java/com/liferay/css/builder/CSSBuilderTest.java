@@ -133,8 +133,7 @@ public class CSSBuilderTest {
 		cssBuilderArgs.setDocrootDir(docrootDirPath.toFile());
 		cssBuilderArgs.setGenerateSourceMap(generateSourceMap);
 		cssBuilderArgs.setOutputDirName(outputDirName);
-		cssBuilderArgs.setPortalCommonPath(
-			String.valueOf(portalCommonPath.toAbsolutePath()));
+		cssBuilderArgs.setPortalCommonPath(portalCommonPath.toFile());
 		cssBuilderArgs.setPrecision(precision);
 		cssBuilderArgs.setRtlExcludedPathRegexps(
 			Arrays.asList(rtlExcludedPathRegexps));

@@ -546,7 +546,7 @@
 									content.val(<portlet:namespace />kaleoDesigner.editor.get('value'));
 								}
 								else {
-									content.val(<portlet:namespace />kaleoDesigner.toFormattedXML());
+									content.val(<portlet:namespace />kaleoDesigner.getContent());
 								}
 							},
 							['aui-base']

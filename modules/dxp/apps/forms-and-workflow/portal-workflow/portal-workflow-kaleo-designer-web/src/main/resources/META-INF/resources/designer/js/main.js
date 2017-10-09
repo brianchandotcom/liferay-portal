@@ -2,7 +2,6 @@ AUI.add(
 	'liferay-portlet-kaleo-designer',
 	function(A) {
 		var AArray = A.Array;
-		var AObject = A.Object;
 		var DiagramBuilder = A.DiagramBuilder;
 		var Lang = A.Lang;
 		var XMLDefinition = Liferay.KaleoDesignerXMLDefinition;
@@ -18,10 +17,9 @@ AUI.add(
 		var isObject = Lang.isObject;
 		var isValue = Lang.isValue;
 
-		var cdata = Liferay.KaleoDesignerUtils.cdata;
 		var jsonParse = Liferay.KaleoDesignerUtils.jsonParse;
-		var jsonStringify = Liferay.KaleoDesignerUtils.jsonStringify;
 		var uniformRandomInt = Liferay.KaleoDesignerUtils.uniformRandomInt;
+		var serializeDefinition = Liferay.KaleoDesignerXMLDefinitionSerializer;
 
 		var COL_TYPES_ASSIGNMENT = ['address', 'receptionType', 'resourceActions', 'roleId', 'roleType', 'scriptedAssignment', 'scriptedRecipient', 'taskAssignees', 'user', 'userId'];
 
@@ -147,6 +145,14 @@ AUI.add(
 						instance._fixTableWidth();
 					},
 
+					getContent: function() {
+						var instance = this;
+
+						var json = instance.toJSON();
+
+						return instance.definitionController.serializeDefinition(json);
+					},
+
 					showEditor: function() {
 						var instance = this;
 
@@ -163,94 +169,14 @@ AUI.add(
 						var definition = instance.definition;
 
 						if (!content || instance.validateDefinition(content)) {
-							content = instance.toFormattedXML();
+							content = serializeDefinition(
+								definition.get('xmlNamespace'),
+								definition.getAttrs(['description', 'name', 'version']),
+								instance.toJSON()
+							);
 						}
 
 						editor.set('value', content);
-					},
-
-					toFormattedXML: function() {
-						var instance = this;
-
-						var xml = instance.toXML();
-
-						xml = XMLUtil.format(xml);
-
-						xml = XMLFormatter.format(xml);
-
-						xml = xml.trim();
-
-						return xml;
-					},
-
-					toXML: function() {
-						var instance = this;
-
-						var json = instance.toJSON();
-
-						var definitionDescription = instance.xmlDeserializer.get('definitionDescription');
-						var definitionName = A.Escape.html(instance.xmlDeserializer.get('definitionName'));
-						var definitionVersion = instance.xmlDeserializer.get('definitionVersion');
-						var xmlNamespace = instance.xmlDeserializer.get('xmlNamespace');
-
-						var buffer = [];
-
-						var xmlWorkflowDefinition = XMLUtil.createObj('workflow-definition', xmlNamespace);
-
-						buffer.push('<?xml version="1.0"?>', xmlWorkflowDefinition.open);
-
-						buffer.push(
-							XMLUtil.create('name', definitionName),
-							XMLUtil.create('description', definitionDescription),
-							XMLUtil.create('version', definitionVersion)
-						);
-
-						json.nodes.forEach(
-							function(item, index, collection) {
-								var description = item.description;
-								var initial = item.initial;
-								var metadata = item.metadata;
-								var name = item.name;
-								var script = item.script;
-								var scriptLanguage = item.scriptLanguage;
-
-								var xmlNode = XMLUtil.createObj(item.xmlType);
-
-								buffer.push(xmlNode.open, XMLUtil.create('name', name));
-
-								if (description) {
-									buffer.push(XMLUtil.create('description', cdata(jsonStringify(description))));
-								}
-
-								if (metadata) {
-									buffer.push(XMLUtil.create('metadata', cdata(jsonStringify(metadata))));
-								}
-
-								instance._appendXMLActions(buffer, item.actions, item.notifications);
-
-								if (initial) {
-									buffer.push(XMLUtil.create('initial', initial));
-								}
-
-								if (script) {
-									buffer.push(XMLUtil.create('script', cdata(script)));
-								}
-
-								if (scriptLanguage) {
-									buffer.push(XMLUtil.create('scriptLanguage', scriptLanguage));
-								}
-
-								instance._appendXMLAssignments(buffer, item.assignments);
-								instance._appendXMLTransitions(buffer, item.transitions);
-								instance._appendXMLTaskTimers(buffer, item.taskTimers);
-
-								buffer.push(xmlNode.close);
-							}
-						);
-
-						buffer.push(xmlWorkflowDefinition.close);
-
-						return buffer.join(STR_BLANK);
 					},
 
 					validateDefinition: function(definition) {
@@ -299,360 +225,6 @@ AUI.add(
 							if (tabContentNode === instance.sourceNode) {
 								instance.showEditor();
 							}
-						}
-					},
-
-					_appendXMLActions: function(buffer, actions, notifications, assignments, wrapperNodeName, actionNodeName, notificationNodeName, assignmentNodeName) {
-						var instance = this;
-
-						var hasAction = isObject(actions) && !AObject.isEmpty(actions);
-						var hasAssignment = isObject(assignments) && !AObject.isEmpty(assignments);
-						var hasNotification = isObject(notifications) && !AObject.isEmpty(notifications);
-						var xmlActions = XMLUtil.createObj(wrapperNodeName || 'actions');
-
-						if (hasAction || hasNotification || hasAssignment) {
-							buffer.push(xmlActions.open);
-						}
-
-						if (hasAction) {
-							var description = actions.description;
-							var executionType = actions.executionType;
-							var language = actions.scriptLanguage;
-							var script = actions.script;
-
-							var xmlAction = XMLUtil.createObj(actionNodeName || 'action');
-
-							actions.name.forEach(
-								function(item, index, collection) {
-									buffer.push(xmlAction.open, XMLUtil.create('name', item));
-
-									if (description) {
-										buffer.push(XMLUtil.create('description', description[index]));
-									}
-
-									if (script) {
-										buffer.push(XMLUtil.create('script', cdata(script[index])));
-									}
-
-									if (language) {
-										buffer.push(XMLUtil.create('scriptLanguage', language[index]));
-									}
-
-									if (executionType) {
-										buffer.push(XMLUtil.create('executionType', executionType[index]));
-									}
-
-									buffer.push(xmlAction.close);
-								}
-							);
-						}
-
-						if (hasNotification) {
-							instance._appendXMLNotifications(buffer, notifications, notificationNodeName);
-						}
-
-						if (hasAssignment) {
-							instance._appendXMLAssignments(buffer, assignments, assignmentNodeName);
-						}
-
-						if (hasAction || hasNotification || hasAssignment) {
-							buffer.push(xmlActions.close);
-						}
-					},
-
-					_appendXMLAssignments: function(buffer, dataAssignments, wrapperNodeName, wrapperNodeAttrs) {
-						var instance = this;
-
-						if (dataAssignments) {
-							var assignmentType = AArray(dataAssignments.assignmentType)[0];
-
-							var xmlAssignments = XMLUtil.createObj(wrapperNodeName || 'assignments', wrapperNodeAttrs);
-
-							buffer.push(xmlAssignments.open);
-
-							if (dataAssignments.address) {
-								dataAssignments.address.forEach(
-									function(item, index, collection) {
-										if (isValue(item)) {
-											buffer.push(XMLUtil.create('address', item));
-										}
-									}
-								);
-							}
-
-							var xmlRoles = XMLUtil.createObj('roles');
-
-							if (assignmentType === 'resourceActions') {
-								var xmlResourceAction = XMLUtil.create('resourceAction', dataAssignments.resourceAction);
-
-								buffer.push(XMLUtil.create('resourceActions', xmlResourceAction));
-							}
-							else if (assignmentType === 'roleId') {
-								var xmlRoleId = XMLUtil.create('roleId', dataAssignments.roleId);
-
-								buffer.push(xmlRoles.open, XMLUtil.create('role', xmlRoleId), xmlRoles.close);
-							}
-							else if (assignmentType === 'roleType') {
-								buffer.push(xmlRoles.open);
-
-								var xmlRole = XMLUtil.createObj('role');
-
-								dataAssignments.roleType.forEach(
-									function(item, index, collection) {
-										var roleName = dataAssignments.roleName[index];
-
-										if (roleName) {
-											buffer.push(
-												xmlRole.open,
-												XMLUtil.create('roleType', item),
-												XMLUtil.create('name', roleName),
-												XMLUtil.create('autoCreate', dataAssignments.autoCreate[index] || String(false)),
-												xmlRole.close
-											);
-										}
-									}
-								);
-
-								buffer.push(xmlRoles.close);
-							}
-							else if (assignmentType === 'scriptedAssignment') {
-								var xmlScriptedAssignment = XMLUtil.createObj('scriptedAssignment');
-
-								dataAssignments.script.forEach(
-									function(item, index, collection) {
-										buffer.push(
-											xmlScriptedAssignment.open,
-											XMLUtil.create('script', cdata(item)),
-											XMLUtil.create('scriptLanguage', dataAssignments.scriptLanguage[index]),
-											xmlScriptedAssignment.close
-										);
-									}
-								);
-							}
-							else if (assignmentType === 'scriptedRecipient') {
-								var xmlScriptedRecipient = XMLUtil.createObj('scriptedRecipient');
-
-								dataAssignments.script.forEach(
-									function(item, index, collection) {
-										buffer.push(
-											xmlScriptedRecipient.open,
-											XMLUtil.create('script', cdata(item)),
-											XMLUtil.create('scriptLanguage', dataAssignments.scriptLanguage[index]),
-											xmlScriptedRecipient.close
-										);
-									}
-								);
-							}
-							else if (assignmentType === 'user') {
-								var xmlUser = XMLUtil.createObj('user');
-
-								dataAssignments.userId.forEach(
-									function(item, index, collection) {
-										var userContent = null;
-
-										if (isValue(item)) {
-											userContent = XMLUtil.create('userId', item);
-										}
-										else if (isValue(dataAssignments.emailAddress[index])) {
-											userContent = XMLUtil.create('emailAddress', dataAssignments.emailAddress[index]);
-										}
-										else if (isValue(dataAssignments.screenName[index])) {
-											userContent = XMLUtil.create('screenName', dataAssignments.screenName[index]);
-										}
-
-										if (userContent) {
-											buffer.push(
-												xmlUser.open,
-												userContent,
-												xmlUser.close
-											);
-										}
-									}
-								);
-							}
-							else if (assignmentType === 'taskAssignees') {
-								buffer.push('<assignees/>');
-							}
-							else if (!dataAssignments.address || dataAssignments.address.filter(isValue).length === 0) {
-								if (wrapperNodeName === 'recipients') {
-									buffer.push('<assignees/>');
-								}
-								else {
-									buffer.push('<user/>');
-								}
-							}
-
-							buffer.push(xmlAssignments.close);
-						}
-					},
-
-					_appendXMLNotifications: function(buffer, notifications, nodeName) {
-						var instance = this;
-
-						if (notifications && notifications.name && notifications.name.length > 0) {
-							var description = notifications.description;
-							var executionType = notifications.executionType;
-							var notificationTypes = notifications.notificationTypes;
-							var recipients = notifications.recipients;
-							var template = notifications.template;
-							var templateLanguage = notifications.templateLanguage;
-
-							var xmlNotification = XMLUtil.createObj(nodeName || 'notification');
-
-							notifications.name.forEach(
-								function(item, index, collection) {
-									buffer.push(xmlNotification.open, XMLUtil.create('name', item));
-
-									if (description) {
-										buffer.push(XMLUtil.create('description', description[index]));
-									}
-
-									if (template) {
-										buffer.push(XMLUtil.create('template', cdata(template[index])));
-									}
-
-									if (templateLanguage) {
-										buffer.push(XMLUtil.create('templateLanguage', templateLanguage[index]));
-									}
-
-									if (notificationTypes && notificationTypes[index]) {
-										notificationTypes[index].forEach(
-											function(item) {
-												buffer.push(XMLUtil.create('notificationType', item.notificationType));
-											}
-										);
-									}
-
-									var recipientsAttrs = {};
-
-									if (recipients[index].receptionType && recipients[index].receptionType.length > 0) {
-										recipientsAttrs['receptionType'] = recipients[index].receptionType;
-									}
-
-									instance._appendXMLAssignments(
-										buffer,
-										recipients[index],
-										'recipients',
-										recipientsAttrs
-									);
-
-									if (executionType) {
-										buffer.push(XMLUtil.create('executionType', executionType[index]));
-									}
-
-									buffer.push(xmlNotification.close);
-								}
-							);
-						}
-					},
-
-					_appendXMLTaskTimers: function(buffer, taskTimers) {
-						var instance = this;
-
-						if (taskTimers && taskTimers.name && taskTimers.name.length > 0) {
-							var xmlTaskTimers = XMLUtil.createObj('task-timers');
-
-							buffer.push(xmlTaskTimers.open);
-
-							var blocking = taskTimers.blocking;
-							var delay = taskTimers.delay;
-							var description = taskTimers.description;
-							var reassignments = taskTimers.reassignments;
-							var timerActions = taskTimers.timerActions;
-							var timerNotifications = taskTimers.timerNotifications;
-
-							var xmlTaskTimer = XMLUtil.createObj('task-timer');
-
-							taskTimers.name.forEach(
-								function(item, index, collection) {
-									buffer.push(xmlTaskTimer.open, XMLUtil.create('name', item));
-
-									if (description) {
-										buffer.push(XMLUtil.create('description', description[index]));
-									}
-
-									var xmlDelay = XMLUtil.createObj('delay');
-
-									buffer.push(xmlDelay.open);
-
-									buffer.push(XMLUtil.create('duration', delay[index].duration[0]));
-									buffer.push(XMLUtil.create('scale', delay[index].scale[0]));
-
-									buffer.push(xmlDelay.close);
-
-									for (var i = 1; i < delay[index].duration.length; i++) {
-										var xmlRecurrence = XMLUtil.createObj('recurrence');
-
-										buffer.push(xmlRecurrence.open);
-
-										buffer.push(XMLUtil.create('duration', delay[index].duration[i]));
-										buffer.push(XMLUtil.create('scale', delay[index].scale[i]));
-
-										buffer.push(xmlRecurrence.close);
-									}
-
-									if (blocking && isValue(blocking[index])) {
-										buffer.push(XMLUtil.create('blocking', blocking[index]));
-									}
-									else {
-										buffer.push(XMLUtil.create('blocking', String(false)));
-									}
-
-									instance._appendXMLActions(
-										buffer,
-										timerActions[index],
-										timerNotifications[index],
-										reassignments[index],
-										'timer-actions',
-										'timer-action',
-										'timer-notification',
-										'reassignments'
-									);
-
-									buffer.push(xmlTaskTimer.close);
-								}
-							);
-
-							buffer.push(xmlTaskTimers.close);
-						}
-					},
-
-					_appendXMLTransitions: function(buffer, transitions) {
-						var instance = this;
-
-						if (transitions && transitions.length > 0) {
-							var xmlTransition = XMLUtil.createObj('transition');
-							var xmlTransitions = XMLUtil.createObj('transitions');
-
-							buffer.push(xmlTransitions.open);
-
-							var pickDefault = transitions.some(
-								function(item, index, collection) {
-									return item.connector.default === true;
-								}
-							);
-
-							pickDefault = !pickDefault;
-
-							transitions.forEach(
-								function(item, index, collection) {
-									var defaultValue = item.connector.default;
-
-									if (pickDefault && index === 0) {
-										defaultValue = true;
-									}
-
-									buffer.push(
-										xmlTransition.open,
-										XMLUtil.create('name', item.connector.name),
-										XMLUtil.create('target', item.target),
-										XMLUtil.create('default', defaultValue),
-										xmlTransition.close
-									);
-								}
-							);
-
-							buffer.push(xmlTransitions.close);
 						}
 					},
 
@@ -1130,6 +702,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-ace-editor', 'aui-ace-editor-mode-xml', 'aui-tpl-snippets-deprecated', 'datasource', 'datatype-xml', 'event-valuechange', 'io-form', 'liferay-kaleo-designer-autocomplete-util', 'liferay-kaleo-designer-editors', 'liferay-kaleo-designer-nodes', 'liferay-kaleo-designer-remote-services', 'liferay-kaleo-designer-utils', 'liferay-kaleo-designer-xml-definition', 'liferay-kaleo-designer-xml-util', 'liferay-util-window', 'liferay-xml-formatter']
+		requires: ['aui-ace-editor', 'aui-ace-editor-mode-xml', 'aui-tpl-snippets-deprecated', 'datasource', 'datatype-xml', 'event-valuechange', 'io-form', 'liferay-kaleo-designer-editors', 'liferay-kaleo-designer-nodes', 'liferay-kaleo-designer-remote-services', 'liferay-kaleo-designer-utils', 'liferay-kaleo-designer-xml-definition', 'liferay-kaleo-designer-xml-util', 'liferay-util-window', 'liferay-xml-formatter']
 	}
 );

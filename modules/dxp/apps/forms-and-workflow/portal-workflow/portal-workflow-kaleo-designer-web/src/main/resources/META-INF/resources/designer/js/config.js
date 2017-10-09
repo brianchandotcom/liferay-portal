@@ -60,6 +60,13 @@
 								'datatype-xml'
 							]
 						},
+						'liferay-kaleo-designer-xml-definition-serializer': {
+							path: 'xml_definition_serializer.js',
+							requires: [
+								'liferay-kaleo-designer-xml-util',
+								'liferay-xml-formatter'
+							]
+						},
 						'liferay-kaleo-designer-xml-util': {
 							path: 'xml_util.js',
 							requires: [

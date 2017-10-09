@@ -100,9 +100,9 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 
 		classTypesAssetRendererFactories.add(assetRendererFactory);
 
-		String className = AssetPublisherUtil.getClassName(assetRendererFactory);
+		String className = AssetPublisherWebUtil.getClassName(assetRendererFactory);
 
-		Long[] assetSelectedClassTypeIds = AssetPublisherUtil.getClassTypeIds(portletPreferences, className, classTypes);
+		Long[] assetSelectedClassTypeIds = AssetPublisherWebUtil.getClassTypeIds(portletPreferences, className, classTypes);
 
 		// Left list
 
@@ -242,7 +242,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 
 	<%
 	for (AssetRendererFactory<?> curRendererFactory : classTypesAssetRendererFactories) {
-		String className = AssetPublisherUtil.getClassName(curRendererFactory);
+		String className = AssetPublisherWebUtil.getClassName(curRendererFactory);
 	%>
 
 		Util.toggleSelectBox('<portlet:namespace />anyClassType<%= className %>', 'false', '<portlet:namespace /><%= className %>Boxes');
@@ -295,7 +295,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 			String orderByColumn2 = assetPublisherDisplayContext.getOrderByColumn2();
 
 			for (ClassTypeField classTypeField : classTypeFields) {
-				String value = AssetPublisherUtil.encodeName(classTypeField.getClassTypeId(), classTypeField.getName(), null);
+				String value = AssetPublisherWebUtil.encodeName(classTypeField.getClassTypeId(), classTypeField.getName(), null);
 				String selectedOrderByColumn1 = StringPool.BLANK;
 				String selectedOrderByColumn2 = StringPool.BLANK;
 
@@ -382,7 +382,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 
 		<%
 		for (AssetRendererFactory<?> curRendererFactory : classTypesAssetRendererFactories) {
-			String className = AssetPublisherUtil.getClassName(curRendererFactory);
+			String className = AssetPublisherWebUtil.getClassName(curRendererFactory);
 		%>
 
 			<portlet:namespace />toggle<%= className %>(removeOrderBySubtype);

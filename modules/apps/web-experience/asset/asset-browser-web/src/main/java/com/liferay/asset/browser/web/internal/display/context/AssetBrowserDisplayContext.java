@@ -238,7 +238,7 @@ public class AssetBrowserDisplayContext {
 		return _eventName;
 	}
 
-	public long[] getFilterGroupIds() {
+	public long[] getFilterGroupIds() throws PortalException {
 		long[] filterGroupIds = getSelectedGroupIds();
 
 		if (getGroupId() > 0) {
@@ -370,12 +370,25 @@ public class AssetBrowserDisplayContext {
 		return new String[] {"modified-date", "title"};
 	}
 
-	public PortletURL getPortletURL() {
+	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter("groupId", String.valueOf(getGroupId()));
-		portletURL.setParameter(
-			"selectedGroupIds", StringUtil.merge(getSelectedGroupIds()));
+
+		long[] selectedGroupIds = getSelectedGroupIds();
+
+		if (selectedGroupIds.length > 0) {
+			portletURL.setParameter(
+				"selectedGroupIds", StringUtil.merge(selectedGroupIds));
+		}
+
+		long selectedGroupId = ParamUtil.getLong(_request, "selectedGroupId");
+
+		if (selectedGroupId > 0) {
+			portletURL.setParameter(
+				"selectedGroupId", String.valueOf(selectedGroupId));
+		}
+
 		portletURL.setParameter(
 			"refererAssetEntryId", String.valueOf(getRefererAssetEntryId()));
 		portletURL.setParameter("typeSelection", getTypeSelection());
@@ -406,11 +419,22 @@ public class AssetBrowserDisplayContext {
 		return _refererAssetEntryId;
 	}
 
-	public long[] getSelectedGroupIds() {
+	public long[] getSelectedGroupIds() throws PortalException {
 		long[] selectedGroupIds = StringUtil.split(
 			ParamUtil.getString(_request, "selectedGroupIds"), 0L);
 
-		return selectedGroupIds;
+		if (selectedGroupIds.length > 0) {
+			return selectedGroupIds;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long selectedGroupId = ParamUtil.getLong(_request, "selectedGroupId");
+
+		return PortalUtil.getSharedContentSiteGroupIds(
+			themeDisplay.getCompanyId(), selectedGroupId,
+			themeDisplay.getUserId());
 	}
 
 	public int[] getStatuses() {
@@ -436,7 +460,7 @@ public class AssetBrowserDisplayContext {
 		return _subtypeSelectionId;
 	}
 
-	public int getTotal() {
+	public int getTotal() throws PortalException {
 		return getTotal(getFilterGroupIds());
 	}
 
@@ -474,7 +498,7 @@ public class AssetBrowserDisplayContext {
 		return _typeSelection;
 	}
 
-	public boolean isDisabledManagementBar() {
+	public boolean isDisabledManagementBar() throws PortalException {
 		if (getTotal(getSelectedGroupIds()) > 0) {
 			return false;
 		}

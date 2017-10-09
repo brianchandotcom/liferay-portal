@@ -95,7 +95,9 @@ public interface Build {
 
 	public Long getLatestStartTimestamp();
 
-	public Element getLongestRunningDownstreamBuild();
+	public Build getLongestRunningDownstreamBuild();
+
+	public Element getLongestRunningDownstreamBuildElement();
 
 	public Element getLongestRunningTestElement();
 

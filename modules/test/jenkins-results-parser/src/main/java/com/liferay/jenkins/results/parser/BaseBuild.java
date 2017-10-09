@@ -721,8 +721,93 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public Element getLongestRunningDownstreamBuild() {
-		return null;
+	public Build getLongestRunningDownstreamBuild() {
+		long longestDuration = 0;
+
+		Build longestRunningDownstreamBuild = null;
+
+		List<Build> downstreamBuilds = getDownstreamBuilds(null);
+
+		for (Build downstreamBuild : downstreamBuilds) {
+			if (downstreamBuild instanceof BatchBuild) {
+				downstreamBuild =
+					downstreamBuild.getLongestRunningDownstreamBuild();
+
+				if (downstreamBuild == null) {
+					continue;
+				}
+			}
+
+			long downstreamDuration = downstreamBuild.getDuration();
+
+			if (downstreamDuration > longestDuration) {
+				longestDuration = downstreamDuration;
+
+				longestRunningDownstreamBuild = downstreamBuild;
+			}
+		}
+
+		return longestRunningDownstreamBuild;
+	}
+
+	@Override
+	public Element getLongestRunningDownstreamBuildElement() {
+		long downstreamBuildDuration = 0;
+
+		String downstreamBuildName = "Unavailable";
+
+		String downstreamBuildParentName = "Unavailable";
+
+		String downstreamBuildURL = "Unavailable";
+
+		Build longestRunningDownstreamBuild =
+			getLongestRunningDownstreamBuild();
+
+		if (!(longestRunningDownstreamBuild == null)) {
+			if (longestRunningDownstreamBuild instanceof AxisBuild) {
+				String axisNumber =
+					((AxisBuild)longestRunningDownstreamBuild).getAxisNumber();
+
+				downstreamBuildName = "AXIS_VARIABLE=" + axisNumber;
+			}
+			else {
+				downstreamBuildName =
+					longestRunningDownstreamBuild.getDisplayName();
+			}
+
+			downstreamBuildDuration =
+				longestRunningDownstreamBuild.getDuration();
+
+			downstreamBuildURL = longestRunningDownstreamBuild.getBuildURL();
+
+			Build parentBuild = longestRunningDownstreamBuild.getParentBuild();
+
+			String parentJobName = parentBuild.getJobName();
+
+			downstreamBuildParentName = parentBuild.getDisplayName();
+
+			downstreamBuildParentName = downstreamBuildParentName.replace(
+				parentJobName + "/", "");
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(downstreamBuildParentName);
+
+		sb.append("/");
+
+		sb.append(downstreamBuildName);
+
+		String longestRunningBuildDisplayName = sb.toString();
+
+		Element longestDownstreamElement = Dom4JUtil.getNewElement(
+			"p", null, "Longest Downstream Build: ",
+			Dom4JUtil.getNewAnchorElement(
+				downstreamBuildURL, longestRunningBuildDisplayName),
+			" in: ",
+			JenkinsResultsParserUtil.toDurationString(downstreamBuildDuration));
+
+		return longestDownstreamElement;
 	}
 
 	@Override

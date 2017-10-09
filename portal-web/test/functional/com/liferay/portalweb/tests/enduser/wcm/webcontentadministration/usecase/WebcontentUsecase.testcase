@@ -2155,6 +2155,8 @@
 			<var name="uploadFrom" value="dependencies" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>

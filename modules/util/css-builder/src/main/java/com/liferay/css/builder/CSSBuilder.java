@@ -18,7 +18,6 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 
 import com.liferay.css.builder.internal.util.FileUtil;
-import com.liferay.portal.kernel.regex.PatternFactory;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -109,14 +108,15 @@ public class CSSBuilder implements AutoCloseable {
 
 		_portalCommonDirName = portalCommonDir.getCanonicalPath();
 
-		List<String> rtlExcludedPathRegexpsList =
+		List<String> rtlExcludedPathRegexps =
 			_cssBuilderArgs.getRtlExcludedPathRegexps();
 
-		String[] rtlExcludedPathRegexps = rtlExcludedPathRegexpsList.toArray(
-			new String[0]);
+		_rtlExcludedPathPatterns = new Pattern[rtlExcludedPathRegexps.size()];
 
-		_rtlExcludedPathPatterns = PatternFactory.compile(
-			rtlExcludedPathRegexps);
+		for (int i = 0; i < rtlExcludedPathRegexps.size(); i++) {
+			_rtlExcludedPathPatterns[i] = Pattern.compile(
+				rtlExcludedPathRegexps.get(i));
+		}
 
 		_initSassCompiler(_cssBuilderArgs.getSassCompilerClassName());
 	}

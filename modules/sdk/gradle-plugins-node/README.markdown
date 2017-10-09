@@ -307,4 +307,4 @@ task.
 
 If the [`lifecycle-base`](https://docs.gradle.org/current/javadoc/org/gradle/language/base/plugins/LifecycleBasePlugin.html)
 plugin is applied and the `package.json` file declares a script named `test`,
-then the script is executed when running the `check` task.
+the script is executed when running the `check` task.

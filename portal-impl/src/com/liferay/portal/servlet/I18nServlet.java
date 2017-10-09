@@ -277,9 +277,8 @@ public class I18nServlet extends HttpServlet {
 		if (Validator.isNotNull(queryString)) {
 			return path + StringPool.QUESTION + queryString;
 		}
-		else {
-			return path;
-		}
+
+		return path;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(I18nServlet.class);

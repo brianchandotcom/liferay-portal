@@ -428,9 +428,8 @@ public class VirtualHostFilter extends BasePortalFilter {
 		if (Validator.isNotNull(queryString)) {
 			return path + StringPool.QUESTION + queryString;
 		}
-		else {
-			return path;
-		}
+
+		return path;
 	}
 
 	private static final String _PATH_DOCUMENTS = "/documents/";

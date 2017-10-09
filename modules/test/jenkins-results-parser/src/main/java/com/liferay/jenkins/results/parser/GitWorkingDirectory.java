@@ -1181,7 +1181,7 @@ public class GitWorkingDirectory {
 		String remoteURL = upstreamRemote.getRemoteURL();
 
 		if (!remoteURL.contains("-ee") && !remoteURL.contains("-private")) {
-			remoteURL.replace(".git", "-private.git");
+			remoteURL = remoteURL.replace(".git", "-private.git");
 
 			addRemote(true, "upstream", remoteURL);
 		}

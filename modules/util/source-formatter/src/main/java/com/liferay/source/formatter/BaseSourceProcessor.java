@@ -496,7 +496,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		File file = new File(absolutePath);
 
-		format(file, fileName, absolutePath, FileUtil.read(file));
+		String content = FileUtil.read(file);
+
+		if (_hasGeneratedTag(content)) {
+			return;
+		}
+
+		format(file, fileName, absolutePath, content);
 
 		addProgressStatusUpdate(
 			new ProgressStatusUpdate(ProgressStatus.CHECK_FILE_COMPLETED));
@@ -518,6 +524,17 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return sourceChecks;
+	}
+
+	private boolean _hasGeneratedTag(String content) {
+		if ((content.contains("* @generated") || content.contains("$ANTLR")) &&
+			!content.contains("hasGeneratedTag")) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	private void _initSourceCheck(SourceCheck sourceCheck) throws Exception {

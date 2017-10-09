@@ -76,6 +76,7 @@ import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.Upload;
 import org.gradle.util.CollectionUtils;
 import org.gradle.util.GUtil;
@@ -280,6 +281,18 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 		mergeFilesTask.setOutputFile(
 			new File(dir, "artifacts-publish-commands.sh"));
+
+		TaskOutputs taskOutputs = mergeFilesTask.getOutputs();
+
+		taskOutputs.upToDateWhen(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					return false;
+				}
+
+			});
 
 		return mergeFilesTask;
 	}

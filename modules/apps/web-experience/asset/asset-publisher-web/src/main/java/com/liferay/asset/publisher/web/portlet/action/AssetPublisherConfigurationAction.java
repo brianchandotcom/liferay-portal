@@ -135,6 +135,10 @@ public class AssetPublisherConfigurationAction
 			AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_CONFIGURATION,
 			assetPublisherWebConfiguration);
 
+		request.setAttribute(
+			AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_UTIL,
+			assetPublisherWebUtil);
+
 		request.setAttribute(AssetPublisherWebKeys.ITEM_SELECTOR, itemSelector);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -238,7 +242,7 @@ public class AssetPublisherConfigurationAction
 				addScope(actionRequest, preferences);
 			}
 			else if (cmd.equals("add-selection")) {
-				AssetPublisherWebUtil.addSelection(actionRequest, preferences);
+				assetPublisherWebUtil.addSelection(actionRequest, preferences);
 			}
 			else if (cmd.equals("move-selection-down")) {
 				moveSelectionDown(actionRequest, preferences);
@@ -337,7 +341,7 @@ public class AssetPublisherConfigurationAction
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (!AssetPublisherWebUtil.isScopeIdSelectable(
+		if (!assetPublisherWebUtil.isScopeIdSelectable(
 				themeDisplay.getPermissionChecker(), scopeId,
 				themeDisplay.getCompanyGroupId(), layout, true)) {
 
@@ -373,7 +377,7 @@ public class AssetPublisherConfigurationAction
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				className);
 
-		String assetClassName = AssetPublisherWebUtil.getClassName(
+		String assetClassName = assetPublisherWebUtil.getClassName(
 			assetRendererFactory);
 
 		return assetClassName;
@@ -791,6 +795,10 @@ public class AssetPublisherConfigurationAction
 	protected AssetPublisherCustomizerRegistry assetPublisherCustomizerRegistry;
 
 	protected AssetPublisherWebConfiguration assetPublisherWebConfiguration;
+
+	@Reference
+	protected AssetPublisherWebUtil assetPublisherWebUtil;
+
 	protected AssetTagLocalService assetTagLocalService;
 	protected GroupLocalService groupLocalService;
 	protected ItemSelector itemSelector;

@@ -89,7 +89,7 @@ public class AssetPublisherAddPortletProvider
 		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 			className, classPK);
 
-		AssetPublisherWebUtil.addSelection(
+		_assetPublisherWebUtil.addSelection(
 			portletPreferences, assetEntry.getEntryId(), -1,
 			assetEntry.getClassName());
 	}
@@ -111,5 +111,8 @@ public class AssetPublisherAddPortletProvider
 	}
 
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private AssetPublisherWebUtil _assetPublisherWebUtil;
 
 }

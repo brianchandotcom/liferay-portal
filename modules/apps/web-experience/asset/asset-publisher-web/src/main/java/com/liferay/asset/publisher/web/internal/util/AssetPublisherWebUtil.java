@@ -97,7 +97,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(immediate = true, service = AssetPublisherWebUtil.class)
 public class AssetPublisherWebUtil {
 
-	public static void addAndStoreSelection(
+	public void addAndStoreSelection(
 			PortletRequest portletRequest, String className, long classPK,
 			int assetEntryOrder)
 		throws Exception {
@@ -140,7 +140,7 @@ public class AssetPublisherWebUtil {
 		portletPreferences.store();
 	}
 
-	public static void addSelection(
+	public void addSelection(
 			PortletPreferences portletPreferences, long assetEntryId,
 			int assetEntryOrder, String assetEntryType)
 		throws Exception {
@@ -174,7 +174,7 @@ public class AssetPublisherWebUtil {
 		}
 	}
 
-	public static void addSelection(
+	public void addSelection(
 			PortletRequest portletRequest,
 			PortletPreferences portletPreferences)
 		throws Exception {
@@ -189,15 +189,13 @@ public class AssetPublisherWebUtil {
 			portletPreferences, assetEntryId, assetEntryOrder, assetEntryType);
 	}
 
-	public static String encodeName(
+	public String encodeName(
 		long ddmStructureId, String fieldName, Locale locale) {
 
 		return _ddmIndexer.encodeName(ddmStructureId, fieldName, locale);
 	}
 
-	public static String filterAssetTagNames(
-		long groupId, String assetTagNames) {
-
+	public String filterAssetTagNames(long groupId, String assetTagNames) {
 		List<String> filteredAssetTagNames = new ArrayList<>();
 
 		String[] assetTagNamesArray = StringUtil.split(assetTagNames);
@@ -226,7 +224,7 @@ public class AssetPublisherWebUtil {
 		return className.substring(pos + 1);
 	}
 
-	public static Long[] getClassTypeIds(
+	public Long[] getClassTypeIds(
 		PortletPreferences portletPreferences, String className,
 		List<ClassType> availableClassTypes) {
 
@@ -242,13 +240,13 @@ public class AssetPublisherWebUtil {
 			portletPreferences, className, availableClassTypeIds);
 	}
 
-	public static String getDefaultAssetPublisherId(Layout layout) {
+	public String getDefaultAssetPublisherId(Layout layout) {
 		return layout.getTypeSettingsProperty(
 			LayoutTypePortletConstants.DEFAULT_ASSET_PUBLISHER_PORTLET_ID,
 			StringPool.BLANK);
 	}
 
-	public static Map<Locale, String> getEmailAssetEntryAddedBodyMap(
+	public Map<Locale, String> getEmailAssetEntryAddedBodyMap(
 		PortletPreferences portletPreferences) {
 
 		LocalizedValuesMap emailAssetEntryAddedLocalizedBodyMap =
@@ -272,7 +270,7 @@ public class AssetPublisherWebUtil {
 		return emailAssetEntryAddedBodyMap;
 	}
 
-	public static boolean getEmailAssetEntryAddedEnabled(
+	public boolean getEmailAssetEntryAddedEnabled(
 		PortletPreferences portletPreferences) {
 
 		String emailAssetEntryAddedEnabled = portletPreferences.getValue(
@@ -287,7 +285,7 @@ public class AssetPublisherWebUtil {
 		}
 	}
 
-	public static Map<Locale, String> getEmailAssetEntryAddedSubjectMap(
+	public Map<Locale, String> getEmailAssetEntryAddedSubjectMap(
 		PortletPreferences portletPreferences) {
 
 		LocalizedValuesMap emailAssetEntryAddedLocalizedSubjectMap =
@@ -313,7 +311,7 @@ public class AssetPublisherWebUtil {
 		return emailAssetEntryAddedSubjectMap;
 	}
 
-	public static Map<String, String> getEmailDefinitionTerms(
+	public Map<String, String> getEmailDefinitionTerms(
 		PortletRequest portletRequest, String emailFromAddress,
 		String emailFromName) {
 
@@ -378,7 +376,7 @@ public class AssetPublisherWebUtil {
 		return definitionTerms;
 	}
 
-	public static String getEmailFromAddress(
+	public String getEmailFromAddress(
 		PortletPreferences portletPreferences, long companyId) {
 
 		return PortalUtil.getEmailFromAddress(
@@ -386,7 +384,7 @@ public class AssetPublisherWebUtil {
 			_assetPublisherPortletInstanceConfiguration.emailFromAddress());
 	}
 
-	public static String getEmailFromName(
+	public String getEmailFromName(
 		PortletPreferences portletPreferences, long companyId) {
 
 		return PortalUtil.getEmailFromName(
@@ -394,7 +392,7 @@ public class AssetPublisherWebUtil {
 			_assetPublisherPortletInstanceConfiguration.emailFromName());
 	}
 
-	public static long getSubscriptionClassPK(
+	public long getSubscriptionClassPK(
 			long ownerId, int ownerType, long plid, String portletId)
 		throws PortalException {
 
@@ -411,7 +409,7 @@ public class AssetPublisherWebUtil {
 		return portletPreferencesModel.getPortletPreferencesId();
 	}
 
-	public static long getSubscriptionClassPK(long plid, String portletId)
+	public long getSubscriptionClassPK(long plid, String portletId)
 		throws PortalException {
 
 		return getSubscriptionClassPK(
@@ -419,7 +417,7 @@ public class AssetPublisherWebUtil {
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId);
 	}
 
-	public static boolean isDefaultAssetPublisher(
+	public boolean isDefaultAssetPublisher(
 		Layout layout, String portletId, String portletResource) {
 
 		String defaultAssetPublisherPortletId = getDefaultAssetPublisherId(
@@ -438,7 +436,7 @@ public class AssetPublisherWebUtil {
 		return false;
 	}
 
-	public static boolean isScopeIdSelectable(
+	public boolean isScopeIdSelectable(
 			PermissionChecker permissionChecker, String scopeId,
 			long companyGroupId, Layout layout, boolean checkPermission)
 		throws PortalException {
@@ -491,7 +489,7 @@ public class AssetPublisherWebUtil {
 		return true;
 	}
 
-	public static boolean isSubscribed(
+	public boolean isSubscribed(
 			long companyId, long userId, long plid, String portletId)
 		throws PortalException {
 
@@ -501,20 +499,20 @@ public class AssetPublisherWebUtil {
 			getSubscriptionClassPK(plid, portletId));
 	}
 
-	public static void processAssetEntryQuery(
+	public void processAssetEntryQuery(
 			User user, PortletPreferences portletPreferences,
 			AssetEntryQuery assetEntryQuery)
 		throws Exception {
 
 		for (AssetEntryQueryProcessor assetEntryQueryProcessor :
-				_getAssetEntryQueryProcessors()) {
+				_assetEntryQueryProcessors) {
 
 			assetEntryQueryProcessor.processAssetEntryQuery(
 				user, portletPreferences, assetEntryQuery);
 		}
 	}
 
-	public static void subscribe(
+	public void subscribe(
 			PermissionChecker permissionChecker, long groupId, long plid,
 			String portletId)
 		throws PortalException {
@@ -531,7 +529,7 @@ public class AssetPublisherWebUtil {
 			getSubscriptionClassPK(plid, portletId));
 	}
 
-	public static void unsubscribe(
+	public void unsubscribe(
 			PermissionChecker permissionChecker, long plid, String portletId)
 		throws PortalException {
 
@@ -552,18 +550,9 @@ public class AssetPublisherWebUtil {
 	protected void activate(Map<String, Object> properties)
 		throws ConfigurationException {
 
-		_instance = this;
-
 		_assetPublisherPortletInstanceConfiguration =
 			ConfigurationProviderUtil.getSystemConfiguration(
 				AssetPublisherPortletInstanceConfiguration.class);
-	}
-
-	@Reference(unbind = "-")
-	protected void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
 	}
 
 	@Reference(
@@ -577,58 +566,7 @@ public class AssetPublisherWebUtil {
 		_assetEntryQueryProcessors.add(assetEntryQueryProcessor);
 	}
 
-	@Reference(unbind = "-")
-	protected void setAssetPublisherUtil(
-		AssetPublisherUtil assetPublisherUtil) {
-
-		_assetPublisherUtil = assetPublisherUtil;
-	}
-
-	@Reference(unbind = "-")
-	protected void setAssetTagLocalService(
-		AssetTagLocalService assetTagLocalService) {
-
-		_assetTagLocalService = assetTagLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMIndexer(DDMIndexer ddmIndexer) {
-		_ddmIndexer = ddmIndexer;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = layoutLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletPreferencesLocalService(
-		PortletPreferencesLocalService portletPreferencesLocalService) {
-
-		_portletPreferencesLocalService = portletPreferencesLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSubscriptionLocalService(
-		SubscriptionLocalService subscriptionLocalService) {
-
-		_subscriptionLocalService = subscriptionLocalService;
-	}
-
-	private static List<AssetEntryQueryProcessor>
-		_getAssetEntryQueryProcessors() {
-
-		return _instance._assetEntryQueryProcessors;
-	}
-
-	private static String _getAssetEntryXml(
+	private String _getAssetEntryXml(
 		String assetEntryType, String assetEntryUuid) {
 
 		String xml = null;
@@ -659,7 +597,7 @@ public class AssetPublisherWebUtil {
 		return xml;
 	}
 
-	private static Long[] _getClassTypeIds(
+	private Long[] _getClassTypeIds(
 		PortletPreferences portletPreferences, String className,
 		Long[] availableClassTypeIds) {
 
@@ -694,21 +632,33 @@ public class AssetPublisherWebUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetPublisherWebUtil.class);
 
-	private static AssetPublisherWebUtil _instance;
-
-	private static AssetEntryLocalService _assetEntryLocalService;
-	private static AssetPublisherPortletInstanceConfiguration
-		_assetPublisherPortletInstanceConfiguration;
-	private static AssetPublisherUtil _assetPublisherUtil;
-	private static AssetTagLocalService _assetTagLocalService;
-	private static DDMIndexer _ddmIndexer;
-	private static GroupLocalService _groupLocalService;
-	private static LayoutLocalService _layoutLocalService;
-	private static PortletPreferencesLocalService
-		_portletPreferencesLocalService;
-	private static SubscriptionLocalService _subscriptionLocalService;
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	private final List<AssetEntryQueryProcessor> _assetEntryQueryProcessors =
 		new CopyOnWriteArrayList<>();
+	private AssetPublisherPortletInstanceConfiguration
+		_assetPublisherPortletInstanceConfiguration;
+
+	@Reference
+	private AssetPublisherUtil _assetPublisherUtil;
+
+	@Reference
+	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private DDMIndexer _ddmIndexer;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Reference
+	private SubscriptionLocalService _subscriptionLocalService;
 
 }

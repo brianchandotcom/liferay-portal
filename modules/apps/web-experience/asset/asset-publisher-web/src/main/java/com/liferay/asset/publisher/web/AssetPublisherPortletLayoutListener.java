@@ -56,7 +56,7 @@ public class AssetPublisherPortletLayoutListener
 		try {
 			Layout layout = _layoutLocalService.getLayout(plid);
 
-			if (AssetPublisherWebUtil.isDefaultAssetPublisher(
+			if (_assetPublisherWebUtil.isDefaultAssetPublisher(
 					layout, portletId, StringPool.BLANK)) {
 
 				_journalArticleLocalService.deleteLayoutArticleReferences(
@@ -73,7 +73,7 @@ public class AssetPublisherPortletLayoutListener
 
 			_subscriptionLocalService.deleteSubscriptions(
 				layout.getCompanyId(), PortletPreferences.class.getName(),
-				AssetPublisherWebUtil.getSubscriptionClassPK(
+				_assetPublisherWebUtil.getSubscriptionClassPK(
 					ownerId, ownerType, plid, portletId));
 		}
 		catch (Exception e) {
@@ -101,6 +101,12 @@ public class AssetPublisherPortletLayoutListener
 		}
 	}
 
+	protected void setAssetPublisherWebUtil(
+		AssetPublisherWebUtil assetPublisherWebUtil) {
+
+		_assetPublisherWebUtil = assetPublisherWebUtil;
+	}
+
 	protected void setJournalArticleLocalService(
 		JournalArticleLocalService journalArticleLocalService) {
 
@@ -119,6 +125,7 @@ public class AssetPublisherPortletLayoutListener
 		_subscriptionLocalService = subscriptionLocalService;
 	}
 
+	private AssetPublisherWebUtil _assetPublisherWebUtil;
 	private JournalArticleLocalService _journalArticleLocalService;
 	private LayoutLocalService _layoutLocalService;
 	private SubscriptionLocalService _subscriptionLocalService;

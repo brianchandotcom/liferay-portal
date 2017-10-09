@@ -66,7 +66,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 
 		<%
 		for (AssetRendererFactory<?> curRendererFactory : classTypesAssetRendererFactories) {
-			String className = AssetPublisherWebUtil.getClassName(curRendererFactory);
+			String className = assetPublisherWebUtil.getClassName(curRendererFactory);
 		%>
 
 			form.fm('classTypeIds<%= className %>').val(Util.listSelect(form.fm('<%= className %>currentClassTypeIds')));

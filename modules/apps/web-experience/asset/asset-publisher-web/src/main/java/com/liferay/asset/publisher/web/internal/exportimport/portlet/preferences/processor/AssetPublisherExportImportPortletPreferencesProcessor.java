@@ -1304,7 +1304,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			}
 
 			try {
-				if (!AssetPublisherWebUtil.isScopeIdSelectable(
+				if (!assetPublisherWebUtil.isScopeIdSelectable(
 						PermissionThreadLocal.getPermissionChecker(), newValue,
 						companyGroupId, layout, false)) {
 
@@ -1343,6 +1343,9 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		portletPreferences.setValues(
 			key, newValues.toArray(new String[newValues.size()]));
 	}
+
+	@Reference
+	protected AssetPublisherWebUtil assetPublisherWebUtil;
 
 	@Reference
 	protected Portal portal;

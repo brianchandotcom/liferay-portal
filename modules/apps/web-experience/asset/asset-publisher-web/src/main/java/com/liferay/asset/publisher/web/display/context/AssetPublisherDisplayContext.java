@@ -126,6 +126,9 @@ public class AssetPublisherDisplayContext {
 		_assetEntryActionRegistry =
 			(AssetEntryActionRegistry)portletRequest.getAttribute(
 				AssetPublisherWebKeys.ASSET_ENTRY_ACTION_REGISTRY);
+		_assetPublisherWebUtil =
+			(AssetPublisherWebUtil)portletRequest.getAttribute(
+				AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_UTIL);
 		_assetPublisherPortletInstanceConfiguration =
 			(AssetPublisherPortletInstanceConfiguration)
 				portletRequest.getAttribute(
@@ -245,7 +248,7 @@ public class AssetPublisherDisplayContext {
 
 		_assetEntryQuery.setPaginationType(getPaginationType());
 
-		AssetPublisherWebUtil.processAssetEntryQuery(
+		_assetPublisherWebUtil.processAssetEntryQuery(
 			themeDisplay.getUser(), _portletPreferences, _assetEntryQuery);
 
 		_assetPublisherCustomizer.setAssetEntryQueryOptions(
@@ -356,7 +359,7 @@ public class AssetPublisherDisplayContext {
 				queryValues = ParamUtil.getString(
 					_request, "queryTagNames" + queryLogicIndex, queryValues);
 
-				queryValues = AssetPublisherWebUtil.filterAssetTagNames(
+				queryValues = _assetPublisherWebUtil.filterAssetTagNames(
 					themeDisplay.getScopeGroupId(), queryValues);
 			}
 			else {
@@ -1014,7 +1017,7 @@ public class AssetPublisherDisplayContext {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		_defaultAssetPublisher = AssetPublisherWebUtil.isDefaultAssetPublisher(
+		_defaultAssetPublisher = _assetPublisherWebUtil.isDefaultAssetPublisher(
 			themeDisplay.getLayout(), portletDisplay.getId(),
 			getPortletResource());
 
@@ -1330,7 +1333,7 @@ public class AssetPublisherDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		String defaultAssetPublisherPortletId =
-			AssetPublisherWebUtil.getDefaultAssetPublisherId(
+			_assetPublisherWebUtil.getDefaultAssetPublisherId(
 				themeDisplay.getLayout());
 
 		if (isDefaultAssetPublisher() ||
@@ -1381,7 +1384,7 @@ public class AssetPublisherDisplayContext {
 
 		assetEntryQuery.setAttribute(
 			"ddmStructureFieldName",
-			AssetPublisherWebUtil.encodeName(
+			_assetPublisherWebUtil.encodeName(
 				classTypeField.getClassTypeId(), getDDMStructureFieldName(),
 				locale));
 
@@ -1473,6 +1476,7 @@ public class AssetPublisherDisplayContext {
 		_assetPublisherPortletInstanceConfiguration;
 	private final AssetPublisherWebConfiguration
 		_assetPublisherWebConfiguration;
+	private final AssetPublisherWebUtil _assetPublisherWebUtil;
 	private Map<String, Serializable> _attributes;
 	private long[] _availableClassNameIds;
 	private long[] _classNameIds;

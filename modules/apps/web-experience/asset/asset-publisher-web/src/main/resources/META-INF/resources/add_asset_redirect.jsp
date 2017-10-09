@@ -27,7 +27,7 @@ String className = ParamUtil.getString(request, "className");
 long classPK = ParamUtil.getLong(request, "classPK");
 
 if (Validator.isNotNull(className) && (classPK > 0)) {
-	AssetPublisherWebUtil.addAndStoreSelection(liferayPortletRequest, className, classPK, -1);
+	assetPublisherWebUtil.addAndStoreSelection(liferayPortletRequest, className, classPK, -1);
 }
 %>
 

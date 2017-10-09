@@ -16,6 +16,7 @@ package com.liferay.aspectj.arquillian.failure;
 
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.process.EchoOutputProcessor;
 import com.liferay.portal.kernel.process.OutputProcessor;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessUtil;
@@ -91,7 +92,7 @@ public class ArquillianFailureAspect {
 
 			NoticeableFuture<ObjectValuePair<Void, Void>>
 				jstackNoticeableFuture = ProcessUtil.execute(
-					ProcessUtil.ECHO_OUTPUT_PROCESSOR, "jstack", "-l", pid);
+					EchoOutputProcessor.INSTANCE, "jstack", "-l", pid);
 
 			jstackNoticeableFuture.get();
 		}

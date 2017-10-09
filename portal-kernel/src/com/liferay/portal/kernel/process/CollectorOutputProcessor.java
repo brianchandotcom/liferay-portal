@@ -26,6 +26,9 @@ import java.io.InputStream;
 public class CollectorOutputProcessor
 	implements OutputProcessor<byte[], byte[]> {
 
+	public static final OutputProcessor<byte[], byte[]> INSTANCE =
+		new CollectorOutputProcessor();
+
 	@Override
 	public byte[] processStdErr(InputStream stdErrInputStream)
 		throws ProcessException {

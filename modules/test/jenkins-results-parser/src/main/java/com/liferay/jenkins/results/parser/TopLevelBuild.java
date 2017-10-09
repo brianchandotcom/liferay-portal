@@ -547,7 +547,7 @@ public class TopLevelBuild extends BaseBuild {
 
 	protected Element getJenkinsReportBodyElement(TopLevelBuild topLevelBuild) {
 		Map<String, Build> axisBuilds = new TreeMap<>();
-		Map<String, Build> batchBuilds = new TreeMap<>();
+		Map<String, Build> downstreamBuilds = new TreeMap<>();
 		Map<String, TestResult> testResults = new TreeMap<>();
 
 		for (Build batchBuild : topLevelBuild.getDownstreamBuilds(null)) {
@@ -557,7 +557,7 @@ public class TopLevelBuild extends BaseBuild {
 				return null;
 			}
 
-			batchBuilds.put(batchBuild.getDisplayName(), batchBuild);
+			downstreamBuilds.put(batchBuild.getDisplayName(), batchBuild);
 
 			for (Build axisBuild : batchBuild.getDownstreamBuilds(null)) {
 				String axisKey =
@@ -606,10 +606,10 @@ public class TopLevelBuild extends BaseBuild {
 		Dom4JUtil.addToElement(
 			bodyElement, h1Element, h2Element,
 			getJenkinsReportSummaryElement(
-				topLevelBuild, axisBuilds, batchBuilds, testResults),
+				topLevelBuild, axisBuilds, downstreamBuilds, testResults),
 			getJenkinsReportTimelineElement(topLevelBuild, axisBuilds),
 			getJenkinsReportTopLevelTableElement(topLevelBuild),
-			JenkinsReportUtil.getBatchReportElement(batchBuilds));
+			getJenkinsReportDownstreamElement(downstreamBuilds));
 
 		return bodyElement;
 	}
@@ -639,6 +639,132 @@ public class TopLevelBuild extends BaseBuild {
 		return scriptElement;
 	}
 
+	protected Element getJenkinsReportDownstreamElement(
+		Map<String, Build> downstreamBuilds) {
+
+		List<Build> abortedBuilds = new ArrayList();
+
+		List<Build> failureBuilds = new ArrayList();
+
+		List<Build> missingBuilds = new ArrayList();
+
+		List<Build> queuedBuilds = new ArrayList();
+
+		List<Build> runningBuilds = new ArrayList();
+
+		List<Build> startingBuilds = new ArrayList();
+
+		List<Build> successBuilds = new ArrayList();
+
+		Set<String> downstreamBuildsKeySet = downstreamBuilds.keySet();
+
+		for (String key : downstreamBuildsKeySet) {
+			Build build = downstreamBuilds.get(key);
+
+			switch (build.getStatus()) {
+
+				case "completed":
+					String result = build.getResult();
+
+					if (result.equals("SUCCESS")) {
+						successBuilds.add(build);
+					}
+					else if (result.equals("FAILURE") ||
+							 result.equals("UNSTABLE")) {
+
+						failureBuilds.add(build);
+					}
+					else if (result.equals("ABORTED")) {
+						abortedBuilds.add(build);
+					}
+
+					break;
+
+				case "missing":
+					missingBuilds.add(build);
+					break;
+
+				case "queued":
+					queuedBuilds.add(build);
+					break;
+
+				case "running":
+					runningBuilds.add(build);
+					break;
+
+				case "starting":
+					startingBuilds.add(build);
+					break;
+			}
+		}
+
+		Element abortedBatchElement = getJenkinsReportDownstreamTableElement(
+			abortedBuilds, "---- Aborted: " + abortedBuilds.size());
+
+		Element failureBatchElement = getJenkinsReportDownstreamTableElement(
+			failureBuilds, "---- Failure: " + failureBuilds.size());
+
+		Element successBatchElement = getJenkinsReportDownstreamTableElement(
+			successBuilds, "---- Success: " + successBuilds.size());
+
+		Element completedBatchElement = Dom4JUtil.getNewElement("table");
+
+		completedBatchElement.add(
+			Dom4JUtil.getNewElement("caption", null, "Completed: "));
+
+		Dom4JUtil.addToElement(
+			completedBatchElement, abortedBatchElement, failureBatchElement,
+			successBatchElement);
+
+		Element missingBatchElement = getJenkinsReportDownstreamTableElement(
+			missingBuilds, "Missing: " + missingBuilds.size());
+
+		Element queuedBatchElement = getJenkinsReportDownstreamTableElement(
+			queuedBuilds, "Queued: " + queuedBuilds.size());
+
+		Element runningBatchElement = getJenkinsReportDownstreamTableElement(
+			runningBuilds, "Running: " + runningBuilds.size());
+
+		Element startingBatchElement = getJenkinsReportDownstreamTableElement(
+			startingBuilds, "Starting: " + startingBuilds.size());
+
+		Element divElement = Dom4JUtil.getNewElement("div");
+
+		Dom4JUtil.addToElement(
+			divElement, queuedBatchElement, startingBatchElement,
+			runningBatchElement, missingBatchElement, completedBatchElement);
+
+		return divElement;
+	}
+
+	protected Element getJenkinsReportDownstreamTableElement(
+		List<Build> downstreamBuilds, String statusCountCaption) {
+
+		Element tableElement = Dom4JUtil.getNewElement("table");
+
+		tableElement.add(
+			Dom4JUtil.getNewElement("caption", null, statusCountCaption));
+
+		if (!downstreamBuilds.isEmpty()) {
+			tableElement.add(getJenkinsReportTableColumnHeaderElement());
+		}
+
+		for (Build batchBuild : downstreamBuilds) {
+			Element trBatchElement = Dom4JUtil.getNewElement("tr");
+
+			trBatchElement.add(batchBuild.getJenkinsReportBuildInfoElement());
+
+			tableElement.add(trBatchElement);
+
+			for (Build downstreamBuild : batchBuild.getDownstreamBuilds(null)) {
+				tableElement.add(
+					downstreamBuild.getJenkinsReportBuildInfoElement());
+			}
+		}
+
+		return tableElement;
+	}
+
 	protected Element getJenkinsReportHeadElement() {
 		Element headElement = Dom4JUtil.getNewElement("head");
 
@@ -656,7 +782,8 @@ public class TopLevelBuild extends BaseBuild {
 
 	protected Element getJenkinsReportSummaryElement(
 		Build topLevelBuild, Map<String, Build> axisBuilds,
-		Map<String, Build> batchBuilds, Map<String, TestResult> testResults) {
+		Map<String, Build> downstreamBuilds,
+		Map<String, TestResult> testResults) {
 
 		Element buildTimeElement = Dom4JUtil.getNewElement(
 			"p", null, "Build Time: ",
@@ -670,7 +797,7 @@ public class TopLevelBuild extends BaseBuild {
 			axisBuilds);
 
 		Element longestBatchElement = getLongestRunningBatchElement(
-			batchBuilds);
+			downstreamBuilds);
 
 		Element longestTestElement = JenkinsReportUtil.getLongestTestElement(
 			testResults);
@@ -863,7 +990,7 @@ public class TopLevelBuild extends BaseBuild {
 	}
 
 	protected Element getLongestRunningBatchElement(
-		Map<String, Build> batchBuilds) {
+		Map<String, Build> downstreamBuilds) {
 
 		String jobName = "Unavailable";
 
@@ -873,10 +1000,10 @@ public class TopLevelBuild extends BaseBuild {
 
 		String longestBatchURL = "Unavailable";
 
-		Set<String> batchBuildsKeySet = batchBuilds.keySet();
+		Set<String> downstreamBuildsKeySet = downstreamBuilds.keySet();
 
-		for (String key : batchBuildsKeySet) {
-			Build build = batchBuilds.get(key);
+		for (String key : downstreamBuildsKeySet) {
+			Build build = downstreamBuilds.get(key);
 
 			long batchDuration = build.getDuration();
 

@@ -626,12 +626,14 @@ public class CompanyLocalServiceTest {
 
 		UserLocalServiceUtil.updateUser(user);
 
+		String languageId = LocaleUtil.toLanguageId(LocaleUtil.HUNGARY);
+
 		CompanyLocalServiceUtil.updateDisplay(
-			company.getCompanyId(), "hu", "CET");
+			company.getCompanyId(), languageId, "CET");
 
 		user = UserLocalServiceUtil.getDefaultUser(company.getCompanyId());
 
-		Assert.assertEquals("hu", user.getLanguageId());
+		Assert.assertEquals(languageId, user.getLanguageId());
 		Assert.assertEquals("CET", user.getTimeZoneId());
 	}
 

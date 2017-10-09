@@ -112,7 +112,8 @@ public class LocalGitSyncUtil {
 		GitWorkingDirectory.Branch localBranch,
 		GitWorkingDirectory.Remote remote, long timestamp) {
 
-		gitWorkingDirectory.pushToRemote(true, remote);
+		gitWorkingDirectory.pushToRemote(
+			true, localBranch, localBranch.getName(), remote);
 
 		gitWorkingDirectory.pushToRemote(
 			true, localBranch,

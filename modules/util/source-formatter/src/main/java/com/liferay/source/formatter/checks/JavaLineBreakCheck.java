@@ -291,7 +291,10 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 			if (!ToolsUtil.isInsideQuotes(trimmedLine, x)) {
 				String linePart = trimmedLine.substring(0, x + 1);
 
-				if (getLevel(linePart) < 0) {
+				if ((getLevel(linePart) < 0) ||
+					(previousLine.endsWith(">") &&
+					 Validator.isVariableName(trimmedLine.substring(0, x)))) {
+
 					addMessage(
 						fileName,
 						"There should be a line break after '" + linePart + "'",

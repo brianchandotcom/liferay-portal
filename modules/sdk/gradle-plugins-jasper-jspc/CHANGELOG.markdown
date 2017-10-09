@@ -21,7 +21,17 @@
 - [LPS-74368]: Remove all dependency exclusions from the `jspCTool`
 configuration's `com.liferay.jasper.jspc` default dependency.
 
+## 3.0.0 - 2017-10-10
+
+### Changed
+- [LPS-75008]: Execute the [Liferay Jasper JSPC] tool without forking the JVM.
+
+### Removed
+- [LPS-75008]: The `CompileJSPTask` class does not extend `JavaExec` anymore.
+
+[Liferay Jasper JSPC]: https://github.com/liferay/liferay-portal/tree/master/modules/util/jasper-jspc
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-70677]: https://issues.liferay.com/browse/LPS-70677
 [LPS-71048]: https://issues.liferay.com/browse/LPS-71048
 [LPS-74368]: https://issues.liferay.com/browse/LPS-74368
+[LPS-75008]: https://issues.liferay.com/browse/LPS-75008

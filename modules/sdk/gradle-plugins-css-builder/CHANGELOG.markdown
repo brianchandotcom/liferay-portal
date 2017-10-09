@@ -40,6 +40,17 @@
 ### Changed
 - [LPS-74426]: Update the [Liferay CSS Builder] dependency to version 1.1.4.
 
+## 3.0.0 - 2017-10-10
+
+### Added
+- [LPS-75008]: Add [Liferay CSS Builder] as a transitive compile dependency.
+
+### Changed
+- [LPS-75008]: Execute the [Liferay CSS Builder] tool without forking the JVM.
+
+### Removed
+- [LPS-75008]: The `BuildCSSTask` class does not extend `JavaExec` anymore.
+
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-69223]: https://issues.liferay.com/browse/LPS-69223
@@ -48,3 +59,4 @@
 [LPS-74315]: https://issues.liferay.com/browse/LPS-74315
 [LPS-74426]: https://issues.liferay.com/browse/LPS-74426
 [LPS-74789]: https://issues.liferay.com/browse/LPS-74789
+[LPS-75008]: https://issues.liferay.com/browse/LPS-75008

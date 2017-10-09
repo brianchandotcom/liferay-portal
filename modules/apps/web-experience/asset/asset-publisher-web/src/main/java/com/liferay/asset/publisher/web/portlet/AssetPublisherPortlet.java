@@ -246,6 +246,18 @@ public class AssetPublisherPortlet extends MVCPortlet {
 	}
 
 	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_UTIL,
+			assetPublisherWebUtil);
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	@Override
 	public void serveResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {
@@ -271,7 +283,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		AssetPublisherWebUtil.subscribe(
+		assetPublisherWebUtil.subscribe(
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
 			themeDisplay.getPlid(), themeDisplay.getPpid());
 	}
@@ -283,7 +295,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		AssetPublisherWebUtil.unsubscribe(
+		assetPublisherWebUtil.unsubscribe(
 			themeDisplay.getPermissionChecker(), themeDisplay.getPlid(),
 			themeDisplay.getPpid());
 	}
@@ -372,6 +384,9 @@ public class AssetPublisherPortlet extends MVCPortlet {
 	protected AssetPublisherCustomizerRegistry assetPublisherCustomizerRegistry;
 
 	protected AssetPublisherWebConfiguration assetPublisherWebConfiguration;
+
+	@Reference
+	protected AssetPublisherWebUtil assetPublisherWebUtil;
 
 	@Reference
 	protected Portal portal;

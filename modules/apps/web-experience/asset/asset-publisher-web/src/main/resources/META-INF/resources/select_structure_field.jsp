@@ -159,7 +159,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 						var message = A.one('#<portlet:namespace />message');
 
 						if (respondData.success) {
-							result.className = '<%= AssetPublisherWebUtil.getClassName(assetRendererFactory) %>';
+							result.className = '<%= assetPublisherWebUtil.getClassName(assetRendererFactory) %>';
 							result.displayValue = respondData.displayValue;
 							result.value = respondData.value;
 

@@ -185,7 +185,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		Layout layout = _layoutLocalService.getLayout(
 			portletDataContext.getPlid());
 
-		long[] groupIds = AssetPublisherWebUtil.getGroupIds(
+		long[] groupIds = assetPublisherWebUtil.getGroupIds(
 			portletPreferences, portletDataContext.getScopeGroupId(), layout);
 
 		String selectionStyle = portletPreferences.getValue(
@@ -256,10 +256,10 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		throws Exception {
 
 		AssetEntryQuery assetEntryQuery =
-			AssetPublisherWebUtil.getAssetEntryQuery(
+			assetPublisherWebUtil.getAssetEntryQuery(
 				portletPreferences, groupIds, null, null);
 
-		long[] classNameIds = AssetPublisherWebUtil.getClassNameIds(
+		long[] classNameIds = assetPublisherWebUtil.getClassNameIds(
 			portletPreferences,
 			AssetRendererFactoryRegistryUtil.getClassNameIds(companyId, true));
 
@@ -1337,7 +1337,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			}
 
 			try {
-				if (!AssetPublisherWebUtil.isScopeIdSelectable(
+				if (!assetPublisherWebUtil.isScopeIdSelectable(
 						PermissionThreadLocal.getPermissionChecker(), newValue,
 						companyGroupId, layout, false)) {
 
@@ -1376,6 +1376,9 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		portletPreferences.setValues(
 			key, newValues.toArray(new String[newValues.size()]));
 	}
+
+	@Reference
+	protected AssetPublisherWebUtil assetPublisherWebUtil;
 
 	@Reference
 	protected Portal portal;

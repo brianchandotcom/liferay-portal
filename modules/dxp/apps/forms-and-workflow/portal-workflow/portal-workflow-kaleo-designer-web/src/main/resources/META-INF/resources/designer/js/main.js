@@ -3,21 +3,13 @@ AUI.add(
 	function(A) {
 		var DiagramBuilder = A.DiagramBuilder;
 		var Lang = A.Lang;
-		var XMLDefinition = Liferay.KaleoDesignerXMLDefinition;
-		var XMLFormatter = new Liferay.XMLFormatter();
-		var FieldNormalizer = Liferay.KaleoDesignerFieldNormalizer;
 
+		var DefinitionDiagramController = Liferay.KaleoDesignerDefinitionDiagramController;
 		var KaleoDesignerEditors = Liferay.KaleoDesignerEditors;
 		var KaleoDesignerStrings = Liferay.KaleoDesignerStrings;
 		var XMLUtil = Liferay.XMLUtil;
 
 		var isObject = Lang.isObject;
-
-		var jsonParse = Liferay.KaleoDesignerUtils.jsonParse;
-		var uniformRandomInt = Liferay.KaleoDesignerUtils.uniformRandomInt;
-		var serializeDefinition = Liferay.KaleoDesignerXMLDefinitionSerializer;
-
-		var DEFAULT_LANGUAGE = 'groovy';
 
 		var STR_BLANK = '';
 
@@ -82,11 +74,7 @@ AUI.add(
 					initializer: function(config) {
 						var instance = this;
 
-						instance.definition = new XMLDefinition(
-							{
-								value: config.definition
-							}
-						);
+						instance.definitionController = new DefinitionDiagramController(config.definition, instance.canvas);
 
 						instance.after('render', instance._afterRenderKaleoDesigner);
 
@@ -98,30 +86,7 @@ AUI.add(
 					connectDefinitionFields: function() {
 						var instance = this;
 
-						var connectors = [];
-
-						instance.definition.forEachField(
-							function(tagName, fieldData) {
-								fieldData.results.forEach(
-									function(item1, index1, collection1) {
-										item1.transitions.forEach(
-											function(item2, index2, collection2) {
-												connectors.push(
-													{
-														connector: {
-															'default': item2.default,
-															name: item2.name
-														},
-														source: item1.name,
-														target: item2.target
-													}
-												);
-											}
-										);
-									}
-								);
-							}
-						);
+						var connectors = instance.definitionController.getConnectors();
 
 						instance.connectAll(connectors);
 					},
@@ -160,14 +125,8 @@ AUI.add(
 
 						var content = instance.get('definition');
 
-						var definition = instance.definition;
-
 						if (!content || XMLUtil.validateDefinition(content)) {
-							content = serializeDefinition(
-								definition.get('xmlNamespace'),
-								definition.getAttrs(['description', 'name', 'version']),
-								instance.toJSON()
-							);
+							content = instance.getContent();
 						}
 
 						editor.set('value', content);
@@ -212,17 +171,6 @@ AUI.add(
 						var instance = this;
 
 						instance.propertyList._tableNode.setStyle('width', '100%');
-					},
-
-					_getRandomXY: function() {
-						var instance = this;
-
-						var region = instance.canvas.get('region');
-
-						return [
-							uniformRandomInt(0, region.width - 100),
-							uniformRandomInt(0, region.height - 100)
-						];
 					},
 
 					_renderContentTabs: function() {
@@ -297,68 +245,9 @@ AUI.add(
 					_setDefinition: function(val) {
 						var instance = this;
 
-						instance.definition = new XMLDefinition(
-							{
-								value: val
-							}
-						);
+						instance.definitionController = new DefinitionDiagramController(val, instance.canvas);
 
 						return val;
-					},
-
-					_translateXMLtoFields: function() {
-						var instance = this;
-
-						var fields = [];
-
-						instance.definition.forEachField(
-							function(tagName, fieldData) {
-								fieldData.results.forEach(
-									function(item, index, collection) {
-										var description = jsonParse(item.description);
-
-										var type = tagName;
-
-										if (item.initial) {
-											type = 'start';
-										}
-
-										var metadata = jsonParse(item.metadata);
-
-										if (metadata) {
-											if (metadata.terminal) {
-												type = 'end';
-											}
-										}
-										else {
-											metadata = {
-												xy: instance._getRandomXY()
-											};
-										}
-
-										fields.push(
-											{
-												actions: FieldNormalizer.normalizeToActions(item.actions),
-												assignments: FieldNormalizer.normalizeToAssignments(item.assignments),
-												description: description,
-												fields: [{}],
-												initial: item.initial,
-												metadata: metadata,
-												name: item.name,
-												notifications: FieldNormalizer.normalizeToNotifications(item.notifications),
-												script: item.script,
-												scriptLanguage: item.scriptLanguage || DEFAULT_LANGUAGE,
-												taskTimers: FieldNormalizer.normalizeToTaskTimers(item.taskTimers),
-												type: type,
-												xy: metadata.xy
-											}
-										);
-									}
-								);
-							}
-						);
-
-						return fields;
 					},
 
 					_uiSetAvailableFields: function(val) {
@@ -380,11 +269,9 @@ AUI.add(
 					_uiSetDefinition: function(val) {
 						var instance = this;
 
-						var fields = instance._translateXMLtoFields();
-
 						instance.clearFields();
 
-						instance.set('fields', fields);
+						instance.set('fields', instance.definitionController.getFields());
 
 						if (instance.get('rendered')) {
 							instance.connectDefinitionFields();
@@ -466,6 +353,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-ace-editor', 'aui-ace-editor-mode-xml', 'aui-tpl-snippets-deprecated', 'datasource', 'datatype-xml', 'event-valuechange', 'io-form', 'liferay-kaleo-designer-editors', 'liferay-kaleo-designer-field-normalizer', 'liferay-kaleo-designer-nodes', 'liferay-kaleo-designer-utils', 'liferay-kaleo-designer-xml-definition', 'liferay-kaleo-designer-xml-definition-serializer', 'liferay-kaleo-designer-xml-util', 'liferay-util-window']
+		requires: ['aui-ace-editor', 'aui-ace-editor-mode-xml', 'aui-tpl-snippets-deprecated', 'event-valuechange', 'io-form', 'liferay-kaleo-designer-definition-diagram-controller', 'liferay-kaleo-designer-editors', 'liferay-kaleo-designer-nodes', 'liferay-kaleo-designer-utils', 'liferay-kaleo-designer-xml-util', 'liferay-util-window']
 	}
 );

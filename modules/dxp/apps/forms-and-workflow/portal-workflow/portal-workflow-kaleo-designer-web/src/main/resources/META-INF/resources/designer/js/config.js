@@ -14,6 +14,13 @@
 								'autocomplete-highlighters'
 							]
 						},
+						'liferay-kaleo-designer-definition-diagram-controller': {
+							path: 'definition_diagram_controller.js',
+							requires: [
+								'liferay-kaleo-designer-field-normalizer',
+								'liferay-kaleo-designer-utils'
+							]
+						},
 						'liferay-kaleo-designer-editors': {
 							path: 'editors.js',
 							requires: [

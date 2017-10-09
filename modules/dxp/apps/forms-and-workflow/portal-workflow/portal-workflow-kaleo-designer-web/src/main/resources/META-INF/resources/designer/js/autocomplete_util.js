@@ -46,6 +46,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['autocomplete', 'autocomplete-highlighters']
+		requires: ['autocomplete', 'autocomplete-highlighters', 'datasource']
 	}
 );

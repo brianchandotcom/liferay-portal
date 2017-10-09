@@ -2613,6 +2613,20 @@ dependency to version 2.1.21.
 - [LPS-75175]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
 version 2.3.21.
 
+## 3.5.7 - 2017-10-10
+
+### Changed
+- [LPS-75008]: Update the [Liferay Gradle Plugins CSS Builder] dependency to
+version 3.0.0.
+- [LPS-75008]: Update the [Liferay Gradle Plugins Jasper JSPC] dependency to
+version 3.0.0.
+- [LPS-75008]: Update the [Liferay Jasper JSPC] dependency to version 1.0.12.
+
+### Removed
+- [LPS-75008]: Remove the [Liferay CSS Builder] dependency from
+`portal-tools.properties`, since it is now a transitve dependency of
+[Liferay Gradle Plugins CSS Builder].
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -2843,6 +2857,7 @@ version 2.3.21.
 [LPS-74867]: https://issues.liferay.com/browse/LPS-74867
 [LPS-74884]: https://issues.liferay.com/browse/LPS-74884
 [LPS-74933]: https://issues.liferay.com/browse/LPS-74933
+[LPS-75008]: https://issues.liferay.com/browse/LPS-75008
 [LPS-75009]: https://issues.liferay.com/browse/LPS-75009
 [LPS-75047]: https://issues.liferay.com/browse/LPS-75047
 [LPS-75164]: https://issues.liferay.com/browse/LPS-75164

@@ -31,6 +31,7 @@ import com.liferay.ratings.kernel.model.RatingsStats;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalServiceUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalServiceUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.After;
@@ -115,6 +116,8 @@ public class VerifyRatingsTest extends BaseVerifyProcessTestCase {
 		double score = RandomTestUtil.randomDouble();
 		User user = UserTestUtil.addUser();
 
+		_users.add(user);
+
 		RatingsTestUtil.addEntry(
 			_CLASS_NAME, _CLASS_PK, score, user.getUserId());
 
@@ -134,5 +137,8 @@ public class VerifyRatingsTest extends BaseVerifyProcessTestCase {
 
 	@DeleteAfterTestRun
 	private RatingsStats _ratingsStats;
+
+	@DeleteAfterTestRun
+	private final List<User> _users = new ArrayList<>();
 
 }

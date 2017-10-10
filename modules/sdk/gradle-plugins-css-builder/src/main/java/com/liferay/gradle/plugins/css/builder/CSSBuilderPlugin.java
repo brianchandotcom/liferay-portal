@@ -27,8 +27,6 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.artifacts.DependencySet;
-import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
@@ -45,43 +43,17 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 
 	public static final String BUILD_CSS_TASK_NAME = "buildCSS";
 
-	public static final String CSS_BUILDER_CONFIGURATION_NAME = "cssBuilder";
-
 	public static final String PORTAL_COMMON_CSS_CONFIGURATION_NAME =
 		"portalCommonCSS";
 
 	@Override
 	public void apply(Project project) {
-		Configuration cssBuilderConfiguration = _addConfigurationCSSBuilder(
-			project);
 		Configuration portalCommonCSSConfiguration =
 			_addConfigurationPortalCommonCSS(project);
 
 		_addTaskBuildCSS(project);
 
-		_configureTasksBuildCSS(
-			project, cssBuilderConfiguration, portalCommonCSSConfiguration);
-	}
-
-	private Configuration _addConfigurationCSSBuilder(final Project project) {
-		Configuration configuration = GradleUtil.addConfiguration(
-			project, CSS_BUILDER_CONFIGURATION_NAME);
-
-		configuration.defaultDependencies(
-			new Action<DependencySet>() {
-
-				@Override
-				public void execute(DependencySet dependencySet) {
-					_addDependenciesCSSBuilder(project);
-				}
-
-			});
-
-		configuration.setDescription(
-			"Configures Liferay CSS Builder for this project.");
-		configuration.setVisible(false);
-
-		return configuration;
+		_configureTasksBuildCSS(project, portalCommonCSSConfiguration);
 	}
 
 	private Configuration _addConfigurationPortalCommonCSS(
@@ -108,12 +80,6 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 			});
 
 		return configuration;
-	}
-
-	private void _addDependenciesCSSBuilder(Project project) {
-		GradleUtil.addDependency(
-			project, CSS_BUILDER_CONFIGURATION_NAME, "com.liferay",
-			"com.liferay.css.builder", "latest.release");
 	}
 
 	private void _addDependenciesPortalCommonCSS(Project project) {
@@ -154,12 +120,6 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 			});
 
 		return buildCSSTask;
-	}
-
-	private void _configureTaskBuildCSSClasspath(
-		BuildCSSTask buildCSSTask, FileCollection classpath) {
-
-		buildCSSTask.setClasspath(classpath);
 	}
 
 	private void _configureTaskBuildCSSForJavaPlugin(
@@ -211,8 +171,7 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTasksBuildCSS(
-		Project project, final Configuration cssBuilderConfiguration,
-		final Configuration portalCommonCSSConfiguration) {
+		Project project, final Configuration portalCommonCSSConfiguration) {
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -222,8 +181,6 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(BuildCSSTask buildCSSTask) {
-					_configureTaskBuildCSSClasspath(
-						buildCSSTask, cssBuilderConfiguration);
 					_configureTaskBuildCSSPortalCommonFile(
 						buildCSSTask, portalCommonCSSConfiguration);
 				}

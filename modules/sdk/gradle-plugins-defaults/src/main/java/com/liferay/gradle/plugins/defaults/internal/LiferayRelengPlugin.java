@@ -34,7 +34,6 @@ import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask;
 import com.liferay.gradle.plugins.defaults.tasks.WriteArtifactPublishCommandsTask;
 import com.liferay.gradle.plugins.defaults.tasks.WritePropertiesTask;
 import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
-import com.liferay.gradle.util.StringUtil;
 import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
@@ -77,6 +76,7 @@ import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.Upload;
 import org.gradle.util.CollectionUtils;
 import org.gradle.util.GUtil;
@@ -232,10 +232,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			CollectionUtils.first(
 				cleanArtifactsPublishCommandsTask.getDelete()));
 
-		mergeFilesTask.dependsOn(
-			BasePlugin.CLEAN_TASK_NAME +
-				StringUtil.capitalize(mergeFilesTask.getName()));
-
 		mergeFilesTask.doLast(
 			new Action<Task>() {
 
@@ -285,6 +281,18 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 		mergeFilesTask.setOutputFile(
 			new File(dir, "artifacts-publish-commands.sh"));
+
+		TaskOutputs taskOutputs = mergeFilesTask.getOutputs();
+
+		taskOutputs.upToDateWhen(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					return false;
+				}
+
+			});
 
 		return mergeFilesTask;
 	}

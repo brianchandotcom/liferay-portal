@@ -37,8 +37,11 @@ import java.io.Serializable;
  * @see DLSyncEvent
  * @see com.liferay.portlet.documentlibrary.model.impl.DLSyncEventImpl
  * @see com.liferay.portlet.documentlibrary.model.impl.DLSyncEventModelImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.document.library.sync.model.impl.DLSyncEventImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface DLSyncEventModel extends BaseModel<DLSyncEvent>, ShardedModel {
 	/*

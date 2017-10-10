@@ -58,8 +58,11 @@ import javax.sql.DataSource;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.documentlibrary.service.impl.DLSyncEventLocalServiceImpl
  * @see com.liferay.document.library.kernel.service.DLSyncEventLocalServiceUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.document.library.sync.service.impl.DLSyncEventLocalServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public abstract class DLSyncEventLocalServiceBaseImpl
 	extends BaseLocalServiceImpl implements DLSyncEventLocalService,

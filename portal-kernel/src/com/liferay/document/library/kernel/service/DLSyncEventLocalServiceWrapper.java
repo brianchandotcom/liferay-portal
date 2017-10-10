@@ -23,8 +23,11 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  *
  * @author Brian Wing Shun Chan
  * @see DLSyncEventLocalService
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.document.library.sync.service.impl.DLSyncEventLocalServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class DLSyncEventLocalServiceWrapper implements DLSyncEventLocalService,
 	ServiceWrapper<DLSyncEventLocalService> {

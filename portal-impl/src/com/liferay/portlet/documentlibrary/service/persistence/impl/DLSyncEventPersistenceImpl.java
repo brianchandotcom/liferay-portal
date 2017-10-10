@@ -66,8 +66,11 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @see DLSyncEventPersistence
  * @see com.liferay.document.library.kernel.service.persistence.DLSyncEventUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.document.library.sync.model.impl.DLSyncEventImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 	implements DLSyncEventPersistence {

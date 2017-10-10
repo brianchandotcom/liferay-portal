@@ -49,8 +49,11 @@ import java.util.Map;
  * @see DLSyncEventImpl
  * @see DLSyncEvent
  * @see DLSyncEventModel
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.document.library.sync.model.impl.DLSyncEventImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class DLSyncEventModelImpl extends BaseModelImpl<DLSyncEvent>
 	implements DLSyncEventModel {

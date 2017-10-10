@@ -29,8 +29,11 @@ import com.liferay.document.library.kernel.service.DLSyncEventLocalServiceUtil;
  * @author Brian Wing Shun Chan
  * @see DLSyncEventImpl
  * @see DLSyncEvent
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.document.library.sync.model.impl.DLSyncEventImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public abstract class DLSyncEventBaseImpl extends DLSyncEventModelImpl
 	implements DLSyncEvent {

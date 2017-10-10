@@ -34,8 +34,11 @@ import java.util.Objects;
  *
  * @author Brian Wing Shun Chan
  * @see DLSyncEvent
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.document.library.sync.model.impl.DLSyncEventImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class DLSyncEventWrapper implements DLSyncEvent,
 	ModelWrapper<DLSyncEvent> {

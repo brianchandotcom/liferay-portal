@@ -12,13 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.service.persistence.test;
+package com.liferay.document.library.sync.service.persistence.test;
 
-import com.liferay.document.library.kernel.exception.NoSuchSyncEventException;
-import com.liferay.document.library.kernel.model.DLSyncEvent;
-import com.liferay.document.library.kernel.service.DLSyncEventLocalServiceUtil;
-import com.liferay.document.library.kernel.service.persistence.DLSyncEventPersistence;
-import com.liferay.document.library.kernel.service.persistence.DLSyncEventUtil;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
+import com.liferay.document.library.sync.exception.NoSuchEventException;
+import com.liferay.document.library.sync.model.DLSyncEvent;
+import com.liferay.document.library.sync.service.DLSyncEventLocalServiceUtil;
+import com.liferay.document.library.sync.service.persistence.DLSyncEventPersistence;
+import com.liferay.document.library.sync.service.persistence.DLSyncEventUtil;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -44,6 +46,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -56,12 +60,14 @@ import java.util.Set;
 /**
  * @generated
  */
+@RunWith(Arquillian.class)
 public class DLSyncEventPersistenceTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(Propagation.REQUIRED));
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.document.library.sync.service"));
 
 	@Before
 	public void setUp() {
@@ -167,7 +173,7 @@ public class DLSyncEventPersistenceTest {
 		Assert.assertEquals(existingDLSyncEvent, newDLSyncEvent);
 	}
 
-	@Test(expected = NoSuchSyncEventException.class)
+	@Test(expected = NoSuchEventException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 

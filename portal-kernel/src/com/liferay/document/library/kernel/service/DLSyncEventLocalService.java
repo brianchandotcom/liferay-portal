@@ -48,8 +48,11 @@ import java.util.List;
  * @see DLSyncEventLocalServiceUtil
  * @see com.liferay.portlet.documentlibrary.service.base.DLSyncEventLocalServiceBaseImpl
  * @see com.liferay.portlet.documentlibrary.service.impl.DLSyncEventLocalServiceImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.document.library.sync.service.impl.DLSyncEventLocalServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})

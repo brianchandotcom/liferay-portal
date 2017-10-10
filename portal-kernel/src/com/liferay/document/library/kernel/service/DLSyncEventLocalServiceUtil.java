@@ -31,8 +31,11 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @see DLSyncEventLocalService
  * @see com.liferay.portlet.documentlibrary.service.base.DLSyncEventLocalServiceBaseImpl
  * @see com.liferay.portlet.documentlibrary.service.impl.DLSyncEventLocalServiceImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.document.library.sync.service.impl.DLSyncEventLocalServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class DLSyncEventLocalServiceUtil {
 	/*

@@ -50,7 +50,7 @@ public class UpgradeFileUploadsConfiguration extends UpgradeProcess {
 			ConfigurableUtil.createConfigurable(
 				UserFileUploadsConfiguration.class, new HashMapDictionary<>());
 
-		Dictionary properties = new HashMapDictionary();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put(
 			"imageCheckToken",

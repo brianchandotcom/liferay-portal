@@ -51,7 +51,7 @@ public class CounterTransactionExecutorTest {
 			new RecordPlatformTransactionManager(_transactionStatus);
 
 		TransactionAttributeAdapter transactionAttributeAdapter =
-			_newTransactionAttributeAdapter((t) -> false);
+			_newTransactionAttributeAdapter(t -> false);
 
 		_transactionExecutor.execute(
 			recordPlatformTransactionManager, transactionAttributeAdapter,
@@ -67,7 +67,7 @@ public class CounterTransactionExecutorTest {
 			new RecordPlatformTransactionManager(_transactionStatus);
 
 		TransactionAttributeAdapter transactionAttributeAdapter =
-			_newTransactionAttributeAdapter((t) -> false);
+			_newTransactionAttributeAdapter(t -> false);
 
 		try {
 			_transactionExecutor.execute(
@@ -102,7 +102,7 @@ public class CounterTransactionExecutorTest {
 			};
 
 		TransactionAttributeAdapter transactionAttributeAdapter =
-			_newTransactionAttributeAdapter((t) -> false);
+			_newTransactionAttributeAdapter(t -> false);
 
 		try {
 			_transactionExecutor.execute(
@@ -141,7 +141,7 @@ public class CounterTransactionExecutorTest {
 			};
 
 		TransactionAttributeAdapter transactionAttributeAdapter =
-			_newTransactionAttributeAdapter((t) -> false);
+			_newTransactionAttributeAdapter(t -> false);
 
 		try {
 			_transactionExecutor.execute(
@@ -164,7 +164,7 @@ public class CounterTransactionExecutorTest {
 			new RecordPlatformTransactionManager(_transactionStatus);
 
 		TransactionAttributeAdapter transactionAttributeAdapter =
-			_newTransactionAttributeAdapter((t) -> t == appException);
+			_newTransactionAttributeAdapter(t -> t == appException);
 
 		try {
 			_transactionExecutor.execute(
@@ -199,7 +199,7 @@ public class CounterTransactionExecutorTest {
 			};
 
 		TransactionAttributeAdapter transactionAttributeAdapter =
-			_newTransactionAttributeAdapter((t) -> t == appException);
+			_newTransactionAttributeAdapter(t -> t == appException);
 
 		try {
 			_transactionExecutor.execute(

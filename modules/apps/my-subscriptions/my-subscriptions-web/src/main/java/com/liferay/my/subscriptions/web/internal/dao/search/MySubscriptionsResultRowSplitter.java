@@ -43,7 +43,7 @@ public class MySubscriptionsResultRowSplitter implements ResultRowSplitter {
 			Subscription subscription = (Subscription)resultRow.getObject();
 
 			List<ResultRow> list = rowMap.computeIfAbsent(
-				subscription.getClassName(), (className) -> new ArrayList<>());
+				subscription.getClassName(), className -> new ArrayList<>());
 
 			list.add(resultRow);
 		}

@@ -130,7 +130,7 @@ public class RecentBloggersExportImportPortletPreferencesProcessor
 				portletDataContext.getCompanyId(), portletId);
 
 			Function<String, String> exportPortletPreferencesNewValueFunction =
-				(primaryKey) -> {
+				primaryKey -> {
 					long primaryKeyLong = GetterUtil.getLong(primaryKey);
 
 					Organization organization =
@@ -175,7 +175,7 @@ public class RecentBloggersExportImportPortletPreferencesProcessor
 				Organization.class);
 
 		Function<String, Long> importPortletPreferencesNewValueFunction =
-			(portletPreferencesOldValue) -> {
+			portletPreferencesOldValue -> {
 				if (Validator.isNumber(portletPreferencesOldValue)) {
 					long oldPrimaryKey = GetterUtil.getLong(
 						portletPreferencesOldValue);

@@ -65,12 +65,12 @@ public class AdminSubscriptionSender extends SubscriptionSender {
 			"[$ARTICLE_ATTACHMENTS$]", _getEmailKBArticleAttachmentsFunction());
 		setLocalizedContextAttributeWithFunction(
 			"[$ARTICLE_VERSION$]",
-			(locale) -> LanguageUtil.format(
+			locale -> LanguageUtil.format(
 				locale, "version-x", String.valueOf(_kbArticle.getVersion()),
 				false));
 		setLocalizedContextAttributeWithFunction(
 			"[$CATEGORY_TITLE$]",
-			(locale) -> LanguageUtil.get(locale, "category.kb"));
+			locale -> LanguageUtil.get(locale, "category.kb"));
 	}
 
 	@Override
@@ -149,10 +149,10 @@ public class AdminSubscriptionSender extends SubscriptionSender {
 			_kbArticle.getAttachmentsFileEntries();
 
 		if (attachmentsFileEntries.isEmpty()) {
-			return (locale) -> StringPool.BLANK;
+			return locale -> StringPool.BLANK;
 		}
 
-		return (locale) -> {
+		return locale -> {
 			StringBundler sb = new StringBundler(
 				attachmentsFileEntries.size() * 5);
 

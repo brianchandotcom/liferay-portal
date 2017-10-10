@@ -42,7 +42,7 @@ public class EditorConfigProviderSwapper implements Closeable {
 					String editorName) {
 
 					super.visitEditorContributors(
-						(editorConfigContributor) -> {
+						editorConfigContributor -> {
 							if (classes.contains(
 									editorConfigContributor.getClass())) {
 

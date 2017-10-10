@@ -93,7 +93,7 @@ public class PortletLogic extends RuntimeLogic {
 
 		if (!portletId.equals(_request.getParameter("p_p_id"))) {
 			parameterMap = MapUtil.filterByKeys(
-				parameterMap, (key) -> !key.startsWith("p_p_"));
+				parameterMap, key -> !key.startsWith("p_p_"));
 		}
 
 		HttpServletRequest request = DynamicServletRequest.addQueryString(

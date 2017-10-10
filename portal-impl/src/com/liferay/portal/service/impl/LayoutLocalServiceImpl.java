@@ -1219,7 +1219,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			List<Layout> layoutChildLayoutsList =
 				layoutChildLayouts.computeIfAbsent(
 					childLayout.getParentLayoutId(),
-					(parentLayoutId) -> new ArrayList<>());
+					parentLayoutId -> new ArrayList<>());
 
 			layoutChildLayoutsList.add(childLayout);
 		}

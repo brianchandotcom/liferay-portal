@@ -159,7 +159,7 @@ public class StagedLayoutSetStagedModelDataHandler
 		Stream<Element> layoutElementsStream = layoutElements.stream();
 
 		List<String> sourceLayoutUuids = layoutElementsStream.map(
-			(layoutElement) -> layoutElement.attributeValue("uuid")
+			layoutElement -> layoutElement.attributeValue("uuid")
 		).collect(
 			Collectors.toList()
 		);

@@ -16,16 +16,18 @@ package com.liferay.petra.string;
 
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
-
-import java.util.Arrays;
 
 /**
  * @author Alexander Chow
  * @author Shuyang Zhou
  * @author Hugo Huijser
+ * @author Preston Crary
  */
 public class StringUtilTest {
 
@@ -34,16 +36,32 @@ public class StringUtilTest {
 		new CodeCoverageAssertor();
 
 	@Test
+	public void testConstructor() {
+		new StringUtil();
+	}
+
+	@Test
 	public void testSplit() {
+		Assert.assertSame(Collections.emptyList(), StringUtil.split(null));
+		Assert.assertSame(
+			Collections.emptyList(), StringUtil.split(StringPool.BLANK));
+		Assert.assertSame(
+			Collections.emptyList(), StringUtil.split(StringPool.SPACE));
+
 		Assert.assertEquals(
-			Arrays.asList(new String[] {"Alice", "Bob", "Charlie"}),
-			StringUtil.split("Alice,Bob,Charlie"));
+			Collections.emptyList(), StringUtil.split(StringPool.COMMA));
+		Assert.assertEquals(Collections.emptyList(), StringUtil.split(",,,"));
+
 		Assert.assertEquals(
-			Arrays.asList(new String[] {"First", "Second", "Third"}),
-			StringUtil.split("First;Second;Third", ';'));
+			Collections.singletonList("test"), StringUtil.split("test"));
 		Assert.assertEquals(
-			Arrays.asList(new String[] {"One", "Two", "Three"}),
-			StringUtil.split("OnexTwoxThree", 'x'));
+			Collections.singletonList("test"), StringUtil.split("test,"));
+		Assert.assertEquals(
+			Collections.singletonList("test"), StringUtil.split(",test"));
+
+		Assert.assertEquals(
+			Arrays.asList("test1", "test2"),
+			StringUtil.split("test1-test2", CharPool.DASH));
 	}
 
 }

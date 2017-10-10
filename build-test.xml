@@ -2304,6 +2304,29 @@ tell application "Safari" to quit
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-test-ext-properties">
+		<sequential>
+			<if>
+				<equals arg1="${app.server.type}" arg2="tcserver" />
+				<then>
+					<replace file="${app.server.tcserver.dir}/liferay/conf/catalina.properties">
+						<replacetoken><![CDATA[common.loader=${catalina.base}/lib,${catalina.base}/lib/*.jar,${catalina.home}/lib,${catalina.home}/lib/*.jar]]></replacetoken>
+						<replacevalue><![CDATA[common.loader=${catalina.base}/lib,${catalina.base}/lib/*.jar,${catalina.home}/lib,${catalina.home}/lib/*.jar,${catalina.home}/lib/ext/global,${catalina.home}/lib/ext/global/*.jar,${catalina.home}/lib/ext,${catalina.home}/lib/ext/*.jar]]></replacevalue>
+					</replace>
+				</then>
+				<elseif>
+					<equals arg1="${app.server.type}" arg2="tomcat" />
+					<then>
+						<replace file="${app.server.tomcat.dir}/conf/catalina.properties">
+							<replacetoken><![CDATA[common.loader="${catalina.base}/lib","${catalina.base}/lib/*.jar","${catalina.home}/lib","${catalina.home}/lib/*.jar"]]></replacetoken>
+							<replacevalue><![CDATA[common.loader="${catalina.base}/lib","${catalina.base}/lib/*.jar","${catalina.home}/lib","${catalina.home}/lib/*.jar","${catalina.home}/lib/ext/global","${catalina.home}/lib/ext/global/*.jar","${catalina.home}/lib/ext","${catalina.home}/lib/ext/*.jar"]]></replacevalue>
+						</replace>
+					</then>
+				</elseif>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-test-cluster-properties">
 		<sequential>
 			<if>
@@ -2350,29 +2373,6 @@ tell application "Safari" to quit
 
 					<var name="app.server.bundle.index" unset="true" />
 				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="prepare-test-ext-properties">
-		<sequential>
-			<if>
-				<equals arg1="${app.server.type}" arg2="tcserver" />
-				<then>
-					<replace file="${app.server.tcserver.dir}/liferay/conf/catalina.properties">
-						<replacetoken><![CDATA[common.loader=${catalina.base}/lib,${catalina.base}/lib/*.jar,${catalina.home}/lib,${catalina.home}/lib/*.jar]]></replacetoken>
-						<replacevalue><![CDATA[common.loader=${catalina.base}/lib,${catalina.base}/lib/*.jar,${catalina.home}/lib,${catalina.home}/lib/*.jar,${catalina.home}/lib/ext/global,${catalina.home}/lib/ext/global/*.jar,${catalina.home}/lib/ext,${catalina.home}/lib/ext/*.jar]]></replacevalue>
-					</replace>
-				</then>
-				<elseif>
-					<equals arg1="${app.server.type}" arg2="tomcat" />
-					<then>
-						<replace file="${app.server.tomcat.dir}/conf/catalina.properties">
-							<replacetoken><![CDATA[common.loader="${catalina.base}/lib","${catalina.base}/lib/*.jar","${catalina.home}/lib","${catalina.home}/lib/*.jar"]]></replacetoken>
-							<replacevalue><![CDATA[common.loader="${catalina.base}/lib","${catalina.base}/lib/*.jar","${catalina.home}/lib","${catalina.home}/lib/*.jar","${catalina.home}/lib/ext/global","${catalina.home}/lib/ext/global/*.jar","${catalina.home}/lib/ext","${catalina.home}/lib/ext/*.jar"]]></replacevalue>
-						</replace>
-					</then>
-				</elseif>
 			</if>
 		</sequential>
 	</macrodef>

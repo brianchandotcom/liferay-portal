@@ -83,12 +83,20 @@ public class GitWorkingDirectory {
 
 		_repositoryName = repositoryName;
 
-		if (!_privateOnlyRepositories.contains(_repositoryName)) {
-			if (upstreamBranchName.equals("master")) {
-				setUpstreamRemoteToPublicRepository();
+		if (_publicOnlyRepositories.contains(_repositoryName)) {
+			setUpstreamRemoteToPublicRepository();
+		}
+		else {
+			if (_privateOnlyRepositories.contains(_repositoryName)) {
+				setUpstreamRemoteToPrivateRepository();
 			}
 			else {
-				setUpstreamRemoteToPrivateRepository();
+				if (upstreamBranchName.equals("master")) {
+					setUpstreamRemoteToPublicRepository();
+				}
+				else {
+					setUpstreamRemoteToPrivateRepository();
+				}
 			}
 		}
 
@@ -1295,6 +1303,10 @@ public class GitWorkingDirectory {
 			"liferay-jenkins-ee", "liferay-jenkins-tools-private",
 			"liferay-plugins-ee", "liferay-portal-ee",
 			"liferay-qa-portal-legacy-ee", "liferay-release-tool-ee"
+		});
+	private static final List<String> _publicOnlyRepositories = Arrays.asList(
+		new String[] {
+			"liferay-blade-samples", "liferay-plugins", "liferay-portal"
 		});
 
 	private File _gitDirectory;

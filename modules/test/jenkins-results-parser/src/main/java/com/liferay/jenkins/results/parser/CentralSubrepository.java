@@ -61,9 +61,10 @@ public class CentralSubrepository {
 		String tempBranchName = "temp-" + System.currentTimeMillis();
 
 		GitWorkingDirectory gitWorkingDirectory = new GitWorkingDirectory(
-			"master", _subrepositoryDirectory);
+			_subrepositoryUpstreamBranchName, _subrepositoryDirectory,
+			_subrepositoryName);
 
-		GitWorkingDirectory.Branch localMasterBranch = null;
+		GitWorkingDirectory.Branch localUpstreamBranch = null;
 		GitWorkingDirectory.Branch tempBranch = null;
 
 		try {
@@ -74,17 +75,19 @@ public class CentralSubrepository {
 			GitWorkingDirectory.Remote upstreamRemote =
 				gitWorkingDirectory.getRemote("upstream");
 
-			localMasterBranch = gitWorkingDirectory.getBranch("master", null);
+			localUpstreamBranch = gitWorkingDirectory.getBranch(
+				_subrepositoryUpstreamBranchName, null);
 
 			gitWorkingDirectory.fetch(
-				localMasterBranch,
-				gitWorkingDirectory.getBranch("master", upstreamRemote));
+				localUpstreamBranch,
+				gitWorkingDirectory.getBranch(
+					_subrepositoryUpstreamBranchName, upstreamRemote));
 		}
 		finally {
-			if ((localMasterBranch != null) && (tempBranch != null) &&
+			if ((localUpstreamBranch != null) && (tempBranch != null) &&
 				gitWorkingDirectory.branchExists(tempBranch.getName(), null)) {
 
-				gitWorkingDirectory.checkoutBranch(localMasterBranch);
+				gitWorkingDirectory.checkoutBranch(localUpstreamBranch);
 
 				gitWorkingDirectory.deleteBranch(tempBranch);
 			}

@@ -531,27 +531,6 @@ public class LocalGitSyncUtil {
 	protected static Map<GitWorkingDirectory.Remote, Boolean> pushToAllRemotes(
 		final boolean force, final GitWorkingDirectory gitWorkingDirectory,
 		final GitWorkingDirectory.Branch localBranch,
-		final List<GitWorkingDirectory.Branch> remoteBranches) {
-
-		String remoteBranchName = null;
-		List<GitWorkingDirectory.Remote> remotes = new ArrayList<>(
-			remoteBranches.size());
-
-		for (GitWorkingDirectory.Branch remoteBranch : remoteBranches) {
-			if (remoteBranchName == null) {
-				remoteBranchName = remoteBranch.getName();
-			}
-
-			remotes.add(remoteBranch.getRemote());
-		}
-
-		return pushToAllRemotes(
-			force, gitWorkingDirectory, localBranch, remoteBranchName, remotes);
-	}
-
-	protected static Map<GitWorkingDirectory.Remote, Boolean> pushToAllRemotes(
-		final boolean force, final GitWorkingDirectory gitWorkingDirectory,
-		final GitWorkingDirectory.Branch localBranch,
 		final String remoteBranchName,
 		final List<GitWorkingDirectory.Remote> remotes) {
 
@@ -833,7 +812,8 @@ public class LocalGitSyncUtil {
 
 				if (updated) {
 					pushToAllRemotes(
-						true, gitWorkingDirectory, null, remoteCacheBranches);
+						true, gitWorkingDirectory, null, remoteCacheBranchName,
+						localGitRemotes);
 
 					continue;
 				}

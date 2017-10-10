@@ -834,6 +834,10 @@ public class TopLevelBuild extends BaseBuild {
 				(buildEndTime - topLevelStartTime) * dataPoints /
 					topLevelDuration;
 
+			if (dataEnd > dataPoints) {
+				dataEnd = dataPoints;
+			}
+
 			long dataStart =
 				(buildStartTime - topLevelStartTime) * dataPoints /
 					topLevelDuration;

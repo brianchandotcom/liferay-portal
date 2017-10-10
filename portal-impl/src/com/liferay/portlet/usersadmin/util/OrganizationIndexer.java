@@ -102,8 +102,15 @@ public class OrganizationIndexer extends BaseIndexer<Organization> {
 		List<Organization> organizationsTree = (List<Organization>)params.get(
 			"organizationsTree");
 
-		if (ListUtil.isNotEmpty(organizationsTree)) {
+		if (organizationsTree != null) {
 			BooleanFilter booleanFilter = new BooleanFilter();
+
+			if (organizationsTree.isEmpty()) {
+				TermQuery termQuery = new TermQueryImpl(
+					Field.TREE_PATH, StringPool.BLANK);
+
+				booleanFilter.add(new QueryFilter(termQuery));
+			}
 
 			for (Organization organization : organizationsTree) {
 				String treePath = organization.buildTreePath();
@@ -113,16 +120,6 @@ public class OrganizationIndexer extends BaseIndexer<Organization> {
 
 				booleanFilter.add(new QueryFilter(wildcardQuery));
 			}
-
-			contextBooleanFilter.add(booleanFilter, BooleanClauseOccur.MUST);
-		}
-		else if (organizationsTree != null) {
-			BooleanFilter booleanFilter = new BooleanFilter();
-
-			TermQuery termQuery = new TermQueryImpl(
-				Field.TREE_PATH, StringPool.BLANK);
-
-			booleanFilter.add(new QueryFilter(termQuery));
 
 			contextBooleanFilter.add(booleanFilter, BooleanClauseOccur.MUST);
 		}

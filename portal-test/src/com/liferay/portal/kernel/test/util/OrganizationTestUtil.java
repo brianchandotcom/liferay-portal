@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.Phone;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.service.AddressLocalServiceUtil;
 import com.liferay.portal.kernel.service.EmailAddressLocalServiceUtil;
@@ -82,10 +81,8 @@ public class OrganizationTestUtil {
 			long parentOrganizationId, String name, boolean site)
 		throws Exception {
 
-		User user = UserTestUtil.addUser();
-
 		return OrganizationLocalServiceUtil.addOrganization(
-			user.getUserId(), parentOrganizationId, name, site);
+			TestPropsValues.getUserId(), parentOrganizationId, name, site);
 	}
 
 	public static OrgLabor addOrgLabor(Organization organization)

@@ -15,10 +15,9 @@
 
 	{call Modal.render}
 		{param body kind="html"}
-			<form class="form" id="{$namespace}addForm" method="post" data-onsubmit="{$_handleSubmitForm}">
+			<form class="form" id="{$namespace}fragmentNameEditorForm" method="post" data-onsubmit="{$_handleSubmitForm}">
 				{let $classes kind="text"}
-					form-group
-					{sp}input-text-wrapper
+					form-group input-text-wrapper
 					{if $error}
 						{sp}has-error
 					{/if}
@@ -63,16 +62,15 @@
 		{/param}
 
 		{param dialogClasses: 'fragment-name-editor__dialog' /}
-		{param events: ['hide': $_handleModalHidden] /}
-
+		{param events: ['visibleChanged': $_handleModalHidden] /}
 		{param footer kind="html"}
-			<button class="btn btn-primary btn-default btn-lg" data-onclick="{$_handleSubmitForm}" type="button">
+			<button class="btn btn-primary" data-onclick="{$_handleSubmitForm}" type="button">
 				<span class="lfr-btn-label">
 					{msg desc=""}save{/msg}
 				</span>
 			</button>
 
-			<button class="btn btn-cancel btn-default btn-lg btn-link" data-onclick="hide" type="button">
+			<button class="btn btn-secondary" data-onclick="hide" type="button">
 				<span class="lfr-btn-label">
 					{msg desc=""}cancel{/msg}
 				</span>

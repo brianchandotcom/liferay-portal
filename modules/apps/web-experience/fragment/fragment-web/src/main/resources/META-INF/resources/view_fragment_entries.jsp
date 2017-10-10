@@ -129,8 +129,6 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 	</liferay-frontend:add-menu>
 
 	<aui:script require="fragment-web/js/FragmentNameEditor,metal-dom/src/all/dom">
-		var addFragmentEntryMenuItem = document.getElementById('<portlet:namespace />addFragmentEntryMenuItem');
-
 		var updateFragmentActionOptionQueryClickHandler = metalDomSrcAllDom.default.delegate(
 			document.body,
 			'click',
@@ -141,10 +139,10 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 				var fragmentNameEditor = new fragmentWebJsFragmentNameEditor.default(
 					{
 						actionURL: actionElement.dataset.updateUrl,
-						editorTitle: '<%= LanguageUtil.get(request, "update-fragment") %>',
+						editorTitle: '<%= LanguageUtil.get(request, "rename-fragment") %>',
 						events: {
 							hide: function() {
-								fragmentNameEditor.disposeInternal();
+								fragmentNameEditor.dispose();
 							}
 						},
 						fragmentEntryId: actionElement.dataset.fragmentEntryId,
@@ -165,7 +163,7 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 					editorTitle: '<%= LanguageUtil.get(request, "add-fragment") %>',
 					events: {
 						hide: function() {
-							fragmentNameEditor.disposeInternal();
+							fragmentNameEditor.dispose();
 						}
 					},
 					namespace: '<portlet:namespace />',
@@ -174,6 +172,10 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 			);
 		}
 
+		var addFragmentEntryMenuItem = document.getElementById('<portlet:namespace />addFragmentEntryMenuItem');
+
+		addFragmentEntryMenuItem.addEventListener('click', handleAddFragmentEntryMenuItemClick);
+
 		function handleDestroyPortlet () {
 			addFragmentEntryMenuItem.removeEventListener('click', handleAddFragmentEntryMenuItemClick);
 
@@ -181,9 +183,6 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 
 			Liferay.detach('destroyPortlet', handleDestroyPortlet);
 		}
-
-		addFragmentEntryMenuItem.addEventListener('click', handleAddFragmentEntryMenuItemClick);
-
 		Liferay.on('destroyPortlet', handleDestroyPortlet);
 	</aui:script>
 </c:if>

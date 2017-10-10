@@ -35,7 +35,7 @@
 	</tear-down>
 
 	<command name="ConfigureAutofillRule" priority="5">
-		<property name="portal.acceptance" value="pending" />
+		<property name="portal.acceptance" value="false" />
 		<property name="test.name.skip.portal.instance" value="FormRules#ConfigureAutofillRule" />
 
 		<description message="This is a use case for LPS-70446." />
@@ -179,7 +179,7 @@
 	</command>
 
 	<command name="ConfigureCalculateRule" priority="5">
-		<property name="portal.acceptance" value="pending" />
+		<property name="portal.acceptance" value="false" />
 		<description message="This is a use case for LPS-71592." />
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
@@ -304,7 +304,7 @@
 	</command>
 
 	<command name="ConfigureRequireRule" priority="5">
-		<property name="portal.acceptance" value="pending" />
+		<property name="portal.acceptance" value="false" />
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
@@ -396,7 +396,7 @@
 	</command>
 
 	<command name="ConfigureShowRuleUsingAndCondition" priority="5">
-		<property name="portal.acceptance" value="pending" />
+		<property name="portal.acceptance" value="false" />
 		<property name="test.name.skip.portal.instance" value="Forms#ConfigureShowRuleUsingAndCondition" />
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />

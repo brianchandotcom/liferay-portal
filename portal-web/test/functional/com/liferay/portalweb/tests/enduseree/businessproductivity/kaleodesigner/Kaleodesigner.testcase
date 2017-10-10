@@ -170,7 +170,7 @@
 	</command>
 
 	<command name="AddJoinXORWorkflowDefinitionViaViewTab" priority="5">
-		<property name="portal.acceptance" value="pending" />
+		<property name="portal.acceptance" value="true" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -657,7 +657,7 @@
 	</command>
 
 	<command name="DeleteConnectors" priority="5">
-		<property name="portal.acceptance" value="pending" />
+		<property name="portal.acceptance" value="true" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -797,7 +797,7 @@
 	</command>
 
 	<command name="EditAssignmentsForTaskNodeKDCP" priority="5">
-		<property name="portal.acceptance" value="pending" />
+		<property name="portal.acceptance" value="true" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoPortlet">

@@ -125,7 +125,7 @@ public class UpgradeMobileDeviceRules extends UpgradeProcess {
 		sb1.append("(MDRRuleGroupInstance.companyId = ResourcePermission.");
 		sb1.append(
 			"companyId) and (MDRRuleGroupInstance.ruleGroupInstanceId = ");
-		sb1.append("ResourcePermission.primKeyId) and (MDRRuleGroupInstance.");
+		sb1.append("ResourcePermission.primKey) and (MDRRuleGroupInstance.");
 		sb1.append("userId = ResourcePermission.ownerId) and ");
 		sb1.append("(ResourcePermission.name = '");
 		sb1.append(_CLASS_NAME);

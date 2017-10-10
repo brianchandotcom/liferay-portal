@@ -58,7 +58,9 @@ public class StringUtil {
 		int pos = s.indexOf(delimiter, offset);
 
 		while (pos != -1) {
-			values.add(s.substring(offset, pos));
+			if (offset < pos) {
+				values.add(s.substring(offset, pos));
+			}
 
 			offset = pos + 1;
 

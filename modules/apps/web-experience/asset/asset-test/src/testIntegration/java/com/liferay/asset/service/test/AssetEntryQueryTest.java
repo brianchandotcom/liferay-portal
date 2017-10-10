@@ -82,7 +82,7 @@ public class AssetEntryQueryTest {
 		_group = GroupTestUtil.addGroup();
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		AssetVocabulary vocabulary =
 			AssetVocabularyLocalServiceUtil.addVocabulary(

@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class DLFileRankImpl extends DLFileRankBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a document library file rank model instance should use the {@link com.liferay.document.library.file.rank.model.DLFileRank} interface instead.
 	 */
 	public DLFileRankImpl() {
 	}
+
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.petra.content.ContentUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.util.ContentUtil;
 
 /**
  * @author David Truong
@@ -35,6 +35,7 @@ public class RobotsUtil {
 	public static String getDefaultRobots(String virtualHost) {
 		if (Validator.isNotNull(virtualHost)) {
 			String content = ContentUtil.get(
+				RobotsUtil.class.getClassLoader(),
 				PropsValues.ROBOTS_TXT_WITH_SITEMAP);
 
 			content = StringUtil.replace(content, "[$HOST$]", virtualHost);
@@ -42,7 +43,9 @@ public class RobotsUtil {
 			return content;
 		}
 
-		return ContentUtil.get(PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP);
+		return ContentUtil.get(
+			RobotsUtil.class.getClassLoader(),
+			PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP);
 	}
 
 	public static String getRobots(LayoutSet layoutSet) throws PortalException {

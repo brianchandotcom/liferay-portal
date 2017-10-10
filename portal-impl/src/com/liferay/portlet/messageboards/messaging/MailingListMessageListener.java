@@ -19,6 +19,7 @@ import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageConstants;
 import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.kernel.service.MBMessageServiceUtil;
+import com.liferay.petra.mail.MailEngine;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -35,7 +36,6 @@ import com.liferay.portal.security.permission.PermissionCheckerUtil;
 import com.liferay.portlet.messageboards.util.MBMailMessage;
 import com.liferay.portlet.messageboards.util.MBUtil;
 import com.liferay.portlet.messageboards.util.MailingListThreadLocal;
-import com.liferay.util.mail.MailEngine;
 
 import java.io.IOException;
 import java.io.InputStream;

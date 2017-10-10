@@ -60,29 +60,32 @@ import org.osgi.service.component.annotations.Component;
 public class MyOrganizationsPortlet extends UsersAdminPortlet {
 
 	@Override
-	public void render(
+	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		try {
-			long organizationId = ParamUtil.getLong(
-				renderRequest, "organizationId");
+		String path = getPath(renderRequest, renderResponse);
 
-			String mvcPath = ParamUtil.getString(renderRequest, "mvcPath");
+		if (path.equals("/edit_organization.jsp")) {
+			try {
+				long organizationId = ParamUtil.getLong(
+					renderRequest, "organizationId");
 
-			if ((organizationId == 0) &&
-				mvcPath.equals("/edit_organization.jsp")) {
-
-				PortalPermissionUtil.check(
-					PermissionThreadLocal.getPermissionChecker(),
-					ActionKeys.ADD_ORGANIZATION);
+				if (organizationId == 0) {
+					PortalPermissionUtil.check(
+						PermissionThreadLocal.getPermissionChecker(),
+						ActionKeys.ADD_ORGANIZATION);
+				}
 			}
-		}
-		catch (PrincipalException pe) {
-			throw new PortletException(pe);
-		}
+			catch (PrincipalException pe) {
+				throw new PortletException(pe);
+			}
 
-		super.render(renderRequest, renderResponse);
+			include(path, renderRequest, renderResponse);
+		}
+		else {
+			super.doDispatch(renderRequest, renderResponse);
+		}
 	}
 
 }

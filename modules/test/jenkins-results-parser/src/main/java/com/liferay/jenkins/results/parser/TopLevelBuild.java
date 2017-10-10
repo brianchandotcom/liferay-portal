@@ -203,7 +203,7 @@ public class TopLevelBuild extends BaseBuild {
 	public Element getJenkinsReportElement() {
 		Element headElement = getJenkinsReportHeadElement();
 
-		Element bodyElement = getJenkinsReportBodyElement(this);
+		Element bodyElement = getJenkinsReportBodyElement();
 
 		Element jenkinsReportElement = Dom4JUtil.getNewElement("html");
 
@@ -545,12 +545,12 @@ public class TopLevelBuild extends BaseBuild {
 			topLevelBuild.getJobName(), "/git.", repositoryType, ".properties");
 	}
 
-	protected Element getJenkinsReportBodyElement(TopLevelBuild topLevelBuild) {
+	protected Element getJenkinsReportBodyElement() {
 		Map<String, Build> axisBuilds = new TreeMap<>();
 		Map<String, Build> downstreamBuilds = new TreeMap<>();
 		Map<String, TestResult> testResults = new TreeMap<>();
 
-		for (Build batchBuild : topLevelBuild.getDownstreamBuilds(null)) {
+		for (Build batchBuild : getDownstreamBuilds(null)) {
 			String batchBuildDisplayName = batchBuild.getDisplayName();
 
 			if (batchBuildDisplayName == null) {
@@ -580,13 +580,13 @@ public class TopLevelBuild extends BaseBuild {
 
 		Element h1Element = Dom4JUtil.getNewElement("h1");
 
-		String buildURL = topLevelBuild.getBuildURL();
+		String buildURL = getBuildURL();
 
 		Dom4JUtil.addToElement(
 			h1Element, "Jenkins report for ",
 			Dom4JUtil.getNewAnchorElement(buildURL, buildURL));
 
-		JSONObject jobJSONObject = topLevelBuild.getBuildJSONObject();
+		JSONObject jobJSONObject = getBuildJSONObject();
 
 		String jobDescription = "";
 
@@ -605,10 +605,9 @@ public class TopLevelBuild extends BaseBuild {
 
 		Dom4JUtil.addToElement(
 			bodyElement, h1Element, h2Element,
-			getJenkinsReportSummaryElement(
-				topLevelBuild, axisBuilds, downstreamBuilds, testResults),
-			getJenkinsReportTimelineElement(topLevelBuild, axisBuilds),
-			getJenkinsReportTopLevelTableElement(topLevelBuild),
+			getJenkinsReportSummaryElement(this, axisBuilds),
+			getJenkinsReportTimelineElement(this, axisBuilds),
+			getJenkinsReportTopLevelTableElement(this),
 			getJenkinsReportDownstreamElement(downstreamBuilds));
 
 		return bodyElement;
@@ -781,9 +780,7 @@ public class TopLevelBuild extends BaseBuild {
 	}
 
 	protected Element getJenkinsReportSummaryElement(
-		Build topLevelBuild, Map<String, Build> axisBuilds,
-		Map<String, Build> downstreamBuilds,
-		Map<String, TestResult> testResults) {
+		Build topLevelBuild, Map<String, Build> axisBuilds) {
 
 		Element buildTimeElement = Dom4JUtil.getNewElement(
 			"p", null, "Build Time: ",
@@ -802,7 +799,8 @@ public class TopLevelBuild extends BaseBuild {
 		Date startTime = new Date(topLevelBuild.getStartTimestamp());
 
 		Element startTimeElement = Dom4JUtil.getNewElement(
-			"p", null, "Start Time: ", startTime.toLocaleString());
+			"p", null, "Start Time: ",
+			JenkinsResultsParserUtil.toDateString(startTime));
 
 		Element vmUsageElement = getJenkinsReportTotalVMUSageElement(
 			axisBuilds);

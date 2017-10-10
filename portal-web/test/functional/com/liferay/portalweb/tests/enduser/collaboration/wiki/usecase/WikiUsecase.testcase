@@ -473,7 +473,7 @@
 	</command>
 
 	<command name="RestoreDeleteWikiFrontpage" priority="5">
-		<property name="portal.acceptance" value="quarantine" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Navigator#openURL" />
 

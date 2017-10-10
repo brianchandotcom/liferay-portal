@@ -1063,7 +1063,10 @@ public class OrganizationFinderImpl
 
 			int size = organizationsTree.size();
 
-			if (!organizationsTree.isEmpty()) {
+			if (size == 0) {
+				join = "WHERE (Organization_.treePath = '')";
+			}
+			else {
 				StringBundler sb = new StringBundler(size * 2 + 1);
 
 				sb.append("WHERE (");

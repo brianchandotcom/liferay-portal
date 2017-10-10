@@ -252,15 +252,15 @@ extend [`ExecuteNpmTask`](#executenpmtask) in order to execute the command
 [`npm publish`](https://docs.npmjs.com/cli/publish).
 
 These tasks generate a new temporary `package.json` file in the directory
-pointed by the [`workingDir`](#workingdir) property, then execute the
-`npm publish` command. If the `package.json` file in that location does not
-exist, the one in the root of the project directory (if found) is copied;
-otherwise, a new file is created.
+assigned to the [`workingDir`](#workingdir) property; then the `npm publish`
+command is executed. If the `package.json` file in that location does not exist,
+the one in the root of the project directory (if found) is copied; otherwise, a
+new file is created.
 
 The `package.json` is then processed by adding the values provided by the task
-properties, if not already present if the file itself. It is still possible to
+properties, if not already present in the file itself. It is still possible to
 override one or more fields of the `package.json` file with the values provided
-by the task properties by adding one or more keys (e.g., `"version"`) to  the
+by the task properties by adding one or more keys (e.g., `"version"`) to the
 `overriddenPackageJsonKeys` property.
 
 #### Task Properties
@@ -279,14 +279,14 @@ Property Name | Type | Default Value | Description
 `npmEmailAddress` | `String` | `null` | The email address of the npmjs.com user that publishes the package.
 `npmPassword` | `String` | `null` | The password of the npmjs.com user that publishes the package.
 `npmUserName` | `String` | `null` | The name of the npmjs.com user that publishes the package.
-`overriddenPackageJsonKeys` | `Set<String>` | `[]` | The fields whose values to override in the generated `package.json` file.
+`overriddenPackageJsonKeys` | `Set<String>` | `[]` | The field values to override in the generated `package.json` file.
 
 #### Task Methods
 
 Method | Description
 ------ | -----------
-`PublishNodeModuleTask overriddenPackageJsonKeys(Iterable<String> overriddenPackageJsonKeys)` | Adds fields whose values to override in the generated `package.json` file.
-`PublishNodeModuleTask overriddenPackageJsonKeys(String... overriddenPackageJsonKeys)` | Adds fields whose values to override in the generated `package.json` file.
+`PublishNodeModuleTask overriddenPackageJsonKeys(Iterable<String> overriddenPackageJsonKeys)` | Adds field values to override in the generated `package.json` file.
+`PublishNodeModuleTask overriddenPackageJsonKeys(String... overriddenPackageJsonKeys)` | Adds field values to override in the generated `package.json` file.
 
 ### npmRun${script} Task
 
@@ -301,10 +301,10 @@ Property Name | Default Value
 
 If the [`java`](https://docs.gradle.org/current/userguide/java_plugin.html)
 plugin is applied and the `package.json` file declares a script named `"build"`,
-then the script is executed before the `classes` task but after the
+the script is executed before the `classes` task but after the
 [`processResources`](https://docs.gradle.org/4.0/userguide/java_plugin.html#sec:java_resources)
 task.
 
 If the [`lifecycle-base`](https://docs.gradle.org/current/javadoc/org/gradle/language/base/plugins/LifecycleBasePlugin.html)
 plugin is applied and the `package.json` file declares a script named `test`,
-then the script is executed when running the `check` task.
+the script is executed when running the `check` task.

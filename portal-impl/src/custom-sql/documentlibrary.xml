@@ -316,30 +316,6 @@
 				)
 		]]>
 	</sql>
-	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileRankFinder.findByStaleRanks">
-		<![CDATA[
-			SELECT
-				groupId, userId
-			FROM
-				DLFileRank
-			GROUP BY
-				groupId, userId
-			HAVING COUNT(*) > ?
-		]]>
-	</sql>
-	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileRankFinder.findByFolderId">
-		<![CDATA[
-			SELECT
-				{DLFileRank.*}
-			FROM
-				DLFileRank
-			INNER JOIN
-				DLFileEntry ON
-					(DLFileEntry.fileEntryId = DLFileRank.fileEntryId)
-			WHERE
-				(DLFileEntry.folderId = ?)
-		]]>
-	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.countF_ByG_M_F">
 		<![CDATA[
 			SELECT

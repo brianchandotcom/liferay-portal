@@ -719,6 +719,8 @@ public class LocalGitSyncUtil {
 						cacheBranchName, true, null);
 				}
 
+				senderBranchName = senderBranchName.trim();
+
 				gitWorkingDirectory.fetch(
 					localCacheBranch,
 					gitWorkingDirectory.getBranch(

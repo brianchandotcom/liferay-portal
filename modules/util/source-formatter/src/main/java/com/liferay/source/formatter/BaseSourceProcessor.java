@@ -527,7 +527,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	private boolean _hasGeneratedTag(String content) {
-		if ((content.contains("* @generated") || content.contains("$ANTLR")) &&
+		if ((content.contains("@generated") || content.contains("$ANTLR")) &&
 			!content.contains("hasGeneratedTag")) {
 
 			return true;

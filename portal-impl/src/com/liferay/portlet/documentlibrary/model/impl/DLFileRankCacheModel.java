@@ -34,8 +34,11 @@ import java.util.Date;
  *
  * @author Brian Wing Shun Chan
  * @see DLFileRank
+ * @deprecated As of 7.0.0, replaced by {@link
+           com.liferay.document.library.file.rank.model.impl.DLFileRankImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class DLFileRankCacheModel implements CacheModel<DLFileRank>,
 	Externalizable {

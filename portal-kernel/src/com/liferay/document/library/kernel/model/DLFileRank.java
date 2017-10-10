@@ -27,8 +27,11 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see DLFileRankModel
  * @see com.liferay.portlet.documentlibrary.model.impl.DLFileRankImpl
  * @see com.liferay.portlet.documentlibrary.model.impl.DLFileRankModelImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.document.library.file.rank.model.impl.DLFileRankImpl}
  * @generated
  */
+@Deprecated
 @ImplementationClassName("com.liferay.portlet.documentlibrary.model.impl.DLFileRankImpl")
 @ProviderType
 public interface DLFileRank extends DLFileRankModel, PersistedModel {

@@ -18,8 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link
+           com.liferay.document.library.file.rank.service.persistence.impl.DLFileRankFinderImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface DLFileRankFinder {
 	public java.util.List<java.lang.Object[]> findByStaleRanks(int count);

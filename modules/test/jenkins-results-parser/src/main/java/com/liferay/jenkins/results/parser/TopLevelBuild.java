@@ -549,18 +549,20 @@ public class TopLevelBuild extends BaseBuild {
 		Map<String, Build> axisBuilds = new TreeMap<>();
 		Map<String, Build> downstreamBuilds = new TreeMap<>();
 
-		for (Build batchBuild : getDownstreamBuilds(null)) {
-			String batchBuildDisplayName = batchBuild.getDisplayName();
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			String downstreamBuildDisplayName =
+				downstreamBuild.getDisplayName();
 
-			if (batchBuildDisplayName == null) {
+			if (downstreamBuildDisplayName == null) {
 				return null;
 			}
 
-			downstreamBuilds.put(batchBuild.getDisplayName(), batchBuild);
+			downstreamBuilds.put(
+				downstreamBuild.getDisplayName(), downstreamBuild);
 
-			for (Build axisBuild : batchBuild.getDownstreamBuilds(null)) {
+			for (Build axisBuild : downstreamBuild.getDownstreamBuilds(null)) {
 				String axisKey =
-					batchBuild.getDisplayName() + "/" +
+					downstreamBuild.getDisplayName() + "/" +
 						JenkinsResultsParserUtil.getAxisVariable(
 							axisBuild.getBuildURL());
 

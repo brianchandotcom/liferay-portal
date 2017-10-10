@@ -19,6 +19,11 @@ $navbar-dark-active-highlight: lighten(#1865FB, 22%) !default;
 
 $zindex-basic-search-close: 5 !default;
 
+// Sidebar
+
+$sidebar-padding-bottom: 1.5rem !default; // 8px
+$sidebar-padding-top: 1.5rem !default; // 8px
+
 // Mangagement bar
 
 $management-bar-border-bottom-width: 0.0625rem !default; // 1px

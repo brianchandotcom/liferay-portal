@@ -27,7 +27,10 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  * @see    com.liferay.petra.content.ContentUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.petra.content.ContentUtil}
  */
+@Deprecated
 public class ContentUtil {
 
 	public static String get(ClassLoader classLoader, String location) {

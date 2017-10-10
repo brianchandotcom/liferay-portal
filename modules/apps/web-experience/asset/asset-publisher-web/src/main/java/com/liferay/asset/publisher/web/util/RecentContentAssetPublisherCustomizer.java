@@ -107,7 +107,7 @@ public class RecentContentAssetPublisherCustomizer
 
 		PortletPreferences portletPreferences = getPortletPreferences(request);
 
-		long[] groupIds = AssetPublisherUtil.getGroupIds(
+		long[] groupIds = assetPublisherWebUtil.getGroupIds(
 			portletPreferences, themeDisplay.getScopeGroupId(),
 			themeDisplay.getLayout());
 

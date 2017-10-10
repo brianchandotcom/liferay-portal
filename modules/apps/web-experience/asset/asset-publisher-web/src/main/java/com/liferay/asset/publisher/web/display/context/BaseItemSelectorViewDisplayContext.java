@@ -15,7 +15,7 @@
 package com.liferay.asset.publisher.web.display.context;
 
 import com.liferay.asset.publisher.web.constants.AssetPublisherWebKeys;
-import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
+import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -48,6 +48,8 @@ public abstract class BaseItemSelectorViewDisplayContext
 		SiteItemSelectorCriterion siteItemSelectorCriterion,
 		String itemSelectedEventName, PortletURL portletURL) {
 
+		_assetPublisherWebUtil = (AssetPublisherWebUtil)request.getAttribute(
+			AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_UTIL);
 		this.request = request;
 		_siteItemSelectorCriterion = siteItemSelectorCriterion;
 		_itemSelectedEventName = itemSelectedEventName;
@@ -143,7 +145,7 @@ public abstract class BaseItemSelectorViewDisplayContext
 		PortletPreferences portletPreferences =
 			themeDisplay.getStrictLayoutPortletSetup(layout, portletResource);
 
-		return AssetPublisherUtil.getGroupIds(
+		return _assetPublisherWebUtil.getGroupIds(
 			portletPreferences, themeDisplay.getScopeGroupId(),
 			themeDisplay.getLayout());
 	}
@@ -156,6 +158,7 @@ public abstract class BaseItemSelectorViewDisplayContext
 	protected final PortletURL portletURL;
 	protected final HttpServletRequest request;
 
+	private final AssetPublisherWebUtil _assetPublisherWebUtil;
 	private Long _groupId;
 	private final String _itemSelectedEventName;
 	private final SiteItemSelectorCriterion _siteItemSelectorCriterion;

@@ -17,6 +17,7 @@ package com.liferay.asset.publisher.web.util;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
 import com.liferay.asset.util.AssetEntryQueryProcessor;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -37,6 +38,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -148,7 +150,7 @@ public class DefaultAssetPublisherCustomizer
 
 		PortletPreferences portletPreferences = getPortletPreferences(request);
 
-		long[] groupIds = AssetPublisherUtil.getGroupIds(
+		long[] groupIds = assetPublisherWebUtil.getGroupIds(
 			portletPreferences, themeDisplay.getScopeGroupId(),
 			themeDisplay.getLayout());
 
@@ -180,5 +182,8 @@ public class DefaultAssetPublisherCustomizer
 	}
 
 	protected AssetPublisherWebConfiguration assetPublisherWebConfiguration;
+
+	@Reference
+	protected AssetPublisherWebUtil assetPublisherWebUtil;
 
 }

@@ -47,3 +47,11 @@
 		}
 	}
 }
+
+// Forms builder
+
+.form-builder-field {
+	.input-group .form-control {
+		z-index: 0;
+	}
+}

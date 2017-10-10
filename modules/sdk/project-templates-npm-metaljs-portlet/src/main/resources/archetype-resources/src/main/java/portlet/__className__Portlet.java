@@ -15,7 +15,6 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.display-category=category.sample",
-		"com.liferay.portlet.header-portlet-css=/css/modal.css",
 		"com.liferay.portlet.instanceable=true",
 		"javax.portlet.display-name=${artifactId} Portlet",
 		"javax.portlet.init-param.template-path=/",

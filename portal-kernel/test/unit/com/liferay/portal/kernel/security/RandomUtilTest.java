@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.security;
 
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -93,7 +94,9 @@ public class RandomUtilTest {
 
 			if (value >= n) {
 				throw new IllegalArgumentException(
-					"Value " + value + " is larger than " + n);
+					StringBundler.concat(
+						"Value ", String.valueOf(value), " is larger than ",
+						String.valueOf(n)));
 			}
 
 			return value;

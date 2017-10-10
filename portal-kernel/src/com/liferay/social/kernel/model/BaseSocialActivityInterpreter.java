@@ -270,9 +270,9 @@ public abstract class BaseSocialActivityInterpreter
 				return HtmlUtil.escape(groupName);
 			}
 
-			groupName =
-				"<a class=\"group\" href=\"" + groupDisplayURL + "\">" +
-					HtmlUtil.escape(groupName) + "</a>";
+			groupName = StringBundler.concat(
+				"<a class=\"group\" href=\"", groupDisplayURL, "\">",
+				HtmlUtil.escape(groupName), "</a>");
 
 			return groupName;
 		}
@@ -312,9 +312,9 @@ public abstract class BaseSocialActivityInterpreter
 				return HtmlUtil.escape(groupName);
 			}
 
-			groupName =
-				"<a class=\"group\" href=\"" + groupDisplayURL + "\">" +
-					HtmlUtil.escape(groupName) + "</a>";
+			groupName = StringBundler.concat(
+				"<a class=\"group\" href=\"", groupDisplayURL, "\">",
+				HtmlUtil.escape(groupName), "</a>");
 
 			return groupName;
 		}
@@ -478,9 +478,9 @@ public abstract class BaseSocialActivityInterpreter
 			String userDisplayURL = user.getDisplayURL(
 				serviceContext.getThemeDisplay());
 
-			userName =
-				"<a class=\"user\" href=\"" + userDisplayURL + "\">" +
-					HtmlUtil.escape(userName) + "</a>";
+			userName = StringBundler.concat(
+				"<a class=\"user\" href=\"", userDisplayURL, "\">",
+				HtmlUtil.escape(userName), "</a>");
 
 			return userName;
 		}
@@ -516,9 +516,9 @@ public abstract class BaseSocialActivityInterpreter
 
 			String userDisplayURL = user.getDisplayURL(themeDisplay);
 
-			userName =
-				"<a class=\"user\" href=\"" + userDisplayURL + "\">" +
-					HtmlUtil.escape(userName) + "</a>";
+			userName = StringBundler.concat(
+				"<a class=\"user\" href=\"", userDisplayURL, "\">",
+				HtmlUtil.escape(userName), "</a>");
 
 			return userName;
 		}

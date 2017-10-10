@@ -171,8 +171,10 @@ public class SubscriptionSender implements Serializable {
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Add " + toAddress + " to the list of users who have " +
-							"received an email");
+						StringBundler.concat(
+							"Add ", toAddress,
+							" to the list of users who have received an ",
+							"email"));
 				}
 
 				_sentEmailAddresses.add(toAddress);
@@ -665,8 +667,10 @@ public class SubscriptionSender implements Serializable {
 		if (user == null) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"User with email address " + emailAddress +
-						" does not exist for company " + companyId);
+					StringBundler.concat(
+						"User with email address ", emailAddress,
+						" does not exist for company ",
+						String.valueOf(companyId)));
 			}
 
 			if (bulk) {

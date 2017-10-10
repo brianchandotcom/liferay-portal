@@ -40,11 +40,16 @@ public class ReferenceRegistry {
 		catch (SecurityException se) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Not allowed to get field " + fieldName + " for " + clazz);
+					StringBundler.concat(
+						"Not allowed to get field ", fieldName, " for ",
+						String.valueOf(clazz)));
 			}
 		}
 		catch (Exception e) {
-			_log.error("Unable to get field " + fieldName + " for " + clazz);
+			_log.error(
+				StringBundler.concat(
+					"Unable to get field ", fieldName, " for ",
+					String.valueOf(clazz)));
 		}
 	}
 

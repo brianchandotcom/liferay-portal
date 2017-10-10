@@ -97,9 +97,11 @@ public abstract class UpgradeProcess
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Completed upgrade process " +
-						ClassUtil.getClassName(this) + " in " +
-							(System.currentTimeMillis() - start) + "ms");
+					StringBundler.concat(
+						"Completed upgrade process ",
+						ClassUtil.getClassName(this), " in ",
+						String.valueOf(System.currentTimeMillis() - start),
+						"ms"));
 			}
 		}
 	}
@@ -398,8 +400,9 @@ public abstract class UpgradeProcess
 
 						if (alterable.shouldDropIndex(entry.getValue())) {
 							runSQL(
-								"drop index " + entry.getKey() + " on " +
-									tableName);
+								StringBundler.concat(
+									"drop index ", entry.getKey(), " on ",
+									tableName));
 						}
 					}
 

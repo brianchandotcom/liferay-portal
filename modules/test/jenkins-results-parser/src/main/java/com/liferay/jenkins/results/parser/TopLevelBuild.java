@@ -798,8 +798,7 @@ public class TopLevelBuild extends BaseBuild {
 		Element longestBatchElement = getLongestRunningBatchElement(
 			downstreamBuilds);
 
-		Element longestTestElement = JenkinsReportUtil.getLongestTestElement(
-			testResults);
+		Element longestTestElement = getLongestRunningTestElement();
 
 		Date startTime = new Date(topLevelBuild.getStartTimestamp());
 

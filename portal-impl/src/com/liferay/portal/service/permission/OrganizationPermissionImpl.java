@@ -82,7 +82,7 @@ public class OrganizationPermissionImpl implements OrganizationPermission {
 		throws PortalException {
 
 		if (ArrayUtil.isEmpty(organizationIds)) {
-			return true;
+			return false;
 		}
 
 		for (long organizationId : organizationIds) {

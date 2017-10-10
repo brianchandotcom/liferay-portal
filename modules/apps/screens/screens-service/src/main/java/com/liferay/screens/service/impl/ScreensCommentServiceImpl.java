@@ -183,13 +183,13 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 	}
 
 	protected Function<String, ServiceContext> createServiceContextFunction() {
-		return (className) -> new ServiceContext();
+		return className -> new ServiceContext();
 	}
 
 	protected Function<String, ServiceContext> createServiceContextFunction(
 		int workflowAction) {
 
-		return (className) -> {
+		return className -> {
 			ServiceContext serviceContext = new ServiceContext();
 
 			serviceContext.setWorkflowAction(workflowAction);

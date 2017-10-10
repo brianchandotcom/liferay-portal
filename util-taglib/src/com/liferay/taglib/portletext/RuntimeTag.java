@@ -187,7 +187,7 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 				portletInstanceKey, request.getParameter("p_p_id"))) {
 
 			parameterMap = MapUtil.filterByKeys(
-				parameterMap, (key) -> !key.startsWith("p_p_"));
+				parameterMap, key -> !key.startsWith("p_p_"));
 		}
 
 		request = DynamicServletRequest.addQueryString(

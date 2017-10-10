@@ -24,6 +24,16 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
  */
 public abstract class BaseCheck extends AbstractCheck {
 
+	@Override
+	public int[] getAcceptableTokens() {
+		return getDefaultTokens();
+	}
+
+	@Override
+	public int[] getRequiredTokens() {
+		return getDefaultTokens();
+	}
+
 	public void setShowDebugInformation(boolean showDebugInformation) {
 		_showDebugInformation = showDebugInformation;
 	}

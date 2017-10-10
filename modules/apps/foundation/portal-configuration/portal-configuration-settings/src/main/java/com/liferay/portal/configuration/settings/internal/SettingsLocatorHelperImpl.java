@@ -292,7 +292,7 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 			ConfigurationBeanManagedService configurationBeanManagedService =
 				new ConfigurationBeanManagedService(
 					context, configurationBeanClass,
-					(configurationBean) -> {
+					configurationBean -> {
 						ClassLoader classLoader =
 							configurationBeanClass.getClassLoader();
 

@@ -50,8 +50,38 @@
 
 // Forms builder
 
+.form-builder-sidebar {
+	.tab-content .tab-pane {
+		padding: 24px;
+	}
+
+	.input-group-container {
+		display: flex;
+
+		.input-group-addon {
+			background-color: transparent;
+			border-width: 0;
+		}
+	}
+}
+
+.form-builder-page-header {
+	.form-control {
+		background-color: transparent;
+	}
+}
+
 .form-builder-field {
 	.input-group .form-control {
 		z-index: 0;
 	}
+}
+
+.help-icon.icon-monospaced {
+	line-height: 2;
+}
+
+.layout-row-container-row .layout-builder-move-cut-button.layout-builder-move-cut-row-button {
+	right: 30px;
+	top: -22px;
 }

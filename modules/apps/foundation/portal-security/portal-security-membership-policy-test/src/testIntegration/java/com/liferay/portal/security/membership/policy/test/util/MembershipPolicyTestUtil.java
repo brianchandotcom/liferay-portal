@@ -196,7 +196,7 @@ public class MembershipPolicyTestUtil {
 		String facebookSn = RandomTestUtil.randomString();
 		String jabberSn = RandomTestUtil.randomString();
 		String skypeSn = RandomTestUtil.randomString();
-		String twitterSn = RandomTestUtil.randomString();
+		String twitterSn = StringPool.BLANK;
 
 		List<Address> addresses = new ArrayList<>();
 		List<EmailAddress> emailAddresses = new ArrayList<>();

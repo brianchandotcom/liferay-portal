@@ -28,7 +28,7 @@ renderResponse.setTitle((commerceCountry == null) ? LanguageUtil.get(request, "a
 %>
 
 <liferay-frontend:screen-navigation
+	context="<%= commerceCountry %>"
 	key="<%= CommerceCountryScreenNavigationConstants.CATEGORY_KEY_COMMERCE_COUNTRY_DETAILS %>"
-	modelBean="<%= commerceCountry %>"
 	portletURL="<%= currentURLObj %>"
 />

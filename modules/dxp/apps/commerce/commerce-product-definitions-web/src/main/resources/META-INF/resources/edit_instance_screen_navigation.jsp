@@ -36,7 +36,7 @@ renderResponse.setTitle((cpInstance == null) ? LanguageUtil.get(request, "add-sk
 %>
 
 <liferay-frontend:screen-navigation
+	context="<%= cpInstance %>"
 	key="<%= CPInstanceScreenNavigationConstants.SCREEN_NAVIGATION_KEY_CP_INSTANCE_GENERAL %>"
-	modelBean="<%= cpInstance %>"
 	portletURL="<%= currentURLObj %>"
 />

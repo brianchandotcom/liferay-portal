@@ -28,7 +28,7 @@ renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, "add-
 %>
 
 <liferay-frontend:screen-navigation
+	context="<%= cpDefinition %>"
 	key="<%= CPDefinitionScreenNavigationConstants.SCREEN_NAVIGATION_KEY_CP_DEFINITION_GENERAL %>"
-	modelBean="<%= cpDefinition %>"
 	portletURL="<%= currentURLObj %>"
 />

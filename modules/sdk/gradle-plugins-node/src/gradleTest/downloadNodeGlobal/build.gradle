@@ -1,0 +1,32 @@
+task runGradleTest
+
+allprojects {
+	apply plugin: "com.liferay.node"
+
+	node {
+		global = true
+		nodeVersion = "8.4.0"
+	}
+}
+
+runGradleTest {
+	dependsOn ":bar:downloadNode"
+	dependsOn ":foo:downloadNode"
+	dependsOn downloadNode
+
+	doLast {
+		File rootNodeDir = new File(buildDir, "node")
+
+		assert rootNodeDir.exists()
+
+		subprojects.each {
+			File nodeDir = new File(it.buildDir, "node")
+
+			assert !nodeDir.exists()
+		}
+	}
+}
+
+subprojects {
+	apply plugin: "java"
+}

@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component(immediate = true, service = UpgradeStepRegistrator.class)
-public class DLContentServiceUpgrade implements UpgradeStepRegistrator {
+public class DLFileRankServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {

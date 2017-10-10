@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -407,30 +406,10 @@ public class KBArticleStagedModelDataHandler
 			FileEntry fileEntry =
 				(FileEntry)portletDataContext.getZipEntryAsObject(path);
 
-			InputStream inputStream = null;
+			String binPath = dlFileEntryElement.attributeValue("bin-path");
 
-			try {
-				String binPath = dlFileEntryElement.attributeValue("bin-path");
-
-				if (Validator.isNull(binPath) &&
-					portletDataContext.isPerformDirectBinaryImport()) {
-
-					try {
-						inputStream = FileEntryUtil.getContentStream(fileEntry);
-					}
-					catch (NoSuchFileException nsfe) {
-
-						// LPS-52675
-
-						if (_log.isDebugEnabled()) {
-							_log.debug(nsfe, nsfe);
-						}
-					}
-				}
-				else {
-					inputStream = portletDataContext.getZipEntryAsInputStream(
-						binPath);
-				}
+			try (InputStream inputStream = _getKBArticalAttachmentInputStream(
+					binPath, portletDataContext, fileEntry)) {
 
 				if (inputStream == null) {
 					if (_log.isWarnEnabled()) {
@@ -459,9 +438,6 @@ public class KBArticleStagedModelDataHandler
 					_log.debug(dfee, dfee);
 				}
 			}
-			finally {
-				StreamUtil.cleanUp(inputStream);
-			}
 		}
 	}
 
@@ -489,6 +465,32 @@ public class KBArticleStagedModelDataHandler
 		PortletFileRepository portletFileRepository) {
 
 		_portletFileRepository = portletFileRepository;
+	}
+
+	private InputStream _getKBArticalAttachmentInputStream(
+			String binPath, PortletDataContext portletDataContext,
+			FileEntry fileEntry)
+		throws Exception {
+
+		if (Validator.isNull(binPath) &&
+			portletDataContext.isPerformDirectBinaryImport()) {
+
+			try {
+				return FileEntryUtil.getContentStream(fileEntry);
+			}
+			catch (NoSuchFileException nsfe) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(nsfe, nsfe);
+				}
+
+				return null;
+			}
+		}
+
+		return portletDataContext.getZipEntryAsInputStream(binPath);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

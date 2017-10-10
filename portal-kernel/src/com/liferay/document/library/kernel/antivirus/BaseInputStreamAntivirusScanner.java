@@ -15,11 +15,13 @@
 package com.liferay.document.library.kernel.antivirus;
 
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -35,21 +37,22 @@ public abstract class BaseInputStreamAntivirusScanner
 
 	@Override
 	public void scan(File file) throws AntivirusScannerException {
-		InputStream inputStream = null;
-
-		try {
-			inputStream = new FileInputStream(file);
-
+		try (InputStream inputStream = new FileInputStream(file)) {
 			scan(inputStream);
 		}
 		catch (FileNotFoundException fnfe) {
 			throw new SystemException("Unable to scan file", fnfe);
 		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
+		catch (IOException ioe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(ioe, ioe);
+			}
 		}
 	}
 
 	private static final boolean _ACTIVE = true;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseInputStreamAntivirusScanner.class);
 
 }

@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PwdGenerator;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -316,18 +315,11 @@ public class SyncUtil {
 			return StringPool.BLANK;
 		}
 
-		FileInputStream fileInputStream = null;
-
-		try {
-			fileInputStream = new FileInputStream(file);
-
+		try (FileInputStream fileInputStream = new FileInputStream(file)) {
 			return DigesterUtil.digestBase64(Digester.SHA_1, fileInputStream);
 		}
 		catch (Exception e) {
 			return StringPool.BLANK;
-		}
-		finally {
-			StreamUtil.cleanUp(fileInputStream);
 		}
 	}
 
@@ -342,21 +334,15 @@ public class SyncUtil {
 
 		File deltaFile = null;
 
-		FileInputStream sourceFileInputStream = null;
-		FileChannel sourceFileChannel = null;
 		File checksumsFile = FileUtil.createTempFile();
-		OutputStream checksumsOutputStream = null;
-		WritableByteChannel checksumsWritableByteChannel = null;
 
-		try {
-			sourceFileInputStream = new FileInputStream(sourceFile);
-
-			sourceFileChannel = sourceFileInputStream.getChannel();
-
-			checksumsOutputStream = new FileOutputStream(checksumsFile);
-
-			checksumsWritableByteChannel = Channels.newChannel(
-				checksumsOutputStream);
+		try (FileInputStream sourceFileInputStream = new FileInputStream(
+				sourceFile);
+			FileChannel sourceFileChannel = sourceFileInputStream.getChannel();
+			OutputStream checksumsOutputStream = new FileOutputStream(
+				checksumsFile);
+			WritableByteChannel checksumsWritableByteChannel =
+				Channels.newChannel(checksumsOutputStream)) {
 
 			ByteChannelWriter checksumsByteChannelWriter =
 				new ByteChannelWriter(checksumsWritableByteChannel);
@@ -368,39 +354,23 @@ public class SyncUtil {
 		catch (Exception e) {
 			throw new PortalException(e);
 		}
-		finally {
-			StreamUtil.cleanUp(sourceFileInputStream);
-			StreamUtil.cleanUp(sourceFileChannel);
-			StreamUtil.cleanUp(checksumsOutputStream);
-			StreamUtil.cleanUp(checksumsWritableByteChannel);
-		}
 
-		FileInputStream targetFileInputStream = null;
-		ReadableByteChannel targetReadableByteChannel = null;
-		InputStream checksumsInputStream = null;
-		ReadableByteChannel checksumsReadableByteChannel = null;
-		OutputStream deltaOutputStream = null;
-		WritableByteChannel deltaOutputStreamWritableByteChannel = null;
+		deltaFile = FileUtil.createTempFile();
 
-		try {
-			targetFileInputStream = new FileInputStream(targetFile);
-
-			targetReadableByteChannel = targetFileInputStream.getChannel();
-
-			checksumsInputStream = new FileInputStream(checksumsFile);
-
-			checksumsReadableByteChannel = Channels.newChannel(
-				checksumsInputStream);
+		try (FileInputStream targetFileInputStream = new FileInputStream(
+				targetFile);
+			ReadableByteChannel targetReadableByteChannel =
+				targetFileInputStream.getChannel();
+			InputStream checksumsInputStream = new FileInputStream(
+				checksumsFile);
+			ReadableByteChannel checksumsReadableByteChannel =
+				Channels.newChannel(checksumsInputStream);
+			OutputStream deltaOutputStream = new FileOutputStream(deltaFile);
+			WritableByteChannel deltaOutputStreamWritableByteChannel =
+				Channels.newChannel(deltaOutputStream);) {
 
 			ByteChannelReader checksumsByteChannelReader =
 				new ByteChannelReader(checksumsReadableByteChannel);
-
-			deltaFile = FileUtil.createTempFile();
-
-			deltaOutputStream = new FileOutputStream(deltaFile);
-
-			deltaOutputStreamWritableByteChannel = Channels.newChannel(
-				deltaOutputStream);
 
 			ByteChannelWriter deltaByteChannelWriter = new ByteChannelWriter(
 				deltaOutputStreamWritableByteChannel);
@@ -415,13 +385,6 @@ public class SyncUtil {
 			throw new PortalException(e);
 		}
 		finally {
-			StreamUtil.cleanUp(targetFileInputStream);
-			StreamUtil.cleanUp(targetReadableByteChannel);
-			StreamUtil.cleanUp(checksumsInputStream);
-			StreamUtil.cleanUp(checksumsReadableByteChannel);
-			StreamUtil.cleanUp(deltaOutputStream);
-			StreamUtil.cleanUp(deltaOutputStreamWritableByteChannel);
-
 			FileUtil.delete(checksumsFile);
 		}
 
@@ -485,25 +448,17 @@ public class SyncUtil {
 			File originalFile, File deltaFile, File patchedFile)
 		throws PortalException {
 
-		FileInputStream originalFileInputStream = null;
-		FileChannel originalFileChannel = null;
-		FileOutputStream patchedFileOutputStream = null;
-		WritableByteChannel patchedWritableByteChannel = null;
-		ReadableByteChannel deltaReadableByteChannel = null;
-
-		try {
-			originalFileInputStream = new FileInputStream(originalFile);
-
-			originalFileChannel = originalFileInputStream.getChannel();
-
-			patchedFileOutputStream = new FileOutputStream(patchedFile);
-
-			patchedWritableByteChannel = Channels.newChannel(
-				patchedFileOutputStream);
-
+		try (FileInputStream originalFileInputStream = new FileInputStream(
+				originalFile);
+			FileChannel originalFileChannel =
+				originalFileInputStream.getChannel();
+			FileOutputStream patchedFileOutputStream = new FileOutputStream(
+				patchedFile);
+			WritableByteChannel patchedWritableByteChannel =
+				Channels.newChannel(patchedFileOutputStream);
 			FileInputStream deltaInputStream = new FileInputStream(deltaFile);
-
-			deltaReadableByteChannel = Channels.newChannel(deltaInputStream);
+			ReadableByteChannel deltaReadableByteChannel =
+				Channels.newChannel(deltaInputStream)) {
 
 			ByteChannelReader deltaByteChannelReader = new ByteChannelReader(
 				deltaReadableByteChannel);
@@ -514,13 +469,6 @@ public class SyncUtil {
 		}
 		catch (Exception e) {
 			throw new PortalException(e);
-		}
-		finally {
-			StreamUtil.cleanUp(originalFileInputStream);
-			StreamUtil.cleanUp(originalFileChannel);
-			StreamUtil.cleanUp(patchedFileOutputStream);
-			StreamUtil.cleanUp(patchedWritableByteChannel);
-			StreamUtil.cleanUp(deltaReadableByteChannel);
 		}
 	}
 

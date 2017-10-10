@@ -556,7 +556,16 @@ public class ServletResponseUtil {
 		throws IOException {
 
 		if (response.isCommitted()) {
-			StreamUtil.cleanUp(inputStream);
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				}
+				catch (IOException ioe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(ioe, ioe);
+					}
+				}
+			}
 
 			return;
 		}

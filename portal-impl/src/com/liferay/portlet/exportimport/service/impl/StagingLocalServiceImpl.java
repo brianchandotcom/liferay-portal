@@ -902,14 +902,10 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 		IndexStatusManagerThreadLocal.setIndexReadOnly(true);
 
-		FileOutputStream fileOutputStream = null;
+		File tempFile = FileUtil.createTempFile("lar");
 
-		File tempFile = null;
-
-		try {
-			tempFile = FileUtil.createTempFile("lar");
-
-			fileOutputStream = new FileOutputStream(tempFile);
+		try (FileOutputStream fileOutputStream =
+				new FileOutputStream(tempFile)) {
 
 			List<FileEntry> fileEntries =
 				PortletFileRepositoryUtil.getPortletFileEntries(
@@ -963,8 +959,6 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		}
 		finally {
 			IndexStatusManagerThreadLocal.setIndexReadOnly(indexReadOnly);
-
-			StreamUtil.cleanUp(fileOutputStream);
 
 			FileUtil.delete(tempFile);
 		}

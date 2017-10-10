@@ -22,13 +22,11 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 import com.liferay.portal.lpkg.deployer.LPKGVerifier;
 import com.liferay.portal.util.ShutdownUtil;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.nio.file.Files;
@@ -92,34 +90,18 @@ public class BundleManager {
 	}
 
 	public Manifest getManifest(File file) {
-		InputStream inputStream = null;
-		ZipFile zipFile = null;
-
-		try {
-			zipFile = new ZipFile(file);
-
+		try (ZipFile zipFile = new ZipFile(file)) {
 			ZipEntry zipEntry = zipFile.getEntry("META-INF/MANIFEST.MF");
 
 			if (zipEntry == null) {
 				return null;
 			}
 
-			inputStream = zipFile.getInputStream(zipEntry);
-
-			return new Manifest(inputStream);
+			try (InputStream inputStream = zipFile.getInputStream(zipEntry)) {
+				return new Manifest(inputStream);
+			}
 		}
 		catch (Exception e) {
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
-
-			if (zipFile != null) {
-				try {
-					zipFile.close();
-				}
-				catch (IOException ioe) {
-				}
-			}
 		}
 
 		return null;

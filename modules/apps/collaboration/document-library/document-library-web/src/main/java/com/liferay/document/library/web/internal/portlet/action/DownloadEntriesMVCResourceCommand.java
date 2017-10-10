@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -105,7 +104,6 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 		long folderId = ParamUtil.getLong(resourceRequest, "folderId");
 
 		File file = null;
-		InputStream inputStream = null;
 
 		try {
 			List<FileEntry> fileEntries = ActionUtil.getFileEntries(
@@ -168,16 +166,14 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 
 				file = zipWriter.getFile();
 
-				inputStream = new FileInputStream(file);
-
-				PortletResponseUtil.sendFile(
-					resourceRequest, resourceResponse, zipFileName, inputStream,
-					ContentTypes.APPLICATION_ZIP);
+				try (InputStream inputStream = new FileInputStream(file)) {
+					PortletResponseUtil.sendFile(
+						resourceRequest, resourceResponse, zipFileName,
+						inputStream, ContentTypes.APPLICATION_ZIP);
+				}
 			}
 		}
 		finally {
-			StreamUtil.cleanUp(inputStream);
-
 			if (file != null) {
 				file.delete();
 			}
@@ -195,7 +191,6 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 		long folderId = ParamUtil.getLong(resourceRequest, "folderId");
 
 		File file = null;
-		InputStream inputStream = null;
 
 		try {
 			String zipFileName = getZipFileName(folderId, themeDisplay);
@@ -206,15 +201,13 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 
 			file = zipWriter.getFile();
 
-			inputStream = new FileInputStream(file);
-
-			PortletResponseUtil.sendFile(
-				resourceRequest, resourceResponse, zipFileName, inputStream,
-				ContentTypes.APPLICATION_ZIP);
+			try (InputStream inputStream = new FileInputStream(file)) {
+				PortletResponseUtil.sendFile(
+					resourceRequest, resourceResponse, zipFileName, inputStream,
+					ContentTypes.APPLICATION_ZIP);
+			}
 		}
 		finally {
-			StreamUtil.cleanUp(inputStream);
-
 			if (file != null) {
 				file.delete();
 			}

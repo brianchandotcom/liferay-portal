@@ -39,13 +39,13 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.List;
@@ -139,10 +139,8 @@ public class RawMetadataProcessorImpl
 		}
 
 		if (rawMetadataMap == null) {
-			InputStream inputStream = null;
-
-			try {
-				inputStream = fileVersion.getContentStream(false);
+			try (InputStream inputStream =
+					fileVersion.getContentStream(false)) {
 
 				if (inputStream == null) {
 					if (_log.isWarnEnabled()) {
@@ -158,8 +156,10 @@ public class RawMetadataProcessorImpl
 					fileVersion.getExtension(), fileVersion.getMimeType(),
 					inputStream);
 			}
-			finally {
-				StreamUtil.cleanUp(inputStream);
+			catch (IOException ioe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(ioe, ioe);
+				}
 			}
 		}
 

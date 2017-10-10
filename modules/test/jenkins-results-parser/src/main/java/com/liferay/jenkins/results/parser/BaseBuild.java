@@ -833,7 +833,53 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public Element getLongestRunningTestElement() {
-		return null;
+		String longestTestName = "Unavailable";
+
+		String longestTestParentName = "Unavailable";
+
+		String longestTestURL = "Unavailable";
+
+		long longestTestDuration = 0;
+
+		TestResult longestRunningTest = getLongestRunningTest();
+
+		if (longestRunningTest != null) {
+			longestTestName = longestRunningTest.getDisplayName();
+
+			longestTestURL = longestRunningTest.getTestReportURL();
+
+			Build testAxisBuild = longestRunningTest.getAxisBuild();
+
+			Build testBatchBuild = testAxisBuild.getParentBuild();
+
+			String testBatchBuildName = testBatchBuild.getDisplayName();
+
+			String testBatchJobName = testBatchBuild.getJobName();
+
+			longestTestParentName = testBatchBuildName.replace(
+				testBatchJobName + "/", "");
+
+			longestTestDuration = longestRunningTest.getDuration();
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(longestTestParentName);
+
+		sb.append("/");
+
+		sb.append(longestTestName);
+
+		String longestTestDisplayName = sb.toString();
+
+		Element longestTestElement = Dom4JUtil.getNewElement(
+			"p", null, "Longest Test: ",
+			Dom4JUtil.getNewAnchorElement(
+				longestTestURL, longestTestDisplayName),
+			" in: ",
+			JenkinsResultsParserUtil.toDurationString(longestTestDuration));
+
+		return longestTestElement;
 	}
 
 	@Override

@@ -2140,7 +2140,12 @@
 			<var name="pageName" value="Sites Directory Page" />
 		</execute>
 
-		<var name="key_siteName" value="Liferay" />
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<var name="key_siteName" value="${siteName}" />
 
 		<var name="key_orgName" value="Organization Name 1" />
 

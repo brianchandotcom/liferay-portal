@@ -14,16 +14,9 @@
 
 package com.liferay.jasper.jspc;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.InputStreamReader;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-
-import java.net.URI;
-import java.net.URL;
-import java.net.URLClassLoader;
 
 import java.util.Iterator;
 import java.util.List;
@@ -36,22 +29,6 @@ import org.apache.jasper.JasperException;
 public class JspC extends org.apache.jasper.JspC {
 
 	public static void main(String[] args) {
-		try {
-			BufferedReader bufferedReader = new BufferedReader(
-				new InputStreamReader(System.in));
-
-			String classPath = bufferedReader.readLine();
-
-			if ((classPath != null) && !classPath.isEmpty()) {
-				_runWithClassPath(classPath, args);
-
-				return;
-			}
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-
 		JspC jspc = new JspC();
 
 		try {
@@ -119,56 +96,6 @@ public class JspC extends org.apache.jasper.JspC {
 
 				iterator.remove();
 			}
-		}
-	}
-
-	private static void _runWithClassPath(String classpath, String[] args)
-		throws Exception {
-
-		classpath =
-			System.getProperty("java.class.path") + File.pathSeparator +
-				classpath;
-
-		String[] files = classpath.split(File.pathSeparator);
-
-		URL[] urls = new URL[files.length];
-
-		for (int i = 0; i < files.length; i++) {
-			File file = new File(files[i]);
-
-			URI uri = file.toURI();
-
-			urls[i] = uri.toURL();
-		}
-
-		ClassLoader classLoader = new URLClassLoader(urls, null);
-
-		Class<?> jspcClass = classLoader.loadClass(JspC.class.getName());
-
-		Object jspc = jspcClass.newInstance();
-
-		Method setArgsMethod = jspcClass.getMethod("setArgs", String[].class);
-
-		setArgsMethod.invoke(jspc, new Object[] {args});
-
-		Method setClassPathMethod = jspcClass.getMethod(
-			"setClassPath", String.class);
-
-		setClassPathMethod.invoke(jspc, classpath);
-
-		Method executeMethod = jspcClass.getMethod("execute");
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		currentThread.setContextClassLoader(classLoader);
-
-		try {
-			executeMethod.invoke(jspc);
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

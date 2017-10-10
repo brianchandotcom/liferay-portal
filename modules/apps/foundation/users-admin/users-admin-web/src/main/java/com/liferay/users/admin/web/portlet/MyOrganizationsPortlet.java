@@ -14,10 +14,13 @@
 
 package com.liferay.users.admin.web.portlet;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
@@ -78,7 +81,13 @@ public class MyOrganizationsPortlet extends UsersAdminPortlet {
 				}
 			}
 			catch (PrincipalException pe) {
-				throw new PortletException(pe);
+				if (_log.isDebugEnabled()) {
+					_log.debug(pe, pe);
+				}
+
+				SessionErrors.add(renderRequest, pe.getClass());
+
+				path = "/error.jsp";
 			}
 
 			include(path, renderRequest, renderResponse);
@@ -87,5 +96,8 @@ public class MyOrganizationsPortlet extends UsersAdminPortlet {
 			super.doDispatch(renderRequest, renderResponse);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MyOrganizationsPortlet.class);
 
 }

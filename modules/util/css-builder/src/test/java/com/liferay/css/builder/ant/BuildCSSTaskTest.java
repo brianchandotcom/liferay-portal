@@ -14,7 +14,7 @@
 
 package com.liferay.css.builder.ant;
 
-import com.liferay.css.builder.CSSBuilderTest;
+import com.liferay.css.builder.BaseCSSBuilderTestCase;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
@@ -33,7 +33,7 @@ import org.junit.Rule;
 /**
  * @author Andrea Di Giorgi
  */
-public class BuildCSSTaskTest extends CSSBuilderTest {
+public class BuildCSSTaskTest extends BaseCSSBuilderTestCase {
 
 	@Before
 	@Override
@@ -63,7 +63,7 @@ public class BuildCSSTaskTest extends CSSBuilderTest {
 
 		project.setProperty("build.css.dir.names", dirName);
 		project.setProperty(
-			"build.docroot.dir.name",
+			"build.docroot.dir",
 			String.valueOf(docrootDirPath.toAbsolutePath()));
 		project.setProperty(
 			"build.css.generate.source.maps",

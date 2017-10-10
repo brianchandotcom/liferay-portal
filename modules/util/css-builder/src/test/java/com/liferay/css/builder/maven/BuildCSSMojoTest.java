@@ -14,7 +14,7 @@
 
 package com.liferay.css.builder.maven;
 
-import com.liferay.css.builder.CSSBuilderTest;
+import com.liferay.css.builder.BaseCSSBuilderTestCase;
 import com.liferay.css.builder.util.FileTestUtil;
 import com.liferay.maven.executor.MavenExecutor;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -31,7 +31,7 @@ import org.junit.ClassRule;
 /**
  * @author Andrea Di Giorgi
  */
-public class BuildCSSMojoTest extends CSSBuilderTest {
+public class BuildCSSMojoTest extends BaseCSSBuilderTestCase {
 
 	@ClassRule
 	public static final MavenExecutor mavenExecutor = new MavenExecutor();

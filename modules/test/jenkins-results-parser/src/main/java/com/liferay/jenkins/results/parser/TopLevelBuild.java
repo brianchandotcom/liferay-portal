@@ -795,8 +795,7 @@ public class TopLevelBuild extends BaseBuild {
 
 		Element longestAxisElement = getLongestRunningDownstreamBuildElement();
 
-		Element longestBatchElement = getLongestRunningBatchElement(
-			downstreamBuilds);
+		Element longestBatchElement = getLongestRunningBatchElement();
 
 		Element longestTestElement = getLongestRunningTestElement();
 
@@ -1015,9 +1014,7 @@ public class TopLevelBuild extends BaseBuild {
 		return longestRunningBatchBuild;
 	}
 
-	protected Element getLongestRunningBatchElement(
-		Map<String, Build> downstreamBuilds) {
-
+	protected Element getLongestRunningBatchElement() {
 		String jobName = "Unavailable";
 
 		long longestBatchDuration = 0;
@@ -1026,22 +1023,16 @@ public class TopLevelBuild extends BaseBuild {
 
 		String longestBatchURL = "Unavailable";
 
-		Set<String> downstreamBuildsKeySet = downstreamBuilds.keySet();
+		Build longestRunningBatchBuild = getLongestRunningBatchBuild();
 
-		for (String key : downstreamBuildsKeySet) {
-			Build build = downstreamBuilds.get(key);
+		if (!(longestRunningBatchBuild == null)) {
+			jobName = longestRunningBatchBuild.getJobName();
 
-			long batchDuration = build.getDuration();
+			longestBatchDuration = longestRunningBatchBuild.getDuration();
 
-			if (longestBatchDuration < batchDuration) {
-				longestBatchDuration = batchDuration;
+			longestBatchName = longestRunningBatchBuild.getDisplayName();
 
-				jobName = build.getJobName();
-
-				longestBatchName = build.getDisplayName();
-
-				longestBatchURL = build.getBuildURL();
-			}
+			longestBatchURL = longestRunningBatchBuild.getBuildURL();
 		}
 
 		String longestBatchDisplayName = longestBatchName.replace(

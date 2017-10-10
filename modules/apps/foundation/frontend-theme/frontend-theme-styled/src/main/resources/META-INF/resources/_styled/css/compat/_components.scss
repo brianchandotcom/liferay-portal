@@ -13,8 +13,10 @@
 @import "components/figures";
 @import "components/form_validation";
 @import "components/forms";
-@import "components/cards"; // Needs to win over forms
+
+@import "components/cards";
 @import "components/grid";
+@import "components/icons";
 @import "components/input_groups";
 @import "components/labels";
 @import "components/liferay";
@@ -22,6 +24,7 @@
 @import "components/management_bar";
 @import "components/modals";
 @import "components/navs";
+
 @import "components/nav_tabs";
 @import "components/navbar";
 @import "components/pager";

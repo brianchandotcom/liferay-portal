@@ -236,6 +236,14 @@
 	}
 }
 
+.navbar-collapse {
+	.nav-tabs {
+		@include media-breakpoint-down($scaling-breakpoint-down) {
+			flex-direction: column;
+		}
+	}
+}
+
 #navigation.site-navigation,
 .navbar-default,
 .navbar-inverse {

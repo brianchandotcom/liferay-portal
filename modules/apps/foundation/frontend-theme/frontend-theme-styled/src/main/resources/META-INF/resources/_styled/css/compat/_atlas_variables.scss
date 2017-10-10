@@ -5,6 +5,10 @@ $alert-padding-y: 18px !default;
 
 $btn-box-shadow: none !default;
 
+// Labels
+
+$label-text-transform: capitalize !default;
+
 // Navbar
 
 $navbar-padding-x: 0 !default;
@@ -21,3 +25,7 @@ $management-bar-desktop-height: 4rem !default; // 64px
 $management-bar-desktop-link-line-height: 1.5 !default;
 $management-bar-desktop-padding-horizontal: null !default;
 $management-bar-desktop-padding-vertical: (($management-bar-desktop-height - $management-bar-desktop-link-line-height - $management-bar-border-bottom-width - $management-bar-border-top-width) / 2) !default;
+
+// Panels
+
+$panel-title-text-transform: !default;

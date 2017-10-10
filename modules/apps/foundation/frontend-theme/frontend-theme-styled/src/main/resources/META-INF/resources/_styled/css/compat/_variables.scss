@@ -9,6 +9,14 @@ $navbar-border-left-width: 0 !default;
 $navbar-border-right-width: 0 !default;
 $navbar-border-top-width: 0 !default;
 
+$navbar-light-bg: #FFF !default;
+$navbar-light-border-color: transparent !default;
+$navbar-light-active-highlight: lighten(#1865FB, 22%) !default;
+
+$navbar-dark-bg: #31323F !default;
+$navbar-dark-border-color: transparent !default;
+$navbar-dark-active-highlight: lighten(#1865FB, 22%) !default;
+
 $zindex-basic-search-close: 5 !default;
 
 // Mangagement bar

@@ -771,7 +771,10 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 		if (_log.isDebugEnabled()) {
 			for (File file : files) {
-				_log.debug("Preview page for " + tempFileId + " " + file);
+				_log.debug(
+					StringBundler.concat(
+						"Preview page for ", tempFileId, " ",
+						String.valueOf(file)));
 			}
 		}
 

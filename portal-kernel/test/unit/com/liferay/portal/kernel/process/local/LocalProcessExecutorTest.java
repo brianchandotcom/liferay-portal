@@ -1286,11 +1286,13 @@ public class LocalProcessExecutorTest {
 
 			String errLog = errByteArrayOutputStream.toString();
 
-			Assert.assertTrue(
-				errLog.startsWith(
-					"[" + returnWithoutExitProcessCallable.toString() + "]" +
-						new ProcessException(
-							DummyExceptionProcessCallable.class.getName())));
+			String s = StringBundler.concat(
+				"[", returnWithoutExitProcessCallable.toString(), "]",
+				String.valueOf(
+					new ProcessException(
+						DummyExceptionProcessCallable.class.getName())));
+
+			Assert.assertTrue(errLog.startsWith(s));
 		}
 
 		Future<String> processFuture =
@@ -1331,7 +1333,8 @@ public class LocalProcessExecutorTest {
 		String propertyKey = "test-key";
 		String propertyValue = "test-value";
 
-		arguments.add("-D" + propertyKey + "=" + propertyValue);
+		arguments.add(
+			StringBundler.concat("-D", propertyKey, "=", propertyValue));
 
 		builder.setArguments(arguments);
 

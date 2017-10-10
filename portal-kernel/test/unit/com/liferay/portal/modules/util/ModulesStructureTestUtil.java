@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -110,9 +111,10 @@ public class ModulesStructureTestUtil {
 			catch (IllegalArgumentException iae) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Ignoring dependency in " + gradlePath +
-							" since version " + moduleVersion +
-								" cannot be parsed: " + dependency,
+						StringBundler.concat(
+							"Ignoring dependency in ",
+							String.valueOf(gradlePath), " since version ",
+							moduleVersion, " cannot be parsed: ", dependency),
 						iae);
 				}
 			}
@@ -139,9 +141,10 @@ public class ModulesStructureTestUtil {
 			Path projectDirPath = rootDirPath.resolve(projectDirName);
 
 			Assert.assertTrue(
-				"Dependency in " + gradlePath +
-					" points to non-existent project directory " +
-						projectDirPath + ": " + matcher.group(),
+				StringBundler.concat(
+					"Dependency in ", String.valueOf(gradlePath),
+					" points to non-existent project directory ",
+					String.valueOf(projectDirPath), ": ", matcher.group()),
 				Files.exists(projectDirPath));
 
 			Path bndBndPath = projectDirPath.resolve("bnd.bnd");
@@ -154,9 +157,11 @@ public class ModulesStructureTestUtil {
 			catch (NoSuchFileException nsfe) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Ignoring dependency in " + gradlePath +
-							" since it points to a non-OSGi project: " +
-								matcher.group(),
+						StringBundler.concat(
+							"Ignoring dependency in ",
+							String.valueOf(gradlePath),
+							" since it points to a non-OSGi project: ",
+							matcher.group()),
 						nsfe);
 				}
 

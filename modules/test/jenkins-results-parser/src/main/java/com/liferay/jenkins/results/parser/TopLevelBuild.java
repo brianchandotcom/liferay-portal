@@ -987,6 +987,34 @@ public class TopLevelBuild extends BaseBuild {
 		return jobSummaryListElement;
 	}
 
+	protected Build getLongestRunningBatchBuild() {
+		List<Build> downstreamBuilds = getDownstreamBuilds(null);
+
+		long longestBatchDuration = 0;
+
+		Build longestRunningBatchBuild = null;
+
+		for (Build downstreamBuild : downstreamBuilds) {
+			if (downstreamBuild instanceof TopLevelBuild) {
+				downstreamBuild =
+					((TopLevelBuild)
+						downstreamBuild).getLongestRunningBatchBuild();
+			}
+
+			if (downstreamBuild instanceof BatchBuild) {
+				long batchDuration = downstreamBuild.getDuration();
+
+				if (batchDuration > longestBatchDuration) {
+					longestBatchDuration = batchDuration;
+
+					longestRunningBatchBuild = downstreamBuild;
+				}
+			}
+		}
+
+		return longestRunningBatchBuild;
+	}
+
 	protected Element getLongestRunningBatchElement(
 		Map<String, Build> downstreamBuilds) {
 

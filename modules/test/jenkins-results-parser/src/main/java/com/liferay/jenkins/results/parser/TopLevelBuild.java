@@ -241,6 +241,22 @@ public class TopLevelBuild extends BaseBuild {
 		return null;
 	}
 
+	public Element getValidationGitHubMessage() {
+		ValidationBuild validationBuild = null;
+
+		for (Build downstreamBuild : downstreamBuilds) {
+			if (downstreamBuild instanceof ValidationBuild) {
+				validationBuild = (ValidationBuild)downstreamBuild;
+			}
+		}
+
+		if (validationBuild == null) {
+			throw new RuntimeException("Unable to find a validation build");
+		}
+
+		return validationBuild.getGitHubMessageElement();
+	}
+
 	@Override
 	public void setCompareToUpstream(boolean compareToUpstream) {
 		_compareToUpstream = compareToUpstream;

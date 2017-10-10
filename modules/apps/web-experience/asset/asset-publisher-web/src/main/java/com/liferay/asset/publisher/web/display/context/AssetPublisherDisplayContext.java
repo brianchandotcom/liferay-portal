@@ -911,6 +911,8 @@ public class AssetPublisherDisplayContext {
 
 			portletURL.setParameter(
 				"eventName", _portletResponse.getNamespace() + "selectTag");
+			portletURL.setParameter(
+				"groupIds", StringUtil.merge(getGroupIds()));
 			portletURL.setParameter("selectedTags", "{selectedTags}");
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
@@ -953,8 +955,7 @@ public class AssetPublisherDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		List<AssetVocabulary> vocabularies =
-			AssetVocabularyServiceUtil.getGroupVocabularies(
-				themeDisplay.getScopeGroupId());
+			AssetVocabularyServiceUtil.getGroupsVocabularies(getGroupIds());
 
 		return ListUtil.toString(
 			vocabularies, AssetVocabulary.VOCABULARY_ID_ACCESSOR);

@@ -12,7 +12,7 @@ To use the plugin, include it in your build script:
 ```gradle
 buildscript {
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "2.1.4"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "3.0.0"
 	}
 
 	repositories {
@@ -62,18 +62,6 @@ Property Name | Default Value
 [`docrootDir`](#docrootdir) | <p>**If the `java` plugin is applied:** The first `resources` directory of the `main` source set (by default: `src/main/resources`).</p><p>**If the `war` plugin is applied:** `project.webAppDir`.</p><p>**Otherwise:** `null`</p>
 
 ### BuildCSSTask
-
-Tasks of type `BuildCSSTask` extend [`JavaExec`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html),
-so all its properties and methods, such as [`args`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:args(java.css.Iterable))
-and [`maxHeapSize`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:maxHeapSize),
-are available. They also have the following properties set by default:
-
-Property Name | Default Value
-------------- | -------------
-[`args`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:args) | CSS Builder command line arguments
-[`classpath`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:classpath) | [`project.configurations.cssBuilder`](#liferay-css-builder-dependency)
-[`defaultCharacterEncoding`](https://docs.gradle.org/current/javadoc/org/gradle/api/tasks/JavaExec.html#setDefaultCharacterEncoding(java.lang.String)) | `"UTF-8"`
-[`main`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:main) | `"com.liferay.css.builder.CSSBuilder"`
 
 #### Task Properties
 

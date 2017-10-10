@@ -294,6 +294,8 @@
 		<execute macro="Permissions#removePermissionViaAPI">
 			<var name="resourceAction" value="ADD_DOCUMENT" />
 			<var name="resourceName" value="com.liferay.document.library" />
+			<var name="roleTitle" value="Roles Siterole Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">

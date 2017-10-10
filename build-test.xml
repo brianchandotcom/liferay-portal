@@ -9750,15 +9750,6 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</then>
 		</if>
 
-		<get-testcase-property property.name="ext.plugins.includes" />
-
-		<if>
-			<isset property="ext.plugins.includes" />
-			<then>
-				<prepare-test-ext-properties />
-			</then>
-		</if>
-
 		<get-testcase-property property.name="hook.plugins.includes" />
 
 		<if>

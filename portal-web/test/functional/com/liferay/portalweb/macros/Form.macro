@@ -217,7 +217,7 @@
 		<execute function="AssertClick" locator1="Form#SIDEBAR_BASIC_TAB" value1="Basic" />
 	</command>
 
-	<command name="gotoDuplicate">
+	<command name="duplicate">
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
 			<var name="menuItem" value="Duplicate" />
 			<var name="rowEntry" value="${formName}" />

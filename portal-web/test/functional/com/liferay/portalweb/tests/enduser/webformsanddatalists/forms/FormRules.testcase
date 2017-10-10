@@ -1035,7 +1035,7 @@
 			<var name="portlet" value="Forms" />
 		</execute>
 
-		<execute macro="Form#gotoDuplicate">
+		<execute macro="Form#duplicate">
 			<var name="formName" value="Test Form" />
 		</execute>
 

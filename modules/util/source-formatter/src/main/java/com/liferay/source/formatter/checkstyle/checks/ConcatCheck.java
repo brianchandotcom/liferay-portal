@@ -19,21 +19,20 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
+import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtils;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Hugo Huijser
  */
-public class PlusStatementCheck extends BaseCheck {
+public class ConcatCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.PLUS};
+		return new int[] {TokenTypes.CLASS_DEF, TokenTypes.PLUS};
 	}
 
 	public void setMaxLineLength(int maxLineLength) {
@@ -42,7 +41,168 @@ public class PlusStatementCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		_checkMultiLinesPlusStatement(detailAST);
+		if (detailAST.getType() == TokenTypes.CLASS_DEF) {
+			List<DetailAST> methodCallASTList = DetailASTUtil.getMethodCalls(
+				detailAST, "StringBundler", "concat");
+
+			for (DetailAST methodCallAST : methodCallASTList) {
+				_checkConcatMethodCall(methodCallAST);
+			}
+
+			return;
+		}
+
+		_checkPlusOperator(detailAST);
+	}
+
+	private void _checkConcatMethodCall(DetailAST methodCallAST) {
+		DetailAST elistAST = methodCallAST.findFirstToken(TokenTypes.ELIST);
+
+		DetailAST previousLiteralStringAST = null;
+
+		DetailAST childAST = elistAST.getFirstChild();
+
+		while (true) {
+			if (childAST == null) {
+				break;
+			}
+
+			if (childAST.getType() == TokenTypes.EXPR) {
+				DetailAST grandChildAST = childAST.getFirstChild();
+
+				if (grandChildAST.getType() != TokenTypes.STRING_LITERAL) {
+					previousLiteralStringAST = null;
+				}
+				else {
+					if (previousLiteralStringAST != null) {
+						_checkConcatMethodCallLiteralStrings(
+							previousLiteralStringAST, grandChildAST);
+					}
+
+					previousLiteralStringAST = grandChildAST;
+				}
+			}
+
+			childAST = childAST.getNextSibling();
+		}
+	}
+
+	private void _checkConcatMethodCallLiteralStrings(
+		DetailAST literalStringAST1, DetailAST literalStringAST2) {
+
+		String literalStringValue1 = literalStringAST1.getText();
+
+		literalStringValue1 = literalStringValue1.substring(
+			1, literalStringValue1.length() - 1);
+
+		String literalStringValue2 = literalStringAST2.getText();
+
+		literalStringValue2 = literalStringValue2.substring(
+			1, literalStringValue2.length() - 1);
+
+		if (literalStringAST1.getLineNo() == literalStringAST2.getLineNo()) {
+			log(
+				literalStringAST1.getLineNo(), _MSG_COMBINE_LITERAL_STRINGS,
+				literalStringValue1, literalStringValue2);
+
+			return;
+		}
+
+		_checkLiteralStringStartAndEndCharacter(
+			literalStringValue1, literalStringValue2,
+			literalStringAST1.getLineNo());
+
+		String line = getLine(literalStringAST1.getLineNo() - 1);
+
+		int lineLength = CommonUtils.lengthExpandedTabs(
+			line, line.length(), getTabWidth());
+
+		int pos = _getStringBreakPos(
+			literalStringValue1, literalStringValue2,
+			_maxLineLength - lineLength);
+
+		if (pos != -1) {
+			log(
+				literalStringAST2.getLineNo(), _MSG_MOVE_LITERAL_STRING,
+				literalStringValue2.substring(0, pos + 1));
+		}
+	}
+
+	private void _checkLiteralStringStartAndEndCharacter(
+		String literalString1, String literalString2, int lineCount) {
+
+		if (literalString1.endsWith(StringPool.SLASH)) {
+			log(
+				lineCount, _MSG_INVALID_END_CHARACTER,
+				literalString1.charAt(literalString1.length() - 1));
+		}
+
+		if (literalString2.startsWith(StringPool.SPACE) ||
+			(!literalString1.endsWith(StringPool.SPACE) &&
+			 literalString2.matches("^[-:;.].*"))) {
+
+			log(
+				lineCount + 1, _MSG_INVALID_START_CHARACTER,
+				literalString2.charAt(0));
+		}
+	}
+
+	private void _checkMultiPlusStatement(DetailAST detailAST) {
+		FileContents fileContents = getFileContents();
+
+		String fileName = StringUtil.replace(
+			fileContents.getFileName(), '\\', '/');
+
+		if (!fileName.contains("/portal-kernel/")) {
+			return;
+		}
+
+		DetailAST parentAST = detailAST.getParent();
+
+		if (parentAST.getType() == TokenTypes.PLUS) {
+			return;
+		}
+
+		if (DetailASTUtil.hasParentWithTokenType(
+				detailAST, TokenTypes.ANNOTATION) ||
+			!DetailASTUtil.hasParentWithTokenType(
+				detailAST, TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF)) {
+
+			return;
+		}
+
+		boolean containsLiteralString = false;
+		int count = 1;
+
+		DetailAST firstChild = detailAST;
+
+		while (true) {
+			if (firstChild.getType() != TokenTypes.PLUS) {
+				break;
+			}
+
+			if (!containsLiteralString) {
+				List<DetailAST> listeralStringASTList =
+					DetailASTUtil.getAllChildTokens(
+						firstChild, false, TokenTypes.STRING_LITERAL);
+
+				if (!listeralStringASTList.isEmpty()) {
+					containsLiteralString = true;
+				}
+			}
+
+			count++;
+
+			firstChild = firstChild.getFirstChild();
+		}
+
+		if (containsLiteralString && (count > 3)) {
+			log(detailAST.getLineNo(), _MSG_USE_STRINGBUNDLER_CONCAT);
+		}
+	}
+
+	private void _checkPlusOperator(DetailAST detailAST) {
+		_checkMultiPlusStatement(detailAST);
 		_checkTabbing(detailAST);
 
 		if (detailAST.getChildCount() != 2) {
@@ -77,22 +237,8 @@ public class PlusStatementCheck extends BaseCheck {
 			return;
 		}
 
-		if (literalString1.endsWith(StringPool.SLASH)) {
-			log(
-				detailAST.getLineNo(), _MSG_INVALID_END_CHARACTER,
-				literalString1.charAt(literalString1.length() - 1));
-		}
-
-		if (literalString2.startsWith(StringPool.SPACE) ||
-			(!literalString1.endsWith(StringPool.SPACE) &&
-			 literalString2.matches("^[-:;.].*"))) {
-
-			log(
-				lastChild.getLineNo(), _MSG_INVALID_START_CHARACTER,
-				literalString2.charAt(0));
-
-			return;
-		}
+		_checkLiteralStringStartAndEndCharacter(
+			literalString1, literalString2, detailAST.getLineNo());
 
 		String line1 = getLine(lastChild.getLineNo() - 2);
 		String line2 = getLine(lastChild.getLineNo() - 1);
@@ -133,44 +279,6 @@ public class PlusStatementCheck extends BaseCheck {
 			log(
 				lastChild.getLineNo(), _MSG_MOVE_LITERAL_STRING,
 				literalString2.substring(0, pos + 1));
-		}
-	}
-
-	private void _checkMultiLinesPlusStatement(DetailAST detailAST) {
-		DetailAST firstChildAST = detailAST.getFirstChild();
-
-		if (firstChildAST.getType() == TokenTypes.PLUS) {
-			return;
-		}
-
-		if (DetailASTUtil.hasParentWithTokenType(
-				detailAST, TokenTypes.ANNOTATION) ||
-			!DetailASTUtil.hasParentWithTokenType(
-				detailAST, TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF)) {
-
-			return;
-		}
-
-		Set<Integer> lineNumbers = new HashSet<>();
-
-		lineNumbers.add(detailAST.getLineNo());
-
-		DetailAST parentAST = detailAST;
-
-		while (true) {
-			if (parentAST.getType() != TokenTypes.PLUS) {
-				break;
-			}
-
-			DetailAST lastChildAST = parentAST.getLastChild();
-
-			lineNumbers.add(lastChildAST.getLineNo());
-
-			parentAST = parentAST.getParent();
-		}
-
-		if (lineNumbers.size() > 3) {
-			log(detailAST.getLineNo(), _MSG_STATEMENT_TOO_LONG);
 		}
 	}
 
@@ -319,8 +427,8 @@ public class PlusStatementCheck extends BaseCheck {
 	private static final String _MSG_MOVE_LITERAL_STRING =
 		"literal.string.move";
 
-	private static final String _MSG_STATEMENT_TOO_LONG =
-		"plus.statement.too.long";
+	private static final String _MSG_USE_STRINGBUNDLER_CONCAT =
+		"use.stringbundler.concat";
 
 	private int _maxLineLength = 80;
 

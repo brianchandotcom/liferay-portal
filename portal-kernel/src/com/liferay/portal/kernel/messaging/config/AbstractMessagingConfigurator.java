@@ -125,8 +125,9 @@ public abstract class AbstractMessagingConfigurator
 						destinationName, messageListeners.getValue()));
 
 				Filter filter = registry.getFilter(
-					"(&(destination.name=" + destinationName +
-						")(objectClass=" + Destination.class.getName() + "))");
+					StringBundler.concat(
+						"(&(destination.name=", destinationName,
+						")(objectClass=", Destination.class.getName(), "))"));
 
 				serviceDependencyManager.registerDependencies(filter);
 			}
@@ -348,8 +349,9 @@ public abstract class AbstractMessagingConfigurator
 				});
 
 			Filter filter = registry.getFilter(
-				"(&(destination.name=" + destinationName + ")(objectClass=" +
-					Destination.class.getName() + "))");
+				StringBundler.concat(
+					"(&(destination.name=", destinationName, ")(objectClass=",
+					Destination.class.getName(), "))"));
 
 			serviceDependencyManager.registerDependencies(filter);
 		}

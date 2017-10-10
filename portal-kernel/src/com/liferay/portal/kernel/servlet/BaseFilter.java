@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.servlet;
 
 import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
@@ -136,7 +137,8 @@ public abstract class BaseFilter implements LiferayFilter {
 			path = request.getRequestURI();
 
 			log.debug(
-				"[" + threadName + "]" + depther + "> " + logName + " " + path);
+				StringBundler.concat(
+					"[", threadName, "]", depther, "> ", logName, " ", path));
 		}
 
 		filterChain.doFilter(request, response);
@@ -154,8 +156,9 @@ public abstract class BaseFilter implements LiferayFilter {
 		}
 
 		log.debug(
-			"[" + threadName + "]" + depther + "< " + logName + " " + path +
-				" " + (endTime - startTime) + " ms");
+			StringBundler.concat(
+				"[", threadName, "]", depther, "< ", logName, " ", path, " ",
+				String.valueOf(endTime - startTime), " ms"));
 
 		if (depther.length() > 0) {
 			depther = depther.substring(1);

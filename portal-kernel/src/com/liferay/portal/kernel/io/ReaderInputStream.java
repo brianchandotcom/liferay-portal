@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.io;
 
 import com.liferay.portal.kernel.nio.charset.CharsetEncoderUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
@@ -63,8 +64,9 @@ public class ReaderInputStream extends InputStream {
 
 		if (outputBufferSize < _maxBytesPerChar) {
 			throw new IllegalArgumentException(
-				"Output buffer size " + outputBufferSize + " is less than " +
-					_maxBytesPerChar);
+				StringBundler.concat(
+					"Output buffer size ", String.valueOf(outputBufferSize),
+					" is less than ", String.valueOf(_maxBytesPerChar)));
 		}
 
 		_outputBuffer = ByteBuffer.allocate(outputBufferSize);

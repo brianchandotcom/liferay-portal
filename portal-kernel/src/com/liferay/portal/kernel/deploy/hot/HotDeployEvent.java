@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -150,8 +151,9 @@ public class HotDeployEvent {
 			String servletContextName = _servletContext.getServletContextName();
 
 			_log.info(
-				"Plugin " + servletContextName + " requires " +
-					StringUtil.merge(_dependentServletContextNames, ", "));
+				StringBundler.concat(
+					"Plugin ", servletContextName, " requires ",
+					StringUtil.merge(_dependentServletContextNames, ", ")));
 		}
 	}
 

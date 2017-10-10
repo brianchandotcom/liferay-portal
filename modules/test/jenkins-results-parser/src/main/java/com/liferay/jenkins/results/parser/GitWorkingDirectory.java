@@ -567,7 +567,19 @@ public class GitWorkingDirectory {
 	public Remote getRemote(String name) {
 		Map<String, Remote> remotes = getRemotes();
 
-		return remotes.get(name);
+		name = name.trim();
+
+		Remote remote = remotes.get(name);
+
+		if (remote == null && name.equals("upstream")) {
+			JenkinsResultsParserUtil.sleep(1000);
+
+			remotes = getRemotes();
+
+			return remotes.get(name);
+		}
+
+		return remote;
 	}
 
 	public Set<String> getRemoteNames() {
@@ -638,12 +650,24 @@ public class GitWorkingDirectory {
 		lines = Arrays.copyOfRange(lines, x, lines.length);
 
 		try {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("Found remotes: ");
+
 			for (int i = 0; i < lines.length; i = i + 2) {
 				Remote remote = new Remote(
 					this, Arrays.copyOfRange(lines, i, i + 2));
 
+				if (i > 0) {
+					sb.append(", ");
+				}
+
+				sb.append(remote.getName());
+
 				remotes.put(remote.getName(), remote);
 			}
+
+			System.out.println(sb);
 		}
 		catch (Throwable t) {
 			System.out.println("Unable to parse remotes\n" + standardOut);

@@ -546,8 +546,10 @@ public class TopLevelBuild extends BaseBuild {
 	}
 
 	protected Element getJenkinsReportBodyElement() {
-		Map<String, Build> axisBuilds = new TreeMap<>();
+		Map<String, Build> nonBatchBuilds = new TreeMap<>();
 		Map<String, Build> downstreamBuilds = new TreeMap<>();
+
+		nonBatchBuilds.put(getDisplayName(), this);
 
 		for (Build downstreamBuild : getDownstreamBuilds(null)) {
 			String downstreamBuildDisplayName =
@@ -557,16 +559,19 @@ public class TopLevelBuild extends BaseBuild {
 				return null;
 			}
 
-			downstreamBuilds.put(
-				downstreamBuild.getDisplayName(), downstreamBuild);
+			downstreamBuilds.put(downstreamBuildDisplayName, downstreamBuild);
 
-			for (Build axisBuild : downstreamBuild.getDownstreamBuilds(null)) {
-				String axisKey =
-					downstreamBuild.getDisplayName() + "/" +
-						JenkinsResultsParserUtil.getAxisVariable(
-							axisBuild.getBuildURL());
+			if (downstreamBuild instanceof BatchBuild) {
+				for (Build nonBatchBuild :
+						downstreamBuild.getDownstreamBuilds(null)) {
 
-				axisBuilds.put(axisKey, axisBuild);
+					nonBatchBuilds.put(
+						nonBatchBuild.getDisplayName(), nonBatchBuild);
+				}
+			}
+			else {
+				nonBatchBuilds.put(
+					downstreamBuild.getDisplayName(), downstreamBuild);
 			}
 		}
 
@@ -597,8 +602,8 @@ public class TopLevelBuild extends BaseBuild {
 
 		Dom4JUtil.addToElement(
 			bodyElement, h1Element, h2Element,
-			getJenkinsReportSummaryElement(axisBuilds),
-			getJenkinsReportTimelineElement(axisBuilds),
+			getJenkinsReportSummaryElement(nonBatchBuilds),
+			getJenkinsReportTimelineElement(nonBatchBuilds),
 			getJenkinsReportTopLevelTableElement(),
 			getJenkinsReportDownstreamElement(downstreamBuilds));
 
@@ -772,14 +777,14 @@ public class TopLevelBuild extends BaseBuild {
 	}
 
 	protected Element getJenkinsReportSummaryElement(
-		Map<String, Build> axisBuilds) {
+		Map<String, Build> nonBatchBuildss) {
 
 		Element buildTimeElement = Dom4JUtil.getNewElement(
 			"p", null, "Build Time: ",
 			JenkinsResultsParserUtil.toDurationString(getDuration()));
 
 		Element ciUsageElement = getJenkinsReportTotalCIUsageElement(
-			axisBuilds);
+			nonBatchBuildss);
 
 		Element longestAxisElement = getLongestRunningDownstreamBuildElement();
 
@@ -794,7 +799,7 @@ public class TopLevelBuild extends BaseBuild {
 			JenkinsResultsParserUtil.toDateString(startTime));
 
 		Element vmUsageElement = getJenkinsReportTotalVMUSageElement(
-			axisBuilds);
+			nonBatchBuildss);
 
 		Element divElement = Dom4JUtil.getNewElement("div");
 
@@ -807,7 +812,7 @@ public class TopLevelBuild extends BaseBuild {
 	}
 
 	protected Element getJenkinsReportTimelineElement(
-		Map<String, Build> builds) {
+		Map<String, Build> nonBatchBuilds) {
 
 		long topLevelDuration = getDuration();
 		long topLevelStartTime = getStartTimestamp();
@@ -817,8 +822,8 @@ public class TopLevelBuild extends BaseBuild {
 		long[] invocationData = new long[dataPoints];
 		long[] slaveUsageData = new long[dataPoints];
 
-		for (String key : builds.keySet()) {
-			Build build = builds.get(key);
+		for (String key : nonBatchBuilds.keySet()) {
+			Build build = nonBatchBuilds.get(key);
 
 			long buildDuration = build.getDuration();
 			long buildStartTime = build.getStartTimestamp();
@@ -899,12 +904,12 @@ public class TopLevelBuild extends BaseBuild {
 	}
 
 	protected Element getJenkinsReportTotalCIUsageElement(
-		Map<String, Build> axisBuilds) {
+		Map<String, Build> nonBatchBuilds) {
 
 		long totalTime = 0;
 
-		for (Build axisBuild : axisBuilds.values()) {
-			long axisDuration = axisBuild.getDuration();
+		for (Build nonBatchBuild : nonBatchBuilds.values()) {
+			long axisDuration = nonBatchBuild.getDuration();
 
 			totalTime = totalTime + axisDuration;
 		}
@@ -918,9 +923,9 @@ public class TopLevelBuild extends BaseBuild {
 	}
 
 	protected Element getJenkinsReportTotalVMUSageElement(
-		Map<String, Build> axisBuilds) {
+		Map<String, Build> nonBatchBuilds) {
 
-		long totalVMUsed = axisBuilds.size();
+		long totalVMUsed = nonBatchBuilds.size();
 
 		Element totalVMUsageElement = Dom4JUtil.getNewElement(
 			"p", null, "Total VM used: " + totalVMUsed + " slaves");

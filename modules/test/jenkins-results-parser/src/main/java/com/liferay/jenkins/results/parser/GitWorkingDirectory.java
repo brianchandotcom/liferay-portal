@@ -1289,7 +1289,8 @@ public class GitWorkingDirectory {
 	private static final List<String> _publicOnlyRepositoryNames =
 		Arrays.asList(
 			new String[] {
-				"liferay-blade-samples", "liferay-plugins", "liferay-portal"
+				"liferay-binaries-cache-2017", "liferay-blade-samples",
+				"liferay-plugins", "liferay-portal", "portals-pluto"
 			});
 
 	private File _gitDirectory;

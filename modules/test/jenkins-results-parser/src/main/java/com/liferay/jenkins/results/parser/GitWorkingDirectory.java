@@ -144,25 +144,6 @@ public class GitWorkingDirectory {
 	}
 
 	public void checkoutBranch(Branch branch, String options) {
-		if (!branchExists(branch.getName(), null)) {
-			throw new IllegalArgumentException(
-				JenkinsResultsParserUtil.combine(
-					"The branch ", branch.getName(), " could not be found"));
-		}
-
-		Branch currentBranch = getCurrentBranch();
-
-		if (currentBranch != null) {
-			String currentBranchName = currentBranch.getName();
-
-			if (currentBranchName.equals(branch.getName())) {
-				System.out.println(
-					currentBranchName + " is already checked out");
-
-				return;
-			}
-		}
-
 		waitForIndexLock();
 
 		StringBuilder sb = new StringBuilder();
@@ -222,7 +203,7 @@ public class GitWorkingDirectory {
 			timeout++;
 
 			if (timeout >= 59) {
-				currentBranch = getCurrentBranch();
+				Branch currentBranch = getCurrentBranch();
 
 				if ((currentBranch != null) &&
 					branchName.equals(currentBranch.getName())) {

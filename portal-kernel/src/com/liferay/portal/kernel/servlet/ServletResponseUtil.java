@@ -258,11 +258,7 @@ public class ServletResponseUtil {
 			long fullLength, String contentType)
 		throws IOException {
 
-		OutputStream outputStream = null;
-
-		try {
-			outputStream = response.getOutputStream();
-
+		try (OutputStream outputStream = response.getOutputStream()) {
 			Range fullRange = new Range(0, fullLength - 1, fullLength);
 
 			Range firstRange = null;
@@ -281,7 +277,7 @@ public class ServletResponseUtil {
 				setHeaders(
 					request, response, fileName, contentType, null, fullRange);
 
-				copyRange(
+				_copyRange(
 					inputStream, outputStream, fullRange.getStart(),
 					fullRange.getLength());
 			}
@@ -299,7 +295,7 @@ public class ServletResponseUtil {
 
 				response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
 
-				copyRange(
+				_copyRange(
 					inputStream, outputStream, range.getStart(),
 					range.getLength());
 			}
@@ -324,9 +320,15 @@ public class ServletResponseUtil {
 
 				response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
 
-				for (int i = 0; i < ranges.size(); i++) {
-					Range range = ranges.get(i);
+				boolean sequentialRangeList = _isSequentialRangeList(ranges);
 
+				if (!sequentialRangeList) {
+					inputStream = _toRandomAccessInputStream(inputStream);
+				}
+
+				Range previousRange = null;
+
+				for (Range curRange : ranges) {
 					servletOutputStream.println();
 					servletOutputStream.println(
 						StringPool.DOUBLE_DASH + boundary);
@@ -334,12 +336,22 @@ public class ServletResponseUtil {
 						HttpHeaders.CONTENT_TYPE + ": " + contentType);
 					servletOutputStream.println(
 						HttpHeaders.CONTENT_RANGE + ": " +
-							range.getContentRange());
+							curRange.getContentRange());
 					servletOutputStream.println();
 
-					inputStream = copyRange(
-						inputStream, outputStream, range.getStart(),
-						range.getLength());
+					long start = curRange.getStart();
+
+					if (sequentialRangeList) {
+						if (previousRange != null) {
+							start -= previousRange.getEnd() + 1;
+						}
+
+						previousRange = curRange;
+					}
+
+					_copyRange(
+						inputStream, servletOutputStream, start,
+						curRange.getLength());
 				}
 
 				servletOutputStream.println();
@@ -348,11 +360,7 @@ public class ServletResponseUtil {
 			}
 		}
 		finally {
-			try {
-				inputStream.close();
-			}
-			catch (IOException ioe) {
-			}
+			StreamUtil.cleanUp(inputStream);
 		}
 	}
 
@@ -578,48 +586,17 @@ public class ServletResponseUtil {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected static InputStream copyRange(
 			InputStream inputStream, OutputStream outputStream, long start,
 			long length)
 		throws IOException {
 
-		if (inputStream instanceof FileInputStream) {
-			FileInputStream fileInputStream = (FileInputStream)inputStream;
-
-			FileChannel fileChannel = fileInputStream.getChannel();
-
-			fileChannel.transferTo(
-				start, length, Channels.newChannel(outputStream));
-
-			return fileInputStream;
-		}
-		else if (inputStream instanceof ByteArrayInputStream) {
-			ByteArrayInputStream byteArrayInputStream =
-				(ByteArrayInputStream)inputStream;
-
-			byteArrayInputStream.reset();
-
-			byteArrayInputStream.skip(start);
-
-			StreamUtil.transfer(byteArrayInputStream, outputStream, length);
-
-			return byteArrayInputStream;
-		}
-		else if (inputStream instanceof RandomAccessInputStream) {
-			RandomAccessInputStream randomAccessInputStream =
-				(RandomAccessInputStream)inputStream;
-
-			randomAccessInputStream.seek(start);
-
-			StreamUtil.transfer(
-				randomAccessInputStream, outputStream, StreamUtil.BUFFER_SIZE,
-				false, length);
-
-			return randomAccessInputStream;
-		}
-
-		return copyRange(
-			new RandomAccessInputStream(inputStream), outputStream, start,
+		return _copyRange(
+			_toRandomAccessInputStream(inputStream), outputStream, start,
 			length);
 	}
 
@@ -742,6 +719,94 @@ public class ServletResponseUtil {
 			response.setHeader(
 				HttpHeaders.CONTENT_LENGTH, String.valueOf(range.getLength()));
 		}
+	}
+
+	private static InputStream _copyRange(
+			InputStream inputStream, OutputStream outputStream, long start,
+			long length)
+		throws IOException {
+
+		if (inputStream instanceof FileInputStream) {
+			FileInputStream fileInputStream = (FileInputStream)inputStream;
+
+			FileChannel fileChannel = fileInputStream.getChannel();
+
+			fileChannel.transferTo(
+				start, length, Channels.newChannel(outputStream));
+
+			return fileInputStream;
+		}
+		else if (inputStream instanceof ByteArrayInputStream) {
+			ByteArrayInputStream byteArrayInputStream =
+				(ByteArrayInputStream)inputStream;
+
+			byteArrayInputStream.reset();
+
+			byteArrayInputStream.skip(start);
+
+			StreamUtil.transfer(
+				byteArrayInputStream, outputStream, StreamUtil.BUFFER_SIZE,
+				false, length);
+
+			return byteArrayInputStream;
+		}
+		else if (inputStream instanceof RandomAccessInputStream) {
+			RandomAccessInputStream randomAccessInputStream =
+				(RandomAccessInputStream)inputStream;
+
+			randomAccessInputStream.seek(start);
+
+			StreamUtil.transfer(
+				randomAccessInputStream, outputStream, StreamUtil.BUFFER_SIZE,
+				false, length);
+
+			return randomAccessInputStream;
+		}
+
+		inputStream.skip(start);
+
+		StreamUtil.transfer(
+			inputStream, outputStream, StreamUtil.BUFFER_SIZE, false, length);
+
+		return inputStream;
+	}
+
+	private static boolean _isRandomAccessSupported(InputStream inputStream) {
+		if (inputStream instanceof ByteArrayInputStream ||
+			inputStream instanceof FileInputStream ||
+			inputStream instanceof RandomAccessInputStream) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private static boolean _isSequentialRangeList(List<Range> ranges) {
+		Range previousRange = null;
+
+		for (Range range : ranges) {
+			if ((previousRange != null) &&
+				(range.getStart() <= previousRange.getEnd())) {
+
+				return false;
+			}
+
+			previousRange = range;
+		}
+
+		return true;
+	}
+
+	private static InputStream _toRandomAccessInputStream(
+			InputStream inputStream)
+		throws IOException {
+
+		if (_isRandomAccessSupported(inputStream)) {
+			return inputStream;
+		}
+
+		return new RandomAccessInputStream(inputStream);
 	}
 
 	private static final String _CLIENT_ABORT_EXCEPTION =

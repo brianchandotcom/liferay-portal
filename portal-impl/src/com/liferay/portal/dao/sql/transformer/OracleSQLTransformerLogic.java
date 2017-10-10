@@ -14,7 +14,9 @@
 
 package com.liferay.portal.dao.sql.transformer;
 
+import com.liferay.portal.internal.dao.sql.transformer.SQLFunctionTransformer;
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.function.Function;
@@ -33,6 +35,15 @@ public class OracleSQLTransformerLogic extends BaseSQLTransformerLogic {
 			getCastLongFunction(), getCastTextFunction(), getConcatFunction(),
 			getIntegerDivisionFunction(), getNullDateFunction(),
 			_getEscapeFunction(), _getNotEqualsBlankStringFunction());
+	}
+
+	@Override
+	protected Function<String, String> getConcatFunction() {
+		SQLFunctionTransformer sqlFunctionTransformer =
+			new SQLFunctionTransformer(
+				"CONCAT(", StringPool.BLANK, " || ", StringPool.BLANK);
+
+		return sqlFunctionTransformer::transform;
 	}
 
 	@Override

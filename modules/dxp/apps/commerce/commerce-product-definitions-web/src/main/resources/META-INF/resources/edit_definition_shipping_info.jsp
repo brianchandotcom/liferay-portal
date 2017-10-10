@@ -40,25 +40,27 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 
 	<aui:model-context bean="<%= cpDefinition %>" model="<%= CPDefinition.class %>" />
 
-	<aui:fieldset>
-		<aui:input name="shippable" value="<%= shippable %>" />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:input name="shippable" value="<%= shippable %>" />
 
-		<div class="<%= shippable ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />shippableOptions">
-			<aui:input name="freeShipping" />
+			<div class="<%= shippable ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />shippableOptions">
+				<aui:input name="freeShipping" />
 
-			<aui:input name="shipSeparately" />
+				<aui:input name="shipSeparately" />
 
-			<aui:input name="shippingExtraPrice" />
-		</div>
+				<aui:input name="shippingExtraPrice" />
+			</div>
 
-		<aui:input name="width" suffix="<%= cpDefinitionShippingInfoDisplayContext.getCPMeasurementUnitName(CPConstants.MEASUREMENT_UNIT_TYPE_DIMENSION) %>" />
+			<aui:input name="width" suffix="<%= cpDefinitionShippingInfoDisplayContext.getCPMeasurementUnitName(CPConstants.MEASUREMENT_UNIT_TYPE_DIMENSION) %>" />
 
-		<aui:input name="height" suffix="<%= cpDefinitionShippingInfoDisplayContext.getCPMeasurementUnitName(CPConstants.MEASUREMENT_UNIT_TYPE_DIMENSION) %>" />
+			<aui:input name="height" suffix="<%= cpDefinitionShippingInfoDisplayContext.getCPMeasurementUnitName(CPConstants.MEASUREMENT_UNIT_TYPE_DIMENSION) %>" />
 
-		<aui:input name="depth" suffix="<%= cpDefinitionShippingInfoDisplayContext.getCPMeasurementUnitName(CPConstants.MEASUREMENT_UNIT_TYPE_DIMENSION) %>" />
+			<aui:input name="depth" suffix="<%= cpDefinitionShippingInfoDisplayContext.getCPMeasurementUnitName(CPConstants.MEASUREMENT_UNIT_TYPE_DIMENSION) %>" />
 
-		<aui:input name="weight" suffix="<%= cpDefinitionShippingInfoDisplayContext.getCPMeasurementUnitName(CPConstants.MEASUREMENT_UNIT_TYPE_WEIGHT) %>" />
-	</aui:fieldset>
+			<aui:input name="weight" suffix="<%= cpDefinitionShippingInfoDisplayContext.getCPMeasurementUnitName(CPConstants.MEASUREMENT_UNIT_TYPE_WEIGHT) %>" />
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

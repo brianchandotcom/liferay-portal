@@ -46,11 +46,15 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpInstance.g
 
 	<aui:model-context bean="<%= cpInstance %>" model="<%= CPInstance.class %>" />
 
-	<aui:fieldset>
-		<aui:input name="cost" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:fieldset>
+				<aui:input name="cost" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" />
 
-		<aui:input name="price" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" />
-	</aui:fieldset>
+				<aui:input name="price" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" />
+			</aui:fieldset>
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

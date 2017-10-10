@@ -66,44 +66,48 @@ Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLoca
 		id="translationManager"
 	/>
 
-	<aui:fieldset>
-		<div class="commerce-product-definition-url-title form-group">
-			<label for="<portlet:namespace />friendlyURL"><liferay-ui:message key="friendly-url" /> <liferay-ui:icon-help message='<%= LanguageUtil.format(request, "for-example-x", "<em>/news</em>", false) %>' /></label>
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:fieldset>
+				<div class="commerce-product-definition-url-title form-group">
+					<label for="<portlet:namespace />friendlyURL"><liferay-ui:message key="friendly-url" /> <liferay-ui:icon-help message='<%= LanguageUtil.format(request, "for-example-x", "<em>/news</em>", false) %>' /></label>
 
-			<div class="input-group lfr-friendly-url-input-group">
-				<span class="input-group-addon" id="<portlet:namespace />urlBase">
-					<span class="input-group-constrain"><liferay-ui:message key="<%= StringUtil.shorten(friendlyURLBase.toString(), 40) %>" /></span>
-				</span>
+					<div class="input-group lfr-friendly-url-input-group">
+						<span class="input-group-addon" id="<portlet:namespace />urlBase">
+							<span class="input-group-constrain"><liferay-ui:message key="<%= StringUtil.shorten(friendlyURLBase.toString(), 40) %>" /></span>
+						</span>
 
-				<liferay-ui:input-localized cssClass="form-control" defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="urlTitleMapAsXML" xml="<%= HttpUtil.decodeURL(cpDefinitionsSEOInfoDisplayContext.getUrlTitleMapAsXML()) %>" />
+						<liferay-ui:input-localized cssClass="form-control" defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="urlTitleMapAsXML" xml="<%= HttpUtil.decodeURL(cpDefinitionsSEOInfoDisplayContext.getUrlTitleMapAsXML()) %>" />
 
-				<c:if test="<%= cpDefinition != null %>">
+						<c:if test="<%= cpDefinition != null %>">
 
-					<%
-					Map<Locale, String> urlTitleMap = cpDefinition.getUrlTitleMap();
+							<%
+							Map<Locale, String> urlTitleMap = cpDefinition.getUrlTitleMap();
 
-					String productURL = friendlyURLBase + urlTitleMap.get(themeDisplay.getSiteDefaultLocale());
-					%>
+							String productURL = friendlyURLBase + urlTitleMap.get(themeDisplay.getSiteDefaultLocale());
+							%>
 
-					<span class="input-group-addon" id="<portlet:namespace />urlIcon">
-						<liferay-ui:icon
-							iconCssClass="icon-new-window"
-							label="<%= false %>"
-							message="go-to-page"
-							target="_blank"
-							url="<%= productURL %>"
-						/>
-					</span>
-				</c:if>
-			</div>
-		</div>
+							<span class="input-group-addon" id="<portlet:namespace />urlIcon">
+								<liferay-ui:icon
+									iconCssClass="icon-new-window"
+									label="<%= false %>"
+									message="go-to-page"
+									target="_blank"
+									url="<%= productURL %>"
+								/>
+							</span>
+						</c:if>
+					</div>
+				</div>
 
-		<aui:input label="meta-title" localized="<%= true %>" name="metaTitleMapAsXML" type="text" wrapperCssClass="commerce-product-definition-meta-title" />
+				<aui:input label="meta-title" localized="<%= true %>" name="metaTitleMapAsXML" type="text" wrapperCssClass="commerce-product-definition-meta-title" />
 
-		<aui:input label="meta-keywords" localized="<%= true %>" name="metaKeywordsMapAsXML" type="textarea" wrapperCssClass="commerce-product-definition-meta-keywords" />
+				<aui:input label="meta-keywords" localized="<%= true %>" name="metaKeywordsMapAsXML" type="textarea" wrapperCssClass="commerce-product-definition-meta-keywords" />
 
-		<aui:input label="meta-description" localized="<%= true %>" name="metaDescriptionMapAsXML" type="textarea" wrapperCssClass="commerce-product-definition-meta-description" />
-	</aui:fieldset>
+				<aui:input label="meta-description" localized="<%= true %>" name="metaDescriptionMapAsXML" type="textarea" wrapperCssClass="commerce-product-definition-meta-description" />
+			</aui:fieldset>
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

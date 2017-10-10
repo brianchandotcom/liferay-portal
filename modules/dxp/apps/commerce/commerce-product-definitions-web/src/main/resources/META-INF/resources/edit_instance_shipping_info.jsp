@@ -46,15 +46,19 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpInstance.g
 
 	<aui:model-context bean="<%= cpInstance %>" model="<%= CPInstance.class %>" />
 
-	<aui:fieldset>
-		<aui:input name="width" suffix="<%= cpInstanceShippingInfoDisplayContext.getCPMeasurementUnitName(CPConstants.MEASUREMENT_UNIT_TYPE_DIMENSION) %>" />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:fieldset>
+				<aui:input name="width" suffix="<%= cpInstanceShippingInfoDisplayContext.getCPMeasurementUnitName(CPConstants.MEASUREMENT_UNIT_TYPE_DIMENSION) %>" />
 
-		<aui:input name="height" suffix="<%= cpInstanceShippingInfoDisplayContext.getCPMeasurementUnitName(CPConstants.MEASUREMENT_UNIT_TYPE_DIMENSION) %>" />
+				<aui:input name="height" suffix="<%= cpInstanceShippingInfoDisplayContext.getCPMeasurementUnitName(CPConstants.MEASUREMENT_UNIT_TYPE_DIMENSION) %>" />
 
-		<aui:input name="depth" suffix="<%= cpInstanceShippingInfoDisplayContext.getCPMeasurementUnitName(CPConstants.MEASUREMENT_UNIT_TYPE_DIMENSION) %>" />
+				<aui:input name="depth" suffix="<%= cpInstanceShippingInfoDisplayContext.getCPMeasurementUnitName(CPConstants.MEASUREMENT_UNIT_TYPE_DIMENSION) %>" />
 
-		<aui:input name="weight" suffix="<%= cpInstanceShippingInfoDisplayContext.getCPMeasurementUnitName(CPConstants.MEASUREMENT_UNIT_TYPE_WEIGHT) %>" />
-	</aui:fieldset>
+				<aui:input name="weight" suffix="<%= cpInstanceShippingInfoDisplayContext.getCPMeasurementUnitName(CPConstants.MEASUREMENT_UNIT_TYPE_WEIGHT) %>" />
+			</aui:fieldset>
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

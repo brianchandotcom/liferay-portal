@@ -38,25 +38,29 @@ long commerceCountryId = commerceCountriesDisplayContext.getCommerceCountryId();
 
 	<aui:model-context bean="<%= commerceCountry %>" model="<%= CommerceCountry.class %>" />
 
-	<aui:fieldset>
-		<aui:input autoFocus="<%= true %>" name="name" />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:fieldset>
+				<aui:input autoFocus="<%= true %>" name="name" />
 
-		<aui:input name="billingAllowed" />
+				<aui:input name="billingAllowed" />
 
-		<aui:input name="shippingAllowed" />
+				<aui:input name="shippingAllowed" />
 
-		<aui:input name="twoLettersISOCode" />
+				<aui:input name="twoLettersISOCode" />
 
-		<aui:input name="threeLettersISOCode" />
+				<aui:input name="threeLettersISOCode" />
 
-		<aui:input name="numericISOCode" />
+				<aui:input name="numericISOCode" />
 
-		<aui:input name="subjectToVAT" />
+				<aui:input name="subjectToVAT" />
 
-		<aui:input name="priority" />
+				<aui:input name="priority" />
 
-		<aui:input name="active" />
-	</aui:fieldset>
+				<aui:input name="active" />
+			</aui:fieldset>
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

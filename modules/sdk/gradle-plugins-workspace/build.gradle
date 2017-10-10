@@ -40,7 +40,7 @@ copyGradleTestDependencies {
 }
 
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins", version: "3.5.6"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins", version: "3.5.7"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "1.0.12"
 	compile group: "com.liferay", name: "com.liferay.portal.tools.bundle.support", version: "3.2.0"
 	compile group: "de.undercouch", name: "gradle-download-task", version: "3.2.0"

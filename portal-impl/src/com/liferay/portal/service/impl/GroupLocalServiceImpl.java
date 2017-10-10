@@ -3931,9 +3931,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		friendlyURL = StringPool.SLASH + getFriendlyURL(friendlyName);
 
-		String originalFriendlyURL = friendlyURL;
+		long i = 0;
 
-		for (int i = 1;; i++) {
+		while (true) {
 			try {
 				validateFriendlyURL(
 					companyId, groupId, classNameId, classPK, friendlyURL);
@@ -3944,12 +3944,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				int type = gfurle.getType();
 
 				if (type == GroupFriendlyURLException.DUPLICATE) {
-					friendlyURL = originalFriendlyURL + i;
+					friendlyURL = friendlyURL + "-" + ++i;
 				}
 				else {
-					friendlyURL = StringPool.SLASH + classPK;
-
-					break;
+					friendlyURL = StringPool.SLASH + "group-" + classPK;
 				}
 			}
 		}
@@ -4358,8 +4356,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			if (((classNameId != groupClassNameId) &&
 				 !groupIdFriendlyURL.equals(String.valueOf(classPK)) &&
 				 !PropsValues.USERS_SCREEN_NAME_ALLOW_NUMERIC) ||
-				((classNameId == groupClassNameId) &&
-				 !groupIdFriendlyURL.equals(String.valueOf(groupId)))) {
+				(classNameId == groupClassNameId)) {
 
 				GroupFriendlyURLException gfurle =
 					new GroupFriendlyURLException(

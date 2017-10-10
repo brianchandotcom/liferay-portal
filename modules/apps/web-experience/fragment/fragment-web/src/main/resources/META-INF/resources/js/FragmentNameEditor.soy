@@ -4,6 +4,7 @@
  * FragmentNameEditor
  */
 {template .render}
+	{@param editorTitle: string}
 	{@param namespace: string}
 	{@param spritemap: string}
 	{@param? _handleModalHidden: any}
@@ -11,7 +12,6 @@
 	{@param? error: string}
 	{@param? fragmentEntryId: string}
 	{@param? fragmentEntryName: string}
-	{@param? updateFragmentEntryURL: string}
 
 	{call Modal.render}
 		{param body kind="html"}
@@ -36,9 +36,20 @@
 						<span class="hide-accessible">{msg desc=""}required{/msg}</span>
 					</label>
 
-					<input name="{$namespace}id" type="hidden" value="{$fragmentEntryId ?: ''}">
+					{if $fragmentEntryId}
+						<input name="{$namespace}id" type="hidden" value="{$fragmentEntryId}"></input>
+					{/if}
 
-					<input class="field form-control" name="{$namespace}name" type="text" value="{$fragmentEntryName ?: ''}">
+					{let $inputNameAttributes kind="attributes"}
+						class="field form-control"
+						name="{$namespace}name"
+						type="text"
+						{if $fragmentEntryName}
+							value="{$fragmentEntryName}"
+						{/if}
+					{/let}
+
+					<input {$inputNameAttributes}></input>
 
 					{if $error}
 						<div class="form-validator-stack help-block">
@@ -70,11 +81,7 @@
 
 		{param header kind="html"}
 			<h3 class="modal-title">
-				{if $updateFragmentEntryURL}
-					{msg desc=""}update-fragment{/msg}
-				{else}
-					{msg desc=""}add-fragment{/msg}
-				{/if}
+				{$editorTitle}
 			</h3>
 		{/param}
 	{/call}

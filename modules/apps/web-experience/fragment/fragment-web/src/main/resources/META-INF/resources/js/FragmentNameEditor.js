@@ -30,42 +30,32 @@ class FragmentNameEditor extends Component {
 
 		const form = document.getElementById(`${this.namespace}addForm`);
 		const formData = new FormData(form);
-		const formURL = this.addFragmentEntryURL || this.updateFragmentEntryURL;
 
-		fetch(formURL, {
+		fetch(this.actionURL, {
 			body: formData,
 			credentials: 'include',
 			method: 'POST',
 		})
 			.then(response => response.json())
 			.then((jsonResponse) => {
-				this.error = jsonResponse.error;
-
-				if (jsonResponse.fragmentEntryId && this.editFragmentEntryURL) {
-					const uri = new Uri(this.editFragmentEntryURL);
-
-					uri.addParameterValue(
-						`${this.namespace}fragmentEntryId`,
-						jsonResponse.fragmentEntryId,
-					);
-
-					const uriString = uri.toString();
-
-					if (Liferay.SPA) {
-						this.disposeInternal();
-						Liferay.SPA.app.navigate(uriString);
-					} else {
-						location.href = uriString;
-					}
-				} else if (jsonResponse.fragmentEntryId) {
-					if (Liferay.SPA) {
-						this.disposeInternal();
-						Liferay.SPA.app.reloadPage();
-					} else {
-						location.reload();
-					}
+				if (jsonResponse.redirectURL) {
+					this._redirect(jsonResponse.redirectURL);
+				}
+				else if(jsonResponse.error) {
+					this.error = jsonResponse.error;
 				}
 			});
+	}
+
+	_redirect(uri) {
+		if (Liferay.SPA) {
+			this.disposeInternal();
+
+			Liferay.SPA.app.navigate(uri);
+		}
+		else {
+			location.href = uri;
+		}
 	}
 }
 
@@ -83,18 +73,9 @@ FragmentNameEditor.STATE = {
 	 * @memberOf FragmentNameEditor
 	 * @type {!string}
 	 */
-	addFragmentEntryURL: Config.string().value(''),
+	actionURL: Config.string().value(''),
 
-	/**
-	 * URL used for editing the fragment.
-	 * Once the fragment has been successfully created, the browser
-	 * will be redirected to this url.
-	 * @default ''
-	 * @instance
-	 * @memberOf FragmentNameEditor
-	 * @type {!string}
-	 */
-	editFragmentEntryURL: Config.string().value(''),
+	editorTitle: Config.string().required(),
 
 	/**
 	 * Error message returned by the server.
@@ -134,16 +115,6 @@ FragmentNameEditor.STATE = {
 	 * @type {!string}
 	 */
 	namespace: Config.string().required(),
-
-	/**
-	 * URL used for renaming the fragment. The generated form
-	 * will be submitted to this url.
-	 * @default ''
-	 * @instance
-	 * @memberOf FragmentNameEditor
-	 * @type {!string}
-	 */
-	updateFragmentEntryURL: Config.string().value(''),
 
 	/**
 	 * Path of the available icons.

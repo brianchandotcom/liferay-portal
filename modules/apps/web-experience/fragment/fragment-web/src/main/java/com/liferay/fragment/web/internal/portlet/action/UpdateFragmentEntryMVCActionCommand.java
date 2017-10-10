@@ -22,12 +22,15 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,7 +66,7 @@ public class UpdateFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			jsonObject.put(
-				"fragmentEntryId", fragmentEntry.getFragmentEntryId());
+				"redirectURL", getRedirectURL(actionResponse, fragmentEntry));
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);
@@ -76,11 +79,30 @@ public class UpdateFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	protected String getRedirectURL(
+		ActionResponse actionResponse, FragmentEntry fragmentEntry) {
+
+		LiferayPortletResponse liferayPortletResponse =
+			_portal.getLiferayPortletResponse(actionResponse);
+
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter("mvcPath", "/view_fragment_entries.jsp");
+		portletURL.setParameter(
+			"fragmentCollectionId",
+			String.valueOf(fragmentEntry.getFragmentCollectionId()));
+
+		return portletURL.toString();
+	}
+
 	@Reference
 	private FragmentEntryExceptionRequestHandler
 		_fragmentEntryExceptionRequestHandler;
 
 	@Reference
 	private FragmentEntryService _fragmentEntryService;
+
+	@Reference
+	private Portal _portal;
 
 }

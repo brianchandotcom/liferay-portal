@@ -140,6 +140,8 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 
 				var fragmentNameEditor = new fragmentWebJsFragmentNameEditor.default(
 					{
+						actionURL: actionElement.dataset.updateUrl,
+						editorTitle: '<%= LanguageUtil.get(request, "update-fragment") %>',
 						events: {
 							hide: function() {
 								fragmentNameEditor.disposeInternal();
@@ -148,7 +150,6 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 						fragmentEntryId: actionElement.dataset.fragmentEntryId,
 						fragmentEntryName: actionElement.dataset.fragmentEntryName,
 						namespace: '<portlet:namespace />',
-						updateFragmentEntryURL: actionElement.dataset.updateUrl,
 						spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
 					}
 				);
@@ -160,8 +161,8 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 
 			var fragmentNameEditor = new fragmentWebJsFragmentNameEditor.default(
 				{
-					addFragmentEntryURL: '<%= addFragmentEntryURL.toString() %>',
-					editFragmentEntryURL: '<portlet:renderURL><portlet:param name="mvcPath" value="/edit_fragment_entry.jsp" /><portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentDisplayContext.getFragmentCollectionId()) %>" /></portlet:renderURL>',
+					actionURL: '<%= addFragmentEntryURL.toString() %>',
+					editorTitle: '<%= LanguageUtil.get(request, "add-fragment") %>',
 					events: {
 						hide: function() {
 							fragmentNameEditor.disposeInternal();

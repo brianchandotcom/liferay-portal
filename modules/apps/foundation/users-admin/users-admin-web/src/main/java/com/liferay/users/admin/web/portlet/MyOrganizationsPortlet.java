@@ -14,9 +14,22 @@
 
 package com.liferay.users.admin.web.portlet;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
+import java.io.IOException;
+
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -48,4 +61,43 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class MyOrganizationsPortlet extends UsersAdminPortlet {
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		String path = getPath(renderRequest, renderResponse);
+
+		if (path.equals("/edit_organization.jsp")) {
+			try {
+				long organizationId = ParamUtil.getLong(
+					renderRequest, "organizationId");
+
+				if (organizationId == 0) {
+					PortalPermissionUtil.check(
+						PermissionThreadLocal.getPermissionChecker(),
+						ActionKeys.ADD_ORGANIZATION);
+				}
+			}
+			catch (PrincipalException pe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(pe, pe);
+				}
+
+				SessionErrors.add(renderRequest, pe.getClass());
+
+				path = "/error.jsp";
+			}
+
+			include(path, renderRequest, renderResponse);
+		}
+		else {
+			super.doDispatch(renderRequest, renderResponse);
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MyOrganizationsPortlet.class);
+
 }

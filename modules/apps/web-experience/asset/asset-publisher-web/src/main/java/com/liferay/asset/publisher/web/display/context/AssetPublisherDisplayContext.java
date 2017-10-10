@@ -1329,10 +1329,10 @@ public class AssetPublisherDisplayContext {
 
 		_showContextLink = isShowContextLink();
 
-		if (_showContextLink) {
-			if (PortalUtil.getPlidFromPortletId(groupId, portletId) == 0) {
-				_showContextLink = false;
-			}
+		if (_showContextLink &&
+			(PortalUtil.getPlidFromPortletId(groupId, portletId) == 0)) {
+
+			_showContextLink = false;
 		}
 
 		return _showContextLink;

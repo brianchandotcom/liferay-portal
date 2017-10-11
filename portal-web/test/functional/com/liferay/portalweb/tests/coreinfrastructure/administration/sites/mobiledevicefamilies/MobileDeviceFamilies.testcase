@@ -1,6 +1,7 @@
 <definition component-name="portal-mobile-device-rules">
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
+	<property name="blacklist.portal.profile.names.remove" value="com.liferay.portal.mobile.device.detection.fiftyonedegrees,com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise" />
 	<property name="testray.main.component.name" value="Mobile Device Rules" />
 
 	<set-up>

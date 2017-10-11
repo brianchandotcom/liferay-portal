@@ -330,6 +330,8 @@ AUI.add(
 							rangeLink.on(
 								STR_CLICK,
 								function(event) {
+									instance._preventNameRequiredChecking();
+
 									instance._updateDateRange();
 								}
 							);
@@ -355,6 +357,8 @@ AUI.add(
 						var privateLayoutNode = instance.byId('privateLayout');
 
 						privateLayoutNode.val(privateLayout);
+
+						instance._preventNameRequiredChecking();
 
 						instance._reloadForm();
 					},
@@ -765,6 +769,14 @@ AUI.add(
 								title: title
 							}
 						);
+					},
+
+					_preventNameRequiredChecking: function() {
+						var instance = this;
+
+						var nameRequiredNode = instance.byId('nameRequired');
+
+						nameRequiredNode.val("0");
 					},
 
 					_rangeEndsInPast: function(today) {

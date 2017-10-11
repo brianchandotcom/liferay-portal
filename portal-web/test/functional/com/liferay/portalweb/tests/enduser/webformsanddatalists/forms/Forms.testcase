@@ -1712,7 +1712,7 @@
 		</for>
 	</command>
 
-	<command name="SubmitFormWithAllFieldTypesAfterEditingFields" priority="5">
+	<command name="SubmitFormAfterEditingFields" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 		<property name="testray.component.names" value="Training" />
 

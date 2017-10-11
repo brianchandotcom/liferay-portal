@@ -50,10 +50,10 @@ public class SQLFunctionTransformer {
 
 		StringBuilder sb = new StringBuilder(sql);
 
-		while (pos > 0) {
-			int next = pos + _functionPrefix.length() + 1;
+		while (pos >= 0) {
+			sb.replace(pos, pos + _functionPrefix.length(), _replacementPrefix);
 
-			sb.replace(pos, next, _replacementPrefix);
+			int next = pos + _replacementPrefix.length();
 
 			int openParentheses = 1;
 

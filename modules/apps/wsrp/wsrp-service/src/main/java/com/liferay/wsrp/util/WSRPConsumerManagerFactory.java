@@ -14,9 +14,9 @@
 
 package com.liferay.wsrp.util;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.TransientValue;
 import com.liferay.wsrp.model.WSRPConsumer;
 
@@ -142,8 +142,8 @@ public class WSRPConsumerManagerFactory {
 		return wsrpConsumerManager;
 	}
 
-	private static final AutoResetThreadLocal<HttpSession> _session =
-		new AutoResetThreadLocal<>(HttpSession.class + "._session", null);
+	private static final CentralizedThreadLocal<HttpSession> _session =
+		new CentralizedThreadLocal<>(HttpSession.class + "._session");
 	private static final Map<String, WSRPConsumerManager>
 		_wsrpConsumerManagers = new ConcurrentHashMap<>();
 

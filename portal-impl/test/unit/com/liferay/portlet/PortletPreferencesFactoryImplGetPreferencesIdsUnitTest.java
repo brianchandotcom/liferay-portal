@@ -18,43 +18,41 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.tools.ToolDependencies;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.mockito.Mockito;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  */
-@PrepareForTest(
-	{
-		LayoutPermissionUtil.class, PermissionThreadLocal.class,
-		PortletLocalServiceUtil.class
-	}
-)
-@RunWith(PowerMockRunner.class)
 public class PortletPreferencesFactoryImplGetPreferencesIdsUnitTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		ToolDependencies.wireCaches();
+
+		PermissionThreadLocal.setPermissionChecker(
+			(PermissionChecker)ProxyUtil.newProxyInstance(
+				PermissionChecker.class.getClassLoader(),
+				new Class<?>[] {PermissionChecker.class},
+				new PermissionCheckerInvocationHandler()));
 	}
 
 	@Before
@@ -68,38 +66,27 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsUnitTest {
 		_layout.setCompanyId(RandomTestUtil.randomLong());
 		_layout.setPlid(RandomTestUtil.randomLong());
 		_layout.setPrivateLayout(true);
+
+		ReflectionTestUtil.setFieldValue(
+			PortletLocalServiceUtil.class, "_service",
+			ProxyUtil.newProxyInstance(
+				PortletLocalService.class.getClassLoader(),
+				new Class<?>[] {PortletLocalService.class},
+				new PortletLocalServiceInvocationHandler(
+					_layout.getCompanyId())));
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testPreferencesWithModeEditGuestInPrivateLayout()
 		throws Exception {
 
-		PowerMockito.mockStatic(PortletLocalServiceUtil.class);
+		LayoutPermissionUtil layoutPermissionUtil = new LayoutPermissionUtil();
 
-		Mockito.when(
-			PortletLocalServiceUtil.getPortletById(
-				_layout.getCompanyId(), _PORTLET_ID)
-		).thenReturn(
-			getGroupPortlet()
-		);
-
-		PowerMockito.mockStatic(LayoutPermissionUtil.class);
-
-		Mockito.when(
-			LayoutPermissionUtil.contains(
-				Mockito.any(PermissionChecker.class), Mockito.eq(_layout),
-				Mockito.eq(ActionKeys.UPDATE))
-		).thenReturn(
-			true
-		);
-
-		PowerMockito.mockStatic(PermissionThreadLocal.class);
-
-		Mockito.when(
-			PermissionThreadLocal.getPermissionChecker()
-		).thenReturn(
-			PowerMockito.mock(PermissionChecker.class)
-		);
+		layoutPermissionUtil.setLayoutPermission(
+			(LayoutPermission)ProxyUtil.newProxyInstance(
+				LayoutPermission.class.getClassLoader(),
+				new Class<?>[] {LayoutPermission.class},
+				new LayoutPermissionInvocationHandler(true)));
 
 		long siteGroupId = _layout.getGroupId();
 		boolean modeEditGuest = true;
@@ -114,32 +101,13 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsUnitTest {
 
 		_layout.setPrivateLayout(false);
 
-		PowerMockito.mockStatic(PortletLocalServiceUtil.class);
+		LayoutPermissionUtil layoutPermissionUtil = new LayoutPermissionUtil();
 
-		Mockito.when(
-			PortletLocalServiceUtil.getPortletById(
-				_layout.getCompanyId(), _PORTLET_ID)
-		).thenReturn(
-			getGroupPortlet()
-		);
-
-		PowerMockito.mockStatic(LayoutPermissionUtil.class);
-
-		Mockito.when(
-			LayoutPermissionUtil.contains(
-				Mockito.any(PermissionChecker.class), Mockito.eq(_layout),
-				Mockito.eq(ActionKeys.UPDATE))
-		).thenReturn(
-			false
-		);
-
-		PowerMockito.mockStatic(PermissionThreadLocal.class);
-
-		Mockito.when(
-			PermissionThreadLocal.getPermissionChecker()
-		).thenReturn(
-			PowerMockito.mock(PermissionChecker.class)
-		);
+		layoutPermissionUtil.setLayoutPermission(
+			(LayoutPermission)ProxyUtil.newProxyInstance(
+				LayoutPermission.class.getClassLoader(),
+				new Class<?>[] {LayoutPermission.class},
+				new LayoutPermissionInvocationHandler(false)));
 
 		long siteGroupId = _layout.getGroupId();
 		boolean modeEditGuest = true;
@@ -148,20 +116,105 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsUnitTest {
 			siteGroupId, _USER_ID, _layout, _PORTLET_ID, modeEditGuest);
 	}
 
-	protected Portlet getGroupPortlet() {
-		Portlet portlet = new PortletImpl();
-
-		portlet.setPreferencesCompanyWide(false);
-		portlet.setPreferencesOwnedByGroup(true);
-		portlet.setPreferencesUniquePerLayout(false);
-
-		return portlet;
-	}
-
 	private static final String _PORTLET_ID = RandomTestUtil.randomString(10);
 
 	private static final long _USER_ID = RandomTestUtil.randomLong();
 
 	private final Layout _layout = new LayoutImpl();
+
+	private static class LayoutPermissionInvocationHandler
+		implements InvocationHandler {
+
+		@Override
+		public Object invoke(Object proxy, Method method, Object[] args) {
+			if (_containsMethod.equals(method)) {
+				return _contains;
+			}
+
+			throw new UnsupportedOperationException();
+		}
+
+		private LayoutPermissionInvocationHandler(boolean contains) {
+			_contains = contains;
+
+			try {
+				_containsMethod = LayoutPermission.class.getMethod(
+					"contains", PermissionChecker.class, Layout.class,
+					String.class);
+			}
+			catch (NoSuchMethodException nsme) {
+				throw new RuntimeException(nsme);
+			}
+		}
+
+		private final boolean _contains;
+		private final Method _containsMethod;
+
+	}
+
+	private static class PermissionCheckerInvocationHandler
+		implements InvocationHandler {
+
+		@Override
+		public Object invoke(Object proxy, Method method, Object[] args)
+			throws Throwable {
+
+			if (_getUserIdMethod.equals(method)) {
+				return _USER_ID;
+			}
+
+			throw new UnsupportedOperationException();
+		}
+
+		private PermissionCheckerInvocationHandler() {
+			try {
+				_getUserIdMethod = PermissionChecker.class.getMethod(
+					"getUserId");
+			}
+			catch (NoSuchMethodException nsme) {
+				throw new RuntimeException(nsme);
+			}
+		}
+
+		private final Method _getUserIdMethod;
+
+	}
+
+	private static class PortletLocalServiceInvocationHandler
+		implements InvocationHandler {
+
+		@Override
+		public Object invoke(Object proxy, Method method, Object[] args) {
+			if (_getPortletByIdMethod.equals(method) &&
+				args[0].equals(_companyId) && args[1].equals(_PORTLET_ID)) {
+
+				Portlet portlet = new PortletImpl();
+
+				portlet.setPreferencesCompanyWide(false);
+				portlet.setPreferencesOwnedByGroup(true);
+				portlet.setPreferencesUniquePerLayout(false);
+
+				return portlet;
+			}
+
+			throw new UnsupportedOperationException();
+		}
+
+		private PortletLocalServiceInvocationHandler(long companyId) {
+			_companyId = companyId;
+
+			try {
+				_getPortletByIdMethod = PortletLocalService.class.getMethod(
+					"getPortletById", long.class, String.class);
+			}
+			catch (NoSuchMethodException nsme) {
+				throw new RuntimeException(nsme);
+			}
+		}
+
+		private final long _companyId;
+		private final Method _getPortletByIdMethod;
+
+	}
 
 }

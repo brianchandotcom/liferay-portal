@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.security.exportimport;
 
-import com.liferay.portal.kernel.util.InitialThreadLocal;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 
 /**
  * @author Brian Wing Shun Chan
@@ -30,9 +30,9 @@ public class UserGroupImportTransactionThreadLocal {
 	}
 
 	private static final ThreadLocal<Boolean> _originatesFromImport =
-		new InitialThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			UserGroupImportTransactionThreadLocal.class +
 				"._originatesFromImport",
-			() -> Boolean.FALSE);
+			() -> Boolean.FALSE, false);
 
 }

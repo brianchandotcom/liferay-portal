@@ -15,8 +15,8 @@
 package com.liferay.portal.kernel.systemevent;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.model.SystemEventConstants;
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Stack;
@@ -164,7 +164,7 @@ public class SystemEventHierarchyEntryThreadLocal {
 	}
 
 	private static final ThreadLocal<Stack<SystemEventHierarchyEntry>>
-		_systemEventHierarchyEntries = new AutoResetThreadLocal<>(
+		_systemEventHierarchyEntries = new CentralizedThreadLocal<>(
 			SystemEventHierarchyEntryThreadLocal.class +
 				"._systemEventHierarchyEntries",
 			Stack::new);

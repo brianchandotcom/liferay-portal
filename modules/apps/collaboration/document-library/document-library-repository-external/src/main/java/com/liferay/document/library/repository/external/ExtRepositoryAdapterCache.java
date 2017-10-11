@@ -15,9 +15,9 @@
 package com.liferay.document.library.repository.external;
 
 import com.liferay.document.library.repository.external.model.ExtRepositoryModelAdapter;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -117,7 +117,7 @@ public class ExtRepositoryAdapterCache implements Cloneable {
 		ExtRepositoryAdapterCache.class);
 
 	private static final ThreadLocal<ExtRepositoryAdapterCache>
-		_extRepositoryAdapterThreadLocal = new AutoResetThreadLocal<>(
+		_extRepositoryAdapterThreadLocal = new CentralizedThreadLocal<>(
 			ExtRepositoryAdapterCache.class.getName(),
 			ExtRepositoryAdapterCache::new);
 

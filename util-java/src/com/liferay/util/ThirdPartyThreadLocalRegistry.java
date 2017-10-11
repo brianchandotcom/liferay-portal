@@ -14,7 +14,7 @@
 
 package com.liferay.util;
 
-import com.liferay.portal.kernel.util.InitialThreadLocal;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -47,8 +47,8 @@ public class ThirdPartyThreadLocalRegistry {
 	}
 
 	private static final ThreadLocal<Set<ThreadLocal<?>>> _threadLocalSet =
-		new InitialThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			ThirdPartyThreadLocalRegistry.class + "._threadLocalSet",
-			HashSet::new);
+			HashSet::new, false);
 
 }

@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.process;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -43,6 +44,7 @@ import java.net.URLConnection;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -148,7 +150,8 @@ public class ClassPathUtil {
 		sb.append(File.pathSeparator);
 
 		String portalGlobalClassPath = _buildClassPath(
-			classLoader, PortalException.class.getName());
+			classLoader, CentralizedThreadLocal.class.getName(),
+			PortalException.class.getName());
 
 		sb.append(portalGlobalClassPath);
 
@@ -178,6 +181,35 @@ public class ClassPathUtil {
 	}
 
 	private static String _buildClassPath(
+		ClassLoader classloader, String... classNames) {
+
+		Set<File> fileSet = new HashSet<>();
+
+		for (String className : classNames) {
+			File[] files = _listClassPathFiles(classloader, className);
+
+			if (files != null) {
+				Collections.addAll(fileSet, files);
+			}
+		}
+
+		File[] files = fileSet.toArray(new File[fileSet.size()]);
+
+		Arrays.sort(files);
+
+		StringBundler sb = new StringBundler(files.length * 2);
+
+		for (File file : files) {
+			sb.append(file.getAbsolutePath());
+			sb.append(File.pathSeparator);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
+	}
+
+	private static File[] _listClassPathFiles(
 		ClassLoader classloader, String className) {
 
 		String pathOfClass = StringUtil.replace(
@@ -209,7 +241,7 @@ public class ClassPathUtil {
 			catch (Exception e) {
 				_log.error("Unable to resolve local URL from bundle", e);
 
-				return StringPool.BLANK;
+				return null;
 			}
 		}
 
@@ -259,7 +291,7 @@ public class ClassPathUtil {
 				_log.error(
 					"Class " + className + " is not loaded from a JAR file");
 
-				return StringPool.BLANK;
+				return null;
 			}
 
 			String classesDirName = path.substring(
@@ -271,7 +303,7 @@ public class ClassPathUtil {
 						"Class ", className, " is not loaded from a standard ",
 						"location (/WEB-INF/classes)"));
 
-				return StringPool.BLANK;
+				return null;
 			}
 
 			String libDirName = classesDirName.substring(
@@ -290,10 +322,10 @@ public class ClassPathUtil {
 		if (!dir.isDirectory()) {
 			_log.error(dir.toString() + " is not a directory");
 
-			return StringPool.BLANK;
+			return null;
 		}
 
-		File[] files = dir.listFiles(
+		return dir.listFiles(
 			new FileFilter() {
 
 				@Override
@@ -312,23 +344,6 @@ public class ClassPathUtil {
 				}
 
 			});
-
-		if (files == null) {
-			return StringPool.BLANK;
-		}
-
-		Arrays.sort(files);
-
-		StringBundler sb = new StringBundler(files.length * 2);
-
-		for (File file : files) {
-			sb.append(file.getAbsolutePath());
-			sb.append(File.pathSeparator);
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		return sb.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ClassPathUtil.class);

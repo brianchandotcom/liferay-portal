@@ -70,6 +70,25 @@ public class RuntimePageUtil {
 		getRuntimePage().processTemplate(request, response, templateResource);
 	}
 
+	public static void processTemplate(
+		HttpServletRequest request, HttpServletResponse response,
+		String portletId, TemplateResource templateResource,
+		String langType)
+		throws Exception {
+
+		getRuntimePage().processTemplate(
+			request, response, portletId, templateResource, langType);
+	}
+
+	public static void processTemplate(
+		HttpServletRequest request, HttpServletResponse response,
+		TemplateResource templateResource, String langType)
+		throws Exception {
+
+		getRuntimePage().processTemplate(
+			request, response, templateResource, langType);
+	}
+
 	public static String processXML(
 			HttpServletRequest request, HttpServletResponse response,
 			String content)

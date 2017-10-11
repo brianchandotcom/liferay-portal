@@ -45,6 +45,7 @@ import com.liferay.portal.util.PropsValues;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -64,6 +65,43 @@ import javax.servlet.ServletContext;
 @Skip
 public class LayoutTemplateLocalServiceImpl
 	extends LayoutTemplateLocalServiceBaseImpl {
+
+	public static final String DEFAULT_LANG_TYPE =
+		TemplateConstants.LANG_TYPE_VM;
+
+	public static final Set<String> SUPPORTED_LANG_TYPES = new HashSet<>(
+		Arrays.asList(
+			DEFAULT_LANG_TYPE, TemplateConstants.LANG_TYPE_FTL));
+
+	@Override
+	public String getLangType(
+		String layoutTemplateId, boolean standard, String themeId) {
+
+		LayoutTemplate layoutTemplate = getLayoutTemplate(
+			layoutTemplateId, standard, themeId);
+
+		if (layoutTemplate == null) {
+			return DEFAULT_LANG_TYPE;
+		}
+
+		return _getSupportedLangType(layoutTemplate);
+	}
+
+	private String _getSupportedLangType(LayoutTemplate layoutTemplate) {
+		String templatePath = layoutTemplate.getTemplatePath();
+
+		int index = templatePath.lastIndexOf(StringPool.PERIOD);
+
+		if (index != -1) {
+			String langType = templatePath.substring(index + 1);
+
+			if(SUPPORTED_LANG_TYPES.contains(langType)) {
+				return langType;
+			}
+		}
+
+		return DEFAULT_LANG_TYPE;
+	}
 
 	@Override
 	public String getContent(
@@ -366,7 +404,9 @@ public class LayoutTemplateLocalServiceImpl
 
 				layoutTemplateModel.setContent(content);
 				layoutTemplateModel.setColumns(
-					_getColumns(velocityTemplateId, content));
+					_getColumns(
+						velocityTemplateId, content,
+						_getSupportedLangType(layoutTemplateModel)));
 			}
 
 			Element rolesElement = layoutTemplateElement.element("roles");
@@ -394,6 +434,9 @@ public class LayoutTemplateLocalServiceImpl
 
 		String templateId = null;
 
+		LayoutTemplate layoutTemplate = getLayoutTemplate(
+			layoutTemplateId, standard, null);
+
 		try {
 			if (standard) {
 				templateId =
@@ -401,7 +444,7 @@ public class LayoutTemplateLocalServiceImpl
 						layoutTemplateId;
 
 				TemplateResourceLoaderUtil.clearCache(
-					TemplateConstants.LANG_TYPE_VM, templateId);
+					_getSupportedLangType(layoutTemplate), templateId);
 
 				_warStandard.remove(layoutTemplateId);
 			}
@@ -411,7 +454,7 @@ public class LayoutTemplateLocalServiceImpl
 						layoutTemplateId;
 
 				TemplateResourceLoaderUtil.clearCache(
-					TemplateConstants.LANG_TYPE_VM, templateId);
+					_getSupportedLangType(layoutTemplate), templateId);
 
 				_warCustom.remove(layoutTemplateId);
 			}
@@ -438,7 +481,7 @@ public class LayoutTemplateLocalServiceImpl
 
 			try {
 				TemplateResourceLoaderUtil.clearCache(
-					TemplateConstants.LANG_TYPE_VM, templateId);
+					_getSupportedLangType(layoutTemplate), templateId);
 			}
 			catch (Exception e) {
 				_log.error(
@@ -463,7 +506,7 @@ public class LayoutTemplateLocalServiceImpl
 
 			try {
 				TemplateResourceLoaderUtil.clearCache(
-					TemplateConstants.LANG_TYPE_VM, templateId);
+					_getSupportedLangType(layoutTemplate), templateId);
 			}
 			catch (Exception e) {
 				_log.error(
@@ -477,15 +520,14 @@ public class LayoutTemplateLocalServiceImpl
 	}
 
 	private List<String> _getColumns(
-		String velocityTemplateId, String velocityTemplateContent) {
+		String templateId, String templateContent, String langType) {
 
 		try {
 			InitColumnProcessor processor = new InitColumnProcessor();
 
 			Template template = TemplateManagerUtil.getTemplate(
-				TemplateConstants.LANG_TYPE_VM,
-				new StringTemplateResource(
-					velocityTemplateId, velocityTemplateContent),
+				langType,
+				new StringTemplateResource(templateId, templateContent),
 				false);
 
 			template.put("processor", processor);

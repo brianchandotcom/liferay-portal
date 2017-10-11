@@ -686,12 +686,48 @@ public class GitWorkingDirectory {
 		return _repositoryUsername;
 	}
 
+	public Branch getUpstreamBranch() {
+		return getBranch(_upstreamBranchName, null);
+	}
+
 	public String getUpstreamBranchName() {
 		return _upstreamBranchName;
 	}
 
 	public File getWorkingDirectory() {
 		return _workingDirectory;
+	}
+
+	public String log(int num) {
+		return log(num, null);
+	}
+
+	public String log(int num, File file) {
+		for (int i = 0; i < 5; i++) {
+			try {
+				String gitLog = _log(num, file, "%H %s");
+
+				gitLog = gitLog.replaceAll(
+					"Finished executing Bash commands.", "");
+
+				String[] gitLogItems = gitLog.split("\n");
+
+				for (String gitLogItem : gitLogItems) {
+					if (!gitLogItem.matches("([0-9a-f]{40}) (.*)")) {
+						throw new RuntimeException("Unable to run git log");
+					}
+				}
+
+				return gitLog;
+			}
+			catch (RuntimeException re) {
+				re.printStackTrace();
+
+				JenkinsResultsParserUtil.sleep(1000);
+			}
+		}
+
+		throw new RuntimeException("Unable to run git log");
 	}
 
 	public boolean pushToRemote(boolean force, Branch remoteBranch) {
@@ -848,6 +884,30 @@ public class GitWorkingDirectory {
 		if (result.getExitValue() != 0) {
 			throw new RuntimeException("Unable to stage file " + fileName);
 		}
+	}
+
+	public String status() {
+		for (int i = 0; i < 5; i++) {
+			try {
+				String gitStatus = _status();
+
+				gitStatus = gitStatus.replaceAll(
+					"Finished executing Bash commands.", "");
+
+				if (!gitStatus.startsWith("On branch")) {
+					throw new RuntimeException("Unable to run git status");
+				}
+
+				return gitStatus;
+			}
+			catch (RuntimeException re) {
+				re.printStackTrace();
+
+				JenkinsResultsParserUtil.sleep(1000);
+			}
+		}
+
+		throw new RuntimeException("Unable to run git status");
 	}
 
 	public static class Branch {
@@ -1311,6 +1371,47 @@ public class GitWorkingDirectory {
 		private final String _standardOut;
 
 	};
+
+	private String _log(int num, File file, String format) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("git log -n ");
+		sb.append(num);
+		sb.append(" --pretty=format:'");
+		sb.append(format);
+		sb.append("'");
+
+		if (file != null) {
+			sb.append(" ");
+
+			try {
+				sb.append(file.getCanonicalPath());
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(ioe);
+			}
+		}
+
+		ExecutionResult result = executeBashCommands(sb.toString());
+
+		if (result.getExitValue() != 0) {
+			throw new RuntimeException("Unable to run git log");
+		}
+
+		return result.getStandardOut();
+	}
+
+	private String _status() {
+		String command = "git status";
+
+		ExecutionResult result = executeBashCommands(command);
+
+		if (result.getExitValue() != 0) {
+			throw new RuntimeException("Unable to run git status");
+		}
+
+		return result.getStandardOut();
+	}
 
 	private static final Pattern _gitDirectoryPathPattern = Pattern.compile(
 		"gitdir\\: (.*\\.git)");

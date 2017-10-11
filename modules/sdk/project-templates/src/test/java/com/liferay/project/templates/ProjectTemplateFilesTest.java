@@ -240,24 +240,20 @@ public class ProjectTemplateFilesTest {
 
 		Set<String> declaredVariables = new HashSet<>();
 
-		Path definitionsVmPath = projectTemplateDirPath.resolve(
-			"src/main/resources/definitions.vm");
-
 		String messageSuffix = archetypeMetadataXmlPath.toString();
 
-		if (Files.exists(definitionsVmPath)) {
-			String definitionsVm = FileUtil.read(definitionsVmPath);
+		Path definitionsVmPath = projectTemplateDirPath.resolve(
+			"../project-templates/src/main/resources/definitions.vm");
 
-			matcher = _velocitySetDirectivePattern.matcher(definitionsVm);
+		String definitionsVm = FileUtil.read(definitionsVmPath);
 
-			while (matcher.find()) {
-				declaredVariables.add(matcher.group(1));
-			}
+		matcher = _velocitySetDirectivePattern.matcher(definitionsVm);
 
-			messageSuffix += " or " + definitionsVmPath;
+		while (matcher.find()) {
+			declaredVariables.add(matcher.group(1));
 		}
 
-		messageSuffix += ".";
+		messageSuffix += " or " + definitionsVmPath + ".";
 
 		for (String name : archetypeResourcePropertyNames) {
 			Assert.assertTrue(

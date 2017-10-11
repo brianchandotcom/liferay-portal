@@ -52,7 +52,7 @@ public class ServiceContextThreadLocal {
 		_serviceContextThreadLocal = new CentralizedThreadLocal<>(
 			ServiceContextThreadLocal.class + "._serviceContextThreadLocal",
 			LinkedList::new,
-			(serviceContexts) -> {
+			serviceContexts -> {
 				LinkedList<ServiceContext> cloneServiceContexts =
 					new LinkedList<>();
 

@@ -571,7 +571,7 @@ public class GitWorkingDirectory {
 
 		Remote remote = remotes.get(name);
 
-		if (remote == null && name.equals("upstream")) {
+		if ((remote == null) && name.equals("upstream")) {
 			JenkinsResultsParserUtil.sleep(1000);
 
 			remotes = getRemotes();

@@ -552,7 +552,8 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
-			"<aui:script require=\"foo@1.0.0\">", "foo100.default();");
+			"<aui:script require=\"foo@1.0.0\">",
+			"foo100.default('<portlet:namespace />');");
 	}
 
 	@Test
@@ -564,7 +565,8 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
-			"<aui:script require=\"foo-bar@1.0.0\">", "fooBar100.default();");
+			"<aui:script require=\"foo-bar@1.0.0\">",
+			"fooBar100.default('<portlet:namespace />');");
 	}
 
 	@Test

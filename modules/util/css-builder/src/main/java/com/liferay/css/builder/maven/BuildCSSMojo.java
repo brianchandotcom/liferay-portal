@@ -14,8 +14,8 @@
 
 package com.liferay.css.builder.maven;
 
+import com.liferay.css.builder.CSSBuilder;
 import com.liferay.css.builder.CSSBuilderArgs;
-import com.liferay.css.builder.CSSBuilderInvoker;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.io.File;
@@ -64,9 +64,7 @@ public class BuildCSSMojo extends AbstractMojo {
 
 					Artifact artifact = _resolveArtifact(componentDependency);
 
-					File file = artifact.getFile();
-
-					_cssBuilderArgs.setPortalCommonPath(file.getAbsolutePath());
+					_cssBuilderArgs.setPortalCommonPath(artifact.getFile());
 				}
 			}
 
@@ -82,11 +80,11 @@ public class BuildCSSMojo extends AbstractMojo {
 				String[] includedFiles = scanner.getIncludedFiles();
 
 				if (ArrayUtil.isNotEmpty(includedFiles)) {
-					CSSBuilderInvoker.invoke(_baseDir, _cssBuilderArgs);
+					_execute();
 				}
 			}
 			else {
-				CSSBuilderInvoker.invoke(_baseDir, _cssBuilderArgs);
+				_execute();
 			}
 		}
 		catch (Exception e) {
@@ -114,7 +112,13 @@ public class BuildCSSMojo extends AbstractMojo {
 	 * @parameter default-value="${project.build.directory}/${project.build.finalName}"
 	 */
 	public void setDocrootDirName(String docrootDirName) {
-		_cssBuilderArgs.setDocrootDirName(docrootDirName);
+		File docrootDir = new File(docrootDirName);
+
+		if (!docrootDir.isAbsolute()) {
+			docrootDir = new File(_baseDir, docrootDirName);
+		}
+
+		_cssBuilderArgs.setDocrootDir(docrootDir);
 	}
 
 	/**
@@ -134,7 +138,7 @@ public class BuildCSSMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
-	public void setPortalCommonPath(String portalCommonPath) {
+	public void setPortalCommonPath(File portalCommonPath) {
 		_cssBuilderArgs.setPortalCommonPath(portalCommonPath);
 	}
 
@@ -157,6 +161,12 @@ public class BuildCSSMojo extends AbstractMojo {
 	 */
 	public void setSassCompilerClassName(String sassCompilerClassName) {
 		_cssBuilderArgs.setSassCompilerClassName(sassCompilerClassName);
+	}
+
+	private void _execute() throws Exception {
+		try (CSSBuilder cssBuilder = new CSSBuilder(_cssBuilderArgs)) {
+			cssBuilder.execute();
+		}
 	}
 
 	private Artifact _resolveArtifact(ComponentDependency componentDependency)

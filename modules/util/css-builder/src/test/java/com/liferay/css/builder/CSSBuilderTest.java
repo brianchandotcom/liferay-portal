@@ -14,206 +14,60 @@
 
 package com.liferay.css.builder;
 
-import com.liferay.css.builder.util.FileTestUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
-import java.io.File;
-
-import java.net.URL;
-
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
-import java.util.Collections;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
 /**
- * @author Eduardo Garcia
- * @author David Truong
  * @author Andrea Di Giorgi
  */
-public class CSSBuilderTest {
+@RunWith(Parameterized.class)
+public class CSSBuilderTest extends BaseCSSBuilderTestCase {
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		URL url = CSSBuilderTest.class.getResource("dependencies");
-
-		_dependenciesDirPath = Paths.get(url.toURI());
-
-		Assert.assertTrue(Files.isDirectory(_dependenciesDirPath));
-
-		_portalCommonDirPath = Paths.get("build/portal-common-css");
-
-		Assert.assertTrue(Files.isDirectory(_portalCommonDirPath));
-
-		_portalCommonJarPath = Paths.get(
-			"build/portal-common-css-jar/com.liferay.frontend.css.common.jar");
-
-		Assert.assertTrue(Files.isRegularFile(_portalCommonJarPath));
+	@Parameters(name = "{0}")
+	public static String[] getSeparators() {
+		return new String[] {StringPool.EQUAL, StringPool.SPACE};
 	}
 
-	@Before
-	public void setUp() throws Exception {
-		File docrootDir = temporaryFolder.getRoot();
-
-		_docrootDirPath = docrootDir.toPath();
-
-		FileTestUtil.copyDir(
-			_dependenciesDirPath.resolve("css"),
-			_docrootDirPath.resolve("css"));
+	public CSSBuilderTest(String separator) {
+		_separator = separator;
 	}
 
-	@Test
-	public void testCSSBuilderWithFragmentChange() throws Exception {
-		Path fragmentChangePath = _docrootDirPath.resolve(
-			"css/_import_change.scss");
-
-		FileTestUtil.changeContentInPath(fragmentChangePath, "brown", "khaki");
-
-		executeCSSBuilder(
-			"/css", _docrootDirPath, false, ".sass-cache/",
-			_portalCommonDirPath, 6, new String[0], "jni");
-
-		Path cssPath = _docrootDirPath.resolve(
-			"css/.sass-cache/test_import_change.css");
-
-		String css = FileTestUtil.read(cssPath);
-
-		FileTestUtil.changeContentInPath(fragmentChangePath, "khaki", "brown");
-
-		executeCSSBuilder(
-			"/css", _docrootDirPath, false, ".sass-cache/",
-			_portalCommonDirPath, 6, new String[0], "jni");
-
-		css = FileTestUtil.read(cssPath);
-
-		Assert.assertTrue(css.contains("brown"));
-	}
-
-	@Test
-	public void testCSSBuilderWithJni() throws Exception {
-		_testCSSBuilder(_portalCommonDirPath, "jni");
-	}
-
-	@Test
-	public void testCSSBuilderWithJniAndPortalCommonJar() throws Exception {
-		_testCSSBuilder(_portalCommonJarPath, "jni");
-	}
-
-	@Test
-	public void testCSSBuilderWithRuby() throws Exception {
-		_testCSSBuilder(_portalCommonDirPath, "ruby");
-	}
-
-	@Test
-	public void testCSSBuilderWithRubyAndPortalCommonJar() throws Exception {
-		_testCSSBuilder(_portalCommonJarPath, "ruby");
-	}
-
-	@Rule
-	public TemporaryFolder temporaryFolder = new TemporaryFolder();
-
+	@Override
 	protected void executeCSSBuilder(
 			String dirName, Path docrootDirPath, boolean generateSourceMap,
 			String outputDirName, Path portalCommonPath, int precision,
 			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
 		throws Exception {
 
-		try (CSSBuilder cssBuilder = new CSSBuilder(
-				String.valueOf(docrootDirPath.toAbsolutePath()),
-				generateSourceMap, outputDirName,
-				String.valueOf(portalCommonPath.toAbsolutePath()), precision,
-				rtlExcludedPathRegexps, sassCompilerClassName)) {
+		List<String> args = new ArrayList<>();
 
-			cssBuilder.execute(Collections.singletonList(dirName));
-		}
+		args.add("sass.dir" + _separator + dirName);
+		args.add(
+			"sass.docroot.dir" + _separator + docrootDirPath.toAbsolutePath());
+		args.add("sass.generate.source.map" + _separator + generateSourceMap);
+		args.add("sass.output.dir" + _separator + outputDirName);
+		args.add(
+			"sass.portal.common.path" + _separator +
+				portalCommonPath.toAbsolutePath());
+		args.add("sass.precision" + _separator + precision);
+		args.add(
+			"sass.rtl.excluded.path.regexps" + _separator +
+				StringUtil.merge(rtlExcludedPathRegexps));
+		args.add(
+			"sass.compiler.class.name" + _separator + sassCompilerClassName);
+
+		CSSBuilder.main(args.toArray(new String[0]));
 	}
 
-	private static void _assertMatchesCount(
-		Pattern pattern, String s, int expectedCount) {
-
-		int count = 0;
-
-		Matcher matcher = pattern.matcher(s);
-
-		while (matcher.find()) {
-			count++;
-		}
-
-		Assert.assertEquals(expectedCount, count);
-	}
-
-	private void _testCSSBuilder(
-			Path portalCommonPath, String sassCompilerClassName)
-		throws Exception {
-
-		executeCSSBuilder(
-			"/css", _docrootDirPath, false, ".sass-cache/", portalCommonPath, 6,
-			new String[0], sassCompilerClassName);
-
-		String expectedTestContent = FileTestUtil.read(
-			_dependenciesDirPath.resolve("expected/test.css"));
-		String actualTestContent = FileTestUtil.read(
-			_docrootDirPath.resolve("css/.sass-cache/test.css"));
-
-		Assert.assertEquals(expectedTestContent, actualTestContent);
-
-		String actualTestImportContent = FileTestUtil.read(
-			_docrootDirPath.resolve("css/.sass-cache/test_css_import.css"));
-
-		_assertMatchesCount(_cssImportPattern, actualTestImportContent, 3);
-
-		String actualTestImportRtlContent = FileTestUtil.read(
-			_docrootDirPath.resolve("css/.sass-cache/test_css_import_rtl.css"));
-
-		_assertMatchesCount(_cssImportPattern, actualTestImportRtlContent, 3);
-
-		Assert.assertEquals(expectedTestContent, actualTestContent);
-
-		String actualTestPartialContent = FileTestUtil.read(
-			_docrootDirPath.resolve("css/.sass-cache/test_partial.css"));
-
-		Assert.assertEquals(expectedTestContent, actualTestPartialContent);
-
-		Assert.assertFalse(
-			Files.exists(
-				_docrootDirPath.resolve("css/.sass-cache/_partial.css")));
-
-		String expectedTestRtlContent = FileTestUtil.read(
-			_dependenciesDirPath.resolve("expected/test_rtl.css"));
-		String actualTestRtlContent = FileTestUtil.read(
-			_docrootDirPath.resolve("css/.sass-cache/test_rtl.css"));
-
-		Assert.assertEquals(expectedTestRtlContent, actualTestRtlContent);
-
-		String actualTestPartialRtlContent = FileTestUtil.read(
-			_docrootDirPath.resolve("css/.sass-cache/test_partial_rtl.css"));
-
-		Assert.assertEquals(
-			expectedTestRtlContent, actualTestPartialRtlContent);
-
-		String expectedUnicodeContent = FileTestUtil.read(
-			_dependenciesDirPath.resolve("expected/test_unicode.css"));
-		String actualTestUnicodeContent = FileTestUtil.read(
-			_docrootDirPath.resolve("css/.sass-cache/test_unicode.css"));
-
-		Assert.assertEquals(expectedUnicodeContent, actualTestUnicodeContent);
-	}
-
-	private static final Pattern _cssImportPattern = Pattern.compile(
-		"@import\\s+url\\s*\\(\\s*['\"]?(.+\\.css\\?t=\\d+)['\"]?\\s*\\)\\s*;");
-	private static Path _dependenciesDirPath;
-	private static Path _portalCommonDirPath;
-	private static Path _portalCommonJarPath;
-
-	private Path _docrootDirPath;
+	private final String _separator;
 
 }

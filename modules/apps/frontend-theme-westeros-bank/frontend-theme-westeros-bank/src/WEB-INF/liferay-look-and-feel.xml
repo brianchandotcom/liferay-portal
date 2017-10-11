@@ -16,7 +16,7 @@
 		<layout-templates>
 			<custom>
 				<layout-template id="westeros_2_width_limited" name="Westeros 2 columns (90/10) width limited">
-					<template-path>/layoutttpl/custom/westeros_2_width_limited.tpl</template-path>
+					<template-path>/layoutttpl/custom/westeros_2_width_limited.ftl</template-path>
 					<thumbnail-path>/layoutttpl/custom/westeros_2_width_limited.png</thumbnail-path>
 				</layout-template>
 			</custom>

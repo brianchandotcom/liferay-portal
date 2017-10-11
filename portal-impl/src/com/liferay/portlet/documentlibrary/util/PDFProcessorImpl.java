@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessChannel;
 import com.liferay.portal.kernel.process.ProcessException;
-import com.liferay.portal.kernel.process.ProcessExecutorUtil;
+import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemEnv;
 import com.liferay.portal.kernel.util.Validator;
@@ -695,7 +696,7 @@ public class PDFProcessorImpl
 					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH,
 					generatePreview, generateThumbnail);
 
-			ProcessChannel<String> processChannel = ProcessExecutorUtil.execute(
+			ProcessChannel<String> processChannel = _processExecutor.execute(
 				ClassPathUtil.getPortalProcessConfig(), processCallable);
 
 			Future<String> future = processChannel.getProcessNoticeableFuture();
@@ -999,6 +1000,11 @@ public class PDFProcessorImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PDFProcessorImpl.class);
+
+	private static volatile ProcessExecutor _processExecutor =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			ProcessExecutor.class, PDFProcessorImpl.class, "_processExecutor",
+			true);
 
 	private final List<Long> _fileVersionIds = new Vector<>();
 	private boolean _ghostscriptInitialized;

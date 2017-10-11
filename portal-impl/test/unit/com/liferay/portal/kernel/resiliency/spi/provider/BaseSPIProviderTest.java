@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.process.ProcessChannel;
 import com.liferay.portal.kernel.process.ProcessConfig;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutor;
-import com.liferay.portal.kernel.process.ProcessExecutorUtil;
 import com.liferay.portal.kernel.process.local.LocalProcessChannel;
 import com.liferay.portal.kernel.resiliency.PortalResiliencyException;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
@@ -44,6 +43,9 @@ import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.resiliency.spi.SPIRegistryImpl;
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -82,13 +84,15 @@ public class BaseSPIProviderTest {
 
 		SPIAgentFactoryUtil.registerSPIAgentClass(MockSPIAgent.class);
 
+		Registry registry = new BasicRegistryImpl();
+
+		RegistryUtil.setRegistry(registry);
+
+		registry.registerService(ProcessExecutor.class, _mockProcessExecutor);
+
 		_testSPIProvider = new TestSPIProvider();
 
 		MPIHelperUtil.registerSPIProvider(_testSPIProvider);
-
-		ProcessExecutorUtil processExecutorUtil = new ProcessExecutorUtil();
-
-		processExecutorUtil.setProcessExecutor(_mockProcessExecutor);
 
 		SPIRegistryUtil spiRegistryUtil = new SPIRegistryUtil();
 

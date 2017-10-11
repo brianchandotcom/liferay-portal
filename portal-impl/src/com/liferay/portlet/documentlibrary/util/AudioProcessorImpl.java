@@ -29,12 +29,13 @@ import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessChannel;
 import com.liferay.portal.kernel.process.ProcessException;
-import com.liferay.portal.kernel.process.ProcessExecutorUtil;
+import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -367,7 +368,7 @@ public class AudioProcessorImpl
 							PropsKeys.DL_FILE_ENTRY_PREVIEW_AUDIO, false));
 
 				ProcessChannel<String> processChannel =
-					ProcessExecutorUtil.execute(
+					_processExecutor.execute(
 						ClassPathUtil.getPortalProcessConfig(),
 						processCallable);
 
@@ -459,6 +460,11 @@ public class AudioProcessorImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AudioProcessorImpl.class);
+
+	private static volatile ProcessExecutor _processExecutor =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			ProcessExecutor.class, AudioProcessorImpl.class, "_processExecutor",
+			true);
 
 	private final Set<String> _audioMimeTypes = SetUtil.fromArray(
 		PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_MIME_TYPES);

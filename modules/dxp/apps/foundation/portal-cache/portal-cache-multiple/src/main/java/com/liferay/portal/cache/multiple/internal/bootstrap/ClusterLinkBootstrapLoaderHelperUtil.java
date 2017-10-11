@@ -14,6 +14,7 @@
 
 package com.liferay.portal.cache.multiple.internal.bootstrap;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.io.AnnotatedObjectOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.InitialThreadLocal;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -321,10 +321,10 @@ public class ClusterLinkBootstrapLoaderHelperUtil {
 	private static final ServerSocketConfigurator _serverSocketConfigurator =
 		new SocketCacheServerSocketConfiguration();
 	private static final ThreadLocal<Boolean> _skipBootstrapLoaderThreadLocal =
-		new InitialThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			ClusterLinkBootstrapLoaderHelperUtil.class +
 				"._skipBootstrapLoaderThreadLocal",
-			() -> Boolean.FALSE);
+			() -> Boolean.FALSE, false);
 	private static boolean _started;
 
 	private static class CacheElement implements Serializable {

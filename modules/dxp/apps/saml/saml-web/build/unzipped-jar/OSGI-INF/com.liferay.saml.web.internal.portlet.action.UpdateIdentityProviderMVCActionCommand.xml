@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" name="com.liferay.saml.web.internal.portlet.action.UpdateIdentityProviderMVCActionCommand" immediate="true">
+  <implementation class="com.liferay.saml.web.internal.portlet.action.UpdateIdentityProviderMVCActionCommand"/>
+  <service>
+    <provide interface="com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand"/>
+  </service>
+  <reference name="_samlProviderConfigurationHelper" interface="com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper" field="_samlProviderConfigurationHelper"/>
+  <property name="mvc.command.name" type="String" value="/admin/updateIdentityProvider"/>
+  <property name="javax.portlet.name" type="String" value="com_liferay_saml_web_internal_portlet_SamlAdminPortlet"/>
+</scr:component>

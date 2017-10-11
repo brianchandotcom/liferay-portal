@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" name="com.liferay.saml.web.internal.portlet.action.SingleLogoutAction" immediate="true">
+  <implementation class="com.liferay.saml.web.internal.portlet.action.SingleLogoutAction"/>
+  <service>
+    <provide interface="com.liferay.portal.kernel.struts.StrutsAction"/>
+  </service>
+  <reference name="SamlProviderConfigurationHelper" interface="com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper" bind="setSamlProviderConfigurationHelper"/>
+  <reference name="_singleLogoutProfile" interface="com.liferay.saml.runtime.profile.SingleLogoutProfile" field="_singleLogoutProfile"/>
+  <property name="path" type="String">/portal/saml/slo
+/portal/saml/slo_logout
+/portal/saml/slo_soap</property>
+</scr:component>

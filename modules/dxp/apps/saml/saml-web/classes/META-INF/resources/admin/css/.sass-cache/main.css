@@ -1,0 +1,19 @@
+.saml-portlet-admin dl.property-list, .saml-portlet-admin dd.property-list {
+  margin-left: 0;
+  overflow: hidden;
+  padding: 0; }
+  .saml-portlet-admin dl.property-list dd, .saml-portlet-admin dd.property-list dd {
+    padding-left: 5px; }
+  .saml-portlet-admin dl.property-list dt, .saml-portlet-admin dl.property-list dd, .saml-portlet-admin dd.property-list dt, .saml-portlet-admin dd.property-list dd {
+    float: left;
+    line-height: 1.5;
+    margin: 3px 0 0; }
+  .saml-portlet-admin dl.property-list dt, .saml-portlet-admin dd.property-list dt {
+    clear: left;
+    font-weight: bold;
+    min-width: 5em; }
+
+.saml-portlet-admin dd.property-list {
+  clear: both; }
+  .saml-portlet-admin dd.property-list dl {
+    margin-top: 0; }

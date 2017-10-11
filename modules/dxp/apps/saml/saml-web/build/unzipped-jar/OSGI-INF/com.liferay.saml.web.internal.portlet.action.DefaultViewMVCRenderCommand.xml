@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" name="com.liferay.saml.web.internal.portlet.action.DefaultViewMVCRenderCommand" immediate="true">
+  <implementation class="com.liferay.saml.web.internal.portlet.action.DefaultViewMVCRenderCommand"/>
+  <service>
+    <provide interface="com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand"/>
+  </service>
+  <reference name="_certificateTool" interface="com.liferay.saml.runtime.certificate.CertificateTool" field="_certificateTool"/>
+  <reference name="_localEntityManager" interface="com.liferay.saml.runtime.metadata.LocalEntityManager" field="_localEntityManager"/>
+  <reference name="_portal" interface="com.liferay.portal.kernel.util.Portal" field="_portal"/>
+  <reference name="_samlIdpSpConnectionLocalService" interface="com.liferay.saml.persistence.service.SamlIdpSpConnectionLocalService" field="_samlIdpSpConnectionLocalService"/>
+  <reference name="_samlProviderConfigurationHelper" interface="com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper" field="_samlProviderConfigurationHelper"/>
+  <reference name="_samlSpIdpConnectionLocalService" interface="com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService" field="_samlSpIdpConnectionLocalService"/>
+  <property name="mvc.command.name" type="String">/
+/admin</property>
+  <property name="javax.portlet.name" type="String" value="com_liferay_saml_web_internal_portlet_SamlAdminPortlet"/>
+</scr:component>

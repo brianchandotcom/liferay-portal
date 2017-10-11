@@ -1,0 +1,147 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1507761818912
+Bundle-ManifestVersion: 2
+Bundle-Name: Liferay SAML Web
+Bundle-SymbolicName: com.liferay.saml.web
+Bundle-Vendor: Liferay, Inc.
+Bundle-Version: 1.0.0
+Created-By: 1.8.0_121 (Oracle Corporation)
+Import-Package: aQute.bnd.annotation.metatype,com.liferay.application.
+ list;version="[1.0,2)",com.liferay.expando.kernel.model;version="[1.0
+ ,2)",com.liferay.osgi.util;version="[2.0,3)",com.liferay.portal.confi
+ guration.metatype.annotations,com.liferay.portal.kernel.annotation;ve
+ rsion="[6.3,7)",com.liferay.portal.kernel.dao.search;version="[7.2,8)
+ ",com.liferay.portal.kernel.exception;version="[7.0,8)",com.liferay.p
+ ortal.kernel.language;version="[7.1,8)",com.liferay.portal.kernel.log
+ ;version="[7.0,8)",com.liferay.portal.kernel.model;version="[1.0,2)",
+ com.liferay.portal.kernel.portlet;version="[7.3,8)",com.liferay.porta
+ l.kernel.portlet.bridges.mvc;version="[1.2,2)",com.liferay.portal.ker
+ nel.resiliency.spi.agent.annotation;version="[6.2,7)",com.liferay.por
+ tal.kernel.security.auth;version="[1.0,2)",com.liferay.portal.kernel.
+ security.permission;version="[1.1,2)",com.liferay.portal.kernel.servi
+ ce;version="[1.4,2)",com.liferay.portal.kernel.servlet;version="[7.2,
+ 8)",com.liferay.portal.kernel.servlet.taglib.ui;version="[6.3,7)",com
+ .liferay.portal.kernel.struts;version="[7.0,8)",com.liferay.portal.ke
+ rnel.theme;version="[1.0,2)",com.liferay.portal.kernel.upgrade;versio
+ n="[7.1,8)",com.liferay.portal.kernel.upload;version="[6.3,7)",com.li
+ feray.portal.kernel.util;version="[7.4,8)",com.liferay.portal.upgrade
+ .registry;version="[1.2,2)",com.liferay.saml.constants;version="[1.0,
+ 2)",com.liferay.saml.persistence.exception;version="[1.0,2)",com.life
+ ray.saml.persistence.model;version="[1.0,2)",com.liferay.saml.persist
+ ence.service;version="[1.0,2)",com.liferay.saml.runtime.certificate;v
+ ersion="[1.0,2)",com.liferay.saml.runtime.configuration;version="[1.0
+ ,2)",com.liferay.saml.runtime.credential;version="[1.0,2)",com.lifera
+ y.saml.runtime.exception;version="[1.0,2)",com.liferay.saml.runtime.m
+ etadata;version="[1.0,2)",com.liferay.saml.runtime.profile;version="[
+ 1.0,2)",com.liferay.saml.util;version="[2.0,3)",com.liferay.taglib.se
+ arch;version="[1.0,2)",javax.portlet;version="[2.0,3)",javax.servlet;
+ version="[3.0,4)",javax.servlet.http;version="[3.0,4)",org.osgi.util.
+ tracker;version="[1.5,2)"
+Javac-Debug: on
+Javac-Deprecation: off
+Javac-Encoding: UTF-8
+Liferay-Releng-App-Description: Security Assertion Markup Language 2.0
+  (SAML 2.0) is a version of the SAML OASIS standard for exchanging au
+ thentication and authorization data between security domains. SAML 2.
+ 0 is an XML-based protocol that uses security tokens containing asser
+ tions to pass information about a principal (usually an end-user) bet
+ ween an identity provider and a web service. SAML 2.0 enables web-bas
+ ed authentication and authorization scenarios including single sign-o
+ n (SSO). This app enables Liferay to act as a SAML 2.0 Identity Provi
+ der (IdP) or Service Provider (SP). It is built on top of OpenSAML an
+ d uses the Java Keystore for providing certificates/credentials for s
+ ecurity. Once this app is installed, additional configuration is requ
+ ired to adapt the app with your local SAML environment and configurat
+ ion. Visit the Documentation link to learn more about SAML and its co
+ nfiguration options.<br /><br />Supported SAML Providers: PingFederat
+ e, ADFS, Shibboleth, Siteminder, Oracle Access Manager, and OpenAM.
+Liferay-Releng-App-Title: Liferay SAML 2.0 Provider
+Liferay-Releng-Bundle: false
+Liferay-Releng-Category: Security
+Liferay-Releng-Deprecated: false
+Liferay-Releng-Labs: false
+Liferay-Releng-Marketplace: true
+Liferay-Releng-Portal-Required: false
+Liferay-Releng-Public: false
+Liferay-Releng-Restart-Required: true
+Liferay-Releng-Support-Url: http://www.liferay.com
+Liferay-Releng-Supported: true
+Private-Package: com.liferay.saml.web.internal.application.list,com.li
+ feray.saml.web.internal.auth.publicpath,com.liferay.saml.web.internal
+ .constants,com.liferay.saml.web.internal.portlet,com.liferay.saml.web
+ .internal.portlet.action,com.liferay.saml.web.internal.upgrade,com.li
+ feray.saml.web.internal.upgrade.v1_0_0,com.liferay.saml.web.internal.
+ util,content
+Provide-Capability: liferay.resource.bundle;aggregate=saml-web;bundle.
+ symbolic.name="com.liferay.saml.web";resource.bundle.aggregate:String
+ ="(&(bundle.symbolic.name=com.liferay.saml.web)(!(aggregate=*))),(bun
+ dle.symbolic.name=com.liferay.saml.api)";resource.bundle.base.name="c
+ ontent.Language";service.ranking=0,osgi.service;objectClass:List<Stri
+ ng>="com.liferay.application.list.PanelApp",osgi.service;objectClass:
+ List<String>="com.liferay.portal.kernel.portlet.bridges.mvc.MVCAction
+ Command",osgi.service;objectClass:List<String>="com.liferay.portal.ke
+ rnel.portlet.bridges.mvc.MVCRenderCommand",osgi.service;objectClass:L
+ ist<String>="com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourc
+ eCommand",osgi.service;objectClass:List<String>="com.liferay.portal.k
+ ernel.struts.StrutsAction",osgi.service;objectClass:List<String>="com
+ .liferay.portal.upgrade.registry.UpgradeStepRegistrator",osgi.service
+ ;objectClass:List<String>="com.liferay.saml.web.internal.portlet.Saml
+ AdminPortlet,javax.portlet.Portlet",osgi.service;objectClass:List<Str
+ ing>="java.lang.Object",liferay.resource.bundle;bundle.symbolic.name=
+ "com.liferay.saml.web";resource.bundle.base.name="content.Language"
+Require-Capability: liferay.resource.bundle;filter:="(bundle.symbolic.
+ name=com.liferay.saml.api)",osgi.extender;filter:="(&(osgi.extender=j
+ sp.taglib)(uri=http://java.sun.com/portlet_2_0))",osgi.extender;filte
+ r:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/aui))",os
+ gi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.
+ com/tld/theme))",osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(
+ uri=http://liferay.com/tld/ui))",osgi.extender;filter:="(&(osgi.exten
+ der=jsp.taglib)(uri=http://liferay.com/tld/util))",osgi.extender;filt
+ er:="(&(osgi.extender=osgi.component)(version>=1.3.0)(!(version>=2.0.
+ 0)))",osgi.service;filter:="(objectClass=com.liferay.portal.kernel.mo
+ del.Portlet)";effective:=active,osgi.service;filter:="(objectClass=co
+ m.liferay.portal.kernel.util.Portal)";effective:=active,osgi.service;
+ filter:="(objectClass=com.liferay.saml.persistence.service.SamlIdpSpC
+ onnectionLocalService)";effective:=active,osgi.service;filter:="(obje
+ ctClass=com.liferay.saml.persistence.service.SamlSpIdpConnectionLocal
+ Service)";effective:=active,osgi.service;filter:="(objectClass=com.li
+ feray.saml.runtime.certificate.CertificateTool)";effective:=active,os
+ gi.service;filter:="(objectClass=com.liferay.saml.runtime.configurati
+ on.SamlProviderConfigurationHelper)";effective:=active,osgi.service;f
+ ilter:="(objectClass=com.liferay.saml.runtime.credential.KeyStoreMana
+ ger)";effective:=active,osgi.service;filter:="(objectClass=com.lifera
+ y.saml.runtime.metadata.LocalEntityManager)";effective:=active,osgi.s
+ ervice;filter:="(objectClass=com.liferay.saml.runtime.profile.SingleL
+ ogoutProfile)";effective:=active,osgi.service;filter:="(objectClass=c
+ om.liferay.saml.runtime.profile.WebSsoProfile)";effective:=active,osg
+ i.service;filter:="(objectClass=com.liferay.saml.util.SamlHttpRequest
+ Util)";effective:=active,osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=
+ 1.7))"
+Service-Component: OSGI-INF/com.liferay.saml.web.internal.application.
+ list.SamlAdminPanelApp.xml,OSGI-INF/com.liferay.saml.web.internal.aut
+ h.publicpath.AuthPublicPath.xml,OSGI-INF/com.liferay.saml.web.interna
+ l.portlet.SamlAdminPortlet.xml,OSGI-INF/com.liferay.saml.web.internal
+ .portlet.action.AssertionConsumerServiceAction.xml,OSGI-INF/com.lifer
+ ay.saml.web.internal.portlet.action.AuthRedirectAction.xml,OSGI-INF/c
+ om.liferay.saml.web.internal.portlet.action.DefaultViewMVCRenderComma
+ nd.xml,OSGI-INF/com.liferay.saml.web.internal.portlet.action.DeleteSa
+ mlIdpSpConnectionMVCActionCommand.xml,OSGI-INF/com.liferay.saml.web.i
+ nternal.portlet.action.DownloadCertificateMVCResourceCommand.xml,OSGI
+ -INF/com.liferay.saml.web.internal.portlet.action.EditServiceProvider
+ ConnectionMVCRenderCommand.xml,OSGI-INF/com.liferay.saml.web.internal
+ .portlet.action.MetadataAction.xml,OSGI-INF/com.liferay.saml.web.inte
+ rnal.portlet.action.SingleLogoutAction.xml,OSGI-INF/com.liferay.saml.
+ web.internal.portlet.action.UpdateCertificateMVCActionCommand.xml,OSG
+ I-INF/com.liferay.saml.web.internal.portlet.action.UpdateCertificateM
+ VCRenderCommand.xml,OSGI-INF/com.liferay.saml.web.internal.portlet.ac
+ tion.UpdateGeneralMVCActionCommand.xml,OSGI-INF/com.liferay.saml.web.
+ internal.portlet.action.UpdateIdentityProviderConnectionMVCActionComm
+ and.xml,OSGI-INF/com.liferay.saml.web.internal.portlet.action.UpdateI
+ dentityProviderMVCActionCommand.xml,OSGI-INF/com.liferay.saml.web.int
+ ernal.portlet.action.UpdateServiceProviderConnectionMVCActionCommand.
+ xml,OSGI-INF/com.liferay.saml.web.internal.portlet.action.UpdateServi
+ ceProviderMVCActionCommand.xml,OSGI-INF/com.liferay.saml.web.internal
+ .portlet.action.WebSsoAction.xml,OSGI-INF/com.liferay.saml.web.intern
+ al.upgrade.SamlWebUpgrade.xml
+Tool: Bnd-3.3.0.201609221906
+Web-ContextPath: /saml-web

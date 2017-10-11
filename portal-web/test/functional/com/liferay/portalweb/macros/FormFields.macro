@@ -319,25 +319,6 @@
 		<execute function="AssertTextNotPresent" locator1="FormFields#SELECT_OPTIONS_OPTION_VALUE_FIELD_VISIBLE" value1="${fieldValue}" />
 	</command>
 
-	<command name="viewDocumentsAndMediaField">
-		<execute macro="FormFields#viewDocumentsAndMediaLabel">
-			<var name="fieldLabel" value="${fieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
-		</execute>
-
-		<var name="key_fieldLabel" value="${fieldLabel}" />
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute function="AssertElementPresent#assertVisible" locator1="FormFields#DOCUMENTS_AND_MEDIA_FIELD" />
-	</command>
-
-	<command name="viewDocumentsAndMediaLabel">
-		<var name="key_fieldLabel" value="${fieldLabel}" />
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute function="AssertTextEquals#assertText" locator1="FormFields#DOCUMENTS_AND_MEDIA_LABEL" value1="${fieldLabel}" />
-	</command>
-
 	<command name="viewFieldHelpText">
 		<execute function="AssertTextEquals" locator1="FormFields#HELP_TEXT" value1="${fieldHelpText}">
 			<var name="key_fieldName" value="${fieldName}" />
@@ -627,5 +608,24 @@
 		<execute function="AssertTextEquals" locator1="FormFields#TEXT_FIELD_ALT" value1="${fieldValue}">
 			<var name="key_fieldName" value="${fieldName}" />
 		</execute>
+	</command>
+
+	<command name="viewUploadField">
+		<execute macro="FormFields#viewUploadLabel">
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<var name="key_fieldLabel" value="${fieldLabel}" />
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertElementPresent#assertVisible" locator1="FormFields#UPLOAD_FIELD" />
+	</command>
+
+	<command name="viewUploadLabel">
+		<var name="key_fieldLabel" value="${fieldLabel}" />
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertTextEquals#assertText" locator1="FormFields#UPLOAD_LABEL" value1="${fieldLabel}" />
 	</command>
 </definition>

@@ -533,7 +533,7 @@
 		<execute macro="Form#editDescription" />
 
 		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Form Text" />
+			<var name="fieldType" value="Paragraph" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -1186,7 +1186,7 @@
 		<execute macro="Form#previewForm">
 			<var name="fieldLabel" value="Text Field" />
 			<var name="fieldName" value="TextField" />
-			<var name="fieldValue" value="Preview Form Text entry" />
+			<var name="fieldValue" value="Preview Paragraph entry" />
 		</execute>
 
 		<execute macro="Navigator#closeWindow" />
@@ -1204,7 +1204,7 @@
 		<execute macro="Form#submitFormPublish">
 			<var name="fieldLabel" value="Text Field" />
 			<var name="fieldName" value="TextField" />
-			<var name="fieldValue" value="Published form text entry" />
+			<var name="fieldValue" value="Published Paragraph entry" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -1219,7 +1219,7 @@
 
 		<execute macro="FormsAdmin#viewFormTableEntry">
 			<var name="fieldLabel" value="Text Field" />
-			<var name="fieldValue" value="Published form text entry" />
+			<var name="fieldValue" value="Published Paragraph entry" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -1712,7 +1712,7 @@
 		</for>
 	</command>
 
-	<command name="SubmitFormWithAllFieldTypesAfterEditingFields" priority="5">
+	<command name="SubmitFormAfterEditingFields" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 		<property name="testray.component.names" value="Training" />
 
@@ -1731,7 +1731,7 @@
 		<execute macro="Form#editDescription" />
 
 		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Form Text" />
+			<var name="fieldType" value="Paragraph" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -2085,7 +2085,7 @@
 		<execute macro="FormsAdmin#viewDateEntry">
 			<var name="fieldLabel" value="New Date" />
 			<var name="fieldName" value="Date" />
-			<var name="fieldValue" value="5/2/16" />
+			<var name="fieldValue" value="05/02/2016" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewCheckboxEntry">
@@ -2178,7 +2178,7 @@
 		<execute macro="FormsAdmin#viewDateEntry">
 			<var name="fieldLabel" value="New Date" />
 			<var name="fieldName" value="Date" />
-			<var name="fieldValue" value="5/2/16" />
+			<var name="fieldValue" value="05/02/2016" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewCheckboxEntry">
@@ -2212,7 +2212,7 @@
 		</execute>
 
 		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Form Text" />
+			<var name="fieldType" value="Paragraph" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -2499,7 +2499,7 @@
 		<execute macro="FormsAdmin#viewDateEntry">
 			<var name="fieldLabel" value="Date" />
 			<var name="fieldName" value="Date" />
-			<var name="fieldValue" value="5/2/16" />
+			<var name="fieldValue" value="05/02/2016" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewCheckboxEntry">
@@ -2629,79 +2629,6 @@
 		<execute macro="FormsAdmin#viewFormTableEntry">
 			<var name="fieldLabel" value="Text" />
 			<var name="fieldValue" value="test" />
-		</execute>
-	</command>
-
-	<command name="SubmitFormWithDocumentsAndMediaField" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
-
-		<execute macro="FormsAdminNavigator#gotoAddForm" />
-
-		<execute macro="Form#editName" />
-
-		<execute macro="Form#editDescription" />
-
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Documents and Media" />
-		</execute>
-
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Documents And Media Field" />
-		</execute>
-
-		<execute macro="Form#closeSidebar" />
-
-		<execute macro="Form#save" />
-
-		<execute macro="Form#publishForm" />
-
-		<execute macro="FormsAdminNavigator#gotoPublishCopyURLLink" />
-
-		<execute macro="Form#getPublishedFormPublicURL">
-			<return from="publicURL" name="publishedFormPublicURL" />
-			<var name="publishedFormPublicURL" value="${publishedFormPublicURL}" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${publishedFormPublicURL}" />
-		</execute>
-
-		<execute macro="FormFields#viewDocumentsAndMediaField">
-			<var name="fieldLabel" value="Documents And Media Field" />
-			<var name="fieldName" value="DocumentsAndMediaField" />
-		</execute>
-
-		<execute macro="ItemSelector#gotoItemSelectorViaSelectButton" />
-
-		<execute macro="ItemSelector#uploadFile">
-			<var name="navTab" value="Documents and Media" />
-			<var name="uploadFileName" value="Document_1.jpg" />
-		</execute>
-
-		<execute macro="FormPortlet#submit" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
-
-		<execute macro="FormsAdminNavigator#gotoViewEntries" />
-
-		<execute macro="FormsAdminNavigator#gotoView" />
-
-		<execute macro="FormsAdmin#viewDocumentsAndMediaFile">
-			<var name="fieldLabel" value="Documents And Media Field" />
-			<var name="fieldName" value="DocumentsAndMediaField" />
-			<var name="uploadFileName" value="Document_1.jpg" />
 		</execute>
 	</command>
 
@@ -3025,7 +2952,7 @@
 		<execute macro="Form#editDescription" />
 
 		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Form Text" />
+			<var name="fieldType" value="Paragraph" />
 		</execute>
 
 		<execute macro="FormFields#editParagraphBody">
@@ -3811,6 +3738,79 @@
 			<var name="fieldLabel" value="Text Field" />
 			<var name="fieldName" value="TextField" />
 			<var name="fieldValue" value="Text Field Value" />
+		</execute>
+	</command>
+
+	<command name="SubmitFormWithUploadField" priority="4">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoAddForm" />
+
+		<execute macro="Form#editName" />
+
+		<execute macro="Form#editDescription" />
+
+		<execute macro="Form#gotoAddField">
+			<var name="fieldType" value="Upload" />
+		</execute>
+
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="Upload Field" />
+		</execute>
+
+		<execute macro="Form#closeSidebar" />
+
+		<execute macro="Form#save" />
+
+		<execute macro="Form#publishForm" />
+
+		<execute macro="FormsAdminNavigator#gotoPublishCopyURLLink" />
+
+		<execute macro="Form#getPublishedFormPublicURL">
+			<return from="publicURL" name="publishedFormPublicURL" />
+			<var name="publishedFormPublicURL" value="${publishedFormPublicURL}" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${publishedFormPublicURL}" />
+		</execute>
+
+		<execute macro="FormFields#viewUploadField">
+			<var name="fieldLabel" value="Upload Field" />
+			<var name="fieldName" value="UploadField" />
+		</execute>
+
+		<execute macro="ItemSelector#gotoItemSelectorViaSelectButton" />
+
+		<execute macro="ItemSelector#uploadFile">
+			<var name="navTab" value="Documents and Media" />
+			<var name="uploadFileName" value="Document_1.jpg" />
+		</execute>
+
+		<execute macro="FormPortlet#submit" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoViewEntries" />
+
+		<execute macro="FormsAdminNavigator#gotoView" />
+
+		<execute macro="FormsAdmin#viewUploadFile">
+			<var name="fieldLabel" value="Upload Field" />
+			<var name="fieldName" value="UploadField" />
+			<var name="uploadFileName" value="Document_1.jpg" />
 		</execute>
 	</command>
 

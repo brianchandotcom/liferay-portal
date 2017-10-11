@@ -28,8 +28,8 @@ public class ExceptionProcessCallable
 	}
 
 	@Override
-	public ProcessException call() {
-		return _processException;
+	public ProcessException call() throws ProcessException {
+		throw _processException;
 	}
 
 	private static final long serialVersionUID = 1L;

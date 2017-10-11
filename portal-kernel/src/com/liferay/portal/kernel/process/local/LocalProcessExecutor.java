@@ -16,9 +16,7 @@ package com.liferay.portal.kernel.process.local;
 
 import com.liferay.portal.kernel.concurrent.AbortPolicy;
 import com.liferay.portal.kernel.concurrent.AsyncBroker;
-import com.liferay.portal.kernel.concurrent.FutureListener;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
-import com.liferay.portal.kernel.concurrent.NoticeableFutureConverter;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.concurrent.ThreadPoolHandlerAdapter;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedInputStream;
@@ -58,7 +56,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
 
@@ -175,59 +172,24 @@ public class LocalProcessExecutor implements ProcessExecutor {
 
 			AsyncBroker<Long, Serializable> asyncBroker = new AsyncBroker<>();
 
-			SubprocessReactor subprocessReactor = new SubprocessReactor(
+			SubprocessReactor<T> subprocessReactor = new SubprocessReactor<>(
 				process, processConfig.getReactClassLoader(), asyncBroker);
 
 			try {
-				NoticeableFuture<ProcessCallable<? extends Serializable>>
-					processCallableNoticeableFuture = threadPoolExecutor.submit(
-						subprocessReactor);
+				NoticeableFuture<T> noticeableFuture =
+					threadPoolExecutor.submit(subprocessReactor);
 
-				processCallableNoticeableFuture.addFutureListener(
-					new FutureListener
-						<ProcessCallable<? extends Serializable>>() {
-
-						@Override
-						public void complete(
-							Future<ProcessCallable<? extends Serializable>>
-								future) {
-
-							if (future.isCancelled()) {
-								process.destroy();
-							}
+				noticeableFuture.addFutureListener(
+					future -> {
+						if (future.isCancelled()) {
+							process.destroy();
 						}
-
 					});
 
 				// Consider the newly created process as a managed process only
 				// after the subprocess reactor is taken by the thread pool
 
-				_managedProcesses.put(process, processCallableNoticeableFuture);
-
-				NoticeableFuture<T> noticeableFuture =
-					new NoticeableFutureConverter
-						<T, ProcessCallable<? extends Serializable>>(
-							processCallableNoticeableFuture) {
-
-						@Override
-						protected T convert(
-								ProcessCallable<? extends Serializable>
-									processCallable)
-							throws ProcessException {
-
-							if (processCallable instanceof
-									ReturnProcessCallable<?>) {
-
-								return (T)processCallable.call();
-							}
-
-							ExceptionProcessCallable exceptionProcessCallable =
-								(ExceptionProcessCallable)processCallable;
-
-							throw exceptionProcessCallable.call();
-						}
-
-					};
+				_managedProcesses.put(process, noticeableFuture);
 
 				return new LocalProcessChannel<>(
 					noticeableFuture, objectOutputStream, asyncBroker);
@@ -272,8 +234,8 @@ public class LocalProcessExecutor implements ProcessExecutor {
 		new ConcurrentHashMap<>();
 	private volatile ThreadPoolExecutor _threadPoolExecutor;
 
-	private class SubprocessReactor
-		implements Callable<ProcessCallable<? extends Serializable>> {
+	private class SubprocessReactor<T extends Serializable>
+		implements Callable<T> {
 
 		public SubprocessReactor(
 			Process process, ClassLoader reactClassLoader,
@@ -285,8 +247,8 @@ public class LocalProcessExecutor implements ProcessExecutor {
 		}
 
 		@Override
-		public ProcessCallable<? extends Serializable> call() throws Exception {
-			ProcessCallable<?> resultProcessCallable = null;
+		public T call() throws Exception {
+			ProcessCallable<T> resultProcessCallable = null;
 
 			AsyncBrokerThreadLocal.setAsyncBroker(_asyncBroker);
 
@@ -362,10 +324,11 @@ public class LocalProcessExecutor implements ProcessExecutor {
 					ProcessCallable<?> processCallable =
 						(ProcessCallable<?>)obj;
 
-					if ((processCallable instanceof ExceptionProcessCallable) ||
-						(processCallable instanceof ReturnProcessCallable<?>)) {
+					if (processCallable instanceof ExceptionProcessCallable ||
+						processCallable instanceof ReturnProcessCallable) {
 
-						resultProcessCallable = processCallable;
+						resultProcessCallable =
+							(ProcessCallable<T>)processCallable;
 
 						continue;
 					}
@@ -430,14 +393,14 @@ public class LocalProcessExecutor implements ProcessExecutor {
 
 				_managedProcesses.remove(_process);
 
+				AsyncBrokerThreadLocal.removeAsyncBroker();
+
 				if (resultProcessCallable != null) {
 
 					// Override previous process exception if there was one
 
-					return resultProcessCallable;
+					return resultProcessCallable.call();
 				}
-
-				AsyncBrokerThreadLocal.removeAsyncBroker();
 			}
 		}
 

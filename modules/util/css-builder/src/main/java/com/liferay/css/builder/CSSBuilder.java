@@ -94,6 +94,8 @@ public class CSSBuilder implements AutoCloseable {
 			System.err.println(pe.getMessage());
 
 			_printHelp(jCommander);
+
+			System.exit(1);
 		}
 	}
 

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" name="com.liferay.saml.addon.keep.alive.web.internal.instance.lifecycle.SamlKeepAliveExpandoPortalInstanceLifecycleListener" immediate="true">
-  <implementation class="com.liferay.saml.addon.keep.alive.web.internal.instance.lifecycle.SamlKeepAliveExpandoPortalInstanceLifecycleListener"/>
-  <service>
-    <provide interface="com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener"/>
-  </service>
-  <reference name="_expandoColumnLocalService" interface="com.liferay.expando.kernel.service.ExpandoColumnLocalService" field="_expandoColumnLocalService"/>
-  <reference name="_expandoTableLocalService" interface="com.liferay.expando.kernel.service.ExpandoTableLocalService" field="_expandoTableLocalService"/>
-</scr:component>

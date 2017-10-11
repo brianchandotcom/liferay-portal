@@ -20,6 +20,10 @@
 	@extend .dropdown-item;
 }
 
+.dropdown-menu > li.disabled > a {
+	@extend .dropdown-item.disabled;
+}
+
 .dropdown-toggle:after {
 	border-width: 0;
 	content: normal;

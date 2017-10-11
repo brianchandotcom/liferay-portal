@@ -2,9 +2,8 @@
 
 <%@ include file="/init.jsp" %>
 
-<div id="${artifactId}-root">
-</div>
+<div id="<portlet:namespace />"></div>
 
 <aui:script require="${artifactId}@${packageJsonVersion}">
-	${auiScriptRequireVarName}.default();
+	${auiScriptRequireVarName}.default('<portlet:namespace />');
 </aui:script>

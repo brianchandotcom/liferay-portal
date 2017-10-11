@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.jaxrs.whiteboard.JaxRSWhiteboardConstants;
 
 /**
  * This component registers the {@code VulcanApplication} from the {@code
@@ -49,8 +48,8 @@ public class VulcanApplicationRegistrar {
 			properties.put(key, value);
 		}
 
-		properties.put(JaxRSWhiteboardConstants.JAX_RS_NAME, ".default");
-		properties.put(JaxRSWhiteboardConstants.JAX_RS_APPLICATION_BASE, "/");
+		properties.put("osgi.jaxrs.name", ".default");
+		properties.put("osgi.jaxrs.application.base", "/");
 
 		Application service = bundleContext.getService(_serviceReference);
 

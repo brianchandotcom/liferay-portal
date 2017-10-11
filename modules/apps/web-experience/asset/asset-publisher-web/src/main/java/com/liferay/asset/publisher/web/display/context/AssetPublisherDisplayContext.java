@@ -235,24 +235,15 @@ public class AssetPublisherDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		_assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(
-			_portletPreferences, getGroupIds(), getAllAssetCategoryIds(),
+			_portletPreferences, themeDisplay.getScopeGroupId(),
+			themeDisplay.getLayout(), getAllAssetCategoryIds(),
 			getAllAssetTagNames());
 
-		_assetEntryQuery.setClassTypeIds(getClassTypeIds());
 		_assetEntryQuery.setEnablePermissions(isEnablePermissions());
-		_assetEntryQuery.setExcludeZeroViewCount(isExcludeZeroViewCount());
 
 		configureSubtypeFieldFilter(_assetEntryQuery, themeDisplay.getLocale());
 
-		if (isShowOnlyLayoutAssets()) {
-			_assetEntryQuery.setLayout(themeDisplay.getLayout());
-		}
-
 		_assetEntryQuery.setPaginationType(getPaginationType());
-		_assetEntryQuery.setOrderByCol1(getOrderByColumn1());
-		_assetEntryQuery.setOrderByCol2(getOrderByColumn2());
-		_assetEntryQuery.setOrderByType1(getOrderByType1());
-		_assetEntryQuery.setOrderByType2(getOrderByType2());
 
 		AssetPublisherUtil.processAssetEntryQuery(
 			themeDisplay.getUser(), _portletPreferences, _assetEntryQuery);

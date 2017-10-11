@@ -15,7 +15,6 @@
 package com.liferay.asset.publisher.lar.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
@@ -1114,17 +1113,8 @@ public class AssetPublisherExportImportTest
 		Company company = CompanyLocalServiceUtil.getCompany(
 			TestPropsValues.getCompanyId());
 
-		AssetEntryQuery assetEntryQuery =
-			AssetPublisherUtil.getAssetEntryQuery(
-				portletPreferences, new long[] {importedGroup.getGroupId()},
-				null, null);
-
-		long[] availableClassNameIds =
-			AssetRendererFactoryRegistryUtil.getClassNameIds(
-				company.getCompanyId(), true);
-
-		long[] classNameIds = AssetPublisherUtil.getClassNameIds(
-			portletPreferences, availableClassNameIds);
+		AssetEntryQuery assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(
+			portletPreferences, importedGroup.getGroupId(), layout, null, null);
 
 		SearchContainer<AssetEntry> searchContainer = new SearchContainer<>();
 
@@ -1135,7 +1125,7 @@ public class AssetPublisherExportImportTest
 				searchContainer, assetEntryQuery, layout, portletPreferences,
 				StringPool.BLANK, null, null, company.getCompanyId(),
 				importedGroup.getGroupId(), TestPropsValues.getUserId(),
-				classNameIds, null);
+				assetEntryQuery.getClassNameIds(), null);
 
 		List<AssetEntry> actualAssetEntries = new ArrayList<>();
 

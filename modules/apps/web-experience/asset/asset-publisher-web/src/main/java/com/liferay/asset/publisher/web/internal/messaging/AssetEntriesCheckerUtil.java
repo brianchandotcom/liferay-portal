@@ -16,7 +16,6 @@ package com.liferay.asset.publisher.web.internal.messaging;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration;
@@ -373,74 +372,11 @@ public class AssetEntriesCheckerUtil {
 			_configurationProvider.getCompanyConfiguration(
 				AssetPublisherWebConfiguration.class, layout.getCompanyId());
 
-		long[] groupIds = _assetPublisherUtil.getGroupIds(
-			portletPreferences, layout.getGroupId(), layout);
-
-		AssetEntryQuery assetEntryQuery =
-			_assetPublisherUtil.getAssetEntryQuery(
-				portletPreferences, groupIds, null, null);
-
-		assetEntryQuery.setGroupIds(groupIds);
-
-		boolean anyAssetType = GetterUtil.getBoolean(
-			portletPreferences.getValue("anyAssetType", null), true);
-
-		if (!anyAssetType) {
-			long[] availableClassNameIds =
-				AssetRendererFactoryRegistryUtil.getClassNameIds(
-					layout.getCompanyId());
-
-			long[] classNameIds = _assetPublisherUtil.getClassNameIds(
-				portletPreferences, availableClassNameIds);
-
-			assetEntryQuery.setClassNameIds(classNameIds);
-		}
-
-		long[] classTypeIds = GetterUtil.getLongValues(
-			portletPreferences.getValues("classTypeIds", null));
-
-		assetEntryQuery.setClassTypeIds(classTypeIds);
-
-		boolean enablePermissions = GetterUtil.getBoolean(
-			portletPreferences.getValue("enablePermissions", null));
-
-		assetEntryQuery.setEnablePermissions(enablePermissions);
+		AssetEntryQuery assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(
+			portletPreferences, layout.getGroupId(), layout, null, null);
 
 		assetEntryQuery.setEnd(
 			assetPublisherWebConfiguration.dynamicSubscriptionLimit());
-
-		boolean excludeZeroViewCount = GetterUtil.getBoolean(
-			portletPreferences.getValue("excludeZeroViewCount", null));
-
-		assetEntryQuery.setExcludeZeroViewCount(excludeZeroViewCount);
-
-		boolean showOnlyLayoutAssets = GetterUtil.getBoolean(
-			portletPreferences.getValue("showOnlyLayoutAssets", null));
-
-		if (showOnlyLayoutAssets) {
-			assetEntryQuery.setLayout(layout);
-		}
-
-		String orderByColumn1 = GetterUtil.getString(
-			portletPreferences.getValue("orderByColumn1", "modifiedDate"));
-
-		assetEntryQuery.setOrderByCol1(orderByColumn1);
-
-		String orderByColumn2 = GetterUtil.getString(
-			portletPreferences.getValue("orderByColumn2", "title"));
-
-		assetEntryQuery.setOrderByCol2(orderByColumn2);
-
-		String orderByType1 = GetterUtil.getString(
-			portletPreferences.getValue("orderByType1", "DESC"));
-
-		assetEntryQuery.setOrderByType1(orderByType1);
-
-		String orderByType2 = GetterUtil.getString(
-			portletPreferences.getValue("orderByType2", "ASC"));
-
-		assetEntryQuery.setOrderByType2(orderByType2);
-
 		assetEntryQuery.setStart(0);
 
 		try {

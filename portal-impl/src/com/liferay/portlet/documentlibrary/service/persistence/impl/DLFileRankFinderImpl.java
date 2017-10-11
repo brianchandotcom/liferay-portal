@@ -35,11 +35,38 @@ import java.util.List;
 public class DLFileRankFinderImpl
 	extends DLFileRankFinderBaseImpl implements DLFileRankFinder {
 
+	public static final String FIND_BY_FOLDER_ID =
+		DLFileRankFinder.class.getName() + ".findByFolderId";
+
 	public static final String FIND_BY_STALE_RANKS =
 		DLFileRankFinder.class.getName() + ".findByStaleRanks";
 
-	public static final String FIND_BY_FOLDER_ID =
-		DLFileRankFinder.class.getName() + ".findByFolderId";
+	@Override
+	public List<DLFileRank> findByFolderId(long folderId) {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_FOLDER_ID);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("DLFileRank", DLFileRankImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(folderId);
+
+			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
 
 	@Override
 	public List<Object[]> findByStaleRanks(int count) {
@@ -58,33 +85,6 @@ public class DLFileRankFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(count);
-
-			return q.list(true);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	@Override
-	public List<DLFileRank> findByFolderId(long folderId) {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_BY_FOLDER_ID);
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addEntity("DLFileRank", DLFileRankImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(folderId);
 
 			return q.list(true);
 		}

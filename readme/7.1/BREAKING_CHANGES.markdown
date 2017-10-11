@@ -20,7 +20,7 @@ Here are some of the types of changes documented in this file:
   replaces an old API, in spite of the old API being kept in Liferay Portal for
   backwards compatibility.
 
-*This document has been reviewed through commit `0094c92840e2`.*
+*This document has been reviewed through commit `e65e08b84ea8`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -379,14 +379,15 @@ Closure Template library.
 
 ---------------------------------------
 
-### Moved three DL File Properties to OSGi Configurations
-- **Date:** 2017-August-01
+### Moved Three DL File Properties to OSGi Configuration
+- **Date:** 2017-Aug-01
 - **JIRA Ticket:** LPS-69208
 
 #### What changed?
 
 Two DL File properties have been moved from Server Administration to the OSGi
-configuration `DLConfiguration`, and one to `DLFileEntryConfiguration`. Both configurations are located in the `document-library-api` module.
+configuration `DLConfiguration`, and one to `DLFileEntryConfiguration`. Both
+configurations are located in the `document-library-api` module.
 
 #### Who is affected?
 
@@ -400,12 +401,13 @@ This affects anyone who is using the following portal properties:
 
 Instead of overriding the `portal.properties` file, you can manage the
 properties from Portal's configuration administrator. This can be accessed by
-navigating to Liferay's *Control Panel* &rarr; *Configuration* &rarr; *System
-Settings* &rarr; *Configuration* &rarr; *Documents & Media Service* or *Documents & Media File Entries* and editing the settings there.
+navigating to Portal's *Control Panel* &rarr; *Configuration* &rarr; *System
+Settings* &rarr; *Collaboration* &rarr; *Documents & Media Service* or
+*Documents & Media File Entries* and editing the settings there.
 
 If you would like to include the new configuration in your application, follow
 the instructions for
-[making your applications configurable in Liferay 7.0](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/making-your-applications-configurable).
+[making your applications configurable](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/making-your-applications-configurable).
 
 #### Why was this change made?
 
@@ -413,6 +415,7 @@ This change was made as part of the modularization efforts to ease portal
 configuration changes.
 
 ---------------------------------------
+
 ### Changed Default Value for Browser Cache Properties
 - **Date:** 2017-Sep-05
 - **JIRA Ticket:** LPS-74452

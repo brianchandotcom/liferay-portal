@@ -2632,7 +2632,7 @@
 		</execute>
 	</command>
 
-	<command name="SubmitFormWithDocumentsAndMediaField" priority="4">
+	<command name="SubmitFormWithUploadField" priority="4">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -2672,15 +2672,15 @@
 			<var name="url" value="${publishedFormPublicURL}" />
 		</execute>
 
-		<execute macro="FormFields#viewDocumentsAndMediaField">
+		<execute macro="FormFields#viewUploadField">
 			<var name="fieldLabel" value="Upload Field" />
-			<var name="fieldName" value="DocumentsAndMediaField" />
+			<var name="fieldName" value="UploadField" />
 		</execute>
 
 		<execute macro="ItemSelector#gotoItemSelectorViaSelectButton" />
 
 		<execute macro="ItemSelector#uploadFile">
-			<var name="navTab" value="Upload" />
+			<var name="navTab" value="Documents and Media" />
 			<var name="uploadFileName" value="Document_1.jpg" />
 		</execute>
 
@@ -2698,9 +2698,9 @@
 
 		<execute macro="FormsAdminNavigator#gotoView" />
 
-		<execute macro="FormsAdmin#viewDocumentsAndMediaFile">
+		<execute macro="FormsAdmin#viewUploadFile">
 			<var name="fieldLabel" value="Upload Field" />
-			<var name="fieldName" value="DocumentsAndMediaField" />
+			<var name="fieldName" value="UploadField" />
 			<var name="uploadFileName" value="Document_1.jpg" />
 		</execute>
 	</command>

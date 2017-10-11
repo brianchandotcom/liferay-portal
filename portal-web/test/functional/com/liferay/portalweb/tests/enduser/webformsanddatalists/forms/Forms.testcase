@@ -2632,79 +2632,6 @@
 		</execute>
 	</command>
 
-	<command name="SubmitFormWithUploadField" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
-
-		<execute macro="FormsAdminNavigator#gotoAddForm" />
-
-		<execute macro="Form#editName" />
-
-		<execute macro="Form#editDescription" />
-
-		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Upload" />
-		</execute>
-
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Upload Field" />
-		</execute>
-
-		<execute macro="Form#closeSidebar" />
-
-		<execute macro="Form#save" />
-
-		<execute macro="Form#publishForm" />
-
-		<execute macro="FormsAdminNavigator#gotoPublishCopyURLLink" />
-
-		<execute macro="Form#getPublishedFormPublicURL">
-			<return from="publicURL" name="publishedFormPublicURL" />
-			<var name="publishedFormPublicURL" value="${publishedFormPublicURL}" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${publishedFormPublicURL}" />
-		</execute>
-
-		<execute macro="FormFields#viewUploadField">
-			<var name="fieldLabel" value="Upload Field" />
-			<var name="fieldName" value="UploadField" />
-		</execute>
-
-		<execute macro="ItemSelector#gotoItemSelectorViaSelectButton" />
-
-		<execute macro="ItemSelector#uploadFile">
-			<var name="navTab" value="Documents and Media" />
-			<var name="uploadFileName" value="Document_1.jpg" />
-		</execute>
-
-		<execute macro="FormPortlet#submit" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
-
-		<execute macro="FormsAdminNavigator#gotoViewEntries" />
-
-		<execute macro="FormsAdminNavigator#gotoView" />
-
-		<execute macro="FormsAdmin#viewUploadFile">
-			<var name="fieldLabel" value="Upload Field" />
-			<var name="fieldName" value="UploadField" />
-			<var name="uploadFileName" value="Document_1.jpg" />
-		</execute>
-	</command>
-
 	<command name="SubmitFormWithGridField" priority="5">
 		<property name="portal.acceptance" value="pending" />
 
@@ -3811,6 +3738,79 @@
 			<var name="fieldLabel" value="Text Field" />
 			<var name="fieldName" value="TextField" />
 			<var name="fieldValue" value="Text Field Value" />
+		</execute>
+	</command>
+
+	<command name="SubmitFormWithUploadField" priority="4">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoAddForm" />
+
+		<execute macro="Form#editName" />
+
+		<execute macro="Form#editDescription" />
+
+		<execute macro="Form#gotoAddField">
+			<var name="fieldType" value="Upload" />
+		</execute>
+
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="Upload Field" />
+		</execute>
+
+		<execute macro="Form#closeSidebar" />
+
+		<execute macro="Form#save" />
+
+		<execute macro="Form#publishForm" />
+
+		<execute macro="FormsAdminNavigator#gotoPublishCopyURLLink" />
+
+		<execute macro="Form#getPublishedFormPublicURL">
+			<return from="publicURL" name="publishedFormPublicURL" />
+			<var name="publishedFormPublicURL" value="${publishedFormPublicURL}" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${publishedFormPublicURL}" />
+		</execute>
+
+		<execute macro="FormFields#viewUploadField">
+			<var name="fieldLabel" value="Upload Field" />
+			<var name="fieldName" value="UploadField" />
+		</execute>
+
+		<execute macro="ItemSelector#gotoItemSelectorViaSelectButton" />
+
+		<execute macro="ItemSelector#uploadFile">
+			<var name="navTab" value="Documents and Media" />
+			<var name="uploadFileName" value="Document_1.jpg" />
+		</execute>
+
+		<execute macro="FormPortlet#submit" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoViewEntries" />
+
+		<execute macro="FormsAdminNavigator#gotoView" />
+
+		<execute macro="FormsAdmin#viewUploadFile">
+			<var name="fieldLabel" value="Upload Field" />
+			<var name="fieldName" value="UploadField" />
+			<var name="uploadFileName" value="Document_1.jpg" />
 		</execute>
 	</command>
 

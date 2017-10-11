@@ -14,12 +14,12 @@
 
 package com.liferay.vldap.server.internal;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.vldap.server.internal.handler.AbandonLdapHandler;
 import com.liferay.vldap.server.internal.handler.BindLdapHandler;
 import com.liferay.vldap.server.internal.handler.CompareLdapHandler;

@@ -1,0 +1,5 @@
+.toolbar {
+	display: flex;
+
+	@extend .justify-content-between;
+}

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise.internal.data;
+package src.main.java.com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise.test.data.internal;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.mobile.device.detection.fiftyonedegrees.data.DataFileProvider;
@@ -24,7 +24,6 @@ import java.net.URL;
 
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
-import java.util.zip.ZipInputStream;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -32,20 +31,19 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Michael C. Han
+ * @author Matthew Tambara
  */
 @Component(
 	immediate = true,
 	property = {
-		"file.name=META-INF/51Degrees-EnterpriseV3_2.dat.gz",
-		"service.ranking:Integer=100",
+		"file.name=META-INF/51Degrees-TestV3_2.dat.gz",
+		"service.ranking:Integer=200"
 	},
 	service = DataFileProvider.class
 )
-public class FiftyOneDegreesEnterpriseDataFileProvider
+public class FiftyOneDegreesTestEnterpriseDataFileProvider
 	implements DataFileProvider {
 
 	@Override
@@ -56,25 +54,9 @@ public class FiftyOneDegreesEnterpriseDataFileProvider
 
 		URL url = bundle.getResource(fileName);
 
-		if (url == null) {
-			return _dataFileProvider.getDataFileInputStream();
-		}
-
 		InputStream inputStream = url.openStream();
 
-		if (inputStream == null) {
-			return _dataFileProvider.getDataFileInputStream();
-		}
-
-		if (fileName.endsWith(".gz")) {
-			return new GZIPInputStream(inputStream);
-		}
-		else if (fileName.endsWith(".jar") || fileName.endsWith(".zip")) {
-			return new ZipInputStream(inputStream);
-		}
-		else {
-			return inputStream;
-		}
+		return new GZIPInputStream(inputStream);
 	}
 
 	@Activate
@@ -93,10 +75,6 @@ public class FiftyOneDegreesEnterpriseDataFileProvider
 	}
 
 	private BundleContext _bundleContext;
-
-	@Reference(target = "(service.ranking=1)")
-	private DataFileProvider _dataFileProvider;
-
 	private volatile String _fileName;
 
 }

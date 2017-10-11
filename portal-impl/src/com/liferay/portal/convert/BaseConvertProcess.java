@@ -58,7 +58,9 @@ public abstract class BaseConvertProcess implements ConvertProcess {
 		finally {
 			setParameterValues(null);
 
-			MaintenanceUtil.cancel();
+			if (MaintenanceUtil.isMaintaining()) {
+				MaintenanceUtil.cancel();
+			}
 		}
 	}
 

@@ -367,9 +367,9 @@ configurations are located in the `document-library-api` module.
 
 This affects anyone who is using the following portal properties:
 
+- `dl.file.entry.previewable.processor.max.size`
 - `dl.file.extensions`
 - `dl.file.max.size`
-- `dl.file.entry.previewable.processor.max.size`
 
 #### How should I update my code?
 

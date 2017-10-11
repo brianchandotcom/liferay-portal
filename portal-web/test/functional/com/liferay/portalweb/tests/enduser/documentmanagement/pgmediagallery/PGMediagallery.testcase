@@ -242,7 +242,7 @@
 	</command>
 
 	<command name="DeleteFolderDocument" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="quarantine" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Media Gallery Page" />
@@ -281,7 +281,7 @@
 	</command>
 
 	<command name="EditFolder" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="quarantine" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Media Gallery Page" />
@@ -313,7 +313,7 @@
 	</command>
 
 	<command name="EditFolderDocument" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="quarantine" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Media Gallery Page" />

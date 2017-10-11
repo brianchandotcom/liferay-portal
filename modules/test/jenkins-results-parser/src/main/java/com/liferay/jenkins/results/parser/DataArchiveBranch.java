@@ -51,6 +51,8 @@ public class DataArchiveBranch {
 		_portalLegacyGitWorkingDirectory.clean();
 
 		_dataArchives = _getDataArchives(_getBuildProperties());
+		_latestDataArchiveCommits = _getLatestDataArchiveCommits();
+		_latestManualCommit = _getLatestManualCommit();
 	}
 
 	public File getGeneratedDataArchiveDirectory() {
@@ -166,6 +168,46 @@ public class DataArchiveBranch {
 			Arrays.asList(dataArchiveDatabaseNames.split(",")));
 	}
 
+	private List<DataArchiveCommit> _getLatestDataArchiveCommits() {
+		List<DataArchiveCommit> latestDataArchiveCommits = new ArrayList<>();
+
+		String gitLog = _portalLegacyGitWorkingDirectory.log(50);
+
+		String[] gitLogEntities = gitLog.split("\n");
+
+		for (String gitLogEntity : gitLogEntities) {
+			Commit commit = CommitFactory.newCommit(gitLogEntity);
+
+			if (commit instanceof DataArchiveCommit) {
+				latestDataArchiveCommits.add((DataArchiveCommit)commit);
+
+				continue;
+			}
+
+			break;
+		}
+
+		return latestDataArchiveCommits;
+	}
+
+	private ManualCommit _getLatestManualCommit() {
+		String gitLog = _portalLegacyGitWorkingDirectory.log(50);
+
+		String[] gitLogEntities = gitLog.split("\n");
+
+		for (String gitLogEntity : gitLogEntities) {
+			Commit commit = CommitFactory.newCommit(gitLogEntity);
+
+			if (!(commit instanceof ManualCommit)) {
+				continue;
+			}
+
+			return (ManualCommit)commit;
+		}
+
+		return null;
+	}
+
 	private Set<String> _getPortalVersions(Properties buildProperties) {
 		String dataArchivePortalVersions = buildProperties.getProperty(
 			"data.archive.portal.versions");
@@ -206,6 +248,8 @@ public class DataArchiveBranch {
 
 	private final List<DataArchive> _dataArchives;
 	private final File _generatedDataArchiveDirectory;
+	private final List<DataArchiveCommit> _latestDataArchiveCommits;
+	private final ManualCommit _latestManualCommit;
 	private final GitWorkingDirectory _portalLegacyGitWorkingDirectory;
 
 }

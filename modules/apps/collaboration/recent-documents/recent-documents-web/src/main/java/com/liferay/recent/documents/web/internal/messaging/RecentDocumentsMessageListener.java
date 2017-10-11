@@ -14,7 +14,7 @@
 
 package com.liferay.recent.documents.web.internal.messaging;
 
-import com.liferay.document.library.kernel.service.DLFileRankLocalService;
+import com.liferay.document.library.file.rank.service.DLFileRankLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

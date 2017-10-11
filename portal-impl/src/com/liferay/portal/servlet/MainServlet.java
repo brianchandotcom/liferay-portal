@@ -78,6 +78,7 @@ import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.plugin.PluginPackageUtil;
+import com.liferay.portal.service.impl.LayoutTemplateLocalServiceImpl;
 import com.liferay.portal.servlet.filters.absoluteredirects.AbsoluteRedirectsResponse;
 import com.liferay.portal.servlet.filters.i18n.I18nFilter;
 import com.liferay.portal.setup.SetupWizardSampleDataUtil;
@@ -104,6 +105,7 @@ import com.liferay.util.servlet.EncryptedServletRequest;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -878,17 +880,20 @@ public class MainServlet extends ActionServlet {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		Filter freeMarkerFilter = registry.getFilter(
-			StringBundler.concat(
-				"(&(language.type=", TemplateConstants.LANG_TYPE_FTL,
-				")(objectClass=", TemplateManager.class.getName(), "))"));
-		Filter velocityFilter = registry.getFilter(
-			StringBundler.concat(
-				"(&(language.type=", TemplateConstants.LANG_TYPE_VM,
-				")(objectClass=", TemplateManager.class.getName(), "))"));
+		Collection<Filter> filters = new ArrayList<>();
+
+		for(String langType :
+				LayoutTemplateLocalServiceImpl.SUPPORTED_LANG_TYPES ) {
+
+			Filter filter = registry.getFilter(
+				"(&(language.type=" + langType +
+				")(objectClass=" + TemplateManager.class.getName() + "))");
+
+			filters.add(filter);
+		}
 
 		serviceDependencyManager.registerDependencies(
-			freeMarkerFilter, velocityFilter);
+			filters.toArray(new Filter[]{}));
 	}
 
 	protected PluginPackage initPluginPackage() throws Exception {

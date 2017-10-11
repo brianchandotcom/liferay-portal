@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1507761843245
+Bnd-LastModified: 1507761818912
 Bundle-ManifestVersion: 2
 Bundle-Name: Liferay SAML Web
 Bundle-SymbolicName: com.liferay.saml.web
 Bundle-Vendor: Liferay, Inc.
-Bundle-Version: 1.0.1
+Bundle-Version: 1.0.0
 Created-By: 1.8.0_121 (Oracle Corporation)
 Import-Package: aQute.bnd.annotation.metatype,com.liferay.application.
  list;version="[1.0,2)",com.liferay.expando.kernel.model;version="[1.0

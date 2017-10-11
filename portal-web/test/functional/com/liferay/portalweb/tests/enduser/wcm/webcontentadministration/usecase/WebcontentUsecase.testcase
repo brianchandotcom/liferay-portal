@@ -1228,8 +1228,8 @@
 		<execute function="AssertTextNotPresent" value1="WC WebContent Content" />
 	</command>
 
-	<command name="AddWebContentViaSourceEditor" priority="5">
-		<property name="portal.acceptance" value="pending" />
+	<command name="AddWebContentViaSourceEditorAndLocalization" priority="5">
+		<property name="portal.acceptance" value="true" />
 		<property name="testray.component.names" value="Training,Web Content Administration" />
 
 		<execute macro="Page#add">
@@ -1263,6 +1263,57 @@
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Page Name" />
 		</execute>
+
+		<execute macro="WebContent#viewPGViaWCD">
+			<var name="webContentContent" value="Space Program Academy of Continuing Education Dare to Dream out of this world" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
+
+		<execute macro="WebContent#addTranslation">
+			<var name="localizedAbstractSummary" value="A Japanese translation of the basic front page banner" />
+			<var name="localizedLanguage" value="Japanese (Japan)" />
+			<var name="localizedTitle" value="Basic S.P.A.C.E. Banner (Japanese Translation)" />
+			<var name="webContentTitle" value="Basic S.P.A.C.E. Banner" />
+		</execute>
+
+		<execute macro="AlloyEditor#addSourceContent">
+			<var name="content"><![CDATA[
+<h2 class="text-center">Space Program 大学生涯教育</h2>
+
+<p class="text-center">地球から、宇宙の果てへ</p>
+]]></var>
+		</execute>
+
+		<execute macro="Button#clickPublish" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Test Page Name" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Language Selector" />
+		</execute>
+
+		<execute function="Refresh" />
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="Japanese (Japan)" />
+		</execute>
+
+		<execute function="Refresh" />
+
+		<execute macro="WebContent#viewPGViaWCD">
+			<var name="webContentContent" value="Space Program Academy of Continuing Education Dare to Dream out of this world Space Program 大学生涯教育 地球から、宇宙の果てへ" />
+		</execute>
+
+		<execute function="Refresh" />
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="English (United States)" />
+		</execute>
+
+		<execute function="Refresh" />
 
 		<execute macro="WebContent#viewPGViaWCD">
 			<var name="webContentContent" value="Space Program Academy of Continuing Education Dare to Dream out of this world" />

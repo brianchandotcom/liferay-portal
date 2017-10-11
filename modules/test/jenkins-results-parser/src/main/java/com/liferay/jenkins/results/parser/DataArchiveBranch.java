@@ -38,6 +38,14 @@ public class DataArchiveBranch {
 		_portalLegacyGitWorkingDirectory.clean();
 	}
 
+	public File getGeneratedDataArchiveDirectory() {
+		return _generatedDataArchiveDirectory;
+	}
+
+	public File getPortalLegacyWorkingDirectory() {
+		return _portalLegacyGitWorkingDirectory.getWorkingDirectory();
+	}
+
 	private final File _generatedDataArchiveDirectory;
 	private final GitWorkingDirectory _portalLegacyGitWorkingDirectory;
 

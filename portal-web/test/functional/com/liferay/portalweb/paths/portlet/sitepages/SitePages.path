@@ -450,6 +450,11 @@
 	<td>//div[contains(.,'${key_page}')]/*[@data-qa-id='pageOptions']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PAGE_ELLIPSIS_2</td>
+	<td>xpath=(//*[@data-qa-id='pageOptions'])[2]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -997,11 +997,17 @@
 
 		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
 
-		<execute macro="WebContent#addTranslation">
+		<execute macro="WebContent#addLocale">
+			<var name="language" value="Japanese (Japan)" />
+			<var name="locale" value="ja-JP" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentTitle" value="Basic S.P.A.C.E. Banner (Japanese Translation)" />
+		</execute>
+
+		<execute macro="WebContent#addAbstractSummary">
 			<var name="localizedAbstractSummary" value="A Japanese translation of the basic front page banner" />
-			<var name="localizedLanguage" value="Japanese (Japan)" />
-			<var name="localizedTitle" value="Basic S.P.A.C.E. Banner (Japanese Translation)" />
-			<var name="webContentTitle" value="Basic S.P.A.C.E. Banner" />
 		</execute>
 
 		<execute macro="AlloyEditor#addSourceContent">

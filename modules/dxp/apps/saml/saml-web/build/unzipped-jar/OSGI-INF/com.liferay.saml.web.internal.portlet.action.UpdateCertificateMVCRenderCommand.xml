@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<component name="com.liferay.saml.web.internal.portlet.action.UpdateCertificateMVCRenderCommand" immediate="true">
-  <implementation class="com.liferay.saml.web.internal.portlet.action.UpdateCertificateMVCRenderCommand"/>
-  <service>
-    <provide interface="com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand"/>
-  </service>
-  <property name="mvc.command.name" type="String" value="/admin/updateCertificate"/>
-  <property name="javax.portlet.name" type="String" value="com_liferay_saml_web_internal_portlet_SamlAdminPortlet"/>
-</component>

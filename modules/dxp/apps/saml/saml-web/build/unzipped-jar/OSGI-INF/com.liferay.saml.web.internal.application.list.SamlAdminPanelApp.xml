@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="com.liferay.saml.web.internal.application.list.SamlAdminPanelApp" immediate="true">
-  <implementation class="com.liferay.saml.web.internal.application.list.SamlAdminPanelApp"/>
-  <service>
-    <provide interface="com.liferay.application.list.PanelApp"/>
-  </service>
-  <reference name="Portlet" interface="com.liferay.portal.kernel.model.Portlet" target="(javax.portlet.name=com_liferay_saml_web_internal_portlet_SamlAdminPortlet)" bind="setPortlet"/>
-  <property name="panel.category.key" type="String" value="control_panel.configuration"/>
-</scr:component>

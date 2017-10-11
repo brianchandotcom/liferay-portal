@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<component name="com.liferay.saml.web.internal.upgrade.SamlWebUpgrade" immediate="true">
-  <implementation class="com.liferay.saml.web.internal.upgrade.SamlWebUpgrade"/>
-  <service>
-    <provide interface="com.liferay.portal.upgrade.registry.UpgradeStepRegistrator"/>
-  </service>
-</component>

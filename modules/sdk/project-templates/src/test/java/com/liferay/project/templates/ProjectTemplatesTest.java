@@ -1257,6 +1257,14 @@ public class ProjectTemplatesTest {
 		String gradleBundleFileName = "build/libs/com.liferay.test-1.0.0.jar";
 		String mavenBundleFileName = "target/foo-1.0.0.jar";
 
+		Path mavenProjectPath = mavenProjectDir.toPath();
+
+		Path packageJsonPath = mavenProjectPath.resolve("package.json");
+
+		String content = new String(Files.readAllBytes(packageJsonPath)) + "\n";
+
+		Files.write(packageJsonPath, content.getBytes());
+
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir, gradleBundleFileName,
 			mavenBundleFileName);

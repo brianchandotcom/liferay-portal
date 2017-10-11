@@ -555,6 +555,81 @@ public class AssetPublisherUtil {
 	}
 
 	public static AssetEntryQuery getAssetEntryQuery(
+			PortletPreferences portletPreferences, long groupId, Layout layout,
+			long[] overrideAllAssetCategoryIds,
+			String[] overrideAllAssetTagNames)
+		throws PortalException {
+
+		long[] groupIds = getGroupIds(portletPreferences, groupId, layout);
+
+		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+
+		_setCategoriesAndTags(
+			assetEntryQuery, portletPreferences, groupIds,
+			overrideAllAssetCategoryIds, overrideAllAssetTagNames);
+
+		assetEntryQuery.setGroupIds(groupIds);
+
+		boolean anyAssetType = GetterUtil.getBoolean(
+			portletPreferences.getValue("anyAssetType", null), true);
+
+		if (!anyAssetType) {
+			long[] availableClassNameIds =
+				AssetRendererFactoryRegistryUtil.getClassNameIds(
+					layout.getCompanyId());
+
+			long[] classNameIds = getClassNameIds(
+				portletPreferences, availableClassNameIds);
+
+			assetEntryQuery.setClassNameIds(classNameIds);
+		}
+
+		long[] classTypeIds = GetterUtil.getLongValues(
+			portletPreferences.getValues("classTypeIds", null));
+
+		assetEntryQuery.setClassTypeIds(classTypeIds);
+
+		boolean enablePermissions = GetterUtil.getBoolean(
+			portletPreferences.getValue("enablePermissions", null));
+
+		assetEntryQuery.setEnablePermissions(enablePermissions);
+
+		boolean excludeZeroViewCount = GetterUtil.getBoolean(
+			portletPreferences.getValue("excludeZeroViewCount", null));
+
+		assetEntryQuery.setExcludeZeroViewCount(excludeZeroViewCount);
+
+		boolean showOnlyLayoutAssets = GetterUtil.getBoolean(
+			portletPreferences.getValue("showOnlyLayoutAssets", null));
+
+		if (showOnlyLayoutAssets) {
+			assetEntryQuery.setLayout(layout);
+		}
+
+		String orderByColumn1 = GetterUtil.getString(
+			portletPreferences.getValue("orderByColumn1", "modifiedDate"));
+
+		assetEntryQuery.setOrderByCol1(orderByColumn1);
+
+		String orderByColumn2 = GetterUtil.getString(
+			portletPreferences.getValue("orderByColumn2", "title"));
+
+		assetEntryQuery.setOrderByCol2(orderByColumn2);
+
+		String orderByType1 = GetterUtil.getString(
+			portletPreferences.getValue("orderByType1", "DESC"));
+
+		assetEntryQuery.setOrderByType1(orderByType1);
+
+		String orderByType2 = GetterUtil.getString(
+			portletPreferences.getValue("orderByType2", "ASC"));
+
+		assetEntryQuery.setOrderByType2(orderByType2);
+
+		return assetEntryQuery;
+	}
+
+	public static AssetEntryQuery getAssetEntryQuery(
 		PortletPreferences portletPreferences, long[] scopeGroupIds,
 		long[] overrideAllAssetCategoryIds, String[] overrideAllAssetTagNames) {
 

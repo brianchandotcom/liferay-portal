@@ -353,32 +353,6 @@ configuration changes.
 
 ---------------------------------------
 
-### Removed the soyutils Module
-- **Date:** 2017-Aug-28
-- **JIRA Ticket:** LPS-69102
-
-#### What changed?
-
-The module `frontend-js-soyutils-web` is no longer available.
-
-#### Who is affected?
-
-This affects anyone using the `soyutils` module.
-
-#### How should I update my code?
-
-In the rare case that a component is affected, it is recommended that the code
-is migrated to use the `metal-soy` module instead. You can do this by extending
-the `Metal.js` provided `Component` classes.
-
-#### Why was this change made?
-
-The removed module exposed a legacy version of `soyutils`. This caused
-interoperability issues between applications using different versions of the
-Closure Template library.
-
----------------------------------------
-
 ### Moved Three DL File Properties to OSGi Configuration
 - **Date:** 2017-Aug-01
 - **JIRA Ticket:** LPS-69208
@@ -413,6 +387,32 @@ the instructions for
 
 This change was made as part of the modularization efforts to ease portal
 configuration changes.
+
+---------------------------------------
+
+### Removed the soyutils Module
+- **Date:** 2017-Aug-28
+- **JIRA Ticket:** LPS-69102
+
+#### What changed?
+
+The module `frontend-js-soyutils-web` is no longer available.
+
+#### Who is affected?
+
+This affects anyone using the `soyutils` module.
+
+#### How should I update my code?
+
+In the rare case that a component is affected, it is recommended that the code
+is migrated to use the `metal-soy` module instead. You can do this by extending
+the `Metal.js` provided `Component` classes.
+
+#### Why was this change made?
+
+The removed module exposed a legacy version of `soyutils`. This caused
+interoperability issues between applications using different versions of the
+Closure Template library.
 
 ---------------------------------------
 

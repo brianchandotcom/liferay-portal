@@ -87,9 +87,10 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	public <V extends Identifier, A, B, C, D, E, F, G, H> RoutesBuilder<T, U>
 		addCollectionPageGetter(
 			DecaFunction<Pagination, V, A, B, C, D, E, F, G, H,
-				PageItems<T>> decaFunction, Class<V> identifierClass,
-			Class<A> aClass, Class<B> bClass, Class<C> cClass, Class<D> dClass,
-			Class<E> eClass, Class<F> fClass, Class<G> gClass, Class<H> hClass);
+				PageItems<T>> decaFunction,
+			Class<V> identifierClass, Class<A> aClass, Class<B> bClass,
+			Class<C> cClass, Class<D> dClass, Class<E> eClass, Class<F> fClass,
+			Class<G> gClass, Class<H> hClass);
 
 	/**
 	 * Adds a route to a collection page function.
@@ -110,9 +111,10 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	public <V extends Identifier, A, B, C, D, E, F, G> RoutesBuilder<T, U>
 		addCollectionPageGetter(
 			EnneaFunction<Pagination, V, A, B, C, D, E, F, G, PageItems<T>>
-				enneaFunction, Class<V> identifierClass, Class<A> aClass,
-			Class<B> bClass, Class<C> cClass, Class<D> dClass, Class<E> eClass,
-			Class<F> fClass, Class<G> gClass);
+				enneaFunction,
+			Class<V> identifierClass, Class<A> aClass, Class<B> bClass,
+			Class<C> cClass, Class<D> dClass, Class<E> eClass, Class<F> fClass,
+			Class<G> gClass);
 
 	/**
 	 * Adds a route to a collection page function.
@@ -131,8 +133,9 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	public <V extends Identifier, A, B, C, D, E> RoutesBuilder<T, U>
 		addCollectionPageGetter(
 			HeptaFunction<Pagination, V, A, B, C, D, E, PageItems<T>>
-				heptaFunction, Class<V> identifierClass, Class<A> aClass,
-			Class<B> bClass, Class<C> cClass, Class<D> dClass, Class<E> eClass);
+				heptaFunction,
+			Class<V> identifierClass, Class<A> aClass, Class<B> bClass,
+			Class<C> cClass, Class<D> dClass, Class<E> eClass);
 
 	/**
 	 * Adds a route to a collection page function.
@@ -171,9 +174,9 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	public <V extends Identifier, A, B, C, D, E, F> RoutesBuilder<T, U>
 		addCollectionPageGetter(
 			OctaFunction<Pagination, V, A, B, C, D, E, F, PageItems<T>>
-				octaFunction, Class<V> identifierClass, Class<A> aClass,
-			Class<B> bClass, Class<C> cClass, Class<D> dClass, Class<E> eClass,
-			Class<F> fClass);
+				octaFunction,
+			Class<V> identifierClass, Class<A> aClass, Class<B> bClass,
+			Class<C> cClass, Class<D> dClass, Class<E> eClass, Class<F> fClass);
 
 	/**
 	 * Adds a route to a collection page function.
@@ -266,9 +269,10 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	public <A, B, C, D, E, F, G, H, V extends Identifier> RoutesBuilder<T, U>
 		addCollectionPageItemCreator(
 			DecaFunction<V, Map<String, Object>, A, B, C, D, E, F, G, H, T>
-				decaFunction, Class<V> identifierClass, Class<A> aClass,
-			Class<B> bClass, Class<C> cClass, Class<D> dClass, Class<E> eClass,
-			Class<F> fClass, Class<G> gClass, Class<H> hClass);
+				decaFunction,
+			Class<V> identifierClass, Class<A> aClass, Class<B> bClass,
+			Class<C> cClass, Class<D> dClass, Class<E> eClass, Class<F> fClass,
+			Class<G> gClass, Class<H> hClass);
 
 	/**
 	 * Adds a route to a single model post function.
@@ -296,9 +300,10 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	public <A, B, C, D, E, F, G, V extends Identifier> RoutesBuilder<T, U>
 		addCollectionPageItemCreator(
 			EnneaFunction<V, Map<String, Object>, A, B, C, D, E, F, G, T>
-				enneaFunction, Class<V> identifierClass, Class<A> aClass,
-			Class<B> bClass, Class<C> cClass, Class<D> dClass, Class<E> eClass,
-			Class<F> fClass, Class<G> gClass);
+				enneaFunction,
+			Class<V> identifierClass, Class<A> aClass, Class<B> bClass,
+			Class<C> cClass, Class<D> dClass, Class<E> eClass, Class<F> fClass,
+			Class<G> gClass);
 
 	/**
 	 * Adds a route to a single model post function.
@@ -322,8 +327,9 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	public <A, B, C, D, E, V extends Identifier> RoutesBuilder<T, U>
 		addCollectionPageItemCreator(
 			HeptaFunction<V, Map<String, Object>, A, B, C, D, E, T>
-				heptaFunction, Class<V> identifierClass, Class<A> aClass,
-			Class<B> bClass, Class<C> cClass, Class<D> dClass, Class<E> eClass);
+				heptaFunction,
+			Class<V> identifierClass, Class<A> aClass, Class<B> bClass,
+			Class<C> cClass, Class<D> dClass, Class<E> eClass);
 
 	/**
 	 * Adds a route to a single model post function.
@@ -372,9 +378,9 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	public <A, B, C, D, E, F, V extends Identifier> RoutesBuilder<T, U>
 		addCollectionPageItemCreator(
 			OctaFunction<V, Map<String, Object>, A, B, C, D, E, F, T>
-				octaFunction, Class<V> identifierClass, Class<A> aClass,
-			Class<B> bClass, Class<C> cClass, Class<D> dClass, Class<E> eClass,
-			Class<F> fClass);
+				octaFunction,
+			Class<V> identifierClass, Class<A> aClass, Class<B> bClass,
+			Class<C> cClass, Class<D> dClass, Class<E> eClass, Class<F> fClass);
 
 	/**
 	 * Adds a route to a single model post function.
@@ -886,9 +892,9 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	public <A, B, C, D, E, F, G, H> RoutesBuilder<T, U>
 		addCollectionPageItemUpdater(
 			DecaFunction<U, Map<String, Object>, A, B, C, D, E, F, G, H, T>
-				decaFunction, Class<A> aClass, Class<B> bClass, Class<C> cClass,
-			Class<D> dClass, Class<E> eClass, Class<F> fClass, Class<G> gClass,
-			Class<H> hClass);
+				decaFunction,
+			Class<A> aClass, Class<B> bClass, Class<C> cClass, Class<D> dClass,
+			Class<E> eClass, Class<F> fClass, Class<G> gClass, Class<H> hClass);
 
 	/**
 	 * Adds a route to a collection item updater function.
@@ -909,9 +915,9 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	public <A, B, C, D, E, F, G> RoutesBuilder<T, U>
 		addCollectionPageItemUpdater(
 			EnneaFunction<U, Map<String, Object>, A, B, C, D, E, F, G, T>
-				enneaFunction, Class<A> aClass, Class<B> bClass,
-			Class<C> cClass, Class<D> dClass, Class<E> eClass, Class<F> fClass,
-			Class<G> gClass);
+				enneaFunction,
+			Class<A> aClass, Class<B> bClass, Class<C> cClass, Class<D> dClass,
+			Class<E> eClass, Class<F> fClass, Class<G> gClass);
 
 	/**
 	 * Adds a route to a collection item updater function.
@@ -1029,9 +1035,10 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	public <A, B, C, D, E, F, G, H, I> RoutesBuilder<T, U>
 		addCollectionPageItemUpdater(
 			UndecaFunction<U, Map<String, Object>, A, B, C, D, E, F, G, H, I, T>
-				undecaFunction, Class<A> aClass, Class<B> bClass,
-			Class<C> cClass, Class<D> dClass, Class<E> eClass, Class<F> fClass,
-			Class<G> gClass, Class<H> hClass, Class<I> iClass);
+				undecaFunction,
+			Class<A> aClass, Class<B> bClass, Class<C> cClass, Class<D> dClass,
+			Class<E> eClass, Class<F> fClass, Class<G> gClass, Class<H> hClass,
+			Class<I> iClass);
 
 	/**
 	 * Constructs the {@code Routes} instance with the information provided to

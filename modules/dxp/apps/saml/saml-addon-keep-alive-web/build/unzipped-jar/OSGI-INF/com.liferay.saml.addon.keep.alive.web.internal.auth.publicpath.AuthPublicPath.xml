@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="com.liferay.saml.addon.keep.alive.web.internal.auth.publicpath.AuthPublicPath" immediate="true">
+  <implementation class="com.liferay.saml.addon.keep.alive.web.internal.auth.publicpath.AuthPublicPath"/>
+  <service>
+    <provide interface="java.lang.Object"/>
+  </service>
+  <property name="auth.public.path" type="String" value="/portal/saml/keep_alive"/>
+</component>

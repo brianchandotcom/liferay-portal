@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" name="com.liferay.saml.addon.keep.alive.web.internal.struts.action.KeepAliveAction" immediate="true">
+  <implementation class="com.liferay.saml.addon.keep.alive.web.internal.struts.action.KeepAliveAction"/>
+  <service>
+    <provide interface="com.liferay.portal.kernel.struts.StrutsAction"/>
+  </service>
+  <reference name="_http" interface="com.liferay.portal.kernel.util.Http" field="_http"/>
+  <reference name="_samlIdpSpConnectionLocalService" interface="com.liferay.saml.persistence.service.SamlIdpSpConnectionLocalService" field="_samlIdpSpConnectionLocalService"/>
+  <reference name="_samlIdpSpSessionLocalService" interface="com.liferay.saml.persistence.service.SamlIdpSpSessionLocalService" field="_samlIdpSpSessionLocalService"/>
+  <reference name="_samlIdpSsoSessionLocalService" interface="com.liferay.saml.persistence.service.SamlIdpSsoSessionLocalService" field="_samlIdpSsoSessionLocalService"/>
+  <reference name="_samlProviderConfigurationHelper" interface="com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper" field="_samlProviderConfigurationHelper"/>
+  <property name="path" type="String" value="/portal/saml/keep_alive"/>
+</scr:component>

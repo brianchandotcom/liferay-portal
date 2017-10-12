@@ -1258,13 +1258,15 @@ public class ProjectTemplatesTest {
 		String gradleBundleFileName = "build/libs/com.liferay.test-1.0.0.jar";
 		String mavenBundleFileName = "target/foo-1.0.0.jar";
 
-		Path mavenProjectPath = mavenProjectDir.toPath();
+		File mavenPackageJsonFile = new File(mavenProjectDir, "package.json");
 
-		Path packageJsonPath = mavenProjectPath.resolve("package.json");
+		Path mavenPackageJsonPath = mavenPackageJsonFile.toPath();
 
-		String content = new String(Files.readAllBytes(packageJsonPath)) + "\n";
+		String mavenPackageJSON = FileUtil.read(mavenPackageJsonPath) + "\n";
 
-		Files.write(packageJsonPath, content.getBytes());
+		Files.write(
+			mavenPackageJsonPath,
+			mavenPackageJSON.getBytes(StandardCharsets.UTF_8));
 
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir, gradleBundleFileName,

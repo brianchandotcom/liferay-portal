@@ -110,7 +110,7 @@
 </tr>
 <tr>
 	<td>SPECIFIC_ELLIPSIS_ICON</td>
-	<td>//div[@id='main-content']//h2[contains(.,'${key_portletName}')]/../../header/menu/div[contains(@class,'portlet-options')]/a</td>
+	<td>//div[@id='main-content']//header[contains(.,'${key_portletName}')]//menu/div[contains(@class,'portlet-options')]/a</td>
 	<td></td>
 </tr>
 <tr>

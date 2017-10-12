@@ -130,6 +130,8 @@ public interface Build {
 
 	public TopLevelBuild getTopLevelBuild();
 
+	public long getTotalDuration();
+
 	public boolean hasBuildURL(String buildURL);
 
 	public void reinvoke();

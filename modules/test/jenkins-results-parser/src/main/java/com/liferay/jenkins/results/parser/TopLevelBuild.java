@@ -673,8 +673,8 @@ public class TopLevelBuild extends BaseBuild {
 			"p", null, "Build Time: ",
 			JenkinsResultsParserUtil.toDurationString(getDuration()));
 
-		Element ciUsageElement = getJenkinsReportTotalCIUsageElement(
-			nonBatchBuilds);
+		Element cpuUsageTimeElement =
+			getJenkinsReportTotalCpuUsageTimeElement();
 
 		Element longestAxisElement = getLongestRunningDownstreamBuildElement();
 
@@ -694,7 +694,7 @@ public class TopLevelBuild extends BaseBuild {
 		Element divElement = Dom4JUtil.getNewElement("div");
 
 		Dom4JUtil.addToElement(
-			divElement, startTimeElement, buildTimeElement, ciUsageElement,
+			divElement, startTimeElement, buildTimeElement, cpuUsageTimeElement,
 			vmUsageElement, longestBatchElement, longestAxisElement,
 			longestTestElement);
 
@@ -815,23 +815,10 @@ public class TopLevelBuild extends BaseBuild {
 		return topLevelTableElement;
 	}
 
-	protected Element getJenkinsReportTotalCIUsageElement(
-		Map<String, Build> nonBatchBuilds) {
-
-		long totalTime = 0;
-
-		for (Build nonBatchBuild : nonBatchBuilds.values()) {
-			long axisDuration = nonBatchBuild.getDuration();
-
-			totalTime = totalTime + axisDuration;
-		}
-
-		long hoursTotalTime = totalTime / 3600000;
-
-		Element totalCIUsageElement = Dom4JUtil.getNewElement(
-			"p", null, "Total CI Usage: " + hoursTotalTime + " server hours");
-
-		return totalCIUsageElement;
+	protected Element getJenkinsReportTotalCpuUsageTimeElement() {
+		return Dom4JUtil.getNewElement(
+			"p", null, "Total CPU Usage Time: ",
+			JenkinsResultsParserUtil.toDurationString(getTotalDuration()));
 	}
 
 	protected Element getJenkinsReportTotalVMUSageElement(

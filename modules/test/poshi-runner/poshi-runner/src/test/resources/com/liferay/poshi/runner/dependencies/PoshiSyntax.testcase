@@ -33,6 +33,8 @@
 
 			<var method="StringUtil#upperCase('${breadcrumbName}')" name="breadcrumbNameUppercase" />
 
+			<var method="selenium#getText('Staging#HISTORY_VERSION')" name="historyVersion" />
+
 			<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_ENTRY" value1="${breadcrumbNameUppercase}" />
 
 			<if>

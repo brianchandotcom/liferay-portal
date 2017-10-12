@@ -15,6 +15,7 @@
 package com.liferay.portal.internal.dao.sql.transformer;
 
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.util.StringPool;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -30,6 +31,27 @@ public class SQLFunctionTransformerTest {
 		new CodeCoverageAssertor();
 
 	@Test
+	public void testIdentityTransformation() {
+		String sql = "TEST(a, TEST(b, TEST(c), d))";
+
+		SQLFunctionTransformer sqlFunctionTransformer =
+			new SQLFunctionTransformer("TEST(", "TEST(", ",", ")");
+
+		Assert.assertEquals(sql, sqlFunctionTransformer.transform(sql));
+	}
+
+	@Test
+	public void testMixedFunctionCalls() {
+		SQLFunctionTransformer sqlFunctionTransformer =
+			new SQLFunctionTransformer("TEST2(", "function{", "-", "}");
+
+		Assert.assertEquals(
+			"TEST1(a, function{b- TEST1(c)- d}), function{e}",
+			sqlFunctionTransformer.transform(
+				"TEST1(a, TEST2(b, TEST1(c), d)), TEST2(e)"));
+	}
+
+	@Test
 	public void testNestedFunctionCalls() {
 		SQLFunctionTransformer sqlFunctionTransformer =
 			new SQLFunctionTransformer("TEST(", "", " DELIMITER ", "");
@@ -39,6 +61,16 @@ public class SQLFunctionTransformerTest {
 
 		Assert.assertEquals(
 			"a DELIMITER  b DELIMITER  c DELIMITER  d", transformedSQL);
+	}
+
+	@Test
+	public void testNestedPrefixAndSuffix() {
+		SQLFunctionTransformer sqlFunctionTransformer =
+			new SQLFunctionTransformer("TEST(", "function{", "-", "}");
+
+		Assert.assertEquals(
+			"function{a- function{b- function{c}- d}}",
+			sqlFunctionTransformer.transform("TEST(a, TEST(b, TEST(c), d))"));
 	}
 
 	@Test
@@ -71,6 +103,17 @@ public class SQLFunctionTransformerTest {
 			new SQLFunctionTransformer("TEST(", "", " DELIMITER ", "");
 
 		sqlFunctionTransformer.transform("TEST('This string is not closed)");
+	}
+
+	@Test
+	public void testRemoveFunctionTransformation() {
+		SQLFunctionTransformer sqlFunctionTransformer =
+			new SQLFunctionTransformer(
+				"TEST(", StringPool.BLANK, StringPool.BLANK, StringPool.BLANK);
+
+		Assert.assertEquals(
+			"a b c d",
+			sqlFunctionTransformer.transform("TEST(a, TEST(b, TEST(c), d))"));
 	}
 
 	@Test

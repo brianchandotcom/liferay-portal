@@ -131,6 +131,17 @@ public class ExecutePoshiElement extends BasePoshiElement {
 				sb.append(", ");
 			}
 
+			for (PoshiElement poshiElement : toPoshiElements(elements())) {
+				String readableSyntax = poshiElement.toReadableSyntax();
+
+				if (poshiElement instanceof VarPoshiElement) {
+					sb.append(readableSyntax.trim());
+					sb.append(", ");
+
+					continue;
+				}
+			}
+
 			if (sb.length() > 2) {
 				sb.setLength(sb.length() - 2);
 			}

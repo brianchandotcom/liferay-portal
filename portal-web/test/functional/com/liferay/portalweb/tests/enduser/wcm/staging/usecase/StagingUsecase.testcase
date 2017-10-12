@@ -317,6 +317,7 @@
 
 		<execute macro="LAR#importSiteCP">
 			<var name="larFileName" value="HR_Home_Page_Content.lar" />
+			<var name="mirrorWithOverwriting" value="true" />
 			<var name="uploadFrom" value="dependencies" />
 		</execute>
 
@@ -327,7 +328,9 @@
 
 		<execute macro="Staging#gotoPublishToLive" />
 
-		<execute macro="Staging#publishToLive" />
+		<execute macro="Staging#publishToLive" >
+			<var name="publicationName" value="Content Update" />
+		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Home" />
@@ -376,6 +379,18 @@
 			<var name="portletName" value="Activities" />
 		</execute>
 
+		<execute macro="Portlet#deletePG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="Portlet#deletePG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="Portlet#deletePG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Home" />
 			<var name="siteName" value="Site Name" />
@@ -383,6 +398,43 @@
 
 		<execute macro="Portlet#viewNoSpecificPG">
 			<var name="portletName" value="Activities" />
+		</execute>
+
+		<execute macro="Portlet#viewNoSpecificPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="Content#addPG">
+			<var name="assetTitle" value="Enrollment Features" />
+			<var name="pageName" value="Home" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Home" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Content#addPG">
+			<var name="assetTitle" value="The SPACE Family" />
+			<var name="pageName" value="Home" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Web Content Display" />
+			<var name="portletOption" value="Look and Feel Configuration" />
+		</execute>
+
+		<execute macro="Portlet#selectApplicationDecorator">
+			<var name="decorator" value="Barebone" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Home" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Portlet#viewApplicationDecorator">
+			<var name="decorator" value="Barebone" />
 		</execute>
 
 		<execute macro="Staging#gotoPublishToLive" />
@@ -398,9 +450,14 @@
 			<var name="portletName" value="Activities" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
+		<execute macro="Portlet#viewApplicationDecorator">
+			<var name="decorator" value="Barebone" />
+		</execute>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="WCD#WEB_CONTENT_CONTENT" value1="You're a part of the S.P.A.C.E. family" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="WCD#WEB_CONTENT_CONTENT_2" value1="Faculty Meet-and-Greet Brunch" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
 		</execute>
 

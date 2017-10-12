@@ -1,14 +1,8 @@
-#parse( "definitions.vm" )
-
 <%@ include file="/init.jsp" %>
+#parse ("definitions.vm")
 
-<p>
-	<b><liferay-ui:message key="${artifactId}.caption"/></b>
-</p>
-
-<div id="${artifactId}-root">
-</div>
+<div id="<portlet:namespace />"></div>
 
 <aui:script require="${artifactId}@${packageJsonVersion}">
-	${auiScriptRequireVarName}.default();
+	${auiScriptRequireVarName}.default('<portlet:namespace />');
 </aui:script>

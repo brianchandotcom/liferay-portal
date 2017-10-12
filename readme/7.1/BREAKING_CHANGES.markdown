@@ -20,7 +20,7 @@ Here are some of the types of changes documented in this file:
   replaces an old API, in spite of the old API being kept in Liferay Portal for
   backwards compatibility.
 
-*This document has been reviewed through commit `e65e08b84ea8`.*
+*This document has been reviewed through commit `1aa58857f55a`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -464,11 +464,17 @@ of `false` can be considered during performance tuning, if needed.
 #### What changed?
 
 - The portal property `users.screen.name.allow.numeric` now defaults to **true**
-- Numeric screen names are no longer limited by whether or not they correspond to an existing group ID.
+- Numeric screen names are no longer limited by whether or not they correspond
+  to an existing group ID.
 - Sites are no longer allowed to set their group ID as their friendly URL.
-- Sites can no longer be implicitly accessed by using their group ID in the URL (this used to be available automatically, even if it wasn't set that way).
-- If the friendly URL of a site is already set to the group ID, it will continue to work as normal, but you will be forced to change it if you update the site in the Site Settings portlet.
-- If a site is updated and no friendly URL is provided, it will default to `/group-<groupId>`. If that is a duplicate of another friendly URL, the friendly URL will be incremented until a unique friendly URL is found (such as `/group-<groupId>-1`).
+- Sites can no longer be implicitly accessed by using their group ID in the URL
+  (this used to be available automatically, even if it wasn't set that way).
+- If the friendly URL of a site is already set to the group ID, it will continue
+  to work as normal, but you will be forced to change it if you update the site in the Site Settings portlet.
+- If a site is updated and no friendly URL is provided, it will default to
+  `/group-<groupId>`. If that is a duplicate of another friendly URL, the
+  friendly URL will be incremented until a unique friendly URL is found (such as
+  `/group-<groupId>-1`).
 - The default friendly URL for new sites has **not** changed.
 
 #### Who is affected?
@@ -478,19 +484,33 @@ of `false` can be considered during performance tuning, if needed.
 
 #### How should I update my code?
 
-No code updates should be required, but if you are in one of the scenarios from the "Who is affected?" section, you should consider the following changes:
+No code updates should be required, but if you are in one of the scenarios from
+the "Who is affected?" section, you should consider the following changes:
 
-- If you have set the friendly URL of a site to its group ID, it is recommended that you update the friendly URL of that site to something else.  This can be done by the site administrator through the Site Settings portlet.
-- If you have hard-coded the group ID in any links, you will need to change them to match the updated friendly URL.
+- If you have set the friendly URL of a site to its group ID, it is recommended
+  that you update the friendly URL of that site to something else. This can be
+  done by the site administrator through the Site Settings portlet.
+- If you have hard-coded the group ID in any links, you will need to change them
+  to match the updated friendly URL.
 
 #### Why was this change made?
 
-There has been a common complaint from customers who used LDAP to import users: if the users were given a numeric screen name during import, some imports would fail because those screen names conflicted with an existing group ID.
+There has been a common complaint from customers who used LDAP to import users:
+if the users were given a numeric screen name during import, some imports would
+fail because those screen names conflicted with an existing group ID.
 
-This was because the group ID of a site could be used as its friendly URL, while a user's screen name is used as the friendly URL to their personal site. This could introduce a routing conflict, so numeric screen names were disallowed if they conflicted with an existing group ID.
+This was because the group ID of a site could be used as its friendly URL, while
+a user's screen name is used as the friendly URL to their personal site. This
+could introduce a routing conflict, so numeric screen names were disallowed if
+they conflicted with an existing group ID.
 
-By removing the ability of sites to use their group ID as their friendly URL, we also remove the possible conflict with numeric screen names, allowing users to have any number as their screen name. This makes it much less likely for LDAP imports to fail when using numeric screen names for imported users.
+By removing the ability of sites to use their group ID as their friendly URL, we
+also remove the possible conflict with numeric screen names, allowing users to
+have any number as their screen name. This makes it much less likely for LDAP
+imports to fail when using numeric screen names for imported users.
 
-Since LDAP import is much more commonly used than a site using the group ID as its friendly URL, the less useful feature was removed to stabilize the more common one.
+Since LDAP import is much more commonly used than a site using the group ID as
+its friendly URL, the less useful feature was removed to stabilize the more
+common one.
 
 ---------------------------------------

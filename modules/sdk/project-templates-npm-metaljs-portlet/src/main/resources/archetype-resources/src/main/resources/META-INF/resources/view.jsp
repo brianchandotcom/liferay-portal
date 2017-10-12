@@ -1,6 +1,5 @@
-#parse( "definitions.vm" )
-
 <%@ include file="/init.jsp" %>
+#parse ("definitions.vm")
 
 <div id="<portlet:namespace />">
 	Click me to open a superb modal dialog!

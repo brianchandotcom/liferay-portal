@@ -243,7 +243,8 @@ public class ProjectTemplateFilesTest {
 		String messageSuffix = archetypeMetadataXmlPath.toString();
 
 		Path definitionsVmPath = projectTemplateDirPath.resolve(
-			"../project-templates/src/main/resources/definitions.vm");
+			"../project-templates-npm-angular-portlet/" +
+				"src/main/resources/definitions.vm");
 
 		String definitionsVm = FileUtil.read(definitionsVmPath);
 

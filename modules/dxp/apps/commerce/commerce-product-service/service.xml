@@ -96,6 +96,10 @@
 		<column name="productTypeName" type="String" />
 		<column name="availableIndividually" type="boolean" />
 		<column name="ignoreSKUCombinations" type="boolean" />
+		<column name="shippable" type="boolean" />
+		<column name="freeShipping" type="boolean" />
+		<column name="shipSeparately" type="boolean" />
+		<column name="shippingExtraPrice" type="double" />
 		<column name="width" type="double" />
 		<column name="height" type="double" />
 		<column name="depth" type="double" />

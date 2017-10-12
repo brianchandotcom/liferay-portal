@@ -774,6 +774,13 @@
 	</command>
 
 	<command name="publishToLive">
+		<if>
+			<isset var="publicationName" />
+			<then>
+				<execute function="Type" locator1="TextInput#NAME" value1="${publicationName}" />
+			</then>
+		</if>
+
 		<execute function="AssertClickNoError#assertPartialTextClickAt" locator1="Button#SUBMIT" value1="Publish" />
 
 		<execute function="Pause" locator1="5000" />

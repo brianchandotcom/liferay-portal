@@ -29,25 +29,14 @@ import java.sql.ResultSet;
 public class VerifyResourceActions extends VerifyProcess {
 
 	protected void deleteDuplicateBitwiseValuesOnResource() throws Exception {
-		StringBundler sb = new StringBundler(3);
-
-		sb.append("select name, bitwiseValue, min(resourceActionId) as ");
-		sb.append("minResourceActionId from ResourceAction group by name, ");
-		sb.append("bitwiseValue having count(resourceActionId) > 1");
-
-		String sql1 = sb.toString();
-
-		sb.setIndex(0);
-
-		sb.append("select resourceActionId, actionId from ResourceAction ");
-		sb.append("where name = ? and bitwiseValue = ? and ");
-		sb.append("resourceActionId != ?");
-
-		String sql2 = sb.toString();
-
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement ps1 = connection.prepareStatement(sql1);
-			PreparedStatement ps2 = connection.prepareStatement(sql2);
+			PreparedStatement ps1 = connection.prepareStatement(
+				"select name, bitwiseValue, min(resourceActionId) as " +
+					"minResourceActionId from ResourceAction group by name, " +
+						"bitwiseValue having count(resourceActionId) > 1");
+			PreparedStatement ps2 = connection.prepareStatement(
+				"select resourceActionId, actionId from ResourceAction where " +
+					"name = ? and bitwiseValue = ? and resourceActionId != ?");
 			ResultSet rs1 = ps1.executeQuery()) {
 
 			while (rs1.next()) {
@@ -62,7 +51,7 @@ public class VerifyResourceActions extends VerifyProcess {
 				try (ResultSet rs2 = ps2.executeQuery()) {
 					while (rs2.next()) {
 						if (_log.isInfoEnabled()) {
-							sb = new StringBundler(7);
+							StringBundler sb = new StringBundler(7);
 
 							sb.append("Deleting resource action ");
 							sb.append(rs2.getString("actionId"));
@@ -75,10 +64,8 @@ public class VerifyResourceActions extends VerifyProcess {
 							_log.info(sb.toString());
 						}
 
-						long resourceActionId = rs2.getLong("resourceActionId");
-
 						ResourceActionLocalServiceUtil.deleteResourceAction(
-							resourceActionId);
+							rs2.getLong("resourceActionId"));
 					}
 				}
 			}

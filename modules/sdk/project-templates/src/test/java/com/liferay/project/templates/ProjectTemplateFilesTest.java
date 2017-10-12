@@ -862,7 +862,8 @@ public class ProjectTemplateFilesTest {
 		"[a-z]+(?:-[a-z]+)*");
 	private static final Set<String> _textFileExtensions = new HashSet<>(
 		Arrays.asList(
-			"bnd", "gradle", "java", "js", "jsp", "jspf", "properties", "xml"));
+			"bnd", "gradle", "java", "js", "jsp", "jspf", "properties", "vm",
+			"xml"));
 	private static final Pattern _velocityDirectivePattern = Pattern.compile(
 		"#(if|set)\\s*\\(\\s*(.+)\\s*\\)");
 	private static final Pattern _velocitySetDirectivePattern = Pattern.compile(

@@ -360,8 +360,8 @@ public class DefaultUserResolver implements UserResolver {
 	protected User importUser(
 			long companyId, String subjectNameIdentifier,
 			String subjectNameIdentifierType, Assertion assertion,
-			SAMLMessageContext<Response, SAMLObject, NameID>
-				samlMessageContext, ServiceContext serviceContext)
+			SAMLMessageContext<Response, SAMLObject, NameID> samlMessageContext,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		if (_log.isDebugEnabled()) {

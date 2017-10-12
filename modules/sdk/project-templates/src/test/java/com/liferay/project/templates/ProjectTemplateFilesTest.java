@@ -840,13 +840,15 @@ public class ProjectTemplateFilesTest {
 				text.startsWith(xmlDeclaration));
 		}
 
-		matcher = _archetypeResourcePropertyNamePattern.matcher(text);
+		if (!fileName.endsWith(".es.js")) {
+			matcher = _archetypeResourcePropertyNamePattern.matcher(text);
 
-		while (matcher.find()) {
-			String name = matcher.group(1);
+			while (matcher.find()) {
+				String name = matcher.group(1);
 
-			if (!text.contains("#set ($" + name + " = ")) {
-				archetypeResourcePropertyNames.add(name);
+				if (!text.contains("#set ($" + name + " = ")) {
+					archetypeResourcePropertyNames.add(name);
+				}
 			}
 		}
 	}

@@ -309,14 +309,6 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	@Override
-	public Element getJenkinsReportBuildInfoElement() {
-		String axisName = JenkinsResultsParserUtil.combine(
-			"AXIS_VARIABLE=", getAxisNumber());
-
-		return super.getJenkinsReportBuildInfoElement(this, axisName, false);
-	}
-
-	@Override
 	public String getOperatingSystem() {
 		Build parentBuild = getParentBuild();
 

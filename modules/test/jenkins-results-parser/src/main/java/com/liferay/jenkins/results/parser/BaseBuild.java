@@ -522,29 +522,19 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public Element getJenkinsReportBuildInfoElement() {
-		return getJenkinsReportBuildInfoElement(this, getDisplayName(), true);
-	}
-
-	@Override
-	public Element getJenkinsReportBuildInfoElement(
-		Build build, String buildName, boolean tableHeaderElement) {
-
-		String buildURL = build.getBuildURL();
+		String buildURL = getBuildURL();
 
 		String buildConsoleURL = buildURL + "console";
 
-		String tagName = "td";
-
-		if (tableHeaderElement) {
-			tagName = "th";
-		}
+		String tagName = getJenkinsReportBuildInfoCellElementTagName();
 
 		Element trElement = Dom4JUtil.getNewElement("tr");
 
 		trElement.add(
 			Dom4JUtil.getNewElement(
 				tagName, null,
-				Dom4JUtil.getNewAnchorElement(buildURL, null, buildName)));
+				Dom4JUtil.getNewAnchorElement(
+					buildURL, null, getDisplayName())));
 
 		trElement.add(
 			Dom4JUtil.getNewElement(
@@ -560,7 +550,7 @@ public abstract class BaseBuild implements Build {
 				Dom4JUtil.getNewAnchorElement(
 					buildTestReportURL, null, "Test Report")));
 
-		Date buildStartDate = new Date(build.getStartTimestamp());
+		Date buildStartDate = new Date(getStartTimestamp());
 
 		trElement.add(
 			Dom4JUtil.getNewElement(
@@ -570,10 +560,9 @@ public abstract class BaseBuild implements Build {
 		trElement.add(
 			Dom4JUtil.getNewElement(
 				tagName, null,
-				JenkinsResultsParserUtil.toDurationString(
-					build.getDuration())));
+				JenkinsResultsParserUtil.toDurationString(getDuration())));
 
-		String status = build.getStatus();
+		String status = getStatus();
 
 		if (status != null) {
 			status = StringUtils.upperCase(status);
@@ -584,7 +573,7 @@ public abstract class BaseBuild implements Build {
 
 		trElement.add(Dom4JUtil.getNewElement(tagName, null, status));
 
-		String result = build.getResult();
+		String result = getResult();
 
 		if (result == null) {
 			result = "";
@@ -1957,6 +1946,10 @@ public abstract class BaseBuild implements Build {
 		boolean showCommonFailuresCount) {
 
 		return getGitHubMessageJobResultsElement();
+	}
+
+	protected String getJenkinsReportBuildInfoCellElementTagName() {
+		return "td";
 	}
 
 	protected Set<String> getJobParameterNames() {

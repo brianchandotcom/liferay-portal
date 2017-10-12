@@ -131,20 +131,6 @@ public class BatchBuild extends BaseBuild {
 	}
 
 	@Override
-	public Element getJenkinsReportBuildInfoElement() {
-		String batchName = getDisplayName();
-
-		if (batchName.contains("-dist(")) {
-			batchName = batchName.replace(jobName, "dist");
-		}
-		else {
-			batchName = batchName.replace(jobName + "/", "");
-		}
-
-		return super.getJenkinsReportBuildInfoElement(this, batchName, true);
-	}
-
-	@Override
 	public String getOperatingSystem() {
 		return getEnvironment("operating.system");
 	}
@@ -403,6 +389,10 @@ public class BatchBuild extends BaseBuild {
 				JenkinsResultsParserUtil.getNounForm(
 					failCount, " Tests", " Test"),
 				" Failed.", getFailureMessageElement()));
+	}
+
+	protected String getJenkinsReportBuildInfoCellElementTagName() {
+		return "th";
 	}
 
 	protected int getTestCountByStatus(String status) {

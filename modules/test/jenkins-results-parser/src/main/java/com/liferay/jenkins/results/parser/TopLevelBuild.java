@@ -192,15 +192,6 @@ public class TopLevelBuild extends BaseBuild {
 	}
 
 	@Override
-	public Element getJenkinsReportBuildInfoElement() {
-		String topLevelName = getDisplayName();
-
-		topLevelName = topLevelName.replace(jobName + "/", "");
-
-		return super.getJenkinsReportBuildInfoElement(this, topLevelName, true);
-	}
-
-	@Override
 	public Element getJenkinsReportElement() {
 		Element headElement = getJenkinsReportHeadElement();
 
@@ -600,6 +591,10 @@ public class TopLevelBuild extends BaseBuild {
 			getJenkinsReportTimelineElement(nonBatchBuilds),
 			getJenkinsReportTopLevelTableElement(),
 			getJenkinsReportDownstreamElement(downstreamBuilds));
+	}
+
+	protected String getJenkinsReportBuildInfoCellElementTagName() {
+		return "th";
 	}
 
 	protected Element getJenkinsReportChartJsScriptElement(

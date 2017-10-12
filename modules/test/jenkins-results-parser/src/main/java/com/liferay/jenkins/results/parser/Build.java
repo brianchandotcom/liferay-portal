@@ -76,9 +76,6 @@ public interface Build {
 
 	public Element getJenkinsReportBuildInfoElement();
 
-	public Element getJenkinsReportBuildInfoElement(
-		Build build, String buildName, boolean tableHeaderElement);
-
 	public Element getJenkinsReportElement();
 
 	public Element getJenkinsReportTableColumnHeaderElement();

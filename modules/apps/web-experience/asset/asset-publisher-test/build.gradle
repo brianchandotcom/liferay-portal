@@ -12,6 +12,7 @@ dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.journal.api", version: "2.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.0.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.35.0"
+	testIntegrationCompile project(":apps:web-experience:asset:asset-publisher-api")
 	testIntegrationCompile project(":apps:web-experience:asset:asset-publisher-web")
 	testIntegrationCompile project(":apps:web-experience:asset:asset-test-util")
 	testIntegrationCompile project(":apps:web-experience:export-import:export-import-test-util")

@@ -1074,7 +1074,7 @@
 
 		<execute function="Click" locator1="Staging#HISTORY_BUTTON" />
 
-		<var method="selenium#getText('Staging#HISTORY_VERSION')" name="historyVersion" />
+		<var method="selenium#getText(Staging#HISTORY_VERSION)" name="historyVersion" />
 	</command>
 
 	<command name="submitForPublicationPageRevision">

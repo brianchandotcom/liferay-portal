@@ -14,6 +14,8 @@
 
 package com.liferay.project.templates;
 
+import aQute.bnd.osgi.Constants;
+
 import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.Validator;
 import com.liferay.project.templates.internal.util.WorkspaceUtil;
@@ -157,7 +159,7 @@ public class ProjectTemplateFilesTest {
 
 	private void _testArchetypeMetadataXml(
 			Path projectTemplateDirPath, String projectTemplateDirName,
-			boolean requireAuthorProperty,
+			Properties bndProperties, boolean requireAuthorProperty,
 			Set<String> archetypeResourcePropertyNames)
 		throws IOException {
 
@@ -238,34 +240,73 @@ public class ProjectTemplateFilesTest {
 
 		requiredPropertyNames.addAll(_archetypeMetadataXmlDefaultPropertyNames);
 
-		Set<String> declaredVariables = new HashSet<>();
-
-		String messageSuffix = archetypeMetadataXmlPath.toString();
+		List<Path> definitionsVmPaths = new ArrayList<>();
 
 		Path definitionsVmPath = projectTemplateDirPath.resolve(
-			"../project-templates-npm-angular-portlet/src/main/resources" +
-				"/definitions.vm");
+			"src/main/resources/definitions.vm");
 
-		String definitionsVm = FileUtil.read(definitionsVmPath);
-
-		matcher = _velocitySetDirectivePattern.matcher(definitionsVm);
-
-		while (matcher.find()) {
-			declaredVariables.add(matcher.group(1));
+		if (Files.exists(definitionsVmPath)) {
+			definitionsVmPaths.add(definitionsVmPath);
 		}
 
-		messageSuffix += " or " + definitionsVmPath + ".";
+		String includeResource = bndProperties.getProperty(
+			Constants.INCLUDERESOURCE);
+
+		if (Validator.isNotNull(includeResource)) {
+			for (String fileName : includeResource.split(",")) {
+				if (!fileName.endsWith("/definitions.vm")) {
+					continue;
+				}
+
+				definitionsVmPath = projectTemplateDirPath.resolve(fileName);
+
+				if (Files.exists(definitionsVmPath)) {
+					definitionsVmPaths.add(definitionsVmPath);
+				}
+			}
+		}
+
+		Set<String> declaredVariables = new HashSet<>();
+
+		for (Path path : definitionsVmPaths) {
+			String content = FileUtil.read(path);
+
+			matcher = _velocitySetDirectivePattern.matcher(content);
+
+			while (matcher.find()) {
+				declaredVariables.add(matcher.group(1));
+			}
+		}
 
 		for (String name : archetypeResourcePropertyNames) {
-			Assert.assertTrue(
-				"Undeclared \"" + name + "\" property. Please add it to " +
-					messageSuffix,
-				declaredVariables.contains(name) ||
-				requiredPropertyNames.contains(name));
+			if (!declaredVariables.contains(name) &&
+				!requiredPropertyNames.contains(name)) {
+
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("Undeclared \"");
+				sb.append(name);
+				sb.append("\" property. Please add it to ");
+				sb.append(archetypeMetadataXmlPath);
+
+				for (int i = 0; i < definitionsVmPaths.size(); i++) {
+					sb.append(", ");
+
+					if (i == (definitionsVmPaths.size() - 1)) {
+						sb.append("or ");
+					}
+
+					sb.append(definitionsVmPaths.get(i));
+				}
+
+				Assert.fail(sb.toString());
+			}
 		}
 	}
 
-	private void _testBndBnd(Path projectTemplateDirPath) throws IOException {
+	private Properties _testBndBnd(Path projectTemplateDirPath)
+		throws IOException {
+
 		Path bndBndPath = projectTemplateDirPath.resolve("bnd.bnd");
 
 		Properties properties = FileUtil.readProperties(bndBndPath);
@@ -283,6 +324,8 @@ public class ProjectTemplateFilesTest {
 				" must match pattern \"" + _bundleDescriptionPattern.pattern() +
 					"\"",
 			matcher.matches());
+
+		return properties;
 	}
 
 	private void _testBuildGradle(
@@ -657,7 +700,8 @@ public class ProjectTemplateFilesTest {
 		String projectTemplateDirName = String.valueOf(
 			projectTemplateDirPath.getFileName());
 
-		_testBndBnd(projectTemplateDirPath);
+		Properties bndProperties = _testBndBnd(projectTemplateDirPath);
+
 		_testBuildGradle(projectTemplateDirName, archetypeResourcesDirPath);
 
 		_testGitIgnore(projectTemplateDirName, archetypeResourcesDirPath);
@@ -736,7 +780,7 @@ public class ProjectTemplateFilesTest {
 			});
 
 		_testArchetypeMetadataXml(
-			projectTemplateDirPath, projectTemplateDirName,
+			projectTemplateDirPath, projectTemplateDirName, bndProperties,
 			requireAuthorProperty.get(), archetypeResourcePropertyNames);
 	}
 

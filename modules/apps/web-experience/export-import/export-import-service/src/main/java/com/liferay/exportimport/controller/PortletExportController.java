@@ -27,6 +27,7 @@ import com.liferay.asset.kernel.model.adapter.StagedAssetLink;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.exportimport.constants.ExportImportConstants;
 import com.liferay.exportimport.kernel.controller.ExportController;
 import com.liferay.exportimport.kernel.controller.ExportImportController;
 import com.liferay.exportimport.kernel.exception.LayoutImportException;
@@ -771,6 +772,9 @@ public class PortletExportController implements ExportController {
 			"private-layout", String.valueOf(layout.isPrivateLayout()));
 		headerElement.addAttribute(
 			"root-portlet-id", portletDataContext.getRootPortletId());
+		headerElement.addAttribute(
+			"schema-version",
+			ExportImportConstants.EXPORT_IMPORT_SCHEMA_VERSION);
 
 		Element missingReferencesElement = rootElement.addElement(
 			"missing-references");

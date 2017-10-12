@@ -127,15 +127,12 @@ public class SQLFunctionTransformerTest {
 		Assert.assertEquals("TEST2(a, b, c)", transformedSQL);
 	}
 
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void testUnclosedFunctionCall() {
 		SQLFunctionTransformer sqlFunctionTransformer =
 			new SQLFunctionTransformer("TEST(", "", " DELIMITER ", "");
 
-		String transformedSQL = sqlFunctionTransformer.transform(
-			"TEST(a, b, c");
-
-		Assert.assertEquals("a DELIMITER  b DELIMITER  c", transformedSQL);
+		sqlFunctionTransformer.transform("TEST(a, b, c");
 	}
 
 }

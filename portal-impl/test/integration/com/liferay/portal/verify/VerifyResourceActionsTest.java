@@ -77,6 +77,11 @@ public class VerifyResourceActionsTest extends BaseVerifyProcessTestCase {
 		_assertResourceAction(_NAME_2, _ACTION_ID_2, false);
 	}
 
+	@Override
+	protected VerifyProcess getVerifyProcess() {
+		return new VerifyResourceActions();
+	}
+
 	private void _assertResourceAction(
 		String name, String actionId, boolean expectsNull) {
 
@@ -105,11 +110,6 @@ public class VerifyResourceActionsTest extends BaseVerifyProcessTestCase {
 		resourceAction.setBitwiseValue(bitwiseValue);
 
 		_resourceActions.add(ResourceActionUtil.update(resourceAction));
-	}
-
-	@Override
-	protected VerifyProcess getVerifyProcess() {
-		return new VerifyResourceActions();
 	}
 
 	private static final String _ACTION_ID_1 = "action1";

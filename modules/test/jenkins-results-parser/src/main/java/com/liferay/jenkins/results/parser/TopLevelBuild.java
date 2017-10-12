@@ -871,12 +871,8 @@ public class TopLevelBuild extends BaseBuild {
 			Arrays.toString(timeData), Arrays.toString(slaveUsageData),
 			Arrays.toString(invocationData));
 
-		Element divElement = Dom4JUtil.getNewElement("div");
-
-		Dom4JUtil.addToElement(
-			divElement, canvasElement, scriptElement, chartJSScriptElement);
-
-		return divElement;
+		return Dom4JUtil.getNewElement(
+			"div", null, canvasElement, scriptElement, chartJSScriptElement);
 	}
 
 	protected Element getJenkinsReportTopLevelTableElement() {

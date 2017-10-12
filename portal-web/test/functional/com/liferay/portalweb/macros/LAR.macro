@@ -314,6 +314,19 @@
 			</then>
 		</if>
 
+		<if>
+			<equals arg1="${mirrorWithOverwriting}" arg2="true" />
+			<then>
+				<execute function="ScrollWebElementIntoView" locator1="//div[contains(@class,'panel') and contains(@role,'tablist')]//a[normalize-space(text())='Update Data']" />
+
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="Update Data" />
+				</execute>
+
+				<execute function="Click" locator1="ExportImport#UPDATE_DATA_MIRROR_WITH_OVERWRITING_RADIO" />
+			</then>
+		</if>
+
 		<execute function="AssertVisible" locator1="Button#BACK" />
 
 		<execute function="AssertClickNoError" locator1="SitePagesImport#IMPORT_BUTTON" value1="Import" />

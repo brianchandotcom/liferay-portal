@@ -57,7 +57,7 @@ public class SQLFunctionTransformerTest {
 			new SQLFunctionTransformer("TEST(", "", " DELIMITER ", "");
 
 		String transformedSQL = sqlFunctionTransformer.transform(
-			"TEST(a, TEST(b, TEST(c), d))");
+			"TEST(a, TEST(TEST(b), c), d)");
 
 		Assert.assertEquals(
 			"a DELIMITER  b DELIMITER  c DELIMITER  d", transformedSQL);

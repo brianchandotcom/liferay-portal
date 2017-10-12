@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -1159,6 +1160,24 @@ public class CalendarBookingLocalServiceImpl
 		CalendarBooking calendarBooking =
 			calendarBookingPersistence.findByPrimaryKey(calendarBookingId);
 
+		boolean calendarChanged = false;
+
+		if (calendarId != calendarBooking.getCalendarId()) {
+			calendarChanged = true;
+		}
+
+		if (calendarChanged &&
+			(calendarLocalService.isStagingCalendar(calendar) ||
+			 isStagingCalendarBooking(calendarBooking))) {
+
+			systemEventLocalService.addSystemEvent(
+				userId, calendarBooking.getGroupId(),
+				CalendarBooking.class.getName(),
+				calendarBooking.getCalendarBookingId(),
+				calendarBooking.getUuid(), null,
+				SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
+		}
+
 		for (Map.Entry<Locale, String> entry : descriptionMap.entrySet()) {
 			String sanitizedDescription = SanitizerUtil.sanitize(
 				calendar.getCompanyId(), calendar.getGroupId(), userId,
@@ -2235,6 +2254,9 @@ public class CalendarBookingLocalServiceImpl
 
 	@ServiceReference(type = SubscriptionLocalService.class)
 	protected SubscriptionLocalService subscriptionLocalService;
+
+	@ServiceReference(type = SystemEventLocalService.class)
+	protected SystemEventLocalService systemEventLocalService;
 
 	@ServiceReference(type = TrashEntryLocalService.class)
 	protected TrashEntryLocalService trashEntryLocalService;

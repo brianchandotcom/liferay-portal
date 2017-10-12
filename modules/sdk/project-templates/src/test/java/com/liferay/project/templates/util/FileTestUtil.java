@@ -75,7 +75,7 @@ public class FileTestUtil {
 	}
 
 	public static String getExtension(String fileName) {
-		int pos = fileName.indexOf('.');
+		int pos = fileName.lastIndexOf('.');
 
 		if (pos == -1) {
 			return "";

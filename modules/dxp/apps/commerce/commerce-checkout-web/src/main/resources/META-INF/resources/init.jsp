@@ -57,5 +57,5 @@ page import="java.util.StringJoiner" %>
 <portlet:defineObjects />
 
 <%
-	String languageId = LanguageUtil.getLanguageId(locale);
+String languageId = LanguageUtil.getLanguageId(locale);
 %>

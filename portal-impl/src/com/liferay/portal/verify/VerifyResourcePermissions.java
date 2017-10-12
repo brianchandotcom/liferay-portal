@@ -163,9 +163,7 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			long ownerId, int cur, int total)
 		throws Exception {
 
-		if (_log.isInfoEnabled() && (((cur + 1) % 100) == 0)) {
-			cur++;
-
+		if (_log.isInfoEnabled() && ((cur % 100) == 0)) {
 			_log.info(
 				"Processed " + cur + " of " + total + " resource permissions " +
 					"for company = " + companyId + " and model " + modelName);
@@ -247,7 +245,7 @@ public class VerifyResourcePermissions extends VerifyProcess {
 					false, verifiableResourcedModel, role));
 			ResultSet rs = ps.executeQuery()) {
 
-			for (int i = 0; rs.next(); i++) {
+			for (int i = 1; rs.next(); i++) {
 				long primKey = rs.getLong(
 					verifiableResourcedModel.getPrimaryKeyColumnName());
 				long userId = rs.getLong(

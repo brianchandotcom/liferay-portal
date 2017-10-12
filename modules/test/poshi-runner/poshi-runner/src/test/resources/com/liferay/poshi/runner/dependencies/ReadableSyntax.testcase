@@ -127,6 +127,8 @@ document.getElementById('demo').innerHTML = 'FAIL';
 
 		AssertElementPresent(locator1 = "Home#PAGE", value1 = "Welcome");
 
+		Type(locator1 = "DDMField#INTEGER", value1 = "5", key_fieldName = "Integer");
+
 		Click(locator1 = "Home#PAGE");
 
 		Refresh();

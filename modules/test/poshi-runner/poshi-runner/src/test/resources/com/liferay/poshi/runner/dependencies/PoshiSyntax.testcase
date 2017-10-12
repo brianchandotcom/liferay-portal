@@ -163,6 +163,10 @@ document.getElementById('demo').innerHTML = 'FAIL';
 
 		<execute function="AssertElementPresent" locator1="Home#PAGE" value1="Welcome" />
 
+		<execute function="Type" locator1="DDMField#INTEGER" value1="5">
+			<var name="key_fieldName" value="Integer" />
+		</execute>
+
 		<execute function="Click" locator1="Home#PAGE" />
 
 		<execute function="Refresh" />

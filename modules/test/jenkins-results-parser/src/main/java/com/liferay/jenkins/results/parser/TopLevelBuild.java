@@ -688,14 +688,14 @@ public class TopLevelBuild extends BaseBuild {
 			"p", null, "Start Time: ",
 			JenkinsResultsParserUtil.toDateString(startTime));
 
-		Element vmUsageElement = getJenkinsReportTotalVMUSageElement(
-			nonBatchBuilds);
+		Element slavesUsedCountElement =
+			getJenkinsReportTotalSlavesUsedCountElement();
 
 		Element divElement = Dom4JUtil.getNewElement("div");
 
 		Dom4JUtil.addToElement(
 			divElement, startTimeElement, buildTimeElement, cpuUsageTimeElement,
-			vmUsageElement, longestBatchElement, longestAxisElement,
+			slavesUsedCountElement, longestBatchElement, longestAxisElement,
 			longestTestElement);
 
 		return divElement;
@@ -821,15 +821,10 @@ public class TopLevelBuild extends BaseBuild {
 			JenkinsResultsParserUtil.toDurationString(getTotalDuration()));
 	}
 
-	protected Element getJenkinsReportTotalVMUSageElement(
-		Map<String, Build> nonBatchBuilds) {
-
-		long totalVMUsed = nonBatchBuilds.size();
-
-		Element totalVMUsageElement = Dom4JUtil.getNewElement(
-			"p", null, "Total VM used: " + totalVMUsed + " slaves");
-
-		return totalVMUsageElement;
+	protected Element getJenkinsReportTotalSlavesUsedCountElement() {
+		return Dom4JUtil.getNewElement(
+			"p", null, "Total number of Jenkins slaves used: ",
+			Integer.toString(getTotalSlavesUsedCount()));
 	}
 
 	protected Element getJobSummaryListElement() {

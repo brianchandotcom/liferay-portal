@@ -135,7 +135,7 @@ public class RandomTestUtil {
 
 		if (max < min) {
 			throw new IllegalArgumentException(
-				"Max value must be greater than the min value");
+				"Max value must be greater than or equal to the min value");
 		}
 
 		return _random.nextInt(max - min + 1) + min;

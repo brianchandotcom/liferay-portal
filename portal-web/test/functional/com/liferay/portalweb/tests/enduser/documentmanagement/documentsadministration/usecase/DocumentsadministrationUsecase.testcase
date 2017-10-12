@@ -1018,7 +1018,7 @@
 			</then>
 		</while>
 
-		<var attribute="poster" locator="//video" name="videoPreviewThumbnailLink" />
+		<var method="selenium#getAttribute('//video@poster')" name="videoPreviewThumbnailLink" />
 
 		<execute function="Open" locator1="${videoPreviewThumbnailLink}" />
 		<execute function="Pause" locator1="1000" />

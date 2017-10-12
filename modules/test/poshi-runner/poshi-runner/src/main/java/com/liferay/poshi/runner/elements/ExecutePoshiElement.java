@@ -100,21 +100,24 @@ public class ExecutePoshiElement extends BasePoshiElement {
 			assignments.add(matcher.group());
 		}
 
+		assignmentLoop:
 		for (String assignment : assignments) {
 			assignment = assignment.trim();
 
-			if (executeType.equals("macro")) {
-				assignment = "var " + assignment + ";";
+			for (String functionAttributeName : functionAttributeNames) {
+				if (assignment.startsWith(functionAttributeName)) {
+					String name = getNameFromAssignment(assignment);
+					String value = getQuotedContent(assignment);
 
-				add(PoshiElementFactory.newPoshiElement(this, assignment));
+					addAttribute(name, value);
 
-				continue;
+					continue assignmentLoop;
+				}
 			}
 
-			String name = getNameFromAssignment(assignment);
-			String value = getQuotedContent(assignment);
+			assignment = "var " + assignment + ";";
 
-			addAttribute(name, value);
+			add(PoshiElementFactory.newPoshiElement(this, assignment));
 		}
 	}
 

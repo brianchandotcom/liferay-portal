@@ -597,6 +597,8 @@
 			<var name="wikiParentName" value="Wiki Page 1" />
 		</execute>
 
+		<execute function="WaitForSPARefresh" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -729,6 +731,8 @@
 		<execute macro="WikiTable#deleteEntry">
 			<var name="wikiPageTitle" value="Wiki Page 1 Original" />
 		</execute>
+
+		<execute function="WaitForSPARefresh" />
 
 		<execute macro="Navigator#openURL" />
 

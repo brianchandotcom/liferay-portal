@@ -575,39 +575,30 @@ public class TopLevelBuild extends BaseBuild {
 			}
 		}
 
-		Element h1Element = Dom4JUtil.getNewElement("h1");
-
 		String buildURL = getBuildURL();
 
-		Dom4JUtil.addToElement(
-			h1Element, "Jenkins report for ",
+		Element headerElement = Dom4JUtil.getNewElement(
+			"h1", null, "Jenkins report for ",
 			Dom4JUtil.getNewAnchorElement(buildURL, buildURL));
 
 		JSONObject jobJSONObject = getBuildJSONObject();
 
-		String jobDescription = "";
+		Element subheaderElement = null;
 
 		try {
-			jobDescription = jobJSONObject.getString("description");
+			subheaderElement = Dom4JUtil.getNewElement(
+				"h2", null, jobJSONObject.getString("description"));
 		}
 		catch (JSONException jsone) {
 			jsone.printStackTrace();
 		}
 
-		Element h2Element = Dom4JUtil.getNewElement("h2");
-
-		Dom4JUtil.addToElement(h2Element, jobDescription);
-
-		Element bodyElement = Dom4JUtil.getNewElement("body");
-
-		Dom4JUtil.addToElement(
-			bodyElement, h1Element, h2Element,
+		return Dom4JUtil.getNewElement(
+			"body", null, headerElement, subheaderElement,
 			getJenkinsReportSummaryElement(nonBatchBuilds),
 			getJenkinsReportTimelineElement(nonBatchBuilds),
 			getJenkinsReportTopLevelTableElement(),
 			getJenkinsReportDownstreamElement(downstreamBuilds));
-
-		return bodyElement;
 	}
 
 	protected Element getJenkinsReportChartJsScriptElement(

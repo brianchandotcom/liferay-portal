@@ -1,11 +1,9 @@
 ##
 ## Calculate $auiScriptRequireVarName
 ##
-
 #set ($requiredPackage = "${artifactId}${packageJsonVersion}")
 #set ($auiScriptRequireVarName = $requiredPackage)
 #set ($fc = ${requiredPackage.substring(0,1)})
-
 #if ((${fc.compareTo('a')} >= 0) && (${fc.compareTo('z')} <= 0) || (${fc} == '_'))
 	#set ($auiScriptRequireVarName = ${fc})
 #elseif (${fc.compareTo('A')} >= 0 && ${fc.compareTo('Z')} <= 0)
@@ -13,9 +11,7 @@
 #else
 	#set ($auiScriptRequireVarName = "_")
 #end
-
 #set ($startNewWord = false)
-
 #foreach ($c in ${requiredPackage.substring(1).split("")})
 	#if ((${c.compareTo('a')} >= 0) && (${c.compareTo('z')} <= 0) || (${c} == '_'))
 		#if ($startNewWord)

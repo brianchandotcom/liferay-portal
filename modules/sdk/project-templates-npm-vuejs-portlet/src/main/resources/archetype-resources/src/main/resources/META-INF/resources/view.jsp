@@ -1,6 +1,5 @@
-#parse( "definitions.vm" )
-
 <%@ include file="/init.jsp" %>
+#parse ("definitions.vm")
 
 <div id="<portlet:namespace />">{{text}}</div>
 

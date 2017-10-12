@@ -57,6 +57,12 @@ public class LCSClusterEntryTokenClientImpl
 		}
 	}
 
+	public void setJSONWebServiceClient(
+		JSONWebServiceClient jsonWebServiceClient) {
+
+		_jsonWebServiceClient = jsonWebServiceClient;
+	}
+
 	private static final String _URL_LCS_CLUSTER_ENTRY_TOKEN =
 		"/o/osb-lcs-rest/LCSClusterEntryToken";
 

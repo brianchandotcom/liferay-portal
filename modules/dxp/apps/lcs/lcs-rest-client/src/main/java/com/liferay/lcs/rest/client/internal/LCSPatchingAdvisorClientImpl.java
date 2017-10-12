@@ -58,6 +58,12 @@ public class LCSPatchingAdvisorClientImpl implements LCSPatchingAdvisorClient {
 		return _jsonWebServiceClient.doGetToList(String.class, sb.toString());
 	}
 
+	public void setJSONWebServiceClient(
+		JSONWebServiceClient jsonWebServiceClient) {
+
+		_jsonWebServiceClient = jsonWebServiceClient;
+	}
+
 	private static final String _URL_PATCHING_ADVISOR =
 		"/o/osb-lcs-rest/LCSPatchingAdvisor";
 

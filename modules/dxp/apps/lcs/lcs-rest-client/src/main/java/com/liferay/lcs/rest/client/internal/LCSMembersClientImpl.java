@@ -60,6 +60,12 @@ public class LCSMembersClientImpl implements LCSMembersClient {
 			key);
 	}
 
+	public void setJSONWebServiceClient(
+		JSONWebServiceClient jsonWebServiceClient) {
+
+		_jsonWebServiceClient = jsonWebServiceClient;
+	}
+
 	private static final String _URL_LCS_MEMBERS = "/o/osb-lcs-rest/LCSMembers";
 
 	private static final String

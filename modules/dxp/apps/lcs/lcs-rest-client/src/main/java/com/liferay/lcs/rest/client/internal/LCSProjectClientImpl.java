@@ -69,6 +69,12 @@ public class LCSProjectClientImpl implements LCSProjectClient {
 		return lcsProjects;
 	}
 
+	public void setJSONWebServiceClient(
+		JSONWebServiceClient jsonWebServiceClient) {
+
+		_jsonWebServiceClient = jsonWebServiceClient;
+	}
+
 	private static final String _URL_LCS_PROJECT = "/o/osb-lcs-rest/LCSProject";
 
 	@Reference(target = "(component.name=OSBLCSJSONWebServiceClient)")

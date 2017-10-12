@@ -49,6 +49,12 @@ public class LCSMessageClientImpl implements LCSMessageClient {
 				StringPool.SLASH + sourceMessageId);
 	}
 
+	public void setJSONWebServiceClient(
+		JSONWebServiceClient jsonWebServiceClient) {
+
+		_jsonWebServiceClient = jsonWebServiceClient;
+	}
+
 	private static final String _URL_LCS_MESSAGE = "/o/osb-lcs-rest/LCSMessage";
 
 	@Reference(target = "(component.name=OSBLCSJSONWebServiceClient)")

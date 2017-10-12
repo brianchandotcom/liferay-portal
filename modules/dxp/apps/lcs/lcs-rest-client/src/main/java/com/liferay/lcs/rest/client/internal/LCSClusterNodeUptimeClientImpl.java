@@ -28,6 +28,12 @@ import org.osgi.service.component.annotations.Reference;
 public class LCSClusterNodeUptimeClientImpl
 	implements LCSClusterNodeUptimeClient {
 
+	public void setJSONWebServiceClient(
+		JSONWebServiceClient jsonWebServiceClient) {
+
+		_jsonWebServiceClient = jsonWebServiceClient;
+	}
+
 	@Override
 	public void updateLCSClusterNodeUptime(String key)
 		throws JSONWebServiceInvocationException {

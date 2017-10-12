@@ -105,6 +105,12 @@ public class LCSClusterEntryClientImpl implements LCSClusterEntryClient {
 		return lcsClusterEntries;
 	}
 
+	public void setJSONWebServiceClient(
+		JSONWebServiceClient jsonWebServiceClient) {
+
+		_jsonWebServiceClient = jsonWebServiceClient;
+	}
+
 	protected void validate(long lcsProjectId, String lcsClusterEntryName)
 		throws DuplicateLCSClusterEntryNameException,
 			   JSONWebServiceInvocationException,

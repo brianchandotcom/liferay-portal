@@ -70,6 +70,12 @@ public class LCSMetadataClientImpl implements LCSMetadataClient {
 		return lcsMetadata.getSupportedLCSPortlet();
 	}
 
+	public void setJSONWebServiceClient(
+		JSONWebServiceClient jsonWebServiceClient) {
+
+		_jsonWebServiceClient = jsonWebServiceClient;
+	}
+
 	private static final String _URL_LCS_METADATA =
 		"/o/osb-lcs-rest/LCSMetadata";
 

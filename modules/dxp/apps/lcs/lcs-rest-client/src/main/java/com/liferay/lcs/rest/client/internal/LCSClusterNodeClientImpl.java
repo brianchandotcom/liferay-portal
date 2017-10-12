@@ -216,6 +216,12 @@ public class LCSClusterNodeClientImpl implements LCSClusterNodeClient {
 			"merge", String.valueOf(true));
 	}
 
+	public void setJSONWebServiceClient(
+		JSONWebServiceClient jsonWebServiceClient) {
+
+		_jsonWebServiceClient = jsonWebServiceClient;
+	}
+
 	@Override
 	public void updateBuildNumber(String key, int buildNumber)
 		throws JSONWebServiceInvocationException {

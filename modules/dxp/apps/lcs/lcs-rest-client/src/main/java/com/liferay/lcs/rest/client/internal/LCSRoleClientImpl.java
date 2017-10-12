@@ -57,6 +57,12 @@ public class LCSRoleClientImpl implements LCSRoleClient {
 		return true;
 	}
 
+	public void setJSONWebServiceClient(
+		JSONWebServiceClient jsonWebServiceClient) {
+
+		_jsonWebServiceClient = jsonWebServiceClient;
+	}
+
 	private static final String _URL_LCS_ROLE = "/o/osb-lcs-rest/LCSRole";
 
 	@Reference(target = "(component.name=OSBLCSJSONWebServiceClient)")

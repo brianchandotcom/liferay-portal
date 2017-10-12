@@ -86,6 +86,12 @@ public class LCSSubscriptionEntryClientImpl
 				"/incrementServerUsed");
 	}
 
+	public void setJSONWebServiceClient(
+		JSONWebServiceClient jsonWebServiceClient) {
+
+		_jsonWebServiceClient = jsonWebServiceClient;
+	}
+
 	private static final String _URL_LCS_SUBSCRIPTION_ENTRY =
 		"/o/osb-lcs-rest/LCSSubscriptionEntry";
 

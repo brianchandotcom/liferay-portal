@@ -121,35 +121,33 @@ public class VerifyResourcePermissions extends VerifyProcess {
 				false, false, false);
 		}
 
-		if (resourcePermission == null) {
-			resourcePermission =
-				ResourcePermissionLocalServiceUtil.fetchResourcePermission(
-					companyId, modelName, ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(primKey), role.getRoleId());
-
-			if (resourcePermission == null) {
-				return;
-			}
+		if (!modelName.equals(User.class.getName())) {
+			return;
 		}
 
-		if (modelName.equals(User.class.getName())) {
-			User user = UserLocalServiceUtil.fetchUserById(ownerId);
+		User user = UserLocalServiceUtil.fetchUserById(ownerId);
 
-			if (user != null) {
-				Contact contact = ContactLocalServiceUtil.fetchContact(
-					user.getContactId());
+		Contact contact = null;
 
-				if (contact != null) {
-					ownerId = contact.getUserId();
+		if (user != null) {
+			contact = ContactLocalServiceUtil.fetchContact(user.getContactId());
+		}
+
+		if ((contact != null) && (ownerId != contact.getUserId())) {
+			if (resourcePermission == null) {
+				resourcePermission =
+					ResourcePermissionLocalServiceUtil.fetchResourcePermission(
+						companyId, modelName,
+						ResourceConstants.SCOPE_INDIVIDUAL,
+						String.valueOf(primKey), role.getRoleId());
+
+				if (resourcePermission != null) {
+					resourcePermission.setOwnerId(contact.getUserId());
+
+					ResourcePermissionLocalServiceUtil.updateResourcePermission(
+						resourcePermission);
 				}
 			}
-		}
-
-		if (ownerId != resourcePermission.getOwnerId()) {
-			resourcePermission.setOwnerId(ownerId);
-
-			ResourcePermissionLocalServiceUtil.updateResourcePermission(
-				resourcePermission);
 		}
 	}
 

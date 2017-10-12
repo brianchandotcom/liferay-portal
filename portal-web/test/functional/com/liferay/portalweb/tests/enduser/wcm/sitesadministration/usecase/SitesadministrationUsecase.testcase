@@ -724,7 +724,7 @@
 			<var name="gmailMessageTitle" value="Your New Account" />
 		</execute>
 
-		<var locator="Gmail#EMAIL_PASSWORD" name="emailPassword" />
+		<var method="selenium#getText(Gmail#EMAIL_PASSWORD)" name="emailPassword" />
 
 		<execute macro="Gmail#gotoHtmlMode" />
 
@@ -734,7 +734,7 @@
 			<var name="gmailMessageTitle" value="Email Address Verification" />
 		</execute>
 
-		<var locator="Gmail#EMAIL_VERIFICATION_CODE" name="emailVerification" />
+		<var method="selenium#getText(Gmail#EMAIL_VERIFICATION_CODE)" name="emailVerification" />
 
 		<execute macro="Gmail#gotoHtmlMode" />
 
@@ -788,7 +788,7 @@
 			<var name="gmailMessageTitle" value="Email Address Verification" />
 		</execute>
 
-		<var locator="Gmail#EMAIL_ADDRESS_VERIFICATION_URL" name="emailAddressVerificationURL" />
+		<var method="selenium#getText(Gmail#EMAIL_ADDRESS_VERIFICATION_URL)" name="emailAddressVerificationURL" />
 
 		<execute function="Click" locator1="Gmail#EMAIL_ADDRESS_VERIFICATION_URL" />
 

@@ -1441,7 +1441,7 @@
 			<var name="displayStyle" value="List" />
 		</execute>
 
-		<var locator="//tr/td/span/a/span" name="valueName" />
+		<var method="selenium#getText('//tr/td/span/a/span')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 

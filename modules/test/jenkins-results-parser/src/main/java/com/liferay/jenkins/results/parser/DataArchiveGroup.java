@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +33,29 @@ public class DataArchiveGroup {
 
 	public void addDataArchive(DataArchive dataArchive) {
 		_dataArchives.add(dataArchive);
+	}
+
+	public void commitDataArchives() throws IOException {
+		for (DataArchive dataArchive : _dataArchives) {
+			if (!dataArchive.isUpdated()) {
+				dataArchive.updateDataArchive();
+			}
+		}
+
+		GitWorkingDirectory portalLegacyGitWorkingDirectory =
+			_dataArchiveBranch.getPortalLegacyGitWorkingDirectory();
+
+		String gitStatus = portalLegacyGitWorkingDirectory.status();
+
+		if (!gitStatus.contains("nothing to commit, working directory clean")) {
+			ManualCommit latestManualCommit =
+				_dataArchiveBranch.getLatestManualCommit();
+
+			portalLegacyGitWorkingDirectory.commitStagedFilesToCurrentBranch(
+				JenkinsResultsParserUtil.combine(
+					"archive:ignore Update '", _dataArchiveType, "' at ",
+					latestManualCommit.getAbbreviatedSha(), "."));
+		}
 	}
 
 	public String getDataArchiveType() {

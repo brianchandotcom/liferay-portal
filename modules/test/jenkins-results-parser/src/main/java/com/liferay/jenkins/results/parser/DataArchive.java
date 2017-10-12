@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.List;
 
@@ -73,6 +74,28 @@ public class DataArchive {
 		}
 
 		return false;
+	}
+
+	public void updateDataArchive() throws IOException {
+		if (_generatedDataArchiveFile.exists()) {
+			JenkinsResultsParserUtil.copy(
+				_generatedDataArchiveFile, _committedDataArchiveFile);
+
+			String committedDataArchiveFilePath =
+				_committedDataArchiveFile.getCanonicalPath();
+			File portalLegacyWorkingDirectory =
+				_dataArchiveBranch.getPortalLegacyWorkingDirectory();
+
+			committedDataArchiveFilePath =
+				committedDataArchiveFilePath.replaceAll(
+					portalLegacyWorkingDirectory + "/", "");
+
+			GitWorkingDirectory portalLegacyGitWorkingDirectory =
+				_dataArchiveBranch.getPortalLegacyGitWorkingDirectory();
+
+			portalLegacyGitWorkingDirectory.stageFileInCurrentBranch(
+				committedDataArchiveFilePath);
+		}
 	}
 
 	private Commit _getCommit() {

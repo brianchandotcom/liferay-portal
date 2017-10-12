@@ -59,12 +59,52 @@ public class DataArchiveBranch {
 		_dataArchiveGroupMap = _getDataArchiveGroupMap(_dataArchives);
 	}
 
+	public GitWorkingDirectory.Branch createTemporaryBranch()
+		throws IOException {
+
+		GitWorkingDirectory.Branch upstreamBranch =
+			_portalLegacyGitWorkingDirectory.getUpstreamBranch();
+
+		String temporaryBranchName =
+			upstreamBranch.getName() + "-temp-" + System.currentTimeMillis();
+
+		GitWorkingDirectory.Branch temporaryBranch =
+			_portalLegacyGitWorkingDirectory.getBranch(
+				temporaryBranchName, null);
+
+		if (temporaryBranch != null) {
+			_portalLegacyGitWorkingDirectory.deleteBranch(
+				_portalLegacyGitWorkingDirectory.getBranch(
+					temporaryBranchName, null));
+		}
+
+		temporaryBranch = _portalLegacyGitWorkingDirectory.createLocalBranch(
+			temporaryBranchName);
+
+		_portalLegacyGitWorkingDirectory.checkoutBranch(temporaryBranch);
+
+		List<DataArchiveGroup> dataArchiveGroupList = new ArrayList<>(
+			_dataArchiveGroupMap.values());
+
+		for (DataArchiveGroup dataArchiveGroup : dataArchiveGroupList) {
+			if (!dataArchiveGroup.isUpdated()) {
+				dataArchiveGroup.commitDataArchives();
+			}
+		}
+
+		return temporaryBranch;
+	}
+
 	public File getGeneratedDataArchiveDirectory() {
 		return _generatedDataArchiveDirectory;
 	}
 
 	public List<DataArchiveCommit> getLatestDataArchiveCommits() {
 		return _latestDataArchiveCommits;
+	}
+
+	public ManualCommit getLatestManualCommit() {
+		return _latestManualCommit;
 	}
 
 	public GitWorkingDirectory getPortalLegacyGitWorkingDirectory() {

@@ -54,11 +54,13 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
 		java.lang.String layoutUuid, java.lang.String productTypeName,
-		boolean ignoreSKUCombinations, double width, double height,
-		double depth, double weight, java.lang.String ddmStructureKey,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
+		boolean shipSeparately, double shippingExtraPrice, double width,
+		double height, double depth, double weight,
+		java.lang.String ddmStructureKey, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		boolean hasDefaultInstance,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -66,12 +68,12 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		return _cpDefinitionLocalService.addCPDefinition(titleMap,
 			shortDescriptionMap, descriptionMap, metaTitleMap, metaKeywordsMap,
 			metaDescriptionMap, layoutUuid, productTypeName,
-			ignoreSKUCombinations, width, height, depth, weight,
-			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, hasDefaultInstance,
-			serviceContext);
+			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
+			shippingExtraPrice, width, height, depth, weight, ddmStructureKey,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, hasDefaultInstance, serviceContext);
 	}
 
 	@Override
@@ -83,22 +85,25 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
 		java.lang.String layoutUuid, java.lang.String productTypeName,
-		boolean ignoreSKUCombinations, double width, double height,
-		double depth, double weight, java.lang.String ddmStructureKey,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
+		boolean shipSeparately, double shippingExtraPrice, double width,
+		double height, double depth, double weight,
+		java.lang.String ddmStructureKey, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionLocalService.addCPDefinition(titleMap,
 			shortDescriptionMap, descriptionMap, metaTitleMap, metaKeywordsMap,
 			metaDescriptionMap, layoutUuid, productTypeName,
-			ignoreSKUCombinations, width, height, depth, weight,
-			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, serviceContext);
+			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
+			shippingExtraPrice, width, height, depth, weight, ddmStructureKey,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	@Override
@@ -619,8 +624,9 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
 		java.lang.String layoutUuid, boolean ignoreSKUCombinations,
-		double width, double height, double depth, double weight,
-		java.lang.String ddmStructureKey, int displayDateMonth,
+		boolean shippable, boolean freeShipping, boolean shipSeparately,
+		double shippingExtraPrice, double width, double height, double depth,
+		double weight, java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
@@ -630,11 +636,12 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		return _cpDefinitionLocalService.updateCPDefinition(cpDefinitionId,
 			titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
 			metaTitleMap, metaKeywordsMap, metaDescriptionMap, layoutUuid,
-			ignoreSKUCombinations, width, height, depth, weight,
-			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, serviceContext);
+			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
+			shippingExtraPrice, width, height, depth, weight, ddmStructureKey,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	@Override
@@ -676,12 +683,14 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 
 	@Override
 	public com.liferay.commerce.product.model.CPDefinition updateShippingInfo(
-		long cpDefinitionId, double width, double height, double depth,
-		double weight,
+		long cpDefinitionId, boolean shippable, boolean freeShipping,
+		boolean shipSeparately, double shippingExtraPrice, double width,
+		double height, double depth, double weight,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionLocalService.updateShippingInfo(cpDefinitionId,
-			width, height, depth, weight, serviceContext);
+			shippable, freeShipping, shipSeparately, shippingExtraPrice, width,
+			height, depth, weight, serviceContext);
 	}
 
 	@Override

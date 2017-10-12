@@ -41,6 +41,10 @@
 		<field name="productTypeName" type="String" />
 		<field name="availableIndividually" type="boolean" />
 		<field name="ignoreSKUCombinations" type="boolean" />
+		<field name="shippable" type="boolean" />
+		<field name="freeShipping" type="boolean" />
+		<field name="shipSeparately" type="boolean" />
+		<field name="shippingExtraPrice" type="double" />
 		<field name="width" type="double">
 			<validator name="number" />
 		</field>

@@ -94,6 +94,10 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 			{ "productTypeName", Types.VARCHAR },
 			{ "availableIndividually", Types.BOOLEAN },
 			{ "ignoreSKUCombinations", Types.BOOLEAN },
+			{ "shippable", Types.BOOLEAN },
+			{ "freeShipping", Types.BOOLEAN },
+			{ "shipSeparately", Types.BOOLEAN },
+			{ "shippingExtraPrice", Types.DOUBLE },
 			{ "width", Types.DOUBLE },
 			{ "height", Types.DOUBLE },
 			{ "depth", Types.DOUBLE },
@@ -122,6 +126,10 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		TABLE_COLUMNS_MAP.put("productTypeName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("availableIndividually", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("ignoreSKUCombinations", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("shippable", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("freeShipping", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("shipSeparately", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("shippingExtraPrice", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("width", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("height", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("depth", Types.DOUBLE);
@@ -137,7 +145,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		TABLE_COLUMNS_MAP.put("defaultLanguageId", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPDefinition (uuid_ VARCHAR(75) null,CPDefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,productTypeName VARCHAR(75) null,availableIndividually BOOLEAN,ignoreSKUCombinations BOOLEAN,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,DDMStructureKey VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,defaultLanguageId VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table CPDefinition (uuid_ VARCHAR(75) null,CPDefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,productTypeName VARCHAR(75) null,availableIndividually BOOLEAN,ignoreSKUCombinations BOOLEAN,shippable BOOLEAN,freeShipping BOOLEAN,shipSeparately BOOLEAN,shippingExtraPrice DOUBLE,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,DDMStructureKey VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,defaultLanguageId VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table CPDefinition";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinition.displayDate DESC, cpDefinition.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPDefinition.displayDate DESC, CPDefinition.createDate DESC";
@@ -184,6 +192,10 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		model.setProductTypeName(soapModel.getProductTypeName());
 		model.setAvailableIndividually(soapModel.getAvailableIndividually());
 		model.setIgnoreSKUCombinations(soapModel.getIgnoreSKUCombinations());
+		model.setShippable(soapModel.getShippable());
+		model.setFreeShipping(soapModel.getFreeShipping());
+		model.setShipSeparately(soapModel.getShipSeparately());
+		model.setShippingExtraPrice(soapModel.getShippingExtraPrice());
 		model.setWidth(soapModel.getWidth());
 		model.setHeight(soapModel.getHeight());
 		model.setDepth(soapModel.getDepth());
@@ -272,6 +284,10 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		attributes.put("productTypeName", getProductTypeName());
 		attributes.put("availableIndividually", getAvailableIndividually());
 		attributes.put("ignoreSKUCombinations", getIgnoreSKUCombinations());
+		attributes.put("shippable", getShippable());
+		attributes.put("freeShipping", getFreeShipping());
+		attributes.put("shipSeparately", getShipSeparately());
+		attributes.put("shippingExtraPrice", getShippingExtraPrice());
 		attributes.put("width", getWidth());
 		attributes.put("height", getHeight());
 		attributes.put("depth", getDepth());
@@ -360,6 +376,30 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 		if (ignoreSKUCombinations != null) {
 			setIgnoreSKUCombinations(ignoreSKUCombinations);
+		}
+
+		Boolean shippable = (Boolean)attributes.get("shippable");
+
+		if (shippable != null) {
+			setShippable(shippable);
+		}
+
+		Boolean freeShipping = (Boolean)attributes.get("freeShipping");
+
+		if (freeShipping != null) {
+			setFreeShipping(freeShipping);
+		}
+
+		Boolean shipSeparately = (Boolean)attributes.get("shipSeparately");
+
+		if (shipSeparately != null) {
+			setShipSeparately(shipSeparately);
+		}
+
+		Double shippingExtraPrice = (Double)attributes.get("shippingExtraPrice");
+
+		if (shippingExtraPrice != null) {
+			setShippingExtraPrice(shippingExtraPrice);
 		}
 
 		Double width = (Double)attributes.get("width");
@@ -992,6 +1032,68 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 	@JSON
 	@Override
+	public boolean getShippable() {
+		return _shippable;
+	}
+
+	@JSON
+	@Override
+	public boolean isShippable() {
+		return _shippable;
+	}
+
+	@Override
+	public void setShippable(boolean shippable) {
+		_shippable = shippable;
+	}
+
+	@JSON
+	@Override
+	public boolean getFreeShipping() {
+		return _freeShipping;
+	}
+
+	@JSON
+	@Override
+	public boolean isFreeShipping() {
+		return _freeShipping;
+	}
+
+	@Override
+	public void setFreeShipping(boolean freeShipping) {
+		_freeShipping = freeShipping;
+	}
+
+	@JSON
+	@Override
+	public boolean getShipSeparately() {
+		return _shipSeparately;
+	}
+
+	@JSON
+	@Override
+	public boolean isShipSeparately() {
+		return _shipSeparately;
+	}
+
+	@Override
+	public void setShipSeparately(boolean shipSeparately) {
+		_shipSeparately = shipSeparately;
+	}
+
+	@JSON
+	@Override
+	public double getShippingExtraPrice() {
+		return _shippingExtraPrice;
+	}
+
+	@Override
+	public void setShippingExtraPrice(double shippingExtraPrice) {
+		_shippingExtraPrice = shippingExtraPrice;
+	}
+
+	@JSON
+	@Override
 	public double getWidth() {
 		return _width;
 	}
@@ -1445,6 +1547,10 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		cpDefinitionImpl.setProductTypeName(getProductTypeName());
 		cpDefinitionImpl.setAvailableIndividually(getAvailableIndividually());
 		cpDefinitionImpl.setIgnoreSKUCombinations(getIgnoreSKUCombinations());
+		cpDefinitionImpl.setShippable(getShippable());
+		cpDefinitionImpl.setFreeShipping(getFreeShipping());
+		cpDefinitionImpl.setShipSeparately(getShipSeparately());
+		cpDefinitionImpl.setShippingExtraPrice(getShippingExtraPrice());
 		cpDefinitionImpl.setWidth(getWidth());
 		cpDefinitionImpl.setHeight(getHeight());
 		cpDefinitionImpl.setDepth(getDepth());
@@ -1608,6 +1714,14 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 		cpDefinitionCacheModel.ignoreSKUCombinations = getIgnoreSKUCombinations();
 
+		cpDefinitionCacheModel.shippable = getShippable();
+
+		cpDefinitionCacheModel.freeShipping = getFreeShipping();
+
+		cpDefinitionCacheModel.shipSeparately = getShipSeparately();
+
+		cpDefinitionCacheModel.shippingExtraPrice = getShippingExtraPrice();
+
 		cpDefinitionCacheModel.width = getWidth();
 
 		cpDefinitionCacheModel.height = getHeight();
@@ -1685,7 +1799,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1709,6 +1823,14 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		sb.append(getAvailableIndividually());
 		sb.append(", ignoreSKUCombinations=");
 		sb.append(getIgnoreSKUCombinations());
+		sb.append(", shippable=");
+		sb.append(getShippable());
+		sb.append(", freeShipping=");
+		sb.append(getFreeShipping());
+		sb.append(", shipSeparately=");
+		sb.append(getShipSeparately());
+		sb.append(", shippingExtraPrice=");
+		sb.append(getShippingExtraPrice());
 		sb.append(", width=");
 		sb.append(getWidth());
 		sb.append(", height=");
@@ -1742,7 +1864,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(76);
+		StringBundler sb = new StringBundler(88);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.product.model.CPDefinition");
@@ -1791,6 +1913,22 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		sb.append(
 			"<column><column-name>ignoreSKUCombinations</column-name><column-value><![CDATA[");
 		sb.append(getIgnoreSKUCombinations());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>shippable</column-name><column-value><![CDATA[");
+		sb.append(getShippable());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>freeShipping</column-name><column-value><![CDATA[");
+		sb.append(getFreeShipping());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>shipSeparately</column-name><column-value><![CDATA[");
+		sb.append(getShipSeparately());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>shippingExtraPrice</column-name><column-value><![CDATA[");
+		sb.append(getShippingExtraPrice());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>width</column-name><column-value><![CDATA[");
@@ -1871,6 +2009,10 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 	private String _productTypeName;
 	private boolean _availableIndividually;
 	private boolean _ignoreSKUCombinations;
+	private boolean _shippable;
+	private boolean _freeShipping;
+	private boolean _shipSeparately;
+	private double _shippingExtraPrice;
 	private double _width;
 	private double _height;
 	private double _depth;

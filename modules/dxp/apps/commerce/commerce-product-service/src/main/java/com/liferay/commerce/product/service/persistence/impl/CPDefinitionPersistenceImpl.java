@@ -5718,6 +5718,10 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 		cpDefinitionImpl.setProductTypeName(cpDefinition.getProductTypeName());
 		cpDefinitionImpl.setAvailableIndividually(cpDefinition.isAvailableIndividually());
 		cpDefinitionImpl.setIgnoreSKUCombinations(cpDefinition.isIgnoreSKUCombinations());
+		cpDefinitionImpl.setShippable(cpDefinition.isShippable());
+		cpDefinitionImpl.setFreeShipping(cpDefinition.isFreeShipping());
+		cpDefinitionImpl.setShipSeparately(cpDefinition.isShipSeparately());
+		cpDefinitionImpl.setShippingExtraPrice(cpDefinition.getShippingExtraPrice());
 		cpDefinitionImpl.setWidth(cpDefinition.getWidth());
 		cpDefinitionImpl.setHeight(cpDefinition.getHeight());
 		cpDefinitionImpl.setDepth(cpDefinition.getDepth());

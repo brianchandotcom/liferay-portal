@@ -73,11 +73,13 @@ public interface CPDefinitionService extends BaseService {
 		Map<Locale, java.lang.String> metaKeywordsMap,
 		Map<Locale, java.lang.String> metaDescriptionMap,
 		java.lang.String layoutUuid, java.lang.String productTypeName,
-		boolean ignoreSKUCombinations, double width, double height,
-		double depth, double weight, java.lang.String ddmStructureKey,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
+		boolean shipSeparately, double shippingExtraPrice, double width,
+		double height, double depth, double weight,
+		java.lang.String ddmStructureKey, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
@@ -168,8 +170,9 @@ public interface CPDefinitionService extends BaseService {
 		Map<Locale, java.lang.String> metaKeywordsMap,
 		Map<Locale, java.lang.String> metaDescriptionMap,
 		java.lang.String layoutUuid, boolean ignoreSKUCombinations,
-		double width, double height, double depth, double weight,
-		java.lang.String ddmStructureKey, int displayDateMonth,
+		boolean shippable, boolean freeShipping, boolean shipSeparately,
+		double shippingExtraPrice, double width, double height, double depth,
+		double weight, java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
@@ -195,9 +198,10 @@ public interface CPDefinitionService extends BaseService {
 		Map<Locale, java.lang.String> metaDescriptionMap,
 		ServiceContext serviceContext) throws PortalException;
 
-	public CPDefinition updateShippingInfo(long cpDefinitionId, double width,
-		double height, double depth, double weight,
-		ServiceContext serviceContext) throws PortalException;
+	public CPDefinition updateShippingInfo(long cpDefinitionId,
+		boolean shippable, boolean freeShipping, boolean shipSeparately,
+		double shippingExtraPrice, double width, double height, double depth,
+		double weight, ServiceContext serviceContext) throws PortalException;
 
 	public CPDefinition updateStatus(long userId, long cpDefinitionId,
 		int status, ServiceContext serviceContext,

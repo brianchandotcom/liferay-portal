@@ -66,7 +66,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -90,6 +90,14 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		sb.append(availableIndividually);
 		sb.append(", ignoreSKUCombinations=");
 		sb.append(ignoreSKUCombinations);
+		sb.append(", shippable=");
+		sb.append(shippable);
+		sb.append(", freeShipping=");
+		sb.append(freeShipping);
+		sb.append(", shipSeparately=");
+		sb.append(shipSeparately);
+		sb.append(", shippingExtraPrice=");
+		sb.append(shippingExtraPrice);
 		sb.append(", width=");
 		sb.append(width);
 		sb.append(", height=");
@@ -167,6 +175,10 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 
 		cpDefinitionImpl.setAvailableIndividually(availableIndividually);
 		cpDefinitionImpl.setIgnoreSKUCombinations(ignoreSKUCombinations);
+		cpDefinitionImpl.setShippable(shippable);
+		cpDefinitionImpl.setFreeShipping(freeShipping);
+		cpDefinitionImpl.setShipSeparately(shipSeparately);
+		cpDefinitionImpl.setShippingExtraPrice(shippingExtraPrice);
 		cpDefinitionImpl.setWidth(width);
 		cpDefinitionImpl.setHeight(height);
 		cpDefinitionImpl.setDepth(depth);
@@ -249,6 +261,14 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 
 		ignoreSKUCombinations = objectInput.readBoolean();
 
+		shippable = objectInput.readBoolean();
+
+		freeShipping = objectInput.readBoolean();
+
+		shipSeparately = objectInput.readBoolean();
+
+		shippingExtraPrice = objectInput.readDouble();
+
 		width = objectInput.readDouble();
 
 		height = objectInput.readDouble();
@@ -308,6 +328,14 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 
 		objectOutput.writeBoolean(ignoreSKUCombinations);
 
+		objectOutput.writeBoolean(shippable);
+
+		objectOutput.writeBoolean(freeShipping);
+
+		objectOutput.writeBoolean(shipSeparately);
+
+		objectOutput.writeDouble(shippingExtraPrice);
+
 		objectOutput.writeDouble(width);
 
 		objectOutput.writeDouble(height);
@@ -359,6 +387,10 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 	public String productTypeName;
 	public boolean availableIndividually;
 	public boolean ignoreSKUCombinations;
+	public boolean shippable;
+	public boolean freeShipping;
+	public boolean shipSeparately;
+	public double shippingExtraPrice;
 	public double width;
 	public double height;
 	public double depth;

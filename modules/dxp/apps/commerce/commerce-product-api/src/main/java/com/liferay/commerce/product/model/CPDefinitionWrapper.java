@@ -71,6 +71,10 @@ public class CPDefinitionWrapper implements CPDefinition,
 		attributes.put("productTypeName", getProductTypeName());
 		attributes.put("availableIndividually", getAvailableIndividually());
 		attributes.put("ignoreSKUCombinations", getIgnoreSKUCombinations());
+		attributes.put("shippable", getShippable());
+		attributes.put("freeShipping", getFreeShipping());
+		attributes.put("shipSeparately", getShipSeparately());
+		attributes.put("shippingExtraPrice", getShippingExtraPrice());
 		attributes.put("width", getWidth());
 		attributes.put("height", getHeight());
 		attributes.put("depth", getDepth());
@@ -156,6 +160,30 @@ public class CPDefinitionWrapper implements CPDefinition,
 
 		if (ignoreSKUCombinations != null) {
 			setIgnoreSKUCombinations(ignoreSKUCombinations);
+		}
+
+		Boolean shippable = (Boolean)attributes.get("shippable");
+
+		if (shippable != null) {
+			setShippable(shippable);
+		}
+
+		Boolean freeShipping = (Boolean)attributes.get("freeShipping");
+
+		if (freeShipping != null) {
+			setFreeShipping(freeShipping);
+		}
+
+		Boolean shipSeparately = (Boolean)attributes.get("shipSeparately");
+
+		if (shipSeparately != null) {
+			setShipSeparately(shipSeparately);
+		}
+
+		Double shippingExtraPrice = (Double)attributes.get("shippingExtraPrice");
+
+		if (shippingExtraPrice != null) {
+			setShippingExtraPrice(shippingExtraPrice);
 		}
 
 		Double width = (Double)attributes.get("width");
@@ -391,6 +419,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	/**
+	* Returns the free shipping of this cp definition.
+	*
+	* @return the free shipping of this cp definition
+	*/
+	@Override
+	public boolean getFreeShipping() {
+		return _cpDefinition.getFreeShipping();
+	}
+
+	/**
 	* Returns the group ID of this cp definition.
 	*
 	* @return the group ID of this cp definition
@@ -576,6 +614,36 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public java.lang.String getProductTypeName() {
 		return _cpDefinition.getProductTypeName();
+	}
+
+	/**
+	* Returns the shippable of this cp definition.
+	*
+	* @return the shippable of this cp definition
+	*/
+	@Override
+	public boolean getShippable() {
+		return _cpDefinition.getShippable();
+	}
+
+	/**
+	* Returns the shipping extra price of this cp definition.
+	*
+	* @return the shipping extra price of this cp definition
+	*/
+	@Override
+	public double getShippingExtraPrice() {
+		return _cpDefinition.getShippingExtraPrice();
+	}
+
+	/**
+	* Returns the ship separately of this cp definition.
+	*
+	* @return the ship separately of this cp definition
+	*/
+	@Override
+	public boolean getShipSeparately() {
+		return _cpDefinition.getShipSeparately();
 	}
 
 	@Override
@@ -849,6 +917,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	/**
+	* Returns <code>true</code> if this cp definition is free shipping.
+	*
+	* @return <code>true</code> if this cp definition is free shipping; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isFreeShipping() {
+		return _cpDefinition.isFreeShipping();
+	}
+
+	/**
 	* Returns <code>true</code> if this cp definition is ignore sku combinations.
 	*
 	* @return <code>true</code> if this cp definition is ignore sku combinations; <code>false</code> otherwise
@@ -931,6 +1009,26 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public boolean isScheduled() {
 		return _cpDefinition.isScheduled();
+	}
+
+	/**
+	* Returns <code>true</code> if this cp definition is shippable.
+	*
+	* @return <code>true</code> if this cp definition is shippable; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isShippable() {
+		return _cpDefinition.isShippable();
+	}
+
+	/**
+	* Returns <code>true</code> if this cp definition is ship separately.
+	*
+	* @return <code>true</code> if this cp definition is ship separately; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isShipSeparately() {
+		return _cpDefinition.isShipSeparately();
 	}
 
 	@Override
@@ -1056,6 +1154,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	/**
+	* Sets whether this cp definition is free shipping.
+	*
+	* @param freeShipping the free shipping of this cp definition
+	*/
+	@Override
+	public void setFreeShipping(boolean freeShipping) {
+		_cpDefinition.setFreeShipping(freeShipping);
+	}
+
+	/**
 	* Sets the group ID of this cp definition.
 	*
 	* @param groupId the group ID of this cp definition
@@ -1138,6 +1246,36 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public void setProductTypeName(java.lang.String productTypeName) {
 		_cpDefinition.setProductTypeName(productTypeName);
+	}
+
+	/**
+	* Sets whether this cp definition is shippable.
+	*
+	* @param shippable the shippable of this cp definition
+	*/
+	@Override
+	public void setShippable(boolean shippable) {
+		_cpDefinition.setShippable(shippable);
+	}
+
+	/**
+	* Sets the shipping extra price of this cp definition.
+	*
+	* @param shippingExtraPrice the shipping extra price of this cp definition
+	*/
+	@Override
+	public void setShippingExtraPrice(double shippingExtraPrice) {
+		_cpDefinition.setShippingExtraPrice(shippingExtraPrice);
+	}
+
+	/**
+	* Sets whether this cp definition is ship separately.
+	*
+	* @param shipSeparately the ship separately of this cp definition
+	*/
+	@Override
+	public void setShipSeparately(boolean shipSeparately) {
+		_cpDefinition.setShipSeparately(shipSeparately);
 	}
 
 	@Override

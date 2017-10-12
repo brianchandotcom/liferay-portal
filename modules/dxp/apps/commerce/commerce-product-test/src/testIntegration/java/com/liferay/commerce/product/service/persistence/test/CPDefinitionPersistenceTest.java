@@ -146,6 +146,14 @@ public class CPDefinitionPersistenceTest {
 
 		newCPDefinition.setIgnoreSKUCombinations(RandomTestUtil.randomBoolean());
 
+		newCPDefinition.setShippable(RandomTestUtil.randomBoolean());
+
+		newCPDefinition.setFreeShipping(RandomTestUtil.randomBoolean());
+
+		newCPDefinition.setShipSeparately(RandomTestUtil.randomBoolean());
+
+		newCPDefinition.setShippingExtraPrice(RandomTestUtil.nextDouble());
+
 		newCPDefinition.setWidth(RandomTestUtil.nextDouble());
 
 		newCPDefinition.setHeight(RandomTestUtil.nextDouble());
@@ -200,6 +208,14 @@ public class CPDefinitionPersistenceTest {
 			newCPDefinition.getAvailableIndividually());
 		Assert.assertEquals(existingCPDefinition.getIgnoreSKUCombinations(),
 			newCPDefinition.getIgnoreSKUCombinations());
+		Assert.assertEquals(existingCPDefinition.getShippable(),
+			newCPDefinition.getShippable());
+		Assert.assertEquals(existingCPDefinition.getFreeShipping(),
+			newCPDefinition.getFreeShipping());
+		Assert.assertEquals(existingCPDefinition.getShipSeparately(),
+			newCPDefinition.getShipSeparately());
+		AssertUtils.assertEquals(existingCPDefinition.getShippingExtraPrice(),
+			newCPDefinition.getShippingExtraPrice());
 		AssertUtils.assertEquals(existingCPDefinition.getWidth(),
 			newCPDefinition.getWidth());
 		AssertUtils.assertEquals(existingCPDefinition.getHeight(),
@@ -331,11 +347,12 @@ public class CPDefinitionPersistenceTest {
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "productTypeName", true,
 			"availableIndividually", true, "ignoreSKUCombinations", true,
-			"width", true, "height", true, "depth", true, "weight", true,
-			"DDMStructureKey", true, "displayDate", true, "expirationDate",
-			true, "lastPublishDate", true, "status", true, "statusByUserId",
-			true, "statusByUserName", true, "statusDate", true,
-			"defaultLanguageId", true);
+			"shippable", true, "freeShipping", true, "shipSeparately", true,
+			"shippingExtraPrice", true, "width", true, "height", true, "depth",
+			true, "weight", true, "DDMStructureKey", true, "displayDate", true,
+			"expirationDate", true, "lastPublishDate", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true, "defaultLanguageId", true);
 	}
 
 	@Test
@@ -572,6 +589,14 @@ public class CPDefinitionPersistenceTest {
 		cpDefinition.setAvailableIndividually(RandomTestUtil.randomBoolean());
 
 		cpDefinition.setIgnoreSKUCombinations(RandomTestUtil.randomBoolean());
+
+		cpDefinition.setShippable(RandomTestUtil.randomBoolean());
+
+		cpDefinition.setFreeShipping(RandomTestUtil.randomBoolean());
+
+		cpDefinition.setShipSeparately(RandomTestUtil.randomBoolean());
+
+		cpDefinition.setShippingExtraPrice(RandomTestUtil.nextDouble());
 
 		cpDefinition.setWidth(RandomTestUtil.nextDouble());
 

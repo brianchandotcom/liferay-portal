@@ -83,11 +83,13 @@ public class CPDefinitionServiceSoap {
 		java.lang.String[] metaDescriptionMapLanguageIds,
 		java.lang.String[] metaDescriptionMapValues,
 		java.lang.String layoutUuid, java.lang.String productTypeName,
-		boolean ignoreSKUCombinations, double width, double height,
-		double depth, double weight, java.lang.String ddmStructureKey,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
+		boolean shipSeparately, double shippingExtraPrice, double width,
+		double height, double depth, double weight,
+		java.lang.String ddmStructureKey, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -108,8 +110,9 @@ public class CPDefinitionServiceSoap {
 			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.addCPDefinition(titleMap,
 					shortDescriptionMap, descriptionMap, metaTitleMap,
 					metaKeywordsMap, metaDescriptionMap, layoutUuid,
-					productTypeName, ignoreSKUCombinations, width, height,
-					depth, weight, ddmStructureKey, displayDateMonth,
+					productTypeName, ignoreSKUCombinations, shippable,
+					freeShipping, shipSeparately, shippingExtraPrice, width,
+					height, depth, weight, ddmStructureKey, displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, expirationDateMonth, expirationDateDay,
 					expirationDateYear, expirationDateHour,
@@ -370,8 +373,9 @@ public class CPDefinitionServiceSoap {
 		java.lang.String[] metaDescriptionMapLanguageIds,
 		java.lang.String[] metaDescriptionMapValues,
 		java.lang.String layoutUuid, boolean ignoreSKUCombinations,
-		double width, double height, double depth, double weight,
-		java.lang.String ddmStructureKey, int displayDateMonth,
+		boolean shippable, boolean freeShipping, boolean shipSeparately,
+		double shippingExtraPrice, double width, double height, double depth,
+		double weight, java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
@@ -397,7 +401,8 @@ public class CPDefinitionServiceSoap {
 			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.updateCPDefinition(cpDefinitionId,
 					titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
 					metaTitleMap, metaKeywordsMap, metaDescriptionMap,
-					layoutUuid, ignoreSKUCombinations, width, height, depth,
+					layoutUuid, ignoreSKUCombinations, shippable, freeShipping,
+					shipSeparately, shippingExtraPrice, width, height, depth,
 					weight, ddmStructureKey, displayDateMonth, displayDateDay,
 					displayDateYear, displayDateHour, displayDateMinute,
 					expirationDateMonth, expirationDateDay, expirationDateYear,
@@ -487,13 +492,16 @@ public class CPDefinitionServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionSoap updateShippingInfo(
-		long cpDefinitionId, double width, double height, double depth,
-		double weight,
+		long cpDefinitionId, boolean shippable, boolean freeShipping,
+		boolean shipSeparately, double shippingExtraPrice, double width,
+		double height, double depth, double weight,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.updateShippingInfo(cpDefinitionId,
-					width, height, depth, weight, serviceContext);
+					shippable, freeShipping, shipSeparately,
+					shippingExtraPrice, width, height, depth, weight,
+					serviceContext);
 
 			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);
 		}

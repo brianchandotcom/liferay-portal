@@ -271,6 +271,83 @@ public interface CPDefinitionModel extends BaseModel<CPDefinition>, ShardedModel
 	public void setIgnoreSKUCombinations(boolean ignoreSKUCombinations);
 
 	/**
+	 * Returns the shippable of this cp definition.
+	 *
+	 * @return the shippable of this cp definition
+	 */
+	public boolean getShippable();
+
+	/**
+	 * Returns <code>true</code> if this cp definition is shippable.
+	 *
+	 * @return <code>true</code> if this cp definition is shippable; <code>false</code> otherwise
+	 */
+	public boolean isShippable();
+
+	/**
+	 * Sets whether this cp definition is shippable.
+	 *
+	 * @param shippable the shippable of this cp definition
+	 */
+	public void setShippable(boolean shippable);
+
+	/**
+	 * Returns the free shipping of this cp definition.
+	 *
+	 * @return the free shipping of this cp definition
+	 */
+	public boolean getFreeShipping();
+
+	/**
+	 * Returns <code>true</code> if this cp definition is free shipping.
+	 *
+	 * @return <code>true</code> if this cp definition is free shipping; <code>false</code> otherwise
+	 */
+	public boolean isFreeShipping();
+
+	/**
+	 * Sets whether this cp definition is free shipping.
+	 *
+	 * @param freeShipping the free shipping of this cp definition
+	 */
+	public void setFreeShipping(boolean freeShipping);
+
+	/**
+	 * Returns the ship separately of this cp definition.
+	 *
+	 * @return the ship separately of this cp definition
+	 */
+	public boolean getShipSeparately();
+
+	/**
+	 * Returns <code>true</code> if this cp definition is ship separately.
+	 *
+	 * @return <code>true</code> if this cp definition is ship separately; <code>false</code> otherwise
+	 */
+	public boolean isShipSeparately();
+
+	/**
+	 * Sets whether this cp definition is ship separately.
+	 *
+	 * @param shipSeparately the ship separately of this cp definition
+	 */
+	public void setShipSeparately(boolean shipSeparately);
+
+	/**
+	 * Returns the shipping extra price of this cp definition.
+	 *
+	 * @return the shipping extra price of this cp definition
+	 */
+	public double getShippingExtraPrice();
+
+	/**
+	 * Sets the shipping extra price of this cp definition.
+	 *
+	 * @param shippingExtraPrice the shipping extra price of this cp definition
+	 */
+	public void setShippingExtraPrice(double shippingExtraPrice);
+
+	/**
 	 * Returns the width of this cp definition.
 	 *
 	 * @return the width of this cp definition

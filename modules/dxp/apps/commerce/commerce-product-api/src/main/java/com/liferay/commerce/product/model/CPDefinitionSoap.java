@@ -45,6 +45,10 @@ public class CPDefinitionSoap implements Serializable {
 		soapModel.setProductTypeName(model.getProductTypeName());
 		soapModel.setAvailableIndividually(model.getAvailableIndividually());
 		soapModel.setIgnoreSKUCombinations(model.getIgnoreSKUCombinations());
+		soapModel.setShippable(model.getShippable());
+		soapModel.setFreeShipping(model.getFreeShipping());
+		soapModel.setShipSeparately(model.getShipSeparately());
+		soapModel.setShippingExtraPrice(model.getShippingExtraPrice());
 		soapModel.setWidth(model.getWidth());
 		soapModel.setHeight(model.getHeight());
 		soapModel.setDepth(model.getDepth());
@@ -206,6 +210,50 @@ public class CPDefinitionSoap implements Serializable {
 		_ignoreSKUCombinations = ignoreSKUCombinations;
 	}
 
+	public boolean getShippable() {
+		return _shippable;
+	}
+
+	public boolean isShippable() {
+		return _shippable;
+	}
+
+	public void setShippable(boolean shippable) {
+		_shippable = shippable;
+	}
+
+	public boolean getFreeShipping() {
+		return _freeShipping;
+	}
+
+	public boolean isFreeShipping() {
+		return _freeShipping;
+	}
+
+	public void setFreeShipping(boolean freeShipping) {
+		_freeShipping = freeShipping;
+	}
+
+	public boolean getShipSeparately() {
+		return _shipSeparately;
+	}
+
+	public boolean isShipSeparately() {
+		return _shipSeparately;
+	}
+
+	public void setShipSeparately(boolean shipSeparately) {
+		_shipSeparately = shipSeparately;
+	}
+
+	public double getShippingExtraPrice() {
+		return _shippingExtraPrice;
+	}
+
+	public void setShippingExtraPrice(double shippingExtraPrice) {
+		_shippingExtraPrice = shippingExtraPrice;
+	}
+
 	public double getWidth() {
 		return _width;
 	}
@@ -321,6 +369,10 @@ public class CPDefinitionSoap implements Serializable {
 	private String _productTypeName;
 	private boolean _availableIndividually;
 	private boolean _ignoreSKUCombinations;
+	private boolean _shippable;
+	private boolean _freeShipping;
+	private boolean _shipSeparately;
+	private double _shippingExtraPrice;
 	private double _width;
 	private double _height;
 	private double _depth;

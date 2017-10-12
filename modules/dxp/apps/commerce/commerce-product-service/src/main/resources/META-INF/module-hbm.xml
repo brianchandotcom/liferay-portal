@@ -57,6 +57,10 @@
 		<property name="productTypeName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="availableIndividually" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="ignoreSKUCombinations" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="shippable" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="freeShipping" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="shipSeparately" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="shippingExtraPrice" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="width" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="height" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="depth" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />

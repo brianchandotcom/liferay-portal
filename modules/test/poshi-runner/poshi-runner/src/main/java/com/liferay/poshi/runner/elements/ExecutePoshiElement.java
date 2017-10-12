@@ -66,10 +66,15 @@ public class ExecutePoshiElement extends BasePoshiElement {
 
 		String content = getParentheticalContent(readableSyntax);
 
-		if (content.contains("locator1") || content.contains("locator2") ||
-			content.contains("value1") || content.contains("value2")) {
+		String[] functionAttributeNames =
+			{"locator1", "locator2", "value1", "value2"};
 
-			executeType = "function";
+		for (String functionAttributeName : functionAttributeNames) {
+			if (content.startsWith(functionAttributeName)) {
+				executeType = "function";
+
+				break;
+			}
 		}
 
 		String executeCommandName = RegexUtil.getGroup(

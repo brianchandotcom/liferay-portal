@@ -49,13 +49,10 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
 
@@ -76,38 +73,6 @@ public class LocalProcessExecutor implements ProcessExecutor {
 				processes = new HashSet<>();
 
 				_threadPoolExecutor.shutdownNow();
-
-				// At this point, the thread pool will no longer take in any
-				// more subprocess reactors, so we know the list of managed
-				// processes is in a safe state. The worst case is that the
-				// destroyer thread and the thread pool thread concurrently
-				// destroy the same process, but this is JDK's job to ensure
-				// that processes are destroyed in a thread safe manner.
-
-				Set<Entry<Process, NoticeableFuture<?>>> set =
-					_managedProcesses.entrySet();
-
-				Iterator<Entry<Process, NoticeableFuture<?>>> iterator =
-					set.iterator();
-
-				while (iterator.hasNext()) {
-					Entry<Process, NoticeableFuture<?>> entry = iterator.next();
-
-					processes.add(entry.getKey());
-
-					NoticeableFuture<?> noticeableFuture = entry.getValue();
-
-					noticeableFuture.cancel(true);
-
-					iterator.remove();
-				}
-
-				// The current thread has a more comprehensive view of the list
-				// of managed processes than any thread pool thread. After the
-				// previous iteration, we are safe to clear the list of managed
-				// processes.
-
-				_managedProcesses.clear();
 
 				_threadPoolExecutor = null;
 			}
@@ -186,11 +151,6 @@ public class LocalProcessExecutor implements ProcessExecutor {
 						}
 					});
 
-				// Consider the newly created process as a managed process only
-				// after the subprocess reactor is taken by the thread pool
-
-				_managedProcesses.put(process, noticeableFuture);
-
 				return new LocalProcessChannel<>(
 					noticeableFuture, objectOutputStream, asyncBroker);
 			}
@@ -230,8 +190,6 @@ public class LocalProcessExecutor implements ProcessExecutor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LocalProcessExecutor.class);
 
-	private final Map<Process, NoticeableFuture<?>> _managedProcesses =
-		new ConcurrentHashMap<>();
 	private volatile ThreadPoolExecutor _threadPoolExecutor;
 
 	private class SubprocessReactor<T extends Serializable>
@@ -390,8 +348,6 @@ public class LocalProcessExecutor implements ProcessExecutor {
 					throw new ProcessException(
 						"Forcibly killed subprocess on interruption", ie);
 				}
-
-				_managedProcesses.remove(_process);
 
 				AsyncBrokerThreadLocal.removeAsyncBroker();
 

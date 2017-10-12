@@ -90,7 +90,7 @@ public class VerifyResourcePermissions extends VerifyProcess {
 					verifiableResourcedModels.size()]));
 	}
 
-	protected void verifyResourcedModel(
+	private void _verifyResourcedModel(
 			long companyId, String modelName, long primKey, Role role,
 			long ownerId, int cur, int total)
 		throws Exception {
@@ -125,13 +125,10 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			return;
 		}
 
-		User user = UserLocalServiceUtil.fetchUserById(ownerId);
+		User user = UserLocalServiceUtil.getUserById(ownerId);
 
-		Contact contact = null;
-
-		if (user != null) {
-			contact = ContactLocalServiceUtil.fetchContact(user.getContactId());
-		}
+		Contact contact = ContactLocalServiceUtil.fetchContact(
+			user.getContactId());
 
 		if ((contact != null) && (ownerId != contact.getUserId())) {
 			if (resourcePermission == null) {
@@ -151,7 +148,7 @@ public class VerifyResourcePermissions extends VerifyProcess {
 		}
 	}
 
-	protected void verifyResourcedModel(
+	private void _verifyResourcedModel(
 			Role role, VerifiableResourcedModel verifiableResourcedModel)
 		throws Exception {
 
@@ -194,7 +191,7 @@ public class VerifyResourcePermissions extends VerifyProcess {
 				long userId = rs.getLong(
 					verifiableResourcedModel.getUserIdColumnName());
 
-				verifyResourcedModel(
+				_verifyResourcedModel(
 					role.getCompanyId(),
 					verifiableResourcedModel.getModelName(), primKey, role,
 					userId, i, total);
@@ -209,7 +206,7 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 		@Override
 		public Void call() throws Exception {
-			verifyResourcedModel(_role, _verifiableResourcedModel);
+			_verifyResourcedModel(_role, _verifiableResourcedModel);
 
 			return null;
 		}

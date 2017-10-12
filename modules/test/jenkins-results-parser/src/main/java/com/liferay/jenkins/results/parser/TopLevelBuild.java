@@ -887,17 +887,15 @@ public class TopLevelBuild extends BaseBuild {
 		String result = getResult();
 
 		if (result != null) {
-			topLevelTableElement.add(
-				Dom4JUtil.getNewElement(
-					"caption", null,
-					"Top Level Build - <strong>" + result + "</strong>"));
+			Dom4JUtil.getNewElement(
+				"caption", topLevelTableElement,
+				"Top Level Build - <strong>" + result + "</strong>");
 		}
 		else {
-			topLevelTableElement.add(
-				Dom4JUtil.getNewElement(
-					"caption", null,
-					"Top Level Build - <strong>" +
-						StringUtils.upperCase(status) + "</strong>"));
+			Dom4JUtil.getNewElement(
+				"caption", topLevelTableElement,
+				"Top Level Build - <strong>" + StringUtils.upperCase(status) +
+					"</strong>");
 		}
 
 		topLevelTableElement.add(getJenkinsReportTableColumnHeaderElement());

@@ -304,16 +304,18 @@ public class ProjectTemplateFilesTest {
 
 		Properties properties = FileUtil.readProperties(bndBndPath);
 
-		String bundleDescription = properties.getProperty("Bundle-Description");
+		String bundleDescription = properties.getProperty(
+			Constants.BUNDLE_DESCRIPTION);
 
 		Assert.assertTrue(
-			"Missing 'Bundle-Description' header in " + bndBndPath,
+			"Missing \"" + Constants.BUNDLE_DESCRIPTION + "\" header in " +
+				bndBndPath,
 			Validator.isNotNull(bundleDescription));
 
 		Matcher matcher = _bundleDescriptionPattern.matcher(bundleDescription);
 
 		Assert.assertTrue(
-			"Header \"Bundle-Description\" in " + bndBndPath +
+			"Header \"" + Constants.BUNDLE_DESCRIPTION + "\" in " + bndBndPath +
 				" must match pattern \"" + _bundleDescriptionPattern.pattern() +
 					"\"",
 			matcher.matches());

@@ -97,7 +97,7 @@ public class SQLFunctionTransformer {
 			sb.replace(next, next + 1, _replacementSuffix);
 
 			pos = sb.indexOf(
-				_functionPrefix, pos + _replacementPrefix.length() + 1);
+				_functionPrefix, pos + _replacementPrefix.length());
 		}
 
 		return sb.toString();

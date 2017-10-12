@@ -23,6 +23,8 @@ CPDefinition cpDefinition = cpDefinitionShippingInfoDisplayContext.getCPDefiniti
 
 long cpDefinitionId = cpDefinitionShippingInfoDisplayContext.getCPDefinitionId();
 
+boolean shippable = BeanParamUtil.getBoolean(cpDefinition, request, "shippable", true);
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(catalogURL);
 
@@ -39,6 +41,16 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 	<aui:model-context bean="<%= cpDefinition %>" model="<%= CPDefinition.class %>" />
 
 	<aui:fieldset>
+		<aui:input name="shippable" value="<%= shippable %>" />
+
+		<div class="<%= shippable ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />shippableOptions">
+			<aui:input name="freeShipping" />
+
+			<aui:input name="shipSeparately" />
+
+			<aui:input name="shippingExtraPrice" />
+		</div>
+
 		<aui:input name="width" suffix="<%= cpDefinitionShippingInfoDisplayContext.getCPMeasurementUnitName(CPConstants.MEASUREMENT_UNIT_TYPE_DIMENSION) %>" />
 
 		<aui:input name="height" suffix="<%= cpDefinitionShippingInfoDisplayContext.getCPMeasurementUnitName(CPConstants.MEASUREMENT_UNIT_TYPE_DIMENSION) %>" />
@@ -54,3 +66,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 		<aui:button cssClass="btn-lg" href="<%= catalogURL %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
+
+<aui:script>
+	Liferay.Util.toggleBoxes('<portlet:namespace />shippable', '<portlet:namespace />shippableOptions');
+</aui:script>

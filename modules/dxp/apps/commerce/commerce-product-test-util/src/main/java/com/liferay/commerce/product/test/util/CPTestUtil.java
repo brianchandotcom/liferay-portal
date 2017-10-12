@@ -426,6 +426,8 @@ public class CPTestUtil {
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), PortalUUIDUtil.generate(),
 			productTypeName, RandomTestUtil.randomBoolean(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomDouble(),
 			RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble(),
 			RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble(), null,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,

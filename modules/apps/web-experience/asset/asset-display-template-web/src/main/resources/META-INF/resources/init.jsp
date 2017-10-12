@@ -77,6 +77,8 @@ page import="org.osgi.framework.FrameworkUtil" %>
 
 <%
 AssetDisplayTemplateDisplayContext assetDisplayTemplateDisplayContext = (AssetDisplayTemplateDisplayContext)request.getAttribute(AssetDisplayTemplateWebKeys.DISPLAY_CONTEXT);
+
+portletDisplay.setShowStagingIcon(false);
 %>
 
 <%@ include file="/init-ext.jsp" %>

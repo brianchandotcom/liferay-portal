@@ -608,12 +608,12 @@ public class TopLevelBuild extends BaseBuild {
 		String resource = null;
 
 		try {
-			Class<?> clazz = JenkinsResultsParserUtil.class;
-
-			resource = JenkinsResultsParserUtil.readInputStream(
-				clazz.getResourceAsStream("chart-template.js"));
+			resource = JenkinsResultsParserUtil.getResourceFileContent(
+				"chart-template.js");
 		}
 		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to load resource chart-template.js", ioe);
 		}
 
 		resource = resource.replace("'xData'", xData);
@@ -766,11 +766,7 @@ public class TopLevelBuild extends BaseBuild {
 		}
 
 		for (Build batchBuild : downstreamBuilds) {
-			Element trBatchElement = Dom4JUtil.getNewElement("tr");
-
-			trBatchElement.add(batchBuild.getJenkinsReportBuildInfoElement());
-
-			tableElement.add(trBatchElement);
+			tableElement.add(batchBuild.getJenkinsReportBuildInfoElement());
 
 			for (Build downstreamBuild : batchBuild.getDownstreamBuilds(null)) {
 				tableElement.add(
@@ -784,11 +780,16 @@ public class TopLevelBuild extends BaseBuild {
 	protected Element getJenkinsReportHeadElement() {
 		Element headElement = Dom4JUtil.getNewElement("head");
 
-		String style = JenkinsResultsParserUtil.combine(
-			"caption, table, td, th {", "text-align: left;", "padding: .5em;",
-			"white-space: nowrap;", "}", "th:first-child {",
-			"text-indent: 1em;", "}", "td:first-child {", "text-indent: 4em;",
-			"}", "caption {", "font-size: 150%;", "font-weight: bold;", "}");
+		String style = null;
+
+		try {
+			style = JenkinsResultsParserUtil.getResourceFileContent(
+				"jenkins-report.css");
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to load resource jenkins-report.css", ioe);
+		}
 
 		Dom4JUtil.addToElement(
 			headElement, Dom4JUtil.getNewElement("style", null, style));

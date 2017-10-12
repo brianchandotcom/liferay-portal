@@ -16,8 +16,6 @@ package com.liferay.portal.internal.dao.sql.transformer;
 
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -29,14 +27,7 @@ public class SQLFunctionTransformerTest {
 
 	@ClassRule
 	public static final CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor() {
-
-			@Override
-			public void appendAssertClasses(List<Class<?>> assertClasses) {
-				assertClasses.add(SQLFunctionTransformer.class);
-			}
-
-		};
+		new CodeCoverageAssertor();
 
 	@Test
 	public void testNestedFunctionCalls() {

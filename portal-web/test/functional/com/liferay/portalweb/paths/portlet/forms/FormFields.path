@@ -402,24 +402,24 @@
 	<td>//div[@class='panel-body' and contains(.,'Autocomplete')]</td>
 	<td></td>
 </tr>
-<!--DOCUMENTS_AND_MEDIA-->
+<!--UPLOAD-->
 <tr>
-	<td>DOCUMENTS_AND_MEDIA_FIELD</td>
+	<td>UPLOAD_FIELD</td>
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//input[@id='inputFile']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DOCUMENTS_AND_MEDIA_LABEL</td>
+	<td>UPLOAD_LABEL</td>
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DOCUMENTS_AND_MEDIA_FILE_NAME</td>
+	<td>UPLOAD_FILE_NAME</td>
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//h4[contains(.,'${key_uploadFileName}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DOCUMENTS_AND_MEDIA_DOWNLOAD_ICON</td>
+	<td>UPLOAD_DOWNLOAD_ICON</td>
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//a[@download='${key_uploadFileName}']</td>
 	<td></td>
 </tr>

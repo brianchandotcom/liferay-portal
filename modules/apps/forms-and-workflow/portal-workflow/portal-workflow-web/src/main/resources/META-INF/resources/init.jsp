@@ -41,4 +41,6 @@ String tab = ParamUtil.get(request, "tab", defaultTab);
 
 Map<String, DynamicInclude> dynamicIncludes = (Map<String, DynamicInclude>)renderRequest.getAttribute(WorkflowWebKeys.WORKFLOW_TAB_DYNAMIC_INCLUDES);
 List<String> tabNames = (List<String>)renderRequest.getAttribute(WorkflowWebKeys.WORKFLOW_TAB_NAMES);
+
+portletDisplay.setShowStagingIcon(false);
 %>

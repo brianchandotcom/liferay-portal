@@ -14,6 +14,11 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -26,12 +31,7 @@ public class BaseCommit implements Commit {
 
 	@Override
 	public boolean equals(Object o) {
-		Commit commit = (Commit)o;
-
-		String message = commit.getMessage();
-		String sha = commit.getSha();
-
-		if (message.equals(_message) && sha.equals(_sha)) {
+		if (o.hashCode() == hashCode()) {
 			return true;
 		}
 
@@ -49,6 +49,26 @@ public class BaseCommit implements Commit {
 	public String getSha() {
 		return _sha;
 	}
+
+	@Override
+	public int hashCode() {
+		JSONObject jsonObject = _toJSONObject();
+
+		String jsonObjectString = jsonObject.toString();
+
+		return jsonObjectString.hashCode();
+	}
+
+	private JSONObject _toJSONObject() {
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put("message", _message);
+		jsonObject.put("sha", _sha);
+
+		return jsonObject;
+	}
+
+	private static final Map<String, Integer> _map = new HashMap<>();
 
 	private final String _message;
 	private final String _sha;

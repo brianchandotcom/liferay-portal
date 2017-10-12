@@ -14,6 +14,7 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
@@ -90,6 +91,73 @@ public class VerifyResourcePermissions extends VerifyProcess {
 					verifiableResourcedModels.size()]));
 	}
 
+	private String _getVerifyResourcedModelSQL(
+		boolean count, VerifiableResourcedModel verifiableResourcedModel,
+		Role role) {
+
+		StringBundler sb = new StringBundler(28);
+
+		String modelName = verifiableResourcedModel.getModelName();
+
+		if (modelName.equals(User.class.getName())) {
+			sb.append("select ");
+
+			if (count) {
+				sb.append("count(*)");
+			}
+			else {
+				sb.append(verifiableResourcedModel.getPrimaryKeyColumnName());
+				sb.append(", ");
+				sb.append(verifiableResourcedModel.getUserIdColumnName());
+			}
+
+			sb.append(" from ");
+			sb.append(verifiableResourcedModel.getTableName());
+			sb.append(" where companyId = ");
+			sb.append(role.getCompanyId());
+		}
+		else {
+			sb.append("select ");
+
+			if (count) {
+				sb.append("count(*)");
+			}
+			else {
+				sb.append(verifiableResourcedModel.getTableName());
+				sb.append(".");
+				sb.append(verifiableResourcedModel.getPrimaryKeyColumnName());
+				sb.append(", ");
+				sb.append(verifiableResourcedModel.getTableName());
+				sb.append(".");
+				sb.append(verifiableResourcedModel.getUserIdColumnName());
+				sb.append(", ResourcePermission.resourcePermissionId");
+			}
+
+			sb.append(" from ");
+			sb.append(verifiableResourcedModel.getTableName());
+			sb.append(" left join ResourcePermission on (ResourcePermission.");
+			sb.append("companyId = ");
+			sb.append(role.getCompanyId());
+			sb.append(" and ResourcePermission.name = '");
+			sb.append(verifiableResourcedModel.getModelName());
+			sb.append("' and ResourcePermission.scope = ");
+			sb.append(ResourceConstants.SCOPE_INDIVIDUAL);
+			sb.append(" and ResourcePermission.primKey = CAST_TEXT(");
+			sb.append(verifiableResourcedModel.getTableName());
+			sb.append(".");
+			sb.append(verifiableResourcedModel.getPrimaryKeyColumnName());
+			sb.append(") and ResourcePermission.roleId = ");
+			sb.append(role.getRoleId());
+			sb.append(") where ");
+			sb.append(verifiableResourcedModel.getTableName());
+			sb.append(".companyId = ");
+			sb.append(role.getCompanyId());
+			sb.append(" and ResourcePermission.resourcePermissionId is NULL");
+		}
+
+		return SQLTransformer.transform(sb.toString());
+	}
+
 	private void _verifyResourcedModel(
 			long companyId, String modelName, long primKey, Role role,
 			long ownerId, int cur, int total)
@@ -103,10 +171,14 @@ public class VerifyResourcePermissions extends VerifyProcess {
 					"for company = " + companyId + " and model " + modelName);
 		}
 
-		ResourcePermission resourcePermission =
-			ResourcePermissionLocalServiceUtil.fetchResourcePermission(
-				companyId, modelName, ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(primKey), role.getRoleId());
+		ResourcePermission resourcePermission = null;
+
+		if (modelName.equals(User.class.getName())) {
+			resourcePermission =
+				ResourcePermissionLocalServiceUtil.fetchResourcePermission(
+					companyId, modelName, ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(primKey), role.getRoleId());
+		}
 
 		if (resourcePermission == null) {
 			if (_log.isDebugEnabled()) {
@@ -158,9 +230,8 @@ public class VerifyResourcePermissions extends VerifyProcess {
 				verifiableResourcedModel.getTableName());
 			Connection con = DataAccess.getUpgradeOptimizedConnection();
 			PreparedStatement ps = con.prepareStatement(
-				"select count(*) from " +
-					verifiableResourcedModel.getTableName() +
-						" where companyId = " + role.getCompanyId());
+				_getVerifyResourcedModelSQL(
+					true, verifiableResourcedModel, role));
 			ResultSet rs = ps.executeQuery()) {
 
 			if (rs.next()) {
@@ -168,21 +239,12 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			}
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append("select ");
-		sb.append(verifiableResourcedModel.getPrimaryKeyColumnName());
-		sb.append(", ");
-		sb.append(verifiableResourcedModel.getUserIdColumnName());
-		sb.append(" from ");
-		sb.append(verifiableResourcedModel.getTableName());
-		sb.append(" where companyId = ");
-		sb.append(role.getCompanyId());
-
 		try (LoggingTimer loggingTimer = new LoggingTimer(
 				verifiableResourcedModel.getTableName());
 			Connection con = DataAccess.getUpgradeOptimizedConnection();
-			PreparedStatement ps = con.prepareStatement(sb.toString());
+			PreparedStatement ps = con.prepareStatement(
+				_getVerifyResourcedModelSQL(
+					false, verifiableResourcedModel, role));
 			ResultSet rs = ps.executeQuery()) {
 
 			for (int i = 0; rs.next(); i++) {

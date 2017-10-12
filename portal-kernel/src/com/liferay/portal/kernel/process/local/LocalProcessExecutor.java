@@ -14,11 +14,9 @@
 
 package com.liferay.portal.kernel.process.local;
 
-import com.liferay.portal.kernel.concurrent.AbortPolicy;
 import com.liferay.portal.kernel.concurrent.AsyncBroker;
+import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
-import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
-import com.liferay.portal.kernel.concurrent.ThreadPoolHandlerAdapter;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
@@ -30,9 +28,8 @@ import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.process.TerminationProcessException;
 import com.liferay.portal.kernel.util.ClassLoaderObjectInputStream;
-import com.liferay.portal.kernel.util.NamedThreadFactory;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -48,44 +45,22 @@ import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
-import java.util.concurrent.RejectedExecutionException;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Shuyang Zhou
  */
 public class LocalProcessExecutor implements ProcessExecutor {
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public Set<Process> destroy() {
-		if (_threadPoolExecutor == null) {
-			return Collections.emptySet();
-		}
-
-		Set<Process> processes = Collections.emptySet();
-
-		synchronized (this) {
-			if (_threadPoolExecutor != null) {
-				processes = new HashSet<>();
-
-				_threadPoolExecutor.shutdownNow();
-
-				_threadPoolExecutor = null;
-			}
-		}
-
-		// Whip's instrument logic sees a label on a synchronized block exit and
-		// asks for coverage, but it does not understand that this is actually
-		// the same as exiting a method. To overcome this limitation, the code
-		// logic has to explicitly leave the synchronized block before leaving
-		// the method. This limitation will be removed in a future version of
-		// Whip.
-
-		return processes;
+		return Collections.emptySet();
 	}
 
 	@Override
@@ -133,64 +108,67 @@ public class LocalProcessExecutor implements ProcessExecutor {
 
 			objectOutputStream.flush();
 
-			ThreadPoolExecutor threadPoolExecutor = _getThreadPoolExecutor();
-
 			AsyncBroker<Long, Serializable> asyncBroker = new AsyncBroker<>();
 
 			SubprocessReactor<T> subprocessReactor = new SubprocessReactor<>(
 				process, processConfig.getReactClassLoader(), asyncBroker);
 
-			try {
-				NoticeableFuture<T> noticeableFuture =
-					threadPoolExecutor.submit(subprocessReactor);
+			NoticeableFuture<T> noticeableFuture = _submit(
+				_buildThreadName(processCallable, arguments),
+				subprocessReactor);
 
-				noticeableFuture.addFutureListener(
-					future -> {
-						if (future.isCancelled()) {
-							process.destroy();
-						}
-					});
+			noticeableFuture.addFutureListener(
+				future -> {
+					if (future.isCancelled()) {
+						process.destroy();
+					}
+				});
 
-				return new LocalProcessChannel<>(
-					noticeableFuture, objectOutputStream, asyncBroker);
-			}
-			catch (RejectedExecutionException ree) {
-				process.destroy();
-
-				throw new ProcessException(
-					"Cancelled execution because of a concurrent destroy", ree);
-			}
+			return new LocalProcessChannel<>(
+				noticeableFuture, objectOutputStream, asyncBroker);
 		}
 		catch (IOException ioe) {
 			throw new ProcessException(ioe);
 		}
 	}
 
-	private ThreadPoolExecutor _getThreadPoolExecutor() {
-		if (_threadPoolExecutor != null) {
-			return _threadPoolExecutor;
+	private static String _buildThreadName(
+		ProcessCallable<?> processCallable, List<String> arguments) {
+
+		StringBundler sb = new StringBundler(arguments.size() * 2 + 2);
+
+		sb.append(processCallable);
+		sb.append(StringPool.OPEN_BRACKET);
+
+		for (String argument : arguments) {
+			sb.append(argument);
+			sb.append(StringPool.SPACE);
 		}
 
-		synchronized (this) {
-			if (_threadPoolExecutor == null) {
-				_threadPoolExecutor = new ThreadPoolExecutor(
-					0, Integer.MAX_VALUE, 60, TimeUnit.SECONDS, true,
-					Integer.MAX_VALUE, new AbortPolicy(),
-					new NamedThreadFactory(
-						LocalProcessExecutor.class.getName(),
-						Thread.MIN_PRIORITY,
-						PortalClassLoaderUtil.getClassLoader()),
-					new ThreadPoolHandlerAdapter());
-			}
-		}
+		sb.setStringAt(StringPool.CLOSE_BRACKET, sb.index() - 1);
 
-		return _threadPoolExecutor;
+		sb.append("-");
+
+		return sb.toString();
+	}
+
+	private static <T> NoticeableFuture<T> _submit(
+		String threadName, Callable<T> callable) {
+
+		DefaultNoticeableFuture<T> defaultNoticeableFuture =
+			new DefaultNoticeableFuture<>(callable);
+
+		Thread thread = new Thread(defaultNoticeableFuture, threadName);
+
+		thread.setDaemon(true);
+
+		thread.start();
+
+		return defaultNoticeableFuture;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LocalProcessExecutor.class);
-
-	private volatile ThreadPoolExecutor _threadPoolExecutor;
 
 	private class SubprocessReactor<T extends Serializable>
 		implements Callable<T> {

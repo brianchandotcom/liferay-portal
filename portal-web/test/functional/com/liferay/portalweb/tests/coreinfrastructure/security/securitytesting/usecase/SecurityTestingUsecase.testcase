@@ -53,7 +53,7 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<var locator="WCEditWebContent#ARTICLE_ID" name="articleID" />
+		<var method="selenium#getText('WCEditWebContent#ARTICLE_ID')" name="articleID" />
 
 		<execute macro="User#logoutPG" />
 
@@ -171,7 +171,7 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<var locator="UsersAndOrganizationsEditUser#DETAILS_USER_ID_FIELD" name="userId" />
+		<var method="selenium#getText('UsersAndOrganizationsEditUser#DETAILS_USER_ID_FIELD')" name="userId" />
 
 		<execute macro="Api#apiJsonwsUserView" />
 

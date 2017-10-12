@@ -270,7 +270,7 @@
 			<var name="feedName" value="WC Feed Title" />
 		</execute>
 
-		<var attribute="value" locator="//input[contains(@id,'JournalPortlet_url') and contains(@value,'journal/rss')]" name="rssFeedUrl" />
+		<var method="selenium#getAttribute('//input[contains(@id,\'JournalPortlet_url\') and contains(@value,\'journal/rss\')]@value')" name="rssFeedUrl" />
 		<var method="StringUtil#replace('${rssFeedUrl}', 'localhost', '127.0.0.1')" name="rssFeedUrl" />
 
 		<execute macro="Navigator#gotoSitePage">
@@ -633,7 +633,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<var attribute="href" locator="//div[@class='subscribe-action']/span/a[contains(@href,'asset_publisher')]" name="rssFeedUrl" />
+		<var method="selenium#getAttribute('//div[@class=\'subscribe-action\']/span/a[contains(@href,\'asset_publisher\')]@href')" name="rssFeedUrl" />
 		<var method="StringUtil#replace('${rssFeedUrl}', 'localhost', '127.0.0.1')" name="rssFeedUrl" />
 
 		<execute macro="Navigator#gotoSitePage">
@@ -783,7 +783,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<var attribute="href" locator="//div[@class='subscribe-action']/span/a[contains(@href,'asset_publisher')]" name="rssFeedUrl" />
+		<var method="selenium#getAttribute('//div[@class=\'subscribe-action\']/span/a[contains(@href,\'asset_publisher\')]@href')" name="rssFeedUrl" />
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page Name" />

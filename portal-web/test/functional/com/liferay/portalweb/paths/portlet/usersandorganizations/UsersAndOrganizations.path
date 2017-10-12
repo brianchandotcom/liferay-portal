@@ -47,7 +47,7 @@
 <!--ORGANIZATION_TABLE-->
 <tr>
 	<td>ORGANIZATION_TABLE_NAME</td>
-	<td>//td[contains(@class,'name') and contains(.,'${key_orgName}')]//a[2]</td>
+	<td>//td[contains(@class,'name') and contains(.,'${key_orgName}')]//a[1]</td>
 	<td></td>
 </tr>
 <tr>

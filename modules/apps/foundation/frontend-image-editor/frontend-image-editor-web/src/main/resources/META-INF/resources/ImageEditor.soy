@@ -43,19 +43,19 @@
 
 			<div class="fade {$imageEditorReady and not $selectedTool ? 'in' : ''} lfr-image-editor-history-container">
 				<div class="btn-group" role="group">
-					<a class="btn btn-link {$history and $history.canUndo ? '' : 'disabled'} icon-monospaced" data-onclick="undo" href="javascript:;">
+					<a class="btn btn-link btn-monospaced {$history and $history.canUndo ? '' : 'disabled'}" data-onclick="undo" href="javascript:;">
 						<svg class="lexicon-icon">
 							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#angle-left"></use>
 						</svg>
 					</a>
 
-					<a class="btn btn-link {$history and $history.canReset ? '' : 'disabled'} icon-monospaced" data-onclick="reset" href="javascript:;">
+					<a class="btn btn-link btn-monospaced {$history and $history.canReset ? '' : 'disabled'}" data-onclick="reset" href="javascript:;">
 						<svg class="lexicon-icon">
 							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#restore"></use>
 						</svg>
 					</a>
 
-					<a class="btn btn-link {$history and $history.canRedo ? '' : 'disabled'} icon-monospaced" data-onclick="redo" href="javascript:;">
+					<a class="btn btn-link btn-monospaced {$history and $history.canRedo ? '' : 'disabled'}" data-onclick="redo" href="javascript:;">
 						<svg class="lexicon-icon">
 							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#angle-right"></use>
 						</svg>
@@ -94,8 +94,8 @@
  * @param? selectedTool
  */
 {template .tools}
-	<div class="controls text-center">
-		<ul class="list-inline">
+	<div class="controls text-center pt-2">
+		<ul class="d-flex justify-content-center list-inline">
 			{foreach $tool in $imageEditorCapabilities.tools}
 				<li class="{$selectedTool == 'tool-' + index($tool) ? 'open' : ''}">
 					{call .tool data="all"}
@@ -125,7 +125,7 @@
 	{else}
 		{let $control : $tool.controls[0] /}
 
-		<a class="btn" data-control="{$control.variant}" data-onclick="requestImageEditorEdit" data-tool="tool-{$toolIndex}" href="javascript:;">
+		<a class="btn btn-monospaced" data-control="{$control.variant}" data-onclick="requestImageEditorEdit" data-tool="tool-{$toolIndex}" href="javascript:;">
 			<svg class="icon-monospaced lexicon-icon">
 				<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$tool.icon}"></use>
 			</svg>
@@ -148,7 +148,7 @@
 {template .tool_dropdown}
 	{call Dropdown.render}
 		{param header kind="html"}
-			<a class="btn" data-onclick="toggle" href="javascript:;">
+			<a class="btn btn-monospaced" data-onclick="toggle" href="javascript:;">
 				<svg class="icon-monospaced lexicon-icon" data-icon="{$tool.icon}">
 					<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$tool.icon}"></use>
 				</svg>
@@ -185,11 +185,11 @@
  * @param strings
  */
 {template .tool_control}
-	<div class="controls-container {$selectedControl and $selectedControl.label == $control.label ? 'open' : ''}">
-		<div class="btn-space col-md-2 col-sm-2 col-xs-2">
+	<div class="controls-container d-flex {$selectedControl and $selectedControl.label == $control.label ? 'open' : ''}">
+		<div class="col-2 mt-4">
 			<button class="btn btn-link" data-onclick="accept">{$strings['apply']}</button>
 		</div>
-		<div class="col-md-8 col-sm-8 col-xs-8 tool-controls">
+		<div class="col-8 tool-controls">
 			{if $selectedControl and $selectedControl.label == $control.label}
 				{call .active_controls data="all"}
 					{param modulePath: $control.modulePath /}
@@ -197,7 +197,7 @@
 				{/call}
 			{/if}
 		</div>
-		<div class="btn-space col-md-2 col-sm-2 col-xs-2">
+		<div class="col-2 mt-4">
 			<button class="btn btn-link" data-onclick="discard">{$strings['cancel']}</button>
 		</div>
 	</div>

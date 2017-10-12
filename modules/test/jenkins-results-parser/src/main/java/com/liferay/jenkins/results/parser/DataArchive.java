@@ -48,6 +48,10 @@ public class DataArchive {
 				"/", _dataArchiveType, "-", _databaseName, ".zip"));
 	}
 
+	public String getDataArchiveType() {
+		return _dataArchiveType;
+	}
+
 	private final File _committedDataArchiveFile;
 	private final DataArchiveBranch _dataArchiveBranch;
 	private final String _dataArchiveType;

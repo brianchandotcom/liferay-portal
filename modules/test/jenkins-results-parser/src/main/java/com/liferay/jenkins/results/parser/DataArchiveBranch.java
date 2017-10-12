@@ -20,8 +20,10 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -53,6 +55,8 @@ public class DataArchiveBranch {
 		_dataArchives = _getDataArchives(_getBuildProperties());
 		_latestDataArchiveCommits = _getLatestDataArchiveCommits();
 		_latestManualCommit = _getLatestManualCommit();
+
+		_dataArchiveGroupMap = _getDataArchiveGroupMap(_dataArchives);
 	}
 
 	public File getGeneratedDataArchiveDirectory() {
@@ -85,6 +89,29 @@ public class DataArchiveBranch {
 		}
 
 		return buildProperties;
+	}
+
+	private Map<String, DataArchiveGroup> _getDataArchiveGroupMap(
+		List<DataArchive> dataArchives) {
+
+		Map<String, DataArchiveGroup> dataArchiveGroupMap = new HashMap<>();
+
+		for (DataArchive dataArchive : dataArchives) {
+			String dataArchiveType = dataArchive.getDataArchiveType();
+
+			DataArchiveGroup dataArchiveGroup = dataArchiveGroupMap.get(
+				dataArchiveType);
+
+			if (dataArchiveGroup == null) {
+				dataArchiveGroup = new DataArchiveGroup(this, dataArchiveType);
+			}
+
+			dataArchiveGroup.addDataArchive(dataArchive);
+
+			dataArchiveGroupMap.put(dataArchiveType, dataArchiveGroup);
+		}
+
+		return dataArchiveGroupMap;
 	}
 
 	private List<DataArchive> _getDataArchives(Properties buildProperties) {
@@ -246,6 +273,7 @@ public class DataArchiveBranch {
 		return poshiPropertyValues;
 	}
 
+	private final Map<String, DataArchiveGroup> _dataArchiveGroupMap;
 	private final List<DataArchive> _dataArchives;
 	private final File _generatedDataArchiveDirectory;
 	private final List<DataArchiveCommit> _latestDataArchiveCommits;

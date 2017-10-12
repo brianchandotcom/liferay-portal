@@ -16,6 +16,8 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
+import java.util.List;
+
 /**
  * @author Michael Hashimoto
  */
@@ -46,12 +48,48 @@ public class DataArchive {
 			JenkinsResultsParserUtil.combine(
 				generatedDataArchiveDirectory.toString(), "/", _portalVersion,
 				"/", _dataArchiveType, "-", _databaseName, ".zip"));
+
+		_commit = _getCommit();
 	}
 
 	public String getDataArchiveType() {
 		return _dataArchiveType;
 	}
 
+	public boolean isUpdated() {
+		if (_commit == null) {
+			return false;
+		}
+
+		List<DataArchiveCommit> latestDataArchiveCommits =
+			_dataArchiveBranch.getLatestDataArchiveCommits();
+
+		for (DataArchiveCommit latestDataArchiveCommit :
+				latestDataArchiveCommits) {
+
+			if (_commit.equals(latestDataArchiveCommit)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private Commit _getCommit() {
+		if (_committedDataArchiveFile.exists()) {
+			GitWorkingDirectory portalLegacyGitWorkingDirectory =
+				_dataArchiveBranch.getPortalLegacyGitWorkingDirectory();
+
+			String gitLog = portalLegacyGitWorkingDirectory.log(
+				1, _committedDataArchiveFile);
+
+			return CommitFactory.newCommit(gitLog);
+		}
+
+		return null;
+	}
+
+	private Commit _commit;
 	private final File _committedDataArchiveFile;
 	private final DataArchiveBranch _dataArchiveBranch;
 	private final String _dataArchiveType;

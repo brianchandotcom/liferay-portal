@@ -63,6 +63,14 @@ public class DataArchiveBranch {
 		return _generatedDataArchiveDirectory;
 	}
 
+	public List<DataArchiveCommit> getLatestDataArchiveCommits() {
+		return _latestDataArchiveCommits;
+	}
+
+	public GitWorkingDirectory getPortalLegacyGitWorkingDirectory() {
+		return _portalLegacyGitWorkingDirectory;
+	}
+
 	public File getPortalLegacyWorkingDirectory() {
 		return _portalLegacyGitWorkingDirectory.getWorkingDirectory();
 	}

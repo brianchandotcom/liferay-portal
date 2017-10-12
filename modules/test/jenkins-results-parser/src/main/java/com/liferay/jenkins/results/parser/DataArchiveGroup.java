@@ -37,6 +37,16 @@ public class DataArchiveGroup {
 		return _dataArchiveType;
 	}
 
+	public boolean isUpdated() {
+		for (DataArchive dataArchive : _dataArchives) {
+			if (!dataArchive.isUpdated()) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	private final DataArchiveBranch _dataArchiveBranch;
 	private List<DataArchive> _dataArchives = new ArrayList<>();
 	private final String _dataArchiveType;

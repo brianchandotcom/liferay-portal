@@ -57,7 +57,12 @@ public class SQLFunctionTransformer {
 
 			int openParentheses = 1;
 
-			while (next < sb.length()) {
+			while (true) {
+				if (next == sb.length()) {
+					throw new IllegalArgumentException(
+						"Unclosed function in: " + sql);
+				}
+
 				char c = sb.charAt(next);
 
 				if (c == CharPool.COMMA) {
@@ -81,7 +86,8 @@ public class SQLFunctionTransformer {
 					next = sb.indexOf(StringPool.APOSTROPHE, next + 1);
 
 					if (next < 0) {
-						throw new IllegalArgumentException(sql);
+						throw new IllegalArgumentException(
+							"Unclosed string literal in: " + sql);
 					}
 				}
 

@@ -74,12 +74,6 @@ public interface Build {
 
 	public String getJDK();
 
-	public Element getJenkinsReportBuildInfoElement();
-
-	public Element getJenkinsReportElement();
-
-	public Element getJenkinsReportTableColumnHeaderElement();
-
 	public String getJobName();
 
 	public String getJobURL();

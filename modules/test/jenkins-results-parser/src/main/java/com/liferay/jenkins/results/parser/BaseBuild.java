@@ -359,11 +359,29 @@ public abstract class BaseBuild implements Build {
 			return downstreamBuilds;
 		}
 
+		String result = null;
+
+		if (status.contains("/")) {
+			int x = status.indexOf("/");
+
+			status = status.substring(0, x);
+
+			result = status.substring(x + 1);
+		}
+
 		List<Build> filteredDownstreamBuilds = new ArrayList<>();
 
 		for (Build downstreamBuild : downstreamBuilds) {
 			if (status.equals(downstreamBuild.getStatus())) {
-				filteredDownstreamBuilds.add(downstreamBuild);
+				if (result == null) {
+					filteredDownstreamBuilds.add(downstreamBuild);
+
+					continue;
+				}
+
+				if (result.equals(downstreamBuild.getResult())) {
+					filteredDownstreamBuilds.add(downstreamBuild);
+				}
 			}
 		}
 
@@ -518,104 +536,6 @@ public abstract class BaseBuild implements Build {
 	@Override
 	public String getJDK() {
 		return null;
-	}
-
-	@Override
-	public Element getJenkinsReportBuildInfoElement() {
-		String buildURL = getBuildURL();
-
-		String buildConsoleURL = buildURL + "console";
-
-		String tagName = getJenkinsReportBuildInfoCellElementTagName();
-
-		Element trElement = Dom4JUtil.getNewElement("tr");
-
-		trElement.add(
-			Dom4JUtil.getNewElement(
-				tagName, null,
-				Dom4JUtil.getNewAnchorElement(
-					buildURL, null, getDisplayName())));
-
-		trElement.add(
-			Dom4JUtil.getNewElement(
-				tagName, null,
-				Dom4JUtil.getNewAnchorElement(
-					buildConsoleURL, null, "Console")));
-
-		String buildTestReportURL = buildURL + "testReport";
-
-		trElement.add(
-			Dom4JUtil.getNewElement(
-				tagName, null,
-				Dom4JUtil.getNewAnchorElement(
-					buildTestReportURL, null, "Test Report")));
-
-		Date buildStartDate = new Date(getStartTimestamp());
-
-		trElement.add(
-			Dom4JUtil.getNewElement(
-				tagName, null,
-				JenkinsResultsParserUtil.toDateString(buildStartDate)));
-
-		trElement.add(
-			Dom4JUtil.getNewElement(
-				tagName, null,
-				JenkinsResultsParserUtil.toDurationString(getDuration())));
-
-		String status = getStatus();
-
-		if (status != null) {
-			status = StringUtils.upperCase(status);
-		}
-		else {
-			status = "";
-		}
-
-		trElement.add(Dom4JUtil.getNewElement(tagName, null, status));
-
-		String result = getResult();
-
-		if (result == null) {
-			result = "";
-		}
-
-		trElement.add(Dom4JUtil.getNewElement(tagName, null, result));
-
-		return trElement;
-	}
-
-	@Override
-	public Element getJenkinsReportElement() {
-		return null;
-	}
-
-	@Override
-	public Element getJenkinsReportTableColumnHeaderElement() {
-		Element nameElement = Dom4JUtil.getNewElement("th", null, "Name");
-
-		Element consoleElement = Dom4JUtil.getNewElement("th", null, "Console");
-
-		Element testReportElement = Dom4JUtil.getNewElement(
-			"th", null, "Test Report");
-
-		Element startTimeElement = Dom4JUtil.getNewElement(
-			"th", null, "Start Time");
-
-		Element buildTimeElement = Dom4JUtil.getNewElement(
-			"th", null, "Build Time");
-
-		Element statusElement = Dom4JUtil.getNewElement("th", null, "Status");
-
-		Element resultElement = Dom4JUtil.getNewElement("th", null, "Result");
-
-		Element tableColumnHeaderElement = Dom4JUtil.getNewElement("tr");
-
-		Dom4JUtil.addToElement(
-			tableColumnHeaderElement, nameElement, consoleElement,
-			testReportElement, startTimeElement, buildTimeElement,
-			statusElement, resultElement);
-
-		return tableColumnHeaderElement;
 	}
 
 	@Override
@@ -1950,6 +1870,80 @@ public abstract class BaseBuild implements Build {
 
 	protected String getJenkinsReportBuildInfoCellElementTagName() {
 		return "td";
+	}
+
+	protected Element getJenkinsReportTableRowElement() {
+		String cellElementTagName =
+			getJenkinsReportBuildInfoCellElementTagName();
+
+		Element buildInfoElement = Dom4JUtil.getNewElement(
+			"tr", null,
+			Dom4JUtil.getNewElement(
+				cellElementTagName, null,
+				Dom4JUtil.getNewAnchorElement(
+					getBuildURL(), null, getDisplayName())),
+			Dom4JUtil.getNewElement(
+				cellElementTagName, null,
+				Dom4JUtil.getNewAnchorElement(
+					getBuildURL() + "console", null, "Console")),
+			Dom4JUtil.getNewElement(
+				cellElementTagName, null,
+				Dom4JUtil.getNewAnchorElement(
+					getBuildURL() + "testReport", "Test Report")),
+			Dom4JUtil.getNewElement(
+				cellElementTagName, null,
+				JenkinsResultsParserUtil.toDateString(
+					new Date(getStartTimestamp()))),
+			Dom4JUtil.getNewElement(
+				cellElementTagName, null,
+				JenkinsResultsParserUtil.toDurationString(getDuration())));
+
+		String status = getStatus();
+
+		if (status != null) {
+			status = StringUtils.upperCase(status);
+		}
+		else {
+			status = "";
+		}
+
+		Dom4JUtil.getNewElement(cellElementTagName, buildInfoElement, status);
+
+		String result = getResult();
+
+		if (result == null) {
+			result = "";
+		}
+
+		Dom4JUtil.getNewElement(cellElementTagName, buildInfoElement, result);
+
+		return buildInfoElement;
+	}
+
+	protected List<Element> getJenkinsReportTableRowsElements(String status) {
+		List<Element> tableRowElements = new ArrayList<>();
+
+		if ((status == null) || status.equals(getStatus())) {
+			tableRowElements.add(getJenkinsReportTableRowElement());
+		}
+
+		List<Build> downstreamBuilds = getDownstreamBuilds(status);
+
+		Collections.sort(
+			downstreamBuilds, new BaseBuild.BuildDisplayNameComparator());
+
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			if (!(downstreamBuild instanceof BaseBuild)) {
+				continue;
+			}
+
+			BaseBuild downstreamBaseBuild = (BaseBuild)downstreamBuild;
+
+			tableRowElements.addAll(
+				downstreamBaseBuild.getJenkinsReportTableRowsElements(status));
+		}
+
+		return tableRowElements;
 	}
 
 	protected Set<String> getJobParameterNames() {

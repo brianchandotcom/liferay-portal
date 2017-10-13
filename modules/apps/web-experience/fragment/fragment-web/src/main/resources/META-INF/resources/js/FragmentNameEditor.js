@@ -82,7 +82,7 @@ FragmentNameEditor.STATE = {
 	_error: Config.string().internal(),
 
 	/**
-	 * URL used for creating the fragment. The generated form
+	 * URL used for creating/updating the fragment. The generated form
 	 * will be submited to this url.
 	 * @default undefined
 	 * @instance

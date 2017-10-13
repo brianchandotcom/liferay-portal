@@ -24,6 +24,7 @@ import com.liferay.vulcan.resource.builder.RoutesBuilder;
 import com.liferay.vulcan.resource.identifier.LongIdentifier;
 import com.liferay.vulcan.resource.identifier.RootIdentifier;
 import com.liferay.vulcan.sample.internal.model.BlogPost;
+import com.liferay.vulcan.sample.internal.model.BlogPostComment;
 import com.liferay.vulcan.sample.internal.model.User;
 
 import java.util.List;
@@ -61,6 +62,9 @@ public class BlogPostingCollectionResource
 		).addEmbeddedModel(
 			"creator", User.class,
 			blogPost -> User.getUser(blogPost.getCreatorId())
+		).addRelatedCollection(
+			"comments", BlogPostComment.class,
+			blogPost -> (LongIdentifier)blogPost::getId
 		).addString(
 			"alternativeHeadline", BlogPost::getSubtitle
 		).addString(

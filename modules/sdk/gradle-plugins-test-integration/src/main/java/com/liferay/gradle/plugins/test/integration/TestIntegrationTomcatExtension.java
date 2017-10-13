@@ -67,6 +67,10 @@ public class TestIntegrationTomcatExtension {
 		return GradleUtil.toInteger(_portNumber);
 	}
 
+	public boolean isOverwriteCopyTestModules() {
+		return _overwriteCopyTestModules;
+	}
+
 	public void setCheckPath(Object checkPath) {
 		_checkPath = checkPath;
 	}
@@ -91,6 +95,10 @@ public class TestIntegrationTomcatExtension {
 		_managerUserName = managerUserName;
 	}
 
+	public void setOverwriteCopyTestModules(boolean overwriteCopyTestModules) {
+		_overwriteCopyTestModules = overwriteCopyTestModules;
+	}
+
 	public void setPortNumber(Object portNumber) {
 		_portNumber = portNumber;
 	}
@@ -101,6 +109,7 @@ public class TestIntegrationTomcatExtension {
 	private Object _liferayHome;
 	private Object _managerPassword = "tomcat";
 	private Object _managerUserName = "tomcat";
+	private boolean _overwriteCopyTestModules;
 	private Object _portNumber = 8080;
 	private final Project _project;
 

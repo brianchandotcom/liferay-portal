@@ -25,10 +25,13 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -71,6 +74,16 @@ public interface DLFileRankLocalService extends BaseLocalService,
 	public DLFileRank addDLFileRank(DLFileRank dlFileRank);
 
 	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this class directly. Always use {@link DLFileRankLocalServiceUtil} to access the document library file rank local service.
+	*/
+	public DLFileRank addFileRank(long groupId, long companyId, long userId,
+		long fileEntryId, ServiceContext serviceContext);
+
+	public void checkFileRanks();
+
+	/**
 	* Creates a new document library file rank with the primary key. Does not add the document library file rank to the database.
 	*
 	* @param fileRankId the primary key for the new document library file rank
@@ -98,11 +111,25 @@ public interface DLFileRankLocalService extends BaseLocalService,
 	public DLFileRank deleteDLFileRank(long fileRankId)
 		throws PortalException;
 
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public void deleteFileRank(DLFileRank dlFileRank);
+
+	public void deleteFileRank(long fileRankId) throws PortalException;
+
+	public void deleteFileRanksByFileEntryId(long fileEntryId);
+
+	public void deleteFileRanksByUserId(long userId);
+
 	/**
 	* @throws PortalException
 	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	public void disableFileRanks(long fileEntryId);
+
+	public void disableFileRanksByFolderId(long folderId)
 		throws PortalException;
 
 	public DynamicQuery dynamicQuery();
@@ -164,6 +191,11 @@ public interface DLFileRankLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
+	public void enableFileRanks(long fileEntryId);
+
+	public void enableFileRanksByFolderId(long folderId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileRank fetchDLFileRank(long fileRankId);
 
@@ -203,6 +235,9 @@ public interface DLFileRankLocalService extends BaseLocalService,
 	public int getDLFileRanksCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DLFileRank> getFileRanks(long groupId, long userId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
@@ -225,4 +260,7 @@ public interface DLFileRankLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public DLFileRank updateDLFileRank(DLFileRank dlFileRank);
+
+	public DLFileRank updateFileRank(long groupId, long companyId, long userId,
+		long fileEntryId, ServiceContext serviceContext);
 }

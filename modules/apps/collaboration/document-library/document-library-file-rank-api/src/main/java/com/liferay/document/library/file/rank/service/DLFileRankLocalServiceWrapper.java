@@ -46,6 +46,24 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 	}
 
 	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this class directly. Always use {@link DLFileRankLocalServiceUtil} to access the document library file rank local service.
+	*/
+	@Override
+	public com.liferay.document.library.file.rank.model.DLFileRank addFileRank(
+		long groupId, long companyId, long userId, long fileEntryId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		return _dlFileRankLocalService.addFileRank(groupId, companyId, userId,
+			fileEntryId, serviceContext);
+	}
+
+	@Override
+	public void checkFileRanks() {
+		_dlFileRankLocalService.checkFileRanks();
+	}
+
+	/**
 	* Creates a new document library file rank with the primary key. Does not add the document library file rank to the database.
 	*
 	* @param fileRankId the primary key for the new document library file rank
@@ -83,6 +101,28 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 		return _dlFileRankLocalService.deleteDLFileRank(fileRankId);
 	}
 
+	@Override
+	public void deleteFileRank(
+		com.liferay.document.library.file.rank.model.DLFileRank dlFileRank) {
+		_dlFileRankLocalService.deleteFileRank(dlFileRank);
+	}
+
+	@Override
+	public void deleteFileRank(long fileRankId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlFileRankLocalService.deleteFileRank(fileRankId);
+	}
+
+	@Override
+	public void deleteFileRanksByFileEntryId(long fileEntryId) {
+		_dlFileRankLocalService.deleteFileRanksByFileEntryId(fileEntryId);
+	}
+
+	@Override
+	public void deleteFileRanksByUserId(long userId) {
+		_dlFileRankLocalService.deleteFileRanksByUserId(userId);
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -91,6 +131,17 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileRankLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public void disableFileRanks(long fileEntryId) {
+		_dlFileRankLocalService.disableFileRanks(fileEntryId);
+	}
+
+	@Override
+	public void disableFileRanksByFolderId(long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlFileRankLocalService.disableFileRanksByFolderId(folderId);
 	}
 
 	@Override
@@ -179,6 +230,17 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 	}
 
 	@Override
+	public void enableFileRanks(long fileEntryId) {
+		_dlFileRankLocalService.enableFileRanks(fileEntryId);
+	}
+
+	@Override
+	public void enableFileRanksByFolderId(long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlFileRankLocalService.enableFileRanksByFolderId(folderId);
+	}
+
+	@Override
 	public com.liferay.document.library.file.rank.model.DLFileRank fetchDLFileRank(
 		long fileRankId) {
 		return _dlFileRankLocalService.fetchDLFileRank(fileRankId);
@@ -231,6 +293,12 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.document.library.file.rank.model.DLFileRank> getFileRanks(
+		long groupId, long userId) {
+		return _dlFileRankLocalService.getFileRanks(groupId, userId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		return _dlFileRankLocalService.getIndexableActionableDynamicQuery();
 	}
@@ -262,6 +330,14 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 	public com.liferay.document.library.file.rank.model.DLFileRank updateDLFileRank(
 		com.liferay.document.library.file.rank.model.DLFileRank dlFileRank) {
 		return _dlFileRankLocalService.updateDLFileRank(dlFileRank);
+	}
+
+	@Override
+	public com.liferay.document.library.file.rank.model.DLFileRank updateFileRank(
+		long groupId, long companyId, long userId, long fileEntryId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		return _dlFileRankLocalService.updateFileRank(groupId, companyId,
+			userId, fileEntryId, serviceContext);
 	}
 
 	@Override

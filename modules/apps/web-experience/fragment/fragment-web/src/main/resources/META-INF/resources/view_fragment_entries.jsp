@@ -139,7 +139,7 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 				var fragmentNameEditor = new fragmentWebJsFragmentNameEditor.default(
 					{
 						actionURL: actionElement.dataset.updateUrl,
-						editorTitle: '<%= LanguageUtil.get(request, "rename-fragment") %>',
+						editorTitle: '<liferay-ui:message key="rename-fragment" />',
 						events: {
 							hide: function() {
 								fragmentNameEditor.dispose();
@@ -160,7 +160,7 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 			var fragmentNameEditor = new fragmentWebJsFragmentNameEditor.default(
 				{
 					actionURL: '<%= addFragmentEntryURL.toString() %>',
-					editorTitle: '<%= LanguageUtil.get(request, "add-fragment") %>',
+					editorTitle: '<liferay-ui:message key="add-fragment" />',
 					events: {
 						hide: function() {
 							fragmentNameEditor.dispose();

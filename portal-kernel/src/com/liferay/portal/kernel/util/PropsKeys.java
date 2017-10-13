@@ -791,6 +791,10 @@ public interface PropsKeys {
 	@Deprecated
 	public static final String DL_FILE_MAX_SIZE = "dl.file.max.size";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String DL_FILE_RANK_ENABLED = "dl.file.rank.enabled";
 
 	public static final String DL_FILE_RANK_MAX_SIZE = "dl.file.rank.max.size";

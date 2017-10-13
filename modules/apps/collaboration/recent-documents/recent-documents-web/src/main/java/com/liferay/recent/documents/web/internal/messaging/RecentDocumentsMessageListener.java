@@ -54,18 +54,6 @@ public class RecentDocumentsMessageListener extends BaseMessageListener {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		if (!GetterUtil.getBoolean(
-				_props.get(PropsKeys.DL_FILE_RANK_ENABLED))) {
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Skipping because the portal property " +
-						"\"dl.file.rank.enabled being\" is set to false");
-			}
-
-			return;
-		}
-
 		RecentDocumentsConfiguration recentDocumentsConfiguration =
 			ConfigurableUtil.createConfigurable(
 				RecentDocumentsConfiguration.class, properties);

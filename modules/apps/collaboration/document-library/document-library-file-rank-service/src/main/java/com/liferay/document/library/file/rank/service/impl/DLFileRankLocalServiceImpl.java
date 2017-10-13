@@ -204,10 +204,6 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 		long groupId, long companyId, long userId, long fileEntryId,
 		ServiceContext serviceContext) {
 
-		if (!PropsValues.DL_FILE_RANK_ENABLED) {
-			return null;
-		}
-
 		DLFileRank dlFileRank = dlFileRankPersistence.fetchByC_U_F(
 			companyId, userId, fileEntryId);
 

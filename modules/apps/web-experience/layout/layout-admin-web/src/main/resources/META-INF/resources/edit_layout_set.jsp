@@ -56,10 +56,19 @@ renderResponse.setTitle(selGroup.getLayoutRootNodeName(privateLayout, locale));
 	<aui:input name="<%= PortletDataHandlerKeys.SELECTED_LAYOUTS %>" type="hidden" />
 
 	<liferay-ui:form-navigator
-		backURL="<%= backURL %>"
 		formModelBean="<%= selLayoutSet %>"
 		id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT_SET %>"
 		markupView="lexicon"
-		showButtons="<%= GroupPermissionUtil.contains(permissionChecker, selGroup, ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSetPrototypeUpdateable(selLayoutSet) %>"
+		showButtons="<%= false %>"
 	/>
+
+	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, selGroup, ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSetPrototypeUpdateable(selLayoutSet) %>">
+		<aui:button-row>
+			<aui:button cssClass="btn-lg" type="submit" value="save" />
+
+			<c:if test="<%= Validator.isNotNull(backURL) %>">
+				<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" />
+			</c:if>
+		</aui:button-row>
+	</c:if>
 </aui:form>

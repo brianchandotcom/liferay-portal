@@ -66,7 +66,11 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mika Koivisto
  */
-@Component(immediate = true, service = UserResolver.class)
+@Component(
+	immediate = true,
+	property = {"service.ranking:Integer=" + Integer.MIN_VALUE},
+	service = UserResolver.class
+)
 public class DefaultUserResolver implements UserResolver {
 
 	@Override

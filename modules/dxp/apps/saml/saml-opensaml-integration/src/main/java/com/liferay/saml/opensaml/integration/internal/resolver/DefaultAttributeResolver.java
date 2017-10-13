@@ -66,7 +66,11 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mika Koivisto
  */
-@Component(immediate = true, service = AttributeResolver.class)
+@Component(
+	immediate = true,
+	property = {"service.ranking:Integer=" + Integer.MIN_VALUE},
+	service = AttributeResolver.class
+)
 public class DefaultAttributeResolver implements AttributeResolver {
 
 	@Override

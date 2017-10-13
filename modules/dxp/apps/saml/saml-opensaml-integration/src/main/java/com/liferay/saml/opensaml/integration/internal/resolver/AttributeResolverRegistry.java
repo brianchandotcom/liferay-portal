@@ -26,6 +26,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Mika Koivisto
@@ -52,7 +53,10 @@ public class AttributeResolverRegistry {
 		return attributeResolver;
 	}
 
-	@Reference(target = "(!(companyId=*))", unbind = "-")
+	@Reference(
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(!(companyId=*))", unbind = "-"
+	)
 	public void setDefaultAttributeResolver(
 		AttributeResolver defaultAttributeResolver) {
 

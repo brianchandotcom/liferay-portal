@@ -1260,7 +1260,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		super.samlSpSessionLocalService = samlSpSessionLocalService;
 	}
 
-	@Reference(unbind = "-")
+	@Reference(policyOption = ReferencePolicyOption.GREEDY, unbind = "-")
 	protected void setUserResolver(UserResolver userResolver) {
 		_userResolver = userResolver;
 	}

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.messaging.config;
 
+import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
-import com.liferay.portal.kernel.util.ClassLoaderPool;
 
 /**
  * @author Michael C. Han

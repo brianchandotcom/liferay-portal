@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.lang.ClassLoaderPool;
+
 import java.util.HashMap;
 import java.util.Map;
 

@@ -14,9 +14,9 @@
 
 package com.liferay.portal.security.jaas.ext.jonas;
 
+import com.liferay.petra.lang.ClassResolverUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ClassResolverUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.security.jaas.ext.BasicLoginModule;

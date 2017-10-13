@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.io;
 
-import com.liferay.portal.kernel.util.ClassResolverUtil;
+import com.liferay.petra.lang.ClassResolverUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;

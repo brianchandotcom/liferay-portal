@@ -38,7 +38,7 @@ public class ClassResolverUtilTest {
 	}
 
 	@Test
-	public void testResolve() throws Exception {
+	public void testResolve() throws ClassNotFoundException {
 		Assert.assertSame(
 			ClassResolverUtilTest.class,
 			ClassResolverUtil.resolve(
@@ -47,7 +47,9 @@ public class ClassResolverUtilTest {
 	}
 
 	@Test
-	public void testResolveWithDifferentClassLoader() throws Exception {
+	public void testResolveWithDifferentClassLoader()
+		throws ClassNotFoundException {
+
 		Assert.assertSame(
 			ClassResolverUtilTest.class,
 			ClassResolverUtil.resolve(
@@ -57,22 +59,21 @@ public class ClassResolverUtilTest {
 
 	@Test(expected = ClassNotFoundException.class)
 	public void testResolveWithDifferentClassLoaderAndException()
-		throws Exception {
-
-		ClassLoader urlClassLoader = new URLClassLoader(new URL[0], null);
+		throws ClassNotFoundException {
 
 		ClassResolverUtil.resolve(
-			ClassResolverUtilTest.class.getName(), urlClassLoader);
+			ClassResolverUtilTest.class.getName(),
+			new URLClassLoader(new URL[0], null));
 	}
 
 	@Test(expected = ClassNotFoundException.class)
-	public void testResolveWithException() throws Exception {
+	public void testResolveWithException() throws ClassNotFoundException {
 		ClassResolverUtil.resolve(
 			"not.a.real.Class", ClassResolverUtilTest.class.getClassLoader());
 	}
 
 	@Test
-	public void testResolveWithPrimitive() throws Exception {
+	public void testResolveWithPrimitive() throws ClassNotFoundException {
 		Assert.assertSame(
 			boolean.class,
 			ClassResolverUtil.resolve(

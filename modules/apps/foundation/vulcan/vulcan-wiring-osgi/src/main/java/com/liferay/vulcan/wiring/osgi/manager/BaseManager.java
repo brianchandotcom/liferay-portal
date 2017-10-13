@@ -47,14 +47,13 @@ public abstract class BaseManager<T> {
 	 * Adds a new serviceReference/service tuple to the internal map.
 	 *
 	 * @param  serviceReference a service reference.
-	 * @param  clazz class of the service reference service.
 	 * @return the generic inner class of the service reference service, if a
 	 *         valid service can be obtained; {@code Optional#empty()}
 	 *         otherwise.
 	 * @review
 	 */
 	protected <U> Optional<Class<U>> addService(
-		ServiceReference<T> serviceReference, Class<T> clazz) {
+		ServiceReference<T> serviceReference) {
 
 		T service = _bundleContext.getService(serviceReference);
 
@@ -62,7 +61,7 @@ public abstract class BaseManager<T> {
 			return Optional.empty();
 		}
 
-		Class<U> genericClass = _getGenericClass(service, clazz);
+		Class<U> genericClass = _getGenericClass(service);
 
 		_services.computeIfAbsent(
 			genericClass.getName(), name -> new TreeSet<>());
@@ -118,26 +117,24 @@ public abstract class BaseManager<T> {
 	 * Removes a serviceReference/service tuple to the internal map.
 	 *
 	 * @param  serviceReference a service reference.
-	 * @param  clazz class of the service reference service.
 	 * @return the generic inner class of the service reference service, if a
 	 *         valid service can be obtained; {@code Optional#empty()}
 	 *         otherwise.
 	 * @review
 	 */
 	protected <U> Optional<Class<U>> removeService(
-		ServiceReference<T> serviceReference, Class<T> clazz) {
+		ServiceReference<T> serviceReference) {
 
 		Consumer<T> identityConsumer = t -> {
 		};
 
-		return removeService(serviceReference, clazz, identityConsumer);
+		return removeService(serviceReference, identityConsumer);
 	}
 
 	/**
 	 * Removes a serviceReference/service tuple to the internal map.
 	 *
 	 * @param  serviceReference a service reference.
-	 * @param  clazz class of the service reference service.
 	 * @param  beforeRemovingConsumer consumer that will be called before
 	 *         removing the service.
 	 * @return the generic inner class of the service reference service, if a
@@ -146,7 +143,7 @@ public abstract class BaseManager<T> {
 	 * @review
 	 */
 	protected <U> Optional<Class<U>> removeService(
-		ServiceReference<T> serviceReference, Class<T> clazz,
+		ServiceReference<T> serviceReference,
 		Consumer<T> beforeRemovingConsumer) {
 
 		T service = _bundleContext.getService(serviceReference);
@@ -155,7 +152,7 @@ public abstract class BaseManager<T> {
 			return Optional.empty();
 		}
 
-		Class<U> genericClass = _getGenericClass(service, clazz);
+		Class<U> genericClass = _getGenericClass(service);
 
 		TreeSet<ServiceReferenceServiceTuple<T>> serviceReferenceServiceTuples =
 			_services.get(genericClass.getName());
@@ -176,11 +173,11 @@ public abstract class BaseManager<T> {
 		return Optional.of(genericClass);
 	}
 
-	private <U> Class<U> _getGenericClass(T service, Class<T> interfaceClass) {
+	private <U> Class<U> _getGenericClass(T service) {
 		Class<?> serviceClass = service.getClass();
 
 		Try<Class<U>> classTry = GenericUtil.getFirstGenericTypeArgumentTry(
-			serviceClass, interfaceClass);
+			serviceClass);
 
 		return classTry.orElseThrow(
 			() -> new VulcanDeveloperError.MustHaveValidGenericType(

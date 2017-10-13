@@ -66,14 +66,14 @@ public class ProviderManager extends BaseManager<Provider> {
 	protected void setServiceReference(
 		ServiceReference<Provider> serviceReference) {
 
-		addService(serviceReference, Provider.class);
+		addService(serviceReference);
 	}
 
 	@SuppressWarnings("unused")
 	protected void unsetServiceReference(
 		ServiceReference<Provider> serviceReference) {
 
-		removeService(serviceReference, Provider.class);
+		removeService(serviceReference);
 	}
 
 }

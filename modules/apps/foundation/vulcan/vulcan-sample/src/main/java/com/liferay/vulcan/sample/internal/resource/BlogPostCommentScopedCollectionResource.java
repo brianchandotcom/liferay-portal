@@ -19,6 +19,7 @@ import com.liferay.vulcan.pagination.Pagination;
 import com.liferay.vulcan.resource.CollectionResource;
 import com.liferay.vulcan.resource.Representor;
 import com.liferay.vulcan.resource.Routes;
+import com.liferay.vulcan.resource.ScopedCollectionResource;
 import com.liferay.vulcan.resource.builder.RepresentorBuilder;
 import com.liferay.vulcan.resource.builder.RoutesBuilder;
 import com.liferay.vulcan.resource.identifier.LongIdentifier;
@@ -42,9 +43,9 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Hernández
  * @review
  */
-@Component(immediate = true)
-public class BlogPostCommentCollectionResource
-	implements CollectionResource<BlogPostComment, LongIdentifier> {
+@Component(immediate = true, service = CollectionResource.class)
+public class BlogPostCommentScopedCollectionResource
+	implements ScopedCollectionResource<BlogPostComment, LongIdentifier> {
 
 	@Override
 	public Representor<BlogPostComment, LongIdentifier> buildRepresentor(

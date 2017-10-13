@@ -131,8 +131,7 @@ public class CollectionResourceManager extends BaseManager<CollectionResource> {
 	protected void setServiceReference(
 		ServiceReference<CollectionResource> serviceReference) {
 
-		Optional<Class<Object>> optional = addService(
-			serviceReference, CollectionResource.class);
+		Optional<Class<Object>> optional = addService(serviceReference);
 
 		optional.ifPresent(this::_addModelClassMaps);
 	}
@@ -141,8 +140,7 @@ public class CollectionResourceManager extends BaseManager<CollectionResource> {
 	protected void unsetServiceReference(
 		ServiceReference<CollectionResource> serviceReference) {
 
-		Optional<Class<Object>> optional = removeService(
-			serviceReference, CollectionResource.class);
+		Optional<Class<Object>> optional = removeService(serviceReference);
 
 		optional.ifPresent(this::_removeModelClassMaps);
 
@@ -224,7 +222,7 @@ public class CollectionResourceManager extends BaseManager<CollectionResource> {
 			collectionResource.getClass();
 
 		Try<Class<U>> classTry = GenericUtil.getGenericTypeArgumentTry(
-			resourceClass, CollectionResource.class, 1);
+			resourceClass, 1);
 
 		return classTry.orElseThrow(
 			() -> new VulcanDeveloperError.MustHaveValidGenericType(

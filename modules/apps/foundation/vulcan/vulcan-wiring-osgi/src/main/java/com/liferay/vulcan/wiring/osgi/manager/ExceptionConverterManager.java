@@ -60,14 +60,14 @@ public class ExceptionConverterManager extends BaseManager<ExceptionConverter> {
 	protected void setServiceReference(
 		ServiceReference<ExceptionConverter> serviceReference) {
 
-		addService(serviceReference, ExceptionConverter.class);
+		addService(serviceReference);
 	}
 
 	@SuppressWarnings("unused")
 	protected void unsetServiceReference(
 		ServiceReference<ExceptionConverter> serviceReference) {
 
-		removeService(serviceReference, ExceptionConverter.class);
+		removeService(serviceReference);
 	}
 
 	private <T extends Exception> Optional<APIError> _convert(

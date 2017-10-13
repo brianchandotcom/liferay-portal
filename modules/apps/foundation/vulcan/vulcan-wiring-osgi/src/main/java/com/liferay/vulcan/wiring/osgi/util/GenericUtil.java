@@ -39,10 +39,10 @@ public class GenericUtil {
 	 *         first position of a {@code Class}.
 	 * @review
 	 */
-	public static <T, S> Try<Class<S>> getFirstGenericTypeArgumentTry(
-		Class<?> clazz, Class<T> interfaceClass) {
+	public static <S> Try<Class<S>> getFirstGenericTypeArgumentTry(
+		Class<?> clazz) {
 
-		return getGenericTypeArgumentTry(clazz, interfaceClass, 0);
+		return getGenericTypeArgumentTry(clazz, 0);
 	}
 
 	/**
@@ -51,15 +51,12 @@ public class GenericUtil {
 	 *
 	 * @param  type the type from which we want to extract the {@code
 	 *         TypeArgument}.
-	 * @param  clazz the generic class of the {@code Type}.
 	 * @return the {@code Class} of the {@code TypeArgument} located in the
 	 *         first position of a {@code Type}.
 	 * @review
 	 */
-	public static <T, S> Try<Class<S>> getFirstGenericTypeArgumentTry(
-		Type type, Class<T> clazz) {
-
-		return getGenericTypeArgumentTry(type, clazz, 0);
+	public static <S> Try<Class<S>> getFirstGenericTypeArgumentTry(Type type) {
+		return getGenericTypeArgumentTry(type, 0);
 	}
 
 	/**
@@ -74,8 +71,8 @@ public class GenericUtil {
 	 *         position of a {@code Class}.
 	 * @review
 	 */
-	public static <T, S> Try<Class<S>> getGenericTypeArgumentTry(
-		Class<?> clazz, Class<T> interfaceClass, int position) {
+	public static <S> Try<Class<S>> getGenericTypeArgumentTry(
+		Class<?> clazz, int position) {
 
 		Type[] genericInterfaces = clazz.getGenericInterfaces();
 
@@ -86,12 +83,12 @@ public class GenericUtil {
 		for (Type genericInterface : genericInterfaces) {
 			classTry = classTry.recoverWith(
 				throwable -> getGenericTypeArgumentTry(
-					genericInterface, interfaceClass, position));
+					genericInterface, position));
 		}
 
 		return classTry.recoverWith(
 			throwable -> getGenericTypeArgumentTry(
-				clazz.getSuperclass(), interfaceClass, position));
+				clazz.getSuperclass(), position));
 	}
 
 	/**
@@ -100,15 +97,14 @@ public class GenericUtil {
 	 *
 	 * @param  type the type from which we want to extract the {@code
 	 *         TypeArgument}.
-	 * @param  clazz the generic class of the {@code Type}.
 	 * @param  position the {@code TypeArgument} position that we want to
 	 *         obtain.
 	 * @return the {@code Class} of the {@code TypeArgument} located in the nth
 	 *         position of a {@code Type}.
 	 * @review
 	 */
-	public static <T, S> Try<Class<S>> getGenericTypeArgumentTry(
-		Type type, Class<T> clazz, int position) {
+	public static <S> Try<Class<S>> getGenericTypeArgumentTry(
+		Type type, int position) {
 
 		Try<Type> typeTry = Try.success(type);
 
@@ -116,12 +112,6 @@ public class GenericUtil {
 			ParameterizedType.class::isInstance
 		).map(
 			ParameterizedType.class::cast
-		).filter(
-			parameterizedType -> {
-				Type rawType = parameterizedType.getRawType();
-
-				return rawType.equals(clazz);
-			}
 		).map(
 			ParameterizedType::getActualTypeArguments
 		).filter(

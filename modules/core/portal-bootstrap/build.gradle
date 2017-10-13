@@ -81,6 +81,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.petra.encryptor", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.executor", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.function", version: "1.0.0"
+	provided group: "com.liferay", name: "com.liferay.petra.io", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.lang", version: "1.1.0"
 	provided group: "com.liferay", name: "com.liferay.petra.log4j", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.mail", version: "1.1.0"

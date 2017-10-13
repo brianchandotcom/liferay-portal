@@ -2643,6 +2643,10 @@ public interface PropsKeys {
 
 	public static final String WIDGET_SERVLET_MAPPING = "widget.servlet.mapping";
 
+	public static final String WORKFLOW_EMAIL_FROM_ADDRESS = "workflow.email.from.address";
+
+	public static final String WORKFLOW_EMAIL_FROM_NAME = "workflow.email.from.name";
+
 	public static final String XML_SECURITY_ENABLED = "xml.security.enabled";
 
 	public static final String XML_SITEMAP_INDEX_ENABLED = "xml.sitemap.index.enabled";

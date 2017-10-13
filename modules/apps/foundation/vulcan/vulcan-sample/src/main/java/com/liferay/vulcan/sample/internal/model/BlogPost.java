@@ -47,20 +47,17 @@ public class BlogPost {
 	 * @param  title the title of the blog post.
 	 * @param  subtitle the subtitle of the blog post.
 	 * @param  content the content of the blog post.
-	 * @param  displayDate the display date of the blog post.
 	 * @param  creatorId the ID of the creator of this blog post.
 	 * @return the added {@code BlogPost}.
 	 * @review
 	 */
 	public static BlogPost addBlogPost(
-		String title, String subtitle, String content, Date displayDate,
-		long creatorId) {
+		String title, String subtitle, String content, long creatorId) {
 
 		long id = _count.incrementAndGet();
 
 		BlogPost blogPost = new BlogPost(
-			id, title, subtitle, content, displayDate, creatorId, new Date(),
-			new Date());
+			id, title, subtitle, content, creatorId, new Date(), new Date());
 
 		_blogPosts.put(id, blogPost);
 
@@ -128,14 +125,13 @@ public class BlogPost {
 	 * @param  title the new title for the blog post.
 	 * @param  subtitle the new subtitle for the blog post.
 	 * @param  content the new content for the blog post.
-	 * @param  displayDate the new display date for the blog post.
 	 * @param  creatorId the ID of the new creator for the blog post.
 	 * @return the updated {@code BlogPost}.
 	 * @review
 	 */
 	public static Optional<BlogPost> updateBlogPost(
 		long id, String title, String subtitle, String content,
-		Date displayDate, long creatorId) {
+		long creatorId) {
 
 		BlogPost blogPost = _blogPosts.get(id);
 
@@ -146,8 +142,7 @@ public class BlogPost {
 		Date createDate = blogPost.getCreateDate();
 
 		blogPost = new BlogPost(
-			id, title, subtitle, content, displayDate, creatorId, createDate,
-			new Date());
+			id, title, subtitle, content, creatorId, createDate, new Date());
 
 		_blogPosts.put(id, blogPost);
 
@@ -182,16 +177,6 @@ public class BlogPost {
 	 */
 	public long getCreatorId() {
 		return _creatorId;
-	}
-
-	/**
-	 * Returns the display date of this {@code BlogPost}.
-	 *
-	 * @return the display date of the blog post.
-	 * @review
-	 */
-	public Date getDisplayDate() {
-		return _displayDate;
 	}
 
 	/**
@@ -235,14 +220,13 @@ public class BlogPost {
 	}
 
 	private BlogPost(
-		long id, String title, String subtitle, String content,
-		Date displayDate, long creatorId, Date createDate, Date modifiedDate) {
+		long id, String title, String subtitle, String content, long creatorId,
+		Date createDate, Date modifiedDate) {
 
 		_id = id;
 		_title = title;
 		_subtitle = subtitle;
 		_content = content;
-		_displayDate = displayDate;
 		_creatorId = creatorId;
 		_createDate = createDate;
 		_modifiedDate = modifiedDate;
@@ -265,7 +249,7 @@ public class BlogPost {
 
 			Lorem lorem = faker.lorem();
 
-			Date displayDate = dateAndTime.past(400, TimeUnit.DAYS);
+			Date date = dateAndTime.past(400, TimeUnit.DAYS);
 			String subtitle = lorem.sentence();
 			List<String> paragraphs = lorem.paragraphs(5);
 
@@ -282,8 +266,7 @@ public class BlogPost {
 			int creatorId = random.nextInt(User.getUsersCount());
 
 			BlogPost blogPost = new BlogPost(
-				i, title, subtitle, content, displayDate, creatorId,
-				displayDate, displayDate);
+				i, title, subtitle, content, creatorId, date, date);
 
 			_blogPosts.put(i, blogPost);
 		}
@@ -292,7 +275,6 @@ public class BlogPost {
 	private final String _content;
 	private final Date _createDate;
 	private final long _creatorId;
-	private final Date _displayDate;
 	private final long _id;
 	private final Date _modifiedDate;
 	private final String _subtitle;

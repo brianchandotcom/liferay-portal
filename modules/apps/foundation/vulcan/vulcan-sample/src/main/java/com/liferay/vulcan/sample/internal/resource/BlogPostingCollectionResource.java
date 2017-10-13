@@ -26,9 +26,6 @@ import com.liferay.vulcan.resource.identifier.RootIdentifier;
 import com.liferay.vulcan.sample.internal.model.BlogPost;
 import com.liferay.vulcan.sample.internal.model.User;
 
-import java.time.Instant;
-
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -58,11 +55,9 @@ public class BlogPostingCollectionResource
 		return representorBuilder.identifier(
 			blogPost -> blogPost::getId
 		).addDate(
-			"createDate", BlogPost::getCreateDate
+			"dateCreated", BlogPost::getCreateDate
 		).addDate(
-			"displayDate", BlogPost::getDisplayDate
-		).addDate(
-			"modifiedDate", BlogPost::getModifiedDate
+			"dateModified", BlogPost::getModifiedDate
 		).addEmbeddedModel(
 			"creator", User.class,
 			blogPost -> User.getUser(blogPost.getCreatorId())
@@ -107,13 +102,9 @@ public class BlogPostingCollectionResource
 		String title = (String)body.get("headline");
 		String subtitle = (String)body.get("alternativeHeadline");
 		String content = (String)body.get("articleBody");
-		String displayDateString = (String)body.get("displayDate");
 		Long creatorId = (Long)body.get("creator");
 
-		Date displayDate = Date.from(Instant.parse(displayDateString));
-
-		return BlogPost.addBlogPost(
-			title, subtitle, content, displayDate, creatorId);
+		return BlogPost.addBlogPost(title, subtitle, content, creatorId);
 	}
 
 	private void _deleteBlogPost(LongIdentifier blogPostingLongIdentifier) {
@@ -147,14 +138,11 @@ public class BlogPostingCollectionResource
 		String title = (String)body.get("headline");
 		String subtitle = (String)body.get("alternativeHeadline");
 		String content = (String)body.get("articleBody");
-		String displayDateString = (String)body.get("displayDate");
 		Long creatorId = (Long)body.get("creator");
-
-		Date displayDate = Date.from(Instant.parse(displayDateString));
 
 		Optional<BlogPost> optional = BlogPost.updateBlogPost(
 			blogPostingLongIdentifier.getId(), title, subtitle, content,
-			displayDate, creatorId);
+			creatorId);
 
 		return optional.orElseThrow(
 			() -> new NotFoundException(

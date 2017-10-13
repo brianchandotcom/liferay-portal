@@ -1291,6 +1291,69 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
+	public void testMoveStagingCalendarBookingToOtherSiteAndBack()
+		throws Exception {
+
+		_liveGroup = GroupTestUtil.addGroup();
+
+		Calendar liveCalendar = CalendarTestUtil.getDefaultCalendar(_liveGroup);
+
+		CalendarStagingTestUtil.enableLocalStaging(_liveGroup, true);
+
+		Calendar stagingCalendar = CalendarStagingTestUtil.getStagingCalendar(
+			_liveGroup, liveCalendar);
+
+		CalendarBooking calendarBooking =
+			CalendarBookingTestUtil.addRegularCalendarBooking(stagingCalendar);
+
+		CalendarStagingTestUtil.publishLayouts(_liveGroup, true);
+
+		assertCalendarBookingsCount(liveCalendar, 1);
+
+		assertCalendarBookingsCount(stagingCalendar, 1);
+
+		_group = GroupTestUtil.addGroup();
+
+		Calendar externalCalendar = CalendarTestUtil.addCalendar(_group);
+
+		CalendarBookingLocalServiceUtil.updateCalendarBooking(
+			calendarBooking.getUserId(), calendarBooking.getCalendarBookingId(),
+			externalCalendar.getCalendarId(), calendarBooking.getTitleMap(),
+			calendarBooking.getDescriptionMap(), calendarBooking.getLocation(),
+			calendarBooking.getStartTime(), calendarBooking.getEndTime(),
+			calendarBooking.isAllDay(), calendarBooking.getRecurrence(),
+			calendarBooking.getFirstReminder(),
+			calendarBooking.getFirstReminderType(),
+			calendarBooking.getSecondReminder(),
+			calendarBooking.getSecondReminderType(), createServiceContext());
+
+		CalendarBookingLocalServiceUtil.updateCalendarBooking(
+			calendarBooking.getUserId(), calendarBooking.getCalendarBookingId(),
+			stagingCalendar.getCalendarId(), calendarBooking.getTitleMap(),
+			calendarBooking.getDescriptionMap(), calendarBooking.getLocation(),
+			calendarBooking.getStartTime(), calendarBooking.getEndTime(),
+			calendarBooking.isAllDay(), calendarBooking.getRecurrence(),
+			calendarBooking.getFirstReminder(),
+			calendarBooking.getFirstReminderType(),
+			calendarBooking.getSecondReminder(),
+			calendarBooking.getSecondReminderType(), createServiceContext());
+
+		assertCalendarBookingsCount(externalCalendar, 0);
+
+		assertCalendarBookingsCount(liveCalendar, 1);
+
+		assertCalendarBookingsCount(stagingCalendar, 1);
+
+		CalendarStagingTestUtil.publishLayouts(_liveGroup, true);
+
+		assertCalendarBookingsCount(externalCalendar, 0);
+
+		assertCalendarBookingsCount(liveCalendar, 1);
+
+		assertCalendarBookingsCount(stagingCalendar, 1);
+	}
+
+	@Test
 	public void testMoveStagingCalendarBookingToOtherSiteDeletesLiveCalendarBooking()
 		throws Exception {
 

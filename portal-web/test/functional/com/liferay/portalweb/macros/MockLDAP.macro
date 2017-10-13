@@ -2,7 +2,9 @@
 	<command name="selectJsonFile">
 		<var name="key_tab" value="${tabName}" />
 
-		<execute function="AssertClick" locator1="NavTab#TAB_LINK" value1="${tabName}" />
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="${tabName}" />
+		</execute>
 
 		<execute function="UploadCommonFile" locator1="//label[contains(text(),'${key_tab}')]/following-sibling::input[(@type='file')]" value1="${fileName}" />
 

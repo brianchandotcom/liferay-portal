@@ -748,8 +748,6 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute function="WaitForSPARefresh" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -2423,8 +2421,6 @@
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
-
-		<execute function="WaitForSPARefresh" />
 
 		<execute macro="Navigator#openURL" />
 

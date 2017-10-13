@@ -15,7 +15,6 @@
 package com.liferay.petra.string;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -45,26 +44,23 @@ public class StringUtil {
 			return Collections.emptyList();
 		}
 
-		List<String> nodeValues = new ArrayList<>();
+		List<String> elements = new ArrayList<>();
 
-		_split(nodeValues, s, 0, delimiter);
+		_split(elements, s, delimiter);
 
-		return nodeValues;
+		return elements;
 	}
 
-	private static void _split(
-		Collection<String> values, String s, int offset, char delimiter) {
+	private static void _split(List<String> values, String s, char delimiter) {
+		int offset = 0;
+		int pos;
 
-		int pos = s.indexOf(delimiter, offset);
-
-		while (pos != -1) {
+		while ((pos = s.indexOf(delimiter, offset)) != -1) {
 			if (offset < pos) {
 				values.add(s.substring(offset, pos));
 			}
 
 			offset = pos + 1;
-
-			pos = s.indexOf(delimiter, offset);
 		}
 
 		if (offset < s.length()) {

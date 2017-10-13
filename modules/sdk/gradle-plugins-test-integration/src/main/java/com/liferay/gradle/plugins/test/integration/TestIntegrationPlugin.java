@@ -216,6 +216,12 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(FileCopyDetails fileCopyDetails) {
+					if (testIntegrationTomcatExtension.
+							isOverwriteCopyTestModules()) {
+
+						return;
+					}
+
 					String fileName = renameDependencyClosure.call(
 						fileCopyDetails.getName());
 

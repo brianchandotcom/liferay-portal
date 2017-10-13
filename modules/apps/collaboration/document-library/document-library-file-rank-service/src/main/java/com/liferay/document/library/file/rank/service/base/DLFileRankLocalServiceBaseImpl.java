@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.document.library.file.rank.model.DLFileRank;
 import com.liferay.document.library.file.rank.service.DLFileRankLocalService;
+import com.liferay.document.library.file.rank.service.persistence.DLFileRankFinder;
 import com.liferay.document.library.file.rank.service.persistence.DLFileRankPersistence;
 import com.liferay.document.library.kernel.service.persistence.DLFolderPersistence;
 
@@ -351,6 +352,24 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the document library file rank finder.
+	 *
+	 * @return the document library file rank finder
+	 */
+	public DLFileRankFinder getDLFileRankFinder() {
+		return dlFileRankFinder;
+	}
+
+	/**
+	 * Sets the document library file rank finder.
+	 *
+	 * @param dlFileRankFinder the document library file rank finder
+	 */
+	public void setDLFileRankFinder(DLFileRankFinder dlFileRankFinder) {
+		this.dlFileRankFinder = dlFileRankFinder;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -499,6 +518,8 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	protected DLFileRankLocalService dlFileRankLocalService;
 	@BeanReference(type = DLFileRankPersistence.class)
 	protected DLFileRankPersistence dlFileRankPersistence;
+	@BeanReference(type = DLFileRankFinder.class)
+	protected DLFileRankFinder dlFileRankFinder;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.LayoutLocalService.class)

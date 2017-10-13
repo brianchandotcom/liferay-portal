@@ -14,10 +14,13 @@
 
 package com.liferay.vulcan.application.internal.endpoint;
 
+import com.google.gson.JsonObject;
+
 import com.liferay.vulcan.alias.BinaryFunction;
 import com.liferay.vulcan.endpoint.RootEndpoint;
 import com.liferay.vulcan.pagination.Page;
 import com.liferay.vulcan.pagination.SingleModel;
+import com.liferay.vulcan.provider.ServerURLProvider;
 import com.liferay.vulcan.resource.RelatedCollection;
 import com.liferay.vulcan.resource.Representor;
 import com.liferay.vulcan.resource.Routes;
@@ -30,6 +33,7 @@ import com.liferay.vulcan.wiring.osgi.manager.CollectionResourceManager;
 
 import java.io.InputStream;
 
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -183,6 +187,33 @@ public class RootEndpointImpl implements RootEndpoint {
 		).map(
 			function -> function.apply(new RootIdentifier() {})
 		);
+	}
+
+	@Override
+	public String getHome() {
+		List<String> rootCollectionResourceNames =
+			_collectionResourceManager.getRootCollectionResourceNames();
+
+		String serverURL = _serverURLProvider.getServerURL(_httpServletRequest);
+
+		JsonObject rootJsonObject = new JsonObject();
+
+		JsonObject resourcesJsonObject = new JsonObject();
+
+		rootCollectionResourceNames.forEach(
+			name -> {
+				String url = serverURL + "/p/" + name;
+
+				JsonObject jsonObject = new JsonObject();
+
+				jsonObject.addProperty("href", url);
+
+				resourcesJsonObject.add(name, jsonObject);
+			});
+
+		rootJsonObject.add("resources", resourcesJsonObject);
+
+		return rootJsonObject.toString();
 	}
 
 	@Override
@@ -345,5 +376,8 @@ public class RootEndpointImpl implements RootEndpoint {
 
 	@Context
 	private HttpServletRequest _httpServletRequest;
+
+	@Reference
+	private ServerURLProvider _serverURLProvider;
 
 }

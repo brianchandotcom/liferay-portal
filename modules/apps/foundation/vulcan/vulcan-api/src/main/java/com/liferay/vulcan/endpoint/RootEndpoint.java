@@ -143,6 +143,16 @@ public interface RootEndpoint {
 		@PathParam("name") String name);
 
 	/**
+	 * Returns the representation of the "home" of the application.
+	 *
+	 * @return the representation of the "home" of the application
+	 * @review
+	 */
+	@GET
+	@Path("/")
+	public String getHome();
+
+	/**
 	 * Returns a nested collection {@link Page} for a given set of
 	 * name-id-nestedName or an exception if an error occurred.
 	 *

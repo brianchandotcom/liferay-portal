@@ -12,18 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.petra.lang;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Maps servlet context names to/from the servlet context's class loader.
  *
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, replaced with {@link
- *             com.liferay.petra.lang.ClassLoaderPool}
  */
-@Deprecated
 public class ClassLoaderPool {
 
 	/**
@@ -38,10 +36,19 @@ public class ClassLoaderPool {
 	 * @return the class loader associated with the context name
 	 */
 	public static ClassLoader getClassLoader(String contextName) {
-		PortalRuntimePermission.checkGetBeanProperty(ClassLoaderPool.class);
+		ClassLoader classLoader = null;
 
-		return com.liferay.petra.lang.ClassLoaderPool.getClassLoader(
-			contextName);
+		if ((contextName != null) && !contextName.equals("null")) {
+			classLoader = _classLoaders.get(contextName);
+		}
+
+		if (classLoader == null) {
+			Thread currentThread = Thread.currentThread();
+
+			classLoader = currentThread.getContextClassLoader();
+		}
+
+		return classLoader;
 	}
 
 	/**
@@ -49,7 +56,7 @@ public class ClassLoaderPool {
 	 *
 	 * <p>
 	 * If the class loader is <code>null</code> or if no context name is
-	 * associated with the class loader, {@link StringPool#<code>NULL</code>} is
+	 * associated with the class loader, {@link <code>"null"</code>} is
 	 * returned.
 	 * </p>
 	 *
@@ -57,27 +64,47 @@ public class ClassLoaderPool {
 	 * @return the context name associated with the class loader
 	 */
 	public static String getContextName(ClassLoader classLoader) {
-		return com.liferay.petra.lang.ClassLoaderPool.getContextName(
-			classLoader);
+		if (classLoader == null) {
+			return "null";
+		}
+
+		String contextName = _contextNames.get(classLoader);
+
+		if (contextName == null) {
+			contextName = "null";
+		}
+
+		return contextName;
 	}
 
 	public static void register(String contextName, ClassLoader classLoader) {
-		PortalRuntimePermission.checkGetBeanProperty(ClassLoaderPool.class);
-
-		com.liferay.petra.lang.ClassLoaderPool.register(
-			contextName, classLoader);
+		_classLoaders.put(contextName, classLoader);
+		_contextNames.put(classLoader, contextName);
 	}
 
 	public static void unregister(ClassLoader classLoader) {
-		PortalRuntimePermission.checkGetBeanProperty(ClassLoaderPool.class);
+		String contextName = _contextNames.remove(classLoader);
 
-		com.liferay.petra.lang.ClassLoaderPool.unregister(classLoader);
+		if (contextName != null) {
+			_classLoaders.remove(contextName);
+		}
 	}
 
 	public static void unregister(String contextName) {
-		PortalRuntimePermission.checkGetBeanProperty(ClassLoaderPool.class);
+		ClassLoader classLoader = _classLoaders.remove(contextName);
 
-		com.liferay.petra.lang.ClassLoaderPool.unregister(contextName);
+		if (classLoader != null) {
+			_contextNames.remove(classLoader);
+		}
+	}
+
+	private static final Map<String, ClassLoader> _classLoaders =
+		new ConcurrentHashMap<>();
+	private static final Map<ClassLoader, String> _contextNames =
+		new ConcurrentHashMap<>();
+
+	static {
+		register("GlobalClassLoader", ClassLoaderPool.class.getClassLoader());
 	}
 
 }

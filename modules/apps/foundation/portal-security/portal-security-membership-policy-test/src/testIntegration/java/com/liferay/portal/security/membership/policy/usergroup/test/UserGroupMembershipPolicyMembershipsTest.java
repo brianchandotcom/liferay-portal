@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.UserGroupServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -47,6 +48,7 @@ import org.junit.runner.RunWith;
  * @author Roberto Díaz
  */
 @RunWith(Arquillian.class)
+@Sync
 public class UserGroupMembershipPolicyMembershipsTest
 	extends BaseUserGroupMembershipPolicyTestCase {
 

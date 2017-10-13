@@ -19,6 +19,7 @@ package com.liferay.vulcan.result;
  * {@code Exception}.
  *
  * @author Alejandro Hernández
+ * @review
  */
 @FunctionalInterface
 public interface ThrowableSupplier<T> {
@@ -27,6 +28,7 @@ public interface ThrowableSupplier<T> {
 	 * Gets a result or throws an {@code Exception}.
 	 *
 	 * @return a result if no {@code Exception} is thrown.
+	 * @review
 	 */
 	public T get() throws Exception;
 

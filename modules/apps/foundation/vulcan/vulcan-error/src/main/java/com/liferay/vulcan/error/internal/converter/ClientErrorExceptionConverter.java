@@ -27,6 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * representation.
  *
  * @author Alejandro Hernández
+ * @review
  */
 @Component(immediate = true)
 public class ClientErrorExceptionConverter

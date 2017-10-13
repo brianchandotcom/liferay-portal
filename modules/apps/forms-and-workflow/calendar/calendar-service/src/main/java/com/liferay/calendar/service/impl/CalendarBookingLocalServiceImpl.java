@@ -1160,15 +1160,8 @@ public class CalendarBookingLocalServiceImpl
 		CalendarBooking calendarBooking =
 			calendarBookingPersistence.findByPrimaryKey(calendarBookingId);
 
-		boolean calendarModified = false;
-
-		if (calendarId != calendarBooking.getCalendarId()) {
-			calendarModified = true;
-		}
-
-		if (calendarModified &&
-			(calendarLocalService.isStagingCalendar(calendar) ||
-			 isStagingCalendarBooking(calendarBooking))) {
+		if (isStagingCalendarBooking(calendarBooking) &&
+			(calendar.getGroupId() != calendarBooking.getGroupId())) {
 
 			systemEventLocalService.addSystemEvent(
 				userId, calendarBooking.getGroupId(),

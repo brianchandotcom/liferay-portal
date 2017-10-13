@@ -14,6 +14,8 @@
 
 package com.liferay.vulcan.resource;
 
+import aQute.bnd.annotation.ConsumerType;
+
 import com.liferay.vulcan.resource.builder.RepresentorBuilder;
 import com.liferay.vulcan.resource.builder.RoutesBuilder;
 import com.liferay.vulcan.resource.identifier.Identifier;
@@ -41,7 +43,9 @@ import com.liferay.vulcan.resource.identifier.Identifier;
  * @author Jorge Ferrer
  * @see    RepresentorBuilder
  * @see    RoutesBuilder
+ * @review
  */
+@ConsumerType
 public interface CollectionResource<T, U extends Identifier> {
 
 	/**
@@ -49,13 +53,14 @@ public interface CollectionResource<T, U extends Identifier> {
 	 * RepresentorBuilder}.
 	 *
 	 * <p>
-	 * Note that this builder doesn't construct a <code>Representor</code>
-	 * object (such objects don't actually exist). You need to call the builder
-	 * methods providing as much information as possible.
+	 * Note that this builder doesn't construct a {@code Representor} object
+	 * (such objects don't actually exist). You need to call the builder methods
+	 * providing as much information as possible.
 	 * </p>
 	 *
-	 * @param representorBuilder the builder used to create the representor.
-	 * @see   RepresentorBuilder
+	 * @param  representorBuilder the builder used to create the representor.
+	 * @see    RepresentorBuilder
+	 * @review
 	 */
 	public Representor<T, U> buildRepresentor(
 		RepresentorBuilder<T, U> representorBuilder);
@@ -64,6 +69,7 @@ public interface CollectionResource<T, U extends Identifier> {
 	 * Returns the name for this resource.
 	 *
 	 * @return the name for this resource.
+	 * @review
 	 */
 	public String getName();
 
@@ -75,8 +81,9 @@ public interface CollectionResource<T, U extends Identifier> {
 	 * RoutesBuilder}.
 	 * </p>
 	 *
-	 * @param routesBuilder the builder used to create the routes.
-	 * @see   RoutesBuilder
+	 * @param  routesBuilder the builder used to create the routes.
+	 * @see    RoutesBuilder
+	 * @review
 	 */
 	public Routes<T> routes(RoutesBuilder<T, U> routesBuilder);
 

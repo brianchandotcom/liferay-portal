@@ -28,6 +28,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
+ * @review
  */
 @Component(
 	immediate = true,
@@ -44,16 +45,27 @@ public class PlainJSONSingleModelMessageMapper<T>
 	}
 
 	@Override
-	public void mapEmbeddedResourceField(
+	public void mapBooleanField(
+		JSONObjectBuilder jsonObjectBuilder, String fieldName, Boolean value) {
+
+		jsonObjectBuilder.field(
+			fieldName
+		).booleanValue(
+			value
+		);
+	}
+
+	@Override
+	public void mapEmbeddedResourceBooleanField(
 		JSONObjectBuilder jsonObjectBuilder,
 		FunctionalList<String> embeddedPathElements, String fieldName,
-		Object value) {
+		Boolean value) {
 
 		Stream<String> tailStream = embeddedPathElements.tailStream();
 
 		jsonObjectBuilder.nestedField(
 			embeddedPathElements.head(), tailStream.toArray(String[]::new)
-		).value(
+		).booleanValue(
 			value
 		);
 	}
@@ -70,8 +82,38 @@ public class PlainJSONSingleModelMessageMapper<T>
 			embeddedPathElements.head(), tailStream.toArray(String[]::new)
 		).field(
 			fieldName
-		).value(
+		).stringValue(
 			url
+		);
+	}
+
+	@Override
+	public void mapEmbeddedResourceNumberField(
+		JSONObjectBuilder jsonObjectBuilder,
+		FunctionalList<String> embeddedPathElements, String fieldName,
+		Number value) {
+
+		Stream<String> tailStream = embeddedPathElements.tailStream();
+
+		jsonObjectBuilder.nestedField(
+			embeddedPathElements.head(), tailStream.toArray(String[]::new)
+		).numberValue(
+			value
+		);
+	}
+
+	@Override
+	public void mapEmbeddedResourceStringField(
+		JSONObjectBuilder jsonObjectBuilder,
+		FunctionalList<String> embeddedPathElements, String fieldName,
+		String value) {
+
+		Stream<String> tailStream = embeddedPathElements.tailStream();
+
+		jsonObjectBuilder.nestedField(
+			embeddedPathElements.head(), tailStream.toArray(String[]::new)
+		).stringValue(
+			value
 		);
 	}
 
@@ -86,19 +128,8 @@ public class PlainJSONSingleModelMessageMapper<T>
 			embeddedPathElements.head(), tailStream.toArray(String[]::new)
 		).field(
 			"self"
-		).value(
+		).stringValue(
 			url
-		);
-	}
-
-	@Override
-	public void mapField(
-		JSONObjectBuilder jsonObjectBuilder, String fieldName, Object value) {
-
-		jsonObjectBuilder.field(
-			fieldName
-		).value(
-			value
 		);
 	}
 
@@ -108,7 +139,7 @@ public class PlainJSONSingleModelMessageMapper<T>
 
 		jsonObjectBuilder.field(
 			fieldName
-		).value(
+		).stringValue(
 			url
 		);
 	}
@@ -122,8 +153,19 @@ public class PlainJSONSingleModelMessageMapper<T>
 
 		jsonObjectBuilder.nestedField(
 			embeddedPathElements.head(), tailStream.toArray(String[]::new)
-		).value(
+		).stringValue(
 			url
+		);
+	}
+
+	@Override
+	public void mapNumberField(
+		JSONObjectBuilder jsonObjectBuilder, String fieldName, Number value) {
+
+		jsonObjectBuilder.field(
+			fieldName
+		).numberValue(
+			value
 		);
 	}
 
@@ -131,8 +173,19 @@ public class PlainJSONSingleModelMessageMapper<T>
 	public void mapSelfURL(JSONObjectBuilder jsonObjectBuilder, String url) {
 		jsonObjectBuilder.field(
 			"self"
-		).value(
+		).stringValue(
 			url
+		);
+	}
+
+	@Override
+	public void mapStringField(
+		JSONObjectBuilder jsonObjectBuilder, String fieldName, String value) {
+
+		jsonObjectBuilder.field(
+			fieldName
+		).stringValue(
+			value
 		);
 	}
 

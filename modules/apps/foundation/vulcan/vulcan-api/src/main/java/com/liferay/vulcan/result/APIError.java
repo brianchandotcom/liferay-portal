@@ -14,6 +14,8 @@
 
 package com.liferay.vulcan.result;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.util.Optional;
 
 /**
@@ -23,7 +25,9 @@ import java.util.Optional;
  * exceptions will be converted to a {@code 500} error with a standard message.
  *
  * @author Alejandro Hernández
+ * @review
  */
+@ProviderType
 public interface APIError {
 
 	/**
@@ -33,6 +37,7 @@ public interface APIError {
 	 *
 	 * @return the description of this error if present; {@code
 	 *         Optional#empty()} otherwise.
+	 * @review
 	 */
 	public Optional<String> getDescription();
 
@@ -40,6 +45,7 @@ public interface APIError {
 	 * Returns the original exception of this error.
 	 *
 	 * @return the original exception of this error.
+	 * @review
 	 */
 	public Exception getException();
 
@@ -47,6 +53,7 @@ public interface APIError {
 	 * Returns the HTTP status code for this {@code APIError}.
 	 *
 	 * @return the HTTP status code of this error.
+	 * @review
 	 */
 	public int getStatusCode();
 
@@ -55,6 +62,7 @@ public interface APIError {
 	 * APIErrors} of the same type.
 	 *
 	 * @return the title of this error.
+	 * @review
 	 */
 	public String getTitle();
 
@@ -62,6 +70,7 @@ public interface APIError {
 	 * Returns the type of this error. Identifies errors with the same meaning.
 	 *
 	 * @return the type of this error.
+	 * @review
 	 */
 	public String getType();
 

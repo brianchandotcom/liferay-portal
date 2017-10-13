@@ -21,6 +21,7 @@ import java.util.Objects;
  * {@code Exception}.
  *
  * @author Alejandro Hernández
+ * @review
  */
 @FunctionalInterface
 @SuppressWarnings("unused")
@@ -35,6 +36,7 @@ public interface ThrowableFunction<T, R> {
 	 * @return a composed function that first applies this function and then
 	 *         applies the {@code after} function
 	 * @see    #compose(ThrowableFunction)
+	 * @review
 	 */
 	public default <V> ThrowableFunction<T, V> andThen(
 		ThrowableFunction<? super R, ? extends V> throwableFunction) {
@@ -49,6 +51,7 @@ public interface ThrowableFunction<T, R> {
 	 *
 	 * @param  t the function argument
 	 * @return the function result
+	 * @review
 	 */
 	public R apply(T t) throws Exception;
 
@@ -61,6 +64,7 @@ public interface ThrowableFunction<T, R> {
 	 * @return a composed function that first applies the {@code before}
 	 *         function and then applies this function
 	 * @see    #andThen(ThrowableFunction)
+	 * @review
 	 */
 	public default <V> ThrowableFunction<V, R> compose(
 		ThrowableFunction<? super V, ? extends T> throwableFunction) {

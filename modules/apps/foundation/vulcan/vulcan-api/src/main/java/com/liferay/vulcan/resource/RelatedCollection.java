@@ -22,6 +22,7 @@ import java.util.function.Function;
  * Represents the relation between a thing and a collection.
  *
  * @author Alejandro Hernández
+ * @review
  */
 public class RelatedCollection<T, S> {
 
@@ -39,6 +40,7 @@ public class RelatedCollection<T, S> {
 	 * related collection.
 	 *
 	 * @return function to calculate the related collection's identifier.
+	 * @review
 	 */
 	public Function<T, Identifier> getIdentifierFunction() {
 		return _identifierFunction;
@@ -48,6 +50,7 @@ public class RelatedCollection<T, S> {
 	 * Returns the key of the relation.
 	 *
 	 * @return key of the relation.
+	 * @review
 	 */
 	public String getKey() {
 		return _key;
@@ -57,6 +60,7 @@ public class RelatedCollection<T, S> {
 	 * Returns the class of the collection's related models.
 	 *
 	 * @return class of the collection's related models.
+	 * @review
 	 */
 	public Class<S> getModelClass() {
 		return _modelClass;

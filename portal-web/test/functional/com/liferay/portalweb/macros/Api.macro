@@ -38,7 +38,7 @@
 
 		<execute function="AssertTextEquals" locator1="JSONWSAddress#API_METHOD" value1="/address/add-address" />
 
-		<var method="selenium#getText(JSONWSAddress#P_AUTH_FIELD)" name="pAuth" />
+		<var method="selenium#getElementValue(JSONWSAddress#P_AUTH_FIELD)" name="pAuth" />
 
 		<execute function="Open" locator1="${url}${pAuth}" />
 	</command>

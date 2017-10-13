@@ -146,10 +146,10 @@ public class BlogPostComment {
 	 * @review
 	 */
 	public static int getBlogPostCommentsCount(long blogPostId) {
-		Map<Long, BlogPostComment> blogPostComments = _blogPostCommentsMap.get(
-			blogPostId);
+		if (_blogPostCommentsMap.containsKey(blogPostId)) {
+			Map<Long, BlogPostComment> blogPostComments =
+				_blogPostCommentsMap.get(blogPostId);
 
-		if (blogPostComments != null) {
 			return blogPostComments.size();
 		}
 

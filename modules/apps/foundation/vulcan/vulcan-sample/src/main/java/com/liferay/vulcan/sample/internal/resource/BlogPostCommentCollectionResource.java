@@ -52,7 +52,7 @@ public class BlogPostCommentCollectionResource
 			representorBuilder) {
 
 		return representorBuilder.identifier(
-			blogsEntry -> blogsEntry::getId
+			blogPostComment -> blogPostComment::getId
 		).addDate(
 			"dateCreated", BlogPostComment::getCreateDate
 		).addDate(

@@ -14,7 +14,6 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -46,9 +45,8 @@ import javax.portlet.PortletURL;
 public class LayoutsAdminDisplayContext extends BaseLayoutDisplayContext {
 
 	public LayoutsAdminDisplayContext(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
-		throws PortalException {
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		super(liferayPortletRequest, liferayPortletResponse);
 

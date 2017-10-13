@@ -1521,12 +1521,39 @@ war.path=${app.server.weblogic.portal.dir}/</echo>
 							value="-Dcom.sun.management.jmxremote.port=${jmx.remote.port.overwrite}"
 						/>
 
-						<replaceregexp
-							file="${test.app.server.dir}/conf/server.xml"
-							flags="g"
-							match="=&quot;8(\d\d\d)&quot;"
-							replace="=&quot;${test.app.server.leading.port.number}\1&quot;"
-						/>
+						<if>
+							<or>
+								<equals arg1="${app.server.type}" arg2="jboss" />
+								<equals arg1="${app.server.type}" arg2="wildfly" />
+							</or>
+							<then>
+								<replaceregexp
+									file="${test.app.server.dir}/standalone/configuration/standalone.xml"
+									match="offset:0"
+									replace="offset:${app.server.bundle.index}000"
+								/>
+							</then>
+							<elseif>
+								<equals arg1="${app.server.type}" arg2="tomcat" />
+								<then>
+									<replaceregexp
+										file="${test.app.server.dir}/conf/server.xml"
+										flags="g"
+										match="=&quot;8(\d\d\d)&quot;"
+										replace="=&quot;${test.app.server.leading.port.number}\1&quot;"
+									/>
+								</then>
+							</elseif>
+							<elseif>
+								<equals arg1="${app.server.type}" arg2="weblogic" />
+								<then>
+									<replace file="${test.app.server.dir}/domains/liferay/config/config.xml">
+										<replacetoken><![CDATA[<listen-port>8080</listen-port>]]></replacetoken>
+										<replacevalue><![CDATA[<listen-port>${test.app.server.leading.port.number}080</listen-port>]]></replacevalue>
+									</replace>
+								</then>
+							</elseif>
+						</if>
 
 						<replace
 							file="${test.app.server.classes.portal.dir}/portal-ext.properties"

@@ -183,6 +183,7 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 
 			Liferay.detach('destroyPortlet', handleDestroyPortlet);
 		}
+
 		Liferay.on('destroyPortlet', handleDestroyPortlet);
 	</aui:script>
 </c:if>

@@ -646,6 +646,10 @@ public class VerifyProperties extends VerifyProcess {
 		// Document Library
 
 		new String[] {
+			"dl.file.rank.check.interval", "check.file.ranks.interval",
+			"com.liferay.recent.documents.web"
+		},
+		new String[] {
 			"dl.display.templates.config", "display.templates.config",
 			"com.liferay.document.library.web"
 		},

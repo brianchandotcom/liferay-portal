@@ -18,6 +18,7 @@ import com.liferay.layout.admin.web.internal.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -113,10 +114,30 @@ public class ViewLayoutsDisplayContext extends BaseLayoutDisplayContext {
 			return _navigation;
 		}
 
+		String defaultNavigation = "public-pages";
+
+		if (!isShowPublicPages()) {
+			defaultNavigation = "private-pages";
+		}
+
 		_navigation = ParamUtil.getString(
-			liferayPortletRequest, "navigation", "public-pages");
+			liferayPortletRequest, "navigation", defaultNavigation);
 
 		return _navigation;
+	}
+
+	public String[] getNavigationKeys() {
+		if (_navigationKeys != null) {
+			return _navigationKeys;
+		}
+
+		_navigationKeys = new String[] {"public-pages", "private-pages"};
+
+		if (!isShowPublicPages()) {
+			_navigationKeys = new String[] {"private-pages"};
+		}
+
+		return _navigationKeys;
 	}
 
 	public String getOrderByCol() {
@@ -187,9 +208,20 @@ public class ViewLayoutsDisplayContext extends BaseLayoutDisplayContext {
 		return false;
 	}
 
+	public boolean isShowPublicPages() {
+		Group selGroup = getSelGroup();
+
+		if (selGroup.isLayoutSetPrototype() || selGroup.isLayoutPrototype()) {
+			return false;
+		}
+
+		return true;
+	}
+
 	private String _displayStyle;
 	private SearchContainer _layoutsSearchContainer;
 	private String _navigation;
+	private String[] _navigationKeys;
 	private String _orderByCol;
 	private String _orderByType;
 

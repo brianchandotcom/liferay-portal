@@ -43,7 +43,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "pages"));
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"public-pages", "private-pages"} %>'
+			navigationKeys="<%= viewLayoutsDisplayContext.getNavigationKeys() %>"
 			portletURL="<%= viewLayoutsDisplayContext.getPortletURL() %>"
 		/>
 

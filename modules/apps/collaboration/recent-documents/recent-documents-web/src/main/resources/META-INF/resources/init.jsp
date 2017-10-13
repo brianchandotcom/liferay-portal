@@ -21,7 +21,7 @@
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.document.library.kernel.model.DLFileRank" %><%@
+<%@ page import="com.liferay.document.library.file.rank.model.DLFileRank" %><%@
 page import="com.liferay.document.library.kernel.service.DLAppLocalServiceUtil" %><%@
 page import="com.liferay.document.library.kernel.util.DLUtil" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@

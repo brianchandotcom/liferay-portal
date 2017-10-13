@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.kernel.io.unsync;
+package com.liferay.petra.io.unsync;
 
-import com.liferay.portal.kernel.exception.LoggedExceptionInInitializerError;
-import com.liferay.portal.kernel.io.OutputStreamWriter;
+import com.liferay.petra.io.OutputStreamWriter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -207,7 +206,7 @@ public class UnsyncPrintWriterTest {
 			_writerField.setAccessible(true);
 		}
 		catch (Exception e) {
-			throw new LoggedExceptionInInitializerError(e);
+			throw new ExceptionInInitializerError(e);
 		}
 	}
 

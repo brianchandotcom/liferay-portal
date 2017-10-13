@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.io;
+package com.liferay.petra.io;
 
 import java.io.File;
 import java.io.FileOutputStream;

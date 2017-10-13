@@ -12,13 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.kernel.io;
+package com.liferay.petra.io;
 
+import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.lang.ClassLoaderPool;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
@@ -37,7 +36,6 @@ import java.util.List;
 import java.util.Random;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
@@ -57,13 +55,6 @@ public class DeserializerTest {
 			}
 
 		};
-
-	@Before
-	public void setUp() {
-		Class<?> clazz = getClass();
-
-		PortalClassLoaderUtil.setClassLoader(clazz.getClassLoader());
-	}
 
 	@Test
 	public void testBufferInputStream() {

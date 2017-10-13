@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.io.unsync;
+package com.liferay.petra.io.unsync;
 
 import java.io.IOException;
 import java.io.StringWriter;

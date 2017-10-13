@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.io.unsync;
+package com.liferay.petra.io.unsync;
 
 import org.junit.Assert;
 import org.junit.Test;

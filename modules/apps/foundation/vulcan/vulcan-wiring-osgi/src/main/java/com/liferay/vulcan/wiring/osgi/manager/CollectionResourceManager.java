@@ -24,6 +24,7 @@ import com.liferay.vulcan.resource.CollectionResource;
 import com.liferay.vulcan.resource.RelatedCollection;
 import com.liferay.vulcan.resource.Representor;
 import com.liferay.vulcan.resource.Routes;
+import com.liferay.vulcan.resource.ScopedCollectionResource;
 import com.liferay.vulcan.resource.identifier.Identifier;
 import com.liferay.vulcan.result.Try;
 import com.liferay.vulcan.wiring.osgi.internal.resource.builder.RepresentorBuilderImpl;
@@ -107,6 +108,15 @@ public class CollectionResourceManager extends BaseManager<CollectionResource> {
 	}
 
 	/**
+	 * Returns the list of names of the root {@link CollectionResource}.
+	 *
+	 * @return the list of names of the root {@link CollectionResource}.
+	 */
+	public List<String> getRootCollectionResourceNames() {
+		return _rootCollectionResourceNames;
+	}
+
+	/**
 	 * Returns the routes of the model class for a certain name.
 	 *
 	 * @param  name the name of a {@link CollectionResource}.
@@ -167,6 +177,11 @@ public class CollectionResourceManager extends BaseManager<CollectionResource> {
 		).ifPresent(
 			collectionResource -> {
 				_classes.put(collectionResource.getName(), modelClass);
+
+				if (!(collectionResource instanceof ScopedCollectionResource)) {
+					_rootCollectionResourceNames.add(
+						collectionResource.getName());
+				}
 
 				Class<U> identifierClass = _getIdentifierClass(
 					collectionResource);
@@ -274,6 +289,7 @@ public class CollectionResourceManager extends BaseManager<CollectionResource> {
 		_relatedCollections = new ConcurrentHashMap<>();
 	private final Map<String, RepresentorImpl> _representors =
 		new ConcurrentHashMap<>();
+	private final List<String> _rootCollectionResourceNames = new ArrayList<>();
 	private final Map<String, Function<HttpServletRequest, Routes<?>>>
 		_routesFunctions = new ConcurrentHashMap<>();
 

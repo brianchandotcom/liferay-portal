@@ -28,13 +28,13 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 @Deprecated
 @ProviderType
 public class DLFileRankFinderUtil {
-	public static java.util.List<java.lang.Object[]> findByStaleRanks(int count) {
-		return getFinder().findByStaleRanks(count);
-	}
-
 	public static java.util.List<com.liferay.document.library.kernel.model.DLFileRank> findByFolderId(
 		long folderId) {
 		return getFinder().findByFolderId(folderId);
+	}
+
+	public static java.util.List<java.lang.Object[]> findByStaleRanks(int count) {
+		return getFinder().findByStaleRanks(count);
 	}
 
 	public static DLFileRankFinder getFinder() {

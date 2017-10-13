@@ -100,9 +100,10 @@ public class ExecutePoshiElement extends BasePoshiElement {
 			assignments.add(matcher.group());
 		}
 
-		assignmentLoop:
 		for (String assignment : assignments) {
 			assignment = assignment.trim();
+
+			boolean functionAttributeAdded = false;
 
 			for (String functionAttributeName : functionAttributeNames) {
 				if (assignment.startsWith(functionAttributeName)) {
@@ -111,8 +112,14 @@ public class ExecutePoshiElement extends BasePoshiElement {
 
 					addAttribute(name, value);
 
-					continue assignmentLoop;
+					functionAttributeAdded = true;
+
+					break;
 				}
+			}
+
+			if (functionAttributeAdded) {
+				continue;
 			}
 
 			assignment = "var " + assignment + ";";

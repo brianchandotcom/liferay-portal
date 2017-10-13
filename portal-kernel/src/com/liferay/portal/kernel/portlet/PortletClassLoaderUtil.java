@@ -17,8 +17,8 @@ package com.liferay.portal.kernel.portlet;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.portal.kernel.util.ClassLoaderPool;
 
 import javax.servlet.ServletContext;
 

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.module.framework.service;
 
-import com.liferay.portal.kernel.util.ClassLoaderPool;
+import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;

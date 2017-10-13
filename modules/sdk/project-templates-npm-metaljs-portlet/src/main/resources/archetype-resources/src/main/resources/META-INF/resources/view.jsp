@@ -1,11 +1,10 @@
-#parse( "definitions.vm" )
-
 <%@ include file="/init.jsp" %>
+#parse ("definitions.vm")
 
-<button id="<portlet:namespace />-button">
+<div id="<portlet:namespace />">
 	Click me to open a superb modal dialog!
-</button>
+</div>
 
 <aui:script require="${artifactId}@${packageJsonVersion}">
-	${auiScriptRequireVarName}.default('<portlet:namespace />-button');
+	${auiScriptRequireVarName}.default('<portlet:namespace />');
 </aui:script>

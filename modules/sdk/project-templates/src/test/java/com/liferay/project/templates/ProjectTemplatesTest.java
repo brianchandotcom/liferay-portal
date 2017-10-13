@@ -552,7 +552,8 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
-			"<aui:script require=\"foo@1.0.0\">", "foo100.default();");
+			"<aui:script require=\"foo@1.0.0\">",
+			"foo100.default('<portlet:namespace />');");
 	}
 
 	@Test
@@ -564,7 +565,8 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
-			"<aui:script require=\"foo-bar@1.0.0\">", "fooBar100.default();");
+			"<aui:script require=\"foo-bar@1.0.0\">",
+			"fooBar100.default('<portlet:namespace />');");
 	}
 
 	@Test
@@ -620,7 +622,7 @@ public class ProjectTemplatesTest {
 		_testContains(
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
 			"<aui:script require=\"foo@1.0.0\">",
-			"foo100.default('<portlet:namespace />-root');");
+			"foo100.default('<portlet:namespace />');");
 	}
 
 	@Test
@@ -631,7 +633,7 @@ public class ProjectTemplatesTest {
 		_testContains(
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
 			"<aui:script require=\"foo-bar@1.0.0\">",
-			"fooBar100.default('<portlet:namespace />-root');");
+			"fooBar100.default('<portlet:namespace />');");
 	}
 
 	@Test
@@ -642,7 +644,7 @@ public class ProjectTemplatesTest {
 		_testContains(
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
 			"<aui:script require=\"foo@1.0.0\">",
-			"foo100.default('<portlet:namespace />-button');");
+			"foo100.default('<portlet:namespace />');");
 	}
 
 	@Test
@@ -655,7 +657,7 @@ public class ProjectTemplatesTest {
 		_testContains(
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
 			"<aui:script require=\"foo-bar@1.0.0\">",
-			"fooBar100.default('<portlet:namespace />-button');");
+			"fooBar100.default('<portlet:namespace />');");
 	}
 
 	@Test
@@ -664,7 +666,8 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
-			"<aui:script require=\"foo@1.0.0\">", "foo100.default();");
+			"<aui:script require=\"foo@1.0.0\">",
+			"foo100.default('<portlet:namespace />');");
 	}
 
 	@Test
@@ -673,7 +676,8 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
-			"<aui:script require=\"foo-bar@1.0.0\">", "fooBar100.default();");
+			"<aui:script require=\"foo-bar@1.0.0\">",
+			"fooBar100.default('<portlet:namespace />');");
 	}
 
 	@Test
@@ -683,7 +687,7 @@ public class ProjectTemplatesTest {
 		_testContains(
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
 			"<aui:script require=\"foo@1.0.0\">",
-			"foo100.default('<portlet:namespace />-root');");
+			"foo100.default('<portlet:namespace />');");
 	}
 
 	@Test
@@ -694,7 +698,7 @@ public class ProjectTemplatesTest {
 		_testContains(
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
 			"<aui:script require=\"foo-bar@1.0.0\">",
-			"fooBar100.default('<portlet:namespace />-root');");
+			"fooBar100.default('<portlet:namespace />');");
 	}
 
 	@Test
@@ -1253,6 +1257,16 @@ public class ProjectTemplatesTest {
 
 		String gradleBundleFileName = "build/libs/com.liferay.test-1.0.0.jar";
 		String mavenBundleFileName = "target/foo-1.0.0.jar";
+
+		File mavenPackageJsonFile = new File(mavenProjectDir, "package.json");
+
+		Path mavenPackageJsonPath = mavenPackageJsonFile.toPath();
+
+		String mavenPackageJSON = FileUtil.read(mavenPackageJsonPath) + "\n";
+
+		Files.write(
+			mavenPackageJsonPath,
+			mavenPackageJSON.getBytes(StandardCharsets.UTF_8));
 
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir, gradleBundleFileName,

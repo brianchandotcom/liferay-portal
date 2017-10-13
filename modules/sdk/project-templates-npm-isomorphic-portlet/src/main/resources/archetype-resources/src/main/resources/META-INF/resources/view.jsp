@@ -1,12 +1,11 @@
-#parse( "definitions.vm" )
-
 <%@ include file="/init.jsp" %>
+#parse ("definitions.vm")
 
-<pre id="<portlet:namespace />-output">
+<pre id="<portlet:namespace />">
 </pre>
 
 <aui:script require="${artifactId}@${packageJsonVersion}">
-	var out = document.getElementById('<portlet:namespace />-output');
+	var out = document.getElementById('<portlet:namespace />');
 
 	out.innerHTML += 'Portlet main module loaded.\n';
 	out.innerHTML += "Invoking portlet's main module default export.\n";

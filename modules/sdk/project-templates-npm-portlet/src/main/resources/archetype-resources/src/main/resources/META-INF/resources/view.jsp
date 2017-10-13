@@ -1,19 +1,8 @@
-#parse( "definitions.vm" )
-
 <%@ include file="/init.jsp" %>
+#parse ("definitions.vm")
 
-<p>
-	<b><liferay-ui:message key="${artifactId}.caption"/></b>
-</p>
-
-<pre id="<portlet:namespace />-output">
-</pre>
+<div id="<portlet:namespace />"></div>
 
 <aui:script require="${artifactId}@${packageJsonVersion}">
-	window.out = document.getElementById('<portlet:namespace />-output');
-
-	out.innerHTML += 'Portlet main module loaded.\n';
-	out.innerHTML += "Invoking portlet's main module default export.\n";
-
-	${auiScriptRequireVarName}.default();
+	${auiScriptRequireVarName}.default('<portlet:namespace />');
 </aui:script>

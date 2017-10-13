@@ -55,6 +55,12 @@ Layout curLayout = (Layout)row.getObject();
 		/>
 	</c:if>
 
+	<liferay-ui:icon
+		message="view-page"
+		target="_blank"
+		url="<%= PortalUtil.getLayoutFullURL(curLayout, themeDisplay) %>"
+	/>
+
 	<%
 	boolean isDeletable = true;
 

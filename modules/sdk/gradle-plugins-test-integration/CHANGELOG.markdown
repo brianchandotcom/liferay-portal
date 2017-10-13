@@ -46,9 +46,28 @@ property.
 ### Fixed
 - [LPS-71117]: Bypass the following Gradle 4.0 [issue](https://github.com/gradle/gradle/issues/2343).
 
+## 2.2.0 - 2017-10-17
+
+### Added
+- [LPS-75239]: Automatically deploy version 3.0.0 of [Liferay Portal Test] and
+[Liferay Portal Test Integration] when executing the `setUpTestableTomcat` task.
+
+### Changed
+- [LPS-75239]: Increase the default application server check timeout from 5 to
+10 minutes.
+- [LPS-75239]: Disable up-to-date check of `copyTestModules` task.
+- [LPS-75239]: The `copyTestModules` task does not check if a file aready exists
+in the `osgi/test` directory before copying it from the `testModules`
+configuration. To revert this behavior, set the property
+`testIntegrationTomcat.overwriteCopyTestModules` to `false`.
+
+[Liferay Portal Test]: https://github.com/liferay/liferay-portal/tree/master/portal-test
+[Liferay Portal Test Integration]: https://github.com/liferay/liferay-portal/tree/master/portal-test-integration
+[LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-69492]: https://issues.liferay.com/browse/LPS-69492
 [LPS-71117]: https://issues.liferay.com/browse/LPS-71117
 [LPS-72365]: https://issues.liferay.com/browse/LPS-72365
 [LPS-73353]: https://issues.liferay.com/browse/LPS-73353
 [LPS-73525]: https://issues.liferay.com/browse/LPS-73525
+[LPS-75239]: https://issues.liferay.com/browse/LPS-75239

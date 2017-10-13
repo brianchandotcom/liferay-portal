@@ -56,7 +56,7 @@ public class BlogPostingCollectionResource
 		RepresentorBuilder<BlogPost, LongIdentifier> representorBuilder) {
 
 		return representorBuilder.identifier(
-			blogsEntry -> blogsEntry::getId
+			blogPost -> blogPost::getId
 		).addDate(
 			"createDate", BlogPost::getCreateDate
 		).addDate(
@@ -65,13 +65,13 @@ public class BlogPostingCollectionResource
 			"modifiedDate", BlogPost::getModifiedDate
 		).addEmbeddedModel(
 			"creator", User.class,
-			blogPosting -> User.getUser(blogPosting.getCreatorId())
+			blogPost -> User.getUser(blogPost.getCreatorId())
 		).addString(
 			"alternativeHeadline", BlogPost::getSubtitle
 		).addString(
 			"articleBody", BlogPost::getContent
 		).addString(
-			"fileFormat", blogsEntry -> "text/html"
+			"fileFormat", blogPost -> "text/html"
 		).addString(
 			"headline", BlogPost::getTitle
 		).addType(

@@ -18,7 +18,6 @@ import com.liferay.lcs.rest.client.LCSPatchingAdvisorClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
 
@@ -43,9 +42,9 @@ public class LCSPatchingAdvisorClientImpl implements LCSPatchingAdvisorClient {
 		sb.append(_URL_PATCHING_ADVISOR);
 		sb.append("/find/");
 		sb.append(key);
-		sb.append(StringPool.SLASH);
+		sb.append("/");
 		sb.append(patchingToolVersion);
-		sb.append(StringPool.SLASH);
+		sb.append("/");
 
 		for (int i = 0; i < installedPatchIds.length; i++) {
 			sb.append(installedPatchIds[i]);

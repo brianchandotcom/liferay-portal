@@ -19,7 +19,6 @@ import com.liferay.lcs.rest.client.LCSMetadataClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -56,9 +55,9 @@ public class LCSMetadataClientImpl implements LCSMetadataClient {
 		sb = new StringBuilder(5);
 
 		sb.append(_URL_LCS_METADATA);
-		sb.append(StringPool.SLASH);
+		sb.append("/");
 		sb.append(buildNumber);
-		sb.append(StringPool.SLASH);
+		sb.append("/");
 		sb.append(portalEdition);
 
 		LCSMetadata lcsMetadata = _jsonWebServiceClient.doGetToObject(

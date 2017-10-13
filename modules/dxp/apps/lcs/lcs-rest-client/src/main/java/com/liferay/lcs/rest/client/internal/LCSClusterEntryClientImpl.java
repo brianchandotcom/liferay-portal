@@ -21,7 +21,6 @@ import com.liferay.lcs.rest.client.exception.RequiredLCSClusterEntryNameExceptio
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +68,7 @@ public class LCSClusterEntryClientImpl implements LCSClusterEntryClient {
 
 		return _jsonWebServiceClient.doGetToObject(
 			LCSClusterEntry.class,
-			_URL_LCS_CLUSTER_ENTRY + StringPool.SLASH + lcsClusterEntryId);
+			_URL_LCS_CLUSTER_ENTRY + "/" + lcsClusterEntryId);
 	}
 
 	@Override
@@ -80,13 +79,12 @@ public class LCSClusterEntryClientImpl implements LCSClusterEntryClient {
 
 		List<LCSClusterEntry> remoteLcsClusterEntries = null;
 
-		StringBuilder sb = new StringBuilder(5);
+		StringBuilder sb = new StringBuilder(4);
 
 		sb.append(_URL_LCS_CLUSTER_ENTRY);
 		sb.append("/find/");
 		sb.append(lcsProjectId);
-		sb.append(StringPool.SLASH);
-		sb.append("true");
+		sb.append("/true");
 
 		remoteLcsClusterEntries = _jsonWebServiceClient.doGetToList(
 			LCSClusterEntry.class, sb.toString());

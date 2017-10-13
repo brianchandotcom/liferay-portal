@@ -24,7 +24,6 @@ import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -137,8 +136,7 @@ public class LCSClusterNodeClientImpl implements LCSClusterNodeClient {
 
 		try {
 			return _jsonWebServiceClient.doGetToObject(
-				LCSClusterNode.class,
-				_URL_LCS_CLUSTER_NODE + StringPool.SLASH + key);
+				LCSClusterNode.class, _URL_LCS_CLUSTER_NODE + "/" + key);
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
 			if (jsonwsie.getStatus() == HttpServletResponse.SC_NOT_FOUND) {
@@ -162,7 +160,7 @@ public class LCSClusterNodeClientImpl implements LCSClusterNodeClient {
 		sb.append(_URL_LCS_CLUSTER_NODE);
 		sb.append("/find/");
 		sb.append(-1);
-		sb.append(StringPool.SLASH);
+		sb.append("/");
 		sb.append(-1);
 
 		remoteLCSClusterNodes = _jsonWebServiceClient.doGetToList(
@@ -191,7 +189,7 @@ public class LCSClusterNodeClientImpl implements LCSClusterNodeClient {
 		sb.append(_URL_LCS_CLUSTER_NODE);
 		sb.append("/find/");
 		sb.append(start);
-		sb.append(StringPool.SLASH);
+		sb.append("/");
 		sb.append(end);
 
 		remoteLCSClusterNodes = _jsonWebServiceClient.doGetToList(

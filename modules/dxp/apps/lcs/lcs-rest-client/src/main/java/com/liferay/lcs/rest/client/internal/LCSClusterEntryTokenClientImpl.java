@@ -19,7 +19,6 @@ import com.liferay.lcs.rest.client.LCSClusterEntryTokenClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
-import com.liferay.portal.kernel.util.StringPool;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -43,7 +42,7 @@ public class LCSClusterEntryTokenClientImpl
 			LCSClusterEntryToken lcsClusterEntryToken =
 				_jsonWebServiceClient.doGetToObject(
 					LCSClusterEntryToken.class,
-					_URL_LCS_CLUSTER_ENTRY_TOKEN + StringPool.SLASH +
+					_URL_LCS_CLUSTER_ENTRY_TOKEN + "/" +
 						lcsClusterEntryTokenId);
 
 			return lcsClusterEntryToken;

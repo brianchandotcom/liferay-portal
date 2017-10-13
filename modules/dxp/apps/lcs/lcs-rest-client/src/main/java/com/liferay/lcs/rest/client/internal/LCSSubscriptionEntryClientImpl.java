@@ -19,7 +19,6 @@ import com.liferay.lcs.rest.client.LCSSubscriptionEntryClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
-import com.liferay.portal.kernel.util.StringPool;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -82,8 +81,7 @@ public class LCSSubscriptionEntryClientImpl
 		throws JSONWebServiceInvocationException {
 
 		_jsonWebServiceClient.doPost(
-			_URL_LCS_SUBSCRIPTION_ENTRY + StringPool.SLASH + key +
-				"/incrementServerUsed");
+			_URL_LCS_SUBSCRIPTION_ENTRY + "/" + key + "/incrementServerUsed");
 	}
 
 	public void setJSONWebServiceClient(

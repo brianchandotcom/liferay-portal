@@ -19,7 +19,6 @@ import com.liferay.lcs.rest.client.LCSRoleClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
 
@@ -42,9 +41,9 @@ public class LCSRoleClientImpl implements LCSRoleClient {
 		sb.append(_URL_LCS_ROLE);
 		sb.append("/find/");
 		sb.append(lcsProjectId);
-		sb.append(StringPool.SLASH);
+		sb.append("/");
 		sb.append("true");
-		sb.append(StringPool.SLASH);
+		sb.append("/");
 		sb.append("false");
 
 		List<LCSRole> lcsRoles = _jsonWebServiceClient.doGetToList(

@@ -676,6 +676,41 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
+	public void testDeleteStagingCalendarBookingDeletesLiveCalendarBooking()
+		throws Exception {
+
+		_liveGroup = GroupTestUtil.addGroup();
+
+		Calendar liveCalendar = CalendarTestUtil.getDefaultCalendar(_liveGroup);
+
+		CalendarStagingTestUtil.enableLocalStaging(_liveGroup, true);
+
+		Calendar stagingCalendar = CalendarStagingTestUtil.getStagingCalendar(
+			_liveGroup, liveCalendar);
+
+		CalendarBooking calendarBooking =
+			CalendarBookingTestUtil.addRegularCalendarBooking(stagingCalendar);
+
+		CalendarStagingTestUtil.publishLayouts(_liveGroup, true);
+
+		assertCalendarBookingsCount(liveCalendar, 1);
+
+		assertCalendarBookingsCount(stagingCalendar, 1);
+
+		CalendarBookingLocalServiceUtil.deleteCalendarBooking(calendarBooking);
+
+		assertCalendarBookingsCount(liveCalendar, 1);
+
+		assertCalendarBookingsCount(stagingCalendar, 0);
+
+		CalendarStagingTestUtil.publishLayouts(_liveGroup, true);
+
+		assertCalendarBookingsCount(liveCalendar, 0);
+
+		assertCalendarBookingsCount(stagingCalendar, 0);
+	}
+
+	@Test
 	public void testGetRecurringCalendarBookings() throws Exception {
 		ServiceContext serviceContext = createServiceContext();
 

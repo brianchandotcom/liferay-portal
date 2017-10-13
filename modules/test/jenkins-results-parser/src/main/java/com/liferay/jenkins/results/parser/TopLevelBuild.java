@@ -576,7 +576,7 @@ public class TopLevelBuild extends BaseBuild {
 
 		return Dom4JUtil.getNewElement(
 			"body", null, headingElement, subheadingElement,
-			getJenkinsReportSummaryElement(nonBatchBuilds),
+			getJenkinsReportSummaryElement(),
 			getJenkinsReportTimelineElement(nonBatchBuilds),
 			getJenkinsReportTopLevelTableElement(),
 			getJenkinsReportDownstreamElement());
@@ -666,39 +666,51 @@ public class TopLevelBuild extends BaseBuild {
 		return headElement;
 	}
 
-	protected Element getJenkinsReportSummaryElement(
-		Map<String, Build> nonBatchBuilds) {
+	protected Element getJenkinsReportSummaryElement() {
+		Element summaryElement = Dom4JUtil.getNewElement(
+			"div", null,
+			Dom4JUtil.getNewElement(
+				"p", null, "Start Time: ",
+				JenkinsResultsParserUtil.toDateString(
+					new Date(getStartTimestamp()))),
+			Dom4JUtil.getNewElement(
+				"p", null, "Build Time: ",
+				JenkinsResultsParserUtil.toDurationString(getDuration())),
+			Dom4JUtil.getNewElement(
+				"p", null, "Total CPU Usage Time: ",
+				JenkinsResultsParserUtil.toDurationString(getTotalDuration())),
+			Dom4JUtil.getNewElement(
+				"p", null, "Total number of Jenkins slaves used: ",
+				Integer.toString(getTotalSlavesUsedCount())));
 
-		Element buildTimeElement = Dom4JUtil.getNewElement(
-			"p", null, "Build Time: ",
-			JenkinsResultsParserUtil.toDurationString(getDuration()));
+		Build longestRunningDownstreamBuild =
+			getLongestRunningDownstreamBuild();
 
-		Element cpuUsageTimeElement =
-			getJenkinsReportTotalCpuUsageTimeElement();
+		if (longestRunningDownstreamBuild != null) {
+			Dom4JUtil.getNewElement(
+				"p", summaryElement, "Longest Running Downstream Build: ",
+				Dom4JUtil.getNewAnchorElement(
+					longestRunningDownstreamBuild.getBuildURL(),
+					longestRunningDownstreamBuild.getDisplayName()),
+				" in: ",
+				JenkinsResultsParserUtil.toDurationString(
+					longestRunningDownstreamBuild.getDuration()));
+		}
 
-		Element longestAxisElement = getLongestRunningDownstreamBuildElement();
+		TestResult longestRunningTest = getLongestRunningTest();
 
-		Element longestBatchElement = getLongestRunningBatchElement();
+		if (longestRunningTest != null) {
+			Dom4JUtil.getNewElement(
+				"p", null, "Longest Running Test: ",
+				Dom4JUtil.getNewAnchorElement(
+					longestRunningTest.getTestReportURL(),
+					longestRunningTest.getDisplayName()),
+				" in: ",
+				JenkinsResultsParserUtil.toDurationString(
+					longestRunningTest.getDuration()));
+		}
 
-		Element longestTestElement = getLongestRunningTestElement();
-
-		Date startTime = new Date(getStartTimestamp());
-
-		Element startTimeElement = Dom4JUtil.getNewElement(
-			"p", null, "Start Time: ",
-			JenkinsResultsParserUtil.toDateString(startTime));
-
-		Element slavesUsedCountElement =
-			getJenkinsReportTotalSlavesUsedCountElement();
-
-		Element divElement = Dom4JUtil.getNewElement("div");
-
-		Dom4JUtil.addToElement(
-			divElement, startTimeElement, buildTimeElement, cpuUsageTimeElement,
-			slavesUsedCountElement, longestBatchElement, longestAxisElement,
-			longestTestElement);
-
-		return divElement;
+		return summaryElement;
 	}
 
 	protected Element getJenkinsReportTableColumnHeadersElement() {
@@ -815,18 +827,6 @@ public class TopLevelBuild extends BaseBuild {
 		return topLevelTableElement;
 	}
 
-	protected Element getJenkinsReportTotalCpuUsageTimeElement() {
-		return Dom4JUtil.getNewElement(
-			"p", null, "Total CPU Usage Time: ",
-			JenkinsResultsParserUtil.toDurationString(getTotalDuration()));
-	}
-
-	protected Element getJenkinsReportTotalSlavesUsedCountElement() {
-		return Dom4JUtil.getNewElement(
-			"p", null, "Total number of Jenkins slaves used: ",
-			Integer.toString(getTotalSlavesUsedCount()));
-	}
-
 	protected Element getJobSummaryListElement() {
 		Element jobSummaryListElement = Dom4JUtil.getNewElement("ul");
 
@@ -874,63 +874,25 @@ public class TopLevelBuild extends BaseBuild {
 	protected Build getLongestRunningBatchBuild() {
 		List<Build> downstreamBuilds = getDownstreamBuilds(null);
 
-		long longestBatchDuration = 0;
+		long longestDownstreamBuildDuration = 0;
 
-		Build longestRunningBatchBuild = null;
+		Build longestRunningDownstreamBuild = null;
 
 		for (Build downstreamBuild : downstreamBuilds) {
-			if (downstreamBuild instanceof TopLevelBuild) {
-				downstreamBuild =
-					((TopLevelBuild)
-						downstreamBuild).getLongestRunningBatchBuild();
-			}
+			if (downstreamBuild instanceof BatchBuild ||
+				downstreamBuild instanceof TopLevelBuild) {
 
-			if (downstreamBuild instanceof BatchBuild) {
-				long batchDuration = downstreamBuild.getDuration();
+				long downstreamBuildDuration = downstreamBuild.getDuration();
 
-				if (batchDuration > longestBatchDuration) {
-					longestBatchDuration = batchDuration;
+				if (downstreamBuildDuration > longestDownstreamBuildDuration) {
+					longestDownstreamBuildDuration = downstreamBuildDuration;
 
-					longestRunningBatchBuild = downstreamBuild;
+					longestRunningDownstreamBuild = downstreamBuild;
 				}
 			}
 		}
 
-		return longestRunningBatchBuild;
-	}
-
-	protected Element getLongestRunningBatchElement() {
-		String jobName = "Unavailable";
-
-		long longestBatchDuration = 0;
-
-		String longestBatchName = "Unavailable";
-
-		String longestBatchURL = "Unavailable";
-
-		Build longestRunningBatchBuild = getLongestRunningBatchBuild();
-
-		if (!(longestRunningBatchBuild == null)) {
-			jobName = longestRunningBatchBuild.getJobName();
-
-			longestBatchDuration = longestRunningBatchBuild.getDuration();
-
-			longestBatchName = longestRunningBatchBuild.getDisplayName();
-
-			longestBatchURL = longestRunningBatchBuild.getBuildURL();
-		}
-
-		String longestBatchDisplayName = longestBatchName.replace(
-			jobName + "/", "");
-
-		Element longestBatchElement = Dom4JUtil.getNewElement(
-			"p", null, "Longest Batch: ",
-			Dom4JUtil.getNewAnchorElement(
-				longestBatchURL, longestBatchDisplayName),
-			" in: ",
-			JenkinsResultsParserUtil.toDurationString(longestBatchDuration));
-
-		return longestBatchElement;
+		return longestRunningDownstreamBuild;
 	}
 
 	protected Element getMoreDetailsElement() {

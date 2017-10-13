@@ -631,92 +631,17 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public Build getLongestRunningDownstreamBuild() {
-		long longestDuration = 0;
-
 		Build longestRunningDownstreamBuild = null;
 
-		List<Build> downstreamBuilds = getDownstreamBuilds(null);
-
-		for (Build downstreamBuild : downstreamBuilds) {
-			if (downstreamBuild instanceof BatchBuild) {
-				downstreamBuild =
-					downstreamBuild.getLongestRunningDownstreamBuild();
-
-				if (downstreamBuild == null) {
-					continue;
-				}
-			}
-
-			long downstreamDuration = downstreamBuild.getDuration();
-
-			if (downstreamDuration > longestDuration) {
-				longestDuration = downstreamDuration;
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			if (downstreamBuild.getDuration() >
+					longestRunningDownstreamBuild.getDuration()) {
 
 				longestRunningDownstreamBuild = downstreamBuild;
 			}
 		}
 
 		return longestRunningDownstreamBuild;
-	}
-
-	@Override
-	public Element getLongestRunningDownstreamBuildElement() {
-		long downstreamBuildDuration = 0;
-
-		String downstreamBuildName = "Unavailable";
-
-		String downstreamBuildParentName = "Unavailable";
-
-		String downstreamBuildURL = "Unavailable";
-
-		Build longestRunningDownstreamBuild =
-			getLongestRunningDownstreamBuild();
-
-		if (!(longestRunningDownstreamBuild == null)) {
-			if (longestRunningDownstreamBuild instanceof AxisBuild) {
-				String axisNumber =
-					((AxisBuild)longestRunningDownstreamBuild).getAxisNumber();
-
-				downstreamBuildName = "AXIS_VARIABLE=" + axisNumber;
-			}
-			else {
-				downstreamBuildName =
-					longestRunningDownstreamBuild.getDisplayName();
-			}
-
-			downstreamBuildDuration =
-				longestRunningDownstreamBuild.getDuration();
-
-			downstreamBuildURL = longestRunningDownstreamBuild.getBuildURL();
-
-			Build parentBuild = longestRunningDownstreamBuild.getParentBuild();
-
-			String parentJobName = parentBuild.getJobName();
-
-			downstreamBuildParentName = parentBuild.getDisplayName();
-
-			downstreamBuildParentName = downstreamBuildParentName.replace(
-				parentJobName + "/", "");
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(downstreamBuildParentName);
-
-		sb.append("/");
-
-		sb.append(downstreamBuildName);
-
-		String longestRunningBuildDisplayName = sb.toString();
-
-		Element longestDownstreamElement = Dom4JUtil.getNewElement(
-			"p", null, "Longest Downstream Build: ",
-			Dom4JUtil.getNewAnchorElement(
-				downstreamBuildURL, longestRunningBuildDisplayName),
-			" in: ",
-			JenkinsResultsParserUtil.toDurationString(downstreamBuildDuration));
-
-		return longestDownstreamElement;
 	}
 
 	@Override
@@ -738,57 +663,6 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return longestRunningTest;
-	}
-
-	@Override
-	public Element getLongestRunningTestElement() {
-		String longestTestName = "Unavailable";
-
-		String longestTestParentName = "Unavailable";
-
-		String longestTestURL = "Unavailable";
-
-		long longestTestDuration = 0;
-
-		TestResult longestRunningTest = getLongestRunningTest();
-
-		if (longestRunningTest != null) {
-			longestTestName = longestRunningTest.getDisplayName();
-
-			longestTestURL = longestRunningTest.getTestReportURL();
-
-			Build testAxisBuild = longestRunningTest.getAxisBuild();
-
-			Build testBatchBuild = testAxisBuild.getParentBuild();
-
-			String testBatchBuildName = testBatchBuild.getDisplayName();
-
-			String testBatchJobName = testBatchBuild.getJobName();
-
-			longestTestParentName = testBatchBuildName.replace(
-				testBatchJobName + "/", "");
-
-			longestTestDuration = longestRunningTest.getDuration();
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(longestTestParentName);
-
-		sb.append("/");
-
-		sb.append(longestTestName);
-
-		String longestTestDisplayName = sb.toString();
-
-		Element longestTestElement = Dom4JUtil.getNewElement(
-			"p", null, "Longest Test: ",
-			Dom4JUtil.getNewAnchorElement(
-				longestTestURL, longestTestDisplayName),
-			" in: ",
-			JenkinsResultsParserUtil.toDurationString(longestTestDuration));
-
-		return longestTestElement;
 	}
 
 	@Override

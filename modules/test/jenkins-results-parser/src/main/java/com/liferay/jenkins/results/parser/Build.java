@@ -88,11 +88,7 @@ public interface Build {
 
 	public Build getLongestRunningDownstreamBuild();
 
-	public Element getLongestRunningDownstreamBuildElement();
-
 	public TestResult getLongestRunningTest();
-
-	public Element getLongestRunningTestElement();
 
 	public String getMaster();
 

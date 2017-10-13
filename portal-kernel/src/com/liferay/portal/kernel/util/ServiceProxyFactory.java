@@ -250,7 +250,7 @@ public class ServiceProxyFactory {
 							sb.append("}");
 						}
 
-						sb.append("\" is unavaiable in ");
+						sb.append("\" is unavailable in ");
 						sb.append(_TIMEOUT);
 						sb.append(" milliseconds while setting field \"");
 						sb.append(_field.getName());

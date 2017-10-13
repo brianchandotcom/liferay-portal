@@ -27,6 +27,9 @@ import java.io.InputStreamReader;
  */
 public class LoggingOutputProcessor implements OutputProcessor<Void, Void> {
 
+	public static final OutputProcessor<Void, Void> INSTANCE =
+		new LoggingOutputProcessor();
+
 	@Override
 	public Void processStdErr(InputStream stdErrInputStream)
 		throws ProcessException {

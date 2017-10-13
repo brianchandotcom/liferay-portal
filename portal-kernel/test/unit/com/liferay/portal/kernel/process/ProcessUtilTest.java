@@ -82,7 +82,7 @@ public class ProcessUtilTest {
 
 			Future<ObjectValuePair<Void, Void>> loggingFuture =
 				ProcessUtil.execute(
-					ProcessUtil.LOGGING_OUTPUT_PROCESSOR,
+					LoggingOutputProcessor.INSTANCE,
 					_buildArguments(Echo.class, "2"));
 
 			loggingFuture.get();

@@ -18,6 +18,7 @@ import com.liferay.mail.kernel.model.Filter;
 import com.liferay.mail.kernel.util.Hook;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.process.LoggingOutputProcessor;
 import com.liferay.portal.kernel.process.ProcessUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
@@ -127,7 +128,7 @@ public class ShellHook implements Hook {
 
 		try {
 			Future<?> future = ProcessUtil.execute(
-				ProcessUtil.LOGGING_OUTPUT_PROCESSOR, cmdLine);
+				LoggingOutputProcessor.INSTANCE, cmdLine);
 
 			future.get();
 		}

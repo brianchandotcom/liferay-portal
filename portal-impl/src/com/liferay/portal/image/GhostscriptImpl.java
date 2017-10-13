@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.image.Ghostscript;
 import com.liferay.portal.kernel.image.ImageMagickUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.process.LoggingOutputProcessor;
 import com.liferay.portal.kernel.process.ProcessUtil;
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -71,8 +72,7 @@ public class GhostscriptImpl implements Ghostscript {
 			_log.info("Executing command '" + sb.toString() + "'");
 		}
 
-		return ProcessUtil.execute(
-			ProcessUtil.LOGGING_OUTPUT_PROCESSOR, arguments);
+		return ProcessUtil.execute(LoggingOutputProcessor.INSTANCE, arguments);
 	}
 
 	@Override

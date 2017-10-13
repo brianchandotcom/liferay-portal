@@ -196,8 +196,6 @@ public class RootEndpointImpl implements RootEndpoint {
 
 		String serverURL = _serverURLProvider.getServerURL(_httpServletRequest);
 
-		JsonObject rootJsonObject = new JsonObject();
-
 		JsonObject resourcesJsonObject = new JsonObject();
 
 		rootCollectionResourceNames.forEach(
@@ -210,6 +208,8 @@ public class RootEndpointImpl implements RootEndpoint {
 
 				resourcesJsonObject.add(name, jsonObject);
 			});
+
+		JsonObject rootJsonObject = new JsonObject();
 
 		rootJsonObject.add("resources", resourcesJsonObject);
 

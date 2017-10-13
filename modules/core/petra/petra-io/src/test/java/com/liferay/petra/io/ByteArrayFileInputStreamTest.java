@@ -14,6 +14,8 @@
 
 package com.liferay.petra.io;
 
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -21,12 +23,17 @@ import java.io.IOException;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
 public class ByteArrayFileInputStreamTest {
+
+	@ClassRule
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {
@@ -198,6 +205,8 @@ public class ByteArrayFileInputStreamTest {
 		Assert.assertNull(byteArrayFileInputStream.fileInputStream);
 
 		Assert.assertFalse(_testFile.exists());
+
+		byteArrayFileInputStream.close();
 	}
 
 	@Test
@@ -255,6 +264,16 @@ public class ByteArrayFileInputStreamTest {
 	}
 
 	@Test
+	public void testGetFile() throws Exception {
+		ByteArrayFileInputStream byteArrayFileInputStream =
+			new ByteArrayFileInputStream(_testFile, 512);
+
+		Assert.assertSame(_testFile, byteArrayFileInputStream.getFile());
+
+		byteArrayFileInputStream.close();
+	}
+
+	@Test
 	public void testMark() throws IOException {
 
 		// byte[]
@@ -299,6 +318,10 @@ public class ByteArrayFileInputStreamTest {
 		Assert.assertEquals(-1, byteArrayFileInputStream.read());
 
 		// FileInputStream reset to index 0
+
+		byteArrayFileInputStream.reset();
+
+		// Calling reset twice does not cause a NullPointerException
 
 		byteArrayFileInputStream.reset();
 

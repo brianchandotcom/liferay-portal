@@ -24,6 +24,7 @@ import com.liferay.vulcan.resource.CollectionResource;
 import com.liferay.vulcan.resource.RelatedCollection;
 import com.liferay.vulcan.resource.Representor;
 import com.liferay.vulcan.resource.Routes;
+import com.liferay.vulcan.resource.ScopedCollectionResource;
 import com.liferay.vulcan.resource.identifier.Identifier;
 import com.liferay.vulcan.result.Try;
 import com.liferay.vulcan.wiring.osgi.internal.resource.builder.RepresentorBuilderImpl;
@@ -55,6 +56,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
  * @see    CollectionResource
+ * @review
  */
 @Component(immediate = true, service = CollectionResourceManager.class)
 public class CollectionResourceManager extends BaseManager<CollectionResource> {
@@ -64,6 +66,7 @@ public class CollectionResourceManager extends BaseManager<CollectionResource> {
 	 *
 	 * @param  name name of the resource for the class.
 	 * @return the class of a resource's name.
+	 * @review
 	 */
 	public <T> Optional<Class<T>> getModelClassOptional(String name) {
 		Optional<? extends Class<?>> optional = Optional.ofNullable(
@@ -77,6 +80,7 @@ public class CollectionResourceManager extends BaseManager<CollectionResource> {
 	 *
 	 * @param  className the class name of a {@link CollectionResource}
 	 * @return the name of a class name's resource.
+	 * @review
 	 */
 	public Optional<String> getNameOptional(String className) {
 		Optional<CollectionResource> optional = _getCollectionResourceOptional(
@@ -92,6 +96,7 @@ public class CollectionResourceManager extends BaseManager<CollectionResource> {
 	 * @param  modelClass the model class of a {@link CollectionResource}.
 	 * @return the representor of the model class, if present; {@code
 	 *         Optional#empty()} otherwise.
+	 * @review
 	 */
 	public <T, U extends Identifier> Optional<Representor<T, U>>
 		getRepresentorOptional(Class<T> modelClass) {
@@ -103,11 +108,21 @@ public class CollectionResourceManager extends BaseManager<CollectionResource> {
 	}
 
 	/**
+	 * Returns the list of names of the root {@link CollectionResource}.
+	 *
+	 * @return the list of names of the root {@link CollectionResource}.
+	 */
+	public List<String> getRootCollectionResourceNames() {
+		return _rootCollectionResourceNames;
+	}
+
+	/**
 	 * Returns the routes of the model class for a certain name.
 	 *
 	 * @param  name the name of a {@link CollectionResource}.
 	 * @param  httpServletRequest the actual request.
 	 * @return the routes of the model class.
+	 * @review
 	 */
 	public <T> Optional<Routes<T>> getRoutesOptional(
 		String name, HttpServletRequest httpServletRequest) {
@@ -126,8 +141,7 @@ public class CollectionResourceManager extends BaseManager<CollectionResource> {
 	protected void setServiceReference(
 		ServiceReference<CollectionResource> serviceReference) {
 
-		Optional<Class<Object>> optional = addService(
-			serviceReference, CollectionResource.class);
+		Optional<Class<Object>> optional = addService(serviceReference);
 
 		optional.ifPresent(this::_addModelClassMaps);
 	}
@@ -136,8 +150,7 @@ public class CollectionResourceManager extends BaseManager<CollectionResource> {
 	protected void unsetServiceReference(
 		ServiceReference<CollectionResource> serviceReference) {
 
-		Optional<Class<Object>> optional = removeService(
-			serviceReference, CollectionResource.class);
+		Optional<Class<Object>> optional = removeService(serviceReference);
 
 		optional.ifPresent(this::_removeModelClassMaps);
 
@@ -164,6 +177,11 @@ public class CollectionResourceManager extends BaseManager<CollectionResource> {
 		).ifPresent(
 			collectionResource -> {
 				_classes.put(collectionResource.getName(), modelClass);
+
+				if (!(collectionResource instanceof ScopedCollectionResource)) {
+					_rootCollectionResourceNames.add(
+						collectionResource.getName());
+				}
 
 				Class<U> identifierClass = _getIdentifierClass(
 					collectionResource);
@@ -218,8 +236,8 @@ public class CollectionResourceManager extends BaseManager<CollectionResource> {
 		Class<? extends CollectionResource> resourceClass =
 			collectionResource.getClass();
 
-		Try<Class<U>> classTry = GenericUtil.getGenericClassTry(
-			resourceClass, CollectionResource.class, 1);
+		Try<Class<U>> classTry = GenericUtil.getGenericTypeArgumentTry(
+			resourceClass, 1);
 
 		return classTry.orElseThrow(
 			() -> new VulcanDeveloperError.MustHaveValidGenericType(
@@ -271,6 +289,7 @@ public class CollectionResourceManager extends BaseManager<CollectionResource> {
 		_relatedCollections = new ConcurrentHashMap<>();
 	private final Map<String, RepresentorImpl> _representors =
 		new ConcurrentHashMap<>();
+	private final List<String> _rootCollectionResourceNames = new ArrayList<>();
 	private final Map<String, Function<HttpServletRequest, Routes<?>>>
 		_routesFunctions = new ConcurrentHashMap<>();
 

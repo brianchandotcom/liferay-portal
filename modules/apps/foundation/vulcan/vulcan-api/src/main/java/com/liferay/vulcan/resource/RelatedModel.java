@@ -23,6 +23,7 @@ import java.util.function.Function;
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
+ * @review
  */
 public class RelatedModel<T, S> {
 
@@ -39,6 +40,7 @@ public class RelatedModel<T, S> {
 	 * Returns the key of the relation.
 	 *
 	 * @return key of the relation.
+	 * @review
 	 */
 	public String getKey() {
 		return _key;
@@ -48,6 +50,7 @@ public class RelatedModel<T, S> {
 	 * Returns the class of the related model.
 	 *
 	 * @return class of the related model.
+	 * @review
 	 */
 	public Class<S> getModelClass() {
 		return _modelClass;
@@ -58,6 +61,7 @@ public class RelatedModel<T, S> {
 	 * needs a valid instance of the actual model.
 	 *
 	 * @return function to calculate the related model.
+	 * @review
 	 */
 	public Function<T, Optional<S>> getModelFunction() {
 		return _modelFunction;

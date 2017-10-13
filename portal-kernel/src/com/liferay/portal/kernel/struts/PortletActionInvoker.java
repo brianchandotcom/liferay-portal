@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.struts;
 
-import com.liferay.portal.kernel.util.ClassResolverUtil;
+import com.liferay.petra.lang.ClassResolverUtil;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PortalClassInvoker;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;

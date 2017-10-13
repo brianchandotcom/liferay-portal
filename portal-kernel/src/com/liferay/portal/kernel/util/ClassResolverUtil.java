@@ -14,12 +14,17 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.lang.ClassLoaderPool;
+
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.petra.lang.ClassResolverUtil}
  */
+@Deprecated
 public class ClassResolverUtil {
 
 	public static Class<?> resolve(String className, ClassLoader classLoader)

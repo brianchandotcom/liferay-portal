@@ -29,6 +29,7 @@ import java.util.stream.Stream;
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
+ * @review
  */
 public class StringFunctionalList implements FunctionalList<String> {
 

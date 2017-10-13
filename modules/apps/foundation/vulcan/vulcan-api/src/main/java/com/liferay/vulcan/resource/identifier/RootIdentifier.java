@@ -20,6 +20,7 @@ package com.liferay.vulcan.resource.identifier;
  * identifier as its only identifier.
  *
  * @author Alejandro Hernández
+ * @review
  */
 public interface RootIdentifier extends Identifier {
 }

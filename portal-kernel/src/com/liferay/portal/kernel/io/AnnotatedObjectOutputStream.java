@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.io;
 
-import com.liferay.portal.kernel.util.ClassLoaderPool;
+import com.liferay.petra.lang.ClassLoaderPool;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;

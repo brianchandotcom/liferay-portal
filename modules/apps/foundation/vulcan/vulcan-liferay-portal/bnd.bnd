@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Vulcan Liferay Portal
-Bundle-SymbolicName: com.liferay.vulcan.liferay.portal
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.vulcan.liferay.portal.context

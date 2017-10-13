@@ -36,6 +36,7 @@ import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
 
 /**
  * This filter is responsible of filtering {@link Try.Failure} entities,
@@ -43,6 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  * to the response.
  *
  * @author Alejandro Hernández
+ * @review
  */
 @Component(
 	immediate = true, property = "liferay.vulcan.container.response.filter=true"
@@ -68,7 +70,9 @@ public class FailureFilter implements ContainerResponseFilter {
 			APIError apiError = optional.orElseThrow(
 				() -> new MustHaveExceptionConverter(exception.getClass()));
 
-			_vulcanLogger.error(apiError);
+			if (_vulcanLogger != null) {
+				_vulcanLogger.error(apiError);
+			}
 
 			ErrorMessageMapper errorMessageMapper =
 				_errorMessageMapperManager.getErrorMessageMapper(
@@ -97,7 +101,7 @@ public class FailureFilter implements ContainerResponseFilter {
 	@Context
 	private HttpHeaders _httpHeaders;
 
-	@Reference
+	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
 	private VulcanLogger _vulcanLogger;
 
 }

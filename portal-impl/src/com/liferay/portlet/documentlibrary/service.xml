@@ -11,7 +11,6 @@
 		<reference entity="RepositoryEntry" package-path="com.liferay.portal" />
 		<reference entity="DLAppHelper" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFileEntryMetadata" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="DLFileRank" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFolder" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
 	</entity>

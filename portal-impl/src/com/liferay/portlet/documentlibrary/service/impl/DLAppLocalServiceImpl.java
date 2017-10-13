@@ -304,14 +304,20 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  fileEntryId the primary key of the file entry
 	 * @param  serviceContext the service context to be applied
 	 * @return the file rank
+	 *
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *            com.liferay.document.library.file.rank.service.DLFileRankLocalService#addFileRank}
 	 */
+	@Deprecated
 	@Override
 	public DLFileRank addFileRank(
 		long repositoryId, long companyId, long userId, long fileEntryId,
 		ServiceContext serviceContext) {
 
-		return dlFileRankLocalService.addFileRank(
-			repositoryId, companyId, userId, fileEntryId, serviceContext);
+		throw new UnsupportedOperationException(
+			"This method is deprecated and replaced by " +
+				"com.liferay.document.library.file.rank.service." +
+					"DLFileRankLocalService#addFileRank");
 	}
 
 	/**
@@ -423,10 +429,17 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * only supported by the Liferay repository.
 	 *
 	 * @param fileEntryId the primary key of the file entry
+	 *
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *            com.liferay.document.library.file.rank.service.DLFileRankLocalService#deleteFileRanksByFileEntryId}
 	 */
+	@Deprecated
 	@Override
 	public void deleteFileRanksByFileEntryId(long fileEntryId) {
-		dlFileRankLocalService.deleteFileRanksByFileEntryId(fileEntryId);
+		throw new UnsupportedOperationException(
+			"This method is deprecated and replaced by " +
+				"com.liferay.document.library.file.rank.service." +
+					"DLFileRankLocalService#deleteFileRanksByFileEntryId");
 	}
 
 	/**
@@ -434,10 +447,17 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * supported by the Liferay repository.
 	 *
 	 * @param userId the primary key of the user
+	 *
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *            com.liferay.document.library.file.rank.service.DLFileRankLocalService#deleteFileRanksByUserId}
 	 */
+	@Deprecated
 	@Override
 	public void deleteFileRanksByUserId(long userId) {
-		dlFileRankLocalService.deleteFileRanksByUserId(userId);
+		throw new UnsupportedOperationException(
+			"This method is deprecated and replaced by " +
+				"com.liferay.document.library.file.rank.service." +
+					"DLFileRankLocalService#deleteFileRanksByUserId");
 	}
 
 	/**
@@ -607,10 +627,17 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  repositoryId the primary key of the repository
 	 * @param  userId the primary key of the user
 	 * @return the file ranks from the user
+	 *
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *            com.liferay.document.library.file.rank.service.DLFileRankLocalService#getFileRanks}
 	 */
+	@Deprecated
 	@Override
 	public List<DLFileRank> getFileRanks(long repositoryId, long userId) {
-		return dlFileRankLocalService.getFileRanks(repositoryId, userId);
+		throw new UnsupportedOperationException(
+			"This method is deprecated and replaced by " +
+				"com.liferay.document.library.file.rank.service." +
+					"DLFileRankLocalService#getFileRanks");
 	}
 
 	/**
@@ -1075,14 +1102,20 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  fileEntryId the primary key of the file rank's file entry
 	 * @param  serviceContext the service context to be applied
 	 * @return the file rank
+	 *
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *            com.liferay.document.library.file.rank.service.DLFileRankLocalService#updateFileRank}
 	 */
+	@Deprecated
 	@Override
 	public DLFileRank updateFileRank(
 		long repositoryId, long companyId, long userId, long fileEntryId,
 		ServiceContext serviceContext) {
 
-		return dlFileRankLocalService.updateFileRank(
-			repositoryId, companyId, userId, fileEntryId, serviceContext);
+		throw new UnsupportedOperationException(
+			"This method is deprecated and replaced by " +
+				"com.liferay.document.library.file.rank.service." +
+					"DLFileRankLocalService#updateFileRank");
 	}
 
 	/**

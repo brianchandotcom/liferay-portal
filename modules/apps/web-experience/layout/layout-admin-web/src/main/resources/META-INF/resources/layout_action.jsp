@@ -55,7 +55,23 @@ Layout curLayout = (Layout)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, curLayout, ActionKeys.DELETE) %>">
+	<%
+	boolean isDeletable = true;
+
+	if (!LayoutPermissionUtil.contains(permissionChecker, curLayout, ActionKeys.DELETE)) {
+		isDeletable = false;
+	}
+
+	Group group = curLayout.getGroup();
+
+	int layoutsCount = LayoutLocalServiceUtil.getLayoutsCount(group, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+	if (group.isGuest() && !curLayout.isPrivateLayout() && curLayout.isRootLayout() && (layoutsCount == 1)) {
+		isDeletable = false;
+	}
+	%>
+
+	<c:if test="<%= isDeletable %>">
 		<portlet:actionURL name="/delete_layout" var="deleteLayoutURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="plid" value="<%= String.valueOf(curLayout.getPlid()) %>" />

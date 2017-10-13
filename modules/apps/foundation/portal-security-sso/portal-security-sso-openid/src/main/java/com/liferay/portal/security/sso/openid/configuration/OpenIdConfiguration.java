@@ -39,7 +39,7 @@ public interface OpenIdConfiguration {
 	@Meta.AD(
 		deflt = "false",
 		description = "Set this to true to enable OpenId authentication.",
-		required = false
+		name = "enabled", required = false
 	)
 	public boolean enabled();
 

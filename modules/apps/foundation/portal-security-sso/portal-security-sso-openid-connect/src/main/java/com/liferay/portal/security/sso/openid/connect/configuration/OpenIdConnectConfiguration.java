@@ -29,7 +29,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface OpenIdConnectConfiguration {
 
-	@Meta.AD(deflt = "false", description = "enabled-help", required = false)
+	@Meta.AD(
+		deflt = "false", description = "enabled-help", name = "enabled",
+		required = false
+	)
 	public boolean enabled();
 
 }

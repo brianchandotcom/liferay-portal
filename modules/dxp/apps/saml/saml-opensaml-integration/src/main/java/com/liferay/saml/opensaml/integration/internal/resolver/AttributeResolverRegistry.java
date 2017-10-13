@@ -52,7 +52,7 @@ public class AttributeResolverRegistry {
 		return attributeResolver;
 	}
 
-	@Reference(target = "(companyId=0)", unbind = "-")
+	@Reference(target = "(!(companyId=*))", unbind = "-")
 	public void setDefaultAttributeResolver(
 		AttributeResolver defaultAttributeResolver) {
 
@@ -62,7 +62,7 @@ public class AttributeResolverRegistry {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_attributeResolvers = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, AttributeResolver.class, "(!(companyId=0))",
+			bundleContext, AttributeResolver.class, "(companyId=*)",
 			new DefaultServiceReferenceMapper(_log));
 	}
 

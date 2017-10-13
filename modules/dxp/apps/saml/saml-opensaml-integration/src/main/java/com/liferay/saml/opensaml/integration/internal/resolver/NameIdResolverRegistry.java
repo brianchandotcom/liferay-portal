@@ -52,7 +52,7 @@ public class NameIdResolverRegistry {
 		return nameIdResolver;
 	}
 
-	@Reference(target = "(companyId=0)", unbind = "-")
+	@Reference(target = "(!(companyId=*))", unbind = "-")
 	public void setDefaultNameIdResolver(NameIdResolver defaultNameIdResolver) {
 		_defaultNameIdResolver = defaultNameIdResolver;
 	}
@@ -60,7 +60,7 @@ public class NameIdResolverRegistry {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_nameIdResolvers = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, NameIdResolver.class, "(!(companyId=0))",
+			bundleContext, NameIdResolver.class, "(companyId=*)",
 			new DefaultServiceReferenceMapper(_log));
 	}
 

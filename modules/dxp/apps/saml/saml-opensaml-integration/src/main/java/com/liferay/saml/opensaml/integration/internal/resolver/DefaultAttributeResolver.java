@@ -66,10 +66,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mika Koivisto
  */
-@Component(
-	immediate = true, property = {"companyId=0"},
-	service = AttributeResolver.class
-)
+@Component(immediate = true, service = AttributeResolver.class)
 public class DefaultAttributeResolver implements AttributeResolver {
 
 	@Override

@@ -438,6 +438,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_configureTasksCheckOSGiBundleState(project, liferayExtension);
 		_configureTasksFindBugs(project);
 		_configureTasksJavaCompile(project);
+		_configureTasksJspC(project);
 		_configureTasksPmd(project);
 
 		_addTaskUpdateFileSnapshotVersions(project);
@@ -3197,6 +3198,23 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	private void _configureTasksJspC(Project project) {
+		String fragmentHost = _getBundleInstruction(
+			project, Constants.FRAGMENT_HOST);
+
+		if (Validator.isNotNull(fragmentHost)) {
+			Task compileJSPTask = GradleUtil.getTask(
+				project, JspCPlugin.COMPILE_JSP_TASK_NAME);
+
+			compileJSPTask.setEnabled(false);
+
+			Task generateJSPJavaTask = GradleUtil.getTask(
+				project, JspCPlugin.GENERATE_JSP_JAVA_TASK_NAME);
+
+			generateJSPJavaTask.setEnabled(false);
+		}
 	}
 
 	private void _configureTasksPmd(Project project) {

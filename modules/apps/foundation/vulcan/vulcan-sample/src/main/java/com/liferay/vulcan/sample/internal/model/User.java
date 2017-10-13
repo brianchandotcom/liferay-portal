@@ -52,6 +52,7 @@ public class User {
 	 * @param  birthDate the birth date of the user.
 	 * @param  avatar the avatar of the user.
 	 * @return the added {@code User}.
+	 * @review
 	 */
 	public static User addUser(
 		String firstName, String lastName, String email, String address,
@@ -71,16 +72,21 @@ public class User {
 	/**
 	 * Deletes a {@code User} with a certain {@code ID} from the database.
 	 *
-	 * @param id the ID of the user to delete.
+	 * @param  id the ID of the user to delete.
+	 * @review
 	 */
 	public static void deleteUser(long id) {
 		_users.remove(id);
 	}
 
 	/**
-	 * Returns a {@code User} with a certain {@code ID} from the database.
+	 * Returns a {@code User} with a certain {@code ID} from the database if
+	 * present. Returns {@code Optional#empty()} otherwise.
 	 *
-	 * @param id the ID of the user to retrieve.
+	 * @param  id the ID of the user to retrieve.
+	 * @return the {@code User} for the requested ID if present; {@code
+	 *         Optional#empty()} otherwise.
+	 * @review
 	 */
 	public static Optional<User> getUser(long id) {
 		User user = _users.get(id);
@@ -94,6 +100,7 @@ public class User {
 	 * @param  start the start position.
 	 * @param  end the end position.
 	 * @return the list of users between {@code start} and {@code end}.
+	 * @review
 	 */
 	public static List<User> getUsers(int start, int end) {
 		Collection<User> users = _users.values();
@@ -113,13 +120,15 @@ public class User {
 	 * Return the total number of users in the database.
 	 *
 	 * @return the total number of users in the database.
+	 * @review
 	 */
 	public static int getUsersCount() {
 		return _users.size();
 	}
 
 	/**
-	 * Updates a {@code User} with a certain {@code ID} in the database.
+	 * Updates a {@code User} with a certain {@code ID} in the database if
+	 * present.
 	 *
 	 * @param  id the ID of the user to update.
 	 * @param  firstName the first name of the user.
@@ -129,7 +138,9 @@ public class User {
 	 * @param  jobTitle the job title of the user.
 	 * @param  birthDate the birth date of the user.
 	 * @param  avatar the avatar of the user.
-	 * @return the updated {@code User}.
+	 * @return the updated {@code User} if present; {@code Optional#empty()}
+	 *         otherwise.
+	 * @review
 	 */
 	public static Optional<User> updateUser(
 		long id, String firstName, String lastName, String email,
@@ -154,6 +165,7 @@ public class User {
 	 * The address of this {@code User}.
 	 *
 	 * @return the address of the user.
+	 * @review
 	 */
 	public String getAddress() {
 		return _address;
@@ -163,6 +175,7 @@ public class User {
 	 * Returns the avatar of this {@code User}.
 	 *
 	 * @return the avatar of the user.
+	 * @review
 	 */
 	public String getAvatar() {
 		return _avatar;
@@ -172,6 +185,7 @@ public class User {
 	 * The birth date of this {@code User}.
 	 *
 	 * @return the birth date of the user.
+	 * @review
 	 */
 	public Date getBirthDate() {
 		return _birthDate;
@@ -181,6 +195,7 @@ public class User {
 	 * Returns the email of this {@code User}.
 	 *
 	 * @return the email of the user.
+	 * @review
 	 */
 	public String getEmail() {
 		return _email;
@@ -190,6 +205,7 @@ public class User {
 	 * Returns the first name of this {@code User}.
 	 *
 	 * @return the first name of the user.
+	 * @review
 	 */
 	public String getFirstName() {
 		return _firstName;
@@ -199,6 +215,7 @@ public class User {
 	 * Returns the full name of this {@code User}.
 	 *
 	 * @return the last name of the user.
+	 * @review
 	 */
 	public String getFullName() {
 		return _firstName + " " + _lastName;
@@ -208,6 +225,7 @@ public class User {
 	 * The ID of this {@code User}.
 	 *
 	 * @return the ID of the user.
+	 * @review
 	 */
 	public long getId() {
 		return _id;
@@ -217,6 +235,7 @@ public class User {
 	 * The job title of this {@code User}.
 	 *
 	 * @return the job title of the user.
+	 * @review
 	 */
 	public String getJobTitle() {
 		return _jobTitle;
@@ -226,6 +245,7 @@ public class User {
 	 * Returns the last name of this {@code User}.
 	 *
 	 * @return the last name of the user.
+	 * @review
 	 */
 	public String getLastName() {
 		return _lastName;

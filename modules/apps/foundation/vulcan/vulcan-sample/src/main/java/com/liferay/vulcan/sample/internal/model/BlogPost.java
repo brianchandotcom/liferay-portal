@@ -75,9 +75,12 @@ public class BlogPost {
 	}
 
 	/**
-	 * Returns a {@code BlogPost} with a certain {@code ID} from the database.
+	 * Returns a {@code BlogPost} with a certain {@code ID} from the database if
+	 * present. Returns {@code Optional#empty()} otherwise.
 	 *
 	 * @param  id the ID of the blog post to retrieve.
+	 * @return the {@code BlogPost} for the requested ID if present; {@code
+	 *         Optional#empty()} otherwise.
 	 * @review
 	 */
 	public static Optional<BlogPost> getBlogPost(long id) {
@@ -119,14 +122,16 @@ public class BlogPost {
 	}
 
 	/**
-	 * Updates a {@code BlogPost} with a certain {@code ID} in the database.
+	 * Updates a {@code BlogPost} with a certain {@code ID} in the database, if
+	 * present.
 	 *
 	 * @param  id the ID of the blog post to update.
 	 * @param  title the new title for the blog post.
 	 * @param  subtitle the new subtitle for the blog post.
 	 * @param  content the new content for the blog post.
 	 * @param  creatorId the ID of the new creator for the blog post.
-	 * @return the updated {@code BlogPost}.
+	 * @return the updated {@code BlogPost} if present; {@code Optional#empty()}
+	 *         otherwise.
 	 * @review
 	 */
 	public static Optional<BlogPost> updateBlogPost(

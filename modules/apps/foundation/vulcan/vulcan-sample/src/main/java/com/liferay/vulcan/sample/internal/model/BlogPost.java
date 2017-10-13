@@ -282,8 +282,8 @@ public class BlogPost {
 			int creatorId = random.nextInt(User.getUsersCount());
 
 			BlogPost blogPost = new BlogPost(
-				i, title, subtitle, content, displayDate, creatorId, new Date(),
-				new Date());
+				i, title, subtitle, content, displayDate, creatorId,
+				displayDate, displayDate);
 
 			_blogPosts.put(i, blogPost);
 		}

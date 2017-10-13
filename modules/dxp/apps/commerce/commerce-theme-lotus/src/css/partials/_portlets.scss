@@ -1,6 +1,6 @@
 .portlet-boundary_com_liferay_portal_search_web_portlet_SearchPortlet_ {
 	margin: 0 auto;
-	max-width: 1280px;
+	max-width: $limited-container-width;
 
 	.portlet-icon-back {
 		display: none;

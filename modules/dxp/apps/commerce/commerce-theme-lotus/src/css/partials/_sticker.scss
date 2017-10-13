@@ -3,7 +3,7 @@
 }
 
 .sticker-outside {
-	@include position(null, -8px 0 null 0);
+	@include position(absolute, -18px 0 null 0);
 
 	width: 100%;
 }

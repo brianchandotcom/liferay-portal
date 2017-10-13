@@ -9,7 +9,7 @@
 @import "partials/footer";
 @import "partials/jumbotron";
 @import "partials/navbar";
-@import "partials/panel";
+@import "partials/card";
 @import "partials/sticker";
 @import "partials/tab";
 
@@ -25,11 +25,14 @@
 	#mainSearchIcon {
 		position: relative;
 
-		.well {
-			border-color: transparent;
+		.card {
+			&, .list-group-item {
+				border-color: transparent;
+			}
 
 			@include sm {
-				padding: 12px 0 12px;
+				margin: 0;
+				padding: 0;
 			}
 
 			.form-group {
@@ -39,7 +42,7 @@
 			.lexicon-icon-search-static {
 				z-index: 9;
 
-				@include position(absolute, null null 40px 12px);
+				@include position(absolute, null null 8px 8px);
 			}
 		}
 
@@ -62,17 +65,16 @@
 	@import "partials/table";
 
 	a, .btn, input, .form-control {
-		@include form-control-focus($brand-color);
+		// @include hover-focus-active();
 	}
 }
 
 #content {
 	color: $brand-color;
-	min-height: 100vh;
-	padding: 0;
+	min-height: calc(100vh - 112px);
 
 	@include sm {
-		padding-top: 100px;
+		padding-top: 112px;
 	}
 
 	.table {
@@ -93,9 +95,8 @@
 }
 
 .product-detail-header, .nav-tabs-centered .nav-tabs {
-	max-width: 1280px;
-
-	@include center-block();
+	margin: 0 auto;
+	max-width: $limited-container-width;
 }
 
 .product-detail-body {
@@ -142,12 +143,12 @@
 .search-facet {
 	box-shadow: none;
 
-	.panel-heading {
+	.card-heading {
 		background: transparent;
 		border-color: transparent;
 		color: $brand-text-color;
 
-		& + .panel-collapse > .panel-body {
+		& + .card-collapse > .card-body {
 			border-color: transparent;
 		}
 	}
@@ -208,7 +209,7 @@
 	color: $brand-color;
 }
 
-.well {
+.card {
 	background-color: #FFF;
 	border-color: $brand-border-color;
 	border-radius: 0;

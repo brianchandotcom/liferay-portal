@@ -106,6 +106,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "pages"));
 	<%
 	PortletURL addLayoutURL = viewLayoutsDisplayContext.getAddLayoutURL();
 
+	addLayoutURL.setParameter("redirect", currentURL);
 	addLayoutURL.setParameter("backURL", currentURL);
 	%>
 

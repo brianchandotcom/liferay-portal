@@ -72,6 +72,7 @@ public class EditPrivatePagesPortletConfigurationIcon
 		PortletURL editLayoutURL = viewLayoutsDisplayContext.getEditLayoutURL(
 			LayoutConstants.DEFAULT_PLID, true);
 
+		editLayoutURL.setParameter("redirect", themeDisplay.getURLCurrent());
 		editLayoutURL.setParameter("backURL", themeDisplay.getURLCurrent());
 
 		return editLayoutURL.toString();

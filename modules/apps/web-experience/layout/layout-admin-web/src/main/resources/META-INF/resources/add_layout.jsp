@@ -26,28 +26,17 @@ boolean privateLayout = layoutsAdminDisplayContext.isPrivateLayout();
 long parentPlid = LayoutConstants.DEFAULT_PLID;
 long parentLayoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
 
-String selThemeId = null;
-
 if (layout.isTypeControlPanel()) {
 	if (layoutsAdminDisplayContext.getSelPlid() != 0) {
 		selLayout = LayoutLocalServiceUtil.getLayout(layoutsAdminDisplayContext.getSelPlid());
-
-		selThemeId = selLayout.getThemeId();
 
 		privateLayout = selLayout.isPrivateLayout();
 		parentPlid = selLayout.getPlid();
 		parentLayoutId = selLayout.getLayoutId();
 	}
-	else {
-		LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
-
-		selThemeId = selLayoutSet.getThemeId();
-	}
 }
 else {
 	selLayout = layout;
-
-	selThemeId = layout.getThemeId();
 
 	privateLayout = layout.isPrivateLayout();
 	parentPlid = layout.getParentPlid();

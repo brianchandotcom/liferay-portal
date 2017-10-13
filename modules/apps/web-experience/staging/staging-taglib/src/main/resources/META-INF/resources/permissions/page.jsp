@@ -16,31 +16,34 @@
 
 <%@ include file="/permissions/init.jsp" %>
 
+<%
+String inputTitle = StringPool.BLANK;
+String inputDesc = StringPool.BLANK;
+
+if (action.equals("publish")) {
+	inputTitle = "publish-permissions";
+}
+else if (action.equals("export")) {
+	inputTitle = "export-permissions";
+}
+else {
+	inputTitle = "import-permissions";
+}
+
+if (global) {
+	inputDesc = "publish-global-permissions-help";
+}
+else {
+	inputDesc = "export-import-permissions-help";
+}
+
+String inputLabel = "<span style='font-weight: bold;'>" + LanguageUtil.get(request, inputTitle) + ":</span> " + LanguageUtil.get(request, inputDesc);
+%>
+
 <aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="permissions" markupView="lexicon">
 	<span class="<%= labelCSSClass %>">
-		<c:choose>
-			<c:when test='<%= action.equals("publish") %>'>
-				<liferay-ui:message key="publish-permissions" />
-			</c:when>
-			<c:when test='<%= action.equals("export") %>'>
-				<liferay-ui:message key="export-permissions" />
-			</c:when>
-			<c:when test='<%= action.equals("import") %>'>
-				<liferay-ui:message key="import-permissions" />
-			</c:when>
-		</c:choose>
-	</span>
-
-	<aui:input disabled="<%= disableInputs %>" label="<%= StringPool.BLANK %>" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="toggle-switch" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PERMISSIONS, false) %>" />
-
-	<span class="<%= descriptionCSSClass %>">
-		<c:choose>
-			<c:when test="<%= global %>">
-				<liferay-ui:message key="publish-global-permissions-help" />
-			</c:when>
-			<c:otherwise>
-				<liferay-ui:message key="export-import-permissions-help" />
-			</c:otherwise>
-		</c:choose>
+		<aui:input disabled="<%= disableInputs %>" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="checkbox" label="<%= inputLabel %>"
+			value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PERMISSIONS, false) %>"
+		/>
 	</span>
 </aui:fieldset>

@@ -264,7 +264,7 @@
 </tr>
 <tr>
 	<td>SETTINGS_CELL_EDITOR_NOTIFICATION_TYPE_SELECT</td>
-	<td>//select[@name='notificationType']</td>
+	<td>//select[contains(@name,'notificationType')]</td>
 	<td></td>
 </tr>
 <tr>

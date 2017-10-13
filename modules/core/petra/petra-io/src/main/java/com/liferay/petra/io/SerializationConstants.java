@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.io;
+package com.liferay.petra.io;
 
 /**
  * @author Shuyang Zhou

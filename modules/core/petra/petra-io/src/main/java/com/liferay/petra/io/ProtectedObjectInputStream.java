@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.kernel.io;
+package com.liferay.petra.io;
 
 import com.liferay.petra.lang.ClassResolverUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.petra.string.StringUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,8 +23,8 @@ import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectStreamClass;
 
-import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -68,13 +68,12 @@ public class ProtectedObjectInputStream extends ObjectInputStream {
 	private static final Set<String> _restrictedClassNames;
 
 	static {
-		String[] restrictedClassNames = StringUtil.split(
+		List<String> restrictedClassNames = StringUtil.split(
 			System.getProperty(
 				ProtectedObjectInputStream.class.getName() +
 					".restricted.class.names"));
 
-		_restrictedClassNames = new HashSet<>(
-			Arrays.asList(restrictedClassNames));
+		_restrictedClassNames = new HashSet<>(restrictedClassNames);
 	}
 
 }

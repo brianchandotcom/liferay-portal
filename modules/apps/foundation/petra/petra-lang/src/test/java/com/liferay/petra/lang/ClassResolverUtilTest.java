@@ -48,14 +48,11 @@ public class ClassResolverUtilTest {
 
 	@Test
 	public void testResolveWithDifferentClassLoader() throws Exception {
-		URL url = ClassResolverUtilTest.class.getResource(
-			"ClassResolverUtilTest");
-
 		Assert.assertSame(
 			ClassResolverUtilTest.class,
 			ClassResolverUtil.resolve(
 				ClassResolverUtilTest.class.getName(),
-				new URLClassLoader(new URL[] {url})));
+				new URLClassLoader(new URL[0])));
 	}
 
 	@Test(expected = ClassNotFoundException.class)

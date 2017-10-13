@@ -36,8 +36,8 @@ public class HashUtilTest {
 
 	@Test
 	public void testHashBoolean() {
-		_assertHashValue(0, Boolean.FALSE);
-		_assertHashValue(1, Boolean.TRUE);
+		_assertHashValue(0, false);
+		_assertHashValue(1, true);
 	}
 
 	@Test
@@ -76,26 +76,22 @@ public class HashUtilTest {
 		_assertHashValue("hash");
 	}
 
-	private void _assertHashValue(int expected, Boolean value) {
-		Assert.assertEquals(expected, HashUtil.hash(0, value.booleanValue()));
-		Assert.assertEquals(
-			11 + expected, HashUtil.hash(1, value.booleanValue()));
-		Assert.assertEquals(
-			-11 + expected, HashUtil.hash(-1, value.booleanValue()));
+	private void _assertHashValue(int expected, boolean value) {
+		Assert.assertEquals(expected, HashUtil.hash(0, value));
+		Assert.assertEquals(11 + expected, HashUtil.hash(1, value));
+		Assert.assertEquals(-11 + expected, HashUtil.hash(-1, value));
 	}
 
-	private void _assertHashValue(int expected, Integer value) {
-		Assert.assertEquals(expected, HashUtil.hash(0, value.intValue()));
-		Assert.assertEquals(11 + expected, HashUtil.hash(1, value.intValue()));
-		Assert.assertEquals(
-			-11 + expected, HashUtil.hash(-1, value.intValue()));
+	private void _assertHashValue(int expected, int value) {
+		Assert.assertEquals(expected, HashUtil.hash(0, value));
+		Assert.assertEquals(11 + expected, HashUtil.hash(1, value));
+		Assert.assertEquals(-11 + expected, HashUtil.hash(-1, value));
 	}
 
-	private void _assertHashValue(int expected, Long value) {
-		Assert.assertEquals(expected, HashUtil.hash(0, value.longValue()));
-		Assert.assertEquals(11 + expected, HashUtil.hash(1, value.longValue()));
-		Assert.assertEquals(
-			-11 + expected, HashUtil.hash(-1, value.longValue()));
+	private void _assertHashValue(int expected, long value) {
+		Assert.assertEquals(expected, HashUtil.hash(0, value));
+		Assert.assertEquals(11 + expected, HashUtil.hash(1, value));
+		Assert.assertEquals(-11 + expected, HashUtil.hash(-1, value));
 	}
 
 	private void _assertHashValue(Object value) {

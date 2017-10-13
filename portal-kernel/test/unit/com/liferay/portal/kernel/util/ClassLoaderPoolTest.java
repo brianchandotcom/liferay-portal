@@ -38,17 +38,13 @@ public class ClassLoaderPoolTest {
 
 	@Before
 	public void setUp() {
-		Class<?> clazz = getClass();
-
-		PortalClassLoaderUtil.setClassLoader(clazz.getClassLoader());
-
 		_classLoaders = ReflectionTestUtil.getFieldValue(
-			ClassLoaderPool.class, "_classLoaders");
+			com.liferay.petra.lang.ClassLoaderPool.class, "_classLoaders");
 
 		_classLoaders.clear();
 
 		_contextNames = ReflectionTestUtil.getFieldValue(
-			ClassLoaderPool.class, "_contextNames");
+			com.liferay.petra.lang.ClassLoaderPool.class, "_contextNames");
 
 		_contextNames.clear();
 	}
@@ -120,40 +116,28 @@ public class ClassLoaderPoolTest {
 		Assert.assertEquals(_CONTEXT_NAME, _contextNames.get(classLoader));
 	}
 
-	@Test
+	@Test(expected = NullPointerException.class)
 	public void testRegisterWithNullClassLoader() {
-		try {
-			ClassLoaderPool.register(StringPool.BLANK, null);
-
-			Assert.fail();
-		}
-		catch (NullPointerException npe) {
-		}
+		ClassLoaderPool.register(StringPool.BLANK, null);
 	}
 
-	@Test
+	@Test(expected = NullPointerException.class)
 	public void testRegisterWithNullContextName() {
-		try {
-			ClassLoaderPool.register(null, null);
-
-			Assert.fail();
-		}
-		catch (NullPointerException npe) {
-		}
+		ClassLoaderPool.register(null, null);
 	}
 
 	@Test
 	public void testUnregisterWithInvalidClassLoader() {
 		ClassLoaderPool.unregister(new URLClassLoader(new URL[0]));
 
-		assertEmptyMaps();
+		_assertEmptyMaps();
 	}
 
 	@Test
 	public void testUnregisterWithInvalidContextName() {
 		ClassLoaderPool.unregister(_CONTEXT_NAME);
 
-		assertEmptyMaps();
+		_assertEmptyMaps();
 	}
 
 	@Test
@@ -164,7 +148,7 @@ public class ClassLoaderPoolTest {
 
 		ClassLoaderPool.unregister(classLoader);
 
-		assertEmptyMaps();
+		_assertEmptyMaps();
 	}
 
 	@Test
@@ -175,10 +159,10 @@ public class ClassLoaderPoolTest {
 
 		ClassLoaderPool.unregister(_CONTEXT_NAME);
 
-		assertEmptyMaps();
+		_assertEmptyMaps();
 	}
 
-	protected void assertEmptyMaps() {
+	private void _assertEmptyMaps() {
 		Assert.assertTrue(_contextNames.isEmpty());
 		Assert.assertTrue(_classLoaders.isEmpty());
 	}

@@ -33,6 +33,11 @@ if (selGroup.isLayoutSetPrototype()) {
 	privateLayout = true;
 }
 
+if (Validator.isNotNull(backURL)) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(backURL);
+}
+
 renderResponse.setTitle(selGroup.getLayoutRootNodeName(privateLayout, locale));
 %>
 

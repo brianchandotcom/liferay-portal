@@ -105,6 +105,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "pages"));
 
 	<%
 	PortletURL addLayoutURL = viewLayoutsDisplayContext.getAddLayoutURL();
+
+	addLayoutURL.setParameter("backURL", currentURL);
 	%>
 
 	<liferay-frontend:add-menu>

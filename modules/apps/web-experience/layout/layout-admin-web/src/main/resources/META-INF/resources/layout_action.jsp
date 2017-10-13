@@ -27,6 +27,7 @@ Layout curLayout = (Layout)row.getObject();
 		<portlet:renderURL var="editLayoutURL">
 			<portlet:param name="mvcPath" value="/edit_layout.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="backURL" value="<%= currentURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(curLayout.getGroupId()) %>" />
 			<portlet:param name="selPlid" value="<%= String.valueOf(curLayout.getPlid()) %>" />
 			<portlet:param name="privateLayout" value="<%= String.valueOf(curLayout.isPrivateLayout()) %>" />
@@ -42,6 +43,7 @@ Layout curLayout = (Layout)row.getObject();
 		<portlet:renderURL var="addChildPageURL">
 			<portlet:param name="mvcPath" value="/add_layout.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="backURL" value="<%= currentURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(curLayout.getGroupId()) %>" />
 			<portlet:param name="selPlid" value="<%= String.valueOf(curLayout.getPlid()) %>" />
 			<portlet:param name="privateLayout" value="<%= String.valueOf(curLayout.isPrivateLayout()) %>" />

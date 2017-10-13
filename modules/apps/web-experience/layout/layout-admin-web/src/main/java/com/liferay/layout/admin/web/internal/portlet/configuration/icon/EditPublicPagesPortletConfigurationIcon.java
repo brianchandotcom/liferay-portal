@@ -56,6 +56,9 @@ public class EditPublicPagesPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		LiferayPortletRequest liferayPortletRequest =
 			_portal.getLiferayPortletRequest(portletRequest);
 
@@ -68,6 +71,8 @@ public class EditPublicPagesPortletConfigurationIcon
 
 		PortletURL editLayoutURL = viewLayoutsDisplayContext.getEditLayoutURL(
 			LayoutConstants.DEFAULT_PLID, false);
+
+		editLayoutURL.setParameter("backURL", themeDisplay.getURLCurrent());
 
 		return editLayoutURL.toString();
 	}

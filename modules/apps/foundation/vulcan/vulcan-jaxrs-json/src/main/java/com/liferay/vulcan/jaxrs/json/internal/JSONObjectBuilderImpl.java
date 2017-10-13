@@ -14,14 +14,17 @@
 
 package com.liferay.vulcan.jaxrs.json.internal;
 
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 import com.liferay.vulcan.message.json.JSONObjectBuilder;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 /**
  * @author Alejandro Hernández
@@ -31,7 +34,7 @@ import java.util.function.Function;
 public class JSONObjectBuilderImpl implements JSONObjectBuilder {
 
 	@Override
-	public JSONObject build() {
+	public JsonObject build() {
 		return _jsonObject;
 	}
 
@@ -92,7 +95,7 @@ public class JSONObjectBuilderImpl implements JSONObjectBuilder {
 
 	public static class ArrayValueStepImpl implements ArrayValueStep {
 
-		public ArrayValueStepImpl(JSONArray jsonArray) {
+		public ArrayValueStepImpl(JsonArray jsonArray) {
 			_jsonArray = jsonArray;
 		}
 
@@ -107,61 +110,100 @@ public class JSONObjectBuilderImpl implements JSONObjectBuilder {
 
 		@Override
 		public void add(JSONObjectBuilder jsonObjectBuilder) {
-			_jsonArray.put(jsonObjectBuilder.build());
+			_jsonArray.add(jsonObjectBuilder.build());
 		}
 
 		@Override
-		public void add(Object value) {
-			if (value != null) {
-				_jsonArray.put(value);
-			}
+		public void addAllBooleans(Collection<Boolean> collection) {
+			Stream<Boolean> stream = collection.stream();
+
+			stream.forEach(_jsonArray::add);
 		}
 
 		@Override
-		public <T> void addAll(Collection<T> collection) {
-			collection.forEach(_jsonArray::put);
+		public void addAllJsonObjects(Collection<JsonObject> collection) {
+			collection.forEach(_jsonArray::add);
 		}
 
-		private final JSONArray _jsonArray;
+		@Override
+		public void addAllNumbers(Collection<Number> collection) {
+			collection.forEach(_jsonArray::add);
+		}
+
+		@Override
+		public void addAllStrings(Collection<String> collection) {
+			Stream<String> stream = collection.stream();
+
+			stream.forEach(_jsonArray::add);
+		}
+
+		@Override
+		public void addBoolean(Boolean value) {
+			_jsonArray.add(value);
+		}
+
+		@Override
+		public void addNumber(Number value) {
+			_jsonArray.add(value);
+		}
+
+		@Override
+		public void addString(String value) {
+			_jsonArray.add(value);
+		}
+
+		private final JsonArray _jsonArray;
 
 	}
 
-	private final JSONObject _jsonObject = JSONFactoryUtil.createJSONObject();
+	private final JsonObject _jsonObject = new JsonObject();
 
 	private static class FieldStepImpl implements FieldStep {
 
-		public FieldStepImpl(String name, JSONObject jsonObject) {
+		public FieldStepImpl(String name, JsonObject jsonObject) {
 			_name = name;
-			_stepJSONObject = jsonObject;
+			_jsonObject = jsonObject;
 		}
 
 		@Override
 		public ArrayValueStep arrayValue() {
-			JSONArray jsonArray = _stepJSONObject.getJSONArray(_name);
+			Optional<JsonElement> optional = Optional.ofNullable(
+				_jsonObject.get(_name));
 
-			if (jsonArray == null) {
-				jsonArray = JSONFactoryUtil.createJSONArray();
+			JsonArray jsonArray = optional.filter(
+				JsonElement::isJsonArray
+			).map(
+				JsonArray.class::cast
+			).orElseGet(
+				JsonArray::new
+			);
 
-				_stepJSONObject.put(_name, jsonArray);
-			}
+			_jsonObject.add(_name, jsonArray);
 
 			return new ArrayValueStepImpl(jsonArray);
 		}
 
 		@Override
+		public void booleanValue(Boolean value) {
+			_jsonObject.addProperty(_name, value);
+		}
+
+		@Override
 		public FieldStep field(String name) {
-			JSONObject previousJSONObject = _stepJSONObject.getJSONObject(
-				_name);
+			Optional<JsonElement> optional = Optional.ofNullable(
+				_jsonObject.get(_name));
 
-			if (previousJSONObject == null) {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+			JsonObject jsonObject = optional.filter(
+				JsonElement::isJsonObject
+			).map(
+				JsonObject.class::cast
+			).orElseGet(
+				JsonObject::new
+			);
 
-				_stepJSONObject.put(_name, jsonObject);
+			_jsonObject.add(_name, jsonObject);
 
-				return new FieldStepImpl(name, jsonObject);
-			}
-
-			return new FieldStepImpl(name, previousJSONObject);
+			return new FieldStepImpl(name, jsonObject);
 		}
 
 		@Override
@@ -227,14 +269,17 @@ public class JSONObjectBuilderImpl implements JSONObjectBuilder {
 		}
 
 		@Override
-		public void value(Object value) {
-			if (value != null) {
-				_stepJSONObject.put(_name, value);
-			}
+		public void numberValue(Number value) {
+			_jsonObject.addProperty(_name, value);
 		}
 
+		@Override
+		public void stringValue(String value) {
+			_jsonObject.addProperty(_name, value);
+		}
+
+		private final JsonObject _jsonObject;
 		private final String _name;
-		private final JSONObject _stepJSONObject;
 
 	}
 

@@ -33,6 +33,7 @@ import org.osgi.framework.ServiceReference;
  * Use descendants of this class to manage services that have a generic type.
  *
  * @author Alejandro Hernández
+ * @review
  */
 public abstract class BaseManager<T> {
 
@@ -46,13 +47,13 @@ public abstract class BaseManager<T> {
 	 * Adds a new serviceReference/service tuple to the internal map.
 	 *
 	 * @param  serviceReference a service reference.
-	 * @param  clazz class of the service reference service.
 	 * @return the generic inner class of the service reference service, if a
 	 *         valid service can be obtained; {@code Optional#empty()}
 	 *         otherwise.
+	 * @review
 	 */
 	protected <U> Optional<Class<U>> addService(
-		ServiceReference<T> serviceReference, Class<T> clazz) {
+		ServiceReference<T> serviceReference) {
 
 		T service = _bundleContext.getService(serviceReference);
 
@@ -60,7 +61,7 @@ public abstract class BaseManager<T> {
 			return Optional.empty();
 		}
 
-		Class<U> genericClass = _getGenericClass(service, clazz);
+		Class<U> genericClass = _getGenericClass(service);
 
 		_services.computeIfAbsent(
 			genericClass.getName(), name -> new TreeSet<>());
@@ -78,10 +79,11 @@ public abstract class BaseManager<T> {
 
 	/**
 	 * Retrieves a service from the inner map based on its generic inner class.
-	 * Returns <code>Optional#empty()</code> if no service is found.
+	 * Returns {@code Optional#empty()} if no service is found.
 	 *
 	 * @param  clazz the class.
-	 * @return the service, if present; <code>Optional#empty()</code> otherwise.
+	 * @return the service, if present; {@code Optional#empty()} otherwise.
+	 * @review
 	 */
 	protected <U> Optional<T> getServiceOptional(Class<U> clazz) {
 		return getServiceOptional(clazz.getName());
@@ -89,10 +91,11 @@ public abstract class BaseManager<T> {
 
 	/**
 	 * Retrieves a service from the inner map based on its generic inner class
-	 * name. Returns <code>Optional#empty()</code> if no service is found.
+	 * name. Returns {@code Optional#empty()} if no service is found.
 	 *
 	 * @param  className the class name.
-	 * @return the service, if present; <code>Optional#empty()</code> otherwise.
+	 * @return the service, if present; {@code Optional#empty()} otherwise.
+	 * @review
 	 */
 	protected Optional<T> getServiceOptional(String className) {
 		TreeSet<ServiceReferenceServiceTuple<T>> serviceReferenceServiceTuples =
@@ -114,33 +117,33 @@ public abstract class BaseManager<T> {
 	 * Removes a serviceReference/service tuple to the internal map.
 	 *
 	 * @param  serviceReference a service reference.
-	 * @param  clazz class of the service reference service.
 	 * @return the generic inner class of the service reference service, if a
 	 *         valid service can be obtained; {@code Optional#empty()}
 	 *         otherwise.
+	 * @review
 	 */
 	protected <U> Optional<Class<U>> removeService(
-		ServiceReference<T> serviceReference, Class<T> clazz) {
+		ServiceReference<T> serviceReference) {
 
 		Consumer<T> identityConsumer = t -> {
 		};
 
-		return removeService(serviceReference, clazz, identityConsumer);
+		return removeService(serviceReference, identityConsumer);
 	}
 
 	/**
 	 * Removes a serviceReference/service tuple to the internal map.
 	 *
 	 * @param  serviceReference a service reference.
-	 * @param  clazz class of the service reference service.
 	 * @param  beforeRemovingConsumer consumer that will be called before
 	 *         removing the service.
 	 * @return the generic inner class of the service reference service, if a
 	 *         valid service can be obtained; {@code Optional#empty()}
 	 *         otherwise.
+	 * @review
 	 */
 	protected <U> Optional<Class<U>> removeService(
-		ServiceReference<T> serviceReference, Class<T> clazz,
+		ServiceReference<T> serviceReference,
 		Consumer<T> beforeRemovingConsumer) {
 
 		T service = _bundleContext.getService(serviceReference);
@@ -149,7 +152,7 @@ public abstract class BaseManager<T> {
 			return Optional.empty();
 		}
 
-		Class<U> genericClass = _getGenericClass(service, clazz);
+		Class<U> genericClass = _getGenericClass(service);
 
 		TreeSet<ServiceReferenceServiceTuple<T>> serviceReferenceServiceTuples =
 			_services.get(genericClass.getName());
@@ -170,11 +173,11 @@ public abstract class BaseManager<T> {
 		return Optional.of(genericClass);
 	}
 
-	private <U> Class<U> _getGenericClass(T service, Class<T> interfaceClass) {
+	private <U> Class<U> _getGenericClass(T service) {
 		Class<?> serviceClass = service.getClass();
 
-		Try<Class<U>> classTry = GenericUtil.getGenericClassTry(
-			serviceClass, interfaceClass);
+		Try<Class<U>> classTry = GenericUtil.getFirstGenericTypeArgumentTry(
+			serviceClass);
 
 		return classTry.orElseThrow(
 			() -> new VulcanDeveloperError.MustHaveValidGenericType(

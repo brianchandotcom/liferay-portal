@@ -14,6 +14,8 @@
 
 package com.liferay.vulcan.provider;
 
+import aQute.bnd.annotation.ConsumerType;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -24,7 +26,9 @@ import javax.servlet.http.HttpServletRequest;
  * com.liferay.vulcan.resource.builder.RoutesBuilder} methods.
  *
  * @author Alejandro Hernández
+ * @review
  */
+@ConsumerType
 public interface Provider<T> {
 
 	/**
@@ -32,6 +36,7 @@ public interface Provider<T> {
 	 *
 	 * @param  httpServletRequest current request.
 	 * @return the instance of the provided class.
+	 * @review
 	 */
 	public T createContext(HttpServletRequest httpServletRequest);
 

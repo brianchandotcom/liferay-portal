@@ -19,11 +19,12 @@ import java.io.InputStream;
 import java.util.function.Function;
 
 /**
- * Type alias for a function which receives a model of type <code>T</code> and
+ * Type alias for a function which receives a model of type {@code T} and
  * returns a binary representation of that model in the form of an {@link
  * InputStream}.
  *
  * @author Alejandro Hernández
+ * @review
  */
 @FunctionalInterface
 public interface BinaryFunction<T> extends Function<T, InputStream> {

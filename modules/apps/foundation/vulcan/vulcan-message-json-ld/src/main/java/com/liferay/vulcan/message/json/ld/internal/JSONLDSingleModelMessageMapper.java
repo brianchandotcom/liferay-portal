@@ -34,6 +34,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Jorge Ferrer
  * @see    <a href="https://json-ld.org/">JSON-LD</a>
  * @see    <a href="https://www.hydra-cg.com/">Hydra</a>
+ * @review
  */
 @Component(
 	immediate = true,
@@ -49,10 +50,21 @@ public class JSONLDSingleModelMessageMapper<T>
 	}
 
 	@Override
-	public void mapEmbeddedResourceField(
+	public void mapBooleanField(
+		JSONObjectBuilder jsonObjectBuilder, String fieldName, Boolean value) {
+
+		jsonObjectBuilder.field(
+			fieldName
+		).booleanValue(
+			value
+		);
+	}
+
+	@Override
+	public void mapEmbeddedResourceBooleanField(
 		JSONObjectBuilder jsonObjectBuilder,
 		FunctionalList<String> embeddedPathElements, String fieldName,
-		Object value) {
+		Boolean value) {
 
 		Stream<String> tailStream = embeddedPathElements.tailStream();
 
@@ -60,7 +72,7 @@ public class JSONLDSingleModelMessageMapper<T>
 			embeddedPathElements.head(), tailStream.toArray(String[]::new)
 		).field(
 			fieldName
-		).value(
+		).booleanValue(
 			value
 		);
 	}
@@ -77,8 +89,42 @@ public class JSONLDSingleModelMessageMapper<T>
 			embeddedPathElements.head(), tailStream.toArray(String[]::new)
 		).field(
 			fieldName
-		).value(
+		).stringValue(
 			url
+		);
+	}
+
+	@Override
+	public void mapEmbeddedResourceNumberField(
+		JSONObjectBuilder jsonObjectBuilder,
+		FunctionalList<String> embeddedPathElements, String fieldName,
+		Number value) {
+
+		Stream<String> tailStream = embeddedPathElements.tailStream();
+
+		jsonObjectBuilder.nestedField(
+			embeddedPathElements.head(), tailStream.toArray(String[]::new)
+		).field(
+			fieldName
+		).numberValue(
+			value
+		);
+	}
+
+	@Override
+	public void mapEmbeddedResourceStringField(
+		JSONObjectBuilder jsonObjectBuilder,
+		FunctionalList<String> embeddedPathElements, String fieldName,
+		String value) {
+
+		Stream<String> tailStream = embeddedPathElements.tailStream();
+
+		jsonObjectBuilder.nestedField(
+			embeddedPathElements.head(), tailStream.toArray(String[]::new)
+		).field(
+			fieldName
+		).stringValue(
+			value
 		);
 	}
 
@@ -94,7 +140,7 @@ public class JSONLDSingleModelMessageMapper<T>
 		).field(
 			"@type"
 		).arrayValue(
-		).addAll(
+		).addAllStrings(
 			types
 		);
 	}
@@ -110,19 +156,8 @@ public class JSONLDSingleModelMessageMapper<T>
 			embeddedPathElements.head(), tailStream.toArray(String[]::new)
 		).field(
 			"@id"
-		).value(
+		).stringValue(
 			url
-		);
-	}
-
-	@Override
-	public void mapField(
-		JSONObjectBuilder jsonObjectBuilder, String fieldName, Object value) {
-
-		jsonObjectBuilder.field(
-			fieldName
-		).value(
-			value
 		);
 	}
 
@@ -132,7 +167,7 @@ public class JSONLDSingleModelMessageMapper<T>
 
 		jsonObjectBuilder.field(
 			fieldName
-		).value(
+		).stringValue(
 			url
 		);
 	}
@@ -150,7 +185,7 @@ public class JSONLDSingleModelMessageMapper<T>
 
 		jsonObjectBuilder.nestedField(
 			head, tail
-		).value(
+		).stringValue(
 			url
 		);
 
@@ -170,8 +205,19 @@ public class JSONLDSingleModelMessageMapper<T>
 			builder -> builder.nestedField("@context", head)
 		).field(
 			"@type"
-		).value(
+		).stringValue(
 			"@id"
+		);
+	}
+
+	@Override
+	public void mapNumberField(
+		JSONObjectBuilder jsonObjectBuilder, String fieldName, Number value) {
+
+		jsonObjectBuilder.field(
+			fieldName
+		).numberValue(
+			value
 		);
 	}
 
@@ -179,8 +225,19 @@ public class JSONLDSingleModelMessageMapper<T>
 	public void mapSelfURL(JSONObjectBuilder jsonObjectBuilder, String url) {
 		jsonObjectBuilder.field(
 			"@id"
-		).value(
+		).stringValue(
 			url
+		);
+	}
+
+	@Override
+	public void mapStringField(
+		JSONObjectBuilder jsonObjectBuilder, String fieldName, String value) {
+
+		jsonObjectBuilder.field(
+			fieldName
+		).stringValue(
+			value
 		);
 	}
 
@@ -191,7 +248,7 @@ public class JSONLDSingleModelMessageMapper<T>
 		jsonObjectBuilder.field(
 			"@type"
 		).arrayValue(
-		).addAll(
+		).addAllStrings(
 			types
 		);
 	}
@@ -203,7 +260,7 @@ public class JSONLDSingleModelMessageMapper<T>
 
 		jsonObjectBuilder.nestedField(
 			"@context", "@vocab"
-		).value(
+		).stringValue(
 			"http://schema.org"
 		);
 	}

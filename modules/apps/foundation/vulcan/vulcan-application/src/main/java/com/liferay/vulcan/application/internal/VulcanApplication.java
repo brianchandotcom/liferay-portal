@@ -42,9 +42,13 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Hernández
  * @author Carlos Sierra
  * @author Jorge Ferrer
+ * @review
  */
 @ApplicationPath("/")
-@Component(immediate = true, service = Application.class)
+@Component(
+	immediate = true, property = "liferay.vulcan.application=true",
+	service = Application.class
+)
 public class VulcanApplication extends Application {
 
 	@Override

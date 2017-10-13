@@ -27,6 +27,7 @@ import java.util.Collection;
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
+ * @review
  */
 @ProviderType
 public interface Page<T> {
@@ -35,6 +36,7 @@ public interface Page<T> {
 	 * Returns the items of the page.
 	 *
 	 * @return the items of the page.
+	 * @review
 	 */
 	public Collection<T> getItems();
 
@@ -42,6 +44,7 @@ public interface Page<T> {
 	 * Returns the number of items the user has selected on the page.
 	 *
 	 * @return the number of items the user has selected on the page.
+	 * @review
 	 */
 	public int getItemsPerPage();
 
@@ -49,6 +52,7 @@ public interface Page<T> {
 	 * Returns the number of the last page of the collection.
 	 *
 	 * @return the number of the last page of the collection.
+	 * @review
 	 */
 	public int getLastPageNumber();
 
@@ -56,6 +60,7 @@ public interface Page<T> {
 	 * Returns the model class of the page.
 	 *
 	 * @return the model class of the page.
+	 * @review
 	 */
 	public Class<T> getModelClass();
 
@@ -63,6 +68,7 @@ public interface Page<T> {
 	 * Returns the page number in the collection.
 	 *
 	 * @return the page number in the collection.
+	 * @review
 	 */
 	public int getPageNumber();
 
@@ -70,6 +76,7 @@ public interface Page<T> {
 	 * Returns the identifier.
 	 *
 	 * @return the identifier.
+	 * @review
 	 */
 	public Path getPath();
 
@@ -77,24 +84,26 @@ public interface Page<T> {
 	 * Returns the total number of elements in the collection.
 	 *
 	 * @return the total number of elements in the collection.
+	 * @review
 	 */
 	public int getTotalCount();
 
 	/**
-	 * Returns <code>true</code> if another page follows this page in the
-	 * collection.
+	 * Returns {@code true} if another page follows this page in the collection.
 	 *
-	 * @return <code>true</code> if another page follows this page in the
-	 *         collection; <code>false</code> otherwise.
+	 * @return {@code true} if another page follows this page in the collection;
+	 *         {@code false} otherwise.
+	 * @review
 	 */
 	public boolean hasNext();
 
 	/**
-	 * Returns <code>true</code> if another page precedes this page in the
+	 * Returns {@code true} if another page precedes this page in the
 	 * collection.
 	 *
-	 * @return <code>true</code> if another page precedes this page in the
-	 *         collection; <code>false</code> otherwise.
+	 * @return {@code true} if another page precedes this page in the
+	 *         collection; {@code false} otherwise.
+	 * @review
 	 */
 	public boolean hasPrevious();
 

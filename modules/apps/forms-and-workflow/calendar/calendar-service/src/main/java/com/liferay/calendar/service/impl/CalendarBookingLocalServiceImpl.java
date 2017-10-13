@@ -1166,10 +1166,7 @@ public class CalendarBookingLocalServiceImpl
 			groupModified = true;
 		}
 
-		if (groupModified &&
-			(calendarLocalService.isStagingCalendar(calendar) ||
-			 isStagingCalendarBooking(calendarBooking))) {
-
+		if (groupModified && isStagingCalendarBooking(calendarBooking)) {
 			systemEventLocalService.addSystemEvent(
 				userId, calendarBooking.getGroupId(),
 				CalendarBooking.class.getName(),

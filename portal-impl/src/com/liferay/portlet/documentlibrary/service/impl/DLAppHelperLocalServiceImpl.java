@@ -194,11 +194,6 @@ public class DLAppHelperLocalServiceImpl
 			return;
 		}
 
-		// File ranks
-
-		dlFileRankLocalService.deleteFileRanksByFileEntryId(
-			fileEntry.getFileEntryId());
-
 		// File shortcuts
 
 		dlFileShortcutLocalService.deleteFileShortcuts(
@@ -250,14 +245,6 @@ public class DLAppHelperLocalServiceImpl
 
 		if (!incrementCounter) {
 			return;
-		}
-
-		// File rank
-
-		if (userId > 0) {
-			dlFileRankLocalService.updateFileRank(
-				fileEntry.getGroupId(), fileEntry.getCompanyId(), userId,
-				fileEntry.getFileEntryId(), new ServiceContext());
 		}
 
 		// File read count
@@ -667,10 +654,6 @@ public class DLAppHelperLocalServiceImpl
 			userId, fileVersion.getFileVersionId(), trashEntry.getStatus(),
 			new ServiceContext(), new HashMap<String, Serializable>());
 
-		// File rank
-
-		dlFileRankLocalService.enableFileRanks(fileEntry.getFileEntryId());
-
 		// File shortcut
 
 		dlFileShortcutLocalService.enableFileShortcuts(
@@ -772,10 +755,6 @@ public class DLAppHelperLocalServiceImpl
 		dlFolderLocalService.updateStatus(
 			userId, folder.getFolderId(), trashEntry.getStatus(),
 			new HashMap<String, Serializable>(), new ServiceContext());
-
-		// File rank
-
-		dlFileRankLocalService.enableFileRanksByFolderId(folder.getFolderId());
 
 		// Folders, file entries, and file shortcuts
 
@@ -1206,11 +1185,6 @@ public class DLAppHelperLocalServiceImpl
 				userId, fileEntry.getFileEntryId(), newFolderId,
 				serviceContext);
 
-			if (DLAppHelperThreadLocal.isEnabled()) {
-				dlFileRankLocalService.enableFileRanks(
-					fileEntry.getFileEntryId());
-			}
-
 			// Indexer
 
 			Indexer<DLFileEntry> indexer =
@@ -1271,10 +1245,6 @@ public class DLAppHelperLocalServiceImpl
 		}
 
 		if (DLAppHelperThreadLocal.isEnabled()) {
-
-			// File rank
-
-			dlFileRankLocalService.enableFileRanks(fileEntry.getFileEntryId());
 
 			// File shortcut
 
@@ -1352,10 +1322,6 @@ public class DLAppHelperLocalServiceImpl
 
 			dlFileShortcutLocalService.disableFileShortcuts(
 				fileEntry.getFileEntryId());
-
-			// File rank
-
-			dlFileRankLocalService.disableFileRanks(fileEntry.getFileEntryId());
 
 			// Sync
 
@@ -1464,11 +1430,6 @@ public class DLAppHelperLocalServiceImpl
 				userId, folder.getFolderId(), status,
 				new HashMap<String, Serializable>(), new ServiceContext());
 
-			// File rank
-
-			dlFileRankLocalService.enableFileRanksByFolderId(
-				folder.getFolderId());
-
 			// Trash
 
 			if (trashVersion != null) {
@@ -1515,10 +1476,6 @@ public class DLAppHelperLocalServiceImpl
 		dlFolder = dlFolderLocalService.updateStatus(
 			userId, folder.getFolderId(), WorkflowConstants.STATUS_IN_TRASH,
 			new HashMap<String, Serializable>(), new ServiceContext());
-
-		// File rank
-
-		dlFileRankLocalService.disableFileRanksByFolderId(folder.getFolderId());
 
 		// Trash
 

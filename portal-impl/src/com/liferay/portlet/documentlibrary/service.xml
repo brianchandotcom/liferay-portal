@@ -33,7 +33,6 @@
 		<reference entity="DLApp" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFileEntry" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFileEntryType" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="DLFileRank" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFileShortcut" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFileVersion" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFolder" package-path="com.liferay.portlet.documentlibrary" />

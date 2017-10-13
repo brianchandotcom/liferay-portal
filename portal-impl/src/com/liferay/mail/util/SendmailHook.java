@@ -19,6 +19,7 @@ import com.liferay.mail.kernel.util.Hook;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.process.LoggingOutputProcessor;
 import com.liferay.portal.kernel.process.ProcessUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -90,7 +91,7 @@ public class SendmailHook implements Hook {
 
 		try {
 			Future<?> future = ProcessUtil.execute(
-				ProcessUtil.LOGGING_OUTPUT_PROCESSOR, addUserCmd);
+				LoggingOutputProcessor.INSTANCE, addUserCmd);
 
 			future.get();
 		}
@@ -129,7 +130,7 @@ public class SendmailHook implements Hook {
 
 		try {
 			Future<?> future = ProcessUtil.execute(
-				ProcessUtil.LOGGING_OUTPUT_PROCESSOR, deleteUserCmd);
+				LoggingOutputProcessor.INSTANCE, deleteUserCmd);
 
 			future.get();
 		}
@@ -217,7 +218,7 @@ public class SendmailHook implements Hook {
 				PropsKeys.MAIL_HOOK_SENDMAIL_VIRTUSERTABLE_REFRESH);
 
 			Future<?> future = ProcessUtil.execute(
-				ProcessUtil.LOGGING_OUTPUT_PROCESSOR, virtusertableRefreshCmd);
+				LoggingOutputProcessor.INSTANCE, virtusertableRefreshCmd);
 
 			future.get();
 		}
@@ -246,7 +247,7 @@ public class SendmailHook implements Hook {
 
 		try {
 			Future<?> future = ProcessUtil.execute(
-				ProcessUtil.LOGGING_OUTPUT_PROCESSOR, changePasswordCmd);
+				LoggingOutputProcessor.INSTANCE, changePasswordCmd);
 
 			future.get();
 		}

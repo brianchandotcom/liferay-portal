@@ -44,7 +44,8 @@ public class DataArchiveBranch {
 		_portalLegacyGitWorkingDirectory = portalLegacyGitWorkingDirectory;
 
 		GitWorkingDirectory.Branch upstreamBranch =
-			_portalLegacyGitWorkingDirectory.getUpstreamBranch();
+			_portalLegacyGitWorkingDirectory.getBranch(
+				_portalLegacyGitWorkingDirectory.getUpstreamBranchName(), null);
 
 		_portalLegacyGitWorkingDirectory.checkoutBranch(upstreamBranch);
 
@@ -63,7 +64,8 @@ public class DataArchiveBranch {
 		throws IOException {
 
 		GitWorkingDirectory.Branch upstreamBranch =
-			_portalLegacyGitWorkingDirectory.getUpstreamBranch();
+			_portalLegacyGitWorkingDirectory.getBranch(
+				_portalLegacyGitWorkingDirectory.getUpstreamBranchName(), null);
 
 		String temporaryBranchName =
 			upstreamBranch.getName() + "-temp-" + System.currentTimeMillis();

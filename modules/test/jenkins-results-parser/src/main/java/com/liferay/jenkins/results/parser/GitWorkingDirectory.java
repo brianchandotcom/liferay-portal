@@ -686,10 +686,6 @@ public class GitWorkingDirectory {
 		return _repositoryUsername;
 	}
 
-	public Branch getUpstreamBranch() {
-		return getBranch(_upstreamBranchName, null);
-	}
-
 	public String getUpstreamBranchName() {
 		return _upstreamBranchName;
 	}

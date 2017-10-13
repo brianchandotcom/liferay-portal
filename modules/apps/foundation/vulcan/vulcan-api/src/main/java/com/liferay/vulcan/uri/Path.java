@@ -18,12 +18,13 @@ package com.liferay.vulcan.uri;
  * Represents a resource path.
  *
  * <p>
- * For example a resource obtained in the URL: <code>/p/customers/2012</code>
- * will have a path containing <code>2012</code> and <code>"customers"</code> as
- * the ID and name respectively.
+ * For example a resource obtained in the URL: {@code /p/customers/2012} will
+ * have a path containing {@code 2012} and {@code "customers"} as the ID and
+ * name respectively.
  * </p>
  *
  * @author Alejandro Hernández
+ * @review
  */
 public class Path {
 
@@ -41,6 +42,7 @@ public class Path {
 	 * Returns this resource's path as an URI.
 	 *
 	 * @return the chain of identifiers as an URI.
+	 * @review
 	 */
 	public String asURI() {
 		return "/" + getName() + "/" + getId();
@@ -50,11 +52,12 @@ public class Path {
 	 * Returns the ID part of this {@code Path}.
 	 *
 	 * <p>
-	 * For example with a resource obtained in the URI:
-	 * <code>/p/customers/2012</code> this method will return <code>2012</code>.
+	 * For example with a resource obtained in the URI: {@code
+	 * /p/customers/2012} this method will return {@code 2012}.
 	 * </p>
 	 *
 	 * @return the ID part of the {@code Path}.
+	 * @review
 	 */
 	public String getId() {
 		return _id;
@@ -64,12 +67,12 @@ public class Path {
 	 * Returns the name part of this {@code Path}
 	 *
 	 * <p>
-	 * For example with a resource obtained in the URI:
-	 * <code>/p/customers/2012</code> this method will return
-	 * <code>"customer"</code>.
+	 * For example with a resource obtained in the URI: {@code
+	 * /p/customers/2012} this method will return {@code "customer"}.
 	 * </p>
 	 *
 	 * @return the name part of the {@code Path}.
+	 * @review
 	 */
 	public String getName() {
 		return _name;

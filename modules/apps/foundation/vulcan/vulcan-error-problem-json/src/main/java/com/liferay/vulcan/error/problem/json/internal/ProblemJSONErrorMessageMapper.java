@@ -26,6 +26,7 @@ import org.osgi.service.component.annotations.Component;
  * @see    <a
  *         href="https://tools.ietf.org/html/draft-nottingham-http-problem-06">Problem
  *         + JSON</a>
+ * @review
  */
 @Component(immediate = true)
 public class ProblemJSONErrorMessageMapper implements ErrorMessageMapper {
@@ -41,7 +42,7 @@ public class ProblemJSONErrorMessageMapper implements ErrorMessageMapper {
 
 		jsonObjectBuilder.field(
 			"detail"
-		).value(
+		).stringValue(
 			description
 		);
 	}
@@ -52,7 +53,7 @@ public class ProblemJSONErrorMessageMapper implements ErrorMessageMapper {
 
 		jsonObjectBuilder.field(
 			"status"
-		).value(
+		).numberValue(
 			statusCode
 		);
 	}
@@ -61,7 +62,7 @@ public class ProblemJSONErrorMessageMapper implements ErrorMessageMapper {
 	public void mapTitle(JSONObjectBuilder jsonObjectBuilder, String title) {
 		jsonObjectBuilder.field(
 			"title"
-		).value(
+		).stringValue(
 			title
 		);
 	}
@@ -70,7 +71,7 @@ public class ProblemJSONErrorMessageMapper implements ErrorMessageMapper {
 	public void mapType(JSONObjectBuilder jsonObjectBuilder, String type) {
 		jsonObjectBuilder.field(
 			"type"
-		).value(
+		).stringValue(
 			type
 		);
 	}

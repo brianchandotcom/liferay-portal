@@ -24,6 +24,7 @@ import javax.ws.rs.core.Response;
  * representation.
  *
  * @author Alejandro Hernández
+ * @review
  */
 public abstract class WebApplicationExceptionConverter {
 
@@ -33,6 +34,7 @@ public abstract class WebApplicationExceptionConverter {
 	 *
 	 * @param  exception the {@code WebApplicationException} to be converted.
 	 * @return the {@code APIError} representation for the exception.
+	 * @review
 	 */
 	protected APIError convert(WebApplicationException exception) {
 		String description = _getDescription(exception.getMessage());
@@ -46,6 +48,7 @@ public abstract class WebApplicationExceptionConverter {
 	 * Returns the status type for this {@code WebApplicationException} class.
 	 *
 	 * @return the status type for the exception class.
+	 * @review
 	 */
 	protected abstract Response.StatusType getStatusType();
 
@@ -53,6 +56,7 @@ public abstract class WebApplicationExceptionConverter {
 	 * Returns the title for this {@code WebApplicationException} class.
 	 *
 	 * @return the title for the exception class.
+	 * @review
 	 */
 	protected abstract String getTitle();
 
@@ -60,6 +64,7 @@ public abstract class WebApplicationExceptionConverter {
 	 * Returns the type for this {@code WebApplicationException} class.
 	 *
 	 * @return the type for the exception class.
+	 * @review
 	 */
 	protected abstract String getType();
 

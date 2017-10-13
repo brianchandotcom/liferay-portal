@@ -14,6 +14,8 @@
 
 package com.liferay.vulcan.uri;
 
+import aQute.bnd.annotation.ConsumerType;
+
 import com.liferay.vulcan.pagination.Page;
 import com.liferay.vulcan.pagination.SingleModel;
 
@@ -29,7 +31,9 @@ import com.liferay.vulcan.pagination.SingleModel;
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
+ * @review
  */
+@ConsumerType
 public interface CollectionResourceURITransformer {
 
 	/**
@@ -39,6 +43,7 @@ public interface CollectionResourceURITransformer {
 	 * @param  singleModel the single model.
 	 * @param  binaryId the binary ID.
 	 * @return the transformed URI.
+	 * @review
 	 */
 	public <T> String transformBinaryURI(
 		String uri, SingleModel<T> singleModel, String binaryId);
@@ -49,6 +54,7 @@ public interface CollectionResourceURITransformer {
 	 * @param  uri the collection item URI.
 	 * @param  singleModel the single model.
 	 * @return the transformed URI.
+	 * @review
 	 */
 	public <T> String transformCollectionItemSingleResourceURI(
 		String uri, SingleModel<T> singleModel);
@@ -59,6 +65,7 @@ public interface CollectionResourceURITransformer {
 	 * @param  uri the page URI.
 	 * @param  page the page.
 	 * @return the transformed URI.
+	 * @review
 	 */
 	public <T> String transformPageURI(String uri, Page<T> page);
 

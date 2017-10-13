@@ -19,6 +19,7 @@ package com.liferay.vulcan.pagination;
  * generics system.
  *
  * @author Alejandro Hernández
+ * @review
  */
 public class SingleModel<T> {
 
@@ -31,6 +32,7 @@ public class SingleModel<T> {
 	 * Returns the model.
 	 *
 	 * @return the model.
+	 * @review
 	 */
 	public T getModel() {
 		return _model;
@@ -40,6 +42,7 @@ public class SingleModel<T> {
 	 * Returns the model class.
 	 *
 	 * @return the model class.
+	 * @review
 	 */
 	public Class<T> getModelClass() {
 		return _modelClass;

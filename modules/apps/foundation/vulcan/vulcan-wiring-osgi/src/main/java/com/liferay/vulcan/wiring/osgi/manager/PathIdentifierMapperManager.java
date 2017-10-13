@@ -34,6 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * versa.
  *
  * @author Alejandro Hernández
+ * @review
  */
 @Component(immediate = true, service = PathIdentifierMapperManager.class)
 public class PathIdentifierMapperManager
@@ -41,14 +42,15 @@ public class PathIdentifierMapperManager
 
 	/**
 	 * Converts a {@code Path} to its equivalent {@code Identifier} of type T if
-	 * a valid {@link PathIdentifierMapper} can be found. Returns
-	 * <code>Optional#empty()</code> otherwise.
+	 * a valid {@link PathIdentifierMapper} can be found. Returns {@code
+	 * Optional#empty()} otherwise.
 	 *
 	 * @param  clazz the type class of the desired {@code Identifier}.
 	 * @param  path the {@code Path} to be mapped.
 	 * @return the correspondent {@code Identifier}, if a valid {@link
-	 *         PathIdentifierMapper} is present; <code>Optional#empty()</code>
+	 *         PathIdentifierMapper} is present; {@code Optional#empty()}
 	 *         otherwise.
+	 * @review
 	 */
 	public <T extends Identifier> Optional<T> map(Class<T> clazz, Path path) {
 		if (Identifier.class == clazz) {
@@ -71,15 +73,16 @@ public class PathIdentifierMapperManager
 
 	/**
 	 * Converts an {@code Identifier} to its equivalent {@code Path} if a valid
-	 * {@link PathIdentifierMapper} can be found. Returns
-	 * <code>Optional#empty()</code> otherwise.
+	 * {@link PathIdentifierMapper} can be found. Returns {@code
+	 * Optional#empty()} otherwise.
 	 *
 	 * @param  identifier the {@code Identifier} to be mapped.
 	 * @param  modelClass the class of the model identified by the {@code
 	 *         Identifier}.
 	 * @return the correspondent {@code Path}, if a valid {@link
-	 *         PathIdentifierMapper} is present; <code>Optional#empty()</code>
+	 *         PathIdentifierMapper} is present; {@code Optional#empty()}
 	 *         otherwise.
+	 * @review
 	 */
 	public <T extends Identifier, U> Optional<Path> map(
 		T identifier, Class<? extends Identifier> identifierClass,
@@ -109,14 +112,14 @@ public class PathIdentifierMapperManager
 	protected void setServiceReference(
 		ServiceReference<PathIdentifierMapper> serviceReference) {
 
-		addService(serviceReference, PathIdentifierMapper.class);
+		addService(serviceReference);
 	}
 
 	@SuppressWarnings("unused")
 	protected void unsetServiceReference(
 		ServiceReference<PathIdentifierMapper> serviceReference) {
 
-		removeService(serviceReference, PathIdentifierMapper.class);
+		removeService(serviceReference);
 	}
 
 }

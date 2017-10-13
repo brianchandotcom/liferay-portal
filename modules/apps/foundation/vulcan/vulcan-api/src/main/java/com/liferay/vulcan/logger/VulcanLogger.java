@@ -14,6 +14,8 @@
 
 package com.liferay.vulcan.logger;
 
+import aQute.bnd.annotation.ConsumerType;
+
 import com.liferay.vulcan.result.APIError;
 
 /**
@@ -21,15 +23,17 @@ import com.liferay.vulcan.result.APIError;
  * warnings.
  *
  * @author Alejandro Hernández
+ * @review
  */
+@ConsumerType
 public interface VulcanLogger {
 
 	/**
 	 * Logs a message in the form of a exception.
 	 *
-	 * @param apiError the error.
+	 * @param  apiError the error.
+	 * @review
 	 */
-	public default void error(APIError apiError) {
-	}
+	public void error(APIError apiError);
 
 }

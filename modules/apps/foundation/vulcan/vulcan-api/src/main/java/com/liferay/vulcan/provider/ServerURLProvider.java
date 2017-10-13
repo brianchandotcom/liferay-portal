@@ -14,6 +14,8 @@
 
 package com.liferay.vulcan.provider;
 
+import aQute.bnd.annotation.ConsumerType;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -22,7 +24,9 @@ import javax.servlet.http.HttpServletRequest;
  * configuration, SSO...
  *
  * @author Javier Gamarra
+ * @review
  */
+@ConsumerType
 public interface ServerURLProvider {
 
 	/**
@@ -30,6 +34,7 @@ public interface ServerURLProvider {
 	 *
 	 * @param  httpServletRequest the HTTP request
 	 * @return an string URL built based on the HTTP servlet request
+	 * @review
 	 */
 	public String getServerURL(HttpServletRequest httpServletRequest);
 

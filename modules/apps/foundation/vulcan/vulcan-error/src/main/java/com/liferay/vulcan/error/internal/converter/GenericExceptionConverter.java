@@ -25,6 +25,7 @@ import org.osgi.service.component.annotations.Component;
  * Converts any exception to its {@link APIError} representation.
  *
  * @author Alejandro Hernández
+ * @review
  */
 @Component(immediate = true)
 public class GenericExceptionConverter

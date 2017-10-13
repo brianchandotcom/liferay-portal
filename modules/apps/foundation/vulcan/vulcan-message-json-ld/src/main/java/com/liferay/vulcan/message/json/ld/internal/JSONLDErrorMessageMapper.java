@@ -25,6 +25,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Hernández
  * @see    <a href="https://json-ld.org/">JSON-LD</a>
  * @see    <a href="https://www.hydra-cg.com/">Hydra</a>
+ * @review
  */
 @Component(immediate = true)
 public class JSONLDErrorMessageMapper implements ErrorMessageMapper {
@@ -40,7 +41,7 @@ public class JSONLDErrorMessageMapper implements ErrorMessageMapper {
 
 		jsonObjectBuilder.field(
 			"description"
-		).value(
+		).stringValue(
 			description
 		);
 	}
@@ -51,7 +52,7 @@ public class JSONLDErrorMessageMapper implements ErrorMessageMapper {
 
 		jsonObjectBuilder.field(
 			"statusCode"
-		).value(
+		).numberValue(
 			statusCode
 		);
 	}
@@ -60,7 +61,7 @@ public class JSONLDErrorMessageMapper implements ErrorMessageMapper {
 	public void mapTitle(JSONObjectBuilder jsonObjectBuilder, String title) {
 		jsonObjectBuilder.field(
 			"title"
-		).value(
+		).stringValue(
 			title
 		);
 	}

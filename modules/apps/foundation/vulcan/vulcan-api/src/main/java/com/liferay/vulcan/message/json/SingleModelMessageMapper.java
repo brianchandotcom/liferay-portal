@@ -41,6 +41,7 @@ import javax.ws.rs.core.HttpHeaders;
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
+ * @review
  */
 @ConsumerType
 @SuppressWarnings("unused")
@@ -50,32 +51,48 @@ public interface SingleModelMessageMapper<T> {
 	 * Returns the media type that this mapper represents.
 	 *
 	 * @return the media type for this mapper.
+	 * @review
 	 */
 	public String getMediaType();
 
 	/**
-	 * Maps an embedded resource field to its JSON object representation.
+	 * Maps a resource boolean field to its JSON object representation.
 	 *
-	 * @param jsonObjectBuilder the json object builder for the actual item.
-	 * @param embeddedPathElements the embedded path elements of the current
-	 *        resource.
-	 * @param fieldName the field name.
-	 * @param value the value of the field.
+	 * @param  jsonObjectBuilder the json object builder for the actual item.
+	 * @param  fieldName the field name.
+	 * @param  value the value of the field.
+	 * @review
 	 */
-	public default void mapEmbeddedResourceField(
+	public default void mapBooleanField(
+		JSONObjectBuilder jsonObjectBuilder, String fieldName, Boolean value) {
+	}
+
+	/**
+	 * Maps an embedded resource boolean field to its JSON object
+	 * representation.
+	 *
+	 * @param  jsonObjectBuilder the json object builder for the actual item.
+	 * @param  embeddedPathElements the embedded path elements of the current
+	 *         resource.
+	 * @param  fieldName the field name.
+	 * @param  value the value of the field.
+	 * @review
+	 */
+	public default void mapEmbeddedResourceBooleanField(
 		JSONObjectBuilder jsonObjectBuilder,
 		FunctionalList<String> embeddedPathElements, String fieldName,
-		Object value) {
+		Boolean value) {
 	}
 
 	/**
 	 * Maps an embedded resource link to its JSON object representation.
 	 *
-	 * @param jsonObjectBuilder the json object builder for the actual item.
-	 * @param embeddedPathElements the embedded path elements of the current
-	 *        resource.
-	 * @param fieldName the field name.
-	 * @param url the URL of the link.
+	 * @param  jsonObjectBuilder the json object builder for the actual item.
+	 * @param  embeddedPathElements the embedded path elements of the current
+	 *         resource.
+	 * @param  fieldName the field name.
+	 * @param  url the URL of the link.
+	 * @review
 	 */
 	public default void mapEmbeddedResourceLink(
 		JSONObjectBuilder jsonObjectBuilder,
@@ -84,12 +101,45 @@ public interface SingleModelMessageMapper<T> {
 	}
 
 	/**
+	 * Maps an embedded resource number field to its JSON object representation.
+	 *
+	 * @param  jsonObjectBuilder the json object builder for the actual item.
+	 * @param  embeddedPathElements the embedded path elements of the current
+	 *         resource.
+	 * @param  fieldName the field name.
+	 * @param  value the value of the field.
+	 * @review
+	 */
+	public default void mapEmbeddedResourceNumberField(
+		JSONObjectBuilder jsonObjectBuilder,
+		FunctionalList<String> embeddedPathElements, String fieldName,
+		Number value) {
+	}
+
+	/**
+	 * Maps an embedded resource string field to its JSON object representation.
+	 *
+	 * @param  jsonObjectBuilder the json object builder for the actual item.
+	 * @param  embeddedPathElements the embedded path elements of the current
+	 *         resource.
+	 * @param  fieldName the field name.
+	 * @param  value the value of the field.
+	 * @review
+	 */
+	public default void mapEmbeddedResourceStringField(
+		JSONObjectBuilder jsonObjectBuilder,
+		FunctionalList<String> embeddedPathElements, String fieldName,
+		String value) {
+	}
+
+	/**
 	 * Maps an embedded resource types to its JSON object representation.
 	 *
-	 * @param jsonObjectBuilder the json object builder for the actual item.
-	 * @param embeddedPathElements the embedded path elements of the current
-	 *        resource.
-	 * @param types the resource types.
+	 * @param  jsonObjectBuilder the json object builder for the actual item.
+	 * @param  embeddedPathElements the embedded path elements of the current
+	 *         resource.
+	 * @param  types the resource types.
+	 * @review
 	 */
 	public default void mapEmbeddedResourceTypes(
 		JSONObjectBuilder jsonObjectBuilder,
@@ -99,10 +149,11 @@ public interface SingleModelMessageMapper<T> {
 	/**
 	 * Maps an embedded resource URL to its JSON object representation.
 	 *
-	 * @param jsonObjectBuilder the json object builder for the actual item.
-	 * @param embeddedPathElements the embedded path elements of the current
-	 *        resource.
-	 * @param url the URL of the resource.
+	 * @param  jsonObjectBuilder the json object builder for the actual item.
+	 * @param  embeddedPathElements the embedded path elements of the current
+	 *         resource.
+	 * @param  url the URL of the resource.
+	 * @review
 	 */
 	public default void mapEmbeddedResourceURL(
 		JSONObjectBuilder jsonObjectBuilder,
@@ -110,22 +161,12 @@ public interface SingleModelMessageMapper<T> {
 	}
 
 	/**
-	 * Maps a resource field to its JSON object representation.
-	 *
-	 * @param jsonObjectBuilder the json object builder for the actual item.
-	 * @param fieldName the field name.
-	 * @param value the value of the field.
-	 */
-	public default void mapField(
-		JSONObjectBuilder jsonObjectBuilder, String fieldName, Object value) {
-	}
-
-	/**
 	 * Maps a resource link to its JSON object representation.
 	 *
-	 * @param jsonObjectBuilder the json object builder for the actual item.
-	 * @param fieldName the field name.
-	 * @param url the URL of the link.
+	 * @param  jsonObjectBuilder the json object builder for the actual item.
+	 * @param  fieldName the field name.
+	 * @param  url the URL of the link.
+	 * @review
 	 */
 	public default void mapLink(
 		JSONObjectBuilder jsonObjectBuilder, String fieldName, String url) {
@@ -134,10 +175,11 @@ public interface SingleModelMessageMapper<T> {
 	/**
 	 * Maps a linked resource URL to its JSON object representation.
 	 *
-	 * @param jsonObjectBuilder the json object builder for the actual item.
-	 * @param embeddedPathElements the embedded path elements of the current
-	 *        resource.
-	 * @param url the URL of the resource.
+	 * @param  jsonObjectBuilder the json object builder for the actual item.
+	 * @param  embeddedPathElements the embedded path elements of the current
+	 *         resource.
+	 * @param  url the URL of the resource.
+	 * @review
 	 */
 	public default void mapLinkedResourceURL(
 		JSONObjectBuilder jsonObjectBuilder,
@@ -145,20 +187,46 @@ public interface SingleModelMessageMapper<T> {
 	}
 
 	/**
+	 * Maps a resource number field to its JSON object representation.
+	 *
+	 * @param  jsonObjectBuilder the json object builder for the actual item.
+	 * @param  fieldName the field name.
+	 * @param  value the value of the field.
+	 * @review
+	 */
+	public default void mapNumberField(
+		JSONObjectBuilder jsonObjectBuilder, String fieldName, Number value) {
+	}
+
+	/**
 	 * Maps a resource URL to its JSON object representation.
 	 *
-	 * @param jsonObjectBuilder the json object builder for the actual item.
-	 * @param url the URL of the resource.
+	 * @param  jsonObjectBuilder the json object builder for the actual item.
+	 * @param  url the URL of the resource.
+	 * @review
 	 */
 	public default void mapSelfURL(
 		JSONObjectBuilder jsonObjectBuilder, String url) {
 	}
 
 	/**
+	 * Maps a resource string field to its JSON object representation.
+	 *
+	 * @param  jsonObjectBuilder the json object builder for the actual item.
+	 * @param  fieldName the field name.
+	 * @param  value the value of the field.
+	 * @review
+	 */
+	public default void mapStringField(
+		JSONObjectBuilder jsonObjectBuilder, String fieldName, String value) {
+	}
+
+	/**
 	 * Maps a resource types to its JSON object representation.
 	 *
-	 * @param jsonObjectBuilder the json object builder for the actual item.
-	 * @param types the resource types.
+	 * @param  jsonObjectBuilder the json object builder for the actual item.
+	 * @param  types the resource types.
+	 * @review
 	 */
 	public default void mapTypes(
 		JSONObjectBuilder jsonObjectBuilder, List<String> types) {
@@ -168,10 +236,11 @@ public interface SingleModelMessageMapper<T> {
 	 * This method is called when the writer is finishing the model. This means
 	 * that no more methods in this mapper will be called.
 	 *
-	 * @param jsonObjectBuilder the json object builder for the model.
-	 * @param model the actual model.
-	 * @param modelClass the model class of the model.
-	 * @param httpHeaders the HTTP headers of the current request.
+	 * @param  jsonObjectBuilder the json object builder for the model.
+	 * @param  model the actual model.
+	 * @param  modelClass the model class of the model.
+	 * @param  httpHeaders the HTTP headers of the current request.
+	 * @review
 	 */
 	public default void onFinish(
 		JSONObjectBuilder jsonObjectBuilder, T model, Class<T> modelClass,
@@ -181,10 +250,11 @@ public interface SingleModelMessageMapper<T> {
 	/**
 	 * This method is called when the writer is starting the model.
 	 *
-	 * @param jsonObjectBuilder the json object builder for the model.
-	 * @param model the actual model.
-	 * @param modelClass the model class of the model.
-	 * @param httpHeaders the HTTP headers of the current request.
+	 * @param  jsonObjectBuilder the json object builder for the model.
+	 * @param  model the actual model.
+	 * @param  modelClass the model class of the model.
+	 * @param  httpHeaders the HTTP headers of the current request.
+	 * @review
 	 */
 	public default void onStart(
 		JSONObjectBuilder jsonObjectBuilder, T model, Class<T> modelClass,
@@ -198,8 +268,9 @@ public interface SingleModelMessageMapper<T> {
 	 * @param  model the actual model.
 	 * @param  modelClass the model class of the model.
 	 * @param  httpHeaders the HTTP headers of the current request.
-	 * @return <code>true</code> if mapper supports mapping this request;
-	 *         <code>false</code> otherwise.
+	 * @return {@code true} if mapper supports mapping this request;
+	 *         {@code false} otherwise.
+	 * @review
 	 */
 	public default boolean supports(
 		T model, Class<T> modelClass, HttpHeaders httpHeaders) {

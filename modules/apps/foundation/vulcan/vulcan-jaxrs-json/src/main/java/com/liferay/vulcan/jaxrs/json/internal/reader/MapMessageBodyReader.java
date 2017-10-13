@@ -41,6 +41,7 @@ import org.osgi.service.component.annotations.Component;
  * Object>}.
  *
  * @author Alejandro Hernández
+ * @review
  */
 @Component(
 	immediate = true, property = "liferay.vulcan.message.body.reader=true"

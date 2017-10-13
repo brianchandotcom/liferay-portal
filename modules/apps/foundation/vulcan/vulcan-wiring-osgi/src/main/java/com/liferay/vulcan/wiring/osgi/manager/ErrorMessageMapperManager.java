@@ -37,6 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * combination of {@link APIError} an {@link HttpHeaders}.
  *
  * @author Alejandro Hernández
+ * @review
  */
 @Component(immediate = true, service = ErrorMessageMapperManager.class)
 public class ErrorMessageMapperManager {
@@ -50,6 +51,7 @@ public class ErrorMessageMapperManager {
 	 * @param  apiError the {@code APIError} to be mapped.
 	 * @param  httpHeaders the HTTP headers of the current request.
 	 * @return the mapper for this combination of the error and HTTP headers.
+	 * @review
 	 */
 	public ErrorMessageMapper getErrorMessageMapper(
 		APIError apiError, HttpHeaders httpHeaders) {

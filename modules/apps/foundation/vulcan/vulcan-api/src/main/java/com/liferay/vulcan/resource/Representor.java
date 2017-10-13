@@ -14,6 +14,8 @@
 
 package com.liferay.vulcan.resource;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.vulcan.alias.BinaryFunction;
 import com.liferay.vulcan.resource.identifier.Identifier;
 
@@ -33,36 +35,42 @@ import java.util.stream.Stream;
  *
  * @author Alejandro Hernández
  * @see    com.liferay.vulcan.resource.builder.RepresentorBuilder
+ * @review
  */
+@ProviderType
 public interface Representor<T, U extends Identifier> {
 
 	/**
 	 * Returns the binary resources linked to a model.
 	 *
 	 * @return the binary resources.
+	 * @review
 	 */
 	public Map<String, BinaryFunction<T>> getBinaryFunctions();
+
+	/**
+	 * Returns a map containing the boolean field names and the functions to get
+	 * those fields.
+	 *
+	 * @return the field names and field functions.
+	 * @review
+	 */
+	public Map<String, Function<T, Boolean>> getBooleanFunctions();
 
 	/**
 	 * Returns the embedded related models.
 	 *
 	 * @return the embedded related models.
+	 * @review
 	 */
 	public List<RelatedModel<T, ?>> getEmbeddedRelatedModels();
-
-	/**
-	 * Returns a map containing the field names and the functions to get those
-	 * fields.
-	 *
-	 * @return the field names and field functions.
-	 */
-	public Map<String, Function<T, Object>> getFieldFunctions();
 
 	/**
 	 * Returns the identifier of the model.
 	 *
 	 * @param  model the model instance.
 	 * @return the identifier of the model.
+	 * @review
 	 */
 	public U getIdentifier(T model);
 
@@ -70,6 +78,7 @@ public interface Representor<T, U extends Identifier> {
 	 * Returns the identifier class.
 	 *
 	 * @return the identifier class.
+	 * @review
 	 */
 	public Class<U> getIdentifierClass();
 
@@ -77,6 +86,7 @@ public interface Representor<T, U extends Identifier> {
 	 * Returns the linked related models.
 	 *
 	 * @return the linked related models.
+	 * @review
 	 */
 	public List<RelatedModel<T, ?>> getLinkedRelatedModels();
 
@@ -84,20 +94,41 @@ public interface Representor<T, U extends Identifier> {
 	 * Returns the links.
 	 *
 	 * @return the links.
+	 * @review
 	 */
 	public Map<String, String> getLinks();
+
+	/**
+	 * Returns a map containing the number field names and the functions to get
+	 * those fields.
+	 *
+	 * @return the field names and field functions.
+	 * @review
+	 */
+	public Map<String, Function<T, Number>> getNumberFunctions();
 
 	/**
 	 * Returns the related collections.
 	 *
 	 * @return the related collections.
+	 * @review
 	 */
 	public Stream<RelatedCollection<T, ?>> getRelatedCollections();
+
+	/**
+	 * Returns a map containing the string field names and the functions to get
+	 * those fields.
+	 *
+	 * @return the field names and field functions.
+	 * @review
+	 */
+	public Map<String, Function<T, String>> getStringFunctions();
 
 	/**
 	 * Returns the types.
 	 *
 	 * @return the types.
+	 * @review
 	 */
 	public List<String> getTypes();
 

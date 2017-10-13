@@ -34,6 +34,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
+ * @review
  */
 @Component(immediate = true)
 public class EmbeddedProvider implements Provider<Embedded> {

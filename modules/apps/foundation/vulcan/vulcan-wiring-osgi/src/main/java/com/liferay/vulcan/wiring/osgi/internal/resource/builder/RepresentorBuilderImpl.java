@@ -22,13 +22,18 @@ import com.liferay.vulcan.resource.Representor;
 import com.liferay.vulcan.resource.builder.RepresentorBuilder;
 import com.liferay.vulcan.resource.identifier.Identifier;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.TimeZone;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -69,13 +74,13 @@ public class RepresentorBuilderImpl<T, U extends Identifier>
 		}
 
 		@Override
-		public List<RelatedModel<T, ?>> getEmbeddedRelatedModels() {
-			return _embeddedRelatedModels;
+		public Map<String, Function<T, Boolean>> getBooleanFunctions() {
+			return _booleanFunctions;
 		}
 
 		@Override
-		public Map<String, Function<T, Object>> getFieldFunctions() {
-			return _fieldFunctions;
+		public List<RelatedModel<T, ?>> getEmbeddedRelatedModels() {
+			return _embeddedRelatedModels;
 		}
 
 		@Override
@@ -99,6 +104,11 @@ public class RepresentorBuilderImpl<T, U extends Identifier>
 		}
 
 		@Override
+		public Map<String, Function<T, Number>> getNumberFunctions() {
+			return _numberFunctions;
+		}
+
+		@Override
 		public Stream<RelatedCollection<T, ?>> getRelatedCollections() {
 			Stream<List<RelatedCollection<T, ?>>> stream = Stream.of(
 				_relatedCollections, _relatedCollectionsSupplier.get());
@@ -111,6 +121,11 @@ public class RepresentorBuilderImpl<T, U extends Identifier>
 		}
 
 		@Override
+		public Map<String, Function<T, String>> getStringFunctions() {
+			return _stringFunctions;
+		}
+
+		@Override
 		public List<String> getTypes() {
 			return _types;
 		}
@@ -119,16 +134,18 @@ public class RepresentorBuilderImpl<T, U extends Identifier>
 			_binaryFunctions.put(key, binaryFunction);
 		}
 
+		private void _addBoolean(
+			String key, Function<T, Boolean> fieldFunction) {
+
+			_booleanFunctions.put(key, fieldFunction);
+		}
+
 		private <S> void _addEmbeddedModel(
 			String key, Class<S> modelClass,
 			Function<T, Optional<S>> modelFunction) {
 
 			_embeddedRelatedModels.add(
 				new RelatedModel<>(key, modelClass, modelFunction));
-		}
-
-		private void _addField(String key, Function<T, Object> fieldFunction) {
-			_fieldFunctions.put(key, fieldFunction);
 		}
 
 		private void _addLink(String key, String url) {
@@ -143,6 +160,10 @@ public class RepresentorBuilderImpl<T, U extends Identifier>
 				new RelatedModel<>(key, modelClass, modelFunction));
 		}
 
+		private void _addNumber(String key, Function<T, Number> fieldFunction) {
+			_numberFunctions.put(key, fieldFunction);
+		}
+
 		private <S> void _addRelatedCollection(
 			String key, Class<S> modelClass,
 			Function<T, Identifier> identifierFunction) {
@@ -151,22 +172,30 @@ public class RepresentorBuilderImpl<T, U extends Identifier>
 				new RelatedCollection<>(key, modelClass, identifierFunction));
 		}
 
+		private void _addString(String key, Function<T, String> fieldFunction) {
+			_stringFunctions.put(key, fieldFunction);
+		}
+
 		private void _addType(String type) {
 			_types.add(type);
 		}
 
 		private Map<String, BinaryFunction<T>> _binaryFunctions =
 			new HashMap<>();
+		private Map<String, Function<T, Boolean>> _booleanFunctions =
+			new HashMap<>();
 		private List<RelatedModel<T, ?>> _embeddedRelatedModels =
 			new ArrayList<>();
-		private Map<String, Function<T, Object>> _fieldFunctions =
-			new HashMap<>();
 		private final Function<T, U> _identifierFunction;
 		private List<RelatedModel<T, ?>> _linkedRelatedModels =
 			new ArrayList<>();
 		private Map<String, String> _links = new HashMap<>();
+		private Map<String, Function<T, Number>> _numberFunctions =
+			new HashMap<>();
 		private List<RelatedCollection<T, ?>> _relatedCollections =
 			new ArrayList<>();
+		private Map<String, Function<T, String>> _stringFunctions =
+			new HashMap<>();
 		private List<String> _types = new ArrayList<>();
 
 	}
@@ -208,20 +237,44 @@ public class RepresentorBuilderImpl<T, U extends Identifier>
 		}
 
 		@Override
-		public <S> FirstStep<T, U> addEmbeddedModel(
-			String key, Class<S> modelClass,
-			Function<T, Optional<S>> modelFunction) {
+		public FirstStep<T, U> addBoolean(
+			String key, Function<T, Boolean> booleanFunction) {
 
-			_representor._addEmbeddedModel(key, modelClass, modelFunction);
+			_representor._addBoolean(key, booleanFunction);
 
 			return this;
 		}
 
 		@Override
-		public FirstStep<T, U> addField(
-			String key, Function<T, Object> fieldFunction) {
+		public FirstStep<T, U> addDate(
+			String key, Function<T, Date> dateFunction) {
 
-			_representor._addField(key, fieldFunction);
+			Function<Date, String> formatFunction = date -> {
+				if (date == null) {
+					return null;
+				}
+
+				TimeZone timeZone = TimeZone.getTimeZone("UTC");
+
+				DateFormat dateFormat = new SimpleDateFormat(
+					"yyyy-MM-dd'T'HH:mm'Z'");
+
+				dateFormat.setTimeZone(timeZone);
+
+				return dateFormat.format(date);
+			};
+
+			_representor._addString(key, dateFunction.andThen(formatFunction));
+
+			return this;
+		}
+
+		@Override
+		public <S> FirstStep<T, U> addEmbeddedModel(
+			String key, Class<S> modelClass,
+			Function<T, Optional<S>> modelFunction) {
+
+			_representor._addEmbeddedModel(key, modelClass, modelFunction);
 
 			return this;
 		}
@@ -244,12 +297,30 @@ public class RepresentorBuilderImpl<T, U extends Identifier>
 		}
 
 		@Override
+		public FirstStep<T, U> addNumber(
+			String key, Function<T, Number> numberFunction) {
+
+			_representor._addNumber(key, numberFunction);
+
+			return this;
+		}
+
+		@Override
 		public <S> FirstStep<T, U> addRelatedCollection(
 			String key, Class<S> modelClass,
 			Function<T, Identifier> identifierFunction) {
 
 			_representor._addRelatedCollection(
 				key, modelClass, identifierFunction);
+
+			return this;
+		}
+
+		@Override
+		public FirstStep<T, U> addString(
+			String key, Function<T, String> stringFunction) {
+
+			_representor._addString(key, stringFunction);
 
 			return this;
 		}

@@ -14,6 +14,8 @@
 
 package com.liferay.vulcan.resource.builder;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.vulcan.consumer.DecaConsumer;
 import com.liferay.vulcan.consumer.EnneaConsumer;
 import com.liferay.vulcan.consumer.HeptaConsumer;
@@ -44,10 +46,12 @@ import java.util.function.Function;
 
 /**
  * Use instances of this builder to create {@link Routes} of a {@link
- * CollectionResource}.
+ * com.liferay.vulcan.resource.CollectionResource}.
  *
  * @author Alejandro Hernández
+ * @review
  */
+@ProviderType
 @SuppressWarnings("unused")
 public interface RoutesBuilder<T, U extends Identifier> {
 
@@ -57,6 +61,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  biFunction the function that will be used to calculate the page.
 	 * @param  identifierClass the class of the identifier.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <V extends Identifier> RoutesBuilder<T, U> addCollectionPageGetter(
 		BiFunction<Pagination, V, PageItems<T>> biFunction,
@@ -77,13 +82,15 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  gClass the class of the eighth parameter of the page function.
 	 * @param  hClass the class of the ninth parameter of the page function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <V extends Identifier, A, B, C, D, E, F, G, H> RoutesBuilder<T, U>
 		addCollectionPageGetter(
 			DecaFunction<Pagination, V, A, B, C, D, E, F, G, H,
-				PageItems<T>> decaFunction, Class<V> identifierClass,
-			Class<A> aClass, Class<B> bClass, Class<C> cClass, Class<D> dClass,
-			Class<E> eClass, Class<F> fClass, Class<G> gClass, Class<H> hClass);
+				PageItems<T>> decaFunction,
+			Class<V> identifierClass, Class<A> aClass, Class<B> bClass,
+			Class<C> cClass, Class<D> dClass, Class<E> eClass, Class<F> fClass,
+			Class<G> gClass, Class<H> hClass);
 
 	/**
 	 * Adds a route to a collection page function.
@@ -99,13 +106,15 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  fClass the class of the seventh parameter of the page function.
 	 * @param  gClass the class of the eighth parameter of the page function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <V extends Identifier, A, B, C, D, E, F, G> RoutesBuilder<T, U>
 		addCollectionPageGetter(
 			EnneaFunction<Pagination, V, A, B, C, D, E, F, G, PageItems<T>>
-				enneaFunction, Class<V> identifierClass, Class<A> aClass,
-			Class<B> bClass, Class<C> cClass, Class<D> dClass, Class<E> eClass,
-			Class<F> fClass, Class<G> gClass);
+				enneaFunction,
+			Class<V> identifierClass, Class<A> aClass, Class<B> bClass,
+			Class<C> cClass, Class<D> dClass, Class<E> eClass, Class<F> fClass,
+			Class<G> gClass);
 
 	/**
 	 * Adds a route to a collection page function.
@@ -119,12 +128,14 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  dClass the class of the fifth parameter of the page function.
 	 * @param  eClass the class of the sixth parameter of the page function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <V extends Identifier, A, B, C, D, E> RoutesBuilder<T, U>
 		addCollectionPageGetter(
 			HeptaFunction<Pagination, V, A, B, C, D, E, PageItems<T>>
-				heptaFunction, Class<V> identifierClass, Class<A> aClass,
-			Class<B> bClass, Class<C> cClass, Class<D> dClass, Class<E> eClass);
+				heptaFunction,
+			Class<V> identifierClass, Class<A> aClass, Class<B> bClass,
+			Class<C> cClass, Class<D> dClass, Class<E> eClass);
 
 	/**
 	 * Adds a route to a collection page function.
@@ -137,6 +148,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  cClass the class of the fourth parameter of the page function.
 	 * @param  dClass the class of the fifth parameter of the page function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <V extends Identifier, A, B, C, D> RoutesBuilder<T, U>
 		addCollectionPageGetter(
@@ -157,13 +169,14 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  eClass the class of the sixth parameter of the page function.
 	 * @param  fClass the class of the seventh parameter of the page function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <V extends Identifier, A, B, C, D, E, F> RoutesBuilder<T, U>
 		addCollectionPageGetter(
 			OctaFunction<Pagination, V, A, B, C, D, E, F, PageItems<T>>
-				octaFunction, Class<V> identifierClass, Class<A> aClass,
-			Class<B> bClass, Class<C> cClass, Class<D> dClass, Class<E> eClass,
-			Class<F> fClass);
+				octaFunction,
+			Class<V> identifierClass, Class<A> aClass, Class<B> bClass,
+			Class<C> cClass, Class<D> dClass, Class<E> eClass, Class<F> fClass);
 
 	/**
 	 * Adds a route to a collection page function.
@@ -175,6 +188,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  bClass the class of the third parameter of the page function.
 	 * @param  cClass the class of the fourth parameter of the page function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <V extends Identifier, A, B, C> RoutesBuilder<T, U>
 		addCollectionPageGetter(
@@ -191,6 +205,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  aClass the class of the second parameter of the page function.
 	 * @param  bClass the class of the third parameter of the page function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <V extends Identifier, A, B> RoutesBuilder<T, U>
 		addCollectionPageGetter(
@@ -205,6 +220,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  identifierClass the class of the identifier.
 	 * @param  aClass the class of the second parameter of the page function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <V extends Identifier, A> RoutesBuilder<T, U>
 		addCollectionPageGetter(
@@ -218,6 +234,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 *         model.
 	 * @param  identifierClass the class of the identifier.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <V extends Identifier> RoutesBuilder<T, U>
 		addCollectionPageItemCreator(
@@ -247,13 +264,15 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  hClass the class of the ninth parameter of the single model
 	 *         function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B, C, D, E, F, G, H, V extends Identifier> RoutesBuilder<T, U>
 		addCollectionPageItemCreator(
 			DecaFunction<V, Map<String, Object>, A, B, C, D, E, F, G, H, T>
-				decaFunction, Class<V> identifierClass, Class<A> aClass,
-			Class<B> bClass, Class<C> cClass, Class<D> dClass, Class<E> eClass,
-			Class<F> fClass, Class<G> gClass, Class<H> hClass);
+				decaFunction,
+			Class<V> identifierClass, Class<A> aClass, Class<B> bClass,
+			Class<C> cClass, Class<D> dClass, Class<E> eClass, Class<F> fClass,
+			Class<G> gClass, Class<H> hClass);
 
 	/**
 	 * Adds a route to a single model post function.
@@ -276,13 +295,15 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  gClass the class of the eighth parameter of the single model
 	 *         function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B, C, D, E, F, G, V extends Identifier> RoutesBuilder<T, U>
 		addCollectionPageItemCreator(
 			EnneaFunction<V, Map<String, Object>, A, B, C, D, E, F, G, T>
-				enneaFunction, Class<V> identifierClass, Class<A> aClass,
-			Class<B> bClass, Class<C> cClass, Class<D> dClass, Class<E> eClass,
-			Class<F> fClass, Class<G> gClass);
+				enneaFunction,
+			Class<V> identifierClass, Class<A> aClass, Class<B> bClass,
+			Class<C> cClass, Class<D> dClass, Class<E> eClass, Class<F> fClass,
+			Class<G> gClass);
 
 	/**
 	 * Adds a route to a single model post function.
@@ -301,12 +322,14 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  eClass the class of the sixth parameter of the single model
 	 *         function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B, C, D, E, V extends Identifier> RoutesBuilder<T, U>
 		addCollectionPageItemCreator(
 			HeptaFunction<V, Map<String, Object>, A, B, C, D, E, T>
-				heptaFunction, Class<V> identifierClass, Class<A> aClass,
-			Class<B> bClass, Class<C> cClass, Class<D> dClass, Class<E> eClass);
+				heptaFunction,
+			Class<V> identifierClass, Class<A> aClass, Class<B> bClass,
+			Class<C> cClass, Class<D> dClass, Class<E> eClass);
 
 	/**
 	 * Adds a route to a single model post function.
@@ -323,6 +346,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  dClass the class of the fifth parameter of the single model
 	 *         function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B, C, D, V extends Identifier> RoutesBuilder<T, U>
 		addCollectionPageItemCreator(
@@ -349,13 +373,14 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  fClass the class of the seventh parameter of the single model
 	 *         function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B, C, D, E, F, V extends Identifier> RoutesBuilder<T, U>
 		addCollectionPageItemCreator(
 			OctaFunction<V, Map<String, Object>, A, B, C, D, E, F, T>
-				octaFunction, Class<V> identifierClass, Class<A> aClass,
-			Class<B> bClass, Class<C> cClass, Class<D> dClass, Class<E> eClass,
-			Class<F> fClass);
+				octaFunction,
+			Class<V> identifierClass, Class<A> aClass, Class<B> bClass,
+			Class<C> cClass, Class<D> dClass, Class<E> eClass, Class<F> fClass);
 
 	/**
 	 * Adds a route to a single model post function.
@@ -370,6 +395,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  cClass the class of the fourth parameter of the single model
 	 *         function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B, C, V extends Identifier> RoutesBuilder<T, U>
 		addCollectionPageItemCreator(
@@ -388,6 +414,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  bClass the class of the third parameter of the single model
 	 *         function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B, V extends Identifier> RoutesBuilder<T, U>
 		addCollectionPageItemCreator(
@@ -403,6 +430,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  aClass the class of the second parameter of the single model
 	 *         function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, V extends Identifier> RoutesBuilder<T, U>
 		addCollectionPageItemCreator(
@@ -434,6 +462,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  iClass the class of the tenth parameter of the single model
 	 *         function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B, C, D, E, F, G, H, I, V extends Identifier> RoutesBuilder<T, U>
 		addCollectionPageItemCreator(
@@ -451,6 +480,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  aClass the class of the second parameter of the single model
 	 *         function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A> RoutesBuilder<T, U> addCollectionPageItemGetter(
 		BiFunction<U, A, T> biFunction, Class<A> aClass);
@@ -479,6 +509,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  iClass the class of the tenth parameter of the single model
 	 *         function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B, C, D, E, F, G, H, I> RoutesBuilder<T, U>
 		addCollectionPageItemGetter(
@@ -509,6 +540,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  hClass the class of the ninth parameter of the single model
 	 *         function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B, C, D, E, F, G, H> RoutesBuilder<T, U>
 		addCollectionPageItemGetter(
@@ -522,6 +554,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  function the function that will be used to calculate the single
 	 *         model.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public RoutesBuilder<T, U> addCollectionPageItemGetter(
 		Function<U, T> function);
@@ -544,6 +577,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  fClass the class of the seventh parameter of the single model
 	 *         function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B, C, D, E, F> RoutesBuilder<T, U> addCollectionPageItemGetter(
 		HeptaFunction<U, A, B, C, D, E, F, T> heptaFunction, Class<A> aClass,
@@ -566,6 +600,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  eClass the class of the sixth parameter of the single model
 	 *         function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B, C, D, E> RoutesBuilder<T, U> addCollectionPageItemGetter(
 		HexaFunction<U, A, B, C, D, E, T> hexaFunction, Class<A> aClass,
@@ -591,6 +626,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  gClass the class of the eighth parameter of the single model
 	 *         function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B, C, D, E, F, G> RoutesBuilder<T, U>
 		addCollectionPageItemGetter(
@@ -612,6 +648,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  dClass the class of the fifth parameter of the single model
 	 *         function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B, C, D> RoutesBuilder<T, U> addCollectionPageItemGetter(
 		PentaFunction<U, A, B, C, D, T> pentaFunction, Class<A> aClass,
@@ -629,6 +666,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  cClass the class of the fourth parameter of the single model
 	 *         function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B, C> RoutesBuilder<T, U> addCollectionPageItemGetter(
 		TetraFunction<U, A, B, C, T> tetraFunction, Class<A> aClass,
@@ -644,6 +682,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  bClass the class of the third parameter of the single model
 	 *         function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B> RoutesBuilder<T, U> addCollectionPageItemGetter(
 		TriFunction<U, A, B, T> triFunction, Class<A> aClass, Class<B> bClass);
@@ -655,6 +694,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 *         collection item.
 	 * @param  aClass the class of the second parameter of the remover function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A> RoutesBuilder<T, U> addCollectionPageItemRemover(
 		BiConsumer<U, A> biConsumer, Class<A> aClass);
@@ -665,6 +705,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  consumer the function that will be used to delete the single
 	 *         model.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public RoutesBuilder<T, U> addCollectionPageItemRemover(
 		Consumer<U> consumer);
@@ -685,6 +726,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  hClass the class of the ninth parameter of the remover function.
 	 * @param  iClass the class of the tenth parameter of the remover function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B, C, D, E, F, G, H, I> RoutesBuilder<T, U>
 		addCollectionPageItemRemover(
@@ -708,6 +750,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  gClass the class of the eighth parameter of the remover function.
 	 * @param  hClass the class of the ninth parameter of the remover function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B, C, D, E, F, G, H> RoutesBuilder<T, U>
 		addCollectionPageItemRemover(
@@ -728,6 +771,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  fClass the class of the seventh parameter of the remover
 	 *         function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B, C, D, E, F> RoutesBuilder<T, U> addCollectionPageItemRemover(
 		HeptaConsumer<U, A, B, C, D, E, F> heptaConsumer, Class<A> aClass,
@@ -745,6 +789,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  dClass the class of the fifth parameter of the remover function.
 	 * @param  eClass the class of the sixth parameter of the remover function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B, C, D, E> RoutesBuilder<T, U> addCollectionPageItemRemover(
 		HexaConsumer<U, A, B, C, D, E> hexaConsumer, Class<A> aClass,
@@ -764,6 +809,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 *         function.
 	 * @param  gClass the class of the eighth parameter of the remover function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B, C, D, E, F, G> RoutesBuilder<T, U>
 		addCollectionPageItemRemover(
@@ -781,6 +827,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  cClass the class of the fourth parameter of the remover function.
 	 * @param  dClass the class of the fifth parameter of the remover function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B, C, D> RoutesBuilder<T, U> addCollectionPageItemRemover(
 		PentaConsumer<U, A, B, C, D> pentaConsumer, Class<A> aClass,
@@ -795,6 +842,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  bClass the class of the third parameter of the remover function.
 	 * @param  cClass the class of the fourth parameter of the remover function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B, C> RoutesBuilder<T, U> addCollectionPageItemRemover(
 		TetraConsumer<U, A, B, C> tetraConsumer, Class<A> aClass,
@@ -808,6 +856,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  aClass the class of the second parameter of the remover function.
 	 * @param  bClass the class of the third parameter of the remover function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B> RoutesBuilder<T, U> addCollectionPageItemRemover(
 		TriConsumer<U, A, B> triConsumer, Class<A> aClass, Class<B> bClass);
@@ -818,6 +867,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  biFunction the function that will be used to update the single
 	 *         model.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public RoutesBuilder<T, U> addCollectionPageItemUpdater(
 		BiFunction<U, Map<String, Object>, T> biFunction);
@@ -837,13 +887,14 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  gClass the class of the eighth parameter of the updater function.
 	 * @param  hClass the class of the ninth parameter of the updater function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B, C, D, E, F, G, H> RoutesBuilder<T, U>
 		addCollectionPageItemUpdater(
 			DecaFunction<U, Map<String, Object>, A, B, C, D, E, F, G, H, T>
-				decaFunction, Class<A> aClass, Class<B> bClass, Class<C> cClass,
-			Class<D> dClass, Class<E> eClass, Class<F> fClass, Class<G> gClass,
-			Class<H> hClass);
+				decaFunction,
+			Class<A> aClass, Class<B> bClass, Class<C> cClass, Class<D> dClass,
+			Class<E> eClass, Class<F> fClass, Class<G> gClass, Class<H> hClass);
 
 	/**
 	 * Adds a route to a collection item updater function.
@@ -859,13 +910,14 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 *         function.
 	 * @param  gClass the class of the eighth parameter of the updater function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B, C, D, E, F, G> RoutesBuilder<T, U>
 		addCollectionPageItemUpdater(
 			EnneaFunction<U, Map<String, Object>, A, B, C, D, E, F, G, T>
-				enneaFunction, Class<A> aClass, Class<B> bClass,
-			Class<C> cClass, Class<D> dClass, Class<E> eClass, Class<F> fClass,
-			Class<G> gClass);
+				enneaFunction,
+			Class<A> aClass, Class<B> bClass, Class<C> cClass, Class<D> dClass,
+			Class<E> eClass, Class<F> fClass, Class<G> gClass);
 
 	/**
 	 * Adds a route to a collection item updater function.
@@ -878,6 +930,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  dClass the class of the fifth parameter of the updater function.
 	 * @param  eClass the class of the sixth parameter of the updater function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B, C, D, E> RoutesBuilder<T, U> addCollectionPageItemUpdater(
 		HeptaFunction<U, Map<String, Object>, A, B, C, D, E, T> heptaFunction,
@@ -894,6 +947,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  cClass the class of the fourth parameter of the updater function.
 	 * @param  dClass the class of the fifth parameter of the updater function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B, C, D> RoutesBuilder<T, U> addCollectionPageItemUpdater(
 		HexaFunction<U, Map<String, Object>, A, B, C, D, T> hexaFunction,
@@ -912,6 +966,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  fClass the class of the seventh parameter of the updater
 	 *         function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B, C, D, E, F> RoutesBuilder<T, U> addCollectionPageItemUpdater(
 		OctaFunction<U, Map<String, Object>, A, B, C, D, E, F, T> octaFunction,
@@ -927,6 +982,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  bClass the class of the third parameter of the updater function.
 	 * @param  cClass the class of the fourth parameter of the updater function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B, C> RoutesBuilder<T, U> addCollectionPageItemUpdater(
 		PentaFunction<U, Map<String, Object>, A, B, C, T> pentaFunction,
@@ -940,6 +996,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  aClass the class of the second parameter of the updater function.
 	 * @param  bClass the class of the third parameter of the updater function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B> RoutesBuilder<T, U> addCollectionPageItemUpdater(
 		TetraFunction<U, Map<String, Object>, A, B, T> tetraFunction,
@@ -952,6 +1009,7 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 *         collection item.
 	 * @param  aClass the class of the second parameter of the updater function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A> RoutesBuilder<T, U> addCollectionPageItemUpdater(
 		TriFunction<U, Map<String, Object>, A, T> triFunction, Class<A> aClass);
@@ -972,19 +1030,22 @@ public interface RoutesBuilder<T, U extends Identifier> {
 	 * @param  hClass the class of the ninth parameter of the updater function.
 	 * @param  iClass the class of the tenth parameter of the updater function.
 	 * @return the updated builder.
+	 * @review
 	 */
 	public <A, B, C, D, E, F, G, H, I> RoutesBuilder<T, U>
 		addCollectionPageItemUpdater(
 			UndecaFunction<U, Map<String, Object>, A, B, C, D, E, F, G, H, I, T>
-				undecaFunction, Class<A> aClass, Class<B> bClass,
-			Class<C> cClass, Class<D> dClass, Class<E> eClass, Class<F> fClass,
-			Class<G> gClass, Class<H> hClass, Class<I> iClass);
+				undecaFunction,
+			Class<A> aClass, Class<B> bClass, Class<C> cClass, Class<D> dClass,
+			Class<E> eClass, Class<F> fClass, Class<G> gClass, Class<H> hClass,
+			Class<I> iClass);
 
 	/**
-	 * Constructs the <code>Routes</code> instance with the information provided
-	 * to the builder.
+	 * Constructs the {@code Routes} instance with the information provided to
+	 * the builder.
 	 *
-	 * @return the <code>Routes</code> instance.
+	 * @return the {@code Routes} instance.
+	 * @review
 	 */
 	public Routes<T> build();
 

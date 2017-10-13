@@ -35,18 +35,20 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
+ * @review
  */
 @Component(immediate = true, service = ProviderManager.class)
 public class ProviderManager extends BaseManager<Provider> {
 
 	/**
 	 * Returns an instance of type T if a valid {@link Provider} can be found.
-	 * Returns <code>Optional#empty()</code> otherwise.
+	 * Returns {@code Optional#empty()} otherwise.
 	 *
 	 * @param  clazz the type class to be provided.
 	 * @param  httpServletRequest the current request.
-	 * @return the instance of T, if a valid {@link Provider} is present;
-	 *         <code>Optional#empty()</code> otherwise.
+	 * @return the instance of T, if a valid {@link Provider} is present; {@code
+	 *         Optional#empty()} otherwise.
+	 * @review
 	 */
 	public <T> Optional<T> provide(
 		Class<T> clazz, HttpServletRequest httpServletRequest) {
@@ -64,14 +66,14 @@ public class ProviderManager extends BaseManager<Provider> {
 	protected void setServiceReference(
 		ServiceReference<Provider> serviceReference) {
 
-		addService(serviceReference, Provider.class);
+		addService(serviceReference);
 	}
 
 	@SuppressWarnings("unused")
 	protected void unsetServiceReference(
 		ServiceReference<Provider> serviceReference) {
 
-		removeService(serviceReference, Provider.class);
+		removeService(serviceReference);
 	}
 
 }

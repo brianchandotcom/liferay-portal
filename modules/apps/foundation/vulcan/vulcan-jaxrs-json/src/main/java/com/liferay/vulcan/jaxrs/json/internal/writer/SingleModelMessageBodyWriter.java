@@ -17,7 +17,8 @@ package com.liferay.vulcan.jaxrs.json.internal.writer;
 import static org.osgi.service.component.annotations.ReferenceCardinality.AT_LEAST_ONE;
 import static org.osgi.service.component.annotations.ReferencePolicyOption.GREEDY;
 
-import com.liferay.portal.kernel.json.JSONObject;
+import com.google.gson.JsonObject;
+
 import com.liferay.vulcan.alias.BinaryFunction;
 import com.liferay.vulcan.error.VulcanDeveloperError;
 import com.liferay.vulcan.error.VulcanDeveloperError.MustHaveProvider;
@@ -69,6 +70,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
+ * @review
  */
 @Component(
 	immediate = true, property = "liferay.vulcan.message.body.writer=true"
@@ -90,8 +92,8 @@ public class SingleModelMessageBodyWriter<T>
 		Class<?> clazz, Type genericType, Annotation[] annotations,
 		MediaType mediaType) {
 
-		Try<Class<Object>> classTry = GenericUtil.getGenericClassTry(
-			genericType, Try.class);
+		Try<Class<Object>> classTry =
+			GenericUtil.getFirstGenericTypeArgumentTry(genericType);
 
 		return classTry.filter(
 			SingleModel.class::equals
@@ -147,7 +149,7 @@ public class SingleModelMessageBodyWriter<T>
 			singleModelMessageMapper, jsonObjectBuilder, singleModel, fields,
 			embedded);
 
-		JSONObject jsonObject = jsonObjectBuilder.build();
+		JsonObject jsonObject = jsonObjectBuilder.build();
 
 		printWriter.println(jsonObject.toString());
 
@@ -167,10 +169,25 @@ public class SingleModelMessageBodyWriter<T>
 			(singleModel, embeddedPathElements) -> {
 				Class<V> modelClass = singleModel.getModelClass();
 
-				_writerHelper.writeFields(
+				_writerHelper.writeBooleanFields(
 					singleModel.getModel(), modelClass, fields,
 					(fieldName, value) ->
-						singleModelMessageMapper.mapEmbeddedResourceField(
+						singleModelMessageMapper.
+							mapEmbeddedResourceBooleanField(
+								jsonObjectBuilder, embeddedPathElements,
+								fieldName, value));
+
+				_writerHelper.writeNumberFields(
+					singleModel.getModel(), modelClass, fields,
+					(fieldName, value) ->
+						singleModelMessageMapper.mapEmbeddedResourceNumberField(
+							jsonObjectBuilder, embeddedPathElements, fieldName,
+							value));
+
+				_writerHelper.writeStringFields(
+					singleModel.getModel(), modelClass, fields,
+					(fieldName, value) ->
+						singleModelMessageMapper.mapEmbeddedResourceStringField(
 							jsonObjectBuilder, embeddedPathElements, fieldName,
 							value));
 
@@ -199,7 +216,7 @@ public class SingleModelMessageBodyWriter<T>
 							binaryFunctions, singleModel, _httpServletRequest,
 							(fieldName, value) ->
 								singleModelMessageMapper.
-									mapEmbeddedResourceField(
+									mapEmbeddedResourceStringField(
 										jsonObjectBuilder, embeddedPathElements,
 										fieldName, value));
 
@@ -270,9 +287,19 @@ public class SingleModelMessageBodyWriter<T>
 		singleModelMessageMapper.onStart(
 			jsonObjectBuilder, model, modelClass, _httpHeaders);
 
-		_writerHelper.writeFields(
+		_writerHelper.writeBooleanFields(
 			singleModel.getModel(), singleModel.getModelClass(), fields,
-			(field, value) -> singleModelMessageMapper.mapField(
+			(field, value) -> singleModelMessageMapper.mapBooleanField(
+				jsonObjectBuilder, field, value));
+
+		_writerHelper.writeNumberFields(
+			singleModel.getModel(), singleModel.getModelClass(), fields,
+			(field, value) -> singleModelMessageMapper.mapNumberField(
+				jsonObjectBuilder, field, value));
+
+		_writerHelper.writeStringFields(
+			singleModel.getModel(), singleModel.getModelClass(), fields,
+			(field, value) -> singleModelMessageMapper.mapStringField(
 				jsonObjectBuilder, field, value));
 
 		_writerHelper.writeLinks(
@@ -295,7 +322,7 @@ public class SingleModelMessageBodyWriter<T>
 
 				_writerHelper.writeBinaries(
 					binaryFunctions, singleModel, _httpServletRequest,
-					(field, value) -> singleModelMessageMapper.mapField(
+					(field, value) -> singleModelMessageMapper.mapStringField(
 						jsonObjectBuilder, field, value));
 
 				Optional<String> singleURLOptional =

@@ -60,8 +60,10 @@ public class StringUtilTest {
 			Collections.emptyList(), StringUtil.split(StringPool.SPACE));
 
 		Assert.assertEquals(
-			Collections.emptyList(), StringUtil.split(StringPool.COMMA));
-		Assert.assertEquals(Collections.emptyList(), StringUtil.split(",,,"));
+			Collections.<String>emptyList(),
+			StringUtil.split(StringPool.COMMA));
+		Assert.assertEquals(
+			Collections.<String>emptyList(), StringUtil.split(",,,"));
 
 		Assert.assertEquals(
 			Collections.singletonList("test"), StringUtil.split("test"));

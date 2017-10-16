@@ -55,6 +55,27 @@ Layout curLayout = (Layout)row.getObject();
 		/>
 	</c:if>
 
+	<%
+	Group selGroup = layoutsAdminDisplayContext.getSelGroup();
+	%>
+
+	<c:if test="<%= !StagingUtil.isIncomplete(curLayout) && !selGroup.isLayoutPrototype() && LayoutPermissionUtil.contains(themeDisplay.getPermissionChecker(), curLayout, ActionKeys.PERMISSIONS) %>">
+		<liferay-security:permissionsURL
+			modelResource="<%= Layout.class.getName() %>"
+			modelResourceDescription="<%= HtmlUtil.escape(curLayout.getName(themeDisplay.getLocale())) %>"
+			resourcePrimKey="<%= String.valueOf(curLayout.getPlid()) %>"
+			var="permissionsURL"
+			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+		/>
+
+		<liferay-ui:icon
+			message="permissions"
+			method="get"
+			url="<%= permissionsURL %>"
+			useDialog="<%= true %>"
+		/>
+	</c:if>
+
 	<liferay-ui:icon
 		message="view-page"
 		target="_blank"

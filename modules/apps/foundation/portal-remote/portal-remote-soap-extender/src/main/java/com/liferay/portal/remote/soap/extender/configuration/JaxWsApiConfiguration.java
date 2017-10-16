@@ -28,10 +28,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface JaxWsApiConfiguration {
 
-	@Meta.AD(required = true)
+	@Meta.AD(name = "context-path", required = true)
 	public String contextPath();
 
-	@Meta.AD(deflt = "10000", required = true)
+	@Meta.AD(deflt = "10000", name = "timeout", required = true)
 	public long timeout();
 
 }

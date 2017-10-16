@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -70,9 +71,15 @@ public class DLFileRankDLAppHelperLocalServiceWrapper
 		// File rank
 
 		if (userId > 0) {
-			_dlFileRankLocalService.updateFileRank(
-				fileEntry.getGroupId(), fileEntry.getCompanyId(), userId,
-				fileEntry.getFileEntryId(), new ServiceContext());
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> {
+					_dlFileRankLocalService.updateFileRank(
+						fileEntry.getGroupId(), fileEntry.getCompanyId(),
+						userId, fileEntry.getFileEntryId(),
+						new ServiceContext());
+
+					return null;
+				});
 		}
 	}
 

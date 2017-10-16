@@ -93,7 +93,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 <div class="container-fluid-1280 main-content-body">
 	<portlet:actionURL name="/blogs/edit_image" var="editImageURL" />
 
-	<aui:form action="<%= editImageURL %>" cssClass="row" name="fm">
+	<aui:form action="<%= editImageURL %>" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 		<aui:input name="deleteFileEntryIds" type="hidden" />

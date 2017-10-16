@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Jorge Ferrer
+ * @author     Jorge Ferrer
  * @deprecated As of 7.0.0, replaced by {@link
  *             com.liferay.asset.util.AssetEntryQueryProcessor}
  */

@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.trash.TrashRendererFactory;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Adolfo Pérez
+ * @author     Adolfo Pérez
  * @deprecated As of 1.3.0, with no direct replacement
  */
 @Deprecated

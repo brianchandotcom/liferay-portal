@@ -52,7 +52,7 @@ import java.util.stream.Stream;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Akos Thurzo
+ * @author     Akos Thurzo
  * @deprecated As of 1.2.0, replaced by {@link
  *             com.liferay.asset.categories.admin.web.internal.exportimport.staged.model.repository.StagedAssetLinkStagedModelRepository}
  */

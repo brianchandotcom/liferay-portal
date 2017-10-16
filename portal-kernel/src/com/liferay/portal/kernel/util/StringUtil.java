@@ -593,12 +593,13 @@ public class StringUtil {
 	 * that is found in the character array <code>chars</code>. The substring of
 	 * characters returned maintain their original order.
 	 *
+	 * @param      s the string from which to extract characters
+	 * @param      chars the characters to extract from the string
+	 * @return     the substring of each character instance in string
+	 *             <code>s</code> that is found in the character array
+	 *             <code>chars</code>, or an empty string if the given string is
+	 *             <code>null</code>
 	 * @deprecated As of 7.0.0, with no direct replacement
-	 * @param  s the string from which to extract characters
-	 * @param  chars the characters to extract from the string
-	 * @return the substring of each character instance in string <code>s</code>
-	 *         that is found in the character array <code>chars</code>, or an
-	 *         empty string if the given string is <code>null</code>
 	 */
 	@Deprecated
 	public static String extract(String s, char[] chars) {
@@ -2204,11 +2205,11 @@ public class StringUtil {
 	/**
 	 * Pseudorandomly permutes the characters of the string.
 	 *
+	 * @param      s the string whose characters are to be randomized
+	 * @return     a string of the same length as the string whose characters
+	 *             represent a pseudorandom permutation of the characters of the
+	 *             string
 	 * @deprecated As of 7.0.0, replaced by {@link RandomUtil#shuffle(String)}
-	 * @param  s the string whose characters are to be randomized
-	 * @return a string of the same length as the string whose characters
-	 *         represent a pseudorandom permutation of the characters of the
-	 *         string
 	 */
 	@Deprecated
 	public static String randomize(String s) {
@@ -3300,10 +3301,10 @@ public class StringUtil {
 	/**
 	 * Reverses the order of the characters of the string.
 	 *
+	 * @param      s the original string
+	 * @return     a string representing the original string with characters in
+	 *             reverse order
 	 * @deprecated As of 7.0.0, with no direct replacement
-	 * @param  s the original string
-	 * @return a string representing the original string with characters in
-	 *         reverse order
 	 */
 	@Deprecated
 	public static String reverse(String s) {
@@ -3337,10 +3338,10 @@ public class StringUtil {
 	 * </pre>
 	 * </p>
 	 *
+	 * @param      path the original string
+	 * @return     a string representing the original string with all double
+	 *             slashes replaced with single slashes
 	 * @deprecated As of 7.0.0, with no direct replacement
-	 * @param  path the original string
-	 * @return a string representing the original string with all double slashes
-	 *         replaced with single slashes
 	 */
 	@Deprecated
 	public static String safePath(String path) {
@@ -4052,12 +4053,13 @@ public class StringUtil {
 	 * </pre>
 	 * </p>
 	 *
+	 * @param      s the string from which to strip all occurrences of the
+	 *             character
+	 * @param      remove the character to strip from the string
+	 * @return     a string representing the string <code>s</code> with all
+	 *             occurrences of the specified character removed, or
+	 *             <code>null</code> if <code>s</code> is <code>null</code>
 	 * @deprecated As of 7.0.0, replaced by {@link #removeChar(String, char)}
-	 * @param  s the string from which to strip all occurrences of the character
-	 * @param  remove the character to strip from the string
-	 * @return a string representing the string <code>s</code> with all
-	 *         occurrences of the specified character removed, or
-	 *         <code>null</code> if <code>s</code> is <code>null</code>
 	 */
 	@Deprecated
 	public static String strip(String s, char remove) {
@@ -4080,13 +4082,14 @@ public class StringUtil {
 	 * </pre>
 	 * </p>
 	 *
-	 * @deprecated As of 7.0.0, replaced by {@link #removeChars(
-	 *             String, char...)}
-	 * @param  s the string from which to strip all occurrences the characters
-	 * @param  remove the characters to strip from the string
-	 * @return a string representing the string <code>s</code> with all
-	 *         occurrences of the specified characters removed, or
-	 *         <code>null</code> if <code>s</code> is <code>null</code>
+	 * @param      s the string from which to strip all occurrences the
+	 *             characters
+	 * @param      remove the characters to strip from the string
+	 * @return     a string representing the string <code>s</code> with all
+	 *             occurrences of the specified characters removed, or
+	 *             <code>null</code> if <code>s</code> is <code>null</code>
+	 * @deprecated As of 7.0.0, replaced by {@link #removeChars(String,
+	 *             char...)}
 	 */
 	@Deprecated
 	public static String strip(String s, char[] remove) {
@@ -4887,10 +4890,10 @@ public class StringUtil {
 	/**
 	 * Returns the string value of the object.
 	 *
+	 * @param      obj the object whose string value is to be returned
+	 * @return     the string value of the object
+	 * @see        String#valueOf(Object obj)
 	 * @deprecated As of 7.0.0, with no direct replacement
-	 * @param  obj the object whose string value is to be returned
-	 * @return the string value of the object
-	 * @see    String#valueOf(Object obj)
 	 */
 	@Deprecated
 	public static String valueOf(Object obj) {
@@ -5071,10 +5074,10 @@ public class StringUtil {
 	 * Wraps the text when it exceeds the <code>80</code> column width limit,
 	 * using a {@link StringPool#NEW_LINE} to break each wrapped line.
 	 *
+	 * @param      text the text to wrap
+	 * @return     the wrapped text following the column width limit, or
+	 *             <code>null</code> if the text is <code>null</code>
 	 * @deprecated As of 7.0.0, with no direct replacement
-	 * @param  text the text to wrap
-	 * @return the wrapped text following the column width limit, or
-	 *         <code>null</code> if the text is <code>null</code>
 	 */
 	@Deprecated
 	public static String wrap(String text) {
@@ -5085,12 +5088,13 @@ public class StringUtil {
 	 * Wraps the text when it exceeds the column width limit, using the line
 	 * separator to break each wrapped line.
 	 *
+	 * @param      text the text to wrap
+	 * @param      width the column width limit for the text
+	 * @param      lineSeparator the string to use in breaking each wrapped line
+	 * @return     the wrapped text and line separators, following the column
+	 *             width limit, or <code>null</code> if the text is
+	 *             <code>null</code>
 	 * @deprecated As of 7.0.0, with no direct replacement
-	 * @param  text the text to wrap
-	 * @param  width the column width limit for the text
-	 * @param  lineSeparator the string to use in breaking each wrapped line
-	 * @return the wrapped text and line separators, following the column width
-	 *         limit, or <code>null</code> if the text is <code>null</code>
 	 */
 	@Deprecated
 	public static String wrap(String text, int width, String lineSeparator) {

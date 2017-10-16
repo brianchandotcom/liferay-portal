@@ -17,7 +17,7 @@ package com.liferay.calendar.upgrade.v1_0_2;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
- * @author Adam Brandizzi
+ * @author     Adam Brandizzi
  * @deprecated As of 2.5.0, moved to {@link
  *             com.liferay.calendar.internal.upgrade.v1_0_2.UpgradeCalendar}
  */

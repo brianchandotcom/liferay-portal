@@ -20,7 +20,7 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
- * @author Miguel Pastor
+ * @author     Miguel Pastor
  * @deprecated As of 7.0.0, replaced by {@link
  *             com.liferay.asset.util.comparator.AssetTagCountComparator}
  */

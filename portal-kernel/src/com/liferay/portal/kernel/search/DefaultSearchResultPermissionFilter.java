@@ -41,11 +41,11 @@ public class DefaultSearchResultPermissionFilter
 	extends BaseSearchResultPermissionFilter {
 
 	/**
-	 * @deprecated As of 7.0.0, replace with
-	 *             {@link #DefaultSearchResultPermissionFilter(
-	 *                  SearchExecutor, PermissionChecker)}
-	 * @param baseIndexer
-	 * @param permissionChecker
+	 * @param      baseIndexer
+	 * @param      permissionChecker
+	 * @deprecated As of 7.0.0, replace with {@link
+	 *             #DefaultSearchResultPermissionFilter(SearchExecutor,
+	 *             PermissionChecker)}
 	 */
 	@Deprecated
 	public DefaultSearchResultPermissionFilter(

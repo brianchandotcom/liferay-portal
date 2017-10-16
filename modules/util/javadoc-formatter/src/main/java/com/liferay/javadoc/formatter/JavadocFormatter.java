@@ -1144,7 +1144,8 @@ public class JavadocFormatter {
 		// Wrap special constants in code tags
 
 		text = text.replaceAll(
-			"(?i)(?<!<code>|\\w)(null|false|true)(?!\\w)", "<code>$1</code>");
+			"(?i)(?<!<code>|\\{@code |\\w)(null|false|true)(?!\\w)",
+			"<code>$1</code>");
 
 		return text;
 	}
@@ -1436,6 +1437,7 @@ public class JavadocFormatter {
 
 		if (Validator.isNotNull(docletTags)) {
 			if (_initializeMissingJavadocs || Validator.isNotNull(comment)) {
+				sb.append(indent);
 				sb.append(" *\n");
 			}
 
@@ -1716,13 +1718,15 @@ public class JavadocFormatter {
 
 			String modifier = modifiers.get(0);
 
-			for (int i = javaClass.getLineNumber(); i < lines.length; i++) {
+			for (int i = javaClass.getLineNumber() - 1; i < lines.length; i++) {
 				String line = StringUtil.trim(lines[i - 1]);
 
 				if (line.startsWith(modifier + StringPool.SPACE)) {
 					return _getAdjustedLineNumber(i, javaModel);
 				}
 			}
+
+			return -1;
 		}
 
 		if (javaModel instanceof JavaField) {

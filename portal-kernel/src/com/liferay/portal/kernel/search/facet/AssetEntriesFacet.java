@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
- * @author Raymond Augé
+ * @author     Raymond Augé
  * @deprecated As of 7.0.0, with no direct replacement
  */
 @Deprecated

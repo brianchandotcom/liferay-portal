@@ -19,8 +19,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * @author Shuyang Zhou
- * @deprecated As of 7.0.0, replaced by {@link com.liferay.petra.lang.CentralizedThreadLocal}
+ * @author     Shuyang Zhou
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.petra.lang.CentralizedThreadLocal}
  */
 @Deprecated
 public class CentralizedThreadLocal<T> extends ThreadLocal<T> {

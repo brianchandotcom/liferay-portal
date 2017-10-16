@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.concurrent;
 import java.util.concurrent.Future;
 
 /**
- * @author Shuyang Zhou
+ * @author     Shuyang Zhou
  * @deprecated As of 7.0.0, with no direct replacement
  */
 @Deprecated

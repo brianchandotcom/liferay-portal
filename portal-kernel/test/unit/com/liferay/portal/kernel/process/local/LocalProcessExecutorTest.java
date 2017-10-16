@@ -15,10 +15,7 @@
 package com.liferay.portal.kernel.process.local;
 
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
-import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessChannel;
 import com.liferay.portal.kernel.process.ProcessConfig;
@@ -32,70 +29,57 @@ import com.liferay.portal.kernel.process.log.ProcessOutputStream;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.SyncThrowableThread;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.InetAddressUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SocketUtil;
-import com.liferay.portal.kernel.util.SocketUtil.ServerSocketConfigurator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.util.ThreadUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.io.ByteArrayOutputStream;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.NotSerializableException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Serializable;
+import java.io.StreamCorruptedException;
 import java.io.WriteAbortedException;
 
-import java.lang.Thread.UncaughtExceptionHandler;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 import java.net.URL;
 import java.net.URLClassLoader;
 
+import java.nio.channels.ClosedChannelException;
 import java.nio.channels.ServerSocketChannel;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-import java.util.Set;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Callable;
-import java.util.concurrent.CancellationException;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
-import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
-import java.util.logging.Logger;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -122,313 +106,437 @@ public class LocalProcessExecutorTest {
 
 		};
 
-	@After
-	public void tearDown() throws Exception {
-		ExecutorService executorService = _getThreadPoolExecutor();
-
-		if (executorService != null) {
-			executorService.shutdownNow();
-
-			executorService.awaitTermination(10, TimeUnit.SECONDS);
-
-			_nullOutThreadPoolExecutor();
-		}
+	@Test
+	public void testDestroy() throws Exception {
+		_localProcessExecutor.destroy();
 	}
 
 	@Test
-	public void testAttach1() throws Exception {
+	public void testHeartBeatThreadDetachOnBrokenPipe() throws Exception {
+		_testHearBeatThreadDetachByShutdownHook(
+			Operations.SHUTDOWN_HOOK_TRIGGER_BROKEN_PIPE,
+			ShutdownHooks.DETACH_ON_BROKEN_PIPE_SHUTDOWN_HOOK);
+	}
 
-		// No attach
+	@Test
+	public void testHeartBeatThreadDetachOnInterruption() throws Exception {
+		_testHearBeatThreadDetachByShutdownHook(
+			Operations.SHUTDOWN_HOOK_TRIGGER_INTERRUPTION,
+			ShutdownHooks.DETACH_ON_INTERRUPTION_SHUTDOWN_HOOK);
+	}
 
-		ServerSocketChannel serverSocketChannel =
-			SocketUtil.createServerSocketChannel(
-				InetAddressUtil.getLoopbackInetAddress(), 12342,
-				_serverSocketConfigurator);
+	@Test
+	public void testHeartBeatThreadDetachOnUnknown() throws Exception {
+		_testHearBeatThreadDetachByShutdownHook(
+			Operations.SHUTDOWN_HOOK_TRIGGER_UNKNOWN,
+			ShutdownHooks.DETACH_ON_UNKNOWN_SHUTDOWN_HOOK);
+	}
 
-		try (ServerSocket serverSocket = serverSocketChannel.socket()) {
-			int port = serverSocket.getLocalPort();
+	@Test
+	public void testLocalProcessLauncherConstructor() {
+		new LocalProcessLauncher();
+	}
 
+	@Test
+	public void testProcessCallableWithException() throws Exception {
+
+		// ProcessException
+
+		ProcessChannel<Serializable> processChannel =
 			_localProcessExecutor.execute(
 				_createJPDAProcessConfig(_JPDA_OPTIONS1),
-				new AttachParentProcessCallable(
-					AttachChildProcessCallable1.class.getName(), port));
+				() -> {
+					throw new ProcessException("ROOT ProcessException");
+				});
 
-			Socket parentSocket = serverSocket.accept();
+		NoticeableFuture<Serializable> noticeableFuture =
+			processChannel.getProcessNoticeableFuture();
 
-			Assert.assertTrue(ServerThread.isAlive(parentSocket));
+		try {
+			noticeableFuture.get();
 
-			Socket childSocket = serverSocket.accept();
+			Assert.fail();
+		}
+		catch (ExecutionException ee) {
+			Throwable throwable = ee.getCause();
 
-			Assert.assertTrue(ServerThread.isAlive(childSocket));
+			Assert.assertSame(ProcessException.class, throwable.getClass());
+			Assert.assertEquals(
+				"ROOT ProcessException", throwable.getMessage());
+		}
 
-			// Kill parent
+		// NullPointerException
 
-			ServerThread.exit(parentSocket);
+		processChannel = _localProcessExecutor.execute(
+			_createJPDAProcessConfig(_JPDA_OPTIONS1),
+			() -> {
+				throw new NullPointerException("ROOT NullPointerException");
+			});
 
-			// Test alive 10 times for child process
+		noticeableFuture = processChannel.getProcessNoticeableFuture();
 
-			for (int i = 0; i < 10; i++) {
-				Thread.sleep(100);
+		try {
+			noticeableFuture.get();
 
-				Assert.assertTrue(ServerThread.isAlive(childSocket));
-			}
+			Assert.fail();
+		}
+		catch (ExecutionException ee) {
+			Throwable throwable = ee.getCause();
 
-			// Kill child
+			Assert.assertSame(ProcessException.class, throwable.getClass());
 
-			ServerThread.exit(childSocket);
+			throwable = throwable.getCause();
+
+			Assert.assertSame(NullPointerException.class, throwable.getClass());
+			Assert.assertEquals(
+				"ROOT NullPointerException", throwable.getMessage());
 		}
 	}
 
 	@Test
-	public void testAttach2() throws Exception {
+	public void testProcessConfigBuilderEnvironment() throws Exception {
 
-		// Attach
+		// Default environment
 
-		ServerSocketChannel serverSocketChannel =
-			SocketUtil.createServerSocketChannel(
-				InetAddressUtil.getLoopbackInetAddress(), 12342,
-				_serverSocketConfigurator);
+		Builder builder = new Builder();
 
-		try (ServerSocket serverSocket = serverSocketChannel.socket()) {
-			int port = serverSocket.getLocalPort();
+		builder.setArguments(_createArguments(_JPDA_OPTIONS1));
+		builder.setBootstrapClassPath(System.getProperty("java.class.path"));
+		builder.setReactClassLoader(
+			LocalProcessExecutorTest.class.getClassLoader());
 
+		ProcessChannel<HashMap<String, String>> processChannel =
 			_localProcessExecutor.execute(
-				_createJPDAProcessConfig(_JPDA_OPTIONS1),
-				new AttachParentProcessCallable(
-					AttachChildProcessCallable2.class.getName(), port));
+				builder.build(), Operations.GET_ENVIRONMENT);
 
-			Socket parentSocket = serverSocket.accept();
+		Future<HashMap<String, String>> future =
+			processChannel.getProcessNoticeableFuture();
 
-			Assert.assertTrue(ServerThread.isAlive(parentSocket));
+		Assert.assertEquals(System.getenv(), future.get());
 
-			Socket childSocket = serverSocket.accept();
+		// New environment
 
-			Assert.assertTrue(ServerThread.isAlive(childSocket));
+		Map<String, String> environmentMap = new HashMap<>();
 
-			// Kill parent
+		environmentMap.put("key1", "value1");
+		environmentMap.put("key2", "value2");
 
-			ServerThread.exit(parentSocket);
+		builder.setEnvironment(environmentMap);
 
-			if (_log.isInfoEnabled()) {
-				_log.info("Waiting subprocess to exit");
-			}
+		processChannel = _localProcessExecutor.execute(
+			builder.build(), Operations.GET_ENVIRONMENT);
 
-			long startTime = System.currentTimeMillis();
+		future = processChannel.getProcessNoticeableFuture();
 
-			while (true) {
-				Thread.sleep(10);
+		Map<String, String> actualEnvironmentMap = future.get();
 
-				if (!ServerThread.isAlive(childSocket)) {
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"Subprocess exited. Waited " +
-								(System.currentTimeMillis() - startTime) +
-									" ms");
-					}
+		Assert.assertEquals("value1", actualEnvironmentMap.get("key1"));
+		Assert.assertEquals("value2", actualEnvironmentMap.get("key2"));
+	}
 
-					return;
-				}
-			}
+	@Test
+	public void testProcessConfigBuilderJavaExecutable() throws Exception {
+		try {
+			Builder builder = new Builder();
+
+			builder.setJavaExecutable("javax");
+
+			_localProcessExecutor.execute(builder.build(), Operations.SLEEP);
+
+			Assert.fail();
+		}
+		catch (ProcessException pe) {
+			Throwable throwable = pe.getCause();
+
+			Assert.assertTrue(throwable instanceof IOException);
 		}
 	}
 
 	@Test
-	public void testAttach3() throws Exception {
+	public void testProcessConfigBuilderRuntimeClassPath() throws Exception {
+		Builder builder = new Builder();
+
+		builder.setArguments(_createArguments(_JPDA_OPTIONS1));
+
+		char[] largeFileNameChars = new char[10 * 1024 * 1024];
+
+		largeFileNameChars[0] = CharPool.SLASH;
+
+		for (int i = 1; i < largeFileNameChars.length; i++) {
+			largeFileNameChars[i] = (char)('a' + (i % 26));
+		}
+
+		String largeFileName = new String(largeFileNameChars);
+
+		builder.setRuntimeClassPath(largeFileName);
+
+		ProcessChannel<String> processChannel = _localProcessExecutor.execute(
+			builder.build(), Operations.GET_RUNTIME_CLASS_PATH);
+
+		Future<String> future = processChannel.getProcessNoticeableFuture();
+
+		Assert.assertEquals(largeFileName, future.get());
+	}
+
+	@Test
+	public void testProcessConfigDeprecatedMethods() {
+		ProcessConfig processConfig = _createJPDAProcessConfig(_JPDA_OPTIONS1);
+
+		Assert.assertArrayEquals(
+			StringUtil.split(
+				processConfig.getBootstrapClassPath(), File.pathSeparatorChar),
+			processConfig.getBootstrapClassPathElements());
+		Assert.assertArrayEquals(
+			StringUtil.split(
+				processConfig.getRuntimeClassPath(), File.pathSeparatorChar),
+			processConfig.getRuntimeClassPathElements());
+	}
+
+	@Test
+	public void testProcessContextAttach() throws Exception {
+		ProcessChannel<String> processChannel = _localProcessExecutor.execute(
+			_createJPDAProcessConfig(_JPDA_OPTIONS1),
+			Operations.asControllable(Operations.SLEEP));
+
+		Future<Controller> future = processChannel.write(
+			Operations.GET_CONTROLLER);
+
+		Controller parentController = future.get();
+
+		Assert.assertTrue(parentController.isAlive());
+
+		Controller childController = parentController.invoke(
+			Operations.asNewJVM(_JPDA_OPTIONS2, Operations.SLEEP));
+
+		Assert.assertTrue(childController.isAlive());
+
+		// Initially not attached
+
+		Assert.assertFalse(childController.invoke(Operations.IS_ATTACHED));
+
+		// Detach is not doing anything
+
+		Assert.assertEquals("DONE", childController.invoke(Operations.DETACH));
+
+		Assert.assertFalse(childController.invoke(Operations.IS_ATTACHED));
+
+		// Attach child to parent
+
+		Assert.assertTrue(
+			childController.invoke(
+				Operations.attach(ShutdownHooks.TERMINATE_SHUTDOWN_HOOK)));
+
+		Assert.assertTrue(childController.invoke(Operations.IS_ATTACHED));
+
+		// Double attach is rejected
+
+		Assert.assertFalse(
+			childController.invoke(
+				Operations.attach(ShutdownHooks.TERMINATE_SHUTDOWN_HOOK)));
 
 		// Detach
 
-		ServerSocketChannel serverSocketChannel =
-			SocketUtil.createServerSocketChannel(
-				InetAddressUtil.getLoopbackInetAddress(), 12342,
-				_serverSocketConfigurator);
+		Assert.assertEquals("DONE", childController.invoke(Operations.DETACH));
 
-		try (ServerSocket serverSocket = serverSocketChannel.socket()) {
-			int port = serverSocket.getLocalPort();
+		Assert.assertFalse(childController.invoke(Operations.IS_ATTACHED));
 
-			_localProcessExecutor.execute(
-				_createJPDAProcessConfig(_JPDA_OPTIONS1),
-				new AttachParentProcessCallable(
-					AttachChildProcessCallable3.class.getName(), port));
+		// Reattach
 
-			Socket parentSocket = serverSocket.accept();
+		Assert.assertTrue(
+			childController.invoke(
+				Operations.attach(ShutdownHooks.TERMINATE_SHUTDOWN_HOOK)));
 
-			Assert.assertTrue(ServerThread.isAlive(parentSocket));
+		Assert.assertTrue(childController.invoke(Operations.IS_ATTACHED));
 
-			Socket childSocket = serverSocket.accept();
+		// Kill parent
 
-			Assert.assertTrue(ServerThread.isAlive(childSocket));
+		parentController.invoke(Operations.TERMINATE);
 
-			// Kill parent
+		Assert.assertFalse(parentController.isAlive());
 
-			ServerThread.exit(parentSocket);
+		NoticeableFuture<String> noticeableFuture =
+			processChannel.getProcessNoticeableFuture();
 
-			if (_log.isInfoEnabled()) {
-				_log.info("Waiting subprocess to exit...");
-			}
+		Assert.assertEquals("DONE", noticeableFuture.get());
 
-			long startTime = System.currentTimeMillis();
+		// Time wait 10 minutes to assert child is dead
 
-			while (true) {
-				Thread.sleep(10);
+		_timeWaitAssertFalse(
+			"The child process is still alive", childController::isAlive, 10,
+			TimeUnit.MINUTES);
+	}
 
-				if (!ServerThread.isAlive(childSocket)) {
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"Subprocess exited. Waited " +
-								(System.currentTimeMillis() - startTime) +
-									" ms");
+	@Test
+	public void testProcessContextAttachWithNullShutdownHook()
+		throws Exception {
+
+		ProcessChannel<String> processChannel = _localProcessExecutor.execute(
+			_createJPDAProcessConfig(_JPDA_OPTIONS1),
+			Operations.asControllable(Operations.SLEEP));
+
+		Future<Controller> future = processChannel.write(
+			Operations.GET_CONTROLLER);
+
+		Controller parentController = future.get();
+
+		Assert.assertTrue(parentController.isAlive());
+
+		Controller childController = parentController.invoke(
+			Operations.asNewJVM(_JPDA_OPTIONS2, Operations.SLEEP));
+
+		Assert.assertTrue(childController.isAlive());
+
+		// Attach with null shutdown hook
+
+		Assert.assertEquals(
+			"DONE",
+			childController.invoke(
+				() -> {
+					try {
+						ProcessContext.attach("NullShutdownHook", 1, null);
+
+						return "NULL_SHUTDOWN_HOOK_ACCEPTED";
+					}
+					catch (IllegalArgumentException iae) {
+						if (!"Shutdown hook is null".equals(iae.getMessage())) {
+							return iae.getMessage();
+						}
 					}
 
-					return;
-				}
-			}
-		}
+					return "DONE";
+				}));
+
+		Assert.assertFalse(childController.invoke(Operations.IS_ATTACHED));
+
+		// Kill parent
+
+		parentController.invoke(Operations.TERMINATE);
+
+		Assert.assertFalse(parentController.isAlive());
+
+		// Kill child
+
+		childController.invoke(Operations.TERMINATE);
+
+		Assert.assertFalse(childController.isAlive());
 	}
 
 	@Test
-	public void testAttach4() throws Exception {
+	public void testProcessContextConstructor() throws Exception {
+		Constructor<ProcessContext> constructor =
+			ProcessContext.class.getDeclaredConstructor();
 
-		// Shutdown by interruption
+		constructor.setAccessible(true);
 
-		ServerSocketChannel serverSocketChannel =
-			SocketUtil.createServerSocketChannel(
-				InetAddressUtil.getLoopbackInetAddress(), 12342,
-				_serverSocketConfigurator);
+		constructor.newInstance();
 
-		try (ServerSocket serverSocket = serverSocketChannel.socket()) {
-			int port = serverSocket.getLocalPort();
-
-			_localProcessExecutor.execute(
-				_createJPDAProcessConfig(_JPDA_OPTIONS1),
-				new AttachParentProcessCallable(
-					AttachChildProcessCallable4.class.getName(), port));
-
-			Socket parentSocket = serverSocket.accept();
-
-			Assert.assertTrue(ServerThread.isAlive(parentSocket));
-
-			Socket childSocket = serverSocket.accept();
-
-			Assert.assertTrue(ServerThread.isAlive(childSocket));
-
-			// Interrupt child process heartbeat thread
-
-			ServerThread.interruptHeartbeatThread(childSocket);
-
-			// Kill parent
-
-			ServerThread.exit(parentSocket);
-		}
+		Assert.assertNotNull(ProcessContext.getAttributes());
 	}
 
 	@Test
-	public void testAttach5() throws Exception {
+	public void testSpawnProcessWithoutAttach() throws Exception {
+		ProcessChannel<String> processChannel = _localProcessExecutor.execute(
+			_createJPDAProcessConfig(_JPDA_OPTIONS1),
+			Operations.asControllable(Operations.SLEEP));
 
-		// Bad shutdown hook
+		Future<Controller> future = processChannel.write(
+			Operations.GET_CONTROLLER);
 
-		ServerSocketChannel serverSocketChannel =
-			SocketUtil.createServerSocketChannel(
-				InetAddressUtil.getLoopbackInetAddress(), 12342,
-				_serverSocketConfigurator);
+		Controller parentController = future.get();
 
-		try (ServerSocket serverSocket = serverSocketChannel.socket()) {
-			int port = serverSocket.getLocalPort();
+		Assert.assertTrue(parentController.isAlive());
 
-			_localProcessExecutor.execute(
-				_createJPDAProcessConfig(_JPDA_OPTIONS1),
-				new AttachParentProcessCallable(
-					AttachChildProcessCallable5.class.getName(), port));
+		Controller childController = parentController.invoke(
+			Operations.asNewJVM(_JPDA_OPTIONS2, Operations.SLEEP));
 
-			Socket parentSocket = serverSocket.accept();
+		Assert.assertTrue(childController.isAlive());
 
-			Assert.assertTrue(ServerThread.isAlive(parentSocket));
+		// Kill parent
 
-			Socket childSocket = serverSocket.accept();
+		parentController.invoke(Operations.TERMINATE);
 
-			Assert.assertTrue(ServerThread.isAlive(childSocket));
+		Assert.assertFalse(parentController.isAlive());
 
-			// Interrupt child process heartbeat thread
+		NoticeableFuture<String> noticeableFuture =
+			processChannel.getProcessNoticeableFuture();
 
-			ServerThread.interruptHeartbeatThread(childSocket);
+		Assert.assertEquals("DONE", noticeableFuture.get());
 
-			// Kill parent
+		// Test alive 10 times for child process
 
-			ServerThread.exit(parentSocket);
+		for (int i = 0; i < 10; i++) {
+			Thread.sleep(100);
+
+			Assert.assertTrue(childController.isAlive());
 		}
+
+		// Kill child
+
+		childController.invoke(Operations.TERMINATE);
+
+		Assert.assertFalse(childController.isAlive());
 	}
 
 	@Test
-	public void testAttach6() throws Exception {
-
-		// NPE on heartbeat piping back
-
-		ServerSocketChannel serverSocketChannel =
-			SocketUtil.createServerSocketChannel(
-				InetAddressUtil.getLoopbackInetAddress(), 12342,
-				_serverSocketConfigurator);
-
-		try (ServerSocket serverSocket = serverSocketChannel.socket()) {
-			int port = serverSocket.getLocalPort();
-
-			_localProcessExecutor.execute(
-				_createJPDAProcessConfig(_JPDA_OPTIONS1),
-				new AttachParentProcessCallable(
-					AttachChildProcessCallable6.class.getName(), port));
-
-			Socket parentSocket = serverSocket.accept();
-
-			Assert.assertTrue(ServerThread.isAlive(parentSocket));
-
-			Socket childSocket = serverSocket.accept();
-
-			Assert.assertTrue(ServerThread.isAlive(childSocket));
-
-			// Null out child process' OOS to cause NPE in heartbeat thread
-
-			ServerThread.nullOutOOS(childSocket);
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Waiting subprocess to exit");
-			}
-
-			long startTime = System.currentTimeMillis();
-
-			while (true) {
-				Thread.sleep(10);
-
-				if (!ServerThread.isAlive(childSocket)) {
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"Subprocess exited. Waited " +
-								(System.currentTimeMillis() - startTime) +
-									" ms");
-					}
-
-					break;
-				}
-			}
-
-			// Kill parent
-
-			ServerThread.exit(parentSocket);
-		}
-	}
-
-	@Test
-	public void testBrokenPiping() throws Exception {
+	public void testSubprocessReactorAbort() throws Exception {
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
 					LocalProcessExecutor.class.getName(), Level.SEVERE)) {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			BrokenPipingProcessCallable brokenPipingProcessCallable =
-				new BrokenPipingProcessCallable();
+			Builder builder = new Builder();
+
+			builder.setArguments(_createArguments(_JPDA_OPTIONS1));
+			builder.setBootstrapClassPath(
+				System.getProperty("java.class.path"));
+			builder.setReactClassLoader(new URLClassLoader(new URL[0], null));
+
+			ProcessChannel<Boolean> processChannel =
+				_localProcessExecutor.execute(
+					builder.build(), Operations.IS_ATTACHED);
+
+			Future<Boolean> future =
+				processChannel.getProcessNoticeableFuture();
+
+			try {
+				future.get();
+
+				Assert.fail();
+			}
+			catch (ExecutionException ee) {
+				Throwable cause = ee.getCause();
+
+				Assert.assertSame(
+					ClassNotFoundException.class, cause.getClass());
+			}
+
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Abort subprocess piping", logRecord.getMessage());
+
+			Throwable throwable = logRecord.getThrown();
+
+			Assert.assertSame(
+				ClassNotFoundException.class, throwable.getClass());
+		}
+	}
+
+	@Test
+	public void testSubprocessReactorCorruptedStream() throws Exception {
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					LocalProcessExecutor.class.getName(), Level.SEVERE)) {
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			ProcessChannel<Serializable> processChannel =
 				_localProcessExecutor.execute(
 					_createJPDAProcessConfig(_JPDA_OPTIONS1),
-					brokenPipingProcessCallable);
+					Operations.CORRUPTED_STREAM);
 
 			Future<Serializable> future =
 				processChannel.getProcessNoticeableFuture();
@@ -445,6 +553,11 @@ public class LocalProcessExecutorTest {
 
 				Assert.assertEquals(
 					"Corrupted object input stream", cause.getMessage());
+
+				cause = cause.getCause();
+
+				Assert.assertSame(
+					StreamCorruptedException.class, cause.getClass());
 			}
 
 			Assert.assertFalse(future.isCancelled());
@@ -452,7 +565,9 @@ public class LocalProcessExecutorTest {
 
 			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
-			String message = logRecords.get(0).getMessage();
+			LogRecord logRecord = logRecords.get(0);
+
+			String message = logRecord.getMessage();
 
 			int index = message.lastIndexOf(' ');
 
@@ -466,94 +581,26 @@ public class LocalProcessExecutorTest {
 			Assert.assertTrue(file.exists());
 
 			file.delete();
+
+			Throwable throwable = logRecord.getThrown();
+
+			Assert.assertSame(
+				StreamCorruptedException.class, throwable.getClass());
 		}
 	}
 
 	@Test
-	public void testCancel() throws Exception {
-		ReturnWithoutExitProcessCallable returnWithoutExitProcessCallable =
-			new ReturnWithoutExitProcessCallable("");
-
-		ProcessChannel<String> processChannel = _localProcessExecutor.execute(
-			_createJPDAProcessConfig(_JPDA_OPTIONS1),
-			returnWithoutExitProcessCallable);
-
-		Future<String> future = processChannel.getProcessNoticeableFuture();
-
-		Assert.assertFalse(future.isCancelled());
-		Assert.assertFalse(future.isDone());
-
-		Assert.assertTrue(future.cancel(true));
-
-		try {
-			future.get();
-
-			Assert.fail();
-		}
-		catch (CancellationException ce) {
-		}
-
-		Assert.assertTrue(future.isCancelled());
-		Assert.assertTrue(future.isDone());
-		Assert.assertFalse(future.cancel(true));
-	}
-
-	@Test
-	public void testConcurrentCreateExecutorService() throws Exception {
-		final AtomicReference<ExecutorService> atomicReference =
-			new AtomicReference<>();
-
-		SyncThrowableThread<Void> syncThrowableThread =
-			new SyncThrowableThread<>(
-				new Callable<Void>() {
-
-					@Override
-					public Void call() throws Exception {
-						ExecutorService executorService =
-							_invokeGetThreadPoolExecutor();
-
-						atomicReference.set(executorService);
-
-						return null;
-					}
-
-				});
-
-		ExecutorService executorService = null;
-
-		synchronized (_localProcessExecutor) {
-			syncThrowableThread.start();
-
-			while (syncThrowableThread.getState() != Thread.State.BLOCKED);
-
-			executorService = _invokeGetThreadPoolExecutor();
-		}
-
-		syncThrowableThread.sync();
-
-		Assert.assertSame(executorService, atomicReference.get());
-	}
-
-	@Test
-	public void testConstructor() {
-		new LocalProcessLauncher();
-	}
-
-	@Test
-	public void testCrash() throws Exception {
+	public void testSubprocessReactorCrash() throws Exception {
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
 					LocalProcessExecutor.class.getName(), Level.OFF)) {
 
 			// One crash
 
-			KillJVMProcessCallable killJVMProcessCallable =
-				new KillJVMProcessCallable(1);
-
 			ProcessChannel<Serializable> processChannel =
 				_localProcessExecutor.execute(
 					_createJPDAProcessConfig(_JPDA_OPTIONS1),
-					killJVMProcessCallable);
+					Operations.crashJVM(1));
 
 			Future<Serializable> future =
 				processChannel.getProcessNoticeableFuture();
@@ -564,9 +611,6 @@ public class LocalProcessExecutorTest {
 				Assert.fail();
 			}
 			catch (ExecutionException ee) {
-				Assert.assertFalse(future.isCancelled());
-				Assert.assertTrue(future.isDone());
-
 				Throwable throwable = ee.getCause();
 
 				Assert.assertSame(
@@ -584,11 +628,9 @@ public class LocalProcessExecutorTest {
 
 			// Zero crash
 
-			killJVMProcessCallable = new KillJVMProcessCallable(0);
-
 			processChannel = _localProcessExecutor.execute(
 				_createJPDAProcessConfig(_JPDA_OPTIONS1),
-				killJVMProcessCallable);
+				Operations.crashJVM(0));
 
 			future = processChannel.getProcessNoticeableFuture();
 
@@ -598,12 +640,13 @@ public class LocalProcessExecutorTest {
 				Assert.fail();
 			}
 			catch (ExecutionException ee) {
-				Assert.assertFalse(future.isCancelled());
-				Assert.assertTrue(future.isDone());
-
 				Throwable throwable = ee.getCause();
 
 				Assert.assertSame(ProcessException.class, throwable.getClass());
+
+				Assert.assertEquals(
+					"Subprocess piping back ended prematurely",
+					throwable.getMessage());
 
 				throwable = throwable.getCause();
 
@@ -613,213 +656,205 @@ public class LocalProcessExecutorTest {
 	}
 
 	@Test
-	public void testCreateProcessContext() throws Exception {
-		Constructor<ProcessContext> constructor =
-			ProcessContext.class.getDeclaredConstructor();
+	public void testSubprocessReactorKillByCancel() throws Exception {
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					LocalProcessExecutor.class.getName(), Level.SEVERE)) {
 
-		constructor.setAccessible(true);
+			ProcessChannel<String> processChannel =
+				_localProcessExecutor.execute(
+					_createJPDAProcessConfig(_JPDA_OPTIONS1),
+					Operations.asControllable(Operations.SLEEP));
 
-		constructor.newInstance();
+			Future<Controller> future = processChannel.write(
+				Operations.GET_CONTROLLER);
 
-		Assert.assertNotNull(ProcessContext.getAttributes());
-	}
+			Controller controller = future.get();
 
-	@Test
-	public void testDestroy() throws Exception {
+			Assert.assertTrue(controller.isAlive());
 
-		// Clean destroy
+			NoticeableFuture<String> noticeableFuture =
+				processChannel.getProcessNoticeableFuture();
 
-		_localProcessExecutor.destroy();
+			noticeableFuture.cancel(false);
 
-		Assert.assertNull(_getThreadPoolExecutor());
+			_timeWaitAssertFalse(
+				"The process is still alive", controller::isAlive, 10,
+				TimeUnit.MINUTES);
 
-		// Idle destroy
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-		ExecutorService executorService = _invokeGetThreadPoolExecutor();
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
-		Assert.assertNotNull(executorService);
+			LogRecord logRecord = logRecords.get(0);
 
-		Assert.assertNotNull(_getThreadPoolExecutor());
-
-		_localProcessExecutor.destroy();
-
-		Assert.assertNull(_getThreadPoolExecutor());
-
-		// Busy destroy
-
-		executorService = _invokeGetThreadPoolExecutor();
-
-		Assert.assertNotNull(executorService);
-
-		Assert.assertNotNull(_getThreadPoolExecutor());
-
-		DummyJob dummyJob = new DummyJob();
-
-		Future<Void> future = executorService.submit(dummyJob);
-
-		dummyJob.waitUntilStarted();
-
-		_localProcessExecutor.destroy();
-
-		try {
-			future.get();
-
-			Assert.fail();
-		}
-		catch (ExecutionException ee) {
-			Throwable throwable = ee.getCause();
-
-			Assert.assertTrue(throwable instanceof InterruptedException);
-		}
-
-		Assert.assertNull(_getThreadPoolExecutor());
-
-		// Concurrent destroy
-
-		_invokeGetThreadPoolExecutor();
-
-		final LocalProcessExecutor referenceProcessExecutor =
-			_localProcessExecutor;
-
-		Thread thread = new Thread() {
-
-			@Override
-			public void run() {
-				referenceProcessExecutor.destroy();
-			}
-
-		};
-
-		synchronized (_localProcessExecutor) {
-			thread.start();
-
-			while (thread.getState() != Thread.State.BLOCKED);
-
-			_localProcessExecutor.destroy();
-		}
-
-		thread.join();
-
-		_invokeGetThreadPoolExecutor();
-
-		_localProcessExecutor.destroy();
-
-		// Destroy after destroyed
-
-		_localProcessExecutor.destroy();
-
-		Assert.assertNull(_getThreadPoolExecutor());
-	}
-
-	@Test
-	public void testEnvironment() throws Exception {
-
-		// Default environment
-
-		Builder builder = new Builder();
-
-		builder.setArguments(_createArguments(_JPDA_OPTIONS1));
-		builder.setBootstrapClassPath(System.getProperty("java.class.path"));
-		builder.setReactClassLoader(
-			LocalProcessExecutorTest.class.getClassLoader());
-
-		GetEnviornmentProcessCallable getEnviornmentProcessCallable =
-			new GetEnviornmentProcessCallable();
-
-		ProcessChannel<HashMap<String, String>> processChannel =
-			_localProcessExecutor.execute(
-				builder.build(), getEnviornmentProcessCallable);
-
-		Future<HashMap<String, String>> future =
-			processChannel.getProcessNoticeableFuture();
-
-		Assert.assertEquals(System.getenv(), future.get());
-
-		// New environment
-
-		Map<String, String> environmentMap = new HashMap<>();
-
-		environmentMap.put("key1", "value1");
-		environmentMap.put("key2", "value2");
-
-		builder.setEnvironment(environmentMap);
-
-		processChannel = _localProcessExecutor.execute(
-			builder.build(), getEnviornmentProcessCallable);
-
-		future = processChannel.getProcessNoticeableFuture();
-
-		Map<String, String> actualEnvironmentMap = future.get();
-
-		Assert.assertEquals("value1", actualEnvironmentMap.get("key1"));
-		Assert.assertEquals("value2", actualEnvironmentMap.get("key2"));
-	}
-
-	@Test
-	public void testException() throws Exception {
-		DummyExceptionProcessCallable dummyExceptionProcessCallable =
-			new DummyExceptionProcessCallable();
-
-		ProcessChannel<Serializable> processChannel =
-			_localProcessExecutor.execute(
-				_createJPDAProcessConfig(_JPDA_OPTIONS1),
-				dummyExceptionProcessCallable);
-
-		Future<Serializable> future =
-			processChannel.getProcessNoticeableFuture();
-
-		try {
-			future.get();
-
-			Assert.fail();
-		}
-		catch (ExecutionException ee) {
-			Assert.assertFalse(future.isCancelled());
-			Assert.assertTrue(future.isDone());
-
-			Throwable throwable = ee.getCause();
-
-			Assert.assertSame(ProcessException.class, throwable.getClass());
 			Assert.assertEquals(
-				DummyExceptionProcessCallable.class.getName(),
-				throwable.getMessage());
+				"Abort subprocess piping", logRecord.getMessage());
+
+			Throwable throwable = logRecord.getThrown();
+
+			Assert.assertSame(IOException.class, throwable.getClass());
 		}
+	}
 
-		RuntimeExceptionProcessCallable runtimeExceptionProcessCallable =
-			new RuntimeExceptionProcessCallable();
-
-		processChannel = _localProcessExecutor.execute(
+	@Test
+	public void testSubprocessReactorKillByInterruption() throws Exception {
+		ProcessChannel<String> processChannel = _localProcessExecutor.execute(
 			_createJPDAProcessConfig(_JPDA_OPTIONS1),
-			runtimeExceptionProcessCallable);
+			Operations.asControllable(Operations.SLEEP));
 
-		future = processChannel.getProcessNoticeableFuture();
+		Future<Controller> future = processChannel.write(
+			Operations.GET_CONTROLLER);
+
+		Controller controller = future.get();
+
+		Assert.assertTrue(controller.isAlive());
+
+		Map<String, Object> attributes = ProcessContext.getAttributes();
+
+		BlockingQueue<Thread> reactorThreadBlockingQueue =
+			new SynchronousQueue<>();
+
+		attributes.put(
+			"reactorThreadBlockingQueue", reactorThreadBlockingQueue);
+
+		controller.invoke(
+			() -> {
+				ProcessOutputStream processOutputStream =
+					ProcessContext.getProcessOutputStream();
+
+				try {
+					processOutputStream.writeProcessCallable(
+						() -> {
+							Map<String, Object> localAttributes =
+								ProcessContext.getAttributes();
+
+							BlockingQueue<Thread>
+								localReactorThreadBlockingQueue =
+									(BlockingQueue<Thread>)
+										localAttributes.remove(
+											"reactorThreadBlockingQueue");
+
+							try {
+								localReactorThreadBlockingQueue.put(
+									Thread.currentThread());
+							}
+							catch (InterruptedException ie) {
+								throw new ProcessException(ie);
+							}
+
+							return null;
+						});
+
+					processOutputStream.close();
+				}
+				catch (IOException ioe) {
+					throw new ProcessException(ioe);
+				}
+
+				return null;
+			});
+
+		Thread reactorThread = reactorThreadBlockingQueue.take();
+
+		reactorThread.interrupt();
+
+		NoticeableFuture<String> noticeableFuture =
+			processChannel.getProcessNoticeableFuture();
 
 		try {
-			future.get();
+			noticeableFuture.get();
 
 			Assert.fail();
 		}
 		catch (ExecutionException ee) {
-			Assert.assertFalse(future.isCancelled());
-			Assert.assertTrue(future.isDone());
-
 			Throwable throwable = ee.getCause();
 
 			Assert.assertSame(ProcessException.class, throwable.getClass());
+
+			Assert.assertEquals(
+				"Forcibly killed subprocess on interruption",
+				throwable.getMessage());
 
 			throwable = throwable.getCause();
 
-			Assert.assertSame(RuntimeException.class, throwable.getClass());
-			Assert.assertEquals(
-				RuntimeExceptionProcessCallable.class.getName(),
-				throwable.getMessage());
+			Assert.assertSame(InterruptedException.class, throwable.getClass());
 		}
 	}
 
 	@Test
-	public void testExceptionPipingBackProcessCallable() throws Exception {
-		ExceptionPipingBackProcessCallable exceptionPipingBackProcessCallable =
-			new ExceptionPipingBackProcessCallable();
+	public void testSubprocessReactorLeadingLog() throws Exception {
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					LocalProcessExecutor.class.getName(), Level.WARNING)) {
+
+			// Warn level
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			ProcessChannel<String> processChannel =
+				_localProcessExecutor.execute(
+					_createJPDAProcessConfig(_JPDA_OPTIONS1),
+					Operations.LEADING_LOG);
+
+			Future<String> future = processChannel.getProcessNoticeableFuture();
+
+			Assert.assertEquals("DONE", future.get());
+
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Found corrupt leading log Leading log",
+				logRecord.getMessage());
+
+			// Fine level
+
+			logRecords = captureHandler.resetLogLevel(Level.FINE);
+
+			processChannel = _localProcessExecutor.execute(
+				_createJPDAProcessConfig(_JPDA_OPTIONS1),
+				Operations.LEADING_LOG);
+
+			future = processChannel.getProcessNoticeableFuture();
+
+			Assert.assertEquals("DONE", future.get());
+
+			Assert.assertEquals(logRecords.toString(), 2, logRecords.size());
+
+			LogRecord logRecord1 = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Found corrupt leading log Leading log",
+				logRecord1.getMessage());
+
+			LogRecord logRecord2 = logRecords.get(1);
+
+			String message = logRecord2.getMessage();
+
+			Assert.assertTrue(
+				message.contains("Invoked generic process callable"));
+
+			// Severe level
+
+			logRecords = captureHandler.resetLogLevel(Level.SEVERE);
+
+			processChannel = _localProcessExecutor.execute(
+				_createJPDAProcessConfig(_JPDA_OPTIONS1),
+				Operations.LEADING_LOG);
+
+			future = processChannel.getProcessNoticeableFuture();
+
+			Assert.assertEquals("DONE", future.get());
+
+			Assert.assertEquals(logRecords.toString(), 0, logRecords.size());
+		}
+	}
+
+	@Test
+	public void testSubprocessReactorPipingBackExceptionProcessCallable()
+		throws Exception {
 
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
@@ -828,7 +863,7 @@ public class LocalProcessExecutorTest {
 			ProcessChannel<Serializable> processChannel =
 				_localProcessExecutor.execute(
 					_createJPDAProcessConfig(_JPDA_OPTIONS1),
-					exceptionPipingBackProcessCallable);
+					Operations.PIPING_BACK_EXCEPTION_PROCESS_CALLABLE);
 
 			NoticeableFuture<Serializable> noticeableFuture =
 				processChannel.getProcessNoticeableFuture();
@@ -849,340 +884,13 @@ public class LocalProcessExecutorTest {
 
 			Assert.assertSame(ProcessException.class, throwable.getClass());
 			Assert.assertEquals(
-				DummyExceptionProcessCallable.class.getName(),
-				throwable.getMessage());
+				"Exception ProcessCallable", throwable.getMessage());
 		}
 	}
 
 	@Test
-	public void testExecuteOnDestroy() throws Exception {
-		ExecutorService executorService = _invokeGetThreadPoolExecutor();
-
-		executorService.shutdownNow();
-
-		boolean result = executorService.awaitTermination(10, TimeUnit.SECONDS);
-
-		Assert.assertTrue(result);
-
-		DummyReturnProcessCallable dummyReturnProcessCallable =
-			new DummyReturnProcessCallable();
-
-		try {
-			_localProcessExecutor.execute(
-				_createJPDAProcessConfig(_JPDA_OPTIONS1),
-				dummyReturnProcessCallable);
-
-			Assert.fail();
-		}
-		catch (ProcessException pe) {
-			Throwable throwable = pe.getCause();
-
-			Assert.assertEquals(
-				throwable.getClass(), RejectedExecutionException.class);
-		}
-	}
-
-	@Test
-	public void testGetWithTimeout() throws Exception {
-
-		// Success return
-
-		DummyReturnProcessCallable dummyReturnProcessCallable =
-			new DummyReturnProcessCallable();
-
-		ProcessChannel<String> processChannel = _localProcessExecutor.execute(
-			_createJPDAProcessConfig(_JPDA_OPTIONS1),
-			dummyReturnProcessCallable);
-
-		Future<String> future = processChannel.getProcessNoticeableFuture();
-
-		String returnValue = future.get(100, TimeUnit.SECONDS);
-
-		Assert.assertEquals(
-			DummyReturnProcessCallable.class.getName(), returnValue);
-
-		Assert.assertFalse(future.isCancelled());
-		Assert.assertTrue(future.isDone());
-
-		// Timeout return
-
-		ReturnWithoutExitProcessCallable returnWithoutExitProcessCallable =
-			new ReturnWithoutExitProcessCallable("");
-
-		processChannel = _localProcessExecutor.execute(
-			_createJPDAProcessConfig(_JPDA_OPTIONS1),
-			returnWithoutExitProcessCallable);
-
-		future = processChannel.getProcessNoticeableFuture();
-
-		try {
-			future.get(1, TimeUnit.SECONDS);
-
-			Assert.fail();
-		}
-		catch (TimeoutException te) {
-		}
-
-		Assert.assertFalse(future.isCancelled());
-		Assert.assertFalse(future.isDone());
-
-		future.cancel(true);
-
-		ExecutorService executorService = _getThreadPoolExecutor();
-
-		executorService.shutdownNow();
-
-		executorService.awaitTermination(10, TimeUnit.SECONDS);
-
-		Assert.assertTrue(future.isCancelled());
-		Assert.assertTrue(future.isDone());
-	}
-
-	@Test
-	public void testLargeProcessCallable() throws Exception {
-		byte[] largePayload = new byte[100 * 1024 * 1024];
-
-		Random random = new Random();
-
-		random.nextBytes(largePayload);
-
-		EchoPayloadProcessCallable echoPayloadProcessCallable =
-			new EchoPayloadProcessCallable(largePayload);
-
-		ProcessChannel<byte[]> processChannel = _localProcessExecutor.execute(
-			_createJPDAProcessConfig(_JPDA_OPTIONS1),
-			echoPayloadProcessCallable);
-
-		Future<byte[]> future = processChannel.getProcessNoticeableFuture();
-
-		Assert.assertArrayEquals(largePayload, future.get());
-		Assert.assertFalse(future.isCancelled());
-		Assert.assertTrue(future.isDone());
-	}
-
-	@Test
-	public void testLargeRuntimeClassPath() throws Exception {
-		Builder builder = new Builder();
-
-		builder.setArguments(_createArguments(_JPDA_OPTIONS1));
-
-		char[] largeFileNameChars = new char[10 * 1024 * 1024];
-
-		largeFileNameChars[0] = CharPool.SLASH;
-
-		for (int i = 1; i < largeFileNameChars.length; i++) {
-			largeFileNameChars[i] = (char)('a' + (i % 26));
-		}
-
-		String largeFileName = new String(largeFileNameChars);
-
-		builder.setRuntimeClassPath(largeFileName);
-
-		ProcessChannel<String> processChannel = _localProcessExecutor.execute(
-			builder.build(), new EchoRuntimeClassPathProcessCallable());
-
-		Future<String> future = processChannel.getProcessNoticeableFuture();
-
-		Assert.assertEquals(largeFileName, future.get());
-		Assert.assertFalse(future.isCancelled());
-		Assert.assertTrue(future.isDone());
-	}
-
-	@Test
-	public void testLeadingLog() throws Exception {
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					LocalProcessExecutor.class.getName(), Level.WARNING)) {
-
-			// Warn level
-
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
-
-			String leadingLog = "Test leading log.\n";
-			String bodyLog = "Test body log.\n";
-
-			LeadingLogProcessCallable leadingLogProcessCallable =
-				new LeadingLogProcessCallable(leadingLog, bodyLog);
-
-			ProcessChannel<Serializable> processChannel =
-				_localProcessExecutor.execute(
-					_createJPDAProcessConfig(_JPDA_OPTIONS1),
-					leadingLogProcessCallable);
-
-			Future<Serializable> future =
-				processChannel.getProcessNoticeableFuture();
-
-			future.get();
-
-			Assert.assertFalse(future.isCancelled());
-			Assert.assertTrue(future.isDone());
-
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
-
-			LogRecord logRecord = logRecords.get(0);
-
-			Assert.assertEquals(
-				"Found corrupt leading log " + leadingLog,
-				logRecord.getMessage());
-
-			// Fine level
-
-			logRecords = captureHandler.resetLogLevel(Level.FINE);
-
-			leadingLogProcessCallable = new LeadingLogProcessCallable(
-				leadingLog, bodyLog);
-
-			processChannel = _localProcessExecutor.execute(
-				_createJPDAProcessConfig(_JPDA_OPTIONS1),
-				leadingLogProcessCallable);
-
-			future = processChannel.getProcessNoticeableFuture();
-
-			future.get();
-
-			Assert.assertFalse(future.isCancelled());
-			Assert.assertTrue(future.isDone());
-
-			Assert.assertEquals(logRecords.toString(), 2, logRecords.size());
-
-			LogRecord logRecord1 = logRecords.get(0);
-
-			Assert.assertEquals(
-				"Found corrupt leading log " + leadingLog,
-				logRecord1.getMessage());
-
-			LogRecord logRecord2 = logRecords.get(1);
-
-			String message = logRecord2.getMessage();
-
-			Assert.assertTrue(
-				message.contains("Invoked generic process callable"));
-
-			// Severe level
-
-			logRecords = captureHandler.resetLogLevel(Level.SEVERE);
-
-			leadingLogProcessCallable = new LeadingLogProcessCallable(
-				leadingLog, bodyLog);
-
-			processChannel = _localProcessExecutor.execute(
-				_createJPDAProcessConfig(_JPDA_OPTIONS1),
-				leadingLogProcessCallable);
-
-			future = processChannel.getProcessNoticeableFuture();
-
-			future.get();
-
-			Assert.assertFalse(future.isCancelled());
-			Assert.assertTrue(future.isDone());
-
-			Assert.assertEquals(logRecords.toString(), 0, logRecords.size());
-		}
-	}
-
-	@Test
-	public void testLogging() throws Exception {
-		PrintStream oldOutPrintStream = System.out;
-
-		ByteArrayOutputStream outByteArrayOutputStream =
-			new ByteArrayOutputStream();
-
-		PrintStream newOutPrintStream = new PrintStream(
-			outByteArrayOutputStream, true);
-
-		System.setOut(newOutPrintStream);
-
-		PrintStream oldErrPrintStream = System.err;
-
-		ByteArrayOutputStream errByteArrayOutputStream =
-			new ByteArrayOutputStream();
-
-		PrintStream newErrPrintStream = new PrintStream(
-			errByteArrayOutputStream, true);
-
-		System.setErr(newErrPrintStream);
-
-		File signalFile = new File("signal");
-
-		signalFile.delete();
-
-		try {
-			String logMessage = "Log Message";
-
-			final LoggingProcessCallable loggingProcessCallable =
-				new LoggingProcessCallable(logMessage, signalFile);
-
-			final AtomicReference<Exception> exceptionAtomicReference =
-				new AtomicReference<>();
-
-			Thread thread = new Thread() {
-
-				@Override
-				public void run() {
-					try {
-						ProcessChannel<Serializable> processChannel =
-							_localProcessExecutor.execute(
-								_createJPDAProcessConfig(_JPDA_OPTIONS1),
-								loggingProcessCallable);
-
-						Future<Serializable> future =
-							processChannel.getProcessNoticeableFuture();
-
-						future.get();
-
-						Assert.assertFalse(future.isCancelled());
-						Assert.assertTrue(future.isDone());
-					}
-					catch (Exception e) {
-						exceptionAtomicReference.set(e);
-					}
-				}
-
-			};
-
-			thread.start();
-
-			Assert.assertTrue(signalFile.createNewFile());
-
-			_waitForSignalFile(signalFile, false);
-
-			Assert.assertTrue(signalFile.createNewFile());
-
-			thread.join();
-
-			Exception e = exceptionAtomicReference.get();
-
-			if (e != null) {
-				throw e;
-			}
-
-			String outByteArrayOutputStreamString =
-				outByteArrayOutputStream.toString();
-
-			Assert.assertTrue(
-				outByteArrayOutputStreamString.contains(logMessage));
-
-			String errByteArrayOutputStreamString =
-				errByteArrayOutputStream.toString();
-
-			Assert.assertTrue(
-				errByteArrayOutputStreamString.contains(logMessage));
-		}
-		finally {
-			System.setOut(oldOutPrintStream);
-			System.setErr(oldErrPrintStream);
-
-			signalFile.delete();
-		}
-	}
-
-	@Test
-	public void testNonprocessCallablePipingBackProcessCallable()
+	public void testSubprocessReactorPipingBackNonProcessCallable()
 		throws Exception {
-
-		NonprocessCallablePipingBackProcessCallable
-			nonprocessCallablePipingBackProcessCallable =
-				new NonprocessCallablePipingBackProcessCallable();
 
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
@@ -1191,7 +899,7 @@ public class LocalProcessExecutorTest {
 			ProcessChannel<Serializable> processChannel =
 				_localProcessExecutor.execute(
 					_createJPDAProcessConfig(_JPDA_OPTIONS1),
-					nonprocessCallablePipingBackProcessCallable);
+					Operations.PIPING_BACK_NON_PROCESS_CALLABLE);
 
 			NoticeableFuture<Serializable> noticeableFuture =
 				processChannel.getProcessNoticeableFuture();
@@ -1217,7 +925,7 @@ public class LocalProcessExecutorTest {
 			ProcessChannel<Serializable> processChannel =
 				_localProcessExecutor.execute(
 					_createJPDAProcessConfig(_JPDA_OPTIONS1),
-					nonprocessCallablePipingBackProcessCallable);
+					Operations.PIPING_BACK_NON_PROCESS_CALLABLE);
 
 			NoticeableFuture<Serializable> noticeableFuture =
 				processChannel.getProcessNoticeableFuture();
@@ -1231,194 +939,7 @@ public class LocalProcessExecutorTest {
 	}
 
 	@Test
-	public void testProcessChannelPiping() throws Exception {
-		ReturnWithoutExitProcessCallable returnWithoutExitProcessCallable =
-			new ReturnWithoutExitProcessCallable("Premature return value");
-
-		ProcessChannel<String> processChannel = _localProcessExecutor.execute(
-			_createJPDAProcessConfig(_JPDA_OPTIONS1),
-			returnWithoutExitProcessCallable);
-
-		Future<String> resultFuture = processChannel.write(
-			new DummyReturnProcessCallable());
-
-		Assert.assertEquals(
-			DummyReturnProcessCallable.class.getName(), resultFuture.get());
-
-		PrintStream oldErrPrintStream = System.err;
-
-		ByteArrayOutputStream errByteArrayOutputStream =
-			new ByteArrayOutputStream();
-
-		PrintStream newErrPrintStream = new PrintStream(
-			errByteArrayOutputStream, true);
-
-		System.setErr(newErrPrintStream);
-
-		try {
-			Future<Serializable> exceptionFuture = processChannel.write(
-				new DummyExceptionProcessCallable());
-
-			try {
-				exceptionFuture.get();
-
-				Assert.fail();
-			}
-			catch (ExecutionException ee) {
-				Throwable throwable = ee.getCause();
-
-				Assert.assertEquals(
-					DummyExceptionProcessCallable.class.getName(),
-					throwable.getMessage());
-			}
-
-			Future<Serializable> interruptFuture = processChannel.write(
-				new InterruptProcessCallable());
-
-			try {
-				Assert.assertNull(interruptFuture.get());
-			}
-			catch (CancellationException ce) {
-			}
-		}
-		finally {
-			System.setErr(oldErrPrintStream);
-
-			String errLog = errByteArrayOutputStream.toString();
-
-			String s = StringBundler.concat(
-				"[", returnWithoutExitProcessCallable.toString(), "]",
-				String.valueOf(
-					new ProcessException(
-						DummyExceptionProcessCallable.class.getName())));
-
-			Assert.assertTrue(errLog.startsWith(s));
-		}
-
-		Future<String> processFuture =
-			processChannel.getProcessNoticeableFuture();
-
-		try {
-			Assert.fail(processFuture.get());
-		}
-		catch (ExecutionException ee) {
-			Throwable throwable = ee.getCause();
-
-			throwable = throwable.getCause();
-
-			Assert.assertSame(InterruptedException.class, throwable.getClass());
-		}
-	}
-
-	@Test
-	public void testProcessConfigDeprecatedMethods() {
-		ProcessConfig processConfig = _createJPDAProcessConfig(_JPDA_OPTIONS1);
-
-		Assert.assertArrayEquals(
-			StringUtil.split(
-				processConfig.getBootstrapClassPath(), File.pathSeparatorChar),
-			processConfig.getBootstrapClassPathElements());
-		Assert.assertArrayEquals(
-			StringUtil.split(
-				processConfig.getRuntimeClassPath(), File.pathSeparatorChar),
-			processConfig.getRuntimeClassPathElements());
-	}
-
-	@Test
-	public void testPropertyPassing() throws Exception {
-		Builder builder = new Builder();
-
-		List<String> arguments = _createArguments(_JPDA_OPTIONS1);
-
-		String propertyKey = "test-key";
-		String propertyValue = "test-value";
-
-		arguments.add(
-			StringBundler.concat("-D", propertyKey, "=", propertyValue));
-
-		builder.setArguments(arguments);
-
-		ProcessChannel<String> processChannel = _localProcessExecutor.execute(
-			builder.build(), new ReadPropertyProcessCallable(propertyKey));
-
-		Future<String> future = processChannel.getProcessNoticeableFuture();
-
-		Assert.assertEquals(propertyValue, future.get());
-		Assert.assertFalse(future.isCancelled());
-		Assert.assertTrue(future.isDone());
-	}
-
-	@Test
-	public void testReturn() throws Exception {
-		DummyReturnProcessCallable dummyReturnProcessCallable =
-			new DummyReturnProcessCallable();
-
-		ProcessChannel<String> processChannel = _localProcessExecutor.execute(
-			_createJPDAProcessConfig(_JPDA_OPTIONS1),
-			dummyReturnProcessCallable);
-
-		Future<String> future = processChannel.getProcessNoticeableFuture();
-
-		Assert.assertEquals(
-			DummyReturnProcessCallable.class.getName(), future.get());
-		Assert.assertFalse(future.isCancelled());
-		Assert.assertTrue(future.isDone());
-		Assert.assertFalse(future.cancel(true));
-	}
-
-	@Test
-	public void testReturnWithoutExit() throws Exception {
-		ReturnWithoutExitProcessCallable returnWithoutExitProcessCallable =
-			new ReturnWithoutExitProcessCallable("Premature return value");
-
-		ProcessChannel<String> processChannel = _localProcessExecutor.execute(
-			_createJPDAProcessConfig(_JPDA_OPTIONS1),
-			returnWithoutExitProcessCallable);
-
-		Future<String> future = processChannel.getProcessNoticeableFuture();
-
-		for (int i = 0; i < 10; i++) {
-			try {
-				future.get(1, TimeUnit.SECONDS);
-
-				Assert.fail();
-			}
-			catch (TimeoutException te) {
-			}
-		}
-
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					LocalProcessExecutor.class.getName(), Level.OFF)) {
-
-			Set<Process> processes = _localProcessExecutor.destroy();
-
-			Assert.assertEquals(processes.toString(), 1, processes.size());
-
-			try {
-				future.get();
-
-				Assert.fail();
-			}
-			catch (CancellationException ce) {
-				Assert.assertTrue(future.isCancelled());
-				Assert.assertTrue(future.isDone());
-			}
-
-			Iterator<Process> iterator = processes.iterator();
-
-			Process process = iterator.next();
-
-			Assert.assertTrue(process.waitFor() > 0);
-		}
-	}
-
-	@Test
-	public void testUnserializablePipingBackProcessCallable() throws Exception {
-		UnserializablePipingBackProcessCallable
-			unserializablePipingBackProcessCallable =
-				new UnserializablePipingBackProcessCallable();
-
+	public void testSubprocessReactorPipingBackWriteAborted() throws Exception {
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
 					LocalProcessExecutor.class.getName(), Level.WARNING)) {
@@ -1426,7 +947,7 @@ public class LocalProcessExecutorTest {
 			ProcessChannel<Serializable> processChannel =
 				_localProcessExecutor.execute(
 					_createJPDAProcessConfig(_JPDA_OPTIONS1),
-					unserializablePipingBackProcessCallable);
+					Operations.PIPING_BACK_WRITE_ABORTED);
 
 			NoticeableFuture<Serializable> noticeableFuture =
 				processChannel.getProcessNoticeableFuture();
@@ -1475,7 +996,7 @@ public class LocalProcessExecutorTest {
 			ProcessChannel<Serializable> processChannel =
 				_localProcessExecutor.execute(
 					_createJPDAProcessConfig(_JPDA_OPTIONS1),
-					unserializablePipingBackProcessCallable);
+					Operations.PIPING_BACK_WRITE_ABORTED);
 
 			NoticeableFuture<Serializable> noticeableFuture =
 				processChannel.getProcessNoticeableFuture();
@@ -1499,44 +1020,6 @@ public class LocalProcessExecutorTest {
 
 				Assert.assertTrue(logRecords.isEmpty());
 			}
-		}
-	}
-
-	@Test
-	public void testUnserializableProcessCallable() {
-		UnserializableProcessCallable unserializableProcessCallable =
-			new UnserializableProcessCallable();
-
-		try {
-			_localProcessExecutor.execute(
-				_createJPDAProcessConfig(_JPDA_OPTIONS1),
-				unserializableProcessCallable);
-
-			Assert.fail();
-		}
-		catch (ProcessException pe) {
-			Throwable throwable = pe.getCause();
-
-			Assert.assertTrue(throwable instanceof NotSerializableException);
-		}
-	}
-
-	@Test
-	public void testWrongJavaExecutable() {
-		try {
-			Builder builder = new Builder();
-
-			builder.setJavaExecutable("javax");
-
-			_localProcessExecutor.execute(
-				builder.build(), new DummyReturnProcessCallable());
-
-			Assert.fail();
-		}
-		catch (ProcessException pe) {
-			Throwable throwable = pe.getCause();
-
-			Assert.assertTrue(throwable instanceof IOException);
 		}
 	}
 
@@ -1588,77 +1071,140 @@ public class LocalProcessExecutorTest {
 		return builder.build();
 	}
 
-	private static Thread _getHeartbeatThread(boolean remove) {
-		AtomicReference<? extends Thread> heartbeatThreadReference =
-			ReflectionTestUtil.getFieldValue(
-				ProcessContext.class, "_heartbeatThreadReference");
+	private static Serializable _shutdown() {
+		for (Thread thread : ThreadUtil.getThreads()) {
+			if ((thread != null) && "main".equals(thread.getName())) {
+				thread.interrupt();
 
-		if (remove) {
-			return heartbeatThreadReference.getAndSet(null);
+				try {
+					thread.join();
+				}
+				catch (InterruptedException ie) {
+					ReflectionUtil.throwException(ie);
+				}
+
+				break;
+			}
 		}
-		else {
-			return heartbeatThreadReference.get();
+
+		// Force run shutdown hook to flush out code coverage data before
+		// closing ServerSocket to prevent racing condition.
+
+		try {
+			ReflectionTestUtil.invoke(
+				Class.forName("java.lang.ApplicationShutdownHooks"), "runHooks",
+				new Class<?>[0]);
 		}
+		catch (ClassNotFoundException cnfe) {
+			ReflectionUtil.throwException(cnfe);
+		}
+
+		Map<String, Object> attributes = ProcessContext.getAttributes();
+
+		while (true) {
+			ServerSocket serverSocket = (ServerSocket)attributes.get(
+				"SERVER_SOCKET");
+
+			if (serverSocket == null) {
+				continue;
+			}
+
+			try {
+				serverSocket.close();
+			}
+			catch (IOException ioe) {
+				ReflectionUtil.throwException(ioe);
+			}
+
+			break;
+		}
+
+		return null;
 	}
 
-	private static byte[] _toHeadlessSerializationData(
-			Serializable serializable)
-		throws IOException {
-
-		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-			new UnsyncByteArrayOutputStream();
-
-		try (ObjectOutputStream objectOutputStream =
-				new ObjectOutputStream(unsyncByteArrayOutputStream) {
-
-					@Override
-					protected void writeStreamHeader() {
-					}
-
-				}) {
-
-			objectOutputStream.reset();
-
-			objectOutputStream.writeUnshared(serializable);
-		}
-
-		return unsyncByteArrayOutputStream.toByteArray();
-	}
-
-	private static void _waitForSignalFile(
-			File signalFile, boolean expectedExists)
+	private void _testHearBeatThreadDetachByShutdownHook(
+			ProcessCallable<? extends Serializable>
+				shutdownHookTriggerProcessCallable,
+			ShutdownHooks.SerializableShutdownHook serializableShutdownHook)
 		throws Exception {
 
-		while (expectedExists != signalFile.exists()) {
-			Thread.sleep(100);
+		ProcessChannel<String> processChannel = _localProcessExecutor.execute(
+			_createJPDAProcessConfig(_JPDA_OPTIONS1),
+			Operations.asControllable(Operations.SLEEP));
+
+		Future<Controller> future = processChannel.write(
+			Operations.GET_CONTROLLER);
+
+		Controller parentController = future.get();
+
+		Assert.assertTrue(parentController.isAlive());
+
+		Controller childController = parentController.invoke(
+			Operations.asNewJVM(_JPDA_OPTIONS2, Operations.SLEEP));
+
+		Assert.assertTrue(childController.isAlive());
+
+		// Attach child to parent
+
+		Assert.assertTrue(
+			childController.invoke(
+				Operations.attach(serializableShutdownHook)));
+
+		Assert.assertTrue(childController.invoke(Operations.IS_ATTACHED));
+
+		// Trigger shutdown hook
+
+		childController.invoke(shutdownHookTriggerProcessCallable);
+
+		Assert.assertFalse(childController.invoke(Operations.IS_ATTACHED));
+
+		// Make sure reattach is doable
+
+		Assert.assertTrue(
+			childController.invoke(
+				Operations.attach(serializableShutdownHook)));
+
+		Assert.assertTrue(childController.invoke(Operations.IS_ATTACHED));
+
+		// Detach
+
+		Assert.assertEquals("DONE", childController.invoke(Operations.DETACH));
+
+		Assert.assertFalse(childController.invoke(Operations.IS_ATTACHED));
+
+		// Kill parent
+
+		parentController.invoke(Operations.TERMINATE);
+
+		Assert.assertFalse(parentController.isAlive());
+
+		// Kill child
+
+		childController.invoke(Operations.TERMINATE);
+
+		Assert.assertFalse(childController.isAlive());
+	}
+
+	private void _timeWaitAssertFalse(
+		String message, Supplier<Boolean> supplier, long time,
+		TimeUnit timeUnit) {
+
+		long startTime = System.currentTimeMillis();
+
+		while (timeUnit.convert(
+					System.currentTimeMillis() - startTime,
+					TimeUnit.MILLISECONDS) <
+						time) {
+
+			if (!supplier.get()) {
+				return;
+			}
 		}
-	}
 
-	private ThreadPoolExecutor _getThreadPoolExecutor() throws Exception {
-		Field field = LocalProcessExecutor.class.getDeclaredField(
-			"_threadPoolExecutor");
-
-		field.setAccessible(true);
-
-		return (ThreadPoolExecutor)field.get(_localProcessExecutor);
-	}
-
-	private ExecutorService _invokeGetThreadPoolExecutor() throws Exception {
-		Method method = LocalProcessExecutor.class.getDeclaredMethod(
-			"_getThreadPoolExecutor");
-
-		method.setAccessible(true);
-
-		return (ExecutorService)method.invoke(_localProcessExecutor);
-	}
-
-	private void _nullOutThreadPoolExecutor() throws Exception {
-		Field field = LocalProcessExecutor.class.getDeclaredField(
-			"_threadPoolExecutor");
-
-		field.setAccessible(true);
-
-		field.set(_localProcessExecutor, null);
+		Assert.fail(
+			StringBundler.concat(
+				"After waited ", String.valueOf(time), " ",
+				String.valueOf(timeUnit), ". ", message));
 	}
 
 	private static final String _JPDA_OPTIONS1 =
@@ -1667,640 +1213,165 @@ public class LocalProcessExecutorTest {
 	private static final String _JPDA_OPTIONS2 =
 		"-agentlib:jdwp=transport=dt_socket,address=8002,server=y,suspend=y";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		LocalProcessExecutorTest.class);
-
-	private static final ServerSocketConfigurator _serverSocketConfigurator =
-		new ServerSocketConfigurator() {
-
-			@Override
-			public void configure(ServerSocket serverSocket)
-				throws SocketException {
-
-				serverSocket.setReuseAddress(true);
-			}
-
-		};
-
 	private final LocalProcessExecutor _localProcessExecutor =
 		new LocalProcessExecutor();
 
-	private static class AttachChildProcessCallable1
-		implements ProcessCallable<Serializable> {
+	private static class Controller implements Serializable {
 
-		public AttachChildProcessCallable1(int serverPort) {
-			_serverPort = serverPort;
-		}
+		public <T extends Serializable> T invoke(
+			ProcessCallable<T> processCallable) {
 
-		@Override
-		public Serializable call() throws ProcessException {
-			try {
-				ServerThread serverThread = new ServerThread(
-					Thread.currentThread(), "Child Server Thread", _serverPort);
+			try (Socket socket = new Socket(
+					InetAddressUtil.getLoopbackInetAddress(), _serverPort)) {
 
-				serverThread.start();
+				ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+					socket.getOutputStream());
+
+				objectOutputStream.writeObject(processCallable);
+
+				ObjectInputStream objectInputStream = new ObjectInputStream(
+					socket.getInputStream());
+
+				return (T)objectInputStream.readObject();
 			}
 			catch (Exception e) {
-				throw new ProcessException(e);
+				return ReflectionUtil.throwException(e);
 			}
-
-			try {
-				Thread.sleep(Long.MAX_VALUE);
-			}
-			catch (InterruptedException ie) {
-			}
-
-			return null;
 		}
 
-		@Override
-		public String toString() {
-			Class<?> clazz = getClass();
+		public boolean isAlive() {
+			try {
+				return invoke(() -> true);
+			}
+			catch (Exception e) {
+				return false;
+			}
+		}
 
-			return clazz.getSimpleName();
+		private Controller(int serverPort) {
+			_serverPort = serverPort;
 		}
 
 		private static final long serialVersionUID = 1L;
 
-		private int _serverPort;
+		private final int _serverPort;
 
 	}
 
-	private static class AttachChildProcessCallable2
-		extends AttachChildProcessCallable1 {
+	private static class Operations {
 
-		public AttachChildProcessCallable2(int serverPort) {
-			super(serverPort);
-		}
+		public static final ProcessCallable<Serializable> CORRUPTED_STREAM =
+			() -> {
+				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+					new UnsyncByteArrayOutputStream();
 
-		@Override
-		public Serializable call() throws ProcessException {
-			try {
+				try (ObjectOutputStream objectOutputStream =
+						new ObjectOutputStream(unsyncByteArrayOutputStream)) {
+
+					objectOutputStream.writeObject(
+						(ProcessCallable<String>)() -> "DONE");
+				}
+				catch (Exception e) {
+					throw new ProcessException(e);
+				}
+
+				byte[] serializedData =
+					unsyncByteArrayOutputStream.toByteArray();
+
+				serializedData[5] = (byte)(serializedData[5] + 1);
+
 				try {
-					ProcessContext.attach("Child Process", 100, null);
+					FileOutputStream fileOutputStream = new FileOutputStream(
+						FileDescriptor.out);
 
-					throw new ProcessException("Shutdown hook is null");
+					fileOutputStream.write(serializedData);
+
+					fileOutputStream.flush();
 				}
-				catch (IllegalArgumentException iae) {
-				}
-
-				boolean result = ProcessContext.attach(
-					"Child Process", 100, new TestShutdownHook());
-
-				if (!result || !ProcessContext.isAttached()) {
-					throw new ProcessException("Unable to attach");
+				catch (Exception e) {
+					throw new ProcessException(e);
 				}
 
-				Thread.sleep(1000);
+				return null;
+			};
 
-				result = ProcessContext.attach(
-					"Child Process", 100, new TestShutdownHook());
-
-				if (result) {
-					throw new ProcessException("Duplicate attach");
-				}
-
-				super.call();
-			}
-			catch (Exception e) {
-				throw new ProcessException(e);
-			}
-
-			return null;
-		}
-
-		private static final long serialVersionUID = 1L;
-
-	}
-
-	private static class AttachChildProcessCallable3
-		extends AttachChildProcessCallable1 {
-
-		public AttachChildProcessCallable3(int serverPort) {
-			super(serverPort);
-		}
-
-		@Override
-		public Serializable call() throws ProcessException {
+		public static final ProcessCallable<String> DETACH = () -> {
 			try {
 				ProcessContext.detach();
-
-				boolean result = ProcessContext.attach(
-					"Child Process", Long.MAX_VALUE, new TestShutdownHook());
-
-				if (!result || !ProcessContext.isAttached()) {
-					throw new ProcessException("Unable to attach");
-				}
-
-				Thread heartbeatThread = _getHeartbeatThread(false);
-
-				while (heartbeatThread.getState() !=
-							Thread.State.TIMED_WAITING);
-
-				ProcessContext.detach();
-
-				if (ProcessContext.isAttached()) {
-					throw new ProcessException("Unable to detach");
-				}
-
-				result = ProcessContext.attach(
-					"Child Process", 100, new TestShutdownHook());
-
-				if (!result || !ProcessContext.isAttached()) {
-					throw new ProcessException("Unable to attach");
-				}
-
-				heartbeatThread = _getHeartbeatThread(true);
-
-				ReflectionTestUtil.setFieldValue(
-					heartbeatThread, "_detach", true);
-
-				heartbeatThread.join();
-
-				if (ProcessContext.isAttached()) {
-					throw new ProcessException("Unable to detach");
-				}
-
-				result = ProcessContext.attach(
-					"Child Process", 100, new TestShutdownHook());
-
-				if (!result || !ProcessContext.isAttached()) {
-					throw new ProcessException("Unable to attach");
-				}
-
-				super.call();
-			}
-			catch (Exception e) {
-				throw new ProcessException(e);
-			}
-
-			return null;
-		}
-
-		private static final long serialVersionUID = 1L;
-
-	}
-
-	private static class AttachChildProcessCallable4
-		extends AttachChildProcessCallable1 {
-
-		public AttachChildProcessCallable4(int serverPort) {
-			super(serverPort);
-		}
-
-		@Override
-		public Serializable call() throws ProcessException {
-			try {
-				boolean result = ProcessContext.attach(
-					"Child Process", Long.MAX_VALUE, new TestShutdownHook());
-
-				if (!result || !ProcessContext.isAttached()) {
-					throw new ProcessException("Unable to attach");
-				}
-
-				super.call();
-			}
-			catch (Exception e) {
-				throw new ProcessException(e);
-			}
-
-			return null;
-		}
-
-		private static final long serialVersionUID = 1L;
-
-	}
-
-	private static class AttachChildProcessCallable5
-		extends AttachChildProcessCallable1 {
-
-		public AttachChildProcessCallable5(int serverPort) {
-			super(serverPort);
-		}
-
-		@Override
-		public Serializable call() throws ProcessException {
-			try {
-				boolean result = ProcessContext.attach(
-					"Child Process", Long.MAX_VALUE,
-					new TestShutdownHook(true));
-
-				Thread heartbeatThread = _getHeartbeatThread(false);
-
-				heartbeatThread.setUncaughtExceptionHandler(
-					new UncaughtExceptionHandler() {
-
-						@Override
-						public void uncaughtException(Thread t, Throwable e) {
-
-							// Swallow unconcerned uncaught exception
-
-						}
-
-					});
-
-				if (!result || !ProcessContext.isAttached()) {
-					throw new ProcessException("Unable to attach");
-				}
-
-				super.call();
-			}
-			catch (Exception e) {
-				throw new ProcessException(e);
-			}
-
-			return null;
-		}
-
-		private static final long serialVersionUID = 1L;
-
-	}
-
-	private static class AttachChildProcessCallable6
-		extends AttachChildProcessCallable1 {
-
-		public AttachChildProcessCallable6(int serverPort) {
-			super(serverPort);
-		}
-
-		@Override
-		public Serializable call() throws ProcessException {
-			try {
-				boolean result = ProcessContext.attach(
-					"Child Process", 100, new NPEOOSShutdownHook());
-
-				if (!result || !ProcessContext.isAttached()) {
-					throw new ProcessException("Unable to attach");
-				}
-
-				super.call();
-			}
-			catch (Exception e) {
-				throw new ProcessException(e);
-			}
-
-			return null;
-		}
-
-		private static final long serialVersionUID = 1L;
-
-	}
-
-	private static class AttachParentProcessCallable
-		implements ProcessCallable<Serializable> {
-
-		public AttachParentProcessCallable(String className, int serverPort)
-			throws Exception {
-
-			_serverPort = serverPort;
-
-			_processCallableClass = (Class<ProcessCallable<?>>)Class.forName(
-				className);
-		}
-
-		@Override
-		public Serializable call() throws ProcessException {
-			Logger logger = Logger.getLogger("");
-
-			logger.setLevel(Level.FINE);
-
-			try {
-				ServerThread serverThread = new ServerThread(
-					Thread.currentThread(), "Parent Server Thread",
-					_serverPort);
-
-				serverThread.start();
-
-				Constructor<ProcessCallable<?>> constructor =
-					_processCallableClass.getConstructor(int.class);
-
-				ProcessExecutor processExecutor = new LocalProcessExecutor();
-
-				processExecutor.execute(
-					_createJPDAProcessConfig(_JPDA_OPTIONS2),
-					constructor.newInstance(_serverPort));
-			}
-			catch (Exception e) {
-				throw new ProcessException(e);
-			}
-
-			try {
-				Thread.sleep(Long.MAX_VALUE);
-			}
-			catch (InterruptedException ie) {
-			}
-
-			return null;
-		}
-
-		@Override
-		public String toString() {
-			StringBundler sb = new StringBundler(7);
-
-			Class<?> clazz = getClass();
-
-			sb.append(clazz.getSimpleName());
-
-			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append("className=");
-			sb.append(_processCallableClass.getSimpleName());
-			sb.append(", serverPort=");
-			sb.append(_serverPort);
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-
-			return sb.toString();
-		}
-
-		private static final long serialVersionUID = 1L;
-
-		private final Class<ProcessCallable<?>> _processCallableClass;
-		private int _serverPort;
-
-	}
-
-	private static class BrokenPipingProcessCallable
-		implements ProcessCallable<Serializable> {
-
-		public BrokenPipingProcessCallable() throws IOException {
-			DummyReturnProcessCallable dummyReturnProcessCallable =
-				new DummyReturnProcessCallable();
-
-			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-				new UnsyncByteArrayOutputStream();
-
-			try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-					unsyncByteArrayOutputStream)) {
-
-				objectOutputStream.writeObject(dummyReturnProcessCallable);
-			}
-
-			byte[] serializedData = unsyncByteArrayOutputStream.toByteArray();
-
-			serializedData[5] = (byte)(serializedData[5] + 1);
-
-			_brokenPipingData = serializedData;
-		}
-
-		@Override
-		public Serializable call() throws ProcessException {
-			try {
-				FileOutputStream fileOutputStream = new FileOutputStream(
-					FileDescriptor.out);
-
-				fileOutputStream.write(_brokenPipingData);
-
-				fileOutputStream.flush();
-			}
-			catch (Exception e) {
-				throw new ProcessException(e);
-			}
-
-			return null;
-		}
-
-		@Override
-		public String toString() {
-			Class<?> clazz = getClass();
-
-			return clazz.getSimpleName();
-		}
-
-		private static final long serialVersionUID = 1L;
-
-		private final byte[] _brokenPipingData;
-
-	}
-
-	private static class DummyExceptionProcessCallable
-		implements ProcessCallable<Serializable> {
-
-		@Override
-		public Serializable call() throws ProcessException {
-			throw new ProcessException(
-				DummyExceptionProcessCallable.class.getName());
-		}
-
-		@Override
-		public String toString() {
-			Class<?> clazz = getClass();
-
-			return clazz.getSimpleName();
-		}
-
-		private static final long serialVersionUID = 1L;
-
-	}
-
-	private static class DummyJob implements Callable<Void> {
-
-		public DummyJob() {
-			_countDownLatch = new CountDownLatch(1);
-		}
-
-		@Override
-		public Void call() throws Exception {
-			_countDownLatch.countDown();
-
-			Thread.sleep(Long.MAX_VALUE);
-
-			return null;
-		}
-
-		public void waitUntilStarted() throws InterruptedException {
-			_countDownLatch.await();
-		}
-
-		private final CountDownLatch _countDownLatch;
-
-	}
-
-	private static class DummyReturnProcessCallable
-		implements ProcessCallable<String> {
-
-		@Override
-		public String call() {
-			return DummyReturnProcessCallable.class.getName();
-		}
-
-		@Override
-		public String toString() {
-			Class<?> clazz = getClass();
-
-			return clazz.getSimpleName();
-		}
-
-		private static final long serialVersionUID = 1L;
-
-	}
-
-	private static class EchoPayloadProcessCallable
-		implements ProcessCallable<byte[]> {
-
-		public EchoPayloadProcessCallable(byte[] payload) {
-			_payload = payload;
-		}
-
-		@Override
-		public byte[] call() {
-			return _payload;
-		}
-
-		private final byte[] _payload;
-
-	}
-
-	private static class EchoRuntimeClassPathProcessCallable
-		implements ProcessCallable<String> {
-
-		@Override
-		public String call() {
-			Thread currentThread = Thread.currentThread();
-
-			URLClassLoader urlClassLoader =
-				(URLClassLoader)currentThread.getContextClassLoader();
-
-			URL[] urls = urlClassLoader.getURLs();
-
-			StringBundler sb = new StringBundler(urls.length * 2);
-
-			for (URL url : urls) {
-				String path = url.getPath();
-
-				int index = path.indexOf(":/");
-
-				if (index != -1) {
-					path = path.substring(index + 1);
-				}
-
-				if (path.endsWith(StringPool.SLASH)) {
-					path = path.substring(0, path.length() - 1);
-				}
-
-				sb.append(path);
-				sb.append(File.pathSeparator);
-			}
-
-			if (sb.index() > 0) {
-				sb.setIndex(sb.index() - 1);
-			}
-
-			return sb.toString();
-		}
-
-	}
-
-	private static class ExceptionPipingBackProcessCallable
-		implements ProcessCallable<Serializable> {
-
-		@Override
-		public Serializable call() throws ProcessException {
-			ProcessOutputStream processOutputStream =
-				ProcessContext.getProcessOutputStream();
-
-			try {
-				processOutputStream.writeProcessCallable(
-					new DummyExceptionProcessCallable());
-			}
-			catch (IOException ioe) {
-				throw new ProcessException(ioe);
-			}
-
-			return null;
-		}
-
-		private static final long serialVersionUID = 1L;
-
-	}
-
-	private static class GetEnviornmentProcessCallable
-		implements ProcessCallable<HashMap<String, String>> {
-
-		@Override
-		public HashMap<String, String> call() throws ProcessException {
-			return new HashMap<>(System.getenv());
-		}
-
-		private static final long serialVersionUID = 1L;
-
-	}
-
-	private static class InterruptProcessCallable
-		implements ProcessCallable<Serializable> {
-
-		@Override
-		public Serializable call() throws ProcessException {
-			BlockingQueue<Thread> threadBlockingQueue =
-				ReturnWithoutExitProcessCallable._threadBlockingQueue;
-
-			try {
-				Thread thread = threadBlockingQueue.take();
-
-				thread.interrupt();
 			}
 			catch (InterruptedException ie) {
 				throw new ProcessException(ie);
 			}
 
-			return null;
-		}
+			return "DONE";
+		};
 
-	}
+		public static final ProcessCallable<Controller> GET_CONTROLLER = () -> {
+			Map<String, Object> attributes = ProcessContext.getAttributes();
 
-	private static class KillJVMProcessCallable
-		implements ProcessCallable<Serializable> {
+			while (true) {
+				ServerSocket serverSocket = (ServerSocket)attributes.get(
+					"SERVER_SOCKET");
 
-		public KillJVMProcessCallable(int exitCode) {
-			_exitCode = exitCode;
-		}
+				if (serverSocket == null) {
+					continue;
+				}
 
-		@Override
-		public Serializable call() {
-			System.exit(_exitCode);
+				return new Controller(serverSocket.getLocalPort());
+			}
+		};
 
-			return null;
-		}
+		public static final ProcessCallable<HashMap<String, String>>
+			GET_ENVIRONMENT = () -> new HashMap<>(System.getenv());
 
-		@Override
-		public String toString() {
-			StringBundler sb = new StringBundler(5);
+		public static final ProcessCallable<String> GET_RUNTIME_CLASS_PATH =
+			() -> {
+				Thread currentThread = Thread.currentThread();
 
-			Class<?> clazz = getClass();
+				URLClassLoader urlClassLoader =
+					(URLClassLoader)currentThread.getContextClassLoader();
 
-			sb.append(clazz.getSimpleName());
+				URL[] urls = urlClassLoader.getURLs();
 
-			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append("exitCode=");
-			sb.append(_exitCode);
-			sb.append(StringPool.CLOSE_PARENTHESIS);
+				StringBundler sb = new StringBundler(urls.length * 2);
 
-			return sb.toString();
-		}
+				for (URL url : urls) {
+					String path = url.getPath();
 
-		private static final long serialVersionUID = 1L;
+					int index = path.indexOf(":/");
 
-		private final int _exitCode;
+					if (index != -1) {
+						path = path.substring(index + 1);
+					}
 
-	}
+					if (path.endsWith(StringPool.SLASH)) {
+						path = path.substring(0, path.length() - 1);
+					}
 
-	private static class LeadingLogProcessCallable
-		implements ProcessCallable<Serializable> {
+					sb.append(path);
+					sb.append(File.pathSeparator);
+				}
 
-		public LeadingLogProcessCallable(String leadingLog, String bodyLog) {
-			_leadingLog = leadingLog;
-			_bodyLog = bodyLog;
-		}
+				if (sb.index() > 0) {
+					sb.setIndex(sb.index() - 1);
+				}
 
-		@Override
-		public Serializable call() throws ProcessException {
+				return sb.toString();
+			};
+
+		public static final ProcessCallable<Boolean> IS_ATTACHED = () ->
+			ProcessContext.isAttached();
+
+		public static final ProcessCallable<String> LEADING_LOG = () -> {
 			try {
 				FileOutputStream fileOutputStream = new FileOutputStream(
 					FileDescriptor.out);
 
-				fileOutputStream.write(_leadingLog.getBytes(StringPool.UTF8));
+				fileOutputStream.write("Leading log".getBytes(StringPool.UTF8));
 
 				fileOutputStream.flush();
 
-				System.out.print(_bodyLog);
+				System.out.print("Body log");
 
 				System.out.flush();
 
@@ -2316,480 +1387,371 @@ public class LocalProcessExecutorTest {
 				throw new ProcessException(e);
 			}
 
-			return null;
-		}
+			return "DONE";
+		};
 
-		@Override
-		public String toString() {
-			StringBundler sb = new StringBundler(7);
-
-			Class<?> clazz = getClass();
-
-			sb.append(clazz.getSimpleName());
-
-			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append("leadingLog=");
-			sb.append(_leadingLog);
-			sb.append(", bodyLog=");
-			sb.append(_bodyLog);
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-
-			return sb.toString();
-		}
-
-		private static final long serialVersionUID = 1L;
-
-		private final String _bodyLog;
-		private final String _leadingLog;
-
-	}
-
-	private static class LoggingProcessCallable
-		implements ProcessCallable<Serializable> {
-
-		public LoggingProcessCallable(String logMessage, File signalFile) {
-			_logMessage = logMessage;
-			_signalFile = signalFile;
-		}
-
-		@Override
-		public Serializable call() throws ProcessException {
-			try {
-				_waitForSignalFile(_signalFile, true);
-
-				System.out.print(_logMessage);
-				System.err.print(_logMessage);
-
-				boolean result = _signalFile.delete();
-
-				if (!result) {
-					throw new ProcessException(
-						"Unable to remove file " +
-							_signalFile.getAbsolutePath());
-				}
-
-				_waitForSignalFile(_signalFile, true);
-			}
-			catch (Exception e) {
-				throw new ProcessException(e);
-			}
-
-			return null;
-		}
-
-		@Override
-		public String toString() {
-			StringBundler sb = new StringBundler(5);
-
-			Class<?> clazz = getClass();
-
-			sb.append(clazz.getSimpleName());
-
-			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append("logMessage=");
-			sb.append(_logMessage);
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-
-			return sb.toString();
-		}
-
-		private static final long serialVersionUID = 1L;
-
-		private final String _logMessage;
-		private final File _signalFile;
-
-	}
-
-	private static class NonprocessCallablePipingBackProcessCallable
-		implements ProcessCallable<Serializable> {
-
-		@Override
-		public Serializable call() throws ProcessException {
-			try {
-				synchronized (System.out) {
-					System.out.flush();
-
-					OutputStream outputStream = new FileOutputStream(
-						FileDescriptor.out);
-
-					outputStream.write(
-						_toHeadlessSerializationData(
-							"string piping back object"));
-				}
-			}
-			catch (IOException ioe) {
-				throw new ProcessException(ioe);
-			}
-
-			return null;
-		}
-
-		private static final long serialVersionUID = 1L;
-
-	}
-
-	private static class NPEOOSShutdownHook implements ShutdownHook {
-
-		public NPEOOSShutdownHook() {
-			ProcessOutputStream processOutputStream =
-				ProcessContext.getProcessOutputStream();
-
-			_oldObjectOutputStream = ReflectionTestUtil.getFieldValue(
-				processOutputStream, "_objectOutputStream");
-
-			_thread = Thread.currentThread();
-		}
-
-		@Override
-		public boolean shutdown(int shutdownCode, Throwable shutdownError) {
-			try {
+		public static final ProcessCallable<Serializable>
+			PIPING_BACK_EXCEPTION_PROCESS_CALLABLE = () -> {
 				ProcessOutputStream processOutputStream =
 					ProcessContext.getProcessOutputStream();
 
-				ReflectionTestUtil.setFieldValue(
-					processOutputStream, "_objectOutputStream",
-					_oldObjectOutputStream);
-			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
-			}
-
-			_thread.interrupt();
-
-			return true;
-		}
-
-		private final ObjectOutputStream _oldObjectOutputStream;
-		private Thread _thread;
-
-	}
-
-	private static class ReadPropertyProcessCallable
-		implements ProcessCallable<String> {
-
-		public ReadPropertyProcessCallable(String propertyKey) {
-			_propertyKey = propertyKey;
-		}
-
-		@Override
-		public String call() {
-			return System.getProperty(_propertyKey);
-		}
-
-		@Override
-		public String toString() {
-			StringBundler sb = new StringBundler(5);
-
-			Class<?> clazz = getClass();
-
-			sb.append(clazz.getSimpleName());
-
-			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append("propertyKey=");
-			sb.append(_propertyKey);
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-
-			return sb.toString();
-		}
-
-		private static final long serialVersionUID = 1L;
-
-		private final String _propertyKey;
-
-	}
-
-	private static class ReturnWithoutExitProcessCallable
-		implements ProcessCallable<String> {
-
-		public ReturnWithoutExitProcessCallable(String returnValue) {
-			_returnValue = returnValue;
-		}
-
-		@Override
-		public String call() throws ProcessException {
-			try {
-				ProcessOutputStream processOutputStream =
-					ProcessContext.getProcessOutputStream();
-
-				// Forcibly write a premature ReturnProcessCallable
-
-				processOutputStream.writeProcessCallable(
-					new ReturnProcessCallable<String>(_returnValue));
-
-				_threadBlockingQueue.put(Thread.currentThread());
-
-				Thread.sleep(Long.MAX_VALUE);
-			}
-			catch (Exception e) {
-				throw new ProcessException(e);
-			}
-
-			return null;
-		}
-
-		@Override
-		public String toString() {
-			StringBundler sb = new StringBundler(5);
-
-			Class<?> clazz = getClass();
-
-			sb.append(clazz.getSimpleName());
-
-			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append("returnValue=");
-			sb.append(_returnValue);
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-
-			return sb.toString();
-		}
-
-		private static final BlockingQueue<Thread> _threadBlockingQueue =
-			new SynchronousQueue<>();
-		private static final long serialVersionUID = 1L;
-
-		private final String _returnValue;
-
-	}
-
-	private static class RuntimeExceptionProcessCallable
-		implements ProcessCallable<Serializable> {
-
-		@Override
-		public Serializable call() {
-			throw new RuntimeException(
-				RuntimeExceptionProcessCallable.class.getName());
-		}
-
-		@Override
-		public String toString() {
-			Class<?> clazz = getClass();
-
-			return clazz.getSimpleName();
-		}
-
-		private static final long serialVersionUID = 1L;
-
-	}
-
-	private static class ServerThread extends Thread {
-
-		public static void exit(Socket socket) throws Exception {
-			InputStream inputStream = socket.getInputStream();
-			OutputStream outputStream = socket.getOutputStream();
-
-			outputStream.write(_CODE_EXIT);
-
-			socket.shutdownOutput();
-
-			int code = inputStream.read();
-
-			Assert.assertEquals(-1, code);
-
-			socket.close();
-		}
-
-		public static void interruptHeartbeatThread(Socket socket)
-			throws Exception {
-
-			InputStream inputStream = socket.getInputStream();
-			OutputStream outputStream = socket.getOutputStream();
-
-			outputStream.write(_CODE_INTERRUPT);
-
-			socket.shutdownOutput();
-
-			int code = inputStream.read();
-
-			Assert.assertEquals(-1, code);
-
-			socket.close();
-		}
-
-		public static boolean isAlive(Socket socket) {
-			try {
-				InputStream inputStream = socket.getInputStream();
-				OutputStream outputStream = socket.getOutputStream();
-
-				outputStream.write(_CODE_ECHO);
-
-				outputStream.flush();
-
-				if (inputStream.read() == _CODE_ECHO) {
-					return true;
+				try {
+					processOutputStream.writeProcessCallable(
+						() -> {
+							throw new ProcessException(
+								"Exception ProcessCallable");
+						});
 				}
-				else {
-					return false;
+				catch (IOException ioe) {
+					throw new ProcessException(ioe);
 				}
-			}
-			catch (Exception e) {
-				return false;
-			}
-		}
 
-		public static void nullOutOOS(Socket socket) throws Exception {
-			InputStream inputStream = socket.getInputStream();
-			OutputStream outputStream = socket.getOutputStream();
+				return null;
+			};
 
-			outputStream.write(_CODE_NULL_OUT_OOS);
-			outputStream.flush();
+		public static final ProcessCallable<Serializable>
+			PIPING_BACK_NON_PROCESS_CALLABLE = () -> {
+				try {
+					UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+						new UnsyncByteArrayOutputStream();
 
-			int code = inputStream.read();
+					try (ObjectOutputStream objectOutputStream =
+							new ObjectOutputStream(
+								unsyncByteArrayOutputStream) {
 
-			Assert.assertEquals(
-				"Unable to null out OOS because of code " + code,
-				_CODE_NULL_OUT_OOS, code);
-		}
+								@Override
+								protected void writeStreamHeader() {
+								}
 
-		public ServerThread(Thread mainThread, String name, int serverPort)
-			throws Exception {
+							}) {
 
-			_mainThread = mainThread;
-			_socket = new Socket(
-				InetAddressUtil.getLoopbackInetAddress(), serverPort);
+						objectOutputStream.reset();
 
-			setName(name);
-		}
+						objectOutputStream.writeUnshared(
+							"string piping back object");
+					}
 
-		@Override
-		public void run() {
-			try {
-				InputStream inputStream = _socket.getInputStream();
-				OutputStream outputStream = _socket.getOutputStream();
+					synchronized (System.out) {
+						System.out.flush();
 
-				int command = 0;
+						OutputStream outputStream = new FileOutputStream(
+							FileDescriptor.out);
 
-				while (((command = inputStream.read()) != -1) &&
-					   _mainThread.isAlive()) {
-
-					switch (command) {
-						case _CODE_ECHO :
-							outputStream.write(_CODE_ECHO);
-
-							outputStream.flush();
-
-							break;
-
-						case _CODE_EXIT :
-
-							break;
-
-						case _CODE_INTERRUPT :
-							Thread heartbeatThread = _getHeartbeatThread(false);
-
-							heartbeatThread.interrupt();
-							heartbeatThread.join();
-
-							break;
-
-						case _CODE_NULL_OUT_OOS :
-							ReflectionTestUtil.setFieldValue(
-								ProcessContext.getProcessOutputStream(),
-								"_objectOutputStream", null);
-
-							outputStream.write(_CODE_NULL_OUT_OOS);
-
-							outputStream.flush();
-
-							break;
+						outputStream.write(
+							unsyncByteArrayOutputStream.toByteArray());
 					}
 				}
-			}
-			catch (Exception e) {
-			}
-			finally {
-				try {
-					_socket.close();
+				catch (IOException ioe) {
+					throw new ProcessException(ioe);
+				}
 
-					_mainThread.interrupt();
-					_mainThread.join();
+				return null;
+			};
+
+		public static final ProcessCallable<Serializable>
+			PIPING_BACK_WRITE_ABORTED = () -> {
+				ProcessOutputStream processOutputStream =
+					ProcessContext.getProcessOutputStream();
+
+				try {
+					Object obj = new Object();
+
+					processOutputStream.writeProcessCallable(
+						() -> (Serializable)obj);
+				}
+				catch (IOException ioe) {
+					throw new ProcessException(ioe);
+				}
+
+				return null;
+			};
+
+		public static final ProcessCallable<Serializable>
+			SHUTDOWN_HOOK_TRIGGER_BROKEN_PIPE = () -> {
+				AtomicReference<? extends Thread> heartbeatThreadReference =
+					ReflectionTestUtil.getFieldValue(
+						ProcessContext.class, "_heartbeatThreadReference");
+
+				Thread heartBeatThread = heartbeatThreadReference.get();
+
+				ProcessOutputStream processOutputStream =
+					ProcessContext.getProcessOutputStream();
+
+				ObjectOutputStream objectOutputStream =
+					ReflectionTestUtil.getFieldValue(
+						processOutputStream, "_objectOutputStream");
+
+				try {
+					ReflectionTestUtil.setFieldValue(
+						processOutputStream, "_objectOutputStream",
+						new ObjectOutputStream(
+							new UnsyncByteArrayOutputStream()) {
+
+							@Override
+							public void flush() throws IOException {
+								ReflectionTestUtil.setFieldValue(
+									processOutputStream, "_objectOutputStream",
+									objectOutputStream);
+
+								throw new IOException();
+							}
+
+						});
+				}
+				catch (IOException ioe) {
+					throw new ProcessException(ioe);
+				}
+
+				try {
+					heartBeatThread.join();
+				}
+				catch (InterruptedException ie) {
+					throw new ProcessException(ie);
+				}
+
+				return null;
+			};
+
+		public static final ProcessCallable<Serializable>
+			SHUTDOWN_HOOK_TRIGGER_INTERRUPTION = () -> {
+				AtomicReference<? extends Thread> heartbeatThreadReference =
+					ReflectionTestUtil.getFieldValue(
+						ProcessContext.class, "_heartbeatThreadReference");
+
+				Thread heartBeatThread = heartbeatThreadReference.get();
+
+				heartBeatThread.interrupt();
+
+				try {
+					heartBeatThread.join();
+				}
+				catch (InterruptedException ie) {
+					throw new ProcessException(ie);
+				}
+
+				return null;
+			};
+
+		public static final ProcessCallable<Serializable>
+			SHUTDOWN_HOOK_TRIGGER_UNKNOWN = () -> {
+				AtomicReference<? extends Thread> heartbeatThreadReference =
+					ReflectionTestUtil.getFieldValue(
+						ProcessContext.class, "_heartbeatThreadReference");
+
+				Thread heartBeatThread = heartbeatThreadReference.get();
+
+				ProcessOutputStream processOutputStream =
+					ProcessContext.getProcessOutputStream();
+
+				ObjectOutputStream objectOutputStream =
+					ReflectionTestUtil.getFieldValue(
+						processOutputStream, "_objectOutputStream");
+
+				try {
+					ReflectionTestUtil.setFieldValue(
+						processOutputStream, "_objectOutputStream",
+						new ObjectOutputStream(
+							new UnsyncByteArrayOutputStream()) {
+
+							@Override
+							public void flush() {
+								ReflectionTestUtil.setFieldValue(
+									processOutputStream, "_objectOutputStream",
+									objectOutputStream);
+
+								throw new NullPointerException();
+							}
+
+						});
+				}
+				catch (IOException ioe) {
+					throw new ProcessException(ioe);
+				}
+
+				try {
+					heartBeatThread.join();
+				}
+				catch (InterruptedException ie) {
+					throw new ProcessException(ie);
+				}
+
+				return null;
+			};
+
+		public static final ProcessCallable<String> SLEEP = () -> {
+			try {
+				Thread.sleep(Long.MAX_VALUE);
+			}
+			catch (InterruptedException ie) {
+			}
+
+			return "DONE";
+		};
+
+		public static final ProcessCallable<Serializable> TERMINATE =
+			LocalProcessExecutorTest::_shutdown;
+
+		public static <T extends Serializable> ProcessCallable<T>
+			asControllable(ProcessCallable<T> processCallable) {
+
+			return () -> {
+				Map<String, Object> attributes = ProcessContext.getAttributes();
+
+				try {
+					ServerSocketChannel serverSocketChannel =
+						SocketUtil.createServerSocketChannel(
+							InetAddressUtil.getLoopbackInetAddress(), 12342,
+							serverSocket -> serverSocket.setReuseAddress(true));
+
+					ServerSocket serverSocket = serverSocketChannel.socket();
+
+					attributes.put("SERVER_SOCKET", serverSocket);
+
+					Thread serverThread = new Thread(
+						() -> {
+							while (true) {
+								try (Socket socket = serverSocket.accept()) {
+									ObjectInputStream objectInputStream =
+										new ObjectInputStream(
+											socket.getInputStream());
+
+									ProcessCallable<Serializable>
+										requestProcessCallable =
+											(ProcessCallable<Serializable>)
+												objectInputStream.readObject();
+
+									ObjectOutputStream objectOutputStream =
+										new ObjectOutputStream(
+											socket.getOutputStream());
+
+									objectOutputStream.writeObject(
+										requestProcessCallable.call());
+								}
+								catch (ClosedChannelException cce) {
+									return;
+								}
+								catch (Exception e) {
+									e.printStackTrace();
+
+									System.exit(10);
+								}
+							}
+						},
+						processCallable.toString() + "-Controller-Server");
+
+					serverThread.start();
+
+					return processCallable.call();
+				}
+				catch (IOException ioe) {
+					throw new ProcessException(ioe);
+				}
+			};
+		}
+
+		public static ProcessCallable<Controller> asNewJVM(
+			String jpdaOption, ProcessCallable<?> processCallable) {
+
+			return () -> {
+				ProcessExecutor processExecutor = new LocalProcessExecutor();
+
+				try {
+					ProcessChannel<?> processChannel = processExecutor.execute(
+						_createJPDAProcessConfig(jpdaOption),
+						asControllable(processCallable));
+
+					Future<Controller> childControllerFuture =
+						processChannel.write(Operations.GET_CONTROLLER);
+
+					return childControllerFuture.get();
 				}
 				catch (Exception e) {
+					throw new ProcessException(e);
 				}
-			}
+			};
 		}
 
-		private static final int _CODE_ECHO = 1;
+		public static ProcessCallable<Boolean> attach(
+			ShutdownHook shutdownHook) {
 
-		private static final int _CODE_EXIT = 2;
+			return () -> ProcessContext.attach(
+				"Child Process", 1, shutdownHook);
+		}
 
-		private static final int _CODE_INTERRUPT = 3;
+		public static ProcessCallable<Serializable> crashJVM(int exitCode) {
+			return () -> {
+				System.exit(exitCode);
 
-		private static final int _CODE_NULL_OUT_OOS = 4;
-
-		private final Thread _mainThread;
-		private final Socket _socket;
+				return null;
+			};
+		}
 
 	}
 
-	private static class TestShutdownHook implements ShutdownHook {
+	private static class ShutdownHooks {
 
-		public TestShutdownHook() {
-			this(false);
+		public static final SerializableShutdownHook
+			DETACH_ON_BROKEN_PIPE_SHUTDOWN_HOOK =
+				(shutdownCode, shutdownThrowable) -> {
+					if ((shutdownCode == ShutdownHook.BROKEN_PIPE_CODE) &&
+						(shutdownThrowable instanceof IOException)) {
+
+						_unregisterHeartBeatThread();
+
+						return true;
+					}
+
+					return false;
+				};
+
+		public static final SerializableShutdownHook
+			DETACH_ON_INTERRUPTION_SHUTDOWN_HOOK =
+				(shutdownCode, shutdownThrowable) -> {
+					if ((shutdownCode == ShutdownHook.INTERRUPTION_CODE) &&
+						(shutdownThrowable.getClass() ==
+							InterruptedException.class)) {
+
+						_unregisterHeartBeatThread();
+
+						return true;
+					}
+
+					return false;
+				};
+
+		public static final SerializableShutdownHook
+			DETACH_ON_UNKNOWN_SHUTDOWN_HOOK =
+				(shutdownCode, shutdownThrowable) -> {
+					if ((shutdownCode == ShutdownHook.UNKNOWN_CODE) &&
+						!(shutdownThrowable instanceof InterruptedException) &&
+						!(shutdownThrowable instanceof IOException)) {
+
+						_unregisterHeartBeatThread();
+
+						return true;
+					}
+
+					return false;
+				};
+
+		public static final SerializableShutdownHook TERMINATE_SHUTDOWN_HOOK =
+			(shutdownCode, shutdownThrowable) -> {
+				_shutdown();
+
+				return true;
+			};
+
+		private static void _unregisterHeartBeatThread() {
+			AtomicReference<? extends Thread> heartbeatThreadReference =
+				ReflectionTestUtil.getFieldValue(
+					ProcessContext.class, "_heartbeatThreadReference");
+
+			heartbeatThreadReference.set(null);
 		}
 
-		public TestShutdownHook(boolean failToShutdown) {
-			_failToShutdown = failToShutdown;
-			_thread = Thread.currentThread();
+		private interface SerializableShutdownHook
+			extends Serializable, ShutdownHook {
 		}
-
-		@Override
-		public boolean shutdown(int shutdownCode, Throwable shutdownThrowable) {
-			_thread.interrupt();
-
-			if (_failToShutdown) {
-				throw new RuntimeException();
-			}
-
-			return true;
-		}
-
-		private final boolean _failToShutdown;
-		private Thread _thread;
-
-	}
-
-	private static class UnserializablePipingBackProcessCallable
-		implements ProcessCallable<Serializable> {
-
-		@Override
-		public Serializable call() throws ProcessException {
-			ProcessOutputStream processOutputStream =
-				ProcessContext.getProcessOutputStream();
-
-			try {
-				processOutputStream.writeProcessCallable(
-					new UnserializableProcessCallable());
-			}
-			catch (IOException ioe) {
-				throw new ProcessException(ioe);
-			}
-
-			return null;
-		}
-
-		private static final long serialVersionUID = 1L;
-
-	}
-
-	private static class UnserializableProcessCallable
-		implements ProcessCallable<Serializable> {
-
-		@Override
-		public Serializable call() {
-			return UnserializableProcessCallable.class.getName();
-		}
-
-		@Override
-		public String toString() {
-			Class<?> clazz = getClass();
-
-			return clazz.getSimpleName();
-		}
-
-		private static final long serialVersionUID = 1L;
-
-		@SuppressWarnings("unused")
-		private Object _unserializableObject = new Object();
 
 	}
 

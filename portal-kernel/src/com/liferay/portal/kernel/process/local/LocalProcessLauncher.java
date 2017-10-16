@@ -315,6 +315,11 @@ public class LocalProcessLauncher {
 						shutdownCode, shutdownThrowable);
 				}
 			}
+
+			AtomicReference<HeartbeatThread> heartBeatThreadReference =
+				ProcessContext._heartbeatThreadReference;
+
+			heartBeatThreadReference.compareAndSet(this, null);
 		}
 
 		private volatile boolean _detach;

@@ -133,7 +133,15 @@ public class UnsyncStringReader extends Reader {
 	}
 
 	@Override
-	public long skip(long skip) {
+	public long skip(long skip) throws IOException {
+		if (skip < 0) {
+			throw new IllegalArgumentException("skip value is negative");
+		}
+
+		if (string == null) {
+			throw new IOException("String is null");
+		}
+
 		if (index >= stringLength) {
 			return 0;
 		}

@@ -14,6 +14,8 @@
 
 package com.liferay.petra.io.unsync;
 
+import com.liferay.petra.string.StringBundler;
+
 import java.io.IOException;
 import java.io.Writer;
 
@@ -83,6 +85,22 @@ public class UnsyncBufferedWriter extends Writer {
 	public void write(char[] chars, int offset, int length) throws IOException {
 		if (writer == null) {
 			throw new IOException("Writer is null");
+		}
+
+		if ((offset < 0) || (offset > chars.length) || (length < 0) ||
+			((offset + length) > chars.length) || ((offset + length) < 0)) {
+
+			StringBundler sb = new StringBundler(7);
+
+			sb.append("{chars.length=");
+			sb.append(chars.length);
+			sb.append(", offset=");
+			sb.append(offset);
+			sb.append(", length=");
+			sb.append(length);
+			sb.append("}");
+
+			throw new IndexOutOfBoundsException(sb.toString());
 		}
 
 		if (length >= size) {

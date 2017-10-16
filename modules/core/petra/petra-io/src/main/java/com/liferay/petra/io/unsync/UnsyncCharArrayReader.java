@@ -14,6 +14,8 @@
 
 package com.liferay.petra.io.unsync;
 
+import com.liferay.petra.string.StringBundler;
+
 import java.io.IOException;
 import java.io.Reader;
 
@@ -81,8 +83,20 @@ public class UnsyncCharArrayReader extends Reader {
 			throw new IOException("Stream closed");
 		}
 
-		if (length <= 0) {
-			return 0;
+		if ((offset < 0) || (offset > chars.length) || (length < 0) ||
+			((offset + length) > chars.length) || ((offset + length) < 0)) {
+
+			StringBundler sb = new StringBundler(7);
+
+			sb.append("{chars.length=");
+			sb.append(chars.length);
+			sb.append(", offset=");
+			sb.append(offset);
+			sb.append(", length=");
+			sb.append(length);
+			sb.append("}");
+
+			throw new IndexOutOfBoundsException(sb.toString());
 		}
 
 		if (index >= capacity) {
@@ -159,7 +173,7 @@ public class UnsyncCharArrayReader extends Reader {
 		}
 
 		if (skip < 0) {
-			return 0;
+			throw new IllegalArgumentException("skip value is negative");
 		}
 
 		if ((index + skip) > capacity) {

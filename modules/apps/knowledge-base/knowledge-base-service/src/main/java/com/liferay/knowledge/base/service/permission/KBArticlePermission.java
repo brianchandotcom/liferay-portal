@@ -14,13 +14,17 @@
 
 package com.liferay.knowledge.base.service.permission;
 
+import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.PropsValues;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -54,8 +58,41 @@ public class KBArticlePermission implements BaseModelPermissionChecker {
 	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, KBArticle kbArticle,
-		String actionId) {
+			PermissionChecker permissionChecker, KBArticle kbArticle,
+			String actionId)
+		throws PortalException {
+
+		if (actionId.equals(ActionKeys.VIEW) &&
+			PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
+
+			long parentResourceClassNameId =
+				kbArticle.getParentResourceClassNameId();
+			long parentResourcePrimKey = kbArticle.getParentResourcePrimKey();
+
+			long kbFolderClassNameId = PortalUtil.getClassNameId(
+				KBFolderConstants.getClassName());
+
+			if ((parentResourcePrimKey ==
+					KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) ||
+				(parentResourceClassNameId == kbFolderClassNameId)) {
+
+				if (!KBFolderPermission.contains(
+						permissionChecker, kbArticle.getGroupId(),
+						parentResourcePrimKey, actionId)) {
+
+					return false;
+				}
+			}
+			else {
+				KBArticle parentKBArticle =
+					KBArticleLocalServiceUtil.getKBArticle(
+						parentResourcePrimKey);
+
+				if (!contains(permissionChecker, parentKBArticle, actionId)) {
+					return false;
+				}
+			}
+		}
 
 		if (permissionChecker.hasOwnerPermission(
 				kbArticle.getCompanyId(), KBArticle.class.getName(),

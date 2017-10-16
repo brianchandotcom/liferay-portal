@@ -63,12 +63,10 @@ public class FlagsTag extends TemplateRendererTag {
 
 			putValue("companyName", "Company name");
 
-			String className = (String)context.get("className");
-			long classPK = (Long)context.get("classPK");
-
-			putValue("data", _getDataJSONObject(context, className, classPK));
-
 			putValue("flagsEnabled", _isFlagsEnabled(themeDisplay));
+
+			putValue("formData", _getDataJSONObject(context));
+
 			putValue("id", randomNamespace + "id");
 
 			putValue("enabled", enabled);
@@ -83,14 +81,14 @@ public class FlagsTag extends TemplateRendererTag {
 			putValue("message", message);
 
 			putValue(
-				"portletNamespace",
-				PortalUtil.getPortletNamespace(PortletKeys.FLAGS));
-
-			putValue(
 				"pathTermsOfUse",
 				themeDisplay.getPathMain() + "/portal/terms_of_use");
 
 			putValue("pathThemeImages", themeDisplay.getPathThemeImages());
+
+			putValue(
+				"portletNamespace",
+				PortalUtil.getPortletNamespace(PortletKeys.FLAGS));
 
 			boolean signedIn = themeDisplay.isSignedIn();
 
@@ -186,15 +184,13 @@ public class FlagsTag extends TemplateRendererTag {
 		return currentURL;
 	}
 
-	private JSONObject _getDataJSONObject(
-		Map<String, Object> context, String className, long classPK) {
-
+	private JSONObject _getDataJSONObject(Map<String, Object> context) {
 		String namespace = PortalUtil.getPortletNamespace(PortletKeys.FLAGS);
 
 		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject();
 
-		dataJSONObject.put(namespace + "className", className);
-		dataJSONObject.put(namespace + "classPK", classPK);
+		dataJSONObject.put(namespace + "className", context.get("className"));
+		dataJSONObject.put(namespace + "classPK", context.get("classPK"));
 		dataJSONObject.put(
 			namespace + "contentTitle", context.get("contentTitle"));
 		dataJSONObject.put(namespace + "contentURL", _getCurrentURL());

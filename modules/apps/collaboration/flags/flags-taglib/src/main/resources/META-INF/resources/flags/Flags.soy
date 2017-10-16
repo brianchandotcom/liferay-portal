@@ -90,13 +90,13 @@
 		{/let}
 
 		{if $enabled}
-			<button aria-label="{$message}" class="btn btn-link" data-onclick="_handleFlagButtonClick">
+			<button aria-label="{$message}" class="btn btn-link" data-onclick="_handleFlagButtonClick" type="button">
 				{$icon}
 			</button>
 		{else}
 			{$icon}
 		{/if}
-		
+
 		{let $spanAttributes kind="attributes"}
 			class="taglib-text
 				{if not $label}
@@ -130,112 +130,47 @@
 
 	{call Modal.render}
 		{param body kind="html"}
-			{call .reportDialogBody}
-				{param _handleReasonChange: $_handleReasonChange /}
-				{param _selectedReason: $_selectedReason /}
-				{param _showConfirmationMessage: $_showConfirmationMessage /}
-				{param _showErrorMessage: $_showErrorMessage /}
-				{param companyName: $companyName /}
-				{param flagsEnabled: $flagsEnabled /}
-				{param pathTermsOfUse: $pathTermsOfUse /}
-				{param pathThemeImages: $pathThemeImages /}
-				{param portletNamespace: $portletNamespace /}
-				{param reasons: $reasons /}
-				{param reporterEmailAddress: $reporterEmailAddress /}
-				{param signedIn: $signedIn /}
-			{/call}
+			{if $flagsEnabled}
+				{if $_showErrorMessage}
+					{call .errorMessage /}
+				{elseif $_showConfirmationMessage}
+					{call .confirmationMessage}
+						{param companyName: $companyName /}
+					{/call}
+				{else}
+					{call .reportForm}
+						{param _handleReasonChange: $_handleReasonChange /}
+						{param _selectedReason: $_selectedReason /}
+						{param pathTermsOfUse: $pathTermsOfUse /}
+						{param pathThemeImages: $pathThemeImages /}
+						{param portletNamespace: $portletNamespace /}
+						{param reasons: $reasons /}
+						{param reporterEmailAddress: $reporterEmailAddress /}
+						{param signedIn: $signedIn /}
+					{/call}
+				{/if}
+			{else}
+				<p>{msg desc=""}please-sign-in-to-flag-this-as-inappropriate{/msg}</p>
+			{/if}
 		{/param}
 
+		{param events: [ 'hide': $_handleCloseDialogClick] /}
+
 		{param footer kind="html"}
-			{let $showCloseButton: $_showConfirmationMessage or $_showErrorMessage or (not $signedIn and not $flagsEnabled) /}
-
-			{let $reportButtonClasses kind="text"}
-				btn btn-primary
-				{if $showCloseButton}
-					{sp}hide
-				{/if}
-			{/let}
-
-			<button class="{$reportButtonClasses}" data-onclick="{$_handleReportButtonClick}" type="button">{msg desc=""}report{/msg}</button>
-
-			{let $cancelButtonClasses kind="text"}
-				btn btn-link
-				{if $showCloseButton}
-					{sp}hide
-				{/if}
-			{/let}
-
-			<button class="{$cancelButtonClasses}" data-onclick="{$_handleCloseDialogClick}" type="button">{msg desc=""}cancel{/msg}</button>
-
-			{let $closeButtonClasses kind="text"}
-				btn btn-default
-				{if not $showCloseButton}
-					{sp}hide
-				{/if}
-			{/let}
-
-			<button class="{$closeButtonClasses}" data-onclick="{$_handleCloseDialogClick}" type="button">{msg desc=""}close{/msg}</button>
+			{if not ($_showConfirmationMessage or $_showErrorMessage or (not $signedIn and not $flagsEnabled))}
+				<button class="btn btn-primary" data-onclick="{$_handleReportButtonClick}" type="button">{msg desc=""}report{/msg}</button>
+				<button class="btn btn-link" data-onclick="hide" type="button">{msg desc=""}cancel{/msg}</button>
+			{else}
+				<button class="btn btn-default" data-onclick="hide" type="button">{msg desc=""}close{/msg}</button>
+			{/if}
 		{/param}
 
 		{param header kind="html"}
-			{let $buttonAttributes kind="attributes"}
-				aria-label="{msg desc=""}close{/msg}"
-				class="close"
-				data-onclick="{$_handleCloseDialogClick}"
-				type="button"
-			{/let}
-
-			<button {$buttonAttributes}>
-				<span aria-hidden="true">X</span>
-			</button>
-
 			{msg desc=""}report-inappropriate-content{/msg}
 		{/param}
 
-		{param noCloseButton: true /}
 		{param ref:'modal' /}
 	{/call}
-{/template}
-
-/**
- * Prints the modal body.
- */
-{template .reportDialogBody}
-	{@param companyName: string}
-	{@param flagsEnabled: bool}
-	{@param pathTermsOfUse: string}
-	{@param pathThemeImages: string}
-	{@param portletNamespace: string}
-	{@param reasons: list<string>}
-	{@param signedIn: bool}
-	{@param? _handleReasonChange: any}
-	{@param? _selectedReason: string}
-	{@param? _showConfirmationMessage: bool}
-	{@param? _showErrorMessage: bool}
-	{@param? reporterEmailAddress: string}
-
-	{if $flagsEnabled}
-		{if $_showErrorMessage}
-			{call .showError /}
-		{elseif $_showConfirmationMessage}
-			{call .showConfirmation}
-				{param companyName: $companyName /}
-			{/call}
-		{else}
-			{call .reportForm}
-				{param _handleReasonChange: $_handleReasonChange /}
-				{param _selectedReason: $_selectedReason /}
-				{param pathTermsOfUse: $pathTermsOfUse /}
-				{param pathThemeImages: $pathThemeImages /}
-				{param portletNamespace: $portletNamespace /}
-				{param reasons: $reasons /}
-				{param reporterEmailAddress: $reporterEmailAddress /}
-				{param signedIn: $signedIn /}
-			{/call}
-		{/if}
-	{else}
-		<p>{msg desc=""}please-sign-in-to-flag-this-as-inappropriate{/msg}</p>
-	{/if}
 {/template}
 
 /**
@@ -304,9 +239,9 @@
 {/template}
 
 /**
- * Shows a confirmation message if the request was successfully sent.
+ * Prints a confirmation message.
  */
-{template .showConfirmation}
+{template .confirmationMessage}
 	{@param companyName: string}
 
 	<p>
@@ -319,9 +254,9 @@
 {/template}
 
 /**
- * Shows an error message if the request has failed.
+ * Prints an error message.
  */
-{template .showError}
+{template .errorMessage}
 	<p>
 		<strong>{msg desc=""}an-error-occurred-while-sending-the-report-please-try-again-in-a-few-minutes{/msg}</strong>
 	</p>

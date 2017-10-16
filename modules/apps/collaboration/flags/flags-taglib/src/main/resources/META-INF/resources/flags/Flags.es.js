@@ -15,10 +15,8 @@ class Flags extends PortletBase {
 	/**
 	 * @inheritDoc
 	 */
-	attached() {
-		this._reportDialogOpen = false;
-		this._showConfirmationMessage = false;
-		this._showErrorMessage = false;
+	created() {
+		this.namespace = this.portletNamespace;
 	}
 
 	/**
@@ -79,13 +77,13 @@ class Flags extends PortletBase {
 	 * @protected
 	 */
 	_sendReport() {
-		this.data[this.ns('reason')] = this._getReason();
-		this.data[this.ns('reporterEmailAddress')] = this.refs.modal.refs.reporterEmailAddress.value;
+		this.formData[this.ns('reason')] = this._getReason();
+		this.formData[this.ns('reporterEmailAddress')] = this.refs.modal.refs.reporterEmailAddress.value;
 
 		let formData = new FormData();
 
-		for (let name in this.data) {
-			formData.append(name, this.data[name]);
+		for (let name in this.formData) {
+			formData.append(name, this.formData[name]);
 		}
 
 		fetch(this.uri, {
@@ -112,6 +110,33 @@ class Flags extends PortletBase {
  */
 Flags.STATE = {
 	/**
+	 * Flag to indicate if dialog should be open.
+	 * @default false
+	 * @instance
+	 * @memberof Flags
+	 * @type {Boolean}
+	 */
+	_reportDialogOpen: Config.bool().internal().value(false),
+
+	/**
+	 * Flag to indicate if dialog should show the confirmation message.
+	 * @default false
+	 * @instance
+	 * @memberof Flags
+	 * @type {Boolean}
+	 */
+	_showConfirmationMessage: Config.bool().internal().value(false),
+
+	/**
+	 * Flag to indicate if dialog should show the error message.
+	 * @default false
+	 * @instance
+	 * @memberof Flags
+	 * @type {Boolean}
+	 */
+	_showErrorMessage: Config.bool().internal().value(false),
+
+	/**
 	 * Selected reason to flag.
 	 * @instance
 	 * @memberof Flags
@@ -128,21 +153,13 @@ Flags.STATE = {
 	companyName: Config.string().required(),
 
 	/**
-	 * Portlet's data.
+	 * CSS classes to be applied to the element.
 	 * @instance
 	 * @memberof Flags
-	 * @type {!Object}
+	 * @type {?string}
+	 * @default undefined
 	 */
-	data: Config.object().required(),
-
-  /**
-   * CSS classes to be applied to the element.
-   * @instance
-   * @memberof Flags
-   * @type {?string}
-   * @default undefined
-   */
-  elementClasses: Config.string(),
+	elementClasses: Config.string(),
 
 	/**
 	 * Whether the form to flag is enabled or not.
@@ -159,6 +176,14 @@ Flags.STATE = {
 	 * @type {!Boolean}
 	 */
 	flagsEnabled: Config.bool().required(),
+
+	/**
+	 * Portlet's data needed to send within the form.
+	 * @instance
+	 * @memberof Flags
+	 * @type {!Object}
+	 */
+	formData: Config.object().required(),
 
 	/**
 	 * Component id.
@@ -244,8 +269,7 @@ Flags.STATE = {
 	title: Config.string().required(),
 
 	/**
-	 * Uri of the page that will be opened
-	 * in the dialog.
+	 * Uri to send the report fetch request.
 	 * @instance
 	 * @memberof Flags
 	 * @type {String}

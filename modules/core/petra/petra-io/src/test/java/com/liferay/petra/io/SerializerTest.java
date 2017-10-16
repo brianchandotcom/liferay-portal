@@ -67,6 +67,7 @@ public class SerializerTest {
 				public void appendAssertClasses(List<Class<?>> assertClasses) {
 					assertClasses.add(AnnotatedObjectInputStream.class);
 					assertClasses.add(AnnotatedObjectOutputStream.class);
+					assertClasses.add(SerializationConstants.class);
 				}
 
 			},
@@ -272,6 +273,11 @@ public class SerializerTest {
 		Assert.assertNotNull(bufferNode7.next);
 		Assert.assertSame(buffer3, bufferNode8.buffer);
 		Assert.assertNull(bufferNode8.next);
+	}
+
+	@Test
+	public void testConstructor() {
+		new SerializationConstants();
 	}
 
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)

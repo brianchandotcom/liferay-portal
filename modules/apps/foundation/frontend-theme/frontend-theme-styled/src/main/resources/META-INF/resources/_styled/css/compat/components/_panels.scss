@@ -35,25 +35,25 @@
 }
 
 .panel-default {
-	border-color: $panel-secondary-border-color;
+	border-color: map-get($panel-secondary, border-color);
 	box-shadow: $panel-box-shadow;
-	color: $panel-secondary-color;
+	color: map-get($panel-secondary, color);
 
 	.panel-heading {
-		background-color: $panel-secondary-header-bg;
-		border-color: $panel-secondary-header-border-color;
-		color: $panel-secondary-header-color;
+		background-color: map-get($panel-secondary, header-bg);
+		border-color: map-get($panel-secondary, header-border-color);
+		color: map-get($panel-secondary, header-color);
 
 		.panel-group & {
 			+ .panel-collapse > .panel-body {
-				border-color: $panel-secondary-header-border-color;
+				border-color: map-get($panel-secondary, header-border-color);
 			}
 		}
 	}
 
 	.panel-footer {
-		background-color: $panel-secondary-footer-bg;
-		border-color: $panel-secondary-footer-border-color;
-		color: $panel-secondary-footer-color;
+		background-color: map-get($panel-secondary, footer-bg);
+		border-color: map-get($panel-secondary, footer-border-color);
+		color: map-get($panel-secondary, footer-color);
 	}
 }

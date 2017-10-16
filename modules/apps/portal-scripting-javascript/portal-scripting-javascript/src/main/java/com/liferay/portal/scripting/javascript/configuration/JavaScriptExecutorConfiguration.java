@@ -31,7 +31,7 @@ public interface JavaScriptExecutorConfiguration {
 
 	@Meta.AD(
 		deflt = "com.liferay.portal.kernel.scripting.ScriptingUtil|com.liferay.portal.scripting.internal.ScriptingImpl|java.lang.System",
-		required = false
+		name = "forbidden-class-names", required = false
 	)
 	public String[] forbiddenClassNames();
 

@@ -1144,7 +1144,8 @@ public class JavadocFormatter {
 		// Wrap special constants in code tags
 
 		text = text.replaceAll(
-			"(?i)(?<!<code>|\\w)(null|false|true)(?!\\w)", "<code>$1</code>");
+			"(?i)(?<!<code>|\\{@code |\\w)(null|false|true)(?!\\w)",
+			"<code>$1</code>");
 
 		return text;
 	}

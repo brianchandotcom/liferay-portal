@@ -172,7 +172,7 @@
 
 		<execute macro="BlogsNavigator#gotoAbstractField" />
 
-		<execute function="Paste" locator1="AlloyEditor#TRACKBACKS_TO_SEND" />
+		<execute function="Paste" locator1="TextInput#TRACKBACKS" />
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 

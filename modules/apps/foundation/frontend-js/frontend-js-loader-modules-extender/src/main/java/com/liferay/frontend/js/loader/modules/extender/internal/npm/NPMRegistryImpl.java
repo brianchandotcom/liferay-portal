@@ -290,10 +290,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 		@Override
 		public void modifiedBundle(
 			Bundle bundle, BundleEvent bundleEvent, JSBundle jsBundle) {
-
-			removedBundle(bundle, bundleEvent, jsBundle);
-
-			addingBundle(bundle, bundleEvent);
 		}
 
 		@Override

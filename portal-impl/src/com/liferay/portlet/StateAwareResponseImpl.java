@@ -248,6 +248,10 @@ public abstract class StateAwareResponseImpl
 			throw new IllegalStateException();
 		}
 
+		if (windowState == null) {
+			throw new IllegalArgumentException();
+		}
+
 		if (!portletRequestImpl.isWindowStateAllowed(windowState)) {
 			throw new WindowStateException(windowState.toString(), windowState);
 		}

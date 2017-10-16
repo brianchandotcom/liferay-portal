@@ -5,7 +5,6 @@
  */
 {template .render}
 	{@param companyName: string}
-	{@param cssClass: string}
 	{@param enabled: bool}
 	{@param flagsEnabled: bool}
 	{@param id: string}
@@ -24,9 +23,21 @@
 	{@param? _reportDialogOpen: bool}
 	{@param? _showConfirmationMessage: bool}
 	{@param? _showErrorMessage: bool}
+	{@param? elementClasses: string}
 	{@param? reporterEmailAddress: string}
 
-	<div class="taglib-flags {$cssClass}" id="{$id}" title="{$title}">
+	{let $containerAttributes kind="attributes"}
+		class="taglib-flags
+			{if $elementClasses}
+				{sp}$elementClasses
+			{/if}
+		"
+
+		id="{$id}"
+		title="{$title}"
+	{/let}
+
+	<div {$containerAttributes}>
 		{call .flagIcon}
 			{param enabled: $enabled /}
 			{param label: $label /}

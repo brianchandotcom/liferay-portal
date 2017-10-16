@@ -63,8 +63,6 @@ public class FlagsTag extends TemplateRendererTag {
 
 			putValue("companyName", "Company name");
 
-			putValue("cssClass", _getCssClass(randomNamespace, enabled));
-
 			String className = (String)context.get("className");
 			long classPK = (Long)context.get("classPK");
 
@@ -145,6 +143,10 @@ public class FlagsTag extends TemplateRendererTag {
 		putValue("contentTitle", contentTitle);
 	}
 
+	public void setElementClasses(String elementClasses) {
+		putValue("elementClasses", elementClasses);
+	}
+
 	public void setEnabled(boolean enabled) {
 		putValue("enabled", enabled);
 	}
@@ -159,16 +161,6 @@ public class FlagsTag extends TemplateRendererTag {
 
 	public void setReportedUserId(long reportedUserId) {
 		putValue("reportedUserId", reportedUserId);
-	}
-
-	private String _getCssClass(String randomNamespace, boolean enabled) {
-		String cssClass = randomNamespace;
-
-		if (enabled) {
-			cssClass = randomNamespace + " flag-enable";
-		}
-
-		return cssClass;
 	}
 
 	private String _getCurrentURL() {

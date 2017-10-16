@@ -138,20 +138,21 @@ Flags.STATE = {
 	companyName: Config.string().required(),
 
 	/**
-	 * CSS classes.
-	 * @instance
-	 * @memberof Flags
-	 * @type {String}
-	 */
-	cssClass: Config.string().required(),
-
-	/**
 	 * Portlet's data.
 	 * @instance
 	 * @memberof Flags
 	 * @type {!Object}
 	 */
 	data: Config.object().required(),
+
+  /**
+   * CSS classes to be applied to the element.
+   * @instance
+   * @memberof Flags
+   * @type {?string}
+   * @default undefined
+   */
+  elementClasses: Config.string(),
 
 	/**
 	 * Whether the form to flag is enabled or not.

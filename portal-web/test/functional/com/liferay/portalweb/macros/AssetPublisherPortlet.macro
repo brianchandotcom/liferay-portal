@@ -1,6 +1,8 @@
 <definition>
 	<command name="addAsset">
-		<execute function="Click#makeVisibleClickAt" locator1="AP#ADD_ASSET_PLUS_ICON" />
+		<execute function="Click#clickNoWaitForVisible" locator1="Portlet#ICON_PLUS_SIGN">
+			<var name="key_portletName" value="Asset Publisher" />
+		</execute>
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${assetType}">
 			<var name="key_menuItem" value="${assetType}" />

@@ -28,7 +28,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface XSLEngineConfiguration {
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(
+		deflt = "false", name = "secure-processing-enabled", required = false
+	)
 	public boolean secureProcessingEnabled();
 
 }

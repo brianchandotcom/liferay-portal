@@ -15,8 +15,6 @@
 package com.liferay.layout.admin.web.internal.display.context;
 
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -83,23 +81,6 @@ public class LayoutsAdminDisplayContext extends BaseLayoutDisplayContext {
 			themeDisplay.getLocale());
 
 		return _layoutDescriptions;
-	}
-
-	@Override
-	public Long getLayoutId() {
-		if (_layoutId != null) {
-			return _layoutId;
-		}
-
-		_layoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
-
-		Layout selLayout = getSelLayout();
-
-		if (selLayout != null) {
-			_layoutId = selLayout.getLayoutId();
-		}
-
-		return _layoutId;
 	}
 
 	@Override
@@ -190,7 +171,6 @@ public class LayoutsAdminDisplayContext extends BaseLayoutDisplayContext {
 
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
 	private List<LayoutDescription> _layoutDescriptions;
-	private Long _layoutId;
 	private String _pagesName;
 	private String _redirect;
 

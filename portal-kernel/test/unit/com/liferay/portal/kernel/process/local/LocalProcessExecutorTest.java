@@ -1470,7 +1470,8 @@ public class LocalProcessExecutorTest {
 			SHUTDOWN_HOOK_TRIGGER_BROKEN_PIPE = () -> {
 				AtomicReference<? extends Thread> heartbeatThreadReference =
 					ReflectionTestUtil.getFieldValue(
-						ProcessContext.class, "_heartbeatThreadReference");
+						ProcessContext.class,
+						"_heartbeatThreadAtomicReference");
 
 				Thread heartBeatThread = heartbeatThreadReference.get();
 
@@ -1516,7 +1517,8 @@ public class LocalProcessExecutorTest {
 			SHUTDOWN_HOOK_TRIGGER_INTERRUPTION = () -> {
 				AtomicReference<? extends Thread> heartbeatThreadReference =
 					ReflectionTestUtil.getFieldValue(
-						ProcessContext.class, "_heartbeatThreadReference");
+						ProcessContext.class,
+						"_heartbeatThreadAtomicReference");
 
 				Thread heartBeatThread = heartbeatThreadReference.get();
 
@@ -1536,7 +1538,8 @@ public class LocalProcessExecutorTest {
 			SHUTDOWN_HOOK_TRIGGER_UNKNOWN = () -> {
 				AtomicReference<? extends Thread> heartbeatThreadReference =
 					ReflectionTestUtil.getFieldValue(
-						ProcessContext.class, "_heartbeatThreadReference");
+						ProcessContext.class,
+						"_heartbeatThreadAtomicReference");
 
 				Thread heartBeatThread = heartbeatThreadReference.get();
 
@@ -1744,7 +1747,7 @@ public class LocalProcessExecutorTest {
 		private static void _unregisterHeartBeatThread() {
 			AtomicReference<? extends Thread> heartbeatThreadReference =
 				ReflectionTestUtil.getFieldValue(
-					ProcessContext.class, "_heartbeatThreadReference");
+					ProcessContext.class, "_heartbeatThreadAtomicReference");
 
 			heartbeatThreadReference.set(null);
 		}

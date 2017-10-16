@@ -91,7 +91,7 @@ public class SearchEngineInitializer implements Runnable {
 		catch (InterruptedException ie) {
 		}
 
-		ExecutorService portalExecutor =
+		ExecutorService executorService =
 			_portalExecutorManager.getPortalExecutor(
 				SearchEngineInitializer.class.getName());
 
@@ -128,7 +128,7 @@ public class SearchEngineInitializer implements Runnable {
 
 					});
 
-				portalExecutor.submit(futureTask);
+				executorService.submit(futureTask);
 
 				futureTasks.add(futureTask);
 			}

@@ -33,7 +33,7 @@ var initSPA = function(callback) {
 			{
 				handler: RenderURLScreen,
 				path: function(url) {
-					if (url.indexOf(themeDisplay.getPathMain()) === 0) {
+					if ((url + "/").indexOf(themeDisplay.getPathMain() + "/") === 0) {
 						return false;
 					}
 

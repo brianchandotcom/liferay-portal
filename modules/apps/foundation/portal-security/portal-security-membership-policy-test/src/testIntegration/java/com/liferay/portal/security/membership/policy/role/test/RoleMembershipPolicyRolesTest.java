@@ -27,12 +27,14 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.security.membership.policy.role.BaseRoleMembershipPolicyTestCase;
 import com.liferay.portal.security.membership.policy.test.util.MembershipPolicyTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
+import com.liferay.portal.test.rule.SynchronousMailTestRule;
 
 import java.util.Collections;
 import java.util.List;
@@ -48,6 +50,7 @@ import org.junit.runner.RunWith;
  * @author Roberto Díaz
  */
 @RunWith(Arquillian.class)
+@Sync
 public class RoleMembershipPolicyRolesTest
 	extends BaseRoleMembershipPolicyTestCase {
 
@@ -56,7 +59,8 @@ public class RoleMembershipPolicyRolesTest
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			PermissionCheckerTestRule.INSTANCE);
+			PermissionCheckerTestRule.INSTANCE,
+			SynchronousMailTestRule.INSTANCE);
 
 	@After
 	@Override

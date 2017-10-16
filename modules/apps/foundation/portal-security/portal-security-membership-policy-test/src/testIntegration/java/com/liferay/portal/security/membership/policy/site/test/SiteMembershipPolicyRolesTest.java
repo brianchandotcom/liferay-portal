@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.UserGroupRoleServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.UserGroupRolePK;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.security.membership.policy.site.BaseSiteMembershipPolicyTestCase;
@@ -51,6 +52,7 @@ import org.junit.runner.RunWith;
  * @author Roberto Díaz
  */
 @RunWith(Arquillian.class)
+@Sync
 public class SiteMembershipPolicyRolesTest
 	extends BaseSiteMembershipPolicyTestCase {
 

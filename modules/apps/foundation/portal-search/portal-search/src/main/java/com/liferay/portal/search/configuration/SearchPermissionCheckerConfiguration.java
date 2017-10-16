@@ -37,13 +37,13 @@ public interface SearchPermissionCheckerConfiguration {
 	@Deprecated
 	@Meta.AD(
 		deflt = "true", description = "include-inherited-permissions-help",
-		required = false
+		name = "include-inherited-permissions", required = false
 	)
 	public boolean includeInheritedPermissions();
 
 	@Meta.AD(
 		deflt = "250", description = "permission-terms-limit-help",
-		required = false
+		name = "permission-terms-limit", required = false
 	)
 	public int permissionTermsLimit();
 

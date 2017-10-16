@@ -31,7 +31,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ProviderType
 public interface IndexStatusManagerConfiguration {
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(deflt = "false", name = "index-read-only", required = false)
 	public boolean indexReadOnly();
 
 }

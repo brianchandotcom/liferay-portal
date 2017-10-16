@@ -111,6 +111,7 @@ File Name | Description
 
 File Name | Description
 --------- | -----------
+`.lfrbuild-deploy` | Deploys the module to the LCS site portal directory.
 `.lfrbuild-spark-job` | Configures the module as an Apache Spark job.
 `.lfrbuild-spring-boot` | Configures the module as a Spring Boot application.
 

@@ -2628,10 +2628,14 @@ version 1.0.172.
 - [LPS-74449]: Update the [Liferay Gradle Plugins CSS Builder] dependency to
 version 2.1.5.
 
-## 3.5.9 - 2017-10-13
+## 3.5.9 - 2017-10-16
 
 ### Changed
 - [LPS-75238]: Disable JSP compilation for OSGi fragments.
+- [LPS-75254]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.4.
+- [LPS-75254]: Update the [Liferay Source Formatter] dependency to version
+1.0.475.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
@@ -2870,4 +2874,5 @@ version 2.1.5.
 [LPS-75164]: https://issues.liferay.com/browse/LPS-75164
 [LPS-75175]: https://issues.liferay.com/browse/LPS-75175
 [LPS-75238]: https://issues.liferay.com/browse/LPS-75238
+[LPS-75254]: https://issues.liferay.com/browse/LPS-75254
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

@@ -64,6 +64,10 @@ Layout curLayout = (Layout)row.getObject();
 	<%
 	boolean isDeletable = true;
 
+	if (StagingUtil.isIncomplete(curLayout)) {
+		isDeletable = false;
+	}
+
 	if (!LayoutPermissionUtil.contains(permissionChecker, curLayout, ActionKeys.DELETE)) {
 		isDeletable = false;
 	}

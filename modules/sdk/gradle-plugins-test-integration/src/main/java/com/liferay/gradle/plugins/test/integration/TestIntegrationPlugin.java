@@ -61,6 +61,7 @@ import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.StopExecutionException;
+import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.testing.Test;
 import org.gradle.process.JavaForkOptions;
 
@@ -254,6 +255,18 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		copy.setDescription(
 			"Copies additional OSGi modules to deploy during integration " +
 				"testing.");
+
+		TaskOutputs taskOutputs = copy.getOutputs();
+
+		taskOutputs.upToDateWhen(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					return false;
+				}
+
+			});
 
 		return copy;
 	}

@@ -646,6 +646,14 @@ public class VerifyProperties extends VerifyProcess {
 		// Document Library
 
 		new String[] {
+			"dl.file.rank.check.interval", "check.file.ranks.interval",
+			"com.liferay.recent.documents.web"
+		},
+		new String[] {
+			"dl.file.rank.max.size", "max.size",
+			"com.liferay.document.library.file.rank.service"
+		},
+		new String[] {
 			"dl.display.templates.config", "display.templates.config",
 			"com.liferay.document.library.web"
 		},
@@ -1745,8 +1753,8 @@ public class VerifyProperties extends VerifyProcess {
 		"dl.file.entry.image.exif.metadata.rotation.enabled",
 		"dl.file.entry.previewable.processor.max.size",
 		"dl.file.entry.read.count.enabled", "dl.file.extensions",
-		"dl.file.max.size", "dl.folder.menu.visible", "dockbar.add.portlets",
-		"dockbar.administrative.links.show.in.pop.up",
+		"dl.file.max.size", "dl.file.rank.enabled", "dl.folder.menu.visible",
+		"dockbar.add.portlets", "dockbar.administrative.links.show.in.pop.up",
 		"dynamic.data.lists.record.set.force.autogenerate.key",
 		"dynamic.data.lists.template.language.parser[ftl]",
 		"dynamic.data.lists.template.language.parser[vm]",

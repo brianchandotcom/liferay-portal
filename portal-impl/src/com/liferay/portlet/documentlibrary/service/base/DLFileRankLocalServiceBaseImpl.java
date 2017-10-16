@@ -63,8 +63,11 @@ import javax.sql.DataSource;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.documentlibrary.service.impl.DLFileRankLocalServiceImpl
  * @see com.liferay.document.library.kernel.service.DLFileRankLocalServiceUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+           com.liferay.document.library.file.rank.service.impl.DLFileRankLocalServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public abstract class DLFileRankLocalServiceBaseImpl
 	extends BaseLocalServiceImpl implements DLFileRankLocalService,

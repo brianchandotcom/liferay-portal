@@ -35,8 +35,11 @@ import java.util.Objects;
  *
  * @author Brian Wing Shun Chan
  * @see DLFileRank
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.document.library.file.rank.model.impl.DLFileRankImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	public DLFileRankWrapper(DLFileRank dlFileRank) {

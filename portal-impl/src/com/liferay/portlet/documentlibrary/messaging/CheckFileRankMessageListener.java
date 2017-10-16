@@ -20,7 +20,10 @@ import com.liferay.portal.kernel.messaging.Message;
 
 /**
  * @author Alexander Chow
+
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class CheckFileRankMessageListener extends BaseMessageListener {
 
 	@Override

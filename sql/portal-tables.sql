@@ -366,16 +366,6 @@ create table DLFileEntryTypes_DLFolders (
 	primary key (fileEntryTypeId, folderId)
 );
 
-create table DLFileRank (
-	fileRankId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	createDate DATE null,
-	fileEntryId LONG,
-	active_ BOOLEAN
-);
-
 create table DLFileShortcut (
 	uuid_ VARCHAR(75) null,
 	fileShortcutId LONG not null primary key,

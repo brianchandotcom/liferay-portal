@@ -17,15 +17,12 @@ package com.liferay.document.library.trash.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.model.DLFileRank;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryServiceUtil;
-import com.liferay.document.library.kernel.service.DLFileRankLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLTrashServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
@@ -39,7 +36,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -73,8 +69,6 @@ import com.liferay.trash.test.util.WhenIsIndexableBaseModel;
 import com.liferay.trash.test.util.WhenIsMoveableFromTrashBaseModel;
 import com.liferay.trash.test.util.WhenIsRestorableBaseModel;
 import com.liferay.trash.test.util.WhenIsUpdatableBaseModel;
-
-import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -259,11 +253,6 @@ public class DLFileEntryTrashHandlerTest
 			dlFileVersion.getFileName());
 	}
 
-	@Test
-	public void testTrashDLFileRank() throws Exception {
-		trashDLFileRank();
-	}
-
 	@Override
 	@Test(expected = TrashEntryException.class)
 	public void testTrashParentAndBaseModel() throws Exception {
@@ -353,23 +342,6 @@ public class DLFileEntryTrashHandlerTest
 		DLFolderLocalServiceUtil.deleteFolder(dlFolder.getFolderId(), false);
 	}
 
-	protected int getActiveDLFileRanksCount(long groupId, long fileEntryId)
-		throws Exception {
-
-		List<DLFileRank> dlFileRanks = DLFileRankLocalServiceUtil.getFileRanks(
-			groupId, TestPropsValues.getUserId());
-
-		int count = 0;
-
-		for (DLFileRank dlFileRank : dlFileRanks) {
-			if (dlFileRank.getFileEntryId() == fileEntryId) {
-				count++;
-			}
-		}
-
-		return count;
-	}
-
 	@Override
 	protected BaseModel<?> getBaseModel(long primaryKey) throws Exception {
 		return DLFileEntryLocalServiceUtil.getDLFileEntry(primaryKey);
@@ -434,51 +406,6 @@ public class DLFileEntryTrashHandlerTest
 	@Override
 	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
 		DLTrashServiceUtil.moveFileEntryToTrash(primaryKey);
-	}
-
-	protected void trashDLFileRank() throws Exception {
-		Group group = GroupTestUtil.addGroup();
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
-		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			getBaseModelClassName());
-
-		try {
-			baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-			DLAppLocalServiceUtil.addFileRank(
-				group.getGroupId(), TestPropsValues.getCompanyId(),
-				TestPropsValues.getUserId(), (Long)baseModel.getPrimaryKeyObj(),
-				serviceContext);
-
-			Assert.assertEquals(
-				1,
-				getActiveDLFileRanksCount(
-					group.getGroupId(), (Long)baseModel.getPrimaryKeyObj()));
-
-			moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
-
-			Assert.assertEquals(
-				0,
-				getActiveDLFileRanksCount(
-					group.getGroupId(), (Long)baseModel.getPrimaryKeyObj()));
-
-			trashHandler.restoreTrashEntry(
-				TestPropsValues.getUserId(), getTrashEntryClassPK(baseModel));
-
-			Assert.assertEquals(
-				1,
-				getActiveDLFileRanksCount(
-					group.getGroupId(), (Long)baseModel.getPrimaryKeyObj()));
-		}
-		finally {
-			trashHandler.deleteTrashEntry(getTrashEntryClassPK(baseModel));
-		}
 	}
 
 	private static final String _FILE_ENTRY_TITLE = RandomTestUtil.randomString(

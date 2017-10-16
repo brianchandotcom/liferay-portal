@@ -54,8 +54,11 @@ import java.util.Map;
  * @see DLFileRankImpl
  * @see DLFileRank
  * @see DLFileRankModel
+ * @deprecated As of 7.0.0, replaced by {@link
+           com.liferay.document.library.file.rank.model.impl.DLFileRankImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	implements DLFileRankModel {

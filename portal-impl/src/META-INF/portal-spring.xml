@@ -51,9 +51,6 @@
 	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLFileEntryTypeServiceImpl" id="com.liferay.document.library.kernel.service.DLFileEntryTypeService" />
 	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileEntryTypePersistenceImpl" id="com.liferay.document.library.kernel.service.persistence.DLFileEntryTypePersistence" parent="basePersistence" />
 	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileEntryTypeFinderImpl" id="com.liferay.document.library.kernel.service.persistence.DLFileEntryTypeFinder" parent="basePersistence" />
-	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLFileRankLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLFileRankLocalService" />
-	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileRankPersistenceImpl" id="com.liferay.document.library.kernel.service.persistence.DLFileRankPersistence" parent="basePersistence" />
-	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileRankFinderImpl" id="com.liferay.document.library.kernel.service.persistence.DLFileRankFinder" parent="basePersistence" />
 	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLFileShortcutLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLFileShortcutLocalService" />
 	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLFileShortcutServiceImpl" id="com.liferay.document.library.kernel.service.DLFileShortcutService" />
 	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileShortcutPersistenceImpl" id="com.liferay.document.library.kernel.service.persistence.DLFileShortcutPersistence" parent="basePersistence" />

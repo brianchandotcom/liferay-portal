@@ -51,8 +51,11 @@ import java.util.List;
  * @see DLFileRankLocalServiceUtil
  * @see com.liferay.portlet.documentlibrary.service.base.DLFileRankLocalServiceBaseImpl
  * @see com.liferay.portlet.documentlibrary.service.impl.DLFileRankLocalServiceImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+           com.liferay.document.library.file.rank.service.impl.DLFileRankLocalServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})

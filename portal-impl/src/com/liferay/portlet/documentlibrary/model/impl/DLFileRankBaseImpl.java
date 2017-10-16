@@ -29,8 +29,11 @@ import com.liferay.document.library.kernel.service.DLFileRankLocalServiceUtil;
  * @author Brian Wing Shun Chan
  * @see DLFileRankImpl
  * @see DLFileRank
+ * @deprecated As of 7.0.0, replaced by {@link
+           com.liferay.document.library.file.rank.model.impl.DLFileRankImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public abstract class DLFileRankBaseImpl extends DLFileRankModelImpl
 	implements DLFileRank {

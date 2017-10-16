@@ -12,13 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.service.persistence.test;
+package com.liferay.document.library.file.rank.service.persistence.test;
 
-import com.liferay.document.library.kernel.exception.NoSuchFileRankException;
-import com.liferay.document.library.kernel.model.DLFileRank;
-import com.liferay.document.library.kernel.service.DLFileRankLocalServiceUtil;
-import com.liferay.document.library.kernel.service.persistence.DLFileRankPersistence;
-import com.liferay.document.library.kernel.service.persistence.DLFileRankUtil;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
+import com.liferay.document.library.file.rank.exception.NoSuchFileRankException;
+import com.liferay.document.library.file.rank.model.DLFileRank;
+import com.liferay.document.library.file.rank.service.DLFileRankLocalServiceUtil;
+import com.liferay.document.library.file.rank.service.persistence.DLFileRankPersistence;
+import com.liferay.document.library.file.rank.service.persistence.DLFileRankUtil;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -45,6 +47,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -57,12 +61,14 @@ import java.util.Set;
 /**
  * @generated
  */
+@RunWith(Arquillian.class)
 public class DLFileRankPersistenceTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(Propagation.REQUIRED));
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.document.library.file.rank.service"));
 
 	@Before
 	public void setUp() {

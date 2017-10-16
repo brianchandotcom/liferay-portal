@@ -28,7 +28,10 @@ import java.util.List;
 
 /**
  * @author Alexander Chow
+ * @deprecated As of 7.0.0, replaced by {@link
+ *            com.liferay.document.library.file.rank.service.persistence.impl.DLFileRankFinderImpl}
  */
+@Deprecated
 public class DLFileRankFinderImpl
 	extends DLFileRankFinderBaseImpl implements DLFileRankFinder {
 

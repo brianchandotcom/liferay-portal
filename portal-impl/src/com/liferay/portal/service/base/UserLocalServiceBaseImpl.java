@@ -23,8 +23,6 @@ import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
 
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryPersistence;
-import com.liferay.document.library.kernel.service.persistence.DLFileRankFinder;
-import com.liferay.document.library.kernel.service.persistence.DLFileRankPersistence;
 
 import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
 
@@ -2089,62 +2087,6 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the document library file rank local service.
-	 *
-	 * @return the document library file rank local service
-	 */
-	public com.liferay.document.library.kernel.service.DLFileRankLocalService getDLFileRankLocalService() {
-		return dlFileRankLocalService;
-	}
-
-	/**
-	 * Sets the document library file rank local service.
-	 *
-	 * @param dlFileRankLocalService the document library file rank local service
-	 */
-	public void setDLFileRankLocalService(
-		com.liferay.document.library.kernel.service.DLFileRankLocalService dlFileRankLocalService) {
-		this.dlFileRankLocalService = dlFileRankLocalService;
-	}
-
-	/**
-	 * Returns the document library file rank persistence.
-	 *
-	 * @return the document library file rank persistence
-	 */
-	public DLFileRankPersistence getDLFileRankPersistence() {
-		return dlFileRankPersistence;
-	}
-
-	/**
-	 * Sets the document library file rank persistence.
-	 *
-	 * @param dlFileRankPersistence the document library file rank persistence
-	 */
-	public void setDLFileRankPersistence(
-		DLFileRankPersistence dlFileRankPersistence) {
-		this.dlFileRankPersistence = dlFileRankPersistence;
-	}
-
-	/**
-	 * Returns the document library file rank finder.
-	 *
-	 * @return the document library file rank finder
-	 */
-	public DLFileRankFinder getDLFileRankFinder() {
-		return dlFileRankFinder;
-	}
-
-	/**
-	 * Sets the document library file rank finder.
-	 *
-	 * @param dlFileRankFinder the document library file rank finder
-	 */
-	public void setDLFileRankFinder(DLFileRankFinder dlFileRankFinder) {
-		this.dlFileRankFinder = dlFileRankFinder;
-	}
-
-	/**
 	 * Returns the expando row local service.
 	 *
 	 * @return the expando row local service
@@ -2886,12 +2828,6 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected DLFileEntryPersistence dlFileEntryPersistence;
 	@BeanReference(type = DLFileEntryFinder.class)
 	protected DLFileEntryFinder dlFileEntryFinder;
-	@BeanReference(type = com.liferay.document.library.kernel.service.DLFileRankLocalService.class)
-	protected com.liferay.document.library.kernel.service.DLFileRankLocalService dlFileRankLocalService;
-	@BeanReference(type = DLFileRankPersistence.class)
-	protected DLFileRankPersistence dlFileRankPersistence;
-	@BeanReference(type = DLFileRankFinder.class)
-	protected DLFileRankFinder dlFileRankFinder;
 	@BeanReference(type = com.liferay.expando.kernel.service.ExpandoRowLocalService.class)
 	protected com.liferay.expando.kernel.service.ExpandoRowLocalService expandoRowLocalService;
 	@BeanReference(type = ExpandoRowPersistence.class)

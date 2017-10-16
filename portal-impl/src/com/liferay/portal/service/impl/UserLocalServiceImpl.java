@@ -1916,10 +1916,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		assetEntryLocalService.deleteEntry(
 			User.class.getName(), user.getUserId());
 
-		// Document library
-
-		dlFileRankLocalService.deleteFileRanksByUserId(user.getUserId());
-
 		// Expando
 
 		expandoRowLocalService.deleteRows(user.getUserId());

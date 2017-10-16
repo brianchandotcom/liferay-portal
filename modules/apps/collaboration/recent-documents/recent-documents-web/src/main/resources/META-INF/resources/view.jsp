@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<DLFileRank> fileRanks = DLAppLocalServiceUtil.getFileRanks(scopeGroupId, user.getUserId());
+List<DLFileRank> fileRanks = DLFileRankLocalServiceUtil.getFileRanks(scopeGroupId, user.getUserId());
 %>
 
 <c:choose>

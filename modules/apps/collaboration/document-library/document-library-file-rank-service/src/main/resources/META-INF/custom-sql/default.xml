@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.document.library.file.rank.service.persistence.DLFileRankFinder.findByStaleRanks">
+		<![CDATA[
+			SELECT
+				groupId, userId
+			FROM
+				DLFileRank
+			GROUP BY
+				groupId, userId
+			HAVING COUNT(*) > ?
+		]]>
+	</sql>
+	<sql id="com.liferay.document.library.file.rank.service.persistence.DLFileRankFinder.findByFolderId">
+		<![CDATA[
+			SELECT
+				{DLFileRank.*}
+			FROM
+				DLFileRank
+			INNER JOIN
+				DLFileEntry ON
+					(DLFileEntry.fileEntryId = DLFileRank.fileEntryId)
+			WHERE
+				(DLFileEntry.folderId = ?)
+		]]>
+	</sql>
+</custom-sql>

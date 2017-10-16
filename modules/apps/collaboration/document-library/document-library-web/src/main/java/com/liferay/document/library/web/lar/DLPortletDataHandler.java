@@ -17,7 +17,6 @@ package com.liferay.document.library.web.lar;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
-import com.liferay.document.library.kernel.model.DLFileRank;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
 import com.liferay.document.library.kernel.model.DLFileVersion;
@@ -109,7 +108,6 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		setDataPortletPreferences("rootFolderId");
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(DLFileEntryType.class),
-			new StagedModelType(DLFileRank.class),
 			new StagedModelType(DLFileShortcut.class),
 			new StagedModelType(DLFileEntryConstants.getClassName()),
 			new StagedModelType(DLFolderConstants.getClassName()),

@@ -1,10 +1,14 @@
 <definition>
 	<command name="addContent">
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${content}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#EDITOR" value1="${content}">
+			<var name="key_editor" value="content" />
+		</execute>
 	</command>
 
 	<command name="addDescription">
-		<execute function="Type#typeEditor" locator1="AlloyEditor#DESCRIPTION_FIELD" value1="${description}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#EDITOR" value1="${description}">
+			<var name="key_editor" value="description" />
+		</execute>
 	</command>
 
 	<command name="addSourceContent">
@@ -16,7 +20,9 @@
 	</command>
 
 	<command name="addTitle">
-		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${title}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#EDITOR" value1="${title}">
+			<var name="key_editor" value="title" />
+		</execute>
 	</command>
 
 	<command name="addTitleAndContent">
@@ -30,11 +36,15 @@
 	</command>
 
 	<command name="clickContentField">
-		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
+		<execute function="Click" locator1="AlloyEditor#EDITOR">
+			<var name="key_editor" value="content" />
+		</execute>
 	</command>
 
 	<command name="toggleStylingInAlloyEditor">
-		<execute function="SelectFieldText" locator1="AlloyEditor#CONTENT_FIELD" />
+		<execute function="SelectFieldText" locator1="AlloyEditor#EDITOR">
+			<var name="key_editor" value="content" />
+		</execute>
 
 		<if>
 			<isset var="boldContent" />

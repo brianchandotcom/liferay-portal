@@ -120,7 +120,9 @@
 		<if>
 			<isset var="specialCharacters" />
 			<then>
-				<execute function="Type#sendKeys" locator1="AlloyEditor#TITLE_FIELD" value1="${kbArticleTitle}" />
+				<execute function="Type#sendKeys" locator1="AlloyEditor#EDITOR" value1="${kbArticleTitle}">
+					<var name="key_editor" value="title" />
+				</execute>
 			</then>
 			<else>
 				<execute macro="AlloyEditor#addTitle">
@@ -821,8 +823,13 @@
 
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#HEADER_TITLE" value1="${kbArticleTitle}" />
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD_LOCALIZED" value1="${kbArticleTitleEdit}" />
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD_LOCALIZED" value1="${kbArticleContentEdit}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#EDITOR" value1="${kbArticleTitleEdit}">
+			<var name="key_editor" value="title" />
+		</execute>
+
+		<execute function="Type#typeEditor" locator1="AlloyEditor#EDITOR" value1="${kbArticleContentEdit}">
+			<var name="key_editor" value="content" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Button#PUBLISH_LOCALIZED" value1="Publicar" />
 
@@ -1528,7 +1535,9 @@
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="A new version is created automatically if this content is modified." />
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#TITLE" value1="${kbArticleTitle}" />
-		<execute function="AssertTextEquals" locator1="AlloyEditor#CONTENT_FIELD" value1="${kbArticleContent}" />
+		<execute function="AssertTextEquals" locator1="AlloyEditor#EDITOR" value1="${kbArticleContent}">
+			<var name="key_editor" value="content" />
+		</execute>
 
 		<if>
 			<condition function="IsElementNotPresent" locator1="KnowledgeBaseArticle#ATTACHMENTS_HEADER_EXPANDED" />

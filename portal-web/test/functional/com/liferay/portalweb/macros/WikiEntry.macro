@@ -10,7 +10,9 @@
 	</command>
 
 	<command name="addPageTitle">
-		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${wikiPageTitle}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#EDITOR" value1="${wikiPageTitle}">
+			<var name="key_editor" value="title" />
+		</execute>
 	</command>
 
 	<command name="cancel">

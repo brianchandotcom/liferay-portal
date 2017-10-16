@@ -53,7 +53,9 @@
 
 		<execute function="Click" locator1="BlogsEditEntry#DELETE_COVER_IMAGE_BUTTON" />
 
-		<execute function="Click#pauseClickAt" locator1="AlloyEditor#CONTENT_FIELD" />
+		<execute function="Click#pauseClickAt" locator1="AlloyEditor#EDITOR">
+			<var name="key_editor" value="content" />
+		</execute>
 
 		<execute function="Click" locator1="AlloyEditor#CONTENT_ADD_BUTTON" />
 
@@ -86,7 +88,9 @@
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="Web Content Title" />
 
-		<execute function="Click#pauseClickAt" locator1="AlloyEditor#CONTENT_FIELD" />
+		<execute function="Click#pauseClickAt" locator1="AlloyEditor#EDITOR">
+			<var name="key_editor" value="content" />
+		</execute>
 
 		<execute function="Click" locator1="AlloyEditor#CONTENT_ADD_BUTTON" />
 

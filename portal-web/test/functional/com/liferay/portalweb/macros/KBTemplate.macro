@@ -75,7 +75,12 @@
 			<var name="kbTemplateTitle" value="${kbTemplateTitle}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="AlloyEditor#TITLE_FIELD" value1="${kbTemplateTitle}" />
-		<execute function="AssertTextEquals" locator1="AlloyEditor#CONTENT_FIELD" value1="${kbTemplateContent}" />
+		<execute function="AssertTextEquals" locator1="AlloyEditor#EDITOR" value1="${kbTemplateTitle}">
+			<var name="key_editor" value="title" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="AlloyEditor#EDITOR" value1="${kbTemplateContent}">
+			<var name="key_editor" value="content" />
+		</execute>
 	</command>
 </definition>

@@ -244,7 +244,9 @@
 		<if>
 			<isset var="webContentContent" />
 			<then>
-				<execute function="AssertTextEquals" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContent}" />
+				<execute function="AssertTextEquals" locator1="AlloyEditor#EDITOR" value1="${webContentContent}">
+					<var name="key_editor" value="content" />
+				</execute>
 			</then>
 		</if>
 	</command>
@@ -1595,7 +1597,9 @@
 				</execute>
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContent}" />
+				<execute function="AssertTextEquals" locator1="AlloyEditor#EDITOR" value1="${webContentContent}">
+					<var name="key_editor" value="content" />
+				</execute>
 
 				<execute function="SelectFrame" value1="relative=top" />
 			</else>
@@ -1941,7 +1945,9 @@
 	<command name="viewStatus">
 		<execute function="AssertTextEquals" locator1="AssetWorkflow#WORKFLOW_STATUS" value1="${webContentStatus}" />
 		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${webContentTitle}" />
-		<execute function="AssertTextEquals" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContent}" />
+		<execute function="AssertTextEquals" locator1="AlloyEditor#EDITOR" value1="${webContentContent}">
+			<var name="key_editor" value="content" />
+		</execute>
 
 		<execute function="SelectFrameTop" />
 	</command>
@@ -2021,7 +2027,9 @@
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${localizedTitle}" />
-		<execute function="AssertTextEquals" locator1="AlloyEditor#CONTENT_FIELD" value1="${localizedContent}" />
+		<execute function="AssertTextEquals" locator1="AlloyEditor#EDITOR" value1="${localizedContent}">
+			<var name="key_editor" value="content" />
+		</execute>
 	</command>
 
 	<command name="viewUnlocalizableTextBox">
@@ -2092,7 +2100,9 @@
 		<if>
 			<isset var="description" />
 			<then>
-				<execute function="AssertTextEquals" locator1="AlloyEditor#DESCRIPTION_FIELD" value1="${description}" />
+				<execute function="AssertTextEquals" locator1="AlloyEditor#EDITOR" value1="${description}">
+					<var name="key_editor" value="description" />
+				</execute>
 			</then>
 		</if>
 
@@ -2168,7 +2178,9 @@
 
 		<execute function="AssertTextEquals" locator1="AssetWorkflow#WORKFLOW_STATUS" value1="Pending (${workflowTask})" />
 		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${webContentTitle}" />
-		<execute function="AssertTextEquals" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContent}" />
+		<execute function="AssertTextEquals" locator1="AlloyEditor#EDITOR" value1="${webContentContent}">
+			<var name="key_editor" value="content" />
+		</execute>
 
 		<execute function="SelectFrameTop" />
 	</command>
@@ -2184,6 +2196,8 @@
 
 		<execute function="AssertTextEquals" locator1="AssetWorkflow#WORKFLOW_STATUS" value1="Pending (${workflowTask})" />
 		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${webContentTitle}" />
-		<execute function="AssertTextEquals" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContent}" />
+		<execute function="AssertTextEquals" locator1="AlloyEditor#EDITOR" value1="${webContentContent}">
+			<var name="key_editor" value="content" />
+		</execute>
 	</command>
 </definition>

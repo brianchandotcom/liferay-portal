@@ -35,7 +35,9 @@
 	<command name="_editEmptyFrontPage">
 		<execute function="AssertClick" locator1="Wiki#FRONTPAGE_DEFAULT_MESSAGE" value1="This page is empty. Edit it to add some text." />
 
-		<execute function="AssertElementPresent" locator1="AlloyEditor#CONTENT_FIELD" />
+		<execute function="AssertElementPresent" locator1="AlloyEditor#EDITOR">
+			<var name="key_editor" value="content" />
+		</execute>
 
 		<execute macro="AlloyEditor#addContent">
 			<var name="content" value="${wikiPageContent}" />
@@ -193,7 +195,9 @@
 	<command name="addFrontPageCP">
 		<execute function="AssertClick" locator1="Message#INFO_LINK" value1="This page is empty. Edit it to add some text." />
 
-		<execute function="AssertElementPresent" locator1="AlloyEditor#CONTENT_FIELD" />
+		<execute function="AssertElementPresent" locator1="AlloyEditor#EDITOR">
+			<var name="key_editor" value="content" />
+		</execute>
 
 		<execute macro="AlloyEditor#addContent">
 			<var name="content" value="${wikiFrontPageContent}" />
@@ -214,7 +218,9 @@
 
 		<execute function="AssertClick#assertTextClickAtAndPause" locator1="Wiki#FRONTPAGE_DEFAULT_MESSAGE" value1="This page is empty. Edit it to add some text." />
 
-		<execute function="AssertElementPresent" locator1="AlloyEditor#CONTENT_FIELD" />
+		<execute function="AssertElementPresent" locator1="AlloyEditor#EDITOR">
+			<var name="key_editor" value="content" />
+		</execute>
 
 		<if>
 			<equals arg1="${creoleSource}" arg2="true" />
@@ -370,7 +376,9 @@
 	<command name="addPG">
 		<execute macro="WikiNavigator#gotoAddPageViaPG" />
 
-		<execute function="AssertElementPresent" locator1="AlloyEditor#TITLE_FIELD" />
+		<execute function="AssertElementPresent" locator1="AlloyEditor#EDITOR">
+			<var name="key_editor" value="title" />
+		</execute>
 
 		<execute macro="AlloyEditor#addTitle">
 			<var name="title" value="${wikiPageTitle}" />
@@ -760,7 +768,9 @@
 			<var name="key_menuItem" value="Edit" />
 		</execute>
 
-		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
+		<execute function="Click" locator1="AlloyEditor#EDITOR">
+			<var name="key_editor" value="content" />
+		</execute>
 
 		<execute function="AssertElementPresent" locator1="AlloyEditor#CONTENT_ADD_BUTTON" />
 

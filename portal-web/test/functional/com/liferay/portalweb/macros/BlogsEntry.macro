@@ -103,7 +103,9 @@
 	</command>
 
 	<command name="addSubtitle">
-		<execute function="Type#typeEditor" locator1="AlloyEditor#SUBTITLE_FIELD" value1="${entrySubtitle}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#EDITOR" value1="${entrySubtitle}">
+			<var name="key_editor" value="subtitle" />
+		</execute>
 	</command>
 
 	<command name="addTag">
@@ -222,7 +224,9 @@
 	</command>
 
 	<command name="editContent">
-		<execute function="AssertTextEquals" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContent}" />
+		<execute function="AssertTextEquals" locator1="AlloyEditor#EDITOR" value1="${entryContent}">
+			<var name="key_editor" value="content" />
+		</execute>
 
 		<execute macro="AlloyEditor#addContent">
 			<var name="content" value="${entryContentEdit}" />
@@ -277,13 +281,19 @@
 	</command>
 
 	<command name="editSubtitle">
-		<execute function="AssertTextEquals" locator1="AlloyEditor#SUBTITLE_FIELD" value1="${entrySubtitle}" />
+		<execute function="AssertTextEquals" locator1="AlloyEditor#EDITOR" value1="${entrySubtitle}">
+			<var name="key_editor" value="subtitle" />
+		</execute>
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#SUBTITLE_FIELD" value1="${entrySubtitleEdit}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#EDITOR" value1="${entrySubtitleEdit}">
+			<var name="key_editor" value="subtitle" />
+		</execute>
 	</command>
 
 	<command name="editTitle">
-		<execute function="AssertTextEquals" locator1="AlloyEditor#TITLE_FIELD" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="AlloyEditor#EDITOR" value1="${entryTitle}">
+			<var name="key_editor" value="title" />
+		</execute>
 
 		<execute macro="AlloyEditor#addTitle">
 			<var name="title" value="${entryTitleEdit}" />
@@ -596,7 +606,9 @@
 	</command>
 
 	<command name="selectFormattingStyle">
-		<execute function="SelectFieldText" locator1="AlloyEditor#CONTENT_FIELD" />
+		<execute function="SelectFieldText" locator1="AlloyEditor#EDITOR">
+			<var name="key_editor" value="content" />
+		</execute>
 
 		<execute function="Click" locator1="AlloyEditor#TEXT_FORMATTING_STYLE" />
 

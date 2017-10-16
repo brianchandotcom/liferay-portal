@@ -202,7 +202,9 @@
 			<var name="site" value="College of Agricultural Science" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesMembers">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Members" />
+			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Site Memberships" />
 		</execute>
 
@@ -214,7 +216,9 @@
 			<var name="site" value="College of Business" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesMembers">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Members" />
+			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Site Memberships" />
 		</execute>
 
@@ -229,7 +233,9 @@
 				<var name="site" value="${siteName}" />
 			</execute>
 
-			<execute macro="ProductMenu#gotoSitesMembers">
+			<execute macro="ProductMenu#gotoPortlet">
+				<var name="category" value="Members" />
+				<var name="panel" value="Site Administration" />
 				<var name="portlet" value="Site Memberships" />
 			</execute>
 

@@ -14,6 +14,8 @@
 
 package com.liferay.petra.io.unsync;
 
+import com.liferay.petra.string.StringBundler;
+
 import java.io.IOException;
 import java.io.Reader;
 
@@ -75,7 +77,23 @@ public class UnsyncStringReader extends Reader {
 			throw new IOException("String is null");
 		}
 
-		if (length <= 0) {
+		if ((offset < 0) || (offset > chars.length) || (length < 0) ||
+			((offset + length) > chars.length) || ((offset + length) < 0)) {
+
+			StringBundler sb = new StringBundler(7);
+
+			sb.append("{chars.length=");
+			sb.append(chars.length);
+			sb.append(", offset=");
+			sb.append(offset);
+			sb.append(", length=");
+			sb.append(length);
+			sb.append("}");
+
+			throw new IndexOutOfBoundsException(sb.toString());
+		}
+
+		if (length == 0) {
 			return 0;
 		}
 

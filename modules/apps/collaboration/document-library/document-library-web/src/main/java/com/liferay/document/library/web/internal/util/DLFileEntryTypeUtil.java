@@ -46,9 +46,13 @@ public class DLFileEntryTypeUtil {
 
 		for (DDMStructure ddmStructure : dlFileEntryType.getDDMStructures()) {
 			DLFileEntryMetadata dlFileEntryMetadata =
-				DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
+				DLFileEntryMetadataLocalServiceUtil.fetchFileEntryMetadata(
 					ddmStructure.getStructureId(),
 					fileVersion.getFileVersionId());
+
+			if (dlFileEntryMetadata == null) {
+				continue;
+			}
 
 			DDMFormValues ddmFormValues =
 				dlEditFileEntryDisplayContext.getDDMFormValues(

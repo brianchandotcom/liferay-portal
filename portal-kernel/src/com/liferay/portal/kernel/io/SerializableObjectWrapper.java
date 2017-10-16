@@ -25,6 +25,8 @@ import java.io.Serializable;
 
 import java.nio.ByteBuffer;
 
+import java.util.Objects;
+
 /**
  * @author Tina Tian
  */
@@ -87,7 +89,7 @@ public class SerializableObjectWrapper implements Externalizable {
 				lazySerializable.getSerializable();
 		}
 
-		return _serializable.equals(serializableWrapper._serializable);
+		return Objects.equals(_serializable, serializableWrapper._serializable);
 	}
 
 	@Override
@@ -98,7 +100,7 @@ public class SerializableObjectWrapper implements Externalizable {
 			_serializable = lazySerializable.getSerializable();
 		}
 
-		return _serializable.hashCode();
+		return Objects.hashCode(_serializable);
 	}
 
 	@Override

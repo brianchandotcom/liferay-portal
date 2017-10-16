@@ -44,8 +44,13 @@ public class SerializableObjectWrapper implements Externalizable {
 			LazySerializable lazySerializable =
 				(LazySerializable)serializableWrapper._serializable;
 
-			serializableWrapper._serializable =
-				lazySerializable.getSerializable();
+			Serializable serializable = lazySerializable.getSerializable();
+
+			if (serializable == null) {
+				return null;
+			}
+
+			serializableWrapper._serializable = serializable;
 		}
 
 		return (T)serializableWrapper._serializable;
@@ -97,15 +102,26 @@ public class SerializableObjectWrapper implements Externalizable {
 		if (_serializable instanceof LazySerializable) {
 			LazySerializable lazySerializable = (LazySerializable)_serializable;
 
-			_serializable = lazySerializable.getSerializable();
+			Serializable serializable = lazySerializable.getSerializable();
+
+			if (serializable == null) {
+				return false;
+			}
+
+			_serializable = serializable;
 		}
 
 		if (serializableWrapper._serializable instanceof LazySerializable) {
 			LazySerializable lazySerializable =
 				(LazySerializable)serializableWrapper._serializable;
 
-			serializableWrapper._serializable =
-				lazySerializable.getSerializable();
+			Serializable serializable = lazySerializable.getSerializable();
+
+			if (serializable == null) {
+				return false;
+			}
+
+			serializableWrapper._serializable = serializable;
 		}
 
 		return _serializable.equals(serializableWrapper._serializable);

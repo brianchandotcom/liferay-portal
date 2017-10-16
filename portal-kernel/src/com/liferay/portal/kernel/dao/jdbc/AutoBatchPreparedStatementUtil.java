@@ -213,17 +213,18 @@ public class AutoBatchPreparedStatementUtil {
 
 			final PreparedStatement preparedStatement = _preparedStatement;
 
-			NoticeableFuture<Void> noticeableFuture = _portalExecutor.submit(
-				() -> {
-					try {
-						preparedStatement.executeBatch();
-					}
-					finally {
-						preparedStatement.close();
-					}
+			NoticeableFuture<Void> noticeableFuture =
+				_noticeableExecutorService.submit(
+					() -> {
+						try {
+							preparedStatement.executeBatch();
+						}
+						finally {
+							preparedStatement.close();
+						}
 
-					return null;
-				});
+						return null;
+					});
 
 			_futures.add(noticeableFuture);
 
@@ -250,7 +251,7 @@ public class AutoBatchPreparedStatementUtil {
 		private int _count;
 		private final Set<Future<Void>> _futures = Collections.newSetFromMap(
 			new ConcurrentHashMap<>());
-		private final NoticeableExecutorService _portalExecutor =
+		private final NoticeableExecutorService _noticeableExecutorService =
 			_portalExecutorManager.getPortalExecutor(
 				ConcurrentBatchInvocationHandler.class.getName());
 		private PreparedStatement _preparedStatement;
@@ -317,17 +318,18 @@ public class AutoBatchPreparedStatementUtil {
 		private void _executeUpdate() throws SQLException {
 			final PreparedStatement preparedStatement = _preparedStatement;
 
-			NoticeableFuture<Void> noticeableFuture = _portalExecutor.submit(
-				() -> {
-					try {
-						preparedStatement.executeUpdate();
-					}
-					finally {
-						preparedStatement.close();
-					}
+			NoticeableFuture<Void> noticeableFuture =
+				_noticeableExecutorService.submit(
+					() -> {
+						try {
+							preparedStatement.executeUpdate();
+						}
+						finally {
+							preparedStatement.close();
+						}
 
-					return null;
-				});
+						return null;
+					});
 
 			_futures.add(noticeableFuture);
 
@@ -353,7 +355,7 @@ public class AutoBatchPreparedStatementUtil {
 		private final Connection _connection;
 		private final Set<Future<Void>> _futures = Collections.newSetFromMap(
 			new ConcurrentHashMap<>());
-		private final NoticeableExecutorService _portalExecutor =
+		private final NoticeableExecutorService _noticeableExecutorService =
 			_portalExecutorManager.getPortalExecutor(
 				ConcurrentNoBatchInvocationHandler.class.getName());
 		private PreparedStatement _preparedStatement;

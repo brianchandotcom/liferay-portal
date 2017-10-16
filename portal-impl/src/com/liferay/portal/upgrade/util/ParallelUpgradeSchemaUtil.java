@@ -32,7 +32,7 @@ import java.util.concurrent.Future;
 public class ParallelUpgradeSchemaUtil {
 
 	public static void execute(String... sqlFileNames) throws Exception {
-		ExecutorService portalExecutor =
+		ExecutorService executorService =
 			_portalExecutorManager.getPortalExecutor(
 				ParallelUpgradeSchemaUtil.class.getName());
 
@@ -41,7 +41,7 @@ public class ParallelUpgradeSchemaUtil {
 		try {
 			for (String sqlFileName : sqlFileNames) {
 				futures.add(
-					portalExecutor.submit(
+					executorService.submit(
 						new CallableSQLExecutor(sqlFileName)));
 			}
 
@@ -50,7 +50,7 @@ public class ParallelUpgradeSchemaUtil {
 			}
 		}
 		finally {
-			portalExecutor.shutdown();
+			executorService.shutdown();
 		}
 	}
 

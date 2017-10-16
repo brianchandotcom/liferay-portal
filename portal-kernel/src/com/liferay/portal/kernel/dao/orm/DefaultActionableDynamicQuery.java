@@ -293,7 +293,7 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 
 					for (final Object object : objects) {
 						futures.add(
-							_portalExecutor.submit(
+							_executorService.submit(
 								new Callable<Void>() {
 
 									@Override
@@ -418,6 +418,9 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 	private long _companyId;
 	private Method _dynamicQueryCountMethod;
 	private Method _dynamicQueryMethod;
+	private final ExecutorService _executorService =
+		_portalExecutorManager.getPortalExecutor(
+			DefaultActionableDynamicQuery.class.getName());
 	private long _groupId;
 	private String _groupIdPropertyName = "groupId";
 	private int _interval = Indexer.DEFAULT_INTERVAL;
@@ -429,9 +432,6 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 	private PerformActionMethod _performActionMethod;
 
 	private PerformCountMethod _performCountMethod;
-	private final ExecutorService _portalExecutor =
-		_portalExecutorManager.getPortalExecutor(
-			DefaultActionableDynamicQuery.class.getName());
 	private String _primaryKeyPropertyName;
 	private TransactionConfig _transactionConfig;
 

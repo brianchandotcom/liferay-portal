@@ -338,19 +338,19 @@ public class ServiceTestUtil {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		ExecutorService portalExecutor = registry.callService(
+		ExecutorService executorService = registry.callService(
 			PortalExecutorManager.class,
 			portalExecutorManager -> portalExecutorManager.getPortalExecutor(
 				oldDestination.getName(), false));
 
-		if (portalExecutor == null) {
+		if (executorService == null) {
 			return;
 		}
 
-		portalExecutor.shutdown();
+		executorService.shutdown();
 
 		try {
-			if (!portalExecutor.awaitTermination(
+			if (!executorService.awaitTermination(
 					TestPropsValues.CI_TEST_TIMEOUT_TIME,
 					TimeUnit.MILLISECONDS)) {
 

@@ -61,7 +61,7 @@ class Flags extends PortletBase {
 	 * @param {Event} event
 	 * @protected
 	 */
-	_handleOnReasonChange(event) {
+	_handleReasonChange(event) {
 		let reason = event.delegateTarget.value;
 
 		let otherReasonContainer = this.one('#otherReasonContainer');
@@ -79,7 +79,7 @@ class Flags extends PortletBase {
 	 * @param {Event} event
 	 * @protected
 	 */
-	_handleOnSubmitForm(event) {
+	_handleSubmitForm(event) {
 		event.preventDefault();
 
 		let form = this.one('form[name="' + this.ns('flagsForm') +'"]');

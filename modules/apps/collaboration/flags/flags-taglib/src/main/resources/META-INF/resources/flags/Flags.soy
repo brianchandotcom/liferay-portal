@@ -17,9 +17,9 @@
 	{@param signedIn: bool}
 	{@param title: string}
 	{@param? _handleCloseDialogClick: any}
-	{@param? _handleOnReasonChange: any}
-	{@param? _handleOnSubmitForm: any}
+	{@param? _handleReasonChange: any}
 	{@param? _handleReportButtonClick: any}
+	{@param? _handleSubmitForm: any}
 	{@param? _reportDialogOpen: bool}
 	{@param? _showConfirmationMessage: bool}
 	{@param? _showErrorMessage: bool}
@@ -48,9 +48,9 @@
 		{if $_reportDialogOpen}
 			{call .reportDialog}
 				{param _handleCloseDialogClick: $_handleCloseDialogClick /}
-				{param _handleOnReasonChange: $_handleOnReasonChange /}
-				{param _handleOnSubmitForm: $_handleOnSubmitForm /}
+				{param _handleReasonChange: $_handleReasonChange /}
 				{param _handleReportButtonClick: $_handleReportButtonClick /}
+				{param _handleSubmitForm: $_handleSubmitForm /}
 				{param _showConfirmationMessage: $_showConfirmationMessage /}
 				{param _showErrorMessage: $_showErrorMessage /}
 				{param companyName: $companyName /}
@@ -121,8 +121,8 @@
 	{@param reasons: list<string>}
 	{@param signedIn: bool}
 	{@param? _handleCloseDialogClick: any}
-	{@param? _handleOnReasonChange: any}
-	{@param? _handleOnSubmitForm: any}
+	{@param? _handleReasonChange: any}
+	{@param? _handleSubmitForm: any}
 	{@param? _handleReportButtonClick: any}
 	{@param? _showConfirmationMessage: bool}
 	{@param? _showErrorMessage: bool}
@@ -131,8 +131,8 @@
 	{call Modal.render}
 		{param body kind="html"}
 			{call .reportDialogBody}
-				{param _handleOnReasonChange: $_handleOnReasonChange /}
-				{param _handleOnSubmitForm: $_handleOnSubmitForm /}
+				{param _handleReasonChange: $_handleReasonChange /}
+				{param _handleSubmitForm: $_handleSubmitForm /}
 				{param _showConfirmationMessage: $_showConfirmationMessage /}
 				{param _showErrorMessage: $_showErrorMessage /}
 				{param companyName: $companyName /}
@@ -207,8 +207,8 @@
 	{@param portletNamespace: string}
 	{@param reasons: list<string>}
 	{@param signedIn: bool}
-	{@param? _handleOnReasonChange: any}
-	{@param? _handleOnSubmitForm: any}
+	{@param? _handleReasonChange: any}
+	{@param? _handleSubmitForm: any}
 	{@param? _showConfirmationMessage: bool}
 	{@param? _showErrorMessage: bool}
 	{@param? reporterEmailAddress: string}
@@ -222,8 +222,8 @@
 			{/call}
 		{else}
 			{call .reportForm}
-				{param _handleOnReasonChange: $_handleOnReasonChange /}
-				{param _handleOnSubmitForm: $_handleOnSubmitForm /}
+				{param _handleReasonChange: $_handleReasonChange /}
+				{param _handleSubmitForm: $_handleSubmitForm /}
 				{param pathTermsOfUse: $pathTermsOfUse /}
 				{param pathThemeImages: $pathThemeImages /}
 				{param portletNamespace: $portletNamespace /}
@@ -246,11 +246,11 @@
 	{@param portletNamespace: string}
 	{@param reasons: list<string>}
 	{@param signedIn: bool}
-	{@param? _handleOnReasonChange: any}
-	{@param? _handleOnSubmitForm: any}
+	{@param? _handleReasonChange: any}
+	{@param? _handleSubmitForm: any}
 	{@param? reporterEmailAddress: string}
 
-	<form class="container-fluid-1280" method="post" name="{$portletNamespace}flagsForm" onsubmit="{$_handleOnSubmitForm}" >
+	<form class="container-fluid-1280" method="post" name="{$portletNamespace}flagsForm" onsubmit="{$_handleSubmitForm}" >
 		{let $termsOfUse kind="html"}
 			<a href="{$pathTermsOfUse}" target="_blank">
 				{msg desc=""}terms-of-use{/msg}
@@ -267,7 +267,7 @@
 					{msg desc=""}reason-for-the-report{/msg}
 				</label>
 
-				<select class="form-control" data-onchange="{$_handleOnReasonChange}" id="{$portletNamespace}reason" name="{$portletNamespace}reason">
+				<select class="form-control" data-onchange="{$_handleReasonChange}" id="{$portletNamespace}reason" name="{$portletNamespace}reason">
 					{foreach $reason in $reasons}
 						<option value="{$reason}">{$reason}</option>
 					{/foreach}

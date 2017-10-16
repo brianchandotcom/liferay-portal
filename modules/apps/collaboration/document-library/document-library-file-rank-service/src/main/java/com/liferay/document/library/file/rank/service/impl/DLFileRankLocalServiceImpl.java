@@ -93,18 +93,7 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 
 	@Override
 	public void checkFileRanks() {
-		int maxSize = 5;
-
-		try {
-			DLFileRankServiceConfiguration dlFileRankServiceConfiguration =
-				configurationProvider.getSystemConfiguration(
-					DLFileRankServiceConfiguration.class);
-
-			maxSize = dlFileRankServiceConfiguration.maxSize();
-		}
-		catch (ConfigurationException ce) {
-			_log.error("Unable to get dl file rank service configuration", ce);
-		}
+		int maxSize = _getMaxSize();
 
 		List<Object[]> staleFileRanks = dlFileRankFinder.findByStaleRanks(
 			maxSize);
@@ -210,18 +199,7 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 
 	@Override
 	public List<DLFileRank> getFileRanks(long groupId, long userId) {
-		int maxSize = 5;
-
-		try {
-			DLFileRankServiceConfiguration dlFileRankServiceConfiguration =
-				configurationProvider.getSystemConfiguration(
-					DLFileRankServiceConfiguration.class);
-
-			maxSize = dlFileRankServiceConfiguration.maxSize();
-		}
-		catch (ConfigurationException ce) {
-			_log.error("Unable to get dl file rank service configuration", ce);
-		}
+		int maxSize = _getMaxSize();
 
 		return dlFileRankPersistence.findByG_U_A(
 			groupId, userId, true, 0, maxSize,
@@ -279,6 +257,23 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 
 	@ServiceReference(type = ConfigurationProvider.class)
 	protected ConfigurationProvider configurationProvider;
+
+	private int _getMaxSize() {
+		int maxSize = 5;
+
+		try {
+			DLFileRankServiceConfiguration dlFileRankServiceConfiguration =
+				configurationProvider.getSystemConfiguration(
+					DLFileRankServiceConfiguration.class);
+
+			maxSize = dlFileRankServiceConfiguration.maxSize();
+		}
+		catch (ConfigurationException ce) {
+			_log.error("Unable to get dl file rank service configuration", ce);
+		}
+
+		return maxSize;
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileRankLocalServiceImpl.class);

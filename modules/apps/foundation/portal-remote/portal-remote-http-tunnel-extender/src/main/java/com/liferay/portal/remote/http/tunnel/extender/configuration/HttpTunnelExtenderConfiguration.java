@@ -29,7 +29,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface HttpTunnelExtenderConfiguration {
 
-	@Meta.AD(deflt = "255.255.255.255", required = false)
+	@Meta.AD(
+		deflt = "255.255.255.255", name = "hosts-allowed", required = false
+	)
 	public String[] hostsAllowed();
 
 }

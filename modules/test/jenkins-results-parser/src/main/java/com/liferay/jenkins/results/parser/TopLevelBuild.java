@@ -355,6 +355,47 @@ public class TopLevelBuild extends BaseBuild {
 			JenkinsResultsParserUtil.toDurationString(getDuration()));
 	}
 
+	protected Element getCompanionBranchDetailsElement() {
+		String baseRepositoryName = getBaseRepositoryName();
+		String branchName = getBranchName();
+
+		String companionRepositoryName = baseRepositoryName + "-ee";
+
+		if (branchName.endsWith("-private")) {
+			companionRepositoryName = baseRepositoryName.substring(
+				0, baseRepositoryName.indexOf("-ee") - 1);
+		}
+
+		String companionUsername = getCompanionUsername();
+
+		String companionBranchURL = JenkinsResultsParserUtil.combine(
+			"https://github.com/", companionUsername, "/",
+			companionRepositoryName, "/tree/", getCompanionBranchName());
+
+		String companionRepositorySHA = null;
+
+		companionRepositorySHA = getCompanionRepositorySHA();
+
+		String companionRepositoryCommitURL = JenkinsResultsParserUtil.combine(
+			"https://github.com/", companionUsername, "/",
+			companionRepositoryName, "/commit/", companionRepositorySHA);
+
+		Element companionBranchDetailsElement = Dom4JUtil.getNewElement(
+			"p", null, "Branch Name: ",
+			Dom4JUtil.getNewAnchorElement(
+				companionBranchURL, getCompanionBranchName()));
+
+		if (companionRepositorySHA != null) {
+			Dom4JUtil.addToElement(
+				companionBranchDetailsElement, Dom4JUtil.getNewElement("br"),
+				"Branch GIT ID: ",
+				Dom4JUtil.getNewAnchorElement(
+					companionRepositoryCommitURL, companionRepositorySHA));
+		}
+
+		return companionBranchDetailsElement;
+	}
+
 	protected Element getDownstreamGitHubMessageElement() {
 		String status = getStatus();
 
@@ -586,6 +627,22 @@ public class TopLevelBuild extends BaseBuild {
 			"html", null, getResultElement(), getBuildTimeElement(),
 			Dom4JUtil.getNewElement("h4", null, "Base Branch:"),
 			getBaseBranchDetailsElement());
+
+		String branchName = getBranchName();
+		String companionBranchLabel = "Copied in Private Modules Branch:";
+
+		if (branchName.endsWith("-private")) {
+			companionBranchLabel = "Built off of Portal Core Branch:";
+		}
+
+		if (!branchName.startsWith("ee-") &&
+			getBaseRepositoryName().contains("portal")) {
+
+			Dom4JUtil.addToElement(
+				rootElement,
+				Dom4JUtil.getNewElement("h4", null, companionBranchLabel),
+				getCompanionBranchDetailsElement());
+		}
 
 		int successCount = getDownstreamBuildCountByResult("SUCCESS");
 

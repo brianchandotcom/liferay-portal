@@ -1088,7 +1088,7 @@ public class GitWorkingDirectory {
 
 	protected List<Branch> getRemoteBranches(Remote remote) {
 		ExecutionResult executionResult = executeBashCommands(
-			1, 1000 * 60,
+			1, 1000 * 60 * 10,
 			JenkinsResultsParserUtil.combine(
 				"git ls-remote -h ", remote.getName()));
 
@@ -1121,6 +1121,7 @@ public class GitWorkingDirectory {
 
 	protected List<String> getRemoteBranchNames(Remote remote) {
 		ExecutionResult executionResult = executeBashCommands(
+			1, 1000 * 60 * 10,
 			JenkinsResultsParserUtil.combine(
 				"git ls-remote -h ", remote.getName()));
 
@@ -1193,10 +1194,22 @@ public class GitWorkingDirectory {
 
 		String remoteURL = upstreamRemote.getRemoteURL();
 
-		if (!remoteURL.contains("-ee") && !remoteURL.contains("-private")) {
-			remoteURL = remoteURL.replace(".git", "-private.git");
+		String repositoryName = getRepositoryName();
 
-			addRemote(true, "upstream", remoteURL);
+		if (repositoryName.endsWith("-ee")) {
+			if (!remoteURL.contains("-ee")) {
+				remoteURL = remoteURL.replace(".git", "-ee.git");
+
+				addRemote(true, "upstream", remoteURL);
+			}
+		}
+
+		if (repositoryName.endsWith("-private")) {
+			if (!remoteURL.contains("-private")) {
+				remoteURL = remoteURL.replace(".git", "-private.git");
+
+				addRemote(true, "upstream", remoteURL);
+			}
 		}
 	}
 

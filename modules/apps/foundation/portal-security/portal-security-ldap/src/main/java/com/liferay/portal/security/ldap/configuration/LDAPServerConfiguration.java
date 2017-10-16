@@ -34,25 +34,34 @@ public interface LDAPServerConfiguration {
 
 	public static final long LDAP_SERVER_ID_DEFAULT = 0;
 
-	@Meta.AD(deflt = "0", required = false)
+	@Meta.AD(deflt = "0", name = "company-id", required = false)
 	public long companyId();
 
 	@Meta.AD(deflt = "0", name = "ldap-server-id", required = false)
 	public long ldapServerId();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(deflt = "", name = "server-name", required = false)
 	public String serverName();
 
-	@Meta.AD(deflt = "ldap://localhost:10389", required = false)
+	@Meta.AD(
+		deflt = "ldap://localhost:10389", name = "base-provider-url",
+		required = false
+	)
 	public String baseProviderURL();
 
-	@Meta.AD(deflt = "", description = "base-dn-help", required = false)
+	@Meta.AD(
+		deflt = "", description = "base-dn-help", name = "base-dn",
+		required = false
+	)
 	public String baseDN();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(deflt = "", name = "security-principal", required = false)
 	public String securityPrincipal();
 
-	@Meta.AD(deflt = "secret", required = false, type = Meta.Type.Password)
+	@Meta.AD(
+		deflt = "secret", name = "security-credential", required = false,
+		type = Meta.Type.Password
+	)
 	public String securityCredential();
 
 	@Meta.AD(
@@ -64,72 +73,86 @@ public interface LDAPServerConfiguration {
 
 	@Meta.AD(
 		deflt = "(objectClass=inetOrgPerson)",
-		description = "user-search-filter-help", required = false
+		description = "user-search-filter-help", name = "user-search-filter",
+		required = false
 	)
 	public String userSearchFilter();
 
 	@Meta.AD(
 		deflt = "emailAddress=mail|firstName=givenName|group=groupMembership|jobTitle=title|lastName=sn|password=userPassword|screenName=cn|uuid=uuid",
-		description = "user-mappings-help", required = false
+		description = "user-mappings-help", name = "user-mappings",
+		required = false
 	)
 	public String[] userMappings();
 
 	@Meta.AD(
-		deflt = "", description = "user-custom-mappings-help", required = false
+		deflt = "", description = "user-custom-mappings-help",
+		name = "user-custom-mappings", required = false
 	)
 	public String[] userCustomMappings();
 
 	@Meta.AD(
 		deflt = "", description = "user-ignore-attributes-help",
-		required = false
+		name = "user-ignore-attributes", required = false
 	)
 	public String[] userIgnoreAttributes();
 
 	@Meta.AD(
 		deflt = "birthday=|facebookSn=|jabberSn=|skypeSn=|smsSn=|twitterSn=",
-		description = "contact-mappings-help", required = false
+		description = "contact-mappings-help", name = "contact-mappings",
+		required = false
 	)
 	public String[] contactMappings();
 
 	@Meta.AD(
 		deflt = "", description = "contact-custom-mappings-help",
-		required = false
+		name = "contact-custom-mappings", required = false
 	)
 	public String[] contactCustomMappings();
 
 	@Meta.AD(
 		deflt = "true", description = "group-search-filter-enabled-help",
-		required = false
+		name = "group-search-filter-enabled", required = false
 	)
 	public boolean groupSearchFilterEnabled();
 
 	@Meta.AD(
 		deflt = "(objectClass=groupOfUniqueNames)",
-		description = "group-search-filter-help", required = false
+		description = "group-search-filter-help", name = "group-search-filter",
+		required = false
 	)
 	public String groupSearchFilter();
 
 	@Meta.AD(
 		deflt = "description=description|groupName=cn|user=uniqueMember",
-		description = "group-mappings-help", required = false
+		description = "group-mappings-help", name = "group-mappings",
+		required = false
 	)
 	public String[] groupMappings();
 
-	@Meta.AD(deflt = "", description = "users-dn-help", required = false)
+	@Meta.AD(
+		deflt = "", description = "users-dn-help", name = "users-dn",
+		required = false
+	)
 	public String usersDN();
 
 	@Meta.AD(
 		deflt = "top|person|inetOrgPerson|organizationalPerson",
-		description = "user-default-object-classes-help", required = false
+		description = "user-default-object-classes-help",
+		name = "user-default-object-classes", required = false
 	)
 	public String[] userDefaultObjectClasses();
 
-	@Meta.AD(deflt = "", description = "groups-dn-help", required = false)
+	@Meta.AD(
+		deflt = "", description = "groups-dn-help", name = "groups-dn",
+		required = false
+	)
 	public String groupsDN();
 
 	@Meta.AD(
 		deflt = "top|groupOfUniqueNames",
-		description = "group-default-object-classes-help", required = false
+		description = "group-default-object-classes-help",
+		name = "group-default-object-classes", required = false
 	)
 	public String[] groupDefaultObjectClasses();
 

@@ -29,7 +29,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface SoyTemplateEngineConfiguration {
 
-	@Meta.AD(deflt = "60", required = false)
+	@Meta.AD(
+		deflt = "60", name = "resource-modification-check", required = false
+	)
 	public int resourceModificationCheck();
 
 }

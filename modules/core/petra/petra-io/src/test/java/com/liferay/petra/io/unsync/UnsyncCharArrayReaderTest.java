@@ -15,6 +15,7 @@
 package com.liferay.petra.io.unsync;
 
 import java.io.IOException;
+import java.io.Reader;
 
 import java.nio.CharBuffer;
 
@@ -24,7 +25,7 @@ import org.junit.Test;
 /**
  * @author Shuyang Zhou
  */
-public class UnsyncCharArrayReaderTest {
+public class UnsyncCharArrayReaderTest extends BaseReaderTestCase {
 
 	@Test
 	public void testBlockRead() throws IOException {
@@ -167,49 +168,7 @@ public class UnsyncCharArrayReaderTest {
 		Assert.assertEquals(_SIZE / 2, unsyncCharArrayReader.markIndex);
 	}
 
-	@Test
-	public void testMarkAndReset() throws IOException {
-		UnsyncCharArrayReader unsyncCharArrayReader = new UnsyncCharArrayReader(
-			_BUFFER);
-
-		Assert.assertEquals('a', unsyncCharArrayReader.read());
-		Assert.assertEquals('b', unsyncCharArrayReader.read());
-
-		unsyncCharArrayReader.mark(-1);
-
-		Assert.assertEquals(2, unsyncCharArrayReader.index);
-		Assert.assertEquals('c', unsyncCharArrayReader.read());
-		Assert.assertEquals('d', unsyncCharArrayReader.read());
-		Assert.assertEquals(4, unsyncCharArrayReader.index);
-
-		unsyncCharArrayReader.reset();
-
-		Assert.assertEquals(2, unsyncCharArrayReader.index);
-		Assert.assertEquals('c', unsyncCharArrayReader.read());
-		Assert.assertEquals('d', unsyncCharArrayReader.read());
-		Assert.assertEquals(4, unsyncCharArrayReader.index);
-	}
-
-	@Test
-	public void testMarkSupported() {
-		UnsyncCharArrayReader unsyncCharArrayReader = new UnsyncCharArrayReader(
-			_BUFFER);
-
-		Assert.assertTrue(unsyncCharArrayReader.markSupported());
-	}
-
-	@Test
-	public void testRead() throws IOException {
-		UnsyncCharArrayReader unsyncCharArrayReader = new UnsyncCharArrayReader(
-			_BUFFER);
-
-		for (int i = 0; i < _SIZE; i++) {
-			Assert.assertEquals('a' + i, unsyncCharArrayReader.read());
-		}
-
-		Assert.assertEquals(-1, unsyncCharArrayReader.read());
-	}
-
+	@Override
 	@Test
 	public void testReady() throws IOException {
 		UnsyncCharArrayReader unsyncCharArrayReader = new UnsyncCharArrayReader(
@@ -222,18 +181,9 @@ public class UnsyncCharArrayReaderTest {
 		Assert.assertFalse(unsyncCharArrayReader.ready());
 	}
 
-	@Test
-	public void testSkip() throws IOException {
-		UnsyncCharArrayReader unsyncCharArrayReader = new UnsyncCharArrayReader(
-			_BUFFER);
-
-		long size = _SIZE * 2 / 3;
-
-		Assert.assertEquals(size, unsyncCharArrayReader.skip(size));
-		Assert.assertEquals(size, unsyncCharArrayReader.index);
-		Assert.assertEquals(_SIZE - size, unsyncCharArrayReader.skip(size));
-
-		Assert.assertEquals(_SIZE, unsyncCharArrayReader.index);
+	@Override
+	protected Reader getReader(String s) {
+		return new UnsyncCharArrayReader(s.toCharArray());
 	}
 
 	private static final char[] _BUFFER =

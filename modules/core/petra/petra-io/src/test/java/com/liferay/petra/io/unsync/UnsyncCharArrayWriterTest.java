@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.io.Writer;
 
 import java.nio.CharBuffer;
 
@@ -30,7 +31,7 @@ import org.junit.Test;
 /**
  * @author Shuyang Zhou
  */
-public class UnsyncCharArrayWriterTest {
+public class UnsyncCharArrayWriterTest extends BaseWriterTestCase {
 
 	@Test
 	public void testAppendChar() {
@@ -218,6 +219,11 @@ public class UnsyncCharArrayWriterTest {
 		Assert.assertEquals(4, length);
 
 		Assert.assertEquals("abcd", stringWriter.toString());
+	}
+
+	@Override
+	protected Writer getWriter() {
+		return new UnsyncCharArrayWriter();
 	}
 
 }

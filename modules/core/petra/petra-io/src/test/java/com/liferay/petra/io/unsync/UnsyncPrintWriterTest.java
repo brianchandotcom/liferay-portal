@@ -31,7 +31,7 @@ import org.junit.Test;
 /**
  * @author Shuyang Zhou
  */
-public class UnsyncPrintWriterTest {
+public class UnsyncPrintWriterTest extends BaseWriterTestCase {
 
 	@After
 	public void tearDown() throws Exception {
@@ -183,6 +183,11 @@ public class UnsyncPrintWriterTest {
 		unsyncPrintWriter.write("opqrst", 2, 2);
 
 		Assert.assertEquals("abcdefghijklmnopqr", stringWriter.toString());
+	}
+
+	@Override
+	protected Writer getWriter() {
+		return new UnsyncPrintWriter(new StringWriter());
 	}
 
 	private static Writer _getOut(UnsyncPrintWriter unsyncPrintWriter) {

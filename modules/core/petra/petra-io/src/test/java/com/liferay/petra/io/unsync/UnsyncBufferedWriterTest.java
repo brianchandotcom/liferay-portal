@@ -16,6 +16,7 @@ package com.liferay.petra.io.unsync;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.io.Writer;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -23,7 +24,7 @@ import org.junit.Test;
 /**
  * @author Shuyang Zhou
  */
-public class UnsyncBufferedWriterTest {
+public class UnsyncBufferedWriterTest extends BaseWriterTestCase {
 
 	@Test
 	public void testBlockWrite() throws IOException {
@@ -229,6 +230,11 @@ public class UnsyncBufferedWriterTest {
 		Assert.assertEquals('d', unsyncBufferedWriter.buffer[0]);
 		Assert.assertEquals(3, stringWriter.getBuffer().length());
 		Assert.assertEquals("abc", stringWriter.getBuffer().toString());
+	}
+
+	@Override
+	protected Writer getWriter() {
+		return new UnsyncBufferedWriter(new StringWriter());
 	}
 
 }

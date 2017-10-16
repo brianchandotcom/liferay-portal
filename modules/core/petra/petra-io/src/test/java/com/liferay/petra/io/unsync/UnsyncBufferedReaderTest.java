@@ -17,6 +17,7 @@ package com.liferay.petra.io.unsync;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.io.StringReader;
 
 import org.junit.Assert;
@@ -25,10 +26,13 @@ import org.junit.Test;
 /**
  * @author Shuyang Zhou
  */
-public class UnsyncBufferedReaderTest {
+public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 
+	@Override
 	@Test
 	public void testBlockRead() throws IOException {
+		super.testBlockRead();
+
 		StringReader stringReader = new StringReader("abcdefghi");
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
@@ -44,10 +48,6 @@ public class UnsyncBufferedReaderTest {
 		// Zero length read
 
 		Assert.assertEquals(0, unsyncBufferedReader.read(buffer, 0, 0));
-
-		// Negative length read
-
-		Assert.assertEquals(0, unsyncBufferedReader.read(buffer, 0, -1));
 
 		// In-memory
 
@@ -117,62 +117,15 @@ public class UnsyncBufferedReaderTest {
 		Assert.assertNull(unsyncBufferedReader.reader);
 
 		try {
-			unsyncBufferedReader.mark(0);
-
-			Assert.fail();
-		}
-		catch (IOException ioe) {
-		}
-
-		try {
-			unsyncBufferedReader.read();
-
-			Assert.fail();
-		}
-		catch (IOException ioe) {
-		}
-
-		try {
-			unsyncBufferedReader.read(new char[5]);
-
-			Assert.fail();
-		}
-		catch (IOException ioe) {
-		}
-
-		try {
 			unsyncBufferedReader.readLine();
 
 			Assert.fail();
 		}
 		catch (IOException ioe) {
+			Assert.assertEquals("Reader is null", ioe.getMessage());
 		}
 
-		try {
-			unsyncBufferedReader.ready();
-
-			Assert.fail();
-		}
-		catch (IOException ioe) {
-		}
-
-		try {
-			unsyncBufferedReader.reset();
-
-			Assert.fail();
-		}
-		catch (IOException ioe) {
-		}
-
-		try {
-			unsyncBufferedReader.skip(0);
-
-			Assert.fail();
-		}
-		catch (IOException ioe) {
-		}
-
-		unsyncBufferedReader.close();
+		testClose(unsyncBufferedReader, "Reader is null");
 	}
 
 	@Test
@@ -189,6 +142,7 @@ public class UnsyncBufferedReaderTest {
 
 		try {
 			new UnsyncBufferedReader(new StringReader(""), 0);
+
 			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
@@ -196,6 +150,7 @@ public class UnsyncBufferedReaderTest {
 
 		try {
 			new UnsyncBufferedReader(new StringReader(""), -1);
+
 			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
@@ -314,14 +269,6 @@ public class UnsyncBufferedReaderTest {
 	}
 
 	@Test
-	public void testMarkSupported() {
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new StringReader("abcdefghi"), 5);
-
-		Assert.assertTrue(unsyncBufferedReader.markSupported());
-	}
-
-	@Test
 	public void testRead() throws IOException {
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new StringReader("ab\r\nef"), 3);
@@ -391,6 +338,7 @@ public class UnsyncBufferedReaderTest {
 		Assert.assertEquals(5, unsyncBufferedReader.index);
 	}
 
+	@Override
 	@Test
 	public void testReady() throws IOException {
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
@@ -404,6 +352,7 @@ public class UnsyncBufferedReaderTest {
 		Assert.assertFalse(unsyncBufferedReader.ready());
 	}
 
+	@Override
 	@Test
 	public void testSkip() throws IOException {
 		int size = 10;
@@ -475,6 +424,11 @@ public class UnsyncBufferedReaderTest {
 		// Skip on EOF
 
 		Assert.assertEquals(0, unsyncBufferedReader.skip(1));
+	}
+
+	@Override
+	protected Reader getReader(String s) {
+		return new UnsyncBufferedReader(new StringReader(s));
 	}
 
 	private static final char[] _BUFFER =

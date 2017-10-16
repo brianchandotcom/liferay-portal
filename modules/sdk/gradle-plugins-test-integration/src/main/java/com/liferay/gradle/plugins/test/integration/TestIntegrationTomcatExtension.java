@@ -109,7 +109,7 @@ public class TestIntegrationTomcatExtension {
 	private Object _liferayHome;
 	private Object _managerPassword = "tomcat";
 	private Object _managerUserName = "tomcat";
-	private boolean _overwriteCopyTestModules;
+	private boolean _overwriteCopyTestModules = true;
 	private Object _portNumber = 8080;
 	private final Project _project;
 

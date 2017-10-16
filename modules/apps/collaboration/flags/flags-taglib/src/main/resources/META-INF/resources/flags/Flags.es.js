@@ -17,8 +17,6 @@ class Flags extends PortletBase {
 	 */
 	attached() {
 		this._reportDialogOpen = false;
-		this.namespace = this.portletNamespace;
-		this.rootNode = this.one('.taglib-flags');
 		this._showConfirmationMessage = false;
 		this._showErrorMessage = false;
 	}
@@ -28,12 +26,13 @@ class Flags extends PortletBase {
 	 * @return {String} reason
 	 */
 	_getReason() {
-		let reason = this.one('#reason').value;
+		let reason;
 
-		if (reason === 'other') {
-			let otherReason = this.one('#otherReason').value;
-
-			reason = otherReason || Liferay.Language.get('no-reason-specified');
+		if (this.refs.modal.refs.otherReason) {
+			reason = this.refs.modal.refs.otherReason.value || Liferay.Language.get('no-reason-specified');
+		}
+		else {
+			reason = this.refs.modal.refs.reason.value;
 		}
 
 		return reason;
@@ -66,19 +65,22 @@ class Flags extends PortletBase {
 	}
 
 	/**
+	 * Forms the submit.
+	 * @internal
+	 * @protected
+	 */
+	_handleReportButtonClick() {
+		this._sendReport();
+	}
+
+	/**
 	 * Makes an ajax request to submit the data.
 	 * @param {Event} event
 	 * @protected
 	 */
-	_handleSubmitForm(event) {
-		event.preventDefault();
-
-		let form = this.one('form[name="' + this.ns('flagsForm') +'"]');
-
+	_sendReport() {
 		this.data[this.ns('reason')] = this._getReason();
-		this.data[this.ns('reporterEmailAddress')] = this.one(
-      '#reporterEmailAddress'
-    ).value;
+		this.data[this.ns('reporterEmailAddress')] = this.refs.modal.refs.reporterEmailAddress.value;
 
 		let formData = new FormData();
 
@@ -99,17 +101,6 @@ class Flags extends PortletBase {
 		.catch(() => {
 			this._showErrorMessage = true;
 		});
-	}
-
-	/**
-	 * Forms the submit.
-	 * @internal
-	 * @protected
-	 */
-	_handleReportButtonClick() {
-		let input = this.one('input[type="submit"]');
-
-		input.click();
 	}
 };
 

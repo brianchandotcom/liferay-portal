@@ -95,8 +95,11 @@ public class SerializableObjectWrapper implements Externalizable {
 			LazySerializable lazySerializable2 =
 				(LazySerializable)serializableWrapper._serializable;
 
-			return Arrays.equals(
-				lazySerializable1.getData(), lazySerializable2.getData());
+			if (Arrays.equals(
+					lazySerializable1.getData(), lazySerializable2.getData())) {
+
+				return true;
+			}
 		}
 
 		if (_serializable instanceof LazySerializable) {

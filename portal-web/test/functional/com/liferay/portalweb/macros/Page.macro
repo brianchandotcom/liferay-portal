@@ -692,7 +692,9 @@
 
 		<execute function="Click" locator1="Button#ADD_ACTION" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${actionName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${actionName}" />
+		</execute>
 
 		<var name="key_actionType" value="${actionType}" />
 

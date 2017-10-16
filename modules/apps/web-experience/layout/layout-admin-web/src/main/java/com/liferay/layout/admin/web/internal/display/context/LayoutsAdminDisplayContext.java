@@ -17,22 +17,13 @@ package com.liferay.layout.admin.web.internal.display.context;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.RoleConstants;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.util.LayoutDescription;
 import com.liferay.portal.util.LayoutListUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
 
 import java.util.List;
@@ -68,15 +59,6 @@ public class LayoutsAdminDisplayContext extends BaseLayoutDisplayContext {
 				PortalUtil.getHttpServletRequest(liferayPortletRequest)));
 
 		return addLayoutURL;
-	}
-
-	public PortletURL getEditLayoutURL() {
-		PortletURL editLayoutURL = super.getEditLayoutURL(
-			getSelPlid(), isPrivateLayout());
-
-		editLayoutURL.setParameter("redirect", getRedirect());
-
-		return editLayoutURL;
 	}
 
 	public Group getGroup() {
@@ -127,21 +109,6 @@ public class LayoutsAdminDisplayContext extends BaseLayoutDisplayContext {
 
 	public Long getLiveGroupId() {
 		return _groupDisplayContextHelper.getLiveGroupId();
-	}
-
-	public Organization getOrganization() {
-		if (_organization != null) {
-			return _organization;
-		}
-
-		Group liveGroup = getLiveGroup();
-
-		if (liveGroup.isOrganization()) {
-			_organization = OrganizationLocalServiceUtil.fetchOrganization(
-				liveGroup.getOrganizationId());
-		}
-
-		return _organization;
 	}
 
 	public String getPagesName() {
@@ -212,20 +179,6 @@ public class LayoutsAdminDisplayContext extends BaseLayoutDisplayContext {
 		return 0;
 	}
 
-	public User getSelUser() {
-		if (_selUser != null) {
-			return _selUser;
-		}
-
-		Group liveGroup = getLiveGroup();
-
-		if (liveGroup.isUser()) {
-			_selUser = UserLocalServiceUtil.fetchUser(liveGroup.getClassPK());
-		}
-
-		return _selUser;
-	}
-
 	@Override
 	public Group getStagingGroup() {
 		return _groupDisplayContextHelper.getStagingGroup();
@@ -235,64 +188,10 @@ public class LayoutsAdminDisplayContext extends BaseLayoutDisplayContext {
 		return _groupDisplayContextHelper.getStagingGroupId();
 	}
 
-	public UserGroup getUserGroup() {
-		if (_userGroup != null) {
-			return _userGroup;
-		}
-
-		Group liveGroup = getLiveGroup();
-
-		if (liveGroup.isUserGroup()) {
-			_userGroup = UserGroupLocalServiceUtil.fetchUserGroup(
-				liveGroup.getClassPK());
-		}
-
-		return _userGroup;
-	}
-
-	protected boolean hasPowerUserRole() {
-		try {
-			User selUser = getSelUser();
-
-			return RoleLocalServiceUtil.hasUserRole(
-				selUser.getUserId(), themeDisplay.getCompanyId(),
-				RoleConstants.POWER_USER, true);
-		}
-		catch (Exception e) {
-		}
-
-		return false;
-	}
-
-	protected boolean isPrivateLayoutsModifiable() {
-		if ((!PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_POWER_USER_REQUIRED ||
-			 hasPowerUserRole()) &&
-			PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	protected boolean isPublicLayoutsModifiable() {
-		if ((!PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED ||
-			 hasPowerUserRole()) &&
-			PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
 	private List<LayoutDescription> _layoutDescriptions;
 	private Long _layoutId;
-	private Organization _organization;
 	private String _pagesName;
 	private String _redirect;
-	private User _selUser;
-	private UserGroup _userGroup;
 
 }

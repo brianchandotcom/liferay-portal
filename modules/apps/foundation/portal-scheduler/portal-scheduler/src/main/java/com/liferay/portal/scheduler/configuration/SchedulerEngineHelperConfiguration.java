@@ -34,7 +34,7 @@ public interface SchedulerEngineHelperConfiguration {
 
 	@Meta.AD(
 		deflt = "false", description = "audit-scheduler-job-enabled-help",
-		required = false
+		name = "audit-scheduler-job-enabled", required = false
 	)
 	public boolean auditSchedulerJobEnabled();
 

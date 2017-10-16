@@ -17,6 +17,8 @@ package com.liferay.petra.io.unsync;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
+import java.io.Writer;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -24,7 +26,7 @@ import org.junit.Test;
 /**
  * @author Shuyang Zhou
  */
-public class UnsyncStringWriterTest {
+public class UnsyncStringWriterTest extends BaseWriterTestCase {
 
 	@ClassRule
 	public static final CodeCoverageAssertor codeCoverageAssertor =
@@ -345,13 +347,6 @@ public class UnsyncStringWriterTest {
 		Assert.assertEquals("cd", unsyncStringWriter.stringBundler.stringAt(1));
 	}
 
-	@Test(expected = NullPointerException.class)
-	public void testWriteNullCharArray() {
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter(true);
-
-		unsyncStringWriter.write((char[])null, 0, 1);
-	}
-
 	@Test
 	public void testWriteNullString() {
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter(true);
@@ -367,51 +362,6 @@ public class UnsyncStringWriterTest {
 
 		Assert.assertEquals(
 			StringPool.NULL, unsyncStringWriter.stringBundler.toString());
-	}
-
-	@Test(expected = IndexOutOfBoundsException.class)
-	public void testWriteOutOfBoundsLength() {
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter(false);
-
-		char[] chars = {'a', 'b', 'c'};
-
-		unsyncStringWriter.write(chars, 3, 1);
-	}
-
-	@Test(expected = IndexOutOfBoundsException.class)
-	public void testWriteOutOfBoundsNegativeLength() {
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter(false);
-
-		char[] chars = {'a', 'b', 'c'};
-
-		unsyncStringWriter.write(chars, 0, -1);
-	}
-
-	@Test(expected = IndexOutOfBoundsException.class)
-	public void testWriteOutOfBoundsNegativeOffset() {
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter(false);
-
-		char[] chars = {'a', 'b', 'c'};
-
-		unsyncStringWriter.write(chars, -1, 1);
-	}
-
-	@Test(expected = IndexOutOfBoundsException.class)
-	public void testWriteOutOfBoundsOffset() {
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter(false);
-
-		char[] chars = {'a', 'b', 'c'};
-
-		unsyncStringWriter.write(chars, 4, 1);
-	}
-
-	@Test(expected = IndexOutOfBoundsException.class)
-	public void testWriteOutOfBoundsOverflow() {
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter(false);
-
-		char[] chars = {'a', 'b', 'c'};
-
-		unsyncStringWriter.write(chars, 1, Integer.MAX_VALUE);
 	}
 
 	@Test
@@ -483,13 +433,9 @@ public class UnsyncStringWriterTest {
 		Assert.assertEquals("b", unsyncStringWriter.stringBundler.stringAt(1));
 	}
 
-	@Test
-	public void testWriteZeroLength() {
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter(false);
-
-		char[] chars = {'a', 'b', 'c'};
-
-		unsyncStringWriter.write(chars, 0, 0);
+	@Override
+	protected Writer getWriter() {
+		return new UnsyncStringWriter(false);
 	}
 
 }

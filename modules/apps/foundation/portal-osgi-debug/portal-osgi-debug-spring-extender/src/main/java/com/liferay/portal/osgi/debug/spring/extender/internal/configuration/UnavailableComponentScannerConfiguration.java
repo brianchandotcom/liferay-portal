@@ -32,7 +32,7 @@ public interface UnavailableComponentScannerConfiguration {
 	@Meta.AD(
 		deflt = "-1",
 		description = "unavailable-component-scanning-interval-help",
-		required = false
+		name = "unavailable-component-scanning-interval", required = false
 	)
 	public long unavailableComponentScanningInterval();
 

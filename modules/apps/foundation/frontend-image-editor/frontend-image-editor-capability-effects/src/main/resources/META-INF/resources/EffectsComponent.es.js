@@ -1,9 +1,7 @@
-import Component from 'metal-component/src/Component';
-import Soy from 'metal-soy/src/Soy';
-
-import async from 'metal/src/async/async';
-import core from 'metal/src/core';
-import { CancellablePromise } from 'metal-promise/src/promise/Promise';
+import Component from 'metal-component';
+import Soy from 'metal-soy';
+import { CancellablePromise } from 'metal-promise';
+import { async, core } from 'metal';
 
 import componentTemplates from './EffectsComponent.soy';
 import controlsTemplates from './EffectsControls.soy';

@@ -1,8 +1,7 @@
-import Component from 'metal-component/src/Component';
-import Soy from 'metal-soy/src/Soy';
-
-import core from 'metal/src/core';
-import { CancellablePromise } from 'metal-promise/src/promise/Promise';
+import Component from 'metal-component';
+import Soy from 'metal-soy';
+import { CancellablePromise } from 'metal-promise';
+import { core } from 'metal';
 
 import componentTemplates from './RotateComponent.soy';
 import controlsTemplates from './RotateControls.soy';

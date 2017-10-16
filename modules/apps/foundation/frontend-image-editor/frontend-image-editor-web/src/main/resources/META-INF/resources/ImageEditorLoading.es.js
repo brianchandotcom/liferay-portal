@@ -1,5 +1,5 @@
-import Component from 'metal-component/src/Component';
-import Soy from 'metal-soy/src/Soy';
+import Component from 'metal-component';
+import Soy from 'metal-soy';
 
 import templates from './ImageEditorLoading.soy';
 

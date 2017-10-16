@@ -10,6 +10,7 @@
 		"metal-component": "^2.13.2",
 		"metal-datatable": "^2.0.0",
 		"metal-dom": "^2.13.2",
+		"metal-drag-drop": "^2.0.1",
 		"metal-dropdown": "^2.0.0",
 		"metal-events": "^2.13.2",
 		"metal-incremental-dom": "^2.13.2",

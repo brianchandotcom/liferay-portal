@@ -447,7 +447,11 @@
 
 		<execute macro="FormRules#addRule" />
 
+		<execute macro="FormRules#viewRuleConditionDropdownDisabled" />
+
 		<execute macro="FormRules#addCondition" />
+
+		<execute macro="FormRules#viewRuleConditionDropdownEnabled" />
 
 		<execute macro="FormRules#selectRuleCondition">
 			<var name="condition" value="AND" />

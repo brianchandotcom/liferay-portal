@@ -36,7 +36,6 @@ page import="com.liferay.exportimport.kernel.staging.LayoutStagingUtil" %><%@
 page import="com.liferay.exportimport.kernel.staging.StagingUtil" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.LayoutPageTemplateDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext" %><%@
-page import="com.liferay.layout.admin.web.internal.display.context.LayoutsPrototypeTreeDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.LayoutsTreeDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.OrphanPortletsDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.ViewLayoutsDisplayContext" %><%@

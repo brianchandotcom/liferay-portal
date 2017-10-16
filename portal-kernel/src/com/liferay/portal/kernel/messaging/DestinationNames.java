@@ -19,6 +19,8 @@ package com.liferay.portal.kernel.messaging;
  */
 public interface DestinationNames {
 
+	public static final String ANALYTICS = "liferay/analytics";
+
 	public static final String ASYNC_SERVICE = "liferay/async_service";
 
 	public static final String AUDIT = "liferay/audit";

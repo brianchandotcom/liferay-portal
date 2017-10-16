@@ -85,7 +85,11 @@ public class OrphanPortletsDisplayContext {
 	public List<Portlet> getOrphanPortlets() {
 		Layout selLayout = getSelLayout();
 
-		if (!selLayout.isSupportsEmbeddedPortlets()) {
+		return getOrphanPortlets(selLayout);
+	}
+
+	public List<Portlet> getOrphanPortlets(Layout layout) {
+		if (!layout.isSupportsEmbeddedPortlets()) {
 			return Collections.emptyList();
 		}
 
@@ -93,7 +97,7 @@ public class OrphanPortletsDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		LayoutTypePortlet selLayoutTypePortlet =
-			(LayoutTypePortlet)selLayout.getLayoutType();
+			(LayoutTypePortlet)layout.getLayoutType();
 
 		List<Portlet> explicitlyAddedPortlets =
 			selLayoutTypePortlet.getExplicitlyAddedPortlets();

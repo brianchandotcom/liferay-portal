@@ -91,6 +91,23 @@ Layout curLayout = (Layout)row.getObject();
 		/>
 	</c:if>
 
+	<%
+	OrphanPortletsDisplayContext orphanPortletsDisplayContext = new OrphanPortletsDisplayContext(renderRequest);
+	%>
+
+	<c:if test="<%= !StagingUtil.isIncomplete(curLayout) && curLayout.isSupportsEmbeddedPortlets() && ListUtil.isNotEmpty(orphanPortletsDisplayContext.getOrphanPortlets(curLayout)) %>">
+		<portlet:renderURL var="orphanPortletsURL">
+			<portlet:param name="mvcPath" value="/orphan_portlets.jsp" />
+			<portlet:param name="backURL" value="<%= currentURL %>" />
+			<portlet:param name="selPlid" value="<%= String.valueOf(curLayout.getPlid()) %>" />
+		</portlet:renderURL>
+
+		<liferay-ui:icon
+			message="orphan-portlets"
+			url="<%= orphanPortletsURL %>"
+		/>
+	</c:if>
+
 	<liferay-ui:icon
 		message="view-page"
 		target="_blank"

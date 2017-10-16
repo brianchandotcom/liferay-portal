@@ -15,24 +15,18 @@
 package com.liferay.document.library.internal.service;
 
 import com.liferay.document.library.file.rank.service.DLFileRankLocalService;
-import com.liferay.document.library.kernel.model.DLFileRank;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
 import com.liferay.document.library.kernel.service.DLAppHelperLocalServiceWrapper;
-import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.document.library.kernel.service.DLAppLocalServiceWrapper;
 import com.liferay.document.library.kernel.util.DLAppHelperThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
-import com.liferay.portal.kernel.repository.event.TrashRepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import java.util.List;
 
 /**
  * @author Sergio González
@@ -83,19 +77,6 @@ public class DLFileRankDLAppHelperLocalServiceWrapper
 	}
 
 	@Override
-	public void restoreFileEntryFromTrash(long userId, FileEntry fileEntry)
-		throws PortalException {
-
-		super.restoreFileEntryFromTrash(userId, fileEntry);
-
-		if (!DLAppHelperThreadLocal.isEnabled()) {
-			return;
-		}
-
-		_dlFileRankLocalService.enableFileRanks(fileEntry.getFileEntryId());
-	}
-
-	@Override
 	public FileEntry moveFileEntryFromTrash(
 			long userId, FileEntry fileEntry, long newFolderId,
 			ServiceContext serviceContext)
@@ -108,24 +89,25 @@ public class DLFileRankDLAppHelperLocalServiceWrapper
 			return curFileEntry;
 		}
 
-		_dlFileRankLocalService.enableFileRanks(
-			fileEntry.getFileEntryId());
+		_dlFileRankLocalService.enableFileRanks(fileEntry.getFileEntryId());
 
 		return curFileEntry;
 	}
 
 	@Override
-	public Folder moveFolderToTrash(long userId, Folder folder)
+	public FileEntry moveFileEntryToTrash(long userId, FileEntry fileEntry)
 		throws PortalException {
 
-		Folder curFolder = super.moveFolderToTrash(userId, folder);
+		FileEntry curFileEntry = super.moveFileEntryToTrash(userId, fileEntry);
 
-		_dlFileRankLocalService.disableFileRanksByFolderId(
-			folder.getFolderId());
+		if (!DLAppHelperThreadLocal.isEnabled()) {
+			return curFileEntry;
+		}
 
-		return curFolder;
+		_dlFileRankLocalService.disableFileRanks(fileEntry.getFileEntryId());
+
+		return curFileEntry;
 	}
-
 
 	@Override
 	public Folder moveFolderFromTrash(
@@ -142,29 +124,37 @@ public class DLFileRankDLAppHelperLocalServiceWrapper
 			return curFolder;
 		}
 
-		_dlFileRankLocalService.enableFileRanksByFolderId(
+		_dlFileRankLocalService.enableFileRanksByFolderId(folder.getFolderId());
+
+		return curFolder;
+	}
+
+	@Override
+	public Folder moveFolderToTrash(long userId, Folder folder)
+		throws PortalException {
+
+		Folder curFolder = super.moveFolderToTrash(userId, folder);
+
+		_dlFileRankLocalService.disableFileRanksByFolderId(
 			folder.getFolderId());
 
 		return curFolder;
 	}
 
 	@Override
-	public FileEntry moveFileEntryToTrash(long userId, FileEntry fileEntry)
+	public void restoreFileEntryFromTrash(long userId, FileEntry fileEntry)
 		throws PortalException {
 
-		FileEntry curFileEntry = super.moveFileEntryToTrash(
-			userId, fileEntry);
+		super.restoreFileEntryFromTrash(userId, fileEntry);
 
 		if (!DLAppHelperThreadLocal.isEnabled()) {
-			return curFileEntry;
+			return;
 		}
 
-		_dlFileRankLocalService.disableFileRanks(fileEntry.getFileEntryId());
-
-		return curFileEntry;
+		_dlFileRankLocalService.enableFileRanks(fileEntry.getFileEntryId());
 	}
 
-		@Override
+	@Override
 	public void restoreFolderFromTrash(long userId, Folder folder)
 		throws PortalException {
 

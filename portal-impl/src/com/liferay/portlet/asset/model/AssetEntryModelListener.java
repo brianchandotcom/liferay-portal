@@ -18,7 +18,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.model.BaseModelListener;
 
 /**
- * @author Bryan Engler
+ * @author     Bryan Engler
  * @deprecated As of 7.0.0, moved to {@link
  *             com.liferay.asset.internal.model.listener.AssetEntryModelListener}
  */

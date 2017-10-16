@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * @author Tina Tian
+ * @author     Tina Tian
  * @deprecated As of 7.0.0, with no direct replacement
  */
 @Deprecated

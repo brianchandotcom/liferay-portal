@@ -34,9 +34,9 @@ import com.liferay.social.kernel.model.SocialActivity;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Ryan Park
- * @author Zsolt Berentey
+ * @author     Brian Wing Shun Chan
+ * @author     Ryan Park
+ * @author     Zsolt Berentey
  * @deprecated As of 1.3.0, with no direct replacement
  */
 @Deprecated

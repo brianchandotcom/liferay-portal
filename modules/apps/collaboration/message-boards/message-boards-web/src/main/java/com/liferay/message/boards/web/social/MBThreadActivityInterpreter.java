@@ -35,7 +35,7 @@ import com.liferay.social.kernel.model.SocialActivityConstants;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Zsolt Berentey
+ * @author     Zsolt Berentey
  * @deprecated As of 1.3.0, with no direct replacement
  */
 @Deprecated

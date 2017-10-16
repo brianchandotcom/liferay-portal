@@ -1568,8 +1568,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	/**
 	 * Returns all the layouts without resource permissions
 	 *
-	 * @param  roleId the primary key of the role
-	 * @return all the layouts without resource permissions
+	 * @param      roleId the primary key of the role
+	 * @return     all the layouts without resource permissions
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated

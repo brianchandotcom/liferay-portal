@@ -420,8 +420,7 @@ public class Serializer {
 	 * <p>
 	 * The queue is small enough to simply use a linear scan search for
 	 * maintaining its order. The entire queue data is held by a {@link
-	 * SoftReference}, so when necessary, GC can release the whole
-	 * buffer cache.
+	 * SoftReference}, so when necessary, GC can release the whole buffer cache.
 	 * </p>
 	 */
 	protected static class BufferQueue {

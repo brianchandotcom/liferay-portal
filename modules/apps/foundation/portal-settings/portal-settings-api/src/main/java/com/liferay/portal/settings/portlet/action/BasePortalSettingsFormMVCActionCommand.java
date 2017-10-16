@@ -39,11 +39,11 @@ import javax.portlet.ActionResponse;
 import javax.portlet.ValidatorException;
 
 /**
- * @author Tomas Polesovsky
- * @author Philip Jones
- * @deprecated As of 2.0.0, since 2.1.0 replaced by
- *             {@link com.liferay.portal.settings.web.portlet.action.
- *              PortalSettingsContributor}
+ * @author     Tomas Polesovsky
+ * @author     Philip Jones
+ * @deprecated As of 2.0.0, since 2.1.0 replaced by {@link
+ *             com.liferay.portal.settings.web.portlet.action.
+ *             PortalSettingsContributor}
  */
 @Deprecated
 @ProviderType

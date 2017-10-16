@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Eduardo Garcia
+ * @author     Eduardo Garcia
  * @deprecated As of 1.3.0, with no direct replacement
  */
 @Deprecated

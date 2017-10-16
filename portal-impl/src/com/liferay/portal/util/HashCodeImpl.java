@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.HashCode;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author     Brian Wing Shun Chan
  * @deprecated As of 7.0.0, with no direct replacement
  */
 @Deprecated

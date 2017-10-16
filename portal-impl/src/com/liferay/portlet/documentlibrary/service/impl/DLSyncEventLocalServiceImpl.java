@@ -20,7 +20,7 @@ import com.liferay.portlet.documentlibrary.service.base.DLSyncEventLocalServiceB
 import java.util.List;
 
 /**
- * @author Dennis Ju
+ * @author     Dennis Ju
  * @deprecated As of 7.0.0, replaced by {@link
  *             com.liferay.document.library.sync.service.impl.DLSyncEventLocalServiceImpl}
  */

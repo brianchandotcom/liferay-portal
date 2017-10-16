@@ -99,8 +99,8 @@ import javax.portlet.PortletURL;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Jorge Ferrer
+ * @author     Brian Wing Shun Chan
+ * @author     Jorge Ferrer
  * @deprecated As of 1.2.0, replaced by {@link
  *             com.liferay.asset.util.AssetHelper}
  */

@@ -646,8 +646,8 @@ public class StringUtil_IW {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #removeChars(
-	 *             String, char...)}
+	 * @deprecated As of 7.0.0, replaced by {@link #removeChars(String,
+	 *             char...)}
 	 */
 	@Deprecated
 	public java.lang.String strip(java.lang.String s, char[] remove) {

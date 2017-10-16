@@ -20,8 +20,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Alexander Chow
+ * @author     Brian Wing Shun Chan
+ * @author     Alexander Chow
  * @deprecated As of 7.0.0, with no direct replacement
  */
 @Deprecated

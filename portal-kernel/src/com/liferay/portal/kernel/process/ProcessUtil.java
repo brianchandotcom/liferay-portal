@@ -36,7 +36,7 @@ public class ProcessUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *			   CollectorOutputProcessor#INSTANCE}
+	 *             CollectorOutputProcessor#INSTANCE}
 	 */
 	@Deprecated
 	public static final CollectorOutputProcessor COLLECTOR_OUTPUT_PROCESSOR =
@@ -44,15 +44,14 @@ public class ProcessUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *			   ConsumerOutputProcessor#INSTANCE}
+	 *             ConsumerOutputProcessor#INSTANCE}
 	 */
 	@Deprecated
 	public static final ConsumerOutputProcessor CONSUMER_OUTPUT_PROCESSOR =
 		new ConsumerOutputProcessor();
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *			   EchoOutputProcessor#INSTANCE}
+	 * @deprecated As of 7.0.0, replaced by {@link EchoOutputProcessor#INSTANCE}
 	 */
 	@Deprecated
 	public static final EchoOutputProcessor ECHO_OUTPUT_PROCESSOR =
@@ -60,7 +59,7 @@ public class ProcessUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *			   LoggingOutputProcessor#INSTANCE}
+	 *             LoggingOutputProcessor#INSTANCE}
 	 */
 	@Deprecated
 	public static final LoggingOutputProcessor LOGGING_OUTPUT_PROCESSOR =

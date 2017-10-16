@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.io.Writer;
 
 /**
- * @author Shuyang Zhou
+ * @author     Shuyang Zhou
  * @deprecated As of 7.0.0, with no direct replacement
  */
 @Deprecated

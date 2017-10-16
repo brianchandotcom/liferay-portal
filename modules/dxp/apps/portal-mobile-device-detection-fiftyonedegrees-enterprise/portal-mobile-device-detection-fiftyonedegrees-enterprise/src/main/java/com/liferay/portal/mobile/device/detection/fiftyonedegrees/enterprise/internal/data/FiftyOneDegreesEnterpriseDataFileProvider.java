@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true,
+	enabled = false, immediate = true,
 	property = {
 		"file.name=META-INF/51Degrees-EnterpriseV3_2.dat.gz",
 		"service.ranking:Integer=100",

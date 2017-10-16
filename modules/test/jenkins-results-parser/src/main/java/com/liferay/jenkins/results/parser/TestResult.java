@@ -125,6 +125,10 @@ public class TestResult {
 		return duration;
 	}
 
+	public Element getGitHubElement() {
+		return getGitHubElement(null);
+	}
+
 	public Element getGitHubElement(String testrayLogsURL) {
 		String testReportURL = getTestReportURL();
 

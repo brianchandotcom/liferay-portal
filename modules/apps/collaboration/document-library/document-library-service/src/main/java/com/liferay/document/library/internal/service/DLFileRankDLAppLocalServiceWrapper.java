@@ -18,7 +18,7 @@ import com.liferay.document.library.file.rank.service.DLFileRankLocalService;
 import com.liferay.document.library.kernel.model.DLFileRank;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceWrapper;
-import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
+import com.liferay.petra.model.adapter.util.ModelAdapterUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 

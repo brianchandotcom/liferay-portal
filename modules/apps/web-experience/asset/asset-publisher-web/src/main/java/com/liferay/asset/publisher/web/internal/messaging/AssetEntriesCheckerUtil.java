@@ -16,11 +16,11 @@ package com.liferay.asset.publisher.web.internal.messaging;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.asset.util.impl.AssetUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -122,10 +122,10 @@ public class AssetEntriesCheckerUtil {
 	}
 
 	@Reference(unbind = "-")
-	protected void setAssetPublisherUtil(
-		AssetPublisherUtil assetPublisherUtil) {
+	protected void setAssetPublisherWebUtil(
+		AssetPublisherWebUtil assetPublisherWebUtil) {
 
-		_assetPublisherUtil = assetPublisherUtil;
+		_assetPublisherWebUtil = assetPublisherWebUtil;
 	}
 
 	@Reference(unbind = "-")
@@ -199,16 +199,16 @@ public class AssetEntriesCheckerUtil {
 
 		AssetEntry assetEntry = assetEntries.get(0);
 
-		String fromName = _assetPublisherUtil.getEmailFromName(
+		String fromName = _assetPublisherWebUtil.getEmailFromName(
 			portletPreferences, assetEntry.getCompanyId());
-		String fromAddress = _assetPublisherUtil.getEmailFromAddress(
+		String fromAddress = _assetPublisherWebUtil.getEmailFromAddress(
 			portletPreferences, assetEntry.getCompanyId());
 
 		Map<Locale, String> localizedSubjectMap =
-			_assetPublisherUtil.getEmailAssetEntryAddedSubjectMap(
+			_assetPublisherWebUtil.getEmailAssetEntryAddedSubjectMap(
 				portletPreferences);
 		Map<Locale, String> localizedBodyMap =
-			_assetPublisherUtil.getEmailAssetEntryAddedBodyMap(
+			_assetPublisherWebUtil.getEmailAssetEntryAddedBodyMap(
 				portletPreferences);
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
@@ -236,7 +236,7 @@ public class AssetEntriesCheckerUtil {
 		List<Subscription> subscriptions, PortletPreferences portletPreferences,
 		List<AssetEntry> assetEntries) {
 
-		if (!_assetPublisherUtil.getEmailAssetEntryAddedEnabled(
+		if (!_assetPublisherWebUtil.getEmailAssetEntryAddedEnabled(
 				portletPreferences)) {
 
 			return;
@@ -314,7 +314,7 @@ public class AssetEntriesCheckerUtil {
 				portletPreferencesModel.getPortletId(),
 				portletPreferencesModel.getPreferences());
 
-		if (!_assetPublisherUtil.getEmailAssetEntryAddedEnabled(
+		if (!_assetPublisherWebUtil.getEmailAssetEntryAddedEnabled(
 				portletPreferences)) {
 
 			return;
@@ -345,7 +345,7 @@ public class AssetEntriesCheckerUtil {
 				portletPreferencesModel.getCompanyId(),
 				com.liferay.portal.kernel.model.PortletPreferences.class.
 					getName(),
-				_assetPublisherUtil.getSubscriptionClassPK(
+				_assetPublisherWebUtil.getSubscriptionClassPK(
 					portletPreferencesModel.getPlid(),
 					portletPreferencesModel.getPortletId()));
 
@@ -373,74 +373,11 @@ public class AssetEntriesCheckerUtil {
 			_configurationProvider.getCompanyConfiguration(
 				AssetPublisherWebConfiguration.class, layout.getCompanyId());
 
-		long[] groupIds = _assetPublisherUtil.getGroupIds(
-			portletPreferences, layout.getGroupId(), layout);
-
-		AssetEntryQuery assetEntryQuery =
-			_assetPublisherUtil.getAssetEntryQuery(
-				portletPreferences, groupIds, null, null);
-
-		assetEntryQuery.setGroupIds(groupIds);
-
-		boolean anyAssetType = GetterUtil.getBoolean(
-			portletPreferences.getValue("anyAssetType", null), true);
-
-		if (!anyAssetType) {
-			long[] availableClassNameIds =
-				AssetRendererFactoryRegistryUtil.getClassNameIds(
-					layout.getCompanyId());
-
-			long[] classNameIds = _assetPublisherUtil.getClassNameIds(
-				portletPreferences, availableClassNameIds);
-
-			assetEntryQuery.setClassNameIds(classNameIds);
-		}
-
-		long[] classTypeIds = GetterUtil.getLongValues(
-			portletPreferences.getValues("classTypeIds", null));
-
-		assetEntryQuery.setClassTypeIds(classTypeIds);
-
-		boolean enablePermissions = GetterUtil.getBoolean(
-			portletPreferences.getValue("enablePermissions", null));
-
-		assetEntryQuery.setEnablePermissions(enablePermissions);
+		AssetEntryQuery assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(
+			portletPreferences, layout.getGroupId(), layout, null, null);
 
 		assetEntryQuery.setEnd(
 			assetPublisherWebConfiguration.dynamicSubscriptionLimit());
-
-		boolean excludeZeroViewCount = GetterUtil.getBoolean(
-			portletPreferences.getValue("excludeZeroViewCount", null));
-
-		assetEntryQuery.setExcludeZeroViewCount(excludeZeroViewCount);
-
-		boolean showOnlyLayoutAssets = GetterUtil.getBoolean(
-			portletPreferences.getValue("showOnlyLayoutAssets", null));
-
-		if (showOnlyLayoutAssets) {
-			assetEntryQuery.setLayout(layout);
-		}
-
-		String orderByColumn1 = GetterUtil.getString(
-			portletPreferences.getValue("orderByColumn1", "modifiedDate"));
-
-		assetEntryQuery.setOrderByCol1(orderByColumn1);
-
-		String orderByColumn2 = GetterUtil.getString(
-			portletPreferences.getValue("orderByColumn2", "title"));
-
-		assetEntryQuery.setOrderByCol2(orderByColumn2);
-
-		String orderByType1 = GetterUtil.getString(
-			portletPreferences.getValue("orderByType1", "DESC"));
-
-		assetEntryQuery.setOrderByType1(orderByType1);
-
-		String orderByType2 = GetterUtil.getString(
-			portletPreferences.getValue("orderByType2", "ASC"));
-
-		assetEntryQuery.setOrderByType2(orderByType2);
-
 		assetEntryQuery.setStart(0);
 
 		try {
@@ -462,7 +399,7 @@ public class AssetEntriesCheckerUtil {
 		}
 	}
 
-	private static AssetPublisherUtil _assetPublisherUtil;
+	private static AssetPublisherWebUtil _assetPublisherWebUtil;
 	private static LayoutLocalService _layoutLocalService;
 	private static PortletPreferencesLocalService
 		_portletPreferencesLocalService;

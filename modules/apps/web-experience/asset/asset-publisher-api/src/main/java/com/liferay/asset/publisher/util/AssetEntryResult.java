@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.publisher.web.display.context;
+package com.liferay.asset.publisher.util;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 
@@ -22,10 +22,7 @@ import java.util.List;
  * Provides a wrapper class to group asset entries by asset category title.
  *
  * @author Eudaldo Alonso
- * @deprecated As of 1.2.0, replaced by {@link
- *             com.liferay.asset.publisher.util.AssetEntryResult}
  */
-@Deprecated
 public class AssetEntryResult {
 
 	public AssetEntryResult(List<AssetEntry> assetEntries) {

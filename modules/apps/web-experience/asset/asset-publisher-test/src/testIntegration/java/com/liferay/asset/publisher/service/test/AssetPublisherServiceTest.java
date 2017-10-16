@@ -22,7 +22,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.publisher.test.util.AssetPublisherTestUtil;
-import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
+import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
@@ -38,14 +38,19 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -80,6 +85,21 @@ public class AssetPublisherServiceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@BeforeClass
+	public static void setUpClass() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			AssetPublisherHelper.class.getName());
+
+		_serviceTracker.open();
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_serviceTracker.close();
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
@@ -88,6 +108,7 @@ public class AssetPublisherServiceTest {
 			_NO_ASSET_CATEGORY_IDS, _NO_ASSET_TAG_NAMES, 5, true);
 		_permissionChecker = PermissionCheckerFactoryUtil.create(
 			TestPropsValues.getUser());
+		_assetPublisherHelper = _serviceTracker.getService();
 	}
 
 	@Test
@@ -95,7 +116,7 @@ public class AssetPublisherServiceTest {
 		PortletPreferences portletPreferences =
 			getAssetPublisherPortletPreferences();
 
-		List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(
+		List<AssetEntry> assetEntries = _assetPublisherHelper.getAssetEntries(
 			new MockPortletRequest(), portletPreferences, _permissionChecker,
 			new long[] {_group.getGroupId()}, false, false);
 
@@ -117,7 +138,7 @@ public class AssetPublisherServiceTest {
 		PortletPreferences portletPreferences =
 			getAssetPublisherPortletPreferences();
 
-		List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(
+		List<AssetEntry> assetEntries = _assetPublisherHelper.getAssetEntries(
 			new MockPortletRequest(), portletPreferences, _permissionChecker,
 			new long[] {_group.getGroupId()}, false, false);
 
@@ -127,7 +148,7 @@ public class AssetPublisherServiceTest {
 			assetEntries.size());
 
 		List<AssetEntry> filteredAsssetEntries =
-			AssetPublisherUtil.getAssetEntries(
+			_assetPublisherHelper.getAssetEntries(
 				new MockPortletRequest(), portletPreferences,
 				_permissionChecker, new long[] {_group.getGroupId()},
 				allAssetCategoryIds, _NO_ASSET_TAG_NAMES, false, false);
@@ -154,7 +175,7 @@ public class AssetPublisherServiceTest {
 		PortletPreferences portletPreferences =
 			getAssetPublisherPortletPreferences();
 
-		List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(
+		List<AssetEntry> assetEntries = _assetPublisherHelper.getAssetEntries(
 			new MockPortletRequest(), portletPreferences, _permissionChecker,
 			new long[] {_group.getGroupId()}, false, false);
 
@@ -164,7 +185,7 @@ public class AssetPublisherServiceTest {
 			assetEntries.size());
 
 		List<AssetEntry> filteredAssetEntries =
-			AssetPublisherUtil.getAssetEntries(
+			_assetPublisherHelper.getAssetEntries(
 				new MockPortletRequest(), portletPreferences,
 				_permissionChecker, new long[] {_group.getGroupId()},
 				allCategoyIds, allAssetTagNames, false, false);
@@ -182,7 +203,7 @@ public class AssetPublisherServiceTest {
 		PortletPreferences portletPreferences =
 			getAssetPublisherPortletPreferences();
 
-		List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(
+		List<AssetEntry> assetEntries = _assetPublisherHelper.getAssetEntries(
 			new MockPortletRequest(), portletPreferences, _permissionChecker,
 			new long[] {_group.getGroupId()}, false, false);
 
@@ -192,7 +213,7 @@ public class AssetPublisherServiceTest {
 			assetEntries.size());
 
 		List<AssetEntry> filteredAssetEntries =
-			AssetPublisherUtil.getAssetEntries(
+			_assetPublisherHelper.getAssetEntries(
 				new MockPortletRequest(), portletPreferences,
 				_permissionChecker, new long[] {_group.getGroupId()},
 				_NO_ASSET_CATEGORY_IDS, allAssetTagNames, false, false);
@@ -282,9 +303,13 @@ public class AssetPublisherServiceTest {
 
 	private static final String[] _NO_ASSET_TAG_NAMES = new String[0];
 
+	private static ServiceTracker<AssetPublisherHelper, AssetPublisherHelper>
+		_serviceTracker;
+
 	private long[] _assetCategoryIds = new long[0];
 	private List<AssetEntry> _assetEntries = new ArrayList<>();
 	private String[] _assetEntryXmls = new String[0];
+	private AssetPublisherHelper _assetPublisherHelper;
 
 	@DeleteAfterTestRun
 	private Group _group;

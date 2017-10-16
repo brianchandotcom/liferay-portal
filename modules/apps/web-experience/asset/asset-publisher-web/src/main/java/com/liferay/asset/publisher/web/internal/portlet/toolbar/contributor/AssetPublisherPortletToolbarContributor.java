@@ -228,7 +228,7 @@ public class AssetPublisherPortletToolbarContributor
 		}
 
 		boolean addDisplayPageParameter =
-			AssetPublisherWebUtil.isDefaultAssetPublisher(
+			_assetPublisherWebUtil.isDefaultAssetPublisher(
 				themeDisplay.getLayout(), portletDisplay.getId(),
 				assetPublisherDisplayContext.getPortletResource());
 
@@ -294,6 +294,9 @@ public class AssetPublisherPortletToolbarContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetPublisherPortletToolbarContributor.class);
+
+	@Reference
+	private AssetPublisherWebUtil _assetPublisherWebUtil;
 
 	private GroupLocalService _groupLocalService;
 

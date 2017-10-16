@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.asset.publisher.web
 Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.asset.publisher.web,\
+	com.liferay.asset.publisher.web.configuration,\
 	com.liferay.asset.publisher.web.constants,\
 	com.liferay.asset.publisher.web.display.context,\
 	com.liferay.asset.publisher.web.portlet,\

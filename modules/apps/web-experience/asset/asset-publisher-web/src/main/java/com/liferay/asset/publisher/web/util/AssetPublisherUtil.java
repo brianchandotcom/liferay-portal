@@ -126,11 +126,14 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  *
  * @author Raymond Augé
  * @author Julio Camarero
+ * @deprecated As of 1.2.0, replaced by {@link
+ *             com.liferay.asset.publisher.util.AssetPublisherHelper}
  */
 @Component(
 	configurationPid = "com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration",
 	immediate = true, service = AssetPublisherUtil.class
 )
+@Deprecated
 @ProviderType
 public class AssetPublisherUtil {
 
@@ -555,113 +558,89 @@ public class AssetPublisherUtil {
 	}
 
 	public static AssetEntryQuery getAssetEntryQuery(
+			PortletPreferences portletPreferences, long groupId, Layout layout,
+			long[] overrideAllAssetCategoryIds,
+			String[] overrideAllAssetTagNames)
+		throws PortalException {
+
+		long[] groupIds = getGroupIds(portletPreferences, groupId, layout);
+
+		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+
+		_setCategoriesAndTags(
+			assetEntryQuery, portletPreferences, groupIds,
+			overrideAllAssetCategoryIds, overrideAllAssetTagNames);
+
+		assetEntryQuery.setGroupIds(groupIds);
+
+		boolean anyAssetType = GetterUtil.getBoolean(
+			portletPreferences.getValue("anyAssetType", null), true);
+
+		if (!anyAssetType) {
+			long[] availableClassNameIds =
+				AssetRendererFactoryRegistryUtil.getClassNameIds(
+					layout.getCompanyId());
+
+			long[] classNameIds = getClassNameIds(
+				portletPreferences, availableClassNameIds);
+
+			assetEntryQuery.setClassNameIds(classNameIds);
+		}
+
+		long[] classTypeIds = GetterUtil.getLongValues(
+			portletPreferences.getValues("classTypeIds", null));
+
+		assetEntryQuery.setClassTypeIds(classTypeIds);
+
+		boolean enablePermissions = GetterUtil.getBoolean(
+			portletPreferences.getValue("enablePermissions", null));
+
+		assetEntryQuery.setEnablePermissions(enablePermissions);
+
+		boolean excludeZeroViewCount = GetterUtil.getBoolean(
+			portletPreferences.getValue("excludeZeroViewCount", null));
+
+		assetEntryQuery.setExcludeZeroViewCount(excludeZeroViewCount);
+
+		boolean showOnlyLayoutAssets = GetterUtil.getBoolean(
+			portletPreferences.getValue("showOnlyLayoutAssets", null));
+
+		if (showOnlyLayoutAssets) {
+			assetEntryQuery.setLayout(layout);
+		}
+
+		String orderByColumn1 = GetterUtil.getString(
+			portletPreferences.getValue("orderByColumn1", "modifiedDate"));
+
+		assetEntryQuery.setOrderByCol1(orderByColumn1);
+
+		String orderByColumn2 = GetterUtil.getString(
+			portletPreferences.getValue("orderByColumn2", "title"));
+
+		assetEntryQuery.setOrderByCol2(orderByColumn2);
+
+		String orderByType1 = GetterUtil.getString(
+			portletPreferences.getValue("orderByType1", "DESC"));
+
+		assetEntryQuery.setOrderByType1(orderByType1);
+
+		String orderByType2 = GetterUtil.getString(
+			portletPreferences.getValue("orderByType2", "ASC"));
+
+		assetEntryQuery.setOrderByType2(orderByType2);
+
+		return assetEntryQuery;
+	}
+
+	public static AssetEntryQuery getAssetEntryQuery(
 		PortletPreferences portletPreferences, long[] scopeGroupIds,
 		long[] overrideAllAssetCategoryIds, String[] overrideAllAssetTagNames) {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
-		long[] allAssetCategoryIds = new long[0];
-		long[] anyAssetCategoryIds = new long[0];
-		long[] notAllAssetCategoryIds = new long[0];
-		long[] notAnyAssetCategoryIds = new long[0];
-
-		String[] allAssetTagNames = new String[0];
-		String[] anyAssetTagNames = new String[0];
-		String[] notAllAssetTagNames = new String[0];
-		String[] notAnyAssetTagNames = new String[0];
-
-		for (int i = 0; true; i++) {
-			String[] queryValues = portletPreferences.getValues(
-				"queryValues" + i, null);
-
-			if (ArrayUtil.isEmpty(queryValues)) {
-				break;
-			}
-
-			boolean queryContains = GetterUtil.getBoolean(
-				portletPreferences.getValue(
-					"queryContains" + i, StringPool.BLANK));
-			boolean queryAndOperator = GetterUtil.getBoolean(
-				portletPreferences.getValue(
-					"queryAndOperator" + i, StringPool.BLANK));
-			String queryName = portletPreferences.getValue(
-				"queryName" + i, StringPool.BLANK);
-
-			if (Objects.equals(queryName, "assetCategories")) {
-				long[] assetCategoryIds = GetterUtil.getLongValues(queryValues);
-
-				if (queryContains && queryAndOperator) {
-					allAssetCategoryIds = assetCategoryIds;
-				}
-				else if (queryContains && !queryAndOperator) {
-					anyAssetCategoryIds = assetCategoryIds;
-				}
-				else if (!queryContains && queryAndOperator) {
-					notAllAssetCategoryIds = assetCategoryIds;
-				}
-				else {
-					notAnyAssetCategoryIds = assetCategoryIds;
-				}
-			}
-			else {
-				if (queryContains && queryAndOperator) {
-					allAssetTagNames = queryValues;
-				}
-				else if (queryContains && !queryAndOperator) {
-					anyAssetTagNames = queryValues;
-				}
-				else if (!queryContains && queryAndOperator) {
-					notAllAssetTagNames = queryValues;
-				}
-				else {
-					notAnyAssetTagNames = queryValues;
-				}
-			}
-		}
-
-		if (overrideAllAssetCategoryIds != null) {
-			allAssetCategoryIds = overrideAllAssetCategoryIds;
-		}
-
-		allAssetCategoryIds = _filterAssetCategoryIds(allAssetCategoryIds);
-
-		assetEntryQuery.setAllCategoryIds(allAssetCategoryIds);
-
-		if (overrideAllAssetTagNames != null) {
-			allAssetTagNames = overrideAllAssetTagNames;
-		}
-
-		long[] siteGroupIds = getSiteGroupIds(scopeGroupIds);
-
-		for (String assetTagName : allAssetTagNames) {
-			long[] allAssetTagIds = _assetTagLocalService.getTagIds(
-				siteGroupIds, assetTagName);
-
-			assetEntryQuery.addAllTagIdsArray(allAssetTagIds);
-		}
-
-		assetEntryQuery.setAnyCategoryIds(anyAssetCategoryIds);
-
-		long[] anyAssetTagIds = _assetTagLocalService.getTagIds(
-			siteGroupIds, anyAssetTagNames);
-
-		assetEntryQuery.setAnyTagIds(anyAssetTagIds);
-
-		assetEntryQuery.setNotAllCategoryIds(notAllAssetCategoryIds);
-
-		for (String assetTagName : notAllAssetTagNames) {
-			long[] notAllAssetTagIds = _assetTagLocalService.getTagIds(
-				siteGroupIds, assetTagName);
-
-			assetEntryQuery.addNotAllTagIdsArray(notAllAssetTagIds);
-		}
-
-		assetEntryQuery.setNotAnyCategoryIds(notAnyAssetCategoryIds);
-
-		long[] notAnyAssetTagIds = _assetTagLocalService.getTagIds(
-			siteGroupIds, notAnyAssetTagNames);
-
-		assetEntryQuery.setNotAnyTagIds(notAnyAssetTagIds);
+		_setCategoriesAndTags(
+			assetEntryQuery, portletPreferences, scopeGroupIds,
+			overrideAllAssetCategoryIds, overrideAllAssetTagNames);
 
 		return assetEntryQuery;
 	}
@@ -1777,6 +1756,115 @@ public class AssetPublisherUtil {
 		}
 
 		return xml;
+	}
+
+	private static void _setCategoriesAndTags(
+		AssetEntryQuery assetEntryQuery, PortletPreferences portletPreferences,
+		long[] scopeGroupIds, long[] overrideAllAssetCategoryIds,
+		String[] overrideAllAssetTagNames) {
+
+		long[] allAssetCategoryIds = new long[0];
+		long[] anyAssetCategoryIds = new long[0];
+		long[] notAllAssetCategoryIds = new long[0];
+		long[] notAnyAssetCategoryIds = new long[0];
+
+		String[] allAssetTagNames = new String[0];
+		String[] anyAssetTagNames = new String[0];
+		String[] notAllAssetTagNames = new String[0];
+		String[] notAnyAssetTagNames = new String[0];
+
+		for (int i = 0; true; i++) {
+			String[] queryValues = portletPreferences.getValues(
+				"queryValues" + i, null);
+
+			if (ArrayUtil.isEmpty(queryValues)) {
+				break;
+			}
+
+			boolean queryContains = GetterUtil.getBoolean(
+				portletPreferences.getValue(
+					"queryContains" + i, StringPool.BLANK));
+			boolean queryAndOperator = GetterUtil.getBoolean(
+				portletPreferences.getValue(
+					"queryAndOperator" + i, StringPool.BLANK));
+			String queryName = portletPreferences.getValue(
+				"queryName" + i, StringPool.BLANK);
+
+			if (Objects.equals(queryName, "assetCategories")) {
+				long[] assetCategoryIds = GetterUtil.getLongValues(queryValues);
+
+				if (queryContains && queryAndOperator) {
+					allAssetCategoryIds = assetCategoryIds;
+				}
+				else if (queryContains && !queryAndOperator) {
+					anyAssetCategoryIds = assetCategoryIds;
+				}
+				else if (!queryContains && queryAndOperator) {
+					notAllAssetCategoryIds = assetCategoryIds;
+				}
+				else {
+					notAnyAssetCategoryIds = assetCategoryIds;
+				}
+			}
+			else {
+				if (queryContains && queryAndOperator) {
+					allAssetTagNames = queryValues;
+				}
+				else if (queryContains && !queryAndOperator) {
+					anyAssetTagNames = queryValues;
+				}
+				else if (!queryContains && queryAndOperator) {
+					notAllAssetTagNames = queryValues;
+				}
+				else {
+					notAnyAssetTagNames = queryValues;
+				}
+			}
+		}
+
+		if (overrideAllAssetCategoryIds != null) {
+			allAssetCategoryIds = overrideAllAssetCategoryIds;
+		}
+
+		allAssetCategoryIds = _filterAssetCategoryIds(allAssetCategoryIds);
+
+		assetEntryQuery.setAllCategoryIds(allAssetCategoryIds);
+
+		if (overrideAllAssetTagNames != null) {
+			allAssetTagNames = overrideAllAssetTagNames;
+		}
+
+		long[] siteGroupIds = getSiteGroupIds(scopeGroupIds);
+
+		for (String assetTagName : allAssetTagNames) {
+			long[] allAssetTagIds = _assetTagLocalService.getTagIds(
+				siteGroupIds, assetTagName);
+
+			assetEntryQuery.addAllTagIdsArray(allAssetTagIds);
+		}
+
+		assetEntryQuery.setAnyCategoryIds(anyAssetCategoryIds);
+
+		long[] anyAssetTagIds = _assetTagLocalService.getTagIds(
+			siteGroupIds, anyAssetTagNames);
+
+		assetEntryQuery.setAnyTagIds(anyAssetTagIds);
+
+		assetEntryQuery.setNotAllCategoryIds(notAllAssetCategoryIds);
+
+		for (String assetTagName : notAllAssetTagNames) {
+			long[] notAllAssetTagIds = _assetTagLocalService.getTagIds(
+				siteGroupIds, assetTagName);
+
+			assetEntryQuery.addNotAllTagIdsArray(notAllAssetTagIds);
+		}
+
+		assetEntryQuery.setNotAnyCategoryIds(notAnyAssetCategoryIds);
+
+		long[] notAnyAssetTagIds = _assetTagLocalService.getTagIds(
+			siteGroupIds, notAnyAssetTagNames);
+
+		assetEntryQuery.setNotAnyTagIds(notAnyAssetTagIds);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

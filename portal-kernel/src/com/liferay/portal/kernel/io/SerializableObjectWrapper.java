@@ -25,7 +25,7 @@ import java.io.Serializable;
 
 import java.nio.ByteBuffer;
 
-import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * @author Tina Tian
@@ -75,18 +75,6 @@ public class SerializableObjectWrapper implements Externalizable {
 		SerializableObjectWrapper serializableWrapper =
 			(SerializableObjectWrapper)object;
 
-		if ((_serializable instanceof LazySerializable) &&
-			(serializableWrapper._serializable instanceof LazySerializable)) {
-
-			LazySerializable lazySerializable1 =
-				(LazySerializable)_serializable;
-			LazySerializable lazySerializable2 =
-				(LazySerializable)serializableWrapper._serializable;
-
-			return Arrays.equals(
-				lazySerializable1.getData(), lazySerializable2.getData());
-		}
-
 		if (_serializable instanceof LazySerializable) {
 			LazySerializable lazySerializable = (LazySerializable)_serializable;
 
@@ -101,7 +89,7 @@ public class SerializableObjectWrapper implements Externalizable {
 				lazySerializable.getSerializable();
 		}
 
-		return _serializable.equals(serializableWrapper._serializable);
+		return Objects.equals(_serializable, serializableWrapper._serializable);
 	}
 
 	@Override
@@ -112,7 +100,7 @@ public class SerializableObjectWrapper implements Externalizable {
 			_serializable = lazySerializable.getSerializable();
 		}
 
-		return _serializable.hashCode();
+		return Objects.hashCode(_serializable);
 	}
 
 	@Override

@@ -650,6 +650,10 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.recent.documents.web"
 		},
 		new String[] {
+			"dl.file.rank.max.size", "max.size",
+			"com.liferay.document.library.file.rank.service"
+		},
+		new String[] {
 			"dl.display.templates.config", "display.templates.config",
 			"com.liferay.document.library.web"
 		},

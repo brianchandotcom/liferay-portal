@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.file.rank.service.impl;
 
+import com.liferay.document.library.file.rank.internal.configuration.DLFileRankServiceConfiguration;
 import com.liferay.document.library.file.rank.model.DLFileRank;
 import com.liferay.document.library.file.rank.service.base.DLFileRankLocalServiceBaseImpl;
 import com.liferay.document.library.file.rank.util.comparator.FileRankCreateDateComparator;
@@ -24,9 +25,11 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 
@@ -90,16 +93,29 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 
 	@Override
 	public void checkFileRanks() {
+		int maxSize = 5;
+
+		try {
+			DLFileRankServiceConfiguration dlFileRankServiceConfiguration =
+				configurationProvider.getSystemConfiguration(
+					DLFileRankServiceConfiguration.class);
+
+			maxSize = dlFileRankServiceConfiguration.maxSize();
+		}
+		catch (ConfigurationException ce) {
+			_log.error("Unable to get dl file rank service configuration", ce);
+		}
+
 		List<Object[]> staleFileRanks = dlFileRankFinder.findByStaleRanks(
-			PropsValues.DL_FILE_RANK_MAX_SIZE);
+			maxSize);
 
 		for (Object[] staleFileRank : staleFileRanks) {
 			long groupId = (Long)staleFileRank[0];
 			long userId = (Long)staleFileRank[1];
 
 			List<DLFileRank> dlFileRanks = dlFileRankPersistence.findByG_U_A(
-				groupId, userId, true, PropsValues.DL_FILE_RANK_MAX_SIZE,
-				QueryUtil.ALL_POS, new FileRankCreateDateComparator());
+				groupId, userId, true, maxSize, QueryUtil.ALL_POS,
+				new FileRankCreateDateComparator());
 
 			for (DLFileRank dlFileRank : dlFileRanks) {
 				long fileRankId = dlFileRank.getFileRankId();
@@ -194,8 +210,21 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 
 	@Override
 	public List<DLFileRank> getFileRanks(long groupId, long userId) {
+		int maxSize = 5;
+
+		try {
+			DLFileRankServiceConfiguration dlFileRankServiceConfiguration =
+				configurationProvider.getSystemConfiguration(
+					DLFileRankServiceConfiguration.class);
+
+			maxSize = dlFileRankServiceConfiguration.maxSize();
+		}
+		catch (ConfigurationException ce) {
+			_log.error("Unable to get dl file rank service configuration", ce);
+		}
+
 		return dlFileRankPersistence.findByG_U_A(
-			groupId, userId, true, 0, PropsValues.DL_FILE_RANK_MAX_SIZE,
+			groupId, userId, true, 0, maxSize,
 			new FileRankCreateDateComparator());
 	}
 
@@ -247,6 +276,9 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 			dlFileRankPersistence.update(dlFileRank);
 		}
 	}
+
+	@ServiceReference(type = ConfigurationProvider.class)
+	protected ConfigurationProvider configurationProvider;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileRankLocalServiceImpl.class);

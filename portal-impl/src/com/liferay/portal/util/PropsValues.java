@@ -633,6 +633,10 @@ public class PropsValues {
 	@Deprecated
 	public static final boolean DL_FILE_RANK_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DL_FILE_RANK_ENABLED));
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final int DL_FILE_RANK_MAX_SIZE = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_FILE_RANK_MAX_SIZE));
 
 	public static final boolean DL_FOLDER_ICON_CHECK_COUNT = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DL_FOLDER_ICON_CHECK_COUNT));

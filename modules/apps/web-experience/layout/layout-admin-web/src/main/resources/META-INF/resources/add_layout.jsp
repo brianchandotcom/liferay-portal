@@ -17,6 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
+String backURL = ParamUtil.getString(request, "backURL", redirect);
+
 String portletResource = ParamUtil.getString(request, "portletResource");
 
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
@@ -26,28 +30,17 @@ boolean privateLayout = layoutsAdminDisplayContext.isPrivateLayout();
 long parentPlid = LayoutConstants.DEFAULT_PLID;
 long parentLayoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
 
-String selThemeId = null;
-
 if (layout.isTypeControlPanel()) {
 	if (layoutsAdminDisplayContext.getSelPlid() != 0) {
 		selLayout = LayoutLocalServiceUtil.getLayout(layoutsAdminDisplayContext.getSelPlid());
-
-		selThemeId = selLayout.getThemeId();
 
 		privateLayout = selLayout.isPrivateLayout();
 		parentPlid = selLayout.getPlid();
 		parentLayoutId = selLayout.getLayoutId();
 	}
-	else {
-		LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
-
-		selThemeId = selLayoutSet.getThemeId();
-	}
 }
 else {
 	selLayout = layout;
-
-	selThemeId = layout.getThemeId();
 
 	privateLayout = layout.isPrivateLayout();
 	parentPlid = layout.getParentPlid();
@@ -55,6 +48,11 @@ else {
 }
 
 String[] types = LayoutTypeControllerTracker.getTypes();
+
+if (Validator.isNotNull(backURL)) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(backURL);
+}
 
 renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 %>
@@ -64,6 +62,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 </portlet:actionURL>
 
 <aui:form action="<%= addLayoutURL %>" cssClass="container-fluid-1280" data-senna-off="true" enctype="multipart/form-data" method="post" name="addPageFm">
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
 	<aui:input name="privateLayout" type="hidden" value="<%= privateLayout %>" />
 	<aui:input name="parentPlid" type="hidden" value="<%= parentPlid %>" />
@@ -203,6 +202,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" value="add-page" />
+
+		<c:if test="<%= Validator.isNotNull(backURL) %>">
+			<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" />
+		</c:if>
 	</aui:button-row>
 </aui:form>
 

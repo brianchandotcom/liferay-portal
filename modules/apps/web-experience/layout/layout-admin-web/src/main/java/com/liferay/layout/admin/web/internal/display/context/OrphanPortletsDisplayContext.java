@@ -14,7 +14,6 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -46,9 +45,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class OrphanPortletsDisplayContext {
 
-	public OrphanPortletsDisplayContext(PortletRequest portletRequest)
-		throws PortalException {
-
+	public OrphanPortletsDisplayContext(PortletRequest portletRequest) {
 		_portletRequest = portletRequest;
 	}
 

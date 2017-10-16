@@ -61,9 +61,8 @@ import javax.portlet.PortletURL;
 public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 
 	public LayoutsTreeDisplayContext(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
-		throws PortalException {
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		super(liferayPortletRequest, liferayPortletResponse);
 	}

@@ -36,9 +36,8 @@ public class LayoutsPrototypeTreeDisplayContext
 	extends BaseLayoutDisplayContext {
 
 	public LayoutsPrototypeTreeDisplayContext(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
-		throws PortalException {
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		super(liferayPortletRequest, liferayPortletResponse);
 	}

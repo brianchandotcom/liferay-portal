@@ -1,4 +1,4 @@
-import { CancellablePromise } from 'metal-promise/src/promise/Promise';
+import { CancellablePromise } from 'metal-promise';
 
 /**
  * Image Editor History Entry

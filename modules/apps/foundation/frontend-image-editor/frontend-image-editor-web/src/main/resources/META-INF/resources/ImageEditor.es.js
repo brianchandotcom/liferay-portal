@@ -1,15 +1,12 @@
-import Component from 'metal-component/src/Component';
-import Soy from 'metal-soy/src/Soy';
-
-import async from 'metal/src/async/async';
-import core from 'metal/src/core';
-import dom from 'metal-dom/src/dom';
-import { CancellablePromise } from 'metal-promise/src/promise/Promise';
-import Dropdown from 'metal-dropdown/src/Dropdown';
+import Component from 'metal-component';
+import Dropdown from 'metal-dropdown';
+import Soy from 'metal-soy';
+import dom from 'metal-dom';
+import { CancellablePromise } from 'metal-promise';
+import { async, core } from 'metal';
 
 import ImageEditorHistoryEntry from './ImageEditorHistoryEntry.es';
 import ImageEditorLoading from './ImageEditorLoading.es';
-
 import templates from './ImageEditor.soy';
 
 /**

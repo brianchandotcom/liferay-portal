@@ -1,10 +1,9 @@
-import Component from 'metal-component/src/Component';
-import Soy from 'metal-soy/src/Soy';
-
-import core from 'metal/src/core';
-import debounce from 'metal-debounce/src/debounce';
-import { CancellablePromise } from 'metal-promise/src/promise/Promise';
-import Slider from 'metal-slider/src/Slider';
+import Component from 'metal-component';
+import Slider from 'metal-slider';
+import Soy from 'metal-soy';
+import debounce from 'metal-debounce';
+import { CancellablePromise } from 'metal-promise';
+import { core } from 'metal';
 
 import componentTemplates from './BrightnessComponent.soy';
 import controlsTemplates from './BrightnessControls.soy';

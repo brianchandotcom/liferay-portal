@@ -1,11 +1,9 @@
-import Component from 'metal-component/src/Component';
-import Soy from 'metal-soy/src/Soy';
-
-import async from 'metal/src/async/async';
-import core from 'metal/src/core';
-import dom from 'metal-dom/src/dom';
-import Drag from 'metal-drag-drop/src/Drag';
-import Position from 'metal-position/src/Position';
+import Component from 'metal-component';
+import Position from 'metal-position';
+import Soy from 'metal-soy';
+import dom from 'metal-dom';
+import { Drag } from 'metal-drag-drop';
+import { async, core } from 'metal';
 
 import handlesTemplates from './CropHandles.soy';
 

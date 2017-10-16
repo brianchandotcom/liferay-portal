@@ -2,7 +2,6 @@
 @import "mixins";
 
 $imageeditor-btn-padding: 8px 4px !default;
-$imageeditor-btn-space: 24px !default;
 $imageeditor-controls-height: 52px !default;
 $imageeditor-filters-border-width: 4px;
 $imageeditor-filters-height: 90px !default;
@@ -62,18 +61,17 @@ $gray-lighter: lighten($gray-base, 93.5%) !default; // #EEE
 
 			.lexicon-icon {
 				color: $imageeditor-text-color;
-				margin-top: -7px;
 			}
 		}
 	}
 
 	.lfr-image-editor-tools-container {
-		height: 142px;
+		height: $imageeditor-controls-height + $imageeditor-filters-height;
 	}
 
 	.controls {
 		background-color: $imageeditor-bg;
-		bottom: 10px;
+		bottom: 0;
 		height: $imageeditor-controls-height;
 		position: absolute;
 		width: 100%;
@@ -97,10 +95,6 @@ $gray-lighter: lighten($gray-base, 93.5%) !default; // #EEE
 			z-index: 1;
 
 			@include transition(height 0.6s $ease-out-quint);
-
-			.btn-space {
-				margin-top: $imageeditor-btn-space;
-			}
 
 			.tool-controls {
 				overflow: visible;
@@ -183,7 +177,7 @@ $gray-lighter: lighten($gray-base, 93.5%) !default; // #EEE
 								color: $imageeditor-link-color;
 
 								canvas {
-									border: $imageeditor-filters-border-width solid $imageeditor-link-color;
+									border-color: $imageeditor-link-color;
 									border-radius: $imageeditor-filters-border-width;
 								}
 							}
@@ -230,7 +224,7 @@ $gray-lighter: lighten($gray-base, 93.5%) !default; // #EEE
 
 	.slider {
 		color: $imageeditor-link-color;
-		height: 74px;
+		height: $imageeditor-controls-height + $slider-height;
 		position: relative;
 		text-align: center;
 
@@ -281,10 +275,6 @@ $gray-lighter: lighten($gray-base, 93.5%) !default; // #EEE
 			float: none;
 			margin: 0 15px;
 			width: 100px;
-
-			&:not(:focus) {
-				color: $imageeditor-text-color;
-			}
 		}
 	}
 }

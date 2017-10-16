@@ -59,25 +59,19 @@
 			<var name="portletName" value="Navigation Menu" />
 		</execute>
 
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="NavigationMenu#selectAndSaveConfiguration">
-			<var name="displayTemplate" value="Split Button Dropdowns" />
+		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
+			<var name="portletName" value="Navigation" />
+			<var name="templateName" value="Split Button Dropdowns" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Navigation Test Page1" />
 		</execute>
 
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletOption" value="Configuration" />
+		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
+			<var name="portletName" value="Navigation" />
+			<var name="templateName" value="Bar minimally styled" />
 		</execute>
-
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
-
-		<execute function="Select" locator1="Select#DISPLAY_TEMPLATE" value1="Bar minimally styled" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -248,13 +242,9 @@
 
 		<execute function="AssertTextEquals" locator1="Navigation#BREADCRUMB_ENTRY" value1="Navigation Display Test Page" />
 
-		<execute macro="Portlet#gotoPortletOptions">
+		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
 			<var name="portletName" value="Navigation Menu" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="NavigationMenu#selectAndSaveConfiguration">
-			<var name="displayTemplate" value="Bar minimally styled" />
+			<var name="templateName" value="Bar minimally styled" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

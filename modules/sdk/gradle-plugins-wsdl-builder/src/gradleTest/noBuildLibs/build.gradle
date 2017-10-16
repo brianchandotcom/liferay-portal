@@ -1,0 +1,33 @@
+apply plugin: "com.liferay.wsdl.builder"
+
+task runGradleTest
+
+buildWSDL {
+	buildLibs = false
+}
+
+repositories {
+	maven {
+		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	dependsOn buildWSDL
+
+	doLast {
+		String[] fileNames = [
+			"src/main/java/com/example/sample/GreetingBuilder.java",
+			"src/main/java/com/example/wsdl/HelloWorldService_wsdl/HelloWorld_BindingStub.java",
+			"src/main/java/com/example/wsdl/HelloWorldService_wsdl/HelloWorld_PortType.java",
+			"src/main/java/com/example/wsdl/HelloWorldService_wsdl/HelloWorld_Service.java",
+			"src/main/java/com/example/wsdl/HelloWorldService_wsdl/HelloWorld_ServiceLocator.java"
+		]
+
+		for (String fileName in fileNames) {
+			File generatedFile = file(fileName)
+
+			assert generatedFile.exists()
+		}
+	}
+}

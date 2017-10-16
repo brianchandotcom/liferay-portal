@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.petra.lang;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
@@ -39,12 +39,12 @@ public class ClassLoaderPoolTest {
 	@Before
 	public void setUp() {
 		_classLoaders = ReflectionTestUtil.getFieldValue(
-			com.liferay.petra.lang.ClassLoaderPool.class, "_classLoaders");
+			ClassLoaderPool.class, "_classLoaders");
 
 		_classLoaders.clear();
 
 		_contextNames = ReflectionTestUtil.getFieldValue(
-			com.liferay.petra.lang.ClassLoaderPool.class, "_contextNames");
+			ClassLoaderPool.class, "_contextNames");
 
 		_contextNames.clear();
 	}
@@ -65,8 +65,7 @@ public class ClassLoaderPoolTest {
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		Assert.assertSame(
-			contextClassLoader,
-			ClassLoaderPool.getClassLoader(StringPool.NULL));
+			contextClassLoader, ClassLoaderPool.getClassLoader("null"));
 		Assert.assertSame(
 			contextClassLoader, ClassLoaderPool.getClassLoader(null));
 	}
@@ -88,10 +87,9 @@ public class ClassLoaderPoolTest {
 		ClassLoaderPool.register(_CONTEXT_NAME, classLoader);
 
 		Assert.assertEquals(
-			StringPool.NULL,
+			"null",
 			ClassLoaderPool.getContextName(new URLClassLoader(new URL[0])));
-		Assert.assertEquals(
-			StringPool.NULL, ClassLoaderPool.getContextName(null));
+		Assert.assertEquals("null", ClassLoaderPool.getContextName(null));
 	}
 
 	@Test
@@ -118,7 +116,7 @@ public class ClassLoaderPoolTest {
 
 	@Test(expected = NullPointerException.class)
 	public void testRegisterWithNullClassLoader() {
-		ClassLoaderPool.register(StringPool.BLANK, null);
+		ClassLoaderPool.register("null", null);
 	}
 
 	@Test(expected = NullPointerException.class)
@@ -163,8 +161,8 @@ public class ClassLoaderPoolTest {
 	}
 
 	private void _assertEmptyMaps() {
-		Assert.assertTrue(_contextNames.isEmpty());
-		Assert.assertTrue(_classLoaders.isEmpty());
+		Assert.assertTrue(_contextNames.toString(), _contextNames.isEmpty());
+		Assert.assertTrue(_classLoaders.toString(), _classLoaders.isEmpty());
 	}
 
 	private static final String _CONTEXT_NAME = "contextName";

@@ -12,32 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.kernel.io;
-
-import com.liferay.petra.lang.ClassLoaderPool;
-
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
+package com.liferay.petra.lang;
 
 /**
  * @author Shuyang Zhou
  */
-public class AnnotatedObjectOutputStream extends ObjectOutputStream {
+public class HashUtil {
 
-	public AnnotatedObjectOutputStream(OutputStream outputStream)
-		throws IOException {
-
-		super(outputStream);
+	public static int hash(int seed, boolean value) {
+		return seed * 11 + (value ? 1 : 0);
 	}
 
-	@Override
-	protected void annotateClass(Class<?> clazz) throws IOException {
-		ClassLoader classLoader = clazz.getClassLoader();
+	public static int hash(int seed, int value) {
+		return seed * 11 + value;
+	}
 
-		String contextName = ClassLoaderPool.getContextName(classLoader);
+	public static int hash(int seed, long value) {
+		return (int)(seed * 11 + value);
+	}
 
-		writeUTF(contextName);
+	public static int hash(int seed, Object value) {
+		return seed * 11 + (value == null ? 0 : value.hashCode());
 	}
 
 }

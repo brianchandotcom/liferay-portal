@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.lang.ClassResolverUtil;
 import com.liferay.portal.kernel.io.ProtectedObjectInputStream;
 
 import java.io.IOException;

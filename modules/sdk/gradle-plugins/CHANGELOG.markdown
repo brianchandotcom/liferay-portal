@@ -2628,7 +2628,7 @@ version 1.0.172.
 - [LPS-74449]: Update the [Liferay Gradle Plugins CSS Builder] dependency to
 version 2.1.5.
 
-## 3.5.9 - 2017-10-13
+## 3.5.9 - 2017-10-16
 
 ### Changed
 - [LPS-75238]: Disable JSP compilation for OSGi fragments.

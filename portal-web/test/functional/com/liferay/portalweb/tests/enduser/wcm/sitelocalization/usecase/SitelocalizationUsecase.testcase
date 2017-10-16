@@ -274,8 +274,9 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoLocalizedControlPanel">
+		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Usuarios" />
+			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Usuarios y Organizaciones" />
 		</execute>
 
@@ -292,8 +293,9 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoLocalizedControlPanel">
+		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Usuarios" />
+			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Usuarios y Organizaciones" />
 		</execute>
 
@@ -571,8 +573,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoLocalizedControlPanel">
+		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuración" />
+			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Configuración de la instancia" />
 		</execute>
 
@@ -584,8 +587,9 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoLocalizedSitesAdministration">
+		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuración" />
+			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Ajustes del sitio" />
 		</execute>
 
@@ -625,8 +629,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoLocalizedSitesAdministration">
+		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuración" />
+			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Ajustes del sitio" />
 		</execute>
 

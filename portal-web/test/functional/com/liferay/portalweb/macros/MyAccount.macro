@@ -34,8 +34,9 @@
 	</command>
 
 	<command name="configureDisplaySettingsLanguageLocalized">
-		<execute macro="ProductMenu#gotoLocalizedUserMyAccount">
+		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="${category}" />
+			<var name="panel" value="User" />
 			<var name="portlet" value="${portlet}" />
 		</execute>
 

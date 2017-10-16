@@ -1029,31 +1029,35 @@ public class ModulesStructureTest {
 
 		Map<String, Boolean> allowedConfigurationsMap = new TreeMap<>();
 
-		boolean hasSrcMainDir = Files.exists(dirPath.resolve("src/main"));
-		boolean hasSrcTestDir = Files.exists(dirPath.resolve("src/test"));
-		boolean hasSrcTestIntegrationDir = Files.exists(
-			dirPath.resolve("src/testIntegration"));
+		if (!_isInGitRepoReadOnly(dirPath)) {
+			boolean hasSrcMainDir = Files.exists(dirPath.resolve("src/main"));
+			boolean hasSrcTestDir = Files.exists(dirPath.resolve("src/test"));
+			boolean hasSrcTestIntegrationDir = Files.exists(
+				dirPath.resolve("src/testIntegration"));
 
-		boolean mainConfigurationsAllowed = false;
+			boolean mainConfigurationsAllowed = false;
 
-		if (hasSrcMainDir ||
-			(!hasSrcMainDir && !hasSrcTestDir && !hasSrcTestIntegrationDir) ||
-			content.contains("copyLibs {\n\tenabled = true")) {
+			if (hasSrcMainDir ||
+				(!hasSrcMainDir && !hasSrcTestDir &&
+				 !hasSrcTestIntegrationDir) ||
+				content.contains("copyLibs {\n\tenabled = true")) {
 
-			mainConfigurationsAllowed = true;
+				mainConfigurationsAllowed = true;
+			}
+
+			allowedConfigurationsMap.put("compile", mainConfigurationsAllowed);
+			allowedConfigurationsMap.put(
+				"compileOnly", mainConfigurationsAllowed);
+			allowedConfigurationsMap.put("provided", mainConfigurationsAllowed);
+
+			allowedConfigurationsMap.put("testCompile", hasSrcTestDir);
+			allowedConfigurationsMap.put("testRuntime", hasSrcTestDir);
+
+			allowedConfigurationsMap.put(
+				"testIntegrationCompile", hasSrcTestIntegrationDir);
+			allowedConfigurationsMap.put(
+				"testIntegrationRuntime", hasSrcTestIntegrationDir);
 		}
-
-		allowedConfigurationsMap.put("compile", mainConfigurationsAllowed);
-		allowedConfigurationsMap.put("compileOnly", mainConfigurationsAllowed);
-		allowedConfigurationsMap.put("provided", mainConfigurationsAllowed);
-
-		allowedConfigurationsMap.put("testCompile", hasSrcTestDir);
-		allowedConfigurationsMap.put("testRuntime", hasSrcTestDir);
-
-		allowedConfigurationsMap.put(
-			"testIntegrationCompile", hasSrcTestIntegrationDir);
-		allowedConfigurationsMap.put(
-			"testIntegrationRuntime", hasSrcTestIntegrationDir);
 
 		for (GradleDependency gradleDependency : gradleDependencies) {
 			Boolean allowed = allowedConfigurationsMap.get(

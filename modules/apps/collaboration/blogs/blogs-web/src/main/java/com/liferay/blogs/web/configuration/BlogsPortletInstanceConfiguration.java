@@ -32,51 +32,57 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface BlogsPortletInstanceConfiguration {
 
-	@Meta.AD(deflt = "abstract", required = false)
+	@Meta.AD(deflt = "abstract", name = "display-style", required = false)
 	public String displayStyle();
 
-	@Meta.AD(deflt = "0", required = false)
+	@Meta.AD(deflt = "0", name = "display-style-group-id", required = false)
 	public long displayStyleGroupId();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "enable-comment-ratings", required = false)
 	public boolean enableCommentRatings();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "enable-comments", required = false)
 	public boolean enableComments();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "enable-flags", required = false)
 	public boolean enableFlags();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "enable-ratings", required = false)
 	public boolean enableRatings();
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(deflt = "false", name = "enable-reading-time", required = false)
 	public boolean enableReadingTime();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "enable-related-assets", required = false)
 	public boolean enableRelatedAssets();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "enable-social-bookmarks", required = false)
 	public boolean enableSocialBookmarks();
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(deflt = "false", name = "enable-view-count", required = false)
 	public boolean enableViewCount();
 
 	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/search.container.page.default.delta}",
-		required = false
+		name = "page-delta", required = false
 	)
 	public String pageDelta();
 
-	@Meta.AD(deflt = "bottom", required = false)
+	@Meta.AD(
+		deflt = "bottom", name = "social-bookmarks-display-position",
+		required = false
+	)
 	public String socialBookmarksDisplayPosition();
 
-	@Meta.AD(deflt = "menu", required = false)
+	@Meta.AD(
+		deflt = "menu", name = "social-bookmarks-display-style",
+		required = false
+	)
 	public String socialBookmarksDisplayStyle();
 
 	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/social.bookmark.types}",
-		required = false
+		name = "social-bookmarks-types", required = false
 	)
 	public String socialBookmarksTypes();
 

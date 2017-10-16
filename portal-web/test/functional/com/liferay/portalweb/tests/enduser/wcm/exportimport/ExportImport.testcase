@@ -367,7 +367,7 @@
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
-			<var name="adtType" value="Blogs" />
+			<var name="templateName" value="Blogs Test ADT" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

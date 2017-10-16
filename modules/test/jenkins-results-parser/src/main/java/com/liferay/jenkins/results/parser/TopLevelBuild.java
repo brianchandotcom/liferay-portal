@@ -109,6 +109,21 @@ public class TopLevelBuild extends BaseBuild {
 		return getTempMap(tempMapName);
 	}
 
+	public Map<String, String> getCompanionGitRepositoryDetailsTempMap() {
+		String branchName = getBranchName();
+		String branchType = "ee";
+		String repositoryType = getBaseRepositoryType();
+
+		if (branchName.endsWith("-private")) {
+			branchType = "base";
+		}
+
+		String tempMapName = JenkinsResultsParserUtil.combine(
+			"git.", repositoryType, ".", branchType, ".properties");
+
+		return getTempMap(tempMapName);
+	}
+
 	@Override
 	public String getDisplayName() {
 		String displayName = super.getDisplayName();

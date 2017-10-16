@@ -99,7 +99,7 @@
 		<execute macro="RSS#waitForRSSLoad" />
 
 		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
-			<var name="adtType" value="RSS" />
+			<var name="templateName" value="RSS Test ADT" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -157,7 +157,7 @@
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
-			<var name="adtType" value="RSS" />
+			<var name="templateName" value="RSS Test ADT" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -211,7 +211,7 @@
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
-			<var name="adtType" value="RSS" />
+			<var name="templateName" value="RSS Test ADT" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -282,7 +282,7 @@
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
-			<var name="adtType" value="Asset Publisher" />
+			<var name="templateName" value="Asset Publisher Test ADT" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -390,7 +390,7 @@
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
-			<var name="adtType" value="Categories Navigation" />
+			<var name="templateName" value="Categories Navigation Test ADT" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -490,7 +490,7 @@
 		<execute macro="MGPortlet#viewShowAllPG" />
 
 		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
-			<var name="adtType" value="Documents and Media" />
+			<var name="templateName" value="Documents and Media Test ADT" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -582,7 +582,7 @@
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
-			<var name="adtType" value="Site Map" />
+			<var name="templateName" value="Site Map Test ADT" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -663,7 +663,7 @@
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
-			<var name="adtType" value="Categories Navigation" />
+			<var name="templateName" value="Categories Navigation Test ADT" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">
@@ -780,7 +780,7 @@
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
-			<var name="adtType" value="Tags Navigation" />
+			<var name="templateName" value="Tags Navigation Test ADT" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">

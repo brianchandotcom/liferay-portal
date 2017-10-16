@@ -2001,7 +2001,15 @@
 			</else>
 		</if>
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
+		<if>
+			<equals arg1="${onLive}" arg2="true" />
+			<then>
+				<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_DESCRIPTIVE_TITLE_ON_LIVE" value1="${webContentTitle}" />
+			</then>
+			<else>
+				<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="viewTranslation">

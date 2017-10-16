@@ -1,0 +1,15 @@
+<definition>
+	<command name="selectJsonFile">
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="${tabName}" />
+		</execute>
+
+		<execute function="UploadCommonFile" locator1="//label[contains(text(),'${key_tab}')]/following-sibling::input[(@type='file')]" value1="${fileName}">
+			<var name="key_tab" value="${tabName}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Button#TAB_SUBMIT_BTN" value1="Add ${tabName}" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+</definition>

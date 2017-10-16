@@ -259,6 +259,11 @@
 			<var name="key_menuItem" value="Basic Document" />
 		</execute>
 
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
 		<execute macro="Permissions#definePermissionViaJSONAPI">
 			<var name="resourceAction" value="ADD_DOCUMENT" />
 			<var name="resourceName" value="com.liferay.document.library" />
@@ -281,9 +286,16 @@
 			<var name="dmDocumentTitle" value="Document_1.doc" />
 		</execute>
 
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
 		<execute macro="Permissions#removePermissionViaAPI">
 			<var name="resourceAction" value="ADD_DOCUMENT" />
 			<var name="resourceName" value="com.liferay.document.library" />
+			<var name="roleTitle" value="Roles Siterole Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">

@@ -448,10 +448,10 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoLocalizedControlPanel">
+		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Sitios web" />
+			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Plantillas de página" />
-			<var name="tab" value="Panel de control" />
 		</execute>
 
 		<execute macro="PageTemplate#viewDefaultLocalizedCP">
@@ -461,8 +461,9 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoLocalizedUserMyAccount">
+		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Mi cuenta" />
+			<var name="panel" value="User" />
 			<var name="portlet" value="Mi cuenta" />
 		</execute>
 

@@ -164,7 +164,7 @@
 			</then>
 		</if>
 
-		<execute function="Select" locator1="Select#DISPLAY_TEMPLATE" value1="${adtType} Test ADT" />
+		<execute function="Select" locator1="Select#DISPLAY_TEMPLATE" value1="${templateName}" />
 
 		<execute macro="Button#clickSave" />
 

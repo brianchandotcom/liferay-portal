@@ -397,7 +397,9 @@ public class IndentationCheck extends BaseCheck {
 
 	private int _adjustTabCountForChains(int tabCount, DetailAST detailAST) {
 		boolean checkChaining = false;
+		DetailAST firstElistParent = null;
 		int methodCallLineCount = -1;
+		boolean outsideMethodCall = false;
 
 		DetailAST parentAST = detailAST;
 
@@ -406,6 +408,31 @@ public class IndentationCheck extends BaseCheck {
 				(parentAST.getType() == TokenTypes.LABELED_STAT) ||
 				(parentAST.getType() == TokenTypes.OBJBLOCK) ||
 				(parentAST.getType() == TokenTypes.SLIST)) {
+
+				return tabCount;
+			}
+
+			if (firstElistParent == null) {
+				if (parentAST.getType() == TokenTypes.ELIST) {
+					firstElistParent = parentAST;
+				}
+				else if (parentAST.getType() == TokenTypes.RPAREN) {
+					DetailAST previousSibling = parentAST.getPreviousSibling();
+
+					if ((previousSibling != null) &&
+						(previousSibling.getType() == TokenTypes.ELIST)) {
+
+						firstElistParent = previousSibling;
+					}
+				}
+			}
+			else if (parentAST.getType() == TokenTypes.LAMBDA) {
+				firstElistParent = null;
+				outsideMethodCall = false;
+			}
+
+			if (outsideMethodCall &&
+				(parentAST.getType() == TokenTypes.ELIST)) {
 
 				return tabCount;
 			}
@@ -436,6 +463,10 @@ public class IndentationCheck extends BaseCheck {
 
 					checkChaining = true;
 					methodCallLineCount = parentAST.getLineNo();
+				}
+
+				if (firstElistParent != null) {
+					outsideMethodCall = true;
 				}
 			}
 

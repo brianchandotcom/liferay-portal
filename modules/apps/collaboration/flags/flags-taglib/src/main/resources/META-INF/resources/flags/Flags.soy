@@ -21,6 +21,7 @@
 	{@param? _handleReportButtonClick: any}
 	{@param? _handleSubmitForm: any}
 	{@param? _reportDialogOpen: bool}
+	{@param? _selectedReason: string}
 	{@param? _showConfirmationMessage: bool}
 	{@param? _showErrorMessage: bool}
 	{@param? elementClasses: string}
@@ -51,6 +52,7 @@
 				{param _handleReasonChange: $_handleReasonChange /}
 				{param _handleReportButtonClick: $_handleReportButtonClick /}
 				{param _handleSubmitForm: $_handleSubmitForm /}
+				{param _selectedReason: $_selectedReason /}
 				{param _showConfirmationMessage: $_showConfirmationMessage /}
 				{param _showErrorMessage: $_showErrorMessage /}
 				{param companyName: $companyName /}
@@ -124,6 +126,7 @@
 	{@param? _handleReasonChange: any}
 	{@param? _handleSubmitForm: any}
 	{@param? _handleReportButtonClick: any}
+	{@param? _selectedReason: string}
 	{@param? _showConfirmationMessage: bool}
 	{@param? _showErrorMessage: bool}
 	{@param? reporterEmailAddress: string}
@@ -133,6 +136,7 @@
 			{call .reportDialogBody}
 				{param _handleReasonChange: $_handleReasonChange /}
 				{param _handleSubmitForm: $_handleSubmitForm /}
+				{param _selectedReason: $_selectedReason /}
 				{param _showConfirmationMessage: $_showConfirmationMessage /}
 				{param _showErrorMessage: $_showErrorMessage /}
 				{param companyName: $companyName /}
@@ -209,6 +213,7 @@
 	{@param signedIn: bool}
 	{@param? _handleReasonChange: any}
 	{@param? _handleSubmitForm: any}
+	{@param? _selectedReason: string}
 	{@param? _showConfirmationMessage: bool}
 	{@param? _showErrorMessage: bool}
 	{@param? reporterEmailAddress: string}
@@ -224,6 +229,7 @@
 			{call .reportForm}
 				{param _handleReasonChange: $_handleReasonChange /}
 				{param _handleSubmitForm: $_handleSubmitForm /}
+				{param _selectedReason: $_selectedReason /}
 				{param pathTermsOfUse: $pathTermsOfUse /}
 				{param pathThemeImages: $pathThemeImages /}
 				{param portletNamespace: $portletNamespace /}
@@ -248,6 +254,7 @@
 	{@param signedIn: bool}
 	{@param? _handleReasonChange: any}
 	{@param? _handleSubmitForm: any}
+	{@param? _selectedReason: string}
 	{@param? reporterEmailAddress: string}
 
 	<form class="container-fluid-1280" method="post" name="{$portletNamespace}flagsForm" onsubmit="{$_handleSubmitForm}" >
@@ -276,12 +283,14 @@
 				</select>
 			</div>
 
-			<span class="hide" id="{$portletNamespace}otherReasonContainer">
-				<div class="form-group">
-					<label class="control-label" for="{$portletNamespace}otherReason">{msg desc=""}other-reason{/msg}</label>
-					<input class="form-control" id="{$portletNamespace}otherReason" name="{$portletNamespace}otherReason" />
-				</div>
-			</span>
+			{if $_selectedReason == 'other'}
+				<span>
+					<div class="form-group">
+						<label class="control-label" for="{$portletNamespace}otherReason">{msg desc=""}other-reason{/msg}</label>
+						<input class="form-control" id="{$portletNamespace}otherReason" name="{$portletNamespace}otherReason" />
+					</div>
+				</span>
+			{/if}
 
 			{if $signedIn}
 				<input id="{$portletNamespace}reporterEmailAddress" name="{$portletNamespace}reporterEmailAddress" type="hidden" value="{$reporterEmailAddress}" />

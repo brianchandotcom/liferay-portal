@@ -62,16 +62,7 @@ class Flags extends PortletBase {
 	 * @protected
 	 */
 	_handleReasonChange(event) {
-		let reason = event.delegateTarget.value;
-
-		let otherReasonContainer = this.one('#otherReasonContainer');
-
-		if (reason === 'other') {
-			dom.removeClasses(otherReasonContainer, 'hide');
-		}
-		else {
-			dom.addClasses(otherReasonContainer, 'hide');
-		}
+		this._selectedReason = event.delegateTarget.value;
 	}
 
 	/**
@@ -129,6 +120,14 @@ class Flags extends PortletBase {
  * @type {!Object}
  */
 Flags.STATE = {
+	/**
+	 * Selected reason to flag.
+	 * @instance
+	 * @memberof Flags
+	 * @type {String}
+	 */
+	_selectedReason: Config.string().internal(),
+
 	/**
 	 * Company name.
 	 * @instance
@@ -226,7 +225,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {List}
 	 */
-	reasons: Config.array().required(),
+	reasons: Config.arrayOf(Config.string()).required(),
 
 	/**
 	 * Email of the user who reports

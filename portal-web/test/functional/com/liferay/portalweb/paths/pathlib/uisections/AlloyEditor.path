@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>EDITOR</td>
+	<td>//div[contains(@id,'_${key_editor}Editor')][not(contains(@id,'Container'))]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_ADD_BUTTON</td>
 	<td>//button[contains(@class,'ae-button') and contains(@class,'add')]</td>
 	<td></td>

@@ -904,6 +904,14 @@ public class LocalGitSyncUtil {
 		GitWorkingDirectory.Branch localUpstreamBranch =
 			gitWorkingDirectory.getBranch(upstreamBranchName, null);
 
+		if (localUpstreamBranch == null) {
+			localUpstreamBranch = gitWorkingDirectory.createLocalBranch(
+				upstreamBranchName);
+
+			gitWorkingDirectory.fetch(
+				localUpstreamBranch, remoteUpstreamBranch);
+		}
+
 		String localUpstreamBranchSha = localUpstreamBranch.getSha();
 
 		String remoteUpstreamBranchSha = remoteUpstreamBranch.getSha();

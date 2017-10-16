@@ -1716,13 +1716,15 @@ public class JavadocFormatter {
 
 			String modifier = modifiers.get(0);
 
-			for (int i = javaClass.getLineNumber(); i < lines.length; i++) {
+			for (int i = javaClass.getLineNumber() - 1; i < lines.length; i++) {
 				String line = StringUtil.trim(lines[i - 1]);
 
 				if (line.startsWith(modifier + StringPool.SPACE)) {
 					return _getAdjustedLineNumber(i, javaModel);
 				}
 			}
+
+			return -1;
 		}
 
 		if (javaModel instanceof JavaField) {

@@ -54,6 +54,7 @@ import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
+import com.liferay.gradle.plugins.test.integration.TestIntegrationTomcatExtension;
 import com.liferay.gradle.plugins.tlddoc.builder.TLDDocBuilderPlugin;
 import com.liferay.gradle.plugins.tlddoc.builder.tasks.TLDDocTask;
 import com.liferay.gradle.plugins.upgrade.table.builder.UpgradeTableBuilderPlugin;
@@ -439,6 +440,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_configureTasksFindBugs(project);
 		_configureTasksJavaCompile(project);
 		_configureTasksPmd(project);
+		_configureTestIntegrationTomcat(project);
 
 		_addTaskUpdateFileSnapshotVersions(project);
 
@@ -3357,6 +3359,14 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			uploadArchivesTask.finalizedBy(
 				updateFileVersionsTask, updateVersionTask);
 		}
+	}
+
+	private void _configureTestIntegrationTomcat(Project project) {
+		TestIntegrationTomcatExtension testIntegrationTomcatExtension =
+			GradleUtil.getExtension(
+				project, TestIntegrationTomcatExtension.class);
+
+		testIntegrationTomcatExtension.setOverwriteCopyTestModules(false);
 	}
 
 	private void _forceProjectDependenciesEvaluation(Project project) {

@@ -61,6 +61,7 @@ import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.StopExecutionException;
+import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.testing.Test;
 import org.gradle.process.JavaForkOptions;
 
@@ -192,6 +193,12 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		GradleUtil.addDependency(
 			project, TEST_MODULES_CONFIGURATION_NAME, "org.apache.aries.jmx",
 			"org.apache.aries.jmx.core", "1.1.7");
+		GradleUtil.addDependency(
+			project, TEST_MODULES_CONFIGURATION_NAME, "com.liferay.portal",
+			"com.liferay.portal.test", "3.0.0");
+		GradleUtil.addDependency(
+			project, TEST_MODULES_CONFIGURATION_NAME, "com.liferay.portal",
+			"com.liferay.portal.test.integration", "3.0.0");
 	}
 
 	private Copy _addTaskCopyTestModules(
@@ -210,6 +217,12 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(FileCopyDetails fileCopyDetails) {
+					if (testIntegrationTomcatExtension.
+							isOverwriteCopyTestModules()) {
+
+						return;
+					}
+
 					String fileName = renameDependencyClosure.call(
 						fileCopyDetails.getName());
 
@@ -242,6 +255,18 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		copy.setDescription(
 			"Copies additional OSGi modules to deploy during integration " +
 				"testing.");
+
+		TaskOutputs taskOutputs = copy.getOutputs();
+
+		taskOutputs.upToDateWhen(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					return false;
+				}
+
+			});
 
 		return copy;
 	}

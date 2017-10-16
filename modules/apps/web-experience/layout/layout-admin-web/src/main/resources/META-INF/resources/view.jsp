@@ -20,13 +20,7 @@
 Group group = layoutsAdminDisplayContext.getGroup();
 
 SitesUtil.addPortletBreadcrumbEntries(group, layoutsAdminDisplayContext.getPagesName(), layoutsAdminDisplayContext.getRedirectURL(), request, renderResponse);
-
-Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
-
-String targetNode = null;
 %>
-
-<%@ include file="/layout_exception.jspf" %>
 
 <div class="container-fluid-1280">
 	<div class="lfr-app-column-view manage-view">

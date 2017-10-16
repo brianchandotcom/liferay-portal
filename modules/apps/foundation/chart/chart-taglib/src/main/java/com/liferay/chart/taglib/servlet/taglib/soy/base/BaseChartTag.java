@@ -14,18 +14,48 @@
 
 package com.liferay.chart.taglib.servlet.taglib.soy.base;
 
+import com.liferay.chart.taglib.internal.NPMResolverProvider;
+import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Map;
+import javax.servlet.ServletRequest;
 
 /**
  * @author Chema Balsas
  */
-public class BaseChartTag extends TemplateRendererTag {
-    
+public abstract class BaseChartTag extends TemplateRendererTag {
+
+	public BaseChartTag(String moduleBaseName) {
+		_moduleBaseName = moduleBaseName;
+	}
+
+	@Override
+	public int doStartTag() {
+		setTemplateNamespace(_moduleBaseName + ".render");
+
+		_outputStylesheetLink();
+
+		return super.doStartTag();
+	}
+
+	@Override
+	public String getModule() {
+		NPMResolver npmResolver = NPMResolverProvider.getNPMResolver();
+
+		if (npmResolver == null) {
+			return StringPool.BLANK;
+		}
+
+		return npmResolver.resolveModuleName(
+			"metal-charts/lib/" + _moduleBaseName);
+	}
+
 	public void setColumns(Object columns) {
 		putValue("columns", columns);
 	}
@@ -37,4 +67,47 @@ public class BaseChartTag extends TemplateRendererTag {
 	public void setId(String id) {
 		putValue("id", id);
 	}
+
+	private OutputData _getOutputData() {
+		ServletRequest servletRequest = getRequest();
+
+		OutputData outputData = (OutputData)servletRequest.getAttribute(
+			WebKeys.OUTPUT_DATA);
+
+		if (outputData == null) {
+			outputData = new OutputData();
+
+			servletRequest.setAttribute(WebKeys.OUTPUT_DATA, outputData);
+		}
+
+		return outputData;
+	}
+
+	private void _outputStylesheetLink() {
+		OutputData outputData = _getOutputData();
+
+		NPMResolver npmResolver = NPMResolverProvider.getNPMResolver();
+
+		if (npmResolver == null) {
+			return;
+		}
+
+		String cssPath = npmResolver.resolveModuleName(
+			"metal-charts/lib/css/main.css");
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("<link rel=\"stylesheet\" href=\"");
+		sb.append(PortalUtil.getPathModule());
+		sb.append("/chart-taglib/node_modules/");
+		sb.append(cssPath);
+		sb.append("\">");
+
+		outputData.addData(_OUTPUT_KEY, WebKeys.PAGE_TOP, sb);
+	}
+
+	private static final String _OUTPUT_KEY = BaseChartTag.class.getName();
+
+	private final String _moduleBaseName;
+
 }

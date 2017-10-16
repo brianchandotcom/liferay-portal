@@ -114,21 +114,21 @@ public class RandomTestUtil {
 		return randomInt(1, Integer.MAX_VALUE);
 	}
 
-	public static int randomInt(int min, int max)
-		throws IllegalArgumentException {
-
-		if (((long)max - (long)min) >= Integer.MAX_VALUE) {
-			throw new IllegalArgumentException(
-				"The difference between max and min must be less than " +
-					Integer.MAX_VALUE);
-		}
-
+	public static int randomInt(int min, int max) {
 		if (max < min) {
 			throw new IllegalArgumentException(
 				"Max value must be greater than or equal to the min value");
 		}
 
-		return _random.nextInt(max - min + 1) + min;
+		int value = _random.nextInt();
+
+		long range = max + 1 - min;
+
+		if (range == 0) {
+			return value;
+		}
+
+		return (int)(Math.abs(value) % range + min);
 	}
 
 	public static Map<Locale, String> randomLocaleStringMap() {

@@ -17,8 +17,6 @@ package com.liferay.petra.io.unsync;
 import java.io.IOException;
 import java.io.Reader;
 
-import java.nio.CharBuffer;
-
 /**
  * <p>
  * See https://issues.liferay.com/browse/LPS-6648.
@@ -94,21 +92,6 @@ public class UnsyncStringReader extends Reader {
 		string.getChars(index, index + read, chars, offset);
 
 		index += read;
-
-		return read;
-	}
-
-	@Override
-	public int read(CharBuffer charBuffer) throws IOException {
-		int remaining = charBuffer.remaining();
-
-		char[] chars = new char[remaining];
-
-		int read = read(chars, 0, remaining);
-
-		if (read > 0) {
-			charBuffer.put(chars, 0, read);
-		}
 
 		return read;
 	}

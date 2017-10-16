@@ -155,6 +155,10 @@ public class ReflectionUtil {
 		return interfaceClasses.toArray(new Class<?>[interfaceClasses.size()]);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static Class<?>[] getParameterTypes(Object[] arguments) {
 		if (arguments == null) {
 			return null;

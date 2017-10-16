@@ -81,7 +81,7 @@ public class ModuleFrameworkAdapterHelper {
 	}
 
 	public Object exec(
-		String methodName, Class<?>[] parameterTypes, Object...parameters) {
+		String methodName, Class<?>[] parameterTypes, Object... parameters) {
 
 		try {
 			Method method = searchMethod(methodName, parameterTypes);
@@ -95,7 +95,11 @@ public class ModuleFrameworkAdapterHelper {
 		}
 	}
 
-	public Object execute(String methodName, Object...parameters) {
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
+	public Object execute(String methodName, Object... parameters) {
 		Class<?>[] parameterTypes = ReflectionUtil.getParameterTypes(
 			parameters);
 

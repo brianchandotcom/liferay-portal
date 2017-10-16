@@ -33,6 +33,7 @@ definition {
 		for (breadcrumbName : "${breadcrumbListVisible}") {
 			var key_breadcrumbName = "${breadcrumbName}";
 			var breadcrumbNameUppercase = "StringUtil.upperCase('${breadcrumbName}')";
+			var historyVersion = "selenium.getText('Staging#HISTORY_VERSION')";
 
 			AssertTextEquals(locator1 = "Breadcrumb#BREADCRUMB_ENTRY", value1 = "${breadcrumbNameUppercase}");
 
@@ -125,6 +126,8 @@ document.getElementById('demo').innerHTML = 'FAIL';
 		Smoke.runSmoke();
 
 		AssertElementPresent(locator1 = "Home#PAGE", value1 = "Welcome");
+
+		Type(locator1 = "DDMField#INTEGER", value1 = "5", key_fieldName = "Integer");
 
 		Click(locator1 = "Home#PAGE");
 

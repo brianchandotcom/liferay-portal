@@ -33,6 +33,8 @@
 
 			<var method="StringUtil#upperCase('${breadcrumbName}')" name="breadcrumbNameUppercase" />
 
+			<var method="selenium#getText('Staging#HISTORY_VERSION')" name="historyVersion" />
+
 			<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_ENTRY" value1="${breadcrumbNameUppercase}" />
 
 			<if>
@@ -160,6 +162,10 @@ document.getElementById('demo').innerHTML = 'FAIL';
 		<execute macro="Smoke#runSmoke" />
 
 		<execute function="AssertElementPresent" locator1="Home#PAGE" value1="Welcome" />
+
+		<execute function="Type" locator1="DDMField#INTEGER" value1="5">
+			<var name="key_fieldName" value="Integer" />
+		</execute>
 
 		<execute function="Click" locator1="Home#PAGE" />
 

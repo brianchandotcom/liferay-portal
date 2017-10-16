@@ -15,6 +15,7 @@
 package com.liferay.poshi.runner.elements;
 
 import com.liferay.poshi.runner.util.Dom4JUtil;
+import com.liferay.poshi.runner.util.Validator;
 
 import java.io.IOException;
 
@@ -67,8 +68,13 @@ public class VarPoshiElement extends BasePoshiElement {
 
 		String value = getQuotedContent(readableSyntax);
 
-		if (value.contains("Util.")) {
-			value = value.replace("Util.", "Util#");
+		if (value.contains("Util.") || value.startsWith("selenium.")) {
+			if (value.startsWith("selenium.")) {
+				value = value.replace("selenium.", "selenium#");
+			}
+			else {
+				value = value.replace("Util.", "Util#");
+			}
 
 			addAttribute("method", value);
 
@@ -107,7 +113,16 @@ public class VarPoshiElement extends BasePoshiElement {
 
 		String value = getVarValue();
 
-		value = value.replace("Util#", "Util.");
+		if (Validator.isNotNull(valueAttributeName)) {
+			if (valueAttributeName.equals("method")) {
+				if (value.startsWith("selenium#")) {
+					value = value.replace("selenium#", "selenium.");
+				}
+				else {
+					value = value.replace("Util#", "Util.");
+				}
+			}
+		}
 
 		sb.append(value);
 

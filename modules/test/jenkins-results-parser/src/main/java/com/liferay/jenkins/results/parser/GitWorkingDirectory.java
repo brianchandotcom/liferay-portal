@@ -1308,7 +1308,8 @@ public class GitWorkingDirectory {
 			new String[] {
 				"liferay-jenkins-ee", "liferay-jenkins-tools-private",
 				"liferay-plugins-ee", "liferay-portal-ee",
-				"liferay-qa-portal-legacy-ee", "liferay-release-tool-ee"
+				"liferay-qa-portal-legacy-ee", "liferay-qa-websites-ee",
+				"liferay-release-tool-ee"
 			});
 	private static final List<String> _publicOnlyRepositoryNames =
 		Arrays.asList(

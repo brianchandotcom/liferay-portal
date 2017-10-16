@@ -1088,7 +1088,7 @@ public class GitWorkingDirectory {
 
 	protected List<Branch> getRemoteBranches(Remote remote) {
 		ExecutionResult executionResult = executeBashCommands(
-			1, 1000 * 60,
+			1, 1000 * 60 * 10,
 			JenkinsResultsParserUtil.combine(
 				"git ls-remote -h ", remote.getName()));
 
@@ -1121,6 +1121,7 @@ public class GitWorkingDirectory {
 
 	protected List<String> getRemoteBranchNames(Remote remote) {
 		ExecutionResult executionResult = executeBashCommands(
+			1, 1000 * 60 * 10,
 			JenkinsResultsParserUtil.combine(
 				"git ls-remote -h ", remote.getName()));
 

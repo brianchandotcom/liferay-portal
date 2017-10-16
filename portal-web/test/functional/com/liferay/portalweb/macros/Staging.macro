@@ -777,7 +777,9 @@
 		<if>
 			<isset var="publicationName" />
 			<then>
-				<execute function="Type" locator1="TextInput#NAME" value1="${publicationName}" />
+				<execute macro="PortletEntry#inputName">
+					<var name="name" value="${publicationName}" />
+				</execute>
 			</then>
 		</if>
 

@@ -123,6 +123,12 @@ public class FragmentEntryServiceUtil {
 	}
 
 	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
+		long fragmentEntryId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateFragmentEntry(fragmentEntryId, name);
+	}
+
+	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
 		long fragmentEntryId, java.lang.String name, java.lang.String css,
 		java.lang.String html, java.lang.String js)
 		throws com.liferay.portal.kernel.exception.PortalException {

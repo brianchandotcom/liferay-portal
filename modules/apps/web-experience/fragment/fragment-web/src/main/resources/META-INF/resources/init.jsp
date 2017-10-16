@@ -40,6 +40,9 @@ page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
+<%@ page import="java.util.HashMap" %><%@
+page import="java.util.Map" %>
+
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

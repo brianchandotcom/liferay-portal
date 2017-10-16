@@ -128,29 +128,63 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 		<liferay-frontend:add-menu-item id="addFragmentEntryMenuItem" title='<%= LanguageUtil.get(request, "add-fragment") %>' url="<%= addFragmentEntryURL.toString() %>" />
 	</liferay-frontend:add-menu>
 
-	<aui:script require="fragment-web/js/FragmentNameEditor">
-		var addFragmentEntryMenuItem = document.getElementById('<portlet:namespace />addFragmentEntryMenuItem');
-
-		addFragmentEntryMenuItem.addEventListener(
+	<aui:script require="fragment-web/js/FragmentNameEditor,metal-dom/src/all/dom">
+		var updateFragmentActionOptionQueryClickHandler = metalDomSrcAllDom.default.delegate(
+			document.body,
 			'click',
+			'.<portlet:namespace />update-fragment-action-option',
 			function(event) {
-				event.preventDefault();
+				var actionElement = event.target;
 
 				var fragmentNameEditor = new fragmentWebJsFragmentNameEditor.default(
 					{
-						addFragmentEntryURL: '<%= addFragmentEntryURL.toString() %>',
-						editFragmentEntryURL: '<portlet:renderURL><portlet:param name="mvcPath" value="/edit_fragment_entry.jsp" /><portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentDisplayContext.getFragmentCollectionId()) %>" /></portlet:renderURL>',
+						actionURL: actionElement.dataset.updateUrl,
+						editorTitle: '<liferay-ui:message key="rename-fragment" />',
 						events: {
 							hide: function() {
-								fragmentNameEditor.disposeInternal();
+								fragmentNameEditor.dispose();
 							}
 						},
+						fragmentEntryId: actionElement.dataset.fragmentEntryId,
+						fragmentEntryName: actionElement.dataset.fragmentEntryName,
 						namespace: '<portlet:namespace />',
 						spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
 					}
 				);
 			}
 		);
+
+		function handleAddFragmentEntryMenuItemClick(event) {
+			event.preventDefault();
+
+			var fragmentNameEditor = new fragmentWebJsFragmentNameEditor.default(
+				{
+					actionURL: '<%= addFragmentEntryURL.toString() %>',
+					editorTitle: '<liferay-ui:message key="add-fragment" />',
+					events: {
+						hide: function() {
+							fragmentNameEditor.dispose();
+						}
+					},
+					namespace: '<portlet:namespace />',
+					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+				}
+			);
+		}
+
+		var addFragmentEntryMenuItem = document.getElementById('<portlet:namespace />addFragmentEntryMenuItem');
+
+		addFragmentEntryMenuItem.addEventListener('click', handleAddFragmentEntryMenuItemClick);
+
+		function handleDestroyPortlet () {
+			addFragmentEntryMenuItem.removeEventListener('click', handleAddFragmentEntryMenuItemClick);
+
+			updateFragmentActionOptionQueryClickHandler.removeListener();
+
+			Liferay.detach('destroyPortlet', handleDestroyPortlet);
+		}
+
+		Liferay.on('destroyPortlet', handleDestroyPortlet);
 	</aui:script>
 </c:if>
 

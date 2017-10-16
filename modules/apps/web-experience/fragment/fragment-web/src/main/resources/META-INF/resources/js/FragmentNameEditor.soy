@@ -4,18 +4,20 @@
  * FragmentNameEditor
  */
 {template .render}
+	{@param editorTitle: string}
 	{@param namespace: string}
 	{@param spritemap: string}
 	{@param? _handleModalHidden: any}
 	{@param? _handleSubmitForm: any}
 	{@param? error: string}
+	{@param? fragmentEntryId: string}
+	{@param? fragmentEntryName: string}
 
 	{call Modal.render}
 		{param body kind="html"}
-			<form class="form" id="{$namespace}addForm" method="post" data-onsubmit="{$_handleSubmitForm}">
+			<form class="form" id="{$namespace}fragmentNameEditorForm" method="post" data-onsubmit="{$_handleSubmitForm}">
 				{let $classes kind="text"}
-					form-group
-					{sp}input-text-wrapper
+					form-group input-text-wrapper
 					{if $error}
 						{sp}has-error
 					{/if}
@@ -33,7 +35,20 @@
 						<span class="hide-accessible">{msg desc=""}required{/msg}</span>
 					</label>
 
-					<input class="field form-control" name="{$namespace}name" type="text">
+					{if $fragmentEntryId}
+						<input name="{$namespace}id" type="hidden" value="{$fragmentEntryId}"></input>
+					{/if}
+
+					{let $inputNameAttributes kind="attributes"}
+						class="field form-control"
+						name="{$namespace}name"
+						type="text"
+						{if $fragmentEntryName}
+							value="{$fragmentEntryName}"
+						{/if}
+					{/let}
+
+					<input {$inputNameAttributes}></input>
 
 					{if $error}
 						<div class="form-validator-stack help-block">
@@ -47,16 +62,15 @@
 		{/param}
 
 		{param dialogClasses: 'fragment-name-editor__dialog' /}
-		{param events: ['hide': $_handleModalHidden] /}
-
+		{param events: ['visibleChanged': $_handleModalHidden] /}
 		{param footer kind="html"}
-			<button class="btn btn-primary btn-default btn-lg" data-onclick="{$_handleSubmitForm}" type="button">
+			<button class="btn btn-primary" data-onclick="{$_handleSubmitForm}" type="button">
 				<span class="lfr-btn-label">
 					{msg desc=""}save{/msg}
 				</span>
 			</button>
 
-			<button class="btn btn-cancel btn-default btn-lg btn-link" data-onclick="hide" type="button">
+			<button class="btn btn-secondary" data-onclick="hide" type="button">
 				<span class="lfr-btn-label">
 					{msg desc=""}cancel{/msg}
 				</span>
@@ -65,7 +79,7 @@
 
 		{param header kind="html"}
 			<h3 class="modal-title">
-				{msg desc=""}add-fragment{/msg}
+				{$editorTitle}
 			</h3>
 		{/param}
 	{/call}

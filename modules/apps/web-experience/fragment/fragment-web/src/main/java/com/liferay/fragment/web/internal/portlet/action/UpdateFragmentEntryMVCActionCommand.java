@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -44,33 +42,26 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT,
-		"mvc.command.name=addFragmentEntry"
+		"mvc.command.name=updateFragmentEntry"
 	},
 	service = MVCActionCommand.class
 )
-public class AddFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
+public class UpdateFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long fragmentCollectionId = ParamUtil.getLong(
-			actionRequest, "fragmentCollectionId");
+		long fragmentEntryId = ParamUtil.getLong(
+			actionRequest, "fragmentEntryId");
 
 		String name = ParamUtil.getString(actionRequest, "name");
-		String css = ParamUtil.getString(actionRequest, "cssContent");
-		String js = ParamUtil.getString(actionRequest, "jsContent");
-		String html = ParamUtil.getString(actionRequest, "htmlContent");
 
 		try {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				actionRequest);
-
 			FragmentEntry fragmentEntry =
-				_fragmentEntryService.addFragmentEntry(
-					serviceContext.getScopeGroupId(), fragmentCollectionId,
-					name, css, html, js, serviceContext);
+				_fragmentEntryService.updateFragmentEntry(
+					fragmentEntryId, name);
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -96,13 +87,10 @@ public class AddFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", "/edit_fragment_entry.jsp");
+		portletURL.setParameter("mvcPath", "/view_fragment_entries.jsp");
 		portletURL.setParameter(
 			"fragmentCollectionId",
 			String.valueOf(fragmentEntry.getFragmentCollectionId()));
-		portletURL.setParameter(
-			"fragmentEntryId",
-			String.valueOf(fragmentEntry.getFragmentEntryId()));
 
 		return portletURL.toString();
 	}

@@ -25,17 +25,9 @@
 				</div>
 			</#if>
 
-			<header class="navbar navbar-ecommerce">
-				<div class="container-fluid-1280" id="banner" role="banner">
-					<div class="navbar-header" id="heading">
-						<#if has_navigation>
-							<button aria-controls="navigation" aria-expanded="false" class="collapsed navbar-toggle" data-target="#navigationCollapse" data-toggle="collapse" type="button">
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-							</button>
-						</#if>
-
+			<header class="navbar navbar-expand-md navbar-ecommerce">
+				<div class="container-fluid" id="banner" role="banner">
+					<div class="navbar-brand" id="heading">
 						<a class="${logo_css_class}" href="${site_default_url}" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
 							<img alt="${logo_description}" height="56" src="${site_logo}" />
 
@@ -44,6 +36,14 @@
 							</#if>
 						</a>
 					</div>
+
+					<#if has_navigation>
+						<button aria-controls="navigation" aria-expanded="false" class="navbar-toggler" data-target="#navigationCollapse" data-toggle="collapse" type="button">
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+					</#if>
 
 					<#if has_navigation>
 						<#include "${full_templates_path}/navigation.ftl" />

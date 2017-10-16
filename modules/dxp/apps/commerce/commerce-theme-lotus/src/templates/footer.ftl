@@ -25,7 +25,7 @@
 					/>
 				</div>
 
-				<div class="col-md-5 col-md-offset-1 nav" role="menubar">
+				<div class="col-md-5 ml-md-auto nav" role="menubar">
 					<h2 class="h4">FOLLOW US</h2>
 					<p class="h2">
 						<span class="icon-twitter"></span>

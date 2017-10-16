@@ -17,12 +17,25 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectPage");
+String redirect = layoutsAdminDisplayContext.getRedirect();
 
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(LanguageUtil.get(request, "copy-applications"));
 %>
 
-<div class="container-fluid-1280">
+<portlet:actionURL name="copyApplications" var="copyApplicationsURL" />
+
+<aui:form action="<%= copyApplicationsURL %>" cssClass="container-fluid-1280" name="fm">
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="groupId" type="hidden" value="<%= layoutsAdminDisplayContext.getSelGroupId() %>" />
+	<aui:input name="selPlid" type="hidden" value="<%= layoutsAdminDisplayContext.getSelPlid() %>" />
+	<aui:input name="privateLayout" type="hidden" value="<%= layoutsAdminDisplayContext.isPrivateLayout() %>" />
+	<aui:input name="layoutId" type="hidden" value="<%= layoutsAdminDisplayContext.getLayoutId() %>" />
+
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
 			<c:if test="<%= selLayout != null %>">
@@ -52,15 +65,10 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 			</aui:select>
 		</aui:fieldset>
 	</aui:fieldset-group>
-</div>
 
-<aui:script use="aui-base">
-	var copyLayoutId = A.one('#<portlet:namespace />copyLayoutId');
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" type="submit" value="save" />
 
-	Liferay.Util.getOpener().Liferay.fire(
-		'<%= HtmlUtil.escapeJS(eventName) %>',
-		{
-			data: copyLayoutId.getDOMNode()
-		}
-	);
-</aui:script>
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+	</aui:button-row>
+</aui:form>

@@ -14,9 +14,16 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
+import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
+import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -167,6 +174,38 @@ public class LayoutsAdminDisplayContext extends BaseLayoutDisplayContext {
 
 	public Long getStagingGroupId() {
 		return _groupDisplayContextHelper.getStagingGroupId();
+	}
+
+	public boolean showCopyApplicationsAction(Layout layout)
+		throws PortalException {
+
+		// Check if layout is incomplete
+
+		LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(
+			layout);
+
+		boolean incomplete = false;
+
+		if (layoutRevision != null) {
+			long layoutSetBranchId = layoutRevision.getLayoutSetBranchId();
+
+			incomplete = StagingUtil.isIncomplete(layout, layoutSetBranchId);
+		}
+
+		if (incomplete) {
+			return false;
+		}
+
+		// Check if layout is a layout prototype
+
+		Group group = layout.getGroup();
+
+		if (group.isLayoutPrototype()) {
+			return false;
+		}
+
+		return LayoutPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), layout, ActionKeys.UPDATE);
 	}
 
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;

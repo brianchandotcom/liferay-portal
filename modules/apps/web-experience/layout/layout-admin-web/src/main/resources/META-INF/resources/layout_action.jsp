@@ -76,6 +76,21 @@ Layout curLayout = (Layout)row.getObject();
 		/>
 	</c:if>
 
+	<c:if test="<%= layoutsAdminDisplayContext.showCopyApplicationsAction(curLayout) %>">
+		<portlet:renderURL var="copyApplicationsURL">
+			<portlet:param name="mvcPath" value="/copy_applications.jsp" />
+			<portlet:param name="backURL" value="<%= currentURL %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(curLayout.getGroupId()) %>" />
+			<portlet:param name="selPlid" value="<%= String.valueOf(curLayout.getPlid()) %>" />
+			<portlet:param name="privateLayout" value="<%= String.valueOf(curLayout.isPrivateLayout()) %>" />
+		</portlet:renderURL>
+
+		<liferay-ui:icon
+			message="copy-applications"
+			url="<%= copyApplicationsURL %>"
+		/>
+	</c:if>
+
 	<liferay-ui:icon
 		message="view-page"
 		target="_blank"

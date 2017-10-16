@@ -215,6 +215,7 @@ if (portletTitleBasedNavigation) {
 					</portlet:actionURL>
 
 					<liferay-ui:icon-delete
+						showIcon="<%= true %>"
 						trash="<%= trashHelper.isTrashEnabled(themeDisplay.getScopeGroupId()) %>"
 						url="<%= deleteURL %>"
 					/>

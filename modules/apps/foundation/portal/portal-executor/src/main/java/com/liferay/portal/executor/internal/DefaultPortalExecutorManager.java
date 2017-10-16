@@ -14,7 +14,6 @@
 
 package com.liferay.portal.executor.internal;
 
-import com.liferay.petra.concurrent.FutureListener;
 import com.liferay.petra.concurrent.NoticeableExecutorService;
 import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.petra.concurrent.NoticeableThreadPoolExecutor;
@@ -27,7 +26,6 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -89,7 +87,7 @@ public class DefaultPortalExecutorManager implements PortalExecutorManager {
 				noticeableExecutorService.terminationNoticeableFuture();
 
 			terminationNoticeableFuture.addFutureListener(
-				new UnregisterFutureListener(name));
+				future -> _noticeableExecutorServices.remove(name));
 		}
 
 		return previousNoticeableExecutorService;
@@ -136,21 +134,6 @@ public class DefaultPortalExecutorManager implements PortalExecutorManager {
 
 		_portalExecutorConfigs.remove(
 			portalExecutorConfig.getName(), portalExecutorConfig);
-	}
-
-	protected class UnregisterFutureListener implements FutureListener<Void> {
-
-		@Override
-		public void complete(Future<Void> future) {
-			_noticeableExecutorServices.remove(name);
-		}
-
-		protected UnregisterFutureListener(String name) {
-			this.name = name;
-		}
-
-		protected final String name;
-
 	}
 
 	private NoticeableExecutorService _createPortalExecutor(

@@ -18,7 +18,6 @@ import com.liferay.document.library.ddm.DLFileEntryMetadataDDMPermissionSupport;
 import com.liferay.document.library.google.docs.internal.util.GoogleDocsDLFileEntryTypeHelper;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructureLinkManager;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.dynamic.data.mapping.util.DDM;
@@ -46,86 +45,18 @@ public class GoogleDocsConfigurator {
 			_companyLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<Company>() {
+			(Company company) -> {
+				GoogleDocsDLFileEntryTypeHelper
+					googleDocsDLFileEntryTypeHelper =
+						new GoogleDocsDLFileEntryTypeHelper(
+							company, _classNameLocalService, _ddm,
+							_ddmFormXSDDeserializer, _ddmStructureLocalService,
+							_dlFileEntryTypeLocalService, _userLocalService);
 
-				@Override
-				public void performAction(Company company)
-					throws PortalException {
-
-					GoogleDocsDLFileEntryTypeHelper
-						googleDocsDLFileEntryTypeHelper =
-							new GoogleDocsDLFileEntryTypeHelper(
-								company, _classNameLocalService, _ddm,
-								_ddmFormXSDDeserializer,
-								_ddmStructureLocalService,
-								_dlFileEntryTypeLocalService,
-								_userLocalService);
-
-					googleDocsDLFileEntryTypeHelper.
-						addGoogleDocsDLFileEntryType();
-				}
-
+				googleDocsDLFileEntryTypeHelper.addGoogleDocsDLFileEntryType();
 			});
 
 		actionableDynamicQuery.performActions();
-	}
-
-	@Reference(unbind = "-")
-	protected void setClassNameLocalService(
-		ClassNameLocalService classNameLocalService) {
-
-		_classNameLocalService = classNameLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDM(DDM ddm) {
-		_ddm = ddm;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormXSDDeserializer(
-		DDMFormXSDDeserializer ddmFormXSDDeserializer) {
-
-		_ddmFormXSDDeserializer = ddmFormXSDDeserializer;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureLinkManager(
-		DDMStructureLinkManager ddmStructureLinkManager) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureVersionLocalService(
-		DDMStructureVersionLocalService ddmStructureVersionLocalService) {
-
-		_ddmStructureVersionLocalService = ddmStructureVersionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLFileEntryMetadataDDMPermissionSupport(
-		DLFileEntryMetadataDDMPermissionSupport
-			dlFileEntryMetadataDDMPermissionSupport) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLFileEntryTypeLocalService(
-		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
-
-		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -134,17 +65,35 @@ public class GoogleDocsConfigurator {
 	}
 
 	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
+	protected void setDDMStructureVersionLocalService(
+		DDMStructureVersionLocalService ddmStructureVersionLocalService) {
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLFileEntryMetadataDDMPermissionSupport(
+		DLFileEntryMetadataDDMPermissionSupport
+			dlFileEntryMetadataDDMPermissionSupport) {
+	}
+
+	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
 	private DDM _ddm;
+
+	@Reference
 	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;
+
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
-	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
+
+	@Reference
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

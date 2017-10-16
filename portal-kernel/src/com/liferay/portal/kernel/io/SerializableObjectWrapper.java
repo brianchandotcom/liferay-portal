@@ -56,10 +56,13 @@ public class SerializableObjectWrapper implements Externalizable {
 	 * this for any other purpose.
 	 */
 	public SerializableObjectWrapper() {
+		_hashCode = 0;
 	}
 
 	public SerializableObjectWrapper(Serializable serializable) {
 		_serializable = serializable;
+
+		_hashCode = serializable.hashCode();
 	}
 
 	@Override
@@ -74,6 +77,10 @@ public class SerializableObjectWrapper implements Externalizable {
 
 		SerializableObjectWrapper serializableWrapper =
 			(SerializableObjectWrapper)object;
+
+		if (_hashCode != serializableWrapper._hashCode) {
+			return false;
+		}
 
 		if ((_serializable instanceof LazySerializable) &&
 			(serializableWrapper._serializable instanceof LazySerializable)) {
@@ -106,17 +113,13 @@ public class SerializableObjectWrapper implements Externalizable {
 
 	@Override
 	public int hashCode() {
-		if (_serializable instanceof LazySerializable) {
-			LazySerializable lazySerializable = (LazySerializable)_serializable;
-
-			_serializable = lazySerializable.getSerializable();
-		}
-
-		return _serializable.hashCode();
+		return _hashCode;
 	}
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		_hashCode = objectInput.readInt();
+
 		byte[] data = new byte[objectInput.readInt()];
 
 		objectInput.readFully(data);
@@ -126,6 +129,8 @@ public class SerializableObjectWrapper implements Externalizable {
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeInt(_hashCode);
+
 		if (_serializable instanceof LazySerializable) {
 			LazySerializable lazySerializable = (LazySerializable)_serializable;
 
@@ -153,6 +158,7 @@ public class SerializableObjectWrapper implements Externalizable {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SerializableObjectWrapper.class);
 
+	private int _hashCode;
 	private volatile Serializable _serializable;
 
 	private static class LazySerializable implements Serializable {

@@ -27,7 +27,7 @@ public interface PortalExecutorManager {
 		String name, boolean createIfAbsent);
 
 	public NoticeableExecutorService registerPortalExecutor(
-		String name, NoticeableExecutorService executorService);
+		String name, NoticeableExecutorService noticeableExecutorService);
 
 	public void shutdown();
 

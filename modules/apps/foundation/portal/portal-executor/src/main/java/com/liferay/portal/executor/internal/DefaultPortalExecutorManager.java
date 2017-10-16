@@ -57,40 +57,42 @@ public class DefaultPortalExecutorManager implements PortalExecutorManager {
 	public NoticeableExecutorService getPortalExecutor(
 		String name, boolean createIfAbsent) {
 
-		NoticeableExecutorService executorService = _executorServices.get(name);
+		NoticeableExecutorService noticeableExecutorService =
+			_noticeableExecutorServices.get(name);
 
-		if ((executorService == null) && createIfAbsent) {
-			executorService = _createPortalExecutor(name);
+		if ((noticeableExecutorService == null) && createIfAbsent) {
+			noticeableExecutorService = _createPortalExecutor(name);
 
 			NoticeableExecutorService previousNoticeableExecutorService =
-				registerPortalExecutor(name, executorService);
+				registerPortalExecutor(name, noticeableExecutorService);
 
 			if (previousNoticeableExecutorService != null) {
-				executorService.shutdown();
+				noticeableExecutorService.shutdown();
 
-				executorService = previousNoticeableExecutorService;
+				noticeableExecutorService = previousNoticeableExecutorService;
 			}
 		}
 
-		return executorService;
+		return noticeableExecutorService;
 	}
 
 	@Override
 	public NoticeableExecutorService registerPortalExecutor(
-		String name, NoticeableExecutorService executorService) {
+		String name, NoticeableExecutorService noticeableExecutorService) {
 
-		NoticeableExecutorService previousExecutorService =
-			_executorServices.putIfAbsent(name, executorService);
+		NoticeableExecutorService previousNoticeableExecutorService =
+			_noticeableExecutorServices.putIfAbsent(
+				name, noticeableExecutorService);
 
-		if (previousExecutorService == null) {
+		if (previousNoticeableExecutorService == null) {
 			NoticeableFuture<Void> terminationNoticeableFuture =
-				executorService.terminationNoticeableFuture();
+				noticeableExecutorService.terminationNoticeableFuture();
 
 			terminationNoticeableFuture.addFutureListener(
 				new UnregisterFutureListener(name));
 		}
 
-		return previousExecutorService;
+		return previousNoticeableExecutorService;
 	}
 
 	@Override
@@ -100,14 +102,14 @@ public class DefaultPortalExecutorManager implements PortalExecutorManager {
 
 	@Override
 	public void shutdown(boolean interrupt) {
-		for (NoticeableExecutorService executorService :
-				_executorServices.values()) {
+		for (NoticeableExecutorService noticeableExecutorService :
+				_noticeableExecutorServices.values()) {
 
 			if (interrupt) {
-				executorService.shutdownNow();
+				noticeableExecutorService.shutdownNow();
 			}
 			else {
-				executorService.shutdown();
+				noticeableExecutorService.shutdown();
 			}
 		}
 	}
@@ -140,7 +142,7 @@ public class DefaultPortalExecutorManager implements PortalExecutorManager {
 
 		@Override
 		public void complete(Future<Void> future) {
-			_executorServices.remove(name);
+			_noticeableExecutorServices.remove(name);
 		}
 
 		protected UnregisterFutureListener(String name) {
@@ -199,7 +201,7 @@ public class DefaultPortalExecutorManager implements PortalExecutorManager {
 			});
 
 	private final ConcurrentMap<String, NoticeableExecutorService>
-		_executorServices = new ConcurrentHashMap<>();
+		_noticeableExecutorServices = new ConcurrentHashMap<>();
 	private final ConcurrentMap<String, PortalExecutorConfig>
 		_portalExecutorConfigs = new ConcurrentHashMap<>();
 

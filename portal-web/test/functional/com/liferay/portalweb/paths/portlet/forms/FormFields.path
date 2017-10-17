@@ -191,7 +191,7 @@
 </tr>
 <tr>
 	<td>RADIO_LABEL</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]/label</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label</td>
 	<td></td>
 </tr>
 <tr>

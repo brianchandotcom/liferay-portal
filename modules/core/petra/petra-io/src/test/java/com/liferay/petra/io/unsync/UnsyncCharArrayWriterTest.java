@@ -15,6 +15,7 @@
 package com.liferay.petra.io.unsync;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -26,12 +27,17 @@ import java.nio.CharBuffer;
 import java.util.Arrays;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
 public class UnsyncCharArrayWriterTest extends BaseWriterTestCase {
+
+	@ClassRule
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Test
 	public void testAppendChar() {
@@ -61,13 +67,33 @@ public class UnsyncCharArrayWriterTest extends BaseWriterTestCase {
 		Assert.assertEquals('a', unsyncCharArrayWriter.buffer[0]);
 		Assert.assertEquals('b', unsyncCharArrayWriter.buffer[1]);
 
-		unsyncCharArrayWriter.append(new StringBuilder("cd"));
+		unsyncCharArrayWriter.append(new StringBuilder("abcd"), 2, 4);
 
 		Assert.assertEquals(4, unsyncCharArrayWriter.size());
 		Assert.assertEquals('a', unsyncCharArrayWriter.buffer[0]);
 		Assert.assertEquals('b', unsyncCharArrayWriter.buffer[1]);
 		Assert.assertEquals('c', unsyncCharArrayWriter.buffer[2]);
 		Assert.assertEquals('d', unsyncCharArrayWriter.buffer[3]);
+
+		unsyncCharArrayWriter.reset();
+
+		unsyncCharArrayWriter.append(null);
+
+		Assert.assertEquals(4, unsyncCharArrayWriter.size());
+		Assert.assertEquals('n', unsyncCharArrayWriter.buffer[0]);
+		Assert.assertEquals('u', unsyncCharArrayWriter.buffer[1]);
+		Assert.assertEquals('l', unsyncCharArrayWriter.buffer[2]);
+		Assert.assertEquals('l', unsyncCharArrayWriter.buffer[3]);
+
+		unsyncCharArrayWriter.reset();
+
+		unsyncCharArrayWriter.append(null, 0, 4);
+
+		Assert.assertEquals(4, unsyncCharArrayWriter.size());
+		Assert.assertEquals('n', unsyncCharArrayWriter.buffer[0]);
+		Assert.assertEquals('u', unsyncCharArrayWriter.buffer[1]);
+		Assert.assertEquals('l', unsyncCharArrayWriter.buffer[2]);
+		Assert.assertEquals('l', unsyncCharArrayWriter.buffer[3]);
 	}
 
 	@Test
@@ -82,6 +108,16 @@ public class UnsyncCharArrayWriterTest extends BaseWriterTestCase {
 
 		Assert.assertEquals(0, unsyncCharArrayWriter.size());
 		Assert.assertEquals(64, unsyncCharArrayWriter.buffer.length);
+	}
+
+	@Test
+	public void testFlushAndClose() {
+		UnsyncCharArrayWriter unsyncCharArrayWriter =
+			new UnsyncCharArrayWriter();
+
+		unsyncCharArrayWriter.flush();
+
+		unsyncCharArrayWriter.close();
 	}
 
 	@Test
@@ -126,8 +162,8 @@ public class UnsyncCharArrayWriterTest extends BaseWriterTestCase {
 
 	@Test
 	public void testWriteChar() {
-		UnsyncCharArrayWriter unsyncCharArrayWriter =
-			new UnsyncCharArrayWriter();
+		UnsyncCharArrayWriter unsyncCharArrayWriter = new UnsyncCharArrayWriter(
+			1);
 
 		unsyncCharArrayWriter.write('a');
 
@@ -143,8 +179,8 @@ public class UnsyncCharArrayWriterTest extends BaseWriterTestCase {
 
 	@Test
 	public void testWriteCharArray() {
-		UnsyncCharArrayWriter unsyncCharArrayWriter =
-			new UnsyncCharArrayWriter();
+		UnsyncCharArrayWriter unsyncCharArrayWriter = new UnsyncCharArrayWriter(
+			3);
 
 		unsyncCharArrayWriter.write("ab".toCharArray());
 
@@ -163,8 +199,8 @@ public class UnsyncCharArrayWriterTest extends BaseWriterTestCase {
 
 	@Test
 	public void testWriteString() {
-		UnsyncCharArrayWriter unsyncCharArrayWriter =
-			new UnsyncCharArrayWriter();
+		UnsyncCharArrayWriter unsyncCharArrayWriter = new UnsyncCharArrayWriter(
+			3);
 
 		unsyncCharArrayWriter.write("ab");
 
@@ -172,7 +208,11 @@ public class UnsyncCharArrayWriterTest extends BaseWriterTestCase {
 		Assert.assertEquals('a', unsyncCharArrayWriter.buffer[0]);
 		Assert.assertEquals('b', unsyncCharArrayWriter.buffer[1]);
 
+		char[] buffer = unsyncCharArrayWriter.buffer;
+
 		unsyncCharArrayWriter.write("cd");
+
+		Assert.assertNotSame(buffer, unsyncCharArrayWriter.buffer);
 
 		Assert.assertEquals(4, unsyncCharArrayWriter.size());
 		Assert.assertEquals('a', unsyncCharArrayWriter.buffer[0]);
@@ -198,6 +238,29 @@ public class UnsyncCharArrayWriterTest extends BaseWriterTestCase {
 		Assert.assertEquals(2, charBuffer.limit());
 		charBuffer.position(0);
 		Assert.assertEquals("ab", charBuffer.toString());
+
+		charBuffer = CharBuffer.allocate(5);
+
+		length = unsyncCharArrayWriter.writeTo(charBuffer);
+
+		Assert.assertEquals(4, length);
+
+		Assert.assertEquals(4, charBuffer.position());
+		Assert.assertEquals(5, charBuffer.limit());
+		charBuffer.position(0);
+		charBuffer.limit(4);
+		Assert.assertEquals("abcd", charBuffer.toString());
+
+		charBuffer = CharBuffer.allocate(0);
+
+		length = unsyncCharArrayWriter.writeTo(charBuffer);
+
+		Assert.assertEquals(0, length);
+
+		Assert.assertEquals(0, charBuffer.position());
+		Assert.assertEquals(0, charBuffer.limit());
+		charBuffer.position(0);
+		Assert.assertEquals("", charBuffer.toString());
 
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();

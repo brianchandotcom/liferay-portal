@@ -57,3 +57,7 @@
 		color: map-get($panel-secondary, footer-color);
 	}
 }
+
+.main-content-card .panel-group {
+	@extend .panel-group-fluid;
+}

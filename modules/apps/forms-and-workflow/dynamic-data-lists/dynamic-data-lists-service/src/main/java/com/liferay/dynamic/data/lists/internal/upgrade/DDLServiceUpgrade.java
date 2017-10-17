@@ -14,16 +14,20 @@
 
 package com.liferay.dynamic.data.lists.internal.upgrade;
 
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.dynamic.data.lists.internal.upgrade.v1_0_0.UpgradeKernelPackage;
 import com.liferay.dynamic.data.lists.internal.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.dynamic.data.lists.internal.upgrade.v1_0_0.UpgradeSchema;
 import com.liferay.dynamic.data.lists.internal.upgrade.v1_0_1.UpgradeRecordGroup;
 import com.liferay.dynamic.data.lists.internal.upgrade.v1_0_2.UpgradeDDLRecordSetSettings;
-import com.liferay.dynamic.data.lists.internal.upgrade.v1_0_4.UpgradeDDLRecord;
-import com.liferay.dynamic.data.lists.internal.upgrade.v1_0_4.UpgradeDDLRecordVersion;
-import com.liferay.dynamic.data.lists.internal.upgrade.v1_1_0.UpgradeDDLRecordSetSettingsFieldValues;
+import com.liferay.dynamic.data.lists.internal.upgrade.v1_1_1.UpgradeDDLRecordSet;
+import com.liferay.dynamic.data.lists.internal.upgrade.v1_1_1.UpgradeDDLRecordSetVersion;
+import com.liferay.dynamic.data.lists.internal.upgrade.v1_1_2.UpgradeDDLRecord;
+import com.liferay.dynamic.data.lists.internal.upgrade.v1_1_2.UpgradeDDLRecordVersion;
+import com.liferay.dynamic.data.lists.internal.upgrade.v1_2_0.UpgradeDDLRecordSetSettingsFieldValues;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -61,16 +65,23 @@ public class DDLServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradeDDLRecordSetSettings(_jsonFactory));
 
 		registry.register(
-			"com.liferay.dynamic.data.lists.service", "1.0.2", "1.0.3",
-			new com.liferay.dynamic.data.lists.internal.upgrade.v1_0_3.
+			"com.liferay.dynamic.data.lists.service", "1.0.2", "1.1.0",
+			new com.liferay.dynamic.data.lists.internal.upgrade.v1_1_0.
 				UpgradeSchema());
 
 		registry.register(
-			"com.liferay.dynamic.data.lists.service", "1.0.3", "1.0.4",
+			"com.liferay.dynamic.data.lists.service", "1.1.0", "1.1.1",
+			new UpgradeDDLRecordSet(),
+			new UpgradeDDLRecordSetVersion(
+				_counterLocalService, _ddmStructureLocalService,
+				_userLocalService));
+
+		registry.register(
+			"com.liferay.dynamic.data.lists.service", "1.1.1", "1.1.2",
 			new UpgradeDDLRecord(), new UpgradeDDLRecordVersion());
 
 		registry.register(
-			"com.liferay.dynamic.data.lists.service", "1.0.4", "1.1.0",
+			"com.liferay.dynamic.data.lists.service", "1.1.2", "1.2.0",
 			new UpgradeDDLRecordSetSettingsFieldValues(_jsonFactory));
 	}
 
@@ -80,6 +91,15 @@ public class DDLServiceUpgrade implements UpgradeStepRegistrator {
 	}
 
 	@Reference
+	private CounterLocalService _counterLocalService;
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

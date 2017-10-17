@@ -14,6 +14,6 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Dynamic Data Lists
-Liferay-Require-SchemaVersion: 1.1.0
+Liferay-Require-SchemaVersion: 1.2.0
 Liferay-Service: true
 -includeresource: @poi-[0-9]*.jar

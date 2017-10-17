@@ -14,17 +14,24 @@
 
 package com.liferay.petra.io.unsync;
 
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
 public class UnsyncBufferedWriterTest extends BaseWriterTestCase {
+
+	@ClassRule
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Test
 	public void testBlockWrite() throws IOException {
@@ -43,45 +50,60 @@ public class UnsyncBufferedWriterTest extends BaseWriterTestCase {
 
 		Assert.assertEquals(0, stringWriter.getBuffer().length());
 
+		unsyncBufferedWriter.write("c".toCharArray());
+
+		Assert.assertEquals(3, unsyncBufferedWriter.count);
+		Assert.assertEquals('a', unsyncBufferedWriter.buffer[0]);
+		Assert.assertEquals('b', unsyncBufferedWriter.buffer[1]);
+		Assert.assertEquals('c', unsyncBufferedWriter.buffer[2]);
+
+		Assert.assertEquals(0, stringWriter.getBuffer().length());
+
 		// Auto flush
 
-		unsyncBufferedWriter.write("cd".toCharArray());
+		unsyncBufferedWriter.write("de".toCharArray());
 
 		Assert.assertEquals(2, unsyncBufferedWriter.count);
-		Assert.assertEquals('c', unsyncBufferedWriter.buffer[0]);
-		Assert.assertEquals('d', unsyncBufferedWriter.buffer[1]);
-		Assert.assertEquals(2, stringWriter.getBuffer().length());
-		Assert.assertEquals("ab", stringWriter.getBuffer().toString());
+		Assert.assertEquals('d', unsyncBufferedWriter.buffer[0]);
+		Assert.assertEquals('e', unsyncBufferedWriter.buffer[1]);
+		Assert.assertEquals(3, stringWriter.getBuffer().length());
+		Assert.assertEquals("abc", stringWriter.getBuffer().toString());
 
 		// Direct with auto flush
 
-		unsyncBufferedWriter.write("efg".toCharArray());
+		unsyncBufferedWriter.write("fgh".toCharArray());
 
 		Assert.assertEquals(0, unsyncBufferedWriter.count);
-		Assert.assertEquals(7, stringWriter.getBuffer().length());
-		Assert.assertEquals("abcdefg", stringWriter.getBuffer().toString());
+		Assert.assertEquals(8, stringWriter.getBuffer().length());
+		Assert.assertEquals("abcdefgh", stringWriter.getBuffer().toString());
 
 		// Direct without auto flush
 
-		unsyncBufferedWriter.write("hij".toCharArray());
+		unsyncBufferedWriter.write("ijk".toCharArray());
 
 		Assert.assertEquals(0, unsyncBufferedWriter.count);
-		Assert.assertEquals(10, stringWriter.getBuffer().length());
-		Assert.assertEquals("abcdefghij", stringWriter.getBuffer().toString());
+		Assert.assertEquals(11, stringWriter.getBuffer().length());
+		Assert.assertEquals("abcdefghijk", stringWriter.getBuffer().toString());
 	}
 
 	@Test
 	public void testClose() throws IOException {
+		StringWriter stringWriter = new StringWriter();
+
 		UnsyncBufferedWriter unsyncBufferedWriter = new UnsyncBufferedWriter(
-			new StringWriter());
+			stringWriter, 10);
 
 		Assert.assertNotNull(unsyncBufferedWriter.buffer);
-		Assert.assertNotNull(unsyncBufferedWriter.writer);
+		Assert.assertSame(stringWriter, unsyncBufferedWriter.writer);
+
+		unsyncBufferedWriter.write("test");
 
 		unsyncBufferedWriter.close();
 
 		Assert.assertNull(unsyncBufferedWriter.buffer);
 		Assert.assertNull(unsyncBufferedWriter.writer);
+
+		Assert.assertEquals("test", stringWriter.toString());
 
 		try {
 			unsyncBufferedWriter.flush();
@@ -89,6 +111,7 @@ public class UnsyncBufferedWriterTest extends BaseWriterTestCase {
 			Assert.fail();
 		}
 		catch (IOException ioe) {
+			Assert.assertEquals("Writer is null", ioe.getMessage());
 		}
 
 		try {
@@ -97,6 +120,7 @@ public class UnsyncBufferedWriterTest extends BaseWriterTestCase {
 			Assert.fail();
 		}
 		catch (IOException ioe) {
+			Assert.assertEquals("Writer is null", ioe.getMessage());
 		}
 
 		try {
@@ -105,6 +129,7 @@ public class UnsyncBufferedWriterTest extends BaseWriterTestCase {
 			Assert.fail();
 		}
 		catch (IOException ioe) {
+			Assert.assertEquals("Writer is null", ioe.getMessage());
 		}
 
 		try {
@@ -113,7 +138,10 @@ public class UnsyncBufferedWriterTest extends BaseWriterTestCase {
 			Assert.fail();
 		}
 		catch (IOException ioe) {
+			Assert.assertEquals("Writer is null", ioe.getMessage());
 		}
+
+		unsyncBufferedWriter.close();
 	}
 
 	@Test
@@ -128,6 +156,33 @@ public class UnsyncBufferedWriterTest extends BaseWriterTestCase {
 
 		Assert.assertEquals(10, unsyncBufferedWriter.buffer.length);
 		Assert.assertEquals(0, unsyncBufferedWriter.count);
+
+		try {
+			new UnsyncBufferedWriter(null, -1);
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals("Size is less than 1", iae.getMessage());
+		}
+	}
+
+	@Test
+	public void testFlush() throws IOException {
+		StringWriter stringWriter = new StringWriter();
+
+		UnsyncBufferedWriter unsyncBufferedWriter = new UnsyncBufferedWriter(
+			stringWriter, 4);
+
+		unsyncBufferedWriter.write("test");
+
+		unsyncBufferedWriter.flush();
+
+		Assert.assertEquals("test", stringWriter.toString());
+
+		unsyncBufferedWriter.flush();
+
+		Assert.assertEquals("test", stringWriter.toString());
 	}
 
 	@Test

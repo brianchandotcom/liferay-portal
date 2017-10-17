@@ -14,9 +14,9 @@
 
 package com.liferay.portal.search.elasticsearch.internal.facet;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 

@@ -14,7 +14,7 @@
 
 package com.liferay.source.formatter.checkstyle;
 
-import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checkstyle.util.CheckstyleLogger;

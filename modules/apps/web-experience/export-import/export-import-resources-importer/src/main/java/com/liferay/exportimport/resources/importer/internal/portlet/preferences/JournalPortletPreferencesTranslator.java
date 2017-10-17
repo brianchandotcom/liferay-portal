@@ -15,8 +15,8 @@
 package com.liferay.exportimport.resources.importer.internal.portlet.preferences;
 
 import com.liferay.exportimport.resources.importer.portlet.preferences.PortletPreferencesTranslator;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 

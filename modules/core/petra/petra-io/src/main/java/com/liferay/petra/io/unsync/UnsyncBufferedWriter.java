@@ -49,13 +49,8 @@ public class UnsyncBufferedWriter extends Writer {
 			return;
 		}
 
-		if (count > 0) {
-			writer.write(buffer, 0, count);
+		flush();
 
-			count = 0;
-		}
-
-		writer.flush();
 		writer.close();
 
 		writer = null;

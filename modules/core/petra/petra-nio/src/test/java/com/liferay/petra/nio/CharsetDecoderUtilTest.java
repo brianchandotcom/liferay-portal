@@ -61,7 +61,7 @@ public class CharsetDecoderUtilTest {
 			Assert.assertEquals(1, mie.getInputLength());
 		}
 
-		FakeCharset fakeCharset = new FakeCharset();
+		TestCharset fakeCharset = new TestCharset();
 
 		Object cache1 = ReflectionTestUtil.getAndSetFieldValue(
 			Charset.class, "cache1",

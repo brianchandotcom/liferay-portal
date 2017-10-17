@@ -24,9 +24,9 @@ import java.nio.charset.CharsetEncoder;
 /**
  * @author Shuyang Zhou
  */
-public class FakeCharset extends Charset {
+public class TestCharset extends Charset {
 
-	public FakeCharset() {
+	public TestCharset() {
 		super("fake-charset", null);
 	}
 

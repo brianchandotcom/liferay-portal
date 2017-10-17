@@ -63,13 +63,6 @@
 
 		<execute function="Click" locator1="Form#FIELD_BODY" />
 
-		<if>
-			<condition function="IsElementNotPresent" locator1="Form#SIDEBAR_BASIC_TAB" />
-			<then>
-				<execute function="Click" locator1="Form#FIELD_BODY_CONTENT" />
-			</then>
-		</if>
-
 		<execute function="AssertElementPresent" locator1="Form#SIDEBAR_BASIC_TAB" />
 	</command>
 

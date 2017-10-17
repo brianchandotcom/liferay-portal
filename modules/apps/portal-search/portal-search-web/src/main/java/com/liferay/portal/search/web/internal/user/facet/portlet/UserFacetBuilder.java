@@ -15,10 +15,9 @@
 package com.liferay.portal.search.web.internal.user.facet.portlet;
 
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.facet.Facet;
+import com.liferay.portal.search.facet.user.UserFacetFactory;
 
 /**
  * @author Lino Alves
@@ -30,21 +29,13 @@ public class UserFacetBuilder {
 	}
 
 	public Facet build() {
-		MultiValueFacet multiValueFacet = _userFacetFactory.newInstance(
-			_searchContext);
+		Facet facet = _userFacetFactory.newInstance(_searchContext);
 
-		multiValueFacet.setFacetConfiguration(
-			buildFacetConfiguration(multiValueFacet));
+		facet.setFacetConfiguration(buildFacetConfiguration(facet));
 
-		if (_selectedUsers != null) {
-			multiValueFacet.setValues(_selectedUsers);
+		facet.select(_selectedUserNames);
 
-			_searchContext.setAttribute(
-				multiValueFacet.getFieldName(),
-				StringUtil.merge(_selectedUsers));
-		}
-
-		return multiValueFacet;
+		return facet;
 	}
 
 	public void setFrequencyThreshold(int frequencyThreshold) {
@@ -59,8 +50,8 @@ public class UserFacetBuilder {
 		_searchContext = searchContext;
 	}
 
-	public void setSelectedUsers(String... selectedUsers) {
-		_selectedUsers = selectedUsers;
+	public void setSelectedUserNames(String... selectedUserNames) {
+		_selectedUserNames = selectedUserNames;
 	}
 
 	protected FacetConfiguration buildFacetConfiguration(Facet facet) {
@@ -84,7 +75,7 @@ public class UserFacetBuilder {
 	private int _frequencyThreshold;
 	private int _maxTerms;
 	private SearchContext _searchContext;
-	private String[] _selectedUsers;
+	private String[] _selectedUserNames;
 	private final UserFacetFactory _userFacetFactory;
 
 }

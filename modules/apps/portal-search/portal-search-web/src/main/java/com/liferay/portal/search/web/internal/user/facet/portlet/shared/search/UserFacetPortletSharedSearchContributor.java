@@ -15,17 +15,17 @@
 package com.liferay.portal.search.web.internal.user.facet.portlet.shared.search;
 
 import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.search.facet.user.UserFacetFactory;
 import com.liferay.portal.search.web.internal.user.facet.constants.UserFacetPortletKeys;
 import com.liferay.portal.search.web.internal.user.facet.portlet.UserFacetBuilder;
-import com.liferay.portal.search.web.internal.user.facet.portlet.UserFacetFactory;
 import com.liferay.portal.search.web.internal.user.facet.portlet.UserFacetPortletPreferences;
 import com.liferay.portal.search.web.internal.user.facet.portlet.UserFacetPortletPreferencesImpl;
+import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
-import java.util.Optional;
-
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Lino Alves
@@ -64,15 +64,15 @@ public class UserFacetPortletSharedSearchContributor
 		userFacetBuilder.setSearchContext(
 			portletSharedSearchSettings.getSearchContext());
 
-		Optional<String[]> parameterValuesOptional =
-			portletSharedSearchSettings.getParameterValues(
-				userFacetPortletPreferences.getParameterName());
-
-		parameterValuesOptional.ifPresent(userFacetBuilder::setSelectedUsers);
+		SearchOptionalUtil.copy(
+			() -> portletSharedSearchSettings.getParameterValues(
+				userFacetPortletPreferences.getParameterName()),
+			userFacetBuilder::setSelectedUserNames);
 
 		return userFacetBuilder.build();
 	}
 
-	protected UserFacetFactory userFacetFactory = new UserFacetFactory();
+	@Reference
+	protected UserFacetFactory userFacetFactory;
 
 }

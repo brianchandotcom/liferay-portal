@@ -14,18 +14,25 @@
 
 package com.liferay.petra.io.unsync;
 
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+
 import java.io.IOException;
 import java.io.Reader;
 
 import java.nio.CharBuffer;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
 public class UnsyncCharArrayReaderTest extends BaseReaderTestCase {
+
+	@ClassRule
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Test
 	public void testBlockRead() throws IOException {
@@ -51,6 +58,8 @@ public class UnsyncCharArrayReaderTest extends BaseReaderTestCase {
 		for (int i = 0; i < read; i++) {
 			Assert.assertEquals('a' + i + size, buffer[i]);
 		}
+
+		Assert.assertEquals(-1, unsyncCharArrayReader.read(new char[1]));
 	}
 
 	@Test
@@ -79,10 +88,18 @@ public class UnsyncCharArrayReaderTest extends BaseReaderTestCase {
 		for (int i = 0; i < read; i++) {
 			Assert.assertEquals('a' + i + size, charBuffer.get(i));
 		}
+
+		charBuffer.position(charBuffer.limit());
+
+		Assert.assertEquals(0, unsyncCharArrayReader.read(charBuffer));
+
+		charBuffer.position(0);
+
+		Assert.assertEquals(-1, unsyncCharArrayReader.read(charBuffer));
 	}
 
 	@Test
-	public void testClose() {
+	public void testClose() throws IOException {
 		UnsyncCharArrayReader unsyncCharArrayReader = new UnsyncCharArrayReader(
 			_BUFFER);
 
@@ -91,62 +108,15 @@ public class UnsyncCharArrayReaderTest extends BaseReaderTestCase {
 		Assert.assertTrue(unsyncCharArrayReader.buffer == null);
 
 		try {
-			unsyncCharArrayReader.mark(0);
+			unsyncCharArrayReader.read((CharBuffer)null);
 
 			Assert.fail();
 		}
 		catch (IOException ioe) {
+			Assert.assertEquals("Stream closed", ioe.getMessage());
 		}
 
-		try {
-			unsyncCharArrayReader.read();
-
-			Assert.fail();
-		}
-		catch (IOException ioe) {
-		}
-
-		try {
-			unsyncCharArrayReader.read(new char[5]);
-
-			Assert.fail();
-		}
-		catch (IOException ioe) {
-		}
-
-		try {
-			unsyncCharArrayReader.read(new char[5], 1, 2);
-
-			Assert.fail();
-		}
-		catch (IOException ioe) {
-		}
-
-		try {
-			unsyncCharArrayReader.read(CharBuffer.allocate(5));
-
-			Assert.fail();
-		}
-		catch (IOException ioe) {
-		}
-
-		try {
-			unsyncCharArrayReader.ready();
-
-			Assert.fail();
-		}
-		catch (IOException ioe) {
-		}
-
-		try {
-			unsyncCharArrayReader.reset();
-
-			Assert.fail();
-		}
-		catch (IOException ioe) {
-		}
-
-		unsyncCharArrayReader.close();
+		testClose(unsyncCharArrayReader, "Stream closed");
 	}
 
 	@Test

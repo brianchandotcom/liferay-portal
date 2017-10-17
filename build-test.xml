@@ -6501,7 +6501,9 @@ virtual.hosts.default.site.name=
 
 axis.servlet.hosts.allowed=
 
-tunnel.servlet.hosts.allowed=</echo>
+tunnel.servlet.hosts.allowed=
+
+module.framework.properties.blacklist.portal.profile.names=com.liferay.portal.mobile.device.detection.fiftyonedegrees,com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise</echo>
 
 		<if>
 			<equals arg1="${database.type}" arg2="oracle" />

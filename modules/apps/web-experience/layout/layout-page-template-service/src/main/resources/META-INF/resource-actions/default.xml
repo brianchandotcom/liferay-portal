@@ -11,14 +11,14 @@
 		<weight>1</weight>
 		<permissions>
 			<supports>
+				<action-key>ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION</action-key>
 				<action-key>ADD_LAYOUT_PAGE_TEMPLATE_ENTRY</action-key>
-				<action-key>ADD_LAYOUT_PAGE_TEMPLATE_FOLDER</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
 			<site-member-defaults>
+				<action-key>ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION</action-key>
 				<action-key>ADD_LAYOUT_PAGE_TEMPLATE_ENTRY</action-key>
-				<action-key>ADD_LAYOUT_PAGE_TEMPLATE_FOLDER</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>VIEW</action-key>
 			</site-member-defaults>
@@ -26,18 +26,18 @@
 				<action-key>VIEW</action-key>
 			</guest-defaults>
 			<guest-unsupported>
+				<action-key>ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION</action-key>
 				<action-key>ADD_LAYOUT_PAGE_TEMPLATE_ENTRY</action-key>
-				<action-key>ADD_LAYOUT_PAGE_TEMPLATE_FOLDER</action-key>
 				<action-key>PERMISSIONS</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.layout.page.template.model.LayoutPageTemplateEntry</model-name>
+		<model-name>com.liferay.layout.page.template.model.LayoutPageTemplateCollection</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_layout_admin_web_portlet_LayoutAdminPortlet</portlet-name>
 		</portlet-ref>
-		<weight>2</weight>
+		<weight>3</weight>
 		<permissions>
 			<supports>
 				<action-key>DELETE</action-key>
@@ -57,11 +57,11 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.layout.page.template.model.LayoutPageTemplateFolder</model-name>
+		<model-name>com.liferay.layout.page.template.model.LayoutPageTemplateEntry</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_layout_admin_web_portlet_LayoutAdminPortlet</portlet-name>
 		</portlet-ref>
-		<weight>3</weight>
+		<weight>2</weight>
 		<permissions>
 			<supports>
 				<action-key>DELETE</action-key>

@@ -320,14 +320,6 @@ public class StagedGroupStagedModelDataHandler
 				portletDataContext.getManifestSummary());
 		}
 
-		// Import site data portlets
-
-		if (_log.isDebugEnabled() && !sitePortletElements.isEmpty()) {
-			_log.debug("Importing portlets");
-		}
-
-		importSitePortlets(portletDataContext, sitePortletElements);
-
 		// Import services
 
 		Element siteServicesElement = rootElement.element("site-services");
@@ -350,6 +342,14 @@ public class StagedGroupStagedModelDataHandler
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, groupElement);
 		}
+
+		// Import site data portlets
+
+		if (_log.isDebugEnabled() && !sitePortletElements.isEmpty()) {
+			_log.debug("Importing portlets");
+		}
+
+		importSitePortlets(portletDataContext, sitePortletElements);
 	}
 
 	protected void exportPortlet(

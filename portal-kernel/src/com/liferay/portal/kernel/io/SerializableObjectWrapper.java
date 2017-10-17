@@ -108,7 +108,8 @@ public class SerializableObjectWrapper implements Externalizable {
 			Serializable serializable = lazySerializable.getSerializable();
 
 			if (serializable == null) {
-				return false;
+				return Arrays.equals(
+					lazySerializable.getData(), serializableWrapper._getData());
 			}
 
 			_serializable = serializable;
@@ -121,7 +122,7 @@ public class SerializableObjectWrapper implements Externalizable {
 			Serializable serializable = lazySerializable.getSerializable();
 
 			if (serializable == null) {
-				return false;
+				return Arrays.equals(_getData(), lazySerializable.getData());
 			}
 
 			serializableWrapper._serializable = serializable;
@@ -150,16 +151,18 @@ public class SerializableObjectWrapper implements Externalizable {
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeInt(_hashCode);
 
+		byte[] data = _getData();
+
+		objectOutput.writeInt(data.length);
+
+		objectOutput.write(data, 0, data.length);
+	}
+
+	private byte[] _getData() {
 		if (_serializable instanceof LazySerializable) {
 			LazySerializable lazySerializable = (LazySerializable)_serializable;
 
-			byte[] data = lazySerializable.getData();
-
-			objectOutput.writeInt(data.length);
-
-			objectOutput.write(data, 0, data.length);
-
-			return;
+			return lazySerializable.getData();
 		}
 
 		Serializer serializer = new Serializer();
@@ -168,10 +171,7 @@ public class SerializableObjectWrapper implements Externalizable {
 
 		ByteBuffer byteBuffer = serializer.toByteBuffer();
 
-		objectOutput.writeInt(byteBuffer.remaining());
-
-		objectOutput.write(
-			byteBuffer.array(), byteBuffer.position(), byteBuffer.remaining());
+		return byteBuffer.array();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

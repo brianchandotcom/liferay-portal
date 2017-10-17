@@ -14,8 +14,10 @@
 
 package com.liferay.commerce.model;
 
+import com.liferay.commerce.exception.CommerceShippingEngineException;
 import com.liferay.portal.kernel.service.ServiceContext;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -26,6 +28,10 @@ import javax.portlet.RenderResponse;
  * @author Andrea Di Giorgi
  */
 public interface CommerceShippingEngine {
+
+	public List<CommerceShippingOption> getCommerceShippingOptions(
+			CommerceCart commerceCart, Locale locale)
+		throws CommerceShippingEngineException;
 
 	public String getDescription(Locale locale);
 

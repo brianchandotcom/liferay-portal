@@ -14,9 +14,18 @@
 
 package com.liferay.commerce.shipping.engine.fedex.internal;
 
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.exception.CommerceShippingEngineException;
+import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceShippingEngine;
+import com.liferay.commerce.model.CommerceShippingOption;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.shipping.engine.fedex.internal.configuration.FedExCommerceShippingEngineGroupServiceConfiguration;
 import com.liferay.commerce.shipping.engine.fedex.internal.constants.FedExCommerceShippingEngineConstants;
+import com.liferay.commerce.shipping.engine.fedex.internal.util.FedExCommerceShippingOptionHelper;
+import com.liferay.commerce.util.CommercePriceCalculationHelper;
+import com.liferay.commerce.util.CommerceShippingOriginLocatorRegistry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -31,6 +40,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -53,6 +63,32 @@ import org.osgi.service.component.annotations.Reference;
 	service = CommerceShippingEngine.class
 )
 public class FedExCommerceShippingEngine implements CommerceShippingEngine {
+
+	@Override
+	public List<CommerceShippingOption> getCommerceShippingOptions(
+			CommerceCart commerceCart, Locale locale)
+		throws CommerceShippingEngineException {
+
+		try {
+			FedExCommerceShippingOptionHelper
+				fedExCommerceShippingOptionsHelper =
+					new FedExCommerceShippingOptionHelper(
+						commerceCart, _commerceCurrencyLocalService,
+						_commercePriceCalculationHelper,
+						_commerceShippingOriginLocatorRegistry,
+						_cpInstanceLocalService, _cpMeasurementUnitLocalService,
+						_configurationProvider, _getResourceBundle(locale));
+
+			return
+				fedExCommerceShippingOptionsHelper.getCommerceShippingOptions();
+		}
+		catch (CommerceShippingEngineException csee) {
+			throw csee;
+		}
+		catch (Exception e) {
+			throw new CommerceShippingEngineException(e);
+		}
+	}
 
 	@Override
 	public String getDescription(Locale locale) {
@@ -128,7 +164,23 @@ public class FedExCommerceShippingEngine implements CommerceShippingEngine {
 	}
 
 	@Reference
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
+
+	@Reference
+	private CommercePriceCalculationHelper _commercePriceCalculationHelper;
+
+	@Reference
+	private CommerceShippingOriginLocatorRegistry
+		_commerceShippingOriginLocatorRegistry;
+
+	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

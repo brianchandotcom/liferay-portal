@@ -17,6 +17,11 @@ package com.liferay.commerce.exception;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.List;
 
 /**
  * @author Andrea Di Giorgi
@@ -39,16 +44,87 @@ public class CommerceShippingEngineException extends PortalException {
 		super(cause);
 	}
 
-	public static class InvalidCommerceShippingOriginLocator
+	public static class MustSetCurrency
 		extends CommerceShippingEngineException {
 
-		public InvalidCommerceShippingOriginLocator(
+		public MustSetCurrency(String code) {
+			super("Unable to get currency with code \"" + code + "\"");
+
+			_code = code;
+		}
+
+		public String getCode() {
+			return _code;
+		}
+
+		private final String _code;
+
+	}
+
+	public static class MustSetMeasurementUnit
+		extends CommerceShippingEngineException {
+
+		public MustSetMeasurementUnit(String[] keys) {
+			super(
+				"At least one measurement unit with the following keys must " +
+					"be set: " +
+						StringUtil.merge(keys, StringPool.COMMA_AND_SPACE));
+
+			_keys = keys;
+		}
+
+		public String[] getKeys() {
+			return _keys;
+		}
+
+		private final String[] _keys;
+
+	}
+
+	public static class MustSetPrimaryCurrency
+		extends CommerceShippingEngineException {
+
+		public MustSetPrimaryCurrency() {
+			super("Unable to get primary currency");
+		}
+
+	}
+
+	public static class MustSetShippingAddress
+		extends CommerceShippingEngineException {
+
+		public MustSetShippingAddress() {
+			super("Unable to get shipping address");
+		}
+
+	}
+
+	public static class MustSetShippingOriginLocator
+		extends CommerceShippingEngineException {
+
+		public MustSetShippingOriginLocator(
 			String commerceShippingOriginLocatorKey) {
 
 			super(
-				"Unable to get commerce shipping origin locator \"" +
+				"Unable to get shipping origin locator \"" +
 					commerceShippingOriginLocatorKey + "\"");
 		}
+
+	}
+
+	public static class ServerError extends CommerceShippingEngineException {
+
+		public ServerError(List<KeyValuePair> errorKVPs) {
+			super("Unable to get reply from server");
+
+			_errorKVPs = errorKVPs;
+		}
+
+		public List<KeyValuePair> getErrorKVPs() {
+			return _errorKVPs;
+		}
+
+		private final List<KeyValuePair> _errorKVPs;
 
 	}
 

@@ -68,6 +68,19 @@ rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 	</c:if>
 </h4>
 
-<h5 class="text-default">
+<span class="h5 text-default">
 	<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" />
-</h5>
+</span>
+
+<c:if test="<%= latestFileVersion.getModel() instanceof DLFileVersion %>">
+
+	<%
+	DLFileVersion latestDLFileVersion = (DLFileVersion)latestFileVersion.getModel();
+
+	DLFileEntryType dlFileEntryType = latestDLFileVersion.getDLFileEntryType();
+	%>
+
+	<span class="h5 text-default">
+		<%= HtmlUtil.escape(dlFileEntryType.getName(locale)) %>
+	</span>
+</c:if>

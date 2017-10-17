@@ -396,6 +396,30 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 								</liferay-ui:search-container-column-text>
 							</c:if>
 
+							<c:if test='<%= ArrayUtil.contains(entryColumns, "document-type") %>'>
+								<c:choose>
+									<c:when test="<%= latestFileVersion.getModel() instanceof DLFileVersion %>">
+
+										<%
+										DLFileVersion latestDLFileVersion = (DLFileVersion)latestFileVersion.getModel();
+
+										DLFileEntryType dlFileEntryType = latestDLFileVersion.getDLFileEntryType();
+										%>
+
+										<liferay-ui:search-container-column-text
+											name="document-type"
+											value="<%= HtmlUtil.escape(dlFileEntryType.getName(locale)) %>"
+										/>
+									</c:when>
+									<c:otherwise>
+										<liferay-ui:search-container-column-text
+											name="document-type"
+											value="--"
+										/>
+									</c:otherwise>
+								</c:choose>
+							</c:if>
+
 							<c:if test='<%= ArrayUtil.contains(entryColumns, "size") %>'>
 								<liferay-ui:search-container-column-text
 									name="size"
@@ -530,6 +554,13 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 									href="<%= rowURL %>"
 									name="title"
 									value="<%= curFolder.getName() %>"
+								/>
+							</c:if>
+
+							<c:if test='<%= ArrayUtil.contains(entryColumns, "document-type") %>'>
+								<liferay-ui:search-container-column-text
+									name="document-type"
+									value="--"
 								/>
 							</c:if>
 

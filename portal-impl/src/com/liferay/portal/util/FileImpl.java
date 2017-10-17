@@ -14,12 +14,12 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.petra.nio.CharsetEncoderUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.nio.charset.CharsetEncoderUtil;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessChannel;
@@ -56,6 +56,7 @@ import java.io.Reader;
 import java.io.Writer;
 
 import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 
@@ -713,7 +714,8 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 	@Override
 	public boolean isSameContent(File file, String s) {
-		ByteBuffer byteBuffer = CharsetEncoderUtil.encode(StringPool.UTF8, s);
+		ByteBuffer byteBuffer = CharsetEncoderUtil.encode(
+			StringPool.UTF8, CharBuffer.wrap(s));
 
 		return isSameContent(file, byteBuffer.array(), byteBuffer.limit());
 	}

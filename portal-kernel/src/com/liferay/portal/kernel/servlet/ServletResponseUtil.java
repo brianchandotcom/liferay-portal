@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.petra.nio.CharsetEncoderUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.nio.charset.CharsetEncoderUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -591,7 +591,7 @@ public class ServletResponseUtil {
 		}
 		else {
 			ByteBuffer byteBuffer = CharsetEncoderUtil.encode(
-				StringPool.UTF8, s);
+				StringPool.UTF8, CharBuffer.wrap(s));
 
 			write(response, byteBuffer);
 		}

@@ -5,6 +5,7 @@
 		<resource-root path="com.liferay.petra.concurrent.jar" />
 		<resource-root path="com.liferay.petra.lang.jar" />
 		<resource-root path="com.liferay.petra.memory.jar" />
+		<resource-root path="com.liferay.petra.nio.jar" />
 		<resource-root path="com.liferay.registry.api.jar" />
 		<resource-root path="hsql.jar" />
 		<resource-root path="mysql.jar" />

@@ -161,6 +161,9 @@ public class SerializableObjectWrapperTest {
 	private void _testEquals() throws Exception {
 		Assert.assertFalse(
 			_testSerializableObjectWrapper.equals(_TEST_SERIALIZABLE));
+		Assert.assertFalse(
+			_testSerializableObjectWrapper.equals(
+				new SerializableObjectWrapper(_ANOTHER_TEST_SERIALIZABLE)));
 
 		Assert.assertTrue(
 			_testSerializableObjectWrapper.equals(
@@ -180,6 +183,11 @@ public class SerializableObjectWrapperTest {
 	}
 
 	private void _testHashCode() throws Exception {
+		Assert.assertNotEquals(
+			_testSerializableObjectWrapper.hashCode(),
+			new SerializableObjectWrapper(
+				_ANOTHER_TEST_SERIALIZABLE).hashCode());
+
 		Assert.assertEquals(
 			_testSerializableObjectWrapper.hashCode(),
 			new SerializableObjectWrapper(_TEST_SERIALIZABLE).hashCode());
@@ -187,6 +195,9 @@ public class SerializableObjectWrapperTest {
 			_testSerializableObjectWrapper.hashCode(),
 			_getDeserializedObject(_testSerializableObjectWrapper).hashCode());
 	}
+
+	private static final TestSerializable _ANOTHER_TEST_SERIALIZABLE =
+		new TestSerializable("_ANOTHER_TEST_SERIALIZABLE");
 
 	private static final TestSerializable _TEST_SERIALIZABLE =
 		new TestSerializable("_TEST_SERIALIZABLE");

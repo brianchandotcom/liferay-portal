@@ -1,8 +1,22 @@
-@if (variable-exists(atlas-theme)) {
-	.alert-mismissable,
-	.alert-dismissible {
-		.close {
-			padding: 0 $alert-padding-x;
-		}
+.alert .close .lexicon-icon {
+	display: inline-block;
+	height: $lexicon-icon-size;
+	width: $lexicon-icon-size;
+}
+
+.alert-dismissable {
+	padding-bottom: $alert-dismissible-padding-bottom;
+	padding-left: $alert-dismissible-padding-left;
+	padding-right: $alert-dismissible-padding-right;
+	padding-top: $alert-dismissible-padding-top;
+}
+
+.alert-fluid.alert-dismissable {
+	.container, .container-fluid {
+		padding-bottom: $alert-dismissible-padding-bottom;
+		padding-left: $alert-dismissible-padding-left;
+		padding-right: calc(#{$alert-dismissible-padding-right} + #{$grid-gutter-width / 2});
+		padding-top: $alert-dismissible-padding-top;
+		position: relative;
 	}
 }

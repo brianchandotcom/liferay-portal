@@ -20,18 +20,12 @@ import com.liferay.dynamic.data.mapping.util.BaseDDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayTabItem;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -71,68 +65,8 @@ public class DLDDMDisplay extends BaseDDMDisplay {
 	@Override
 	public List<DDMDisplayTabItem> getTabItems() {
 		return Arrays.asList(
-			new DDMDisplayTabItem() {
-
-				@Override
-				public String getTitle(
-					LiferayPortletRequest liferayPortletRequest,
-					LiferayPortletResponse liferayPortletResponse) {
-
-					return LanguageUtil.get(
-						getResourceBundle(liferayPortletRequest.getLocale()),
-						"documents-and-media");
-				}
-
-				@Override
-				public String getURL(
-						LiferayPortletRequest liferayPortletRequest,
-						LiferayPortletResponse liferayPortletResponse)
-					throws Exception {
-
-					PortletURL portletURL = _portal.getControlPanelPortletURL(
-						liferayPortletRequest,
-						PortletKeys.DOCUMENT_LIBRARY_ADMIN,
-						PortletRequest.RENDER_PHASE);
-
-					portletURL.setParameter(
-						"mvcRenderCommandName", "/document_library/view");
-
-					return portletURL.toString();
-				}
-
-			},
-			new DDMDisplayTabItem() {
-
-				@Override
-				public String getTitle(
-					LiferayPortletRequest liferayPortletRequest,
-					LiferayPortletResponse liferayPortletResponse) {
-
-					return LanguageUtil.get(
-						getResourceBundle(liferayPortletRequest.getLocale()),
-						"document-types");
-				}
-
-				@Override
-				public String getURL(
-						LiferayPortletRequest liferayPortletRequest,
-						LiferayPortletResponse liferayPortletResponse)
-					throws Exception {
-
-					PortletURL portletURL = _portal.getControlPanelPortletURL(
-						liferayPortletRequest,
-						PortletKeys.DOCUMENT_LIBRARY_ADMIN,
-						PortletRequest.RENDER_PHASE);
-
-					portletURL.setParameter(
-						"mvcRenderCommandName",
-						"/document_library/view_file_entry_types");
-
-					return portletURL.toString();
-				}
-
-			},
-			getDefaultTabItem());
+			_documentsAndMediaDDMDisplayTabItem,
+			_documentTypesDDMDisplayTabItem, getDefaultTabItem());
 	}
 
 	@Override
@@ -148,6 +82,10 @@ public class DLDDMDisplay extends BaseDDMDisplay {
 	}
 
 	@Reference
-	private Portal _portal;
+	private DocumentsAndMediaDDMDisplayTabItem
+		_documentsAndMediaDDMDisplayTabItem;
+
+	@Reference
+	private DocumentTypesDDMDisplayTabItem _documentTypesDDMDisplayTabItem;
 
 }

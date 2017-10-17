@@ -2327,6 +2327,12 @@
 			<var name="rowNumber" value="1" />
 		</execute>
 
+		<execute macro="FormFields#editOptionsRow">
+			<var name="optionName" value="Checkbox2" />
+			<var name="optionValue" value="Checkbox 2" />
+			<var name="rowNumber" value="2" />
+		</execute>
+
 		<execute macro="Form#closeSidebar" />
 
 		<execute macro="Form#addPage" />
@@ -2352,23 +2358,21 @@
 		</execute>
 
 		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Multiple Selection" />
+			<var name="fieldType" value="Upload" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Checkbox Page 3" />
+			<var name="fieldValue" value="Upload Field" />
 		</execute>
 
-		<execute macro="FormFields#editOptionsRow">
-			<var name="optionName" value="Checkbox1" />
-			<var name="optionValue" value="Checkbox 1" />
-			<var name="rowNumber" value="1" />
+		<execute macro="Form#closeSidebar" />
+
+		<execute macro="Form#gotoAddField">
+			<var name="fieldType" value="Numeric" />
 		</execute>
 
-		<execute macro="FormFields#editOptionsRow">
-			<var name="optionName" value="Checkbox2" />
-			<var name="optionValue" value="Checkbox 2" />
-			<var name="rowNumber" value="2" />
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="Value" />
 		</execute>
 
 		<execute macro="Form#closeSidebar" />
@@ -2448,9 +2452,11 @@
 			<var name="formPageNext" value="Page 3" />
 		</execute>
 
-		<execute macro="FormFields#selectCheckboxOption">
-			<var name="checkboxOption" value="Checkbox 1" />
-			<var name="fieldName" value="CheckboxPage3" />
+		<execute macro="ItemSelector#gotoItemSelectorViaSelectButton" />
+
+		<execute macro="ItemSelector#uploadFile">
+			<var name="navTab" value="Documents and Media" />
+			<var name="uploadFileName" value="Document_1.jpg" />
 		</execute>
 
 		<execute macro="FormPortlet#submit" />
@@ -2523,9 +2529,15 @@
 			<var name="formPageNext" value="Page 3" />
 		</execute>
 
-		<execute macro="FormsAdmin#viewCheckboxEntry">
-			<var name="fieldLabel" value="Checkbox Page 3" />
-			<var name="fieldName" value="CheckboxPage3" />
+		<execute macro="FormsAdmin#viewUploadFile">
+			<var name="fieldLabel" value="Upload Field" />
+			<var name="fieldName" value="UploadField" />
+			<var name="uploadFileName" value="Document_1.jpg" />
+		</execute>
+
+		<execute macro="FormFields#viewTextField">
+			<var name="fieldLabel" value="Value" />
+			<var name="fieldName" value="Value" />
 		</execute>
 	</command>
 

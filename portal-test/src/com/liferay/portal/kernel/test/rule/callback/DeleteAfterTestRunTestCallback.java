@@ -86,9 +86,11 @@ public class DeleteAfterTestRunTestCallback
 							fieldClass.getComponentType())) {
 
 						throw new IllegalArgumentException(
-							"Unable to annotate field " + field +
-								" because it is not an array of type " +
-									PersistedModel.class.getName());
+							StringBundler.concat(
+								"Unable to annotate field ",
+								String.valueOf(field),
+								" because it is not an array of type ",
+								PersistedModel.class.getName()));
 					}
 
 					addField(
@@ -111,9 +113,11 @@ public class DeleteAfterTestRunTestCallback
 
 					if (collectionType == null) {
 						throw new IllegalArgumentException(
-							"Unable to annotate field " + field +
-								" because it is not a collection of type " +
-									PersistedModel.class.getName());
+							StringBundler.concat(
+								"Unable to annotate field ",
+								String.valueOf(field),
+								" because it is not a collection of type ",
+								PersistedModel.class.getName()));
 					}
 
 					addField(

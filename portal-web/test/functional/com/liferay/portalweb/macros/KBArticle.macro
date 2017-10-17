@@ -823,12 +823,12 @@
 
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#HEADER_TITLE" value1="${kbArticleTitle}" />
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#EDITOR" value1="${kbArticleTitleEdit}">
-			<var name="key_editor" value="title" />
+		<execute macro="AlloyEditor#addTitle">
+			<var name="title" value="${kbArticleTitleEdit}" />
 		</execute>
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#EDITOR" value1="${kbArticleContentEdit}">
-			<var name="key_editor" value="content" />
+		<execute macro="AlloyEditor#addContent">
+			<var name="title" value="${kbArticleContentEdit}" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Button#PUBLISH_LOCALIZED" value1="Publicar" />

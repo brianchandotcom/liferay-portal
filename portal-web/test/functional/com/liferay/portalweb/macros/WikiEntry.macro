@@ -10,8 +10,8 @@
 	</command>
 
 	<command name="addPageTitle">
-		<execute function="Type#typeEditor" locator1="AlloyEditor#EDITOR" value1="${wikiPageTitle}">
-			<var name="key_editor" value="title" />
+		<execute macro="AlloyEditor#addTitle">
+			<var name="title" value="${wikiPageTitle}" />
 		</execute>
 	</command>
 

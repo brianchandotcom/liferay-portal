@@ -673,14 +673,57 @@ public class LocalProcessExecutorTest {
 
 			Assert.assertTrue(controller.isAlive());
 
+			Map<String, Object> attributes = ProcessContext.getAttributes();
+
+			BlockingQueue<Thread> reactorThreadBlockingQueue =
+				new SynchronousQueue<>();
+
+			attributes.put(
+				"reactorThreadBlockingQueue", reactorThreadBlockingQueue);
+
+			controller.invoke(
+				() -> {
+					ProcessOutputStream processOutputStream =
+						ProcessContext.getProcessOutputStream();
+
+					try {
+						processOutputStream.writeProcessCallable(
+							() -> {
+								Map<String, Object> localAttributes =
+									ProcessContext.getAttributes();
+
+								BlockingQueue<Thread>
+									localReactorThreadBlockingQueue =
+										(BlockingQueue<Thread>)
+											localAttributes.remove(
+												"reactorThreadBlockingQueue");
+
+								try {
+									localReactorThreadBlockingQueue.put(
+										Thread.currentThread());
+								}
+								catch (InterruptedException ie) {
+									throw new ProcessException(ie);
+								}
+
+								return null;
+							});
+					}
+					catch (IOException ioe) {
+						throw new ProcessException(ioe);
+					}
+
+					return null;
+				});
+
+			Thread reactorThread = reactorThreadBlockingQueue.take();
+
 			NoticeableFuture<String> noticeableFuture =
 				processChannel.getProcessNoticeableFuture();
 
 			noticeableFuture.cancel(false);
 
-			_timeWaitAssertFalse(
-				"The process is still alive", controller::isAlive, 10,
-				TimeUnit.MINUTES);
+			reactorThread.join();
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 

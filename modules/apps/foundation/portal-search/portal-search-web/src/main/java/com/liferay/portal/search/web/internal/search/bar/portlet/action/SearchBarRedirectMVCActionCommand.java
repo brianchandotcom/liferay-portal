@@ -14,11 +14,11 @@
 
 package com.liferay.portal.search.web.internal.search.bar.portlet.action;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.web.internal.display.context.PortletRequestThemeDisplaySupplier;

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.fabric.netty.handlers;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.fabric.agent.FabricAgentRegistry;
 import com.liferay.portal.fabric.netty.agent.NettyFabricAgentConfig;
 import com.liferay.portal.fabric.netty.agent.NettyFabricAgentStub;
@@ -22,7 +23,6 @@ import com.liferay.portal.fabric.netty.repository.NettyRepository;
 import com.liferay.portal.fabric.repository.Repository;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import io.netty.channel.Channel;

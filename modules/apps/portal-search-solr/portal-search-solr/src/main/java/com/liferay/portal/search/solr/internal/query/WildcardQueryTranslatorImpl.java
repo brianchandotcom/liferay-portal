@@ -14,9 +14,9 @@
 
 package com.liferay.portal.search.solr.internal.query;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.search.QueryTerm;
 import com.liferay.portal.kernel.search.WildcardQuery;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.search.solr.query.WildcardQueryTranslator;
 
 import org.apache.lucene.index.Term;

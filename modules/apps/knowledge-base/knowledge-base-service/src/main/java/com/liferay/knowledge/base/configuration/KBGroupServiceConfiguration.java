@@ -32,132 +32,167 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface KBGroupServiceConfiguration {
 
-	@Meta.AD(deflt = "alloyeditor", required = false)
+	@Meta.AD(deflt = "alloyeditor", name = "get-editor-name", required = false)
 	public String getEditorName();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "article-increment-priority-enabled",
+		required = false
+	)
 	public boolean articleIncrementPriorityEnabled();
 
-	@Meta.AD(deflt = ".markdown|.md", required = false)
+	@Meta.AD(
+		deflt = ".markdown|.md", name = "markdown-importer-article-extensions",
+		required = false
+	)
 	public String[] markdownImporterArticleExtensions();
 
-	@Meta.AD(deflt = "intro.markdown", required = false)
+	@Meta.AD(
+		deflt = "intro.markdown", name = "markdown-importer-article-intro",
+		required = false
+	)
 	public String markdownImporterArticleIntro();
 
-	@Meta.AD(deflt = ".bmp|.gif|.jpeg|.jpg|.png", required = false)
+	@Meta.AD(
+		deflt = ".bmp|.gif|.jpeg|.jpg|.png",
+		name = "markdown-importer-image-file-extensions", required = false
+	)
 	public String[] markdownImporterImageFileExtensions();
 
-	@Meta.AD(deflt = "/images", required = false)
+	@Meta.AD(
+		deflt = "/images", name = "markdown-importer-image-folder",
+		required = false
+	)
 	public String markdownImporterImageFolder();
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(deflt = "false", name = "source-urlenabled", required = false)
 	public boolean sourceURLEnabled();
 
-	@Meta.AD(deflt = "edit-on-github", required = false)
+	@Meta.AD(
+		deflt = "edit-on-github", name = "source-urledit-message-key",
+		required = false
+	)
 	public String sourceURLEditMessageKey();
 
 	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/admin.email.from.name}",
-		required = false
+		name = "email-from-name", required = false
 	)
 	public String emailFromName();
 
 	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/admin.email.from.address}",
-		required = false
+		name = "email-from-address", required = false
 	)
 	public String emailFromAddress();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "email-kbarticle-added-enabled", required = false
+	)
 	public boolean emailKBArticleAddedEnabled();
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/knowledge/base/dependencies/email_kb_article_added_subject.tmpl}",
-		required = false
+		name = "email-kbarticle-added-subject", required = false
 	)
 	public String emailKBArticleAddedSubject();
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/knowledge/base/dependencies/email_kb_article_added_body.tmpl}",
-		required = false
+		name = "email-kbarticle-added-body", required = false
 	)
 	public String emailKBArticleAddedBody();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "email-kbarticle-updated-enabled",
+		required = false
+	)
 	public boolean emailKBArticleUpdatedEnabled();
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/knowledge/base/dependencies/email_kb_article_updated_subject.tmpl}",
-		required = false
+		name = "email-kbarticle-updated-subject", required = false
 	)
 	public String emailKBArticleUpdatedSubject();
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/knowledge/base/dependencies/email_kb_article_updated_body.tmpl}",
-		required = false
+		name = "email-kbarticle-updated-body", required = false
 	)
 	public String emailKBArticleUpdatedBody();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "email-kbarticle-suggestion-in-progress-enabled",
+		required = false
+	)
 	public boolean emailKBArticleSuggestionInProgressEnabled();
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/knowledge/base/dependencies/email_kb_suggestion_in_progress_subject.tmpl}",
+		name = "email-kbarticle-suggestion-in-progress-subject",
 		required = false
 	)
 	public String emailKBArticleSuggestionInProgressSubject();
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/knowledge/base/dependencies/email_kb_suggestion_in_progress_body.tmpl}",
-		required = false
+		name = "email-kbarticle-suggestion-in-progress-body", required = false
 	)
 	public String emailKBArticleSuggestionInProgressBody();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "email-kbarticle-suggestion-received-enabled",
+		required = false
+	)
 	public boolean emailKBArticleSuggestionReceivedEnabled();
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/knowledge/base/dependencies/email_kb_suggestion_received_subject.tmpl}",
-		required = false
+		name = "email-kbarticle-suggestion-received-subject", required = false
 	)
 	public String emailKBArticleSuggestionReceivedSubject();
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/knowledge/base/dependencies/email_kb_suggestion_received_body.tmpl}",
-		required = false
+		name = "email-kbarticle-suggestion-received-body", required = false
 	)
 	public String emailKBArticleSuggestionReceivedBody();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "email-kbarticle-suggestion-resolved-enabled",
+		required = false
+	)
 	public boolean emailKBArticleSuggestionResolvedEnabled();
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/knowledge/base/dependencies/email_kb_suggestion_resolved_subject.tmpl}",
-		required = false
+		name = "email-kbarticle-suggestion-resolved-subject", required = false
 	)
 	public String emailKBArticleSuggestionResolvedSubject();
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/knowledge/base/dependencies/email_kb_suggestion_resolved_body.tmpl}",
-		required = false
+		name = "email-kbarticle-suggestion-resolved-body", required = false
 	)
 	public String emailKBArticleSuggestionResolvedBody();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "enable-rss", required = false)
 	public boolean enableRSS();
 
-	@Meta.AD(deflt = "20", required = false)
+	@Meta.AD(deflt = "20", name = "rss-delta", required = false)
 	public int rssDelta();
 
-	@Meta.AD(deflt = "full-content", required = false)
+	@Meta.AD(
+		deflt = "full-content", name = "rss-display-style", required = false
+	)
 	public String rssDisplayStyle();
 
-	@Meta.AD(deflt = "atom10", required = false)
+	@Meta.AD(deflt = "atom10", name = "rss-format", required = false)
 	public String rssFormat();
 
 	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/rss.feed.type.default}",
-		required = false
+		name = "rss-feed-type", required = false
 	)
 	public String rssFeedType();
 

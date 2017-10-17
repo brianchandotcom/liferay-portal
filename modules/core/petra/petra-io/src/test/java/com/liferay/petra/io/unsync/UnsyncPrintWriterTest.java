@@ -15,17 +15,24 @@
 package com.liferay.petra.io.unsync;
 
 import com.liferay.petra.io.OutputStreamWriter;
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InterruptedIOException;
 import java.io.StringWriter;
 import java.io.Writer;
 
 import java.lang.reflect.Field;
 
+import java.util.Locale;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
@@ -33,11 +40,130 @@ import org.junit.Test;
  */
 public class UnsyncPrintWriterTest extends BaseWriterTestCase {
 
+	@ClassRule
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
+
 	@After
 	public void tearDown() throws Exception {
 		File testFile = new File(_TEST_FILE_NAME);
 
 		testFile.delete();
+	}
+
+	@Test
+	public void testAppend() throws Exception {
+		StringWriter stringWriter = new StringWriter();
+
+		UnsyncPrintWriter unsyncPrintWriter = new UnsyncPrintWriter(
+			stringWriter);
+
+		unsyncPrintWriter.append('A');
+
+		Assert.assertEquals("A", stringWriter.toString());
+
+		unsyncPrintWriter.append(null);
+
+		Assert.assertEquals("Anull", stringWriter.toString());
+
+		unsyncPrintWriter.append("B");
+
+		Assert.assertEquals("AnullB", stringWriter.toString());
+
+		unsyncPrintWriter.append(null, 0, 4);
+
+		Assert.assertEquals("AnullBnull", stringWriter.toString());
+
+		unsyncPrintWriter.append("C", 0, 1);
+
+		Assert.assertEquals("AnullBnullC", stringWriter.toString());
+	}
+
+	@Test
+	public void testCheckError() {
+		UnsyncPrintWriter unsyncPrintWriter = new UnsyncPrintWriter(
+			new StringWriter());
+
+		unsyncPrintWriter.close();
+
+		unsyncPrintWriter.println();
+
+		Assert.assertTrue(unsyncPrintWriter.checkError());
+
+		unsyncPrintWriter.reset(null);
+
+		Assert.assertFalse(unsyncPrintWriter.checkError());
+
+		unsyncPrintWriter.write(new char[0], 0, 0);
+
+		Assert.assertTrue(unsyncPrintWriter.checkError());
+
+		unsyncPrintWriter.reset(null);
+
+		Assert.assertFalse(unsyncPrintWriter.checkError());
+
+		unsyncPrintWriter.write('c');
+
+		Assert.assertTrue(unsyncPrintWriter.checkError());
+
+		unsyncPrintWriter.reset(null);
+
+		Assert.assertFalse(unsyncPrintWriter.checkError());
+
+		unsyncPrintWriter.write("test");
+
+		Assert.assertTrue(unsyncPrintWriter.checkError());
+
+		unsyncPrintWriter.reset(null);
+
+		Assert.assertFalse(unsyncPrintWriter.checkError());
+
+		unsyncPrintWriter.write("test", 0, 4);
+
+		Assert.assertTrue(unsyncPrintWriter.checkError());
+
+		unsyncPrintWriter.reset(null);
+
+		Assert.assertFalse(unsyncPrintWriter.checkError());
+	}
+
+	@Test
+	public void testClose() {
+		AtomicBoolean calledClose = new AtomicBoolean();
+
+		UnsyncPrintWriter unsyncPrintWriter = new UnsyncPrintWriter(
+			new StringWriter() {
+
+				@Override
+				public void close() {
+					calledClose.set(true);
+				}
+
+			});
+
+		unsyncPrintWriter.close();
+
+		Assert.assertTrue(calledClose.get());
+
+		calledClose.set(false);
+
+		unsyncPrintWriter.close();
+
+		Assert.assertFalse(calledClose.get());
+
+		unsyncPrintWriter.reset(
+			new StringWriter() {
+
+				@Override
+				public void close() throws IOException {
+					throw new IOException();
+				}
+
+			});
+
+		unsyncPrintWriter.close();
+
+		Assert.assertTrue(unsyncPrintWriter.checkError());
 	}
 
 	@Test
@@ -100,15 +226,221 @@ public class UnsyncPrintWriterTest extends BaseWriterTestCase {
 	}
 
 	@Test
-	public void testFormat() {
+	public void testFlush() {
+		AtomicBoolean calledFlush = new AtomicBoolean();
+
+		UnsyncPrintWriter unsyncPrintWriter = new UnsyncPrintWriter(
+			new StringWriter() {
+
+				@Override
+				public void flush() {
+					calledFlush.set(true);
+				}
+
+			});
+
+		unsyncPrintWriter.flush();
+
+		Assert.assertTrue(calledFlush.get());
+
+		calledFlush.set(false);
+
+		unsyncPrintWriter.close();
+
+		unsyncPrintWriter.flush();
+
+		Assert.assertFalse(calledFlush.get());
+
+		Assert.assertTrue(unsyncPrintWriter.checkError());
+
+		unsyncPrintWriter.reset(null);
+
+		Assert.assertFalse(unsyncPrintWriter.checkError());
+
+		unsyncPrintWriter.reset(
+			new Writer() {
+
+				@Override
+				public void close() {
+					throw new UnsupportedOperationException();
+				}
+
+				@Override
+				public void flush() throws IOException {
+					throw new IOException();
+				}
+
+				@Override
+				public void write(char[] cbuf, int off, int len) {
+					throw new UnsupportedOperationException();
+				}
+
+			});
+
+		unsyncPrintWriter.flush();
+
+		Assert.assertTrue(unsyncPrintWriter.checkError());
+	}
+
+	@Test
+	public void testInterruptedIOException() throws Exception {
+		UnsyncPrintWriter unsyncPrintWriter = new UnsyncPrintWriter(
+			new Writer() {
+
+				@Override
+				public void close() {
+				}
+
+				@Override
+				public void flush() {
+				}
+
+				@Override
+				public void write(char[] cbuf, int off, int len)
+					throws IOException {
+
+					throw new InterruptedIOException();
+				}
+
+				@Override
+				public void write(int c) throws IOException {
+					throw new InterruptedIOException();
+				}
+
+				@Override
+				public void write(String s) throws IOException {
+					throw new InterruptedIOException();
+				}
+
+				@Override
+				public void write(String s, int offset, int length)
+					throws IOException {
+
+					throw new InterruptedIOException();
+				}
+
+			});
+
+		unsyncPrintWriter.println();
+
+		Assert.assertTrue(Thread.interrupted());
+
+		unsyncPrintWriter.write(new char[0], 0, 0);
+
+		Assert.assertTrue(Thread.interrupted());
+
+		unsyncPrintWriter.write('c');
+
+		Assert.assertTrue(Thread.interrupted());
+
+		unsyncPrintWriter.write("test");
+
+		Assert.assertTrue(Thread.interrupted());
+
+		unsyncPrintWriter.write("test", 0, 4);
+
+		Assert.assertTrue(Thread.interrupted());
+	}
+
+	@Test
+	public void testIOException() {
+		Writer writer = new Writer() {
+
+			@Override
+			public void close() {
+			}
+
+			@Override
+			public void flush() {
+			}
+
+			@Override
+			public void write(char[] cbuf, int off, int len)
+				throws IOException {
+
+				throw new IOException();
+			}
+
+			@Override
+			public void write(int c) throws IOException {
+				throw new IOException();
+			}
+
+			@Override
+			public void write(String s) throws IOException {
+				throw new IOException();
+			}
+
+			@Override
+			public void write(String s, int offset, int length)
+				throws IOException {
+
+				throw new IOException();
+			}
+
+		};
+
+		UnsyncPrintWriter unsyncPrintWriter = new UnsyncPrintWriter(writer);
+
+		unsyncPrintWriter.println();
+
+		Assert.assertTrue(unsyncPrintWriter.checkError());
+
+		unsyncPrintWriter.reset(writer);
+
+		unsyncPrintWriter.write(new char[0], 0, 0);
+
+		Assert.assertTrue(unsyncPrintWriter.checkError());
+
+		unsyncPrintWriter.reset(writer);
+
+		unsyncPrintWriter.write('c');
+
+		Assert.assertTrue(unsyncPrintWriter.checkError());
+
+		unsyncPrintWriter.reset(writer);
+
+		unsyncPrintWriter.write("test");
+
+		Assert.assertTrue(unsyncPrintWriter.checkError());
+
+		unsyncPrintWriter.reset(writer);
+
+		unsyncPrintWriter.write("test", 0, 4);
+
+		Assert.assertTrue(unsyncPrintWriter.checkError());
+	}
+
+	@Test
+	public void testPrintf() {
 		StringWriter stringWriter = new StringWriter();
 
 		UnsyncPrintWriter unsyncPrintWriter = new UnsyncPrintWriter(
 			stringWriter);
 
-		unsyncPrintWriter.format("%2$2d %1$2s", "a", 1);
+		unsyncPrintWriter.printf("%2$2d %1$2s", "a", 1);
 
 		Assert.assertEquals(" 1  a", stringWriter.toString());
+
+		StringBuffer stringBuffer = stringWriter.getBuffer();
+
+		stringBuffer.setLength(0);
+
+		unsyncPrintWriter.printf("%1$s", "reuse formatter");
+
+		Assert.assertEquals("reuse formatter", stringWriter.toString());
+
+		stringBuffer.setLength(0);
+
+		unsyncPrintWriter.printf(Locale.CANADA, "%1$s", "replace formatter");
+
+		Assert.assertEquals("replace formatter", stringWriter.toString());
+
+		unsyncPrintWriter.close();
+
+		unsyncPrintWriter.printf(Locale.getDefault(), null);
+
+		Assert.assertTrue(unsyncPrintWriter.checkError());
 	}
 
 	@Test
@@ -123,6 +455,88 @@ public class UnsyncPrintWriterTest extends BaseWriterTestCase {
 		String lineSeparator = System.getProperty("line.separator");
 
 		Assert.assertEquals(lineSeparator, stringWriter.toString());
+
+		StringBuffer stringBuffer = stringWriter.getBuffer();
+
+		stringBuffer.setLength(0);
+
+		unsyncPrintWriter.println(true);
+
+		Assert.assertEquals("true" + lineSeparator, stringWriter.toString());
+
+		stringBuffer.setLength(0);
+
+		unsyncPrintWriter.println(false);
+
+		Assert.assertEquals("false" + lineSeparator, stringWriter.toString());
+
+		stringBuffer.setLength(0);
+
+		unsyncPrintWriter.println('c');
+
+		Assert.assertEquals("c" + lineSeparator, stringWriter.toString());
+
+		stringBuffer.setLength(0);
+
+		unsyncPrintWriter.println(new char[] {'a', 'b', 'c'});
+
+		Assert.assertEquals("abc" + lineSeparator, stringWriter.toString());
+
+		stringBuffer.setLength(0);
+
+		unsyncPrintWriter.println(3.14D);
+
+		Assert.assertEquals("3.14" + lineSeparator, stringWriter.toString());
+
+		stringBuffer.setLength(0);
+
+		unsyncPrintWriter.println(1.62F);
+
+		Assert.assertEquals("1.62" + lineSeparator, stringWriter.toString());
+
+		stringBuffer.setLength(0);
+
+		unsyncPrintWriter.println(10);
+
+		Assert.assertEquals("10" + lineSeparator, stringWriter.toString());
+
+		stringBuffer.setLength(0);
+
+		unsyncPrintWriter.println(100L);
+
+		Assert.assertEquals("100" + lineSeparator, stringWriter.toString());
+
+		stringBuffer.setLength(0);
+
+		unsyncPrintWriter.println(
+			new Object() {
+
+				@Override
+				public String toString() {
+					return "test";
+				}
+
+			});
+
+		Assert.assertEquals("test" + lineSeparator, stringWriter.toString());
+
+		stringBuffer.setLength(0);
+
+		unsyncPrintWriter.println((String)null);
+
+		Assert.assertEquals("null" + lineSeparator, stringWriter.toString());
+
+		stringBuffer.setLength(0);
+
+		unsyncPrintWriter.println("テスト");
+
+		Assert.assertEquals("テスト" + lineSeparator, stringWriter.toString());
+
+		unsyncPrintWriter.close();
+
+		unsyncPrintWriter.println();
+
+		Assert.assertTrue(unsyncPrintWriter.checkError());
 	}
 
 	@Test

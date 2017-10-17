@@ -227,11 +227,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FIELD_BODY_CONTENT</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]/div[@class='form-builder-field-content-target']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FIELD_BODY_DUPLICATE</td>
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]/../following-sibling::div/following-sibling::div/div[contains(@data-fieldname,'${key_fieldName}')]</td>
 	<td></td>

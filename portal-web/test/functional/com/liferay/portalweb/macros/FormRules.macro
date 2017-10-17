@@ -280,6 +280,14 @@
 		<execute function="AssertTextEquals" locator1="FormRules#RULE_BUILDER_TIMELINE_RULE_CONDITION" value1="${condition}" />
 	</command>
 
+	<command name="viewRuleConditionDropdownDisabled">
+		<execute function="AssertNotEditable" locator1="FormRules#RULE_BUILDER_RULE_CONDITION_DROPDOWN" />
+	</command>
+
+	<command name="viewRuleConditionDropdownEnabled">
+		<execute function="AssertEditable" locator1="FormRules#RULE_BUILDER_RULE_CONDITION_DROPDOWN" />
+	</command>
+
 	<command name="viewSummary">
 		<execute macro="FormRules#viewConditionFieldSummary">
 			<var name="conditionField" value="${conditionField}" />

@@ -23,19 +23,19 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.layout.page.template.service.http.LayoutPageTemplateFolderServiceSoap}.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.layout.page.template.service.http.LayoutPageTemplateCollectionServiceSoap}.
  *
  * @author Brian Wing Shun Chan
- * @see com.liferay.layout.page.template.service.http.LayoutPageTemplateFolderServiceSoap
+ * @see com.liferay.layout.page.template.service.http.LayoutPageTemplateCollectionServiceSoap
  * @generated
  */
 @ProviderType
-public class LayoutPageTemplateFolderSoap implements Serializable {
-	public static LayoutPageTemplateFolderSoap toSoapModel(
-		LayoutPageTemplateFolder model) {
-		LayoutPageTemplateFolderSoap soapModel = new LayoutPageTemplateFolderSoap();
+public class LayoutPageTemplateCollectionSoap implements Serializable {
+	public static LayoutPageTemplateCollectionSoap toSoapModel(
+		LayoutPageTemplateCollection model) {
+		LayoutPageTemplateCollectionSoap soapModel = new LayoutPageTemplateCollectionSoap();
 
-		soapModel.setLayoutPageTemplateFolderId(model.getLayoutPageTemplateFolderId());
+		soapModel.setLayoutPageTemplateCollectionId(model.getLayoutPageTemplateCollectionId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -48,9 +48,9 @@ public class LayoutPageTemplateFolderSoap implements Serializable {
 		return soapModel;
 	}
 
-	public static LayoutPageTemplateFolderSoap[] toSoapModels(
-		LayoutPageTemplateFolder[] models) {
-		LayoutPageTemplateFolderSoap[] soapModels = new LayoutPageTemplateFolderSoap[models.length];
+	public static LayoutPageTemplateCollectionSoap[] toSoapModels(
+		LayoutPageTemplateCollection[] models) {
+		LayoutPageTemplateCollectionSoap[] soapModels = new LayoutPageTemplateCollectionSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -59,15 +59,15 @@ public class LayoutPageTemplateFolderSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static LayoutPageTemplateFolderSoap[][] toSoapModels(
-		LayoutPageTemplateFolder[][] models) {
-		LayoutPageTemplateFolderSoap[][] soapModels = null;
+	public static LayoutPageTemplateCollectionSoap[][] toSoapModels(
+		LayoutPageTemplateCollection[][] models) {
+		LayoutPageTemplateCollectionSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new LayoutPageTemplateFolderSoap[models.length][models[0].length];
+			soapModels = new LayoutPageTemplateCollectionSoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new LayoutPageTemplateFolderSoap[0][0];
+			soapModels = new LayoutPageTemplateCollectionSoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -77,34 +77,35 @@ public class LayoutPageTemplateFolderSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static LayoutPageTemplateFolderSoap[] toSoapModels(
-		List<LayoutPageTemplateFolder> models) {
-		List<LayoutPageTemplateFolderSoap> soapModels = new ArrayList<LayoutPageTemplateFolderSoap>(models.size());
+	public static LayoutPageTemplateCollectionSoap[] toSoapModels(
+		List<LayoutPageTemplateCollection> models) {
+		List<LayoutPageTemplateCollectionSoap> soapModels = new ArrayList<LayoutPageTemplateCollectionSoap>(models.size());
 
-		for (LayoutPageTemplateFolder model : models) {
+		for (LayoutPageTemplateCollection model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new LayoutPageTemplateFolderSoap[soapModels.size()]);
+		return soapModels.toArray(new LayoutPageTemplateCollectionSoap[soapModels.size()]);
 	}
 
-	public LayoutPageTemplateFolderSoap() {
+	public LayoutPageTemplateCollectionSoap() {
 	}
 
 	public long getPrimaryKey() {
-		return _layoutPageTemplateFolderId;
+		return _layoutPageTemplateCollectionId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setLayoutPageTemplateFolderId(pk);
+		setLayoutPageTemplateCollectionId(pk);
 	}
 
-	public long getLayoutPageTemplateFolderId() {
-		return _layoutPageTemplateFolderId;
+	public long getLayoutPageTemplateCollectionId() {
+		return _layoutPageTemplateCollectionId;
 	}
 
-	public void setLayoutPageTemplateFolderId(long layoutPageTemplateFolderId) {
-		_layoutPageTemplateFolderId = layoutPageTemplateFolderId;
+	public void setLayoutPageTemplateCollectionId(
+		long layoutPageTemplateCollectionId) {
+		_layoutPageTemplateCollectionId = layoutPageTemplateCollectionId;
 	}
 
 	public long getGroupId() {
@@ -171,7 +172,7 @@ public class LayoutPageTemplateFolderSoap implements Serializable {
 		_description = description;
 	}
 
-	private long _layoutPageTemplateFolderId;
+	private long _layoutPageTemplateCollectionId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;

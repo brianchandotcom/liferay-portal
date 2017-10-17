@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean class="com.liferay.layout.page.template.service.impl.LayoutPageTemplateCollectionLocalServiceImpl" id="com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService" />
+	<bean class="com.liferay.layout.page.template.service.impl.LayoutPageTemplateCollectionServiceImpl" id="com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService" />
+	<bean class="com.liferay.layout.page.template.service.persistence.impl.LayoutPageTemplateCollectionPersistenceImpl" id="com.liferay.layout.page.template.service.persistence.LayoutPageTemplateCollectionPersistence" parent="basePersistence" />
 	<bean class="com.liferay.layout.page.template.service.impl.LayoutPageTemplateEntryLocalServiceImpl" id="com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService" />
 	<bean class="com.liferay.layout.page.template.service.impl.LayoutPageTemplateEntryServiceImpl" id="com.liferay.layout.page.template.service.LayoutPageTemplateEntryService" />
 	<bean class="com.liferay.layout.page.template.service.persistence.impl.LayoutPageTemplateEntryPersistenceImpl" id="com.liferay.layout.page.template.service.persistence.LayoutPageTemplateEntryPersistence" parent="basePersistence" />
-	<bean class="com.liferay.layout.page.template.service.impl.LayoutPageTemplateFolderLocalServiceImpl" id="com.liferay.layout.page.template.service.LayoutPageTemplateFolderLocalService" />
-	<bean class="com.liferay.layout.page.template.service.impl.LayoutPageTemplateFolderServiceImpl" id="com.liferay.layout.page.template.service.LayoutPageTemplateFolderService" />
-	<bean class="com.liferay.layout.page.template.service.persistence.impl.LayoutPageTemplateFolderPersistenceImpl" id="com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFolderPersistence" parent="basePersistence" />
 	<bean class="com.liferay.layout.page.template.service.impl.LayoutPageTemplateFragmentLocalServiceImpl" id="com.liferay.layout.page.template.service.LayoutPageTemplateFragmentLocalService" />
 	<bean class="com.liferay.layout.page.template.service.persistence.impl.LayoutPageTemplateFragmentPersistenceImpl" id="com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFragmentPersistence" parent="basePersistence" />
 </beans>

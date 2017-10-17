@@ -16,26 +16,27 @@ package com.liferay.layout.page.template.exception;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class LayoutPageTemplateFolderNameException extends PortalException {
+public class NoSuchPageTemplateCollectionException
+	extends NoSuchModelException {
 
-	public LayoutPageTemplateFolderNameException() {
+	public NoSuchPageTemplateCollectionException() {
 	}
 
-	public LayoutPageTemplateFolderNameException(String msg) {
+	public NoSuchPageTemplateCollectionException(String msg) {
 		super(msg);
 	}
 
-	public LayoutPageTemplateFolderNameException(String msg, Throwable cause) {
+	public NoSuchPageTemplateCollectionException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public LayoutPageTemplateFolderNameException(Throwable cause) {
+	public NoSuchPageTemplateCollectionException(Throwable cause) {
 		super(cause);
 	}
 

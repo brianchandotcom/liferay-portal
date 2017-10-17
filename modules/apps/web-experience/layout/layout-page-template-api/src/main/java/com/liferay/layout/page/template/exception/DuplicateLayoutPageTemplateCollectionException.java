@@ -22,23 +22,23 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class DuplicateLayoutPageTemplateFolderException
+public class DuplicateLayoutPageTemplateCollectionException
 	extends PortalException {
 
-	public DuplicateLayoutPageTemplateFolderException() {
+	public DuplicateLayoutPageTemplateCollectionException() {
 	}
 
-	public DuplicateLayoutPageTemplateFolderException(String msg) {
+	public DuplicateLayoutPageTemplateCollectionException(String msg) {
 		super(msg);
 	}
 
-	public DuplicateLayoutPageTemplateFolderException(
+	public DuplicateLayoutPageTemplateCollectionException(
 		String msg, Throwable cause) {
 
 		super(msg, cause);
 	}
 
-	public DuplicateLayoutPageTemplateFolderException(Throwable cause) {
+	public DuplicateLayoutPageTemplateCollectionException(Throwable cause) {
 		super(cause);
 	}
 

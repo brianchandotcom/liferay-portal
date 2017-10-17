@@ -42,13 +42,15 @@ public class LayoutPageTemplateEntryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.layout.page.template.service.impl.LayoutPageTemplateEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry addLayoutPageTemplateEntry(
-		long groupId, long layoutPageTemplateFolderId, java.lang.String name,
+		long groupId, long layoutPageTemplateCollectionId,
+		java.lang.String name,
 		java.util.List<com.liferay.fragment.model.FragmentEntry> fragmentEntries,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addLayoutPageTemplateEntry(groupId,
-			layoutPageTemplateFolderId, name, fragmentEntries, serviceContext);
+			layoutPageTemplateCollectionId, name, fragmentEntries,
+			serviceContext);
 	}
 
 	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> deleteLayoutPageTemplateEntries(
@@ -72,44 +74,44 @@ public class LayoutPageTemplateEntryServiceUtil {
 				   .fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
 	}
 
-	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
-		long groupId, long layoutPageTemplateFolderId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static int getLayoutPageTemplateCollectionsCount(long groupId,
+		long layoutPageTemplateCollectionId) {
 		return getService()
-				   .getLayoutPageTemplateEntries(groupId,
-			layoutPageTemplateFolderId, start, end);
+				   .getLayoutPageTemplateCollectionsCount(groupId,
+			layoutPageTemplateCollectionId);
+	}
+
+	public static int getLayoutPageTemplateCollectionsCount(long groupId,
+		long layoutPageTemplateCollectionId, java.lang.String name) {
+		return getService()
+				   .getLayoutPageTemplateCollectionsCount(groupId,
+			layoutPageTemplateCollectionId, name);
 	}
 
 	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
-		long groupId, long layoutPageTemplateFolderId, int start, int end,
+		long groupId, long layoutPageTemplateCollectionId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getLayoutPageTemplateEntries(groupId,
+			layoutPageTemplateCollectionId, start, end);
+	}
+
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
+		long groupId, long layoutPageTemplateCollectionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getLayoutPageTemplateEntries(groupId,
-			layoutPageTemplateFolderId, start, end, orderByComparator);
+			layoutPageTemplateCollectionId, start, end, orderByComparator);
 	}
 
 	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
-		long groupId, long layoutPageTemplateFolderId, java.lang.String name,
-		int start, int end,
+		long groupId, long layoutPageTemplateCollectionId,
+		java.lang.String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> orderByComparator) {
 		return getService()
 				   .getLayoutPageTemplateEntries(groupId,
-			layoutPageTemplateFolderId, name, start, end, orderByComparator);
-	}
-
-	public static int getLayoutPageTemplateFoldersCount(long groupId,
-		long layoutPageTemplateFolderId) {
-		return getService()
-				   .getLayoutPageTemplateFoldersCount(groupId,
-			layoutPageTemplateFolderId);
-	}
-
-	public static int getLayoutPageTemplateFoldersCount(long groupId,
-		long layoutPageTemplateFolderId, java.lang.String name) {
-		return getService()
-				   .getLayoutPageTemplateFoldersCount(groupId,
-			layoutPageTemplateFolderId, name);
+			layoutPageTemplateCollectionId, name, start, end, orderByComparator);
 	}
 
 	/**

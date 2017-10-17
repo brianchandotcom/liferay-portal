@@ -15,6 +15,7 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -58,9 +59,8 @@ public class SectionTag extends IncludeTag {
 			_sectionSelected = Boolean.valueOf(_tabsTag.getSectionSelected());
 			String sectionScroll = namespace + sectionParam + "TabsScroll";
 
-			String sectionRedirectParams =
-				"&scroll=" + sectionScroll + "&" + sectionParam + "=" +
-					sectionName;
+			String sectionRedirectParams = StringBundler.concat(
+				"&scroll=", sectionScroll, "&", sectionParam, "=", sectionName);
 
 			_tabsTag.incrementSection();
 

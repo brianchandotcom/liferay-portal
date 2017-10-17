@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.ThemeHelper;
 import com.liferay.portal.kernel.util.Validator;
@@ -306,8 +307,9 @@ public class ThemeUtil {
 
 			if (themeServletContext == null) {
 				_log.error(
-					"Theme " + theme.getThemeId() + " cannot find its " +
-						"servlet context at " + theme.getServletContextName());
+					StringBundler.concat(
+						"Theme ", theme.getThemeId(), " cannot find its ",
+						"servlet context at ", theme.getServletContextName()));
 			}
 			else {
 				RequestDispatcher requestDispatcher =
@@ -315,8 +317,9 @@ public class ThemeUtil {
 
 				if (requestDispatcher == null) {
 					_log.error(
-						"Theme " + theme.getThemeId() + " does not have " +
-							path);
+						StringBundler.concat(
+							"Theme ", theme.getThemeId(), " does not have ",
+							path));
 				}
 				else {
 					requestDispatcher.include(request, response);
@@ -329,7 +332,8 @@ public class ThemeUtil {
 
 			if (requestDispatcher == null) {
 				_log.error(
-					"Theme " + theme.getThemeId() + " does not have " + path);
+					StringBundler.concat(
+						"Theme ", theme.getThemeId(), " does not have ", path));
 			}
 			else {
 				requestDispatcher.include(request, response);

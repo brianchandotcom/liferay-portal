@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.test;
 
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -90,8 +91,10 @@ public class ReflectionTestUtil {
 
 		return ReflectionUtil.throwException(
 			new NoSuchMethodException(
-				"No bridge method on " + clazz + " with name " + methodName +
-					" and parameter types " + Arrays.toString(parameterTypes)));
+				StringBundler.concat(
+					"No bridge method on ", String.valueOf(clazz),
+					" with name ", methodName, " and parameter types ",
+					Arrays.toString(parameterTypes))));
 	}
 
 	public static Field getField(Class<?> clazz, String fieldName) {
@@ -130,7 +133,9 @@ public class ReflectionTestUtil {
 
 		return ReflectionUtil.throwException(
 			new NoSuchFieldException(
-				"No field on " + clazz + " with name " + fieldName));
+				StringBundler.concat(
+					"No field on ", String.valueOf(clazz), " with name ",
+					fieldName)));
 	}
 
 	public static <T> T getFieldValue(Class<?> clazz, String fieldName) {
@@ -184,8 +189,10 @@ public class ReflectionTestUtil {
 
 		return ReflectionUtil.throwException(
 			new NoSuchMethodException(
-				"No method on " + clazz + " with name " + methodName +
-					" and parameter types " + Arrays.toString(parameterTypes)));
+				StringBundler.concat(
+					"No method on ", String.valueOf(clazz), " with name ",
+					methodName, " and parameter types ",
+					Arrays.toString(parameterTypes))));
 	}
 
 	public static <T> T invoke(

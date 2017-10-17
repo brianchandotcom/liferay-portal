@@ -26,6 +26,8 @@ LocalizedValuesMap messageLocalizedValuesMap = fedExCommerceShippingEngineGroupS
 if (messageLocalizedValuesMap != null) {
 	messageXml = LocalizationUtil.getXml(messageLocalizedValuesMap, "message");
 }
+
+String[] serviceTypes = StringUtil.split(fedExCommerceShippingEngineGroupServiceConfiguration.serviceTypes());
 %>
 
 <aui:fieldset>
@@ -39,4 +41,58 @@ if (messageLocalizedValuesMap != null) {
 			xml="<%= messageXml %>"
 		/>
 	</aui:field-wrapper>
+
+	<aui:input name="settings--url--" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.url() %>" />
+
+	<aui:input name="settings--key--" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.key() %>" />
+
+	<aui:input name="settings--password--" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.password() %>" />
+
+	<aui:input label="account-number" name="settings--accountNumber--" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.accountNumber() %>" />
+
+	<aui:input label="meter-number" name="settings--meterNumber--" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.meterNumber() %>" />
+
+	<aui:select name="dropoff-type" name="settings--dropoffType--">
+
+		<%
+		for (String dropoffType : FedExCommerceShippingEngineConstants.DROPOFF_TYPES) {
+		%>
+
+			<aui:option label="<%= FedExCommerceShippingEngineConstants.getDropoffTypeLabel(dropoffType) %>" selected="<%= dropoffType.equals(fedExCommerceShippingEngineGroupServiceConfiguration.dropoffType()) %>" value="<%= dropoffType %>" />
+
+		<%
+		}
+		%>
+
+	</aui:select>
+
+	<aui:field-wrapper label="service-types">
+
+		<%
+		for (String serviceType : FedExCommerceShippingEngineConstants.SERVICE_TYPES) {
+		%>
+
+			<div>
+				<aui:input checked="<%= ArrayUtil.contains(serviceTypes, serviceType) %>" label="<%= FedExCommerceShippingEngineConstants.getServiceTypeLabel(serviceType) %>" name="settings--serviceTypes--" type="checkbox" value="<%= serviceType %>" />
+			</div>
+
+		<%
+		}
+		%>
+
+	</aui:field-wrapper>
+
+	<aui:select label="packing-type" name="settings--packingType--">
+
+		<%
+		for (String packingType : FedExCommerceShippingEngineConstants.PACKING_TYPES) {
+		%>
+
+			<aui:option label="<%= packingType %>" selected="<%= packingType.equals(fedExCommerceShippingEngineGroupServiceConfiguration.packingType()) %>" value="<%= packingType %>" />
+
+		<%
+		}
+		%>
+
+	</aui:select>
 </aui:fieldset>

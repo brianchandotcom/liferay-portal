@@ -16,6 +16,9 @@ package com.liferay.commerce.shipping.engine.fedex.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.fedex.ws.rate.v22.DropoffType;
+
+import com.liferay.commerce.shipping.engine.fedex.internal.constants.FedExCommerceShippingEngineConstants;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 
@@ -32,7 +35,34 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 )
 public interface FedExCommerceShippingEngineGroupServiceConfiguration {
 
+	@Meta.AD(
+		deflt = FedExCommerceShippingEngineConstants.PACKING_TYPE_BY_DIMENSIONS,
+		required = false
+	)
+	public String packingType();
+
+	@Meta.AD(deflt = DropoffType._BUSINESS_SERVICE_CENTER, required = false)
+	public String dropoffType();
+
+	@Meta.AD(required = false)
+	public String accountNumber();
+
+	@Meta.AD(required = false)
+	public String key();
+
 	@Meta.AD(required = false)
 	public LocalizedValuesMap message();
+
+	@Meta.AD(required = false)
+	public String meterNumber();
+
+	@Meta.AD(required = false)
+	public String password();
+
+	@Meta.AD(required = false)
+	public String serviceTypes();
+
+	@Meta.AD(required = false)
+	public String url();
 
 }

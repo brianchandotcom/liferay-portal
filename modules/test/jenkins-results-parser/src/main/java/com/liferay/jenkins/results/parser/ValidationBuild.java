@@ -19,6 +19,7 @@ import com.liferay.jenkins.results.parser.failure.message.generator.GenericFailu
 import com.liferay.jenkins.results.parser.failure.message.generator.RebaseFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.SubrepositorySourceFormatFailureMessageGenerator;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -66,6 +67,10 @@ public class ValidationBuild extends BaseBuild {
 					taskSummaryListElement,
 					getTaskSummaryIndexElement(consoleSnippet));
 			}
+
+			Dom4JUtil.addToElement(
+				rootElement, Dom4JUtil.getNewElement("hr"),
+				getTestSummaryElement());
 		}
 		else {
 			Dom4JUtil.addToElement(rootElement, getFailureMessageElement());
@@ -140,6 +145,23 @@ public class ValidationBuild extends BaseBuild {
 		return null;
 	}
 
+	protected Element getGitHubMessageTestResultsElement() {
+		int failCount = getTestCountByStatus("FAILURE");
+		int successCount = getTestCountByStatus("SUCCESS");
+
+		return Dom4JUtil.getNewElement(
+			"div", null, Dom4JUtil.getNewElement("h6", null, "Test Results:"),
+			Dom4JUtil.getNewElement(
+				"p", null, Integer.toString(successCount),
+				JenkinsResultsParserUtil.getNounForm(
+					successCount, " Tests", " Test"),
+				" Passed.", Dom4JUtil.getNewElement("br"),
+				Integer.toString(failCount),
+				JenkinsResultsParserUtil.getNounForm(
+					failCount, " Tests", " Test"),
+				" Failed."));
+	}
+
 	protected Element getResultMessageElement() {
 		Element resultMessageElement = Dom4JUtil.getNewElement("h1");
 
@@ -195,6 +217,32 @@ public class ValidationBuild extends BaseBuild {
 		}
 
 		return taskSummaryIndexElement;
+	}
+
+	protected Element getTestSummaryElement() {
+		List<TestResult> testResults = getTestResults(null);
+
+		Element testSummaryElement = Dom4JUtil.getNewElement(
+			"div", null, getGitHubMessageTestResultsElement());
+
+		List<Element> failureElements = new ArrayList<>();
+
+		for (TestResult testResult : getTestResults(null)) {
+			String testStatus = testResult.getStatus();
+
+			if (testStatus.equals("FIXED") || testStatus.equals("PASSED") ||
+				testStatus.equals("SKIPPED")) {
+
+				continue;
+			}
+
+			failureElements.add(testResult.getGitHubElement());
+		}
+
+		Dom4JUtil.getOrderedListElement(
+			failureElements, testSummaryElement, 10);
+
+		return testSummaryElement;
 	}
 
 	private static final Pattern _consoleResultPattern = Pattern.compile(

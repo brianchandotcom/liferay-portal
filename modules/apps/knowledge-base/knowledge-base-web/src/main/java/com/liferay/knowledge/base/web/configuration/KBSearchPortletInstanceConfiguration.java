@@ -32,57 +32,93 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface KBSearchPortletInstanceConfiguration {
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "show-kbarticle-author-column", required = false
+	)
 	public boolean showKBArticleAuthorColumn();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "show-kbarticle-create-date-column",
+		required = false
+	)
 	public boolean showKBArticleCreateDateColumn();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "show-kbarticle-modified-date-column",
+		required = false
+	)
 	public boolean showKBArticleModifiedDateColumn();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "show-kbarticle-views-column", required = false
+	)
 	public boolean showKBArticleViewsColumn();
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(
+		deflt = "false", name = "enable-kbarticle-description", required = false
+	)
 	public boolean enableKBArticleDescription();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "enable-kbarticle-ratings", required = false
+	)
 	public boolean enableKBArticleRatings();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "show-kbarticle-asset-entries", required = false
+	)
 	public boolean showKBArticleAssetEntries();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "show-kbarticle-attachments", required = false
+	)
 	public boolean showKBArticleAttachments();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "enable-kbarticle-asset-links", required = false
+	)
 	public boolean enableKBArticleAssetLinks();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "enable-kbarticle-view-count-increment",
+		required = false
+	)
 	public boolean enableKBArticleViewCountIncrement();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "enable-kbarticle-subscriptions",
+		required = false
+	)
 	public boolean enableKBArticleSubscriptions();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "enable-kbarticle-history", required = false
+	)
 	public boolean enableKBArticleHistory();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "enable-kbarticle-print", required = false)
 	public boolean enableKBArticlePrint();
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(
+		deflt = "false", name = "enable-social-bookmarks", required = false
+	)
 	public boolean enableSocialBookmarks();
 
-	@Meta.AD(deflt = "menu", required = false)
+	@Meta.AD(
+		deflt = "menu", name = "social-bookmarks-display-style",
+		required = false
+	)
 	public String socialBookmarksDisplayStyle();
 
-	@Meta.AD(deflt = "bottom", required = false)
+	@Meta.AD(
+		deflt = "bottom", name = "social-bookmarks-display-position",
+		required = false
+	)
 	public String socialBookmarksDisplayPosition();
 
 	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/social.bookmark.types}",
-		required = false
+		name = "social-bookmarks-types", required = false
 	)
 	public String socialBookmarksTypes();
 

@@ -33,58 +33,86 @@ import com.liferay.portal.kernel.util.StringPool;
 )
 public interface KBDisplayPortletInstanceConfiguration {
 
-	@Meta.AD(deflt = "0", required = false)
+	@Meta.AD(deflt = "0", name = "resource-prim-key", required = false)
 	public long resourcePrimKey();
 
-	@Meta.AD(deflt = "0", required = false)
+	@Meta.AD(deflt = "0", name = "resource-class-name-id", required = false)
 	public long resourceClassNameId();
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(
+		deflt = "false", name = "enable-kbarticle-description", required = false
+	)
 	public boolean enableKBArticleDescription();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "enable-kbarticle-ratings", required = false
+	)
 	public boolean enableKBArticleRatings();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "show-kbarticle-asset-entries", required = false
+	)
 	public boolean showKBArticleAssetEntries();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "show-kbarticle-attachments", required = false
+	)
 	public boolean showKBArticleAttachments();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "enable-kbarticle-asset-links", required = false
+	)
 	public boolean enableKBArticleAssetLinks();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "enable-kbarticle-view-count-increment",
+		required = false
+	)
 	public boolean enableKBArticleViewCountIncrement();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "enable-kbarticle-subscriptions",
+		required = false
+	)
 	public boolean enableKBArticleSubscriptions();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "enable-kbarticle-history", required = false
+	)
 	public boolean enableKBArticleHistory();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "enable-kbarticle-print", required = false)
 	public boolean enableKBArticlePrint();
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(
+		deflt = "false", name = "enable-social-bookmarks", required = false
+	)
 	public boolean enableSocialBookmarks();
 
-	@Meta.AD(deflt = "menu", required = false)
+	@Meta.AD(
+		deflt = "menu", name = "social-bookmarks-display-style",
+		required = false
+	)
 	public String socialBookmarksDisplayStyle();
 
-	@Meta.AD(deflt = "bottom", required = false)
+	@Meta.AD(
+		deflt = "bottom", name = "social-bookmarks-display-position",
+		required = false
+	)
 	public String socialBookmarksDisplayPosition();
 
 	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/social.bookmark.types}",
-		required = false
+		name = "social-bookmarks-types", required = false
 	)
 	public String socialBookmarksTypes();
 
-	@Meta.AD(deflt = StringPool.BLANK, required = false)
+	@Meta.AD(
+		deflt = StringPool.BLANK, name = "content-root-prefix", required = false
+	)
 	public String contentRootPrefix();
 
-	@Meta.AD(deflt = "3", required = false)
+	@Meta.AD(deflt = "3", name = "max-nesting-level", required = false)
 	public int maxNestingLevel();
 
 }

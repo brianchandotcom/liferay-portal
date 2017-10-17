@@ -14,7 +14,7 @@
 
 package com.liferay.petra.io.unsync;
 
-import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.io.internal.BoundaryCheckerUtil;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -87,21 +87,7 @@ public class UnsyncBufferedWriter extends Writer {
 			throw new IOException("Writer is null");
 		}
 
-		if ((offset < 0) || (offset > chars.length) || (length < 0) ||
-			((offset + length) > chars.length) || ((offset + length) < 0)) {
-
-			StringBundler sb = new StringBundler(7);
-
-			sb.append("{chars.length=");
-			sb.append(chars.length);
-			sb.append(", offset=");
-			sb.append(offset);
-			sb.append(", length=");
-			sb.append(length);
-			sb.append("}");
-
-			throw new IndexOutOfBoundsException(sb.toString());
-		}
+		BoundaryCheckerUtil.check(chars.length, offset, length);
 
 		if (length >= size) {
 			if (count > 0) {
@@ -148,6 +134,8 @@ public class UnsyncBufferedWriter extends Writer {
 		if (writer == null) {
 			throw new IOException("Writer is null");
 		}
+
+		BoundaryCheckerUtil.check(string.length(), offset, length);
 
 		int x = offset;
 		int y = offset + length;

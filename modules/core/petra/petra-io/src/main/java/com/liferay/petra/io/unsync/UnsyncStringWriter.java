@@ -14,6 +14,7 @@
 
 package com.liferay.petra.io.unsync;
 
+import com.liferay.petra.io.internal.BoundaryCheckerUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
@@ -128,21 +129,7 @@ public class UnsyncStringWriter extends Writer {
 
 	@Override
 	public void write(char[] chars, int offset, int length) {
-		if ((offset < 0) || (offset > chars.length) || (length < 0) ||
-			((offset + length) > chars.length) || ((offset + length) < 0)) {
-
-			StringBundler sb = new StringBundler(7);
-
-			sb.append("{chars.length=");
-			sb.append(chars.length);
-			sb.append(", offset=");
-			sb.append(offset);
-			sb.append(", length=");
-			sb.append(length);
-			sb.append("}");
-
-			throw new IndexOutOfBoundsException(sb.toString());
-		}
+		BoundaryCheckerUtil.check(chars.length, offset, length);
 
 		if (length == 0) {
 			return;

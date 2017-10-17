@@ -1703,6 +1703,8 @@
 	</command>
 
 	<command name="ErrorAddUserScreenNameNumberSiteId" priority="4">
+		<property name="custom.properties" value="users.screen.name.allow.numeric=false" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Sites" />
 			<var name="panel" value="Control Panel" />

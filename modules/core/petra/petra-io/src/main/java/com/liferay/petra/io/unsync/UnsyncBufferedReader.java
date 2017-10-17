@@ -175,12 +175,11 @@ public class UnsyncBufferedReader extends Reader {
 			}
 
 			if (index >= firstInvalidIndex) {
-				if ((sb != null) && (sb.index() > 0)) {
-					return sb.toString();
-				}
-				else {
+				if (sb == null) {
 					return null;
 				}
+
+				return sb.toString();
 			}
 
 			boolean hasLineBreak = false;

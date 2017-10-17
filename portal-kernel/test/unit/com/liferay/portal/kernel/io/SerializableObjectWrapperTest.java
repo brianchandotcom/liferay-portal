@@ -107,13 +107,7 @@ public class SerializableObjectWrapperTest {
 				SerializableObjectWrapper.unwrap(
 					_getDeserializedObject(_testSerializableObjectWrapper)));
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
-
-			LogRecord logRecord = logRecords.get(0);
-
-			Assert.assertEquals(
-				"Unable to deserialize object", logRecord.getMessage());
-			Assert.assertSame(cnfe, logRecord.getThrown());
+			_assertLogAndClear(logRecords, cnfe);
 
 			// Test equals
 
@@ -135,6 +129,20 @@ public class SerializableObjectWrapperTest {
 
 		Assert.assertEquals(
 			deserializedObject, _getDeserializedObject(deserializedObject));
+	}
+
+	private void _assertLogAndClear(
+		List<LogRecord> logRecords, ClassNotFoundException cnfe) {
+
+		Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+
+		LogRecord logRecord = logRecords.get(0);
+
+		Assert.assertEquals(
+			"Unable to deserialize object", logRecord.getMessage());
+		Assert.assertSame(cnfe, logRecord.getThrown());
+
+		logRecords.clear();
 	}
 
 	private SerializableObjectWrapper _getDeserializedObject(

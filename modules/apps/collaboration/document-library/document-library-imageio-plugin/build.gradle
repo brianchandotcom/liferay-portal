@@ -1,0 +1,26 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+dependencies {
+	compileInclude group: "com.twelvemonkeys.common", name: "common-image", version: "3.3.2"
+	compileInclude group: "com.twelvemonkeys.common", name: "common-io", version: "3.3.2"
+	compileInclude group: "com.twelvemonkeys.common", name: "common-lang", version: "3.3.2"
+	compileInclude group: "com.twelvemonkeys.imageio", name: "imageio-bmp", version: "3.3.2"
+	compileInclude group: "com.twelvemonkeys.imageio", name: "imageio-core", version: "3.3.2"
+	compileInclude group: "com.twelvemonkeys.imageio", name: "imageio-hdr", version: "3.3.2"
+	compileInclude group: "com.twelvemonkeys.imageio", name: "imageio-icns", version: "3.3.2"
+	compileInclude group: "com.twelvemonkeys.imageio", name: "imageio-iff", version: "3.3.2"
+	compileInclude group: "com.twelvemonkeys.imageio", name: "imageio-jpeg", version: "3.3.2"
+	compileInclude group: "com.twelvemonkeys.imageio", name: "imageio-metadata", version: "3.3.2"
+	compileInclude group: "com.twelvemonkeys.imageio", name: "imageio-pcx", version: "3.3.2"
+	compileInclude group: "com.twelvemonkeys.imageio", name: "imageio-pict", version: "3.3.2"
+	compileInclude group: "com.twelvemonkeys.imageio", name: "imageio-pnm", version: "3.3.2"
+	compileInclude group: "com.twelvemonkeys.imageio", name: "imageio-psd", version: "3.3.2"
+	compileInclude group: "com.twelvemonkeys.imageio", name: "imageio-sgi", version: "3.3.2"
+	compileInclude group: "com.twelvemonkeys.imageio", name: "imageio-tga", version: "3.3.2"
+	compileInclude group: "com.twelvemonkeys.imageio", name: "imageio-thumbsdb", version: "3.3.2"
+	compileInclude group: "com.twelvemonkeys.imageio", name: "imageio-tiff", version: "3.3.2"
+
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	provided group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
+}

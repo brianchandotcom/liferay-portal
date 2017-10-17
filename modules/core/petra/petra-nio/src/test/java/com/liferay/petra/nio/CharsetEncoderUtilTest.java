@@ -59,7 +59,7 @@ public class CharsetEncoderUtilTest {
 			Assert.assertEquals(1, uce.getInputLength());
 		}
 
-		FakeCharset fakeCharset = new FakeCharset();
+		TestCharset fakeCharset = new TestCharset();
 
 		Object cache1 = ReflectionTestUtil.getAndSetFieldValue(
 			Charset.class, "cache1",

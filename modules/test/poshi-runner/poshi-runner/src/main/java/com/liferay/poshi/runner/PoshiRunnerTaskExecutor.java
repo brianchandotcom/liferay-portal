@@ -14,6 +14,8 @@
 
 package com.liferay.poshi.runner;
 
+import org.junit.runner.JUnitCore;
+
 /**
  * @author Yi-Chen Tsai
  */
@@ -57,15 +59,19 @@ public class PoshiRunnerTaskExecutor {
 		}
 	}
 
-	protected static void evaluatePoshiConsole() {
+	protected static void evaluatePoshiConsole() throws Exception {
 		System.out.println("Executing task: evaluatePoshiConsole");
+
+		PoshiRunnerConsoleEvaluator.main(null);
 	}
 
-	protected static void runPoshi(String[] args) {
+	protected static void runPoshi(String[] args) throws Exception {
 		System.out.println("Executing task: runPoshi");
+
+		JUnitCore.runClasses(PoshiRunner.class);
 	}
 
-	protected static void taskHelp() {
+	protected static void taskHelp() throws Exception {
 		System.out.println("List of PoshiRunner tasks:");
 		System.out.println("--------------------------");
 		System.out.println(
@@ -76,12 +82,16 @@ public class PoshiRunnerTaskExecutor {
 			"writePoshiProperties - Write the Poshi properties files.");
 	}
 
-	protected static void validatePoshi() {
+	protected static void validatePoshi() throws Exception {
 		System.out.println("Executing task: validatePoshi");
+
+		PoshiRunnerValidation.main(null);
 	}
 
-	protected static void writePoshiProperties() {
+	protected static void writePoshiProperties() throws Exception {
 		System.out.println("Executing task: writePoshiProperties");
+
+		PoshiRunnerContext.main(null);
 	}
 
 }

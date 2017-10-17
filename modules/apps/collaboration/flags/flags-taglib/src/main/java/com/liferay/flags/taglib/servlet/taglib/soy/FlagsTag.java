@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -61,7 +62,9 @@ public class FlagsTag extends TemplateRendererTag {
 			boolean enabled = GetterUtil.getBoolean(
 				context.get("enabled"), true);
 
-			putValue("companyName", "Company name");
+			Company company = themeDisplay.getCompany();
+
+			putValue("companyName", company.getName());
 
 			putValue("flagsEnabled", _isFlagsEnabled(themeDisplay));
 
@@ -113,7 +116,7 @@ public class FlagsTag extends TemplateRendererTag {
 
 			putValue("uri", _getURI());
 
-			putValue("reasons", _getReasons(themeDisplay));
+			putValue("reasons", _getReasons(themeDisplay.getCompanyId()));
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -200,13 +203,12 @@ public class FlagsTag extends TemplateRendererTag {
 		return dataJSONObject;
 	}
 
-	private String[] _getReasons(ThemeDisplay themeDisplay)
+	private String[] _getReasons(long companyId)
 		throws PortalException {
 
 		FlagsGroupServiceConfiguration flagsGroupServiceConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
-				FlagsGroupServiceConfiguration.class,
-				themeDisplay.getCompanyId());
+				FlagsGroupServiceConfiguration.class, companyId);
 
 		return flagsGroupServiceConfiguration.reasons();
 	}

@@ -89,7 +89,10 @@ public class SerializableObjectWrapperTest {
 		Assert.assertEquals(
 			_TEST_SERIALIZABLE,
 			SerializableObjectWrapper.unwrap(_TEST_SERIALIZABLE));
+	}
 
+	@Test
+	public void testWithBrokenClassLoader() throws Exception {
 		ClassLoaderPool.unregister(ClassLoaderPool.class.getClassLoader());
 
 		Thread currentThread = Thread.currentThread();

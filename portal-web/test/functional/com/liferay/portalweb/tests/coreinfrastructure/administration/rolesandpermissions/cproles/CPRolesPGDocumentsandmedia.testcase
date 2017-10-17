@@ -361,12 +361,13 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<var name="dmFolderName" value="DM Folder Name" />
-		<var name="key_dmFolderName" value="${dmFolderName}" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE" value1="DM Folder Name">
+			<var name="key_dmFolderName" value="DM Folder Name" />
+		</execute>
 
-		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE" value1="${dmFolderName}" />
-
-		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS">
+			<var name="key_dmFolderName" value="DM Folder Name" />
+		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Move to the Recycle Bin">
 			<var name="key_menuItem" value="Move to the Recycle Bin" />

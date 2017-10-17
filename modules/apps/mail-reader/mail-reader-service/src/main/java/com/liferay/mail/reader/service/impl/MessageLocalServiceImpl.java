@@ -21,6 +21,7 @@ import com.liferay.mail.reader.model.Attachment;
 import com.liferay.mail.reader.model.Folder;
 import com.liferay.mail.reader.model.Message;
 import com.liferay.mail.reader.service.base.MessageLocalServiceBaseImpl;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 

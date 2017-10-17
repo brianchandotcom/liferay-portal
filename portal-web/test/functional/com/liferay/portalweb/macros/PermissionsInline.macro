@@ -272,10 +272,6 @@
 		<execute macro="IFrame#selectPermissionsFrame" />
 	</command>
 
-	<command name="viewButtonInactive">
-		<execute function="AssertNotVisible" locator1="Button#${buttonName}" />
-	</command>
-
 	<command name="viewPermissionsChecked">
 		<var method="StringUtil#replace('${roleTitle}', ' ', '-')" name="key_roleTitle" />
 		<var method="StringUtil#lowerCase('${key_roleTitle}')" name="key_roleTitle" />

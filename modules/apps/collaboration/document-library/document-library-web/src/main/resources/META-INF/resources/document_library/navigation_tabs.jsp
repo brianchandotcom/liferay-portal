@@ -44,4 +44,30 @@ String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName
 			selected='<%= mvcRenderCommandName.equals("/document_library/view_file_entry_types") %>'
 		/>
 	</c:if>
+
+	<%
+	Portlet portlet = PortletLocalServiceUtil.getPortletById(
+		portletDisplay.getId());
+
+	PortletURL viewMetadataSetsURL = PortletURLFactoryUtil.create(
+		liferayPortletRequest,
+		PortletProviderUtil.getPortletId(com.liferay.dynamic.data.mapping.model.DDMStructure.class.getName(), PortletProvider.Action.VIEW),
+		PortletRequest.RENDER_PHASE);
+
+	viewMetadataSetsURL.setParameter("mvcPath", "/view.jsp");
+	viewMetadataSetsURL.setParameter("backURL", themeDisplay.getURLCurrent());
+	viewMetadataSetsURL.setParameter("groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+	viewMetadataSetsURL.setParameter("refererPortletName", DLPortletKeys.DOCUMENT_LIBRARY);
+	viewMetadataSetsURL.setParameter("refererWebDAVToken", WebDAVUtil.getStorageToken(portlet));
+	viewMetadataSetsURL.setParameter("showAncestorScopes", Boolean.TRUE.toString());
+	viewMetadataSetsURL.setParameter("showManageTemplates", Boolean.FALSE.toString());
+	%>
+
+	<c:if test="<%= DLPortletKeys.DOCUMENT_LIBRARY_ADMIN.equals(dlRequestHelper.getPortletName()) %>">
+		<aui:nav-item
+			href="<%= viewMetadataSetsURL.toString() %>"
+			label="metadata-sets"
+			selected="<%= false %>"
+		/>
+	</c:if>
 </aui:nav>

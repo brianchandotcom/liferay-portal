@@ -36,40 +36,42 @@ public interface RSSPortletInstanceConfiguration {
 	 * Set a DDM template ID that starts with the prefix "ddmTemplate_" (i.e.
 	 * ddmTemplate_rss-navigation-ftl) to use as the display style.
 	 */
-	@Meta.AD(required = false)
+	@Meta.AD(name = "display-style", required = false)
 	public String displayStyle();
 
-	@Meta.AD(deflt = "0", required = false)
+	@Meta.AD(deflt = "0", name = "display-style-group-id", required = false)
 	public long displayStyleGroupId();
 
-	@Meta.AD(deflt = "4", required = false)
+	@Meta.AD(deflt = "4", name = "entries-per-feed", required = false)
 	public int entriesPerFeed();
 
-	@Meta.AD(deflt = "8", required = false)
+	@Meta.AD(deflt = "8", name = "expanded-entries-per-feed", required = false)
 	public int expandedEntriesPerFeed();
 
-	@Meta.AD(deflt = "right", required = false)
+	@Meta.AD(deflt = "right", name = "feed-image-alignment", required = false)
 	public String feedImageAlignment();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "show-feed-description", required = false)
 	public boolean showFeedDescription();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "show-feed-image", required = false)
 	public boolean showFeedImage();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "show-feed-item-author", required = false)
 	public boolean showFeedItemAuthor();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "show-feed-published-date", required = false
+	)
 	public boolean showFeedPublishedDate();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "show-feed-title", required = false)
 	public boolean showFeedTitle();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "titles", required = false)
 	public String[] titles();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "urls", required = false)
 	public String[] urls();
 
 }

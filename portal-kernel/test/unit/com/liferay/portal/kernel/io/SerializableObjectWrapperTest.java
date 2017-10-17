@@ -99,6 +99,8 @@ public class SerializableObjectWrapperTest {
 				JDKLoggerTestUtil.configureJDKLogger(
 					SerializableObjectWrapper.class.getName(), Level.ALL)) {
 
+			// Test unwrap
+
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			Assert.assertNull(
@@ -112,6 +114,14 @@ public class SerializableObjectWrapperTest {
 			Assert.assertEquals(
 				"Unable to deserialize object", logRecord.getMessage());
 			Assert.assertSame(cnfe, logRecord.getThrown());
+
+			// Test equals
+
+			_testEquals();
+
+			// Test hashCode
+
+			_testHashCode();
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);

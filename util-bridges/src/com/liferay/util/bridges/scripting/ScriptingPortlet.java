@@ -289,7 +289,9 @@ public class ScriptingPortlet extends GenericPortlet {
 		InputStream inputStream = portletContext.getResourceAsStream(path);
 
 		if (inputStream == null) {
-			_log.error(path + " is not a valid " + language + " file");
+			_log.error(
+				StringBundler.concat(
+					path, " is not a valid ", language, " file"));
 
 			return;
 		}

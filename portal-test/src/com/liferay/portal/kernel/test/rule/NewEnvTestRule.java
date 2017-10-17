@@ -239,8 +239,10 @@ public class NewEnvTestRule implements TestRule {
 
 			if (parts.length != 2) {
 				throw new IllegalArgumentException(
-					"Wrong environment variable " + variable + " resolved as " +
-						resolvedVariable + ". Need to be \"key=value\" format");
+					StringBundler.concat(
+						"Wrong environment variable ", variable,
+						" resolved as ", resolvedVariable,
+						". Need to be \"key=value\" format"));
 			}
 
 			environmentMap.put(parts[0], parts[1]);

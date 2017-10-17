@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -100,9 +101,10 @@ public class SynchronousDestinationTestCallback
 
 		if (!hasSyncedMethod) {
 			throw new AssertionError(
-				testClass.getName() + " uses " +
-					SynchronousDestinationTestRule.class.getName() +
-						" without any usage of " + Sync.class.getName());
+				StringBundler.concat(
+					testClass.getName(), " uses ",
+					SynchronousDestinationTestRule.class.getName(),
+					" without any usage of ", Sync.class.getName()));
 		}
 
 		return null;
@@ -278,8 +280,9 @@ public class SynchronousDestinationTestCallback
 			Registry registry = RegistryUtil.getRegistry();
 
 			return registry.getFilter(
-				"(&(destination.name=" + destinationName + ")(objectClass=" +
-					Destination.class.getName() + "))");
+				StringBundler.concat(
+					"(&(destination.name=", destinationName, ")(objectClass=",
+					Destination.class.getName(), "))"));
 		}
 
 		private final List<String> _absentDestinationNames = new ArrayList<>();

@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.tools.DBUpgrader;
@@ -318,8 +319,9 @@ public class ServiceTestUtil {
 		Registry registry = RegistryUtil.getRegistry();
 
 		return registry.getFilter(
-			"(&(destination.name=" + destinationName + ")(objectClass=" +
-				Destination.class.getName() + "))");
+			StringBundler.concat(
+				"(&(destination.name=", destinationName, ")(objectClass=",
+				Destination.class.getName(), "))"));
 	}
 
 	private static void _replaceWithSynchronousDestination(String name) {

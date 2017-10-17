@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PrefsProps;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcess;
@@ -141,9 +142,10 @@ public abstract class BaseCompanySettingsVerifyProcessTestCase
 			ServiceReference<?>[] serviceReferences =
 				registry.getServiceReferences(
 					VerifyProcess.class.getName(),
-					"(&(objectClass=" + VerifyProcess.class.getName() +
-						")(verify.process.name=" + getVerifyProcessName() +
-							"))");
+					StringBundler.concat(
+						"(&(objectClass=", VerifyProcess.class.getName(),
+						")(verify.process.name=", getVerifyProcessName(),
+						"))"));
 
 			if (ArrayUtil.isEmpty(serviceReferences)) {
 				throw new IllegalStateException("Unable to get verify process");

@@ -233,8 +233,9 @@ public abstract class BaseBSFPortlet extends GenericPortlet {
 
 		if (inputStream == null) {
 			_log.error(
-				path + " is not a valid " + getScriptingEngineLanguage() +
-					" file");
+				StringBundler.concat(
+					path, " is not a valid ", getScriptingEngineLanguage(),
+					" file"));
 
 			return;
 		}

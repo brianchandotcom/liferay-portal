@@ -40,7 +40,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
-			long userId, long groupId, long layoutPageTemplateFolderId,
+			long userId, long groupId, long layoutPageTemplateCollectionId,
 			String name, List<FragmentEntry> fragmentEntries,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -65,8 +65,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			serviceContext.getCreateDate(new Date()));
 		layoutPageTemplateEntry.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
-		layoutPageTemplateEntry.setLayoutPageTemplateFolderId(
-			layoutPageTemplateFolderId);
+		layoutPageTemplateEntry.setLayoutPageTemplateCollectionId(
+			layoutPageTemplateCollectionId);
 		layoutPageTemplateEntry.setName(name);
 
 		layoutPageTemplateEntryPersistence.update(layoutPageTemplateEntry);
@@ -140,44 +140,48 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 	@Override
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
-		long groupId, long layoutPageTemplateFolderId) {
+		long groupId, long layoutPageTemplateCollectionId) {
 
 		return layoutPageTemplateEntryPersistence.findByG_L(
-			groupId, layoutPageTemplateFolderId);
+			groupId, layoutPageTemplateCollectionId);
 	}
 
 	@Override
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
-			long groupId, long layoutPageTemplateFolderId, int start, int end)
+			long groupId, long layoutPageTemplateCollectionId, int start,
+			int end)
 		throws PortalException {
 
 		return layoutPageTemplateEntryPersistence.findByG_L(
-			groupId, layoutPageTemplateFolderId, start, end);
+			groupId, layoutPageTemplateCollectionId, start, end);
 	}
 
 	@Override
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
-			long groupId, long layoutPageTemplateFolderId, int start, int end,
+			long groupId, long layoutPageTemplateCollectionId, int start,
+			int end,
 			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws PortalException {
 
 		return layoutPageTemplateEntryPersistence.findByG_L(
-			groupId, layoutPageTemplateFolderId, start, end, orderByComparator);
+			groupId, layoutPageTemplateCollectionId, start, end,
+			orderByComparator);
 	}
 
 	@Override
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
-		long groupId, long layoutPageTemplateFolderId, String name, int start,
-		int end, OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		long groupId, long layoutPageTemplateCollectionId, String name,
+		int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
 		if (Validator.isNull(name)) {
 			return layoutPageTemplateEntryPersistence.findByG_L(
-				groupId, layoutPageTemplateFolderId, start, end,
+				groupId, layoutPageTemplateCollectionId, start, end,
 				orderByComparator);
 		}
 
 		return layoutPageTemplateEntryPersistence.findByG_L_LikeN(
-			groupId, layoutPageTemplateFolderId, name, start, end,
+			groupId, layoutPageTemplateCollectionId, name, start, end,
 			orderByComparator);
 	}
 

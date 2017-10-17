@@ -45,34 +45,12 @@ public class SerializableObjectWrapperTest {
 
 	@Test
 	public void testEquals() throws Exception {
-		Assert.assertFalse(
-			_testSerializableObjectWrapper.equals(_TEST_SERIALIZABLE));
-
-		Assert.assertTrue(
-			_testSerializableObjectWrapper.equals(
-				_testSerializableObjectWrapper));
-		Assert.assertTrue(
-			_testSerializableObjectWrapper.equals(
-				new SerializableObjectWrapper(_TEST_SERIALIZABLE)));
-		Assert.assertTrue(
-			_testSerializableObjectWrapper.equals(
-				_getDeserializedObject(_testSerializableObjectWrapper)));
-		Assert.assertTrue(
-			_getDeserializedObject(_testSerializableObjectWrapper).equals(
-				_testSerializableObjectWrapper));
-		Assert.assertTrue(
-			_getDeserializedObject(_testSerializableObjectWrapper).equals(
-				_getDeserializedObject(_testSerializableObjectWrapper)));
+		_testEquals();
 	}
 
 	@Test
 	public void testHashCode() throws Exception {
-		Assert.assertEquals(
-			_testSerializableObjectWrapper.hashCode(),
-			new SerializableObjectWrapper(_TEST_SERIALIZABLE).hashCode());
-		Assert.assertEquals(
-			_testSerializableObjectWrapper.hashCode(),
-			_getDeserializedObject(_testSerializableObjectWrapper).hashCode());
+		_testHashCode();
 	}
 
 	@Test
@@ -168,6 +146,36 @@ public class SerializableObjectWrapperTest {
 				return (SerializableObjectWrapper)ois.readObject();
 			}
 		}
+	}
+
+	private void _testEquals() throws Exception {
+		Assert.assertFalse(
+			_testSerializableObjectWrapper.equals(_TEST_SERIALIZABLE));
+
+		Assert.assertTrue(
+			_testSerializableObjectWrapper.equals(
+				_testSerializableObjectWrapper));
+		Assert.assertTrue(
+			_testSerializableObjectWrapper.equals(
+				new SerializableObjectWrapper(_TEST_SERIALIZABLE)));
+		Assert.assertTrue(
+			_testSerializableObjectWrapper.equals(
+				_getDeserializedObject(_testSerializableObjectWrapper)));
+		Assert.assertTrue(
+			_getDeserializedObject(_testSerializableObjectWrapper).equals(
+				_testSerializableObjectWrapper));
+		Assert.assertTrue(
+			_getDeserializedObject(_testSerializableObjectWrapper).equals(
+				_getDeserializedObject(_testSerializableObjectWrapper)));
+	}
+
+	private void _testHashCode() throws Exception {
+		Assert.assertEquals(
+			_testSerializableObjectWrapper.hashCode(),
+			new SerializableObjectWrapper(_TEST_SERIALIZABLE).hashCode());
+		Assert.assertEquals(
+			_testSerializableObjectWrapper.hashCode(),
+			_getDeserializedObject(_testSerializableObjectWrapper).hashCode());
 	}
 
 	private static final TestSerializable _TEST_SERIALIZABLE =

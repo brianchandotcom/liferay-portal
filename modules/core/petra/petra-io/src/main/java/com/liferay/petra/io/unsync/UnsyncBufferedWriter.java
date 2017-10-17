@@ -34,7 +34,7 @@ public class UnsyncBufferedWriter extends Writer {
 
 	public UnsyncBufferedWriter(Writer writer, int size) {
 		if (size <= 0) {
-			throw new IllegalArgumentException("Size is less than 0");
+			throw new IllegalArgumentException("Size is less than 1");
 		}
 
 		this.writer = writer;

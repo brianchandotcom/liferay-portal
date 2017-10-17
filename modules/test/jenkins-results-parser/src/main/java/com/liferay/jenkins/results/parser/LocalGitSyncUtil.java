@@ -34,34 +34,6 @@ import java.util.regex.Pattern;
  */
 public class LocalGitSyncUtil {
 
-	public static void deleteCacheBranch(
-		GitWorkingDirectory gitWorkingDirectory, String receiverUsername,
-		String senderBranchName, String senderUsername, String senderBranchSHA,
-		String upstreamBranchSHA) {
-
-		List<GitWorkingDirectory.Remote> localGitRemotes = null;
-
-		try {
-			localGitRemotes = getLocalGitRemotes(gitWorkingDirectory);
-
-			deleteCacheBranch(
-				getCacheBranchName(
-					receiverUsername, senderUsername, senderBranchSHA,
-					upstreamBranchSHA),
-				gitWorkingDirectory, localGitRemotes);
-		}
-		finally {
-			if (localGitRemotes != null) {
-				try {
-					gitWorkingDirectory.removeRemotes(localGitRemotes);
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
 	public static List<GitWorkingDirectory.Remote> getLocalGitRemotes(
 		GitWorkingDirectory gitWorkingDirectory) {
 
@@ -218,48 +190,6 @@ public class LocalGitSyncUtil {
 		}
 	}
 
-	protected static void deleteCacheBranch(
-		final String cacheBranchName,
-		final GitWorkingDirectory gitWorkingDirectory,
-		List<GitWorkingDirectory.Remote> localGitRemotes) {
-
-		long start = System.currentTimeMillis();
-
-		ExecutorService executorService = Executors.newFixedThreadPool(
-			_MAX_THREAD_POOL_SIZE);
-
-		for (final GitWorkingDirectory.Remote localGitRemote :
-				localGitRemotes) {
-
-			executorService.execute(
-				new Runnable() {
-
-					@Override
-					public void run() {
-						deleteRemoteCacheBranch(
-							cacheBranchName, gitWorkingDirectory,
-							localGitRemote);
-					}
-
-				});
-		}
-
-		executorService.shutdown();
-
-		try {
-			executorService.awaitTermination(15, TimeUnit.MINUTES);
-		}
-		catch (InterruptedException ie) {
-			throw new RuntimeException(ie);
-		}
-
-		long duration = System.currentTimeMillis() - start;
-
-		System.out.println(
-			"Expired cache branches deleted in " +
-				JenkinsResultsParserUtil.toDurationString(duration));
-	}
-
 	protected static void deleteExpiredCacheBranches(
 		GitWorkingDirectory gitWorkingDirectory,
 		GitWorkingDirectory.Remote remote, long timestamp) {
@@ -268,11 +198,21 @@ public class LocalGitSyncUtil {
 		int deleteCount = 0;
 		long oldestBranchAge = Long.MIN_VALUE;
 
+		Map<String, GitWorkingDirectory.Branch> remoteBranches =
+			new HashMap<>();
+
 		for (GitWorkingDirectory.Branch remoteBranch :
-				gitWorkingDirectory.getRemoteBranches(remote)) {
+				gitWorkingDirectory.getRemoteBranches(null, remote)) {
+
+			remoteBranches.put(remoteBranch.getName(), remoteBranch);
+		}
+
+		for (String remoteBranchName : remoteBranches.keySet()) {
+			GitWorkingDirectory.Branch remoteBranch = remoteBranches.get(
+				remoteBranchName);
 
 			Matcher matcher = _cacheTimestampBranchPattern.matcher(
-				remoteBranch.getName());
+				remoteBranchName);
 
 			if (matcher.matches()) {
 				branchCount++;
@@ -284,8 +224,7 @@ public class LocalGitSyncUtil {
 
 				if (branchAge > _BRANCH_EXPIRE_AGE_MILLIS) {
 					GitWorkingDirectory.Branch remoteRepositoryBaseCacheBranch =
-						gitWorkingDirectory.getBranch(
-							matcher.group("name"), remote);
+						remoteBranches.get(matcher.group("name"));
 
 					if (remoteRepositoryBaseCacheBranch != null) {
 						deleteRemoteRepositoryCacheBranch(
@@ -370,19 +309,15 @@ public class LocalGitSyncUtil {
 
 	protected static void deleteRemoteCacheBranch(
 		String cacheBranchName, GitWorkingDirectory gitWorkingDirectory,
-		GitWorkingDirectory.Remote remote) {
+		Map<String, GitWorkingDirectory.Branch> remoteBranches) {
 
-		for (GitWorkingDirectory.Branch remoteBranch :
-				gitWorkingDirectory.getRemoteBranches(remote)) {
-
-			String remoteBranchName = remoteBranch.getName();
-
+		for (String remoteBranchName : remoteBranches.keySet()) {
 			if (!remoteBranchName.startsWith(cacheBranchName)) {
 				continue;
 			}
 
 			deleteRemoteRepositoryCacheBranch(
-				gitWorkingDirectory, remoteBranch);
+				gitWorkingDirectory, remoteBranches.get(remoteBranchName));
 		}
 	}
 
@@ -472,38 +407,41 @@ public class LocalGitSyncUtil {
 		GitWorkingDirectory gitWorkingDirectory,
 		GitWorkingDirectory.Remote remote) {
 
-		List<GitWorkingDirectory.Branch> remoteCacheBranchNames =
+		List<GitWorkingDirectory.Branch> remoteCacheBranches =
 			new ArrayList<>();
 
-		List<GitWorkingDirectory.Branch> remoteBranches =
-			gitWorkingDirectory.getRemoteBranches(remote);
+		Map<String, GitWorkingDirectory.Branch> remoteBranches =
+			new HashMap<>();
 
-		for (GitWorkingDirectory.Branch remoteBranch : remoteBranches) {
-			String remoteBranchName = remoteBranch.getName();
+		for (GitWorkingDirectory.Branch remoteBranch :
+				gitWorkingDirectory.getRemoteBranches(null, remote)) {
 
+			remoteBranches.put(remoteBranch.getName(), remoteBranch);
+		}
+
+		for (String remoteBranchName : remoteBranches.keySet()) {
 			if (remoteBranchName.matches(_cacheBranchRegex)) {
-				if (hasTimestampBranch(
-						remoteBranch.getName(), remoteBranches)) {
-
-					remoteCacheBranchNames.add(remoteBranch);
+				if (hasTimestampBranch(remoteBranchName, remoteBranches)) {
+					remoteCacheBranches.add(
+						remoteBranches.get(remoteBranchName));
 				}
 				else {
 					deleteRemoteCacheBranch(
-						remoteBranch.getName(), gitWorkingDirectory, remote);
+						remoteBranchName, gitWorkingDirectory, remoteBranches);
 				}
 			}
 		}
 
-		return remoteCacheBranchNames;
+		return remoteCacheBranches;
 	}
 
 	protected static boolean hasTimestampBranch(
 		String cacheBranchName,
-		List<GitWorkingDirectory.Branch> remoteBranches) {
+		Map<String, GitWorkingDirectory.Branch> remoteBranches) {
 
-		for (GitWorkingDirectory.Branch remoteBranch : remoteBranches) {
+		for (String remoteBranchName : remoteBranches.keySet()) {
 			Matcher matcher = _cacheTimestampBranchPattern.matcher(
-				remoteBranch.getName());
+				remoteBranchName);
 
 			if (matcher.matches()) {
 				return true;

@@ -423,7 +423,7 @@ public class GitWorkingDirectory {
 			return new Branch(branchName, null, getBranchSHA(branchName));
 		}
 
-		List<Branch> branches = getBranches(remote);
+		List<Branch> branches = getBranches(branchName, remote);
 
 		for (Branch branch : branches) {
 			if (branchName.equals(branch.getName())) {
@@ -434,12 +434,21 @@ public class GitWorkingDirectory {
 		return null;
 	}
 
-	public List<Branch> getBranches(Remote remote) {
+	public List<Branch> getBranches(String branchName, Remote remote) {
 		if (remote == null) {
 			List<String> localBranchNames = getLocalBranchNames();
 
 			List<Branch> localBranches = new ArrayList<>(
 				localBranchNames.size());
+
+			if (branchName != null) {
+				if (localBranchNames.contains(branchName)) {
+					localBranches.add(
+						new Branch(branchName, null, getBranchSHA(branchName)));
+				}
+
+				return localBranches;
+			}
 
 			for (String localBranchName : localBranchNames) {
 				localBranches.add(
@@ -450,7 +459,7 @@ public class GitWorkingDirectory {
 			return localBranches;
 		}
 
-		return getRemoteBranches(remote);
+		return getRemoteBranches(branchName, remote);
 	}
 
 	public List<String> getBranchNames(Remote remote) {
@@ -1086,11 +1095,20 @@ public class GitWorkingDirectory {
 			"Real Git directory could not be found in " + gitFile.getPath());
 	}
 
-	protected List<Branch> getRemoteBranches(Remote remote) {
+	protected List<Branch> getRemoteBranches(String branchName, Remote remote) {
+		String command = null;
+
+		if (branchName != null) {
+			command = JenkinsResultsParserUtil.combine(
+				"git ls-remote -h ", remote.getName(), " ", branchName);
+		}
+		else {
+			command = JenkinsResultsParserUtil.combine(
+				"git ls-remote -h ", remote.getName());
+		}
+
 		ExecutionResult executionResult = executeBashCommands(
-			1, 1000 * 60 * 10,
-			JenkinsResultsParserUtil.combine(
-				"git ls-remote -h ", remote.getName()));
+			1, 1000 * 60 * 10, command);
 
 		if (executionResult.getExitValue() != 0) {
 			throw new RuntimeException(

@@ -54,6 +54,106 @@ public class SerializableObjectWrapperTest {
 	}
 
 	@Test
+	public void testSpecialEquals() throws Exception {
+		Assert.assertTrue(
+			_SPECIAL_TEST_SERIALIZABLE_1.equals(_SPECIAL_TEST_SERIALIZABLE_2));
+		Assert.assertTrue(
+			_specialTestSerializableWrapper1.equals(
+				_specialTestSerializableWrapper2));
+
+		Assert.assertTrue(
+			_getDeserializedObject(_specialTestSerializableWrapper1).equals(
+				_getDeserializedObject(_specialTestSerializableWrapper1)));
+		Assert.assertTrue(
+			_specialTestSerializableWrapper1.equals(
+				_getDeserializedObject(_specialTestSerializableWrapper1)));
+		Assert.assertTrue(
+			_getDeserializedObject(_specialTestSerializableWrapper1).equals(
+				_specialTestSerializableWrapper1));
+
+		Assert.assertTrue(
+			_specialTestSerializableWrapper1.equals(
+				_getDeserializedObject(_specialTestSerializableWrapper2)));
+		Assert.assertTrue(
+			_getDeserializedObject(_specialTestSerializableWrapper1).equals(
+				_specialTestSerializableWrapper2));
+		Assert.assertTrue(
+			_getDeserializedObject(_specialTestSerializableWrapper1).equals(
+				_getDeserializedObject(_specialTestSerializableWrapper2)));
+	}
+
+	@Test
+	public void testSpecialEqualsWithBrokenClassLoader() throws Exception {
+		ClassLoaderPool.unregister(ClassLoaderPool.class.getClassLoader());
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		ClassNotFoundException cnfe = new ClassNotFoundException();
+
+		currentThread.setContextClassLoader(
+			new ClassLoader() {
+
+				@Override
+				public Class<?> loadClass(String name)
+					throws ClassNotFoundException {
+
+					if (name.equals(SpecialTestSerializable.class.getName())) {
+						throw cnfe;
+					}
+
+					return super.loadClass(name);
+				}
+
+			});
+
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					SerializableObjectWrapper.class.getName(), Level.ALL)) {
+
+			Assert.assertTrue(
+				_getDeserializedObject(_specialTestSerializableWrapper1).equals(
+					_getDeserializedObject(_specialTestSerializableWrapper1)));
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertTrue(
+				_specialTestSerializableWrapper1.equals(
+					_getDeserializedObject(_specialTestSerializableWrapper1)));
+
+			_assertLogAndClear(logRecords, cnfe);
+
+			Assert.assertTrue(
+				_getDeserializedObject(_specialTestSerializableWrapper1).equals(
+					_specialTestSerializableWrapper1));
+
+			_assertLogAndClear(logRecords, cnfe);
+
+			Assert.assertFalse(
+				_specialTestSerializableWrapper1.equals(
+					_getDeserializedObject(_specialTestSerializableWrapper2)));
+
+			_assertLogAndClear(logRecords, cnfe);
+
+			Assert.assertFalse(
+				_getDeserializedObject(_specialTestSerializableWrapper1).equals(
+					_specialTestSerializableWrapper2));
+
+			_assertLogAndClear(logRecords, cnfe);
+
+			Assert.assertFalse(
+				_getDeserializedObject(_specialTestSerializableWrapper1).equals(
+					_getDeserializedObject(_specialTestSerializableWrapper2)));
+
+			_assertLogAndClear(logRecords, cnfe);
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
+		}
+	}
+
+	@Test
 	public void testUnwrap() throws Exception {
 		Assert.assertEquals(
 			_TEST_SERIALIZABLE,
@@ -207,11 +307,55 @@ public class SerializableObjectWrapperTest {
 	private static final TestSerializable _ANOTHER_TEST_SERIALIZABLE =
 		new TestSerializable("_ANOTHER_TEST_SERIALIZABLE");
 
+	private static final SpecialTestSerializable _SPECIAL_TEST_SERIALIZABLE_1 =
+		new SpecialTestSerializable("_SPECIAL_TEST_SERIALIZABLE", "");
+
+	private static final SpecialTestSerializable _SPECIAL_TEST_SERIALIZABLE_2 =
+		new SpecialTestSerializable(
+			"_SPECIAL_TEST_SERIALIZABLE", "_SPECIAL_TEST_SERIALIZABLE_VALUE");
+
 	private static final TestSerializable _TEST_SERIALIZABLE =
 		new TestSerializable("_TEST_SERIALIZABLE");
 
+	private final SerializableObjectWrapper _specialTestSerializableWrapper1 =
+		new SerializableObjectWrapper(_SPECIAL_TEST_SERIALIZABLE_1);
+	private final SerializableObjectWrapper _specialTestSerializableWrapper2 =
+		new SerializableObjectWrapper(_SPECIAL_TEST_SERIALIZABLE_2);
 	private final SerializableObjectWrapper _testSerializableObjectWrapper =
 		new SerializableObjectWrapper(_TEST_SERIALIZABLE);
+
+	private static class SpecialTestSerializable implements Serializable {
+
+		@Override
+		public boolean equals(Object object) {
+			if (this == object) {
+				return true;
+			}
+
+			if (!(object instanceof SpecialTestSerializable)) {
+				return false;
+			}
+
+			SpecialTestSerializable specialTestSerializable =
+				(SpecialTestSerializable)object;
+
+			return Objects.equals(_name, specialTestSerializable._name);
+		}
+
+		@Override
+		public int hashCode() {
+			return _name.hashCode();
+		}
+
+		private SpecialTestSerializable(String name, String value) {
+			_name = name;
+			_value = value;
+		}
+
+		private final String _name;
+		private final String _value;
+
+	}
 
 	private static class TestSerializable implements Serializable {
 

@@ -232,7 +232,7 @@
 </tr>
 <tr>
 	<td>TEXT_FIELD_LINE_OPTION</td>
-	<td>//div[contains(@class,'radio-options')]//input[contains(@id,'${key_textFieldLineOption}')]</td>
+	<td>//div[contains(@class,'radio-options')]//input[contains(@id,'${key_textFieldLineOption}')] | //div[contains(@class,'check')]//input[contains(@id,'${key_textFieldLineOption}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -378,9 +378,10 @@ public class SPIClassPathContextListenerTest {
 			LogRecord logRecord = logRecords.get(0);
 
 			Assert.assertEquals(
-				"Duplicate SPI provider " + spiProviderReference.get() +
-					" is already registered in servlet context " +
-						_mockServletContext.getContextPath(),
+				StringBundler.concat(
+					"Duplicate SPI provider ", spiProviderReference.get(),
+					" is already registered in servlet context ",
+					_mockServletContext.getContextPath()),
 				logRecord.getMessage());
 		}
 
@@ -467,7 +468,8 @@ public class SPIClassPathContextListenerTest {
 		resourceName = resourceName.concat(".class");
 
 		URL url = new URL(
-			"file://" + jarFile.getAbsolutePath() + "!/" + resourceName);
+			StringBundler.concat(
+				"file://", jarFile.getAbsolutePath(), "!/", resourceName));
 
 		resources.put(resourceName, url);
 	}

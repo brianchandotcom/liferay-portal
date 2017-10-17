@@ -33,14 +33,8 @@ public class CommerceAddressImpl extends CommerceAddressBaseImpl {
 
 	@Override
 	public CommerceCountry getCommerceCountry() throws PortalException {
-		long commerceCountryId = getCommerceCountryId();
-
-		if (commerceCountryId > 0) {
-			return CommerceCountryLocalServiceUtil.getCommerceCountry(
-				commerceCountryId);
-		}
-
-		return null;
+		return CommerceCountryLocalServiceUtil.getCommerceCountry(
+			getCommerceCountryId());
 	}
 
 	@Override

@@ -28,7 +28,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface WabExtenderConfiguration {
 
-	@Meta.AD(deflt = "60000", required = false)
+	@Meta.AD(deflt = "60000", name = "stop-timeout", required = false)
 	public long stopTimeout();
 
 }

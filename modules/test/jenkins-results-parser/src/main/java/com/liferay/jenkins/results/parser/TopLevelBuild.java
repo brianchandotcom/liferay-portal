@@ -334,12 +334,6 @@ public class TopLevelBuild extends BaseBuild {
 		return baseBranchDetailsElement;
 	}
 
-	protected Element getBuildTimeElement() {
-		return Dom4JUtil.getNewElement(
-			"p", null, "Build Time: ",
-			JenkinsResultsParserUtil.toDurationString(getDuration()));
-	}
-
 	protected Element getDownstreamGitHubMessageElement() {
 		String status = getStatus();
 

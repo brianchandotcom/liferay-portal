@@ -14,9 +14,9 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.HashSet;

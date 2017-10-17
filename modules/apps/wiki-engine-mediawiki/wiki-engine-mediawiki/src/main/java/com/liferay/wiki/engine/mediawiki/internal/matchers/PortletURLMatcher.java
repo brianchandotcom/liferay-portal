@@ -14,9 +14,9 @@
 
 package com.liferay.wiki.engine.mediawiki.internal.matchers;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.CallbackMatcher;
-import com.liferay.portal.kernel.util.CharPool;
 
 import java.util.regex.MatchResult;
 

@@ -32,26 +32,10 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
- * The implementation of the document library content local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.document.library.content.service.DLContentLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
  * @author Brian Wing Shun Chan
- * @see DLContentLocalServiceBaseImpl
- * @see com.liferay.document.library.content.service.DLContentLocalServiceUtil
  */
 public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.document.library.content.service.DLContentLocalServiceUtil} to access the document library content local service.
-	 */
 	@Override
 	public DLContent addContent(
 		long companyId, long repositoryId, String path, String version,

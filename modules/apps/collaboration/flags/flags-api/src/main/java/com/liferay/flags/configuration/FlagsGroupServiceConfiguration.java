@@ -33,37 +33,39 @@ public interface FlagsGroupServiceConfiguration {
 
 	@Meta.AD(
 		deflt = "com/liferay/flags/dependencies/email_flag_body.tmpl",
-		required = false
+		name = "email-body", required = false
 	)
 	public String emailBody();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "email-entry-added-enabled", required = false
+	)
 	public boolean emailEntryAddedEnabled();
 
 	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/admin.email.from.address}",
-		required = false
+		name = "email-from-address", required = false
 	)
 	public String emailFromAddress();
 
 	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/admin.email.from.name}",
-		required = false
+		name = "email-from-name", required = false
 	)
 	public String emailFromName();
 
 	@Meta.AD(
 		deflt = "com/liferay/flags/dependencies/email_flag_subject.tmpl",
-		required = false
+		name = "email-subject", required = false
 	)
 	public String emailSubject();
 
-	@Meta.AD(deflt = "flase", required = false)
+	@Meta.AD(deflt = "false", name = "guest-users-enabled", required = false)
 	public boolean guestUsersEnabled();
 
 	@Meta.AD(
 		deflt = "sexual-content|violent-or-repulsive-content|hateful-or-abusive-content|harmful-dangerous-acts|spam|infringes-my-rights",
-		required = false
+		name = "reasons", required = false
 	)
 	public String[] reasons();
 

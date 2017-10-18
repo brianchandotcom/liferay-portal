@@ -40,6 +40,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 
@@ -404,18 +405,33 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 				@Override
 				public String get(String key) {
-					switch (key) {
-						case PropsKeys.CLUSTER_LINK_ENABLED:
-							return String.valueOf(enabled);
-						case PropsKeys.CLUSTER_LINK_CHANNEL_LOGIC_NAME_CONTROL:
-							return "test-control-channel-logic-name";
-						case PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL:
-							return "test-channel-name-control";
-						case PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL:
-							return "test-channel-properties-control";
-						default:
-							return StringPool.BLANK;
+					if (Objects.equals(key, PropsKeys.CLUSTER_LINK_ENABLED)) {
+						return String.valueOf(enabled);
 					}
+
+					if (Objects.equals(
+							key,
+							PropsKeys.
+								CLUSTER_LINK_CHANNEL_LOGIC_NAME_CONTROL)) {
+
+						return "test-control-channel-logic-name";
+					}
+
+					if (Objects.equals(
+							key, PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL)) {
+
+						return "test-channel-name-control";
+					}
+
+					if (Objects.equals(
+							key,
+							PropsKeys.
+								CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL)) {
+
+						return "test-channel-properties-control";
+					}
+
+					return StringPool.BLANK;
 				}
 
 				@Override

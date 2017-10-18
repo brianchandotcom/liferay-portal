@@ -93,7 +93,7 @@ public class FriendlyURLEntryLocalServiceImpl
 			friendlyURLEntryMapping = friendlyURLEntryMappingPersistence.create(
 				friendlyURLEntryMappingPK);
 		}
-		else if (_isLocalizationsEqual(friendlyURLEntryMapping, urlTitleMap)) {
+		else if (_containsAllURLTitles(friendlyURLEntryMapping, urlTitleMap)) {
 			return friendlyURLEntryPersistence.fetchByPrimaryKey(
 				friendlyURLEntryMapping.getFriendlyURLEntryId());
 		}
@@ -474,7 +474,7 @@ public class FriendlyURLEntryLocalServiceImpl
 		validate(groupId, classNameId, 0, urlTitle);
 	}
 
-	private boolean _isLocalizationsEqual(
+	private boolean _containsAllURLTitles(
 		FriendlyURLEntryMapping friendlyURLEntryMapping,
 		Map<String, String> urlTitleMap) {
 

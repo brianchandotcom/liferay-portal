@@ -14,40 +14,62 @@
 
 package com.liferay.portal.verify;
 
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.Sync;
-import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.verify.model.VerifiableResourcedModel;
+import com.liferay.portal.model.impl.ResourcePermissionImpl;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.verify.model.GroupVerifiableResourcedModel;
+import com.liferay.portal.verify.model.UserVerifiableModel;
 import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Manuel de la Peña
+ * @author Preston Crary
  */
-@Sync
 public class VerifyResourcePermissionsTest extends BaseVerifyProcessTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
-			SynchronousDestinationTestRule.INSTANCE);
+		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testVerifyMoreThanOneCompany() throws Exception {
-		verify(false);
+	public void testVerifyGroupResourcedModel() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		_testVerifyResourcedModel(
+			_group.getCompanyId(), _group.getGroupId(),
+			_group.getCreatorUserId(), new GroupVerifiableResourcedModel());
 	}
 
 	@Test
-	public void testVerifyOneCompany() throws Exception {
-		verify(true);
+	public void testVerifyUserResourcedModel() throws Exception {
+		_user = UserTestUtil.addUser();
+
+		Contact contact = _user.getContact();
+
+		_testVerifyResourcedModel(
+			_user.getCompanyId(), _user.getUserId(), contact.getUserId(),
+			new UserVerifiableModel());
 	}
 
 	@Override
@@ -55,20 +77,51 @@ public class VerifyResourcePermissionsTest extends BaseVerifyProcessTestCase {
 		return new VerifyResourcePermissions();
 	}
 
-	protected void verify(boolean oneCompany) throws Exception {
-		Company company = null;
+	private void _testVerifyResourcedModel(
+			long companyId, long pk, long userId,
+			VerifiableResourcedModel verifiableResourcedModel)
+		throws Exception {
 
-		if (!oneCompany) {
-			company = CompanyTestUtil.addCompany();
-		}
+		Role ownerRole = RoleLocalServiceUtil.getRole(
+			companyId, RoleConstants.OWNER);
 
-		doVerify();
+		ResourcePermission resourcePermission =
+			ResourcePermissionLocalServiceUtil.fetchResourcePermission(
+				companyId, verifiableResourcedModel.getModelName(),
+				ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(pk),
+				ownerRole.getRoleId());
 
-		if (!oneCompany) {
-			if (company != null) {
-				CompanyLocalServiceUtil.deleteCompany(company);
-			}
-		}
+		Assert.assertNotNull(resourcePermission);
+
+		ResourcePermissionLocalServiceUtil.deleteResourcePermission(
+			resourcePermission);
+
+		VerifyResourcePermissions verifyResourcePermissions =
+			new VerifyResourcePermissions();
+
+		verifyResourcePermissions.verify(verifiableResourcedModel);
+
+		EntityCacheUtil.clearCache(ResourcePermissionImpl.class);
+		FinderCacheUtil.clearCache(ResourcePermissionImpl.class.getName());
+
+		resourcePermission =
+			ResourcePermissionLocalServiceUtil.fetchResourcePermission(
+				companyId, verifiableResourcedModel.getModelName(),
+				ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(pk),
+				ownerRole.getRoleId());
+
+		Assert.assertNotNull(resourcePermission);
+
+		Assert.assertEquals(
+			String.valueOf(pk), resourcePermission.getPrimKey());
+
+		Assert.assertEquals(userId, resourcePermission.getOwnerId());
 	}
+
+	@DeleteAfterTestRun
+	private Group _group;
+
+	@DeleteAfterTestRun
+	private User _user;
 
 }

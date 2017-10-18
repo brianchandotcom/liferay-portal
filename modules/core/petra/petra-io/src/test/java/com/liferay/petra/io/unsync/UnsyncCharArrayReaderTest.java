@@ -14,12 +14,15 @@
 
 package com.liferay.petra.io.unsync;
 
+import com.liferay.petra.io.internal.BoundaryCheckerUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.io.IOException;
 import java.io.Reader;
 
 import java.nio.CharBuffer;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -32,7 +35,14 @@ public class UnsyncCharArrayReaderTest extends BaseReaderTestCase {
 
 	@ClassRule
 	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+		new CodeCoverageAssertor() {
+
+			@Override
+			public void appendAssertClasses(List<Class<?>> assertClasses) {
+				assertClasses.add(BoundaryCheckerUtil.class);
+			}
+
+		};
 
 	@Test
 	public void testBlockRead() throws IOException {
@@ -121,6 +131,8 @@ public class UnsyncCharArrayReaderTest extends BaseReaderTestCase {
 
 	@Test
 	public void testConstructor() {
+		new BoundaryCheckerUtil();
+
 		UnsyncCharArrayReader unsyncCharArrayReader = new UnsyncCharArrayReader(
 			_BUFFER);
 

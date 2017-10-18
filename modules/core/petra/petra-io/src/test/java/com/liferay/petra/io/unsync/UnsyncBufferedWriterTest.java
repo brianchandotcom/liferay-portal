@@ -14,11 +14,14 @@
 
 package com.liferay.petra.io.unsync;
 
+import com.liferay.petra.io.internal.BoundaryCheckerUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -31,7 +34,14 @@ public class UnsyncBufferedWriterTest extends BaseWriterTestCase {
 
 	@ClassRule
 	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+		new CodeCoverageAssertor() {
+
+			@Override
+			public void appendAssertClasses(List<Class<?>> assertClasses) {
+				assertClasses.add(BoundaryCheckerUtil.class);
+			}
+
+		};
 
 	@Test
 	public void testBlockWrite() throws IOException {
@@ -146,6 +156,8 @@ public class UnsyncBufferedWriterTest extends BaseWriterTestCase {
 
 	@Test
 	public void testConstructor() {
+		new BoundaryCheckerUtil();
+
 		UnsyncBufferedWriter unsyncBufferedWriter = new UnsyncBufferedWriter(
 			new StringWriter());
 

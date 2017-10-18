@@ -14,6 +14,7 @@
 
 package com.liferay.petra.io.unsync;
 
+import com.liferay.petra.io.internal.BoundaryCheckerUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.io.ByteArrayInputStream;
@@ -21,6 +22,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -33,7 +36,14 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 
 	@ClassRule
 	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+		new CodeCoverageAssertor() {
+
+			@Override
+			public void appendAssertClasses(List<Class<?>> assertClasses) {
+				assertClasses.add(BoundaryCheckerUtil.class);
+			}
+
+		};
 
 	@Override
 	@Test
@@ -137,6 +147,8 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 
 	@Test
 	public void testConstructor() {
+		new BoundaryCheckerUtil();
+
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new StringReader(""));
 

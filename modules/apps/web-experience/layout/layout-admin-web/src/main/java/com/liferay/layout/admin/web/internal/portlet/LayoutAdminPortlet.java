@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutPrototype;
-import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Theme;
@@ -65,7 +64,6 @@ import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeService;
-import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.LayoutSetService;
@@ -95,7 +93,6 @@ import com.liferay.portal.kernel.util.ThemeFactoryUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.impl.ThemeSettingImpl;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.sites.action.ActionUtil;
@@ -532,42 +529,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		updateSettings(
 			actionRequest, liveGroupId, stagingGroupId, privateLayout,
 			layoutSet.getSettingsProperties());
-	}
-
-	public void enableLayout(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long incompleteLayoutRevisionId = ParamUtil.getLong(
-			actionRequest, "incompleteLayoutRevisionId");
-
-		LayoutRevision incompleteLayoutRevision =
-			layoutRevisionLocalService.getLayoutRevision(
-				incompleteLayoutRevisionId);
-
-		long layoutBranchId = ParamUtil.getLong(
-			actionRequest, "layoutBranchId",
-			incompleteLayoutRevision.getLayoutBranchId());
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
-
-		layoutRevisionLocalService.updateLayoutRevision(
-			serviceContext.getUserId(),
-			incompleteLayoutRevision.getLayoutRevisionId(), layoutBranchId,
-			incompleteLayoutRevision.getName(),
-			incompleteLayoutRevision.getTitle(),
-			incompleteLayoutRevision.getDescription(),
-			incompleteLayoutRevision.getKeywords(),
-			incompleteLayoutRevision.getRobots(),
-			incompleteLayoutRevision.getTypeSettings(),
-			incompleteLayoutRevision.getIconImage(),
-			incompleteLayoutRevision.getIconImageId(),
-			incompleteLayoutRevision.getThemeId(),
-			incompleteLayoutRevision.getColorSchemeId(),
-			incompleteLayoutRevision.getCss(), serviceContext);
 	}
 
 	public void resetCustomizationView(
@@ -1015,13 +976,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setLayoutRevisionLocalService(
-		LayoutRevisionLocalService layoutRevisionLocalService) {
-
-		this.layoutRevisionLocalService = layoutRevisionLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setLayoutService(LayoutService layoutService) {
 		this.layoutService = layoutService;
 	}
@@ -1336,7 +1290,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 	protected LayoutLocalService layoutLocalService;
 	protected LayoutPrototypeLocalService layoutPrototypeLocalService;
 	protected LayoutPrototypeService layoutPrototypeService;
-	protected LayoutRevisionLocalService layoutRevisionLocalService;
 	protected LayoutService layoutService;
 	protected LayoutSetLocalService layoutSetLocalService;
 	protected LayoutSetService layoutSetService;

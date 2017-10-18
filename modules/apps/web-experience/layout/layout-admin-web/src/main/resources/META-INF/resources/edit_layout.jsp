@@ -95,7 +95,7 @@ renderResponse.setTitle(selLayout.getName(locale));
 		<aui:button-row>
 			<aui:button cssClass="btn-lg" id="enableLayoutButton" name="enableLayout" value='<%= LanguageUtil.format(request, "enable-in-x", HtmlUtil.escape(layoutSetBranchName), false) %>' />
 
-			<portlet:actionURL name="enableLayout" var="enableLayoutURL">
+			<portlet:actionURL name="/layout/enable_layout" var="enableLayoutURL">
 				<portlet:param name="mvcPath" value="/view.jsp" />
 				<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
 				<portlet:param name="incompleteLayoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />

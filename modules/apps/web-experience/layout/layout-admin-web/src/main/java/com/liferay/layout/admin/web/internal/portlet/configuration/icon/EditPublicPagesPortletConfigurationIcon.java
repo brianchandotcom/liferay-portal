@@ -15,7 +15,7 @@
 package com.liferay.layout.admin.web.internal.portlet.configuration.icon;
 
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.admin.web.internal.display.context.ViewLayoutsDisplayContext;
+import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -65,11 +65,11 @@ public class EditPublicPagesPortletConfigurationIcon
 		LiferayPortletResponse liferayPortletResponse =
 			_portal.getLiferayPortletResponse(portletResponse);
 
-		ViewLayoutsDisplayContext viewLayoutsDisplayContext =
-			new ViewLayoutsDisplayContext(
+		LayoutsAdminDisplayContext layoutsAdminDisplayContext =
+			new LayoutsAdminDisplayContext(
 				liferayPortletRequest, liferayPortletResponse);
 
-		PortletURL editLayoutURL = viewLayoutsDisplayContext.getEditLayoutURL(
+		PortletURL editLayoutURL = layoutsAdminDisplayContext.getEditLayoutURL(
 			LayoutConstants.DEFAULT_PLID, false);
 
 		editLayoutURL.setParameter("redirect", themeDisplay.getURLCurrent());
@@ -91,21 +91,21 @@ public class EditPublicPagesPortletConfigurationIcon
 		LiferayPortletRequest liferayPortletRequest =
 			_portal.getLiferayPortletRequest(portletRequest);
 
-		ViewLayoutsDisplayContext viewLayoutsDisplayContext =
-			new ViewLayoutsDisplayContext(liferayPortletRequest, null);
+		LayoutsAdminDisplayContext layoutsAdminDisplayContext =
+			new LayoutsAdminDisplayContext(liferayPortletRequest, null);
 
-		if (viewLayoutsDisplayContext.isPrivatePages()) {
+		if (layoutsAdminDisplayContext.isPrivatePages()) {
 			return false;
 		}
 
-		if (!viewLayoutsDisplayContext.isShowPublicPages()) {
+		if (!layoutsAdminDisplayContext.isShowPublicPages()) {
 			return false;
 		}
 
 		try {
 			return GroupPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(),
-				viewLayoutsDisplayContext.getSelGroupId(),
+				layoutsAdminDisplayContext.getSelGroupId(),
 				ActionKeys.MANAGE_LAYOUTS);
 		}
 		catch (Exception e) {

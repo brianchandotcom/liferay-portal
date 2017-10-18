@@ -14,8 +14,8 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal.npm.builtin;
 
-import com.liferay.frontend.js.loader.modules.extender.internal.npm.NPMRegistry;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 
 import javax.servlet.Servlet;
 

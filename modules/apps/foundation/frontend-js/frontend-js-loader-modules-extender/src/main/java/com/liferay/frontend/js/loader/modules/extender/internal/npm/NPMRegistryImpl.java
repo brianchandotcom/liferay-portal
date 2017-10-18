@@ -22,6 +22,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSBundleProcessor;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -53,7 +54,7 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
  * @author Iván Zaera
  */
 @Component(immediate = true, service = NPMRegistry.class)
-public class NPMRegistry {
+public class NPMRegistryImpl implements NPMRegistry {
 
 	/**
 	 * Returns the OSGi bundles containing NPM packages that have been deployed
@@ -73,6 +74,17 @@ public class NPMRegistry {
 	 */
 	public JSModule getJSModule(String identifier) {
 		return _jsModules.get(identifier);
+	}
+
+	/**
+	 * Returns the NPM package with the ID.
+	 *
+	 * @param  identifier the NPM package's ID
+	 * @return the NPM package descriptor with the ID
+	 */
+	@Override
+	public JSPackage getJSPackage(String identifier) {
+		return _jsPackages.get(identifier);
 	}
 
 	/**
@@ -278,10 +290,6 @@ public class NPMRegistry {
 		@Override
 		public void modifiedBundle(
 			Bundle bundle, BundleEvent bundleEvent, JSBundle jsBundle) {
-
-			removedBundle(bundle, bundleEvent, jsBundle);
-
-			addingBundle(bundle, bundleEvent);
 		}
 
 		@Override

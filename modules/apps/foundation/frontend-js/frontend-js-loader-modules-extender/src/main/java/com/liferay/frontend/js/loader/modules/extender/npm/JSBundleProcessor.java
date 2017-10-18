@@ -18,9 +18,7 @@ import org.osgi.framework.Bundle;
 
 /**
  * Processes an OSGi bundle to find NPM packages and modules inside it and make
- * them available for the {@link
- * com.liferay.frontend.js.loader.modules.extender.internal.npm.NPMRegistry} to
- * track them.
+ * them available for the {@link NPMRegistry} to track them.
  *
  * <p>
  * There can be several {@link JSBundleProcessor}s deployed inside one portal if
@@ -46,9 +44,8 @@ public interface JSBundleProcessor {
 	 * an NPM package or module, this method returns <code>null</code>.
 	 *
 	 * <p>
-	 * This method is invoked by the {@link
-	 * com.liferay.frontend.js.loader.modules.extender.internal.npm.NPMRegistry}
-	 * whenever a new OSGi bundle is deployed to the portal.
+	 * This method is invoked by the {@link NPMRegistry} whenever a new OSGi
+	 * bundle is deployed to the portal.
 	 * </p>
 	 *
 	 * @param  bundle the handle to the OSGi bundle being deployed

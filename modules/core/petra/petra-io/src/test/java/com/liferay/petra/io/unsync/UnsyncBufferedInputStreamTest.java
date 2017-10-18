@@ -14,16 +14,24 @@
 
 package com.liferay.petra.io.unsync;
 
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
 public class UnsyncBufferedInputStreamTest {
+
+	@ClassRule
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Test
 	public void testBlockRead() throws IOException {
@@ -126,6 +134,37 @@ public class UnsyncBufferedInputStreamTest {
 
 		Assert.assertEquals(_SIZE, unsyncBufferedInputStream.read(tempBuffer));
 		Assert.assertEquals(-1, unsyncBufferedInputStream.read(tempBuffer));
+
+		// Second read is blocked after first read
+
+		unsyncBufferedInputStream = new UnsyncBufferedInputStream(
+			new InputStream() {
+
+				@Override
+				public int available() {
+					return 1;
+				}
+
+				@Override
+				public int read() {
+					if (_firstRead) {
+						_firstRead = false;
+
+						return 2;
+					}
+
+					return -1;
+				}
+
+				private boolean _firstRead = true;
+
+			});
+
+		byte[] bytes = new byte[2];
+
+		Assert.assertEquals(1, unsyncBufferedInputStream.read(bytes));
+		Assert.assertEquals(2, bytes[0]);
+		Assert.assertEquals(0, bytes[1]);
 	}
 
 	@Test
@@ -147,6 +186,7 @@ public class UnsyncBufferedInputStreamTest {
 			Assert.fail();
 		}
 		catch (IOException ioe) {
+			Assert.assertEquals("Input stream is null", ioe.getMessage());
 		}
 
 		try {
@@ -155,6 +195,7 @@ public class UnsyncBufferedInputStreamTest {
 			Assert.fail();
 		}
 		catch (IOException ioe) {
+			Assert.assertEquals("Input stream is null", ioe.getMessage());
 		}
 
 		try {
@@ -163,6 +204,7 @@ public class UnsyncBufferedInputStreamTest {
 			Assert.fail();
 		}
 		catch (IOException ioe) {
+			Assert.assertEquals("Input stream is null", ioe.getMessage());
 		}
 
 		try {
@@ -171,6 +213,7 @@ public class UnsyncBufferedInputStreamTest {
 			Assert.fail();
 		}
 		catch (IOException ioe) {
+			Assert.assertEquals("Input stream is null", ioe.getMessage());
 		}
 
 		try {
@@ -179,6 +222,7 @@ public class UnsyncBufferedInputStreamTest {
 			Assert.fail();
 		}
 		catch (IOException ioe) {
+			Assert.assertEquals("Input stream is null", ioe.getMessage());
 		}
 
 		unsyncBufferedInputStream.close();
@@ -206,6 +250,7 @@ public class UnsyncBufferedInputStreamTest {
 			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
+			Assert.assertEquals("Size is less than 1", iae.getMessage());
 		}
 
 		try {
@@ -215,6 +260,7 @@ public class UnsyncBufferedInputStreamTest {
 			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
+			Assert.assertEquals("Size is less than 1", iae.getMessage());
 		}
 	}
 
@@ -289,6 +335,7 @@ public class UnsyncBufferedInputStreamTest {
 			Assert.fail();
 		}
 		catch (IOException ioe) {
+			Assert.assertEquals("Resetting to invalid mark", ioe.getMessage());
 		}
 
 		// Shuffle

@@ -6,8 +6,8 @@ apply plugin: "de.undercouch.download"
 apply plugin: "org.ysb33r.gradletest"
 
 task copyDistBundleZipPluginsSdk(type: Copy)
-task downloadPluginsSdk(type: Download)
 task copyGradleTestDependencies(type: Copy)
+task downloadPluginsSdk(type: Download)
 
 String bundleUrl = "https://cdn.lfrs.sl/releases.liferay.com/portal/7.0.3-ga4/liferay-ce-portal-tomcat-7.0-ga4-20170613175008905.zip"
 String pluginsSdkUrl = "https://cdn.lfrs.sl/releases.liferay.com/portal/7.0.3-ga4/com.liferay.portal.plugins.sdk-1.0.11-20170613175008905.zip"

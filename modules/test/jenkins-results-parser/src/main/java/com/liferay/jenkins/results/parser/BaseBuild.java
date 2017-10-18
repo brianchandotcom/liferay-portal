@@ -366,9 +366,9 @@ public abstract class BaseBuild implements Build {
 		if (status.contains("/")) {
 			int x = status.indexOf("/");
 
-			status = status.substring(0, x);
-
 			result = status.substring(x + 1);
+
+			status = status.substring(0, x);
 		}
 
 		List<Build> filteredDownstreamBuilds = new ArrayList<>();
@@ -637,7 +637,7 @@ public abstract class BaseBuild implements Build {
 
 		for (Build downstreamBuild : getDownstreamBuilds(null)) {
 			if ((longestRunningDownstreamBuild == null) ||
-					(downstreamBuild.getDuration() >
+				(downstreamBuild.getDuration() >
 					longestRunningDownstreamBuild.getDuration())) {
 
 				longestRunningDownstreamBuild = downstreamBuild;
@@ -2429,7 +2429,10 @@ public abstract class BaseBuild implements Build {
 					(_duration / _timeline.length));
 
 			if (index > _timeline.length) {
-				return _timeline.length;
+				return _timeline.length - 1;
+			}
+			else if (index < 0 ) {
+				return 0;
 			}
 
 			return index;

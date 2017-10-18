@@ -72,7 +72,11 @@ public class UnsyncByteArrayInputStream extends InputStream {
 
 	@Override
 	public int read(byte[] bytes, int offset, int length) {
-		if (length <= 0) {
+		if (length < 0) {
+			throw new IndexOutOfBoundsException("{length=" + length + "}");
+		}
+
+		if (length == 0) {
 			return 0;
 		}
 

@@ -14,6 +14,8 @@
 
 package com.liferay.petra.io.unsync;
 
+import com.liferay.petra.io.internal.BoundaryCheckerUtil;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
@@ -79,7 +81,9 @@ public class UnsyncByteArrayOutputStream extends OutputStream {
 
 	@Override
 	public void write(byte[] bytes, int offset, int length) {
-		if (length <= 0) {
+		BoundaryCheckerUtil.check(bytes.length, offset, length);
+
+		if (length == 0) {
 			return;
 		}
 

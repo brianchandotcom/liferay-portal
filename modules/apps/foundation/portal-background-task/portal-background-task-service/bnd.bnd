@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Background Task Service
 Bundle-SymbolicName: com.liferay.portal.background.task.service
-Bundle-Version: 2.0.20
+Bundle-Version: 3.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Background Tasks
 Liferay-Require-SchemaVersion: 1.0.0

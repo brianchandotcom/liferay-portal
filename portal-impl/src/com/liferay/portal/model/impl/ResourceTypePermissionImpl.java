@@ -77,7 +77,9 @@ import com.liferay.portal.kernel.model.ResourceAction;
  * </p>
  *
  * @author Connor McKay
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class ResourceTypePermissionImpl extends ResourceTypePermissionBaseImpl {
 
 	@Override

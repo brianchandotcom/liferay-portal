@@ -509,9 +509,7 @@
 		<reference entity="PortletPreferences" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="ResourceAction" package-path="com.liferay.portal" />
-		<reference entity="ResourceBlock" package-path="com.liferay.portal" />
 		<reference entity="ResourcePermission" package-path="com.liferay.portal" />
-		<reference entity="ResourceTypePermission" package-path="com.liferay.portal" />
 		<reference entity="Role" package-path="com.liferay.portal" />
 		<reference entity="SystemEvent" package-path="com.liferay.portal" />
 		<reference entity="Team" package-path="com.liferay.portal" />
@@ -1517,7 +1515,6 @@
 
 		<!-- References -->
 
-		<reference entity="ResourceBlock" package-path="com.liferay.portal" />
 		<reference entity="ResourcePermission" package-path="com.liferay.portal" />
 		<reference entity="Role" package-path="com.liferay.portal" />
 		<reference entity="Team" package-path="com.liferay.portal" />
@@ -1673,7 +1670,6 @@
 		<reference entity="PortletPreferences" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="ResourceAction" package-path="com.liferay.portal" />
-		<reference entity="ResourceBlock" package-path="com.liferay.portal" />
 		<reference entity="ResourcePermission" package-path="com.liferay.portal" />
 		<reference entity="Role" package-path="com.liferay.portal" />
 	</entity>
@@ -2122,12 +2118,9 @@
 		<!-- References -->
 
 		<reference entity="Company" package-path="com.liferay.portal" />
-		<reference entity="ResourceBlock" package-path="com.liferay.portal" />
-		<reference entity="ResourceBlockPermission" package-path="com.liferay.portal" />
 		<reference entity="ResourcePermission" package-path="com.liferay.portal" />
-		<reference entity="ResourceTypePermission" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="ResourceBlock" remote-service="true">
+	<entity deprecated="true" local-service="true" name="ResourceBlock" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -2171,7 +2164,7 @@
 		<reference entity="ResourceTypePermission" package-path="com.liferay.portal" />
 		<reference entity="Role" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="ResourceBlockPermission" remote-service="false">
+	<entity deprecated="true" local-service="true" name="ResourceBlockPermission" remote-service="false">
 
 		<!-- PK fields -->
 
@@ -2275,7 +2268,7 @@
 		<reference entity="ResourceAction" package-path="com.liferay.portal" />
 		<reference entity="Role" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="ResourceTypePermission" remote-service="false">
+	<entity deprecated="true" local-service="true" name="ResourceTypePermission" remote-service="false">
 
 		<!-- PK fields -->
 
@@ -2388,10 +2381,7 @@
 		<reference entity="Layout" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="ResourceAction" package-path="com.liferay.portal" />
-		<reference entity="ResourceBlock" package-path="com.liferay.portal" />
-		<reference entity="ResourceBlockPermission" package-path="com.liferay.portal" />
 		<reference entity="ResourcePermission" package-path="com.liferay.portal" />
-		<reference entity="ResourceTypePermission" package-path="com.liferay.portal" />
 		<reference entity="Team" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="UserGroupGroupRole" package-path="com.liferay.portal" />

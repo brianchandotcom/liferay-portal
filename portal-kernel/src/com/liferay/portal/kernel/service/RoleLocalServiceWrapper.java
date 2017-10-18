@@ -521,6 +521,10 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 		return _roleLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Role> getResourceBlockRoles(
 		long resourceBlockId, java.lang.String className,

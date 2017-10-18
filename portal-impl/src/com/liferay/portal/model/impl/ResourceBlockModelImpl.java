@@ -52,8 +52,10 @@ import java.util.Map;
  * @see ResourceBlockImpl
  * @see ResourceBlock
  * @see ResourceBlockModel
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @JSON(strict = true)
 @ProviderType
 public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>

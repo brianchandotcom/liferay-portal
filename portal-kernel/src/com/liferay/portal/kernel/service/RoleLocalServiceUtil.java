@@ -483,6 +483,10 @@ public class RoleLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portal.kernel.model.Role> getResourceBlockRoles(
 		long resourceBlockId, java.lang.String className,
 		java.lang.String actionId) {

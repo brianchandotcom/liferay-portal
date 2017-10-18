@@ -74,10 +74,7 @@
 	<import class="com.liferay.portal.kernel.model.Repository" />
 	<import class="com.liferay.portal.kernel.model.RepositoryEntry" />
 	<import class="com.liferay.portal.kernel.model.ResourceAction" />
-	<import class="com.liferay.portal.kernel.model.ResourceBlock" />
-	<import class="com.liferay.portal.kernel.model.ResourceBlockPermission" />
 	<import class="com.liferay.portal.kernel.model.ResourcePermission" />
-	<import class="com.liferay.portal.kernel.model.ResourceTypePermission" />
 	<import class="com.liferay.portal.kernel.model.Role" />
 	<import class="com.liferay.portal.kernel.model.ServiceComponent" />
 	<import class="com.liferay.portal.kernel.model.SystemEvent" />
@@ -791,27 +788,6 @@
 		<property name="actionId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="bitwiseValue" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
-	<class dynamic-update="true" name="com.liferay.portal.model.impl.ResourceBlockImpl" table="ResourceBlock">
-		<id name="resourceBlockId" type="long">
-			<generator class="assigned" />
-		</id>
-		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="permissionsHash" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="referenceCount" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-	</class>
-	<class dynamic-update="true" name="com.liferay.portal.model.impl.ResourceBlockPermissionImpl" table="ResourceBlockPermission">
-		<id name="resourceBlockPermissionId" type="long">
-			<generator class="assigned" />
-		</id>
-		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="resourceBlockId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="roleId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="actionIds" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-	</class>
 	<class dynamic-update="true" name="com.liferay.portal.model.impl.ResourcePermissionImpl" table="ResourcePermission">
 		<id name="resourcePermissionId" type="long">
 			<generator class="assigned" />
@@ -826,17 +802,6 @@
 		<property name="ownerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="actionIds" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="viewActionId" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-	</class>
-	<class dynamic-update="true" name="com.liferay.portal.model.impl.ResourceTypePermissionImpl" table="ResourceTypePermission">
-		<id name="resourceTypePermissionId" type="long">
-			<generator class="assigned" />
-		</id>
-		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="roleId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="actionIds" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.portal.model.impl.RoleImpl" table="Role_">
 		<id name="roleId" type="long">

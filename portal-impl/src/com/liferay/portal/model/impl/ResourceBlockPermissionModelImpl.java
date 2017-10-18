@@ -47,8 +47,10 @@ import java.util.Map;
  * @see ResourceBlockPermissionImpl
  * @see ResourceBlockPermission
  * @see ResourceBlockPermissionModel
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBlockPermission>
 	implements ResourceBlockPermissionModel {

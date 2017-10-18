@@ -31,8 +31,10 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @see ResourceBlockService
  * @see com.liferay.portal.service.base.ResourceBlockServiceBaseImpl
  * @see com.liferay.portal.service.impl.ResourceBlockServiceImpl
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public class ResourceBlockServiceUtil {
 	/*

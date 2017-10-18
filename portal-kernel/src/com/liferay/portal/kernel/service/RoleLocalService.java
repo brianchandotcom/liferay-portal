@@ -395,6 +395,10 @@ public interface RoleLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Role> getResourceBlockRoles(long resourceBlockId,
 		java.lang.String className, java.lang.String actionId);

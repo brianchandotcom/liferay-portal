@@ -310,7 +310,13 @@ public class LegacyDataArchiveUtil {
 
 		Set<String> poshiPropertyValues = new HashSet<>();
 
-		List<Element> childElements = element.elements();
+		List<Element> childElements = new ArrayList<>();
+
+		for (Object elementObject : element.elements()) {
+			if (elementObject instanceof Element) {
+				childElements.add((Element)elementObject);
+			}
+		}
 
 		if (childElements.isEmpty()) {
 			return poshiPropertyValues;

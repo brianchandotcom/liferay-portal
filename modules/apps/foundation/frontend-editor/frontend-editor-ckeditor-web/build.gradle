@@ -2,8 +2,8 @@ import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 import com.liferay.gradle.util.tasks.ConcatenateTask
 
-task buildCKEditorBBCode(type: ConcatenateTask)
 task buildCKEditor(type: Copy)
+task buildCKEditorBBCode(type: ConcatenateTask)
 task buildCKEditorScayt(type: Copy)
 task buildCKEditorWsc(type: Copy)
 

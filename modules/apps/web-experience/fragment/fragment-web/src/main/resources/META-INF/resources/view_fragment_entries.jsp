@@ -134,9 +134,9 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 		var updateFragmentActionOptionQueryClickHandler = metalDomSrcAllDom.default.delegate(
 			document.body,
 			'click',
-			'.<portlet:namespace />update-fragment-action-option',
+			'.<portlet:namespace />update-fragment-action-option > a',
 			function(event) {
-				var actionElement = event.target;
+				var actionElement = event.delegateTarget;
 
 				fragmentNameEditor = new fragmentWebJsFragmentNameEditor.default(
 					{

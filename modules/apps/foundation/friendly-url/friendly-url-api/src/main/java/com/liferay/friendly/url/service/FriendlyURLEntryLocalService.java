@@ -126,12 +126,6 @@ public interface FriendlyURLEntryLocalService extends BaseLocalService,
 	public void deleteFriendlyURLEntry(long groupId, java.lang.Class<?> clazz,
 		long classPK) throws PortalException;
 
-	public void deleteFriendlyURLEntry(long groupId, java.lang.Class<?> clazz,
-		long classPK, java.lang.String urlTitle) throws PortalException;
-
-	public void deleteFriendlyURLEntry(long groupId, long classNameId,
-		long classPK, java.lang.String urlTitle) throws PortalException;
-
 	public void deleteGroupFriendlyURLEntries(long groupId, long classNameId);
 
 	/**
@@ -321,12 +315,12 @@ public interface FriendlyURLEntryLocalService extends BaseLocalService,
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public FriendlyURLEntry getMainFriendlyURLEntry(long groupId,
-		java.lang.Class<?> clazz, long classPK) throws PortalException;
+	public FriendlyURLEntry getMainFriendlyURLEntry(java.lang.Class<?> clazz,
+		long classPK) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public FriendlyURLEntry getMainFriendlyURLEntry(long groupId,
-		long classNameId, long classPK) throws PortalException;
+	public FriendlyURLEntry getMainFriendlyURLEntry(long classNameId,
+		long classPK) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeService;
@@ -64,7 +63,6 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -485,39 +483,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		MultiSessionMessages.add(actionRequest, "layoutUpdated", layout);
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
-	}
-
-	public void resetCustomizationView(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (!LayoutPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
-				ActionKeys.CUSTOMIZE)) {
-
-			throw new PrincipalException();
-		}
-
-		LayoutTypePortlet layoutTypePortlet =
-			themeDisplay.getLayoutTypePortlet();
-
-		if ((layoutTypePortlet != null) && layoutTypePortlet.isCustomizable() &&
-			layoutTypePortlet.isCustomizedView()) {
-
-			layoutTypePortlet.resetUserPreferences();
-		}
-
-		MultiSessionMessages.add(
-			actionRequest,
-			portal.getPortletId(actionRequest) + "requestProcessed");
-
-		Layout layout = themeDisplay.getLayout();
-
-		actionResponse.sendRedirect(
-			layout.getRegularURL(portal.getHttpServletRequest(actionRequest)));
 	}
 
 	/**

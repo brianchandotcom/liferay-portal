@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.display-name=Group Pages",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
-		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.init-param.view-template=/view_layouts.jsp",
 		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.supported-public-render-parameter=layoutSetBranchId",

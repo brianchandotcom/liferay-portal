@@ -27,6 +27,8 @@ public class LayoutTypePortletConstants {
 
 	public static final String LAYOUT_TEMPLATE_ID = "layout-template-id";
 
+	public static final String LINK_TO_LAYOUT_ID = "linkToLayoutId";
+
 	public static final String MODE_ABOUT = "mode-about";
 
 	public static final String MODE_CONFIG = "mode-config";

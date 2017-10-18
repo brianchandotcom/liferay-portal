@@ -2892,27 +2892,28 @@ public class ServiceBuilder {
 	}
 
 	private void _createPersistenceTest(Entity entity) throws Exception {
-		Map<String, Object> context = _getContext();
-
-		context.put("entity", entity);
-
-		JavaClass modelImplJavaClass = _getJavaClass(
-			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
-
-		context = _putDeprecatedKeys(context, modelImplJavaClass);
-
-		// Content
-
-		String content = _processTemplate(_tplPersistenceTest, context);
-
-		// Write file
-
 		File ejbFile = new File(
 			_testOutputPath + "/service/persistence/test/" + entity.getName() +
 				"PersistenceTest.java");
 
-		ToolsUtil.writeFile(
-			ejbFile, content, _author, _jalopySettings, _modifiedFileNames);
+		if (entity.isDeprecated()) {
+			ejbFile.delete();
+		}
+		else {
+			Map<String, Object> context = _getContext();
+
+			context.put("entity", entity);
+
+			JavaClass modelImplJavaClass = _getJavaClass(
+				_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
+
+			context = _putDeprecatedKeys(context, modelImplJavaClass);
+
+			String content = _processTemplate(_tplPersistenceTest, context);
+
+			ToolsUtil.writeFile(
+				ejbFile, content, _author, _jalopySettings, _modifiedFileNames);
+		}
 
 		ejbFile = new File(
 			_testOutputPath + "/service/persistence/" + entity.getName() +
@@ -5243,6 +5244,13 @@ public class ServiceBuilder {
 
 			if (columnName.equals("resourceBlockId") &&
 				!ejbName.equals("ResourceBlock")) {
+
+				if (!ejbName.equals("ResourceBlockPermission")) {
+					throw new IllegalArgumentException(
+						"ResourceBlock is deprecated, implement " +
+							"BaseUpgradeResourceBlock to migrate to " +
+								"ResourcePermission");
+				}
 
 				permissionedModel = true;
 			}

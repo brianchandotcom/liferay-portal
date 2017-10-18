@@ -29,8 +29,10 @@ import com.liferay.portal.kernel.model.ResourceTypePermission;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portal.service.persistence.impl.ResourceTypePermissionPersistenceImpl
  * @see ResourceTypePermissionUtil
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface ResourceTypePermissionPersistence extends BasePersistence<ResourceTypePermission> {
 	/*

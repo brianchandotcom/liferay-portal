@@ -29,8 +29,10 @@ import com.liferay.portal.kernel.model.ResourceBlock;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portal.service.persistence.impl.ResourceBlockPersistenceImpl
  * @see ResourceBlockUtil
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock> {
 	/*

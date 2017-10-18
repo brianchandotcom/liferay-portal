@@ -19,10 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.service.ResourceBlockLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourceBlockPermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -72,17 +69,10 @@ public class ExportImportPermissionUtil {
 			List<String> actionIds)
 		throws PortalException {
 
-		if (ResourceBlockLocalServiceUtil.isSupported(className)) {
-			return ResourceBlockPermissionLocalServiceUtil.
-				getAvailableResourceBlockPermissionActionIds(
-					className, GetterUtil.getLong(primKey), actionIds);
-		}
-		else {
-			return ResourcePermissionLocalServiceUtil.
-				getAvailableResourcePermissionActionIds(
-					companyId, className, ResourceConstants.SCOPE_INDIVIDUAL,
-					primKey, actionIds);
-		}
+		return ResourcePermissionLocalServiceUtil.
+			getAvailableResourcePermissionActionIds(
+				companyId, className, ResourceConstants.SCOPE_INDIVIDUAL,
+				primKey, actionIds);
 	}
 
 	public static String getTeamRoleName(String roleName) {
@@ -139,16 +129,9 @@ public class ExportImportPermissionUtil {
 			return;
 		}
 
-		if (ResourceBlockLocalServiceUtil.isSupported(resourceName)) {
-			ResourceBlockLocalServiceUtil.setIndividualScopePermissions(
-				companyId, groupId, resourceName,
-				GetterUtil.getLong(resourcePK), roleIdsToActionIds);
-		}
-		else {
-			ResourcePermissionLocalServiceUtil.setResourcePermissions(
-				companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
-				resourcePK, roleIdsToActionIds);
-		}
+		ResourcePermissionLocalServiceUtil.setResourcePermissions(
+			companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
+			resourcePK, roleIdsToActionIds);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

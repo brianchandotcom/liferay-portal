@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -53,7 +52,6 @@ import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.service.SocialActivityLocalServiceUtil;
 import com.liferay.social.kernel.service.SocialActivityServiceUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.After;
@@ -201,21 +199,11 @@ public class SocialActivityServiceTest {
 		Role role = RoleLocalServiceUtil.getRole(
 			_group.getCompanyId(), RoleConstants.GUEST);
 
-		if (ResourceBlockLocalServiceUtil.isSupported(
-				DLFileEntry.class.getName())) {
-
-			ResourceBlockLocalServiceUtil.setIndividualScopePermissions(
-				_group.getCompanyId(), _group.getGroupId(),
-				DLFileEntry.class.getName(), fileEntry.getFileEntryId(),
-				role.getRoleId(), new ArrayList<String>());
-		}
-		else {
-			ResourcePermissionLocalServiceUtil.setResourcePermissions(
-				_group.getCompanyId(), DLFileEntry.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(fileEntry.getFileEntryId()), role.getRoleId(),
-				new String[0]);
-		}
+		ResourcePermissionLocalServiceUtil.setResourcePermissions(
+			_group.getCompanyId(), DLFileEntry.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(fileEntry.getFileEntryId()), role.getRoleId(),
+			new String[0]);
 	}
 
 	@DeleteAfterTestRun

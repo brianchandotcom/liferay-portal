@@ -14,18 +14,25 @@
 
 package com.liferay.petra.io.unsync;
 
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import java.util.Arrays;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
 public class UnsyncBufferedOutputStreamTest {
+
+	@ClassRule
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Test
 	public void testBlockWrite() throws IOException {
@@ -55,6 +62,38 @@ public class UnsyncBufferedOutputStreamTest {
 
 		Assert.assertEquals(100, unsyncBufferedOutputStream.buffer[0]);
 		Assert.assertEquals(_SIZE * 2, byteArrayOutputStream.size());
+
+		byteArrayOutputStream.reset();
+
+		unsyncBufferedOutputStream = new UnsyncBufferedOutputStream(
+			byteArrayOutputStream, _SIZE + 1);
+
+		unsyncBufferedOutputStream.write(100);
+		unsyncBufferedOutputStream.write(110);
+
+		Assert.assertEquals(0, byteArrayOutputStream.size());
+
+		unsyncBufferedOutputStream.write(_BUFFER);
+
+		Assert.assertEquals(2, byteArrayOutputStream.size());
+
+		byte[] bytes = byteArrayOutputStream.toByteArray();
+
+		Assert.assertEquals(100, bytes[0]);
+		Assert.assertEquals(110, bytes[1]);
+
+		for (int i = 0; i < _SIZE; i++) {
+			Assert.assertEquals(i, unsyncBufferedOutputStream.buffer[i]);
+		}
+
+		byteArrayOutputStream.reset();
+
+		unsyncBufferedOutputStream = new UnsyncBufferedOutputStream(
+			byteArrayOutputStream, _SIZE / 2);
+
+		unsyncBufferedOutputStream.write(_BUFFER);
+
+		Assert.assertArrayEquals(_BUFFER, byteArrayOutputStream.toByteArray());
 	}
 
 	@Test
@@ -76,13 +115,23 @@ public class UnsyncBufferedOutputStreamTest {
 			new UnsyncBufferedOutputStream(byteArrayOutputStream, 0);
 		}
 		catch (IllegalArgumentException iae) {
+			Assert.assertEquals("Size is less than 1", iae.getMessage());
 		}
 
 		try {
 			new UnsyncBufferedOutputStream(byteArrayOutputStream, -1);
 		}
 		catch (IllegalArgumentException iae) {
+			Assert.assertEquals("Size is less than 1", iae.getMessage());
 		}
+	}
+
+	@Test
+	public void testFlush() throws IOException {
+		UnsyncBufferedOutputStream unsyncBufferedOutputStream =
+			new UnsyncBufferedOutputStream(new ByteArrayOutputStream(), 1);
+
+		unsyncBufferedOutputStream.flush();
 	}
 
 	@Test

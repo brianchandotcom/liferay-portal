@@ -33,7 +33,7 @@ public class CommitFactory {
 		String sha = matcher.group("sha");
 
 		if (message.startsWith("archive:ignore")) {
-			return new DataArchiveCommit(message, sha);
+			return new LegacyDataArchiveCommit(message, sha);
 		}
 
 		return new ManualCommit(message, sha);

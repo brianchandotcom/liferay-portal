@@ -17,9 +17,9 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public class DataArchiveCommit extends BaseCommit {
+public class LegacyDataArchiveCommit extends BaseCommit {
 
-	public DataArchiveCommit(String message, String sha) {
+	public LegacyDataArchiveCommit(String message, String sha) {
 		super(message, sha);
 	}
 

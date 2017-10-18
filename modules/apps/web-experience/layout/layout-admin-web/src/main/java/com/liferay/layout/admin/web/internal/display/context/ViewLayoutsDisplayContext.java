@@ -184,7 +184,7 @@ public class ViewLayoutsDisplayContext extends BaseLayoutDisplayContext {
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", "/view_layouts.jsp");
+		portletURL.setParameter("mvcPath", "/view.jsp");
 		portletURL.setParameter("navigation", getNavigation());
 		portletURL.setParameter("orderByCol", getOrderByCol());
 		portletURL.setParameter("orderByType", getOrderByType());

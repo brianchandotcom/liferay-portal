@@ -74,13 +74,14 @@ public class PoshiRunnerTaskExecutor {
 	protected static void taskHelp() throws Exception {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("List of PoshiRunner tasks:\n");
-		sb.append("--------------------------\n");
+		sb.append("Usage: PoshiRunnerTaskExector <command> <args>\n");
+		sb.append("\n");
+		sb.append("command options include:\n");
 		sb.append(
-			"evaluatePoshiConsole - Evaluate the console output errors.\n");
-		sb.append("runPoshi - Execute tests using Poshi Runner.\n");
-		sb.append("validatePoshi - Validates the Poshi files syntax.\n");
-		sb.append("writePoshiProperties - Write the Poshi properties files.\n");
+			"\tevaluatePoshiConsole\tEvaluate the console output errors.\n");
+		sb.append("\trunPoshi\t\t\tExecute tests using Poshi Runner.\n");
+		sb.append("\tvalidatePoshi\t\tValidates the Poshi files syntax.\n");
+		sb.append("\twritePoshiProperties\tWrite the Poshi properties files.\n");
 
 		System.out.println(sb.toString());
 	}

@@ -31,8 +31,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.documentlibrary.service.persistence.impl.DLContentPersistenceImpl
  * @see DLContentUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.document.library.content.model.impl.DLContentImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface DLContentPersistence extends BasePersistence<DLContent> {
 	/*

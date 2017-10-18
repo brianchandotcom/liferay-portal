@@ -79,8 +79,6 @@ create unique index IX_717B9BA2 on Country (a3[$COLUMN_LENGTH:75$]);
 create index IX_25D734CD on Country (active_);
 create unique index IX_19DA007B on Country (name[$COLUMN_LENGTH:75$]);
 
-create unique index IX_FDD1AAA8 on DLContent (companyId, repositoryId, path_[$COLUMN_LENGTH:255$], version[$COLUMN_LENGTH:75$]);
-
 create index IX_5444C427 on DLFileEntry (companyId, fileEntryTypeId);
 create index IX_B8526DBE on DLFileEntry (custom1ImageId);
 create index IX_AC9BDEDD on DLFileEntry (custom2ImageId);

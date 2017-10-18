@@ -36,8 +36,11 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @see DLContentPersistence
  * @see com.liferay.portlet.documentlibrary.service.persistence.impl.DLContentPersistenceImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.document.library.content.model.impl.DLContentImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class DLContentUtil {
 	/*

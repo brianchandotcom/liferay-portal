@@ -12,13 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.service.persistence.test;
+package com.liferay.document.library.content.service.persistence.test;
 
-import com.liferay.document.library.kernel.exception.NoSuchContentException;
-import com.liferay.document.library.kernel.model.DLContent;
-import com.liferay.document.library.kernel.service.DLContentLocalServiceUtil;
-import com.liferay.document.library.kernel.service.persistence.DLContentPersistence;
-import com.liferay.document.library.kernel.service.persistence.DLContentUtil;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
+import com.liferay.document.library.content.exception.NoSuchContentException;
+import com.liferay.document.library.content.model.DLContent;
+import com.liferay.document.library.content.service.DLContentLocalServiceUtil;
+import com.liferay.document.library.content.service.persistence.DLContentPersistence;
+import com.liferay.document.library.content.service.persistence.DLContentUtil;
 
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -47,6 +49,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.sql.Blob;
@@ -63,12 +67,14 @@ import java.util.Set;
 /**
  * @generated
  */
+@RunWith(Arquillian.class)
 public class DLContentPersistenceTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(Propagation.REQUIRED));
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.document.library.content.service"));
 
 	@Before
 	public void setUp() {

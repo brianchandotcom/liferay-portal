@@ -37,7 +37,7 @@ else {
 	inputDescription = "export-import-permissions-help";
 }
 
-String inputLabel = "<span style='font-weight: bold;'>" + LanguageUtil.get(request, inputTitle) + ":</span> " + LanguageUtil.get(request, inputDescription);
+String inputLabel = "<span style='font-weight: bold;'>" + LanguageUtil.get(request, inputTitle) + ":</span> <span style='font-weight: normal;'>" + LanguageUtil.get(request, inputDescription) + "</span> ";
 %>
 
 <aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="permissions" markupView="lexicon">

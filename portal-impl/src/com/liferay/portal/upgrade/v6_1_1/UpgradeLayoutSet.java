@@ -53,8 +53,11 @@ public class UpgradeLayoutSet extends UpgradeProcess {
 						long layoutSetId = rs.getLong("LayoutSet.layoutSetId");
 
 						runSQL(
-							"update LayoutSet set logoId = 0 where groupId = " +
-								groupId + " and layoutSetId = " + layoutSetId);
+							StringBundler.concat(
+								"update LayoutSet set logoId = 0 where ",
+								"groupId = ", String.valueOf(groupId),
+								"and layoutSetId = ",
+								String.valueOf(layoutSetId)));
 					}
 				}
 			}

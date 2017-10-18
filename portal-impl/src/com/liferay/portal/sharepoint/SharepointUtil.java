@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -86,7 +87,9 @@ public class SharepointUtil {
 		}
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Storage class for path " + path + " is " + storageClass);
+			_log.info(
+				StringBundler.concat(
+					"Storage class for path ", path, " is ", storageClass));
 		}
 
 		return (SharepointStorage)InstancePool.get(storageClass);

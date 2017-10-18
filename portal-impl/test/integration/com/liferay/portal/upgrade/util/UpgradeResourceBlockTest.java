@@ -198,8 +198,9 @@ public class UpgradeResourceBlockTest extends BaseUpgradeResourceBlock {
 		throws Exception {
 
 		try (PreparedStatement ps = connection.prepareStatement(
-				"select * from " + tableName + " where " + primaryKeyName +
-					" < 0");
+				StringBundler.concat(
+					"select * from ", tableName, " where ", primaryKeyName,
+					" < 0"));
 			ResultSet rs = ps.executeQuery()) {
 
 			Assert.assertFalse(rs.next());

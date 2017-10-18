@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xuggler.Xuggler;
 import com.liferay.portal.kernel.xuggler.XugglerInstallException;
@@ -68,9 +69,10 @@ public class XugglerAutoInstallHelper {
 
 		if (xugglerJarFile == null) {
 			_log.error(
-				"Xuggler auto install is not supported on system: " +
-					System.getProperty("os.name") + "/" +
-						System.getProperty("os.arch"));
+				StringBundler.concat(
+					"Xuggler auto install is not supported on system: ",
+					System.getProperty("os.name"), "/",
+					System.getProperty("os.arch")));
 
 			return;
 		}

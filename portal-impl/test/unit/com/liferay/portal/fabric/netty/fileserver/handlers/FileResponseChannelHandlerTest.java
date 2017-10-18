@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Time;
 
 import io.netty.channel.Channel;
@@ -146,9 +147,10 @@ public class FileResponseChannelHandlerTest {
 			LogRecord logRecord = logRecords.get(0);
 
 			Assert.assertEquals(
-				"Unable to place result " + fileResponse +
-					" because no future exists with ID " +
-						fileResponse.getPath(),
+				StringBundler.concat(
+					"Unable to place result ", String.valueOf(fileResponse),
+					" because no future exists with ID ",
+					String.valueOf(fileResponse.getPath())),
 				logRecord.getMessage());
 		}
 	}
@@ -185,9 +187,10 @@ public class FileResponseChannelHandlerTest {
 			LogRecord logRecord = logRecords.get(0);
 
 			Assert.assertEquals(
-				"Unable to place result " + fileResponse +
-					" because no future exists with ID " +
-						fileResponse.getPath(),
+				StringBundler.concat(
+					"Unable to place result ", String.valueOf(fileResponse),
+					" because no future exists with ID ",
+					String.valueOf(fileResponse.getPath())),
 				logRecord.getMessage());
 		}
 	}

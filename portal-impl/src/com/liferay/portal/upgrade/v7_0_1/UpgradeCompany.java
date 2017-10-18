@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.v7_0_1;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.util.Encryptor;
 
 import java.security.Key;
@@ -49,8 +50,9 @@ public class UpgradeCompany extends UpgradeProcess {
 				keyString = Encryptor.serializeKey(key);
 
 				runSQL(
-					"update Company set key_ = '" + keyString +
-						"' where companyId = " + companyId);
+					StringBundler.concat(
+						"update Company set key_ = '", keyString,
+						"' where companyId = ", companyId));
 			}
 		}
 	}

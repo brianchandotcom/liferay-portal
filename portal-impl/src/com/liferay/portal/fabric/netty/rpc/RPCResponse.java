@@ -75,8 +75,10 @@ public class RPCResponse<T extends Serializable> extends RPCSerializable {
 		else {
 			if (!asyncBroker.takeWithResult(id, _result)) {
 				_log.error(
-					"Unable to place result " + _result +
-						" because no future exists with ID " + id);
+					StringBundler.concat(
+						"Unable to place result ", String.valueOf(_result),
+						" because no future exists with ID ",
+						String.valueOf(id)));
 			}
 		}
 	}

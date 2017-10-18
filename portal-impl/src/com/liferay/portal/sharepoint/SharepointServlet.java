@@ -41,8 +41,9 @@ public class SharepointServlet extends HttpServlet {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				request.getHeader(HttpHeaders.USER_AGENT) + " " +
-					request.getMethod() + " " + request.getRequestURI());
+				StringBundler.concat(
+					request.getHeader(HttpHeaders.USER_AGENT), " ",
+					request.getMethod(), " ", request.getRequestURI()));
 		}
 
 		try {
@@ -103,9 +104,9 @@ public class SharepointServlet extends HttpServlet {
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						request.getHeader(HttpHeaders.USER_AGENT) + " " +
-							method.getMethodName() + " " + uri + " " +
-								rootPath);
+						StringBundler.concat(
+							request.getHeader(HttpHeaders.USER_AGENT), " ",
+							method.getMethodName(), " ", uri, " ", rootPath));
 				}
 
 				method.process(sharepointRequest);
@@ -113,8 +114,9 @@ public class SharepointServlet extends HttpServlet {
 			else {
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						request.getHeader(HttpHeaders.USER_AGENT) + " " +
-							request.getMethod() + " " + uri);
+						StringBundler.concat(
+							request.getHeader(HttpHeaders.USER_AGENT), " ",
+							request.getMethod(), " ", uri));
 				}
 			}
 		}

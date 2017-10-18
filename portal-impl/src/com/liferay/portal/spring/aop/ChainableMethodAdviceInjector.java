@@ -14,6 +14,8 @@
 
 package com.liferay.portal.spring.aop;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 import org.aopalliance.intercept.MethodInterceptor;
 
 /**
@@ -69,8 +71,9 @@ public class ChainableMethodAdviceInjector {
 				_childMethodInterceptor) {
 
 			throw new IllegalArgumentException(
-				"Unable to find " + _childMethodInterceptor + " from " +
-					_parentChainableMethodAdvice);
+				StringBundler.concat(
+					"Unable to find ", String.valueOf(_childMethodInterceptor),
+					" from ", String.valueOf(_parentChainableMethodAdvice)));
 		}
 
 		_newChainableMethodAdvice.nextMethodInterceptor =

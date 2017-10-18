@@ -241,8 +241,9 @@ public class TemplateProcessor implements ColumnProcessor {
 			}
 			else {
 				throw new IllegalArgumentException(
-					"Key " + key + " has unsupported value of type " +
-						ClassUtil.getClassName(value.getClass()));
+					StringBundler.concat(
+						"Key ", key, " has unsupported value of type ",
+						ClassUtil.getClassName(value.getClass())));
 			}
 		}
 

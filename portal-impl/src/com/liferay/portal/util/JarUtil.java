@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.InputStream;
@@ -63,8 +64,9 @@ public class JarUtil {
 
 					if (_log.isDebugEnabled()) {
 						_log.debug(
-							"Swapping URL from " + urlString + " to " +
-								newURLString);
+							StringBundler.concat(
+								"Swapping URL from ", urlString, " to ",
+								newURLString));
 					}
 				}
 				catch (UnknownHostException uhe) {
@@ -78,7 +80,10 @@ public class JarUtil {
 		Path path = Paths.get(libPath, name);
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Downloading " + url + " to " + path);
+			_log.info(
+				StringBundler.concat(
+					"Downloading ", String.valueOf(url), " to ",
+					String.valueOf(path)));
 		}
 
 		try (InputStream inputStream = url.openStream()) {
@@ -86,7 +91,10 @@ public class JarUtil {
 		}
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Downloaded " + url + " to " + path);
+			_log.info(
+				StringBundler.concat(
+					"Downloaded ", String.valueOf(url), " to ",
+					String.valueOf(path)));
 		}
 
 		return path;
@@ -101,13 +109,19 @@ public class JarUtil {
 		URI uri = path.toUri();
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Installing " + path + " to " + urlClassLoader);
+			_log.info(
+				StringBundler.concat(
+					"Installing ", String.valueOf(path), " to ",
+					String.valueOf(urlClassLoader)));
 		}
 
 		_addURLMethod.invoke(urlClassLoader, uri.toURL());
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Installed " + path + " to " + urlClassLoader);
+			_log.info(
+				StringBundler.concat(
+					"Installed ", String.valueOf(path), " to ",
+					String.valueOf(urlClassLoader)));
 		}
 	}
 

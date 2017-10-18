@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -252,7 +253,9 @@ public class DeployUtil {
 
 		if (appServerType.equals(ServerDetector.JETTY_ID)) {
 			FileUtil.delete(
-				_getJettyHome() + "/contexts/" + deployDir.getName() + ".xml");
+				StringBundler.concat(
+					_getJettyHome(), "/contexts/", deployDir.getName(),
+					".xml"));
 		}
 
 		if (appServerType.equals(ServerDetector.JBOSS_ID) ||

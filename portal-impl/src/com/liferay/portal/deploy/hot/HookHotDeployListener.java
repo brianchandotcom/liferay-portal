@@ -102,6 +102,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -611,8 +612,8 @@ public class HookHotDeployListener
 
 		String packagePath = modelName.substring(0, pos);
 
-		String beanName =
-			packagePath + ".service.persistence." + entityName + "Persistence";
+		String beanName = StringBundler.concat(
+			packagePath, ".service.persistence.", entityName, "Persistence");
 
 		try {
 			return (BasePersistence<?>)PortalBeanLocatorUtil.locate(beanName);
@@ -1074,8 +1075,9 @@ public class HookHotDeployListener
 				new DeprecatedFormNavigatorEntry(
 					formNavigatorSection, formNavigatorSection, categoryKey,
 					formNavigatorId,
-					"/html/portlet/" + jspPath + "/" + formNavigatorSection +
-						".jsp");
+					StringBundler.concat(
+						"/html/portlet/", jspPath, "/", formNavigatorSection,
+						".jsp"));
 
 			registerService(
 				servletContextName,
@@ -2100,7 +2102,9 @@ public class HookHotDeployListener
 			}
 			catch (Exception e) {
 				_log.error(
-					"Error setting field " + fieldName + ": " + e.getMessage());
+					StringBundler.concat(
+						"Error setting field ", fieldName, ": ",
+						e.getMessage()));
 			}
 		}
 
@@ -2123,7 +2127,9 @@ public class HookHotDeployListener
 			}
 			catch (Exception e) {
 				_log.error(
-					"Error setting field " + fieldName + ": " + e.getMessage());
+					StringBundler.concat(
+						"Error setting field ", fieldName, ": ",
+						e.getMessage()));
 			}
 		}
 
@@ -2146,7 +2152,9 @@ public class HookHotDeployListener
 			}
 			catch (Exception e) {
 				_log.error(
-					"Error setting field " + fieldName + ": " + e.getMessage());
+					StringBundler.concat(
+						"Error setting field ", fieldName, ": ",
+						e.getMessage()));
 			}
 		}
 
@@ -2168,7 +2176,9 @@ public class HookHotDeployListener
 			}
 			catch (Exception e) {
 				_log.error(
-					"Error setting field " + fieldName + ": " + e.getMessage());
+					StringBundler.concat(
+						"Error setting field ", fieldName, ": ",
+						e.getMessage()));
 			}
 		}
 
@@ -2237,7 +2247,9 @@ public class HookHotDeployListener
 			}
 			catch (Exception e) {
 				_log.error(
-					"Error setting field " + fieldName + ": " + e.getMessage());
+					StringBundler.concat(
+						"Error setting field ", fieldName, ": ",
+						e.getMessage()));
 			}
 		}
 	}

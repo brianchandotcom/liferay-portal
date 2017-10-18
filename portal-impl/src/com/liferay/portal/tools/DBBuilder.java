@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -134,7 +135,9 @@ public class DBBuilder {
 	private void _buildSQLFile(String sqlDir, String fileName)
 		throws IOException {
 
-		if (!FileUtil.exists(sqlDir + "/" + fileName + ".sql")) {
+		if (!FileUtil.exists(
+				StringBundler.concat(sqlDir, "/", fileName, ".sql"))) {
+
 			return;
 		}
 

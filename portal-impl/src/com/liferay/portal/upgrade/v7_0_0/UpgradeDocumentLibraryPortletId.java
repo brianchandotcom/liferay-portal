@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
 
 import java.sql.PreparedStatement;
@@ -50,8 +51,9 @@ public class UpgradeDocumentLibraryPortletId extends UpgradePortletId {
 
 	protected void deleteDuplicateResourcePermissions() throws SQLException {
 		try (PreparedStatement ps1 = connection.prepareStatement(
-				"select companyId, scope, primKey from ResourcePermission " +
-					"where name = '" + _PORTLET_ID_DOCUMENT_LIBRARY + "'");
+				StringBundler.concat(
+					"select companyId, scope, primKey from ResourcePermission ",
+					"where name = '", _PORTLET_ID_DOCUMENT_LIBRARY, "'"));
 			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {

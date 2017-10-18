@@ -98,8 +98,9 @@ public class VerifySQLServer extends VerifyProcess {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Updating " + tableName + "." + columnName + " to use " +
-					"nvarchar(max)");
+				StringBundler.concat(
+					"Updating ", tableName, ".", columnName, " to use ",
+					"nvarchar(max)"));
 		}
 
 		StringBundler sb = new StringBundler(4);
@@ -114,13 +115,18 @@ public class VerifySQLServer extends VerifyProcess {
 
 		runSQL(sb.toString());
 
-		runSQL("update " + tableName + " set temp = " + columnName);
-
-		runSQL("alter table " + tableName + " drop column " + columnName);
+		runSQL(
+			StringBundler.concat(
+				"update ", tableName, " set temp = ", columnName));
 
 		runSQL(
-			"exec sp_rename \'" + tableName + ".temp\', \'" + columnName +
-				"\', \'column\'");
+			StringBundler.concat(
+				"alter table ", tableName, " drop column ", columnName));
+
+		runSQL(
+			StringBundler.concat(
+				"exec sp_rename \'", tableName, ".temp\', \'", columnName,
+				"\', \'column\'"));
 	}
 
 	protected void convertVarcharColumn(
@@ -129,8 +135,9 @@ public class VerifySQLServer extends VerifyProcess {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Updating " + tableName + "." + columnName +
-					" to use nvarchar");
+				StringBundler.concat(
+					"Updating ", tableName, ".", columnName,
+					" to use nvarchar"));
 		}
 
 		StringBundler sb = new StringBundler(8);
@@ -201,7 +208,9 @@ public class VerifySQLServer extends VerifyProcess {
 				String indexName = rs.getString("index_name");
 
 				if (_log.isInfoEnabled()) {
-					_log.info("Dropping index " + tableName + "." + indexName);
+					_log.info(
+						StringBundler.concat(
+							"Dropping index ", tableName, ".", indexName));
 				}
 
 				String indexNameUpperCase = StringUtil.toUpperCase(indexName);
@@ -211,15 +220,19 @@ public class VerifySQLServer extends VerifyProcess {
 						getPrimaryKeyColumnNames(indexName));
 
 					runSQL(
-						"alter table " + tableName + " drop constraint " +
-							indexName);
+						StringBundler.concat(
+							"alter table ", tableName, " drop constraint ",
+							indexName));
 
 					_addPrimaryKeySQLs.add(
-						"alter table " + tableName + " add primary key (" +
-							primaryKeyColumnNames + ")");
+						StringBundler.concat(
+							"alter table ", tableName, " add primary key (",
+							primaryKeyColumnNames, ")"));
 				}
 				else {
-					runSQL("drop index " + indexName + " on " + tableName);
+					runSQL(
+						StringBundler.concat(
+							"drop index ", indexName, " on ", tableName));
 				}
 			}
 		}

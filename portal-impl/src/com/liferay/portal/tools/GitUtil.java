@@ -16,6 +16,7 @@ package com.liferay.portal.tools;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -203,8 +204,9 @@ public class GitUtil {
 		String latestCommitId = unsyncBufferedReader.readLine();
 
 		unsyncBufferedReader = getGitCommandReader(
-			"git diff --diff-filter=AM --name-only " + commitId + " " +
-				latestCommitId);
+			StringBundler.concat(
+				"git diff --diff-filter=AM --name-only ", commitId, " ",
+				latestCommitId));
 
 		String line = null;
 

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.aspects.ReflectionUtilAdvice;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
@@ -118,8 +119,9 @@ public class ASMWrapperUtilTest {
 		Package pkg = TestDelegate.class.getPackage();
 
 		Assert.assertEquals(
-			pkg.getName() + "." + TestInterface.class.getSimpleName() +
-				"ASMWrapper",
+			StringBundler.concat(
+				pkg.getName(), ".", TestInterface.class.getSimpleName(),
+				"ASMWrapper"),
 			asmWrapperClass.getName());
 
 		Assert.assertSame(Object.class, asmWrapperClass.getSuperclass());
@@ -133,8 +135,9 @@ public class ASMWrapperUtilTest {
 		Assert.assertEquals(0, asmWrapper.hashCode());
 		Assert.assertEquals("test", asmWrapper.toString());
 		Assert.assertEquals(
-			"Expected: " + Arrays.toString(expectedMethods) + ", actual: " +
-				Arrays.toString(actualMethods),
+			StringBundler.concat(
+				"Expected: ", Arrays.toString(expectedMethods), ", actual: ",
+				Arrays.toString(actualMethods)),
 			expectedMethods.length, actualMethods.length);
 
 		for (int i = 0; i < expectedMethods.length; i++) {
@@ -280,21 +283,31 @@ public class ASMWrapperUtilTest {
 
 	private void _assertEquals(Method expectedMethod, Method actualMethod) {
 		Assert.assertEquals(
-			"Expected:" + expectedMethod + ", actual: " + actualMethod,
+			StringBundler.concat(
+				"Expected:", String.valueOf(expectedMethod), ", actual: ",
+				String.valueOf(actualMethod)),
 			expectedMethod.getModifiers() - Modifier.ABSTRACT,
 			actualMethod.getModifiers());
 		Assert.assertSame(
-			"Expected:" + expectedMethod + ", actual: " + actualMethod,
+			StringBundler.concat(
+				"Expected:", String.valueOf(expectedMethod), ", actual: ",
+				String.valueOf(actualMethod)),
 			expectedMethod.getReturnType(), actualMethod.getReturnType());
 		Assert.assertEquals(
-			"Expected:" + expectedMethod + ", actual: " + actualMethod,
+			StringBundler.concat(
+				"Expected:", String.valueOf(expectedMethod), ", actual: ",
+				String.valueOf(actualMethod)),
 			expectedMethod.getName(), actualMethod.getName());
 		Assert.assertArrayEquals(
-			"Expected:" + expectedMethod + ", actual: " + actualMethod,
+			StringBundler.concat(
+				"Expected:", String.valueOf(expectedMethod), ", actual: ",
+				String.valueOf(actualMethod)),
 			expectedMethod.getParameterTypes(),
 			actualMethod.getParameterTypes());
 		Assert.assertArrayEquals(
-			"Expected:" + expectedMethod + ", actual: " + actualMethod,
+			StringBundler.concat(
+				"Expected:", String.valueOf(expectedMethod), ", actual: ",
+				String.valueOf(actualMethod)),
 			expectedMethod.getExceptionTypes(),
 			actualMethod.getExceptionTypes());
 	}

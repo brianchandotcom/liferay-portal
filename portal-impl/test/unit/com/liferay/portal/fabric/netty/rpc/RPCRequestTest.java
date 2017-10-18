@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelOutboundHandlerAdapter;
@@ -168,7 +169,9 @@ public class RPCRequestTest {
 		RPCRequest<String> rpcRequest = new RPCRequest<>(_ID, rpcCallable);
 
 		Assert.assertEquals(
-			"{id=" + _ID + ", rpcCallable=" + rpcCallable.toString() + "}",
+			StringBundler.concat(
+				"{id=", String.valueOf(_ID), ", rpcCallable=",
+				rpcCallable.toString(), "}"),
 			rpcRequest.toString());
 	}
 

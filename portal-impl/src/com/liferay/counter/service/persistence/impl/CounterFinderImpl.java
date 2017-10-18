@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -122,7 +123,8 @@ public class CounterFinderImpl
 		synchronized (counterRegister) {
 			if (_counterRegisterMap.containsKey(newName)) {
 				throw new SystemException(
-					"Cannot rename " + oldName + " to " + newName);
+					StringBundler.concat(
+						"Cannot rename ", oldName, " to ", newName));
 			}
 
 			Connection connection = null;

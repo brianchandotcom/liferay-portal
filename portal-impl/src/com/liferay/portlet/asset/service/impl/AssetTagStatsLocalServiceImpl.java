@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portlet.asset.service.base.AssetTagStatsLocalServiceBaseImpl;
 
 import java.util.List;
@@ -55,8 +56,9 @@ public class AssetTagStatsLocalServiceImpl
 		catch (SystemException se) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Add failed, fetch {tagId=" + tagId + ", classNameId=" +
-						classNameId + "}");
+					StringBundler.concat(
+						"Add failed, fetch {tagId=", String.valueOf(tagId),
+						", classNameId=", String.valueOf(classNameId), "}"));
 			}
 
 			tagStats = assetTagStatsPersistence.fetchByT_C(

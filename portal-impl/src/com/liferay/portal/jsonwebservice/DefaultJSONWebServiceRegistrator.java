@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.aop.AdvisedSupportProxy;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.util.PropsValues;
@@ -120,8 +121,9 @@ public class DefaultJSONWebServiceRegistrator
 		}
 		catch (Exception e) {
 			_log.error(
-				"Unable to compute target class of bean " + beanName +
-					" with type " + bean.getClass(),
+				StringBundler.concat(
+					"Unable to compute target class of bean ", beanName,
+					" with type ", String.valueOf(bean.getClass())),
 				e);
 
 			return;

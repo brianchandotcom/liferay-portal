@@ -55,8 +55,9 @@ public class SharepointDocumentWorkspaceServlet extends HttpServlet {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				request.getHeader(HttpHeaders.USER_AGENT) + " " +
-					request.getMethod() + " " + request.getRequestURI());
+				StringBundler.concat(
+					request.getHeader(HttpHeaders.USER_AGENT), " ",
+					request.getMethod(), " ", request.getRequestURI()));
 		}
 
 		try {
@@ -147,9 +148,9 @@ public class SharepointDocumentWorkspaceServlet extends HttpServlet {
 
 		Element root = doc.addElement("Results");
 
-		String url =
-			"http://" + request.getLocalAddr() + ":" + request.getServerPort() +
-				"/sharepoint";
+		String url = StringBundler.concat(
+			"http://", request.getLocalAddr(), ":",
+			String.valueOf(request.getServerPort()), "/sharepoint");
 
 		root.addElement("SubscribeUrl").setText(url);
 

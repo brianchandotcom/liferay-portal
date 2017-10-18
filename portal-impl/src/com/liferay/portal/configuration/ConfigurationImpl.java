@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Field;
@@ -404,7 +405,9 @@ public class ConfigurationImpl
 
 			if (companyId > CompanyConstants.SYSTEM) {
 				info +=
-					" for {companyId=" + companyId + ", webId=" + webId + "}";
+					StringBundler.concat(
+						" for {companyId=", String.valueOf(companyId),
+						", webId=", webId, "}");
 			}
 
 			System.out.println(info);

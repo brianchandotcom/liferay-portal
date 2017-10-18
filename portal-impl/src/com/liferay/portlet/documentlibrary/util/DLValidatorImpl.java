@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.exception.SourceFileNameException;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.document.library.kernel.util.DLValidatorUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
@@ -156,8 +157,9 @@ public final class DLValidatorImpl implements DLValidator {
 					return nameWithoutExtension + StringPool.UNDERLINE;
 				}
 
-				return nameWithoutExtension + StringPool.UNDERLINE +
-					StringPool.PERIOD + extension;
+				return StringBundler.concat(
+					nameWithoutExtension, StringPool.UNDERLINE,
+					StringPool.PERIOD, extension);
 			}
 		}
 

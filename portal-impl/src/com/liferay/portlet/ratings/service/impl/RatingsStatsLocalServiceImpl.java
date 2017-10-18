@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portlet.ratings.service.base.RatingsStatsLocalServiceBaseImpl;
 import com.liferay.ratings.kernel.exception.NoSuchStatsException;
 import com.liferay.ratings.kernel.model.RatingsStats;
@@ -50,8 +51,10 @@ public class RatingsStatsLocalServiceImpl
 		catch (SystemException se) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Add failed, fetch {classNameId=" + classNameId +
-						", classPK=" + classPK + "}");
+					StringBundler.concat(
+						"Add failed, fetch {classNameId=",
+						String.valueOf(classNameId), ", classPK=",
+						String.valueOf(classPK), "}"));
 			}
 
 			stats = ratingsStatsPersistence.fetchByC_C(

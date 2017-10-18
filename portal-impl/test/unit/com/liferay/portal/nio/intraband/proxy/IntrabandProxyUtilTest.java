@@ -161,8 +161,10 @@ public class IntrabandProxyUtilTest {
 		}
 		catch (IllegalArgumentException iae) {
 			Assert.assertEquals(
-				"Field " + fields[0] + " is expected to be of type " +
-					Object.class + " and not static",
+				StringBundler.concat(
+					"Field ", String.valueOf(fields[0]),
+					" is expected to be of type ", String.valueOf(Object.class),
+					" and not static"),
 				iae.getMessage());
 		}
 
@@ -174,8 +176,10 @@ public class IntrabandProxyUtilTest {
 		}
 		catch (IllegalArgumentException iae) {
 			Assert.assertEquals(
-				"Field " + fields[0] + " is expected to be of type " +
-					String.class + " and static",
+				StringBundler.concat(
+					"Field ", String.valueOf(fields[0]),
+					" is expected to be of type ", String.valueOf(String.class),
+					" and static"),
 				iae.getMessage());
 		}
 	}
@@ -1669,10 +1673,11 @@ public class IntrabandProxyUtilTest {
 					Assert.assertSame(
 						IllegalArgumentException.class, throwable.getClass());
 					Assert.assertEquals(
-						"Unknow method index " + i +
-							" for proxy methods mappings " +
-								ReflectionTestUtil.getFieldValue(
-									skeletonClass, "_PROXY_METHODS_MAPPING"),
+						StringBundler.concat(
+							"Unknow method index ", String.valueOf(i),
+							" for proxy methods mappings ",
+							ReflectionTestUtil.getFieldValue(
+									skeletonClass, "_PROXY_METHODS_MAPPING")),
 						throwable.getMessage());
 				}
 
@@ -2164,8 +2169,10 @@ public class IntrabandProxyUtilTest {
 				"PROXY_METHOD_SIGNATURES");
 
 			Assert.assertEquals(
-				"Field " + field + " is expected to be of type " +
-					String[].class + " and static",
+				StringBundler.concat(
+					"Field ", String.valueOf(field),
+					" is expected to be of type ",
+					String.valueOf(String[].class), " and static"),
 				iae.getMessage());
 		}
 
@@ -2187,8 +2194,10 @@ public class IntrabandProxyUtilTest {
 					"_PROXY_METHODS_MAPPING");
 
 				Assert.assertEquals(
-					"Field " + field + " is expected to be of type " +
-						String.class + " and static",
+					StringBundler.concat(
+						"Field ", String.valueOf(field),
+						" is expected to be of type ",
+						String.valueOf(String.class), " and static"),
 					iae.getMessage());
 			}
 
@@ -2208,8 +2217,10 @@ public class IntrabandProxyUtilTest {
 				Field field = TestValidateClass3.class.getDeclaredField("_log");
 
 				Assert.assertEquals(
-					"Field " + field + " is expected to be of type " +
-						Log.class + " and static",
+					StringBundler.concat(
+						"Field ", String.valueOf(field),
+						" is expected to be of type ",
+						String.valueOf(Log.class), " and static"),
 					iae.getMessage());
 			}
 
@@ -2230,8 +2241,10 @@ public class IntrabandProxyUtilTest {
 					"_targetLocator");
 
 				Assert.assertEquals(
-					"Field " + field + " is expected to be of type " +
-						TargetLocator.class + " and not static",
+					StringBundler.concat(
+						"Field ", String.valueOf(field),
+						" is expected to be of type ",
+						String.valueOf(TargetLocator.class), " and not static"),
 					iae.getMessage());
 			}
 		}
@@ -2253,8 +2266,10 @@ public class IntrabandProxyUtilTest {
 					"_proxyType");
 
 				Assert.assertEquals(
-					"Field " + field + " is expected to be of type " +
-						byte.class + " and static",
+					StringBundler.concat(
+						"Field ", String.valueOf(field),
+						" is expected to be of type ",
+						String.valueOf(byte.class), " and static"),
 					iae.getMessage());
 			}
 
@@ -2274,8 +2289,10 @@ public class IntrabandProxyUtilTest {
 				Field field = TestValidateClass6.class.getDeclaredField("_id");
 
 				Assert.assertEquals(
-					"Field " + field + " is expected to be of type " +
-						String.class + " and not static",
+					StringBundler.concat(
+						"Field ", String.valueOf(field),
+						" is expected to be of type ",
+						String.valueOf(String.class), " and not static"),
 					iae.getMessage());
 			}
 
@@ -2296,8 +2313,10 @@ public class IntrabandProxyUtilTest {
 					"_intraband");
 
 				Assert.assertEquals(
-					"Field " + field + " is expected to be of type " +
-						Intraband.class + " and not static",
+					StringBundler.concat(
+						"Field ", String.valueOf(field),
+						" is expected to be of type ",
+						String.valueOf(Intraband.class), " and not static"),
 					iae.getMessage());
 			}
 
@@ -2318,8 +2337,11 @@ public class IntrabandProxyUtilTest {
 					"_registrationReference");
 
 				Assert.assertEquals(
-					"Field " + field + " is expected to be of type " +
-						RegistrationReference.class + " and not static",
+					StringBundler.concat(
+						"Field ", String.valueOf(field),
+						" is expected to be of type ",
+						String.valueOf(RegistrationReference.class),
+						" and not static"),
 					iae.getMessage());
 			}
 
@@ -2340,8 +2362,11 @@ public class IntrabandProxyUtilTest {
 					"_exceptionHandler");
 
 				Assert.assertEquals(
-					"Field " + field + " is expected to be of type " +
-						ExceptionHandler.class + " and not static",
+					StringBundler.concat(
+						"Field ", String.valueOf(field),
+						" is expected to be of type ",
+						String.valueOf(ExceptionHandler.class),
+						" and not static"),
 					iae.getMessage());
 			}
 		}

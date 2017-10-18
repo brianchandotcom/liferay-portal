@@ -70,8 +70,10 @@ public class DeployManagerImpl implements DeployManager {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Level " + i + " required deployment WAR file names " +
-						levelRequiredDeploymentWARFileNamesString);
+					StringBundler.concat(
+						"Level ", String.valueOf(i),
+						" required deployment WAR file names ",
+						levelRequiredDeploymentWARFileNamesString));
 			}
 
 			String[] levelRequiredDeploymentWARFileNames = StringUtil.split(
@@ -108,8 +110,10 @@ public class DeployManagerImpl implements DeployManager {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Level " + i + " required deployment contexts " +
-						StringUtil.merge(levelRequiredDeploymentContexts));
+					StringBundler.concat(
+						"Level ", String.valueOf(i),
+						" required deployment contexts ",
+						StringUtil.merge(levelRequiredDeploymentContexts)));
 			}
 		}
 	}

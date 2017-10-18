@@ -117,7 +117,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		String json = toJSON(map);
 
-		json = "[" + json + ", " + json + "]";
+		json = StringBundler.concat("[", json, ", ", json, "]");
 
 		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(json);
 

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnsafeConsumer;
 import com.liferay.portal.util.PropsValues;
@@ -78,9 +79,11 @@ public abstract class VerifyProcess extends BaseDBProcess {
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Completed verification process " +
-						ClassUtil.getClassName(this) + " in " +
-							(System.currentTimeMillis() - start) + "ms");
+					StringBundler.concat(
+						"Completed verification process ",
+						ClassUtil.getClassName(this), " in ",
+						String.valueOf(System.currentTimeMillis() - start),
+						"ms"));
 			}
 		}
 	}

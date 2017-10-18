@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.RepositoryConfiguration;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.repository.registry.RepositoryClassDefinition;
 import com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalog;
@@ -133,8 +134,9 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 		try {
 			if (!configuration.equals(_CONFIGURATION)) {
 				throw new IllegalArgumentException(
-					"Specified " + configuration + " does not match " +
-						"supported configuration " + _CONFIGURATION);
+					StringBundler.concat(
+						"Specified ", configuration, " does not match ",
+						"supported configuration ", _CONFIGURATION));
 			}
 
 			Collection<String> supportedParameters = new ArrayList<>();

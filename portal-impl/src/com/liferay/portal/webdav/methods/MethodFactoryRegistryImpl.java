@@ -17,6 +17,7 @@ package com.liferay.portal.webdav.methods;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.webdav.methods.MethodFactory;
 import com.liferay.portal.kernel.webdav.methods.MethodFactoryRegistry;
 
@@ -57,8 +58,10 @@ public class MethodFactoryRegistryImpl implements MethodFactoryRegistry {
 
 		if (_log.isWarnEnabled() && (previousMethodFactory != null)) {
 			_log.warn(
-				"Replacing " + previousMethodFactory + " for class name " +
-					clazz.getName() + " with " + methodFactory);
+				StringBundler.concat(
+					"Replacing ", String.valueOf(previousMethodFactory),
+					" for class name ", clazz.getName(), " with ",
+					String.valueOf(methodFactory)));
 		}
 	}
 

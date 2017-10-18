@@ -446,9 +446,10 @@ public class RuntimePageImpl implements RuntimePage {
 
 					if (_log.isDebugEnabled()) {
 						_log.debug(
-							"Serially rendered portlet " +
-								portlet.getPortletId() + " in " +
-									stopWatch.getTime() + " ms");
+							StringBundler.concat(
+								"Serially rendered portlet ",
+								portlet.getPortletId(), " in ",
+								String.valueOf(stopWatch.getTime()), " ms"));
 					}
 				}
 
@@ -592,9 +593,10 @@ public class RuntimePageImpl implements RuntimePage {
 
 					if (_log.isDebugEnabled()) {
 						_log.debug(
-							"Parallely rendered portlet " +
-								portlet.getPortletId() + " in " + duration +
-									" ms");
+							StringBundler.concat(
+								"Parallely rendered portlet ",
+								portlet.getPortletId(), " in ",
+								String.valueOf(duration), " ms"));
 					}
 
 					continue;

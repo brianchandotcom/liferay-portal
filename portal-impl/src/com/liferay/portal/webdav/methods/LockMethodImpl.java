@@ -163,7 +163,8 @@ public class LockMethodImpl implements Method {
 			_log.debug("Response XML\n" + xml);
 		}
 
-		String lockToken = "<" + WebDAVUtil.TOKEN_PREFIX + lock.getUuid() + ">";
+		String lockToken = StringBundler.concat(
+			"<", WebDAVUtil.TOKEN_PREFIX, lock.getUuid(), ">");
 
 		response.setContentType(ContentTypes.TEXT_XML_UTF8);
 		response.setHeader("Lock-Token", lockToken);

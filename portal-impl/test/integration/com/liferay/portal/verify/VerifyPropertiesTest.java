@@ -16,6 +16,7 @@ package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
@@ -74,9 +75,10 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 
 			Assert.assertEquals(
-				"Portal property \"" + migratedPortalKey +
-					"\" was migrated to the system property \"" +
-						migratedPortalKey + "\"",
+				StringBundler.concat(
+					"Portal property \"", migratedPortalKey,
+					"\" was migrated to the system property \"",
+					migratedPortalKey, "\""),
 				loggingEvent.getMessage());
 		}
 		finally {
@@ -115,9 +117,10 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 
 			Assert.assertEquals(
-				"System property \"" + migratedSystemKey +
-					"\" was migrated to the portal property \"" +
-						migratedSystemKey + "\"",
+				StringBundler.concat(
+					"System property \"", migratedSystemKey,
+					"\" was migrated to the portal property \"",
+					migratedSystemKey, "\""),
 				loggingEvent.getMessage());
 		}
 		finally {
@@ -159,9 +162,10 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 
 			Assert.assertEquals(
-				"Portal property \"" + modularizedPortalKey +
-					"\" was modularized to " + modularizedPortalKey + " as \"" +
-						modularizedPortalKey + "\"",
+				StringBundler.concat(
+					"Portal property \"", modularizedPortalKey,
+					"\" was modularized to ", modularizedPortalKey, " as \"",
+					modularizedPortalKey, "\""),
 				loggingEvent.getMessage());
 		}
 		finally {
@@ -271,8 +275,9 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 
 			Assert.assertEquals(
-				"Portal property \"" + renamedPortalKey +
-					"\" was renamed to \"" + renamedPortalKey + "\"",
+				StringBundler.concat(
+					"Portal property \"", renamedPortalKey,
+					"\" was renamed to \"", renamedPortalKey, "\""),
 				loggingEvent.getMessage());
 		}
 		finally {
@@ -308,8 +313,9 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 
 			Assert.assertEquals(
-				"System property \"" + renamedSystemKey +
-					"\" was renamed to \"" + renamedSystemKey + "\"",
+				StringBundler.concat(
+					"System property \"", renamedSystemKey,
+					"\" was renamed to \"", renamedSystemKey, "\""),
 				loggingEvent.getMessage());
 		}
 		finally {

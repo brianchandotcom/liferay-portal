@@ -53,10 +53,10 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 	}
 
 	protected void upgradePortalPreferences(long companyId) throws Exception {
-		String sql =
-			"select portalPreferencesId, preferences from PortalPreferences " +
-				"where ownerId = " + companyId + " and ownerType = " +
-					PortletKeys.PREFS_OWNER_TYPE_COMPANY;
+		String sql = StringBundler.concat(
+			"select portalPreferencesId, preferences from PortalPreferences ",
+			"where ownerId = ", String.valueOf(companyId), " and ownerType = ",
+			String.valueOf(PortletKeys.PREFS_OWNER_TYPE_COMPANY));
 
 		try (PreparedStatement ps1 = connection.prepareStatement(sql);
 			ResultSet rs = ps1.executeQuery()) {

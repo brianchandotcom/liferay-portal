@@ -414,8 +414,10 @@ public class PortletURLImpl
 			!mappedCacheability.equals(PORTLET)) {
 
 			throw new IllegalArgumentException(
-				"Cacheability " + cacheability + " is not FULL, " + FULL +
-					", PAGE, " + PAGE + ", or PORTLET, " + PORTLET);
+				StringBundler.concat(
+					"Cacheability ", cacheability, " is not FULL, ",
+					String.valueOf(FULL), ", PAGE, ", PAGE, ", or PORTLET, ",
+					String.valueOf(PORTLET)));
 		}
 
 		if (_portletRequest instanceof ResourceRequest) {

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Image;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.service.base.ImageLocalServiceBaseImpl;
@@ -103,8 +104,9 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Unable to get image " + imageId + ": " +
-							e.getMessage());
+						StringBundler.concat(
+							"Unable to get image ", String.valueOf(imageId),
+							": ", e.getMessage()));
 				}
 			}
 		}

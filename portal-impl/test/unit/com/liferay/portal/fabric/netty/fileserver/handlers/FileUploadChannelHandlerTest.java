@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
@@ -470,9 +471,11 @@ public class FileUploadChannelHandlerTest {
 				}
 				else {
 					Assert.assertEquals(
-						"Unable to place result " + fileResponse +
-							" because no future exists with ID " +
-								fileResponse.getPath(),
+						StringBundler.concat(
+							"Unable to place result ",
+							String.valueOf(fileResponse),
+							" because no future exists with ID ",
+							String.valueOf(fileResponse.getPath())),
 						logRecord.getMessage());
 				}
 			}

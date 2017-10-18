@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.persistence.LayoutFinder;
 import com.liferay.portal.kernel.service.persistence.LayoutUtil;
 import com.liferay.portal.kernel.service.persistence.RoleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.impl.LayoutImpl;
@@ -181,9 +182,9 @@ public class LayoutFinderImpl
 		long companyId, String portletId, String preferencesKey,
 		String preferencesValue) {
 
-		String preferences =
-			"%<preference><name>" + preferencesKey + "</name><value>" +
-				preferencesValue + "</value>%";
+		String preferences = StringBundler.concat(
+			"%<preference><name>", preferencesKey, "</name><value>",
+			preferencesValue, "</value>%");
 
 		Session session = null;
 

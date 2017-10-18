@@ -66,9 +66,7 @@ public class FriendlyURLEntryStagedModelRepository
 	public void deleteStagedModel(FriendlyURLEntry friendlyURLEntry)
 		throws PortalException {
 
-		_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
-			friendlyURLEntry.getGroupId(), friendlyURLEntry.getClassNameId(),
-			friendlyURLEntry.getClassPK(), friendlyURLEntry.getUrlTitle());
+		_friendlyURLEntryLocalService.deleteFriendlyURLEntry(friendlyURLEntry);
 	}
 
 	@Override

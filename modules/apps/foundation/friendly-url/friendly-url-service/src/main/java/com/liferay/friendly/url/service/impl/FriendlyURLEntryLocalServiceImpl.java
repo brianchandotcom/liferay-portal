@@ -142,6 +142,56 @@ public class FriendlyURLEntryLocalServiceImpl
 	}
 
 	@Override
+	public FriendlyURLEntry deleteFriendlyURLEntry(
+		FriendlyURLEntry friendlyURLEntry) {
+
+		friendlyURLEntryLocalizationPersistence.removeByFriendlyURLEntryId(
+			friendlyURLEntry.getFriendlyURLEntryId());
+
+		FriendlyURLEntry deletedFriendlyURLEntry =
+			friendlyURLEntryPersistence.remove(friendlyURLEntry);
+
+		FriendlyURLEntryMapping friendlyURLEntryMapping =
+			friendlyURLEntryMappingPersistence.fetchByPrimaryKey(
+				new FriendlyURLEntryMappingPK(
+					friendlyURLEntry.getClassNameId(),
+					friendlyURLEntry.getClassPK()));
+
+		if ((friendlyURLEntryMapping != null) &&
+			(friendlyURLEntryMapping.getFriendlyURLEntryId() ==
+				friendlyURLEntry.getFriendlyURLEntryId())) {
+
+			friendlyURLEntry = friendlyURLEntryPersistence.fetchByG_C_C_Last(
+				friendlyURLEntry.getGroupId(),
+				friendlyURLEntry.getClassNameId(),
+				friendlyURLEntry.getClassPK(),
+				new FriendlyURLEntryCreateDateComparator());
+
+			if (friendlyURLEntry == null) {
+				friendlyURLEntryMappingPersistence.remove(
+					friendlyURLEntryMapping);
+			}
+			else {
+				friendlyURLEntryMapping.setFriendlyURLEntryId(
+					friendlyURLEntry.getFriendlyURLEntryId());
+
+				friendlyURLEntryMappingPersistence.update(
+					friendlyURLEntryMapping);
+			}
+		}
+
+		return deletedFriendlyURLEntry;
+	}
+
+	@Override
+	public FriendlyURLEntry deleteFriendlyURLEntry(long friendlyURLEntryId)
+		throws PortalException {
+
+		return deleteFriendlyURLEntry(
+			friendlyURLEntryPersistence.findByPrimaryKey(friendlyURLEntryId));
+	}
+
+	@Override
 	public void deleteFriendlyURLEntry(
 			long groupId, Class<?> clazz, long classPK)
 		throws PortalException {
@@ -161,56 +211,6 @@ public class FriendlyURLEntryLocalServiceImpl
 
 		friendlyURLEntryMappingPersistence.remove(
 			new FriendlyURLEntryMappingPK(classNameId, classPK));
-	}
-
-	@Override
-	public void deleteFriendlyURLEntry(
-			long groupId, Class<?> clazz, long classPK, String urlTitle)
-		throws PortalException {
-
-		long classNameId = classNameLocalService.getClassNameId(clazz);
-
-		deleteFriendlyURLEntry(groupId, classNameId, classPK, urlTitle);
-	}
-
-	@Override
-	public void deleteFriendlyURLEntry(
-			long groupId, long classNameId, long classPK, String urlTitle)
-		throws PortalException {
-
-		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
-			friendlyURLEntryLocalizationPersistence.fetchByG_C_U(
-				groupId, classNameId, urlTitle);
-
-		if (friendlyURLEntryLocalization == null) {
-			return;
-		}
-
-		friendlyURLEntryLocalizationPersistence.removeByFriendlyURLEntryId(
-			friendlyURLEntryLocalization.getFriendlyURLEntryId());
-
-		FriendlyURLEntry friendlyURLEntry =
-			friendlyURLEntryPersistence.fetchByG_C_C_First(
-				groupId, classNameId, classPK,
-				new FriendlyURLEntryCreateDateComparator());
-
-		FriendlyURLEntryMappingPK friendlyURLEntryMappingPK =
-			new FriendlyURLEntryMappingPK(classNameId, classPK);
-
-		if (friendlyURLEntry == null) {
-			friendlyURLEntryMappingPersistence.remove(
-				friendlyURLEntryMappingPK);
-		}
-		else {
-			FriendlyURLEntryMapping friendlyURLEntryMapping =
-				friendlyURLEntryMappingPersistence.findByPrimaryKey(
-					friendlyURLEntryMappingPK);
-
-			friendlyURLEntryMapping.setFriendlyURLEntryId(
-				friendlyURLEntry.getFriendlyURLEntryId());
-
-			friendlyURLEntryMappingPersistence.update(friendlyURLEntryMapping);
-		}
 	}
 
 	@Override

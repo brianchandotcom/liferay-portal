@@ -72,7 +72,10 @@ import javax.mail.internet.MimeMultipart;
  * @author Thiago Moreira
  * @author Brett Swaim
  * @see    com.liferay.petra.mail.MailEngine
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.petra.mail.MailEngine}
  */
+@Deprecated
 public class MailEngine {
 
 	public static Session getSession() {

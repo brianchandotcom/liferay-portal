@@ -19,7 +19,10 @@ import org.apache.commons.lang.exception.NestableException;
 /**
  * @author Alexander Chow
  * @see    com.liferay.petra.mail.MailServerException
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.petra.mail.MailServerException}
  */
+@Deprecated
 public class MailServerException extends NestableException {
 
 	public MailServerException() {

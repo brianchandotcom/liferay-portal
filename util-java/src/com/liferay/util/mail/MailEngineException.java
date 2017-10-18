@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.exception.NestableException;
 /**
  * @author Brian Wing Shun Chan
  * @see    com.liferay.petra.mail.MailEngineException
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.petra.mail.MailEngineException}
  */
+@Deprecated
 public class MailEngineException extends NestableException {
 
 	public MailEngineException() {

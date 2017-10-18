@@ -44,7 +44,10 @@ import javax.crypto.spec.SecretKeySpec;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  * @see    com.liferay.petra.encryptor.Encryptor
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.petra.encryptor.Encryptor}
  */
+@Deprecated
 public class Encryptor {
 
 	public static final String ENCODING = Digester.ENCODING;

@@ -508,7 +508,6 @@ public class FriendlyURLEntryLocalServiceImpl
 		long classPK, Map<String, String> urlTitleMap) {
 
 		for (Map.Entry<String, String> entry : urlTitleMap.entrySet()) {
-			String languageId = entry.getKey();
 			String urlTitle = entry.getValue();
 
 			String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
@@ -540,7 +539,7 @@ public class FriendlyURLEntryLocalServiceImpl
 			friendlyURLEntryLocalization.setClassNameId(classNameId);
 			friendlyURLEntryLocalization.setClassPK(classPK);
 			friendlyURLEntryLocalization.setUrlTitle(normalizedUrlTitle);
-			friendlyURLEntryLocalization.setLanguageId(languageId);
+			friendlyURLEntryLocalization.setLanguageId(entry.getKey());
 
 			friendlyURLEntryLocalizationPersistence.update(
 				friendlyURLEntryLocalization);

@@ -41,6 +41,10 @@ import org.osgi.service.component.annotations.Reference;
 public class DLDDMDisplay extends BaseDDMDisplay {
 
 	@Override
+	public DDMDisplayTabItem getDefaultTabItem() {
+		return _defaultTabItem;
+	}
+
 	public String getPortletId() {
 		return PortletKeys.DOCUMENT_LIBRARY;
 	}
@@ -80,6 +84,14 @@ public class DLDDMDisplay extends BaseDDMDisplay {
 	public boolean isShowBackURLInTitleBar() {
 		return true;
 	}
+
+	private final DDMDisplayTabItem _defaultTabItem =
+		(liferayPortletRequest, liferayPortletResponse) -> {
+			ResourceBundle resourceBundle = getResourceBundle(
+				liferayPortletRequest.getLocale());
+
+			return LanguageUtil.get(resourceBundle, "metadata-sets");
+		};
 
 	@Reference
 	private DocumentsAndMediaDDMDisplayTabItem

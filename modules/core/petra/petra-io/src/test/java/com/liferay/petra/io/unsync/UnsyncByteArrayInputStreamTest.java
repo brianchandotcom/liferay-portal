@@ -14,13 +14,15 @@
 
 package com.liferay.petra.io.unsync;
 
+import java.io.InputStream;
+
 import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
-public class UnsyncByteArrayInputStreamTest {
+public class UnsyncByteArrayInputStreamTest extends BaseInputStreamTestCase {
 
 	@Test
 	public void testBlockRead() {
@@ -119,6 +121,11 @@ public class UnsyncByteArrayInputStreamTest {
 			_SIZE - size, unsyncByteArrayInputStream.skip(size));
 
 		Assert.assertEquals(0, unsyncByteArrayInputStream.available());
+	}
+
+	@Override
+	protected InputStream getInputStream(byte[] bytes) {
+		return new UnsyncByteArrayInputStream(bytes);
 	}
 
 	private static final byte[] _BUFFER =

@@ -16,6 +16,7 @@ package com.liferay.petra.io.unsync;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 
 import java.util.Arrays;
@@ -26,7 +27,7 @@ import org.junit.Test;
 /**
  * @author Shuyang Zhou
  */
-public class UnsyncByteArrayOutputStreamTest {
+public class UnsyncByteArrayOutputStreamTest extends BaseOutputStreamTestCase {
 
 	@Test
 	public void testBlockWrite() {
@@ -171,6 +172,11 @@ public class UnsyncByteArrayOutputStreamTest {
 
 		Assert.assertTrue(
 			Arrays.equals(_BUFFER, byteArrayOutputStream.toByteArray()));
+	}
+
+	@Override
+	protected OutputStream getOutputStream() {
+		return new UnsyncByteArrayOutputStream();
 	}
 
 	private static final byte[] _BUFFER =

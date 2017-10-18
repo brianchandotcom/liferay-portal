@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutPrototype;
@@ -61,6 +62,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
+import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
@@ -251,6 +253,15 @@ public class SitesImpl implements Sites {
 
 		Layout layoutPrototypeLayout = layoutPrototype.getLayout();
 
+		byte[] iconBytes = null;
+
+		if (layoutPrototypeLayout.isIconImage()) {
+			Image image = ImageLocalServiceUtil.getImage(
+				layoutPrototypeLayout.getIconImageId());
+
+			iconBytes = image.getTextObj();
+		}
+
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -271,7 +282,7 @@ public class SitesImpl implements Sites {
 				targetLayout.getDescriptionMap(), targetLayout.getKeywordsMap(),
 				targetLayout.getRobotsMap(), layoutPrototypeLayout.getType(),
 				targetLayout.getHidden(), targetLayout.getFriendlyURLMap(),
-				targetLayout.getIconImage(), null, serviceContext);
+				layoutPrototypeLayout.isIconImage(), iconBytes, serviceContext);
 		}
 		finally {
 			LocaleThreadLocal.setSiteDefaultLocale(siteDefaultLocale);

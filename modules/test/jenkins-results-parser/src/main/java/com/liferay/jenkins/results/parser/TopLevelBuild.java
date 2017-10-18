@@ -51,6 +51,15 @@ import org.json.JSONObject;
 public class TopLevelBuild extends BaseBuild {
 
 	@Override
+	public void addTimelineData(BaseBuild.TimelineData timelineData) {
+		timelineData.addTimelineData(this);
+
+		if (getTopLevelBuild() == this) {
+			addDownstreamBuildsTimelineData(timelineData);
+		}
+	}
+
+	@Override
 	public void archive(String archiveName) {
 		super.archive(archiveName);
 
@@ -251,6 +260,10 @@ public class TopLevelBuild extends BaseBuild {
 	@Override
 	public JSONObject getTestReportJSONObject() {
 		return null;
+	}
+
+	public BaseBuild.TimelineData getTimelineData() {
+		return new BaseBuild.TimelineData(500, this);
 	}
 
 	@Override
@@ -576,8 +589,7 @@ public class TopLevelBuild extends BaseBuild {
 
 		return Dom4JUtil.getNewElement(
 			"body", null, headingElement, subheadingElement,
-			getJenkinsReportSummaryElement(),
-			getJenkinsReportTimelineElement(nonBatchBuilds),
+			getJenkinsReportSummaryElement(), getJenkinsReportTimelineElement(),
 			getJenkinsReportTopLevelTableElement(),
 			getJenkinsReportDownstreamElement());
 	}
@@ -741,52 +753,7 @@ public class TopLevelBuild extends BaseBuild {
 		return tableColumnHeaderElement;
 	}
 
-	protected Element getJenkinsReportTimelineElement(
-		Map<String, Build> nonBatchBuilds) {
-
-		long topLevelDuration = getDuration();
-		long topLevelStartTime = getStartTimestamp();
-
-		int dataPoints = 500;
-
-		long[] invocationData = new long[dataPoints];
-		long[] slaveUsageData = new long[dataPoints];
-
-		for (String key : nonBatchBuilds.keySet()) {
-			Build build = nonBatchBuilds.get(key);
-
-			long buildDuration = build.getDuration();
-			long buildStartTime = build.getStartTimestamp();
-
-			long buildEndTime = buildDuration + buildStartTime;
-
-			long dataEnd =
-				(buildEndTime - topLevelStartTime) * dataPoints /
-					topLevelDuration;
-
-			if (dataEnd > dataPoints) {
-				dataEnd = dataPoints;
-			}
-
-			long dataStart =
-				(buildStartTime - topLevelStartTime) * dataPoints /
-					topLevelDuration;
-
-			for (int i = (int)dataStart; i < dataEnd; i++) {
-				slaveUsageData[i] = ++slaveUsageData[i];
-			}
-
-			invocationData[(int)dataStart] = ++invocationData[(int)dataStart];
-		}
-
-		long[] timeData = new long[dataPoints];
-
-		timeData[0] = 0;
-
-		for (int i = 1; i < timeData.length; i++) {
-			timeData[i] = timeData[0] + i * topLevelDuration / dataPoints;
-		}
-
+	protected Element getJenkinsReportTimelineElement() {
 		Element canvasElement = Dom4JUtil.getNewElement("canvas");
 
 		canvasElement.addAttribute("height", "300");
@@ -797,9 +764,12 @@ public class TopLevelBuild extends BaseBuild {
 		scriptElement.addAttribute("src", _CHART_JS_FILE);
 		scriptElement.addText("");
 
+		BaseBuild.TimelineData timelineData = getTimelineData();
+
 		Element chartJSScriptElement = getJenkinsReportChartJsScriptElement(
-			Arrays.toString(timeData), Arrays.toString(slaveUsageData),
-			Arrays.toString(invocationData));
+			Arrays.toString(timelineData.getIndexData()),
+			Arrays.toString(timelineData.getSlaveUsageData()),
+			Arrays.toString(timelineData.getInvocationsData()));
 
 		return Dom4JUtil.getNewElement(
 			"div", null, canvasElement, scriptElement, chartJSScriptElement);

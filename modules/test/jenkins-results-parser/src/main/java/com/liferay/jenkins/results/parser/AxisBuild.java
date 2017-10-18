@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.BaseBuild.TimelineData;
 import com.liferay.jenkins.results.parser.failure.message.generator.CompileFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.FailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.GenericFailureMessageGenerator;
@@ -48,6 +49,11 @@ import org.json.JSONObject;
  * @author Peter Yoo
  */
 public class AxisBuild extends BaseBuild {
+
+	@Override
+	public void addTimelineData(BaseBuild.TimelineData timelineData) {
+		timelineData.addTimelineData(this);
+	}
 
 	@Override
 	public void findDownstreamBuilds() {

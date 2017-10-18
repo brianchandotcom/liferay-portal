@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.BaseBuild.TimelineData;
+
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -35,6 +37,11 @@ import org.json.JSONObject;
  * @author Kevin Yen
  */
 public class BatchBuild extends BaseBuild {
+
+	@Override
+	public void addTimelineData(BaseBuild.TimelineData timelineData) {
+		addDownstreamBuildsTimelineData(timelineData);
+	}
 
 	@Override
 	public String getAppServer() {

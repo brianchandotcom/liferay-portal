@@ -70,6 +70,8 @@ public abstract class BaseBuild implements Build {
 		}
 	}
 
+	public abstract void addTimelineData(BaseBuild.TimelineData timelineData);
+
 	@Override
 	public void archive(final String archiveName) {
 		if (!_status.equals("completed")) {
@@ -1400,6 +1402,18 @@ public abstract class BaseBuild implements Build {
 		update();
 	}
 
+	protected void addDownstreamBuildsTimelineData(
+		BaseBuild.TimelineData timelineData) {
+
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			if (downstreamBuild instanceof BaseBuild) {
+				BaseBuild downstreamBaseBuild = (BaseBuild)downstreamBuild;
+
+				downstreamBaseBuild.addTimelineData(timelineData);
+			}
+		}
+	}
+
 	protected void archiveConsoleLog() {
 		downloadSampleURL(
 			getArchivePath(), true, getBuildURL(), "/consoleText");
@@ -2341,6 +2355,102 @@ public abstract class BaseBuild implements Build {
 		SlaveOfflineRule.getSlaveOfflineRules();
 	protected long statusModifiedTime;
 	protected Element upstreamJobFailureMessageElement;
+
+	protected static class TimelineData {
+
+		protected TimelineData(int size, TopLevelBuild topLevelBuild) {
+			if (topLevelBuild != topLevelBuild.getTopLevelBuild()) {
+				throw new IllegalArgumentException(
+					"Nested TopLevelBuild objects are invalid");
+			}
+
+			if (size < 1) {
+				throw new IllegalArgumentException("Invalid size " + size);
+			}
+
+			_duration = topLevelBuild.getDuration();
+			_startTimestamp = topLevelBuild.getStartTimestamp();
+			_timeline = new TimelineDataPoint[size];
+
+			for (int i = 0; i < size; i++) {
+				_timeline[i] = new TimelineDataPoint(
+					(int)(i * (_duration / _timeline.length)));
+			}
+
+			topLevelBuild.addTimelineData(this);
+		}
+
+		protected void addTimelineData(BaseBuild build) {
+			int endIndex = _getIndex(
+				build.getStartTimestamp() + build.getDuration());
+			int startIndex = _getIndex(build.getStartTimestamp());
+
+			_timeline[startIndex]._invocationsCount++;
+
+			for (int i = startIndex; i <= endIndex; i++) {
+				_timeline[i]._slaveUsageCount++;
+			}
+		}
+
+		protected int[] getIndexData() {
+			int[] indexes = new int[_timeline.length];
+
+			for (int i = 0; i < _timeline.length; i++) {
+				indexes[i] = _timeline[i]._index;
+			}
+
+			return indexes;
+		}
+
+		protected int[] getInvocationsData() {
+			int[] invocationsData = new int[_timeline.length];
+
+			for (int i = 0; i < _timeline.length; i++) {
+				invocationsData[i] = _timeline[i]._invocationsCount;
+			}
+
+			return invocationsData;
+		}
+
+		protected int[] getSlaveUsageData() {
+			int[] slaveUsageData = new int[_timeline.length];
+
+			for (int i = 0; i < _timeline.length; i++) {
+				slaveUsageData[i] = _timeline[i]._slaveUsageCount;
+			}
+
+			return slaveUsageData;
+		}
+
+		private int _getIndex(long timestamp) {
+			int index =
+				(int)((timestamp - _startTimestamp) *
+					(_duration / _timeline.length));
+
+			if (index > _timeline.length) {
+				return _timeline.length;
+			}
+
+			return index;
+		}
+
+		private final long _duration;
+		private final long _startTimestamp;
+		private final TimelineDataPoint[] _timeline;
+
+		private static class TimelineDataPoint {
+
+			private TimelineDataPoint(int index) {
+				_index = index;
+			}
+
+			private final int _index;
+			private int _invocationsCount;
+			private int _slaveUsageCount;
+
+		}
+
+	}
 
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
 		{

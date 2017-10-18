@@ -1208,7 +1208,9 @@
 
 		<execute function="AssertClick" locator1="Comments#EDIT_LINK" value1="Edit" />
 
-		<execute function="Type" locator1="AlloyEditor#CONTENT_FIELD" value1="${commentBodyEdit}" />
+		<execute macro="AlloyEditor#addContent">
+			<var name="content" value="${commentBodyEdit}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 

@@ -134,7 +134,9 @@
 			<var name="key_menuItem" value="Edit" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="AlloyEditor#TITLE_FIELD" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="AlloyEditor#EDITOR" value1="${entryTitle}">
+			<var name="key_editor" value="title" />
+		</execute>
 
 		<execute macro="AlloyEditor#addTitleAndContent">
 			<var name="content" value="${entryContentEdit}" />

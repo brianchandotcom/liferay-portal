@@ -164,7 +164,9 @@
 
 		<execute function="Click" locator1="Form#NAME_FIELD" />
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#NAME_FIELD" value1="${formName}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#EDITOR" value1="${formName}">
+			<var name="key_editor" value="name" />
+		</execute>
 	</command>
 
 	<command name="editNameLocalized">
@@ -176,9 +178,9 @@
 
 		<execute function="Click" locator1="Form#NAME_FIELD" />
 
-		<var name="key_localizedText" value="${localizedText}" />
-
-		<execute function="Type#typeEditor" locator1="AlloyEditor#NAME_FIELD_LOCALIZED" value1="${formName}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#EDITOR" value1="${formName}">
+			<var name="key_editor" value="name" />
+		</execute>
 	</command>
 
 	<command name="editPageDescription">

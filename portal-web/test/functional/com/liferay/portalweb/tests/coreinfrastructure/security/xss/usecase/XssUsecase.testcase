@@ -241,7 +241,9 @@
 
 		<execute macro="BlogsNavigator#gotoAddEntry" />
 
-		<execute function="Type#typeAceEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${entryTitle}" />
+		<execute function="Type#typeAceEditor" locator1="AlloyEditor#EDITOR" value1="${entryTitle}">
+			<var name="key_editor" value="title" />
+		</execute>
 
 		<execute macro="BlogsEntry#addContent">
 			<var name="entryContent" value="Blogs Entry Content" />

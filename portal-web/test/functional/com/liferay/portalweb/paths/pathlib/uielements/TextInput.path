@@ -489,6 +489,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TRACKBACKS</td>
+	<td>//input[contains(@id,'trackbacks')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TRASH_ENTRIES_MAX_AGE</td>
 	<td>//input[contains(@id,'trashEntriesMaxAge')]</td>
 	<td></td>

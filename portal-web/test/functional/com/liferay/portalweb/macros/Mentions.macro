@@ -9,7 +9,9 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute function="Type#sendKeys" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContent} @${mentionsUserScreenName}" />
+		<execute function="Type#sendKeys" locator1="AlloyEditor#EDITOR" value1="${entryContent} @${mentionsUserScreenName}">
+			<var name="key_editor" value="content" />
+		</execute>
 
 		<execute function="Click#clickNoMouseOver" locator1="Mentions#MENTIONS_USER_DISPLAY_OPTION" />
 
@@ -59,7 +61,9 @@
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
 
-		<execute function="Type#sendKeys" locator1="AlloyEditor#CONTENT_FIELD" value1="@${mentionsUserScreenName}" />
+		<execute function="Type#sendKeys" locator1="AlloyEditor#EDITOR" value1="@${mentionsUserScreenName}">
+			<var name="key_editor" value="content" />
+		</execute>
 
 		<execute function="Click#clickNoMouseOver" locator1="Mentions#MENTIONS_USER_DISPLAY_OPTION" />
 
@@ -75,11 +79,15 @@
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
 
-		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
+		<execute function="Click" locator1="AlloyEditor#EDITOR">
+			<var name="key_editor" value="content" />
+		</execute>
 
 		<var name="key_mentionsUserScreenName" value="${mentionsUserScreenName}" />
 
-		<execute function="Type#sendKeys" locator1="AlloyEditor#CONTENT_FIELD" value1=" @${mentionsUserScreenName}" />
+		<execute function="Type#sendKeys" locator1="AlloyEditor#EDITOR" value1=" @${mentionsUserScreenName}">
+			<var name="key_editor" value="content" />
+		</execute>
 
 		<execute function="Click#clickNoMouseOver" locator1="Mentions#MENTIONS_USER_DISPLAY_OPTION" />
 

@@ -111,7 +111,9 @@
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="Icon#BACK" />
-		<execute function="AssertVisible" locator1="AlloyEditor#TITLE_FIELD" />
+		<execute function="AssertVisible" locator1="AlloyEditor#EDITOR">
+			<var name="key_editor" value="title" />
+		</execute>
 	</command>
 
 	<command name="gotoEditPG">

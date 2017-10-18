@@ -80,7 +80,7 @@ if (portletTitleBasedNavigation) {
 							for (RepositoryClassDefinition repositoryClassDefinition : RepositoryClassDefinitionCatalogUtil.getExternalRepositoryClassDefinitions()) {
 							%>
 
-								<aui:option label="<%= HtmlUtil.escape(repositoryClassDefinition.getRepositoryTypeLabel(locale)) %>" value="<%= HtmlUtil.escapeAttribute(repositoryClassDefinition.getClassName()) %>" />
+								<aui:option label="<%= HtmlUtil.escape(repositoryClassDefinition.getRepositoryTypeLabel(locale)) %>" value="<%= RepositoryClassDefinitionUtil.getRepositoryClassDefinitionId(repositoryClassDefinition) %>" />
 
 							<%
 							}
@@ -153,12 +153,10 @@ if (portletTitleBasedNavigation) {
 		<%
 		for (RepositoryClassDefinition repositoryClassDefinition : RepositoryClassDefinitionCatalogUtil.getExternalRepositoryClassDefinitions()) {
 			try {
-				String className = repositoryClassDefinition.getClassName();
-
-				String unqualifiedClassName = HtmlUtil.escapeAttribute(className.substring(className.lastIndexOf(StringPool.PERIOD) + 1));
+				String repositoryClassDefinitionId = RepositoryClassDefinitionUtil.getRepositoryClassDefinitionId(repositoryClassDefinition);
 		%>
 
-				<div class="settings-parameters" id="<portlet:namespace />repository-<%= unqualifiedClassName %>-configuration">
+				<div class="settings-parameters" id="<portlet:namespace />repository-<%= repositoryClassDefinitionId %>-configuration">
 
 					<%
 					RepositoryConfiguration repositoryConfiguration = repositoryClassDefinition.getRepositoryConfiguration();
@@ -192,9 +190,9 @@ if (portletTitleBasedNavigation) {
 	var showConfiguration = function(select) {
 		settingsSupported.append(settingsParameters.find('.settings-parameters'));
 
-		var className = select.val().split('.').pop();
+		var repositoryClassDefinitionId = select.val();
 
-		var repositoryParameters = $('#<portlet:namespace />repository-' + className + '-configuration');
+		var repositoryParameters = $('#<portlet:namespace />repository-' + repositoryClassDefinitionId + '-configuration');
 
 		settingsParameters.append(repositoryParameters);
 	};

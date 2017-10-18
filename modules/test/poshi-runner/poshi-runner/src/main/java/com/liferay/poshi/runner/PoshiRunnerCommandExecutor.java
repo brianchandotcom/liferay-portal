@@ -19,42 +19,49 @@ import org.junit.runner.JUnitCore;
 /**
  * @author Yi-Chen Tsai
  */
-public class PoshiRunnerTaskExecutor {
+public class PoshiRunnerCommandExecutor {
 
 	public static void main(String[] args) throws Exception {
-		String task;
+		String command;
 
 		if (args.length < 1) {
-			task = "help";
+			command = "help";
 		}
 		else {
-			task = args[0];
+			command = args[0];
 		}
 
-		switch (task) {
+		switch (command) {
 			case "evaluatePoshiConsole":
 				evaluatePoshiConsole();
+
 				break;
 
 			case "help":
 				taskHelp();
+
 				break;
 
 			case "runPoshi":
 				runPoshi(args);
+
 				break;
 
 			case "validatePoshi":
 				validatePoshi();
+
 				break;
 
 			case "writePoshiProperties":
 				writePoshiProperties();
+
 				break;
 
 			default:
-				System.out.println("ERROR: Unrecognized task name: " + task);
+				System.out.println("ERROR: Unrecognized task name: " + command);
+
 				taskHelp();
+
 				break;
 		}
 	}
@@ -81,7 +88,8 @@ public class PoshiRunnerTaskExecutor {
 			"\tevaluatePoshiConsole\tEvaluate the console output errors.\n");
 		sb.append("\trunPoshi\t\t\tExecute tests using Poshi Runner.\n");
 		sb.append("\tvalidatePoshi\t\tValidates the Poshi files syntax.\n");
-		sb.append("\twritePoshiProperties\tWrite the Poshi properties files.\n");
+		sb.append(
+			"\twritePoshiProperties\tWrite the Poshi properties files.\n");
 
 		System.out.println(sb.toString());
 	}

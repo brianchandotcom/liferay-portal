@@ -97,6 +97,13 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
+		if (IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) {
+			Alert.viewSuccessMessage();
+		}
+		else {
+			fail("Element not present");
+		}
+
 		if ((IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) && ("${check}" == "true") && (isSet(duplicate))) {
 			Alert.viewSuccessMessage();
 		}

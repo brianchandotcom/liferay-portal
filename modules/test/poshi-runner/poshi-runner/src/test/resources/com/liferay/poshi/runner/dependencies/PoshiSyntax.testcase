@@ -118,6 +118,16 @@
 		</if>
 
 		<if>
+			<condition function="IsElementPresent" locator1="Blogs#ADD_BLOGS_ENTRY" />
+			<then>
+				<execute macro="Alert#viewSuccessMessage" />
+			</then>
+			<else>
+				<fail message="Element not present" />
+            </else>
+		</if>
+
+		<if>
 			<and>
 				<condition function="IsElementPresent" locator1="Blogs#ADD_BLOGS_ENTRY" />
 				<equals arg1="${check}" arg2="true" />

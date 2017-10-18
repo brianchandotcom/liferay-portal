@@ -504,6 +504,8 @@ public class FriendlyURLEntryLocalServiceImpl
 					return false;
 				}
 			}
+
+			return false;
 		}
 
 		return true;

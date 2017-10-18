@@ -44,6 +44,10 @@ public class PersistedModelLocalServiceRegistryImpl
 		return ListUtil.fromMapValues(_persistedModelLocalServices);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isPermissionedModelLocalService(String className) {
 		PersistedModelLocalService persistedModelLocalService =

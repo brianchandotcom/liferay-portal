@@ -60,8 +60,10 @@ import java.rmi.RemoteException;
  * @see ResourceBlockServiceHttp
  * @see com.liferay.portal.kernel.model.ResourceBlockSoap
  * @see ResourceBlockServiceUtil
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public class ResourceBlockServiceSoap {
 	public static void addCompanyScopePermission(long scopeGroupId,

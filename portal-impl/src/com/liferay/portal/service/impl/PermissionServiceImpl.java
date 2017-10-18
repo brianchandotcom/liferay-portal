@@ -19,10 +19,7 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
-import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupedModel;
-import com.liferay.portal.kernel.model.PermissionedModel;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
@@ -178,33 +175,13 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 				}
 			}
 
-			long ownerId = 0;
+			ResourcePermission resourcePermission =
+				resourcePermissionLocalService.getResourcePermission(
+					permissionChecker.getCompanyId(), name,
+					ResourceConstants.SCOPE_INDIVIDUAL, primKey,
+					permissionChecker.getOwnerRoleId());
 
-			if (resourceBlockLocalService.isSupported(name)) {
-				PermissionedModel permissionedModel =
-					resourceBlockLocalService.getPermissionedModel(
-						name, GetterUtil.getLong(primKey));
-
-				if (permissionedModel instanceof GroupedModel) {
-					GroupedModel groupedModel = (GroupedModel)permissionedModel;
-
-					ownerId = groupedModel.getUserId();
-				}
-				else if (permissionedModel instanceof AuditedModel) {
-					AuditedModel auditedModel = (AuditedModel)permissionedModel;
-
-					ownerId = auditedModel.getUserId();
-				}
-			}
-			else {
-				ResourcePermission resourcePermission =
-					resourcePermissionLocalService.getResourcePermission(
-						permissionChecker.getCompanyId(), name,
-						ResourceConstants.SCOPE_INDIVIDUAL, primKey,
-						permissionChecker.getOwnerRoleId());
-
-				ownerId = resourcePermission.getOwnerId();
-			}
+			long ownerId = resourcePermission.getOwnerId();
 
 			if (permissionChecker.hasOwnerPermission(
 					permissionChecker.getCompanyId(), name, primKey, ownerId,

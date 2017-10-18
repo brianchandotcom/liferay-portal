@@ -33,8 +33,10 @@ import java.util.Objects;
  *
  * @author Brian Wing Shun Chan
  * @see ResourceBlock
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public class ResourceBlockWrapper implements ResourceBlock,
 	ModelWrapper<ResourceBlock> {

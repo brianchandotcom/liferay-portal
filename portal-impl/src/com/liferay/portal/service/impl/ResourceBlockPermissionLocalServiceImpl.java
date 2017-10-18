@@ -37,7 +37,9 @@ import java.util.Set;
  * </p>
  *
  * @author Connor McKay
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class ResourceBlockPermissionLocalServiceImpl
 	extends ResourceBlockPermissionLocalServiceBaseImpl {
 

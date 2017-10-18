@@ -35,10 +35,8 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceAction;
-import com.liferay.portal.kernel.model.ResourceBlockPermission;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
-import com.liferay.portal.kernel.model.ResourceTypePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -55,10 +53,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -78,7 +73,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -87,7 +81,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.Callable;
 
 /**
  * Provides the local service for accessing, adding, checking, deleting, and
@@ -252,18 +245,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		userPersistence.addRoles(userId, roleIds);
 
 		reindex(userId);
-	}
-
-	@Override
-	public void afterPropertiesSet() {
-		super.afterPropertiesSet();
-
-		TransactionConfig.Builder builder = new TransactionConfig.Builder();
-
-		builder.setIsolation(Isolation.READ_COMMITTED);
-		builder.setPropagation(Propagation.REQUIRES_NEW);
-
-		_transactionConfig = builder.build();
 	}
 
 	/**
@@ -443,49 +424,12 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		// Resources
 
-		List<ResourceBlockPermission> resourceBlockPermissions =
-			resourceBlockPermissionPersistence.findByRoleId(role.getRoleId());
-
-		try {
-			TransactionInvokerUtil.invoke(
-				_transactionConfig,
-				new Callable<Void>() {
-
-					@Override
-					public Void call() {
-						for (ResourceBlockPermission resourceBlockPermission :
-								resourceBlockPermissions) {
-
-							resourceBlockPermissionLocalService.
-								deleteResourceBlockPermission(
-									resourceBlockPermission);
-						}
-
-						return null;
-					}
-
-				});
-		}
-		catch (Throwable t) {
-			throw new PortalException(t);
-		}
-
 		List<ResourcePermission> resourcePermissions =
 			resourcePermissionPersistence.findByRoleId(role.getRoleId());
 
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			resourcePermissionLocalService.deleteResourcePermission(
 				resourcePermission);
-		}
-
-		List<ResourceTypePermission> resourceTypePermissions =
-			resourceTypePermissionPersistence.findByRoleId(role.getRoleId());
-
-		for (ResourceTypePermission resourceTypePermission :
-				resourceTypePermissions) {
-
-			resourceTypePermissionLocalService.deleteResourceTypePermission(
-				resourceTypePermission);
 		}
 
 		String className = role.getClassName();
@@ -779,6 +723,10 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			teamGroupId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public List<Role> getResourceBlockRoles(
 		long resourceBlockId, String className, String actionId) {
@@ -1703,17 +1651,9 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			Role role, String name, String[] actionIds)
 		throws PortalException {
 
-		if (resourceBlockLocalService.isSupported(name)) {
-			resourceBlockLocalService.setCompanyScopePermissions(
-				role.getCompanyId(), name, role.getRoleId(),
-				Arrays.asList(actionIds));
-		}
-		else {
-			resourcePermissionLocalService.setResourcePermissions(
-				role.getCompanyId(), name, ResourceConstants.SCOPE_COMPANY,
-				String.valueOf(role.getCompanyId()), role.getRoleId(),
-				actionIds);
-		}
+		resourcePermissionLocalService.setResourcePermissions(
+			role.getCompanyId(), name, ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(role.getCompanyId()), role.getRoleId(), actionIds);
 	}
 
 	protected void validate(
@@ -1762,6 +1702,5 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		RoleLocalServiceImpl.class);
 
 	private final Map<String, Role> _systemRolesMap = new HashMap<>();
-	private TransactionConfig _transactionConfig;
 
 }

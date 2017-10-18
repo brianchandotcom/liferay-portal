@@ -60,8 +60,10 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @see ResourceBlockPermissionPersistence
  * @see com.liferay.portal.kernel.service.persistence.ResourceBlockPermissionUtil
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<ResourceBlockPermission>
 	implements ResourceBlockPermissionPersistence {

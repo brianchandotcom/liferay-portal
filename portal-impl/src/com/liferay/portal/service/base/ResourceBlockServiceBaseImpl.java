@@ -46,8 +46,10 @@ import javax.sql.DataSource;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portal.service.impl.ResourceBlockServiceImpl
  * @see com.liferay.portal.kernel.service.ResourceBlockServiceUtil
+ * @deprecated
  * @generated
  */
+@Deprecated
 public abstract class ResourceBlockServiceBaseImpl extends BaseServiceImpl
 	implements ResourceBlockService, IdentifiableOSGiService {
 	/*

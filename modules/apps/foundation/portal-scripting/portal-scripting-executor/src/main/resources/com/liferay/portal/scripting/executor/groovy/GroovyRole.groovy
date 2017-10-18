@@ -76,9 +76,6 @@ class GroovyRole {
 		String resourceName, String[] actionIds, boolean add,
 		GroovyScriptingContext groovyScriptingContext) {
 
-		boolean resourceBlockSupported =
-			ResourceBlockLocalServiceUtil.isSupported(resourceName);
-
 		int scope = ResourceConstants.SCOPE_COMPANY;
 
 		if ((role.getType() == RoleConstants.TYPE_ORGANIZATION) ||
@@ -89,42 +86,28 @@ class GroovyRole {
 
 		for (String actionId : actionIds) {
 			if (add) {
-				if (resourceBlockSupported) {
-					ResourceBlockLocalServiceUtil.addCompanyScopePermission(
-						groovyScriptingContext.companyId, resourceName,
-						role.getRoleId(), actionId);
+				if (scope == ResourceConstants.SCOPE_COMPANY) {
+					ResourcePermissionLocalServiceUtil.
+						addResourcePermission(
+							groovyScriptingContext.companyId, resourceName,
+							scope, String.valueOf(role.getCompanyId()),
+							role.getRoleId(), actionId);
 				}
-				else {
-					if (scope == ResourceConstants.SCOPE_COMPANY) {
-						ResourcePermissionLocalServiceUtil.
-							addResourcePermission(
-								groovyScriptingContext.companyId, resourceName,
-								scope, String.valueOf(role.getCompanyId()),
-								role.getRoleId(), actionId);
-					}
-					else if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
-						ResourcePermissionLocalServiceUtil.
-							addResourcePermission(
-								groovyScriptingContext.companyId, resourceName,
-								scope,
-								String.valueOf(
-									GroupConstants.DEFAULT_PARENT_GROUP_ID),
-								role.getRoleId(), actionId);
-					}
+				else if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
+					ResourcePermissionLocalServiceUtil.
+						addResourcePermission(
+							groovyScriptingContext.companyId, resourceName,
+							scope,
+							String.valueOf(
+								GroupConstants.DEFAULT_PARENT_GROUP_ID),
+							role.getRoleId(), actionId);
 				}
 			}
 			else {
-				if (resourceBlockSupported) {
-					ResourceBlockLocalServiceUtil.removeCompanyScopePermission(
-						groovyScriptingContext.companyId, resourceName,
+				ResourcePermissionLocalServiceUtil.
+					removeResourcePermissions(
+						groovyScriptingContext.companyId, resourceName, scope,
 						role.getRoleId(), actionId);
-				}
-				else {
-					ResourcePermissionLocalServiceUtil.
-						removeResourcePermissions(
-							groovyScriptingContext.companyId, resourceName,
-							scope, role.getRoleId(), actionId);
-				}
 			}
 		}
 	}

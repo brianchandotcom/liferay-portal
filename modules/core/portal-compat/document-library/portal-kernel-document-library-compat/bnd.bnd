@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Portal Kernel Document Library Compat
+Bundle-SymbolicName: com.liferay.portal.kernel.document.library.compat
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.document.library.kernel.exception,\
+	com.liferay.document.library.kernel.model,\
+	com.liferay.document.library.kernel.service,\
+	com.liferay.document.library.kernel.service.persistence

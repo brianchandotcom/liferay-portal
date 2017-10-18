@@ -170,11 +170,11 @@
 		min-width: 180px;
 		right: 48px;
 		top: 50%;
- 		transform: translateY(-50%);
+		transform: translateY(-50%);
 
- 		@include media-breakpoint-down(sm) {
- 			margin-top: 20px;
- 		}
+		@include media-breakpoint-down(sm) {
+			margin-top: 20px;
+		}
 	}
 }
 

@@ -1,6 +1,6 @@
 .form-control {
-	border-radius: 0;
 	border: 1px solid $brand-color;
+	border-radius: 0;
 	color: $brand-color;
 
 	@include placeholder($brand-color);

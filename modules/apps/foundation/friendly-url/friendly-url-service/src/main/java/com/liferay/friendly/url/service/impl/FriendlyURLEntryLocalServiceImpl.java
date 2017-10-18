@@ -431,10 +431,7 @@ public class FriendlyURLEntryLocalServiceImpl
 		throws PortalException {
 
 		for (String urlTitle : urlTitleMap.values()) {
-			String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
-				urlTitle);
-
-			validate(groupId, classNameId, classPK, normalizedUrlTitle);
+			validate(groupId, classNameId, classPK, urlTitle);
 		}
 	}
 
@@ -446,13 +443,13 @@ public class FriendlyURLEntryLocalServiceImpl
 		int maxLength = ModelHintsUtil.getMaxLength(
 			FriendlyURLEntryLocalization.class.getName(), "urlTitle");
 
-		if (urlTitle.length() > maxLength) {
+		String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
+			urlTitle);
+
+		if (normalizedUrlTitle.length() > maxLength) {
 			throw new FriendlyURLLengthException(
 				urlTitle + " is longer than " + maxLength);
 		}
-
-		String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
-			urlTitle);
 
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
 			friendlyURLEntryLocalizationPersistence.fetchByG_C_U(

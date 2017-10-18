@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.friendly.url.servlet;
+package com.liferay.friendly.url.internal.servlet;
 
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;

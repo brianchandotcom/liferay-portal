@@ -20,10 +20,10 @@ import aQute.bnd.annotation.ProviderType;
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class LayoutPageTemplateFolderImpl
-	extends LayoutPageTemplateFolderBaseImpl {
+public class LayoutPageTemplateCollectionImpl
+	extends LayoutPageTemplateCollectionBaseImpl {
 
-	public LayoutPageTemplateFolderImpl() {
+	public LayoutPageTemplateCollectionImpl() {
 	}
 
 }

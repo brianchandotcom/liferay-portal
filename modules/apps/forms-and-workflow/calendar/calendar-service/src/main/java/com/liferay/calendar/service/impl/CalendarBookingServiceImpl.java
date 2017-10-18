@@ -203,7 +203,7 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 			CalendarActionKeys.MANAGE_BOOKINGS);
 
 		calendarBookingLocalService.deleteCalendarBookingInstance(
-			calendarBooking, instanceIndex, allFollowing);
+			getUserId(), calendarBooking, instanceIndex, allFollowing);
 	}
 
 	@Override
@@ -220,7 +220,7 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 			CalendarActionKeys.MANAGE_BOOKINGS);
 
 		calendarBookingLocalService.deleteCalendarBookingInstance(
-			calendarBooking, instanceIndex, allFollowing,
+			getUserId(), calendarBooking, instanceIndex, allFollowing,
 			deleteRecurringCalendarBookings);
 	}
 
@@ -237,7 +237,7 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 			CalendarActionKeys.MANAGE_BOOKINGS);
 
 		calendarBookingLocalService.deleteCalendarBookingInstance(
-			calendarBookingId, startTime, allFollowing);
+			getUserId(), calendarBookingId, startTime, allFollowing);
 	}
 
 	@Override

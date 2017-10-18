@@ -154,6 +154,11 @@ public class CalendarBookingLocalServiceWrapper
 			allRecurringInstances);
 	}
 
+	/**
+	* @deprecated As of 3.0.0, replaced by {@link
+	#deleteCalendarBookingInstance(long, CalendarBooking, int, boolean)}
+	*/
+	@Deprecated
 	@Override
 	public void deleteCalendarBookingInstance(
 		com.liferay.calendar.model.CalendarBooking calendarBooking,
@@ -163,6 +168,12 @@ public class CalendarBookingLocalServiceWrapper
 			instanceIndex, allFollowing);
 	}
 
+	/**
+	* @deprecated As of 3.0.0, replaced by {@link
+	#deleteCalendarBookingInstance(long, CalendarBooking, int, boolean,
+	boolean)}
+	*/
+	@Deprecated
 	@Override
 	public void deleteCalendarBookingInstance(
 		com.liferay.calendar.model.CalendarBooking calendarBooking,
@@ -173,6 +184,11 @@ public class CalendarBookingLocalServiceWrapper
 			instanceIndex, allFollowing, deleteRecurringCalendarBookings);
 	}
 
+	/**
+	* @deprecated As of 3.0.0, replaced by {@link
+	#deleteCalendarBookingInstance(long, CalendarBooking, long, boolean)}
+	*/
+	@Deprecated
 	@Override
 	public void deleteCalendarBookingInstance(
 		com.liferay.calendar.model.CalendarBooking calendarBooking,
@@ -182,6 +198,12 @@ public class CalendarBookingLocalServiceWrapper
 			startTime, allFollowing);
 	}
 
+	/**
+	* @deprecated As of 3.0.0, replaced by {@link
+	#deleteCalendarBookingInstance(long, CalendarBooking, long, boolean,
+	boolean)}
+	*/
+	@Deprecated
 	@Override
 	public void deleteCalendarBookingInstance(
 		com.liferay.calendar.model.CalendarBooking calendarBooking,
@@ -193,11 +215,64 @@ public class CalendarBookingLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteCalendarBookingInstance(long userId,
+		com.liferay.calendar.model.CalendarBooking calendarBooking,
+		int instanceIndex, boolean allFollowing)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_calendarBookingLocalService.deleteCalendarBookingInstance(userId,
+			calendarBooking, instanceIndex, allFollowing);
+	}
+
+	@Override
+	public void deleteCalendarBookingInstance(long userId,
+		com.liferay.calendar.model.CalendarBooking calendarBooking,
+		int instanceIndex, boolean allFollowing,
+		boolean deleteRecurringCalendarBookings)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_calendarBookingLocalService.deleteCalendarBookingInstance(userId,
+			calendarBooking, instanceIndex, allFollowing,
+			deleteRecurringCalendarBookings);
+	}
+
+	@Override
+	public void deleteCalendarBookingInstance(long userId,
+		com.liferay.calendar.model.CalendarBooking calendarBooking,
+		long startTime, boolean allFollowing)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_calendarBookingLocalService.deleteCalendarBookingInstance(userId,
+			calendarBooking, startTime, allFollowing);
+	}
+
+	@Override
+	public void deleteCalendarBookingInstance(long userId,
+		com.liferay.calendar.model.CalendarBooking calendarBooking,
+		long startTime, boolean allFollowing,
+		boolean deleteRecurringCalendarBookings)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_calendarBookingLocalService.deleteCalendarBookingInstance(userId,
+			calendarBooking, startTime, allFollowing,
+			deleteRecurringCalendarBookings);
+	}
+
+	/**
+	* @deprecated As of 3.0.0, replaced by {@link
+	#deleteCalendarBookingInstance(long, long, long, boolean)}
+	*/
+	@Deprecated
+	@Override
 	public void deleteCalendarBookingInstance(long calendarBookingId,
 		long startTime, boolean allFollowing)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_calendarBookingLocalService.deleteCalendarBookingInstance(calendarBookingId,
 			startTime, allFollowing);
+	}
+
+	@Override
+	public void deleteCalendarBookingInstance(long userId,
+		long calendarBookingId, long startTime, boolean allFollowing)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_calendarBookingLocalService.deleteCalendarBookingInstance(userId,
+			calendarBookingId, startTime, allFollowing);
 	}
 
 	@Override

@@ -32,10 +32,12 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -89,18 +91,13 @@ public class NotificationTemplateContextFactory {
 
 		Map<String, Serializable> attributes = new HashMap<>();
 
-		TimeZone userTimezone = user.getTimeZone();
+		Format userDateTimeFormat = _getUserDateTimeFormat(
+			calendarBooking, user);
 
-		Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
-			user.getLocale(),
-			CalendarUtil.getCalendarBookingDisplayTimeZone(
-				calendarBooking, userTimezone));
-
-		String userTimezoneDisplayName = userTimezone.getDisplayName(
-			false, TimeZone.SHORT, user.getLocale());
+		String userTimezoneDisplayName = _getUserTimezoneDisplayName(user);
 
 		String endTime =
-			dateFormatDateTime.format(calendarBooking.getEndTime()) +
+			userDateTimeFormat.format(calendarBooking.getEndTime()) +
 				StringPool.SPACE + userTimezoneDisplayName;
 
 		attributes.put("endTime", endTime);
@@ -127,7 +124,7 @@ public class NotificationTemplateContextFactory {
 				"javax.portlet.title.".concat(CalendarPortletKeys.CALENDAR)));
 
 		String startTime =
-			dateFormatDateTime.format(calendarBooking.getStartTime()) +
+			userDateTimeFormat.format(calendarBooking.getStartTime()) +
 				StringPool.SPACE + userTimezoneDisplayName;
 
 		attributes.put("startTime", startTime);
@@ -140,6 +137,41 @@ public class NotificationTemplateContextFactory {
 		attributes.put("url", calendarBookingURL);
 
 		notificationTemplateContext.setAttributes(attributes);
+
+		return notificationTemplateContext;
+	}
+
+	public static NotificationTemplateContext getInstance(
+			NotificationType notificationType,
+			NotificationTemplateType notificationTemplateType,
+			CalendarBooking calendarBooking, User user,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		NotificationTemplateContext notificationTemplateContext = getInstance(
+			notificationType, notificationTemplateType, calendarBooking, user);
+
+		if (Validator.isNotNull(serviceContext)) {
+			if (Validator.isNotNull(
+					serviceContext.getAttribute("instanceStartTime"))) {
+
+				long instanceStartTime = (long)serviceContext.getAttribute(
+					"instanceStartTime");
+
+				Format userDateTimeFormat = _getUserDateTimeFormat(
+					calendarBooking, user);
+
+				String userTimezoneDisplayName = _getUserTimezoneDisplayName(
+					user);
+
+				String instanceStartTimeFormatted =
+					userDateTimeFormat.format(instanceStartTime) +
+						StringPool.SPACE + userTimezoneDisplayName;
+
+				notificationTemplateContext.setAttribute(
+					"instanceStartTime", instanceStartTimeFormatted);
+			}
+		}
 
 		return notificationTemplateContext;
 	}
@@ -192,6 +224,28 @@ public class NotificationTemplateContextFactory {
 		Company company = CompanyLocalServiceUtil.getCompany(companyId);
 
 		return company.getPortalURL(groupId);
+	}
+
+	private static Format _getUserDateTimeFormat(
+		CalendarBooking calendarBooking, User user) {
+
+		TimeZone userTimezone = user.getTimeZone();
+
+		Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(
+			user.getLocale(),
+			CalendarUtil.getCalendarBookingDisplayTimeZone(
+				calendarBooking, userTimezone));
+
+		return dateTimeFormat;
+	}
+
+	private static String _getUserTimezoneDisplayName(User user) {
+		TimeZone userTimezone = user.getTimeZone();
+
+		String userTimezoneDisplayName = userTimezone.getDisplayName(
+			false, TimeZone.SHORT, user.getLocale());
+
+		return userTimezoneDisplayName;
 	}
 
 	private static PortletConfig _portletConfig;

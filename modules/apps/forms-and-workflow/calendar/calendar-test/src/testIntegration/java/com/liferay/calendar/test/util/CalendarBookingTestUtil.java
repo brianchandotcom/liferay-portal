@@ -269,6 +269,37 @@ public class CalendarBookingTestUtil {
 	}
 
 	public static CalendarBooking addRecurringCalendarBooking(
+			Calendar invitingCalendar, Calendar invitedCalendar,
+			Recurrence recurrence)
+		throws PortalException {
+
+		User user = UserLocalServiceUtil.fetchUser(
+			invitingCalendar.getUserId());
+
+		return addRecurringCalendarBooking(
+			invitingCalendar, invitedCalendar, recurrence,
+			createServiceContext(user));
+	}
+
+	public static CalendarBooking addRecurringCalendarBooking(
+			Calendar invitingCalendar, Calendar invitedCalendar,
+			Recurrence recurrence, ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = UserLocalServiceUtil.fetchUser(invitedCalendar.getUserId());
+
+		long startTime = System.currentTimeMillis();
+
+		return addCalendarBooking(
+			user, invitingCalendar,
+			new long[] {invitedCalendar.getCalendarId()},
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), startTime,
+			startTime + (Time.HOUR * 10), recurrence, 0, null, 0, null,
+			serviceContext);
+	}
+
+	public static CalendarBooking addRecurringCalendarBooking(
 			User user, Calendar calendar, long startTime, long endTime,
 			Recurrence recurrence, ServiceContext serviceContext)
 		throws PortalException {

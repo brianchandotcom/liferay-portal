@@ -76,6 +76,12 @@
 	}
 }
 
+.navbar-no-collapse {
+	.navbar-nav {
+		flex-direction: row;
+	}
+}
+
 .navbar-default,
 .navbar-inverse {
 	border-style: solid;

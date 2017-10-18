@@ -2626,7 +2626,7 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 
 		<replace file="${app.server.websphere.instance.dir}/config/cells/liferay-cell/nodes/liferay-node/servers/server1/server.xml">
 			<replacetoken><![CDATA[genericJvmArguments="-Xquickstart"]]></replacetoken>
-			<replacevalue><![CDATA[genericJvmArguments="-Xquickstart -Dfile.encoding=UTF-8"]]></replacevalue>
+			<replacevalue><![CDATA[genericJvmArguments="-Xquickstart -Dfile.encoding=UTF-8 -Duser.timezone=GMT"]]></replacevalue>
 		</replace>
 
 		<echo>Installing fix pack. This may take a few minutes</echo>

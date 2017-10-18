@@ -14,6 +14,8 @@
 
 package com.liferay.petra.io.unsync;
 
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,12 +23,17 @@ import java.io.Reader;
 import java.io.StringReader;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
 public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
+
+	@ClassRule
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Override
 	@Test
@@ -92,7 +99,7 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 
 		char[] tempBuffer = new char[_SIZE];
 
-		unsyncBufferedReader.read(tempBuffer);
+		Assert.assertEquals(_SIZE, unsyncBufferedReader.read(tempBuffer));
 
 		// Mark and EOF
 
@@ -146,6 +153,7 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
+			Assert.assertEquals("Size is less than 1", iae.getMessage());
 		}
 
 		try {
@@ -154,6 +162,7 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
+			Assert.assertEquals("Size is less than 1", iae.getMessage());
 		}
 	}
 
@@ -178,6 +187,7 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
+			Assert.assertEquals("Mark limit is less than 0", iae.getMessage());
 		}
 
 		Assert.assertEquals(-1, unsyncBufferedReader.markLimitIndex);
@@ -230,6 +240,7 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 			Assert.fail();
 		}
 		catch (IOException ioe) {
+			Assert.assertEquals("Resetting to invalid mark", ioe.getMessage());
 		}
 
 		// Shuffle
@@ -266,6 +277,17 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 
 		Assert.assertEquals(0, unsyncBufferedReader.index);
 		Assert.assertEquals(0, unsyncBufferedReader.firstInvalidIndex);
+
+		// Read line without buffer
+
+		unsyncBufferedReader = new UnsyncBufferedReader(
+			new StringReader("abcdefghi"), 3);
+
+		Assert.assertEquals('a', unsyncBufferedReader.read());
+
+		unsyncBufferedReader.mark(3);
+
+		Assert.assertEquals("bcdefghi", unsyncBufferedReader.readLine());
 	}
 
 	@Test
@@ -336,6 +358,14 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 
 		Assert.assertEquals("abcdefghijklmn", unsyncBufferedReader.readLine());
 		Assert.assertEquals(5, unsyncBufferedReader.index);
+
+		unsyncBufferedReader = new UnsyncBufferedReader(
+			new StringReader("abcdefghijklmn\r"), 5);
+
+		Assert.assertEquals('a', unsyncBufferedReader.read());
+		Assert.assertEquals('b', unsyncBufferedReader.read());
+
+		unsyncBufferedReader.mark(1);
 	}
 
 	@Override
@@ -350,6 +380,37 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 			new InputStreamReader(new ByteArrayInputStream(new byte[0])));
 
 		Assert.assertFalse(unsyncBufferedReader.ready());
+
+		unsyncBufferedReader = new UnsyncBufferedReader(
+			new StringReader("abcd") {
+
+				@Override
+				public int read(char[] chars, int offset, int length)
+					throws IOException {
+
+					_ready = false;
+
+					return super.read(chars, offset, length);
+				}
+
+				@Override
+				public boolean ready() {
+					return _ready;
+				}
+
+				private boolean _ready = true;
+
+			});
+
+		char[] chars = new char[2];
+
+		Assert.assertEquals(2, unsyncBufferedReader.read(chars));
+
+		Assert.assertEquals("ab", new String(chars));
+
+		unsyncBufferedReader.mark(2);
+
+		Assert.assertTrue(unsyncBufferedReader.ready());
 	}
 
 	@Override
@@ -368,8 +429,11 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 
 		try {
 			unsyncBufferedReader.skip(-1);
+
+			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
+			Assert.assertEquals("Skip is less than 0", iae.getMessage());
 		}
 
 		// Load data into buffer

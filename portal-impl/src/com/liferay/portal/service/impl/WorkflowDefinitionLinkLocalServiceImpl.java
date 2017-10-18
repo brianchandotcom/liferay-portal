@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -182,8 +183,10 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 
 		if (workflowDefinitionLink == null) {
 			throw new NoSuchWorkflowDefinitionLinkException(
-				"No workflow for groupId=" + groupId + ", companyId=" +
-					companyId + " and className=" + className);
+				StringBundler.concat(
+					"No workflow for groupId=", String.valueOf(groupId),
+					", companyId=", String.valueOf(companyId),
+					" and className=", className));
 		}
 
 		return workflowDefinitionLink;

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.RetryAcceptor;
 import com.liferay.portal.kernel.spring.aop.Property;
 import com.liferay.portal.kernel.spring.aop.Retry;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PropsValues;
 
 import java.lang.annotation.Annotation;
@@ -92,8 +93,10 @@ public class RetryAdvice extends AnnotationChainableMethodAdvice<Retry> {
 					}
 
 					_log.warn(
-						"Retry on " + methodInvocation + " for " + number +
-							" more times due to result " + returnValue);
+						StringBundler.concat(
+							"Retry on ", String.valueOf(methodInvocation),
+							" for ", number, " more times due to result ",
+							String.valueOf(returnValue)));
 				}
 			}
 			catch (Throwable t) {
@@ -111,8 +114,10 @@ public class RetryAdvice extends AnnotationChainableMethodAdvice<Retry> {
 					}
 
 					_log.warn(
-						"Retry on " + methodInvocation + " for " + number +
-							" more times due to exception " + throwable,
+						StringBundler.concat(
+							"Retry on ", String.valueOf(methodInvocation),
+							" for ", number, " more times due to exception ",
+							String.valueOf(throwable)),
 						throwable);
 				}
 			}
@@ -123,9 +128,12 @@ public class RetryAdvice extends AnnotationChainableMethodAdvice<Retry> {
 		if (throwable != null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Give up retrying on " + methodInvocation + " after " +
-						totalRetries + " retries and rethrow last retry's " +
-							"exception " + throwable,
+					StringBundler.concat(
+						"Give up retrying on ",
+						String.valueOf(methodInvocation), " after ",
+						String.valueOf(totalRetries),
+						" retries and rethrow last retry's exception ",
+						String.valueOf(throwable)),
 					throwable);
 			}
 
@@ -134,9 +142,11 @@ public class RetryAdvice extends AnnotationChainableMethodAdvice<Retry> {
 
 		if (_log.isWarnEnabled()) {
 			_log.warn(
-				"Give up retrying on " + methodInvocation + " after " +
-					totalRetries + " retries and returning the last retry's " +
-						"result " + returnValue);
+				StringBundler.concat(
+					"Give up retrying on ", String.valueOf(methodInvocation),
+					" after ", String.valueOf(totalRetries),
+					" retries and returning the last retry's result ",
+					String.valueOf(returnValue)));
 		}
 
 		return returnValue;

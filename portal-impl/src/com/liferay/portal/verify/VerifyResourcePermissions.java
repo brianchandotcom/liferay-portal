@@ -165,8 +165,10 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 		if (_log.isInfoEnabled() && ((cur % 100) == 0)) {
 			_log.info(
-				"Processed " + cur + " of " + total + " resource permissions " +
-					"for company = " + companyId + " and model " + modelName);
+				StringBundler.concat(
+					"Processed ", String.valueOf(cur), " of ",
+					String.valueOf(total), " resource permissions for company ",
+					"= ", String.valueOf(companyId), " and model ", modelName));
 		}
 
 		ResourcePermission resourcePermission = null;
@@ -181,9 +183,12 @@ public class VerifyResourcePermissions extends VerifyProcess {
 		if (resourcePermission == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No resource found for {" + companyId + ", " + modelName +
-						", " + ResourceConstants.SCOPE_INDIVIDUAL + ", " +
-							primKey + ", " + role.getRoleId() + "}");
+					StringBundler.concat(
+						"No resource found for {", String.valueOf(companyId),
+						", ", modelName, ", ",
+						String.valueOf(ResourceConstants.SCOPE_INDIVIDUAL),
+						", ", String.valueOf(primKey), ", ",
+						String.valueOf(role.getRoleId()), "}"));
 			}
 
 			ResourceLocalServiceUtil.addResources(

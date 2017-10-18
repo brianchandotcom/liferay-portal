@@ -865,9 +865,10 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		throws Exception {
 
 		try (PreparedStatement ps = connection.prepareStatement(
-				"select folderId from DLFolder where groupId = " + groupId +
-					" and parentFolderId = " + parentFolderId +
-						" and name = ?")) {
+				StringBundler.concat(
+					"select folderId from DLFolder where groupId = ",
+					String.valueOf(groupId), " and parentFolderId = ",
+					String.valueOf(parentFolderId), " and name = ?"))) {
 
 			ps.setString(1, name);
 
@@ -876,8 +877,10 @@ public class UpgradeImageGallery extends UpgradeProcess {
 					long newFolderId = rs.getLong("folderId");
 
 					runSQL(
-						"update IGImage set folderId = " + newFolderId +
-							" where folderId = " + folderId);
+						StringBundler.concat(
+							"update IGImage set folderId = ",
+							String.valueOf(newFolderId), " where folderId = ",
+							String.valueOf(folderId)));
 
 					folderIds.put(folderId, newFolderId);
 
@@ -946,9 +949,11 @@ public class UpgradeImageGallery extends UpgradeProcess {
 				dlBitwiseValues, igActionIds);
 
 			runSQL(
-				"update ResourcePermission set name = '" + dlResourceName +
-					"', actionIds = " + dlActionIdsLong + " where name = '" +
-						igResourceName + "' and actionIds = " + i);
+				StringBundler.concat(
+					"update ResourcePermission set name = '", dlResourceName,
+					"', actionIds = ", String.valueOf(dlActionIdsLong),
+					" where name = '", igResourceName, "' and actionIds = ",
+					String.valueOf(i)));
 		}
 	}
 

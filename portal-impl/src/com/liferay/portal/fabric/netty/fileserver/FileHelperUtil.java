@@ -196,8 +196,9 @@ public class FileHelperUtil {
 
 			if (touched.get()) {
 				throw new IOException(
-					"Source path " + fromPath + " was left in an " +
-						"inconsistent state",
+					StringBundler.concat(
+						"Source path ", String.valueOf(fromPath),
+						" was left in an inconsistent state"),
 					ioe);
 			}
 
@@ -286,8 +287,10 @@ public class FileHelperUtil {
 
 				if (size != length) {
 					throw new IOException(
-						"Zip stream for entry " + zipEntry.getName() + " is " +
-							size + " bytes but should " + length + " bytes");
+						StringBundler.concat(
+							"Zip stream for entry ", zipEntry.getName(), " is ",
+							String.valueOf(size), " bytes but should ",
+							String.valueOf(length), " bytes"));
 				}
 			}
 		}

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.InputStream;
 
@@ -37,7 +38,9 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		ClassLoader classLoader = clazz.getClassLoader();
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Resolving entity " + publicId + " " + systemId);
+			_log.debug(
+				StringBundler.concat(
+					"Resolving entity ", publicId, " ", systemId));
 		}
 
 		if (publicId != null) {
@@ -108,7 +111,9 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("No entity found for " + publicId + " " + systemId);
+			_log.debug(
+				StringBundler.concat(
+					"No entity found for ", publicId, " ", systemId));
 		}
 
 		return null;

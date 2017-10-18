@@ -74,9 +74,10 @@ public class ServiceComponentLocalServiceImpl
 		Registry registry = RegistryUtil.getRegistry();
 
 		Filter filter = registry.getFilter(
-			"(&(objectClass=" + UpgradeStep.class.getName() +
-				")(upgrade.from.schema.version=0.0.0)(upgrade.initial." +
-					"database.creation=true))");
+			StringBundler.concat(
+				"(&(objectClass=", UpgradeStep.class.getName(),
+				")(upgrade.from.schema.version=0.0.0)(upgrade.initial.",
+				"database.creation=true))"));
 
 		_upgradeStepServiceTracker = registry.trackServices(
 			filter, new UpgradeStepServiceTrackerCustomizer());
@@ -165,9 +166,11 @@ public class ServiceComponentLocalServiceImpl
 			}
 			else if (serviceComponent.getBuildNumber() > buildNumber) {
 				throw new OldServiceComponentException(
-					"Build namespace " + buildNamespace + " has build number " +
-						serviceComponent.getBuildNumber() +
-							" which is newer than " + buildNumber);
+					StringBundler.concat(
+						"Build namespace ", buildNamespace,
+						" has build number ",
+						String.valueOf(serviceComponent.getBuildNumber()),
+						" which is newer than ", String.valueOf(buildNumber)));
 			}
 			else {
 				return serviceComponent;
@@ -548,8 +551,9 @@ public class ServiceComponentLocalServiceImpl
 			int pos = modelName.lastIndexOf(".model.");
 
 			Class<?> modelClass = Class.forName(
-				modelName.substring(0, pos) + ".model.impl." +
-					modelName.substring(pos + 7) + "ModelImpl",
+				StringBundler.concat(
+					modelName.substring(0, pos), ".model.impl.",
+					modelName.substring(pos + 7), "ModelImpl"),
 				true, classLoader);
 
 			Field dataSourceField = modelClass.getField("DATA_SOURCE");

@@ -17,6 +17,7 @@ package com.liferay.portal.events;
 import com.liferay.portal.kernel.events.SessionAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.text.NumberFormat;
 
@@ -35,18 +36,20 @@ public class GarbageCollectorAction extends SessionAction {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Before:\t\t" + nf.format(runtime.freeMemory()) + "\t" +
-					nf.format(runtime.totalMemory()) + "\t" +
-						nf.format(runtime.maxMemory()));
+				StringBundler.concat(
+					"Before:\t\t", nf.format(runtime.freeMemory()), "\t",
+					nf.format(runtime.totalMemory()), "\t",
+					nf.format(runtime.maxMemory())));
 		}
 
 		System.gc();
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"After:\t\t" + nf.format(runtime.freeMemory()) + "\t" +
-					nf.format(runtime.totalMemory()) + "\t" +
-						nf.format(runtime.maxMemory()));
+				StringBundler.concat(
+					"After:\t\t", nf.format(runtime.freeMemory()), "\t",
+					nf.format(runtime.totalMemory()), "\t",
+					nf.format(runtime.maxMemory())));
 		}
 	}
 

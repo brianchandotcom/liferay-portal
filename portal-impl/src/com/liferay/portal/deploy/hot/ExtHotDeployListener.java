@@ -89,7 +89,8 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 
 		String servletContextName = servletContext.getServletContextName();
 
-		String jarFullName = "/WEB-INF/" + jarName + "/" + jarName + ".jar";
+		String jarFullName = StringBundler.concat(
+			"/WEB-INF/", jarName, "/", jarName, ".jar");
 
 		InputStream is = servletContext.getResourceAsStream(jarFullName);
 
@@ -97,8 +98,8 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 			throw new HotDeployException(jarFullName + " does not exist");
 		}
 
-		String newJarFullName =
-			dir + "ext-" + servletContextName + jarName.substring(3) + ".jar";
+		String newJarFullName = StringBundler.concat(
+			dir, "ext-", servletContextName, jarName.substring(3), ".jar");
 
 		StreamUtil.transfer(is, new FileOutputStream(new File(newJarFullName)));
 	}
@@ -172,9 +173,10 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Extension environment for " + servletContextName +
-					" has been applied. You must reboot the server and " +
-						"redeploy all other plugins.");
+				StringBundler.concat(
+					"Extension environment for ", servletContextName,
+					" has been applied. You must reboot the server and ",
+					"redeploy all other plugins."));
 		}
 	}
 
@@ -247,8 +249,10 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 			StringPool.BLANK, "**/WEB-INF/web.xml", true, false);
 
 		FileUtil.copyFile(
-			pluginWebDir + "WEB-INF/ext-" + servletContextName + ".xml",
-			portalWebDir + "WEB-INF/ext-" + servletContextName + ".xml");
+			StringBundler.concat(
+				pluginWebDir, "WEB-INF/ext-", servletContextName, ".xml"),
+			StringBundler.concat(
+				portalWebDir, "WEB-INF/ext-", servletContextName, ".xml"));
 
 		ExtRegistry.registerExt(servletContext);
 	}

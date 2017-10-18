@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.template.URLResourceParser;
 
 import java.io.IOException;
@@ -54,8 +55,9 @@ public class VelocityServletResourceParser extends URLResourceParser {
 
 		if (servletContext == null) {
 			_log.error(
-				source + " is not valid because " + servletContextName +
-					" does not map to a servlet context");
+				StringBundler.concat(
+					source, " is not valid because ", servletContextName,
+					" does not map to a servlet context"));
 
 			return null;
 		}
@@ -65,8 +67,9 @@ public class VelocityServletResourceParser extends URLResourceParser {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				name + " is associated with the servlet context " +
-					servletContextName + " " + servletContext);
+				StringBundler.concat(
+					name, " is associated with the servlet context ",
+					servletContextName, " ", String.valueOf(servletContext)));
 		}
 
 		URL url = servletContext.getResource(name);

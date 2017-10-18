@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.IOException;
 
@@ -125,8 +126,10 @@ public abstract class BaseCompanySettingsVerifyProcess extends VerifyProcess {
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Removing preference keys " + keys + " for company " +
-							company.getCompanyId());
+						StringBundler.concat(
+							"Removing preference keys ", String.valueOf(keys),
+							" for company ",
+							String.valueOf(company.getCompanyId())));
 				}
 
 				companyLocalService.removePreferences(

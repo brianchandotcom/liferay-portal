@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.poller.PollerResponse;
 import com.liferay.portal.kernel.service.BrowserTrackerLocalServiceUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -338,8 +339,9 @@ public class PollerRequestHandlerImpl
 		}
 		catch (Exception e) {
 			_log.error(
-				"Invalid credentials for company id " + companyId +
-					" and user id " + userIdString);
+				StringBundler.concat(
+					"Invalid credentials for company id ",
+					String.valueOf(companyId), " and user id ", userIdString));
 		}
 
 		return userId;

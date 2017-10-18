@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.messageboards.service.base.MBBanLocalServiceBaseImpl;
 import com.liferay.portlet.messageboards.util.MBUtil;
@@ -138,8 +139,10 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 			if (now >= unbanTime) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Auto expiring ban " + ban.getBanId() + " on user " +
-							ban.getBanUserId());
+						StringBundler.concat(
+							"Auto expiring ban ",
+							String.valueOf(ban.getBanId()), " on user ",
+							String.valueOf(ban.getBanUserId())));
 				}
 
 				mbBanPersistence.remove(ban);

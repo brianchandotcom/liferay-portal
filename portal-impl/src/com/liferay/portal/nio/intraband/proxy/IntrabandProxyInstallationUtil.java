@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.nio.intraband.proxy.TargetLocator;
 import com.liferay.portal.kernel.nio.intraband.rpc.IntrabandRPCUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.lang.reflect.Constructor;
 
@@ -49,9 +50,10 @@ public class IntrabandProxyInstallationUtil {
 			stubProxyMethodSignatures);
 
 		throw new IllegalStateException(
-			"Skeleton and stub proxy method signatures do not match. " +
-				"Skeleton is " + skeletonProxyMethodSignaturesString +
-					". Stub is " + stubProxyMethodSignaturesString + ".");
+			StringBundler.concat(
+				"Skeleton and stub proxy method signatures do not match. ",
+				"Skeleton is ", skeletonProxyMethodSignaturesString,
+				". Stub is ", stubProxyMethodSignaturesString, "."));
 	}
 
 	public static String[] installSkeleton(

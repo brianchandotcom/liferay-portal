@@ -109,8 +109,9 @@ public class VerifyAuditedModel extends VerifyProcess {
 		throws Exception {
 
 		try (PreparedStatement ps = con.prepareStatement(
-				"select companyId, userId, createDate, modifiedDate from " +
-					tableName + " where " + pkColumnName + " = ?")) {
+				StringBundler.concat(
+					"select companyId, userId, createDate, modifiedDate from ",
+					tableName, " where ", pkColumnName, " = ?"))) {
 
 			ps.setLong(1, primKey);
 
@@ -140,7 +141,10 @@ public class VerifyAuditedModel extends VerifyProcess {
 				}
 
 				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to find " + tableName + " " + primKey);
+					_log.debug(
+						StringBundler.concat(
+							"Unable to find ", tableName, " ",
+							String.valueOf(primKey)));
 				}
 
 				return null;

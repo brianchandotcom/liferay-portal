@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.security.auth.BaseAuthTokenWhitelist;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -213,8 +214,9 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 
 		ServiceTracker<Object, Object> serviceTracker = registry.trackServices(
 			registry.getFilter(
-				"(&(&(" + whitelistName + "=*)(javax.portlet.name=*))" +
-					"(objectClass=" + serviceClass.getName() + "))"),
+				StringBundler.concat(
+					"(&(&(", whitelistName, "=*)(javax.portlet.name=*))",
+					"(objectClass=", serviceClass.getName(), "))")),
 			new TokenWhitelistTrackerCustomizer(whiteList));
 
 		serviceTracker.open();

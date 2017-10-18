@@ -64,8 +64,9 @@ public class VerifyMySQL extends VerifyProcess {
 		try (ResultSet rs = statement.executeQuery(sb.toString())) {
 			if (!rs.next()) {
 				throw new IllegalStateException(
-					"Table " + tableName + " does not have column " +
-						columnName);
+					StringBundler.concat(
+						"Table ", tableName, " does not have column ",
+						columnName));
 			}
 
 			return rs.getString("Type");
@@ -121,8 +122,9 @@ public class VerifyMySQL extends VerifyProcess {
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Updating table " + tableName + " column " +
-							columnName + " to datetime(6)");
+						StringBundler.concat(
+							"Updating table ", tableName, " column ",
+							columnName, " to datetime(6)"));
 				}
 
 				statement.executeUpdate(sql);
@@ -157,13 +159,15 @@ public class VerifyMySQL extends VerifyProcess {
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Updating table " + tableName + " to use engine " +
-							PropsValues.DATABASE_MYSQL_ENGINE);
+						StringBundler.concat(
+							"Updating table ", tableName, " to use engine ",
+							PropsValues.DATABASE_MYSQL_ENGINE));
 				}
 
 				statement.executeUpdate(
-					"alter table " + tableName + " engine " +
-						PropsValues.DATABASE_MYSQL_ENGINE);
+					StringBundler.concat(
+						"alter table ", tableName, " engine ",
+						PropsValues.DATABASE_MYSQL_ENGINE));
 			}
 		}
 	}

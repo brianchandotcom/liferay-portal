@@ -41,7 +41,8 @@ public class FaultImpl implements Fault {
 
 	@Override
 	public String toString() {
-		return "XML-RPC fault " + _code + " " + _description;
+		return StringBundler.concat(
+			"XML-RPC fault ", String.valueOf(_code), " ", _description);
 	}
 
 	@Override

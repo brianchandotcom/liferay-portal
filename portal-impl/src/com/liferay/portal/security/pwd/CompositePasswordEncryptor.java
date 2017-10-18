@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -95,8 +96,10 @@ public class CompositePasswordEncryptor
 				Class<?> clazz = passwordEncryptor.getClass();
 
 				_log.debug(
-					"Registering " + StringUtil.merge(supportedAlgorithmTypes) +
-						" for " + clazz.getName());
+					StringBundler.concat(
+						"Registering ",
+						StringUtil.merge(supportedAlgorithmTypes), " for ",
+						clazz.getName()));
 			}
 
 			for (String supportedAlgorithmType : supportedAlgorithmTypes) {
@@ -135,8 +138,9 @@ public class CompositePasswordEncryptor
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Found " + ClassUtil.getClassName(passwordEncryptor) +
-					" to encrypt password using " + algorithm);
+				StringBundler.concat(
+					"Found ", ClassUtil.getClassName(passwordEncryptor),
+					" to encrypt password using ", algorithm));
 		}
 
 		return passwordEncryptor;

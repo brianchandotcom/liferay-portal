@@ -16,6 +16,7 @@ package com.liferay.portal.javadoc;
 
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
@@ -86,7 +87,7 @@ public class JavadocUtil {
 			return sb.toString() + className;
 		}
 		else {
-			return sb.toString() + 'L' + className + ';';
+			return StringBundler.concat(sb.toString(), "L", className, ";");
 		}
 	}
 

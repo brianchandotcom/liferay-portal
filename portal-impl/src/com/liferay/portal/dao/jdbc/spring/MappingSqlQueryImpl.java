@@ -17,6 +17,7 @@ package com.liferay.portal.dao.jdbc.spring;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
 import com.liferay.portal.kernel.dao.jdbc.ParamSetter;
 import com.liferay.portal.kernel.dao.jdbc.RowMapper;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -49,8 +50,10 @@ public class MappingSqlQueryImpl<T> implements MappingSqlQuery<T> {
 	public List<T> execute(Object... params) throws SQLException {
 		if (_paramSetters.length != params.length) {
 			throw new IllegalArgumentException(
-				"Expected " + _paramSetters.length + " parameters instead of " +
-					params.length + " parameters");
+				StringBundler.concat(
+					"Expected ", String.valueOf(_paramSetters.length),
+					" parameters instead of ", String.valueOf(params.length),
+					" parameters"));
 		}
 
 		try (Connection connection = ConnectionUtil.getConnection(_dataSource);

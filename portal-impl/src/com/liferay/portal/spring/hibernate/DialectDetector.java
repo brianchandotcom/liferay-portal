@@ -75,8 +75,10 @@ public class DialectDetector {
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Determine dialect for " + dbName + " " + dbMajorVersion +
-						"." + dbMinorVersion);
+					StringBundler.concat(
+						"Determine dialect for ", dbName, " ",
+						String.valueOf(dbMajorVersion), ".",
+						String.valueOf(dbMinorVersion)));
 			}
 
 			if (dbName.startsWith("HSQL")) {

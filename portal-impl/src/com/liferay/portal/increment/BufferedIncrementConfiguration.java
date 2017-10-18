@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PropsUtil;
 
 /**
@@ -48,9 +49,11 @@ public class BufferedIncrementConfiguration {
 		if (threadpoolKeepAliveTime < 0) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					PropsKeys.BUFFERED_INCREMENT_THREADPOOL_KEEP_ALIVE_TIME +
-						"[" + configuration + "]=" + threadpoolKeepAliveTime +
-							". Auto reset to 0.");
+					StringBundler.concat(
+						PropsKeys.BUFFERED_INCREMENT_THREADPOOL_KEEP_ALIVE_TIME,
+						"[", configuration, "]=",
+						String.valueOf(threadpoolKeepAliveTime),
+						". Auto reset to 0."));
 			}
 
 			threadpoolKeepAliveTime = 0;
@@ -65,9 +68,10 @@ public class BufferedIncrementConfiguration {
 		if (threadpoolMaxSize < 1) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					PropsKeys.BUFFERED_INCREMENT_THREADPOOL_MAX_SIZE + "[" +
-						configuration + "]=" + threadpoolMaxSize +
-							". Auto reset to 1.");
+					StringBundler.concat(
+						PropsKeys.BUFFERED_INCREMENT_THREADPOOL_MAX_SIZE, "[",
+						configuration, "]=", String.valueOf(threadpoolMaxSize),
+						". Auto reset to 1."));
 			}
 
 			threadpoolMaxSize = 1;

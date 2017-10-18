@@ -167,12 +167,14 @@ public class PluginsEnvironmentBuilder {
 
 		if (string.contains(dependencyName)) {
 			System.out.println(
-				"Skipping duplicate " + dependencyName + " " + version);
+				StringBundler.concat(
+					"Skipping duplicate ", dependencyName, " ", version));
 
 			return;
 		}
 
-		System.out.println("Adding " + dependencyName + " " + version);
+		System.out.println(
+			StringBundler.concat("Adding ", dependencyName, " ", version));
 
 		if (version.equals("latest.integration")) {
 			File dir = new File(ivyDirName + "/cache/" + dependencyName);
@@ -201,9 +203,8 @@ public class PluginsEnvironmentBuilder {
 			}
 		}
 
-		String ivyFileName =
-			ivyDirName + "/cache/" + dependencyName + "/ivy-" + version +
-				".xml";
+		String ivyFileName = StringBundler.concat(
+			ivyDirName, "/cache/", dependencyName, "/ivy-", version, ".xml");
 
 		if (_fileUtil.exists(ivyFileName)) {
 			Document document = _saxReader.read(new File(ivyFileName));
@@ -242,10 +243,12 @@ public class PluginsEnvironmentBuilder {
 			}
 		}
 
-		String dirName = ivyDirName + "/cache/" + dependencyName + "/bundles";
+		String dirName = StringBundler.concat(
+			ivyDirName, "/cache/", dependencyName, "/bundles");
 
 		if (!_fileUtil.exists(dirName)) {
-			dirName = ivyDirName + "/cache/" + dependencyName + "/jars";
+			dirName = StringBundler.concat(
+				ivyDirName, "/cache/", dependencyName, "/jars");
 
 			if (!_fileUtil.exists(dirName)) {
 				System.out.println("Unable to find jars in " + dirName);
@@ -280,7 +283,8 @@ public class PluginsEnvironmentBuilder {
 		}
 
 		System.out.println(
-			"Unable to find jars in " + dirName + " for " + version);
+			StringBundler.concat(
+				"Unable to find jars in ", dirName, " for ", version));
 	}
 
 	protected void addIvyCacheJars(
@@ -395,8 +399,9 @@ public class PluginsEnvironmentBuilder {
 
 		for (String requiredDeploymentContext : requiredDeploymentContexts) {
 			if (_fileUtil.exists(
-					libDir.getCanonicalPath() + "/" +
-						requiredDeploymentContext + "-service.jar")) {
+					StringBundler.concat(
+						libDir.getCanonicalPath(), "/",
+						requiredDeploymentContext, "-service.jar"))) {
 
 				jars.add(requiredDeploymentContext + "-service.jar");
 			}
@@ -811,7 +816,8 @@ public class PluginsEnvironmentBuilder {
 					continue;
 				}
 
-				String dirName = projectDirName + "/" + sourceDirName + "/../";
+				String dirName = StringBundler.concat(
+					projectDirName, "/", sourceDirName, "/../");
 
 				if (gitIgnores.isEmpty()) {
 					_fileUtil.delete(dirName + ".gitignore");

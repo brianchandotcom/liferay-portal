@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -204,8 +205,9 @@ public class DLAppServiceJsonTest extends BaseJsonClientTestCase {
 		URL_JSONWS + "/dlapp/delete-folder";
 
 	private static final String _URL_GET_FILE_ENTRY_BY_UUID_AND_GROUP_ID =
-		URL_JSONWS + "/dlapp/get-file-entry-by-uuid-and-group-id/uuid/" +
-			DLAppServiceJsonTest._UUID + "/group-id/" + _GROUP_ID;
+		StringBundler.concat(
+			URL_JSONWS, "/dlapp/get-file-entry-by-uuid-and-group-id/uuid/",
+			DLAppServiceJsonTest._UUID, "/group-id/", _GROUP_ID);
 
 	private static final String _UUID = "[$UUID$]";
 

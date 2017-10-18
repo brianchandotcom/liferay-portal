@@ -1065,8 +1065,10 @@ public class PortalImpl implements Portal {
 			}
 			else {
 				throw new NoSuchLayoutException(
-					"{groupId=" + groupId + ", privateLayout=" + privateLayout +
-						"}");
+					StringBundler.concat(
+						"{groupId=", String.valueOf(groupId),
+						", privateLayout=", String.valueOf(privateLayout),
+						"}"));
 			}
 		}
 		else {
@@ -3920,8 +3922,10 @@ public class PortalImpl implements Portal {
 		if (plid == LayoutConstants.DEFAULT_PLID) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Portlet " + portletId +
-						" does not exist on a page in group " + groupId);
+					StringBundler.concat(
+						"Portlet ", portletId,
+						" does not exist on a page in group ",
+						String.valueOf(groupId)));
 			}
 		}
 
@@ -5815,9 +5819,9 @@ public class PortalImpl implements Portal {
 				portletURL.setPortletMode(PortletMode.VIEW);
 				portletURL.setWindowState(WindowState.MAXIMIZED);
 
-				userName =
-					"<a href=\"" + portletURL.toString() + "\">" +
-						HtmlUtil.escape(userName) + "</a>";
+				userName = StringBundler.concat(
+					"<a href=\"", portletURL.toString(), "\">",
+					HtmlUtil.escape(userName), "</a>");
 			}
 		}
 		catch (Exception e) {
@@ -5890,9 +5894,10 @@ public class PortalImpl implements Portal {
 
 		if (_log.isWarnEnabled()) {
 			_log.warn(
-				"Set the property \"" + PropsKeys.VIRTUAL_HOSTS_VALID_HOSTS +
-					"\" in portal.properties to allow \"" + domain +
-						"\" as a domain");
+				StringBundler.concat(
+					"Set the property \"", PropsKeys.VIRTUAL_HOSTS_VALID_HOSTS,
+					"\" in portal.properties to allow \"", domain,
+					"\" as a domain"));
 		}
 
 		try {
@@ -6678,8 +6683,9 @@ public class PortalImpl implements Portal {
 				WebKeys.CURRENT_URL);
 
 			_log.debug(
-				"Current URL " + currentURL + " generates exception: " +
-					e.getMessage());
+				StringBundler.concat(
+					"Current URL ", currentURL, " generates exception: ",
+					e.getMessage()));
 		}
 
 		if (e instanceof NoSuchImageException) {
@@ -7710,8 +7716,10 @@ public class PortalImpl implements Portal {
 		}
 
 		_log.error(
-			"User " + realUserIdObj + " does not have the permission to " +
-				"impersonate " + doAsUserId);
+			StringBundler.concat(
+				"User ", String.valueOf(realUserIdObj),
+				" does not have the permission to impersonate ",
+				String.valueOf(doAsUserId)));
 
 		return 0;
 	}

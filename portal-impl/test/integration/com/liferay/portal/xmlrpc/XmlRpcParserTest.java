@@ -15,6 +15,7 @@
 package com.liferay.portal.xmlrpc;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.xmlrpc.Fault;
 import com.liferay.portal.kernel.xmlrpc.Response;
@@ -132,83 +133,90 @@ public class XmlRpcParserTest {
 	}
 
 	private static final String[] _FAULT_RESPONSES = {
-		"<?xml version=\"1.0\"?>" +
-		"<methodResponse>" +
-		"<fault>" +
-		"<value>" +
-		"<struct>" +
-		"<member>" +
-		"<name>faultCode</name>" +
-		"<value><int>4</int></value>" +
-		"</member>" +
-		"<member>" +
-		"<name>faultString</name>" +
-		"<value><string>Too many parameters.</string></value>" +
-		"</member>" +
-		"</struct>" +
-		"</value>" +
-		"</fault>" +
-		"</methodResponse>",
-		"<?xml version=\"1.0\"?>" +
-		"<methodResponse>" +
-		"<fault>" +
-		"<value>" +
-		"<struct>" +
-		"<member>" +
-		"<name>faultCode</name>" +
-		"<value><i4>4</i4></value>" +
-		"</member>" +
-		"<member>" +
-		"<name>faultString</name>" +
-		"<value>Too many parameters.</value>" +
-		"</member>" +
-		"</struct>" +
-		"</value>" +
-		"</fault>" +
-		"</methodResponse>"
+		StringBundler.concat(
+			"<?xml version=\"1.0\"?>",
+			"<methodResponse>",
+			"<fault>",
+			"<value>",
+			"<struct>",
+			"<member>",
+			"<name>faultCode</name>",
+			"<value><int>4</int></value>",
+			"</member>",
+			"<member>",
+			"<name>faultString</name>",
+			"<value><string>Too many parameters.</string></value>",
+			"</member>",
+			"</struct>",
+			"</value>",
+			"</fault>",
+			"</methodResponse>"),
+		StringBundler.concat(
+			"<?xml version=\"1.0\"?>",
+			"<methodResponse>",
+			"<fault>",
+			"<value>",
+			"<struct>",
+			"<member>",
+			"<name>faultCode</name>",
+			"<value><i4>4</i4></value>",
+			"</member>",
+			"<member>",
+			"<name>faultString</name>",
+			"<value>Too many parameters.</value>",
+			"</member>",
+			"</struct>",
+			"</value>",
+			"</fault>",
+			"</methodResponse>")
 	};
 
 	private static final String[] _NON_PARAMETERIZED_METHODS = {
-		"<?xml version=\"1.0\"?>" +
-		"<methodCall>" +
-		"<methodName>noParams</methodName>" +
-		"<params>" +
-		"</params>" +
-		"</methodCall>",
-		"<?xml version=\"1.0\"?>" +
-		"<methodCall>" +
-		"<methodName>noParams</methodName>" +
-		"</methodCall>"
+		StringBundler.concat(
+			"<?xml version=\"1.0\"?>",
+			"<methodCall>",
+			"<methodName>noParams</methodName>",
+			"<params>",
+			"</params>",
+			"</methodCall>"),
+		StringBundler.concat(
+			"<?xml version=\"1.0\"?>",
+			"<methodCall>",
+			"<methodName>noParams</methodName>",
+			"</methodCall>")
 	};
 
 	private static final String _PARAMETERIZED_METHOD =
-		"<?xml version=\"1.0\"?>" +
-		"<methodCall>" +
-		"<methodName>params</methodName>" +
-		"<params>" +
-		"<param><value><i4>1024</i4></value></param>" +
-		"<param><value>hello</value></param>" +
-		"<param><value><string>world</string></value></param>" +
-		"</params>" +
-		"</methodCall>";
+		StringBundler.concat(
+			"<?xml version=\"1.0\"?>",
+			"<methodCall>",
+			"<methodName>params</methodName>",
+			"<params>",
+			"<param><value><i4>1024</i4></value></param>",
+			"<param><value>hello</value></param>",
+			"<param><value><string>world</string></value></param>",
+			"</params>",
+			"</methodCall>");
 
 	private static final String[] _SUCCESS_RESPONSES = {
-		"<?xml version=\"1.0\"?>" +
-		"<methodResponse>" +
-		"<params>" +
-		"<param>" +
-		"<value><string>South Dakota</string></value>" +
-		"</param>" +
-		"</params>" +
-		"</methodResponse>",
-		"<?xml version=\"1.0\"?>" +
-		"<methodResponse>" +
-		"<params>" +
-		"<param>" +
-		"<value>South Dakota</value>" +
-		"</param>" +
-		"</params>" +
-		"</methodResponse>"
+		StringBundler.concat(
+			"<?xml version=\"1.0\"?>",
+			"<methodResponse>",
+			"<params>",
+			"<param>",
+			"<value><string>South Dakota</string></value>",
+			"</param>",
+			"</params>",
+			"</methodResponse>"),
+		StringBundler.concat(
+			"<?xml version=\"1.0\"?>",
+			"<methodResponse>",
+			"<params>",
+			"<param>",
+			"<value>South Dakota</value>",
+			"</param>",
+			"</params>",
+			"</methodResponse>")
 	};
 
 }

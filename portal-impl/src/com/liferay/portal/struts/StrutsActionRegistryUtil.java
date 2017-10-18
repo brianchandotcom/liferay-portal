@@ -16,6 +16,7 @@ package com.liferay.portal.struts;
 
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.struts.StrutsPortletAction;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -178,9 +179,10 @@ public class StrutsActionRegistryUtil {
 		Registry registry = RegistryUtil.getRegistry();
 
 		Filter filter = registry.getFilter(
-			"(&(|(objectClass=" + StrutsAction.class.getName() +
-				")(objectClass=" + StrutsPortletAction.class.getName() +
-					"))(path=*))");
+			StringBundler.concat(
+				"(&(|(objectClass=", StrutsAction.class.getName(),
+				")(objectClass=", StrutsPortletAction.class.getName(),
+				"))(path=*))"));
 
 		_serviceTracker = registry.trackServices(
 			filter, new ActionServiceTrackerCustomizer());

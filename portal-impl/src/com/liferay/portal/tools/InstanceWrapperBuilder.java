@@ -244,9 +244,10 @@ public class InstanceWrapperBuilder {
 		// Write file
 
 		File file = new File(
-			parentDir + "/" +
-				StringUtil.replace(javaClass.getPackage().getName(), '.', '/') +
-					"/" + javaClass.getName() + "_IW.java");
+			StringBundler.concat(
+				parentDir, "/",
+				StringUtil.replace(javaClass.getPackage().getName(), '.', '/'),
+				"/", javaClass.getName(), "_IW.java"));
 
 		ToolsUtil.writeFile(file, sb.toString(), null);
 	}

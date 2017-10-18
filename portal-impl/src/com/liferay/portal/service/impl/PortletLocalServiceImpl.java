@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -546,7 +547,9 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		else {
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Portlet not found for " + companyId + " " + portletId);
+					StringBundler.concat(
+						"Portlet not found for ", String.valueOf(companyId),
+						" ", portletId));
 			}
 
 			portlet = new PortletImpl(CompanyConstants.SYSTEM, portletId);
@@ -766,9 +769,10 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 					!liferayPortletIds.contains(portletId)) {
 
 					_log.warn(
-						"Portlet with the name " + portletId +
-							" is described in portlet.xml but does not have " +
-								"a matching entry in liferay-portlet.xml");
+						StringBundler.concat(
+							"Portlet with the name ", portletId,
+							" is described in portlet.xml but does not have a ",
+							"matching entry in liferay-portlet.xml"));
 				}
 			}
 
@@ -779,9 +783,10 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 					!portletsMap.containsKey(portletId)) {
 
 					_log.warn(
-						"Portlet with the name " + portletId +
-							" is described in liferay-portlet.xml but does " +
-								"not have a matching entry in portlet.xml");
+						StringBundler.concat(
+							"Portlet with the name ", portletId,
+							" is described in liferay-portlet.xml but does ",
+							"not have a matching entry in portlet.xml"));
 				}
 			}
 
@@ -867,9 +872,10 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				!liferayPortletIds.contains(portletId)) {
 
 				_log.warn(
-					"Portlet with the name " + portletId +
-						" is described in portlet.xml but does not have a " +
-							"matching entry in liferay-portlet.xml");
+					StringBundler.concat(
+						"Portlet with the name ", portletId,
+						" is described in portlet.xml but does not have a ",
+						"matching entry in liferay-portlet.xml"));
 			}
 		}
 
@@ -878,9 +884,10 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		for (String portletId : liferayPortletIds) {
 			if (_log.isWarnEnabled() && !portletsMap.containsKey(portletId)) {
 				_log.warn(
-					"Portlet with the name " + portletId +
-						" is described in liferay-portlet.xml but does not " +
-							"have a matching entry in portlet.xml");
+					StringBundler.concat(
+						"Portlet with the name ", portletId,
+						" is described in liferay-portlet.xml but does not ",
+						"have a matching entry in portlet.xml"));
 			}
 		}
 
@@ -1072,8 +1079,9 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		if (Validator.isNull(portletId)) {
 			_log.error(
-				"Struts path " + securityPath + " is not mapped to a portlet " +
-					"in liferay-portlet.xml");
+				StringBundler.concat(
+					"Struts path ", securityPath,
+					" is not mapped to a portlet in liferay-portlet.xml"));
 		}
 
 		return portletId;
@@ -2101,9 +2109,11 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			// LPS-32878
 
 			throw new PortletIdException(
-				"Portlet ID " + portletId + " has more than " +
-					PortletIdCodec.PORTLET_INSTANCE_KEY_MAX_LENGTH +
-						" characters");
+				StringBundler.concat(
+					"Portlet ID ", portletId, " has more than ",
+					String.valueOf(
+						PortletIdCodec.PORTLET_INSTANCE_KEY_MAX_LENGTH),
+					" characters"));
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -2530,8 +2540,9 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 				if (portletModels.isEmpty()) {
 					_log.error(
-						"Filter mapping with filter name " + filterName +
-							" references unknown portlet name " + portletName);
+						StringBundler.concat(
+							"Filter mapping with filter name ", filterName,
+							" references unknown portlet name ", portletName));
 				}
 
 				for (Portlet portletModel : portletModels) {

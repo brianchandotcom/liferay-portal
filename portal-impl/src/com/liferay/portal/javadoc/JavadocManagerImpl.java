@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.javadoc.JavadocMethodImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -101,8 +102,9 @@ public class JavadocManagerImpl implements JavadocManager {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Attempting to load method from class " + implClassName +
-					" instead of " + className);
+				StringBundler.concat(
+					"Attempting to load method from class ", implClassName,
+					" instead of ", className));
 		}
 
 		try {
@@ -117,8 +119,9 @@ public class JavadocManagerImpl implements JavadocManager {
 		catch (NoSuchMethodException nsme) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to load method " + method.getName() +
-						" from class " + implClassName);
+					StringBundler.concat(
+						"Unable to load method ", method.getName(),
+						" from class ", implClassName));
 			}
 		}
 		catch (Exception e) {
@@ -217,8 +220,9 @@ public class JavadocManagerImpl implements JavadocManager {
 
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to load method " + methodName +
-								" from class " + type);
+							StringBundler.concat(
+								"Unable to load method ", methodName,
+								" from class ", type));
 					}
 				}
 			}

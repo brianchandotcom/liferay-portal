@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -106,8 +107,9 @@ public class WeavingClassLoader extends URLClassLoader {
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Woven class " + name + " result in " +
-							dumpFile.getCanonicalPath());
+						StringBundler.concat(
+							"Woven class ", name, " result in ",
+							dumpFile.getCanonicalPath()));
 				}
 			}
 			else {

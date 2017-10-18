@@ -315,8 +315,9 @@ public class HttpImpl implements Http {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					toString() + " is waiting on " + availableConnections +
-						" connections");
+					StringBundler.concat(
+						toString(), " is waiting on ",
+						String.valueOf(availableConnections), " connections"));
 			}
 
 			_poolingHttpClientConnectionManager.closeIdleConnections(
@@ -844,8 +845,9 @@ public class HttpImpl implements Http {
 					catch (IllegalArgumentException iae) {
 						if (_log.isInfoEnabled()) {
 							_log.info(
-								"Skipping parameter with key " + key +
-									" because of invalid value " + kvp[1],
+								StringBundler.concat(
+									"Skipping parameter with key ", key,
+									" because of invalid value ", kvp[1]),
 								iae);
 						}
 

@@ -15,6 +15,7 @@
 package com.liferay.portal.fabric.netty.fileserver.handlers;
 
 import com.liferay.portal.fabric.netty.fileserver.FileHelperUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -194,8 +195,9 @@ public class FileServerTestUtil {
 			Assert.assertTrue(
 				otherFile + " is not file", Files.isRegularFile(otherFile));
 			Assert.assertArrayEquals(
-				"File content does not match, file1 " + file + ", file2 " +
-					otherFile,
+				StringBundler.concat(
+					"File content does not match, file1 ", String.valueOf(file),
+					", file2 ", String.valueOf(otherFile)),
 				Files.readAllBytes(file), Files.readAllBytes(otherFile));
 
 			return FileVisitResult.CONTINUE;

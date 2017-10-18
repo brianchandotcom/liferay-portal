@@ -515,8 +515,9 @@ public class MainServlet extends ActionServlet {
 		try {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Authenticate user id " + userId + " and remote user " +
-						remoteUser);
+					StringBundler.concat(
+						"Authenticate user id ", String.valueOf(userId),
+						" and remote user ", remoteUser));
 			}
 
 			userId = loginUser(
@@ -878,11 +879,13 @@ public class MainServlet extends ActionServlet {
 		Registry registry = RegistryUtil.getRegistry();
 
 		Filter freeMarkerFilter = registry.getFilter(
-			"(&(language.type=" + TemplateConstants.LANG_TYPE_FTL +
-				")(objectClass=" + TemplateManager.class.getName() + "))");
+			StringBundler.concat(
+				"(&(language.type=", TemplateConstants.LANG_TYPE_FTL,
+				")(objectClass=", TemplateManager.class.getName(), "))"));
 		Filter velocityFilter = registry.getFilter(
-			"(&(language.type=" + TemplateConstants.LANG_TYPE_VM +
-				")(objectClass=" + TemplateManager.class.getName() + "))");
+			StringBundler.concat(
+				"(&(language.type=", TemplateConstants.LANG_TYPE_VM,
+				")(objectClass=", TemplateManager.class.getName(), "))"));
 
 		serviceDependencyManager.registerDependencies(
 			freeMarkerFilter, velocityFilter);

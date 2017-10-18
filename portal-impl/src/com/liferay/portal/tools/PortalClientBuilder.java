@@ -99,7 +99,8 @@ public class PortalClientBuilder {
 				serviceName.startsWith("Portlet_")) {
 
 				Wsdl2JavaTask.generateJava(
-					url + "/" + serviceName + "?wsdl", outputDir, mappingFile);
+					StringBundler.concat(url, "/", serviceName, "?wsdl"),
+					outputDir, mappingFile);
 			}
 		}
 
@@ -107,8 +108,9 @@ public class PortalClientBuilder {
 
 		if (testNamespace.exists()) {
 			throw new RuntimeException(
-				"Please update " + mappingFile + " from namespace " +
-					"com.liferay.portal to com.liferay.client.soap.portal");
+				StringBundler.concat(
+					"Please update ", mappingFile, " from namespace ",
+					"com.liferay.portal to com.liferay.client.soap.portal"));
 		}
 	}
 

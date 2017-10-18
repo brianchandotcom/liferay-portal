@@ -294,7 +294,10 @@ public class JSONWebServiceActionsManagerImpl
 		int count = getJSONWebServiceActionsCount(contextPath);
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Configured " + count + " actions for " + contextPath);
+			_log.info(
+				StringBundler.concat(
+					"Configured ", String.valueOf(count), " actions for ",
+					contextPath));
 		}
 
 		return count;
@@ -334,7 +337,10 @@ public class JSONWebServiceActionsManagerImpl
 		int count = getJSONWebServiceActionsCount(contextPath);
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Configured " + count + " actions for " + contextPath);
+			_log.info(
+				StringBundler.concat(
+					"Configured ", String.valueOf(count), " actions for ",
+					contextPath));
 		}
 
 		return count;
@@ -465,8 +471,9 @@ public class JSONWebServiceActionsManagerImpl
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Request JSON web service action with path " + path +
-					" and method " + method + " for " + contextName);
+				StringBundler.concat(
+					"Request JSON web service action with path ", path,
+					" and method ", method, " for ", contextName));
 		}
 
 		String[] parameterNames =
@@ -488,8 +495,9 @@ public class JSONWebServiceActionsManagerImpl
 
 		if (jsonWebServiceActionConfig == null) {
 			throw new NoSuchJSONWebServiceException(
-				"No JSON web service action with path " + path +
-					" and method " + method + " for " + contextName);
+				StringBundler.concat(
+					"No JSON web service action with path ", path,
+					" and method ", method, " for ", contextName));
 		}
 
 		return jsonWebServiceActionConfig;
@@ -530,8 +538,9 @@ public class JSONWebServiceActionsManagerImpl
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to find JSON web service actions with path " +
-						path + " for " + contextName);
+					StringBundler.concat(
+						"Unable to find JSON web service actions with path ",
+						path, " for ", contextName));
 			}
 
 			return null;
@@ -539,9 +548,11 @@ public class JSONWebServiceActionsManagerImpl
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Found " + jsonWebServiceActionConfigs.size() +
-					" JSON web service actions with path " + path + " for " +
-						contextName);
+				StringBundler.concat(
+					"Found ",
+					String.valueOf(jsonWebServiceActionConfigs.size()),
+					" JSON web service actions with path ", path, " for ",
+					contextName));
 		}
 
 		jsonWebServiceActionConfigs = new ArrayList<>(
@@ -595,13 +606,15 @@ public class JSONWebServiceActionsManagerImpl
 		if (_log.isDebugEnabled()) {
 			if (matchedJSONWebServiceActionConfig == null) {
 				_log.debug(
-					"Unable to match parameters to a JSON web service action " +
-						"with path " + path + " for " + contextName);
+					StringBundler.concat(
+						"Unable to match parameters to a JSON web service ",
+						"action with path ", path, " for ", contextName));
 			}
 			else {
 				_log.debug(
-					"Matched parameters to a JSON web service action with " +
-						"path " + path + " for " + contextName);
+					StringBundler.concat(
+						"Matched parameters to a JSON web service action with ",
+						"path ", path, " for ", contextName));
 			}
 		}
 

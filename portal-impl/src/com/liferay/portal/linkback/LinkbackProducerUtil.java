@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
@@ -84,8 +85,9 @@ public class LinkbackProducerUtil {
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"XML-RPC pingback " + serverUri + ", source " +
-							sourceUri + ", target " + targetUri);
+						StringBundler.concat(
+							"XML-RPC pingback ", serverUri, ", source ",
+							sourceUri, ", target ", targetUri));
 				}
 
 				Response response = XmlRpcUtil.executeMethod(
@@ -180,7 +182,8 @@ public class LinkbackProducerUtil {
 		}
 
 		_log.error(
-			"Error while pinging trackback at " + trackback + ": " + error);
+			StringBundler.concat(
+				"Error while pinging trackback at ", trackback, ": ", error));
 
 		return false;
 	}

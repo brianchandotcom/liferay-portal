@@ -92,8 +92,9 @@ public class HypersonicLoader {
 		// guarantees that ${databaseName}.log is purged.
 
 		try (Connection con = DriverManager.getConnection(
-				"jdbc:hsqldb:" + sqlDir + "/" + databaseName +
-					";hsqldb.write_delay=false;shutdown=true",
+				StringBundler.concat(
+					"jdbc:hsqldb:", sqlDir, "/", databaseName,
+					";hsqldb.write_delay=false;shutdown=true"),
 				"sa", "")) {
 
 			if (Validator.isNull(fileNames)) {

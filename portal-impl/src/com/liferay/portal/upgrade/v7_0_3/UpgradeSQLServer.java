@@ -49,8 +49,9 @@ public class UpgradeSQLServer extends UpgradeProcess {
 
 				try {
 					runSQL(
-						"alter table " + tableName + " alter column " +
-							columnName + " nvarchar(4000)");
+						StringBundler.concat(
+							"alter table ", tableName, " alter column ",
+							columnName, " nvarchar(4000)"));
 				}
 				catch (SQLException sqle) {
 					if (sqle.getErrorCode() == 1441) {

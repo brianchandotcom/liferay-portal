@@ -610,7 +610,8 @@ public class LocalizationImpl implements Localization {
 			String prefixedLocalizedKey = localizedKey;
 
 			if (Validator.isNotNull(prefix)) {
-				prefixedLocalizedKey = prefix + "--" + localizedKey + "--";
+				prefixedLocalizedKey = StringBundler.concat(
+					prefix, "--", localizedKey, "--");
 			}
 
 			String value = ParamUtil.getString(

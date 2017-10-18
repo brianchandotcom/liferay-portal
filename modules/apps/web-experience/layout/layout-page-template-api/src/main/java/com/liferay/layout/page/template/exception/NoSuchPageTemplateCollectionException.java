@@ -22,20 +22,21 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class NoSuchPageTemplateFolderException extends NoSuchModelException {
+public class NoSuchPageTemplateCollectionException
+	extends NoSuchModelException {
 
-	public NoSuchPageTemplateFolderException() {
+	public NoSuchPageTemplateCollectionException() {
 	}
 
-	public NoSuchPageTemplateFolderException(String msg) {
+	public NoSuchPageTemplateCollectionException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchPageTemplateFolderException(String msg, Throwable cause) {
+	public NoSuchPageTemplateCollectionException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchPageTemplateFolderException(Throwable cause) {
+	public NoSuchPageTemplateCollectionException(Throwable cause) {
 		super(cause);
 	}
 

@@ -19,10 +19,10 @@ package com.liferay.layout.page.template.constants;
  */
 public class LayoutPageTemplateActionKeys {
 
+	public static final String ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION =
+		"ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION";
+
 	public static final String ADD_LAYOUT_PAGE_TEMPLATE_ENTRY =
 		"ADD_LAYOUT_PAGE_TEMPLATE_ENTRY";
-
-	public static final String ADD_LAYOUT_PAGE_TEMPLATE_FOLDER =
-		"ADD_LAYOUT_PAGE_TEMPLATE_FOLDER";
 
 }

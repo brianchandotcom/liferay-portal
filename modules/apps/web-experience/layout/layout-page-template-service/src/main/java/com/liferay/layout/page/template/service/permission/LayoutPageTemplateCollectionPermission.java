@@ -14,8 +14,8 @@
 
 package com.liferay.layout.page.template.service.permission;
 
-import com.liferay.layout.page.template.model.LayoutPageTemplateFolder;
-import com.liferay.layout.page.template.service.LayoutPageTemplateFolderLocalServiceUtil;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -33,54 +33,60 @@ import org.osgi.service.component.annotations.Component;
  * @author Jürgen Kappler
  */
 @Component(
-	property = {"model.class.name=com.liferay.layout.page.template.model.LayoutPageTemplateFolder"},
+	property = {"model.class.name=com.liferay.layout.page.template.model.LayoutPageTemplateCollection"},
 	service = BaseModelPermissionChecker.class
 )
-public class LayoutPageTemplateFolderPermission
+public class LayoutPageTemplateCollectionPermission
 	implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker,
-			LayoutPageTemplateFolder layoutPageTemplateFolder, String actionId)
+			LayoutPageTemplateCollection layoutPageTemplateCollection,
+			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, layoutPageTemplateFolder, actionId)) {
+		if (!contains(
+				permissionChecker, layoutPageTemplateCollection, actionId)) {
+
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, LayoutPageTemplateFolder.class.getName(),
-				layoutPageTemplateFolder.getLayoutPageTemplateFolderId(),
+				permissionChecker, LayoutPageTemplateCollection.class.getName(),
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
 				actionId);
 		}
 	}
 
 	public static void check(
 			PermissionChecker permissionChecker,
-			long layoutPageTemplateFolderId, String actionId)
+			long layoutPageTemplateCollectionId, String actionId)
 		throws PortalException {
 
 		if (!contains(
-				permissionChecker, layoutPageTemplateFolderId, actionId)) {
+				permissionChecker, layoutPageTemplateCollectionId, actionId)) {
 
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, LayoutPageTemplateFolder.class.getName(),
-				layoutPageTemplateFolderId, actionId);
+				permissionChecker, LayoutPageTemplateCollection.class.getName(),
+				layoutPageTemplateCollectionId, actionId);
 		}
 	}
 
 	public static boolean contains(
 		PermissionChecker permissionChecker,
-		LayoutPageTemplateFolder layoutPageTemplateFolder, String actionId) {
+		LayoutPageTemplateCollection layoutPageTemplateCollection,
+		String actionId) {
 
 		Map<Object, Object> permissionChecksMap =
 			permissionChecker.getPermissionChecksMap();
 
 		PermissionCacheKey permissionCacheKey = new PermissionCacheKey(
-			layoutPageTemplateFolder.getLayoutPageTemplateFolderId(), actionId);
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
+			actionId);
 
 		Boolean contains = (Boolean)permissionChecksMap.get(permissionCacheKey);
 
 		if (contains == null) {
 			contains = _contains(
-				permissionChecker, layoutPageTemplateFolder, actionId);
+				permissionChecker, layoutPageTemplateCollection, actionId);
 
 			permissionChecksMap.put(permissionCacheKey, contains);
 		}
@@ -90,22 +96,24 @@ public class LayoutPageTemplateFolderPermission
 
 	public static boolean contains(
 			PermissionChecker permissionChecker,
-			long layoutPageTemplateFolderId, String actionId)
+			long layoutPageTemplateCollectionId, String actionId)
 		throws PortalException {
 
-		LayoutPageTemplateFolder layoutPageTemplateFolder =
-			LayoutPageTemplateFolderLocalServiceUtil.
-				fetchLayoutPageTemplateFolder(layoutPageTemplateFolderId);
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			LayoutPageTemplateCollectionLocalServiceUtil.
+				fetchLayoutPageTemplateCollection(
+					layoutPageTemplateCollectionId);
 
-		if (layoutPageTemplateFolder == null) {
+		if (layoutPageTemplateCollection == null) {
 			_log.error(
-				"Unable to get layout page template folder " +
-					layoutPageTemplateFolderId);
+				"Unable to get layout page template collection " +
+					layoutPageTemplateCollectionId);
 
 			return false;
 		}
 
-		return contains(permissionChecker, layoutPageTemplateFolder, actionId);
+		return contains(
+			permissionChecker, layoutPageTemplateCollection, actionId);
 	}
 
 	@Override
@@ -119,17 +127,20 @@ public class LayoutPageTemplateFolderPermission
 
 	private static boolean _contains(
 		PermissionChecker permissionChecker,
-		LayoutPageTemplateFolder layoutPageTemplateFolder, String actionId) {
+		LayoutPageTemplateCollection layoutPageTemplateCollection,
+		String actionId) {
 
 		if (permissionChecker.hasOwnerPermission(
-				layoutPageTemplateFolder.getCompanyId(),
-				LayoutPageTemplateFolder.class.getName(),
-				layoutPageTemplateFolder.getLayoutPageTemplateFolderId(),
-				layoutPageTemplateFolder.getUserId(), actionId) ||
+				layoutPageTemplateCollection.getCompanyId(),
+				LayoutPageTemplateCollection.class.getName(),
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				layoutPageTemplateCollection.getUserId(), actionId) ||
 			permissionChecker.hasPermission(
-				layoutPageTemplateFolder.getGroupId(),
-				LayoutPageTemplateFolder.class.getName(),
-				layoutPageTemplateFolder.getLayoutPageTemplateFolderId(),
+				layoutPageTemplateCollection.getGroupId(),
+				LayoutPageTemplateCollection.class.getName(),
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
 				actionId)) {
 
 			return true;
@@ -139,7 +150,7 @@ public class LayoutPageTemplateFolderPermission
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutPageTemplateFolderPermission.class);
+		LayoutPageTemplateCollectionPermission.class);
 
 	private static class PermissionCacheKey {
 
@@ -155,8 +166,8 @@ public class LayoutPageTemplateFolderPermission
 
 			PermissionCacheKey permissionCacheKey = (PermissionCacheKey)obj;
 
-			if ((_layoutPageTemplateFolderId ==
-					permissionCacheKey._layoutPageTemplateFolderId) &&
+			if ((_layoutPageTemplateCollectionId ==
+					permissionCacheKey._layoutPageTemplateCollectionId) &&
 				Objects.equals(_actionId, permissionCacheKey._actionId)) {
 
 				return true;
@@ -167,20 +178,20 @@ public class LayoutPageTemplateFolderPermission
 
 		@Override
 		public int hashCode() {
-			int hash = HashUtil.hash(0, _layoutPageTemplateFolderId);
+			int hash = HashUtil.hash(0, _layoutPageTemplateCollectionId);
 
 			return HashUtil.hash(hash, _actionId);
 		}
 
 		private PermissionCacheKey(
-			long layoutPageTemplateFolderId, String actionId) {
+			long layoutPageTemplateCollectionId, String actionId) {
 
-			_layoutPageTemplateFolderId = layoutPageTemplateFolderId;
+			_layoutPageTemplateCollectionId = layoutPageTemplateCollectionId;
 			_actionId = actionId;
 		}
 
 		private final String _actionId;
-		private final long _layoutPageTemplateFolderId;
+		private final long _layoutPageTemplateCollectionId;
 
 	}
 

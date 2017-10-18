@@ -1,19 +1,8 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.layout.page.template.model.LayoutPageTemplateEntry">
-		<field name="layoutPageTemplateEntryId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="layoutPageTemplateFolderId" type="long" />
-		<field name="name" type="String" />
-	</model>
-	<model name="com.liferay.layout.page.template.model.LayoutPageTemplateFolder">
-		<field name="layoutPageTemplateFolderId" type="long" />
+	<model name="com.liferay.layout.page.template.model.LayoutPageTemplateCollection">
+		<field name="layoutPageTemplateCollectionId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -22,6 +11,17 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="name" type="String" />
 		<field name="description" type="String" />
+	</model>
+	<model name="com.liferay.layout.page.template.model.LayoutPageTemplateEntry">
+		<field name="layoutPageTemplateEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="layoutPageTemplateCollectionId" type="long" />
+		<field name="name" type="String" />
 	</model>
 	<model name="com.liferay.layout.page.template.model.LayoutPageTemplateFragment">
 		<field name="layoutPageTemplateFragmentId" type="long" />

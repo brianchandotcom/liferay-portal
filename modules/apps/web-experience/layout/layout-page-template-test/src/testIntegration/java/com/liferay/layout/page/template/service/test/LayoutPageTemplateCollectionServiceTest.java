@@ -15,11 +15,11 @@
 package com.liferay.layout.page.template.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateFolderException;
-import com.liferay.layout.page.template.exception.LayoutPageTemplateFolderNameException;
-import com.liferay.layout.page.template.model.LayoutPageTemplateFolder;
+import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException;
+import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
-import com.liferay.layout.page.template.service.LayoutPageTemplateFolderServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -45,7 +45,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class LayoutPageTemplateFolderServiceTest {
+public class LayoutPageTemplateCollectionServiceTest {
 
 	@ClassRule
 	@Rule
@@ -59,85 +59,91 @@ public class LayoutPageTemplateFolderServiceTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
-	@Test(expected = DuplicateLayoutPageTemplateFolderException.class)
-	public void testAddDuplicateLayoutPageTemplateFolders() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		LayoutPageTemplateFolderServiceUtil.addLayoutPageTemplateFolder(
-			_group.getGroupId(), "Layout Page Template Folder", null,
-			serviceContext);
-
-		LayoutPageTemplateFolderServiceUtil.addLayoutPageTemplateFolder(
-			_group.getGroupId(), "Layout Page Template Folder", null,
-			serviceContext);
-	}
-
-	@Test
-	public void testAddLayoutPageTemplateFolder() throws PortalException {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		LayoutPageTemplateFolder layoutPageTemplateFolder =
-			LayoutPageTemplateFolderServiceUtil.addLayoutPageTemplateFolder(
-				_group.getGroupId(), "Layout Page Template Folder", null,
-				serviceContext);
-
-		Assert.assertEquals(
-			"Layout Page Template Folder", layoutPageTemplateFolder.getName());
-	}
-
-	@Test(expected = LayoutPageTemplateFolderNameException.class)
-	public void testAddLayoutPageTemplateFolderWithEmptyName()
+	@Test(expected = DuplicateLayoutPageTemplateCollectionException.class)
+	public void testAddDuplicateLayoutPageTemplateCollections()
 		throws Exception {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		LayoutPageTemplateFolderServiceUtil.addLayoutPageTemplateFolder(
-			_group.getGroupId(), StringPool.BLANK, null, serviceContext);
+		LayoutPageTemplateCollectionServiceUtil.addLayoutPageTemplateCollection(
+			_group.getGroupId(), "Layout Page Template Collection", null,
+			serviceContext);
+
+		LayoutPageTemplateCollectionServiceUtil.addLayoutPageTemplateCollection(
+			_group.getGroupId(), "Layout Page Template Collection", null,
+			serviceContext);
 	}
 
-	@Test(expected = LayoutPageTemplateFolderNameException.class)
-	public void testAddLayoutPageTemplateFolderWithNullName() throws Exception {
+	@Test
+	public void testAddLayoutPageTemplateCollection() throws PortalException {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		LayoutPageTemplateFolderServiceUtil.addLayoutPageTemplateFolder(
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			LayoutPageTemplateCollectionServiceUtil.
+				addLayoutPageTemplateCollection(
+					_group.getGroupId(), "Layout Page Template Collection",
+					null, serviceContext);
+
+		Assert.assertEquals(
+			"Layout Page Template Collection",
+			layoutPageTemplateCollection.getName());
+	}
+
+	@Test(expected = LayoutPageTemplateCollectionNameException.class)
+	public void testAddLayoutPageTemplateCollectionWithEmptyName()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		LayoutPageTemplateCollectionServiceUtil.addLayoutPageTemplateCollection(
+			_group.getGroupId(), StringPool.BLANK, null, serviceContext);
+	}
+
+	@Test(expected = LayoutPageTemplateCollectionNameException.class)
+	public void testAddLayoutPageTemplateCollectionWithNullName()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		LayoutPageTemplateCollectionServiceUtil.addLayoutPageTemplateCollection(
 			_group.getGroupId(), null, null, serviceContext);
 	}
 
 	@Test
-	public void testAddMultipleLayoutPageTemplateFolders()
+	public void testAddMultipleLayoutPageTemplateCollections()
 		throws PortalException {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		int originalLayoutPageTemplateFoldersCount =
-			LayoutPageTemplateFolderServiceUtil.
-				getLayoutPageTemplateFoldersCount(_group.getGroupId());
+		int originalLayoutPageTemplateCollectionsCount =
+			LayoutPageTemplateCollectionServiceUtil.
+				getLayoutPageTemplateCollectionsCount(_group.getGroupId());
 
-		LayoutPageTemplateFolderServiceUtil.addLayoutPageTemplateFolder(
-			_group.getGroupId(), "Layout Page Template Folder 1",
+		LayoutPageTemplateCollectionServiceUtil.addLayoutPageTemplateCollection(
+			_group.getGroupId(), "Layout Page Template Collection 1",
 			StringPool.BLANK, serviceContext);
 
-		LayoutPageTemplateFolderServiceUtil.addLayoutPageTemplateFolder(
-			_group.getGroupId(), "Layout Page Template Folder 2",
+		LayoutPageTemplateCollectionServiceUtil.addLayoutPageTemplateCollection(
+			_group.getGroupId(), "Layout Page Template Collection 2",
 			StringPool.BLANK, serviceContext);
 
-		int actualLayoutPageTemplateFoldersCount =
-			LayoutPageTemplateFolderServiceUtil.
-				getLayoutPageTemplateFoldersCount(_group.getGroupId());
+		int actualLayoutPageTemplateCollectionsCount =
+			LayoutPageTemplateCollectionServiceUtil.
+				getLayoutPageTemplateCollectionsCount(_group.getGroupId());
 
 		Assert.assertEquals(
-			originalLayoutPageTemplateFoldersCount + 2,
-			actualLayoutPageTemplateFoldersCount);
+			originalLayoutPageTemplateCollectionsCount + 2,
+			actualLayoutPageTemplateCollectionsCount);
 	}
 
 	@Test
@@ -146,43 +152,53 @@ public class LayoutPageTemplateFolderServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		LayoutPageTemplateFolder layoutPageTemplateFolder =
-			LayoutPageTemplateFolderServiceUtil.addLayoutPageTemplateFolder(
-				_group.getGroupId(), "Layout Page Template Folder", null,
-				serviceContext);
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			LayoutPageTemplateCollectionServiceUtil.
+				addLayoutPageTemplateCollection(
+					_group.getGroupId(), "Layout Page Template Collection",
+					null, serviceContext);
 
-		LayoutPageTemplateFolderServiceUtil.deleteLayoutPageTemplateFolder(
-			layoutPageTemplateFolder.getLayoutPageTemplateFolderId());
+		LayoutPageTemplateCollectionServiceUtil.
+			deleteLayoutPageTemplateCollection(
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId());
 
 		Assert.assertNull(
-			LayoutPageTemplateFolderServiceUtil.fetchLayoutPageTemplateFolder(
-				layoutPageTemplateFolder.getLayoutPageTemplateFolderId()));
+			LayoutPageTemplateCollectionServiceUtil.
+				fetchLayoutPageTemplateCollection(
+					layoutPageTemplateCollection.
+						getLayoutPageTemplateCollectionId()));
 	}
 
 	@Test
-	public void testLayoutPageTemplateFoldersWithPageTemplates()
+	public void testLayoutPageTemplateCollectionsWithPageTemplates()
 		throws Exception {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		LayoutPageTemplateFolder layoutPageTemplateFolder =
-			LayoutPageTemplateFolderServiceUtil.addLayoutPageTemplateFolder(
-				_group.getGroupId(), "Layout Page Template Folder", null,
-				serviceContext);
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			LayoutPageTemplateCollectionServiceUtil.
+				addLayoutPageTemplateCollection(
+					_group.getGroupId(), "Layout Page Template Collection",
+					null, serviceContext);
 
 		LayoutPageTemplateEntryServiceUtil.addLayoutPageTemplateEntry(
 			_group.getGroupId(),
-			layoutPageTemplateFolder.getLayoutPageTemplateFolderId(),
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
 			"Layout Page Template Entry", null, serviceContext);
 
-		LayoutPageTemplateFolderServiceUtil.deleteLayoutPageTemplateFolder(
-			layoutPageTemplateFolder.getLayoutPageTemplateFolderId());
+		LayoutPageTemplateCollectionServiceUtil.
+			deleteLayoutPageTemplateCollection(
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId());
 
 		Assert.assertNull(
-			LayoutPageTemplateFolderServiceUtil.fetchLayoutPageTemplateFolder(
-				layoutPageTemplateFolder.getLayoutPageTemplateFolderId()));
+			LayoutPageTemplateCollectionServiceUtil.
+				fetchLayoutPageTemplateCollection(
+					layoutPageTemplateCollection.
+						getLayoutPageTemplateCollectionId()));
 	}
 
 	@DeleteAfterTestRun

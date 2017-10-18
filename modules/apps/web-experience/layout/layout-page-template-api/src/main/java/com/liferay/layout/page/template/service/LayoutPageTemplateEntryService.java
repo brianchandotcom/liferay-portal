@@ -59,7 +59,7 @@ public interface LayoutPageTemplateEntryService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link LayoutPageTemplateEntryServiceUtil} to access the layout page template entry remote service. Add custom service methods to {@link com.liferay.layout.page.template.service.impl.LayoutPageTemplateEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(long groupId,
-		long layoutPageTemplateFolderId, java.lang.String name,
+		long layoutPageTemplateCollectionId, java.lang.String name,
 		List<FragmentEntry> fragmentEntries, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -74,29 +74,29 @@ public interface LayoutPageTemplateEntryService extends BaseService {
 		long layoutPageTemplateEntryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLayoutPageTemplateCollectionsCount(long groupId,
+		long layoutPageTemplateCollectionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLayoutPageTemplateCollectionsCount(long groupId,
+		long layoutPageTemplateCollectionId, java.lang.String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
-		long groupId, long layoutPageTemplateFolderId, int start, int end)
+		long groupId, long layoutPageTemplateCollectionId, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
-		long groupId, long layoutPageTemplateFolderId, int start, int end,
+		long groupId, long layoutPageTemplateCollectionId, int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
-		long groupId, long layoutPageTemplateFolderId, java.lang.String name,
-		int start, int end,
+		long groupId, long layoutPageTemplateCollectionId,
+		java.lang.String name, int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getLayoutPageTemplateFoldersCount(long groupId,
-		long layoutPageTemplateFolderId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getLayoutPageTemplateFoldersCount(long groupId,
-		long layoutPageTemplateFolderId, java.lang.String name);
 
 	/**
 	* Returns the OSGi service identifier.

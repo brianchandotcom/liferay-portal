@@ -22,20 +22,23 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class LayoutPageTemplateFolderNameException extends PortalException {
+public class DuplicateLayoutPageTemplateCollectionException
+	extends PortalException {
 
-	public LayoutPageTemplateFolderNameException() {
+	public DuplicateLayoutPageTemplateCollectionException() {
 	}
 
-	public LayoutPageTemplateFolderNameException(String msg) {
+	public DuplicateLayoutPageTemplateCollectionException(String msg) {
 		super(msg);
 	}
 
-	public LayoutPageTemplateFolderNameException(String msg, Throwable cause) {
+	public DuplicateLayoutPageTemplateCollectionException(
+		String msg, Throwable cause) {
+
 		super(msg, cause);
 	}
 
-	public LayoutPageTemplateFolderNameException(Throwable cause) {
+	public DuplicateLayoutPageTemplateCollectionException(Throwable cause) {
 		super(cause);
 	}
 

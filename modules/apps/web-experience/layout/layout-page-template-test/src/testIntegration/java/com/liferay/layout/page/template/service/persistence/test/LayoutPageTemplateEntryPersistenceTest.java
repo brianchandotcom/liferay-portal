@@ -137,7 +137,7 @@ public class LayoutPageTemplateEntryPersistenceTest {
 
 		newLayoutPageTemplateEntry.setModifiedDate(RandomTestUtil.nextDate());
 
-		newLayoutPageTemplateEntry.setLayoutPageTemplateFolderId(RandomTestUtil.nextLong());
+		newLayoutPageTemplateEntry.setLayoutPageTemplateCollectionId(RandomTestUtil.nextLong());
 
 		newLayoutPageTemplateEntry.setName(RandomTestUtil.randomString());
 
@@ -162,8 +162,8 @@ public class LayoutPageTemplateEntryPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingLayoutPageTemplateEntry.getModifiedDate()),
 			Time.getShortTimestamp(newLayoutPageTemplateEntry.getModifiedDate()));
-		Assert.assertEquals(existingLayoutPageTemplateEntry.getLayoutPageTemplateFolderId(),
-			newLayoutPageTemplateEntry.getLayoutPageTemplateFolderId());
+		Assert.assertEquals(existingLayoutPageTemplateEntry.getLayoutPageTemplateCollectionId(),
+			newLayoutPageTemplateEntry.getLayoutPageTemplateCollectionId());
 		Assert.assertEquals(existingLayoutPageTemplateEntry.getName(),
 			newLayoutPageTemplateEntry.getName());
 	}
@@ -235,8 +235,8 @@ public class LayoutPageTemplateEntryPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("LayoutPageTemplateEntry",
 			"layoutPageTemplateEntryId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "layoutPageTemplateFolderId", true, "name",
-			true);
+			"modifiedDate", true, "layoutPageTemplateCollectionId", true,
+			"name", true);
 	}
 
 	@Test
@@ -480,7 +480,7 @@ public class LayoutPageTemplateEntryPersistenceTest {
 
 		layoutPageTemplateEntry.setModifiedDate(RandomTestUtil.nextDate());
 
-		layoutPageTemplateEntry.setLayoutPageTemplateFolderId(RandomTestUtil.nextLong());
+		layoutPageTemplateEntry.setLayoutPageTemplateCollectionId(RandomTestUtil.nextLong());
 
 		layoutPageTemplateEntry.setName(RandomTestUtil.randomString());
 

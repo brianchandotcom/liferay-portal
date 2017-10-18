@@ -21,11 +21,11 @@ import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateEntryException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.model.LayoutPageTemplateFolder;
 import com.liferay.layout.page.template.model.LayoutPageTemplateFragment;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
-import com.liferay.layout.page.template.service.LayoutPageTemplateFolderServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateFragmentLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -76,19 +76,20 @@ public class LayoutPageTemplateEntryServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		LayoutPageTemplateFolder layoutPageTemplateFolder =
-			LayoutPageTemplateFolderServiceUtil.addLayoutPageTemplateFolder(
-				_group.getGroupId(), "Layout Page Template Folder", null,
-				serviceContext);
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			LayoutPageTemplateCollectionServiceUtil.
+				addLayoutPageTemplateCollection(
+					_group.getGroupId(), "Layout Page Template Collection",
+					null, serviceContext);
 
 		LayoutPageTemplateEntryServiceUtil.addLayoutPageTemplateEntry(
 			_group.getGroupId(),
-			layoutPageTemplateFolder.getLayoutPageTemplateFolderId(),
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
 			"Layout Page Template Entry", null, serviceContext);
 
 		LayoutPageTemplateEntryServiceUtil.addLayoutPageTemplateEntry(
 			_group.getGroupId(),
-			layoutPageTemplateFolder.getLayoutPageTemplateFolderId(),
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
 			"Layout Page Template Entry", null, serviceContext);
 	}
 
@@ -98,15 +99,16 @@ public class LayoutPageTemplateEntryServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		LayoutPageTemplateFolder layoutPageTemplateFolder =
-			LayoutPageTemplateFolderServiceUtil.addLayoutPageTemplateFolder(
-				_group.getGroupId(), "Layout Page Template Folder", null,
-				serviceContext);
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			LayoutPageTemplateCollectionServiceUtil.
+				addLayoutPageTemplateCollection(
+					_group.getGroupId(), "Layout Page Template Collection",
+					null, serviceContext);
 
 		LayoutPageTemplateEntryServiceUtil.addLayoutPageTemplateEntry(
 			_group.getGroupId(),
-			layoutPageTemplateFolder.getLayoutPageTemplateFolderId(), null,
-			null, serviceContext);
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
+			null, null, serviceContext);
 	}
 
 	@Test
@@ -115,15 +117,17 @@ public class LayoutPageTemplateEntryServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		LayoutPageTemplateFolder layoutPageTemplateFolder =
-			LayoutPageTemplateFolderServiceUtil.addLayoutPageTemplateFolder(
-				_group.getGroupId(), "Layout Page Template Folder", null,
-				serviceContext);
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			LayoutPageTemplateCollectionServiceUtil.
+				addLayoutPageTemplateCollection(
+					_group.getGroupId(), "Layout Page Template Collection",
+					null, serviceContext);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			LayoutPageTemplateEntryServiceUtil.addLayoutPageTemplateEntry(
 				_group.getGroupId(),
-				layoutPageTemplateFolder.getLayoutPageTemplateFolderId(),
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
 				"Layout Page Template Entry", null, serviceContext);
 
 		Assert.assertEquals(
@@ -136,14 +140,15 @@ public class LayoutPageTemplateEntryServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		LayoutPageTemplateFolder layoutPageTemplateFolder =
-			LayoutPageTemplateFolderServiceUtil.addLayoutPageTemplateFolder(
-				_group.getGroupId(), "Layout Page Template Folder", null,
-				serviceContext);
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			LayoutPageTemplateCollectionServiceUtil.
+				addLayoutPageTemplateCollection(
+					_group.getGroupId(), "Layout Page Template Collection",
+					null, serviceContext);
 
 		LayoutPageTemplateEntryServiceUtil.addLayoutPageTemplateEntry(
 			_group.getGroupId(),
-			layoutPageTemplateFolder.getLayoutPageTemplateFolderId(),
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
 			StringPool.BLANK, null, serviceContext);
 	}
 
@@ -155,10 +160,11 @@ public class LayoutPageTemplateEntryServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		LayoutPageTemplateFolder layoutPageTemplateFolder =
-			LayoutPageTemplateFolderServiceUtil.addLayoutPageTemplateFolder(
-				_group.getGroupId(), "Layout Page Template Folder", null,
-				serviceContext);
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			LayoutPageTemplateCollectionServiceUtil.
+				addLayoutPageTemplateCollection(
+					_group.getGroupId(), "Layout Page Template Collection",
+					null, serviceContext);
 
 		FragmentCollection fragmentCollection =
 			FragmentCollectionServiceUtil.addFragmentCollection(
@@ -186,7 +192,8 @@ public class LayoutPageTemplateEntryServiceTest {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			LayoutPageTemplateEntryServiceUtil.addLayoutPageTemplateEntry(
 				_group.getGroupId(),
-				layoutPageTemplateFolder.getLayoutPageTemplateFolderId(),
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
 				"Layout Page Template Entry", layoutPageTemplateFragmentEntries,
 				serviceContext);
 
@@ -209,31 +216,34 @@ public class LayoutPageTemplateEntryServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		LayoutPageTemplateFolder layoutPageTemplateFolder =
-			LayoutPageTemplateFolderServiceUtil.addLayoutPageTemplateFolder(
-				_group.getGroupId(), "Layout Page Template Folder", null,
-				serviceContext);
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			LayoutPageTemplateCollectionServiceUtil.
+				addLayoutPageTemplateCollection(
+					_group.getGroupId(), "Layout Page Template Collection",
+					null, serviceContext);
 
 		List<LayoutPageTemplateEntry> originalLayoutPageTemplateEntries =
 			LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
-				layoutPageTemplateFolder.getGroupId(),
-				layoutPageTemplateFolder.getLayoutPageTemplateFolderId(),
+				layoutPageTemplateCollection.getGroupId(),
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		LayoutPageTemplateEntryServiceUtil.addLayoutPageTemplateEntry(
 			_group.getGroupId(),
-			layoutPageTemplateFolder.getLayoutPageTemplateFolderId(),
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
 			"Layout Page Template Entry 1", null, serviceContext);
 
 		LayoutPageTemplateEntryServiceUtil.addLayoutPageTemplateEntry(
 			_group.getGroupId(),
-			layoutPageTemplateFolder.getLayoutPageTemplateFolderId(),
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
 			"Layout Page Template Entry 2", null, serviceContext);
 
 		List<LayoutPageTemplateEntry> actualLayoutPageTemplateEntries =
 			LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
-				layoutPageTemplateFolder.getGroupId(),
-				layoutPageTemplateFolder.getLayoutPageTemplateFolderId(),
+				layoutPageTemplateCollection.getGroupId(),
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(
@@ -248,15 +258,17 @@ public class LayoutPageTemplateEntryServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		LayoutPageTemplateFolder layoutPageTemplateFolder =
-			LayoutPageTemplateFolderServiceUtil.addLayoutPageTemplateFolder(
-				_group.getGroupId(), "Layout Page Template Folder", null,
-				serviceContext);
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			LayoutPageTemplateCollectionServiceUtil.
+				addLayoutPageTemplateCollection(
+					_group.getGroupId(), "Layout Page Template Collection",
+					null, serviceContext);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			LayoutPageTemplateEntryServiceUtil.addLayoutPageTemplateEntry(
 				_group.getGroupId(),
-				layoutPageTemplateFolder.getLayoutPageTemplateFolderId(),
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
 				"Layout Page Template Entry", null, serviceContext);
 
 		LayoutPageTemplateEntryServiceUtil.deleteLayoutPageTemplateEntry(
@@ -275,10 +287,11 @@ public class LayoutPageTemplateEntryServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		LayoutPageTemplateFolder layoutPageTemplateFolder =
-			LayoutPageTemplateFolderServiceUtil.addLayoutPageTemplateFolder(
-				_group.getGroupId(), "Layout Page Template Folder", null,
-				serviceContext);
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			LayoutPageTemplateCollectionServiceUtil.
+				addLayoutPageTemplateCollection(
+					_group.getGroupId(), "Layout Page Template Collection",
+					null, serviceContext);
 
 		FragmentCollection fragmentCollection =
 			FragmentCollectionServiceUtil.addFragmentCollection(
@@ -306,7 +319,8 @@ public class LayoutPageTemplateEntryServiceTest {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			LayoutPageTemplateEntryServiceUtil.addLayoutPageTemplateEntry(
 				_group.getGroupId(),
-				layoutPageTemplateFolder.getLayoutPageTemplateFolderId(),
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
 				"Layout Page Template Entry", layoutPageTemplateFragmentEntries,
 				serviceContext);
 

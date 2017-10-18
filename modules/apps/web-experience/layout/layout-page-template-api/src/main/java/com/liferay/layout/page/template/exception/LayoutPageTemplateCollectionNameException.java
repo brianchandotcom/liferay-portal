@@ -12,18 +12,33 @@
  * details.
  */
 
-package com.liferay.layout.page.template.model.impl;
+package com.liferay.layout.page.template.exception;
 
 import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class LayoutPageTemplateFolderImpl
-	extends LayoutPageTemplateFolderBaseImpl {
+public class LayoutPageTemplateCollectionNameException extends PortalException {
 
-	public LayoutPageTemplateFolderImpl() {
+	public LayoutPageTemplateCollectionNameException() {
+	}
+
+	public LayoutPageTemplateCollectionNameException(String msg) {
+		super(msg);
+	}
+
+	public LayoutPageTemplateCollectionNameException(
+		String msg, Throwable cause) {
+
+		super(msg, cause);
+	}
+
+	public LayoutPageTemplateCollectionNameException(Throwable cause) {
+		super(cause);
 	}
 
 }

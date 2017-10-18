@@ -350,67 +350,69 @@ public class LayoutPageTemplateEntryUtil {
 	}
 
 	/**
-	* Returns all the layout page template entries where groupId = &#63; and layoutPageTemplateFolderId = &#63;.
+	* Returns all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @return the matching layout page template entries
 	*/
 	public static List<LayoutPageTemplateEntry> findByG_L(long groupId,
-		long layoutPageTemplateFolderId) {
-		return getPersistence().findByG_L(groupId, layoutPageTemplateFolderId);
+		long layoutPageTemplateCollectionId) {
+		return getPersistence()
+				   .findByG_L(groupId, layoutPageTemplateCollectionId);
 	}
 
 	/**
-	* Returns a range of all the layout page template entries where groupId = &#63; and layoutPageTemplateFolderId = &#63;.
+	* Returns a range of all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @param start the lower bound of the range of layout page template entries
 	* @param end the upper bound of the range of layout page template entries (not inclusive)
 	* @return the range of matching layout page template entries
 	*/
 	public static List<LayoutPageTemplateEntry> findByG_L(long groupId,
-		long layoutPageTemplateFolderId, int start, int end) {
+		long layoutPageTemplateCollectionId, int start, int end) {
 		return getPersistence()
-				   .findByG_L(groupId, layoutPageTemplateFolderId, start, end);
+				   .findByG_L(groupId, layoutPageTemplateCollectionId, start,
+			end);
 	}
 
 	/**
-	* Returns an ordered range of all the layout page template entries where groupId = &#63; and layoutPageTemplateFolderId = &#63;.
+	* Returns an ordered range of all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @param start the lower bound of the range of layout page template entries
 	* @param end the upper bound of the range of layout page template entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout page template entries
 	*/
 	public static List<LayoutPageTemplateEntry> findByG_L(long groupId,
-		long layoutPageTemplateFolderId, int start, int end,
+		long layoutPageTemplateCollectionId, int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 		return getPersistence()
-				   .findByG_L(groupId, layoutPageTemplateFolderId, start, end,
-			orderByComparator);
+				   .findByG_L(groupId, layoutPageTemplateCollectionId, start,
+			end, orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the layout page template entries where groupId = &#63; and layoutPageTemplateFolderId = &#63;.
+	* Returns an ordered range of all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @param start the lower bound of the range of layout page template entries
 	* @param end the upper bound of the range of layout page template entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -418,209 +420,212 @@ public class LayoutPageTemplateEntryUtil {
 	* @return the ordered range of matching layout page template entries
 	*/
 	public static List<LayoutPageTemplateEntry> findByG_L(long groupId,
-		long layoutPageTemplateFolderId, int start, int end,
+		long layoutPageTemplateCollectionId, int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findByG_L(groupId, layoutPageTemplateFolderId, start, end,
-			orderByComparator, retrieveFromCache);
+				   .findByG_L(groupId, layoutPageTemplateCollectionId, start,
+			end, orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	* Returns the first layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateFolderId = &#63;.
+	* Returns the first layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout page template entry
 	* @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
 	*/
 	public static LayoutPageTemplateEntry findByG_L_First(long groupId,
-		long layoutPageTemplateFolderId,
+		long layoutPageTemplateCollectionId,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException {
 		return getPersistence()
-				   .findByG_L_First(groupId, layoutPageTemplateFolderId,
+				   .findByG_L_First(groupId, layoutPageTemplateCollectionId,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the first layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateFolderId = &#63;.
+	* Returns the first layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
 	*/
 	public static LayoutPageTemplateEntry fetchByG_L_First(long groupId,
-		long layoutPageTemplateFolderId,
+		long layoutPageTemplateCollectionId,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 		return getPersistence()
-				   .fetchByG_L_First(groupId, layoutPageTemplateFolderId,
+				   .fetchByG_L_First(groupId, layoutPageTemplateCollectionId,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the last layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateFolderId = &#63;.
+	* Returns the last layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout page template entry
 	* @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
 	*/
 	public static LayoutPageTemplateEntry findByG_L_Last(long groupId,
-		long layoutPageTemplateFolderId,
+		long layoutPageTemplateCollectionId,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException {
 		return getPersistence()
-				   .findByG_L_Last(groupId, layoutPageTemplateFolderId,
+				   .findByG_L_Last(groupId, layoutPageTemplateCollectionId,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the last layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateFolderId = &#63;.
+	* Returns the last layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
 	*/
 	public static LayoutPageTemplateEntry fetchByG_L_Last(long groupId,
-		long layoutPageTemplateFolderId,
+		long layoutPageTemplateCollectionId,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 		return getPersistence()
-				   .fetchByG_L_Last(groupId, layoutPageTemplateFolderId,
+				   .fetchByG_L_Last(groupId, layoutPageTemplateCollectionId,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateFolderId = &#63;.
+	* Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
 	*
 	* @param layoutPageTemplateEntryId the primary key of the current layout page template entry
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout page template entry
 	* @throws NoSuchPageTemplateEntryException if a layout page template entry with the primary key could not be found
 	*/
 	public static LayoutPageTemplateEntry[] findByG_L_PrevAndNext(
 		long layoutPageTemplateEntryId, long groupId,
-		long layoutPageTemplateFolderId,
+		long layoutPageTemplateCollectionId,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException {
 		return getPersistence()
 				   .findByG_L_PrevAndNext(layoutPageTemplateEntryId, groupId,
-			layoutPageTemplateFolderId, orderByComparator);
+			layoutPageTemplateCollectionId, orderByComparator);
 	}
 
 	/**
-	* Returns all the layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateFolderId = &#63;.
+	* Returns all the layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @return the matching layout page template entries that the user has permission to view
 	*/
 	public static List<LayoutPageTemplateEntry> filterFindByG_L(long groupId,
-		long layoutPageTemplateFolderId) {
+		long layoutPageTemplateCollectionId) {
 		return getPersistence()
-				   .filterFindByG_L(groupId, layoutPageTemplateFolderId);
+				   .filterFindByG_L(groupId, layoutPageTemplateCollectionId);
 	}
 
 	/**
-	* Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateFolderId = &#63;.
+	* Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @param start the lower bound of the range of layout page template entries
 	* @param end the upper bound of the range of layout page template entries (not inclusive)
 	* @return the range of matching layout page template entries that the user has permission to view
 	*/
 	public static List<LayoutPageTemplateEntry> filterFindByG_L(long groupId,
-		long layoutPageTemplateFolderId, int start, int end) {
+		long layoutPageTemplateCollectionId, int start, int end) {
 		return getPersistence()
-				   .filterFindByG_L(groupId, layoutPageTemplateFolderId, start,
-			end);
+				   .filterFindByG_L(groupId, layoutPageTemplateCollectionId,
+			start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the layout page template entries that the user has permissions to view where groupId = &#63; and layoutPageTemplateFolderId = &#63;.
+	* Returns an ordered range of all the layout page template entries that the user has permissions to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @param start the lower bound of the range of layout page template entries
 	* @param end the upper bound of the range of layout page template entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout page template entries that the user has permission to view
 	*/
 	public static List<LayoutPageTemplateEntry> filterFindByG_L(long groupId,
-		long layoutPageTemplateFolderId, int start, int end,
+		long layoutPageTemplateCollectionId, int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 		return getPersistence()
-				   .filterFindByG_L(groupId, layoutPageTemplateFolderId, start,
-			end, orderByComparator);
+				   .filterFindByG_L(groupId, layoutPageTemplateCollectionId,
+			start, end, orderByComparator);
 	}
 
 	/**
-	* Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateFolderId = &#63;.
+	* Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
 	*
 	* @param layoutPageTemplateEntryId the primary key of the current layout page template entry
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout page template entry
 	* @throws NoSuchPageTemplateEntryException if a layout page template entry with the primary key could not be found
 	*/
 	public static LayoutPageTemplateEntry[] filterFindByG_L_PrevAndNext(
 		long layoutPageTemplateEntryId, long groupId,
-		long layoutPageTemplateFolderId,
+		long layoutPageTemplateCollectionId,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException {
 		return getPersistence()
 				   .filterFindByG_L_PrevAndNext(layoutPageTemplateEntryId,
-			groupId, layoutPageTemplateFolderId, orderByComparator);
+			groupId, layoutPageTemplateCollectionId, orderByComparator);
 	}
 
 	/**
-	* Removes all the layout page template entries where groupId = &#63; and layoutPageTemplateFolderId = &#63; from the database.
+	* Removes all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	*/
-	public static void removeByG_L(long groupId, long layoutPageTemplateFolderId) {
-		getPersistence().removeByG_L(groupId, layoutPageTemplateFolderId);
+	public static void removeByG_L(long groupId,
+		long layoutPageTemplateCollectionId) {
+		getPersistence().removeByG_L(groupId, layoutPageTemplateCollectionId);
 	}
 
 	/**
-	* Returns the number of layout page template entries where groupId = &#63; and layoutPageTemplateFolderId = &#63;.
+	* Returns the number of layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @return the number of matching layout page template entries
 	*/
-	public static int countByG_L(long groupId, long layoutPageTemplateFolderId) {
-		return getPersistence().countByG_L(groupId, layoutPageTemplateFolderId);
+	public static int countByG_L(long groupId,
+		long layoutPageTemplateCollectionId) {
+		return getPersistence()
+				   .countByG_L(groupId, layoutPageTemplateCollectionId);
 	}
 
 	/**
-	* Returns the number of layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateFolderId = &#63;.
+	* Returns the number of layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @return the number of matching layout page template entries that the user has permission to view
 	*/
 	public static int filterCountByG_L(long groupId,
-		long layoutPageTemplateFolderId) {
+		long layoutPageTemplateCollectionId) {
 		return getPersistence()
-				   .filterCountByG_L(groupId, layoutPageTemplateFolderId);
+				   .filterCountByG_L(groupId, layoutPageTemplateCollectionId);
 	}
 
 	/**
@@ -687,50 +692,51 @@ public class LayoutPageTemplateEntryUtil {
 	}
 
 	/**
-	* Returns all the layout page template entries where groupId = &#63; and layoutPageTemplateFolderId = &#63; and name LIKE &#63;.
+	* Returns all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63;.
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @param name the name
 	* @return the matching layout page template entries
 	*/
 	public static List<LayoutPageTemplateEntry> findByG_L_LikeN(long groupId,
-		long layoutPageTemplateFolderId, java.lang.String name) {
+		long layoutPageTemplateCollectionId, java.lang.String name) {
 		return getPersistence()
-				   .findByG_L_LikeN(groupId, layoutPageTemplateFolderId, name);
+				   .findByG_L_LikeN(groupId, layoutPageTemplateCollectionId,
+			name);
 	}
 
 	/**
-	* Returns a range of all the layout page template entries where groupId = &#63; and layoutPageTemplateFolderId = &#63; and name LIKE &#63;.
+	* Returns a range of all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @param name the name
 	* @param start the lower bound of the range of layout page template entries
 	* @param end the upper bound of the range of layout page template entries (not inclusive)
 	* @return the range of matching layout page template entries
 	*/
 	public static List<LayoutPageTemplateEntry> findByG_L_LikeN(long groupId,
-		long layoutPageTemplateFolderId, java.lang.String name, int start,
+		long layoutPageTemplateCollectionId, java.lang.String name, int start,
 		int end) {
 		return getPersistence()
-				   .findByG_L_LikeN(groupId, layoutPageTemplateFolderId, name,
-			start, end);
+				   .findByG_L_LikeN(groupId, layoutPageTemplateCollectionId,
+			name, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the layout page template entries where groupId = &#63; and layoutPageTemplateFolderId = &#63; and name LIKE &#63;.
+	* Returns an ordered range of all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @param name the name
 	* @param start the lower bound of the range of layout page template entries
 	* @param end the upper bound of the range of layout page template entries (not inclusive)
@@ -738,22 +744,22 @@ public class LayoutPageTemplateEntryUtil {
 	* @return the ordered range of matching layout page template entries
 	*/
 	public static List<LayoutPageTemplateEntry> findByG_L_LikeN(long groupId,
-		long layoutPageTemplateFolderId, java.lang.String name, int start,
+		long layoutPageTemplateCollectionId, java.lang.String name, int start,
 		int end, OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 		return getPersistence()
-				   .findByG_L_LikeN(groupId, layoutPageTemplateFolderId, name,
-			start, end, orderByComparator);
+				   .findByG_L_LikeN(groupId, layoutPageTemplateCollectionId,
+			name, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the layout page template entries where groupId = &#63; and layoutPageTemplateFolderId = &#63; and name LIKE &#63;.
+	* Returns an ordered range of all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @param name the name
 	* @param start the lower bound of the range of layout page template entries
 	* @param end the upper bound of the range of layout page template entries (not inclusive)
@@ -762,92 +768,92 @@ public class LayoutPageTemplateEntryUtil {
 	* @return the ordered range of matching layout page template entries
 	*/
 	public static List<LayoutPageTemplateEntry> findByG_L_LikeN(long groupId,
-		long layoutPageTemplateFolderId, java.lang.String name, int start,
+		long layoutPageTemplateCollectionId, java.lang.String name, int start,
 		int end, OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findByG_L_LikeN(groupId, layoutPageTemplateFolderId, name,
-			start, end, orderByComparator, retrieveFromCache);
+				   .findByG_L_LikeN(groupId, layoutPageTemplateCollectionId,
+			name, start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	* Returns the first layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateFolderId = &#63; and name LIKE &#63;.
+	* Returns the first layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63;.
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @param name the name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout page template entry
 	* @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
 	*/
 	public static LayoutPageTemplateEntry findByG_L_LikeN_First(long groupId,
-		long layoutPageTemplateFolderId, java.lang.String name,
+		long layoutPageTemplateCollectionId, java.lang.String name,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException {
 		return getPersistence()
-				   .findByG_L_LikeN_First(groupId, layoutPageTemplateFolderId,
-			name, orderByComparator);
+				   .findByG_L_LikeN_First(groupId,
+			layoutPageTemplateCollectionId, name, orderByComparator);
 	}
 
 	/**
-	* Returns the first layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateFolderId = &#63; and name LIKE &#63;.
+	* Returns the first layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63;.
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @param name the name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
 	*/
 	public static LayoutPageTemplateEntry fetchByG_L_LikeN_First(long groupId,
-		long layoutPageTemplateFolderId, java.lang.String name,
+		long layoutPageTemplateCollectionId, java.lang.String name,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 		return getPersistence()
-				   .fetchByG_L_LikeN_First(groupId, layoutPageTemplateFolderId,
-			name, orderByComparator);
+				   .fetchByG_L_LikeN_First(groupId,
+			layoutPageTemplateCollectionId, name, orderByComparator);
 	}
 
 	/**
-	* Returns the last layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateFolderId = &#63; and name LIKE &#63;.
+	* Returns the last layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63;.
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @param name the name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout page template entry
 	* @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
 	*/
 	public static LayoutPageTemplateEntry findByG_L_LikeN_Last(long groupId,
-		long layoutPageTemplateFolderId, java.lang.String name,
+		long layoutPageTemplateCollectionId, java.lang.String name,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException {
 		return getPersistence()
-				   .findByG_L_LikeN_Last(groupId, layoutPageTemplateFolderId,
-			name, orderByComparator);
+				   .findByG_L_LikeN_Last(groupId,
+			layoutPageTemplateCollectionId, name, orderByComparator);
 	}
 
 	/**
-	* Returns the last layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateFolderId = &#63; and name LIKE &#63;.
+	* Returns the last layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63;.
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @param name the name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
 	*/
 	public static LayoutPageTemplateEntry fetchByG_L_LikeN_Last(long groupId,
-		long layoutPageTemplateFolderId, java.lang.String name,
+		long layoutPageTemplateCollectionId, java.lang.String name,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 		return getPersistence()
-				   .fetchByG_L_LikeN_Last(groupId, layoutPageTemplateFolderId,
-			name, orderByComparator);
+				   .fetchByG_L_LikeN_Last(groupId,
+			layoutPageTemplateCollectionId, name, orderByComparator);
 	}
 
 	/**
-	* Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateFolderId = &#63; and name LIKE &#63;.
+	* Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63;.
 	*
 	* @param layoutPageTemplateEntryId the primary key of the current layout page template entry
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @param name the name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout page template entry
@@ -855,60 +861,60 @@ public class LayoutPageTemplateEntryUtil {
 	*/
 	public static LayoutPageTemplateEntry[] findByG_L_LikeN_PrevAndNext(
 		long layoutPageTemplateEntryId, long groupId,
-		long layoutPageTemplateFolderId, java.lang.String name,
+		long layoutPageTemplateCollectionId, java.lang.String name,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException {
 		return getPersistence()
 				   .findByG_L_LikeN_PrevAndNext(layoutPageTemplateEntryId,
-			groupId, layoutPageTemplateFolderId, name, orderByComparator);
+			groupId, layoutPageTemplateCollectionId, name, orderByComparator);
 	}
 
 	/**
-	* Returns all the layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateFolderId = &#63; and name LIKE &#63;.
+	* Returns all the layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63;.
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @param name the name
 	* @return the matching layout page template entries that the user has permission to view
 	*/
 	public static List<LayoutPageTemplateEntry> filterFindByG_L_LikeN(
-		long groupId, long layoutPageTemplateFolderId, java.lang.String name) {
+		long groupId, long layoutPageTemplateCollectionId, java.lang.String name) {
 		return getPersistence()
-				   .filterFindByG_L_LikeN(groupId, layoutPageTemplateFolderId,
-			name);
+				   .filterFindByG_L_LikeN(groupId,
+			layoutPageTemplateCollectionId, name);
 	}
 
 	/**
-	* Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateFolderId = &#63; and name LIKE &#63;.
+	* Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @param name the name
 	* @param start the lower bound of the range of layout page template entries
 	* @param end the upper bound of the range of layout page template entries (not inclusive)
 	* @return the range of matching layout page template entries that the user has permission to view
 	*/
 	public static List<LayoutPageTemplateEntry> filterFindByG_L_LikeN(
-		long groupId, long layoutPageTemplateFolderId, java.lang.String name,
-		int start, int end) {
+		long groupId, long layoutPageTemplateCollectionId,
+		java.lang.String name, int start, int end) {
 		return getPersistence()
-				   .filterFindByG_L_LikeN(groupId, layoutPageTemplateFolderId,
-			name, start, end);
+				   .filterFindByG_L_LikeN(groupId,
+			layoutPageTemplateCollectionId, name, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the layout page template entries that the user has permissions to view where groupId = &#63; and layoutPageTemplateFolderId = &#63; and name LIKE &#63;.
+	* Returns an ordered range of all the layout page template entries that the user has permissions to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @param name the name
 	* @param start the lower bound of the range of layout page template entries
 	* @param end the upper bound of the range of layout page template entries (not inclusive)
@@ -916,20 +922,20 @@ public class LayoutPageTemplateEntryUtil {
 	* @return the ordered range of matching layout page template entries that the user has permission to view
 	*/
 	public static List<LayoutPageTemplateEntry> filterFindByG_L_LikeN(
-		long groupId, long layoutPageTemplateFolderId, java.lang.String name,
-		int start, int end,
+		long groupId, long layoutPageTemplateCollectionId,
+		java.lang.String name, int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 		return getPersistence()
-				   .filterFindByG_L_LikeN(groupId, layoutPageTemplateFolderId,
-			name, start, end, orderByComparator);
+				   .filterFindByG_L_LikeN(groupId,
+			layoutPageTemplateCollectionId, name, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateFolderId = &#63; and name LIKE &#63;.
+	* Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63;.
 	*
 	* @param layoutPageTemplateEntryId the primary key of the current layout page template entry
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @param name the name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout page template entry
@@ -937,54 +943,55 @@ public class LayoutPageTemplateEntryUtil {
 	*/
 	public static LayoutPageTemplateEntry[] filterFindByG_L_LikeN_PrevAndNext(
 		long layoutPageTemplateEntryId, long groupId,
-		long layoutPageTemplateFolderId, java.lang.String name,
+		long layoutPageTemplateCollectionId, java.lang.String name,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException {
 		return getPersistence()
 				   .filterFindByG_L_LikeN_PrevAndNext(layoutPageTemplateEntryId,
-			groupId, layoutPageTemplateFolderId, name, orderByComparator);
+			groupId, layoutPageTemplateCollectionId, name, orderByComparator);
 	}
 
 	/**
-	* Removes all the layout page template entries where groupId = &#63; and layoutPageTemplateFolderId = &#63; and name LIKE &#63; from the database.
+	* Removes all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @param name the name
 	*/
 	public static void removeByG_L_LikeN(long groupId,
-		long layoutPageTemplateFolderId, java.lang.String name) {
+		long layoutPageTemplateCollectionId, java.lang.String name) {
 		getPersistence()
-			.removeByG_L_LikeN(groupId, layoutPageTemplateFolderId, name);
+			.removeByG_L_LikeN(groupId, layoutPageTemplateCollectionId, name);
 	}
 
 	/**
-	* Returns the number of layout page template entries where groupId = &#63; and layoutPageTemplateFolderId = &#63; and name LIKE &#63;.
+	* Returns the number of layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63;.
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @param name the name
 	* @return the number of matching layout page template entries
 	*/
 	public static int countByG_L_LikeN(long groupId,
-		long layoutPageTemplateFolderId, java.lang.String name) {
+		long layoutPageTemplateCollectionId, java.lang.String name) {
 		return getPersistence()
-				   .countByG_L_LikeN(groupId, layoutPageTemplateFolderId, name);
+				   .countByG_L_LikeN(groupId, layoutPageTemplateCollectionId,
+			name);
 	}
 
 	/**
-	* Returns the number of layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateFolderId = &#63; and name LIKE &#63;.
+	* Returns the number of layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63;.
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateFolderId the layout page template folder ID
+	* @param layoutPageTemplateCollectionId the layout page template collection ID
 	* @param name the name
 	* @return the number of matching layout page template entries that the user has permission to view
 	*/
 	public static int filterCountByG_L_LikeN(long groupId,
-		long layoutPageTemplateFolderId, java.lang.String name) {
+		long layoutPageTemplateCollectionId, java.lang.String name) {
 		return getPersistence()
-				   .filterCountByG_L_LikeN(groupId, layoutPageTemplateFolderId,
-			name);
+				   .filterCountByG_L_LikeN(groupId,
+			layoutPageTemplateCollectionId, name);
 	}
 
 	/**

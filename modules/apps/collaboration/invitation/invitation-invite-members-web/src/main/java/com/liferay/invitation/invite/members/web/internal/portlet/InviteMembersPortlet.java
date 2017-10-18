@@ -16,7 +16,8 @@ package com.liferay.invitation.invite.members.web.internal.portlet;
 
 import com.liferay.invitation.invite.members.constants.InviteMembersPortletKeys;
 import com.liferay.invitation.invite.members.service.MemberRequestLocalService;
-import com.liferay.invitation.invite.members.util.InviteMembersUserHelper;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.kernel.dao.orm.CustomSQLParam;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -39,7 +40,10 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.comparator.UserFirstNameComparator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -97,7 +101,7 @@ public class InviteMembersPortlet extends MVCPortlet {
 
 		jsonObject.put(
 			"count",
-			_inviteMembersUserHelper.getAvailableUsersCount(
+			_getAvailableUsersCount(
 				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 				keywords));
 
@@ -109,7 +113,7 @@ public class InviteMembersPortlet extends MVCPortlet {
 
 		jsonObject.put("options", optionsJSONObject);
 
-		List<User> users = _inviteMembersUserHelper.getAvailableUsers(
+		List<User> users = _getAvailableUsers(
 			themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 			keywords, start, end);
 
@@ -269,13 +273,6 @@ public class InviteMembersPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setInviteMembersUserHelper(
-		InviteMembersUserHelper inviteMembersUserHelper) {
-
-		_inviteMembersUserHelper = inviteMembersUserHelper;
-	}
-
-	@Reference(unbind = "-")
 	protected void setMemberRequestLocalService(
 		MemberRequestLocalService memberRequestLocalService) {
 
@@ -294,11 +291,50 @@ public class InviteMembersPortlet extends MVCPortlet {
 		_userLocalService = userLocalService;
 	}
 
+	private List<User> _getAvailableUsers(
+			long companyId, long groupId, String keywords, int start, int end)
+		throws Exception {
+
+		LinkedHashMap usersParams = new LinkedHashMap();
+
+		usersParams.put(
+			"usersInvited",
+			new CustomSQLParam(
+				CustomSQLUtil.get(
+					getClass(),
+					"com.liferay.portal.service.persistence.UserFinder." +
+						"filterByUsersGroupsGroupId"),
+				groupId));
+
+		return _userLocalService.search(
+			companyId, keywords, WorkflowConstants.STATUS_APPROVED, usersParams,
+			start, end, new UserFirstNameComparator(true));
+	}
+
+	private int _getAvailableUsersCount(
+			long companyId, long groupId, String keywords)
+		throws Exception {
+
+		LinkedHashMap usersParams = new LinkedHashMap();
+
+		usersParams.put(
+			"usersInvited",
+			new CustomSQLParam(
+				CustomSQLUtil.get(
+					getClass(),
+					"com.liferay.portal.service.persistence.UserFinder." +
+						"filterByUsersGroupsGroupId"),
+				groupId));
+
+		return _userLocalService.searchCount(
+			companyId, keywords, WorkflowConstants.STATUS_APPROVED,
+			usersParams);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		InviteMembersPortlet.class);
 
 	private GroupLocalService _groupLocalService;
-	private InviteMembersUserHelper _inviteMembersUserHelper;
 	private MemberRequestLocalService _memberRequestLocalService;
 
 	@Reference

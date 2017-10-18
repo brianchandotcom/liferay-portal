@@ -27,8 +27,12 @@ import groovy.lang.Closure;
 import java.io.File;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
+
+import org.apache.tools.ant.filters.FixCrLfFilter;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
@@ -36,6 +40,7 @@ import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.PublishArtifactSet;
+import org.gradle.api.file.FileCopyDetails;
 import org.gradle.api.internal.ConventionMapping;
 import org.gradle.api.internal.plugins.DslObject;
 import org.gradle.api.invocation.Gradle;
@@ -160,6 +165,17 @@ public class AppDockerPlugin implements Plugin<Project> {
 
 		Sync sync = GradleUtil.addTask(
 			project, PREPARE_APP_DOCKER_IMAGE_INPUT_DIR_TASK_NAME, Sync.class);
+
+		sync.filesMatching(
+			"**/*.sh",
+			new Action<FileCopyDetails>() {
+
+				@Override
+				public void execute(FileCopyDetails fileCopyDetails) {
+					fileCopyDetails.filter(_fixCrLfArgs, FixCrLfFilter.class);
+				}
+
+			});
 
 		sync.from(
 			new Callable<File>() {
@@ -370,6 +386,15 @@ public class AppDockerPlugin implements Plugin<Project> {
 		}
 
 		return imageRepository + ":" + imageTag;
+	}
+
+	private static final Map<String, Object> _fixCrLfArgs = new HashMap<>();
+
+	static {
+		_fixCrLfArgs.put(
+			"eof", FixCrLfFilter.AddAsisRemove.newInstance("remove"));
+		_fixCrLfArgs.put("eol", FixCrLfFilter.CrLf.newInstance("lf"));
+		_fixCrLfArgs.put("fixlast", false);
 	}
 
 }

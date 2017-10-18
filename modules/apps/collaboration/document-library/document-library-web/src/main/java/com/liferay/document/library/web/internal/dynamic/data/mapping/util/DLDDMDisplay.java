@@ -73,7 +73,7 @@ public class DLDDMDisplay extends BaseDDMDisplay {
 	public String getTitle(Locale locale) {
 		ResourceBundle resourceBundle = getResourceBundle(locale);
 
-		return LanguageUtil.get(resourceBundle, "metadata-sets");
+		return LanguageUtil.get(resourceBundle, "documents-and-media");
 	}
 
 	@Override

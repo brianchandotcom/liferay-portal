@@ -42,11 +42,7 @@ public class UnsyncBufferedOutputStream extends UnsyncFilterOutputStream {
 
 	@Override
 	public void flush() throws IOException {
-		if (count > 0) {
-			outputStream.write(buffer, 0, count);
-
-			count = 0;
-		}
+		_flushBuffer();
 
 		outputStream.flush();
 	}
@@ -59,21 +55,15 @@ public class UnsyncBufferedOutputStream extends UnsyncFilterOutputStream {
 	@Override
 	public void write(byte[] bytes, int offset, int length) throws IOException {
 		if (length >= buffer.length) {
-			if (count > 0) {
-				outputStream.write(buffer, 0, count);
-
-				count = 0;
-			}
+			_flushBuffer();
 
 			outputStream.write(bytes, offset, length);
 
 			return;
 		}
 
-		if ((count > 0) && (length > (buffer.length - count))) {
-			outputStream.write(buffer, 0, count);
-
-			count = 0;
+		if (length > (buffer.length - count)) {
+			_flushBuffer();
 		}
 
 		System.arraycopy(bytes, offset, buffer, count, length);
@@ -94,6 +84,14 @@ public class UnsyncBufferedOutputStream extends UnsyncFilterOutputStream {
 
 	protected byte[] buffer;
 	protected int count;
+
+	private void _flushBuffer() throws IOException {
+		if (count > 0) {
+			outputStream.write(buffer, 0, count);
+
+			count = 0;
+		}
+	}
 
 	private static final int _DEFAULT_BUFFER_SIZE = 8192;
 

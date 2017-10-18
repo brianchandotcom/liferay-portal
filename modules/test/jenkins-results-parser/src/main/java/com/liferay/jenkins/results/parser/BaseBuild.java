@@ -636,8 +636,9 @@ public abstract class BaseBuild implements Build {
 		Build longestRunningDownstreamBuild = null;
 
 		for (Build downstreamBuild : getDownstreamBuilds(null)) {
-			if (downstreamBuild.getDuration() >
-					longestRunningDownstreamBuild.getDuration()) {
+			if ((longestRunningDownstreamBuild == null) ||
+					(downstreamBuild.getDuration() >
+					longestRunningDownstreamBuild.getDuration())) {
 
 				longestRunningDownstreamBuild = downstreamBuild;
 			}

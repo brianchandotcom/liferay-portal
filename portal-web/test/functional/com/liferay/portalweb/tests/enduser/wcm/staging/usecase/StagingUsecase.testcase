@@ -457,7 +457,9 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="WCD#WEB_CONTENT_CONTENT" value1="You're a part of the S.P.A.C.E. family" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="WCD#WEB_CONTENT_CONTENT_2" value1="Faculty Meet-and-Greet Brunch" />
 
-		<execute macro="ProductMenu#gotoSitesContent">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Web Content" />
 		</execute>
 
@@ -973,9 +975,10 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesContent">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Documents and Media" />
-			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">
@@ -984,9 +987,10 @@
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesContent">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Web Content" />
-			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -1044,9 +1048,10 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesContent">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Documents and Media" />
-			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="DMDocument#deleteCP">
@@ -1089,9 +1094,10 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesContent">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Documents and Media" />
-			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="DMDocument#viewPG">

@@ -249,9 +249,10 @@
 		<property name="portal.acceptance" value="pending" />
 		<property name="testray.component.names" value="Training" />
 
-		<execute macro="ProductMenu#gotoSitesContent">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Blogs" />
-			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="Blogs#addEntry">
@@ -770,9 +771,10 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesContent">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Web Content" />
-			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">

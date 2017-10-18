@@ -1,8 +1,8 @@
+apply plugin: "com.liferay.alloy.taglib"
+
 configurations {
 	alloyTaglib
 }
-
-apply plugin: "com.liferay.alloy.taglib"
 
 task runGradleTest
 

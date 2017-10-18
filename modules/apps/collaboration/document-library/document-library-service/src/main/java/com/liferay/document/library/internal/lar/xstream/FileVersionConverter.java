@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.lar.xstream;
+package com.liferay.document.library.internal.lar.xstream;
 
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.exportimport.kernel.xstream.BaseXStreamConverter;

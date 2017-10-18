@@ -14,9 +14,9 @@
 
 package com.liferay.document.library.internal.xstream.configurator;
 
-import com.liferay.document.library.lar.xstream.FileEntryConverter;
-import com.liferay.document.library.lar.xstream.FileVersionConverter;
-import com.liferay.document.library.lar.xstream.FolderConverter;
+import com.liferay.document.library.internal.lar.xstream.FileEntryConverter;
+import com.liferay.document.library.internal.lar.xstream.FileVersionConverter;
+import com.liferay.document.library.internal.lar.xstream.FolderConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamAlias;
 import com.liferay.exportimport.kernel.xstream.XStreamConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamType;

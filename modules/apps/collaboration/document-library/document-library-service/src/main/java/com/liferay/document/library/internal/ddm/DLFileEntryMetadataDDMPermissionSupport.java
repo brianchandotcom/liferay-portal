@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.ddm;
+package com.liferay.document.library.internal.ddm;
 
 import com.liferay.dynamic.data.mapping.util.DDMStructurePermissionSupport;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
@@ -25,11 +25,14 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"default.model.resource.name=true",
-		"model.class.name=com.liferay.document.library.kernel.util.RawMetadataProcessor"
+		"model.class.name=com.liferay.document.library.kernel.model.DLFileEntryMetadata"
+	},
+	service = {
+		DDMStructurePermissionSupport.class,
+		DLFileEntryMetadataDDMPermissionSupport.class
 	}
 )
-public class RawMetadataProcessorDDMPermissionSupport
+public class DLFileEntryMetadataDDMPermissionSupport
 	implements DDMStructurePermissionSupport {
 
 	@Override

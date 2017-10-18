@@ -510,6 +510,10 @@ public class FriendlyURLEntryLocalServiceImpl
 		for (Map.Entry<String, String> entry : urlTitleMap.entrySet()) {
 			String urlTitle = entry.getValue();
 
+			if (Validator.isNull(urlTitle)) {
+				continue;
+			}
+
 			String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
 				urlTitle);
 
@@ -517,10 +521,9 @@ public class FriendlyURLEntryLocalServiceImpl
 				friendlyURLEntryLocalizationPersistence.fetchByG_C_U(
 					groupId, classNameId, normalizedUrlTitle);
 
-			if (Validator.isNull(normalizedUrlTitle) ||
-				((existingFriendlyURLEntryLocalization != null) &&
-				 (existingFriendlyURLEntryLocalization.getClassPK() ==
-					 classPK))) {
+			if ((existingFriendlyURLEntryLocalization != null) &&
+				(existingFriendlyURLEntryLocalization.getClassPK() ==
+					classPK)) {
 
 				continue;
 			}

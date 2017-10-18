@@ -251,7 +251,10 @@ public class FriendlyURLEntryLocalServiceImpl
 							new FriendlyURLEntryMappingPK(
 								classNameId, friendlyURLEntry.getClassPK()));
 
-					if (friendlyURLEntryMapping != null) {
+					if ((friendlyURLEntryMapping != null) &&
+						(friendlyURLEntryMapping.getFriendlyURLEntryId() ==
+							friendlyURLEntry.getFriendlyURLEntryId())) {
+
 						friendlyURLEntryMappingPersistence.remove(
 							friendlyURLEntryMapping);
 					}

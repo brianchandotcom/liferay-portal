@@ -776,7 +776,9 @@ AUI.add(
 
 						var nameRequiredNode = instance.byId('nameRequired');
 
-						nameRequiredNode.val("0");
+						if (nameRequiredNode) {
+							nameRequiredNode.val("0");
+						}
 					},
 
 					_rangeEndsInPast: function(today) {

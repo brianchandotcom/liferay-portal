@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Frontend JS Loader Modules Extender
 Bundle-SymbolicName: com.liferay.frontend.js.loader.modules.extender
-Bundle-Version: 1.0.15
+Bundle-Version: 1.1.0
+Export-Package: com.liferay.frontend.js.loader.modules.extender.npm
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Frontend Infrastructure
 -includeresource:\

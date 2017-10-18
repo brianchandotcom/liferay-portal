@@ -531,20 +531,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		}
 	}
 
-	public void resetPrototype(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		SitesUtil.resetPrototype(themeDisplay.getLayout());
-
-		MultiSessionMessages.add(
-			actionRequest,
-			portal.getPortletId(actionRequest) + "requestProcessed");
-	}
-
 	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)

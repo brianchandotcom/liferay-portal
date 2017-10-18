@@ -331,49 +331,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
-	public void copyApplications(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		boolean privateLayout = ParamUtil.getBoolean(
-			actionRequest, "privateLayout");
-		long layoutId = ParamUtil.getLong(actionRequest, "layoutId");
-
-		Layout layout = layoutLocalService.getLayout(
-			groupId, privateLayout, layoutId);
-
-		if (!layout.getType().equals(LayoutConstants.TYPE_PORTLET)) {
-			return;
-		}
-
-		long copyLayoutId = ParamUtil.getLong(actionRequest, "copyLayoutId");
-
-		if ((copyLayoutId == 0) || (copyLayoutId == layout.getLayoutId())) {
-			return;
-		}
-
-		Layout copyLayout = layoutLocalService.fetchLayout(
-			groupId, privateLayout, copyLayoutId);
-
-		if ((copyLayout == null) || !copyLayout.isTypePortlet()) {
-			return;
-		}
-
-		UnicodeProperties sourceLayoutTypeSettingsProperties =
-			copyLayout.getTypeSettingsProperties();
-
-		ActionUtil.removePortletIds(actionRequest, layout);
-
-		ActionUtil.copyPreferences(actionRequest, layout, copyLayout);
-
-		SitesUtil.copyLookAndFeel(layout, copyLayout);
-
-		layoutService.updateLayout(
-			groupId, privateLayout, layoutId,
-			sourceLayoutTypeSettingsProperties.toString());
-	}
-
 	public void deleteLayout(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -1392,7 +1349,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 	protected Portal portal;
 
 	protected PortletPreferencesLocalService portletPreferencesLocalService;
-
 	protected ThemeLocalService themeLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(

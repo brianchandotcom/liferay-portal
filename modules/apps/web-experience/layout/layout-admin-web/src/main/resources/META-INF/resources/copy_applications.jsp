@@ -27,7 +27,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(LanguageUtil.get(request, "copy-applications"));
 %>
 
-<portlet:actionURL name="copyApplications" var="copyApplicationsURL" />
+<portlet:actionURL name="/layout/copy_applications" var="copyApplicationsURL" />
 
 <aui:form action="<%= copyApplicationsURL %>" cssClass="container-fluid-1280" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />

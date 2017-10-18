@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.background.task.upgrade;
+package com.liferay.portal.background.task.internal.upgrade;
 
 import com.liferay.portal.background.task.internal.upgrade.v1_0_0.UpgradeBackgroundTask;
 import com.liferay.portal.background.task.internal.upgrade.v1_0_0.UpgradeSchema;

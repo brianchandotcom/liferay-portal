@@ -1,0 +1,87 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.document.library.google.docs.internal.instance.lifecycle;
+
+import com.liferay.document.library.ddm.DLFileEntryMetadataDDMPermissionSupport;
+import com.liferay.document.library.google.docs.internal.util.GoogleDocsDLFileEntryTypeHelper;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
+import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
+import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Adolfo Pérez
+ */
+@Component(immediate = true, service = PortalInstanceLifecycleListener.class)
+public class GoogleDocsPortalInstanceLifecycleListener
+	extends BasePortalInstanceLifecycleListener {
+
+	@Override
+	public void portalInstanceRegistered(Company company) throws Exception {
+		try {
+			GoogleDocsDLFileEntryTypeHelper googleDocsDLFileEntryTypeHelper =
+				new GoogleDocsDLFileEntryTypeHelper(
+					company, _classNameLocalService, _ddm,
+					_ddmFormXSDDeserializer, _ddmStructureLocalService,
+					_dlFileEntryTypeLocalService, _userLocalService);
+
+			googleDocsDLFileEntryTypeHelper.addGoogleDocsDLFileEntryType();
+		}
+		catch (PortalException pe) {
+			throw new ModelListenerException(pe);
+		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMStructureVersionLocalService(
+		DDMStructureVersionLocalService ddmStructureVersionLocalService) {
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLFileEntryMetadataDDMPermissionSupport(
+		DLFileEntryMetadataDDMPermissionSupport
+			dlFileEntryMetadataDDMPermissionSupport) {
+	}
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private DDM _ddm;
+
+	@Reference
+	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
+
+}

@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -543,32 +542,6 @@ public class TopLevelBuild extends BaseBuild {
 	}
 
 	protected Element getJenkinsReportBodyElement() {
-		Map<String, Build> nonBatchBuilds = new HashMap<>();
-
-		nonBatchBuilds.put(getDisplayName(), this);
-
-		for (Build downstreamBuild : getDownstreamBuilds(null)) {
-			String downstreamBuildDisplayName =
-				downstreamBuild.getDisplayName();
-
-			if (downstreamBuildDisplayName == null) {
-				return null;
-			}
-
-			if (downstreamBuild instanceof BatchBuild) {
-				for (Build nonBatchBuild :
-						downstreamBuild.getDownstreamBuilds(null)) {
-
-					nonBatchBuilds.put(
-						nonBatchBuild.getDisplayName(), nonBatchBuild);
-				}
-			}
-			else {
-				nonBatchBuilds.put(
-					downstreamBuild.getDisplayName(), downstreamBuild);
-			}
-		}
-
 		String buildURL = getBuildURL();
 
 		Element headingElement = Dom4JUtil.getNewElement(

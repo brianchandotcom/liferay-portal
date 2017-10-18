@@ -381,8 +381,8 @@ public class FriendlyURLEntryLocalServiceImpl
 			String defaultLanguageId, Map<String, String> urlTitleMap)
 		throws PortalException {
 
-		FriendlyURLEntry friendlyURLEntry = getFriendlyURLEntry(
-			friendlyURLEntryId);
+		FriendlyURLEntry friendlyURLEntry =
+			friendlyURLEntryPersistence.findByPrimaryKey(friendlyURLEntryId);
 
 		validate(
 			friendlyURLEntry.getGroupId(), classNameId, classPK, urlTitleMap);

@@ -27,7 +27,7 @@ import org.junit.Test;
 /**
  * @author Shuyang Zhou
  */
-public class UnsyncBufferedInputStreamTest {
+public class UnsyncBufferedInputStreamTest extends BaseInputStreamTestCase {
 
 	@ClassRule
 	public static final CodeCoverageAssertor codeCoverageAssertor =
@@ -51,10 +51,6 @@ public class UnsyncBufferedInputStreamTest {
 		// Zero length read
 
 		Assert.assertEquals(0, unsyncBufferedInputStream.read(buffer, 0, 0));
-
-		// Negative length read
-
-		Assert.assertEquals(0, unsyncBufferedInputStream.read(buffer, 0, -1));
 
 		// In-memory
 
@@ -180,52 +176,7 @@ public class UnsyncBufferedInputStreamTest {
 		Assert.assertTrue(unsyncBufferedInputStream.inputStream == null);
 		Assert.assertTrue(unsyncBufferedInputStream.buffer == null);
 
-		try {
-			unsyncBufferedInputStream.available();
-
-			Assert.fail();
-		}
-		catch (IOException ioe) {
-			Assert.assertEquals("Input stream is null", ioe.getMessage());
-		}
-
-		try {
-			unsyncBufferedInputStream.read();
-
-			Assert.fail();
-		}
-		catch (IOException ioe) {
-			Assert.assertEquals("Input stream is null", ioe.getMessage());
-		}
-
-		try {
-			unsyncBufferedInputStream.read(new byte[5]);
-
-			Assert.fail();
-		}
-		catch (IOException ioe) {
-			Assert.assertEquals("Input stream is null", ioe.getMessage());
-		}
-
-		try {
-			unsyncBufferedInputStream.reset();
-
-			Assert.fail();
-		}
-		catch (IOException ioe) {
-			Assert.assertEquals("Input stream is null", ioe.getMessage());
-		}
-
-		try {
-			unsyncBufferedInputStream.skip(0);
-
-			Assert.fail();
-		}
-		catch (IOException ioe) {
-			Assert.assertEquals("Input stream is null", ioe.getMessage());
-		}
-
-		unsyncBufferedInputStream.close();
+		testClose(unsyncBufferedInputStream, "Input stream is null");
 	}
 
 	@Test
@@ -496,6 +447,11 @@ public class UnsyncBufferedInputStreamTest {
 		// Skip on EOF
 
 		Assert.assertEquals(0, unsyncBufferedInputStream.skip(1));
+	}
+
+	@Override
+	protected InputStream getInputStream(byte[] bytes) {
+		return new UnsyncBufferedInputStream(new ByteArrayInputStream(bytes));
 	}
 
 	private static final byte[] _BUFFER =

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import java.util.Arrays;
 
@@ -28,7 +29,7 @@ import org.junit.Test;
 /**
  * @author Shuyang Zhou
  */
-public class UnsyncBufferedOutputStreamTest {
+public class UnsyncBufferedOutputStreamTest extends BaseOutputStreamTestCase {
 
 	@ClassRule
 	public static final CodeCoverageAssertor codeCoverageAssertor =
@@ -127,14 +128,6 @@ public class UnsyncBufferedOutputStreamTest {
 	}
 
 	@Test
-	public void testFlush() throws IOException {
-		UnsyncBufferedOutputStream unsyncBufferedOutputStream =
-			new UnsyncBufferedOutputStream(new ByteArrayOutputStream(), 1);
-
-		unsyncBufferedOutputStream.flush();
-	}
-
-	@Test
 	public void testWrite() throws IOException {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
@@ -155,6 +148,11 @@ public class UnsyncBufferedOutputStreamTest {
 
 		Assert.assertTrue(
 			Arrays.equals(_BUFFER, byteArrayOutputStream.toByteArray()));
+	}
+
+	@Override
+	protected OutputStream getOutputStream() {
+		return new UnsyncBufferedOutputStream(new ByteArrayOutputStream());
 	}
 
 	private static final byte[] _BUFFER =

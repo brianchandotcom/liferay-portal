@@ -124,7 +124,11 @@ public class UnsyncBufferedInputStream extends UnsyncFilterInputStream {
 			throw new IOException("Input stream is null");
 		}
 
-		if (length <= 0) {
+		if (length < 0) {
+			throw new IndexOutOfBoundsException("{length=" + length + "}");
+		}
+
+		if (length == 0) {
 			return 0;
 		}
 

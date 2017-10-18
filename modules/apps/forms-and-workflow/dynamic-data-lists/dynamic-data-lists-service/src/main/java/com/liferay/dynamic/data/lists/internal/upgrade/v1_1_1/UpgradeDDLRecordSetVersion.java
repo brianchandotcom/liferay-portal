@@ -47,42 +47,38 @@ public class UpgradeDDLRecordSetVersion extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		StringBundler sql1 = new StringBundler();
+		StringBundler sb1 = new StringBundler();
 
-		sql1.append("select recordSetId, groupId, companyId, userId, ");
-		sql1.append("userName, createDate, modifiedDate, DDMStructureId, ");
-		sql1.append("name, description, settings_ from DDLRecordSet");
+		sb1.append("select recordSetId, groupId, companyId, userId, ");
+		sb1.append("userName, createDate, modifiedDate, DDMStructureId, ");
+		sb1.append("name, description, settings_ from DDLRecordSet");
 
-		StringBundler sql2 = new StringBundler();
+		StringBundler sb2 = new StringBundler();
 
-		sql2.append("insert into DDLRecordSetVersion (recordSetVersionId, ");
-		sql2.append("groupId, companyId, userId, userName, createDate, ");
-		sql2.append("recordSetId, DDMStructureVersionId, name, description, ");
-		sql2.append("settings_, version,  status, statusByUserId, ");
-		sql2.append("statusByUserName, statusDate) values (?, ?, ?, ?, ?, ?, ");
-		sql2.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		sb2.append("insert into DDLRecordSetVersion (recordSetVersionId, ");
+		sb2.append("groupId, companyId, userId, userName, createDate, ");
+		sb2.append("recordSetId, DDMStructureVersionId, name, description, ");
+		sb2.append("settings_, version,  status, statusByUserId, ");
+		sb2.append("statusByUserName, statusDate) values (?, ?, ?, ?, ?, ?, ");
+		sb2.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 		try (PreparedStatement ps1 = connection.prepareStatement(
-				sql1.toString());
+				sb1.toString());
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection, sql2.toString())) {
+					connection, sb2.toString())) {
 
 			try (ResultSet rs = ps1.executeQuery()) {
 				while (rs.next()) {
-					long recordSetId = rs.getLong("recordSetId");
-
-					long userId = rs.getLong("userId");
-
-					User user = _userLocalService.getUser(userId);
+					User user = _userLocalService.getUser(rs.getLong("userId"));
 
 					ps2.setLong(1, _counterLocalService.increment());
 					ps2.setLong(2, rs.getLong("groupId"));
 					ps2.setLong(3, rs.getLong("companyId"));
-					ps2.setLong(4, userId);
+					ps2.setLong(4, user.getUserId());
 					ps2.setString(5, rs.getString("userName"));
 					ps2.setTimestamp(6, rs.getTimestamp("createDate"));
-					ps2.setLong(7, recordSetId);
+					ps2.setLong(7, rs.getLong("recordSetId"));
 					ps2.setLong(
 						8,
 						getDDMStructureVersionId(rs.getLong("DDMStructureId")));

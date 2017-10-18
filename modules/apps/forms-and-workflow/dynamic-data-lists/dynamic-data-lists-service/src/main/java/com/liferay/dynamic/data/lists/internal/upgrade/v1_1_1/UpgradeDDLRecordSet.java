@@ -38,13 +38,8 @@ public class UpgradeDDLRecordSet extends UpgradeProcess {
 
 			try (ResultSet rs = ps1.executeQuery()) {
 				while (rs.next()) {
-					long recordSetId = rs.getLong(1);
-
-					String version = DDLRecordSetConstants.VERSION_DEFAULT;
-
-					ps2.setString(1, version);
-
-					ps2.setLong(2, recordSetId);
+					ps2.setString(1, DDLRecordSetConstants.VERSION_DEFAULT);
+					ps2.setLong(2, rs.getLong(1));
 
 					ps2.addBatch();
 				}

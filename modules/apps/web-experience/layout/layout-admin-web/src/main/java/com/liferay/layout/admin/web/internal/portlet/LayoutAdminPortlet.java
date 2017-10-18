@@ -21,6 +21,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
+import com.liferay.layout.admin.web.internal.portlet.action.ActionUtil;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
 import com.liferay.mobile.device.rules.model.MDRAction;
@@ -46,32 +47,23 @@ import com.liferay.portal.kernel.exception.SitemapIncludeException;
 import com.liferay.portal.kernel.exception.SitemapPagePriorityException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutPrototype;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.model.Theme;
-import com.liferay.portal.kernel.model.ThemeSetting;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeService;
 import com.liferay.portal.kernel.service.LayoutService;
-import com.liferay.portal.kernel.service.LayoutSetLocalService;
-import com.liferay.portal.kernel.service.LayoutSetService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -86,27 +78,21 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThemeFactoryUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.impl.ThemeSettingImpl;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.sites.action.ActionUtil;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -224,7 +210,8 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			inheritMobileRuleGroups(layout, serviceContext);
 
 			if (parentLayout.isTypePortlet()) {
-				ActionUtil.copyPreferences(actionRequest, layout, parentLayout);
+				com.liferay.portlet.sites.action.ActionUtil.copyPreferences(
+					actionRequest, layout, parentLayout);
 
 				SitesUtil.copyLookAndFeel(layout, parentLayout);
 			}
@@ -297,7 +284,8 @@ public class LayoutAdminPortlet extends MVCPortlet {
 				layout.getTypeSettings());
 
 			if ((copyLayout != null) && copyLayout.isTypePortlet()) {
-				ActionUtil.copyPreferences(actionRequest, layout, copyLayout);
+				com.liferay.portlet.sites.action.ActionUtil.copyPreferences(
+					actionRequest, layout, copyLayout);
 
 				SitesUtil.copyLookAndFeel(layout, copyLayout);
 			}
@@ -499,38 +487,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
-	public void editLayoutSet(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long layoutSetId = ParamUtil.getLong(actionRequest, "layoutSetId");
-
-		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
-		long stagingGroupId = ParamUtil.getLong(
-			actionRequest, "stagingGroupId");
-		boolean privateLayout = ParamUtil.getBoolean(
-			actionRequest, "privateLayout");
-
-		LayoutSet layoutSet = layoutSetLocalService.getLayoutSet(layoutSetId);
-
-		updateLogo(actionRequest, liveGroupId, stagingGroupId, privateLayout);
-
-		updateLookAndFeel(
-			actionRequest, themeDisplay.getCompanyId(), liveGroupId,
-			stagingGroupId, privateLayout, layoutSet.getSettingsProperties());
-
-		updateMergePages(actionRequest, liveGroupId);
-
-		updateRobots(actionRequest, liveGroupId, privateLayout);
-
-		updateSettings(
-			actionRequest, liveGroupId, stagingGroupId, privateLayout,
-			layoutSet.getSettingsProperties());
-	}
-
 	public void resetCustomizationView(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -624,24 +580,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			portal.getPortletId(actionRequest) + "requestProcessed");
 	}
 
-	protected void deleteThemeSettingsProperties(
-		UnicodeProperties typeSettingsProperties, String device) {
-
-		String keyPrefix = ThemeSettingImpl.namespaceProperty(device);
-
-		Set<String> keys = typeSettingsProperties.keySet();
-
-		Iterator<String> itr = keys.iterator();
-
-		while (itr.hasNext()) {
-			String key = itr.next();
-
-			if (key.startsWith(keyPrefix)) {
-				itr.remove();
-			}
-		}
-	}
-
 	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -709,26 +647,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		}
 	}
 
-	protected String getColorSchemeId(
-			long companyId, String themeId, String colorSchemeId)
-		throws Exception {
-
-		Theme theme = themeLocalService.getTheme(companyId, themeId);
-
-		if (!theme.hasColorSchemes()) {
-			colorSchemeId = StringPool.BLANK;
-		}
-
-		if (Validator.isNull(colorSchemeId)) {
-			ColorScheme colorScheme = themeLocalService.getColorScheme(
-				companyId, themeId, colorSchemeId);
-
-			colorSchemeId = colorScheme.getColorSchemeId();
-		}
-
-		return colorSchemeId;
-	}
-
 	protected String getEmptyLayoutSetURL(
 		PortletRequest portletRequest, long groupId, boolean privateLayout) {
 
@@ -747,7 +665,8 @@ public class LayoutAdminPortlet extends MVCPortlet {
 	}
 
 	protected Group getGroup(PortletRequest portletRequest) throws Exception {
-		return ActionUtil.getGroup(portletRequest);
+		return com.liferay.portlet.sites.action.ActionUtil.getGroup(
+			portletRequest);
 	}
 
 	protected byte[] getIconBytes(
@@ -940,18 +859,8 @@ public class LayoutAdminPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		this.groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setGroupProvider(GroupProvider groupProvider) {
 		this.groupProvider = groupProvider;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupService(GroupService groupService) {
-		this.groupService = groupService;
 	}
 
 	@Reference(unbind = "-")
@@ -978,18 +887,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 	@Reference(unbind = "-")
 	protected void setLayoutService(LayoutService layoutService) {
 		this.layoutService = layoutService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutSetLocalService(
-		LayoutSetLocalService layoutSetLocalService) {
-
-		this.layoutSetLocalService = layoutSetLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutSetService(LayoutSetService layoutSetService) {
-		this.layoutSetService = layoutSetService;
 	}
 
 	@Reference(unbind = "-")
@@ -1026,80 +923,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		this.portletPreferencesLocalService = portletPreferencesLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setThemeLocalService(ThemeLocalService themeLocalService) {
-		this.themeLocalService = themeLocalService;
-	}
-
-	protected void setThemeSettingProperties(
-			ActionRequest actionRequest,
-			UnicodeProperties typeSettingsProperties,
-			Map<String, ThemeSetting> themeSettings, String device,
-			boolean isLayout)
-		throws PortalException {
-
-		Layout layout = null;
-
-		if (isLayout) {
-			long groupId = ParamUtil.getLong(actionRequest, "groupId");
-			boolean privateLayout = ParamUtil.getBoolean(
-				actionRequest, "privateLayout");
-			long layoutId = ParamUtil.getLong(actionRequest, "layoutId");
-
-			layout = layoutLocalService.getLayout(
-				groupId, privateLayout, layoutId);
-		}
-
-		for (Map.Entry<String, ThemeSetting> entry : themeSettings.entrySet()) {
-			String key = entry.getKey();
-			ThemeSetting themeSetting = entry.getValue();
-
-			String property = StringBundler.concat(
-				device, "ThemeSettingsProperties--", key,
-				StringPool.DOUBLE_DASH);
-
-			String value = ParamUtil.getString(
-				actionRequest, property, themeSetting.getValue());
-
-			if ((isLayout &&
-				 !Objects.equals(
-					 value,
-					 layout.getDefaultThemeSetting(key, device, false))) ||
-				(!isLayout && !value.equals(themeSetting.getValue()))) {
-
-				typeSettingsProperties.setProperty(
-					ThemeSettingImpl.namespaceProperty(device, key), value);
-			}
-		}
-	}
-
-	protected void updateLogo(
-			ActionRequest actionRequest, long liveGroupId, long stagingGroupId,
-			boolean privateLayout)
-		throws Exception {
-
-		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
-
-		byte[] logoBytes = null;
-
-		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
-
-		if (fileEntryId > 0) {
-			FileEntry fileEntry = dlAppLocalService.getFileEntry(fileEntryId);
-
-			logoBytes = FileUtil.getBytes(fileEntry.getContentStream());
-		}
-
-		long groupId = liveGroupId;
-
-		if (stagingGroupId > 0) {
-			groupId = stagingGroupId;
-		}
-
-		layoutSetService.updateLogo(
-			groupId, privateLayout, !deleteLogo, logoBytes);
-	}
-
 	protected void updateLookAndFeel(
 			ActionRequest actionRequest, long companyId, long liveGroupId,
 			long stagingGroupId, boolean privateLayout, long layoutId,
@@ -1125,13 +948,14 @@ public class LayoutAdminPortlet extends MVCPortlet {
 					companyId);
 				deviceColorSchemeId = StringPool.BLANK;
 
-				deleteThemeSettingsProperties(typeSettingsProperties, device);
+				actionUtil.deleteThemeSettingsProperties(
+					typeSettingsProperties, device);
 			}
 			else if (Validator.isNotNull(deviceThemeId)) {
-				deviceColorSchemeId = getColorSchemeId(
+				deviceColorSchemeId = actionUtil.getColorSchemeId(
 					companyId, deviceThemeId, deviceColorSchemeId);
 
-				updateThemeSettingsProperties(
+				actionUtil.updateThemeSettingsProperties(
 					actionRequest, companyId, typeSettingsProperties, device,
 					deviceThemeId, true);
 			}
@@ -1152,137 +976,11 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		}
 	}
 
-	protected void updateLookAndFeel(
-			ActionRequest actionRequest, long companyId, long liveGroupId,
-			long stagingGroupId, boolean privateLayout,
-			UnicodeProperties typeSettingsProperties)
-		throws Exception {
-
-		String[] devices = StringUtil.split(
-			ParamUtil.getString(actionRequest, "devices"));
-
-		for (String device : devices) {
-			String deviceThemeId = ParamUtil.getString(
-				actionRequest, device + "ThemeId");
-			String deviceColorSchemeId = ParamUtil.getString(
-				actionRequest, device + "ColorSchemeId");
-			String deviceCss = ParamUtil.getString(
-				actionRequest, device + "Css");
-
-			if (Validator.isNotNull(deviceThemeId)) {
-				deviceColorSchemeId = getColorSchemeId(
-					companyId, deviceThemeId, deviceColorSchemeId);
-
-				updateThemeSettingsProperties(
-					actionRequest, companyId, typeSettingsProperties, device,
-					deviceThemeId, false);
-			}
-
-			long groupId = liveGroupId;
-
-			if (stagingGroupId > 0) {
-				groupId = stagingGroupId;
-			}
-
-			layoutSetService.updateLookAndFeel(
-				groupId, privateLayout, deviceThemeId, deviceColorSchemeId,
-				deviceCss);
-		}
-	}
-
-	protected void updateMergePages(
-			ActionRequest actionRequest, long liveGroupId)
-		throws Exception {
-
-		boolean mergeGuestPublicPages = ParamUtil.getBoolean(
-			actionRequest, "mergeGuestPublicPages");
-
-		Group liveGroup = groupLocalService.getGroup(liveGroupId);
-
-		UnicodeProperties typeSettingsProperties =
-			liveGroup.getTypeSettingsProperties();
-
-		typeSettingsProperties.setProperty(
-			"mergeGuestPublicPages", String.valueOf(mergeGuestPublicPages));
-
-		groupService.updateGroup(liveGroupId, liveGroup.getTypeSettings());
-	}
-
-	protected void updateRobots(
-			ActionRequest actionRequest, long liveGroupId,
-			boolean privateLayout)
-		throws Exception {
-
-		Group liveGroup = groupLocalService.getGroup(liveGroupId);
-
-		UnicodeProperties typeSettingsProperties =
-			liveGroup.getTypeSettingsProperties();
-
-		String propertyName = "false-robots.txt";
-
-		if (privateLayout) {
-			propertyName = "true-robots.txt";
-		}
-
-		String robots = ParamUtil.getString(
-			actionRequest, "robots",
-			liveGroup.getTypeSettingsProperty(propertyName));
-
-		typeSettingsProperties.setProperty(propertyName, robots);
-
-		groupService.updateGroup(
-			liveGroup.getGroupId(), typeSettingsProperties.toString());
-	}
-
-	protected void updateSettings(
-			ActionRequest actionRequest, long liveGroupId, long stagingGroupId,
-			boolean privateLayout, UnicodeProperties settingsProperties)
-		throws Exception {
-
-		UnicodeProperties typeSettingsProperties =
-			PropertiesParamUtil.getProperties(
-				actionRequest, "TypeSettingsProperties--");
-
-		settingsProperties.putAll(typeSettingsProperties);
-
-		long groupId = liveGroupId;
-
-		if (stagingGroupId > 0) {
-			groupId = stagingGroupId;
-		}
-
-		layoutSetService.updateSettings(
-			groupId, privateLayout, settingsProperties.toString());
-	}
-
-	protected UnicodeProperties updateThemeSettingsProperties(
-			ActionRequest actionRequest, long companyId,
-			UnicodeProperties typeSettingsProperties, String device,
-			String deviceThemeId, boolean layout)
-		throws Exception {
-
-		Theme theme = themeLocalService.getTheme(companyId, deviceThemeId);
-
-		deleteThemeSettingsProperties(typeSettingsProperties, device);
-
-		Map<String, ThemeSetting> themeSettings =
-			theme.getConfigurableSettings();
-
-		if (themeSettings.isEmpty()) {
-			return typeSettingsProperties;
-		}
-
-		setThemeSettingProperties(
-			actionRequest, typeSettingsProperties, themeSettings, device,
-			layout);
-
-		return typeSettingsProperties;
-	}
+	@Reference
+	protected ActionUtil actionUtil;
 
 	protected DLAppLocalService dlAppLocalService;
-	protected GroupLocalService groupLocalService;
 	protected GroupProvider groupProvider;
-	protected GroupService groupService;
 
 	@Reference
 	protected ItemSelector itemSelector;
@@ -1291,8 +989,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 	protected LayoutPrototypeLocalService layoutPrototypeLocalService;
 	protected LayoutPrototypeService layoutPrototypeService;
 	protected LayoutService layoutService;
-	protected LayoutSetLocalService layoutSetLocalService;
-	protected LayoutSetService layoutSetService;
 	protected MDRActionLocalService mdrActionLocalService;
 	protected MDRActionService mdrActionService;
 	protected MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService;
@@ -1302,7 +998,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 	protected Portal portal;
 
 	protected PortletPreferencesLocalService portletPreferencesLocalService;
-	protected ThemeLocalService themeLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutAdminPortlet.class);

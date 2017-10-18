@@ -41,8 +41,8 @@ if (Validator.isNotNull(backURL)) {
 renderResponse.setTitle(selGroup.getLayoutRootNodeName(privateLayout, locale));
 %>
 
-<portlet:actionURL name="editLayoutSet" var="editLayoutSetURL">
-	<portlet:param name="mvcPath" value="/view.jsp" />
+<portlet:actionURL name="/layout/edit_layout_set" var="editLayoutSetURL">
+	<portlet:param name="mvcPath" value="/edit_layout_set.jsp" />
 </portlet:actionURL>
 
 <aui:form action="<%= editLayoutSetURL %>" cssClass="edit-layoutset-form" enctype="multipart/form-data" method="post" name="fm">

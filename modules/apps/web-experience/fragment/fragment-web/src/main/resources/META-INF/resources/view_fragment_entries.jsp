@@ -129,6 +129,8 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 	</liferay-frontend:add-menu>
 
 	<aui:script require="fragment-web/js/FragmentNameEditor,metal-dom/src/all/dom">
+		var fragmentNameEditor;
+
 		var updateFragmentActionOptionQueryClickHandler = metalDomSrcAllDom.default.delegate(
 			document.body,
 			'click',
@@ -136,7 +138,7 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 			function(event) {
 				var actionElement = event.target;
 
-				var fragmentNameEditor = new fragmentWebJsFragmentNameEditor.default(
+				fragmentNameEditor = new fragmentWebJsFragmentNameEditor.default(
 					{
 						actionURL: actionElement.dataset.updateUrl,
 						editorTitle: '<liferay-ui:message key="rename-fragment" />',
@@ -157,7 +159,7 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 		function handleAddFragmentEntryMenuItemClick(event) {
 			event.preventDefault();
 
-			var fragmentNameEditor = new fragmentWebJsFragmentNameEditor.default(
+			fragmentNameEditor = new fragmentWebJsFragmentNameEditor.default(
 				{
 					actionURL: '<%= addFragmentEntryURL.toString() %>',
 					editorTitle: '<liferay-ui:message key="add-fragment" />',
@@ -178,6 +180,8 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 
 		function handleDestroyPortlet () {
 			addFragmentEntryMenuItem.removeEventListener('click', handleAddFragmentEntryMenuItemClick);
+
+			fragmentNameEditor.dispose();
 
 			updateFragmentActionOptionQueryClickHandler.removeListener();
 

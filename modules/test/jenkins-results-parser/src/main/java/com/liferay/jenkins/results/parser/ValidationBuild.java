@@ -158,7 +158,7 @@ public class ValidationBuild extends BaseBuild {
 		int successCount = getTestCountByStatus("SUCCESS");
 
 		return Dom4JUtil.getNewElement(
-			"div", null, Dom4JUtil.getNewElement("h6", null, "Test Results:"),
+			"div", null,
 			Dom4JUtil.getNewElement(
 				"p", null, Integer.toString(successCount),
 				JenkinsResultsParserUtil.getNounForm(
@@ -228,34 +228,59 @@ public class ValidationBuild extends BaseBuild {
 	}
 
 	protected Element getTestSummaryElement() {
+		Element testSummaryElement = Dom4JUtil.getNewElement(
+			"div", null, Dom4JUtil.getNewElement("h6", null, "Test Results:"));
+
 		List<TestResult> testResults = getTestResults(null);
 
-		Element testSummaryElement = Dom4JUtil.getNewElement(
-			"div", null, getGitHubMessageTestResultsElement());
+		boolean noTestResults = testResults.isEmpty();
 
-		List<Element> failureElements = new ArrayList<>();
+		if (testResults.size() == 1) {
+			TestResult testResult = testResults.get(0);
 
-		for (TestResult testResult : getTestResults(null)) {
-			String testStatus = testResult.getStatus();
+			String className = testResult.getClassName();
 
-			if (testStatus.equals("FIXED") || testStatus.equals("PASSED") ||
-				testStatus.equals("SKIPPED")) {
-
-				continue;
-			}
-
-			failureElements.add(testResult.getGitHubElement());
+			noTestResults = className.equals("com.liferay.jenkins.Jenkins");
 		}
 
-		Dom4JUtil.getOrderedListElement(failureElements, testSummaryElement, 5);
+		if (noTestResults) {
+			Dom4JUtil.addToElement(
+				testSummaryElement,
+				Dom4JUtil.getNewElement("h5", null, "No tests were ran."));
+		}
+		else {
+			Dom4JUtil.addToElement(
+				testSummaryElement,
+				Dom4JUtil.getNewElement(
+					"div", null, getGitHubMessageTestResultsElement()));
 
-		Element testReportElement = Dom4JUtil.getNewElement(
-			"h5", null, "For all test results, click ",
-			Dom4JUtil.getNewAnchorElement(
-				getBuildURL() + "/testReport", "here"),
-			".");
+			List<Element> failureElements = new ArrayList<>();
 
-		Dom4JUtil.addToElement(testSummaryElement, testReportElement);
+			for (TestResult testResult : getTestResults(null)) {
+				String testStatus = testResult.getStatus();
+
+				if (testStatus.equals("FIXED") || testStatus.equals("PASSED") ||
+					testStatus.equals("SKIPPED")) {
+
+					continue;
+				}
+
+				failureElements.add(testResult.getGitHubElement());
+			}
+
+			if (!failureElements.isEmpty()) {
+				Dom4JUtil.getOrderedListElement(
+					failureElements, testSummaryElement, 5);
+			}
+
+			Element testReportElement = Dom4JUtil.getNewElement(
+				"h5", null, "For all test results, click ",
+				Dom4JUtil.getNewAnchorElement(
+					getBuildURL() + "/testReport", "here"),
+				".");
+
+			Dom4JUtil.addToElement(testSummaryElement, testReportElement);
+		}
 
 		return testSummaryElement;
 	}

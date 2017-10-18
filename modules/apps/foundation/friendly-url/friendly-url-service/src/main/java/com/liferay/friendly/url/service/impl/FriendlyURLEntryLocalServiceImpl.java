@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -478,34 +479,25 @@ public class FriendlyURLEntryLocalServiceImpl
 		FriendlyURLEntryMapping friendlyURLEntryMapping,
 		Map<String, String> urlTitleMap) {
 
-		List<FriendlyURLEntryLocalization> friendlyURLEntryLocalizations =
-			friendlyURLEntryLocalizationPersistence.findByFriendlyURLEntryId(
-				friendlyURLEntryMapping.getFriendlyURLEntryId());
+		Map<String, String> existUrlTitleMap = new HashMap<>();
 
-		iterate:
+		for (FriendlyURLEntryLocalization friendlyURLEntryLocalization :
+				friendlyURLEntryLocalizationPersistence.
+					findByFriendlyURLEntryId(
+						friendlyURLEntryMapping.getFriendlyURLEntryId())) {
+
+			existUrlTitleMap.put(
+				friendlyURLEntryLocalization.getLanguageId(),
+				friendlyURLEntryLocalization.getUrlTitle());
+		}
+
 		for (Map.Entry<String, String> entry : urlTitleMap.entrySet()) {
-			String languageId = entry.getKey();
-			String urlTitle = entry.getValue();
+			String urlTitle = FriendlyURLNormalizerUtil.normalize(
+				entry.getValue());
 
-			for (FriendlyURLEntryLocalization friendlyURLEntryLocalization :
-					friendlyURLEntryLocalizations) {
-
-				if (languageId.equals(
-						friendlyURLEntryLocalization.getLanguageId())) {
-
-					urlTitle = FriendlyURLNormalizerUtil.normalize(urlTitle);
-
-					if (urlTitle.equals(
-							friendlyURLEntryLocalization.getUrlTitle())) {
-
-						continue iterate;
-					}
-
-					return false;
-				}
+			if (!urlTitle.equals(existUrlTitleMap.get(entry.getKey()))) {
+				return false;
 			}
-
-			return false;
 		}
 
 		return true;

@@ -737,18 +737,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		hideDefaultSuccessMessage(actionRequest);
 	}
 
-	public void toggleCustomizedView(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		actionRequest.setAttribute(
-			WebKeys.REDIRECT,
-			portal.getLayoutURL(themeDisplay.getLayout(), themeDisplay));
-	}
-
 	protected void deleteThemeSettingsProperties(
 		UnicodeProperties typeSettingsProperties, String device) {
 

@@ -17,22 +17,17 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/document_library/view_file_entry_types.jsp");
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
-
-renderResponse.setTitle(LanguageUtil.get(request, "document-types"));
+portletURL.setParameter("mvcRenderCommandName", "/document_library/view_file_entry_types");
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<liferay-portlet:renderURL varImpl="searchURL">
-		<portlet:param name="mvcPath" value="/document_library/view_file_entry_types.jsp" />
+		<portlet:param name="mvcRenderCommandName" value="/document_library/view_file_entry_types" />
 	</liferay-portlet:renderURL>
+
+	<liferay-util:include page="/document_library/navigation_tabs.jsp" servletContext="<%= application %>" />
 
 	<aui:nav-bar-search>
 		<aui:form action="<%= searchURL.toString() %>" method="post" name="fm">

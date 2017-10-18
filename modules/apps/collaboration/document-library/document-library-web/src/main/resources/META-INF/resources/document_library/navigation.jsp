@@ -27,9 +27,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 <c:if test="<%= dlPortletInstanceSettingsHelper.isShowTabs() || dlPortletInstanceSettingsHelper.isShowSearch() %>">
 	<aui:nav-bar cssClass='<%= dlPortletInstanceSettingsHelper.isShowSearch() ? "collapse-basic-search" : StringPool.BLANK %>' markupView="lexicon">
 		<c:if test="<%= dlPortletInstanceSettingsHelper.isShowTabs() %>">
-			<aui:nav cssClass="navbar-nav">
-				<aui:nav-item label="documents-and-media" selected="<%= true %>" />
-			</aui:nav>
+			<liferay-util:include page="/document_library/navigation_tabs.jsp" servletContext="<%= application %>" />
 		</c:if>
 
 		<c:if test="<%= dlPortletInstanceSettingsHelper.isShowSearch() %>">

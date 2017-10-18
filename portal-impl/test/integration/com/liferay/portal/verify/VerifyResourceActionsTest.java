@@ -51,61 +51,52 @@ public class VerifyResourceActionsTest extends BaseVerifyProcessTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		createResourceAction(_NAME_1, _ACTION_ID_1, 2);
-		createResourceAction(_NAME_1, _ACTION_ID_2, 2);
-		createResourceAction(_NAME_2, _ACTION_ID_1, 2);
-		createResourceAction(_NAME_2, _ACTION_ID_2, 4);
+		_createResourceAction(_NAME_1, _ACTION_ID_1, 2);
+		_createResourceAction(_NAME_1, _ACTION_ID_2, 2);
+		_createResourceAction(_NAME_1, _ACTION_ID_3, 2);
+		_createResourceAction(_NAME_2, _ACTION_ID_1, 2);
+		_createResourceAction(_NAME_2, _ACTION_ID_2, 4);
 	}
 
 	@Test
 	public void testDeleteDuplicateBitwiseValuesOnResource() throws Throwable {
 		ResourceActionLocalServiceUtil.checkResourceActions();
 
-		ResourceAction resourceAction =
-			ResourceActionLocalServiceUtil.fetchResourceAction(
-				_NAME_1, _ACTION_ID_1);
-
-		Assert.assertNotNull(resourceAction);
-
-		resourceAction = ResourceActionLocalServiceUtil.fetchResourceAction(
-			_NAME_1, _ACTION_ID_2);
-
-		Assert.assertNotNull(resourceAction);
-
-		resourceAction = ResourceActionLocalServiceUtil.fetchResourceAction(
-			_NAME_2, _ACTION_ID_1);
-
-		Assert.assertNotNull(resourceAction);
-
-		resourceAction = ResourceActionLocalServiceUtil.fetchResourceAction(
-			_NAME_2, _ACTION_ID_2);
-
-		Assert.assertNotNull(resourceAction);
+		_assertResourceAction(_NAME_1, _ACTION_ID_1, false);
+		_assertResourceAction(_NAME_1, _ACTION_ID_2, false);
+		_assertResourceAction(_NAME_1, _ACTION_ID_3, false);
+		_assertResourceAction(_NAME_2, _ACTION_ID_1, false);
+		_assertResourceAction(_NAME_2, _ACTION_ID_2, false);
 
 		doVerify();
 
-		resourceAction = ResourceActionLocalServiceUtil.fetchResourceAction(
-			_NAME_1, _ACTION_ID_1);
-
-		Assert.assertNotNull(resourceAction);
-
-		resourceAction = ResourceActionLocalServiceUtil.fetchResourceAction(
-			_NAME_1, _ACTION_ID_2);
-
-		Assert.assertNull(resourceAction);
-
-		resourceAction = ResourceActionLocalServiceUtil.fetchResourceAction(
-			_NAME_2, _ACTION_ID_1);
-
-		Assert.assertNotNull(resourceAction);
-
-		resourceAction = ResourceActionLocalServiceUtil.fetchResourceAction(
-			_NAME_2, _ACTION_ID_2);
-
-		Assert.assertNotNull(resourceAction);
+		_assertResourceAction(_NAME_1, _ACTION_ID_1, false);
+		_assertResourceAction(_NAME_1, _ACTION_ID_2, true);
+		_assertResourceAction(_NAME_1, _ACTION_ID_3, true);
+		_assertResourceAction(_NAME_2, _ACTION_ID_1, false);
+		_assertResourceAction(_NAME_2, _ACTION_ID_2, false);
 	}
 
-	protected void createResourceAction(
+	@Override
+	protected VerifyProcess getVerifyProcess() {
+		return new VerifyResourceActions();
+	}
+
+	private void _assertResourceAction(
+		String name, String actionId, boolean expectsNull) {
+
+		ResourceAction resourceAction =
+			ResourceActionLocalServiceUtil.fetchResourceAction(name, actionId);
+
+		if (expectsNull) {
+			Assert.assertNull(resourceAction);
+		}
+		else {
+			Assert.assertNotNull(resourceAction);
+		}
+	}
+
+	private void _createResourceAction(
 		final String name, final String actionId, final long bitwiseValue) {
 
 		long resourceActionId = CounterLocalServiceUtil.increment(
@@ -121,14 +112,11 @@ public class VerifyResourceActionsTest extends BaseVerifyProcessTestCase {
 		_resourceActions.add(ResourceActionUtil.update(resourceAction));
 	}
 
-	@Override
-	protected VerifyProcess getVerifyProcess() {
-		return new VerifyResourceActions();
-	}
-
 	private static final String _ACTION_ID_1 = "action1";
 
 	private static final String _ACTION_ID_2 = "action2";
+
+	private static final String _ACTION_ID_3 = "action3";
 
 	private static final String _NAME_1 = "portlet1";
 

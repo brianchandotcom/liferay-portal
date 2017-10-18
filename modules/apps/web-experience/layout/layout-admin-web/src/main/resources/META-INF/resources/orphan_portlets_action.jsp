@@ -22,7 +22,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 Portlet portlet = (Portlet)row.getObject();
 %>
 
-<portlet:actionURL name="deleteOrphanPortlets" var="deleteOrphanPortletsURL">
+<portlet:actionURL name="/layout/delete_orphan_portlets" var="deleteOrphanPortletsURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="portletId" value="<%= portlet.getPortletId() %>" />
 	<portlet:param name="selPlid" value="<%= String.valueOf(layoutsAdminDisplayContext.getSelPlid()) %>" />

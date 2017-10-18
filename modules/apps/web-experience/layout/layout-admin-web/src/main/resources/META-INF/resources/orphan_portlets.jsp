@@ -83,7 +83,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "orphan-portlets"));
 		</c:choose>
 	</div>
 
-	<portlet:actionURL name="deleteOrphanPortlets" var="deleteOrphanPortletsURL">
+	<portlet:actionURL name="/layout/delete_orphan_portlets" var="deleteOrphanPortletsURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="backURL" value="<%= backURL %>" />
 		<portlet:param name="selPlid" value="<%= String.valueOf(orphanPortletsDisplayContext.getSelPlid()) %>" />

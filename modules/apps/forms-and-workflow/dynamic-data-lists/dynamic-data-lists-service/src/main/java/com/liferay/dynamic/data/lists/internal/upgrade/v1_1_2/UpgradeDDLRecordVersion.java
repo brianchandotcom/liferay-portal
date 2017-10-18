@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.internal.upgrade.v1_0_4;
+package com.liferay.dynamic.data.lists.internal.upgrade.v1_1_2;
 
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -24,32 +24,33 @@ import java.sql.ResultSet;
 /**
  * @author Leonardo Barros
  */
-public class UpgradeDDLRecord extends UpgradeProcess {
+public class UpgradeDDLRecordVersion extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
 		StringBundler sb = new StringBundler(3);
 
-		sb.append("select DDLRecord.recordId, DDLRecordSet.version ");
-		sb.append("from DDLRecord inner join DDLRecordSet on ");
-		sb.append("DDLRecord.recordSetId = DDLRecordSet.recordSetId ");
+		sb.append(
+			"select DDLRecordVersion.recordVersionId, DDLRecordSet.version ");
+		sb.append("from DDLRecordVersion inner join DDLRecordSet on ");
+		sb.append("DDLRecordVersion.recordSetId = DDLRecordSet.recordSetId ");
 
 		try (PreparedStatement ps1 = connection.prepareStatement(sb.toString());
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update DDLRecord set recordSetVersion = ? where " +
-						"recordId = ?")) {
+					"update DDLRecordVersion set recordSetVersion = ? where " +
+						"recordVersionId = ?")) {
 
 			try (ResultSet rs = ps1.executeQuery()) {
 				while (rs.next()) {
-					long recordId = rs.getLong(1);
+					long recordVersionId = rs.getLong(1);
 
 					String version = rs.getString(2);
 
 					ps2.setString(1, version);
 
-					ps2.setLong(2, recordId);
+					ps2.setLong(2, recordVersionId);
 
 					ps2.addBatch();
 				}

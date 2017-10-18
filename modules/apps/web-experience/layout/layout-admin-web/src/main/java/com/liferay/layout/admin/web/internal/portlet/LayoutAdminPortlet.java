@@ -56,7 +56,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
@@ -485,52 +484,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
-	/**
-	 * Resets the number of failed merge attempts for the page template, which
-	 * is accessed from the action request's <code>layoutPrototypeId</code>
-	 * param. Once the counter is reset, the modified page template is merged
-	 * back into its linked page, which is accessed from the action request's
-	 * <code>selPlid</code> param.
-	 *
-	 * <p>
-	 * If the number of failed merge attempts is not equal to zero after the
-	 * merge, an error key is submitted into the {@link SessionErrors}.
-	 * </p>
-	 *
-	 * @param  actionRequest the action request
-	 * @throws Exception if an exception occurred
-	 */
-	public void resetMergeFailCountAndMerge(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long layoutPrototypeId = ParamUtil.getLong(
-			actionRequest, "layoutPrototypeId");
-
-		LayoutPrototype layoutPrototype =
-			layoutPrototypeLocalService.getLayoutPrototype(layoutPrototypeId);
-
-		SitesUtil.setMergeFailCount(layoutPrototype, 0);
-
-		long selPlid = ParamUtil.getLong(actionRequest, "selPlid");
-
-		Layout selLayout = layoutLocalService.getLayout(selPlid);
-
-		SitesUtil.resetPrototype(selLayout);
-
-		SitesUtil.mergeLayoutPrototypeLayout(selLayout.getGroup(), selLayout);
-
-		layoutPrototype = layoutPrototypeService.getLayoutPrototype(
-			layoutPrototypeId);
-
-		int mergeFailCountAfterMerge = SitesUtil.getMergeFailCount(
-			layoutPrototype);
-
-		if (mergeFailCountAfterMerge > 0) {
-			SessionErrors.add(actionRequest, "resetMergeFailCountAndMerge");
-		}
-	}
-
 	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -822,13 +775,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setLayoutPrototypeLocalService(
-		LayoutPrototypeLocalService layoutPrototypeLocalService) {
-
-		this.layoutPrototypeLocalService = layoutPrototypeLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setLayoutPrototypeService(
 		LayoutPrototypeService layoutPrototypeService) {
 
@@ -937,7 +883,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 	protected ItemSelector itemSelector;
 
 	protected LayoutLocalService layoutLocalService;
-	protected LayoutPrototypeLocalService layoutPrototypeLocalService;
 	protected LayoutPrototypeService layoutPrototypeService;
 	protected LayoutService layoutService;
 	protected MDRActionLocalService mdrActionLocalService;

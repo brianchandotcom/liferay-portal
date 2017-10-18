@@ -18,12 +18,15 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.FileCheck;
+import com.liferay.source.formatter.checks.GradleFileCheck;
 import com.liferay.source.formatter.checks.JavaTermCheck;
 import com.liferay.source.formatter.checks.SourceCheck;
 import com.liferay.source.formatter.checks.configuration.SourceCheckConfiguration;
 import com.liferay.source.formatter.checks.configuration.SourceChecksResult;
 import com.liferay.source.formatter.checks.configuration.SourceChecksSuppressions;
 import com.liferay.source.formatter.checks.configuration.SourceFormatterConfiguration;
+import com.liferay.source.formatter.parser.GradleFile;
+import com.liferay.source.formatter.parser.GradleFileParser;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
 import com.liferay.source.formatter.parser.ParseException;
@@ -75,6 +78,7 @@ public class SourceChecksUtil {
 			return sourceChecksResult;
 		}
 
+		GradleFile gradleFile = null;
 		JavaClass javaClass = null;
 		List<JavaClass> anonymousClasses = null;
 
@@ -97,6 +101,25 @@ public class SourceChecksUtil {
 				sourceChecksResult = _processFileCheck(
 					sourceChecksResult, (FileCheck)sourceCheck, fileName,
 					absolutePath);
+			}
+			else if (sourceCheck instanceof GradleFileCheck) {
+				if (gradleFile == null) {
+					try {
+						gradleFile = GradleFileParser.parse(
+							fileName, sourceChecksResult.getContent());
+					}
+					catch (ParseException pe) {
+						sourceChecksResult.addSourceFormatterMessage(
+							new SourceFormatterMessage(
+								fileName, pe.getMessage(), null, -1));
+
+						continue;
+					}
+				}
+
+				sourceChecksResult = _processGradleFileCheck(
+					sourceChecksResult, (GradleFileCheck)sourceCheck,
+					gradleFile, fileName, absolutePath);
 			}
 			else {
 				if (javaClass == null) {
@@ -225,6 +248,28 @@ public class SourceChecksUtil {
 
 		for (SourceFormatterMessage sourceFormatterMessage :
 				fileCheck.getSourceFormatterMessages(fileName)) {
+
+			sourceChecksResult.addSourceFormatterMessage(
+				sourceFormatterMessage);
+		}
+
+		return sourceChecksResult;
+	}
+
+	private static SourceChecksResult _processGradleFileCheck(
+			SourceChecksResult sourceChecksResult,
+			GradleFileCheck gradleFileCheck, GradleFile gradleFile,
+			String fileName, String absolutePath)
+		throws Exception {
+
+		String content = gradleFileCheck.process(
+			fileName, absolutePath, gradleFile,
+			sourceChecksResult.getContent());
+
+		sourceChecksResult.setContent(content);
+
+		for (SourceFormatterMessage sourceFormatterMessage :
+				gradleFileCheck.getSourceFormatterMessages(fileName)) {
 
 			sourceChecksResult.addSourceFormatterMessage(
 				sourceFormatterMessage);

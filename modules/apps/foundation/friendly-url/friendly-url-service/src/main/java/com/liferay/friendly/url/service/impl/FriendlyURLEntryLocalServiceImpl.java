@@ -94,7 +94,7 @@ public class FriendlyURLEntryLocalServiceImpl
 				friendlyURLEntryMappingPK);
 		}
 		else if (_isLocalizationsEqual(friendlyURLEntryMapping, urlTitleMap)) {
-			return fetchFriendlyURLEntry(
+			return friendlyURLEntryPersistence.fetchByPrimaryKey(
 				friendlyURLEntryMapping.getFriendlyURLEntryId());
 		}
 

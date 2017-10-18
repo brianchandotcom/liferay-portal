@@ -623,8 +623,7 @@ public class BlogsEntryStagedModelDataHandler
 
 		FriendlyURLEntry mainFriendlyURLEntry =
 			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
-				importedBlogsEntry.getGroupId(), BlogsEntry.class,
-				importedBlogsEntry.getEntryId());
+				BlogsEntry.class, importedBlogsEntry.getEntryId());
 
 		importedBlogsEntry.setUrlTitle(mainFriendlyURLEntry.getUrlTitle());
 

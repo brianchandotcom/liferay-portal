@@ -295,17 +295,17 @@ public class FriendlyURLEntryLocalServiceImpl
 
 	@Override
 	public FriendlyURLEntry getMainFriendlyURLEntry(
-			long groupId, Class<?> clazz, long classPK)
+			Class<?> clazz, long classPK)
 		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(clazz);
 
-		return getMainFriendlyURLEntry(groupId, classNameId, classPK);
+		return getMainFriendlyURLEntry(classNameId, classPK);
 	}
 
 	@Override
 	public FriendlyURLEntry getMainFriendlyURLEntry(
-			long groupId, long classNameId, long classPK)
+			long classNameId, long classPK)
 		throws PortalException {
 
 		FriendlyURLEntryMapping friendlyURLEntryMapping =

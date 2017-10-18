@@ -267,28 +267,11 @@ public class InviteMembersPortlet extends MVCPortlet {
 		return StringUtil.split(GetterUtil.getString(value));
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMemberRequestLocalService(
-		MemberRequestLocalService memberRequestLocalService) {
-
-		_memberRequestLocalService = memberRequestLocalService;
-	}
-
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.invitation.invite.members.service)(release.schema.version=1.0.1))",
 		unbind = "-"
 	)
 	protected void setRelease(Release release) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
 	}
 
 	private List<User> _getAvailableUsers(
@@ -334,12 +317,16 @@ public class InviteMembersPortlet extends MVCPortlet {
 	private static final Log _log = LogFactoryUtil.getLog(
 		InviteMembersPortlet.class);
 
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private MemberRequestLocalService _memberRequestLocalService;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

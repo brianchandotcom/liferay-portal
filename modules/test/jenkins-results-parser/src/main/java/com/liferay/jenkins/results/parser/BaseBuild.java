@@ -1834,8 +1834,21 @@ public abstract class BaseBuild implements Build {
 	protected List<Element> getJenkinsReportTableRowsElements(String status) {
 		List<Element> tableRowElements = new ArrayList<>();
 
-		if ((status == null) || status.equals(getStatus())) {
-			tableRowElements.add(getJenkinsReportTableRowElement());
+		String stat = status;
+		String result = null;
+
+		if (status.contains("/")) {
+			int x = status.indexOf("/");
+
+			result = status.substring(x + 1);
+
+			stat = status.substring(0, x);
+		}
+
+		if ((status == null) || stat.equals(getStatus())) {
+			if ((result == null) || result.equals(getResult())) {
+				tableRowElements.add(getJenkinsReportTableRowElement());
+			}
 		}
 
 		List<Build> downstreamBuilds = getDownstreamBuilds(status);
@@ -2431,7 +2444,7 @@ public abstract class BaseBuild implements Build {
 			if (index > _timeline.length) {
 				return _timeline.length - 1;
 			}
-			else if (index < 0 ) {
+			else if (index < 0) {
 				return 0;
 			}
 

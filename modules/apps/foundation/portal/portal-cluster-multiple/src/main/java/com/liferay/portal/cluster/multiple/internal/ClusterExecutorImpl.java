@@ -17,7 +17,6 @@ package com.liferay.portal.cluster.multiple.internal;
 import com.liferay.petra.concurrent.ConcurrentReferenceValueHashMap;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration;
-import com.liferay.portal.cluster.multiple.internal.constants.ClusterPropsKeys;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterEvent;
@@ -55,7 +54,6 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -242,13 +240,10 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 			ClusterExecutorConfiguration.class,
 			componentContext.getProperties());
 
-		String channelLogicName = getChannelLogicName(
-			componentContext.getProperties());
-		String channelPropertiesString = getChannelPropertiesString(
-			componentContext.getProperties());
-		String channelName = getChannelName(componentContext.getProperties());
-
-		initialize(channelLogicName, channelPropertiesString, channelName);
+		initialize(
+			_props.get(PropsKeys.CLUSTER_LINK_CHANNEL_LOGIC_NAME_CONTROL),
+			_props.get(PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL),
+			_props.get(PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL));
 
 		BundleContext bundleContext = componentContext.getBundleContext();
 
@@ -360,46 +355,6 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 			SecureRandomUtil.nextLong(), SecureRandomUtil.nextLong());
 
 		return uuid.toString();
-	}
-
-	protected String getChannelLogicName(
-		Dictionary<String, Object> properties) {
-
-		String channelLogicName = GetterUtil.getString(
-			properties.get(ClusterPropsKeys.CHANNEL_LOGIC_NAME_CONTROL));
-
-		if (Validator.isNull(channelLogicName)) {
-			channelLogicName = _props.get(
-				PropsKeys.CLUSTER_LINK_CHANNEL_LOGIC_NAME_CONTROL);
-		}
-
-		return channelLogicName;
-	}
-
-	protected String getChannelName(Dictionary<String, Object> properties) {
-		String channelName = GetterUtil.getString(
-			properties.get(ClusterPropsKeys.CHANNEL_NAME_CONTROL));
-
-		if (Validator.isNull(channelName)) {
-			channelName = _props.get(
-				PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL);
-		}
-
-		return channelName;
-	}
-
-	protected String getChannelPropertiesString(
-		Dictionary<String, Object> properties) {
-
-		String channelPropertiesString = GetterUtil.getString(
-			properties.get(ClusterPropsKeys.CHANNEL_PROPERTIES_CONTROL));
-
-		if (Validator.isNull(channelPropertiesString)) {
-			channelPropertiesString = _props.get(
-				PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL);
-		}
-
-		return channelPropertiesString;
 	}
 
 	protected ClusterChannel getClusterChannel() {
@@ -539,14 +494,12 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		if (Validator.isNull(channelPropertiesString)) {
 			throw new IllegalStateException(
 				"Set \"" + PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL +
-					"\" or \"" + ClusterPropsKeys.CHANNEL_PROPERTIES_CONTROL +
-						"\"");
+					"\"");
 		}
 
 		if (Validator.isNull(channelName)) {
 			throw new IllegalStateException(
-				"Set \"" + PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL +
-					"\" or \"" + ClusterPropsKeys.CHANNEL_NAME_CONTROL + "\"");
+				"Set \"" + PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL + "\"");
 		}
 
 		_executorService = _portalExecutorManager.getPortalExecutor(

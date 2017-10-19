@@ -14,7 +14,6 @@
 
 package com.liferay.portal.cluster.multiple.internal;
 
-import com.liferay.portal.cluster.multiple.internal.constants.ClusterPropsKeys;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.Priority;
 import com.liferay.portal.kernel.configuration.Filter;
@@ -31,9 +30,7 @@ import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
 import java.io.Serializable;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -284,7 +281,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		AspectJNewEnvTestRule.INSTANCE;
 
 	protected ClusterLinkImpl getClusterLinkImpl(
-		final boolean enabled, int channels) {
+		final boolean enabled, final int channels) {
 
 		ClusterLinkImpl clusterLinkImpl = new ClusterLinkImpl();
 
@@ -329,7 +326,34 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 				public Properties getProperties(
 					String prefix, boolean removePrefix) {
 
-					return new Properties();
+					Properties properties = new Properties();
+
+					for (int i = 0; i < channels; i++) {
+						if (PropsKeys.CLUSTER_LINK_CHANNEL_NAME_TRANSPORT.
+								equals(prefix)) {
+
+							properties.put(
+								StringPool.PERIOD + i,
+								"test-channel-logic-name-transport-" + i);
+						}
+						else if (PropsKeys.
+									CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT.
+										equals(prefix)) {
+
+							properties.put(
+								StringPool.PERIOD + i,
+								"test-channel-properties-transport-" + i);
+						}
+						else if (PropsKeys.CLUSTER_LINK_CHANNEL_NAME_TRANSPORT.
+									equals(prefix)) {
+
+							properties.put(
+								StringPool.PERIOD + i,
+								"test-channel-name-transport-" + i);
+						}
+					}
+
+					return properties;
 				}
 
 			});
@@ -340,20 +364,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		clusterLinkImpl.setPortalExecutorManager(
 			new MockPortalExecutorManager());
 
-		Map<String, Object> properties = new HashMap<>();
-
-		for (int i = 0; i < channels; i++) {
-			properties.put(
-				ClusterPropsKeys.CHANNEL_NAME_TRANSPORT_PREFIX +
-					StringPool.PERIOD + i,
-				"test-channel-name-transport-" + i);
-			properties.put(
-				ClusterPropsKeys.CHANNEL_PROPERTIES_TRANSPORT_PREFIX +
-					StringPool.PERIOD + i,
-				"test-channel-properties-transport-" + i);
-		}
-
-		clusterLinkImpl.activate(properties);
+		clusterLinkImpl.activate();
 
 		return clusterLinkImpl;
 	}

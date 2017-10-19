@@ -162,6 +162,8 @@ document.getElementById('demo').innerHTML = 'FAIL';
 
 		<execute macro="Smoke#viewWelcomePage" />
 
+		<take-screenshot />
+
 		<while>
 			<condition function="IsElementPresent" locator1="AssetCategorization#TAGS_REMOVE_ICON_GENERIC" />
 			<then>

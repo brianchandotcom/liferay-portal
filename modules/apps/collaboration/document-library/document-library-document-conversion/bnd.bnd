@@ -3,8 +3,23 @@ Bundle-SymbolicName: com.liferay.document.library.document.conversion
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.document.library.document.conversion.configuration
 Import-Package:\
+	!com.google.common.collect.*,\
+	!com.google.gson.*,\
+	\
 	!com.sun.star.lib.unoloader,\
+	\
+	!net.oauth.jsontoken.*,\
+	\
+	!org.apache.http.*,\
+	\
+	!org.joda.time.*,\
 	\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Document Library
+-includeresource:\
+	@google-collections-[0-9]*.jar,\
+	@gson-[0-9]*.jar,\
+	@httpclient-[0-9]*.jar,\
+	@joda-time-[0-9]*.jar,\
+	@jsontoken-[0-9]*.jar

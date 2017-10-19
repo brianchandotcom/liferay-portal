@@ -117,6 +117,13 @@ public class DocumentConversionImpl implements DocumentConversion {
 						outputDocumentFormat.getName());
 		}
 
+		if (sourceExtension.equals("html")) {
+			DocumentHTMLProcessor documentHTMLProcessor =
+				new DocumentHTMLProcessor();
+
+			inputStream = documentHTMLProcessor.process(inputStream);
+		}
+
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
@@ -129,6 +136,8 @@ public class DocumentConversionImpl implements DocumentConversion {
 		FileUtil.write(
 			file, unsyncByteArrayOutputStream.unsafeGetByteArray(), 0,
 			unsyncByteArrayOutputStream.size());
+
+		inputStream.close();
 
 		return file;
 	}

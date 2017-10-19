@@ -14,6 +14,7 @@
 
 package com.liferay.asset.categories.admin.web.internal.exportimport.data.handler;
 
+import com.liferay.asset.kernel.exception.DuplicateTagException;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
@@ -21,6 +22,8 @@ import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.xml.Element;
 
@@ -134,14 +137,36 @@ public class AssetTagStagedModelDataHandler
 		if (existingAssetTag == null) {
 			serviceContext.setUuid(assetTag.getUuid());
 
-			importedAssetTag = _assetTagLocalService.addTag(
-				userId, portletDataContext.getScopeGroupId(),
-				assetTag.getName(), serviceContext);
+			try {
+				importedAssetTag = _assetTagLocalService.addTag(
+					userId, portletDataContext.getScopeGroupId(),
+					assetTag.getName(), serviceContext);
+			}
+			catch (DuplicateTagException dte) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(dte);
+				}
+
+				importedAssetTag = _assetTagLocalService.addTag(
+					userId, portletDataContext.getScopeGroupId(),
+					assetTag.getName() + " (Duplicate)", serviceContext);
+			}
 		}
 		else {
-			importedAssetTag = _assetTagLocalService.updateTag(
-				userId, existingAssetTag.getTagId(), assetTag.getName(),
-				serviceContext);
+			try {
+				importedAssetTag = _assetTagLocalService.updateTag(
+					userId, existingAssetTag.getTagId(), assetTag.getName(),
+					serviceContext);
+			}
+			catch (DuplicateTagException dte) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(dte);
+				}
+
+				importedAssetTag = _assetTagLocalService.updateTag(
+					userId, existingAssetTag.getTagId(),
+					assetTag.getName() + " (Duplicate)", serviceContext);
+			}
 		}
 
 		portletDataContext.importClassedModel(assetTag, importedAssetTag);
@@ -153,6 +178,9 @@ public class AssetTagStagedModelDataHandler
 
 		_assetTagLocalService = assetTagLocalService;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetTagStagedModelDataHandler.class);
 
 	private AssetTagLocalService _assetTagLocalService;
 

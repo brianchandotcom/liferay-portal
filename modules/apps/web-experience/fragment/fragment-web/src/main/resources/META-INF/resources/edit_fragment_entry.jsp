@@ -64,7 +64,7 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentEntryTitle());
 	var jsInput = document.getElementById('<portlet:namespace />jsContent');
 	var wrapper = document.getElementById('<portlet:namespace />fragmentEditor');
 
-	new fragmentWebJsFragmentEditor.default(
+	var fragmentEditor = new fragmentWebJsFragmentEditor.default(
 		{
 			events: {
 				contentChanged: function(event) {
@@ -81,4 +81,12 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentEntryTitle());
 		},
 		wrapper
 	);
+
+	function destroyFragmentEditor () {
+		fragmentEditor.dispose();
+
+		Liferay.detach('destroyPortlet', destroyFragmentEditor);
+	}
+
+	Liferay.on('destroyPortlet', destroyFragmentEditor);
 </aui:script>

@@ -54,9 +54,12 @@ public class LegacyDataArchiveUtil {
 
 		_legacyDataGitWorkingDirectory.clean();
 
-		_legacyDataArchives = _getLegacyDataArchives(_getBuildProperties());
+		Properties buildProperties = _getBuildProperties();
+
+		_legacyDataArchives = _getLegacyDataArchives(buildProperties);
 		_latestLegacyDataArchiveCommits = _getLatestLegacyDataArchiveCommits();
 		_latestManualCommit = _getLatestManualCommit();
+		_portalVersions = _getPortalVersions(buildProperties)
 
 		_legacyDataArchiveGroupMap = _getLegacyDataArchiveGroupMap(
 			_legacyDataArchives);
@@ -118,6 +121,10 @@ public class LegacyDataArchiveUtil {
 
 	public File getLegacyDataWorkingDirectory() {
 		return _legacyDataGitWorkingDirectory.getWorkingDirectory();
+	}
+
+	public Set<String> getPortalVersions() {
+		return _portalVersions;
 	}
 
 	private Properties _getBuildProperties() {
@@ -348,5 +355,6 @@ public class LegacyDataArchiveUtil {
 		_legacyDataArchiveGroupMap;
 	private final List<LegacyDataArchive> _legacyDataArchives;
 	private final GitWorkingDirectory _legacyDataGitWorkingDirectory;
+	private final Set<String> _portalVersions;
 
 }

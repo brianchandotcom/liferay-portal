@@ -14,8 +14,6 @@
 
 package com.liferay.portal.cluster.multiple.internal;
 
-import static com.liferay.portal.kernel.util.PropsUtil.setProps;
-
 import com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterEvent;
@@ -61,7 +59,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 		// Test 1, add cluster event listener
 
-		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl();
+		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl(true);
 
 		List<ClusterEventListener> clusterEventListeners =
 			clusterExecutorImpl.getClusterEventListeners();
@@ -134,7 +132,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 	@Test
 	public void testDebugClusterEventListener() {
-		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl();
+		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl(true);
 
 		clusterExecutorImpl.clusterExecutorConfiguration =
 			new ClusterExecutorConfiguration() {
@@ -210,7 +208,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 		// Test 1, execute multicast request and not skip local
 
-		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl();
+		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl(true);
 
 		TestClusterChannel.clearAllMessages();
 
@@ -288,7 +286,8 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 		Assert.assertTrue(multicastMessages.isEmpty());
 		Assert.assertTrue(unicastMessages.isEmpty());
 
-		ClusterExecutorImpl newClusterExecutorImpl = getClusterExecutorImpl();
+		ClusterExecutorImpl newClusterExecutorImpl = getClusterExecutorImpl(
+			true);
 
 		Assert.assertEquals(
 			multicastMessages.toString(), 1, multicastMessages.size());
@@ -321,7 +320,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 	@Test
 	public void testExecuteClusterRequest() throws Exception {
-		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl();
+		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl(true);
 
 		// Test 1, payload is not method handler
 
@@ -385,10 +384,6 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 	@Rule
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
 		AspectJNewEnvTestRule.INSTANCE;
-
-	protected ClusterExecutorImpl getClusterExecutorImpl() {
-		return getClusterExecutorImpl(true);
-	}
 
 	protected ClusterExecutorImpl getClusterExecutorImpl(boolean enabled) {
 		ClusterExecutorImpl clusterExecutorImpl = new ClusterExecutorImpl();

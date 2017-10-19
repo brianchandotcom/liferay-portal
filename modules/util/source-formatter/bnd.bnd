@@ -13,7 +13,6 @@ Import-Package:\
 Main-Class: com.liferay.source.formatter.SourceFormatter
 -includeresource:\
 	@biz.aQute.bndlib-[0-9]*!/aQute/bnd/osgi/Constants.class,\
-	@com.liferay.petra.nio-[0-9]*.jar,\
 	@com.liferay.petra.string-[0-9]*.jar!/com/liferay/petra/string/CharPool.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/deploy/dependencies/web.xml,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/ArgumentsMap.class,\

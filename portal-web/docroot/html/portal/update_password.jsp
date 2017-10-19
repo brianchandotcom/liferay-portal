@@ -30,6 +30,8 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 }
 %>
 
+<%@ include file="/html/portal/select_language.jspf" %>
+
 <c:choose>
 	<c:when test="<%= !themeDisplay.isSignedIn() && (ticket == null) %>">
 		<div class="alert alert-warning">

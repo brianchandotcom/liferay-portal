@@ -419,7 +419,41 @@ public class IndentationCheck extends BaseCheck {
 				if (line.endsWith("(") &&
 					(parentAST.getLineNo() < methodCallLineCount)) {
 
-					tabCount--;
+					DetailAST rparenAST = null;
+
+					DetailAST methodCallAST = _findDetailAST(
+						parentAST, parentAST.getLineNo(),
+						TokenTypes.METHOD_CALL);
+
+					if (methodCallAST != null) {
+						rparenAST = methodCallAST.findFirstToken(
+							TokenTypes.RPAREN);
+					}
+					else {
+						DetailAST lparenAST = _findDetailAST(
+							parentAST, parentAST.getLineNo(),
+							TokenTypes.LPAREN);
+
+						DetailAST nextSibling = lparenAST.getNextSibling();
+
+						while (true) {
+							if ((nextSibling == null) ||
+								(nextSibling.getType() == TokenTypes.RPAREN)) {
+
+								rparenAST = nextSibling;
+
+								break;
+							}
+
+							nextSibling = nextSibling.getNextSibling();
+						}
+					}
+
+					if ((rparenAST != null) &&
+						(rparenAST.getLineNo() < detailAST.getLineNo())) {
+
+						tabCount--;
+					}
 
 					checkChaining = false;
 				}
@@ -482,6 +516,25 @@ public class IndentationCheck extends BaseCheck {
 
 			parentAST = parentAST.getParent();
 		}
+	}
+
+	private DetailAST _findDetailAST(
+		DetailAST parentAST, int lineNo, int type) {
+
+		if (parentAST.getType() == type) {
+			return parentAST;
+		}
+
+		List<DetailAST> methodCallASTList = DetailASTUtil.getAllChildTokens(
+			parentAST, true, type);
+
+		for (DetailAST methodCallAST : methodCallASTList) {
+			if (methodCallAST.getLineNo() == lineNo) {
+				return methodCallAST;
+			}
+		}
+
+		return null;
 	}
 
 	private DetailAST _findParent(DetailAST detailAST, int type) {

@@ -889,12 +889,12 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 					}
 				}
 
-				long[] userId = getUserPrimaryKeys(group.getGroupId());
+				long[] userIds = getUserPrimaryKeys(group.getGroupId());
 
-				if (userId.length != 0) {
+				if (ArrayUtil.isNotEmpty(userIds)) {
 					TransactionCommitCallbackUtil.registerCallback(
 						() -> {
-							reindex(group.getCompanyId(), userId);
+							reindex(group.getCompanyId(), userIds);
 
 							return null;
 						});

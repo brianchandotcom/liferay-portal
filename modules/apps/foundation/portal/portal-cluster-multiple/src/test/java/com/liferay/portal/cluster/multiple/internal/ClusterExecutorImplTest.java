@@ -405,10 +405,6 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 				@Override
 				public String get(String key) {
-					if (Objects.equals(key, PropsKeys.CLUSTER_LINK_ENABLED)) {
-						return String.valueOf(enabled);
-					}
-
 					if (Objects.equals(
 							key,
 							PropsKeys.
@@ -429,6 +425,10 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 								CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL)) {
 
 						return "test-channel-properties-control";
+					}
+
+					if (Objects.equals(key, PropsKeys.CLUSTER_LINK_ENABLED)) {
+						return String.valueOf(enabled);
 					}
 
 					return StringPool.BLANK;

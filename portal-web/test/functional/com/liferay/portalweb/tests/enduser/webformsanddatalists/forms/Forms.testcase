@@ -2342,12 +2342,28 @@
 		</execute>
 
 		<execute macro="Form#gotoAddField">
-			<var name="fieldType" value="Text Field" />
+			<var name="fieldType" value="Grid" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="SingleLineText2" />
+			<var name="fieldValue" value="Grid Field Survey" />
 		</execute>
+
+		<for list="1,2,3" param="optionNumber">
+			<execute macro="FormFields#editGridOptions">
+				<var name="gridField" value="row" />
+				<var name="optionValue" value="Option ${optionNumber}" />
+				<var name="rowNumber" value="${optionNumber}" />
+			</execute>
+		</for>
+
+		<for list="1,2,3" param="optionNumber">
+			<execute macro="FormFields#editGridOptions">
+				<var name="gridField" value="column" />
+				<var name="optionValue" value="Category ${optionNumber}" />
+				<var name="rowNumber" value="${optionNumber}" />
+			</execute>
+		</for>
 
 		<execute macro="Form#closeSidebar" />
 
@@ -2442,10 +2458,12 @@
 			<var name="formPageNext" value="Page 2" />
 		</execute>
 
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="SingleLineText2" />
-			<var name="fieldValue" value="SingleLineText2" />
-		</execute>
+		<for list="1,2,3" param="optionNumber">
+			<execute macro="FormFields#selectGridRadioOption">
+				<var name="categoryColumnName" value="Category${optionNumber}" />
+				<var name="optionRowName" value="Option${optionNumber}" />
+			</execute>
+		</for>
 
 		<execute macro="FormPortlet#nextPage">
 			<var name="formPageCurrent" value="Page 2" />
@@ -2518,10 +2536,9 @@
 			<var name="formPageNext" value="Page 2" />
 		</execute>
 
-		<execute macro="FormsAdmin#viewTextEntry">
-			<var name="fieldLabel" value="SingleLineText2" />
-			<var name="fieldName" value="SingleLineText2" />
-			<var name="fieldValue" value="SingleLineText2" />
+		<execute macro="FormFields#viewTextLabel">
+			<var name="fieldLabel" value="Grid Field Survey" />
+			<var name="fieldName" value="GridFieldSurvey" />
 		</execute>
 
 		<execute macro="FormPortlet#nextPage">

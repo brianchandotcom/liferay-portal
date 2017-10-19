@@ -44,8 +44,13 @@ public class SerializableObjectWrapper implements Externalizable {
 			LazySerializable lazySerializable =
 				(LazySerializable)serializableWrapper._serializable;
 
-			serializableWrapper._serializable =
-				lazySerializable.getSerializable();
+			Serializable serializable = lazySerializable.getSerializable();
+
+			if (serializable == null) {
+				return null;
+			}
+
+			serializableWrapper._serializable = serializable;
 		}
 
 		return (T)serializableWrapper._serializable;
@@ -56,10 +61,13 @@ public class SerializableObjectWrapper implements Externalizable {
 	 * this for any other purpose.
 	 */
 	public SerializableObjectWrapper() {
+		_hashCode = 0;
 	}
 
 	public SerializableObjectWrapper(Serializable serializable) {
 		_serializable = serializable;
+
+		_hashCode = serializable.hashCode();
 	}
 
 	@Override
@@ -75,6 +83,10 @@ public class SerializableObjectWrapper implements Externalizable {
 		SerializableObjectWrapper serializableWrapper =
 			(SerializableObjectWrapper)object;
 
+		if (_hashCode != serializableWrapper._hashCode) {
+			return false;
+		}
+
 		if ((_serializable instanceof LazySerializable) &&
 			(serializableWrapper._serializable instanceof LazySerializable)) {
 
@@ -83,22 +95,37 @@ public class SerializableObjectWrapper implements Externalizable {
 			LazySerializable lazySerializable2 =
 				(LazySerializable)serializableWrapper._serializable;
 
-			return Arrays.equals(
-				lazySerializable1.getData(), lazySerializable2.getData());
+			if (Arrays.equals(
+					lazySerializable1.getData(), lazySerializable2.getData())) {
+
+				return true;
+			}
 		}
 
 		if (_serializable instanceof LazySerializable) {
 			LazySerializable lazySerializable = (LazySerializable)_serializable;
 
-			_serializable = lazySerializable.getSerializable();
+			Serializable serializable = lazySerializable.getSerializable();
+
+			if (serializable == null) {
+				return Arrays.equals(
+					lazySerializable.getData(), serializableWrapper._getData());
+			}
+
+			_serializable = serializable;
 		}
 
 		if (serializableWrapper._serializable instanceof LazySerializable) {
 			LazySerializable lazySerializable =
 				(LazySerializable)serializableWrapper._serializable;
 
-			serializableWrapper._serializable =
-				lazySerializable.getSerializable();
+			Serializable serializable = lazySerializable.getSerializable();
+
+			if (serializable == null) {
+				return Arrays.equals(_getData(), lazySerializable.getData());
+			}
+
+			serializableWrapper._serializable = serializable;
 		}
 
 		return _serializable.equals(serializableWrapper._serializable);
@@ -106,17 +133,13 @@ public class SerializableObjectWrapper implements Externalizable {
 
 	@Override
 	public int hashCode() {
-		if (_serializable instanceof LazySerializable) {
-			LazySerializable lazySerializable = (LazySerializable)_serializable;
-
-			_serializable = lazySerializable.getSerializable();
-		}
-
-		return _serializable.hashCode();
+		return _hashCode;
 	}
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		_hashCode = objectInput.readInt();
+
 		byte[] data = new byte[objectInput.readInt()];
 
 		objectInput.readFully(data);
@@ -126,16 +149,20 @@ public class SerializableObjectWrapper implements Externalizable {
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeInt(_hashCode);
+
+		byte[] data = _getData();
+
+		objectOutput.writeInt(data.length);
+
+		objectOutput.write(data, 0, data.length);
+	}
+
+	private byte[] _getData() {
 		if (_serializable instanceof LazySerializable) {
 			LazySerializable lazySerializable = (LazySerializable)_serializable;
 
-			byte[] data = lazySerializable.getData();
-
-			objectOutput.writeInt(data.length);
-
-			objectOutput.write(data, 0, data.length);
-
-			return;
+			return lazySerializable.getData();
 		}
 
 		Serializer serializer = new Serializer();
@@ -144,15 +171,13 @@ public class SerializableObjectWrapper implements Externalizable {
 
 		ByteBuffer byteBuffer = serializer.toByteBuffer();
 
-		objectOutput.writeInt(byteBuffer.remaining());
-
-		objectOutput.write(
-			byteBuffer.array(), byteBuffer.position(), byteBuffer.remaining());
+		return byteBuffer.array();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SerializableObjectWrapper.class);
 
+	private int _hashCode;
 	private volatile Serializable _serializable;
 
 	private static class LazySerializable implements Serializable {

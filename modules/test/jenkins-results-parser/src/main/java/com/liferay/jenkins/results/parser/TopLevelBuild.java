@@ -604,16 +604,15 @@ public class TopLevelBuild extends BaseBuild {
 			getJenkinsReportDownstreamTableElement("starting", "Starting: "),
 			getJenkinsReportDownstreamTableElement("running", "Running: "),
 			getJenkinsReportDownstreamTableElement("missing", "Missing: "),
-			Dom4JUtil.getNewElement(
-				"caption", null, "Completed: ",
-				getJenkinsReportDownstreamTableElement(
-					"completed/ABORTED", "---- Aborted: "),
-				getJenkinsReportDownstreamTableElement(
-					"completed/FAILURE", "---- Failure: "),
-				getJenkinsReportDownstreamTableElement(
-					"completed/UNSTABLE", "---- Unstable: "),
-				getJenkinsReportDownstreamTableElement(
-					"completed/SUCCESS", "---- Success: ")));
+			Dom4JUtil.getNewElement("h2", null, "Completed: "),
+			getJenkinsReportDownstreamTableElement(
+				"completed/ABORTED", "---- Aborted: "),
+			getJenkinsReportDownstreamTableElement(
+				"completed/FAILURE", "---- Failure: "),
+			getJenkinsReportDownstreamTableElement(
+				"completed/UNSTABLE", "---- Unstable: "),
+			getJenkinsReportDownstreamTableElement(
+				"completed/SUCCESS", "---- Success: "));
 	}
 
 	protected Element getJenkinsReportDownstreamTableElement(

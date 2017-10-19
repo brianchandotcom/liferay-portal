@@ -16,7 +16,6 @@ package com.liferay.message.boards.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.message.boards.kernel.model.MBStatsUser;
 import com.liferay.message.boards.model.MBStatsUser;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;

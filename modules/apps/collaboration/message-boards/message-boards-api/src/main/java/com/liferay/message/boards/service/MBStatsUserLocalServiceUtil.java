@@ -48,12 +48,12 @@ public class MBStatsUserLocalServiceUtil {
 	* @param mbStatsUser the message boards stats user
 	* @return the message boards stats user that was added
 	*/
-	public static com.liferay.message.boards.kernel.model.MBStatsUser addMBStatsUser(
-		com.liferay.message.boards.kernel.model.MBStatsUser mbStatsUser) {
+	public static com.liferay.message.boards.model.MBStatsUser addMBStatsUser(
+		com.liferay.message.boards.model.MBStatsUser mbStatsUser) {
 		return getService().addMBStatsUser(mbStatsUser);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBStatsUser addStatsUser(
+	public static com.liferay.message.boards.model.MBStatsUser addStatsUser(
 		long groupId, long userId) {
 		return getService().addStatsUser(groupId, userId);
 	}
@@ -64,7 +64,7 @@ public class MBStatsUserLocalServiceUtil {
 	* @param statsUserId the primary key for the new message boards stats user
 	* @return the new message boards stats user
 	*/
-	public static com.liferay.message.boards.kernel.model.MBStatsUser createMBStatsUser(
+	public static com.liferay.message.boards.model.MBStatsUser createMBStatsUser(
 		long statsUserId) {
 		return getService().createMBStatsUser(statsUserId);
 	}
@@ -76,7 +76,7 @@ public class MBStatsUserLocalServiceUtil {
 	* @return the message boards stats user that was removed
 	* @throws PortalException if a message boards stats user with the primary key could not be found
 	*/
-	public static com.liferay.message.boards.kernel.model.MBStatsUser deleteMBStatsUser(
+	public static com.liferay.message.boards.model.MBStatsUser deleteMBStatsUser(
 		long statsUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteMBStatsUser(statsUserId);
@@ -88,8 +88,8 @@ public class MBStatsUserLocalServiceUtil {
 	* @param mbStatsUser the message boards stats user
 	* @return the message boards stats user that was removed
 	*/
-	public static com.liferay.message.boards.kernel.model.MBStatsUser deleteMBStatsUser(
-		com.liferay.message.boards.kernel.model.MBStatsUser mbStatsUser) {
+	public static com.liferay.message.boards.model.MBStatsUser deleteMBStatsUser(
+		com.liferay.message.boards.model.MBStatsUser mbStatsUser) {
 		return getService().deleteMBStatsUser(mbStatsUser);
 	}
 
@@ -108,7 +108,7 @@ public class MBStatsUserLocalServiceUtil {
 	}
 
 	public static void deleteStatsUser(
-		com.liferay.message.boards.kernel.model.MBStatsUser statsUser) {
+		com.liferay.message.boards.model.MBStatsUser statsUser) {
 		getService().deleteStatsUser(statsUser);
 	}
 
@@ -198,7 +198,7 @@ public class MBStatsUserLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBStatsUser fetchMBStatsUser(
+	public static com.liferay.message.boards.model.MBStatsUser fetchMBStatsUser(
 		long statsUserId) {
 		return getService().fetchMBStatsUser(statsUserId);
 	}
@@ -223,7 +223,7 @@ public class MBStatsUserLocalServiceUtil {
 	* @return the message boards stats user
 	* @throws PortalException if a message boards stats user with the primary key could not be found
 	*/
-	public static com.liferay.message.boards.kernel.model.MBStatsUser getMBStatsUser(
+	public static com.liferay.message.boards.model.MBStatsUser getMBStatsUser(
 		long statsUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMBStatsUser(statsUserId);
@@ -240,7 +240,7 @@ public class MBStatsUserLocalServiceUtil {
 	* @param end the upper bound of the range of message boards stats users (not inclusive)
 	* @return the range of message boards stats users
 	*/
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBStatsUser> getMBStatsUsers(
+	public static java.util.List<com.liferay.message.boards.model.MBStatsUser> getMBStatsUsers(
 		int start, int end) {
 		return getService().getMBStatsUsers(start, end);
 	}
@@ -277,12 +277,12 @@ public class MBStatsUserLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBStatsUser getStatsUser(
+	public static com.liferay.message.boards.model.MBStatsUser getStatsUser(
 		long groupId, long userId) {
 		return getService().getStatsUser(groupId, userId);
 	}
 
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBStatsUser> getStatsUsersByGroupId(
+	public static java.util.List<com.liferay.message.boards.model.MBStatsUser> getStatsUsersByGroupId(
 		long groupId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getStatsUsersByGroupId(groupId, start, end);
@@ -293,7 +293,7 @@ public class MBStatsUserLocalServiceUtil {
 		return getService().getStatsUsersByGroupIdCount(groupId);
 	}
 
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBStatsUser> getStatsUsersByUserId(
+	public static java.util.List<com.liferay.message.boards.model.MBStatsUser> getStatsUsersByUserId(
 		long userId) {
 		return getService().getStatsUsersByUserId(userId);
 	}
@@ -304,22 +304,22 @@ public class MBStatsUserLocalServiceUtil {
 	* @param mbStatsUser the message boards stats user
 	* @return the message boards stats user that was updated
 	*/
-	public static com.liferay.message.boards.kernel.model.MBStatsUser updateMBStatsUser(
-		com.liferay.message.boards.kernel.model.MBStatsUser mbStatsUser) {
+	public static com.liferay.message.boards.model.MBStatsUser updateMBStatsUser(
+		com.liferay.message.boards.model.MBStatsUser mbStatsUser) {
 		return getService().updateMBStatsUser(mbStatsUser);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBStatsUser updateStatsUser(
+	public static com.liferay.message.boards.model.MBStatsUser updateStatsUser(
 		long groupId, long userId) {
 		return getService().updateStatsUser(groupId, userId);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBStatsUser updateStatsUser(
+	public static com.liferay.message.boards.model.MBStatsUser updateStatsUser(
 		long groupId, long userId, java.util.Date lastPostDate) {
 		return getService().updateStatsUser(groupId, userId, lastPostDate);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBStatsUser updateStatsUser(
+	public static com.liferay.message.boards.model.MBStatsUser updateStatsUser(
 		long groupId, long userId, int messageCount, java.util.Date lastPostDate) {
 		return getService()
 				   .updateStatsUser(groupId, userId, messageCount, lastPostDate);

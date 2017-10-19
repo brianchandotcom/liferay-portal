@@ -406,14 +406,6 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 				@Override
 				public String get(String key) {
 					if (Objects.equals(
-							key,
-							PropsKeys.
-								CLUSTER_LINK_CHANNEL_LOGIC_NAME_CONTROL)) {
-
-						return "test-control-channel-logic-name";
-					}
-
-					if (Objects.equals(
 							key, PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL)) {
 
 						return "test-channel-name-control";

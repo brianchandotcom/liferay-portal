@@ -329,16 +329,8 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 					Properties properties = new Properties();
 
 					for (int i = 0; i < channels; i++) {
-						if (PropsKeys.CLUSTER_LINK_CHANNEL_NAME_TRANSPORT.
+						if (PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT.
 								equals(prefix)) {
-
-							properties.put(
-								StringPool.PERIOD + i,
-								"test-channel-logic-name-transport-" + i);
-						}
-						else if (PropsKeys.
-									CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT.
-										equals(prefix)) {
 
 							properties.put(
 								StringPool.PERIOD + i,

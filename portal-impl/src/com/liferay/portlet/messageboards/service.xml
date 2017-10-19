@@ -415,57 +415,6 @@
 		<reference entity="MBThread" package-path="com.liferay.portlet.messageboards" />
 		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
 	</entity>
-	<entity human-name="message boards stats user" local-service="true" name="MBStatsUser" remote-service="false">
-
-		<!-- PK fields -->
-
-		<column name="statsUserId" primary="true" type="long" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-
-		<!-- Other fields -->
-
-		<column name="messageCount" type="int" />
-		<column name="lastPostDate" type="Date" />
-
-		<!-- Order -->
-
-		<order by="desc">
-			<order-column name="messageCount" />
-		</order>
-
-		<!-- Finder methods -->
-
-		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
-		</finder>
-		<finder name="UserId" return-type="Collection">
-			<finder-column name="userId" />
-		</finder>
-		<finder name="G_U" return-type="MBStatsUser" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="userId" />
-		</finder>
-		<finder name="G_NotU_NotM" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column comparator="!=" name="userId" />
-			<finder-column comparator="!=" name="messageCount" />
-		</finder>
-
-		<!-- References -->
-
-		<reference entity="Group" package-path="com.liferay.portal" />
-		<reference entity="User" package-path="com.liferay.portal" />
-		<reference entity="MBMessage" package-path="com.liferay.portlet.messageboards" />
-		<reference entity="MBThread" package-path="com.liferay.portlet.messageboards" />
-	</entity>
 	<entity human-name="message boards thread" local-service="true" name="MBThread" remote-service="true" trash-enabled="true" uuid="true">
 
 		<!-- PK fields -->

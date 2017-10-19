@@ -2403,7 +2403,7 @@ public abstract class BaseBuild implements Build {
 
 			_timeline[startIndex]._invocationsCount++;
 
-			for (int i = startIndex; i < endIndex; i++) {
+			for (int i = startIndex; i <= endIndex; i++) {
 				_timeline[i]._slaveUsageCount++;
 			}
 		}
@@ -2443,8 +2443,8 @@ public abstract class BaseBuild implements Build {
 				(int)((timestamp - _startTimestamp) *
 					_timeline.length / _duration);
 
-			if (index > _timeline.length) {
-				return _timeline.length;
+			if (index >= _timeline.length) {
+				return _timeline.length - 1;
 			}
 
 			return index;

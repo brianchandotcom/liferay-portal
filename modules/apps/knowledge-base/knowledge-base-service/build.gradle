@@ -30,7 +30,6 @@ dependencies {
 	provided project(":apps:web-experience:export-import:export-import-api")
 	provided project(":apps:web-experience:export-import:export-import-service")
 
-	testCompile group: "junit", name: "junit", version: "4.12"
 	testCompile group: "org.mockito", name: "mockito-core", version: "1.10.8"
 }
 

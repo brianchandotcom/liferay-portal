@@ -61,10 +61,17 @@ public class AssetTagsPortletDataHandler extends BasePortletDataHandler {
 		setDataAlwaysStaged(true);
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(AssetTag.class));
-		setExportControls(
+
+		PortletDataHandlerBoolean tagsPortletDataHandlerBoolean =
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "tags", true, false, null,
-				AssetTag.class.getName()));
+				NAMESPACE, "tags", true, false, null, AssetTag.class.getName());
+
+		setExportControls(tagsPortletDataHandlerBoolean);
+		setImportControls(
+			tagsPortletDataHandlerBoolean,
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "merge-tags-by-name", false, false, null));
+
 		setPublishToLiveByDefault(true);
 	}
 

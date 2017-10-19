@@ -1,3 +1,6 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 dependencies {
 	compileInclude group: "org.jgroups", name: "jgroups", version: "3.6.4.Final"
 

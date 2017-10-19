@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=Commerce Category Navigation",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + CPPortletKeys.CP_ASSET_CATEGORY_NAVIGATION,
+		"javax.portlet.name=" + CPPortletKeys.CP_ASSET_CATEGORIES_NAVIGATION,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"

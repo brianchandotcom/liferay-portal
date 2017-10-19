@@ -15,9 +15,9 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -29,43 +29,54 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Pavel Savinov
+ * @author Jürgen Kappler
  */
 @Component(
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
-		"mvc.command.name=/layout/delete_layout"
+		"mvc.command.name=/layout/edit_layout_page_template_collection"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteLayoutMVCActionCommand extends BaseMVCActionCommand {
+public class EditLayoutPageTemplateCollectionMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long[] plids = null;
+		long layoutPageTemplateCollectionId = ParamUtil.getLong(
+			actionRequest, "layoutPageTemplateCollectionId");
 
-		long plid = ParamUtil.getLong(actionRequest, "plid");
+		String name = ParamUtil.getString(actionRequest, "name");
+		String description = ParamUtil.getString(actionRequest, "description");
 
-		if (plid > 0) {
-			plids = new long[] {plid};
+		if (layoutPageTemplateCollectionId <= 0) {
+
+			// Add layout page template collection
+
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				actionRequest);
+
+			_layoutPageTemplateCollectionService.
+				addLayoutPageTemplateCollection(
+					serviceContext.getScopeGroupId(), name, description,
+					serviceContext);
 		}
 		else {
-			plids = ParamUtil.getLongValues(actionRequest, "rowIds");
-		}
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
+			// Update layout page template collection
 
-		for (long curPlid : plids) {
-			_layoutService.deleteLayout(curPlid, serviceContext);
+			_layoutPageTemplateCollectionService.
+				updateLayoutPageTemplateCollection(
+					layoutPageTemplateCollectionId, name, description);
 		}
 	}
 
 	@Reference
-	private LayoutService _layoutService;
+	private LayoutPageTemplateCollectionService
+		_layoutPageTemplateCollectionService;
 
 }

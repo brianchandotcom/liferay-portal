@@ -15,11 +15,9 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.LayoutService;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ActionRequest;
@@ -29,43 +27,45 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Pavel Savinov
+ * @author Jürgen Kappler
  */
 @Component(
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
-		"mvc.command.name=/layout/delete_layout"
+		"mvc.command.name=/layout/delete_layout_page_template_collection"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteLayoutMVCActionCommand extends BaseMVCActionCommand {
+public class DeleteLayoutPageTemplateCollectionMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long[] plids = null;
+		long[] deleteLayoutPageTemplateCollectionIds = null;
 
-		long plid = ParamUtil.getLong(actionRequest, "plid");
+		long layoutPageTemplateCollectionId = ParamUtil.getLong(
+			actionRequest, "layoutPageTemplateCollectionId");
 
-		if (plid > 0) {
-			plids = new long[] {plid};
+		if (layoutPageTemplateCollectionId > 0) {
+			deleteLayoutPageTemplateCollectionIds =
+				new long[] {layoutPageTemplateCollectionId};
 		}
 		else {
-			plids = ParamUtil.getLongValues(actionRequest, "rowIds");
+			deleteLayoutPageTemplateCollectionIds = ParamUtil.getLongValues(
+				actionRequest, "rowIds");
 		}
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
-		for (long curPlid : plids) {
-			_layoutService.deleteLayout(curPlid, serviceContext);
-		}
+		_layoutPageTemplateCollectionService.
+			deleteLayoutPageTemplateCollections(
+				deleteLayoutPageTemplateCollectionIds);
 	}
 
 	@Reference
-	private LayoutService _layoutService;
+	private LayoutPageTemplateCollectionService
+		_layoutPageTemplateCollectionService;
 
 }

@@ -94,7 +94,7 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table LayoutPageTemplateCollection (layoutPageTemplateCollectionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table LayoutPageTemplateCollection (layoutPageTemplateCollectionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutPageTemplateCollection";
 	public static final String ORDER_BY_JPQL = " ORDER BY layoutPageTemplateCollection.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LayoutPageTemplateCollection.name ASC";

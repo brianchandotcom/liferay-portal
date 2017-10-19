@@ -60,7 +60,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "pages"));
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<portlet:actionURL name="/delete_layout" var="deleteLayoutURL">
+<portlet:actionURL name="/layout/delete_layout" var="deleteLayoutURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 

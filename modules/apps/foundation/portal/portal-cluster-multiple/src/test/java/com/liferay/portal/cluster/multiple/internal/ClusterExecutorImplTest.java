@@ -15,7 +15,6 @@
 package com.liferay.portal.cluster.multiple.internal;
 
 import com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration;
-import com.liferay.portal.cluster.multiple.internal.constants.ClusterPropsKeys;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterEvent;
 import com.liferay.portal.kernel.cluster.ClusterEventListener;
@@ -39,8 +38,9 @@ import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 
@@ -59,7 +59,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 		// Test 1, add cluster event listener
 
-		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl();
+		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl(true);
 
 		List<ClusterEventListener> clusterEventListeners =
 			clusterExecutorImpl.getClusterEventListeners();
@@ -107,8 +107,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 	@Test
 	public void testDeactivate() {
-		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl(
-			true, true);
+		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl(true);
 
 		List<TestClusterChannel> clusterChannels =
 			TestClusterChannel.getClusterChannels();
@@ -133,7 +132,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 	@Test
 	public void testDebugClusterEventListener() {
-		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl();
+		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl(true);
 
 		clusterExecutorImpl.clusterExecutorConfiguration =
 			new ClusterExecutorConfiguration() {
@@ -168,8 +167,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 		// Test 1, initialize
 
-		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl(
-			true, false);
+		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl(false);
 
 		List<TestClusterChannel> clusterChannels =
 			TestClusterChannel.getClusterChannels();
@@ -210,7 +208,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 		// Test 1, execute multicast request and not skip local
 
-		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl();
+		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl(true);
 
 		TestClusterChannel.clearAllMessages();
 
@@ -288,7 +286,8 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 		Assert.assertTrue(multicastMessages.isEmpty());
 		Assert.assertTrue(unicastMessages.isEmpty());
 
-		ClusterExecutorImpl newClusterExecutorImpl = getClusterExecutorImpl();
+		ClusterExecutorImpl newClusterExecutorImpl = getClusterExecutorImpl(
+			true);
 
 		Assert.assertEquals(
 			multicastMessages.toString(), 1, multicastMessages.size());
@@ -321,7 +320,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 	@Test
 	public void testExecuteClusterRequest() throws Exception {
-		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl();
+		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl(true);
 
 		// Test 1, payload is not method handler
 
@@ -386,14 +385,18 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
 		AspectJNewEnvTestRule.INSTANCE;
 
-	protected ClusterExecutorImpl getClusterExecutorImpl() {
-		return getClusterExecutorImpl(true, true);
-	}
-
-	protected ClusterExecutorImpl getClusterExecutorImpl(
-		final boolean debugEnabled, final boolean enabled) {
-
+	protected ClusterExecutorImpl getClusterExecutorImpl(boolean enabled) {
 		ClusterExecutorImpl clusterExecutorImpl = new ClusterExecutorImpl();
+
+		Map<String, String> properties = new HashMap<>();
+
+		properties.put(
+			PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL,
+			"test-channel-name-control");
+		properties.put(
+			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL,
+			"test-channel-properties-control");
+		properties.put(PropsKeys.CLUSTER_LINK_ENABLED, String.valueOf(enabled));
 
 		clusterExecutorImpl.setProps(
 			new Props() {
@@ -405,11 +408,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 				@Override
 				public String get(String key) {
-					if (PropsKeys.CLUSTER_LINK_ENABLED.equals(key)) {
-						return String.valueOf(enabled);
-					}
-
-					return StringPool.BLANK;
+					return properties.getOrDefault(key, StringPool.BLANK);
 				}
 
 				@Override
@@ -447,18 +446,8 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 		clusterExecutorImpl.setPortalExecutorManager(
 			new MockPortalExecutorManager());
 
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(
-			ClusterPropsKeys.CHANNEL_LOGIC_NAME_CONTROL,
-			"test-control-channel-logic-name");
-		properties.put(
-			ClusterPropsKeys.CHANNEL_NAME_CONTROL, "test-channel-name-control");
-		properties.put(
-			ClusterPropsKeys.CHANNEL_PROPERTIES_CONTROL,
-			"test-channel-properties-control");
-
-		clusterExecutorImpl.activate(new MockComponentContext(properties));
+		clusterExecutorImpl.activate(
+			new MockComponentContext(new HashMapDictionary<>()));
 
 		return clusterExecutorImpl;
 	}

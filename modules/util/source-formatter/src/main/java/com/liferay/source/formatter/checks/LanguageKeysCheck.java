@@ -56,11 +56,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (!isSubrepository() &&
-			!absolutePath.contains("/modules/private/apps/")) {
-
-			_checkLanguageKeys(fileName, absolutePath, content, getPatterns());
-		}
+		_checkLanguageKeys(fileName, absolutePath, content, getPatterns());
 
 		return content;
 	}

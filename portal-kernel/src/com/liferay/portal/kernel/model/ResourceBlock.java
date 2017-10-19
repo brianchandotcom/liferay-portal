@@ -26,8 +26,10 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see ResourceBlockModel
  * @see com.liferay.portal.model.impl.ResourceBlockImpl
  * @see com.liferay.portal.model.impl.ResourceBlockModelImpl
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ImplementationClassName("com.liferay.portal.model.impl.ResourceBlockImpl")
 @ProviderType
 public interface ResourceBlock extends ResourceBlockModel, PermissionedModel {

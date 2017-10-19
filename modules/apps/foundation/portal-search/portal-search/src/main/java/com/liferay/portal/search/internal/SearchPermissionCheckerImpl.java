@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.ResourceBlockLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -178,17 +177,9 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			String viewActionId, Document doc)
 		throws Exception {
 
-		List<Role> roles = null;
-
-		if (_resourceBlockLocalService.isSupported(className)) {
-			roles = _resourceBlockLocalService.getRoles(
-				className, Long.valueOf(classPK), viewActionId);
-		}
-		else {
-			roles = _resourcePermissionLocalService.getRoles(
-				companyId, className, ResourceConstants.SCOPE_INDIVIDUAL,
-				classPK, viewActionId);
-		}
+		List<Role> roles = _resourcePermissionLocalService.getRoles(
+			companyId, className, ResourceConstants.SCOPE_INDIVIDUAL, classPK,
+			viewActionId);
 
 		if (roles.isEmpty()) {
 			return;
@@ -497,9 +488,6 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private ResourceBlockLocalService _resourceBlockLocalService;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

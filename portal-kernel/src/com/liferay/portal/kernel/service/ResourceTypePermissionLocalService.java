@@ -46,8 +46,10 @@ import java.util.List;
  * @see ResourceTypePermissionLocalServiceUtil
  * @see com.liferay.portal.service.base.ResourceTypePermissionLocalServiceBaseImpl
  * @see com.liferay.portal.service.impl.ResourceTypePermissionLocalServiceImpl
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})

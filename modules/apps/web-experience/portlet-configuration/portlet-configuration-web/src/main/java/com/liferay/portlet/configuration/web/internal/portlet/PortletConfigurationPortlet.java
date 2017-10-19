@@ -38,8 +38,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PermissionService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
-import com.liferay.portal.kernel.service.ResourceBlockLocalService;
-import com.liferay.portal.kernel.service.ResourceBlockService;
 import com.liferay.portal.kernel.service.ResourcePermissionService;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -527,30 +525,15 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 		Map<Long, String[]> roleIdsToActionIds = new HashMap<>();
 
-		if (_resourceBlockLocalService.isSupported(selResource)) {
-			for (long roleId : roleIds) {
-				List<String> actionIds = getActionIdsList(
-					actionRequest, roleId, true);
+		for (long roleId : roleIds) {
+			String[] actionIds = getActionIds(actionRequest, roleId, false);
 
-				roleIdsToActionIds.put(
-					roleId, actionIds.toArray(new String[actionIds.size()]));
-			}
-
-			_resourceBlockService.setIndividualScopePermissions(
-				themeDisplay.getCompanyId(), resourceGroupId, selResource,
-				GetterUtil.getLong(resourcePrimKey), roleIdsToActionIds);
+			roleIdsToActionIds.put(roleId, actionIds);
 		}
-		else {
-			for (long roleId : roleIds) {
-				String[] actionIds = getActionIds(actionRequest, roleId, false);
 
-				roleIdsToActionIds.put(roleId, actionIds);
-			}
-
-			_resourcePermissionService.setIndividualResourcePermissions(
-				resourceGroupId, themeDisplay.getCompanyId(), selResource,
-				resourcePrimKey, roleIdsToActionIds);
-		}
+		_resourcePermissionService.setIndividualResourcePermissions(
+			resourceGroupId, themeDisplay.getCompanyId(), selResource,
+			resourcePrimKey, roleIdsToActionIds);
 
 		if (PropsValues.PERMISSIONS_PROPAGATION_ENABLED) {
 			Portlet portlet = _portletLocalService.getPortletById(
@@ -942,20 +925,6 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setResourceBlockLocalService(
-		ResourceBlockLocalService resourceBlockLocalService) {
-
-		_resourceBlockLocalService = resourceBlockLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setResourceBlockService(
-		ResourceBlockService resourceBlockService) {
-
-		_resourceBlockService = resourceBlockService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setResourcePermissionService(
 		ResourcePermissionService resourcePermissionService) {
 
@@ -1077,8 +1046,6 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
 	private final ThreadLocal<PortletRequest> _portletRequestThreadLocal =
 		new CentralizedThreadLocal<>("_portletRequestThreadLocal");
-	private ResourceBlockLocalService _resourceBlockLocalService;
-	private ResourceBlockService _resourceBlockService;
 	private ResourcePermissionService _resourcePermissionService;
 
 	private class PortletConfigurationPortletPortletConfig

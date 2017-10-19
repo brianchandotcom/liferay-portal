@@ -16,9 +16,7 @@ package com.liferay.portlet.rolesadmin.search;
 
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourceTypePermissionLocalServiceUtil;
 
 import javax.portlet.PortletResponse;
 
@@ -49,13 +47,6 @@ public class ResourceActionRowChecker extends RowChecker {
 		String actionId = (String)objArray[1];
 		String resourceName = (String)objArray[2];
 		Integer scope = (Integer)objArray[4];
-
-		if (ResourceBlockLocalServiceUtil.isSupported(resourceName)) {
-			return ResourceTypePermissionLocalServiceUtil.
-				hasEitherScopePermission(
-					role.getCompanyId(), resourceName, role.getRoleId(),
-					actionId);
-		}
 
 		return ResourcePermissionLocalServiceUtil.hasScopeResourcePermission(
 			role.getCompanyId(), resourceName, scope, role.getRoleId(),

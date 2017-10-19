@@ -29,8 +29,10 @@ import com.liferay.portal.kernel.service.ResourceBlockPermissionLocalServiceUtil
  * @author Brian Wing Shun Chan
  * @see ResourceBlockPermissionImpl
  * @see ResourceBlockPermission
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public abstract class ResourceBlockPermissionBaseImpl
 	extends ResourceBlockPermissionModelImpl implements ResourceBlockPermission {

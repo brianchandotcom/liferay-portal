@@ -41,6 +41,10 @@ public interface PermissionChecker extends Cloneable {
 
 	public long[] getGuestUserRoleIds();
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public List<Long> getOwnerResourceBlockIds(
 		long companyId, long groupId, String name, String actionId);
 
@@ -54,6 +58,10 @@ public interface PermissionChecker extends Cloneable {
 
 	public Map<Object, Object> getPermissionChecksMap();
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public List<Long> getResourceBlockIds(
 		long companyId, long groupId, long userId, String name,
 		String actionId);

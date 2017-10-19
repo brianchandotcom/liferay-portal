@@ -85,4 +85,13 @@ public class SiteNavigationMenuItemLocalServiceImpl
 			siteNavigationMenuId);
 	}
 
+	@Override
+	public List<SiteNavigationMenuItem> getSiteNavigationMenuItemsByParent(
+		long parentSiteNavigationMenuItemId) {
+
+		return siteNavigationMenuItemPersistence.
+			findByParentSiteNavigationMenuItemId(
+				parentSiteNavigationMenuItemId);
+	}
+
 }

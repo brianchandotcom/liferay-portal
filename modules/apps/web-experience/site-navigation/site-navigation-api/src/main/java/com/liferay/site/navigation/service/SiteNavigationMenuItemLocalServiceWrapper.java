@@ -269,6 +269,12 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 		return _siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(siteNavigationMenuId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.site.navigation.model.SiteNavigationMenuItem> getSiteNavigationMenuItemsByParent(
+		long parentSiteNavigationMenuItemId) {
+		return _siteNavigationMenuItemLocalService.getSiteNavigationMenuItemsByParent(parentSiteNavigationMenuItemId);
+	}
+
 	/**
 	* Returns the number of site navigation menu items.
 	*

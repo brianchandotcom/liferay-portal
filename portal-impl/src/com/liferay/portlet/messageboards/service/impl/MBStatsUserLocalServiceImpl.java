@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.messageboards.model.impl.MBStatsUserImpl;
 import com.liferay.portlet.messageboards.service.base.MBStatsUserLocalServiceBaseImpl;
@@ -59,8 +60,9 @@ public class MBStatsUserLocalServiceImpl
 		catch (SystemException se) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Add failed, fetch {groupId=" + groupId + ", userId=" +
-						userId + "}");
+					StringBundler.concat(
+						"Add failed, fetch {groupId=", String.valueOf(groupId),
+						", userId=", String.valueOf(userId), "}"));
 			}
 
 			statsUser = mbStatsUserPersistence.fetchByG_U(

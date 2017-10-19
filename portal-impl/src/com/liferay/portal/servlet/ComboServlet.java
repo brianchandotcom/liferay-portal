@@ -416,8 +416,10 @@ public class ComboServlet extends HttpServlet {
 		if (!PortalUtil.isValidResourceId(resourcePath)) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Invalid resource " + request.getRequestURL() + "?" +
-						request.getQueryString());
+					StringBundler.concat(
+						"Invalid resource ",
+						String.valueOf(request.getRequestURL()), "?",
+						request.getQueryString()));
 			}
 
 			return null;

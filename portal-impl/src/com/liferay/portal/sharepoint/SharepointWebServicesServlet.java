@@ -36,8 +36,9 @@ public class SharepointWebServicesServlet extends HttpServlet {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				request.getHeader(HttpHeaders.USER_AGENT) + " " +
-					request.getMethod() + " " + request.getRequestURI());
+				StringBundler.concat(
+					request.getHeader(HttpHeaders.USER_AGENT), " ",
+					request.getMethod(), " ", request.getRequestURI()));
 		}
 
 		try {
@@ -58,9 +59,9 @@ public class SharepointWebServicesServlet extends HttpServlet {
 
 		StringBundler sb = new StringBundler(12);
 
-		String url =
-			"http://" + request.getLocalAddr() + ":" + request.getServerPort() +
-				"/sharepoint";
+		String url = StringBundler.concat(
+			"http://", request.getLocalAddr(), ":",
+			String.valueOf(request.getServerPort()), "/sharepoint");
 
 		sb.append("<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"");
 		sb.append("http://schemas.xmlsoap.org/soap/envelope/\">");

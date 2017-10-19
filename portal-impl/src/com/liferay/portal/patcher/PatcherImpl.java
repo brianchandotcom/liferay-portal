@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -80,8 +81,9 @@ public class PatcherImpl implements Patcher {
 		}
 		catch (Exception e) {
 			_log.error(
-				"Unable to copy " + patchFile.getAbsolutePath() + " to " +
-					patchDirectory.getAbsolutePath());
+				StringBundler.concat(
+					"Unable to copy ", patchFile.getAbsolutePath(), " to ",
+					patchDirectory.getAbsolutePath()));
 
 			return false;
 		}

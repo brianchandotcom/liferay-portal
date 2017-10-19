@@ -81,8 +81,9 @@ public class Table {
 
 		if (value == null) {
 			throw new UpgradeException(
-				"Nulls should never be inserted into the database. Attempted " +
-					"to append column to " + sb.toString() + ".");
+				StringBundler.concat(
+					"Nulls should never be inserted into the database. ",
+					"Attempted to append column to ", sb.toString(), "."));
 		}
 		else if (value instanceof byte[]) {
 			sb.append(Base64.encode((byte[])value));
@@ -165,7 +166,8 @@ public class Table {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Starting backup of " + _tableName + " to " + tempFileName);
+				StringBundler.concat(
+					"Starting backup of ", _tableName, " to ", tempFileName));
 		}
 
 		UnsyncBufferedWriter unsyncBufferedWriter = new UnsyncBufferedWriter(
@@ -191,16 +193,18 @@ public class Table {
 				catch (StagnantRowException sre) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Skipping stagnant data in " + _tableName + ": " +
-								sre.getMessage());
+							StringBundler.concat(
+								"Skipping stagnant data in ", _tableName, ": ",
+								sre.getMessage()));
 					}
 				}
 			}
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Finished backup of " + _tableName + " to " + tempFileName +
-						" in " + stopWatch.getTime() + " ms");
+					StringBundler.concat(
+						"Finished backup of ", _tableName, " to ", tempFileName,
+						" in ", String.valueOf(stopWatch.getTime()), " ms"));
 			}
 		}
 		catch (Exception e) {
@@ -503,8 +507,9 @@ public class Table {
 
 				if (values.length != columns.length) {
 					throw new UpgradeException(
-						"Column lengths differ between temp file and schema. " +
-							"Attempted to insert row " + line + ".");
+						StringBundler.concat(
+							"Column lengths differ between temp file and ",
+							"schema. Attempted to insert row ", line, "."));
 				}
 
 				int[] order = getOrder();

@@ -67,9 +67,11 @@ public class UpgradeSubscription extends UpgradeProcess {
 				PortletPreferences.class.getName());
 
 			runSQL(
-				"delete from Subscription where classNameId = " + classNameId +
-					" and classPK not in (select portletPreferencesId from " +
-						"PortletPreferences)");
+				StringBundler.concat(
+					"delete from Subscription where classNameId = ",
+					String.valueOf(classNameId),
+					" and classPK not in (select portletPreferencesId from ",
+					"PortletPreferences)"));
 		}
 	}
 
@@ -116,9 +118,9 @@ public class UpgradeSubscription extends UpgradeProcess {
 			return 0;
 		}
 
-		String sql =
-			"select " + groupIdSQLParts[1] + " from " + groupIdSQLParts[0] +
-				" where " + groupIdSQLParts[2] + " = ?";
+		String sql = StringBundler.concat(
+			"select ", groupIdSQLParts[1], " from ", groupIdSQLParts[0],
+			" where ", groupIdSQLParts[2], " = ?");
 
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setLong(1, classPK);

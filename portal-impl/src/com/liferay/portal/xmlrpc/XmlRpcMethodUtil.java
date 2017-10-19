@@ -16,6 +16,7 @@ package com.liferay.portal.xmlrpc;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.xmlrpc.Method;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -92,8 +93,9 @@ public class XmlRpcMethodUtil {
 			if (registeredMethod != null) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"There is already an XML-RPC method registered with " +
-							"name " + methodName + " at " + token);
+						StringBundler.concat(
+							"There is already an XML-RPC method registered ",
+							"with name ", methodName, " at ", token));
 				}
 			}
 			else {

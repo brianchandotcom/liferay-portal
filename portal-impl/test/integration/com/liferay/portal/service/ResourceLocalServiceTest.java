@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.security.permission.DoAsUserThread;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -85,8 +86,10 @@ public class ResourceLocalServiceTest {
 		}
 
 		Assert.assertTrue(
-			"Only " + successCount + " out of " + ServiceTestUtil.THREAD_COUNT +
-				" threads added resources successfully",
+			StringBundler.concat(
+				"Only ", String.valueOf(successCount), " out of ",
+				String.valueOf(ServiceTestUtil.THREAD_COUNT),
+				" threads added resources successfully"),
 			successCount == ServiceTestUtil.THREAD_COUNT);
 	}
 

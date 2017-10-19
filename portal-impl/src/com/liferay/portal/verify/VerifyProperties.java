@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
@@ -98,9 +99,9 @@ public class VerifyProperties extends VerifyProcess {
 
 		if (portalProperties.containsKey(oldKey)) {
 			_log.error(
-				"Portal property \"" + oldKey +
-					"\" was migrated to the system property \"" + newKey +
-						"\"");
+				StringBundler.concat(
+					"Portal property \"", oldKey,
+					"\" was migrated to the system property \"", newKey, "\""));
 		}
 	}
 
@@ -111,9 +112,9 @@ public class VerifyProperties extends VerifyProcess {
 
 		if (value != null) {
 			_log.error(
-				"System property \"" + oldKey +
-					"\" was migrated to the portal property \"" + newKey +
-						"\"");
+				StringBundler.concat(
+					"System property \"", oldKey,
+					"\" was migrated to the portal property \"", newKey, "\""));
 		}
 	}
 
@@ -124,8 +125,9 @@ public class VerifyProperties extends VerifyProcess {
 
 		if (portalProperties.containsKey(oldKey)) {
 			_log.error(
-				"Portal property \"" + oldKey + "\" was modularized to " +
-					moduleName + " as \"" + newKey + "\"");
+				StringBundler.concat(
+					"Portal property \"", oldKey, "\" was modularized to ",
+					moduleName, " as \"", newKey, "\""));
 		}
 	}
 
@@ -136,8 +138,9 @@ public class VerifyProperties extends VerifyProcess {
 
 		if (systemProperties.containsKey(oldKey)) {
 			_log.error(
-				"System property \"" + oldKey + "\" was modularized to " +
-					moduleName + " as \"" + newKey + "\"");
+				StringBundler.concat(
+					"System property \"", oldKey, "\" was modularized to ",
+					moduleName, " as \"", newKey, "\""));
 		}
 	}
 
@@ -197,8 +200,9 @@ public class VerifyProperties extends VerifyProcess {
 
 		if (portalProperties.containsKey(oldKey)) {
 			_log.error(
-				"Portal property \"" + oldKey + "\" was renamed to \"" +
-					newKey + "\"");
+				StringBundler.concat(
+					"Portal property \"", oldKey, "\" was renamed to \"",
+					newKey, "\""));
 		}
 	}
 
@@ -209,8 +213,9 @@ public class VerifyProperties extends VerifyProcess {
 
 		if (value != null) {
 			_log.error(
-				"System property \"" + oldKey + "\" was renamed to \"" +
-					newKey + "\"");
+				StringBundler.concat(
+					"System property \"", oldKey, "\" was renamed to \"",
+					newKey, "\""));
 		}
 	}
 

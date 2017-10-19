@@ -583,8 +583,10 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				catch (PortalException pe) {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
-							"Unable to get resource permissions for " +
-								className + " with group " + groupId,
+							StringBundler.concat(
+								"Unable to get resource permissions for ",
+								className, " with group ",
+								String.valueOf(groupId)),
 							pe);
 					}
 				}
@@ -628,8 +630,9 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to get resource permissions for " + className +
-						" with company " + companyId,
+					StringBundler.concat(
+						"Unable to get resource permissions for ", className,
+						" with company ", String.valueOf(companyId)),
 					pe);
 			}
 		}

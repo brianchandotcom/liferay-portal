@@ -527,9 +527,10 @@ public class MBUtil {
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Message boards search index is stale and contains " +
-							"entry {className=" + entryClassName + ", " +
-								"classPK=" + entryClassPK + "}");
+						StringBundler.concat(
+							"Message boards search index is stale and ",
+							"contains entry {className=", entryClassName,
+							", classPK=", String.valueOf(entryClassPK), "}"));
 				}
 
 				continue;

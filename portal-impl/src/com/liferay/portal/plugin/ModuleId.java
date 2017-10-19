@@ -15,6 +15,7 @@
 package com.liferay.portal.plugin;
 
 import com.liferay.portal.kernel.plugin.Version;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
@@ -43,8 +44,9 @@ public class ModuleId implements Serializable {
 	public static String toString(
 		String groupId, String artifactId, String version, String type) {
 
-		return groupId + StringPool.SLASH + artifactId + StringPool.SLASH +
-			version + StringPool.SLASH + type;
+		return StringBundler.concat(
+			groupId, StringPool.SLASH, artifactId, StringPool.SLASH, version,
+			StringPool.SLASH, type);
 	}
 
 	@Override
@@ -67,14 +69,16 @@ public class ModuleId implements Serializable {
 	}
 
 	public String getArtifactPath() {
-		return StringPool.SLASH + _groupId + StringPool.SLASH + _artifactId +
-			StringPool.SLASH + _pluginVersion + StringPool.SLASH +
-				getArtifactWARName();
+		return StringBundler.concat(
+			StringPool.SLASH, _groupId, StringPool.SLASH, _artifactId,
+			StringPool.SLASH, String.valueOf(_pluginVersion), StringPool.SLASH,
+			getArtifactWARName());
 	}
 
 	public String getArtifactWARName() {
-		return _artifactId + StringPool.DASH + _pluginVersion +
-			StringPool.PERIOD + _type;
+		return StringBundler.concat(
+			_artifactId, StringPool.DASH, String.valueOf(_pluginVersion),
+			StringPool.PERIOD, _type);
 	}
 
 	public String getGroupId() {

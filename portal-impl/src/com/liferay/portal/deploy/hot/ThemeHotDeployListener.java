@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.ThemeHelper;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -112,8 +113,9 @@ public class ThemeHotDeployListener extends BaseHotDeployListener {
 			}
 			else {
 				_log.info(
-					themes.size() + " themes for " + servletContextName +
-						" are available for use");
+					StringBundler.concat(
+						String.valueOf(themes.size()), " themes for ",
+						servletContextName, " are available for use"));
 			}
 		}
 
@@ -186,8 +188,9 @@ public class ThemeHotDeployListener extends BaseHotDeployListener {
 			}
 			else {
 				_log.info(
-					themes.size() + " themes for " + servletContextName +
-						" were unregistered");
+					StringBundler.concat(
+						String.valueOf(themes.size()), " themes for ",
+						servletContextName, " were unregistered"));
 			}
 		}
 	}

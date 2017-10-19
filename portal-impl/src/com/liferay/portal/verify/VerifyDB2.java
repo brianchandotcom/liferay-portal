@@ -62,8 +62,9 @@ public class VerifyDB2 extends VerifyProcess {
 					String columnName = rs.getString(2);
 
 					runSQL(
-						"alter table " + tableName + " alter column " +
-							columnName + " set data type varchar(600)");
+						StringBundler.concat(
+							"alter table ", tableName, " alter column ",
+							columnName, " set data type varchar(600)"));
 				}
 			}
 		}

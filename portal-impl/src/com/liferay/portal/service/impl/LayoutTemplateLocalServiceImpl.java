@@ -337,9 +337,10 @@ public class LayoutTemplateLocalServiceImpl
 			}
 			catch (Exception e) {
 				_log.error(
-					"Unable to get content at template path " +
-						layoutTemplateModel.getTemplatePath() + ": " +
-							e.getMessage());
+					StringBundler.concat(
+						"Unable to get content at template path ",
+						layoutTemplateModel.getTemplatePath(), ": ",
+						e.getMessage()));
 			}
 
 			if (Validator.isNull(content)) {

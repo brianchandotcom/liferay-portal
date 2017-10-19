@@ -653,8 +653,10 @@ public class PluginPackageUtil {
 
 				if (responseCode != HttpServletResponse.SC_OK) {
 					throw new PluginPackageException(
-						"Unable to download file " + pluginsXmlURL +
-							" because of response code " + responseCode);
+						StringBundler.concat(
+							"Unable to download file ", pluginsXmlURL,
+							" because of response code ",
+							String.valueOf(responseCode)));
 				}
 			}
 
@@ -704,7 +706,8 @@ public class PluginPackageUtil {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Loading plugin repository " + repositoryURL + ":\n" + xml);
+				StringBundler.concat(
+					"Loading plugin repository ", repositoryURL, ":\n", xml));
 		}
 
 		RemotePluginPackageRepository pluginPackageRepository =
@@ -898,9 +901,8 @@ public class PluginPackageUtil {
 			}
 		}
 
-		String moduleId =
-			moduleGroupId + "/" + moduleArtifactId + "/" + moduleVersion +
-				"/war";
+		String moduleId = StringBundler.concat(
+			moduleGroupId, "/", moduleArtifactId, "/", moduleVersion, "/war");
 
 		String pluginName = GetterUtil.getString(
 			properties.getProperty("name"));
@@ -1100,14 +1102,16 @@ public class PluginPackageUtil {
 
 		if (version.equals(Version.UNKNOWN) && _log.isWarnEnabled()) {
 			_log.warn(
-				"Plugin package on context " + servletContextName +
-					" cannot be tracked because this WAR does not contain a " +
-						"liferay-plugin-package.xml file");
+				StringBundler.concat(
+					"Plugin package on context ", servletContextName,
+					" cannot be tracked because this WAR does not contain a ",
+					"liferay-plugin-package.xml file"));
 		}
 
 		PluginPackage pluginPackage = new PluginPackageImpl(
-			artifactGroupId + StringPool.SLASH + artifactId + StringPool.SLASH +
-				version + StringPool.SLASH + "war");
+			StringBundler.concat(
+				artifactGroupId, StringPool.SLASH, artifactId, StringPool.SLASH,
+				version, StringPool.SLASH, "war"));
 
 		pluginPackage.setName(artifactId);
 
@@ -1281,8 +1285,9 @@ public class PluginPackageUtil {
 				repositoryReport.addError(repositoryURL, ppe);
 
 				_log.error(
-					"Unable to load repository " + repositoryURL + " " +
-						ppe.toString());
+					StringBundler.concat(
+						"Unable to load repository ", repositoryURL, " ",
+						ppe.toString()));
 			}
 		}
 
@@ -1346,8 +1351,9 @@ public class PluginPackageUtil {
 		catch (PluginPackageException ppe) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to reindex unistalled package " +
-						pluginPackage.getContext() + ": " + ppe.getMessage());
+					StringBundler.concat(
+						"Unable to reindex unistalled package ",
+						pluginPackage.getContext(), ": ", ppe.getMessage()));
 			}
 		}
 	}

@@ -105,8 +105,9 @@ public class VerifyGroupedModel extends VerifyProcess {
 		throws Exception {
 
 		try (PreparedStatement ps = con.prepareStatement(
-				"select groupId from " + tableName + " where " +
-					primaryKeColumnName + " = ?")) {
+				StringBundler.concat(
+					"select groupId from ", tableName, " where ",
+					primaryKeColumnName, " = ?"))) {
 
 			ps.setLong(1, primKey);
 
@@ -116,7 +117,10 @@ public class VerifyGroupedModel extends VerifyProcess {
 				}
 
 				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to find " + tableName + " " + primKey);
+					_log.debug(
+						StringBundler.concat(
+							"Unable to find ", tableName, " ",
+							String.valueOf(primKey)));
 				}
 
 				return 0;

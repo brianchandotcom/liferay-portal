@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -176,9 +177,10 @@ public class JSONFactoryTest {
 		Assert.assertEquals("boo", map.get("foo"));
 
 		map = (Map<?, ?>)JSONFactoryUtil.looseDeserialize(
-			"{\"class\":\"" + JSONFactoryUtil.class.getName() +
-				"\",\"foo\": \"boo\",\"jsonFactory\":{\"class\":\"" +
-					JSONFactoryImpl.class.getName() + "\"}}");
+			StringBundler.concat(
+				"{\"class\":\"", JSONFactoryUtil.class.getName(),
+				"\",\"foo\": \"boo\",\"jsonFactory\":{\"class\":\"",
+				JSONFactoryImpl.class.getName(), "\"}}"));
 
 		Assert.assertNotNull(map);
 		Assert.assertEquals(map.toString(), 3, map.size());

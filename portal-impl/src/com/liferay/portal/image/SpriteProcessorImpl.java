@@ -94,8 +94,9 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 
 			if (servletContextName != null) {
 				spriteRootDir = new File(
-					PropsUtil.get(PropsKeys.LIFERAY_HOME) + "/work" +
-						SpriteProcessor.PATH + "/" + servletContextName);
+					StringBundler.concat(
+						PropsUtil.get(PropsKeys.LIFERAY_HOME), "/work",
+						SpriteProcessor.PATH, "/", servletContextName));
 			}
 			else {
 				File tempDir = (File)servletContext.getAttribute(
@@ -194,7 +195,9 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 
 					key = contextPath.concat(key);
 
-					String value = (int)y + "," + height + "," + width;
+					String value = StringBundler.concat(
+						String.valueOf((int)y), ",", String.valueOf(height),
+						",", String.valueOf(width));
 
 					spriteProperties.setProperty(key, value);
 
@@ -445,7 +448,10 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 			for (int w = 0; w < width; w++) {
 				offset = (h * width * numOfBands) + (w * numOfBands);
 
-				System.out.print("[" + w + ", " + h + "] = ");
+				System.out.print(
+					StringBundler.concat(
+						"[", String.valueOf(w), ", ", String.valueOf(h),
+						"] = "));
 
 				for (int b = 0; b < numOfBands; b++) {
 					System.out.print(pixels[offset + b] + " ");

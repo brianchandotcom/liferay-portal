@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -296,8 +297,9 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			}
 			else {
 				_log.info(
-					portlets.size() + " portlets for " + servletContextName +
-						" are available for use");
+					StringBundler.concat(
+						String.valueOf(portlets.size()), " portlets for ",
+						servletContextName, " are available for use"));
 			}
 		}
 	}
@@ -357,8 +359,9 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			}
 			else {
 				_log.info(
-					portlets.size() + " portlets for " + servletContextName +
-						" were unregistered");
+					StringBundler.concat(
+						String.valueOf(portlets.size()), " portlets for ",
+						servletContextName, " were unregistered"));
 			}
 		}
 	}

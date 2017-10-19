@@ -62,6 +62,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -2837,18 +2838,20 @@ public class PortletImpl extends PortletBaseImpl {
 			if (Validator.isNotNull(roleLink)) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Linking role for portlet [" + getPortletId() +
-							"] with role-name [" + unlinkedRole +
-								"] to role-link [" + roleLink + "]");
+						StringBundler.concat(
+							"Linking role for portlet [", getPortletId(),
+							"] with role-name [", unlinkedRole,
+							"] to role-link [", roleLink, "]"));
 				}
 
 				linkedRoles.add(roleLink);
 			}
 			else {
 				_log.error(
-					"Unable to link role for portlet [" + getPortletId() +
-						"] with role-name [" + unlinkedRole +
-							"] because role-link is null");
+					StringBundler.concat(
+						"Unable to link role for portlet [", getPortletId(),
+						"] with role-name [", unlinkedRole,
+						"] because role-link is null"));
 			}
 		}
 

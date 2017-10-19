@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -324,8 +325,9 @@ public class LicenseUtil {
 			if (Validator.isNotNull(_PROXY_URL)) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Using proxy " + _PROXY_URL + StringPool.COLON +
-							_PROXY_PORT);
+						StringBundler.concat(
+							"Using proxy ", _PROXY_URL, StringPool.COLON,
+							String.valueOf(_PROXY_PORT)));
 				}
 
 				proxyHttpHost = new HttpHost(_PROXY_URL, _PROXY_PORT);

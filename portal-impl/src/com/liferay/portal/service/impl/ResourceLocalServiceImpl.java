@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.impl.ResourceImpl;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.base.ResourceLocalServiceBaseImpl;
@@ -1079,9 +1080,11 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		}
 
 		_log.debug(
-			"Checking user permissions block " + block + " for " + userId +
-				" " + resourceId + " " + actionId + " takes " +
-					stopWatch.getTime() + " ms");
+			StringBundler.concat(
+				"Checking user permissions block ", String.valueOf(block),
+				" for ", String.valueOf(userId), " ",
+				String.valueOf(resourceId), " ", actionId, " takes ",
+				String.valueOf(stopWatch.getTime()), " ms"));
 	}
 
 	protected void updateResourceBlocks(

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.PortalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.impl.ClassNameImpl;
 import com.liferay.portal.service.base.PortalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
@@ -158,8 +159,9 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 
 			if (!newValue.equals(className.getValue())) {
 				throw new IllegalStateException(
-					"Expected " + newValue + " but found " +
-						className.getClassName());
+					StringBundler.concat(
+						"Expected ", newValue, " but found ",
+						className.getClassName()));
 			}
 		}
 		finally {

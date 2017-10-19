@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsUtil;
@@ -129,8 +130,11 @@ public class StartupHelper {
 			if (buildNumber == ReleaseInfo.getParentBuildNumber()) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Skipping upgrade process from " + buildNumber +
-							" to " + ReleaseInfo.getParentBuildNumber());
+						StringBundler.concat(
+							"Skipping upgrade process from ",
+							String.valueOf(buildNumber), " to ",
+							String.valueOf(
+								ReleaseInfo.getParentBuildNumber())));
 				}
 
 				return;
@@ -147,9 +151,12 @@ public class StartupHelper {
 				if (upgradeProcessClassNames.length == 0) {
 					if (_log.isInfoEnabled()) {
 						_log.info(
-							"Upgrading from " + buildNumber + " to " +
-								ReleaseInfo.getParentBuildNumber() +
-									" is not supported");
+							StringBundler.concat(
+								"Upgrading from ", String.valueOf(buildNumber),
+								" to ",
+								String.valueOf(
+									ReleaseInfo.getParentBuildNumber()),
+								" is not supported"));
 					}
 
 					System.exit(0);

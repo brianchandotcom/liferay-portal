@@ -190,10 +190,9 @@ public class MySQLDB extends BaseDB {
 				if (createTable && (pos != -1)) {
 					createTable = false;
 
-					line =
-						line.substring(0, pos) + " engine " +
-							PropsValues.DATABASE_MYSQL_ENGINE +
-								line.substring(pos);
+					line = StringBundler.concat(
+						line.substring(0, pos), " engine ",
+						PropsValues.DATABASE_MYSQL_ENGINE, line.substring(pos));
 				}
 
 				sb.append(line);

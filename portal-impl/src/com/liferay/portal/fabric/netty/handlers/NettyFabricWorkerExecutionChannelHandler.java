@@ -323,8 +323,10 @@ public class NettyFabricWorkerExecutionChannelHandler
 
 			if (nettyStubFabricWorker == null) {
 				throw new ProcessException(
-					"Unable to locate fabric worker on channel " + channel +
-						", with fabric worker id " + _id);
+					StringBundler.concat(
+						"Unable to locate fabric worker on channel ",
+						String.valueOf(channel), ", with fabric worker id ",
+						String.valueOf(_id)));
 			}
 
 			if (_throwable != null) {

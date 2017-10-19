@@ -54,8 +54,10 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 		runSQL("insert into Counter values('" + _OLD_CLASS_NAME + "', 10)");
 
 		runSQL(
-			"insert into ClassName_ values(0, " + increment(ClassName.class) +
-				", 'PREFIX_" + _OLD_CLASS_NAME + "')");
+			StringBundler.concat(
+				"insert into ClassName_ values(0, ",
+				String.valueOf(increment(ClassName.class)), ", 'PREFIX_",
+				_OLD_CLASS_NAME, "')"));
 
 		StringBundler sb = new StringBundler(9);
 
@@ -149,8 +151,9 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 			ResultSet rs = ps.executeQuery()) {
 
 			Assert.assertTrue(
-				"Table " + tableName + " and column " + columnName +
-					" does not contain value " + _OLD_CLASS_NAME,
+				StringBundler.concat(
+					"Table ", tableName, " and column ", columnName,
+					" does not contain value ", _OLD_CLASS_NAME),
 				rs.next());
 
 			oldValue = rs.getString(columnName);
@@ -179,8 +182,9 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 			ResultSet rs = ps.executeQuery()) {
 
 			Assert.assertTrue(
-				"Table " + tableName + " and column " + columnName +
-					" does not contain value " + newValue,
+				StringBundler.concat(
+					"Table ", tableName, " and column ", columnName,
+					" does not contain value ", newValue),
 				rs.next());
 		}
 	}

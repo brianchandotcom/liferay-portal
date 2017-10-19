@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webdav.WebDAVException;
@@ -154,8 +155,9 @@ public class WebDAVServlet extends HttpServlet {
 				}
 
 				_log.info(
-					xLitmus + request.getMethod() + " " +
-						request.getRequestURI() + " " + status);
+					StringBundler.concat(
+						xLitmus, request.getMethod(), " ",
+						request.getRequestURI(), " ", String.valueOf(status)));
 			}
 		}
 	}
@@ -224,8 +226,9 @@ public class WebDAVServlet extends HttpServlet {
 			if (match) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Skipping over " + request.getMethod() + " " +
-							request.getPathInfo());
+						StringBundler.concat(
+							"Skipping over ", request.getMethod(), " ",
+							request.getPathInfo()));
 				}
 
 				return true;

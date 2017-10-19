@@ -114,8 +114,10 @@ public class FileSystemHook extends BaseHook {
 		String path = buildPath(String.valueOf(imageId));
 
 		return new File(
-			_rootDir + StringPool.SLASH + path + StringPool.SLASH + imageId +
-				StringPool.PERIOD + type);
+			StringBundler.concat(
+				String.valueOf(_rootDir), StringPool.SLASH, path,
+				StringPool.SLASH, String.valueOf(imageId), StringPool.PERIOD,
+				type));
 	}
 
 	private final File _rootDir;

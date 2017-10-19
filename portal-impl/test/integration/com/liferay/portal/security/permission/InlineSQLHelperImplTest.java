@@ -105,7 +105,8 @@ public class InlineSQLHelperImplTest {
 		_assertClauseOrdering(
 			_SQL_PLAIN + _SQL_GROUP_BY + _SQL_ORDER_BY, _ORDER_BY_CLAUSE);
 		_assertClauseOrdering(
-			_SQL_PLAIN + _SQL_WHERE + _SQL_GROUP_BY + _SQL_ORDER_BY,
+			StringBundler.concat(
+				_SQL_PLAIN, _SQL_WHERE, _SQL_GROUP_BY, _SQL_ORDER_BY),
 			_ORDER_BY_CLAUSE);
 	}
 

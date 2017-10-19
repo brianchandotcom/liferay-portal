@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import com.xuggle.ferry.RefCounted;
 import com.xuggle.xuggler.Global;
@@ -514,7 +515,8 @@ public abstract class LiferayConverter {
 		String container, int defaultValue, int maxValue) {
 
 		int property = GetterUtil.getInteger(
-			properties.getProperty(propertyName + "[" + container + "]"),
+			properties.getProperty(
+				StringBundler.concat(propertyName, "[", container, "]")),
 			defaultValue);
 
 		if (property > maxValue) {
@@ -523,8 +525,9 @@ public abstract class LiferayConverter {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Default " + prettyPropertyName + " for " + container +
-					" configured to " + property);
+				StringBundler.concat(
+					"Default ", prettyPropertyName, " for ", container,
+					" configured to ", String.valueOf(property)));
 		}
 
 		return property;
@@ -676,8 +679,9 @@ public abstract class LiferayConverter {
 
 		if (iCodec == null) {
 			throw new RuntimeException(
-				"Unable to determine " + inputICodecType + " encoder for " +
-					outputURL);
+				StringBundler.concat(
+					"Unable to determine ", String.valueOf(inputICodecType),
+					" encoder for ", outputURL));
 		}
 
 		IStream outputIStream = outputIContainer.addNewStream(iCodec);

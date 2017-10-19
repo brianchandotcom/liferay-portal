@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.security.AccessController;
 import java.security.PrivilegedAction;
@@ -107,8 +108,9 @@ public class DoPrivilegedFactory
 			Class<?> clazz = bean.getClass();
 
 			_log.debug(
-				"Wrapping calls to bean " + beanName + " of type " + clazz +
-					" with access controller checking");
+				StringBundler.concat(
+					"Wrapping calls to bean ", beanName, " of type ",
+					String.valueOf(clazz), " with access controller checking"));
 		}
 
 		return wrap(bean);

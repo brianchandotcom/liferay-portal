@@ -1947,14 +1947,16 @@ public class SitesImpl implements Sites {
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Copied " + file.getAbsolutePath() + " to " +
-							cacheFile.getAbsolutePath());
+						StringBundler.concat(
+							"Copied ", file.getAbsolutePath(), " to ",
+							cacheFile.getAbsolutePath()));
 				}
 			}
 			catch (Exception e) {
 				_log.error(
-					"Unable to copy file " + file.getAbsolutePath() + " to " +
-						cacheFile.getAbsolutePath(),
+					StringBundler.concat(
+						"Unable to copy file ", file.getAbsolutePath(), " to ",
+						cacheFile.getAbsolutePath()),
 					e);
 			}
 		}

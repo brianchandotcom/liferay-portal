@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import io.netty.channel.embedded.EmbeddedChannel;
 
@@ -67,8 +68,9 @@ public class RPCResponseTest {
 			_ID, true, _RESULT, _throwable);
 
 		Assert.assertEquals(
-			"{cancelled=true, id=" + _ID + ", result=" + _RESULT +
-				", throwable=" + _throwable + "}",
+			StringBundler.concat(
+				"{cancelled=true, id=", String.valueOf(_ID), ", result=",
+				_RESULT, ", throwable=", String.valueOf(_throwable), "}"),
 			rpcResponse.toString());
 	}
 
@@ -108,8 +110,10 @@ public class RPCResponseTest {
 			}
 			else {
 				Assert.assertEquals(
-					"Unable to place result " + result +
-						" because no future exists with ID " + _ID,
+					StringBundler.concat(
+						"Unable to place result ", result,
+						" because no future exists with ID ",
+						String.valueOf(_ID)),
 					logRecord.getMessage());
 			}
 		}

@@ -145,8 +145,10 @@ public class UpgradeAsset extends UpgradeProcess {
 		throws Exception {
 
 		runSQL(
-			"update AssetEntry set classNameId = " + dlFileEntryClassNameId +
-				" where classNameId = " + igImageClassNameId);
+			StringBundler.concat(
+				"update AssetEntry set classNameId = ",
+				String.valueOf(dlFileEntryClassNameId), " where classNameId = ",
+				String.valueOf(igImageClassNameId)));
 	}
 
 }

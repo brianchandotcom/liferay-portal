@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MethodParameter;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.lang.reflect.Array;
@@ -385,8 +386,9 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			catch (Exception e) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Unable to set inner parameter " + parameterName + "." +
-							innerParameter.getName(),
+						StringBundler.concat(
+							"Unable to set inner parameter ", parameterName,
+							".", innerParameter.getName()),
 						e);
 				}
 			}
@@ -443,9 +445,10 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 							parameterType, methodParameters[i].getType())) {
 
 						throw new IllegalArgumentException(
-							"Unmatched argument type " +
-								parameterType.getName() +
-									" for method argument " + i);
+							StringBundler.concat(
+								"Unmatched argument type ",
+								parameterType.getName(),
+								" for method argument ", String.valueOf(i)));
 					}
 				}
 

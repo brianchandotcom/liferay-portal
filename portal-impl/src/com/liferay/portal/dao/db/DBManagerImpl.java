@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
@@ -182,8 +183,9 @@ public class DBManagerImpl implements DBManager {
 			Class<?> clazz = _db.getClass();
 
 			_log.debug(
-				"Using DB implementation " + clazz.getName() + " for " +
-					db.getDBType());
+				StringBundler.concat(
+					"Using DB implementation ", clazz.getName(), " for ",
+					String.valueOf(db.getDBType())));
 		}
 	}
 

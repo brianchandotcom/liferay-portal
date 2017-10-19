@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.servlet.ServletInputStreamAdapter;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProgressTracker;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.servlet.filters.uploadservletrequest.UploadServletRequestFilter;
 import com.liferay.portal.util.PropsUtil;
@@ -132,7 +133,10 @@ public class LiferayInputStream extends ServletInputStreamAdapter {
 		int percent = (int)((_totalRead * 100L) / _totalSize);
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(bytesRead + "/" + _totalRead + "=" + percent);
+			_log.debug(
+				StringBundler.concat(
+					String.valueOf(bytesRead), "/", String.valueOf(_totalRead),
+					"=", String.valueOf(percent)));
 		}
 
 		if (_totalSize > 0) {

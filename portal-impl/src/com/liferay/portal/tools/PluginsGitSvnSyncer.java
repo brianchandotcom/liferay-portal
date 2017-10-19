@@ -300,8 +300,9 @@ public class PluginsGitSvnSyncer {
 			_fileUtil.write(tempFile, StringUtil.merge(ignoresArray, "\n"));
 
 			_exec(
-				_SVN_SET_IGNORES + "-F \"" + tempFile.getCanonicalPath() +
-					"\" \"" + destDirName + dirName + "\"");
+				StringBundler.concat(
+					_SVN_SET_IGNORES, "-F \"", tempFile.getCanonicalPath(),
+					"\" \"", destDirName, dirName, "\""));
 		}
 		finally {
 			_fileUtil.delete(tempFile);

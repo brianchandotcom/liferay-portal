@@ -86,8 +86,9 @@ public class UpgradePermission extends UpgradeProcess {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer(name)) {
 			try (PreparedStatement ps = connection.prepareStatement(
-					"select " + pkColumnName + ", groupId, companyId from " +
-						tableName);
+					StringBundler.concat(
+						"select ", pkColumnName, ", groupId, companyId from ",
+						tableName));
 				ResultSet rs = ps.executeQuery()) {
 
 				while (rs.next()) {

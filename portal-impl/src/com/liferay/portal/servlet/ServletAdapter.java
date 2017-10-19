@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -59,8 +60,9 @@ public class ServletAdapter extends HttpServlet {
 		Registry registry = RegistryUtil.getRegistry();
 
 		Filter filter = registry.getFilter(
-			"(&" + config.getInitParameter("filter") + "(objectClass=" +
-				Servlet.class.getName() + "))");
+			StringBundler.concat(
+				"(&", config.getInitParameter("filter"), "(objectClass=",
+				Servlet.class.getName(), "))"));
 
 		_serviceTracker = registry.trackServices(
 			filter, new ServletTrackerCustomizer());

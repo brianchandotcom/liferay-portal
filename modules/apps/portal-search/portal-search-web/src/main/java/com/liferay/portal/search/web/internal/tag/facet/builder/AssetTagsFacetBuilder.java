@@ -15,10 +15,8 @@
 package com.liferay.portal.search.web.internal.tag.facet.builder;
 
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.facet.Facet;
 import com.liferay.portal.search.facet.tag.AssetTagNamesFacetFactory;
 
 /**
@@ -33,22 +31,13 @@ public class AssetTagsFacetBuilder {
 	}
 
 	public Facet build() {
-		MultiValueFacet multiValueFacet =
-			(MultiValueFacet)_assetTagNamesFacetFactory.newInstance(
-				_searchContext);
+		Facet facet = _assetTagNamesFacetFactory.newInstance(_searchContext);
 
-		multiValueFacet.setFacetConfiguration(
-			buildFacetConfiguration(multiValueFacet));
+		facet.setFacetConfiguration(buildFacetConfiguration(facet));
 
-		if (_selectedTags != null) {
-			multiValueFacet.setValues(_selectedTags);
+		facet.select(_selectedTagNames);
 
-			_searchContext.setAttribute(
-				multiValueFacet.getFieldName(),
-				StringUtil.merge(_selectedTags));
-		}
-
-		return multiValueFacet;
+		return facet;
 	}
 
 	public void setFrequencyThreshold(int frequencyThreshold) {
@@ -63,8 +52,8 @@ public class AssetTagsFacetBuilder {
 		_searchContext = searchContext;
 	}
 
-	public void setSelectedTags(String... selectedTags) {
-		_selectedTags = selectedTags;
+	public void setSelectedTagNames(String... selectedTagNames) {
+		_selectedTagNames = selectedTagNames;
 	}
 
 	protected FacetConfiguration buildFacetConfiguration(Facet facet) {
@@ -89,6 +78,6 @@ public class AssetTagsFacetBuilder {
 	private int _frequencyThreshold;
 	private int _maxTerms;
 	private SearchContext _searchContext;
-	private String[] _selectedTags;
+	private String[] _selectedTagNames;
 
 }

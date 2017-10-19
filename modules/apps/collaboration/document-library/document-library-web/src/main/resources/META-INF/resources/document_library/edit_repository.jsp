@@ -80,7 +80,7 @@ if (portletTitleBasedNavigation) {
 							for (RepositoryClassDefinition repositoryClassDefinition : RepositoryClassDefinitionCatalogUtil.getExternalRepositoryClassDefinitions()) {
 							%>
 
-								<aui:option label="<%= HtmlUtil.escape(repositoryClassDefinition.getRepositoryTypeLabel(locale)) %>" value="<%= RepositoryClassDefinitionUtil.getRepositoryClassDefinitionId(repositoryClassDefinition) %>" />
+								<aui:option label="<%= HtmlUtil.escape(repositoryClassDefinition.getRepositoryTypeLabel(locale)) %>" value="<%= HtmlUtil.escapeAttribute(repositoryClassDefinition.getClassName()) %>" />
 
 							<%
 							}
@@ -190,7 +190,9 @@ if (portletTitleBasedNavigation) {
 	var showConfiguration = function(select) {
 		settingsSupported.append(settingsParameters.find('.settings-parameters'));
 
-		var repositoryClassDefinitionId = select.val();
+		var className = select.val();
+
+		var repositoryClassDefinitionId = className.replace(/\W/g, '-');
 
 		var repositoryParameters = $('#<portlet:namespace />repository-' + repositoryClassDefinitionId + '-configuration');
 

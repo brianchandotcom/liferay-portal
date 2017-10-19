@@ -14,20 +14,38 @@
 
 package com.liferay.petra.io.unsync;
 
+import com.liferay.petra.io.internal.BoundaryCheckerUtil;
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 
+import java.nio.ByteBuffer;
+
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
 public class UnsyncByteArrayOutputStreamTest extends BaseOutputStreamTestCase {
+
+	@ClassRule
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		new CodeCoverageAssertor() {
+
+			@Override
+			public void appendAssertClasses(List<Class<?>> assertClasses) {
+				assertClasses.add(BoundaryCheckerUtil.class);
+			}
+
+		};
 
 	@Test
 	public void testBlockWrite() {
@@ -43,6 +61,8 @@ public class UnsyncByteArrayOutputStreamTest extends BaseOutputStreamTestCase {
 
 	@Test
 	public void testConstructor() {
+		new BoundaryCheckerUtil();
+
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
@@ -141,6 +161,11 @@ public class UnsyncByteArrayOutputStreamTest extends BaseOutputStreamTestCase {
 		Assert.assertTrue(Arrays.equals(_BUFFER, bytes2));
 
 		Assert.assertSame(bytes1, bytes2);
+
+		ByteBuffer byteBuffer =
+			unsyncByteArrayOutputStream.unsafeGetByteBuffer();
+
+		Assert.assertSame(bytes1, byteBuffer.array());
 	}
 
 	@Test

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean class="com.liferay.reading.time.service.impl.ReadingTimeEntryLocalServiceImpl" id="com.liferay.reading.time.service.ReadingTimeEntryLocalService" />
+	<bean class="com.liferay.reading.time.service.impl.ReadingTimeEntryServiceImpl" id="com.liferay.reading.time.service.ReadingTimeEntryService" />
+	<bean class="com.liferay.reading.time.service.persistence.impl.ReadingTimeEntryPersistenceImpl" id="com.liferay.reading.time.service.persistence.ReadingTimeEntryPersistence" parent="basePersistence" />
+</beans>

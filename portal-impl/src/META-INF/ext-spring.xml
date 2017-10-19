@@ -9,9 +9,6 @@
 >
 	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLContentLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLContentLocalService" />
 	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLContentPersistenceImpl" id="com.liferay.document.library.kernel.service.persistence.DLContentPersistence" parent="basePersistence" />
-	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLFileRankLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLFileRankLocalService" />
-	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileRankPersistenceImpl" id="com.liferay.document.library.kernel.service.persistence.DLFileRankPersistence" parent="basePersistence" />
-	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileRankFinderImpl" id="com.liferay.document.library.kernel.service.persistence.DLFileRankFinder" parent="basePersistence" />
 	<bean class="com.liferay.portlet.messageboards.service.impl.MBBanLocalServiceImpl" id="com.liferay.message.boards.kernel.service.MBBanLocalService" />
 	<bean class="com.liferay.portlet.messageboards.service.impl.MBBanServiceImpl" id="com.liferay.message.boards.kernel.service.MBBanService" />
 	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBBanPersistenceImpl" id="com.liferay.message.boards.kernel.service.persistence.MBBanPersistence" parent="basePersistence" />

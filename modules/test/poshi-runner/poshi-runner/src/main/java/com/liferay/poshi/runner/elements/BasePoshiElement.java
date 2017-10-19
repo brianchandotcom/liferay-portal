@@ -139,6 +139,7 @@ public abstract class BasePoshiElement
 		return "\t";
 	}
 
+
 	protected String getParentheticalContent(String readableSyntax) {
 		return RegexUtil.getGroup(readableSyntax, ".*?\\((.*)\\)", 1);
 	}

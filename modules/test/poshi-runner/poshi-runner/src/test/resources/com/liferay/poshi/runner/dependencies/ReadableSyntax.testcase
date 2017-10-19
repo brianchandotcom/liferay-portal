@@ -41,6 +41,8 @@ definition {
 				Alert.viewErrorMessage(
 					errorMessage = "A configuration with this ID already exists. Please enter a unique ID."
 				);
+
+				echo("Please enter a unique ID.");
 			}
 			else {
 				Alert.viewSuccessMessage();
@@ -152,5 +154,42 @@ document.getElementById('demo').innerHTML = 'FAIL';
 		Type(value1 = "Welcome");
 
 		AssertElementPresent.assertElementPresent(locator1 = "Home#PAGE", value1 = "Welcome");
+	}
+
+	@description = "Ensure that a user can add multiple Blogs Entries."
+	@priority = "4"
+	testAddBlogsEntries {
+		property testray.component.names = "Blogs";
+		property testray.main.component.name = "Blogs";
+
+		task ("Add a blogs entry called 'Blogs Entry1 Title' with content 'Blogs Entry1 Content'") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Blogs"
+			);
+
+			Blogs.addEntry(
+				entryContent = "Blogs Entry1 Content",
+				entryTitle = "Blogs Entry1 Title"
+			);
+		}
+
+		task ("Add a blogs entry called 'Blogs Entry2 Title' with content 'Blogs Entry2 Content'") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Blogs"
+			);
+
+			Blogs.addEntry(
+				entryContent = "Blogs Entry2 Content",
+				entryTitle = "Blogs Entry2 Title"
+			);
+		}
 	}
 }

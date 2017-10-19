@@ -63,6 +63,7 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentEntryTitle());
 	var htmlInput = document.getElementById('<portlet:namespace />htmlContent');
 	var jsInput = document.getElementById('<portlet:namespace />jsContent');
 	var wrapper = document.getElementById('<portlet:namespace />fragmentEditor');
+
 	var fragmentEditor = new fragmentWebJsFragmentEditor.default(
 		{
 			events: {

@@ -30,7 +30,6 @@
 	<import class="com.liferay.message.boards.kernel.model.MBDiscussion" />
 	<import class="com.liferay.message.boards.kernel.model.MBMailingList" />
 	<import class="com.liferay.message.boards.kernel.model.MBMessage" />
-	<import class="com.liferay.message.boards.kernel.model.MBStatsUser" />
 	<import class="com.liferay.message.boards.kernel.model.MBThread" />
 	<import class="com.liferay.message.boards.kernel.model.MBThreadFlag" />
 	<import class="com.liferay.portal.kernel.model.Account" />

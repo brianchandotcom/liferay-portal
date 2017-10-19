@@ -14,6 +14,8 @@
 
 package com.liferay.portal.cluster.multiple.internal;
 
+import static com.liferay.portal.kernel.util.PropsUtil.setProps;
+
 import com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterEvent;
@@ -38,9 +40,9 @@ import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
+import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 
@@ -391,9 +393,19 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 	}
 
 	protected ClusterExecutorImpl getClusterExecutorImpl(
-		final boolean debugEnabled, final boolean enabled) {
+		final boolean debugEnabled, boolean enabled) {
 
 		ClusterExecutorImpl clusterExecutorImpl = new ClusterExecutorImpl();
+
+		Map<String, String> properties = new HashMap<>();
+
+		properties.put(
+			PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL,
+			"test-channel-name-control");
+		properties.put(
+			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL,
+			"test-channel-properties-control");
+		properties.put(PropsKeys.CLUSTER_LINK_ENABLED, String.valueOf(enabled));
 
 		clusterExecutorImpl.setProps(
 			new Props() {
@@ -405,25 +417,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 				@Override
 				public String get(String key) {
-					if (Objects.equals(
-							key, PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL)) {
-
-						return "test-channel-name-control";
-					}
-
-					if (Objects.equals(
-							key,
-							PropsKeys.
-								CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL)) {
-
-						return "test-channel-properties-control";
-					}
-
-					if (Objects.equals(key, PropsKeys.CLUSTER_LINK_ENABLED)) {
-						return String.valueOf(enabled);
-					}
-
-					return StringPool.BLANK;
+					return properties.getOrDefault(key, StringPool.BLANK);
 				}
 
 				@Override
@@ -461,9 +455,8 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 		clusterExecutorImpl.setPortalExecutorManager(
 			new MockPortalExecutorManager());
 
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		clusterExecutorImpl.activate(new MockComponentContext(properties));
+		clusterExecutorImpl.activate(
+			new MockComponentContext(new HashMapDictionary<>()));
 
 		return clusterExecutorImpl;
 	}

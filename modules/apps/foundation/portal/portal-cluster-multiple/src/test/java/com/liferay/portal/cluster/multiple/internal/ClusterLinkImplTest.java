@@ -30,7 +30,9 @@ import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
 import java.io.Serializable;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -285,6 +287,27 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 		ClusterLinkImpl clusterLinkImpl = new ClusterLinkImpl();
 
+		Properties channelPropertiesProperties = new Properties();
+		Properties channelNameProperties = new Properties();
+
+		for (int i = 0; i < channels; i++) {
+			channelPropertiesProperties.put(
+				StringPool.PERIOD + i,
+				"test-channel-properties-transport-" + i);
+			channelNameProperties.put(
+				StringPool.PERIOD + i, "test-channel-name-transport-" + i);
+		}
+
+		Map<String, Properties> properties = new HashMap<>();
+
+		properties.put(
+			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT,
+			channelPropertiesProperties);
+
+		properties.put(
+			PropsKeys.CLUSTER_LINK_CHANNEL_NAME_TRANSPORT,
+			channelNameProperties);
+
 		clusterLinkImpl.setProps(
 			new Props() {
 
@@ -326,26 +349,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 				public Properties getProperties(
 					String prefix, boolean removePrefix) {
 
-					Properties properties = new Properties();
-
-					for (int i = 0; i < channels; i++) {
-						if (PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT.
-								equals(prefix)) {
-
-							properties.put(
-								StringPool.PERIOD + i,
-								"test-channel-properties-transport-" + i);
-						}
-						else if (PropsKeys.CLUSTER_LINK_CHANNEL_NAME_TRANSPORT.
-									equals(prefix)) {
-
-							properties.put(
-								StringPool.PERIOD + i,
-								"test-channel-name-transport-" + i);
-						}
-					}
-
-					return properties;
+					return properties.getOrDefault(prefix, new Properties());
 				}
 
 			});

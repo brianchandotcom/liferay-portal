@@ -112,6 +112,13 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
+		if (IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) {
+			Alert.viewSuccessMessage();
+		}
+		else if ("${check}" == "true") {
+			Alert.viewErrorMessage();
+		}
+
 		var siteName = return(
 			TestCase.getSiteName(
 				siteName = "${siteName}"

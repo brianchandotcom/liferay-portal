@@ -149,6 +149,19 @@
 			</then>
 		</if>
 
+		<if>
+			<condition function="IsElementPresent" locator1="Blogs#ADD_BLOGS_ENTRY" />
+			<then>
+				<execute macro="Alert#viewSuccessMessage" />
+			</then>
+			<elseif>
+				<equals arg1="${check}" arg2="true" />
+				<then>
+					<execute macro="Alert#viewErrorMessage" />
+				</then>
+			</elseif>
+		</if>
+
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />

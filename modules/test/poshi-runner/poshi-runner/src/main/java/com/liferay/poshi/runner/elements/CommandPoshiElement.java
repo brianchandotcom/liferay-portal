@@ -203,7 +203,7 @@ public class CommandPoshiElement extends BasePoshiElement {
 				continue;
 			}
 
-			if (!line.startsWith("else {")) {
+			if (!line.startsWith("else {") && !line.startsWith("else if")) {
 				String readableBlock = sb.toString();
 
 				readableBlock = readableBlock.trim();

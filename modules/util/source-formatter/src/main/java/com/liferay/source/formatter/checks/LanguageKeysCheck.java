@@ -104,7 +104,12 @@ public class LanguageKeysCheck extends BaseFileCheck {
 					languageKey.startsWith(StringPool.OPEN_BRACKET) ||
 					languageKey.startsWith(StringPool.OPEN_CURLY_BRACE) ||
 					languageKey.startsWith(StringPool.PERIOD) ||
-					languageKey.startsWith(StringPool.UNDERLINE) ||
+					languageKey.startsWith(StringPool.UNDERLINE)) {
+
+					continue;
+				}
+
+				if (!isSubrepository() &&
 					_portalLanguageProperties.containsKey(languageKey)) {
 
 					continue;

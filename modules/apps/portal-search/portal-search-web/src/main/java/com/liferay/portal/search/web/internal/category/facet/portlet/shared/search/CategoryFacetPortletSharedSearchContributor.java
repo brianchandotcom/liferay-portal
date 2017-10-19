@@ -17,8 +17,8 @@ package com.liferay.portal.search.web.internal.category.facet.portlet.shared.sea
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.search.facet.category.CategoryFacetFactory;
 import com.liferay.portal.search.web.internal.category.facet.builder.AssetCategoriesFacetBuilder;
-import com.liferay.portal.search.web.internal.category.facet.builder.AssetCategoriesFacetFactory;
 import com.liferay.portal.search.web.internal.category.facet.constants.CategoryFacetPortletKeys;
 import com.liferay.portal.search.web.internal.category.facet.portlet.CategoryFacetPortletPreferences;
 import com.liferay.portal.search.web.internal.category.facet.portlet.CategoryFacetPortletPreferencesImpl;
@@ -29,6 +29,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Lino Alves
@@ -59,7 +60,7 @@ public class CategoryFacetPortletSharedSearchContributor
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
 		AssetCategoriesFacetBuilder assetCategoriesFacetBuilder =
-			new AssetCategoriesFacetBuilder(assetCategoriesFacetFactory);
+			new AssetCategoriesFacetBuilder(categoryFacetFactory);
 
 		assetCategoriesFacetBuilder.setFrequencyThreshold(
 			categoryFacetPortletPreferences.getFrequencyThreshold());
@@ -82,7 +83,7 @@ public class CategoryFacetPortletSharedSearchContributor
 		return assetCategoriesFacetBuilder.build();
 	}
 
-	protected AssetCategoriesFacetFactory assetCategoriesFacetFactory =
-		new AssetCategoriesFacetFactory();
+	@Reference
+	protected CategoryFacetFactory categoryFacetFactory;
 
 }

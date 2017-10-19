@@ -15,10 +15,10 @@
 package com.liferay.portal.search.web.internal.category.facet.builder;
 
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.search.facet.Facet;
+import com.liferay.portal.search.facet.category.CategoryFacetFactory;
 
 /**
  * @author Lino Alves
@@ -26,27 +26,21 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class AssetCategoriesFacetBuilder {
 
 	public AssetCategoriesFacetBuilder(
-		AssetCategoriesFacetFactory assetCategoriesFacetFactory) {
+		CategoryFacetFactory categoryFacetFactory) {
 
-		_assetCategoriesFacetFactory = assetCategoriesFacetFactory;
+		_categoryFacetFactory = categoryFacetFactory;
 	}
 
 	public Facet build() {
-		MultiValueFacet multiValueFacet =
-			_assetCategoriesFacetFactory.newInstance(_searchContext);
+		Facet facet = _categoryFacetFactory.newInstance(_searchContext);
 
-		multiValueFacet.setFacetConfiguration(
-			buildFacetConfiguration(multiValueFacet));
+		facet.setFacetConfiguration(buildFacetConfiguration(facet));
 
 		if (_selectedCategoryIds != null) {
-			multiValueFacet.setValues(_selectedCategoryIds);
-
-			_searchContext.setAttribute(
-				multiValueFacet.getFieldName(),
-				StringUtil.merge(_selectedCategoryIds));
+			facet.select(ArrayUtil.toStringArray(_selectedCategoryIds));
 		}
 
-		return multiValueFacet;
+		return facet;
 	}
 
 	public void setFrequencyThreshold(int frequencyThreshold) {
@@ -84,7 +78,7 @@ public class AssetCategoriesFacetBuilder {
 		return facetConfiguration;
 	}
 
-	private final AssetCategoriesFacetFactory _assetCategoriesFacetFactory;
+	private final CategoryFacetFactory _categoryFacetFactory;
 	private int _frequencyThreshold;
 	private int _maxTerms;
 	private SearchContext _searchContext;

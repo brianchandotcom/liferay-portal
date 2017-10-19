@@ -2489,6 +2489,11 @@
 
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 
+		<execute macro="FormsAdmin#viewFormTableEntry">
+			<var name="fieldLabel" value="Status" />
+			<var name="fieldValue" value="Approved" />
+		</execute>
+
 		<execute macro="FormsAdminNavigator#gotoView" />
 
 		<execute macro="FormFields#viewParagraphField">

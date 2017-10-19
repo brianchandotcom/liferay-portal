@@ -5,7 +5,6 @@ dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.liferay", name: "com.liferay.petra.xml", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.background.task.api", version: "2.0.0"
-	provided group: "com.liferay", name: "com.liferay.portal.background.task.service", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.xstream.configurator.api", version: "2.0.0"

@@ -14,349 +14,185 @@
 
 package com.liferay.lcs.messaging.analytics;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Ivica Cardic
  */
-public class ATAnalyticsEventsMessage extends AnalyticsEventsMessage {
+public class ATAnalyticsEventsMessage extends BaseAnalyticsEventsMessage {
 
-	public static class Context extends AnalyticsEventsMessage.Context {
+	public long getAnonymousUserId() {
+		return _anonymousUserId;
+	}
 
-		public long getAnonymousUserId() {
-			return _anonymousUserId;
-		}
-
-		public String getBCP47LanguageId() {
-			return _bcp47LanguageId;
-		}
-
-		public String getCDNBaseURL() {
-			return _cdnBaseURL;
-		}
-
-		public String getCDNDynamicResourcesHost() {
-			return _cdnDynamicResourcesHost;
-		}
-
-		public String getCDNHost() {
-			return _cdnHost;
-		}
-
-		public long getCompanyGroupId() {
-			return _companyGroupId;
-		}
-
-		public String getDefaultLanguageId() {
-			return _defaultLanguageId;
-		}
-
-		public String getDoAsUserIdEncoded() {
-			return _doAsUserIdEncoded;
-		}
-
-		public long getLayoutId() {
-			return _layoutId;
-		}
-
-		public String getLayoutRelativeURL() {
-			return _layoutRelativeURL;
-		}
-
-		public long getParentGroupId() {
-			return _parentGroupId;
-		}
-
-		public long getParentLayoutId() {
-			return _parentLayoutId;
-		}
-
-		public String getPathContext() {
-			return _pathContext;
-		}
-
-		public String getPathImage() {
-			return _pathImage;
-		}
-
-		public String getPathJavaScript() {
-			return _pathJavaScript;
-		}
-
-		public String getPathMain() {
-			return _pathMain;
-		}
-
-		public String getPathThemeImages() {
-			return _pathThemeImages;
-		}
-
-		public String getPathThemeRoot() {
-			return _pathThemeRoot;
-		}
-
-		public long getPlid() {
-			return _plid;
-		}
-
-		public String getPortalURL() {
-			return _portalURL;
-		}
-
-		public long getScopeGroupId() {
-			return _scopeGroupId;
-		}
-
-		public long getScopeGroupIdOrLiveGroupId() {
-			return _scopeGroupIdOrLiveGroupId;
-		}
-
-		public String getSessionId() {
-			return _sessionId;
-		}
-
-		public long getSiteGroupId() {
-			return _siteGroupId;
-		}
-
-		public String getURLControlPanel() {
-			return _urlControlPanel;
-		}
-
-		public String getURLHome() {
-			return _urlHome;
-		}
-
-		public String getUserName() {
-			return _userName;
-		}
-
-		public boolean isAddSessionIdToURL() {
-			return _addSessionIdToURL;
-		}
-
-		public boolean isControlPanel() {
-			return _controlPanel;
-		}
-
-		public boolean isFreeformLayout() {
-			return _freeformLayout;
-		}
-
-		public boolean isImpersonated() {
-			return _impersonated;
-		}
+	public String getClientIP() {
+		return _clientIP;
+	}
 
-		public boolean isPrivateLayout() {
-			return _privateLayout;
-		}
-
-		public boolean isSignedIn() {
-			return _signedIn;
-		}
-
-		public boolean isStateExclusive() {
-			return _stateExclusive;
-		}
-
-		public boolean isStateMaximized() {
-			return _stateMaximized;
-		}
-
-		public boolean isStatePopUp() {
-			return _statePopUp;
-		}
-
-		public boolean isVirtualLayout() {
-			return _virtualLayout;
-		}
-
-		public void setAddSessionIdToURL(boolean addSessionIdToURL) {
-			_addSessionIdToURL = addSessionIdToURL;
-		}
-
-		public void setAnonymousUserId(long anonymousUserId) {
-			_anonymousUserId = anonymousUserId;
-		}
-
-		public void setBCP47LanguageId(String bcp47LanguageId) {
-			_bcp47LanguageId = bcp47LanguageId;
-		}
-
-		public void setCDNBaseURL(String cdnBaseURL) {
-			_cdnBaseURL = cdnBaseURL;
-		}
-
-		public void setCDNDynamicResourcesHost(String cdnDynamicResourcesHost) {
-			_cdnDynamicResourcesHost = cdnDynamicResourcesHost;
-		}
-
-		public void setCDNHost(String cdnHost) {
-			_cdnHost = cdnHost;
-		}
-
-		public void setCompanyGroupId(long companyGroupId) {
-			_companyGroupId = companyGroupId;
-		}
-
-		public void setControlPanel(boolean controlPanel) {
-			_controlPanel = controlPanel;
-		}
-
-		public void setDefaultLanguageId(String defaultLanguageId) {
-			_defaultLanguageId = defaultLanguageId;
-		}
-
-		public void setDoAsUserIdEncoded(String doAsUserIdEncoded) {
-			_doAsUserIdEncoded = doAsUserIdEncoded;
-		}
+	public Context getContext() {
+		return _context;
+	}
 
-		public void setFreeformLayout(boolean freeformLayout) {
-			_freeformLayout = freeformLayout;
-		}
-
-		public void setImpersonated(boolean impersonated) {
-			_impersonated = impersonated;
-		}
-
-		public void setLayoutId(long layoutId) {
-			_layoutId = layoutId;
-		}
-
-		public void setLayoutRelativeURL(String layoutRelativeURL) {
-			_layoutRelativeURL = layoutRelativeURL;
-		}
-
-		public void setParentGroupId(long parentGroupId) {
-			_parentGroupId = parentGroupId;
-		}
-
-		public void setParentLayoutId(long parentLayoutId) {
-			_parentLayoutId = parentLayoutId;
-		}
-
-		public void setPathContext(String pathContext) {
-			_pathContext = pathContext;
-		}
-
-		public void setPathImage(String pathImage) {
-			_pathImage = pathImage;
-		}
+	public List<Event> getEvents() {
+		return _events;
+	}
 
-		public void setPathJavaScript(String pathJavaScript) {
-			_pathJavaScript = pathJavaScript;
-		}
-
-		public void setPathMain(String pathMain) {
-			_pathMain = pathMain;
-		}
-
-		public void setPathThemeImages(String pathThemeImages) {
-			_pathThemeImages = pathThemeImages;
-		}
-
-		public void setPathThemeRoot(String pathThemeRoot) {
-			_pathThemeRoot = pathThemeRoot;
-		}
-
-		public void setPlid(long plid) {
-			_plid = plid;
-		}
-
-		public void setPortalURL(String portalURL) {
-			_portalURL = portalURL;
-		}
+	public String getUserAgent() {
+		return _userAgent;
+	}
 
-		public void setPrivateLayout(boolean privateLayout) {
-			_privateLayout = privateLayout;
-		}
+	public void setAnonymousUserId(long anonymousUserId) {
+		_anonymousUserId = anonymousUserId;
+	}
 
-		public void setScopeGroupId(long scopeGroupId) {
-			_scopeGroupId = scopeGroupId;
-		}
+	public void setClientIP(String clientIP) {
+		_clientIP = clientIP;
+	}
 
-		public void setScopeGroupIdOrLiveGroupId(
-			long scopeGroupIdOrLiveGroupId) {
+	public void setContext(Context context) {
+		_context = context;
+	}
 
-			_scopeGroupIdOrLiveGroupId = scopeGroupIdOrLiveGroupId;
-		}
+	public void setEvents(List<Event> events) {
+		_events = events;
+	}
 
-		public void setSessionId(String sessionId) {
-			_sessionId = sessionId;
-		}
+	public void setUserAgent(String userAgent) {
+		_userAgent = userAgent;
+	}
 
-		public void setSignedIn(boolean signedIn) {
-			_signedIn = signedIn;
-		}
+	@JsonIgnoreProperties(ignoreUnknown = true)
+	public static class Context {
 
-		public void setSiteGroupId(long siteGroupId) {
-			_siteGroupId = siteGroupId;
+		public long getInstanceId() {
+			return _instanceId;
 		}
 
-		public void setStateExclusive(boolean stateExclusive) {
-			_stateExclusive = stateExclusive;
+		public String getLanguageId() {
+			return _languageId;
 		}
 
-		public void setStateMaximized(boolean stateMaximized) {
-			_stateMaximized = stateMaximized;
+		public String getURL() {
+			return _url;
 		}
 
-		public void setStatePopUp(boolean statePopUp) {
-			_statePopUp = statePopUp;
+		public long getUserId() {
+			return _userId;
 		}
 
-		public void setUrlControlPanel(String urlControlPanel) {
-			_urlControlPanel = urlControlPanel;
+		public void setInstanceId(long instanceId) {
+			_instanceId = instanceId;
 		}
 
-		public void setURLHome(String urlHome) {
-			_urlHome = urlHome;
+		public void setLanguageId(String languageId) {
+			_languageId = languageId;
 		}
 
-		public void setUserName(String userName) {
-			_userName = userName;
+		public void setURL(String url) {
+			_url = url;
 		}
 
-		public void setVirtualLayout(boolean virtualLayout) {
-			_virtualLayout = virtualLayout;
+		public void setUserId(long userId) {
+			_userId = userId;
 		}
 
-		private boolean _addSessionIdToURL;
-		private long _anonymousUserId;
-		private String _bcp47LanguageId;
-		private String _cdnBaseURL;
-		private String _cdnDynamicResourcesHost;
-		private String _cdnHost;
-		private long _companyGroupId;
-		private boolean _controlPanel;
-		private String _defaultLanguageId;
-		private String _doAsUserIdEncoded;
-		private boolean _freeformLayout;
-		private boolean _impersonated;
-		private long _layoutId;
-		private String _layoutRelativeURL;
-		private long _parentGroupId;
-		private long _parentLayoutId;
-		private String _pathContext;
-		private String _pathImage;
-		private String _pathJavaScript;
-		private String _pathMain;
-		private String _pathThemeImages;
-		private String _pathThemeRoot;
-		private long _plid;
-		private String _portalURL;
-		private boolean _privateLayout;
-		private long _scopeGroupId;
-		private long _scopeGroupIdOrLiveGroupId;
-		private String _sessionId;
-		private boolean _signedIn;
-		private long _siteGroupId;
-		private boolean _stateExclusive;
-		private boolean _stateMaximized;
-		private boolean _statePopUp;
-		private String _urlControlPanel;
-		private String _urlHome;
-		private String _userName;
-		private boolean _virtualLayout;
+		private long _instanceId;
+		private String _languageId;
+		private String _url;
+		private long _userId;
 
 	}
+
+	@JsonIgnoreProperties(ignoreUnknown = true)
+	public static class Event {
+
+		public String getAdditionalInfo() {
+			return _additionalInfo;
+		}
+
+		public String getEvent() {
+			return _event;
+		}
+
+		public Map<String, String> getProperties() {
+			return Collections.unmodifiableMap(_properties);
+		}
+
+		public List<Referrer> getReferrers() {
+			return Collections.unmodifiableList(_referrers);
+		}
+
+		public Date getTimestamp() {
+			return _timestamp;
+		}
+
+		public void setAdditionalInfo(String additionalInfo) {
+			_additionalInfo = additionalInfo;
+		}
+
+		public void setEvent(String event) {
+			_event = event;
+		}
+
+		public void setProperties(Map<String, String> properties) {
+			_properties = properties;
+		}
+
+		public void setReferrers(List<Referrer> referrers) {
+			_referrers = referrers;
+		}
+
+		public void setTimestamp(Date timestamp) {
+			_timestamp = timestamp;
+		}
+
+		private String _additionalInfo;
+		private String _event;
+		private Map<String, String> _properties = Collections.emptyMap();
+		private List<Referrer> _referrers = Collections.emptyList();
+
+		@JsonFormat(
+			pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+			shape = JsonFormat.Shape.STRING, timezone = "UTC"
+		)
+		private Date _timestamp;
+
+	}
+
+	@JsonIgnoreProperties(ignoreUnknown = true)
+	public static class Referrer {
+
+		public List<String> getReferrerEntityIds() {
+			return _referrerEntityIds;
+		}
+
+		public String getReferrerEntityType() {
+			return _referrerEntityType;
+		}
+
+		public void setReferrerEntityIds(List<String> referrerEntityIds) {
+			_referrerEntityIds = referrerEntityIds;
+		}
+
+		public void setReferrerEntityType(String referrerEntityType) {
+			_referrerEntityType = referrerEntityType;
+		}
+
+		private List<String> _referrerEntityIds = Collections.emptyList();
+		private String _referrerEntityType;
+
+	}
+
+	private long _anonymousUserId;
+	private String _clientIP;
+	private Context _context;
+	private List<Event> _events = Collections.emptyList();
+	private String _userAgent;
 
 }

@@ -21,8 +21,10 @@ import aQute.bnd.annotation.ProviderType;
  *
  * @author Brian Wing Shun Chan
  * @see ResourceTypePermissionLocalService
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public class ResourceTypePermissionLocalServiceWrapper
 	implements ResourceTypePermissionLocalService,

@@ -80,7 +80,9 @@ import javax.sql.DataSource;
  *
  * @author Connor McKay
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class ResourceBlockLocalServiceImpl
 	extends ResourceBlockLocalServiceBaseImpl {
 
@@ -488,11 +490,6 @@ public class ResourceBlockLocalServiceImpl
 							resourceBlockPermissionLocalService.
 								deleteResourceBlockPermissions(resourceBlockId);
 						}
-
-						PermissionCacheUtil.clearResourceBlockCache(
-							resourceBlock.getCompanyId(),
-							resourceBlock.getGroupId(),
-							resourceBlock.getName());
 					}
 				}
 
@@ -755,9 +752,6 @@ public class ResourceBlockLocalServiceImpl
 			PermissionThreadLocal.setFlushResourceBlockEnabled(
 				companyId, groupId, name, flushResourceBlockEnabled);
 
-			PermissionCacheUtil.clearResourceBlockCache(
-				companyId, groupId, name);
-
 			PermissionCacheUtil.clearResourcePermissionCache(
 				ResourceConstants.SCOPE_INDIVIDUAL, name,
 				String.valueOf(primKey));
@@ -874,8 +868,6 @@ public class ResourceBlockLocalServiceImpl
 		resourceBlockLocalService.updateResourceBlockId(
 			companyId, groupId, name, permissionedModel, permissionsHash,
 			resourceBlockPermissionsContainer);
-
-		PermissionCacheUtil.clearResourceBlockCache(companyId, groupId, name);
 	}
 
 	@Override

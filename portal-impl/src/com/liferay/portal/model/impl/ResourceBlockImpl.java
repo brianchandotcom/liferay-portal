@@ -65,6 +65,8 @@ package com.liferay.portal.model.impl;
  * </p>
  *
  * @author Connor McKay
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class ResourceBlockImpl extends ResourceBlockBaseImpl {
 }

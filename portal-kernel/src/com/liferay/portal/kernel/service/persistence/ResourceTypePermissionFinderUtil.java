@@ -21,8 +21,10 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public class ResourceTypePermissionFinderUtil {
 	public static java.util.List<com.liferay.portal.kernel.model.ResourceTypePermission> findByEitherScopeC_G_N(

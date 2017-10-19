@@ -21,14 +21,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
-import com.liferay.portal.kernel.model.PermissionedModel;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.Resource;
-import com.liferay.portal.kernel.model.ResourceBlockConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
@@ -44,8 +41,6 @@ import com.liferay.portal.kernel.security.permission.UserBagFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
-import com.liferay.portal.kernel.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
@@ -84,34 +79,15 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		return new AdvancedPermissionChecker();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public ResourceBlockIdsBag getGuestResourceBlockIdsBag(
 			long companyId, long groupId, String name)
 		throws Exception {
 
-		ResourceBlockIdsBag resourceBlockIdsBag =
-			PermissionCacheUtil.getResourceBlockIdsBag(
-				companyId, groupId, defaultUserId, name);
-
-		if (resourceBlockIdsBag != null) {
-			return resourceBlockIdsBag;
-		}
-
-		try {
-			resourceBlockIdsBag =
-				ResourceBlockLocalServiceUtil.getResourceBlockIdsBag(
-					getCompanyId(), groupId, name, getGuestUserRoleIds());
-
-			PermissionCacheUtil.putResourceBlockIdsBag(
-				companyId, groupId, defaultUserId, name, resourceBlockIdsBag);
-
-			return resourceBlockIdsBag;
-		}
-		catch (Exception e) {
-			PermissionCacheUtil.removeResourceBlockIdsBag(
-				getCompanyId(), groupId, defaultUserId, name);
-
-			throw e;
-		}
+		return null;
 	}
 
 	@Override
@@ -149,107 +125,48 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		return roleIds;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public List<Long> getOwnerResourceBlockIds(
 		long companyId, long groupId, String name, String actionId) {
 
-		try {
-			ResourceBlockIdsBag resourceBlockIdsBag =
-				getOwnerResourceBlockIdsBag(companyId, groupId, name);
-
-			return ResourceBlockLocalServiceUtil.getResourceBlockIds(
-				resourceBlockIdsBag, name, actionId);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
-		}
-
 		return Collections.emptyList();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public ResourceBlockIdsBag getOwnerResourceBlockIdsBag(
 		long companyId, long groupId, String name) {
 
-		ResourceBlockIdsBag resourceBlockIdsBag =
-			PermissionCacheUtil.getResourceBlockIdsBag(
-				companyId, groupId, ResourceBlockConstants.OWNER_USER_ID, name);
-
-		if (resourceBlockIdsBag != null) {
-			return resourceBlockIdsBag;
-		}
-
-		try {
-			long[] roleIds = {getOwnerRoleId()};
-
-			resourceBlockIdsBag =
-				ResourceBlockLocalServiceUtil.getResourceBlockIdsBag(
-					getCompanyId(), groupId, name, roleIds);
-
-			PermissionCacheUtil.putResourceBlockIdsBag(
-				companyId, groupId, ResourceBlockConstants.OWNER_USER_ID, name,
-				resourceBlockIdsBag);
-
-			return resourceBlockIdsBag;
-		}
-		catch (Exception e) {
-			PermissionCacheUtil.removeResourceBlockIdsBag(
-				companyId, groupId, ResourceBlockConstants.OWNER_USER_ID, name);
-
-			throw e;
-		}
+		return null;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public List<Long> getResourceBlockIds(
 		long companyId, long groupId, long userId, String name,
 		String actionId) {
 
-		try {
-			ResourceBlockIdsBag resourceBlockIdsBag = getResourceBlockIdsBag(
-				companyId, groupId, name, getRoleIds(getUserId(), groupId));
-
-			return ResourceBlockLocalServiceUtil.getResourceBlockIds(
-				resourceBlockIdsBag, name, actionId);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
-		}
-
 		return Collections.emptyList();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public ResourceBlockIdsBag getResourceBlockIdsBag(
 			long companyId, long groupId, String name, long[] roleIds)
 		throws Exception {
 
-		ResourceBlockIdsBag resourceBlockIdsBag =
-			PermissionCacheUtil.getResourceBlockIdsBag(
-				companyId, groupId, getUserId(), name);
-
-		if (resourceBlockIdsBag != null) {
-			return resourceBlockIdsBag;
-		}
-
-		try {
-			resourceBlockIdsBag =
-				ResourceBlockLocalServiceUtil.getResourceBlockIdsBag(
-					getCompanyId(), groupId, name, roleIds);
-
-			PermissionCacheUtil.putResourceBlockIdsBag(
-				companyId, groupId, getUserId(), name, resourceBlockIdsBag);
-
-			return resourceBlockIdsBag;
-		}
-		catch (Exception e) {
-			PermissionCacheUtil.removeResourceBlockIdsBag(
-				companyId, groupId, getUserId(), name);
-
-			throw e;
-		}
+		return null;
 	}
 
 	@Override
@@ -306,34 +223,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 
 		try {
-			if (ResourceBlockLocalServiceUtil.isSupported(name)) {
-				PermissionedModel permissionedModel =
-					ResourceBlockLocalServiceUtil.getPermissionedModel(
-						name, GetterUtil.getLong(primKey));
-
-				long groupId = 0;
-
-				if (permissionedModel instanceof GroupedModel) {
-					GroupedModel groupedModel = (GroupedModel)permissionedModel;
-
-					groupId = groupedModel.getGroupId();
-				}
-
-				ResourceBlockIdsBag resourceBlockIdsBag = null;
-
-				if (ownerIsDefaultUser) {
-					resourceBlockIdsBag = getGuestResourceBlockIdsBag(
-						companyId, groupId, name);
-				}
-				else {
-					resourceBlockIdsBag = getOwnerResourceBlockIdsBag(
-						companyId, groupId, name);
-				}
-
-				return ResourceBlockLocalServiceUtil.hasPermission(
-					name, permissionedModel, actionId, resourceBlockIdsBag);
-			}
-
 			long ownerRoleId = getOwnerRoleId();
 
 			if (ownerIsDefaultUser) {
@@ -372,9 +261,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				// If the group is a scope group for a layout, check the
 				// original group.
 
-				if (group.isLayout() &&
-					!ResourceBlockLocalServiceUtil.isSupported(name)) {
-
+				if (group.isLayout()) {
 					Layout layout = LayoutLocalServiceUtil.getLayout(
 						group.getClassPK());
 
@@ -566,22 +453,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		throws Exception {
 
 		logHasUserPermission(groupId, name, primKey, actionId, stopWatch, 1);
-
-		if (PersistedModelLocalServiceRegistryUtil.
-				isPermissionedModelLocalService(name)) {
-
-			ResourceBlockIdsBag resourceBlockIdsBag = getResourceBlockIdsBag(
-				companyId, groupId, name, roleIds);
-
-			boolean value = ResourceBlockLocalServiceUtil.hasPermission(
-				name, GetterUtil.getLong(primKey), actionId,
-				resourceBlockIdsBag);
-
-			logHasUserPermission(
-				groupId, name, primKey, actionId, stopWatch, 2);
-
-			return value;
-		}
 
 		List<Resource> resources = getResources(
 			companyId, groupId, name, primKey, actionId);
@@ -1524,15 +1395,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 
 		try {
-			if (ResourceBlockLocalServiceUtil.isSupported(name)) {
-				ResourceBlockIdsBag resourceBlockIdsBag =
-					getGuestResourceBlockIdsBag(companyId, groupId, name);
-
-				return ResourceBlockLocalServiceUtil.hasPermission(
-					name, GetterUtil.getLong(primKey), actionId,
-					resourceBlockIdsBag);
-			}
-
 			List<Resource> resources = getResources(
 				companyId, groupId, name, primKey, actionId);
 

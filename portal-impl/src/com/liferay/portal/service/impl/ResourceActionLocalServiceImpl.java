@@ -23,12 +23,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ResourceAction;
-import com.liferay.portal.kernel.model.ResourceBlock;
-import com.liferay.portal.kernel.model.ResourceBlockConstants;
-import com.liferay.portal.kernel.model.ResourceBlockPermissionsContainer;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
-import com.liferay.portal.kernel.model.ResourceTypePermission;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -42,7 +38,6 @@ import com.liferay.portal.service.base.ResourceActionLocalServiceBaseImpl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -229,131 +224,40 @@ public class ResourceActionLocalServiceImpl
 			};
 
 		for (Company company : companyLocalService.getCompanies()) {
-			if (resourceBlockLocalService.isSupported(
-					resourceAction.getName())) {
+			ActionableDynamicQuery actionableDynamicQuery =
+				resourcePermissionLocalService.getActionableDynamicQuery();
 
-				ActionableDynamicQuery resourceBlockActionableDynamicQuery =
-					resourceBlockLocalService.getActionableDynamicQuery();
+			actionableDynamicQuery.setAddCriteriaMethod(addCriteriaMethod);
+			actionableDynamicQuery.setCompanyId(company.getCompanyId());
+			actionableDynamicQuery.setPerformActionMethod(
+				new ActionableDynamicQuery.
+					PerformActionMethod<ResourcePermission>() {
 
-				resourceBlockActionableDynamicQuery.setAddCriteriaMethod(
-					addCriteriaMethod);
-				resourceBlockActionableDynamicQuery.setCompanyId(
-					company.getCompanyId());
-				resourceBlockActionableDynamicQuery.setPerformActionMethod(
-					new ActionableDynamicQuery.
-						PerformActionMethod<ResourceBlock>() {
+					@Override
+					public void performAction(
+						ResourcePermission resourcePermission) {
 
-						@Override
-						public void performAction(ResourceBlock resourceBlock) {
-							ResourceBlockPermissionsContainer
-								resourceBlockPermissionsContainer =
-									resourceBlockPermissionLocalService.
-										getResourceBlockPermissionsContainer(
-											resourceBlock.getResourceBlockId());
+						long actionIds = resourcePermission.getActionIds();
 
-							Set<Long> roleIds =
-								resourceBlockPermissionsContainer.getRoleIds();
+						if ((actionIds & bitwiseValue) != 0) {
+							actionIds &= ~bitwiseValue;
 
-							for (long roleId : roleIds) {
-								resourceBlockPermissionsContainer.
-									removePermission(roleId, bitwiseValue);
+							resourcePermission.setActionIds(actionIds);
+							resourcePermission.setViewActionId(
+								actionIds % 2 == 1);
 
-								resourceBlockPermissionLocalService.
-									updateResourceBlockPermission(
-										resourceBlock.getResourceBlockId(),
-										roleId, bitwiseValue,
-										ResourceBlockConstants.OPERATOR_REMOVE);
-							}
-
-							resourceBlock.setPermissionsHash(
-								resourceBlockPermissionsContainer.
-									getPermissionsHash());
-
-							resourceBlockPersistence.update(resourceBlock);
+							resourcePermissionPersistence.update(
+								resourcePermission);
 						}
+					}
 
-					});
+				});
 
-				try {
-					resourceBlockActionableDynamicQuery.performActions();
-				}
-				catch (PortalException pe) {
-					throw new SystemException(pe);
-				}
-
-				ActionableDynamicQuery resourceTypeActionableDynamicQuery =
-					resourceTypePermissionLocalService.
-						getActionableDynamicQuery();
-
-				resourceTypeActionableDynamicQuery.setAddCriteriaMethod(
-					addCriteriaMethod);
-				resourceTypeActionableDynamicQuery.setCompanyId(
-					company.getCompanyId());
-				resourceTypeActionableDynamicQuery.setPerformActionMethod(
-					new ActionableDynamicQuery.
-						PerformActionMethod<ResourceTypePermission>() {
-
-						@Override
-						public void performAction(
-							ResourceTypePermission resourceTypePermission) {
-
-							long actionIds =
-								resourceTypePermission.getActionIds();
-
-							if ((actionIds & bitwiseValue) != 0) {
-								resourceTypePermission.setActionIds(
-									actionIds & (~bitwiseValue));
-
-								resourceTypePermissionPersistence.update(
-									resourceTypePermission);
-							}
-						}
-
-					});
-
-				try {
-					resourceTypeActionableDynamicQuery.performActions();
-				}
-				catch (PortalException pe) {
-					throw new SystemException(pe);
-				}
+			try {
+				actionableDynamicQuery.performActions();
 			}
-			else {
-				ActionableDynamicQuery actionableDynamicQuery =
-					resourcePermissionLocalService.getActionableDynamicQuery();
-
-				actionableDynamicQuery.setAddCriteriaMethod(addCriteriaMethod);
-				actionableDynamicQuery.setCompanyId(company.getCompanyId());
-				actionableDynamicQuery.setPerformActionMethod(
-					new ActionableDynamicQuery.
-						PerformActionMethod<ResourcePermission>() {
-
-						@Override
-						public void performAction(
-							ResourcePermission resourcePermission) {
-
-							long actionIds = resourcePermission.getActionIds();
-
-							if ((actionIds & bitwiseValue) != 0) {
-								actionIds &= ~bitwiseValue;
-
-								resourcePermission.setActionIds(actionIds);
-								resourcePermission.setViewActionId(
-									actionIds % 2 == 1);
-
-								resourcePermissionPersistence.update(
-									resourcePermission);
-							}
-						}
-
-					});
-
-				try {
-					actionableDynamicQuery.performActions();
-				}
-				catch (PortalException pe) {
-					throw new SystemException(pe);
-				}
+			catch (PortalException pe) {
+				throw new SystemException(pe);
 			}
 		}
 

@@ -64,7 +64,6 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
-import com.liferay.portal.kernel.model.ResourceTypePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
@@ -3787,52 +3786,24 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			if (resourceAction != null) {
 				Set<Group> rolePermissionsGroups = new HashSet<>();
 
-				if (resourceBlockLocalService.isSupported(
-						rolePermissions.getName())) {
+				List<ResourcePermission> resourcePermissions =
+					resourcePermissionPersistence.findByC_N_S(
+						companyId, rolePermissions.getName(),
+						rolePermissions.getScope());
 
-					List<ResourceTypePermission> resourceTypePermissions =
-						resourceTypePermissionPersistence.findByRoleId(
-							rolePermissions.getRoleId());
+				for (ResourcePermission resourcePermission :
+						resourcePermissions) {
 
-					for (ResourceTypePermission resourceTypePermission :
-							resourceTypePermissions) {
+					if ((resourcePermission.getRoleId() ==
+							rolePermissions.getRoleId()) &&
+						resourcePermission.hasAction(resourceAction)) {
 
-						if ((resourceTypePermission.getCompanyId() ==
-								companyId) &&
-							Objects.equals(
-								rolePermissions.getName(),
-								resourceTypePermission.getName()) &&
-							resourceTypePermission.hasAction(resourceAction)) {
+						Group group = groupPersistence.fetchByPrimaryKey(
+							GetterUtil.getLong(
+								resourcePermission.getPrimKey()));
 
-							Group group = groupPersistence.fetchByPrimaryKey(
-								resourceTypePermission.getGroupId());
-
-							if (group != null) {
-								rolePermissionsGroups.add(group);
-							}
-						}
-					}
-				}
-				else {
-					List<ResourcePermission> resourcePermissions =
-						resourcePermissionPersistence.findByC_N_S(
-							companyId, rolePermissions.getName(),
-							rolePermissions.getScope());
-
-					for (ResourcePermission resourcePermission :
-							resourcePermissions) {
-
-						if ((resourcePermission.getRoleId() ==
-								rolePermissions.getRoleId()) &&
-							resourcePermission.hasAction(resourceAction)) {
-
-							Group group = groupPersistence.fetchByPrimaryKey(
-								GetterUtil.getLong(
-									resourcePermission.getPrimKey()));
-
-							if (group != null) {
-								rolePermissionsGroups.add(group);
-							}
+						if (group != null) {
+							rolePermissionsGroups.add(group);
 						}
 					}
 				}
@@ -4204,17 +4175,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			Role role, String name, String[] actionIds)
 		throws PortalException {
 
-		if (resourceBlockLocalService.isSupported(name)) {
-			resourceBlockLocalService.setCompanyScopePermissions(
-				role.getCompanyId(), name, role.getRoleId(),
-				Arrays.asList(actionIds));
-		}
-		else {
-			resourcePermissionLocalService.setResourcePermissions(
-				role.getCompanyId(), name, ResourceConstants.SCOPE_COMPANY,
-				String.valueOf(role.getCompanyId()), role.getRoleId(),
-				actionIds);
-		}
+		resourcePermissionLocalService.setResourcePermissions(
+			role.getCompanyId(), name, ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(role.getCompanyId()), role.getRoleId(), actionIds);
 	}
 
 	protected void setRolePermissions(Group group, Role role, String name)
@@ -4231,17 +4194,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			Group group, Role role, String name, String[] actionIds)
 		throws PortalException {
 
-		if (resourceBlockLocalService.isSupported(name)) {
-			resourceBlockLocalService.setGroupScopePermissions(
-				role.getCompanyId(), group.getGroupId(), name, role.getRoleId(),
-				Arrays.asList(actionIds));
-		}
-		else {
-			resourcePermissionLocalService.setResourcePermissions(
-				group.getCompanyId(), name, ResourceConstants.SCOPE_GROUP,
-				String.valueOf(group.getGroupId()), role.getRoleId(),
-				actionIds);
-		}
+		resourcePermissionLocalService.setResourcePermissions(
+			group.getCompanyId(), name, ResourceConstants.SCOPE_GROUP,
+			String.valueOf(group.getGroupId()), role.getRoleId(), actionIds);
 	}
 
 	protected List<Group> sort(

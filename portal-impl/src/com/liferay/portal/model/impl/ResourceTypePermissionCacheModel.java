@@ -33,8 +33,10 @@ import java.io.ObjectOutput;
  *
  * @author Brian Wing Shun Chan
  * @see ResourceTypePermission
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public class ResourceTypePermissionCacheModel implements CacheModel<ResourceTypePermission>,
 	Externalizable, MVCCModel {

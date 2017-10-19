@@ -32,8 +32,10 @@ import java.io.ObjectOutput;
  *
  * @author Brian Wing Shun Chan
  * @see ResourceBlockPermission
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public class ResourceBlockPermissionCacheModel implements CacheModel<ResourceBlockPermission>,
 	Externalizable, MVCCModel {

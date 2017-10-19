@@ -109,8 +109,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 	@Test
 	public void testDeactivate() {
-		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl(
-			true, true);
+		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl(true);
 
 		List<TestClusterChannel> clusterChannels =
 			TestClusterChannel.getClusterChannels();
@@ -170,8 +169,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 		// Test 1, initialize
 
-		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl(
-			true, false);
+		ClusterExecutorImpl clusterExecutorImpl = getClusterExecutorImpl(false);
 
 		List<TestClusterChannel> clusterChannels =
 			TestClusterChannel.getClusterChannels();
@@ -389,12 +387,10 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 		AspectJNewEnvTestRule.INSTANCE;
 
 	protected ClusterExecutorImpl getClusterExecutorImpl() {
-		return getClusterExecutorImpl(true, true);
+		return getClusterExecutorImpl(true);
 	}
 
-	protected ClusterExecutorImpl getClusterExecutorImpl(
-		final boolean debugEnabled, boolean enabled) {
-
+	protected ClusterExecutorImpl getClusterExecutorImpl(boolean enabled) {
 		ClusterExecutorImpl clusterExecutorImpl = new ClusterExecutorImpl();
 
 		Map<String, String> properties = new HashMap<>();

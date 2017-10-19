@@ -7,14 +7,21 @@
 	</command>
 
 	<command name="configureCertificateAndPrivateKey">
+		<execute function="AssertClick" locator1="Button#CREATE_CERTIFICATE" value1="Create Certificate" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 		<execute function="Type" locator1="CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_COMMON_NAME_FIELD" value1="Liferay QA" />
 		<execute function="Type" locator1="CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_ORGANIZATION_FIELD" value1="Liferay" />
 		<execute function="Type" locator1="CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_COUNTRY_FIELD" value1="USA" />
 		<execute function="Select" locator1="CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_KEY_ALGORITHM_SELECT" value1="RSA" />
 		<execute function="Select" locator1="CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_KEY_LENGTH_SELECT" value1="2048" />
 		<execute function="Type" locator1="CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_KEY_PASSWORD_FIELD" value1="${samlKeyPassword}" />
-		<execute function="AssertClick" locator1="CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+
+		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Save" />
+
+		<execute function="AssertElementPresent" locator1="Button#DOWNLOAD_CERTIFICATE" value1="Download Certificate" />
+		<execute function="AssertElementPresent" locator1="Button#REPLACE_CERTIFICATE" value1="Replace Certificate" />
 	</command>
 
 	<command name="enable">

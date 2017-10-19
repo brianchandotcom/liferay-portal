@@ -50,7 +50,7 @@ else {
 
 	entrySearch.setTotal(trashEntryList.getCount());
 
-	trashEntries = TrashEntryImpl.toModels(trashEntryList.getArray());
+	trashEntries = trashEntryList.getOriginalTrashEntries();
 
 	approximate = trashEntryList.isApproximate();
 }

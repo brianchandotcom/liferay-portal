@@ -71,6 +71,10 @@ public class IfPoshiElement extends BasePoshiElement {
 
 		sb.append(createReadableBlock(thenReadableSyntax));
 
+		for (PoshiElement elseifElement : (List<PoshiElement>) elements("elseif")) {
+			sb.append(elseifElement.toReadableSyntax());
+		}
+
 		if (element("else") != null) {
 			PoshiElement elseElement = (PoshiElement)element("else");
 
@@ -103,7 +107,7 @@ public class IfPoshiElement extends BasePoshiElement {
 	protected String getBlockName() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(getName());
+		sb.append(getReadableName());
 
 		for (String conditionName : _conditionNames) {
 			if (element(conditionName) != null) {
@@ -121,6 +125,10 @@ public class IfPoshiElement extends BasePoshiElement {
 		return sb.toString();
 	}
 
+	protected String getReadableName() {
+		return getName();
+	}
+
 	protected List<String> getReadableBlocks(String readableSyntax) {
 		StringBuilder sb = new StringBuilder();
 
@@ -131,7 +139,7 @@ public class IfPoshiElement extends BasePoshiElement {
 
 			readableBlock = readableBlock.trim();
 
-			if (line.startsWith(getName() + " (") && line.endsWith("{") &&
+			if (line.startsWith(getReadableName() + " (") && line.endsWith("{") &&
 				(readableBlock.length() == 0)) {
 
 				readableBlocks.add(line);

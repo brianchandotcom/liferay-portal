@@ -55,8 +55,11 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.model.impl.MBStatsUserImpl}
  * @generated
  */
+@Deprecated
 public class MBStatsUserPersistenceTest {
 	@ClassRule
 	@Rule

@@ -2447,6 +2447,10 @@ public abstract class BaseBuild implements Build {
 				return _timeline.length - 1;
 			}
 
+			if (index < 0) {
+				return 0;
+			}
+
 			return index;
 		}
 

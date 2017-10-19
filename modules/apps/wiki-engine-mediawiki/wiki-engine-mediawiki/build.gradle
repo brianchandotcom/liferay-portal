@@ -22,6 +22,7 @@ copyJAMWiki {
 dependencies {
 	compileInclude group: "com.liferay", name: "org.jamwiki", version: jamWikiVersion
 
+	provided group: "com.liferay", name: "com.liferay.petra.function", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.wiki.api", version: "2.2.0"
 	provided group: "com.liferay", name: "com.liferay.wiki.engine.input.editor.common", version: "2.0.0"

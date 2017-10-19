@@ -15,7 +15,6 @@
 package com.liferay.chart.taglib.servlet.taglib.soy.base;
 
 import com.liferay.chart.taglib.internal.NPMResolverProvider;
-import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
 import com.liferay.portal.kernel.servlet.taglib.util.OutputData;

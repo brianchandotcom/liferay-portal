@@ -17,11 +17,12 @@ package com.liferay.portal.search.web.internal.folder.facet.portlet.shared.searc
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.search.facet.folder.FolderFacetFactory;
 import com.liferay.portal.search.web.internal.folder.facet.constants.FolderFacetPortletKeys;
 import com.liferay.portal.search.web.internal.folder.facet.portlet.FolderFacetBuilder;
-import com.liferay.portal.search.web.internal.folder.facet.portlet.FolderFacetFactory;
 import com.liferay.portal.search.web.internal.folder.facet.portlet.FolderFacetPortletPreferences;
 import com.liferay.portal.search.web.internal.folder.facet.portlet.FolderFacetPortletPreferencesImpl;
+import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
@@ -29,6 +30,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Lino Alves
@@ -68,19 +70,22 @@ public class FolderFacetPortletSharedSearchContributor
 		folderFacetBuilder.setSearchContext(
 			portletSharedSearchSettings.getSearchContext());
 
-		Optional<String[]> parameterValuesOptional =
-			portletSharedSearchSettings.getParameterValues(
-				folderFacetPortletPreferences.getParameterName());
+		SearchOptionalUtil.copy(
+			() -> {
+				Optional<String[]> optional =
+					portletSharedSearchSettings.getParameterValues(
+						folderFacetPortletPreferences.getParameterName());
 
-		Optional<long[]> foldersOptional = parameterValuesOptional.map(
-			parameterValues -> ListUtil.toLongArray(
-				Arrays.asList(parameterValues), GetterUtil::getLong));
-
-		foldersOptional.ifPresent(folderFacetBuilder::setSelectedFolders);
+				return optional.map(
+					parameterValues -> ListUtil.toLongArray(
+						Arrays.asList(parameterValues), GetterUtil::getLong));
+			},
+			folderFacetBuilder::setSelectedFolderIds);
 
 		return folderFacetBuilder.build();
 	}
 
-	protected FolderFacetFactory folderFacetFactory = new FolderFacetFactory();
+	@Reference
+	protected FolderFacetFactory folderFacetFactory;
 
 }

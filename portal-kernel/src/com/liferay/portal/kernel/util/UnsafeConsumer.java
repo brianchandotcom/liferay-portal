@@ -18,7 +18,10 @@ import java.util.Collection;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, replaced with {@link
+ *             com.liferay.petra.function.UnsafeConsumer}
  */
+@Deprecated
 public interface UnsafeConsumer<E, T extends Throwable> {
 
 	public static <E> void accept(

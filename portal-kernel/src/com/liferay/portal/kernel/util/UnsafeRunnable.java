@@ -16,7 +16,9 @@ package com.liferay.portal.kernel.util;
 
 /**
  * @author Adolfo Pérez
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 @FunctionalInterface
 public interface UnsafeRunnable<T extends Throwable> {
 

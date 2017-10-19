@@ -1591,16 +1591,6 @@
 		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
-	<class name="com.liferay.portlet.messageboards.model.impl.MBStatsUserImpl" table="MBStatsUser">
-		<id name="statsUserId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="messageCount" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="lastPostDate" type="org.hibernate.type.TimestampType" />
-	</class>
 	<class name="com.liferay.portlet.messageboards.model.impl.MBThreadImpl" table="MBThread">
 		<id name="threadId" type="long">
 			<generator class="assigned" />

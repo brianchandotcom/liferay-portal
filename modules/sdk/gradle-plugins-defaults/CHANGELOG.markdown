@@ -2419,6 +2419,17 @@ dependencies into module dependencies in test projects.
 ### Changed
 - [LPS-75829]: Update the [Liferay Gradle Plugins] dependency to version 3.5.41.
 
+## 5.1.48 - 2017-11-14
+
+### Added
+- [LPS-75359]: Automatically exclude unfetchable [EasyConf](http://easyconf.sourceforge.net/)
+transitive dependencies.
+- [LPS-75359]: Force specific versions of EasyConf transitive dependencies in
+the `testCompileClasspath` and `testRuntime` configurations:
+	- `commons-configuration:commons-configuration:1.10`
+	- `xerces:xercesImpl:2.11.0`
+	- `xml-apis:xml-apis:1.4.01`
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -2683,6 +2694,7 @@ dependencies into module dependencies in test projects.
 [LPS-75254]: https://issues.liferay.com/browse/LPS-75254
 [LPS-75273]: https://issues.liferay.com/browse/LPS-75273
 [LPS-75323]: https://issues.liferay.com/browse/LPS-75323
+[LPS-75359]: https://issues.liferay.com/browse/LPS-75359
 [LPS-75399]: https://issues.liferay.com/browse/LPS-75399
 [LPS-75430]: https://issues.liferay.com/browse/LPS-75430
 [LPS-75488]: https://issues.liferay.com/browse/LPS-75488

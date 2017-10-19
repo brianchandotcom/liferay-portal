@@ -114,6 +114,20 @@ public class LayoutPageTemplateEntryServiceUtil {
 			layoutPageTemplateCollectionId, name, start, end, orderByComparator);
 	}
 
+	public static int getLayoutPageTemplateEntriesCount(long groupId,
+		long layoutPageTemplateFolder) {
+		return getService()
+				   .getLayoutPageTemplateEntriesCount(groupId,
+			layoutPageTemplateFolder);
+	}
+
+	public static int getLayoutPageTemplateEntriesCount(long groupId,
+		long layoutPageTemplateFolder, java.lang.String name) {
+		return getService()
+				   .getLayoutPageTemplateEntriesCount(groupId,
+			layoutPageTemplateFolder, name);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

@@ -5,7 +5,7 @@
 	<model-resource>
 		<model-name>com.liferay.layout.page.template</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_layout_admin_web_portlet_LayoutAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_layout_admin_web_portlet_GroupPagesPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -35,7 +35,7 @@
 	<model-resource>
 		<model-name>com.liferay.layout.page.template.model.LayoutPageTemplateCollection</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_layout_admin_web_portlet_LayoutAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_layout_admin_web_portlet_GroupPagesPortlet</portlet-name>
 		</portlet-ref>
 		<weight>3</weight>
 		<permissions>
@@ -59,7 +59,7 @@
 	<model-resource>
 		<model-name>com.liferay.layout.page.template.model.LayoutPageTemplateEntry</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_layout_admin_web_portlet_LayoutAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_layout_admin_web_portlet_GroupPagesPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>

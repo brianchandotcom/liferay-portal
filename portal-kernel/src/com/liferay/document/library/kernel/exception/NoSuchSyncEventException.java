@@ -18,7 +18,10 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.document.library.sync.exception.NoSuchEventException}
  */
+@Deprecated
 public class NoSuchSyncEventException extends NoSuchModelException {
 
 	public NoSuchSyncEventException() {

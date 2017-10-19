@@ -2,7 +2,7 @@ Bundle-Name: Liferay Chart Taglib
 Bundle-SymbolicName: com.liferay.chart.taglib
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Frontend Infrastructure
+Liferay-Releng-Module-Group-Title:
 Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="jsp.taglib";\

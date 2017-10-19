@@ -14,15 +14,22 @@
 
 package com.liferay.petra.io.unsync;
 
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+
 import java.io.InputStream;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
 public class UnsyncByteArrayInputStreamTest extends BaseInputStreamTestCase {
+
+	@ClassRule
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Test
 	public void testBlockRead() {
@@ -48,6 +55,13 @@ public class UnsyncByteArrayInputStreamTest extends BaseInputStreamTestCase {
 		for (int i = 0; i < read; i++) {
 			Assert.assertEquals(i + size, buffer[i]);
 		}
+
+		// Empty stream
+
+		unsyncByteArrayInputStream = new UnsyncByteArrayInputStream(
+			new byte[0]);
+
+		Assert.assertEquals(-1, unsyncByteArrayInputStream.read(buffer));
 	}
 
 	@Test
@@ -121,6 +135,8 @@ public class UnsyncByteArrayInputStreamTest extends BaseInputStreamTestCase {
 			_SIZE - size, unsyncByteArrayInputStream.skip(size));
 
 		Assert.assertEquals(0, unsyncByteArrayInputStream.available());
+
+		Assert.assertEquals(0, unsyncByteArrayInputStream.skip(-1));
 	}
 
 	@Override

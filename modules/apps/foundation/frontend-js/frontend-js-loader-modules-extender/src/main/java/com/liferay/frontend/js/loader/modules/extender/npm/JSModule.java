@@ -14,6 +14,9 @@
 
 package com.liferay.frontend.js.loader.modules.extender.npm;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import java.util.Collection;
 
 /**
@@ -95,5 +98,14 @@ public interface JSModule extends JSResolvableBundleAsset {
 	 * @return the NPM package
 	 */
 	public JSPackage getJSPackage();
+
+	/**
+	 * Returns the module's source map.
+	 *
+	 * @return an {@link InputStream} that allows reading the bytes inside the
+	 *         source map
+	 * @throws IOException if an IO exception occurred
+	 */
+	public InputStream getSourceMapInputStream() throws IOException;
 
 }

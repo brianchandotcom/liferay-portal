@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.categories.admin.web.internal.exportimport.data.handler;
+package com.liferay.asset.tags.admin.web.internal.exportimport.data.handler;
 
 import com.liferay.asset.kernel.exception.DuplicateTagException;
 import com.liferay.asset.kernel.model.AssetTag;

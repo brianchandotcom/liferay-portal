@@ -27,7 +27,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionTitle());
 %>
 
-<portlet:actionURL name="editLayoutPageTemplateCollection" var="editLayoutPageTemplateCollectionURL">
+<portlet:actionURL name="/layout/edit_layout_page_template_collection" var="editLayoutPageTemplateCollectionURL">
 	<portlet:param name="mvcPath" value="/edit_layout_page_template_collection.jsp" />
 </portlet:actionURL>
 

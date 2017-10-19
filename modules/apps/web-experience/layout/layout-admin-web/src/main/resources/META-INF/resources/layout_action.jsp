@@ -78,7 +78,7 @@ Layout curLayout = (Layout)row.getObject();
 	%>
 
 	<c:if test="<%= isDeletable %>">
-		<portlet:actionURL name="/delete_layout" var="deleteLayoutURL">
+		<portlet:actionURL name="/layout/delete_layout" var="deleteLayoutURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="plid" value="<%= String.valueOf(curLayout.getPlid()) %>" />
 		</portlet:actionURL>

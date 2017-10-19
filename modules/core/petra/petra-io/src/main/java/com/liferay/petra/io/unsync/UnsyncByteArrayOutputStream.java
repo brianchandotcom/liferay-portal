@@ -89,15 +89,7 @@ public class UnsyncByteArrayOutputStream extends OutputStream {
 
 		int newIndex = index + length;
 
-		if (newIndex > buffer.length) {
-			int newBufferSize = Math.max(buffer.length << 1, newIndex);
-
-			byte[] newBuffer = new byte[newBufferSize];
-
-			System.arraycopy(buffer, 0, newBuffer, 0, index);
-
-			buffer = newBuffer;
-		}
+		_ensureCapacity(newIndex);
 
 		System.arraycopy(bytes, offset, buffer, index, length);
 
@@ -108,15 +100,7 @@ public class UnsyncByteArrayOutputStream extends OutputStream {
 	public void write(int b) {
 		int newIndex = index + 1;
 
-		if (newIndex > buffer.length) {
-			int newBufferSize = Math.max(buffer.length << 1, newIndex);
-
-			byte[] newBuffer = new byte[newBufferSize];
-
-			System.arraycopy(buffer, 0, newBuffer, 0, buffer.length);
-
-			buffer = newBuffer;
-		}
+		_ensureCapacity(newIndex);
 
 		buffer[index] = (byte)b;
 
@@ -129,5 +113,17 @@ public class UnsyncByteArrayOutputStream extends OutputStream {
 
 	protected byte[] buffer;
 	protected int index;
+
+	private void _ensureCapacity(int minCapacity) {
+		if (minCapacity > buffer.length) {
+			int newBufferSize = Math.max(buffer.length << 1, minCapacity);
+
+			byte[] newBuffer = new byte[newBufferSize];
+
+			System.arraycopy(buffer, 0, newBuffer, 0, buffer.length);
+
+			buffer = newBuffer;
+		}
+	}
 
 }

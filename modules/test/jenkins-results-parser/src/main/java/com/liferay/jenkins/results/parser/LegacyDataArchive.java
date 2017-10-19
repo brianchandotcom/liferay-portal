@@ -59,6 +59,10 @@ public class LegacyDataArchive {
 		return _legacyDataArchiveType;
 	}
 
+	public String getPortalVersion() {
+		return _portalVersion;
+	}
+
 	public boolean isUpdated() {
 		if (_commit == null) {
 			return false;

@@ -59,7 +59,7 @@ public class LegacyDataArchiveUtil {
 		_legacyDataArchives = _getLegacyDataArchives(buildProperties);
 		_latestLegacyDataArchiveCommits = _getLatestLegacyDataArchiveCommits();
 		_latestManualCommit = _getLatestManualCommit();
-		_portalVersions = _getPortalVersions(buildProperties)
+		_portalVersions = _getPortalVersions(buildProperties);
 
 		_legacyDataArchiveGroupMap = _getLegacyDataArchiveGroupMap(
 			_legacyDataArchives);
@@ -220,19 +220,23 @@ public class LegacyDataArchiveUtil {
 		for (LegacyDataArchive legacyDataArchive : legacyDataArchives) {
 			String legacyDataArchiveType =
 				legacyDataArchive.getLegacyDataArchiveType();
+			String portalVersion = legacyDataArchive.getPortalVersion();
+
+			String legacyDataArchiveKey = JenkinsResultsParserUtil.combine(
+				legacyDataArchiveType, "+", portalVersion);
 
 			LegacyDataArchiveGroup legacyDataArchiveGroup =
-				legacyDataArchiveGroupMap.get(legacyDataArchiveType);
+				legacyDataArchiveGroupMap.get(legacyDataArchiveKey);
 
 			if (legacyDataArchiveGroup == null) {
 				legacyDataArchiveGroup = new LegacyDataArchiveGroup(
-					this, legacyDataArchiveType);
+					this, legacyDataArchiveType, portalVersion);
 			}
 
 			legacyDataArchiveGroup.addLegacyDataArchive(legacyDataArchive);
 
 			legacyDataArchiveGroupMap.put(
-				legacyDataArchiveType, legacyDataArchiveGroup);
+				legacyDataArchiveKey, legacyDataArchiveGroup);
 		}
 
 		return legacyDataArchiveGroupMap;

@@ -96,11 +96,11 @@ public abstract class BaseChartTag extends TemplateRendererTag {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("<link rel=\"stylesheet\" href=\"");
+		sb.append("<link href=\"");
 		sb.append(PortalUtil.getPathModule());
 		sb.append("/chart-taglib/node_modules/");
 		sb.append(cssPath);
-		sb.append("\">");
+		sb.append("\" rel=\"stylesheet\">");
 
 		outputData.addData(_OUTPUT_KEY, WebKeys.PAGE_TOP, sb);
 	}

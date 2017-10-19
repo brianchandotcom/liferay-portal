@@ -14,8 +14,6 @@
 
 package com.liferay.friendly.url.internal.servlet;
 
-import com.liferay.friendly.url.servlet.FriendlyURLServlet;
-
 import javax.servlet.Servlet;
 
 import org.osgi.service.component.annotations.Component;

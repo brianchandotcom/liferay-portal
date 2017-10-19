@@ -621,6 +621,10 @@ public class TopLevelBuild extends BaseBuild {
 		List<Element> tableRowElements = getJenkinsReportTableRowsElements(
 			status);
 
+		if (tableRowElements.isEmpty()) {
+			return null;
+		}
+
 		return Dom4JUtil.getNewElement(
 			"table", null,
 			Dom4JUtil.getNewElement(

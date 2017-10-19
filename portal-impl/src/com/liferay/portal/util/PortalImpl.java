@@ -8322,17 +8322,11 @@ public class PortalImpl implements Portal {
 		String canonicalURLSuffix = canonicalURL.substring(pos);
 
 		if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2) {
-			String defaultLocalePath = _buildI18NPath(
-				siteDefaultLocale.getLanguage(), siteDefaultLocale);
+			String i18nPath = buildI18NPath(siteDefaultLocale);
 
-			int canonicalURLSuffixPos = defaultLocalePath.length() + pos;
-
-			if (canonicalURLSuffixPos >= canonicalURL.length()) {
-				canonicalURLSuffix = StringPool.BLANK;
-			}
-			else {
-				canonicalURLSuffix = canonicalURL.substring(
-					canonicalURLSuffixPos + 1);
+			if (canonicalURLSuffix.startsWith(i18nPath)) {
+				canonicalURLSuffix = canonicalURLSuffix.substring(
+					i18nPath.length());
 			}
 		}
 

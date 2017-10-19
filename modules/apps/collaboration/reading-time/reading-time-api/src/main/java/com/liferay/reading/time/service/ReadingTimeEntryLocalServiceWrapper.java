@@ -34,6 +34,13 @@ public class ReadingTimeEntryLocalServiceWrapper
 		_readingTimeEntryLocalService = readingTimeEntryLocalService;
 	}
 
+	@Override
+	public com.liferay.reading.time.model.ReadingTimeEntry addReadingTimeEntry(
+		long classNameId, long classPK, long readingTimeInSeconds) {
+		return _readingTimeEntryLocalService.addReadingTimeEntry(classNameId,
+			classPK, readingTimeInSeconds);
+	}
+
 	/**
 	* Adds the reading time entry to the database. Also notifies the appropriate model listeners.
 	*
@@ -184,6 +191,13 @@ public class ReadingTimeEntryLocalServiceWrapper
 	public com.liferay.reading.time.model.ReadingTimeEntry fetchReadingTimeEntry(
 		long readingTimeEntryId) {
 		return _readingTimeEntryLocalService.fetchReadingTimeEntry(readingTimeEntryId);
+	}
+
+	@Override
+	public com.liferay.reading.time.model.ReadingTimeEntry fetchReadingTimeEntry(
+		long classNameId, long classPK) {
+		return _readingTimeEntryLocalService.fetchReadingTimeEntry(classNameId,
+			classPK);
 	}
 
 	/**

@@ -14,8 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import com.liferay.jenkins.results.parser.BaseBuild.TimelineData;
-
 import java.io.IOException;
 
 import java.util.ArrayList;

@@ -14,7 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import com.liferay.jenkins.results.parser.BaseBuild.TimelineData;
 import com.liferay.jenkins.results.parser.failure.message.generator.CompileFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.FailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.GenericFailureMessageGenerator;

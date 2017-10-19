@@ -16,6 +16,7 @@ package com.liferay.layout.admin.web.internal.display.context;
 
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.util.LayoutPageTemplatePortletUtil;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
 import com.liferay.layout.page.template.service.permission.LayoutPageTemplatePermission;
@@ -153,15 +154,17 @@ public class LayoutPageTemplateDisplayContext {
 		layoutPageTemplateCollectionsSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
 
+		layoutPageTemplateCollectionsSearchContainer.setOrderByCol(
+			getOrderByCol());
+
 		OrderByComparator<LayoutPageTemplateCollection> orderByComparator =
 			LayoutPageTemplatePortletUtil.
 				getLayoutPageTemplateCollectionOrderByComparator(
 					getOrderByCol(), getOrderByType());
 
-		layoutPageTemplateCollectionsSearchContainer.setOrderByCol(
-			getOrderByCol());
 		layoutPageTemplateCollectionsSearchContainer.setOrderByComparator(
 			orderByComparator);
+
 		layoutPageTemplateCollectionsSearchContainer.setOrderByType(
 			getOrderByType());
 		layoutPageTemplateCollectionsSearchContainer.setRowChecker(
@@ -271,7 +274,7 @@ public class LayoutPageTemplateDisplayContext {
 		return false;
 	}
 
-	public boolean isShowAddButton(String actionId) {
+	public boolean isShowAddButton() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -279,7 +282,9 @@ public class LayoutPageTemplateDisplayContext {
 				themeDisplay.getPermissionChecker(),
 				LayoutPageTemplatePermission.RESOURCE_NAME,
 				LayoutAdminPortletKeys.GROUP_PAGES,
-				themeDisplay.getSiteGroupId(), actionId)) {
+				themeDisplay.getSiteGroupId(),
+				LayoutPageTemplateActionKeys.
+					ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION)) {
 
 			return true;
 		}

@@ -17,6 +17,7 @@ package com.liferay.petra.function;
 /**
  * @author Shuyang Zhou
  */
+@FunctionalInterface
 public interface UnsafeFunction<T, R, E extends Throwable> {
 
 	public R apply(T t) throws E;

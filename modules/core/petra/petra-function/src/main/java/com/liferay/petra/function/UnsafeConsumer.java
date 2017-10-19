@@ -19,6 +19,7 @@ import java.util.Collection;
 /**
  * @author Shuyang Zhou
  */
+@FunctionalInterface
 public interface UnsafeConsumer<E, T extends Throwable> {
 
 	public static <E> void accept(

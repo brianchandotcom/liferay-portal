@@ -76,11 +76,7 @@
 	</command>
 
 	<command name="gotoDocumentType">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Document Types">
-			<var name="key_menuItem" value="Document Types" />
-		</execute>
+		<execute function="AssertClick" locator1="NavBar#DOCUMENT_TYPES" value1="Document Types" />
 	</command>
 
 	<command name="gotoDocumentVersion">

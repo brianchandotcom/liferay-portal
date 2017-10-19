@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 public class NPMResolverProvider {
 
 	public static NPMResolver getNPMResolver() {
-		if(_npmResolverProvider == null) {
+		if (_npmResolverProvider == null) {
 			return null;
 		}
 
@@ -45,4 +45,5 @@ public class NPMResolverProvider {
 	private static NPMResolverProvider _npmResolverProvider;
 
 	private NPMResolver _npmResolver;
+
 }

@@ -30,9 +30,9 @@ import org.osgi.service.component.annotations.ReferencePolicy;
  */
 @Component(
 	immediate = true,
-	service = SiteNavigationMenuItemTypeControllerTracker.class
+	service = SiteNavigationMenuItemTypeControllerRegistry.class
 )
-public class SiteNavigationMenuItemTypeControllerTracker {
+public class SiteNavigationMenuItemTypeControllerRegistry {
 
 	public SiteNavigationMenuItemTypeController
 		getSiteNavigationMenuItemTypeController(

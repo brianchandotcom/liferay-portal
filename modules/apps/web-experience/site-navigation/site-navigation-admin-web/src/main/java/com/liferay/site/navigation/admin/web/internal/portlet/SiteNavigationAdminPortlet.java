@@ -17,7 +17,7 @@ package com.liferay.site.navigation.admin.web.internal.portlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.site.navigation.admin.web.internal.constants.SiteNavigationAdminPortletKeys;
 import com.liferay.site.navigation.admin.web.internal.constants.SiteNavigationAdminWebKeys;
-import com.liferay.site.navigation.type.controller.SiteNavigationMenuItemTypeControllerTracker;
+import com.liferay.site.navigation.type.controller.SiteNavigationMenuItemTypeControllerRegistry;
 
 import java.io.IOException;
 
@@ -64,14 +64,14 @@ public class SiteNavigationAdminPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(
 			SiteNavigationAdminWebKeys.
-				SITE_NAVIGATION_MENU_ITEM_TYPE_CONTROLLER_TRACKER,
-			_siteNavigationMenuItemTypeControllerTracker);
+				SITE_NAVIGATION_MENU_ITEM_TYPE_CONTROLLER_REGISTRY,
+			_siteNavigationMenuItemTypeControllerRegistry);
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
 	@Reference
-	private SiteNavigationMenuItemTypeControllerTracker
-		_siteNavigationMenuItemTypeControllerTracker;
+	private SiteNavigationMenuItemTypeControllerRegistry
+		_siteNavigationMenuItemTypeControllerRegistry;
 
 }

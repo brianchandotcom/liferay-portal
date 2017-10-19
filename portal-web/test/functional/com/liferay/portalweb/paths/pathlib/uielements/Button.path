@@ -304,6 +304,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CREATE_CERTIFICATE</td>
+	<td>//button[contains(.,'Create Certificate')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DEACTIVATE</td>
 	<td>//*[@data-qa-id='deactivateButton'] | //button[contains(.,'Deactivate')]</td>
 	<td></td>
@@ -341,6 +346,11 @@
 <tr>
 	<td>DOWNLOAD</td>
 	<td>//a[contains(@class,'btn') and contains(.,'Download')] | //button[contains(.,'Download')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOWNLOAD_CERTIFICATE</td>
+	<td>//a[contains(.,'Download Certificate')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -581,6 +591,11 @@
 <tr>
 	<td>REORDER</td>
 	<td>//button[span[@class='icon-bar'][3]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPLACE_CERTIFICATE</td>
+	<td>//button[contains(.,'Replace Certificate')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -8,7 +8,9 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Portlet#HEADER" value1="New Classification Rule" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${classificationName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${classificationName}" />
+		</execute>
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Operating System and Type" />

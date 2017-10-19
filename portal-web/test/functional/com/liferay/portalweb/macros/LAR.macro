@@ -314,6 +314,13 @@
 			</then>
 		</if>
 
+		<if>
+			<equals arg1="${mirrorWithOverwriting}" arg2="true" />
+			<then>
+				<execute macro="LAR#_mirrorWithOverwriting" />
+			</then>
+		</if>
+
 		<execute function="AssertVisible" locator1="Button#BACK" />
 
 		<execute function="AssertClickNoError" locator1="SitePagesImport#IMPORT_BUTTON" value1="Import" />
@@ -321,6 +328,16 @@
 		<execute function="Pause" locator1="5000" />
 
 		<execute function="AssertTextEquals" locator1="SitePagesImport#CURRENT_AND_PREVIOUS_STATUS_1" value1="Successful" />
+	</command>
+
+	<command name="_mirrorWithOverwriting">
+		<execute function="ScrollWebElementIntoView" locator1="//div[contains(@class,'panel') and contains(@role,'tablist')]//a[normalize-space(text())='Update Data']" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Update Data" />
+		</execute>
+
+		<execute function="Click" locator1="ExportImport#UPDATE_DATA_MIRROR_WITH_OVERWRITING_RADIO" />
 	</command>
 
 	<command name="_selectImportFile">
@@ -380,13 +397,7 @@
 				<if>
 					<equals arg1="${mirrorWithOverwriting}" arg2="true" />
 					<then>
-						<execute function="ScrollWebElementIntoView" locator1="//div[contains(@class,'panel') and contains(@role,'tablist')]//a[normalize-space(text())='Update Data']" />
-
-						<execute macro="Panel#expandPanel">
-							<var name="panelHeading" value="Update Data" />
-						</execute>
-
-						<execute function="Click" locator1="ExportImport#UPDATE_DATA_MIRROR_WITH_OVERWRITING_RADIO" />
+						<execute macro="LAR#_mirrorWithOverwriting" />
 					</then>
 				</if>
 

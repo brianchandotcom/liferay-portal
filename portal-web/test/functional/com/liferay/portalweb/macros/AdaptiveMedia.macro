@@ -31,7 +31,9 @@
 	<command name="addImageResolution">
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${imageName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${imageName}" />
+		</execute>
 
 		<execute function="Type" locator1="TextInput#MAX_WIDTH" value1="${maxWidth}" />
 
@@ -79,7 +81,9 @@
 	<command name="addNonNumericImageResolution">
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${imageName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${imageName}" />
+		</execute>
 
 		<execute function="Type" locator1="TextInput#MAX_WIDTH" value1="${maxWidth}" />
 
@@ -137,7 +141,9 @@
 				<contains string="${imageNameEdit}" substring="{imageNameEdit}" />
 			</not>
 			<then>
-				<execute function="Type" locator1="TextInput#NAME" value1="${imageNameEdit}"  />
+				<execute macro="PortletEntry#inputName">
+					<var name="name" value="${imageNameEdit}" />
+				</execute>
 			</then>
 		</if>
 

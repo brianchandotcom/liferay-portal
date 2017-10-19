@@ -279,6 +279,46 @@
 		</execute>
 	</command>
 
+	<command name="MoveDocumentToSameFolder" priority="5">
+		<description message="This is a use case for LPS-60405." />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#moveToFolderCP">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="dmFolderName" value="Home" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoDocumentCP">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="DMDocument#viewCP">
+			<var name="dmDocumentSize" value="0KB" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+	</command>
+
 	<command name="MoveFolderToFolder" priority="4">
 		<execute macro="Navigator#openURL" />
 

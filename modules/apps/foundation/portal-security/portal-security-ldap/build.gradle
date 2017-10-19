@@ -2,10 +2,10 @@ import com.liferay.gradle.util.FileUtil
 
 import org.apache.tools.ant.filters.FixCrLfFilter
 
+apply plugin: "antlr"
+
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
-
-apply plugin: "antlr"
 
 String parserDirName = "com/liferay/portal/security/ldap/internal/validator/parser"
 

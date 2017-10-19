@@ -19,7 +19,7 @@
 
 		<execute macro="SAML#configureLiferaySAMLAsSP">
 			<var name="samlEntityID" value="samlsp" />
-			<var name="spURL" value="http://www.able.com:9080/" />
+			<var name="spURL" value="http://www.able.com:9080" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -39,7 +39,7 @@
 			<var name="password" value="test" />
 			<var name="rememberMeChecked" value="false" />
 			<var name="samlEnabled" value="true" />
-			<var name="spURL" value="http://www.able.com:9080/" />
+			<var name="spURL" value="http://www.able.com:9080" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
@@ -86,7 +86,7 @@
 			<var name="password" value="test" />
 			<var name="rememberMeChecked" value="true" />
 			<var name="samlEnabled" value="true" />
-			<var name="spURL" value="http://www.able.com:9080/" />
+			<var name="spURL" value="http://www.able.com:9080" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
@@ -150,7 +150,7 @@
 			<var name="password" value="test" />
 			<var name="rememberMeChecked" value="true" />
 			<var name="samlEnabled" value="true" />
-			<var name="spURL" value="http://www.able.com:9080/" />
+			<var name="spURL" value="http://www.able.com:9080" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
@@ -173,7 +173,7 @@
 
 		<execute macro="SAML#configureLiferaySAMLAsSP">
 			<var name="samlEntityID" value="samlsp2" />
-			<var name="spURL" value="http://www.baker.com:10080/" />
+			<var name="spURL" value="http://www.baker.com:10080" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -181,7 +181,7 @@
 		<execute macro="SAML#executeSPInitiatedSSO">
 			<var name="password" value="test" />
 			<var name="specificURL" value="http://www.able.com:9080" />
-			<var name="spURL" value="http://www.able.com:9080/" />
+			<var name="spURL" value="http://www.able.com:9080" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
@@ -241,7 +241,7 @@
 		<execute macro="SAML#executeSPInitiatedSSO">
 			<var name="password" value="test" />
 			<var name="specificURL" value="http://www.able.com:9080" />
-			<var name="spURL" value="http://www.able.com:9080/" />
+			<var name="spURL" value="http://www.able.com:9080" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 

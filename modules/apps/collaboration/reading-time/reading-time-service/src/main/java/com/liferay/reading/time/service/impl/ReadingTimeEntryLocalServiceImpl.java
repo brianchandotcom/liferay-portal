@@ -14,28 +14,37 @@
 
 package com.liferay.reading.time.service.impl;
 
+import com.liferay.reading.time.model.ReadingTimeEntry;
 import com.liferay.reading.time.service.base.ReadingTimeEntryLocalServiceBaseImpl;
 
 /**
- * The implementation of the reading time entry local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.reading.time.service.ReadingTimeEntryLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
+ * @author Alejandro Tardín
  * @see ReadingTimeEntryLocalServiceBaseImpl
  * @see com.liferay.reading.time.service.ReadingTimeEntryLocalServiceUtil
  */
 public class ReadingTimeEntryLocalServiceImpl
 	extends ReadingTimeEntryLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.reading.time.service.ReadingTimeEntryLocalServiceUtil} to access the reading time entry local service.
-	 */
+	@Override
+	public ReadingTimeEntry addReadingTimeEntry(
+		long classNameId, long classPK, long readingTimeInSeconds) {
+
+		long entryId = counterLocalService.increment();
+
+		ReadingTimeEntry entry = readingTimeEntryPersistence.create(entryId);
+
+		entry.setClassNameId(classNameId);
+		entry.setClassPK(classPK);
+		entry.setReadingTimeInSeconds(readingTimeInSeconds);
+
+		return readingTimeEntryPersistence.update(entry);
+	}
+
+	@Override
+	public ReadingTimeEntry fetchReadingTimeEntry(
+		long classNameId, long classPK) {
+
+		return readingTimeEntryPersistence.fetchByC_C(classNameId, classPK);
+	}
+
 }

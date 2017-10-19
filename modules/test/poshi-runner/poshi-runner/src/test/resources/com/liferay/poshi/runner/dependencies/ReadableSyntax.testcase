@@ -126,6 +126,8 @@ document.getElementById('demo').innerHTML = 'FAIL';
 
 		Smoke.viewWelcomePage();
 
+		takeScreenshot();
+
 		while (IsElementPresent(locator1 = "AssetCategorization#TAGS_REMOVE_ICON_GENERIC")) {
 			Click(locator1 = "AssetCategorization#TAGS_REMOVE_ICON_GENERIC");
 		}

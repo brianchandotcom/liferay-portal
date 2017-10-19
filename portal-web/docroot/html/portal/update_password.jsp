@@ -30,6 +30,8 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 }
 %>
 
+<%@ include file="/html/portal/select_language.jspf" %>
+
 <c:choose>
 	<c:when test="<%= !themeDisplay.isSignedIn() && (ticket == null) %>">
 		<div class="alert alert-warning">
@@ -42,7 +44,7 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 			portletURL.setWindowState(WindowState.MAXIMIZED);
 			%>
 
-			<div>
+			<div class="reset-link-contaner">
 				<aui:a href="<%= portletURL.toString() %>" label="request-a-new-password-reset-link"></aui:a>
 			</div>
 		</div>

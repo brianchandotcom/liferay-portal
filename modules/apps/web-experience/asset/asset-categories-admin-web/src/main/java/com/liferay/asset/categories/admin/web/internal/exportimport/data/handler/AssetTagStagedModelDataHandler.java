@@ -17,6 +17,7 @@ package com.liferay.asset.categories.admin.web.internal.exportimport.data.handle
 import com.liferay.asset.kernel.exception.DuplicateTagException;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.asset.tags.admin.web.internal.lar.AssetTagsPortletDataHandler;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -131,6 +132,13 @@ public class AssetTagStagedModelDataHandler
 
 		AssetTag existingAssetTag = fetchStagedModelByUuidAndGroupId(
 			assetTag.getUuid(), portletDataContext.getScopeGroupId());
+
+		if (portletDataContext.getBooleanParameter(
+				AssetTagsPortletDataHandler.NAMESPACE, "merge-tags-by-name")) {
+
+			existingAssetTag = _assetTagLocalService.fetchTag(
+				portletDataContext.getScopeGroupId(), assetTag.getName());
+		}
 
 		AssetTag importedAssetTag = null;
 

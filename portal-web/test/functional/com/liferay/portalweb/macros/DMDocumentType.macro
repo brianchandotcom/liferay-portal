@@ -1,7 +1,5 @@
 <definition>
 	<command name="add">
-		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Document Types" />
-
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="Type" locator1="DocumentsAndMediaEditDocumentType#NAME_FIELD" value1="${dmDocumentTypeName}" />

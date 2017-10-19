@@ -53,7 +53,7 @@ LayoutPageTemplateCollection layoutPageTemplateCollection = (LayoutPageTemplateC
 	</c:if>
 
 	<c:if test="<%= LayoutPageTemplateCollectionPermission.contains(permissionChecker, layoutPageTemplateCollection, ActionKeys.DELETE) %>">
-		<portlet:actionURL name="deleteLayoutPageTemplateCollection" var="deleteLayoutPageTemplateCollectionURL">
+		<portlet:actionURL name="/layout/delete_layout_page_template_collection" var="deleteLayoutPageTemplateCollectionURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()) %>" />
 		</portlet:actionURL>

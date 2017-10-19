@@ -76,7 +76,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "page-templates"));
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<portlet:actionURL name="deleteLayoutPageTemplateCollection" var="deleteLayoutPageTemplateCollectionURL">
+<portlet:actionURL name="/layout/delete_layout_page_template_collection" var="deleteLayoutPageTemplateCollectionURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 

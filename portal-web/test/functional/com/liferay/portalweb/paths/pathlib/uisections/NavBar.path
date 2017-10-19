@@ -100,7 +100,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_TYPES</td>
-	<td>//*[@data-qa-id='navigation']//a[contains(.,'Document Types')]</td>
+	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Document Types')]</td>
 	<td></td>
 </tr>
 <tr>

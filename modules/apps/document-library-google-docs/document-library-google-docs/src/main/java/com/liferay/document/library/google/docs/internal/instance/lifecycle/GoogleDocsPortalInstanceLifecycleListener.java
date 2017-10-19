@@ -14,13 +14,13 @@
 
 package com.liferay.document.library.google.docs.internal.instance.lifecycle;
 
-import com.liferay.document.library.ddm.DLFileEntryMetadataDDMPermissionSupport;
 import com.liferay.document.library.google.docs.internal.util.GoogleDocsDLFileEntryTypeHelper;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.dynamic.data.mapping.util.DDMStructurePermissionSupport;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -55,15 +55,18 @@ public class GoogleDocsPortalInstanceLifecycleListener
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMStructureVersionLocalService(
-		DDMStructureVersionLocalService ddmStructureVersionLocalService) {
+	@Reference(
+		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileEntryMetadata)",
+		unbind = "-"
+	)
+	protected void setDDMStructurePermissionSupport(
+		DDMStructurePermissionSupport
+			ddmStructurePermissionSupport) {
 	}
 
 	@Reference(unbind = "-")
-	protected void setDLFileEntryMetadataDDMPermissionSupport(
-		DLFileEntryMetadataDDMPermissionSupport
-			dlFileEntryMetadataDDMPermissionSupport) {
+	protected void setDDMStructureVersionLocalService(
+		DDMStructureVersionLocalService ddmStructureVersionLocalService) {
 	}
 
 	@Reference

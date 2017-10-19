@@ -2286,6 +2286,12 @@ from the root project directory.
 ### Changed
 - [LPS-74849]: Update the [Liferay Gradle Plugins] dependency to version 3.5.15.
 
+## 5.1.22 - 2017-10-19
+
+### Changed
+- [LPS-75359]: Change the compile and runtime classpath order for the `test`
+source set so the portal dependencies come first.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -2543,6 +2549,7 @@ from the root project directory.
 [LPS-75239]: https://issues.liferay.com/browse/LPS-75239
 [LPS-75254]: https://issues.liferay.com/browse/LPS-75254
 [LPS-75273]: https://issues.liferay.com/browse/LPS-75273
+[LPS-75359]: https://issues.liferay.com/browse/LPS-75359
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

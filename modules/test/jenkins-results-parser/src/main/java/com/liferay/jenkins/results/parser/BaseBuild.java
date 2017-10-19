@@ -1845,7 +1845,9 @@ public abstract class BaseBuild implements Build {
 			stat = status.substring(0, x);
 		}
 
-		if ((status == null) || stat.equals(getStatus())) {
+		if (((status == null) || stat.equals(getStatus())) &&
+			(getParentBuild() != null)) {
+
 			if ((result == null) || result.equals(getResult())) {
 				tableRowElements.add(getJenkinsReportTableRowElement());
 			}

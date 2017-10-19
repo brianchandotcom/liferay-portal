@@ -44,7 +44,7 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 			portletURL.setWindowState(WindowState.MAXIMIZED);
 			%>
 
-			<div>
+			<div class="reset-link-contaner">
 				<aui:a href="<%= portletURL.toString() %>" label="request-a-new-password-reset-link"></aui:a>
 			</div>
 		</div>

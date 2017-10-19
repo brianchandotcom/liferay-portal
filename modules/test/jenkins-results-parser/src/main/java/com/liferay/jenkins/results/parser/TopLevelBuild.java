@@ -600,26 +600,29 @@ public class TopLevelBuild extends BaseBuild {
 	protected Element getJenkinsReportDownstreamElement() {
 		return Dom4JUtil.getNewElement(
 			"div", null,
-			getJenkinsReportDownstreamTableElement("queued", "Queued: "),
-			getJenkinsReportDownstreamTableElement("starting", "Starting: "),
-			getJenkinsReportDownstreamTableElement("running", "Running: "),
-			getJenkinsReportDownstreamTableElement("missing", "Missing: "),
+			getJenkinsReportDownstreamTableElement(null, "queued", "Queued: "),
+			getJenkinsReportDownstreamTableElement(
+				null, "starting", "Starting: "),
+			getJenkinsReportDownstreamTableElement(
+				null, "running", "Running: "),
+			getJenkinsReportDownstreamTableElement(
+				null, "missing", "Missing: "),
 			Dom4JUtil.getNewElement("h2", null, "Completed: "),
 			getJenkinsReportDownstreamTableElement(
-				"completed/ABORTED", "---- Aborted: "),
+				"ABORTED", "completed", "---- Aborted: "),
 			getJenkinsReportDownstreamTableElement(
-				"completed/FAILURE", "---- Failure: "),
+				"FAILURE", "completed", "---- Failure: "),
 			getJenkinsReportDownstreamTableElement(
-				"completed/UNSTABLE", "---- Unstable: "),
+				"UNSTABLE", "completed", "---- Unstable: "),
 			getJenkinsReportDownstreamTableElement(
-				"completed/SUCCESS", "---- Success: "));
+				"SUCCESS", "completed", "---- Success: "));
 	}
 
 	protected Element getJenkinsReportDownstreamTableElement(
-		String status, String statusCountCaption) {
+		String result, String status, String captionText) {
 
 		List<Element> tableRowElements = getJenkinsReportTableRowsElements(
-			status);
+			result, status);
 
 		if (tableRowElements.isEmpty()) {
 			return null;
@@ -628,7 +631,7 @@ public class TopLevelBuild extends BaseBuild {
 		return Dom4JUtil.getNewElement(
 			"table", null,
 			Dom4JUtil.getNewElement(
-				"caption", null, statusCountCaption,
+				"caption", null, captionText,
 				Integer.toString(tableRowElements.size())),
 			getJenkinsReportTableColumnHeadersElement(),
 			tableRowElements.toArray(new Element[tableRowElements.size()]));

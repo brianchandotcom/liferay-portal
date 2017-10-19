@@ -350,40 +350,38 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public int getDownstreamBuildCount(String status) {
-		List<Build> downstreamBuilds = getDownstreamBuilds(status);
+		return getDownstreamBuildCount(null, status);
+	}
+
+	@Override
+	public int getDownstreamBuildCount(String result, String status) {
+		List<Build> downstreamBuilds = getDownstreamBuilds(result, status);
 
 		return downstreamBuilds.size();
 	}
 
 	@Override
 	public List<Build> getDownstreamBuilds(String status) {
-		if (status == null) {
+		return getDownstreamBuilds(null, status);
+	}
+
+	@Override
+	public List<Build> getDownstreamBuilds(String result, String status) {
+		if ((result == null) && (status == null)) {
 			return downstreamBuilds;
-		}
-
-		String result = null;
-
-		if (status.contains("/")) {
-			int x = status.indexOf("/");
-
-			result = status.substring(x + 1);
-
-			status = status.substring(0, x);
 		}
 
 		List<Build> filteredDownstreamBuilds = new ArrayList<>();
 
 		for (Build downstreamBuild : downstreamBuilds) {
-			if (status.equals(downstreamBuild.getStatus())) {
-				if (result == null) {
-					filteredDownstreamBuilds.add(downstreamBuild);
+			if (((status == null) ||
+				 status.equals(downstreamBuild.getStatus())) &&
+				((result == null) ||
+				 result.equals(downstreamBuild.getResult()))) {
 
-					continue;
-				}
+				filteredDownstreamBuilds.add(downstreamBuild);
 
-				if (result.equals(downstreamBuild.getResult())) {
-					filteredDownstreamBuilds.add(downstreamBuild);
-				}
+				continue;
 			}
 		}
 
@@ -1831,34 +1829,24 @@ public abstract class BaseBuild implements Build {
 		return buildInfoElement;
 	}
 
-	protected List<Element> getJenkinsReportTableRowsElements(String status) {
+	protected List<Element> getJenkinsReportTableRowsElements(
+		String result, String status) {
+
 		List<Element> tableRowElements = new ArrayList<>();
 
-		String stat = status;
-		String result = null;
+		if ((getParentBuild() != null) &&
+			((result == null) || result.equals(getResult())) &&
+			((status == null) || status.equals(getStatus()))) {
 
-		if (status.contains("/")) {
-			int x = status.indexOf("/");
-
-			result = status.substring(x + 1);
-
-			stat = status.substring(0, x);
+			tableRowElements.add(getJenkinsReportTableRowElement());
 		}
 
-		if (((status == null) || stat.equals(getStatus())) &&
-			(getParentBuild() != null)) {
-
-			if ((result == null) || result.equals(getResult())) {
-				tableRowElements.add(getJenkinsReportTableRowElement());
-			}
-		}
-
-		List<Build> downstreamBuilds = getDownstreamBuilds(status);
+		List<Build> downstreamBuilds = getDownstreamBuilds(result, status);
 
 		Collections.sort(
 			downstreamBuilds, new BaseBuild.BuildDisplayNameComparator());
 
-		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+		for (Build downstreamBuild : downstreamBuilds) {
 			if (!(downstreamBuild instanceof BaseBuild)) {
 				continue;
 			}
@@ -1866,7 +1854,8 @@ public abstract class BaseBuild implements Build {
 			BaseBuild downstreamBaseBuild = (BaseBuild)downstreamBuild;
 
 			tableRowElements.addAll(
-				downstreamBaseBuild.getJenkinsReportTableRowsElements(status));
+				downstreamBaseBuild.getJenkinsReportTableRowsElements(
+					result, status));
 		}
 
 		return tableRowElements;

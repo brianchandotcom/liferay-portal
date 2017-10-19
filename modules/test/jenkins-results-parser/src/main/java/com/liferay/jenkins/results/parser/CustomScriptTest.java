@@ -14,7 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.Assert;
@@ -31,12 +31,10 @@ import org.junit.runners.Parameterized.Parameters;
 public class CustomScriptTest {
 
 	@Parameters(name = "{0}")
-	public static Collection<Object[]> getList() throws Exception {
-		Collection<Object[]> testNameList = new ArrayList<>();
-
-		testNameList.add(new String[] {System.getProperty("testName")});
-
-		return testNameList;
+	public static Collection<Object[]> getTestNames() throws Exception {
+		return Arrays.asList(new Object[][] {
+			new Object[] {System.getProperty("testName")}
+		});
 	}
 
 	public CustomScriptTest(String testName) throws Exception {

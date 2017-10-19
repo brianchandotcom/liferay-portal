@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Reading Time API
+Bundle-SymbolicName: com.liferay.reading.time.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.reading.time.exception,\
+	com.liferay.reading.time.model,\
+	com.liferay.reading.time.service,\
+	com.liferay.reading.time.service.persistence
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Reading Time

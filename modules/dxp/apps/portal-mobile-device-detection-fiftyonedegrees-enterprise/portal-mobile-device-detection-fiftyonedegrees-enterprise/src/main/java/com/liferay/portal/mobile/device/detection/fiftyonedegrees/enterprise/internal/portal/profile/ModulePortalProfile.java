@@ -24,7 +24,6 @@ import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
-
 /**
  * @author Matthew Tambara
  */

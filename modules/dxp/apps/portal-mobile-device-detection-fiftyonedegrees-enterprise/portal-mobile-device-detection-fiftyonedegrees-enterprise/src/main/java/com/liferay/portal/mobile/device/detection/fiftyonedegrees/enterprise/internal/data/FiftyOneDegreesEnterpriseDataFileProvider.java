@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true,
 	property = {
 		"file.name=META-INF/51Degrees-EnterpriseV3_2.dat.gz",
-		"service.ranking:Integer=100",
+		"service.ranking:Integer=100"
 	},
 	service = DataFileProvider.class
 )

@@ -16,9 +16,11 @@ package com.liferay.layout.admin.web.internal.display.context;
 
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.util.LayoutPageTemplatePortletUtil;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.service.permission.LayoutPageTemplatePermission;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -68,6 +70,23 @@ public class LayoutPageTemplateDisplayContext {
 			LayoutAdminPortletKeys.GROUP_PAGES, "display-style", "icon");
 
 		return _displayStyle;
+	}
+
+	public String getEditLayoutPageTemplateEntryRedirect()
+		throws PortalException {
+
+		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcPath", "/view_layout_page_template_entries.jsp");
+
+		if (getLayoutPageTemplateCollectionId() > 0) {
+			portletURL.setParameter(
+				"layoutPageTemplateCollectionId",
+				String.valueOf(getLayoutPageTemplateCollectionId()));
+		}
+
+		return portletURL.toString();
 	}
 
 	public String getKeywords() {
@@ -227,6 +246,132 @@ public class LayoutPageTemplateDisplayContext {
 		return layoutPageTemplateCollection.getName();
 	}
 
+	public SearchContainer getLayoutPageTemplateEntriesSearchContainer()
+		throws PortalException {
+
+		if (_layoutPageTemplateEntriesSearchContainer != null) {
+			return _layoutPageTemplateEntriesSearchContainer;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		SearchContainer layoutPageTemplateEntriesSearchContainer =
+			new SearchContainer(
+				_renderRequest, _renderResponse.createRenderURL(), null,
+				"there-are-no-page-templates");
+
+		if (!isSearch()) {
+			layoutPageTemplateEntriesSearchContainer.setEmptyResultsMessage(
+				"there-are-no-page-templates.-you-can-add-a-page-template-by-" +
+					"clicking-the-plus-button-on-the-bottom-right-corner");
+			layoutPageTemplateEntriesSearchContainer.
+				setEmptyResultsMessageCssClass(
+					"taglib-empty-result-message-header-has-plus-btn");
+		}
+		else {
+			layoutPageTemplateEntriesSearchContainer.setSearch(true);
+		}
+
+		layoutPageTemplateEntriesSearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
+
+		layoutPageTemplateEntriesSearchContainer.setOrderByCol(getOrderByCol());
+
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator =
+			LayoutPageTemplatePortletUtil.
+				getLayoutPageTemplateEntryOrderByComparator(
+					getOrderByCol(), getOrderByType());
+
+		layoutPageTemplateEntriesSearchContainer.setOrderByComparator(
+			orderByComparator);
+
+		layoutPageTemplateEntriesSearchContainer.setOrderByType(
+			getOrderByType());
+
+		List<LayoutPageTemplateEntry> layoutPageTemplateEntries = null;
+		int layoutPageTemplateEntriesCount = 0;
+
+		if (isSearch()) {
+			layoutPageTemplateEntries =
+				LayoutPageTemplateEntryLocalServiceUtil.
+					getLayoutPageTemplateEntries(
+						themeDisplay.getScopeGroupId(),
+						getLayoutPageTemplateCollectionId(), getKeywords(),
+						layoutPageTemplateEntriesSearchContainer.getStart(),
+						layoutPageTemplateEntriesSearchContainer.getEnd(),
+						orderByComparator);
+
+			layoutPageTemplateEntriesCount =
+				LayoutPageTemplateEntryServiceUtil.
+					getLayoutPageTemplateEntriesCount(
+						themeDisplay.getScopeGroupId(),
+						getLayoutPageTemplateCollectionId(), getKeywords());
+		}
+		else {
+			layoutPageTemplateEntries =
+				LayoutPageTemplateEntryLocalServiceUtil.
+					getLayoutPageTemplateEntries(
+						themeDisplay.getScopeGroupId(),
+						getLayoutPageTemplateCollectionId(),
+						layoutPageTemplateEntriesSearchContainer.getStart(),
+						layoutPageTemplateEntriesSearchContainer.getEnd(),
+						orderByComparator);
+
+			layoutPageTemplateEntriesCount =
+				LayoutPageTemplateEntryServiceUtil.
+					getLayoutPageTemplateEntriesCount(
+						themeDisplay.getScopeGroupId(),
+						getLayoutPageTemplateCollectionId());
+		}
+
+		layoutPageTemplateEntriesSearchContainer.setResults(
+			layoutPageTemplateEntries);
+		layoutPageTemplateEntriesSearchContainer.setTotal(
+			layoutPageTemplateEntriesCount);
+
+		_layoutPageTemplateEntriesSearchContainer =
+			layoutPageTemplateEntriesSearchContainer;
+
+		return _layoutPageTemplateEntriesSearchContainer;
+	}
+
+	public LayoutPageTemplateEntry getLayoutPageTemplateEntry()
+		throws PortalException {
+
+		if (_layoutPageTemplateEntry != null) {
+			return _layoutPageTemplateEntry;
+		}
+
+		_layoutPageTemplateEntry =
+			LayoutPageTemplateEntryServiceUtil.fetchLayoutPageTemplateEntry(
+				getLayoutPageTemplateEntryId());
+
+		return _layoutPageTemplateEntry;
+	}
+
+	public long getLayoutPageTemplateEntryId() {
+		if (Validator.isNotNull(_layoutPageTemplateEntryId)) {
+			return _layoutPageTemplateEntryId;
+		}
+
+		_layoutPageTemplateEntryId = ParamUtil.getLong(
+			_request, "layoutPageTemplateEntryId");
+
+		return _layoutPageTemplateEntryId;
+	}
+
+	public String getLayoutPageTemplateEntryTitle() throws PortalException {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			getLayoutPageTemplateEntry();
+
+		if (layoutPageTemplateEntry == null) {
+			return LanguageUtil.get(_request, "add-page-template");
+		}
+
+		return layoutPageTemplateEntry.getName();
+	}
+
 	public String getOrderByCol() {
 		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;
@@ -266,6 +411,16 @@ public class LayoutPageTemplateDisplayContext {
 		return true;
 	}
 
+	public boolean isDisabledLayoutPageTemplateEntriesManagementBar()
+		throws PortalException {
+
+		if (_hasLayoutPageTemplateEntriesResults()) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public boolean isSearch() {
 		if (Validator.isNotNull(getKeywords())) {
 			return true;
@@ -274,7 +429,7 @@ public class LayoutPageTemplateDisplayContext {
 		return false;
 	}
 
-	public boolean isShowAddButton() {
+	public boolean isShowAddButton(String actionId) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -282,9 +437,7 @@ public class LayoutPageTemplateDisplayContext {
 				themeDisplay.getPermissionChecker(),
 				LayoutPageTemplatePermission.RESOURCE_NAME,
 				LayoutAdminPortletKeys.GROUP_PAGES,
-				themeDisplay.getSiteGroupId(),
-				LayoutPageTemplateActionKeys.
-					ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION)) {
+				themeDisplay.getSiteGroupId(), actionId)) {
 
 			return true;
 		}
@@ -306,6 +459,16 @@ public class LayoutPageTemplateDisplayContext {
 		return false;
 	}
 
+	public boolean isShowLayoutPageTemplateEntriesSearch()
+		throws PortalException {
+
+		if (_hasLayoutPageTemplateEntriesResults()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _hasLayoutPageTemplateCollectionsResults()
 		throws PortalException {
 
@@ -319,11 +482,27 @@ public class LayoutPageTemplateDisplayContext {
 		return false;
 	}
 
+	private boolean _hasLayoutPageTemplateEntriesResults()
+		throws PortalException {
+
+		SearchContainer searchContainer =
+			getLayoutPageTemplateEntriesSearchContainer();
+
+		if (searchContainer.getTotal() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private String _displayStyle;
 	private String _keywords;
 	private LayoutPageTemplateCollection _layoutPageTemplateCollection;
 	private Long _layoutPageTemplateCollectionId;
 	private SearchContainer _layoutPageTemplateCollectionsSearchContainer;
+	private SearchContainer _layoutPageTemplateEntriesSearchContainer;
+	private LayoutPageTemplateEntry _layoutPageTemplateEntry;
+	private Long _layoutPageTemplateEntryId;
 	private String _orderByCol;
 	private String _orderByType;
 	private final RenderRequest _renderRequest;

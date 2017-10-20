@@ -19,20 +19,24 @@
 <%
 LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPageTemplateDisplayContext(renderRequest, renderResponse, request);
 
-renderResponse.setTitle(LanguageUtil.get(request, "page-templates"));
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionRedirect());
+
+renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionTitle());
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<portlet:renderURL var="mainURL" />
 
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item href="<%= mainURL.toString() %>" label="page-templates" selected="<%= true %>" />
+		<aui:nav-item href="<%= mainURL.toString() %>" label="entries" selected="<%= true %>" />
 	</aui:nav>
 
-	<c:if test="<%= layoutPageTemplateDisplayContext.isShowLayoutPageTemplateCollectionsSearch() %>">
+	<c:if test="<%= layoutPageTemplateDisplayContext.isShowLayoutPageTemplateEntriesSearch() %>">
 		<portlet:renderURL var="portletURL">
-			<portlet:param name="mvcPath" value="/view_layout_page_template_collections.jsp" />
+			<portlet:param name="mvcPath" value="/view_layout_page_template_entries.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionId()) %>" />
 			<portlet:param name="displayStyle" value="<%= layoutPageTemplateDisplayContext.getDisplayStyle() %>" />
 		</portlet:renderURL>
 
@@ -45,9 +49,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "page-templates"));
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
-	disabled="<%= layoutPageTemplateDisplayContext.isDisabledLayoutPageTemplateCollectionsManagementBar() %>"
+	disabled="<%= layoutPageTemplateDisplayContext.isDisabledLayoutPageTemplateEntriesManagementBar() %>"
 	includeCheckBox="<%= true %>"
-	searchContainerId="layoutPageTemplateCollections"
+	searchContainerId="layoutPageTemplateEntries"
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
@@ -72,50 +76,43 @@ renderResponse.setTitle(LanguageUtil.get(request, "page-templates"));
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedLayoutPageTemplateCollections" label="delete" />
+		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedLayoutPageTemplateEntries" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<portlet:actionURL name="/layout/delete_layout_page_template_collection" var="deleteLayoutPageTemplateCollectionURL">
+<portlet:actionURL name="/layout/delete_layout_page_template_entry" var="deleteLayoutPageTemplateEntryURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteLayoutPageTemplateCollectionURL %>" cssClass="container-fluid-1280" name="fm">
+<aui:form action="<%= deleteLayoutPageTemplateEntryURL %>" cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container
-		id="layoutPageTemplateCollections"
-		searchContainer="<%= layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionsSearchContainer() %>"
+		id="layoutPageTemplateEntries"
+		searchContainer="<%= layoutPageTemplateDisplayContext.getLayoutPageTemplateEntriesSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.layout.page.template.model.LayoutPageTemplateCollection"
-			keyProperty="layoutPageTemplateCollectionId"
-			modelVar="layoutPageTemplateCollection"
+			className="com.liferay.layout.page.template.model.LayoutPageTemplateEntry"
+			keyProperty="layoutPageTemplateEntryId"
+			modelVar="layoutPageTemplateEntry"
 		>
-			<portlet:renderURL var="rowURL">
-				<portlet:param name="mvcPath" value="/view_layout_page_template_entries.jsp" />
-				<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()) %>" />
-			</portlet:renderURL>
 
 			<%
-			row.setCssClass("entry-card lfr-asset-folder");
+			row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
 			%>
 
 			<liferay-ui:search-container-column-text>
-				<liferay-ui:search-container-column-text colspan="<%= 2 %>">
-					<liferay-frontend:horizontal-card
-						actionJsp="/layout_page_template_collection_action.jsp"
-						actionJspServletContext="<%= application %>"
-						resultRow="<%= row %>"
-						rowChecker="<%= searchContainer.getRowChecker() %>"
-						text="<%= HtmlUtil.escape(layoutPageTemplateCollection.getName()) %>"
-						url="<%= rowURL.toString() %>"
-					>
-						<liferay-frontend:horizontal-card-col>
-							<liferay-frontend:horizontal-card-icon
-								icon="folder"
-							/>
-						</liferay-frontend:horizontal-card-col>
-					</liferay-frontend:horizontal-card>
-				</liferay-ui:search-container-column-text>
+				<liferay-frontend:icon-vertical-card
+					actionJsp="/layout_page_template_entry_action.jsp"
+					actionJspServletContext="<%= application %>"
+					cssClass="entry-display-style"
+					icon="page"
+					resultRow="<%= row %>"
+					rowChecker="<%= searchContainer.getRowChecker() %>"
+					title="<%= layoutPageTemplateEntry.getName() %>"
+				>
+					<liferay-frontend:vertical-card-header>
+						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - layoutPageTemplateEntry.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+					</liferay-frontend:vertical-card-header>
+				</liferay-frontend:icon-vertical-card>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
@@ -123,18 +120,19 @@ renderResponse.setTitle(LanguageUtil.get(request, "page-templates"));
 	</liferay-ui:search-container>
 </aui:form>
 
-<c:if test="<%= layoutPageTemplateDisplayContext.isShowAddButton(LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION) %>">
-	<portlet:renderURL var="addLayoutPageTemplateCollectionURL">
-		<portlet:param name="mvcPath" value="/edit_layout_page_template_collection.jsp" />
+<c:if test="<%= layoutPageTemplateDisplayContext.isShowAddButton(LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY) %>">
+	<portlet:renderURL var="addLayoutPageTemplateEntryURL">
+		<portlet:param name="mvcPath" value="/edit_layout_page_template_entry.jsp" />
+		<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionId()) %>" />
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-collection") %>' url="<%= addLayoutPageTemplateCollectionURL.toString() %>" />
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-page-template") %>' url="<%= addLayoutPageTemplateEntryURL.toString() %>" />
 	</liferay-frontend:add-menu>
 </c:if>
 
 <aui:script sandbox="<%= true %>">
-	$('#<portlet:namespace />deleteSelectedLayoutPageTemplateCollections').on(
+	$('#<portlet:namespace />deleteSelectedLayoutPageTemplateEntries').on(
 		'click',
 		function() {
 			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {

@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY</td>
+	<td>//textarea[contains(@id,'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHANGE_LOG</td>
 	<td>//textarea[contains(@id,'ChangeLog')]</td>
 	<td></td>

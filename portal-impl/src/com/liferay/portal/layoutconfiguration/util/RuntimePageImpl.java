@@ -93,7 +93,9 @@ public class RuntimePageImpl implements RuntimePage {
 			String portletId, TemplateResource templateResource)
 		throws Exception {
 
-		return doDispatch(request, response, portletId, templateResource, true);
+		return doDispatch(
+			request, response, portletId, templateResource,
+			TemplateConstants.LANG_TYPE_VM, true);
 	}
 
 	@Override
@@ -102,7 +104,9 @@ public class RuntimePageImpl implements RuntimePage {
 			TemplateResource templateResource)
 		throws Exception {
 
-		doDispatch(request, response, null, templateResource, false);
+		doDispatch(
+			request, response, null, templateResource,
+			TemplateConstants.LANG_TYPE_VM, false);
 	}
 
 	@Override
@@ -112,7 +116,21 @@ public class RuntimePageImpl implements RuntimePage {
 		throws Exception {
 
 		StringBundler sb = doDispatch(
-			request, response, portletId, templateResource, true);
+			request, response, portletId, templateResource,
+			TemplateConstants.LANG_TYPE_VM, true);
+
+		sb.writeTo(response.getWriter());
+	}
+
+	@Override
+	public void processTemplate(
+			HttpServletRequest request, HttpServletResponse response,
+			String portletId, TemplateResource templateResource,
+			String langType)
+		throws Exception {
+
+		StringBundler sb = doDispatch(
+			request, response, portletId, templateResource, langType, true);
 
 		sb.writeTo(response.getWriter());
 	}
@@ -124,6 +142,15 @@ public class RuntimePageImpl implements RuntimePage {
 		throws Exception {
 
 		processTemplate(request, response, null, templateResource);
+	}
+
+	@Override
+	public void processTemplate(
+			HttpServletRequest request, HttpServletResponse response,
+			TemplateResource templateResource, String langType)
+		throws Exception {
+
+		processTemplate(request, response, null, templateResource, langType);
 	}
 
 	@Override
@@ -251,7 +278,7 @@ public class RuntimePageImpl implements RuntimePage {
 	protected StringBundler doDispatch(
 			HttpServletRequest request, HttpServletResponse response,
 			String portletId, TemplateResource templateResource,
-			boolean processTemplate)
+			String langType, boolean processTemplate)
 		throws Exception {
 
 		ClassLoader pluginClassLoader = null;
@@ -285,11 +312,12 @@ public class RuntimePageImpl implements RuntimePage {
 
 			if (processTemplate) {
 				return doProcessTemplate(
-					request, response, portletId, templateResource, false);
+					request, response, portletId, templateResource, langType,
+					false);
 			}
 			else {
 				doProcessCustomizationSettings(
-					request, response, templateResource, false);
+					request, response, templateResource, langType, false);
 
 				return null;
 			}
@@ -305,14 +333,15 @@ public class RuntimePageImpl implements RuntimePage {
 
 	protected void doProcessCustomizationSettings(
 			HttpServletRequest request, HttpServletResponse response,
-			TemplateResource templateResource, boolean restricted)
+			TemplateResource templateResource, String langType,
+			boolean restricted)
 		throws Exception {
 
 		CustomizationSettingsProcessor processor =
 			new CustomizationSettingsProcessor(request, response);
 
 		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_VM, templateResource, restricted);
+			langType, templateResource, restricted);
 
 		template.put("processor", processor);
 
@@ -340,18 +369,17 @@ public class RuntimePageImpl implements RuntimePage {
 	protected StringBundler doProcessTemplate(
 			HttpServletRequest request, HttpServletResponse response,
 			String portletId, TemplateResource templateResource,
-			boolean restricted)
+			String langType, boolean restricted)
 		throws Exception {
 
 		TemplateProcessor processor = new TemplateProcessor(
 			request, response, portletId);
 
 		TemplateManager templateManager =
-			TemplateManagerUtil.getTemplateManager(
-				TemplateConstants.LANG_TYPE_VM);
+			TemplateManagerUtil.getTemplateManager(langType);
 
-		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_VM, templateResource, restricted);
+		Template template = templateManager.getTemplate(
+			templateResource, restricted);
 
 		template.put("processor", processor);
 

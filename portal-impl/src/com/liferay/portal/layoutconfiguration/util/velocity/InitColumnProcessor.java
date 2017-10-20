@@ -39,6 +39,9 @@ public class InitColumnProcessor {
 		_columns.add(columnId);
 	}
 
+	public void processMax() {
+	}
+
 	private final List<String> _columns;
 
 }

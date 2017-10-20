@@ -14,8 +14,8 @@
 
 package com.liferay.portal.configuration.test.util;
 
+import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.osgi.util.test.OSGiServiceUtil;
 
 import java.util.Dictionary;
 import java.util.concurrent.CountDownLatch;

@@ -148,7 +148,7 @@
 	<command name="AddWebContentPortalScopeCurrentPage" priority="3">
 		<property name="testray.component.names" value="Web Content Display" />
 
-		<for list="1,2,3" param="i">
+		<for list="1,2" param="i">
 			<execute macro="Page#add">
 				<var name="pageName" value="Web Content Display Page${i}" />
 			</execute>
@@ -191,14 +191,6 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Web Content Display Page3" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#configureScopePG">
-			<var name="scopeSelection" value="Web Content Display Page3" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Web Content Display Page1" />
 		</execute>
 
@@ -227,16 +219,6 @@
 
 		<execute macro="WebContent#viewPGViaWCD">
 			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Web Content Display Page3" />
-		</execute>
-
-		<execute macro="WebContent#viewDefaultPGViaWCD" />
-
-		<execute macro="WebContent#viewSelectNoPGViaWCD">
-			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 	</command>
 

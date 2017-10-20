@@ -340,7 +340,7 @@
 		</execute>
 	</command>
 
-	<command ignore="true" name="ImportLAR" priority="5">
+	<command name="ImportLAR" priority="5">
 		<property name="portal.acceptance" value="pending" />
 		<property name="testray.component.names" value="Training" />
 

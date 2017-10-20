@@ -75,7 +75,7 @@ public class MBStatsUserMBThreadLocalServiceWrapper
 		Stream<MBMessage> stream = messages.stream();
 
 		stream.filter(
-			message -> message.isDiscussion()
+			message -> !message.isDiscussion()
 		).mapToLong(
 			message -> message.getUserId()
 		).distinct(
@@ -96,7 +96,7 @@ public class MBStatsUserMBThreadLocalServiceWrapper
 		Stream<MBMessage> stream = messages.stream();
 
 		stream.filter(
-			mbMessage -> mbMessage.isDiscussion()
+			mbMessage -> !mbMessage.isDiscussion()
 		).mapToLong(
 			message -> message.getUserId()
 		).distinct(

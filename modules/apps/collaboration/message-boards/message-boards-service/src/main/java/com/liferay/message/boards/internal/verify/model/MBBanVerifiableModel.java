@@ -12,16 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.verify.model;
+package com.liferay.message.boards.internal.verify.model;
 
 import com.liferay.portal.kernel.verify.model.VerifiableUUIDModel;
 
 /**
  * @author Miguel Pastor
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.internal.verify.model.MBBanVerifiableModel}
  */
-@Deprecated
 public class MBBanVerifiableModel implements VerifiableUUIDModel {
 
 	@Override

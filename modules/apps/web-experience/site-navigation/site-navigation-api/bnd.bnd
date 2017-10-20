@@ -7,6 +7,7 @@ Export-Package:\
 	com.liferay.site.navigation.model,\
 	com.liferay.site.navigation.service,\
 	com.liferay.site.navigation.service.persistence,\
+	com.liferay.site.navigation.type,\
 	com.liferay.site.navigation.util.comparator
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Navigation

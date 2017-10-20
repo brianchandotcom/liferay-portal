@@ -14,7 +14,6 @@
 
 package com.liferay.petra.io.unsync;
 
-import com.liferay.petra.io.internal.BoundaryCheckerUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.petra.io.internal;
+package com.liferay.petra.io.unsync;
 
 import com.liferay.petra.string.StringBundler;
 

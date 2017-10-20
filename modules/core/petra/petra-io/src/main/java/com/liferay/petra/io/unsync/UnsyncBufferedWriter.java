@@ -14,8 +14,6 @@
 
 package com.liferay.petra.io.unsync;
 
-import com.liferay.petra.io.internal.BoundaryCheckerUtil;
-
 import java.io.IOException;
 import java.io.Writer;
 

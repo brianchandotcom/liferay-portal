@@ -54,7 +54,7 @@ String[] types = siteNavigationMenuItemTypeRegistry.getTypes();
 			</c:when>
 			<c:otherwise>
 				<aui:fieldset>
-					<div class="d-flex" id="<portlet:namespace/>ItemTypes">
+					<div class="d-flex" id="<portlet:namespace/>siteNavigationMenuItemTypes">
 
 						<%
 						for (String type : types) {
@@ -104,12 +104,13 @@ String[] types = siteNavigationMenuItemTypeRegistry.getTypes();
 
 <c:if test="<%= siteNavigationMenu == null %>">
 	<aui:script use="aui-base">
-		A.one('#<portlet:namespace/>ItemTypes').delegate(
+		A.one('#<portlet:namespace/>siteNavigationMenuItemTypes').delegate(
 			'click',
 			function(event) {
-				var type = event.currentTarget.getData().type;
+				var currentTarget = event.currentTarget;
 
-				document.getElementById('<portlet:namespace/>selectedItemType').value = type;
+				document.getElementById('<portlet:namespace/>selectedItemType').value = currentTarget.attr('data-type');
+
 				submitForm(document.<portlet:namespace/>fm);
 			},
 			'.item-type'

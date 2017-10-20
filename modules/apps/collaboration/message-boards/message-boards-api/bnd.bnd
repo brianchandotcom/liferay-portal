@@ -4,6 +4,10 @@ Bundle-Version: 3.1.3
 Export-Package:\
 	com.liferay.message.boards.configuration,\
 	com.liferay.message.boards.display.context,\
+	com.liferay.message.boards.exception,\
+	com.liferay.message.boards.model,\
+	com.liferay.message.boards.service,\
+	com.liferay.message.boards.service.persistence,\
 	com.liferay.message.boards.util.comparator
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Message Boards

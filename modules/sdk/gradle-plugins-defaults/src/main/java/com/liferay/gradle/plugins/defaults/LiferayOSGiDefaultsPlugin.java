@@ -2157,7 +2157,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	private void _configureConfigurationTest(
 		Project project, String name, final LiferayExtension liferayExtension) {
 
-		Configuration configuration = GradleUtil.getConfiguration(
+		final Configuration configuration = GradleUtil.getConfiguration(
 			project, name);
 
 		ResolutionStrategy resolutionStrategy =
@@ -2173,13 +2173,49 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					ModuleVersionSelector moduleVersionSelector =
 						dependencyResolveDetails.getRequested();
 
-					String version = liferayExtension.getDefaultVersion(
-						moduleVersionSelector.getGroup(),
-						moduleVersionSelector.getName(), null);
+					String group = moduleVersionSelector.getGroup();
+					String name = moduleVersionSelector.getName();
 
-					if (Validator.isNotNull(version)) {
-						dependencyResolveDetails.useVersion(version);
+					String target = _getEasyConfDependencyTarget(group, name);
+
+					if (Validator.isNotNull(target) &&
+						GradleUtil.hasDependency(
+							configuration.getAllDependencies(), "easyconf",
+							"easyconf")) {
+
+						dependencyResolveDetails.useTarget(target);
 					}
+					else {
+						String version = liferayExtension.getDefaultVersion(
+							group, name, null);
+
+						if (Validator.isNotNull(version)) {
+							dependencyResolveDetails.useVersion(version);
+						}
+					}
+				}
+
+				private String _getEasyConfDependencyTarget(
+					String group, String name) {
+
+					String target = null;
+
+					if (group.equals("commons-configuration") &&
+						name.equals("commons-configuration")) {
+
+						target =
+							"commons-configuration:commons-configuration:1.10";
+					}
+					else if (group.equals("xerces") && name.equals("xerces")) {
+						target = "xerces:xercesImpl:2.11.0";
+					}
+					else if (group.equals("xml-apis") &&
+							 name.equals("xml-apis")) {
+
+						target = "xml-apis:xml-apis:1.4.01";
+					}
+
+					return target;
 				}
 
 			});

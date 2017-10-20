@@ -1,0 +1,14 @@
+{
+	"dependencies": {
+		"metal-charts": "^1.0.0-alpha.3"
+	},
+	"devDependencies": {
+		"liferay-npm-bundler": "^1.0.0",
+		"liferay-npm-bundler-preset-standard": "^1.0.0"
+	},
+	"name": "frontend-taglib-chart",
+	"scripts": {
+		"build": "liferay-npm-bundler"
+	},
+	"version": "1.0.0"
+}

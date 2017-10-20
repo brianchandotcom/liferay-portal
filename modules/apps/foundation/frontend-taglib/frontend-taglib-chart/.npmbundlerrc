@@ -1,0 +1,7 @@
+{
+    "exclude": {
+        "metal-charts": ["src/jsx/**/*"]
+    },
+    "output": "classes/META-INF/resources",
+    "preset": "liferay-npm-bundler-preset-standard"
+}

@@ -23,7 +23,9 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portlet.messageboards.service.permission.MBPermission;
 
 /**
@@ -41,12 +43,12 @@ public class MBBanServiceImpl extends MBBanServiceBaseImpl {
 			permissionChecker, serviceContext.getScopeGroupId(),
 			ActionKeys.BAN_USER);
 
-		User banUser = userPersistence.findByPrimaryKey(banUserId);
+		User banUser = _userLocalService.getUser(banUserId);
 
 		boolean groupAdmin = false;
 
 		try {
-			groupAdmin = PortalUtil.isGroupAdmin(
+			groupAdmin = _portal.isGroupAdmin(
 				banUser, serviceContext.getScopeGroupId());
 		}
 		catch (Exception e) {
@@ -70,5 +72,11 @@ public class MBBanServiceImpl extends MBBanServiceBaseImpl {
 
 		mbBanLocalService.deleteBan(banUserId, serviceContext);
 	}
+
+	@ServiceReference(type = Portal.class)
+	private Portal _portal;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

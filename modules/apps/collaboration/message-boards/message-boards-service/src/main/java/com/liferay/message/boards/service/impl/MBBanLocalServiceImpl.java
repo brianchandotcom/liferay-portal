@@ -24,10 +24,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Date;
@@ -43,7 +45,7 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 			long userId, long banUserId, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = _userLocalService.getUser(userId);
 		long groupId = serviceContext.getScopeGroupId();
 
 		long banId = counterLocalService.increment();
@@ -172,5 +174,8 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBBanLocalServiceImpl.class);
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

@@ -18,13 +18,13 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.ModifiedFacetFactory;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactory;
 import com.liferay.portal.kernel.util.DateFormatFactory;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.facet.Facet;
+import com.liferay.portal.search.facet.modified.ModifiedFacetFactory;
 
 import java.util.Calendar;
 import java.util.Map;
@@ -52,7 +52,7 @@ public class ModifiedFacetBuilder {
 		String rangeString = _getSelectedRangeString();
 
 		if (!Validator.isBlank(rangeString)) {
-			_searchContext.setAttribute(facet.getFieldName(), rangeString);
+			facet.select(rangeString);
 		}
 
 		return facet;

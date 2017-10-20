@@ -61,6 +61,6 @@ public class TrashEntryList implements Serializable {
 	private boolean _approximate;
 	private TrashEntrySoap[] _array;
 	private int _count;
-	private List<TrashEntry> _originalTrashEntries;
+	private transient List<TrashEntry> _originalTrashEntries;
 
 }

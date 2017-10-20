@@ -55,10 +55,10 @@ property.
 ### Changed
 - [LPS-75239]: Increase the default application server check timeout from 5 to
 10 minutes.
-- [LPS-75239]: Disable up-to-date check of `copyTestModules` task.
-- [LPS-75239]: The `copyTestModules` task does not check if a file aready exists
-in the `osgi/test` directory before copying it from the `testModules`
-configuration. To revert this behavior, set the property
+- [LPS-75239]: Disable the `copyTestModules` task's up-to-date check.
+- [LPS-75239]: Disable the `copyTestModules` task's behavior of not checking if
+a file already exists in the `osgi/test` directory before copying it from the
+`testModules` configuration by setting the property
 `testIntegrationTomcat.overwriteCopyTestModules` to `false`.
 
 [Liferay Portal Test]: https://github.com/liferay/liferay-portal/tree/master/portal-test

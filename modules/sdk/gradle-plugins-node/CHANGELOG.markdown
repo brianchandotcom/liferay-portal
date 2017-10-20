@@ -170,8 +170,8 @@ project with the values provided by the task properties of
 ## 3.2.1 - 2017-10-10
 
 ### Fixed
-- [LPS-75175]: Fix `downloadNode` task circular dependency when setting the
-`node.global` property to `true` in the root project.
+- [LPS-75175]: Fix the `downloadNode` task's circular dependency when setting
+the `node.global` property to `true` in the root project.
 
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023

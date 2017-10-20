@@ -210,8 +210,8 @@ public class LCSClusterNodeClientImpl implements LCSClusterNodeClient {
 		throws JSONWebServiceInvocationException {
 
 		_jsonWebServiceClient.doPut(
-			_URL_LCS_CLUSTER_NODE, "key", key, "status", String.valueOf(status),
-			"merge", String.valueOf(true));
+			_URL_LCS_CLUSTER_NODE + "/updateStatus", "key", key, "status",
+			String.valueOf(status), "merge", String.valueOf(true));
 	}
 
 	public void setJSONWebServiceClient(

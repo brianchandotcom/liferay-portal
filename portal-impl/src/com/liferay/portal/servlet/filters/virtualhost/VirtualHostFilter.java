@@ -252,7 +252,7 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 					forwardURL = forwardURL.concat(friendlyURL);
 
-					forwardURL = _getQueryString(request, forwardURL);
+					forwardURL = _appendQueryString(request, forwardURL);
 
 					if (_log.isDebugEnabled()) {
 						_log.debug("Forward to " + forwardURL);
@@ -369,7 +369,7 @@ public class VirtualHostFilter extends BasePortalFilter {
 				forwardURLString = forwardURL.toString();
 			}
 
-			forwardURLString = _getQueryString(request, forwardURLString);
+			forwardURLString = _appendQueryString(request, forwardURLString);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Forward to " + forwardURLString);
@@ -387,6 +387,21 @@ public class VirtualHostFilter extends BasePortalFilter {
 				VirtualHostFilter.class.getName(), request, response,
 				filterChain);
 		}
+	}
+
+	private String _appendQueryString(HttpServletRequest request, String path) {
+		String queryString = request.getQueryString();
+
+		if (Validator.isNull(queryString)) {
+			queryString = (String)request.getAttribute(
+				JavaConstants.JAVAX_SERVLET_FORWARD_QUERY_STRING);
+		}
+
+		if (Validator.isNotNull(queryString)) {
+			return path + StringPool.QUESTION + queryString;
+		}
+
+		return path;
 	}
 
 	private String _findLanguageId(String friendlyURL) {
@@ -415,21 +430,6 @@ public class VirtualHostFilter extends BasePortalFilter {
 		}
 
 		return languageId;
-	}
-
-	private String _getQueryString(HttpServletRequest request, String path) {
-		String queryString = request.getQueryString();
-
-		if (Validator.isNull(queryString)) {
-			queryString = (String)request.getAttribute(
-				JavaConstants.JAVAX_SERVLET_FORWARD_QUERY_STRING);
-		}
-
-		if (Validator.isNotNull(queryString)) {
-			return path + StringPool.QUESTION + queryString;
-		}
-
-		return path;
 	}
 
 	private static final String _PATH_DOCUMENTS = "/documents/";

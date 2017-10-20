@@ -180,7 +180,7 @@ public class I18nServlet extends HttpServlet {
 			return null;
 		}
 
-		String redirect = _getQueryString(request, path);
+		String redirect = _appendQueryString(request, path);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Redirect " + redirect);
@@ -266,7 +266,7 @@ public class I18nServlet extends HttpServlet {
 
 	}
 
-	private String _getQueryString(HttpServletRequest request, String path) {
+	private String _appendQueryString(HttpServletRequest request, String path) {
 		String queryString = request.getQueryString();
 
 		if (Validator.isNull(queryString)) {

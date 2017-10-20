@@ -17,7 +17,7 @@ package com.liferay.site.navigation.constants;
 /**
  * @author Pavel Savinov
  */
-public class SiteNavigationMenuItemTypeControllerConstants {
+public class SiteNavigationMenuItemTypeConstants {
 
 	public static final String LAYOUT = "layout";
 

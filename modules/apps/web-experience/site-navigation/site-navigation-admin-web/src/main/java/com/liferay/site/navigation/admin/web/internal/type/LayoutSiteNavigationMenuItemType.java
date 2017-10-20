@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.site.navigation.admin.web.internal.type.controller;
+package com.liferay.site.navigation.admin.web.internal.type;
 
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.site.navigation.constants.SiteNavigationMenuItemTypeControllerConstants;
+import com.liferay.site.navigation.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
-import com.liferay.site.navigation.type.controller.SiteNavigationMenuItemTypeController;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,11 +29,11 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"site.navigation.menu.item.type=" + SiteNavigationMenuItemTypeControllerConstants.LAYOUT},
-	service = SiteNavigationMenuItemTypeController.class
+	property = {"site.navigation.menu.item.type=" + SiteNavigationMenuItemTypeConstants.LAYOUT},
+	service = SiteNavigationMenuItemType.class
 )
-public class LayoutSiteNavigationMenuItemTypeController
-	implements SiteNavigationMenuItemTypeController {
+public class LayoutSiteNavigationMenuItemType
+	implements SiteNavigationMenuItemType {
 
 	@Override
 	public JSONObject getEditContext(

@@ -12,53 +12,47 @@
  * details.
  */
 
-package com.liferay.site.navigation.admin.web.internal.type.controller;
+package com.liferay.site.navigation.type;
 
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
-import com.liferay.site.navigation.type.controller.SiteNavigationMenuItemTypeController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Pavel Savinov
  */
-@Component(
-	immediate = true, property = {"site.navigation.menu.item.type=url"},
-	service = SiteNavigationMenuItemTypeController.class
-)
-public class URLSiteNavigationMenuItemTypeController
-	implements SiteNavigationMenuItemTypeController {
+public interface SiteNavigationMenuItemType {
 
-	@Override
 	public JSONObject getEditContext(
 			HttpServletRequest request, HttpServletResponse response,
 			SiteNavigationMenuItem siteNavigationMenuItem)
-		throws Exception {
+		throws Exception;
 
-		return null;
+	public default String getIcon() {
+		return "control-panel";
 	}
 
-	@Override
-	public String getIcon() {
-		return "link";
+	public default String getLabel(
+		SiteNavigationMenuItem siteNavigationMenuItem) {
+
+		UnicodeProperties properties = new UnicodeProperties(true);
+
+		properties.fastLoad(siteNavigationMenuItem.getTypeSettings());
+
+		return properties.getProperty("label");
 	}
 
-	@Override
-	public String getType() {
-		return "url";
+	public default String getType() {
+		return StringPool.BLANK;
 	}
 
-	@Override
 	public JSONObject getViewContext(
 			HttpServletRequest request, HttpServletResponse response,
 			SiteNavigationMenuItem siteNavigationMenuItem)
-		throws Exception {
-
-		return null;
-	}
+		throws Exception;
 
 }

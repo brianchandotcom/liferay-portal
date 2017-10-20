@@ -114,7 +114,11 @@ public class MBStatsUserLocalServiceImpl
 
 		dynamicQuery.setProjection(projection);
 
-		Property property = PropertyFactoryUtil.forName("threadId");
+		Property userIdProperty = PropertyFactoryUtil.forName("userId");
+
+		dynamicQuery.add(userIdProperty.eq(userId));
+
+		Property threadIdProperty = PropertyFactoryUtil.forName("threadId");
 
 		Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
 
@@ -125,7 +129,7 @@ public class MBStatsUserLocalServiceImpl
 			groupId, queryDefinition);
 
 		for (MBThread thread : threads) {
-			disjunction.add(property.ne(thread.getThreadId()));
+			disjunction.add(threadIdProperty.ne(thread.getThreadId()));
 		}
 
 		dynamicQuery.add(disjunction);

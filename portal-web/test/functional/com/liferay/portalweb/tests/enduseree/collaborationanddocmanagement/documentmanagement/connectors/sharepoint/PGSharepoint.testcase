@@ -64,6 +64,7 @@
 
 		<execute macro="DMRepository#addSharepoint">
 			<var name="dmRepositoryLibraryName" value="Documents" />
+			<var name="dmRepositoryName" value="Sharepoint" />
 			<var name="dmRepositorySiteURL" value="http://${sharepointVMHostName}" />
 		</execute>
 

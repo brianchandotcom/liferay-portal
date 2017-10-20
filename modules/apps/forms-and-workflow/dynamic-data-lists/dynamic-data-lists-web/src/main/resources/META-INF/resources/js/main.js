@@ -53,6 +53,7 @@ AUI.add(
 
 				TYPE_EDITOR: {
 					'checkbox': A.CheckboxCellEditor,
+					'ddm-color': FormBuilder.CUSTOM_CELL_EDITORS['color-cell-editor'],
 					'ddm-date': A.DateCellEditor,
 					'ddm-decimal': A.TextCellEditor,
 					'ddm-documentlibrary': FormBuilder.CUSTOM_CELL_EDITORS['document-library-file-entry-cell-editor'],

@@ -133,6 +133,7 @@ import org.gradle.api.UncheckedIOException;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
+import org.gradle.api.artifacts.DependencyResolveDetails;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.DependencySubstitutions;
 import org.gradle.api.artifacts.DependencySubstitutions.Substitution;
@@ -140,6 +141,7 @@ import org.gradle.api.artifacts.ExcludeRule;
 import org.gradle.api.artifacts.ExternalDependency;
 import org.gradle.api.artifacts.ExternalModuleDependency;
 import org.gradle.api.artifacts.ModuleDependency;
+import org.gradle.api.artifacts.ModuleVersionSelector;
 import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.artifacts.ResolutionStrategy;
 import org.gradle.api.artifacts.ResolvableDependencies;
@@ -351,6 +353,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 			_addDependenciesPortalTest(project);
 			_addDependenciesTestCompile(project);
+			_configureConfigurationTest(
+				project, JavaPlugin.TEST_COMPILE_CLASSPATH_CONFIGURATION_NAME);
+			_configureConfigurationTest(
+				project, JavaPlugin.TEST_RUNTIME_CONFIGURATION_NAME);
 			_configureEclipse(project, portalTestConfiguration);
 			_configureIdea(project, portalTestConfiguration);
 			_configureSourceSetTest(
@@ -2144,6 +2150,63 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				@Override
 				public void execute(Configuration configuration) {
 					_configureConfiguration(configuration);
+				}
+
+			});
+	}
+
+	private void _configureConfigurationTest(Project project, String name) {
+		final Configuration configuration = GradleUtil.getConfiguration(
+			project, name);
+
+		ResolutionStrategy resolutionStrategy =
+			configuration.getResolutionStrategy();
+
+		resolutionStrategy.eachDependency(
+			new Action<DependencyResolveDetails>() {
+
+				@Override
+				public void execute(
+					DependencyResolveDetails dependencyResolveDetails) {
+
+					ModuleVersionSelector moduleVersionSelector =
+						dependencyResolveDetails.getRequested();
+
+					String group = moduleVersionSelector.getGroup();
+					String name = moduleVersionSelector.getName();
+
+					String target = _getEasyConfDependencyTarget(group, name);
+
+					if (Validator.isNotNull(target) &&
+						GradleUtil.hasDependency(
+							configuration.getAllDependencies(), "easyconf",
+							"easyconf")) {
+
+						dependencyResolveDetails.useTarget(target);
+					}
+				}
+
+				private String _getEasyConfDependencyTarget(
+					String group, String name) {
+
+					String target = null;
+
+					if (group.equals("commons-configuration") &&
+						name.equals("commons-configuration")) {
+
+						target =
+							"commons-configuration:commons-configuration:1.10";
+					}
+					else if (group.equals("xerces") && name.equals("xerces")) {
+						target = "xerces:xercesImpl:2.11.0";
+					}
+					else if (group.equals("xml-apis") &&
+							 name.equals("xml-apis")) {
+
+						target = "xml-apis:xml-apis:1.4.01";
+					}
+
+					return target;
 				}
 
 			});

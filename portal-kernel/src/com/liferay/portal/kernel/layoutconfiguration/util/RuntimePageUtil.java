@@ -64,16 +64,8 @@ public class RuntimePageUtil {
 
 	public static void processTemplate(
 			HttpServletRequest request, HttpServletResponse response,
-			TemplateResource templateResource)
-		throws Exception {
-
-		getRuntimePage().processTemplate(request, response, templateResource);
-	}
-
-	public static void processTemplate(
-		HttpServletRequest request, HttpServletResponse response,
-		String portletId, TemplateResource templateResource,
-		String langType)
+			String portletId, TemplateResource templateResource,
+			String langType)
 		throws Exception {
 
 		getRuntimePage().processTemplate(
@@ -81,8 +73,16 @@ public class RuntimePageUtil {
 	}
 
 	public static void processTemplate(
-		HttpServletRequest request, HttpServletResponse response,
-		TemplateResource templateResource, String langType)
+			HttpServletRequest request, HttpServletResponse response,
+			TemplateResource templateResource)
+		throws Exception {
+
+		getRuntimePage().processTemplate(request, response, templateResource);
+	}
+
+	public static void processTemplate(
+			HttpServletRequest request, HttpServletResponse response,
+			TemplateResource templateResource, String langType)
 		throws Exception {
 
 		getRuntimePage().processTemplate(

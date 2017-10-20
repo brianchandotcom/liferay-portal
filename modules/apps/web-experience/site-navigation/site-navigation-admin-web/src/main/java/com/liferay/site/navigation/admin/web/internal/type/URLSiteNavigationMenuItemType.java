@@ -15,9 +15,12 @@
 package com.liferay.site.navigation.admin.web.internal.type;
 
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.site.navigation.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
+
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,6 +50,11 @@ public class URLSiteNavigationMenuItemType
 	@Override
 	public String getIcon() {
 		return "link";
+	}
+
+	@Override
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(locale, "url");
 	}
 
 	@Override

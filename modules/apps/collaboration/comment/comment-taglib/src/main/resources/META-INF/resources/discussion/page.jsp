@@ -209,218 +209,269 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 		loginURL.setWindowState(LiferayWindowState.POP_UP);
 		%>
 
-		<aui:script>
-			function <%= namespace + randomNamespace %>0ReplyOnChange(html) {
-				Liferay.Util.toggleDisabled('#<%= namespace + randomNamespace %>postReplyButton0', html.trim() === '');
-			}
-
-			function <%= randomNamespace %>afterLogin(emailAddress, anonymousAccount) {
-				var form = AUI.$('#<%= namespace %><%= HtmlUtil.escapeJS(discussionTaglibHelper.getFormName()) %>');
-
-				form.fm('emailAddress').val(emailAddress);
-
-				<%= namespace %>sendMessage(form, !anonymousAccount);
-			}
-
-			function <%= randomNamespace %>deleteMessage(i) {
-				var form = AUI.$('#<%= namespace %><%= HtmlUtil.escapeJS(discussionTaglibHelper.getFormName()) %>');
-
-				var commentId = form.fm('commentId' + i).val();
-
-				form.fm('<%= randomNamespace %><%= Constants.CMD %>').val('<%= Constants.DELETE %>');
-				form.fm('commentId').val(commentId);
-
-				<%= namespace %>sendMessage(form);
-			}
-
-			function <%= randomNamespace %>hideEl(elId) {
-				AUI.$('#' + elId).css('display', 'none');
-			}
-
-			function <%= randomNamespace %>hideEditor(editorName, formId) {
-				if (window[editorName]) {
-					window[editorName].dispose();
+		<aui:script use="aui-base">
+			Liferay.provide(
+				window,
+				'<%= namespace + randomNamespace %>0ReplyOnChange',
+				function(html) {
+					Liferay.Util.toggleDisabled('#<%= namespace + randomNamespace %>postReplyButton0', html.trim() === '');
 				}
+			);
 
-				<%= randomNamespace %>hideEl(formId);
-			}
+			Liferay.provide(
+				window,
+				'<%= randomNamespace %>afterLogin',
+				function(emailAddress, anonymousAccount) {
+					var form = AUI.$('#<%= namespace %><%= HtmlUtil.escapeJS(discussionTaglibHelper.getFormName()) %>');
 
-			function <%= randomNamespace %>onMessagePosted(response, refreshPage) {
-				Liferay.onceAfter(
-					'<%= portletDisplay.getId() %>:portletRefreshed',
-					function(event) {
-						var randomNamespaceNodes = AUI.$('input[id^="<%= namespace %>randomNamespace"]');
+					form.fm('emailAddress').val(emailAddress);
 
-						randomNamespaceNodes.each(
-							function(index, item) {
-								var randomId = item.value;
+					<%= namespace %>sendMessage(form, !anonymousAccount);
+				}
+			);
 
-								if (index === 0) {
-									<%= randomNamespace %>showStatusMessage(
-										{
-											id: randomId,
-											message: '<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-completed-successfully") %>',
-											type: 'success'
-										}
-									);
+			Liferay.provide(
+				window,
+				'<%= randomNamespace %>deleteMessage',
+				function(i) {
+					var form = AUI.$('#<%= namespace %><%= HtmlUtil.escapeJS(discussionTaglibHelper.getFormName()) %>');
+
+					var commentId = form.fm('commentId' + i).val();
+
+					form.fm('<%= randomNamespace %><%= Constants.CMD %>').val('<%= Constants.DELETE %>');
+					form.fm('commentId').val(commentId);
+
+					<%= namespace %>sendMessage(form);
+				}
+			);
+
+			Liferay.provide(
+				window,
+				'<%= randomNamespace %>hideEl',
+				function(elId) {
+					AUI.$('#' + elId).css('display', 'none');
+				}
+			);
+
+			Liferay.provide(
+				window,
+				'<%= randomNamespace %>hideEditor',
+				function(editorName, formId) {
+					if (window[editorName]) {
+						window[editorName].dispose();
+					}
+
+					<%= randomNamespace %>hideEl(formId);
+				}
+			);
+
+			Liferay.provide(
+				window,
+				'<%= randomNamespace %>onMessagePosted',
+				function(response, refreshPage) {
+					Liferay.onceAfter(
+						'<%= portletDisplay.getId() %>:portletRefreshed',
+						function(event) {
+							var randomNamespaceNodes = AUI.$('input[id^="<%= namespace %>randomNamespace"]');
+
+							randomNamespaceNodes.each(
+								function(index, item) {
+									var randomId = item.value;
+
+									if (index === 0) {
+										<%= randomNamespace %>showStatusMessage(
+											{
+												id: randomId,
+												message: '<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-completed-successfully") %>',
+												type: 'success'
+											}
+										);
+									}
+
+									var currentMessageSelector = '#' + randomId + 'message_' + response.commentId;
+
+									var targetNode = AUI.$(currentMessageSelector);
+
+									if (targetNode.length) {
+										location.hash = currentMessageSelector;
+									}
 								}
+							);
+						}
+					);
 
-								var currentMessageSelector = '#' + randomId + 'message_' + response.commentId;
+					if (refreshPage) {
+						window.location.reload();
+					}
+					else {
+						var portletNodeId = '#p_p_id_<%= portletDisplay.getId() %>_';
 
-								var targetNode = AUI.$(currentMessageSelector);
+						var portletNode = A.one(portletNodeId);
 
-								if (targetNode.length) {
-									location.hash = currentMessageSelector;
-								}
+						Liferay.Portlet.refresh(
+							portletNodeId,
+							A.merge(
+								Liferay.Util.ns(
+									'<%= namespace %>',
+									{
+										skipEditorLoading: true
+									}
+								),
+								portletNode.refreshURLData || {}
+							)
+						);
+					}
+				}
+			);
+
+			Liferay.provide(
+				window,
+				'<%= randomNamespace %>postReply',
+				function(i) {
+					var form = AUI.$('#<%= namespace %><%= HtmlUtil.escapeJS(discussionTaglibHelper.getFormName()) %>');
+
+					var editorInstance = window['<%= namespace + randomNamespace %>postReplyBody' + i];
+
+					var parentCommentId = form.fm('parentCommentId' + i).val();
+
+					form.fm('<%= randomNamespace %><%= Constants.CMD %>').val('<%= Constants.ADD %>');
+					form.fm('parentCommentId').val(parentCommentId);
+					form.fm('body').val(editorInstance.getHTML());
+
+					if (!themeDisplay.isSignedIn()) {
+						window.namespace = '<%= namespace %>';
+						window.randomNamespace = '<%= randomNamespace %>';
+
+						Liferay.Util.openWindow(
+							{
+								dialog: {
+									height: 450,
+									width: 560
+								},
+								id: '<%= namespace %>signInDialog',
+								title: '<%= UnicodeLanguageUtil.get(resourceBundle, "sign-in") %>',
+								uri: '<%= loginURL.toString() %>'
 							}
 						);
 					}
-				);
+					else {
+						<%= namespace %>sendMessage(form);
 
-				if (refreshPage) {
-					window.location.reload();
+						editorInstance.dispose();
+					}
 				}
-				else {
-					Liferay.Portlet.refresh(
-						'#p_p_id_<%= portletDisplay.getId() %>_',
-						Liferay.Util.ns(
-							'<%= namespace %>',
-							{
-								skipEditorLoading: true
-							}
-						)
-					);
+			);
+
+			Liferay.provide(
+				window,
+				'<%= randomNamespace %>scrollIntoView',
+				function(commentId) {
+					document.getElementById('<%= randomNamespace %>messageScroll' + commentId).scrollIntoView();
 				}
-			}
+			);
 
-			function <%= randomNamespace %>postReply(i) {
-				var form = AUI.$('#<%= namespace %><%= HtmlUtil.escapeJS(discussionTaglibHelper.getFormName()) %>');
+			Liferay.provide(
+				window,
+				'<%= namespace %>sendMessage',
+				function(form, refreshPage) {
+					var Util = Liferay.Util;
 
-				var editorInstance = window['<%= namespace + randomNamespace %>postReplyBody' + i];
+					form = AUI.$(form);
 
-				var parentCommentId = form.fm('parentCommentId' + i).val();
+					var commentButtonList = form.find('.btn-comment');
 
-				form.fm('<%= randomNamespace %><%= Constants.CMD %>').val('<%= Constants.ADD %>');
-				form.fm('parentCommentId').val(parentCommentId);
-				form.fm('body').val(editorInstance.getHTML());
+					var cmd = form.fm('<%= randomNamespace %><%= Constants.CMD %>').val();
 
-				if (!themeDisplay.isSignedIn()) {
-					window.namespace = '<%= namespace %>';
-					window.randomNamespace = '<%= randomNamespace %>';
+					var dataType = cmd === '<%= Constants.ADD %>' || cmd === '<%= Constants.UPDATE %>' ? 'json' : null;
 
-					Liferay.Util.openWindow(
+					form.ajaxSubmit(
 						{
-							dialog: {
-								height: 450,
-								width: 560
+							data: {
+								doAsUserId: themeDisplay.getDoAsUserIdEncoded()
 							},
-							id: '<%= namespace %>signInDialog',
-							title: '<%= UnicodeLanguageUtil.get(resourceBundle, "sign-in") %>',
-							uri: '<%= loginURL.toString() %>'
-						}
-					);
-				}
-				else {
-					<%= namespace %>sendMessage(form);
-
-					editorInstance.dispose();
-				}
-			}
-
-			function <%= randomNamespace %>scrollIntoView(commentId) {
-				document.getElementById('<%= randomNamespace %>messageScroll' + commentId).scrollIntoView();
-			}
-
-			function <%= namespace %>sendMessage(form, refreshPage) {
-				var Util = Liferay.Util;
-
-				form = AUI.$(form);
-
-				var commentButtonList = form.find('.btn-comment');
-
-				var cmd = form.fm('<%= randomNamespace %><%= Constants.CMD %>').val();
-
-				var dataType = cmd === '<%= Constants.ADD %>' || cmd === '<%= Constants.UPDATE %>' ? 'json' : null;
-
-				form.ajaxSubmit(
-					{
-						data: {
-							doAsUserId: themeDisplay.getDoAsUserIdEncoded()
-						},
-						beforeSubmit: function() {
-							Util.toggleDisabled(commentButtonList, true);
-						},
-						dataType: dataType,
-						complete: function() {
-							Util.toggleDisabled(commentButtonList, false);
-						},
-						error: function() {
-							<%= randomNamespace %>showStatusMessage(
-								{
-									id: '<%= randomNamespace %>',
-									message: '<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>',
-									type: 'danger'
-								}
-							);
-						},
-						success: function(response) {
-							var exception = response.exception;
-
-							if (!exception) {
-								Liferay.onceAfter(
-									'<%= portletDisplay.getId() %>:messagePosted',
-									function(event) {
-										<%= randomNamespace %>onMessagePosted(response, refreshPage);
-									}
-								);
-
-								Liferay.fire('<%= portletDisplay.getId() %>:messagePosted', response);
-							}
-							else {
-								var errorKey = '<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>';
-
-								if (exception.indexOf('DiscussionMaxCommentsException') > -1) {
-									errorKey = '<%= UnicodeLanguageUtil.get(resourceBundle, "maximum-number-of-comments-has-been-reached") %>';
-								}
-								else if (exception.indexOf('MessageBodyException') > -1) {
-									errorKey = '<%= UnicodeLanguageUtil.get(resourceBundle, "please-enter-a-valid-message") %>';
-								}
-								else if (exception.indexOf('NoSuchMessageException') > -1) {
-									errorKey = '<%= UnicodeLanguageUtil.get(resourceBundle, "the-message-could-not-be-found") %>';
-								}
-								else if (exception.indexOf('PrincipalException') > -1) {
-									errorKey = '<%= UnicodeLanguageUtil.get(resourceBundle, "you-do-not-have-the-required-permissions") %>';
-								}
-								else if (exception.indexOf('RequiredMessageException') > -1) {
-									errorKey = '<%= UnicodeLanguageUtil.get(resourceBundle, "you-cannot-delete-a-root-message-that-has-more-than-one-immediate-reply") %>';
-								}
-
+							beforeSubmit: function() {
+								Util.toggleDisabled(commentButtonList, true);
+							},
+							dataType: dataType,
+							complete: function() {
+								Util.toggleDisabled(commentButtonList, false);
+							},
+							error: function() {
 								<%= randomNamespace %>showStatusMessage(
 									{
 										id: '<%= randomNamespace %>',
-										message: errorKey,
+										message: '<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>',
 										type: 'danger'
 									}
 								);
+							},
+							success: function(response) {
+								var exception = response.exception;
+
+								if (!exception) {
+									Liferay.onceAfter(
+										'<%= portletDisplay.getId() %>:messagePosted',
+										function(event) {
+											<%= randomNamespace %>onMessagePosted(response, refreshPage);
+										}
+									);
+
+									Liferay.fire('<%= portletDisplay.getId() %>:messagePosted', response);
+								}
+								else {
+									var errorKey = '<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>';
+
+									if (exception.indexOf('DiscussionMaxCommentsException') > -1) {
+										errorKey = '<%= UnicodeLanguageUtil.get(resourceBundle, "maximum-number-of-comments-has-been-reached") %>';
+									}
+									else if (exception.indexOf('MessageBodyException') > -1) {
+										errorKey = '<%= UnicodeLanguageUtil.get(resourceBundle, "please-enter-a-valid-message") %>';
+									}
+									else if (exception.indexOf('NoSuchMessageException') > -1) {
+										errorKey = '<%= UnicodeLanguageUtil.get(resourceBundle, "the-message-could-not-be-found") %>';
+									}
+									else if (exception.indexOf('PrincipalException') > -1) {
+										errorKey = '<%= UnicodeLanguageUtil.get(resourceBundle, "you-do-not-have-the-required-permissions") %>';
+									}
+									else if (exception.indexOf('RequiredMessageException') > -1) {
+										errorKey = '<%= UnicodeLanguageUtil.get(resourceBundle, "you-cannot-delete-a-root-message-that-has-more-than-one-immediate-reply") %>';
+									}
+
+									<%= randomNamespace %>showStatusMessage(
+										{
+											id: '<%= randomNamespace %>',
+											message: errorKey,
+											type: 'danger'
+										}
+									);
+								}
 							}
 						}
-					}
-				);
-			}
+					);
+				}
+			);
 
-			function <%= randomNamespace %>showEl(elId) {
-				AUI.$('#' + elId).css('display', '');
-			}
+			Liferay.provide(
+				window,
+				'<%= randomNamespace %>showEl',
+				function(elId) {
+					AUI.$('#' + elId).css('display', '');
+				}
+			);
 
-			function <%= randomNamespace %>showEditor(editorName, formId) {
-				window[editorName].create();
+			Liferay.provide(
+				window,
+				'<%= randomNamespace %>showEditor',
+				function(editorName, formId) {
+					window[editorName].create();
 
-				var html = window[editorName].getHTML();
+					var html = window[editorName].getHTML();
 
-				Liferay.Util.toggleDisabled('#' + editorName.replace('Body', 'Button'), html === '');
+					Liferay.Util.toggleDisabled('#' + editorName.replace('Body', 'Button'), html === '');
 
-				<%= randomNamespace %>showEl(formId);
-			}
+					<%= randomNamespace %>showEl(formId);
+				}
+			);
 
 			Liferay.provide(
 				window,
@@ -437,39 +488,47 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 				['liferay-alert']
 			);
 
-			function <%= randomNamespace %>subscribeToComments(subscribe) {
-				var form = AUI.$('#<%= namespace %><%= HtmlUtil.escapeJS(discussionTaglibHelper.getFormName()) %>');
+			Liferay.provide(
+				window,
+				'<%= randomNamespace %>subscribeToComments',
+				function(subscribe) {
+					var form = AUI.$('#<%= namespace %><%= HtmlUtil.escapeJS(discussionTaglibHelper.getFormName()) %>');
 
-				var cmd = '<%= Constants.UNSUBSCRIBE_FROM_COMMENTS %>';
+					var cmd = '<%= Constants.UNSUBSCRIBE_FROM_COMMENTS %>';
 
-				if (subscribe) {
-					cmd = '<%= Constants.SUBSCRIBE_TO_COMMENTS %>';
+					if (subscribe) {
+						cmd = '<%= Constants.SUBSCRIBE_TO_COMMENTS %>';
+					}
+
+					form.fm('<%= randomNamespace %><%= Constants.CMD %>').val(cmd);
+
+					<%= namespace %>sendMessage(form);
 				}
+			);
 
-				form.fm('<%= randomNamespace %><%= Constants.CMD %>').val(cmd);
+			Liferay.provide(
+				window,
+				'<%= randomNamespace %>updateMessage',
+				function(i, pending) {
+					var form = AUI.$('#<%= namespace %><%= HtmlUtil.escapeJS(discussionTaglibHelper.getFormName()) %>');
 
-				<%= namespace %>sendMessage(form);
-			}
+					var editorInstance = window['<%= namespace + randomNamespace %>editReplyBody' + i];
 
-			function <%= randomNamespace %>updateMessage(i, pending) {
-				var form = AUI.$('#<%= namespace %><%= HtmlUtil.escapeJS(discussionTaglibHelper.getFormName()) %>');
+					var commentId = form.fm('commentId' + i).val();
 
-				var editorInstance = window['<%= namespace + randomNamespace %>editReplyBody' + i];
+					if (pending) {
+						form.fm('workflowAction').val('<%= WorkflowConstants.ACTION_SAVE_DRAFT %>');
+					}
 
-				var commentId = form.fm('commentId' + i).val();
+					form.fm('<%= randomNamespace %><%= Constants.CMD %>').val('<%= Constants.UPDATE %>');
+					form.fm('commentId').val(commentId);
+					form.fm('body').val(editorInstance.getHTML());
 
-				if (pending) {
-					form.fm('workflowAction').val('<%= WorkflowConstants.ACTION_SAVE_DRAFT %>');
+					<%= namespace %>sendMessage(form);
+
+					editorInstance.dispose();
 				}
-
-				form.fm('<%= randomNamespace %><%= Constants.CMD %>').val('<%= Constants.UPDATE %>');
-				form.fm('commentId').val(commentId);
-				form.fm('body').val(editorInstance.getHTML());
-
-				<%= namespace %>sendMessage(form);
-
-				editorInstance.dispose();
-			}
+			);
 
 			<%
 			String messageId = ParamUtil.getString(request, "messageId");

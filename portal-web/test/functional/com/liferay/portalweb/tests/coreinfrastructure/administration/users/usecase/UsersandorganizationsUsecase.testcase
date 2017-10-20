@@ -744,7 +744,7 @@
 		<for list="userfn2 userln2,userfn4 userln4" param="userName">
 			<var name="key_userScreenName" value="${userName}" />
 
-			<execute function="AssertTextNotPresent" locator1="UsersAndOrganizations#USER_TABLE_NAME" value1="${userName}" />
+			<execute function="AssertElementNotPresent" locator1="UsersAndOrganizations#USER_TABLE_NAME" />
 		</for>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -753,7 +753,9 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute function="AssertTextNotPresent" value1="Organization Name 1" />
+		<var name="key_siteName" value="Organization Name 1" />
+
+		<execute function="AssertElementNotPresent" locator1="Sites#SITE_TABLE_NAME" />
 
 		<var name="key_siteName" value="Organization Name 2" />
 

@@ -491,9 +491,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<var name="key_roleTitle" value="Guest" />
-
-		<execute function="AssertTextNotPresent" locator1="Permissions#CONTENT_PERMISSIONS_ROLE_NAME" value1="Guest" />
+		<execute function="AssertElementNotPresent" locator1="Permissions#CONTENT_PERMISSIONS_ROLE_NAME">
+			<var name="key_roleTitle" value="Guest" />
+		</execute>
 
 		<execute macro="Navigator#openPrivateSitePageURL">
 			<var name="pageName" value="Private Blogs Page" />
@@ -508,9 +508,9 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<var name="key_roleTitle" value="Guest" />
-
-		<execute function="AssertTextNotPresent" locator1="Permissions#CONTENT_PERMISSIONS_ROLE_NAME" value1="Guest" />
+		<execute function="AssertElementNotPresent" locator1="Permissions#CONTENT_PERMISSIONS_ROLE_NAME">
+			<var name="key_roleTitle" value="Guest" />
+		</execute>
 	</command>
 
 	<command name="RolesOrganizationSearch" priority="4">
@@ -2268,9 +2268,9 @@
 			<var name="userEmailAddress" value="userea2@liferay.com" />
 		</execute>
 
-		<var name="key_pageName" value="USA Ice Hockey Team Blog" />
-
-		<execute function="AssertTextNotPresent" locator1="Home#PAGE" value1="USA Ice Hockey Team Blog" />
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE">
+			<var name="key_pageName" value="USA Ice Hockey Team Blog" />
+		</execute>
 
 		<execute macro="User#logoutPG" />
 

@@ -1107,8 +1107,10 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute function="AssertTextNotPresent" locator1="Categories#CATEGORY_DETAILS_PROPERTY_KEY" value1="Category Property 2 Key" />
-		<execute function="AssertTextNotPresent" locator1="Categories#CATEGORY_DETAILS_PROPERTY_VALUE" value1="Category Property 2 Value" />
+		<var name="key_pathNumber" value="1" />
+
+		<execute function="AssertElementNotPresent" locator1="Categories#CATEGORY_DETAILS_PROPERTY_KEY_2" />
+		<execute function="AssertElementNotPresent" locator1="Categories#CATEGORY_DETAILS_PROPERTY_VALUE_2" />
 	</command>
 
 	<command name="DeleteSubcategoryViaIcon" priority="3">

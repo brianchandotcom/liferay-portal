@@ -897,7 +897,15 @@
 			<var name="siteName" value="Community Site Name" />
 		</execute>
 
-		<execute function="AssertTextNotPresent" locator1="Home#PAGE_2" value1="Wiki" />
+		<if>
+			<condition function="IsElementPresent" locator1="Home#PAGE_2" />
+			<then>
+				<execute function="AssertTextNotEquals" locator1="Home#PAGE_2" value1="Wiki" />
+			</then>
+			<else>
+				<execute function="AssertElementNotPresent" locator1="Home#PAGE_2" />
+			</else>
+		</if>
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Home" />
@@ -918,7 +926,15 @@
 			<var name="siteName" value="Community Site Name" />
 		</execute>
 
-		<execute function="AssertTextNotPresent" locator1="Home#PAGE_2_GUEST_VIEW" value1="New Page Name" />
+		<if>
+			<condition function="IsElementPresent" locator1="Home#PAGE_2_GUEST_VIEW" />
+			<then>
+				<execute function="AssertTextNotEquals" locator1="Home#PAGE_2_GUEST_VIEW" value1="New Page Name" />
+			</then>
+			<else>
+				<execute function="AssertElementNotPresent" locator1="Home#PAGE_2_GUEST_VIEW" />
+			</else>
+		</if>
 
 		<execute function="Pause" locator1="120000" />
 

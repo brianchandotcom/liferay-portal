@@ -424,7 +424,15 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute function="AssertTextNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
+		<if>
+			<condition function="IsElementNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" />
+			<then>
+				<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" />
+			</then>
+			<else>
+				<execute function="AssertTextNotEquals#assertNotPartialText" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
+			</else>
+		</if>
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
@@ -461,7 +469,12 @@
 
 		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
 
-		<execute function="AssertTextNotPresent" locator1="Home#BREADCRUMB_2" value1="Site Page" />
+		<if>
+			<condition function="IsElementPresent" locator1="Home#BREADCRUMB_2" />
+			<then>
+				<execute function="AssertTextNotEquals" locator1="Home#BREADCRUMB_2" value1="Site Page" />
+			</then>
+		</if>
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
@@ -1520,7 +1533,16 @@
 		</execute>
 
 		<execute function="AssertLocation" value1="${portalURL}/web/united-states" />
-		<execute function="AssertTextNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
+
+		<if>
+			<condition function="IsElementNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" />
+			<then>
+				<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" />
+			</then>
+			<else>
+				<execute function="AssertTextNotEquals#assertNotPartialText" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
+			</else>
+		</if>
 
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Page Type Test Site Name" />
@@ -1532,6 +1554,15 @@
 		</execute>
 
 		<execute function="AssertLocation" value1="${portalURL}/web/canada" />
-		<execute function="AssertTextNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
+
+		<if>
+			<condition function="IsElementNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" />
+			<then>
+				<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" />
+			</then>
+			<else>
+				<execute function="AssertTextNotEquals#assertNotPartialText" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
+			</else>
+		</if>
 	</command>
 </definition>

@@ -1014,7 +1014,7 @@
 
 		<var name="key_portletTitleName" value="Web Content Display" />
 
-		<execute function="AssertTextNotPresent" locator1="Portlet#SPECIFIC_TITLE" value1="Web Content Display" />
+		<execute function="AssertElementNotPresent" locator1="Portlet#SPECIFIC_TITLE" />
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
@@ -1028,7 +1028,7 @@
 
 		<var name="key_portletTitleName" value="Web Content Display" />
 
-		<execute function="AssertTextNotPresent" locator1="Portlet#SPECIFIC_TITLE" value1="Web Content Display" />
+		<execute function="AssertElementNotPresent" locator1="Portlet#SPECIFIC_TITLE" />
 
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Staging Test Page" />
@@ -1256,7 +1256,15 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute function="AssertTextNotPresent" locator1="WCD#WEB_CONTENT_CONTENT" value1="Web Content Title 2" />
+		<if>
+			<condition function="IsElementPresent" locator1="WCD#WEB_CONTENT_CONTENT" />
+			<then>
+				<execute function="AssertTextNotEquals" locator1="WCD#WEB_CONTENT_CONTENT" value1="Web Content Title 2" />
+			</then>
+			<else>
+				<execute function="AssertElementNotPresent" locator1="WCD#WEB_CONTENT_CONTENT" />
+			</else>
+		</if>
 
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="My Workflow Tasks" />

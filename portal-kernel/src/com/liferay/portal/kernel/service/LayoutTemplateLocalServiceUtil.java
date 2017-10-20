@@ -46,6 +46,12 @@ public class LayoutTemplateLocalServiceUtil {
 		return getService().getContent(layoutTemplateId, standard, themeId);
 	}
 
+	public static java.lang.String getLangType(
+		java.lang.String layoutTemplateId, boolean standard,
+		java.lang.String themeId) {
+		return getService().getLangType(layoutTemplateId, standard, themeId);
+	}
+
 	public static com.liferay.portal.kernel.model.LayoutTemplate getLayoutTemplate(
 		java.lang.String layoutTemplateId, boolean standard,
 		java.lang.String themeId) {

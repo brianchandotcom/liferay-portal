@@ -104,7 +104,8 @@ public class RuntimePageImpl implements RuntimePage {
 			TemplateResource templateResource)
 		throws Exception {
 
-		doDispatch(request, response, null, templateResource,
+		doDispatch(
+			request, response, null, templateResource,
 			TemplateConstants.LANG_TYPE_VM, false);
 	}
 
@@ -124,16 +125,8 @@ public class RuntimePageImpl implements RuntimePage {
 	@Override
 	public void processTemplate(
 			HttpServletRequest request, HttpServletResponse response,
-			TemplateResource templateResource)
-		throws Exception {
-
-		processTemplate(request, response, null, templateResource);
-	}
-
-	@Override
-	public void processTemplate(
-		HttpServletRequest request, HttpServletResponse response,
-		String portletId, TemplateResource templateResource, String langType)
+			String portletId, TemplateResource templateResource,
+			String langType)
 		throws Exception {
 
 		StringBundler sb = doDispatch(
@@ -144,8 +137,17 @@ public class RuntimePageImpl implements RuntimePage {
 
 	@Override
 	public void processTemplate(
-		HttpServletRequest request, HttpServletResponse response,
-		TemplateResource templateResource, String langType)
+			HttpServletRequest request, HttpServletResponse response,
+			TemplateResource templateResource)
+		throws Exception {
+
+		processTemplate(request, response, null, templateResource);
+	}
+
+	@Override
+	public void processTemplate(
+			HttpServletRequest request, HttpServletResponse response,
+			TemplateResource templateResource, String langType)
 		throws Exception {
 
 		processTemplate(request, response, null, templateResource, langType);

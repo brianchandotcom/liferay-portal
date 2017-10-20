@@ -18,7 +18,10 @@ import com.liferay.layout.admin.web.internal.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.util.LayoutPageTemplatePortletUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.service.permission.LayoutPageTemplatePermission;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -227,6 +230,69 @@ public class LayoutPageTemplateDisplayContext {
 		return layoutPageTemplateCollection.getName();
 	}
 
+	public SearchContainer getLayoutPageTemplateEntriesSearchContainer()
+		throws PortalException {
+
+		if (_layoutPageTemplateEntriesSearchContainer != null) {
+			return _layoutPageTemplateEntriesSearchContainer;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		SearchContainer layoutPageTemplateEntriesSearchContainer =
+			new SearchContainer(
+				_renderRequest, _renderResponse.createRenderURL(), null,
+				"there-are-no-page-templates");
+
+		layoutPageTemplateEntriesSearchContainer.setEmptyResultsMessage(
+			"there-are-no-page-templates.-you-can-add-a-page-template-by-" +
+				"clicking-the-plus-button-on-the-bottom-right-corner");
+		layoutPageTemplateEntriesSearchContainer.setEmptyResultsMessageCssClass(
+			"taglib-empty-result-message-header-has-plus-btn");
+
+		layoutPageTemplateEntriesSearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
+
+		layoutPageTemplateEntriesSearchContainer.setOrderByCol(getOrderByCol());
+
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator =
+			LayoutPageTemplatePortletUtil.
+				getLayoutPageTemplateEntryOrderByComparator(
+					getOrderByCol(), getOrderByType());
+
+		layoutPageTemplateEntriesSearchContainer.setOrderByComparator(
+			orderByComparator);
+
+		layoutPageTemplateEntriesSearchContainer.setOrderByType(
+			getOrderByType());
+
+		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
+			LayoutPageTemplateEntryLocalServiceUtil.
+				getLayoutPageTemplateEntries(
+					themeDisplay.getScopeGroupId(),
+					getLayoutPageTemplateCollectionId(), getKeywords(),
+					layoutPageTemplateEntriesSearchContainer.getStart(),
+					layoutPageTemplateEntriesSearchContainer.getEnd(),
+					orderByComparator);
+
+		int layoutPageTemplateEntriesCount =
+			LayoutPageTemplateEntryServiceUtil.
+				getLayoutPageTemplateEntriesCount(
+					themeDisplay.getScopeGroupId(),
+					getLayoutPageTemplateCollectionId(), getKeywords());
+
+		layoutPageTemplateEntriesSearchContainer.setResults(
+			layoutPageTemplateEntries);
+		layoutPageTemplateEntriesSearchContainer.setTotal(
+			layoutPageTemplateEntriesCount);
+
+		_layoutPageTemplateEntriesSearchContainer =
+			layoutPageTemplateEntriesSearchContainer;
+
+		return _layoutPageTemplateEntriesSearchContainer;
+	}
+
 	public String getOrderByCol() {
 		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;
@@ -324,6 +390,7 @@ public class LayoutPageTemplateDisplayContext {
 	private LayoutPageTemplateCollection _layoutPageTemplateCollection;
 	private Long _layoutPageTemplateCollectionId;
 	private SearchContainer _layoutPageTemplateCollectionsSearchContainer;
+	private SearchContainer _layoutPageTemplateEntriesSearchContainer;
 	private String _orderByCol;
 	private String _orderByType;
 	private final RenderRequest _renderRequest;

@@ -30,7 +30,6 @@ page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.ResourceBundleUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.site.navigation.admin.web.internal.display.context.SiteNavigationAdminDisplayContext" %><%@
@@ -39,8 +38,7 @@ page import="com.liferay.site.navigation.service.permission.SiteNavigationMenuPe
 page import="com.liferay.site.navigation.type.SiteNavigationMenuItemType" %><%@
 page import="com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry" %>
 
-<%@ page import="java.util.Date" %><%@
-page import="java.util.ResourceBundle" %>
+<%@ page import="java.util.Date" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

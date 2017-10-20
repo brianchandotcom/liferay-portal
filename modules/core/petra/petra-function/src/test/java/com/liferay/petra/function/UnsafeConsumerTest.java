@@ -32,7 +32,15 @@ public class UnsafeConsumerTest {
 
 	@ClassRule
 	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+		new CodeCoverageAssertor() {
+
+			@Override
+			public void appendAssertClasses(List<Class<?>> assertClasses) {
+				assertClasses.add(UnsafeFunction.class);
+				assertClasses.add(UnsafeSupplier.class);
+			}
+
+		};
 
 	@Test
 	public void testAccept1() throws IOException {

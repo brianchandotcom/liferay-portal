@@ -66,23 +66,15 @@ public class EditSiteNavigationMenuMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		SiteNavigationMenu siteNavigationMenu = null;
-
 		if (siteNavigationMenuId > 0) {
-			siteNavigationMenu =
-				_siteNavigationMenuService.updateSiteNavigationMenu(
-					siteNavigationMenuId, name, serviceContext);
+			_siteNavigationMenuService.updateSiteNavigationMenu(
+				siteNavigationMenuId, name, serviceContext);
 		}
 		else {
-			siteNavigationMenu =
+			SiteNavigationMenu siteNavigationMenu =
 				_siteNavigationMenuService.addSiteNavigationMenu(
 					themeDisplay.getScopeGroupId(), name, serviceContext);
-		}
 
-		boolean hideDefaultSuccessMessage = ParamUtil.getBoolean(
-			actionRequest, "hideDefaultSuccessMessage");
-
-		if (hideDefaultSuccessMessage) {
 			hideDefaultSuccessMessage(actionRequest);
 
 			PortletURL redirectURL = PortletURLFactoryUtil.create(

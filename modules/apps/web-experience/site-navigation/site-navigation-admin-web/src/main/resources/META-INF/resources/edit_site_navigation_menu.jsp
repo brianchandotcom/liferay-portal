@@ -37,7 +37,6 @@ String[] types = siteNavigationMenuItemTypeRegistry.getTypes();
 <aui:form action="<%= editSitaNavigationMenuURL %>" cssClass="container-fluid-1280" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="siteNavigationMenuId" type="hidden" value="<%= siteNavigationAdminDisplayContext.getSiteNavigationMenuId() %>" />
-	<aui:input name="hideDefaultSuccessMessage" type="hidden" value="<%= false %>" />
 	<aui:input name="selectedItemType" type="hidden" value="" />
 
 	<aui:model-context bean="<%= siteNavigationMenu %>" model="<%= SiteNavigationMenu.class %>" />
@@ -110,7 +109,6 @@ String[] types = siteNavigationMenuItemTypeRegistry.getTypes();
 			function(event) {
 				var type = event.currentTarget.getData().type;
 
-				document.getElementById('<portlet:namespace/>hideDefaultSuccessMessage').value = 'true';
 				document.getElementById('<portlet:namespace/>selectedItemType').value = type;
 				submitForm(document.<portlet:namespace/>fm);
 			},

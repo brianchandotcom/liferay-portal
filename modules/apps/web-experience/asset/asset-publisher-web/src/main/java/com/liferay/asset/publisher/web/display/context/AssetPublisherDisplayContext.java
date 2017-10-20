@@ -38,9 +38,10 @@ import com.liferay.asset.publisher.web.internal.action.AssetEntryActionRegistry;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.impl.AssetPublisherAddItemHolder;
-import com.liferay.asset.util.impl.AssetUtil;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
+import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -94,6 +95,10 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * Provides utility methods moved from the Asset Publisher portlet's JSP files
@@ -159,7 +164,7 @@ public class AssetPublisherDisplayContext {
 		if (_abstractLength == null) {
 			_abstractLength = GetterUtil.getInteger(
 				_portletPreferences.getValue("abstractLength", null),
-				AssetUtil.ASSET_ENTRY_ABSTRACT_LENGTH);
+				AssetHelper.ASSET_ENTRY_ABSTRACT_LENGTH);
 		}
 
 		return _abstractLength;
@@ -779,12 +784,23 @@ public class AssetPublisherDisplayContext {
 		String redirect = _getScopeAssetPortletRedirect(
 			liferayPortletRequest, liferayPortletResponse);
 
+		Bundle bundle = FrameworkUtil.getBundle(
+			AssetPublisherDisplayContext.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		long[] allAssetCategoryIds = getAllAssetCategoryIds();
+
+		String[] allAssetTagNames = getAllAssetTagNames();
+
 		for (long groupId : groupIds) {
 			List<AssetPublisherAddItemHolder> assetPublisherAddItemHolders =
-				AssetUtil.getAssetPublisherAddItemHolders(
-					liferayPortletRequest, liferayPortletResponse, groupId,
-					getClassNameIds(), getClassTypeIds(),
-					getAllAssetCategoryIds(), getAllAssetTagNames(), redirect);
+				OSGiServiceUtil.callService(
+					bundleContext, AssetHelper.class,
+					assetHelper -> assetHelper.getAssetPublisherAddItemHolders(
+						liferayPortletRequest, liferayPortletResponse, groupId,
+						getClassNameIds(), getClassTypeIds(),
+						allAssetCategoryIds, allAssetTagNames, redirect));
 
 			if (ListUtil.isNotEmpty(assetPublisherAddItemHolders)) {
 				Map<String, PortletURL> addPortletURLs = new HashMap<>();
@@ -829,12 +845,23 @@ public class AssetPublisherDisplayContext {
 		String redirect = _getScopeAssetPortletRedirect(
 			liferayPortletRequest, liferayPortletResponse);
 
+		Bundle bundle = FrameworkUtil.getBundle(
+			AssetPublisherDisplayContext.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		long[] allAssetCategoryIds = getAllAssetCategoryIds();
+
+		String[] allAssetTagNames = getAllAssetTagNames();
+
 		for (long groupId : groupIds) {
 			List<AssetPublisherAddItemHolder> assetPublisherAddItemHolders =
-				AssetUtil.getAssetPublisherAddItemHolders(
-					liferayPortletRequest, liferayPortletResponse, groupId,
-					getClassNameIds(), getClassTypeIds(),
-					getAllAssetCategoryIds(), getAllAssetTagNames(), redirect);
+				OSGiServiceUtil.callService(
+					bundleContext, AssetHelper.class,
+					assetHelper -> assetHelper.getAssetPublisherAddItemHolders(
+						liferayPortletRequest, liferayPortletResponse, groupId,
+						getClassNameIds(), getClassTypeIds(),
+						allAssetCategoryIds, allAssetTagNames, redirect));
 
 			if (ListUtil.isNotEmpty(assetPublisherAddItemHolders)) {
 				scopeAssetPublisherAddItemHolders.put(

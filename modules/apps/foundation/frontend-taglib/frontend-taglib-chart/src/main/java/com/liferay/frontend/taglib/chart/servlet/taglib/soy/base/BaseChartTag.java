@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.chart.taglib.servlet.taglib.soy.base;
+package com.liferay.frontend.taglib.chart.servlet.taglib.soy.base;
 
-import com.liferay.chart.taglib.internal.NPMResolverProvider;
+import com.liferay.frontend.taglib.chart.internal.NPMResolverProvider;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
 import com.liferay.portal.kernel.servlet.taglib.util.OutputData;

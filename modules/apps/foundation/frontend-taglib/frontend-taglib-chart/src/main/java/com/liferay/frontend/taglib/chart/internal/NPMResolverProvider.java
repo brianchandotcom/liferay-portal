@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.chart.taglib.internal;
+package com.liferay.frontend.taglib.chart.internal;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 

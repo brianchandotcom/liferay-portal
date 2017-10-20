@@ -1,0 +1,17 @@
+Bundle-Name: Liferay Frontend Taglib Chart
+Bundle-SymbolicName: com.liferay.frontend.taglib.chart
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.frontend.taglib.chart.servlet.taglib.soy,\
+	com.liferay.frontend.taglib.chart.servlet.taglib.soy.base
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Frontend Infrastructure
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/chart";\
+		version:Version="${Bundle-Version}",\
+	soy;\
+		type="chart-taglib";\
+		version:Version="${Bundle-Version}"
+Web-ContextPath: /frontend-taglib-chart

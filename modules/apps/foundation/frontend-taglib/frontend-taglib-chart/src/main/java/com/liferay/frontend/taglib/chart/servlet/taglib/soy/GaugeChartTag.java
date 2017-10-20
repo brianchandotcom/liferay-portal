@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.chart.taglib.servlet.taglib.soy;
+package com.liferay.frontend.taglib.chart.servlet.taglib.soy;
 
-import com.liferay.chart.taglib.servlet.taglib.soy.base.BaseChartTag;
+import com.liferay.frontend.taglib.chart.servlet.taglib.soy.base.BaseChartTag;
 
 /**
  * @author Chema Balsas
  */
-public class BarChartTag extends BaseChartTag {
+public class GaugeChartTag extends BaseChartTag {
 
-	public BarChartTag() {
-		super("BarChart");
+	public GaugeChartTag() {
+		super("GaugeChart");
 	}
 
 }

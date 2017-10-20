@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.chart.taglib.servlet.taglib.soy;
+package com.liferay.frontend.taglib.chart.servlet.taglib.soy;
 
-import com.liferay.chart.taglib.servlet.taglib.soy.base.BaseChartTag;
+import com.liferay.frontend.taglib.chart.servlet.taglib.soy.base.BaseChartTag;
 
 /**
  * @author Chema Balsas
  */
-public class ScatterChartTag extends BaseChartTag {
+public class StepChartTag extends BaseChartTag {
 
-	public ScatterChartTag() {
-		super("ScatterChart");
+	public StepChartTag() {
+		super("StepChart");
 	}
 
 }

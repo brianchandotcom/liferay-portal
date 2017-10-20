@@ -16,6 +16,7 @@ package com.liferay.lcs.messaging.analytics;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import com.liferay.lcs.messaging.Message;
@@ -29,8 +30,13 @@ import javax.validation.constraints.NotNull;
 
 /**
  * @author Ivica Cardic
+ * @author Riccardo Ferrari
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonSubTypes(
+	{@JsonSubTypes.Type(name = "AT", value = AnalyticsEventsMessage.class)}
+
+)
 @JsonTypeInfo(
 	include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "messageFormat",
 	use = JsonTypeInfo.Id.NAME, visible = true

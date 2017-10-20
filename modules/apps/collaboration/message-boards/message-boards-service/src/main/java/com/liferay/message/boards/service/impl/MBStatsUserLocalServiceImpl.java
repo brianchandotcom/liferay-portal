@@ -16,11 +16,9 @@ package com.liferay.message.boards.service.impl;
 
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.model.MBStatsUser;
-import com.liferay.message.boards.model.impl.MBStatsUserImpl;
 import com.liferay.message.boards.service.base.MBStatsUserLocalServiceBaseImpl;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -32,7 +30,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -111,9 +108,7 @@ public class MBStatsUserLocalServiceImpl
 
 	@Override
 	public Date getLastPostDateByUserId(long groupId, long userId) {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MBThread.class, MBStatsUserImpl.TABLE_NAME,
-			ClassLoaderUtil.getPortalClassLoader());
+		DynamicQuery dynamicQuery = mbThreadLocalService.dynamicQuery();
 
 		Projection projection = ProjectionFactoryUtil.max("lastPostDate");
 
@@ -135,7 +130,7 @@ public class MBStatsUserLocalServiceImpl
 
 		dynamicQuery.add(disjunction);
 
-		List<Date> results = mbStatsUserLocalService.dynamicQuery(dynamicQuery);
+		List<Date> results = mbThreadLocalService.dynamicQuery(dynamicQuery);
 
 		return results.get(0);
 	}

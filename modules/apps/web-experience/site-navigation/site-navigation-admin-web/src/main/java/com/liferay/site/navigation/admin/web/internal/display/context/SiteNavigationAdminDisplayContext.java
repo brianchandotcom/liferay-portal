@@ -63,6 +63,10 @@ public class SiteNavigationAdminDisplayContext {
 		_portletPreferences =
 			PortletPreferencesFactoryUtil.getPortletPreferences(
 				request, SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN);
+		_siteNavigationMenuItemTypeRegistry =
+			(SiteNavigationMenuItemTypeRegistry)_request.getAttribute(
+				SiteNavigationAdminWebKeys.
+					SITE_NAVIGATION_MENU_ITEM_TYPE_REGISTRY);
 	}
 
 	public String getDisplayStyle() {
@@ -281,12 +285,7 @@ public class SiteNavigationAdminDisplayContext {
 	public SiteNavigationMenuItemTypeRegistry
 		getSiteNavigationMenuItemTypeRegistry() {
 
-		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry =
-			(SiteNavigationMenuItemTypeRegistry)_request.getAttribute(
-				SiteNavigationAdminWebKeys.
-					SITE_NAVIGATION_MENU_ITEM_TYPE_REGISTRY);
-
-		return siteNavigationMenuItemTypeRegistry;
+		return _siteNavigationMenuItemTypeRegistry;
 	}
 
 	public boolean isShowAddButton() {
@@ -317,5 +316,7 @@ public class SiteNavigationAdminDisplayContext {
 	private final HttpServletRequest _request;
 	private SearchContainer _searchContainer;
 	private Long _siteNavigationMenuId;
+	private final SiteNavigationMenuItemTypeRegistry
+		_siteNavigationMenuItemTypeRegistry;
 
 }

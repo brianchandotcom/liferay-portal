@@ -76,14 +76,7 @@ renderResponse.setTitle(((siteNavigationMenu == null) ? LanguageUtil.get(request
 					</div>
 
 					<div class="text-center">
-						<h3>
-							<span class="d-block mt-xl-3">
-								<liferay-ui:message key="this-menu-is-empty" />
-							</span>
-							<span class="d-block mt-xl-3">
-								<liferay-ui:message key="please-add-elements-like-pages-categories-urls" />
-							</span>
-						</h3>
+						<liferay-ui:message key="this-menu-is-empty.-please-select-an-element" />
 					</div>
 				</aui:fieldset>
 			</c:otherwise>

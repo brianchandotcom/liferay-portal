@@ -55,9 +55,6 @@ public class AddSiteNavigationMenuMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String selectedItemType = ParamUtil.getString(
-			actionRequest, "selectedItemType");
-
 		String name = ParamUtil.getString(actionRequest, "name");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -69,7 +66,22 @@ public class AddSiteNavigationMenuMVCActionCommand
 
 		hideDefaultSuccessMessage(actionRequest);
 
+		String redirect = _getRedirect(
+			actionRequest, siteNavigationMenu.getSiteNavigationMenuId());
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+	}
+
+	private String _getRedirect(
+		ActionRequest actionRequest, long siteNavigationMenuId) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		String selectedItemType = ParamUtil.getString(
+			actionRequest, "selectedItemType");
 
 		PortletURL redirectURL = PortletURLFactoryUtil.create(
 			actionRequest, SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
@@ -78,11 +90,10 @@ public class AddSiteNavigationMenuMVCActionCommand
 		redirectURL.setParameter("mvcPath", "/edit_site_navigation_menu.jsp");
 		redirectURL.setParameter("redirect", redirect);
 		redirectURL.setParameter(
-			"siteNavigationMenuId",
-			String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()));
+			"siteNavigationMenuId", String.valueOf(siteNavigationMenuId));
 		redirectURL.setParameter("selectedItemType", selectedItemType);
 
-		actionRequest.setAttribute(WebKeys.REDIRECT, redirectURL.toString());
+		return redirectURL.toString();
 	}
 
 	@Reference

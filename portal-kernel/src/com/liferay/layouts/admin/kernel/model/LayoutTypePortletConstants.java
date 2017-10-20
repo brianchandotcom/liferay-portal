@@ -24,16 +24,19 @@ import java.util.Set;
 public class LayoutTypePortletConstants
 	extends com.liferay.portal.kernel.model.LayoutTypePortletConstants {
 
+	public static final String LINK_TO_LAYOUT_ID = "linkToLayoutId";
+
 	public static boolean isLayoutTemplateColumnName(String typeSettingId) {
 		return !_typeSettingsIds.contains(typeSettingId);
 	}
 
 	private static final Set<String> _typeSettingsIds = SetUtil.fromArray(
 		new String[] {
-			DEFAULT_ASSET_PUBLISHER_PORTLET_ID, LAYOUT_TEMPLATE_ID, MODE_ABOUT,
-			MODE_CONFIG, MODE_EDIT, MODE_EDIT_DEFAULTS, MODE_EDIT_GUEST,
-			MODE_HELP, MODE_PREVIEW, MODE_PRINT, NESTED_COLUMN_IDS, STATE_MAX,
-			STATE_MIN, STATIC_PORTLET_ORGANIZATION_SELECTOR,
+			DEFAULT_ASSET_PUBLISHER_PORTLET_ID, LAYOUT_TEMPLATE_ID,
+			LINK_TO_LAYOUT_ID, MODE_ABOUT, MODE_CONFIG, MODE_EDIT,
+			MODE_EDIT_DEFAULTS, MODE_EDIT_GUEST, MODE_HELP, MODE_PREVIEW,
+			MODE_PRINT, NESTED_COLUMN_IDS, STATE_MAX, STATE_MIN,
+			STATIC_PORTLET_ORGANIZATION_SELECTOR,
 			STATIC_PORTLET_REGULAR_SITE_SELECTOR, STATIC_PORTLET_USER_SELECTOR
 		});
 

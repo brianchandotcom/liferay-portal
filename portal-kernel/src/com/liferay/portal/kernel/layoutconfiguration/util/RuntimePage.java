@@ -45,17 +45,18 @@ public interface RuntimePage {
 
 	public void processTemplate(
 			HttpServletRequest request, HttpServletResponse response,
+			String portletId, TemplateResource templateResource,
+			String langType)
+		throws Exception;
+
+	public void processTemplate(
+			HttpServletRequest request, HttpServletResponse response,
 			TemplateResource templateResource)
 		throws Exception;
 
 	public void processTemplate(
-		HttpServletRequest request, HttpServletResponse response,
-		String portletId, TemplateResource templateResource, String langType)
-		throws Exception;
-
-	public void processTemplate(
-		HttpServletRequest request, HttpServletResponse response,
-		TemplateResource templateResource, String langType)
+			HttpServletRequest request, HttpServletResponse response,
+			TemplateResource templateResource, String langType)
 		throws Exception;
 
 	public String processXML(

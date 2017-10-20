@@ -33,7 +33,7 @@ public interface SiteNavigationMenuItemType {
 		throws Exception;
 
 	public default String getIcon() {
-		return "control-panel";
+		return "magic";
 	}
 
 	public default String getLabel(

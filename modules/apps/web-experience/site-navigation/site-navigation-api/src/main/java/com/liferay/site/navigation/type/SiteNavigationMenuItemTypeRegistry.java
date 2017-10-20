@@ -14,8 +14,10 @@
 
 package com.liferay.site.navigation.type;
 
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -41,6 +43,10 @@ public class SiteNavigationMenuItemTypeRegistry {
 		String type) {
 
 		return _siteNavigationMenuItemTypes.get(type);
+	}
+
+	public List<SiteNavigationMenuItemType> getSiteNavigationMenuItemTypes() {
+		return ListUtil.fromMapValues(_siteNavigationMenuItemTypes);
 	}
 
 	public String[] getTypes() {

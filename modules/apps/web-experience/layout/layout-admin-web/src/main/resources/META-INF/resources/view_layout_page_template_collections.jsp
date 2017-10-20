@@ -90,6 +90,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "page-templates"));
 			keyProperty="layoutPageTemplateCollectionId"
 			modelVar="layoutPageTemplateCollection"
 		>
+			<portlet:renderURL var="rowURL">
+				<portlet:param name="mvcPath" value="/view_layout_page_template_entries.jsp" />
+				<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()) %>" />
+			</portlet:renderURL>
 
 			<%
 			row.setCssClass("entry-card lfr-asset-folder");
@@ -103,6 +107,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "page-templates"));
 						resultRow="<%= row %>"
 						rowChecker="<%= searchContainer.getRowChecker() %>"
 						text="<%= HtmlUtil.escape(layoutPageTemplateCollection.getName()) %>"
+						url="<%= rowURL.toString() %>"
 					>
 						<liferay-frontend:horizontal-card-col>
 							<liferay-frontend:horizontal-card-icon

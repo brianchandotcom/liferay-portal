@@ -2502,6 +2502,31 @@ ${output.content}</echo>
 		</exec>
 	</target>
 
+	<target name="patching-tool-custom-scripts-jdk8">
+		<fail message="Please set the property liferay.jenkins.dir" >
+			<condition>
+				<not>
+					<isset property="liferay.jenkins.dir" />
+				</not>
+			</condition>
+		</fail>
+
+		<run-batch-test>
+			<test-action>
+				<sequential>
+					<trycatch property="failure.message">
+						<try>
+							<ant antfile="${liferay.jenkins.dir}/commands/custom-scripts/build-test.xml" inheritAll="false" target="run-patching-tool-custom-scripts" />
+						</try>
+						<catch>
+							<fail message="${failure.message}" />
+						</catch>
+					</trycatch>
+				</sequential>
+			</test-action>
+		</run-batch-test>
+	</target>
+
 	<target name="plugins-compile-jdk8">
 		<run-batch-test>
 			<test-action>

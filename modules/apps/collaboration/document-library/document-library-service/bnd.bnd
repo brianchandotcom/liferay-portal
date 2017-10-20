@@ -1,10 +1,6 @@
 Bundle-Name: Liferay Document Library Service
 Bundle-SymbolicName: com.liferay.document.library.service
-Bundle-Version: 1.1.29
-Export-Package:\
-	com.liferay.document.library.ddm,\
-	com.liferay.document.library.lar.xstream,\
-	com.liferay.document.library.verify
+Bundle-Version: 2.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Document Library
 Liferay-Require-SchemaVersion: 1.0.1

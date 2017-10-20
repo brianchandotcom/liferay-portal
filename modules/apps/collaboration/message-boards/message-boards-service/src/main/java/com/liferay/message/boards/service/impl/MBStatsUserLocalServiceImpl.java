@@ -203,7 +203,7 @@ public class MBStatsUserLocalServiceImpl
 			long groupId, int start, int end)
 		throws PortalException {
 
-		Group group = groupPersistence.findByPrimaryKey(groupId);
+		Group group = groupLocalService.getGroup(groupId);
 
 		long defaultUserId = userLocalService.getDefaultUserId(
 			group.getCompanyId());
@@ -216,7 +216,7 @@ public class MBStatsUserLocalServiceImpl
 	public int getStatsUsersByGroupIdCount(long groupId)
 		throws PortalException {
 
-		Group group = groupPersistence.findByPrimaryKey(groupId);
+		Group group = groupLocalService.getGroup(groupId);
 
 		long defaultUserId = userLocalService.getDefaultUserId(
 			group.getCompanyId());
@@ -240,7 +240,7 @@ public class MBStatsUserLocalServiceImpl
 	public MBStatsUser updateStatsUser(
 		long groupId, long userId, Date lastPostDate) {
 
-		int messageCount = mbMessagePersistence.countByG_U_S(
+		int messageCount = mbMessageLocalService.getGroupMessagesCount(
 			groupId, userId, WorkflowConstants.STATUS_APPROVED);
 
 		return updateStatsUser(groupId, userId, messageCount, lastPostDate);

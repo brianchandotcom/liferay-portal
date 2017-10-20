@@ -52,21 +52,33 @@ renderResponse.setTitle(((siteNavigationMenu == null) ? LanguageUtil.get(request
 			</c:when>
 			<c:otherwise>
 				<aui:fieldset>
-					<div class="d-flex" id="<portlet:namespace/>siteNavigationMenuItemTypes">
+					<div class="row" id="<portlet:namespace/>siteNavigationMenuItemTypes">
 
 						<%
 						for (SiteNavigationMenuItemType siteNavigationMenuItemType : siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemTypes()) {
 						%>
 
-							<div class="card col-md-2 item-type pt-xl-3 text-center" data-type="<%= siteNavigationMenuItemType.getType() %>">
-								<liferay-ui:icon
-									icon="<%= siteNavigationMenuItemType.getIcon() %>"
-									markupView="lexicon"
-								/>
+							<div class="col-md-2 item-type" data-type="<%= siteNavigationMenuItemType.getType() %>">
+								<div class="card card-type-asset">
+									<div class="aspect-ratio card-item-first">
+										<div class="aspect-ratio-item-center-middle aspect-ratio-item-fluid">
+											<liferay-ui:icon
+												icon="<%= siteNavigationMenuItemType.getIcon() %>"
+												markupView="lexicon"
+											/>
+										</div>
+									</div>
 
-								<h5 class="mt-xl-3">
-									<%= siteNavigationMenuItemType.getLabel(locale) %>
-								</h5>
+									<div class="card-body">
+										<div class="card-row">
+											<div class="flex-col flex-col-expand">
+												<div class="card-title text-center text-truncate">
+													<%= siteNavigationMenuItemType.getLabel(locale) %>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 
 						<%

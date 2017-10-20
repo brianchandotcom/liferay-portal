@@ -80,6 +80,12 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 			keyProperty="siteNavigationMenuId"
 			modelVar="siteNavigationMenu"
 		>
+			<portlet:renderURL var="editSiteNavigationMenuURL">
+				<portlet:param name="mvcPath" value="/edit_site_navigation_menu.jsp" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="siteNavigationMenuId" value="<%= String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()) %>" />
+			</portlet:renderURL>
+
 			<c:choose>
 				<c:when test='<%= displayStyle.equals("descriptive") %>'>
 					<liferay-ui:search-container-column-user
@@ -88,7 +94,7 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 						userId="<%= siteNavigationMenu.getUserId() %>"
 					/>
 
-					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>" href="<%= editSiteNavigationMenuURL %>">
 
 						<%
 						Date createDate = siteNavigationMenu.getCreateDate();
@@ -123,6 +129,7 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 							resultRow="<%= row %>"
 							rowChecker="<%= searchContainer.getRowChecker() %>"
 							title="<%= siteNavigationMenu.getName() %>"
+							url="<%= editSiteNavigationMenuURL %>"
 						>
 							<liferay-frontend:vertical-card-sticker-bottom>
 								<liferay-ui:user-portrait
@@ -140,6 +147,7 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 				<c:otherwise>
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-content"
+						href="<%= editSiteNavigationMenuURL %>"
 						name="title"
 						orderable="<%= false %>"
 						value="<%= siteNavigationMenu.getName() %>"
@@ -170,7 +178,7 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 
 <c:if test="<%= siteNavigationAdminDisplayContext.isShowAddButton() %>">
 	<portlet:renderURL var="addSiteNavigationMenuURL">
-		<portlet:param name="mvcPath" value="/edit_site_navigation_menu.jsp" />
+		<portlet:param name="mvcPath" value="/add_site_navigation_menu.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</portlet:renderURL>
 

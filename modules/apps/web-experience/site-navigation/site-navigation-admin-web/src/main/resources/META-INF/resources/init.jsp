@@ -34,7 +34,9 @@ page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.site.navigation.admin.web.internal.display.context.SiteNavigationAdminDisplayContext" %><%@
 page import="com.liferay.site.navigation.model.SiteNavigationMenu" %><%@
-page import="com.liferay.site.navigation.service.permission.SiteNavigationMenuPermission" %>
+page import="com.liferay.site.navigation.service.permission.SiteNavigationMenuPermission" %><%@
+page import="com.liferay.site.navigation.type.SiteNavigationMenuItemType" %><%@
+page import="com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry" %>
 
 <%@ page import="java.util.Date" %>
 
@@ -50,4 +52,5 @@ page import="com.liferay.site.navigation.service.permission.SiteNavigationMenuPe
 
 <%
 SiteNavigationAdminDisplayContext siteNavigationAdminDisplayContext = new SiteNavigationAdminDisplayContext(liferayPortletRequest, liferayPortletResponse, request);
+SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry = siteNavigationAdminDisplayContext.getSiteNavigationMenuItemTypeRegistry();
 %>

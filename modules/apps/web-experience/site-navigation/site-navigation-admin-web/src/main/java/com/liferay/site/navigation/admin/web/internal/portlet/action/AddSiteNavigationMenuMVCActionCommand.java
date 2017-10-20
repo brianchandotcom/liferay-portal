@@ -69,19 +69,14 @@ public class AddSiteNavigationMenuMVCActionCommand
 
 		hideDefaultSuccessMessage(actionRequest);
 
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
 		PortletURL redirectURL = PortletURLFactoryUtil.create(
 			actionRequest, SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
 			themeDisplay.getPlid(), ActionRequest.RENDER_PHASE);
 
-		PortletURL viewSiteNavigationMenusURL = PortletURLFactoryUtil.create(
-			actionRequest, SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
-			themeDisplay.getPlid(), ActionRequest.RENDER_PHASE);
-
-		viewSiteNavigationMenusURL.setParameter("mvcPath", "/view.jsp");
-
 		redirectURL.setParameter("mvcPath", "/edit_site_navigation_menu.jsp");
-		redirectURL.setParameter(
-			"redirect", viewSiteNavigationMenusURL.toString());
+		redirectURL.setParameter("redirect", redirect);
 		redirectURL.setParameter(
 			"siteNavigationMenuId",
 			String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()));

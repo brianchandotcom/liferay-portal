@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean class="com.liferay.message.boards.service.impl.MBBanLocalServiceImpl" id="com.liferay.message.boards.service.MBBanLocalService" />
+	<bean class="com.liferay.message.boards.service.impl.MBBanServiceImpl" id="com.liferay.message.boards.service.MBBanService" />
+	<bean class="com.liferay.message.boards.service.persistence.impl.MBBanPersistenceImpl" id="com.liferay.message.boards.service.persistence.MBBanPersistence" parent="basePersistence" />
 	<bean class="com.liferay.message.boards.service.impl.MBStatsUserLocalServiceImpl" id="com.liferay.message.boards.service.MBStatsUserLocalService" />
 	<bean class="com.liferay.message.boards.service.persistence.impl.MBStatsUserPersistenceImpl" id="com.liferay.message.boards.service.persistence.MBStatsUserPersistence" parent="basePersistence" />
 </beans>

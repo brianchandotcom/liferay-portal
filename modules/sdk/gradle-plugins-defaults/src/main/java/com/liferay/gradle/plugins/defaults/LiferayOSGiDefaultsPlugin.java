@@ -1875,6 +1875,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						moduleDependency.exclude(
 							Collections.singletonMap("group", _GROUP_PORTAL));
 					}
+					else if (name.equals("easyconf")) {
+						moduleDependency.exclude(
+							Collections.singletonMap("group", "xdoclet"));
+						moduleDependency.exclude(
+							Collections.singletonMap("group", "xpp3"));
+					}
 				}
 
 			});

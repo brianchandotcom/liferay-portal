@@ -25,8 +25,6 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(((siteNavigationMenu == null) ? LanguageUtil.get(request, "add-new-menu") : siteNavigationMenu.getName()));
-
-String[] types = siteNavigationMenuItemTypeRegistry.getTypes();
 %>
 
 <portlet:actionURL name="/navigation_menu/edit_site_navigation_menu" var="editSitaNavigationMenuURL">
@@ -57,20 +55,18 @@ String[] types = siteNavigationMenuItemTypeRegistry.getTypes();
 					<div class="d-flex" id="<portlet:namespace/>siteNavigationMenuItemTypes">
 
 						<%
-						for (String type : types) {
-							SiteNavigationMenuItemType siteNavigationMenuItemType = siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(type);
-
+						for (SiteNavigationMenuItemType siteNavigationMenuItemType : siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemTypes()) {
 							ResourceBundle siteNavigationMenuItemTypeResourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, siteNavigationMenuItemType.getClass());
 						%>
 
-							<div class="card col-md-2 item-type pt-xl-3 text-center" data-type="<%= type %>">
+							<div class="card col-md-2 item-type pt-xl-3 text-center" data-type="<%= siteNavigationMenuItemType.getType() %>">
 								<liferay-ui:icon
 									icon="<%= siteNavigationMenuItemType.getIcon() %>"
 									markupView="lexicon"
 								/>
 
 								<h5 class="mt-xl-3">
-									<%= LanguageUtil.get(request, siteNavigationMenuItemTypeResourceBundle, "site.navigation.menu.item.types." + type) %>
+									<%= LanguageUtil.get(request, siteNavigationMenuItemTypeResourceBundle, "site.navigation.menu.item.types." + siteNavigationMenuItemType.getType()) %>
 								</h5>
 							</div>
 

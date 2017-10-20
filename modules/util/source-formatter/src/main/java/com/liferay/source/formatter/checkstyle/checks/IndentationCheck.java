@@ -397,9 +397,7 @@ public class IndentationCheck extends BaseCheck {
 
 	private int _adjustTabCountForChains(int tabCount, DetailAST detailAST) {
 		boolean checkChaining = false;
-		DetailAST firstElistParent = null;
 		int methodCallLineCount = -1;
-		boolean outsideMethodCall = false;
 
 		DetailAST parentAST = detailAST;
 
@@ -408,31 +406,6 @@ public class IndentationCheck extends BaseCheck {
 				(parentAST.getType() == TokenTypes.LABELED_STAT) ||
 				(parentAST.getType() == TokenTypes.OBJBLOCK) ||
 				(parentAST.getType() == TokenTypes.SLIST)) {
-
-				return tabCount;
-			}
-
-			if (firstElistParent == null) {
-				if (parentAST.getType() == TokenTypes.ELIST) {
-					firstElistParent = parentAST;
-				}
-				else if (parentAST.getType() == TokenTypes.RPAREN) {
-					DetailAST previousSibling = parentAST.getPreviousSibling();
-
-					if ((previousSibling != null) &&
-						(previousSibling.getType() == TokenTypes.ELIST)) {
-
-						firstElistParent = previousSibling;
-					}
-				}
-			}
-			else if (parentAST.getType() == TokenTypes.LAMBDA) {
-				firstElistParent = null;
-				outsideMethodCall = false;
-			}
-
-			if (outsideMethodCall &&
-				(parentAST.getType() == TokenTypes.ELIST)) {
 
 				return tabCount;
 			}
@@ -446,7 +419,41 @@ public class IndentationCheck extends BaseCheck {
 				if (line.endsWith("(") &&
 					(parentAST.getLineNo() < methodCallLineCount)) {
 
-					tabCount--;
+					DetailAST rparenAST = null;
+
+					DetailAST methodCallAST = _findDetailAST(
+						parentAST, parentAST.getLineNo(),
+						TokenTypes.METHOD_CALL);
+
+					if (methodCallAST != null) {
+						rparenAST = methodCallAST.findFirstToken(
+							TokenTypes.RPAREN);
+					}
+					else {
+						DetailAST lparenAST = _findDetailAST(
+							parentAST, parentAST.getLineNo(),
+							TokenTypes.LPAREN);
+
+						DetailAST nextSibling = lparenAST.getNextSibling();
+
+						while (true) {
+							if ((nextSibling == null) ||
+								(nextSibling.getType() == TokenTypes.RPAREN)) {
+
+								rparenAST = nextSibling;
+
+								break;
+							}
+
+							nextSibling = nextSibling.getNextSibling();
+						}
+					}
+
+					if ((rparenAST != null) &&
+						(rparenAST.getLineNo() < detailAST.getLineNo())) {
+
+						tabCount--;
+					}
 
 					checkChaining = false;
 				}
@@ -463,10 +470,6 @@ public class IndentationCheck extends BaseCheck {
 
 					checkChaining = true;
 					methodCallLineCount = parentAST.getLineNo();
-				}
-
-				if (firstElistParent != null) {
-					outsideMethodCall = true;
 				}
 			}
 
@@ -513,6 +516,25 @@ public class IndentationCheck extends BaseCheck {
 
 			parentAST = parentAST.getParent();
 		}
+	}
+
+	private DetailAST _findDetailAST(
+		DetailAST parentAST, int lineNo, int type) {
+
+		if (parentAST.getType() == type) {
+			return parentAST;
+		}
+
+		List<DetailAST> methodCallASTList = DetailASTUtil.getAllChildTokens(
+			parentAST, true, type);
+
+		for (DetailAST methodCallAST : methodCallASTList) {
+			if (methodCallAST.getLineNo() == lineNo) {
+				return methodCallAST;
+			}
+		}
+
+		return null;
 	}
 
 	private DetailAST _findParent(DetailAST detailAST, int type) {

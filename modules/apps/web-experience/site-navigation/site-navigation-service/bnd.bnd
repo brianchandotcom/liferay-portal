@@ -1,9 +1,7 @@
 Bundle-Name: Liferay Site Navigation Service
 Bundle-SymbolicName: com.liferay.site.navigation.service
 Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.site.navigation.service.permission,\
-	com.liferay.site.navigation.type.controller.impl
+Export-Package: com.liferay.site.navigation.service.permission
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Navigation
 Liferay-Require-SchemaVersion: 1.0.0

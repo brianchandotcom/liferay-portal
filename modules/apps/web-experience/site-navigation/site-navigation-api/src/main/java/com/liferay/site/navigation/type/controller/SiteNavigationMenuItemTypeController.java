@@ -15,6 +15,8 @@
 package com.liferay.site.navigation.type.controller;
 
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,11 +32,23 @@ public interface SiteNavigationMenuItemTypeController {
 			SiteNavigationMenuItem siteNavigationMenuItem)
 		throws Exception;
 
-	public String getIcon();
+	public default String getIcon() {
+		return "control-panel";
+	}
 
-	public String getLabel(SiteNavigationMenuItem siteNavigationMenuItem);
+	public default String getLabel(
+		SiteNavigationMenuItem siteNavigationMenuItem) {
 
-	public String getType();
+		UnicodeProperties properties = new UnicodeProperties(true);
+
+		properties.fastLoad(siteNavigationMenuItem.getTypeSettings());
+
+		return properties.getProperty("label");
+	}
+
+	public default String getType() {
+		return StringPool.BLANK;
+	}
 
 	public JSONObject getViewContext(
 			HttpServletRequest request, HttpServletResponse response,

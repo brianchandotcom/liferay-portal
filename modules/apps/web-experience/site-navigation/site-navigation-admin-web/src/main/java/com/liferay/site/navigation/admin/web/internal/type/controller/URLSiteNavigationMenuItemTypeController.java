@@ -17,7 +17,6 @@ package com.liferay.site.navigation.admin.web.internal.type.controller;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.type.controller.SiteNavigationMenuItemTypeController;
-import com.liferay.site.navigation.type.controller.impl.BaseSiteNavigationMenuItemTypeControllerImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 	service = SiteNavigationMenuItemTypeController.class
 )
 public class URLSiteNavigationMenuItemTypeController
-	extends BaseSiteNavigationMenuItemTypeControllerImpl {
+	implements SiteNavigationMenuItemTypeController {
 
 	@Override
 	public JSONObject getEditContext(

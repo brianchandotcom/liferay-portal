@@ -14,21 +14,16 @@
 
 package com.liferay.site.navigation.admin.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.web.internal.constants.SiteNavigationAdminPortletKeys;
-import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuService;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,56 +47,16 @@ public class EditSiteNavigationMenuMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long siteNavigationMenuId = ParamUtil.getLong(
 			actionRequest, "siteNavigationMenuId");
-
-		String selectedItemType = ParamUtil.getString(
-			actionRequest, "selectedItemType");
 
 		String name = ParamUtil.getString(actionRequest, "name");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		if (siteNavigationMenuId > 0) {
-			_siteNavigationMenuService.updateSiteNavigationMenu(
-				siteNavigationMenuId, name, serviceContext);
-		}
-		else {
-			SiteNavigationMenu siteNavigationMenu =
-				_siteNavigationMenuService.addSiteNavigationMenu(
-					themeDisplay.getScopeGroupId(), name, serviceContext);
-
-			hideDefaultSuccessMessage(actionRequest);
-
-			PortletURL redirectURL = PortletURLFactoryUtil.create(
-				actionRequest,
-				SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
-				themeDisplay.getPlid(), ActionRequest.RENDER_PHASE);
-
-			PortletURL viewSiteNavigationMenusURL =
-				PortletURLFactoryUtil.create(
-					actionRequest,
-					SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
-					themeDisplay.getPlid(), ActionRequest.RENDER_PHASE);
-
-			viewSiteNavigationMenusURL.setParameter("mvcPath", "/view.jsp");
-
-			redirectURL.setParameter(
-				"mvcPath", "/edit_site_navigation_menu.jsp");
-			redirectURL.setParameter(
-				"redirect", viewSiteNavigationMenusURL.toString());
-			redirectURL.setParameter(
-				"siteNavigationMenuId",
-				String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()));
-			redirectURL.setParameter("selectedItemType", selectedItemType);
-
-			actionRequest.setAttribute(
-				WebKeys.REDIRECT, redirectURL.toString());
-		}
+		_siteNavigationMenuService.updateSiteNavigationMenu(
+			siteNavigationMenuId, name, serviceContext);
 	}
 
 	@Reference

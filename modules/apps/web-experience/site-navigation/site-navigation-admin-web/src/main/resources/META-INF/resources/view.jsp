@@ -178,7 +178,7 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 
 <c:if test="<%= siteNavigationAdminDisplayContext.isShowAddButton() %>">
 	<portlet:renderURL var="addSiteNavigationMenuURL">
-		<portlet:param name="mvcPath" value="/edit_site_navigation_menu.jsp" />
+		<portlet:param name="mvcPath" value="/add_site_navigation_menu.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</portlet:renderURL>
 

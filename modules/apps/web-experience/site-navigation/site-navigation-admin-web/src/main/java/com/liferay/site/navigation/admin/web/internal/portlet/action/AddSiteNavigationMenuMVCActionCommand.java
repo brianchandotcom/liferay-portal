@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
-		"mvc.command.name=/navigation_menu/edit_site_navigation_menu"
+		"mvc.command.name=/navigation_menu/add_site_navigation_menu"
 	},
 	service = MVCActionCommand.class
 )
@@ -55,9 +55,6 @@ public class AddSiteNavigationMenuMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long siteNavigationMenuId = ParamUtil.getLong(
-			actionRequest, "siteNavigationMenuId");
-
 		String selectedItemType = ParamUtil.getString(
 			actionRequest, "selectedItemType");
 
@@ -66,42 +63,31 @@ public class AddSiteNavigationMenuMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		if (siteNavigationMenuId > 0) {
-			_siteNavigationMenuService.updateSiteNavigationMenu(
-				siteNavigationMenuId, name, serviceContext);
-		}
-		else {
-			SiteNavigationMenu siteNavigationMenu =
-				_siteNavigationMenuService.addSiteNavigationMenu(
-					themeDisplay.getScopeGroupId(), name, serviceContext);
+		SiteNavigationMenu siteNavigationMenu =
+			_siteNavigationMenuService.addSiteNavigationMenu(
+				themeDisplay.getScopeGroupId(), name, serviceContext);
 
-			hideDefaultSuccessMessage(actionRequest);
+		hideDefaultSuccessMessage(actionRequest);
 
-			PortletURL redirectURL = PortletURLFactoryUtil.create(
-				actionRequest,
-				SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
-				themeDisplay.getPlid(), ActionRequest.RENDER_PHASE);
+		PortletURL redirectURL = PortletURLFactoryUtil.create(
+			actionRequest, SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
+			themeDisplay.getPlid(), ActionRequest.RENDER_PHASE);
 
-			PortletURL viewSiteNavigationMenusURL =
-				PortletURLFactoryUtil.create(
-					actionRequest,
-					SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
-					themeDisplay.getPlid(), ActionRequest.RENDER_PHASE);
+		PortletURL viewSiteNavigationMenusURL = PortletURLFactoryUtil.create(
+			actionRequest, SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
+			themeDisplay.getPlid(), ActionRequest.RENDER_PHASE);
 
-			viewSiteNavigationMenusURL.setParameter("mvcPath", "/view.jsp");
+		viewSiteNavigationMenusURL.setParameter("mvcPath", "/view.jsp");
 
-			redirectURL.setParameter(
-				"mvcPath", "/edit_site_navigation_menu.jsp");
-			redirectURL.setParameter(
-				"redirect", viewSiteNavigationMenusURL.toString());
-			redirectURL.setParameter(
-				"siteNavigationMenuId",
-				String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()));
-			redirectURL.setParameter("selectedItemType", selectedItemType);
+		redirectURL.setParameter("mvcPath", "/edit_site_navigation_menu.jsp");
+		redirectURL.setParameter(
+			"redirect", viewSiteNavigationMenusURL.toString());
+		redirectURL.setParameter(
+			"siteNavigationMenuId",
+			String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()));
+		redirectURL.setParameter("selectedItemType", selectedItemType);
 
-			actionRequest.setAttribute(
-				WebKeys.REDIRECT, redirectURL.toString());
-		}
+		actionRequest.setAttribute(WebKeys.REDIRECT, redirectURL.toString());
 	}
 
 	@Reference

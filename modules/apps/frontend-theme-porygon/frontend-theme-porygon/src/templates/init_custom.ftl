@@ -1,1 +1,0 @@
-<#assign show_header_main_search = getterUtil.getBoolean(themeDisplay.getThemeSetting("show-header-main-search")) />

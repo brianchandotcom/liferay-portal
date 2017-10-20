@@ -398,7 +398,7 @@ public class VirtualHostFilter extends BasePortalFilter {
 		}
 
 		if (Validator.isNotNull(queryString)) {
-			return path + StringPool.QUESTION + queryString;
+			return path.concat(StringPool.QUESTION).concat(queryString);
 		}
 
 		return path;

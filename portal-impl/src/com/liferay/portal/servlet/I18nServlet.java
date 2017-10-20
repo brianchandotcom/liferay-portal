@@ -275,7 +275,7 @@ public class I18nServlet extends HttpServlet {
 		}
 
 		if (Validator.isNotNull(queryString)) {
-			return path + StringPool.QUESTION + queryString;
+			return path.concat(StringPool.QUESTION).concat(queryString);
 		}
 
 		return path;

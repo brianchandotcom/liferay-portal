@@ -24,6 +24,8 @@ import java.util.Set;
 public class LayoutTypePortletConstants
 	extends com.liferay.portal.kernel.model.LayoutTypePortletConstants {
 
+	public static final String LINK_TO_LAYOUT_ID = "linkToLayoutId";
+
 	public static boolean isLayoutTemplateColumnName(String typeSettingId) {
 		return !_typeSettingsIds.contains(typeSettingId);
 	}

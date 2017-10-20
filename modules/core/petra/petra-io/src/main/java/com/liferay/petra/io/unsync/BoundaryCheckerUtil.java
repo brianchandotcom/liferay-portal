@@ -19,7 +19,7 @@ import com.liferay.petra.string.StringBundler;
 /**
  * @author Preston Crary
  */
-public class BoundaryCheckerUtil {
+class BoundaryCheckerUtil {
 
 	public static void check(int count, int offset, int length) {
 		int end = offset + length;

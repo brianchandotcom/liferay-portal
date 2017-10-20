@@ -438,18 +438,6 @@
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
-	<model name="com.liferay.message.boards.kernel.model.MBBan">
-		<field name="uuid" type="String" />
-		<field name="banId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="banUserId" type="long" />
-		<field name="lastPublishDate" type="Date" />
-	</model>
 	<model name="com.liferay.message.boards.kernel.model.MBCategory">
 		<field name="uuid" type="String" />
 		<field name="categoryId" type="long" />

@@ -354,17 +354,27 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			_addDependenciesPortalTest(project);
 			_addDependenciesTestCompile(project);
 			_configureConfigurationTestCompile(project);
-			_configureConfigurationTest(
-				project, JavaPlugin.TEST_COMPILE_CLASSPATH_CONFIGURATION_NAME,
-				liferayExtension);
-			_configureConfigurationTest(
-				project, JavaPlugin.TEST_RUNTIME_CONFIGURATION_NAME,
-				liferayExtension);
 			_configureEclipse(project, portalTestConfiguration);
 			_configureIdea(project, portalTestConfiguration);
 			_configureSourceSetTest(project, portalTestConfiguration);
 			_configureSourceSetTestIntegration(
 				project, portalConfiguration, portalTestConfiguration);
+
+			boolean forceDefaultVersions = false;
+
+			if (testProject || FileUtil.exists(project, ".lfrbuild-portal") ||
+				FileUtil.exists(project, ".lfrbuild-portal-private") ||
+				FileUtil.exists(project, ".lfrbuild-public")) {
+
+				forceDefaultVersions = true;
+			}
+
+			_configureConfigurationTest(
+				project, JavaPlugin.TEST_COMPILE_CLASSPATH_CONFIGURATION_NAME,
+				liferayExtension, forceDefaultVersions);
+			_configureConfigurationTest(
+				project, JavaPlugin.TEST_RUNTIME_CONFIGURATION_NAME,
+				liferayExtension, forceDefaultVersions);
 
 			if (GradleUtil.getProperty(
 					project, "junit.code.coverage",
@@ -2155,7 +2165,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureConfigurationTest(
-		Project project, String name, final LiferayExtension liferayExtension) {
+		Project project, String name, final LiferayExtension liferayExtension,
+		final boolean forceDefaultVersions) {
 
 		final Configuration configuration = GradleUtil.getConfiguration(
 			project, name);
@@ -2185,7 +2196,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 						dependencyResolveDetails.useTarget(target);
 					}
-					else {
+					else if (forceDefaultVersions) {
 						String version = liferayExtension.getDefaultVersion(
 							group, name, null);
 

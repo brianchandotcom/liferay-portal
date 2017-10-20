@@ -1564,7 +1564,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		serviceContext.setAttribute("className", className);
 		serviceContext.setAttribute("classPK", String.valueOf(classPK));
 
-		return updateMessage(
+		return mbMessageLocalService.updateMessage(
 			userId, messageId, subject, body, inputStreamOVPs, existingFiles,
 			priority, allowPingbacks, serviceContext);
 	}
@@ -1577,7 +1577,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
 
-		return updateMessage(
+		return mbMessageLocalService.updateMessage(
 			userId, messageId, message.getSubject(), body, null, null,
 			message.getPriority(), message.isAllowPingbacks(), serviceContext);
 	}
@@ -1764,7 +1764,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return updateStatus(
+		return mbMessageLocalService.updateStatus(
 			userId, messageId, status, serviceContext,
 			new HashMap<String, Serializable>());
 	}

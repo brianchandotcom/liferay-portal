@@ -38,9 +38,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-new-menu"));
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<aui:input autoFocus="<%= true %>" label="name" name="name" placeholder="name">
-				<aui:validator name="required" />
-			</aui:input>
+			<aui:input autoFocus="<%= true %>" label="name" name="name" placeholder="name" />
 		</aui:fieldset>
 
 		<aui:fieldset>

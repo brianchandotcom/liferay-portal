@@ -21,4 +21,6 @@ public class SiteNavigationMenuItemTypeConstants {
 
 	public static final String LAYOUT = "layout";
 
+	public static final String URL = "url";
+
 }

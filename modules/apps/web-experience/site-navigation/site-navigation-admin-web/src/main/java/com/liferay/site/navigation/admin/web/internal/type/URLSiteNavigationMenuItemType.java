@@ -15,6 +15,7 @@
 package com.liferay.site.navigation.admin.web.internal.type;
 
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.site.navigation.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 
@@ -27,7 +28,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Pavel Savinov
  */
 @Component(
-	immediate = true, property = {"site.navigation.menu.item.type=url"},
+	immediate = true,
+	property = {"site.navigation.menu.item.type=" + SiteNavigationMenuItemTypeConstants.URL},
 	service = SiteNavigationMenuItemType.class
 )
 public class URLSiteNavigationMenuItemType
@@ -49,7 +51,7 @@ public class URLSiteNavigationMenuItemType
 
 	@Override
 	public String getType() {
-		return "url";
+		return SiteNavigationMenuItemTypeConstants.URL;
 	}
 
 	@Override

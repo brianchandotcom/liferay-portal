@@ -51,7 +51,7 @@ public class LayoutSiteNavigationMenuItemType
 
 	@Override
 	public String getType() {
-		return "layout";
+		return SiteNavigationMenuItemTypeConstants.LAYOUT;
 	}
 
 	@Override

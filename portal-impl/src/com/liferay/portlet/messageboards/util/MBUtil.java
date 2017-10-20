@@ -782,6 +782,11 @@ public class MBUtil {
 		return classPKs;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.internal.util.MBUtil#getUnbanDate(MBBan, int)}
+	 */
+	@Deprecated
 	public static Date getUnbanDate(MBBan ban, int expireInterval) {
 		Date banDate = ban.getCreateDate();
 

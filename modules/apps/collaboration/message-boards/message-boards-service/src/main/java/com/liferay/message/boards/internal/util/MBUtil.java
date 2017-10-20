@@ -12,31 +12,28 @@
  * details.
  */
 
-package com.liferay.message.boards.exception;
+package com.liferay.message.boards.internal.util;
 
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.message.boards.model.MBBan;
 
-import com.liferay.portal.kernel.exception.NoSuchModelException;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Adolfo Pérez
  */
-@ProviderType
-public class NoSuchMBBanException extends NoSuchModelException {
+public class MBUtil {
 
-	public NoSuchMBBanException() {
-	}
+	public static Date getUnbanDate(MBBan ban, int expireInterval) {
+		Date banDate = ban.getCreateDate();
 
-	public NoSuchMBBanException(String msg) {
-		super(msg);
-	}
+		Calendar cal = Calendar.getInstance();
 
-	public NoSuchMBBanException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
+		cal.setTime(banDate);
 
-	public NoSuchMBBanException(Throwable cause) {
-		super(cause);
+		cal.add(Calendar.DATE, expireInterval);
+
+		return cal.getTime();
 	}
 
 }

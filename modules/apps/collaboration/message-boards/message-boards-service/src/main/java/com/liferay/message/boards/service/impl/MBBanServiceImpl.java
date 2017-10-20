@@ -14,27 +14,61 @@
 
 package com.liferay.message.boards.service.impl;
 
+import com.liferay.message.boards.model.MBBan;
 import com.liferay.message.boards.service.base.MBBanServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portlet.messageboards.service.permission.MBPermission;
 
 /**
- * The implementation of the message boards ban remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.message.boards.service.MBBanService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
  * @author Brian Wing Shun Chan
- * @see MBBanServiceBaseImpl
- * @see com.liferay.message.boards.service.MBBanServiceUtil
  */
 public class MBBanServiceImpl extends MBBanServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.message.boards.service.MBBanServiceUtil} to access the message boards ban remote service.
-	 */
+	@Override
+	public MBBan addBan(long banUserId, ServiceContext serviceContext)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		MBPermission.check(
+			permissionChecker, serviceContext.getScopeGroupId(),
+			ActionKeys.BAN_USER);
+
+		User banUser = userPersistence.findByPrimaryKey(banUserId);
+
+		boolean groupAdmin = false;
+
+		try {
+			groupAdmin = PortalUtil.isGroupAdmin(
+				banUser, serviceContext.getScopeGroupId());
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+
+		if (groupAdmin) {
+			throw new PrincipalException();
+		}
+
+		return mbBanLocalService.addBan(getUserId(), banUserId, serviceContext);
+	}
+
+	@Override
+	public void deleteBan(long banUserId, ServiceContext serviceContext)
+		throws PortalException {
+
+		MBPermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			ActionKeys.BAN_USER);
+
+		mbBanLocalService.deleteBan(banUserId, serviceContext);
+	}
+
 }

@@ -15,24 +15,15 @@
 package com.liferay.site.navigation.admin.web.internal.type.controller;
 
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.constants.SiteNavigationMenuItemTypeControllerConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.type.controller.SiteNavigationMenuItemTypeController;
 import com.liferay.site.navigation.type.controller.impl.BaseSiteNavigationMenuItemTypeControllerImpl;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -65,25 +56,6 @@ public class LayoutSiteNavigationMenuItemTypeController
 	}
 
 	@Override
-	public String getURL(
-			HttpServletRequest request, HttpServletResponse response,
-			SiteNavigationMenuItem siteNavigationMenuItem)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		UnicodeProperties properties = getTypeSettingsProperties(
-			siteNavigationMenuItem);
-
-		long plid = GetterUtil.getLong(properties.getProperty("plid"));
-
-		Layout layout = _layoutLocalService.getLayout(plid);
-
-		return _portal.getLayoutFriendlyURL(layout, themeDisplay);
-	}
-
-	@Override
 	public JSONObject getViewContext(
 			HttpServletRequest request, HttpServletResponse response,
 			SiteNavigationMenuItem siteNavigationMenuItem)
@@ -91,19 +63,5 @@ public class LayoutSiteNavigationMenuItemTypeController
 
 		return null;
 	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.site.navigation.admin.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		this.servletContext = servletContext;
-	}
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

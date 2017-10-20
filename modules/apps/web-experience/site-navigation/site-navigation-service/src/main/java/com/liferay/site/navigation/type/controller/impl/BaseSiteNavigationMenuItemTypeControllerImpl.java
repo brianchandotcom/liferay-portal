@@ -19,9 +19,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.type.controller.SiteNavigationMenuItemTypeController;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Pavel Savinov
  */
@@ -46,39 +43,6 @@ public abstract class BaseSiteNavigationMenuItemTypeControllerImpl
 		return StringPool.BLANK;
 	}
 
-	@Override
-	public boolean isBrowsable() {
-		return true;
-	}
-
-	@Override
-	public boolean isCheckViewPermission() {
-		return true;
-	}
-
-	@Override
-	public boolean isFullPageDisplayable() {
-		return false;
-	}
-
-	@Override
-	public boolean isParentable() {
-		return true;
-	}
-
-	@Override
-	public boolean isSitemapable() {
-		return true;
-	}
-
-	@Override
-	public boolean isURLFriendliable() {
-		return true;
-	}
-
-	protected void addAttributes(HttpServletRequest request) {
-	}
-
 	protected UnicodeProperties getTypeSettingsProperties(
 		SiteNavigationMenuItem siteNavigationMenuItem) {
 
@@ -88,10 +52,5 @@ public abstract class BaseSiteNavigationMenuItemTypeControllerImpl
 
 		return properties;
 	}
-
-	protected void removeAttributes(HttpServletRequest request) {
-	}
-
-	protected ServletContext servletContext;
 
 }

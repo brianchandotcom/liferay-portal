@@ -36,26 +36,9 @@ public interface SiteNavigationMenuItemTypeController {
 
 	public String getType();
 
-	public String getURL(
-			HttpServletRequest request, HttpServletResponse response,
-			SiteNavigationMenuItem siteNavigationMenuItem)
-		throws Exception;
-
 	public JSONObject getViewContext(
 			HttpServletRequest request, HttpServletResponse response,
 			SiteNavigationMenuItem siteNavigationMenuItem)
 		throws Exception;
-
-	public boolean isBrowsable();
-
-	public boolean isCheckViewPermission();
-
-	public boolean isFullPageDisplayable();
-
-	public boolean isParentable();
-
-	public boolean isSitemapable();
-
-	public boolean isURLFriendliable();
 
 }

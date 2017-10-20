@@ -52,8 +52,6 @@ dependencies {
 
 	testThemes project(":apps:foundation:frontend-theme:frontend-theme-user-dashboard")
 	testThemes project(":apps:foundation:frontend-theme:frontend-theme-user-profile")
-	testThemes project(":apps:frontend-theme-fjord:frontend-theme-fjord")
-	testThemes project(":apps:frontend-theme-westeros-bank:frontend-theme-westeros-bank")
 }
 
 formatSource {

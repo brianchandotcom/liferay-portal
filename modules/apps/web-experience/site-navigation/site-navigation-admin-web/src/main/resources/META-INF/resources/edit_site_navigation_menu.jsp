@@ -56,7 +56,6 @@ renderResponse.setTitle(((siteNavigationMenu == null) ? LanguageUtil.get(request
 
 						<%
 						for (SiteNavigationMenuItemType siteNavigationMenuItemType : siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemTypes()) {
-							ResourceBundle siteNavigationMenuItemTypeResourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, siteNavigationMenuItemType.getClass());
 						%>
 
 							<div class="card col-md-2 item-type pt-xl-3 text-center" data-type="<%= siteNavigationMenuItemType.getType() %>">
@@ -66,7 +65,7 @@ renderResponse.setTitle(((siteNavigationMenu == null) ? LanguageUtil.get(request
 								/>
 
 								<h5 class="mt-xl-3">
-									<%= LanguageUtil.get(request, siteNavigationMenuItemTypeResourceBundle, "site.navigation.menu.item.types." + siteNavigationMenuItemType.getType()) %>
+									<%= siteNavigationMenuItemType.getLabel(locale) %>
 								</h5>
 							</div>
 

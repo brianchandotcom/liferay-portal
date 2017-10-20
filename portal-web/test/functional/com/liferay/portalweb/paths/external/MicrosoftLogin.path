@@ -1,0 +1,66 @@
+<html>
+<head>
+<title>MicrosoftLogin</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MicrosoftLogin</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_TITLE</td>
+	<td>title=Sign in to your account</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--LOGIN-->
+<tr>
+	<td>LOGIN_EMAIL_FIELD</td>
+	<td>//input[contains(@type,'email')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGIN_PASSWORD_FIELD</td>
+	<td>//input[contains(@type,'password')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGIN_SIGN_IN_BUTTON</td>
+	<td>//button[contains(.,'Sign in')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGIN_USER_CHOOSER</td>
+	<td>//td/div[contains(@class,'windows_tile_text') and contains(.,'${key_userEmail}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SHAREPOINT-->
+<tr>
+	<td>SHAREPOINT_NOTIFICATION</td>
+	<td>//div/h1[contains(.,'Do you trust ${app_name}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHAREPOINT_SITE_TITLE</td>
+	<td>//h1[@id='pageTitle']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHAREPOINT_TRUST_IT_BUTTON</td>
+	<td>//input[contains(@value,'Trust It')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

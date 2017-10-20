@@ -16,11 +16,14 @@ package com.liferay.message.boards.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.message.boards.model.MBBan;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -49,6 +52,11 @@ public interface MBBanService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MBBanServiceUtil} to access the message boards ban remote service. Add custom service methods to {@link com.liferay.message.boards.service.impl.MBBanServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public MBBan addBan(long banUserId, ServiceContext serviceContext)
+		throws PortalException;
+
+	public void deleteBan(long banUserId, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

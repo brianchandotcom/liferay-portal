@@ -16,9 +16,16 @@ package com.liferay.message.boards.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.message.boards.service.MBBanServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.message.boards.service.MBBanServiceUtil} service utility. The
+ * {@link MBBanServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,40 @@ import aQute.bnd.annotation.ProviderType;
  * @author Brian Wing Shun Chan
  * @see MBBanServiceHttp
  * @see com.liferay.message.boards.model.MBBanSoap
- * @see com.liferay.message.boards.service.MBBanServiceUtil
+ * @see MBBanServiceUtil
  * @generated
  */
 @ProviderType
 public class MBBanServiceSoap {
+	public static com.liferay.message.boards.model.MBBanSoap addBan(
+		long banUserId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.message.boards.model.MBBan returnValue = MBBanServiceUtil.addBan(banUserId,
+					serviceContext);
+
+			return com.liferay.message.boards.model.MBBanSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void deleteBan(long banUserId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			MBBanServiceUtil.deleteBan(banUserId, serviceContext);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(MBBanServiceSoap.class);
 }

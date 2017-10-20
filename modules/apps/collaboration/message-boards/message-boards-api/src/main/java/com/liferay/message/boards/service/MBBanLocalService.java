@@ -28,10 +28,13 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -63,6 +66,8 @@ public interface MBBanLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MBBanLocalServiceUtil} to access the message boards ban local service. Add custom service methods to {@link com.liferay.message.boards.service.impl.MBBanLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public MBBan addBan(long userId, long banUserId,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the message boards ban to the database. Also notifies the appropriate model listeners.
@@ -73,6 +78,10 @@ public interface MBBanLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public MBBan addMBBan(MBBan mbBan);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public void checkBan(long groupId, long banUserId)
+		throws PortalException;
+
 	/**
 	* Creates a new message boards ban with the primary key. Does not add the message boards ban to the database.
 	*
@@ -80,6 +89,17 @@ public interface MBBanLocalService extends BaseLocalService,
 	* @return the new message boards ban
 	*/
 	public MBBan createMBBan(long banId);
+
+	public void deleteBan(long banId) throws PortalException;
+
+	public void deleteBan(long banUserId, ServiceContext serviceContext);
+
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public void deleteBan(MBBan ban);
+
+	public void deleteBansByBanUserId(long banUserId);
+
+	public void deleteBansByGroupId(long groupId);
 
 	/**
 	* Deletes the message boards ban with the primary key from the database. Also notifies the appropriate model listeners.
@@ -166,6 +186,8 @@ public interface MBBanLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
+	public void expireBans();
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBBan fetchMBBan(long banId);
 
@@ -181,6 +203,12 @@ public interface MBBanLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBBan> getBans(long groupId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getBansCount(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -270,6 +298,9 @@ public interface MBBanLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasBan(long groupId, long banUserId);
 
 	/**
 	* Updates the message boards ban in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

@@ -16,12 +16,21 @@ package com.liferay.message.boards.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.message.boards.service.MBBanServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+
 /**
  * Provides the HTTP utility for the
- * {@link com.liferay.message.boards.service.MBBanServiceUtil} service utility. The
+ * {@link MBBanServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * {@link com.liferay.portal.kernel.security.auth.HttpPrincipal} parameter.
+ * {@link HttpPrincipal} parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -40,10 +49,78 @@ import aQute.bnd.annotation.ProviderType;
  *
  * @author Brian Wing Shun Chan
  * @see MBBanServiceSoap
- * @see com.liferay.portal.kernel.security.auth.HttpPrincipal
- * @see com.liferay.message.boards.service.MBBanServiceUtil
+ * @see HttpPrincipal
+ * @see MBBanServiceUtil
  * @generated
  */
 @ProviderType
 public class MBBanServiceHttp {
+	public static com.liferay.message.boards.model.MBBan addBan(
+		HttpPrincipal httpPrincipal, long banUserId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(MBBanServiceUtil.class,
+					"addBan", _addBanParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					banUserId, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.message.boards.model.MBBan)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static void deleteBan(HttpPrincipal httpPrincipal, long banUserId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(MBBanServiceUtil.class,
+					"deleteBan", _deleteBanParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					banUserId, serviceContext);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(MBBanServiceHttp.class);
+	private static final Class<?>[] _addBanParameterTypes0 = new Class[] {
+			long.class, com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _deleteBanParameterTypes1 = new Class[] {
+			long.class, com.liferay.portal.kernel.service.ServiceContext.class
+		};
 }

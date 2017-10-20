@@ -41,6 +41,18 @@ public class MBBanServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.message.boards.service.impl.MBBanServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.message.boards.model.MBBan addBan(
+		long banUserId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addBan(banUserId, serviceContext);
+	}
+
+	public static void deleteBan(long banUserId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteBan(banUserId, serviceContext);
+	}
 
 	/**
 	* Returns the OSGi service identifier.

@@ -32,6 +32,20 @@ public class MBBanServiceWrapper implements MBBanService,
 		_mbBanService = mbBanService;
 	}
 
+	@Override
+	public com.liferay.message.boards.model.MBBan addBan(long banUserId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbBanService.addBan(banUserId, serviceContext);
+	}
+
+	@Override
+	public void deleteBan(long banUserId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_mbBanService.deleteBan(banUserId, serviceContext);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

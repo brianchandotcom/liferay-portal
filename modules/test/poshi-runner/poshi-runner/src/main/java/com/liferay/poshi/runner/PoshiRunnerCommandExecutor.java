@@ -31,39 +31,39 @@ public class PoshiRunnerCommandExecutor {
 			command = args[0];
 		}
 
-		switch (command) {
-			case "evaluatePoshiConsole":
-				evaluatePoshiConsole();
+		if (command.equals("evaluatePoshiConsole")) {
+			evaluatePoshiConsole();
 
-				break;
-
-			case "help":
-				taskHelp();
-
-				break;
-
-			case "runPoshi":
-				runPoshi(args);
-
-				break;
-
-			case "validatePoshi":
-				validatePoshi();
-
-				break;
-
-			case "writePoshiProperties":
-				writePoshiProperties();
-
-				break;
-
-			default:
-				System.out.println("ERROR: Unrecognized task name: " + command);
-
-				taskHelp();
-
-				break;
+			return;
 		}
+
+		if (command.equals("help")) {
+			taskHelp();
+
+			return;
+		}
+
+		if (command.equals("runPoshi")) {
+			runPoshi(args);
+
+			return;
+		}
+
+		if (command.equals("validatePoshi")) {
+			validatePoshi();
+
+			return;
+		}
+
+		if (command.equals("writePoshiProperties")) {
+			writePoshiProperties();
+
+			return;
+		}
+
+		System.out.println("ERROR: Unrecognized task name: " + command);
+
+		taskHelp();
 	}
 
 	protected static void evaluatePoshiConsole() throws Exception {

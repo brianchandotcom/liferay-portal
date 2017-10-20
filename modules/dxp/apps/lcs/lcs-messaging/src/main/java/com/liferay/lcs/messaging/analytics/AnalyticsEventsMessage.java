@@ -16,19 +16,41 @@ package com.liferay.lcs.messaging.analytics;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+import com.liferay.lcs.messaging.Message;
 
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @author Ivica Cardic
  */
-public class ATAnalyticsEventsMessage extends BaseAnalyticsEventsMessage {
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonTypeInfo(
+	include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "messageFormat",
+	use = JsonTypeInfo.Id.NAME, visible = true
+)
+public class AnalyticsEventsMessage extends Message {
+
+	public String getAnalyticsKey() {
+		return _analyticsKey;
+	}
 
 	public long getAnonymousUserId() {
 		return _anonymousUserId;
+	}
+
+	public String getApplicationId() {
+		return _applicationId;
+	}
+
+	public String getChannel() {
+		return _channel;
 	}
 
 	public String getClientIP() {
@@ -43,12 +65,28 @@ public class ATAnalyticsEventsMessage extends BaseAnalyticsEventsMessage {
 		return _events;
 	}
 
+	public String getMessageFormat() {
+		return _messageFormat;
+	}
+
 	public String getUserAgent() {
 		return _userAgent;
 	}
 
+	public void setAnalyticsKey(String analyticsKey) {
+		_analyticsKey = analyticsKey;
+	}
+
 	public void setAnonymousUserId(long anonymousUserId) {
 		_anonymousUserId = anonymousUserId;
+	}
+
+	public void setApplicationId(String applicationId) {
+		_applicationId = applicationId;
+	}
+
+	public void setChannel(String channel) {
+		_channel = channel;
 	}
 
 	public void setClientIP(String clientIP) {
@@ -61,6 +99,10 @@ public class ATAnalyticsEventsMessage extends BaseAnalyticsEventsMessage {
 
 	public void setEvents(List<Event> events) {
 		_events = events;
+	}
+
+	public void setMessageFormat(String messageFormat) {
+		_messageFormat = messageFormat;
 	}
 
 	public void setUserAgent(String userAgent) {
@@ -189,10 +231,24 @@ public class ATAnalyticsEventsMessage extends BaseAnalyticsEventsMessage {
 
 	}
 
+	@NotNull
+	private String _analyticsKey;
+
 	private long _anonymousUserId;
+
+	@NotNull
+	private String _applicationId;
+
+	@NotNull
+	private String _channel;
+
 	private String _clientIP;
 	private Context _context;
 	private List<Event> _events = Collections.emptyList();
+
+	@NotNull
+	private String _messageFormat;
+
 	private String _userAgent;
 
 }

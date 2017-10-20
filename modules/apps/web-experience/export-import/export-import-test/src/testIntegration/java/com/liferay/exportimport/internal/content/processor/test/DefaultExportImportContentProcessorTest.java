@@ -362,7 +362,9 @@ public class DefaultExportImportContentProcessorTest {
 		Assert.assertFalse(
 			content.contains(
 				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING));
-		Assert.assertFalse(content.contains(_stagingGroup.getFriendlyURL()));
+		Assert.assertTrue(content.contains(
+			"@data_handler_group_friendly_url@@" +
+				_stagingGroup.getFriendlyURL() + "@"));
 		Assert.assertFalse(content.contains(PortalUtil.getPathContext()));
 		Assert.assertFalse(content.contains("/en/en"));
 
@@ -419,7 +421,9 @@ public class DefaultExportImportContentProcessorTest {
 		Assert.assertFalse(
 			content.contains(
 				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING));
-		Assert.assertFalse(content.contains(_stagingGroup.getFriendlyURL()));
+		Assert.assertTrue(content.contains(
+			"@data_handler_group_friendly_url@@" +
+				_stagingGroup.getFriendlyURL() + "@"));
 		Assert.assertFalse(content.contains("/en/en"));
 
 		setFinalStaticField(

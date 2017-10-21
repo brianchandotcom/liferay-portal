@@ -146,6 +146,20 @@ AUI.add(
 						scrollableElement.set('scrollLeft', scrollTo);
 					},
 
+					_afterSelectionKey: function(event) {
+						var instance = this;
+
+						var activeCell = instance.get('activeCell');
+
+						var alignNode = event.alignNode || activeCell;
+
+						var column = instance.getColumn(alignNode);
+
+						if (activeCell && (event.keyCode === 13) && (column.type !== 'textarea')) {
+							instance._onEditCell(activeCell);
+						}
+					},
+
 					_normalizeFieldData: function(item, record, fieldsDisplayValues, normalized) {
 						var instance = this;
 

@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.process.log;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
 import java.io.NotSerializableException;
@@ -56,8 +57,10 @@ public class ProcessOutputStream extends UnsyncByteArrayOutputStream {
 				System.arraycopy(
 					bytes, 0, logData, _logPrefix.length, bytes.length);
 
+				String message = new String(bytes, StringPool.UTF8);
+
 				_objectOutputStream.writeObject(
-					new LoggingProcessCallable(logData, _error));
+					new LoggingProcessCallable(message, _error));
 			}
 
 			_objectOutputStream.flush();
@@ -91,5 +94,32 @@ public class ProcessOutputStream extends UnsyncByteArrayOutputStream {
 	private final boolean _error;
 	private byte[] _logPrefix;
 	private final ObjectOutputStream _objectOutputStream;
+
+	private static class LoggingProcessCallable
+		implements ProcessCallable<String> {
+
+		@Override
+		public String call() {
+			if (_error) {
+				System.err.print(_message);
+			}
+			else {
+				System.out.print(_message);
+			}
+
+			return StringPool.BLANK;
+		}
+
+		private LoggingProcessCallable(String message, boolean error) {
+			_message = message;
+			_error = error;
+		}
+
+		private static final long serialVersionUID = 1L;
+
+		private final boolean _error;
+		private final String _message;
+
+	}
 
 }

@@ -1,0 +1,54 @@
+<definition>
+	<command name="accountSignIn">
+		<var method="TestPropsUtil#get('sharepoint.oauth.user.name')" name="key_userEmail" />
+		<var method="TestPropsUtil#get('sharepoint.oauth.user.password')" name="userPassword" />
+
+		<if>
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="MicrosoftLogin#LOGIN_USER_CHOOSER" />
+
+			<then>
+				<execute function="AssertClick" locator1="MicrosoftLogin#LOGIN_USER_CHOOSER" value1="${key_userEmail}" />
+
+				<execute function="Type" locator1="MicrosoftLogin#LOGIN_PASSWORD_FIELD" value1="${userPassword}" />
+
+				<execute function="AssertClick" locator1="MicrosoftLogin#LOGIN_SIGN_IN_BUTTON" value1="Sign in" />
+			</then>
+			<elseif>
+				<condition function="IsElementPresent#pauseIsElementPresent" locator1="MicrosoftLogin#LOGIN_EMAIL_FIELD" />
+
+				<then>
+					<execute function="Type" locator1="MicrosoftLogin#LOGIN_EMAIL_FIELD" value1="${key_userEmail}" />
+
+					<execute function="Type" locator1="MicrosoftLogin#LOGIN_PASSWORD_FIELD" value1="${userPassword}" />
+
+					<execute function="AssertClick" locator1="MicrosoftLogin#LOGIN_SIGN_IN_BUTTON" value1="Sign in" />
+				</then>
+			</elseif>
+		</if>
+	</command>
+
+	<command name="confirmSharepointApp">
+		<execute function="Pause" locator1="3000" />
+
+		<var name="app_name" value="Collaboration Test Application" />
+
+		<if>
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="MicrosoftLogin#SHAREPOINT_NOTIFICATION" />
+
+			<then>
+				<execute function="AssertClick" locator1="MicrosoftLogin#SHAREPOINT_TRUST_IT_BUTTON" value1="Trust It" />
+			</then>
+		</if>
+
+		<if>
+			<condition function="IsElementPresent" locator1="Portlet#HEADER" />
+
+			<then>
+				<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${dmRepositoryName}" />
+			</then>
+			<else>
+				<execute function="AssertTextEquals" locator1="MicrosoftLogin#SHAREPOINT_SITE_TITLE" value1="Sitio de grupo de Liferay" />
+			</else>
+		</if>
+	</command>
+</definition>

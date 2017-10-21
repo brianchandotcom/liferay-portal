@@ -62,6 +62,7 @@
 
 		<execute macro="DMRepository#addSharepoint">
 			<var name="dmRepositoryLibraryName" value="Documents" />
+			<var name="dmRepositoryName" value="Sharepoint" />
 			<var name="dmRepositorySiteURL" value="http://${sharepointVMHostName}" />
 		</execute>
 
@@ -108,6 +109,118 @@
 			</else>
 		</if>
 	</tear-down>
+
+	<command name="AddNewRepository" priority="5">
+		<var method="TestPropsUtil#get('sharepoint.oauth.authorization.token.endpoint')" name="authorizationGrantEndpoint" />
+		<var method="TestPropsUtil#get('sharepoint.oauth.authorization.token.endpoint')" name="authorizationTokenEndpoint" />
+		<var method="TestPropsUtil#get('sharepoint.oauth.client.id')" name="clientId" />
+		<var method="TestPropsUtil#get('sharepoint.oauth.client.secret')" name="clientSecret" />
+		<var method="TestPropsUtil#get('sharepoint.oauth.configuration.name')" name="configurationName" />
+		<var method="TestPropsUtil#get('sharepoint.oauth.configuration.resource')" name="configurationResource" />
+		<var method="TestPropsUtil#get('sharepoint.oauth.configuration.scope')" name="configurationScope" />
+		<var method="TestPropsUtil#get('sharepoint.oauth.site.domain')" name="siteDomain" />
+		<var method="TestPropsUtil#get('sharepoint.oauth.tenant.id')" name="tenantId" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="System Settings" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Collaboration" />
+		</execute>
+
+		<execute macro="SystemSettings#editConfiguration">
+			<var name="configurationName" value="Sharepoint OAuth2" />
+		</execute>
+
+		<execute function="Click" locator1="Button#ADD_ENTRY" />
+
+		<execute function="Type" locator1="TextArea#ANY" value1="${configurationName}">
+			<var name="key_text" value="name" />
+		</execute>
+
+		<execute function="Type" locator1="TextArea#ANY" value1="${authorizationGrantEndpoint}">
+			<var name="key_text" value="authorizationGrantEndpoint" />
+		</execute>
+
+		<execute function="Type" locator1="TextArea#ANY" value1="${authorizationTokenEndpoint}">
+			<var name="key_text" value="authorizationTokenEndpoint" />
+		</execute>
+
+		<execute function="Type" locator1="TextArea#ANY" value1="${clientId}">
+			<var name="key_text" value="clientId" />
+		</execute>
+
+		<execute function="Type" locator1="TextArea#ANY" value1="${clientSecret}">
+			<var name="key_text" value="clientSecret" />
+		</execute>
+
+		<execute function="Type" locator1="TextArea#ANY" value1="${configurationScope}">
+			<var name="key_text" value="scope" />
+		</execute>
+
+		<execute function="Type" locator1="TextArea#ANY" value1="${tenantId}">
+			<var name="key_text" value="tenantId" />
+		</execute>
+
+		<execute function="Type" locator1="TextArea#ANY" value1="${siteDomain}">
+			<var name="key_text" value="siteDomain" />
+		</execute>
+
+		<execute function="Type" locator1="TextArea#ANY" value1="${configurationResource}">
+			<var name="key_text" value="resource" />
+		</execute>
+
+		<execute macro="Button#clickSave" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMPortlet#setDescriptiveView" />
+
+		<execute macro="DMNavigator#gotoAddRepositoryCP" />
+
+		<execute function="Type" locator1="TextInput#GENERIC_TEXT_INPUT" value1="${configurationName}">
+			<var name="key_fieldLabel" value="Name" />
+		</execute>
+
+		<execute macro="DMRepository#addSharepoint">
+			<var name="dmRepositoryLibraryPath" value="Documentos compartidos" />
+			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+			<var name="dmRepositorySiteAbsoluteURL" value="https://liferaycolab.sharepoint.com" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="https://localhost:8443" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMPortlet#setDescriptiveView" />
+
+		<execute function="AssertClick" locator1="DocumentsAndMedia#REPOSITORY_FOLDER_NAME_DESCRIPTIVE_VIEW" value1="${configurationName}">
+			<var name="key_dmRepositoryName" value="${configurationName}" />
+		</execute>
+
+		<execute macro="MicrosoftLogin#accountSignIn" />
+
+		<execute macro="MicrosoftLogin#confirmSharepointApp">
+			<var name="dmRepositoryName" value="${configurationName}" />
+		</execute>
+	</command>
 
 	<command name="CheckinDocument" priority="4">
 		<property name="test.name.skip.portal.instance" value="CPSharepoint#CheckinDocument" />

@@ -27,8 +27,8 @@ List<AssetCategory> assetCategories = cpAssetCategoriesNavigationDisplayContext.
 		for (AssetCategory assetCategory : assetCategories) {
 		%>
 
-			<li class="lfr-nav-item">
-				<a class="dropdown-toggle" href="#"><span><%= HtmlUtil.escape(assetCategory.getTitle(locale)) %></span></a>
+			<li class="nav-item lfr-nav-item">
+				<a class="nav-link dropdown-toggle" href="#"><span><%= HtmlUtil.escape(assetCategory.getTitle(locale)) %></span></a>
 
 				<ul class="child-menu dropdown-menu" role="menu">
 
@@ -37,7 +37,7 @@ List<AssetCategory> assetCategories = cpAssetCategoriesNavigationDisplayContext.
 					%>
 
 						<li class="child-menu-level-1">
-							<ul class="link-list">
+							<ul class="link-list list-unstyled">
 								<li class="dropdown-header"><%= HtmlUtil.escape(assetCategoryLevel1.getTitle(locale)) %></li>
 								<li class="child-menu-level-2">
 
@@ -46,7 +46,7 @@ List<AssetCategory> assetCategories = cpAssetCategoriesNavigationDisplayContext.
 									%>
 
 										<li>
-											<a href="<%= cpAssetCategoriesNavigationDisplayContext.getFriendlyURL(assetCategoryLevel2.getCategoryId(), themeDisplay) %>" role="menuitem"><%= HtmlUtil.escape(assetCategoryLevel2.getTitle(locale)) %></a>
+											<a class="dropdown-item" href="<%= cpAssetCategoriesNavigationDisplayContext.getFriendlyURL(assetCategoryLevel2.getCategoryId(), themeDisplay) %>" role="menuitem"><%= HtmlUtil.escape(assetCategoryLevel2.getTitle(locale)) %></a>
 										</li>
 
 									<%

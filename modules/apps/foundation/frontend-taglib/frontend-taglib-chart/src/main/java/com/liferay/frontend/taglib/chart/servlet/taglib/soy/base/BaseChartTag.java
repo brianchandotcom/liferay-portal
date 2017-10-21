@@ -98,7 +98,7 @@ public abstract class BaseChartTag extends TemplateRendererTag {
 
 		sb.append("<link href=\"");
 		sb.append(PortalUtil.getPathModule());
-		sb.append("/chart-taglib/node_modules/");
+		sb.append("/frontend-taglib-chart/node_modules/");
 		sb.append(cssPath);
 		sb.append("\" rel=\"stylesheet\">");
 

@@ -16,8 +16,9 @@ package com.liferay.site.navigation.type;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
+
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,15 +37,7 @@ public interface SiteNavigationMenuItemType {
 		return "magic";
 	}
 
-	public default String getLabel(
-		SiteNavigationMenuItem siteNavigationMenuItem) {
-
-		UnicodeProperties properties = new UnicodeProperties(true);
-
-		properties.fastLoad(siteNavigationMenuItem.getTypeSettings());
-
-		return properties.getProperty("label");
-	}
+	public String getLabel(Locale locale);
 
 	public default String getType() {
 		return StringPool.BLANK;

@@ -30,11 +30,13 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.web.internal.constants.SiteNavigationAdminPortletKeys;
+import com.liferay.site.navigation.admin.web.internal.constants.SiteNavigationAdminWebKeys;
 import com.liferay.site.navigation.admin.web.internal.util.SiteNavigationMenuPortletUtil;
 import com.liferay.site.navigation.constants.SiteNavigationActionKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuServiceUtil;
 import com.liferay.site.navigation.service.permission.SiteNavigationPermission;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.util.List;
 
@@ -61,6 +63,10 @@ public class SiteNavigationAdminDisplayContext {
 		_portletPreferences =
 			PortletPreferencesFactoryUtil.getPortletPreferences(
 				request, SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN);
+		_siteNavigationMenuItemTypeRegistry =
+			(SiteNavigationMenuItemTypeRegistry)_request.getAttribute(
+				SiteNavigationAdminWebKeys.
+					SITE_NAVIGATION_MENU_ITEM_TYPE_REGISTRY);
 	}
 
 	public String getDisplayStyle() {
@@ -276,6 +282,12 @@ public class SiteNavigationAdminDisplayContext {
 		return _siteNavigationMenuId;
 	}
 
+	public SiteNavigationMenuItemTypeRegistry
+		getSiteNavigationMenuItemTypeRegistry() {
+
+		return _siteNavigationMenuItemTypeRegistry;
+	}
+
 	public boolean isShowAddButton() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -304,5 +316,7 @@ public class SiteNavigationAdminDisplayContext {
 	private final HttpServletRequest _request;
 	private SearchContainer _searchContainer;
 	private Long _siteNavigationMenuId;
+	private final SiteNavigationMenuItemTypeRegistry
+		_siteNavigationMenuItemTypeRegistry;
 
 }

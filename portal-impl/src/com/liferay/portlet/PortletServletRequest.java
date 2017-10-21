@@ -42,6 +42,7 @@ import javax.portlet.EventRequest;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -320,7 +321,13 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 
 	@Override
 	public String getPathTranslated() {
-		return _request.getPathTranslated();
+		ServletContext servletContext = _request.getServletContext();
+
+		if ((_pathInfo != null) && (servletContext != null)) {
+			return servletContext.getRealPath(_pathInfo);
+		}
+
+		return null;
 	}
 
 	@Override

@@ -7,19 +7,19 @@
 		<#if show_main_search_icon>
 			<li class="nav-item" id="mainSearchIcon">
 				<a class="nav-link collapsed" role="button" data-toggle="collapse" href="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch">
-					<svg class="lexicon-icon lexicon-icon-search">
+					<svg class="commerce-icon lexicon-icon lexicon-icon-search">
 						<use xlink:href="${images_folder}/theme-icons.svg#icon-search" />
 					</svg>
 
-					<svg class="lexicon-icon lexicon-icon-close">
+					<svg class="commerce-icon lexicon-icon lexicon-icon-close">
 						<use xlink:href="${images_folder}/theme-icons.svg#icon-close" />
 					</svg>
 				</a>
 
 				<div class="position-anchored position-anchored-left">
 					<div class="collapse" id="collapseSearch">
-						<div class="card card-horizontal small">
-							<svg class="lexicon-icon lexicon-icon-search-static">
+						<div class="card card-horizontal">
+							<svg class="commerce-icon lexicon-icon lexicon-icon-search-static">
 								<use xlink:href="${images_folder}/theme-icons.svg#icon-search" />
 							</svg>
 
@@ -34,17 +34,17 @@
 			<li class="collapse-hover nav-item" id="wishlistIcon">
 				<a class="animate nav-link" href="${wishlistUrl}">
 					<#if wishListItemsCount != 0>
-						<svg class="lexicon-icon icon-heart-full">
+						<svg class="commerce-icon lexicon-icon icon-heart-full">
 							<use xlink:href="${images_folder}/theme-icons.svg#icon-whislist-full" />
 						</svg>
 
 						<span class="sticker sticker-outside">${wishListItemsCount}</span>
 					<#else>
-						<svg class="lexicon-icon icon-heart">
+						<svg class="commerce-icon lexicon-icon icon-heart">
 							<use xlink:href="${images_folder}/theme-icons.svg#icon-whislist" />
 						</svg>
 
-						<svg class="lexicon-icon icon-heart-full" style="display: none">
+						<svg class="commerce-icon lexicon-icon icon-heart-full" style="display: none">
 							<use xlink:href="${images_folder}/theme-icons.svg#icon-whislist-full" />
 						</svg>
 					</#if>
@@ -64,15 +64,15 @@
 					<#if cartItemsCount != 0>
 						<span class="sticker sticker-outside">${cartItemsCount}</span>
 
-						<svg class="lexicon-icon icon-bag-full">
+						<svg class="commerce-icon lexicon-icon icon-bag-full">
 							<use xlink:href="${images_folder}/theme-icons.svg#icon-bag-full" />
 						</svg>
 					<#else>
-						<svg class="lexicon-icon icon-bag">
+						<svg class="commerce-icon lexicon-icon icon-bag">
 							<use xlink:href="${images_folder}/theme-icons.svg#icon-bag" />
 						</svg>
 
-						<svg class="lexicon-icon icon-bag-full" style="display: none">
+						<svg class="commerce-icon lexicon-icon icon-bag-full" style="display: none">
 							<use xlink:href="${images_folder}/theme-icons.svg#icon-bag-full" />
 						</svg>
 					</#if>

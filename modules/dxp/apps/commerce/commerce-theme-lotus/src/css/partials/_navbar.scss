@@ -18,12 +18,9 @@
 		}
 	}
 
-	.dropdown-menu {
+	.site-navigation {
 		@include sm {
-			border-width: 0;
-			box-shadow: none;
-			max-height: calc(100vh - $header-height-total);
-			top: 94%;
+			min-height: 4rem;
 		}
 	}
 }
@@ -45,7 +42,7 @@
 	background-color: #FFF;
 	border-bottom: 1px solid $brand-border-color;
 	min-height: 98px;
-	padding: 17px 16px;
+	padding: 22px 16px;
 
 	@include sm {
 		left: 0;
@@ -57,7 +54,39 @@
 
 		&.navbar-reduced {
 			min-height: 70px;
-			padding: 4px 16px 1px;
+			padding: 4px 16px 4px;
+		}
+	}
+
+	.dropdown-menu {
+		@include media-breakpoint-down(sm) {
+			border-width: 0;
+			display: block;
+			max-height: none;
+			min-width: 80vw;
+
+			.category-description {
+				margin: auto;
+			}
+
+			.dropdown-header {
+				font-weight: 600;
+			}
+		}
+
+		@include sm {
+			border-width: 0;
+			box-shadow: none;
+			max-height: calc(100vh - $header-height-total);
+			top: 60px;
+		}
+	}
+
+	.navbar-blank > li {
+		position: static;
+
+		&.open .dropdown-menu {
+			display: block;
 		}
 	}
 
@@ -132,7 +161,7 @@
 	}
 
 	.navbar-nav {
-		@include media-breakpoint-up(sm) {
+		@include media-breakpoint-down(sm) {
 			margin: 5.75px 0;
 		}
 
@@ -151,7 +180,7 @@
 }
 
 .position-anchored {
-	> .card .portlet-body{
+	> .card .portlet-body {
 		@include sm {
 			max-height: calc(100vh - $header-height-total);
 			overflow: auto;
@@ -191,7 +220,7 @@
 }
 
 .navbar-recursive {
-	.lexicon-icon {
+	.commerce-icon {
 		@include size($header-icon-size);
 	}
 

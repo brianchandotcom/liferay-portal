@@ -46,13 +46,20 @@ public class FlatJSModule extends BuiltInJSModule {
 
 		super(jsPackage, name, dependencies);
 
-		_resource = jsPackage.getResourceURL(
-			ModuleNameUtil.toFileName(getName()));
+		String fileName = ModuleNameUtil.toFileName(getName());
+
+		_jsURL = jsPackage.getResourceURL(fileName);
+		_sourceMapURL = jsPackage.getResourceURL(fileName + ".map");
 	}
 
 	@Override
 	public InputStream getInputStream() throws IOException {
-		return _resource.openStream();
+		return _jsURL.openStream();
+	}
+
+	@Override
+	public InputStream getSourceMapInputStream() throws IOException {
+		return _sourceMapURL.openStream();
 	}
 
 	@Override
@@ -60,6 +67,7 @@ public class FlatJSModule extends BuiltInJSModule {
 		return getId();
 	}
 
-	private final URL _resource;
+	private final URL _jsURL;
+	private final URL _sourceMapURL;
 
 }

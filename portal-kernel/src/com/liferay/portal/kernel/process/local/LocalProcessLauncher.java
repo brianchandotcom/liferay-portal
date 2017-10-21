@@ -70,7 +70,7 @@ public class LocalProcessLauncher {
 			ProcessContext._setProcessOutputStream(outProcessOutputStream);
 
 			PrintStream newOutPrintStream = new PrintStream(
-				outProcessOutputStream, true);
+				outProcessOutputStream, true, StringPool.UTF8);
 
 			System.setOut(newOutPrintStream);
 		}
@@ -79,7 +79,7 @@ public class LocalProcessLauncher {
 			objectOutputStream, true);
 
 		PrintStream errPrintStream = new PrintStream(
-			errProcessOutputStream, true);
+			errProcessOutputStream, true, StringPool.UTF8);
 
 		System.setErr(errPrintStream);
 

@@ -59,7 +59,6 @@ page import="com.liferay.trash.exception.RestoreEntryException" %><%@
 page import="com.liferay.trash.exception.TrashEntryException" %><%@
 page import="com.liferay.trash.model.TrashEntry" %><%@
 page import="com.liferay.trash.model.TrashEntryList" %><%@
-page import="com.liferay.trash.model.impl.TrashEntryImpl" %><%@
 page import="com.liferay.trash.service.TrashEntryLocalServiceUtil" %><%@
 page import="com.liferay.trash.service.TrashEntryServiceUtil" %><%@
 page import="com.liferay.trash.web.internal.constants.TrashWebKeys" %><%@

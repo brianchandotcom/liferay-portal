@@ -16,6 +16,8 @@ package com.liferay.trash.model;
 
 import java.io.Serializable;
 
+import java.util.List;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -30,6 +32,10 @@ public class TrashEntryList implements Serializable {
 
 	public int getCount() {
 		return _count;
+	}
+
+	public List<TrashEntry> getOriginalTrashEntries() {
+		return _originalTrashEntries;
 	}
 
 	public boolean isApproximate() {
@@ -48,8 +54,13 @@ public class TrashEntryList implements Serializable {
 		_count = count;
 	}
 
+	public void setOriginalTrashEntries(List<TrashEntry> originalTrashEntries) {
+		_originalTrashEntries = originalTrashEntries;
+	}
+
 	private boolean _approximate;
 	private TrashEntrySoap[] _array;
 	private int _count;
+	private transient List<TrashEntry> _originalTrashEntries;
 
 }

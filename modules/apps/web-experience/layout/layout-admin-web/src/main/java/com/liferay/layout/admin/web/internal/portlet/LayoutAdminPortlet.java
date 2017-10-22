@@ -24,12 +24,6 @@ import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.admin.web.internal.portlet.action.ActionUtil;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
-import com.liferay.mobile.device.rules.model.MDRAction;
-import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
-import com.liferay.mobile.device.rules.service.MDRActionLocalService;
-import com.liferay.mobile.device.rules.service.MDRActionService;
-import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService;
-import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceService;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.exception.ImageTypeException;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLException;
@@ -50,13 +44,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.LayoutPrototypeService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -75,9 +67,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.ThemeFactoryUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -86,7 +75,6 @@ import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.io.IOException;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -132,185 +120,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = {Portlet.class}
 )
 public class LayoutAdminPortlet extends MVCPortlet {
-
-	public void addLayout(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		UploadPortletRequest uploadPortletRequest =
-			portal.getUploadPortletRequest(actionRequest);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
-		long stagingGroupId = ParamUtil.getLong(
-			actionRequest, "stagingGroupId");
-		boolean privateLayout = ParamUtil.getBoolean(
-			actionRequest, "privateLayout");
-		long parentLayoutId = ParamUtil.getLong(
-			uploadPortletRequest, "parentLayoutId");
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "name");
-		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "title");
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "description");
-		Map<Locale, String> keywordsMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "keywords");
-		Map<Locale, String> robotsMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "robots");
-		String type = ParamUtil.getString(uploadPortletRequest, "type");
-		boolean hidden = ParamUtil.getBoolean(uploadPortletRequest, "hidden");
-		Map<Locale, String> friendlyURLMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "friendlyURL");
-
-		long layoutPrototypeId = ParamUtil.getLong(
-			uploadPortletRequest, "layoutPrototypeId");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			Layout.class.getName(), actionRequest);
-
-		Layout layout = null;
-
-		boolean inheritFromParentLayoutId = ParamUtil.getBoolean(
-			uploadPortletRequest, "inheritFromParentLayoutId");
-
-		UnicodeProperties typeSettingsProperties =
-			PropertiesParamUtil.getProperties(
-				actionRequest, "TypeSettingsProperties--");
-
-		String linkToLayoutUuid = ParamUtil.getString(
-			actionRequest, "linkToLayoutUuid");
-
-		if (Validator.isNotNull(linkToLayoutUuid)) {
-			Layout linkToLayout = layoutLocalService.getLayoutByUuidAndGroupId(
-				linkToLayoutUuid, groupId, privateLayout);
-
-			typeSettingsProperties.put(
-				"linkToLayoutId", String.valueOf(linkToLayout.getLayoutId()));
-		}
-
-		if (inheritFromParentLayoutId && (parentLayoutId > 0)) {
-			Layout parentLayout = layoutLocalService.getLayout(
-				groupId, privateLayout, parentLayoutId);
-
-			layout = layoutService.addLayout(
-				groupId, privateLayout, parentLayoutId, nameMap, titleMap,
-				parentLayout.getDescriptionMap(), parentLayout.getKeywordsMap(),
-				parentLayout.getRobotsMap(), parentLayout.getType(),
-				parentLayout.getTypeSettings(), hidden, friendlyURLMap,
-				serviceContext);
-
-			inheritMobileRuleGroups(layout, serviceContext);
-
-			if (parentLayout.isTypePortlet()) {
-				com.liferay.portlet.sites.action.ActionUtil.copyPreferences(
-					actionRequest, layout, parentLayout);
-
-				SitesUtil.copyLookAndFeel(layout, parentLayout);
-			}
-		}
-		else if (layoutPrototypeId > 0) {
-			LayoutPrototype layoutPrototype =
-				layoutPrototypeService.getLayoutPrototype(layoutPrototypeId);
-
-			boolean layoutPrototypeLinkEnabled = ParamUtil.getBoolean(
-				uploadPortletRequest,
-				"layoutPrototypeLinkEnabled" + layoutPrototype.getUuid());
-
-			serviceContext.setAttribute(
-				"layoutPrototypeLinkEnabled", layoutPrototypeLinkEnabled);
-
-			serviceContext.setAttribute(
-				"layoutPrototypeUuid", layoutPrototype.getUuid());
-
-			layout = layoutService.addLayout(
-				groupId, privateLayout, parentLayoutId, nameMap, titleMap,
-				descriptionMap, keywordsMap, robotsMap,
-				LayoutConstants.TYPE_PORTLET, typeSettingsProperties.toString(),
-				hidden, friendlyURLMap, serviceContext);
-
-			// Force propagation from page template to page.
-			// See LPS-48430.
-
-			SitesUtil.mergeLayoutPrototypeLayout(layout.getGroup(), layout);
-		}
-		else {
-			long copyLayoutId = ParamUtil.getLong(
-				uploadPortletRequest, "copyLayoutId");
-
-			Layout copyLayout = null;
-
-			String layoutTemplateId = ParamUtil.getString(
-				uploadPortletRequest, "layoutTemplateId",
-				PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
-
-			if (copyLayoutId > 0) {
-				copyLayout = layoutLocalService.fetchLayout(
-					groupId, privateLayout, copyLayoutId);
-
-				if ((copyLayout != null) && copyLayout.isTypePortlet()) {
-					LayoutTypePortlet copyLayoutTypePortlet =
-						(LayoutTypePortlet)copyLayout.getLayoutType();
-
-					layoutTemplateId =
-						copyLayoutTypePortlet.getLayoutTemplateId();
-
-					typeSettingsProperties =
-						copyLayout.getTypeSettingsProperties();
-				}
-			}
-
-			layout = layoutService.addLayout(
-				groupId, privateLayout, parentLayoutId, nameMap, titleMap,
-				descriptionMap, keywordsMap, robotsMap, type,
-				typeSettingsProperties.toString(), hidden, friendlyURLMap,
-				serviceContext);
-
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
-
-			layoutTypePortlet.setLayoutTemplateId(
-				themeDisplay.getUserId(), layoutTemplateId);
-
-			layoutService.updateLayout(
-				groupId, privateLayout, layout.getLayoutId(),
-				layout.getTypeSettings());
-
-			if ((copyLayout != null) && copyLayout.isTypePortlet()) {
-				com.liferay.portlet.sites.action.ActionUtil.copyPreferences(
-					actionRequest, layout, copyLayout);
-
-				SitesUtil.copyLookAndFeel(layout, copyLayout);
-			}
-		}
-
-		updateLookAndFeel(
-			actionRequest, themeDisplay.getCompanyId(), liveGroupId,
-			stagingGroupId, privateLayout, layout.getLayoutId(),
-			layout.getTypeSettingsProperties());
-
-		String portletResource = ParamUtil.getString(
-			uploadPortletRequest, "portletResource");
-
-		MultiSessionMessages.add(
-			actionRequest, portletResource + "layoutAdded", layout);
-
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		if (Validator.isNull(redirect)) {
-			redirect = portal.getLayoutFullURL(layout, themeDisplay);
-
-			if (layout.isTypeURL()) {
-				redirect = portal.getGroupFriendlyURL(
-					layout.getLayoutSet(), themeDisplay);
-			}
-		}
-
-		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
-	}
 
 	public void deleteLayout(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -467,7 +276,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			layoutTypePortlet.getConfigurationActionUpdate(),
 			uploadPortletRequest, response);
 
-		updateLookAndFeel(
+		actionUtil.updateLookAndFeel(
 			actionRequest, themeDisplay.getCompanyId(), liveGroupId,
 			stagingGroupId, privateLayout, layout.getLayoutId(),
 			layout.getTypeSettingsProperties());
@@ -673,37 +482,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		return redirect;
 	}
 
-	protected void inheritMobileRuleGroups(
-			Layout layout, ServiceContext serviceContext)
-		throws PortalException {
-
-		List<MDRRuleGroupInstance> parentMDRRuleGroupInstances =
-			mdrRuleGroupInstanceLocalService.getRuleGroupInstances(
-				Layout.class.getName(), layout.getParentPlid());
-
-		for (MDRRuleGroupInstance parentMDRRuleGroupInstance :
-				parentMDRRuleGroupInstances) {
-
-			MDRRuleGroupInstance mdrRuleGroupInstance =
-				mdrRuleGroupInstanceService.addRuleGroupInstance(
-					layout.getGroupId(), Layout.class.getName(),
-					layout.getPlid(),
-					parentMDRRuleGroupInstance.getRuleGroupId(),
-					parentMDRRuleGroupInstance.getPriority(), serviceContext);
-
-			List<MDRAction> parentMDRActions = mdrActionLocalService.getActions(
-				parentMDRRuleGroupInstance.getRuleGroupInstanceId());
-
-			for (MDRAction mdrAction : parentMDRActions) {
-				mdrActionService.addAction(
-					mdrRuleGroupInstance.getRuleGroupInstanceId(),
-					mdrAction.getNameMap(), mdrAction.getDescriptionMap(),
-					mdrAction.getType(), mdrAction.getTypeSettings(),
-					serviceContext);
-			}
-		}
-	}
-
 	@Override
 	protected boolean isAlwaysSendRedirect() {
 		return true;
@@ -753,42 +531,8 @@ public class LayoutAdminPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setLayoutPrototypeService(
-		LayoutPrototypeService layoutPrototypeService) {
-
-		this.layoutPrototypeService = layoutPrototypeService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setLayoutService(LayoutService layoutService) {
 		this.layoutService = layoutService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMDRActionLocalService(
-		MDRActionLocalService mdrActionLocalService) {
-
-		this.mdrActionLocalService = mdrActionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMDRActionService(MDRActionService mdrActionService) {
-		this.mdrActionService = mdrActionService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMDRRuleGroupInstanceLocalService(
-		MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService) {
-
-		this.mdrRuleGroupInstanceLocalService =
-			mdrRuleGroupInstanceLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMDRRuleGroupInstanceService(
-		MDRRuleGroupInstanceService mdrRuleGroupInstanceService) {
-
-		this.mdrRuleGroupInstanceService = mdrRuleGroupInstanceService;
 	}
 
 	@Reference(unbind = "-")
@@ -796,59 +540,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		PortletPreferencesLocalService portletPreferencesLocalService) {
 
 		this.portletPreferencesLocalService = portletPreferencesLocalService;
-	}
-
-	protected void updateLookAndFeel(
-			ActionRequest actionRequest, long companyId, long liveGroupId,
-			long stagingGroupId, boolean privateLayout, long layoutId,
-			UnicodeProperties typeSettingsProperties)
-		throws Exception {
-
-		String[] devices = StringUtil.split(
-			ParamUtil.getString(actionRequest, "devices"));
-
-		for (String device : devices) {
-			String deviceThemeId = ParamUtil.getString(
-				actionRequest, device + "ThemeId");
-			String deviceColorSchemeId = ParamUtil.getString(
-				actionRequest, device + "ColorSchemeId");
-			String deviceCss = ParamUtil.getString(
-				actionRequest, device + "Css");
-
-			boolean deviceInheritLookAndFeel = ParamUtil.getBoolean(
-				actionRequest, device + "InheritLookAndFeel");
-
-			if (deviceInheritLookAndFeel) {
-				deviceThemeId = ThemeFactoryUtil.getDefaultRegularThemeId(
-					companyId);
-				deviceColorSchemeId = StringPool.BLANK;
-
-				actionUtil.deleteThemeSettingsProperties(
-					typeSettingsProperties, device);
-			}
-			else if (Validator.isNotNull(deviceThemeId)) {
-				deviceColorSchemeId = actionUtil.getColorSchemeId(
-					companyId, deviceThemeId, deviceColorSchemeId);
-
-				actionUtil.updateThemeSettingsProperties(
-					actionRequest, companyId, typeSettingsProperties, device,
-					deviceThemeId, true);
-			}
-
-			long groupId = liveGroupId;
-
-			if (stagingGroupId > 0) {
-				groupId = stagingGroupId;
-			}
-
-			layoutService.updateLayout(
-				groupId, privateLayout, layoutId,
-				typeSettingsProperties.toString());
-
-			layoutService.updateLookAndFeel(
-				groupId, privateLayout, layoutId, deviceThemeId,
-				deviceColorSchemeId, deviceCss);
-		}
 	}
 
 	@Reference
@@ -861,12 +552,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 	protected ItemSelector itemSelector;
 
 	protected LayoutLocalService layoutLocalService;
-	protected LayoutPrototypeService layoutPrototypeService;
 	protected LayoutService layoutService;
-	protected MDRActionLocalService mdrActionLocalService;
-	protected MDRActionService mdrActionService;
-	protected MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService;
-	protected MDRRuleGroupInstanceService mdrRuleGroupInstanceService;
 
 	@Reference
 	protected Portal portal;

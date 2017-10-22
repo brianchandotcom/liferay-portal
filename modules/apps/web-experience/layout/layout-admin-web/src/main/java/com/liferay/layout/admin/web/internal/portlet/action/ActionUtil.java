@@ -20,10 +20,13 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.ThemeSetting;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.ThemeFactoryUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.ThemeSettingImpl;
@@ -80,6 +83,58 @@ public class ActionUtil {
 		}
 
 		return colorSchemeId;
+	}
+
+	public void updateLookAndFeel(
+			ActionRequest actionRequest, long companyId, long liveGroupId,
+			long stagingGroupId, boolean privateLayout, long layoutId,
+			UnicodeProperties typeSettingsProperties)
+		throws Exception {
+
+		String[] devices = StringUtil.split(
+			ParamUtil.getString(actionRequest, "devices"));
+
+		for (String device : devices) {
+			String deviceThemeId = ParamUtil.getString(
+				actionRequest, device + "ThemeId");
+			String deviceColorSchemeId = ParamUtil.getString(
+				actionRequest, device + "ColorSchemeId");
+			String deviceCss = ParamUtil.getString(
+				actionRequest, device + "Css");
+
+			boolean deviceInheritLookAndFeel = ParamUtil.getBoolean(
+				actionRequest, device + "InheritLookAndFeel");
+
+			if (deviceInheritLookAndFeel) {
+				deviceThemeId = ThemeFactoryUtil.getDefaultRegularThemeId(
+					companyId);
+				deviceColorSchemeId = StringPool.BLANK;
+
+				deleteThemeSettingsProperties(typeSettingsProperties, device);
+			}
+			else if (Validator.isNotNull(deviceThemeId)) {
+				deviceColorSchemeId = getColorSchemeId(
+					companyId, deviceThemeId, deviceColorSchemeId);
+
+				updateThemeSettingsProperties(
+					actionRequest, companyId, typeSettingsProperties, device,
+					deviceThemeId, true);
+			}
+
+			long groupId = liveGroupId;
+
+			if (stagingGroupId > 0) {
+				groupId = stagingGroupId;
+			}
+
+			_layoutService.updateLayout(
+				groupId, privateLayout, layoutId,
+				typeSettingsProperties.toString());
+
+			_layoutService.updateLookAndFeel(
+				groupId, privateLayout, layoutId, deviceThemeId,
+				deviceColorSchemeId, deviceCss);
+		}
 	}
 
 	public UnicodeProperties updateThemeSettingsProperties(
@@ -150,6 +205,9 @@ public class ActionUtil {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutService _layoutService;
 
 	@Reference
 	private ThemeLocalService _themeLocalService;

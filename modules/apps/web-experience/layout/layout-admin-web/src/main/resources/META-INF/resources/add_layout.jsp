@@ -57,7 +57,7 @@ if (Validator.isNotNull(backURL)) {
 renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 %>
 
-<portlet:actionURL name="addLayout" var="addLayoutURL">
+<portlet:actionURL name="/layout/add_layout" var="addLayoutURL">
 	<portlet:param name="mvcPath" value="/add_layout.jsp" />
 </portlet:actionURL>
 

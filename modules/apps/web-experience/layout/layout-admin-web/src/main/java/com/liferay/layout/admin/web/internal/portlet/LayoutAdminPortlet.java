@@ -17,14 +17,11 @@ package com.liferay.layout.admin.web.internal.portlet;
 import com.liferay.application.list.GroupProvider;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
-import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
-import com.liferay.layout.admin.web.internal.portlet.action.ActionUtil;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
-import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.exception.ImageTypeException;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLException;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLsException;
@@ -44,13 +41,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.LayoutService;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -58,25 +51,13 @@ import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadException;
-import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.PropertiesParamUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.sites.action.ActionUtil;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.io.IOException;
-
-import java.util.Locale;
-import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -86,8 +67,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -146,148 +125,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		SitesUtil.deleteLayout(actionRequest, actionResponse);
 
 		MultiSessionMessages.add(actionRequest, "layoutDeleted", selPlid);
-
-		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
-	}
-
-	public void editLayout(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		UploadPortletRequest uploadPortletRequest =
-			portal.getUploadPortletRequest(actionRequest);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
-		long stagingGroupId = ParamUtil.getLong(
-			actionRequest, "stagingGroupId");
-		boolean privateLayout = ParamUtil.getBoolean(
-			actionRequest, "privateLayout");
-		long layoutId = ParamUtil.getLong(actionRequest, "layoutId");
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "name");
-		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "title");
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "description");
-		Map<Locale, String> keywordsMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "keywords");
-		Map<Locale, String> robotsMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "robots");
-		String type = ParamUtil.getString(uploadPortletRequest, "type");
-		boolean hidden = ParamUtil.getBoolean(uploadPortletRequest, "hidden");
-		Map<Locale, String> friendlyURLMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "friendlyURL");
-		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
-
-		byte[] iconBytes = null;
-
-		long fileEntryId = ParamUtil.getLong(
-			uploadPortletRequest, "fileEntryId");
-
-		if (fileEntryId > 0) {
-			FileEntry fileEntry = dlAppLocalService.getFileEntry(fileEntryId);
-
-			iconBytes = FileUtil.getBytes(fileEntry.getContentStream());
-		}
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			Layout.class.getName(), actionRequest);
-
-		Layout layout = layoutLocalService.getLayout(
-			groupId, privateLayout, layoutId);
-
-		String currentType = layout.getType();
-
-		layout = layoutService.updateLayout(
-			groupId, privateLayout, layoutId, layout.getParentLayoutId(),
-			nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type,
-			hidden, friendlyURLMap, !deleteLogo, iconBytes, serviceContext);
-
-		themeDisplay.clearLayoutFriendlyURL(layout);
-
-		UnicodeProperties layoutTypeSettingsProperties =
-			layout.getTypeSettingsProperties();
-
-		UnicodeProperties formTypeSettingsProperties =
-			PropertiesParamUtil.getProperties(
-				actionRequest, "TypeSettingsProperties--");
-
-		String linkToLayoutUuid = ParamUtil.getString(
-			actionRequest, "linkToLayoutUuid");
-
-		if (Validator.isNotNull(linkToLayoutUuid)) {
-			Layout linkToLayout = layoutLocalService.getLayoutByUuidAndGroupId(
-				linkToLayoutUuid, groupId, privateLayout);
-
-			formTypeSettingsProperties.put(
-				"linkToLayoutId", String.valueOf(linkToLayout.getLayoutId()));
-		}
-
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
-		if (type.equals(LayoutConstants.TYPE_PORTLET)) {
-			String layoutTemplateId = ParamUtil.getString(
-				uploadPortletRequest, "layoutTemplateId",
-				PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
-
-			layoutTypePortlet.setLayoutTemplateId(
-				themeDisplay.getUserId(), layoutTemplateId);
-
-			layoutTypeSettingsProperties.putAll(formTypeSettingsProperties);
-
-			boolean layoutCustomizable = GetterUtil.getBoolean(
-				layoutTypeSettingsProperties.get(
-					LayoutConstants.CUSTOMIZABLE_LAYOUT));
-
-			if (!layoutCustomizable) {
-				layoutTypePortlet.removeCustomization(
-					layoutTypeSettingsProperties);
-			}
-
-			layout = layoutService.updateLayout(
-				groupId, privateLayout, layoutId,
-				layoutTypeSettingsProperties.toString());
-
-			if (!currentType.equals(LayoutConstants.TYPE_PORTLET)) {
-				portletPreferencesLocalService.deletePortletPreferences(
-					0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid());
-			}
-		}
-		else {
-			layout.setTypeSettingsProperties(formTypeSettingsProperties);
-
-			layoutTypeSettingsProperties.putAll(
-				layout.getTypeSettingsProperties());
-
-			layout = layoutService.updateLayout(
-				groupId, privateLayout, layoutId, layout.getTypeSettings());
-		}
-
-		HttpServletResponse response = portal.getHttpServletResponse(
-			actionResponse);
-
-		EventsProcessorUtil.process(
-			PropsKeys.LAYOUT_CONFIGURATION_ACTION_UPDATE,
-			layoutTypePortlet.getConfigurationActionUpdate(),
-			uploadPortletRequest, response);
-
-		actionUtil.updateLookAndFeel(
-			actionRequest, themeDisplay.getCompanyId(), liveGroupId,
-			stagingGroupId, privateLayout, layout.getLayoutId(),
-			layout.getTypeSettingsProperties());
-
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		if (Validator.isNull(redirect)) {
-			redirect = portal.getLayoutFullURL(layout, themeDisplay);
-		}
-
-		MultiSessionMessages.add(actionRequest, "layoutUpdated", layout);
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
@@ -377,8 +214,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 	}
 
 	protected Group getGroup(PortletRequest portletRequest) throws Exception {
-		return com.liferay.portlet.sites.action.ActionUtil.getGroup(
-			portletRequest);
+		return ActionUtil.getGroup(portletRequest);
 	}
 
 	protected Layout getLayout(PortletRequest portletRequest) throws Exception {
@@ -514,11 +350,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
-		this.dlAppLocalService = dlAppLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setGroupProvider(GroupProvider groupProvider) {
 		this.groupProvider = groupProvider;
 	}
@@ -530,34 +361,15 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		this.layoutLocalService = layoutLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setLayoutService(LayoutService layoutService) {
-		this.layoutService = layoutService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletPreferencesLocalService(
-		PortletPreferencesLocalService portletPreferencesLocalService) {
-
-		this.portletPreferencesLocalService = portletPreferencesLocalService;
-	}
-
-	@Reference
-	protected ActionUtil actionUtil;
-
-	protected DLAppLocalService dlAppLocalService;
 	protected GroupProvider groupProvider;
 
 	@Reference
 	protected ItemSelector itemSelector;
 
 	protected LayoutLocalService layoutLocalService;
-	protected LayoutService layoutService;
 
 	@Reference
 	protected Portal portal;
-
-	protected PortletPreferencesLocalService portletPreferencesLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutAdminPortlet.class);

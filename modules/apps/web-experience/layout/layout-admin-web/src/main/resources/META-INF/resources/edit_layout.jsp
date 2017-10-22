@@ -131,8 +131,8 @@ renderResponse.setTitle(selLayout.getName(locale));
 		</aui:button-row>
 	</c:when>
 	<c:otherwise>
-		<portlet:actionURL name="editLayout" var="editLayoutURL">
-			<portlet:param name="mvcPath" value="/view.jsp" />
+		<portlet:actionURL name="/layout/edit_layout" var="editLayoutURL">
+			<portlet:param name="mvcPath" value="/edit_layout.jsp" />
 		</portlet:actionURL>
 
 		<aui:form action='<%= HttpUtil.addParameter(editLayoutURL, "refererPlid", plid) %>' cssClass="edit-layout-form" data-senna-off="true" enctype="multipart/form-data" method="post" name="editLayoutFm">

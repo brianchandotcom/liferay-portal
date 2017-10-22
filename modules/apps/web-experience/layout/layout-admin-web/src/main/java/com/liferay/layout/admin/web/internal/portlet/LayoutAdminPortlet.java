@@ -85,7 +85,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.util.List;
 import java.util.Locale;
@@ -571,27 +570,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 	protected Group getGroup(PortletRequest portletRequest) throws Exception {
 		return com.liferay.portlet.sites.action.ActionUtil.getGroup(
 			portletRequest);
-	}
-
-	protected byte[] getIconBytes(
-		UploadPortletRequest uploadPortletRequest, String iconFileName) {
-
-		InputStream inputStream = null;
-
-		try {
-			inputStream = uploadPortletRequest.getFileAsStream(iconFileName);
-
-			if (inputStream != null) {
-				return FileUtil.getBytes(inputStream);
-			}
-		}
-		catch (IOException ioe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to retrieve icon", ioe);
-			}
-		}
-
-		return new byte[0];
 	}
 
 	protected Layout getLayout(PortletRequest portletRequest) throws Exception {

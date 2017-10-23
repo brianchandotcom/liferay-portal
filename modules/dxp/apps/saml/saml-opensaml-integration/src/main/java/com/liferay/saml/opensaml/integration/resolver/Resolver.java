@@ -14,24 +14,20 @@
 
 package com.liferay.saml.opensaml.integration.resolver;
 
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import org.opensaml.common.SAMLObject;
-import org.opensaml.common.binding.SAMLMessageContext;
-import org.opensaml.saml2.core.Assertion;
-import org.opensaml.saml2.core.NameID;
-import org.opensaml.saml2.core.Response;
+import com.liferay.saml.opensaml.integration.internal.resolver.SAMLCommands;
 
 /**
- * @author Mika Koivisto
+ * * @author Carlos Sierra Andrés
  */
-public interface UserResolver extends Resolver {
+public interface Resolver {
 
-	public User resolveUser(
-			Assertion assertion,
-			SAMLMessageContext<Response, SAMLObject, NameID> samlMessageContext,
-			ServiceContext serviceContext)
-		throws Exception;
+	public interface SAMLCommand<T, R extends Resolver> {
+	}
+
+	public interface SAMLContext<R extends Resolver> {
+
+		public <T> T resolve(SAMLCommand<T, ? super R> command);
+
+	}
 
 }

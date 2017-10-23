@@ -22,8 +22,9 @@ import org.opensaml.saml2.core.NameIDPolicy;
 
 /**
  * @author Mika Koivisto
+ * @author Carlos Sierra
  */
-public interface NameIdResolver {
+public interface NameIdResolver extends Resolver {
 
 	public NameID resolve(User user, String entityId, NameIDPolicy nameIdPolicy)
 		throws PortalException;

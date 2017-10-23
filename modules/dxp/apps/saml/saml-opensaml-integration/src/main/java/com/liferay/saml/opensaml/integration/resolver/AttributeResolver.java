@@ -24,7 +24,7 @@ import org.opensaml.saml2.core.Attribute;
 /**
  * @author Mika Koivisto
  */
-public interface AttributeResolver {
+public interface AttributeResolver extends Resolver {
 
 	public List<Attribute> resolve(
 		User user, SAMLMessageContext<?, ?, ?> samlMessageContext);

@@ -62,5 +62,5 @@ public interface EntryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JSONArray searchUsersAndContacts(long companyId,
 		java.lang.String keywords, int start, int end)
-		throws PortalException;
+		throws java.lang.Exception;
 }

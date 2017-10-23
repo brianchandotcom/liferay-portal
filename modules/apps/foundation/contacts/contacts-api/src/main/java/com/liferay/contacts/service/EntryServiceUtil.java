@@ -53,7 +53,7 @@ public class EntryServiceUtil {
 
 	public static com.liferay.portal.kernel.json.JSONArray searchUsersAndContacts(
 		long companyId, java.lang.String keywords, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws java.lang.Exception {
 		return getService()
 				   .searchUsersAndContacts(companyId, keywords, start, end);
 	}

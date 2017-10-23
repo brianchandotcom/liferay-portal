@@ -57,8 +57,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class EntryServiceHttp {
 	public static com.liferay.portal.kernel.json.JSONArray searchUsersAndContacts(
 		HttpPrincipal httpPrincipal, long companyId, java.lang.String keywords,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		int start, int end) throws java.lang.Exception {
 		try {
 			MethodKey methodKey = new MethodKey(EntryServiceUtil.class,
 					"searchUsersAndContacts",
@@ -73,8 +72,8 @@ public class EntryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof java.lang.Exception) {
+					throw (java.lang.Exception)e;
 				}
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);

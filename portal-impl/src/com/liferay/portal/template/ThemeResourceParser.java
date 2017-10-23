@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.theme.ThemeLoader;
 import com.liferay.portal.theme.ThemeLoaderFactory;
 
@@ -45,6 +46,21 @@ public class ThemeResourceParser extends URLResourceParser {
 
 		if (pos == -1) {
 			return null;
+		}
+
+		if (templateId.endsWith(
+				StringPool.PERIOD + TemplateConstants.LANG_TYPE_VM)) {
+
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("Support of Velocity has been dropped for themes. ");
+			sb.append("Please update template ");
+			sb.append(templateId);
+			sb.append(" to use FreeMarker.");
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(sb.toString());
+			}
 		}
 
 		String servletContextName = templateId.substring(0, pos);

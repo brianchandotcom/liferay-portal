@@ -27,13 +27,11 @@ import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.ThemeHelper;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.servlet.ServletContext;
 
@@ -118,22 +116,6 @@ public class ThemeHotDeployListener extends BaseHotDeployListener {
 						servletContextName, " are available for use"));
 			}
 		}
-
-		if (_log.isWarnEnabled()) {
-			for (Theme theme : themes) {
-				if (!Objects.equals(
-						theme.getTemplateExtension(),
-						ThemeHelper.TEMPLATE_EXTENSION_VM)) {
-
-					continue;
-				}
-
-				_log.warn(
-					"Support of Velocity is deprecated. Update theme " +
-						theme.getName() +
-							" to use FreeMarker for forward compatibility.");
-			}
-		}
 	}
 
 	protected void doInvokeUndeploy(HotDeployEvent hotDeployEvent)
@@ -173,6 +155,9 @@ public class ThemeHotDeployListener extends BaseHotDeployListener {
 		try {
 			ClassLoaderUtil.setContextClassLoader(
 				ClassLoaderUtil.getPortalClassLoader());
+
+			TemplateResourceLoaderUtil.clearCache(
+				TemplateConstants.LANG_TYPE_FTL);
 
 			TemplateResourceLoaderUtil.clearCache(
 				TemplateConstants.LANG_TYPE_VM);

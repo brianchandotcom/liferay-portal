@@ -74,10 +74,6 @@ public class WrapPortletTag
 			content = ThemeUtil.includeFTL(
 				servletContext, request, response, wrapPage, theme, false);
 		}
-		else if (extension.equals(ThemeHelper.TEMPLATE_EXTENSION_VM)) {
-			content = ThemeUtil.includeVM(
-				servletContext, request, response, wrapPage, theme, false);
-		}
 
 		return _CONTENT_WRAPPER_PRE.concat(content).concat(
 			_CONTENT_WRAPPER_POST);

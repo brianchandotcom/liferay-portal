@@ -239,3 +239,7 @@
 		transition: fill 0.4s ease-in-out;
 	}
 }
+
+.form-builder-select-field .drop-chosen .results-chosen li.option-selected {
+	color: $brand-text-color;
+}

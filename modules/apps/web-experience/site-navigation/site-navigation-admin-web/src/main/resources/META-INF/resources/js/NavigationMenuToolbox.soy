@@ -4,55 +4,35 @@
  * This renders the main element of NavigationMenuToolbox.
  */
 {template .render}
+	{@param availableItemTypes: list<?>}
 	{@param selectedItemType: ?}
-	{@param? availableItemTypes: list<?>}
 	{@param? pathThemeImages: string}
 
-	<div class="navigation-menu-toolbox sidebar sidebar-light sidebar-light-bg" ref="menuBuilderToolbox">
+	<div class="sidebar">
 		<div class="sidebar-header">
 			{call Dropdown.render}
 				{param header kind="html"}
-					<div class="card-horizontal" data-onclick="toggle">
-						<div class="card-col-content card-col-gutters">
-							<span class="lfr-card-title-text text-default treeview-node-name truncate-text">
-								{msg desc="//TODO use variable $selectedItemType"}site.navigation.menu.item.types.layout{/msg}
-							</span>
-						</div>
+					<a data-onclick="toggle" href="javascript:;">
+						<span>{$selectedItemType.label}</span>
 
-						<div class="card-col-field">
-							<a class="btn icon-monospaced" href="javascript:;">
-								<svg class="lexicon-icon">
-									<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#caret-double"></use>
-								</svg>
-							</a>
-						</div>
-					</div>
+						<svg class="lexicon-icon" data-icon="caret-double">
+							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#caret-double"></use>
+						</svg>
+					</a>
 				{/param}
+
 				{param body kind="html"}
 					{if $availableItemTypes}
 						{foreach $availableItemType in $availableItemTypes}
-							<li data-onclick="toggle">
+							<li class="{($selectedItemType.type == $availableItemType.type) ? 'active' : ''} dropdown-item" data-onclick="toggle">
 								<a data-type="{$availableItemType.type}" href="javascript:;">
-									<span class="icon-monospaced">
-										<svg class="lexicon-icon">
-											<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$availableItemType.icon}"></use>
-										</svg>
-									</span>
-									<span>{msg desc="//TODO use variable availableItemType.type"}site.navigation.menu.item.types.layout{/msg}</span>
+									<span>{$availableItemType.label}</span>
 								</a>
 							</li>
 						{/foreach}
 					{/if}
 				{/param}
-				{param ref: 'itemType' /}
 			{/call}
 		</div>
-
-		<div class="item-selector" ref="itemSelector">
-			{if $selectedItemType.editViewHTML}
-				{$selectedItemType.editViewHTML}
-			{/if}
-		</div>
 	</div>
-
 {/template}

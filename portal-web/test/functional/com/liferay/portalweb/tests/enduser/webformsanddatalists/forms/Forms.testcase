@@ -292,15 +292,15 @@
 
 		<execute macro="FormFields#duplicateField" />
 
-		<execute macro="Form#closeSidebar" />
-
-		<execute macro="FormsAdminNavigator#gotoEditDuplicateField">
-			<var name="fieldName" value="TextField" />
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="Text Field 1" />
 		</execute>
 
 		<execute macro="FormFields#viewFieldName">
 			<var name="fieldName" value="TextField1" />
 		</execute>
+
+		<execute macro="Form#closeSidebar" />
 
 		<execute macro="Form#save" />
 	</command>

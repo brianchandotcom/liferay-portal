@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.process.local;
 
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
-import com.liferay.portal.kernel.process.log.ProcessOutputStream;
+import com.liferay.portal.kernel.process.local.LocalProcessLauncher.ProcessContext;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -34,9 +34,6 @@ public class RequestProcessCallable<T extends Serializable>
 
 	@Override
 	public T call() throws ProcessException {
-		ProcessOutputStream processOutputStream =
-			LocalProcessLauncher.ProcessContext.getProcessOutputStream();
-
 		T result = null;
 		Throwable throwable = null;
 
@@ -52,8 +49,8 @@ public class RequestProcessCallable<T extends Serializable>
 		}
 		finally {
 			try {
-				processOutputStream.writeProcessCallable(
-					new ResponseProcessCallable<T>(_id, result, throwable));
+				ProcessContext.writeProcessCallable(
+					new ResponseProcessCallable<>(_id, result, throwable));
 			}
 			catch (IOException ioe) {
 				throw new ProcessException(ioe);

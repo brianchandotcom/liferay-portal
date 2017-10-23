@@ -15,9 +15,9 @@
 package com.liferay.message.boards.service.impl;
 
 import com.liferay.message.boards.exception.BannedUserException;
-import com.liferay.message.boards.internal.util.MBUtil;
 import com.liferay.message.boards.model.MBBan;
 import com.liferay.message.boards.service.base.MBBanLocalServiceBaseImpl;
+import com.liferay.message.boards.util.MBUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

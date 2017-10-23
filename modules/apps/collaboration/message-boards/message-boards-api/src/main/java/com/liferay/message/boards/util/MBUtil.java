@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.internal.util;
+package com.liferay.message.boards.util;
 
 import com.liferay.message.boards.model.MBBan;
 

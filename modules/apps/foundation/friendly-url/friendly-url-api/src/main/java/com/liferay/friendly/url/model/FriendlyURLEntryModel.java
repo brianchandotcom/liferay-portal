@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import java.io.Serializable;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  * The base model interface for the FriendlyURLEntry service. Represents a row in the &quot;FriendlyURLEntry&quot; database table, with each column mapped to a property of this class.
@@ -45,7 +47,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface FriendlyURLEntryModel extends AttachedModel,
-	BaseModel<FriendlyURLEntry>, ShardedModel, StagedModel {
+	BaseModel<FriendlyURLEntry>, MVCCModel, ShardedModel, StagedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -65,6 +67,22 @@ public interface FriendlyURLEntryModel extends AttachedModel,
 	 * @param primaryKey the primary key of this friendly url entry
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this friendly url entry.
+	 *
+	 * @return the mvcc version of this friendly url entry
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this friendly url entry.
+	 *
+	 * @param mvccVersion the mvcc version of this friendly url entry
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this friendly url entry.
@@ -202,40 +220,31 @@ public interface FriendlyURLEntryModel extends AttachedModel,
 	public void setClassPK(long classPK);
 
 	/**
-	 * Returns the url title of this friendly url entry.
+	 * Returns the default language ID of this friendly url entry.
 	 *
-	 * @return the url title of this friendly url entry
+	 * @return the default language ID of this friendly url entry
 	 */
 	@AutoEscape
+	public String getDefaultLanguageId();
+
+	/**
+	 * Sets the default language ID of this friendly url entry.
+	 *
+	 * @param defaultLanguageId the default language ID of this friendly url entry
+	 */
+	public void setDefaultLanguageId(String defaultLanguageId);
+
+	public String[] getAvailableLanguageIds();
+
 	public String getUrlTitle();
 
-	/**
-	 * Sets the url title of this friendly url entry.
-	 *
-	 * @param urlTitle the url title of this friendly url entry
-	 */
-	public void setUrlTitle(String urlTitle);
+	public String getUrlTitle(String languageId);
 
-	/**
-	 * Returns the main of this friendly url entry.
-	 *
-	 * @return the main of this friendly url entry
-	 */
-	public boolean getMain();
+	public String getUrlTitle(String languageId, boolean useDefault);
 
-	/**
-	 * Returns <code>true</code> if this friendly url entry is main.
-	 *
-	 * @return <code>true</code> if this friendly url entry is main; <code>false</code> otherwise
-	 */
-	public boolean isMain();
+	public String getUrlTitleMapAsXML();
 
-	/**
-	 * Sets whether this friendly url entry is main.
-	 *
-	 * @param main the main of this friendly url entry
-	 */
-	public void setMain(boolean main);
+	public Map<String, String> getLanguageIdToUrlTitleMap();
 
 	@Override
 	public boolean isNew();

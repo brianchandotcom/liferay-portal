@@ -116,66 +116,62 @@ public class FriendlyURLEntryLocalizationUtil {
 	}
 
 	/**
-	* Returns all the friendly url entry localizations where groupId = &#63; and friendlyURLEntryId = &#63;.
+	* Returns all the friendly url entry localizations where friendlyURLEntryId = &#63;.
 	*
-	* @param groupId the group ID
 	* @param friendlyURLEntryId the friendly url entry ID
 	* @return the matching friendly url entry localizations
 	*/
-	public static List<FriendlyURLEntryLocalization> findByG_F(long groupId,
+	public static List<FriendlyURLEntryLocalization> findByFriendlyURLEntryId(
 		long friendlyURLEntryId) {
-		return getPersistence().findByG_F(groupId, friendlyURLEntryId);
+		return getPersistence().findByFriendlyURLEntryId(friendlyURLEntryId);
 	}
 
 	/**
-	* Returns a range of all the friendly url entry localizations where groupId = &#63; and friendlyURLEntryId = &#63;.
+	* Returns a range of all the friendly url entry localizations where friendlyURLEntryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FriendlyURLEntryLocalizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param groupId the group ID
 	* @param friendlyURLEntryId the friendly url entry ID
 	* @param start the lower bound of the range of friendly url entry localizations
 	* @param end the upper bound of the range of friendly url entry localizations (not inclusive)
 	* @return the range of matching friendly url entry localizations
 	*/
-	public static List<FriendlyURLEntryLocalization> findByG_F(long groupId,
+	public static List<FriendlyURLEntryLocalization> findByFriendlyURLEntryId(
 		long friendlyURLEntryId, int start, int end) {
 		return getPersistence()
-				   .findByG_F(groupId, friendlyURLEntryId, start, end);
+				   .findByFriendlyURLEntryId(friendlyURLEntryId, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the friendly url entry localizations where groupId = &#63; and friendlyURLEntryId = &#63;.
+	* Returns an ordered range of all the friendly url entry localizations where friendlyURLEntryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FriendlyURLEntryLocalizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param groupId the group ID
 	* @param friendlyURLEntryId the friendly url entry ID
 	* @param start the lower bound of the range of friendly url entry localizations
 	* @param end the upper bound of the range of friendly url entry localizations (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching friendly url entry localizations
 	*/
-	public static List<FriendlyURLEntryLocalization> findByG_F(long groupId,
+	public static List<FriendlyURLEntryLocalization> findByFriendlyURLEntryId(
 		long friendlyURLEntryId, int start, int end,
 		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator) {
 		return getPersistence()
-				   .findByG_F(groupId, friendlyURLEntryId, start, end,
+				   .findByFriendlyURLEntryId(friendlyURLEntryId, start, end,
 			orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the friendly url entry localizations where groupId = &#63; and friendlyURLEntryId = &#63;.
+	* Returns an ordered range of all the friendly url entry localizations where friendlyURLEntryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FriendlyURLEntryLocalizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param groupId the group ID
 	* @param friendlyURLEntryId the friendly url entry ID
 	* @param start the lower bound of the range of friendly url entry localizations
 	* @param end the upper bound of the range of friendly url entry localizations (not inclusive)
@@ -183,270 +179,260 @@ public class FriendlyURLEntryLocalizationUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching friendly url entry localizations
 	*/
-	public static List<FriendlyURLEntryLocalization> findByG_F(long groupId,
+	public static List<FriendlyURLEntryLocalization> findByFriendlyURLEntryId(
 		long friendlyURLEntryId, int start, int end,
 		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findByG_F(groupId, friendlyURLEntryId, start, end,
+				   .findByFriendlyURLEntryId(friendlyURLEntryId, start, end,
 			orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	* Returns the first friendly url entry localization in the ordered set where groupId = &#63; and friendlyURLEntryId = &#63;.
+	* Returns the first friendly url entry localization in the ordered set where friendlyURLEntryId = &#63;.
 	*
-	* @param groupId the group ID
 	* @param friendlyURLEntryId the friendly url entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching friendly url entry localization
 	* @throws NoSuchFriendlyURLEntryLocalizationException if a matching friendly url entry localization could not be found
 	*/
-	public static FriendlyURLEntryLocalization findByG_F_First(long groupId,
+	public static FriendlyURLEntryLocalization findByFriendlyURLEntryId_First(
 		long friendlyURLEntryId,
 		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator)
 		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryLocalizationException {
 		return getPersistence()
-				   .findByG_F_First(groupId, friendlyURLEntryId,
+				   .findByFriendlyURLEntryId_First(friendlyURLEntryId,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the first friendly url entry localization in the ordered set where groupId = &#63; and friendlyURLEntryId = &#63;.
+	* Returns the first friendly url entry localization in the ordered set where friendlyURLEntryId = &#63;.
 	*
-	* @param groupId the group ID
 	* @param friendlyURLEntryId the friendly url entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
 	*/
-	public static FriendlyURLEntryLocalization fetchByG_F_First(long groupId,
+	public static FriendlyURLEntryLocalization fetchByFriendlyURLEntryId_First(
 		long friendlyURLEntryId,
 		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator) {
 		return getPersistence()
-				   .fetchByG_F_First(groupId, friendlyURLEntryId,
+				   .fetchByFriendlyURLEntryId_First(friendlyURLEntryId,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the last friendly url entry localization in the ordered set where groupId = &#63; and friendlyURLEntryId = &#63;.
+	* Returns the last friendly url entry localization in the ordered set where friendlyURLEntryId = &#63;.
 	*
-	* @param groupId the group ID
 	* @param friendlyURLEntryId the friendly url entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching friendly url entry localization
 	* @throws NoSuchFriendlyURLEntryLocalizationException if a matching friendly url entry localization could not be found
 	*/
-	public static FriendlyURLEntryLocalization findByG_F_Last(long groupId,
+	public static FriendlyURLEntryLocalization findByFriendlyURLEntryId_Last(
 		long friendlyURLEntryId,
 		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator)
 		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryLocalizationException {
 		return getPersistence()
-				   .findByG_F_Last(groupId, friendlyURLEntryId,
+				   .findByFriendlyURLEntryId_Last(friendlyURLEntryId,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the last friendly url entry localization in the ordered set where groupId = &#63; and friendlyURLEntryId = &#63;.
+	* Returns the last friendly url entry localization in the ordered set where friendlyURLEntryId = &#63;.
 	*
-	* @param groupId the group ID
 	* @param friendlyURLEntryId the friendly url entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
 	*/
-	public static FriendlyURLEntryLocalization fetchByG_F_Last(long groupId,
+	public static FriendlyURLEntryLocalization fetchByFriendlyURLEntryId_Last(
 		long friendlyURLEntryId,
 		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator) {
 		return getPersistence()
-				   .fetchByG_F_Last(groupId, friendlyURLEntryId,
+				   .fetchByFriendlyURLEntryId_Last(friendlyURLEntryId,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the friendly url entry localizations before and after the current friendly url entry localization in the ordered set where groupId = &#63; and friendlyURLEntryId = &#63;.
+	* Returns the friendly url entry localizations before and after the current friendly url entry localization in the ordered set where friendlyURLEntryId = &#63;.
 	*
 	* @param friendlyURLEntryLocalizationId the primary key of the current friendly url entry localization
-	* @param groupId the group ID
 	* @param friendlyURLEntryId the friendly url entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next friendly url entry localization
 	* @throws NoSuchFriendlyURLEntryLocalizationException if a friendly url entry localization with the primary key could not be found
 	*/
-	public static FriendlyURLEntryLocalization[] findByG_F_PrevAndNext(
-		long friendlyURLEntryLocalizationId, long groupId,
-		long friendlyURLEntryId,
+	public static FriendlyURLEntryLocalization[] findByFriendlyURLEntryId_PrevAndNext(
+		long friendlyURLEntryLocalizationId, long friendlyURLEntryId,
 		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator)
 		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryLocalizationException {
 		return getPersistence()
-				   .findByG_F_PrevAndNext(friendlyURLEntryLocalizationId,
-			groupId, friendlyURLEntryId, orderByComparator);
+				   .findByFriendlyURLEntryId_PrevAndNext(friendlyURLEntryLocalizationId,
+			friendlyURLEntryId, orderByComparator);
 	}
 
 	/**
-	* Removes all the friendly url entry localizations where groupId = &#63; and friendlyURLEntryId = &#63; from the database.
+	* Removes all the friendly url entry localizations where friendlyURLEntryId = &#63; from the database.
 	*
-	* @param groupId the group ID
 	* @param friendlyURLEntryId the friendly url entry ID
 	*/
-	public static void removeByG_F(long groupId, long friendlyURLEntryId) {
-		getPersistence().removeByG_F(groupId, friendlyURLEntryId);
+	public static void removeByFriendlyURLEntryId(long friendlyURLEntryId) {
+		getPersistence().removeByFriendlyURLEntryId(friendlyURLEntryId);
 	}
 
 	/**
-	* Returns the number of friendly url entry localizations where groupId = &#63; and friendlyURLEntryId = &#63;.
+	* Returns the number of friendly url entry localizations where friendlyURLEntryId = &#63;.
 	*
-	* @param groupId the group ID
 	* @param friendlyURLEntryId the friendly url entry ID
 	* @return the number of matching friendly url entry localizations
 	*/
-	public static int countByG_F(long groupId, long friendlyURLEntryId) {
-		return getPersistence().countByG_F(groupId, friendlyURLEntryId);
+	public static int countByFriendlyURLEntryId(long friendlyURLEntryId) {
+		return getPersistence().countByFriendlyURLEntryId(friendlyURLEntryId);
 	}
 
 	/**
-	* Returns the friendly url entry localization where groupId = &#63; and friendlyURLEntryId = &#63; and languageId = &#63; or throws a {@link NoSuchFriendlyURLEntryLocalizationException} if it could not be found.
+	* Returns the friendly url entry localization where friendlyURLEntryId = &#63; and languageId = &#63; or throws a {@link NoSuchFriendlyURLEntryLocalizationException} if it could not be found.
 	*
-	* @param groupId the group ID
 	* @param friendlyURLEntryId the friendly url entry ID
 	* @param languageId the language ID
 	* @return the matching friendly url entry localization
 	* @throws NoSuchFriendlyURLEntryLocalizationException if a matching friendly url entry localization could not be found
 	*/
-	public static FriendlyURLEntryLocalization findByG_F_L(long groupId,
+	public static FriendlyURLEntryLocalization findByFriendlyURLEntryId_LanguageId(
 		long friendlyURLEntryId, java.lang.String languageId)
 		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryLocalizationException {
 		return getPersistence()
-				   .findByG_F_L(groupId, friendlyURLEntryId, languageId);
+				   .findByFriendlyURLEntryId_LanguageId(friendlyURLEntryId,
+			languageId);
 	}
 
 	/**
-	* Returns the friendly url entry localization where groupId = &#63; and friendlyURLEntryId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the friendly url entry localization where friendlyURLEntryId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
-	* @param groupId the group ID
 	* @param friendlyURLEntryId the friendly url entry ID
 	* @param languageId the language ID
 	* @return the matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
 	*/
-	public static FriendlyURLEntryLocalization fetchByG_F_L(long groupId,
+	public static FriendlyURLEntryLocalization fetchByFriendlyURLEntryId_LanguageId(
 		long friendlyURLEntryId, java.lang.String languageId) {
 		return getPersistence()
-				   .fetchByG_F_L(groupId, friendlyURLEntryId, languageId);
+				   .fetchByFriendlyURLEntryId_LanguageId(friendlyURLEntryId,
+			languageId);
 	}
 
 	/**
-	* Returns the friendly url entry localization where groupId = &#63; and friendlyURLEntryId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the friendly url entry localization where friendlyURLEntryId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
-	* @param groupId the group ID
 	* @param friendlyURLEntryId the friendly url entry ID
 	* @param languageId the language ID
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
 	*/
-	public static FriendlyURLEntryLocalization fetchByG_F_L(long groupId,
+	public static FriendlyURLEntryLocalization fetchByFriendlyURLEntryId_LanguageId(
 		long friendlyURLEntryId, java.lang.String languageId,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .fetchByG_F_L(groupId, friendlyURLEntryId, languageId,
-			retrieveFromCache);
+				   .fetchByFriendlyURLEntryId_LanguageId(friendlyURLEntryId,
+			languageId, retrieveFromCache);
 	}
 
 	/**
-	* Removes the friendly url entry localization where groupId = &#63; and friendlyURLEntryId = &#63; and languageId = &#63; from the database.
+	* Removes the friendly url entry localization where friendlyURLEntryId = &#63; and languageId = &#63; from the database.
 	*
-	* @param groupId the group ID
 	* @param friendlyURLEntryId the friendly url entry ID
 	* @param languageId the language ID
 	* @return the friendly url entry localization that was removed
 	*/
-	public static FriendlyURLEntryLocalization removeByG_F_L(long groupId,
+	public static FriendlyURLEntryLocalization removeByFriendlyURLEntryId_LanguageId(
 		long friendlyURLEntryId, java.lang.String languageId)
 		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryLocalizationException {
 		return getPersistence()
-				   .removeByG_F_L(groupId, friendlyURLEntryId, languageId);
+				   .removeByFriendlyURLEntryId_LanguageId(friendlyURLEntryId,
+			languageId);
 	}
 
 	/**
-	* Returns the number of friendly url entry localizations where groupId = &#63; and friendlyURLEntryId = &#63; and languageId = &#63;.
+	* Returns the number of friendly url entry localizations where friendlyURLEntryId = &#63; and languageId = &#63;.
 	*
-	* @param groupId the group ID
 	* @param friendlyURLEntryId the friendly url entry ID
 	* @param languageId the language ID
 	* @return the number of matching friendly url entry localizations
 	*/
-	public static int countByG_F_L(long groupId, long friendlyURLEntryId,
-		java.lang.String languageId) {
+	public static int countByFriendlyURLEntryId_LanguageId(
+		long friendlyURLEntryId, java.lang.String languageId) {
 		return getPersistence()
-				   .countByG_F_L(groupId, friendlyURLEntryId, languageId);
+				   .countByFriendlyURLEntryId_LanguageId(friendlyURLEntryId,
+			languageId);
 	}
 
 	/**
-	* Returns the friendly url entry localization where groupId = &#63; and urlTitle = &#63; and languageId = &#63; or throws a {@link NoSuchFriendlyURLEntryLocalizationException} if it could not be found.
+	* Returns the friendly url entry localization where groupId = &#63; and classNameId = &#63; and urlTitle = &#63; or throws a {@link NoSuchFriendlyURLEntryLocalizationException} if it could not be found.
 	*
 	* @param groupId the group ID
+	* @param classNameId the class name ID
 	* @param urlTitle the url title
-	* @param languageId the language ID
 	* @return the matching friendly url entry localization
 	* @throws NoSuchFriendlyURLEntryLocalizationException if a matching friendly url entry localization could not be found
 	*/
-	public static FriendlyURLEntryLocalization findByG_U_L(long groupId,
-		java.lang.String urlTitle, java.lang.String languageId)
+	public static FriendlyURLEntryLocalization findByG_C_U(long groupId,
+		long classNameId, java.lang.String urlTitle)
 		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryLocalizationException {
-		return getPersistence().findByG_U_L(groupId, urlTitle, languageId);
+		return getPersistence().findByG_C_U(groupId, classNameId, urlTitle);
 	}
 
 	/**
-	* Returns the friendly url entry localization where groupId = &#63; and urlTitle = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the friendly url entry localization where groupId = &#63; and classNameId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param groupId the group ID
+	* @param classNameId the class name ID
 	* @param urlTitle the url title
-	* @param languageId the language ID
 	* @return the matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
 	*/
-	public static FriendlyURLEntryLocalization fetchByG_U_L(long groupId,
-		java.lang.String urlTitle, java.lang.String languageId) {
-		return getPersistence().fetchByG_U_L(groupId, urlTitle, languageId);
+	public static FriendlyURLEntryLocalization fetchByG_C_U(long groupId,
+		long classNameId, java.lang.String urlTitle) {
+		return getPersistence().fetchByG_C_U(groupId, classNameId, urlTitle);
 	}
 
 	/**
-	* Returns the friendly url entry localization where groupId = &#63; and urlTitle = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the friendly url entry localization where groupId = &#63; and classNameId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param groupId the group ID
+	* @param classNameId the class name ID
 	* @param urlTitle the url title
-	* @param languageId the language ID
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
 	*/
-	public static FriendlyURLEntryLocalization fetchByG_U_L(long groupId,
-		java.lang.String urlTitle, java.lang.String languageId,
-		boolean retrieveFromCache) {
+	public static FriendlyURLEntryLocalization fetchByG_C_U(long groupId,
+		long classNameId, java.lang.String urlTitle, boolean retrieveFromCache) {
 		return getPersistence()
-				   .fetchByG_U_L(groupId, urlTitle, languageId,
+				   .fetchByG_C_U(groupId, classNameId, urlTitle,
 			retrieveFromCache);
 	}
 
 	/**
-	* Removes the friendly url entry localization where groupId = &#63; and urlTitle = &#63; and languageId = &#63; from the database.
+	* Removes the friendly url entry localization where groupId = &#63; and classNameId = &#63; and urlTitle = &#63; from the database.
 	*
 	* @param groupId the group ID
+	* @param classNameId the class name ID
 	* @param urlTitle the url title
-	* @param languageId the language ID
 	* @return the friendly url entry localization that was removed
 	*/
-	public static FriendlyURLEntryLocalization removeByG_U_L(long groupId,
-		java.lang.String urlTitle, java.lang.String languageId)
+	public static FriendlyURLEntryLocalization removeByG_C_U(long groupId,
+		long classNameId, java.lang.String urlTitle)
 		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryLocalizationException {
-		return getPersistence().removeByG_U_L(groupId, urlTitle, languageId);
+		return getPersistence().removeByG_C_U(groupId, classNameId, urlTitle);
 	}
 
 	/**
-	* Returns the number of friendly url entry localizations where groupId = &#63; and urlTitle = &#63; and languageId = &#63;.
+	* Returns the number of friendly url entry localizations where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
 	*
 	* @param groupId the group ID
+	* @param classNameId the class name ID
 	* @param urlTitle the url title
-	* @param languageId the language ID
 	* @return the number of matching friendly url entry localizations
 	*/
-	public static int countByG_U_L(long groupId, java.lang.String urlTitle,
-		java.lang.String languageId) {
-		return getPersistence().countByG_U_L(groupId, urlTitle, languageId);
+	public static int countByG_C_U(long groupId, long classNameId,
+		java.lang.String urlTitle) {
+		return getPersistence().countByG_C_U(groupId, classNameId, urlTitle);
 	}
 
 	/**

@@ -33,6 +33,7 @@ public class FriendlyURLEntrySoap implements Serializable {
 	public static FriendlyURLEntrySoap toSoapModel(FriendlyURLEntry model) {
 		FriendlyURLEntrySoap soapModel = new FriendlyURLEntrySoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setFriendlyURLEntryId(model.getFriendlyURLEntryId());
 		soapModel.setGroupId(model.getGroupId());
@@ -41,8 +42,7 @@ public class FriendlyURLEntrySoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
-		soapModel.setUrlTitle(model.getUrlTitle());
-		soapModel.setMain(model.getMain());
+		soapModel.setDefaultLanguageId(model.getDefaultLanguageId());
 
 		return soapModel;
 	}
@@ -95,6 +95,14 @@ public class FriendlyURLEntrySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setFriendlyURLEntryId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -161,26 +169,15 @@ public class FriendlyURLEntrySoap implements Serializable {
 		_classPK = classPK;
 	}
 
-	public String getUrlTitle() {
-		return _urlTitle;
+	public String getDefaultLanguageId() {
+		return _defaultLanguageId;
 	}
 
-	public void setUrlTitle(String urlTitle) {
-		_urlTitle = urlTitle;
+	public void setDefaultLanguageId(String defaultLanguageId) {
+		_defaultLanguageId = defaultLanguageId;
 	}
 
-	public boolean getMain() {
-		return _main;
-	}
-
-	public boolean isMain() {
-		return _main;
-	}
-
-	public void setMain(boolean main) {
-		_main = main;
-	}
-
+	private long _mvccVersion;
 	private String _uuid;
 	private long _friendlyURLEntryId;
 	private long _groupId;
@@ -189,6 +186,5 @@ public class FriendlyURLEntrySoap implements Serializable {
 	private Date _modifiedDate;
 	private long _classNameId;
 	private long _classPK;
-	private String _urlTitle;
-	private boolean _main;
+	private String _defaultLanguageId;
 }

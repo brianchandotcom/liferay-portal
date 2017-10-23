@@ -12,31 +12,32 @@
  * details.
  */
 
-package com.liferay.friendly.url.model.impl;
+package com.liferay.friendly.url.exception;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.friendly.url.model.FriendlyURLEntry;
-import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
- * @author Pavel Savinov
+ * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class FriendlyURLEntryImpl extends FriendlyURLEntryBaseImpl {
+public class NoSuchFriendlyURLEntryMappingException
+	extends NoSuchModelException {
 
-	@Override
-	public boolean isMain() throws PortalException {
-		FriendlyURLEntry friendlyURLEntry =
-			FriendlyURLEntryLocalServiceUtil.getMainFriendlyURLEntry(
-				getClassNameId(), getClassPK());
+	public NoSuchFriendlyURLEntryMappingException() {
+	}
 
-		if (friendlyURLEntry.getPrimaryKey() == getPrimaryKey()) {
-			return true;
-		}
+	public NoSuchFriendlyURLEntryMappingException(String msg) {
+		super(msg);
+	}
 
-		return false;
+	public NoSuchFriendlyURLEntryMappingException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public NoSuchFriendlyURLEntryMappingException(Throwable cause) {
+		super(cause);
 	}
 
 }

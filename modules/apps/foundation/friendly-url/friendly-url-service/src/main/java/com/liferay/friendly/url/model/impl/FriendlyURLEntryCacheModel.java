@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -39,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
-	Externalizable {
+	Externalizable, MVCCModel {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -52,7 +53,8 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 
 		FriendlyURLEntryCacheModel friendlyURLEntryCacheModel = (FriendlyURLEntryCacheModel)obj;
 
-		if (friendlyURLEntryId == friendlyURLEntryCacheModel.friendlyURLEntryId) {
+		if ((friendlyURLEntryId == friendlyURLEntryCacheModel.friendlyURLEntryId) &&
+				(mvccVersion == friendlyURLEntryCacheModel.mvccVersion)) {
 			return true;
 		}
 
@@ -61,14 +63,28 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, friendlyURLEntryId);
+		int hashCode = HashUtil.hash(0, friendlyURLEntryId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(21);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", friendlyURLEntryId=");
 		sb.append(friendlyURLEntryId);
@@ -84,10 +100,8 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
-		sb.append(", urlTitle=");
-		sb.append(urlTitle);
-		sb.append(", main=");
-		sb.append(main);
+		sb.append(", defaultLanguageId=");
+		sb.append(defaultLanguageId);
 		sb.append("}");
 
 		return sb.toString();
@@ -96,6 +110,8 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 	@Override
 	public FriendlyURLEntry toEntityModel() {
 		FriendlyURLEntryImpl friendlyURLEntryImpl = new FriendlyURLEntryImpl();
+
+		friendlyURLEntryImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			friendlyURLEntryImpl.setUuid(StringPool.BLANK);
@@ -125,14 +141,12 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 		friendlyURLEntryImpl.setClassNameId(classNameId);
 		friendlyURLEntryImpl.setClassPK(classPK);
 
-		if (urlTitle == null) {
-			friendlyURLEntryImpl.setUrlTitle(StringPool.BLANK);
+		if (defaultLanguageId == null) {
+			friendlyURLEntryImpl.setDefaultLanguageId(StringPool.BLANK);
 		}
 		else {
-			friendlyURLEntryImpl.setUrlTitle(urlTitle);
+			friendlyURLEntryImpl.setDefaultLanguageId(defaultLanguageId);
 		}
-
-		friendlyURLEntryImpl.setMain(main);
 
 		friendlyURLEntryImpl.resetOriginalValues();
 
@@ -141,6 +155,7 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		friendlyURLEntryId = objectInput.readLong();
@@ -154,14 +169,14 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
-		urlTitle = objectInput.readUTF();
-
-		main = objectInput.readBoolean();
+		defaultLanguageId = objectInput.readUTF();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -181,16 +196,15 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 
 		objectOutput.writeLong(classPK);
 
-		if (urlTitle == null) {
+		if (defaultLanguageId == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(urlTitle);
+			objectOutput.writeUTF(defaultLanguageId);
 		}
-
-		objectOutput.writeBoolean(main);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long friendlyURLEntryId;
 	public long groupId;
@@ -199,6 +213,5 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 	public long modifiedDate;
 	public long classNameId;
 	public long classPK;
-	public String urlTitle;
-	public boolean main;
+	public String defaultLanguageId;
 }

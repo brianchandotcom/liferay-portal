@@ -3,7 +3,13 @@
 <#list blogsEntryModels as blogsEntryModel>
 	${dataFactory.toInsertSQL(blogsEntryModel)}
 
-	${dataFactory.toInsertSQL(dataFactory.newFriendlyURLEntryModel(blogsEntryModel))}
+	<#assign friendlyURLEntryModel = dataFactory.newFriendlyURLEntryModel(blogsEntryModel) />
+
+	${dataFactory.toInsertSQL(friendlyURLEntryModel)}
+
+	${dataFactory.toInsertSQL(dataFactory.newFriendlyURLEntryLocalizationModel(friendlyURLEntryModel, blogsEntryModel))}
+
+	${dataFactory.toInsertSQL(dataFactory.newFriendlyURLEntryMapping(friendlyURLEntryModel))}
 
 	<@insertAssetEntry
 		_categoryAndTag=true

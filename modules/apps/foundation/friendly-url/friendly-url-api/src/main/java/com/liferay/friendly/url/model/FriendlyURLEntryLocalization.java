@@ -17,7 +17,6 @@ package com.liferay.friendly.url.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.annotation.ImplementationClassName;
-import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
 
 /**
@@ -32,7 +31,7 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.friendly.url.model.impl.FriendlyURLEntryLocalizationImpl")
 @ProviderType
 public interface FriendlyURLEntryLocalization
-	extends FriendlyURLEntryLocalizationModel, PersistedModel {
+	extends FriendlyURLEntryLocalizationModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

@@ -32,13 +32,13 @@ import org.osgi.framework.BundleContext;
 public class ImageIOPluginsBundleActivator implements BundleActivator {
 
 	@Override
-	public void start(BundleContext context) throws Exception {
+	public void start(BundleContext bundleContext) {
 		_register(ImageReaderSpi.class, _imageReaderSpiSet);
 		_register(ImageWriterSpi.class, _imageWriterSpiSet);
 	}
 
 	@Override
-	public void stop(BundleContext context) throws Exception {
+	public void stop(BundleContext bundleContext) {
 		_unregister(_imageReaderSpiSet);
 		_unregister(_imageWriterSpiSet);
 	}

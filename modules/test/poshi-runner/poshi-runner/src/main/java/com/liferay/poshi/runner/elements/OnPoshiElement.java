@@ -14,10 +14,10 @@
 
 package com.liferay.poshi.runner.elements;
 
-import org.dom4j.Element;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.dom4j.Element;
 
 /**
  * @author Kenji Heigel
@@ -91,8 +91,25 @@ public class OnPoshiElement extends BasePoshiElement {
 		return sb.toString();
 	}
 
-	protected String getReadableName() {
-		return getName();
+	protected OnPoshiElement() {
+	}
+
+	protected OnPoshiElement(String name, Element element) {
+		super(name, element);
+	}
+
+	protected OnPoshiElement(String name, String readableSyntax) {
+		super(name, readableSyntax);
+	}
+
+	@Override
+	protected String getBlockName() {
+		return "on";
+	}
+
+	@Override
+	protected String getPad() {
+		return super.getPad() + "\t";
 	}
 
 	protected List<String> getReadableBlocks(String readableSyntax) {
@@ -105,8 +122,8 @@ public class OnPoshiElement extends BasePoshiElement {
 
 			readableBlock = readableBlock.trim();
 
-			if (line.startsWith(getReadableName() + " (") && line.endsWith("{") &&
-					(readableBlock.length() == 0)) {
+			if (line.startsWith(getReadableName() + " (") &&
+				line.endsWith("{") && (readableBlock.length() == 0)) {
 
 				readableBlocks.add(line);
 
@@ -130,25 +147,8 @@ public class OnPoshiElement extends BasePoshiElement {
 		return readableBlocks;
 	}
 
-	@Override
-	protected String getBlockName() {
-		return "on";
-	}
-
-	@Override
-	protected String getPad() {
-		return super.getPad() + "\t";
-	}
-
-	protected OnPoshiElement() {
-	}
-
-	protected OnPoshiElement(String name, Element element) {
-		super(name, element);
-	}
-
-	protected OnPoshiElement(String name, String readableSyntax) {
-		super(name, readableSyntax);
+	protected String getReadableName() {
+		return getName();
 	}
 
 	protected boolean isElementType(String readableSyntax) {

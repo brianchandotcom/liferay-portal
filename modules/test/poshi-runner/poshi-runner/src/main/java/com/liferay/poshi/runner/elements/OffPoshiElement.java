@@ -16,9 +16,6 @@ package com.liferay.poshi.runner.elements;
 
 import org.dom4j.Element;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Kenji Heigel
  */
@@ -44,11 +41,6 @@ public class OffPoshiElement extends OnPoshiElement {
 		return null;
 	}
 
-	@Override
-	protected String getBlockName() {
-		return "off";
-	}
-
 	protected OffPoshiElement() {
 	}
 
@@ -58,6 +50,11 @@ public class OffPoshiElement extends OnPoshiElement {
 
 	protected OffPoshiElement(String readableSyntax) {
 		super(_ELEMENT_NAME, readableSyntax);
+	}
+
+	@Override
+	protected String getBlockName() {
+		return "off";
 	}
 
 	private static final String _ELEMENT_NAME = "off";

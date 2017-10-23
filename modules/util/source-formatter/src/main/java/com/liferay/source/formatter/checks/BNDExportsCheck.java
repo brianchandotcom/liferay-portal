@@ -47,7 +47,22 @@ public class BNDExportsCheck extends BaseFileCheck {
 			_checkExports(fileName, content, _exportsPattern, "Export-Package");
 		}
 
+		_checkExportPackage(fileName, absolutePath, content);
+
 		return content;
+	}
+
+	private void _checkExportPackage(
+		String fileName, String absolutePath, String content) {
+
+		if (absolutePath.contains("-service/") &&
+			content.contains("Export-Package")) {
+
+			addMessage(
+				fileName,
+				"Service modules should not be exporting any packages, see " +
+					"LPS-75294");
+		}
 	}
 
 	private void _checkExports(

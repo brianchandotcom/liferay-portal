@@ -71,7 +71,9 @@ public class IfPoshiElement extends BasePoshiElement {
 
 		sb.append(createReadableBlock(thenReadableSyntax));
 
-		for (PoshiElement elseifElement : (List<PoshiElement>) elements("elseif")) {
+		for (PoshiElement elseifElement :
+				(List<PoshiElement>)elements("elseif")) {
+
 			sb.append(elseifElement.toReadableSyntax());
 		}
 
@@ -125,10 +127,6 @@ public class IfPoshiElement extends BasePoshiElement {
 		return sb.toString();
 	}
 
-	protected String getReadableName() {
-		return getName();
-	}
-
 	protected List<String> getReadableBlocks(String readableSyntax) {
 		StringBuilder sb = new StringBuilder();
 
@@ -139,8 +137,8 @@ public class IfPoshiElement extends BasePoshiElement {
 
 			readableBlock = readableBlock.trim();
 
-			if (line.startsWith(getReadableName() + " (") && line.endsWith("{") &&
-				(readableBlock.length() == 0)) {
+			if (line.startsWith(getReadableName() + " (") &&
+				line.endsWith("{") && (readableBlock.length() == 0)) {
 
 				readableBlocks.add(line);
 
@@ -164,6 +162,10 @@ public class IfPoshiElement extends BasePoshiElement {
 		}
 
 		return readableBlocks;
+	}
+
+	protected String getReadableName() {
+		return getName();
 	}
 
 	private boolean _isElementType(String readableSyntax) {

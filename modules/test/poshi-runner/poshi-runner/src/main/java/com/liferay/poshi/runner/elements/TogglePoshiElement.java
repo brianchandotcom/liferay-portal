@@ -14,10 +14,10 @@
 
 package com.liferay.poshi.runner.elements;
 
-import org.dom4j.Element;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.dom4j.Element;
 
 /**
  * @author Kenji Heigel
@@ -49,7 +49,7 @@ public class TogglePoshiElement extends BasePoshiElement {
 		for (String readableBlock : getReadableBlocks(readableSyntax)) {
 			if (readableBlock.startsWith("toggle (")) {
 				String parentheticalContent = getParentheticalContent(
-						readableBlock);
+					readableBlock);
 
 				String summary = getQuotedContent(parentheticalContent);
 
@@ -90,8 +90,20 @@ public class TogglePoshiElement extends BasePoshiElement {
 		return sb.toString();
 	}
 
-	protected String getReadableName() {
-		return getName();
+	protected TogglePoshiElement() {
+	}
+
+	protected TogglePoshiElement(Element element) {
+		super(_ELEMENT_NAME, element);
+	}
+
+	protected TogglePoshiElement(String readableSyntax) {
+		super(_ELEMENT_NAME, readableSyntax);
+	}
+
+	@Override
+	protected String getBlockName() {
+		return "toggle";
 	}
 
 	protected List<String> getReadableBlocks(String readableSyntax) {
@@ -104,8 +116,8 @@ public class TogglePoshiElement extends BasePoshiElement {
 
 			readableBlock = readableBlock.trim();
 
-			if (line.startsWith(getReadableName() + " (") && line.endsWith("{") &&
-					(readableBlock.length() == 0)) {
+			if (line.startsWith(getReadableName() + " (") &&
+				line.endsWith("{") && (readableBlock.length() == 0)) {
 
 				readableBlocks.add(line);
 
@@ -129,20 +141,8 @@ public class TogglePoshiElement extends BasePoshiElement {
 		return readableBlocks;
 	}
 
-	@Override
-	protected String getBlockName() {
-		return "toggle";
-	}
-
-	protected TogglePoshiElement() {
-	}
-
-	protected TogglePoshiElement(Element element) {
-		super(_ELEMENT_NAME, element);
-	}
-
-	protected TogglePoshiElement(String readableSyntax) {
-		super(_ELEMENT_NAME, readableSyntax);
+	protected String getReadableName() {
+		return getName();
 	}
 
 	private boolean _isElementType(String readableSyntax) {

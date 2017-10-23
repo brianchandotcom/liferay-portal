@@ -15,6 +15,8 @@
 package com.liferay.message.boards.comment.internal;
 
 import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.kernel.service.MBMessageLocalService;
+import com.liferay.message.boards.service.MBBanLocalService;
 import com.liferay.portal.kernel.comment.BaseDiscussionPermission;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -28,13 +30,25 @@ import com.liferay.portlet.messageboards.service.permission.MBDiscussionPermissi
  */
 public class MBDiscussionPermissionImpl extends BaseDiscussionPermission {
 
-	public MBDiscussionPermissionImpl(PermissionChecker permissionChecker) {
+	public MBDiscussionPermissionImpl(
+		PermissionChecker permissionChecker,
+		MBBanLocalService mbBanLocalService,
+		MBMessageLocalService mbMessageLocalService) {
+
 		_permissionChecker = permissionChecker;
+		_mbBanLocalService = mbBanLocalService;
+		_mbMessageLocalService = mbMessageLocalService;
 	}
 
 	@Override
 	public boolean hasAddPermission(
 		long companyId, long groupId, String className, long classPK) {
+
+		if (_mbBanLocalService.hasBan(
+				groupId, _permissionChecker.getUserId())) {
+
+			return false;
+		}
 
 		return MBDiscussionPermission.contains(
 			_permissionChecker, companyId, groupId, className, classPK,
@@ -44,6 +58,12 @@ public class MBDiscussionPermissionImpl extends BaseDiscussionPermission {
 	@Override
 	public boolean hasPermission(Comment comment, String actionId)
 		throws PortalException {
+
+		if (_mbBanLocalService.hasBan(
+				comment.getGroupId(), _permissionChecker.getUserId())) {
+
+			return false;
+		}
 
 		if (comment instanceof MBCommentImpl) {
 			MBCommentImpl mbCommentImpl = (MBCommentImpl)comment;
@@ -62,6 +82,14 @@ public class MBDiscussionPermissionImpl extends BaseDiscussionPermission {
 	public boolean hasPermission(long commentId, String actionId)
 		throws PortalException {
 
+		MBMessage message = _mbMessageLocalService.getMessage(commentId);
+
+		if (_mbBanLocalService.hasBan(
+				message.getGroupId(), _permissionChecker.getUserId())) {
+
+			return false;
+		}
+
 		return MBDiscussionPermission.contains(
 			_permissionChecker, commentId, actionId);
 	}
@@ -70,6 +98,12 @@ public class MBDiscussionPermissionImpl extends BaseDiscussionPermission {
 	public boolean hasSubscribePermission(
 			long companyId, long groupId, String className, long classPK)
 		throws PortalException {
+
+		if (_mbBanLocalService.hasBan(
+				groupId, _permissionChecker.getUserId())) {
+
+			return false;
+		}
 
 		return MBDiscussionPermission.contains(
 			_permissionChecker, companyId, groupId, className, classPK,
@@ -80,11 +114,19 @@ public class MBDiscussionPermissionImpl extends BaseDiscussionPermission {
 	public boolean hasViewPermission(
 		long companyId, long groupId, String className, long classPK) {
 
+		if (_mbBanLocalService.hasBan(
+				groupId, _permissionChecker.getUserId())) {
+
+			return false;
+		}
+
 		return MBDiscussionPermission.contains(
 			_permissionChecker, companyId, groupId, className, classPK,
 			ActionKeys.VIEW);
 	}
 
+	private final MBBanLocalService _mbBanLocalService;
+	private final MBMessageLocalService _mbMessageLocalService;
 	private final PermissionChecker _permissionChecker;
 
 }

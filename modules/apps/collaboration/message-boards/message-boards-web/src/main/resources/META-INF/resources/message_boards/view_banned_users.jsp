@@ -36,7 +36,7 @@ portletURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned_use
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.message.boards.kernel.model.MBBan"
+			className="com.liferay.message.boards.model.MBBan"
 			keyProperty="banId"
 			modelVar="ban"
 		>

@@ -84,7 +84,7 @@ int totalBannedUsers = MBBanLocalServiceUtil.getBansCount(scopeGroupId);
 			/>
 
 			<liferay-ui:search-container-row
-				className="com.liferay.message.boards.kernel.model.MBBan"
+				className="com.liferay.message.boards.model.MBBan"
 				keyProperty="banUserId"
 				modelVar="ban"
 			>

@@ -1,58 +1,103 @@
-import { core } from 'metal';
-import Component from 'metal-component';
-
+import {Config} from 'metal-state';
+import dom from 'metal-dom';
+import Modal from 'metal-modal';
+import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import Soy from 'metal-soy';
 
 import templates from './Flags.soy';
 
 /**
- * Flags
- *
  * It opens a dialog where the user can flag the page.
- *
  * @abstract
- * @extends {Component}
+ * @extends {PortletBase}
  */
-class Flags extends Component {
+class Flags extends PortletBase {
+	/**
+	 * @inheritDoc
+	 */
+	created() {
+		this.namespace = this.portletNamespace;
+	}
+
+	/**
+	 * Gets the reason selected by the user.
+	 * @return {String} reason
+	 */
+	_getReason() {
+		let reason;
+
+		if (this.refs.modal.refs.otherReason) {
+			reason = this.refs.modal.refs.otherReason.value || Liferay.Language.get('no-reason-specified');
+		}
+		else {
+			reason = this.refs.modal.refs.reason.value;
+		}
+
+		return reason;
+	}
+
+	/**
+	 * Closes the dialog to flag the page.
+	 */
+	_handleCloseDialogClick() {
+		this._reportDialogOpen = false;
+		this._showConfirmationMessage = false;
+		this._showErrorMessage = false;
+	}
+
 	/**
 	 * Opens a dialog where the user can flag the page.
 	 */
-	openReportDialog() {
-		AUI().use('aui-io-plugin-deprecated', 'liferay-util-window', (A) => {
-			let dialogTitle = Liferay.Language.get('report-inappropriate-content');
+	_handleFlagButtonClick() {
+		this._reportDialogOpen = true;
+	}
 
-			if (this.flagsEnabled) {
-				let popup = Liferay.Util.Window.getWindow(
-					{
-						dialog: {
-							destroyOnHide: true,
-							height: 680,
-							width: 680
-						},
-						title: dialogTitle
-					}
-				);
+	/**
+	 * Checks the reason selected by the user, and allows
+	 * to introduce a specific reasons if necessary.
+	 * @param {Event} event
+	 * @protected
+	 */
+	_handleReasonChange(event) {
+		this._selectedReason = event.delegateTarget.value;
+	}
 
-				popup.plug(
-					A.Plugin.IO, {
-						data: this.data,
-						uri: this.uri
-					}
-				);
+	/**
+	 * Forms the submit.
+	 * @internal
+	 * @protected
+	 */
+	_handleReportButtonClick() {
+		this._sendReport();
+	}
+
+	/**
+	 * Makes an ajax request to submit the data.
+	 * @param {Event} event
+	 * @protected
+	 */
+	_sendReport() {
+		this.formData[this.ns('reason')] = this._getReason();
+		this.formData[this.ns('reporterEmailAddress')] = this.refs.modal.refs.reporterEmailAddress.value;
+
+		let formData = new FormData();
+
+		for (let name in this.formData) {
+			formData.append(name, this.formData[name]);
+		}
+
+		fetch(this.uri, {
+			body: formData,
+			credentials: 'include',
+		 	method: 'post'
+		})
+		.then((xhr) => {
+			if (xhr.status === Liferay.STATUS_CODE.OK) {
+				this._showConfirmationMessage = true;
 			}
-			else {
-				Liferay.Util.Window.getWindow(
-					{
-						dialog: {
-							bodyContent: Liferay.Language.get('please-sign-in-to-flag-this-as-inappropriate'),
-							destroyOnHide: true,
-							height: 680,
-							width: 680
-						},
-						title: dialogTitle
-					}
-				);
-			}
+		})
+		.catch(() => {
+			this._showErrorMessage = true;
 		});
 	}
 };
@@ -65,14 +110,64 @@ class Flags extends Component {
  */
 Flags.STATE = {
 	/**
-	 * Portlet's data.
+	 * Flag to indicate if dialog should be open.
+	 * @default false
 	 * @instance
 	 * @memberof Flags
-	 * @type {!Object}
+	 * @type {Boolean}
 	 */
-	data: {
-		validator: core.isObject
-	},
+	_reportDialogOpen: Config.bool().internal().value(false),
+
+	/**
+	 * Flag to indicate if dialog should show the confirmation message.
+	 * @default false
+	 * @instance
+	 * @memberof Flags
+	 * @type {Boolean}
+	 */
+	_showConfirmationMessage: Config.bool().internal().value(false),
+
+	/**
+	 * Flag to indicate if dialog should show the error message.
+	 * @default false
+	 * @instance
+	 * @memberof Flags
+	 * @type {Boolean}
+	 */
+	_showErrorMessage: Config.bool().internal().value(false),
+
+	/**
+	 * Selected reason to flag.
+	 * @instance
+	 * @memberof Flags
+	 * @type {String}
+	 */
+	_selectedReason: Config.string().internal(),
+
+	/**
+	 * Company name.
+	 * @instance
+	 * @memberof Flags
+	 * @type {String}
+	 */
+	companyName: Config.string().required(),
+
+	/**
+	 * CSS classes to be applied to the element.
+	 * @instance
+	 * @memberof Flags
+	 * @type {?string}
+	 * @default undefined
+	 */
+	elementClasses: Config.string(),
+
+	/**
+	 * Whether the form to flag is enabled or not.
+	 * @instance
+	 * @memberof Flags
+	 * @type {Boolean}
+	 */
+	enabled: Config.bool().required(),
 
 	/**
 	 * Whether the user is able to flag the page.
@@ -80,20 +175,106 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {!Boolean}
 	 */
-	flagsEnabled: {
-		validator: core.isBoolean
-	},
+	flagsEnabled: Config.bool().required(),
 
 	/**
-	 * Uri of the page that will be opened
-	 * in the dialog.
+	 * Portlet's data needed to send within the form.
+	 * @instance
+	 * @memberof Flags
+	 * @type {!Object}
+	 */
+	formData: Config.object().required(),
+
+	/**
+	 * Component id.
 	 * @instance
 	 * @memberof Flags
 	 * @type {String}
 	 */
-	uri: {
-		validator: core.isString
-	}
+	id: Config.string().required(),
+
+	/**
+	 * Whether to show message text as a label next
+	 * to the flag icon or as a tooltip.
+	 * @instance
+	 * @memberof Flags
+	 * @type {Boolean}
+	 */
+	label: Config.bool().required(),
+
+	/**
+	 * Text to display next to the flag icon.
+	 * @instance
+	 * @memberof Flags
+	 * @type {String}
+	 */
+	message: Config.string().required(),
+
+	/**
+	 * Path to Terms of Use.
+	 * @instance
+	 * @memberof Flags
+	 * @type {String}
+	 */
+	pathTermsOfUse: Config.string().required(),
+
+	/**
+	 * Path to images.
+	 * @instance
+	 * @memberof Flags
+	 * @type {String}
+	 */
+	pathThemeImages: Config.string().required(),
+
+	/**
+	 * Portlet's namespace
+	 * @instance
+	 * @memberof Flags
+	 * @type {String}
+	 */
+	portletNamespace: Config.string().required(),
+
+	/**
+	 * List of possible reasons to flag
+	 * a content.
+	 * @instance
+	 * @memberof Flags
+	 * @type {List}
+	 */
+	reasons: Config.arrayOf(Config.string()).required(),
+
+	/**
+	 * Email of the user who reports
+	 * the flag.
+	 * @instance
+	 * @memberof Flags
+	 * @type {String}
+	 */
+	reporterEmailAddress: Config.string(),
+
+	/**
+	 * Wheter the user is signed in or not.
+	 * @instance
+	 * @memberof Flags
+	 * @type {Boolean}
+	 */
+	signedIn: Config.bool().required(),
+
+	/**
+	 * Title to show in the Modal.
+	 * @instance
+	 * @memberof Flags
+	 * @type {String}
+	 */
+	title: Config.string().required(),
+
+	/**
+	 * Uri to send the report fetch request.
+	 * @instance
+	 * @memberof Flags
+	 * @type {String}
+	 */
+	uri: Config.string().required()
 };
 
 // Register component

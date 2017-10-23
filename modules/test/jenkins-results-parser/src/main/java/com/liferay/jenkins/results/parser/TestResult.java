@@ -138,7 +138,9 @@ public class TestResult {
 		downstreamBuildListItemElement.add(
 			Dom4JUtil.getNewAnchorElement(testReportURL, getDisplayName()));
 
-		if (testReportURL.contains("com.liferay.poshi.runner/PoshiRunner")) {
+		if ((testrayLogsURL != null) &&
+			testReportURL.contains("com.liferay.poshi.runner/PoshiRunner")) {
+
 			Dom4JUtil.addToElement(
 				downstreamBuildListItemElement, " - ",
 				Dom4JUtil.getNewAnchorElement(

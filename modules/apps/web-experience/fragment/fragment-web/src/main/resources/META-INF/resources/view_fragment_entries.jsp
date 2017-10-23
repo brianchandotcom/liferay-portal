@@ -145,6 +145,8 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 						events: {
 							hide: function() {
 								fragmentNameEditor.dispose();
+
+								fragmentNameEditor = null;
 							}
 						},
 						fragmentEntryId: actionElement.dataset.fragmentEntryId,
@@ -166,6 +168,8 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 					events: {
 						hide: function() {
 							fragmentNameEditor.dispose();
+
+							fragmentNameEditor = null;
 						}
 					},
 					namespace: '<portlet:namespace />',
@@ -181,7 +185,9 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 		function handleDestroyPortlet () {
 			addFragmentEntryMenuItem.removeEventListener('click', handleAddFragmentEntryMenuItemClick);
 
-			fragmentNameEditor.dispose();
+			if (fragmentNameEditor) {
+				fragmentNameEditor.dispose();
+			}
 
 			updateFragmentActionOptionQueryClickHandler.removeListener();
 

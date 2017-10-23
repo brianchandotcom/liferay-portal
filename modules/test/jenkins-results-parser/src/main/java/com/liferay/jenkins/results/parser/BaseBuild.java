@@ -296,33 +296,6 @@ public abstract class BaseBuild implements Build {
 		return buildURLRegex;
 	}
 
-	public String getCompanionBranchName() {
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		Map<String, String> repositoryGitDetailsTempMap =
-			topLevelBuild.getCompanionGitRepositoryDetailsTempMap();
-
-		return repositoryGitDetailsTempMap.get("github.sender.branch.name");
-	}
-
-	public String getCompanionRepositorySHA() {
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		Map<String, String> repositoryGitDetailsTempMap =
-			topLevelBuild.getCompanionGitRepositoryDetailsTempMap();
-
-		return repositoryGitDetailsTempMap.get("github.sender.branch.sha");
-	}
-
-	public String getCompanionUsername() {
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		Map<String, String> repositoryGitDetailsTempMap =
-			topLevelBuild.getCompanionGitRepositoryDetailsTempMap();
-
-		return repositoryGitDetailsTempMap.get("github.sender.username");
-	}
-
 	@Override
 	public String getConsoleText() {
 		if (_consoleText != null) {

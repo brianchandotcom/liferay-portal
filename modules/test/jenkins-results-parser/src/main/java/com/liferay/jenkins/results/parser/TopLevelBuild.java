@@ -109,6 +109,15 @@ public class TopLevelBuild extends BaseBuild {
 		return getTempMap(tempMapName);
 	}
 
+	public String getCompanionBranchName() {
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		Map<String, String> repositoryGitDetailsTempMap =
+			topLevelBuild.getCompanionGitRepositoryDetailsTempMap();
+
+		return repositoryGitDetailsTempMap.get("github.sender.branch.name");
+	}
+
 	public Map<String, String> getCompanionGitRepositoryDetailsTempMap() {
 		String branchName = getBranchName();
 		String branchType = "ee";
@@ -122,6 +131,24 @@ public class TopLevelBuild extends BaseBuild {
 			"git.", repositoryType, ".", branchType, ".properties");
 
 		return getTempMap(tempMapName);
+	}
+
+	public String getCompanionRepositorySHA() {
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		Map<String, String> repositoryGitDetailsTempMap =
+			topLevelBuild.getCompanionGitRepositoryDetailsTempMap();
+
+		return repositoryGitDetailsTempMap.get("github.sender.branch.sha");
+	}
+
+	public String getCompanionUsername() {
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		Map<String, String> repositoryGitDetailsTempMap =
+			topLevelBuild.getCompanionGitRepositoryDetailsTempMap();
+
+		return repositoryGitDetailsTempMap.get("github.sender.username");
 	}
 
 	@Override

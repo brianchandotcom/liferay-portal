@@ -42,14 +42,14 @@ SearchContainer searchContainer = cpSearchResultsDisplayContext.getSearchContain
 
 		<div class="col-md-4">
 			<div class="card">
-				<div class="aspect-ratio aspect-ratio-center aspect-ratio-vertical">
+				<div class="aspect-ratio">
 
 					<%
 					String img = cpSearchResultsDisplayContext.getProductDefaultImage(document, themeDisplay);
 					%>
 
 					<c:if test="<%= Validator.isNotNull(img) %>">
-						<img src="<%= img %>">
+						<img class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= img %>">
 					</c:if>
 				</div>
 

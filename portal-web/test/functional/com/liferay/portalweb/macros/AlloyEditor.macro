@@ -1,13 +1,15 @@
 <definition>
 	<command name="addContent">
-		<execute function="Type#typeEditor" locator1="AlloyEditor#EDITOR" value1="${content}">
-			<var name="key_editor" value="content" />
+		<execute macro="AlloyEditor#typeEditor">
+			<var name="content" value="${content}" />
+			<var name="editor" value="content" />
 		</execute>
 	</command>
 
 	<command name="addDescription">
-		<execute function="Type#typeEditor" locator1="AlloyEditor#EDITOR" value1="${description}">
-			<var name="key_editor" value="description" />
+		<execute macro="AlloyEditor#typeEditor">
+			<var name="content" value="${description}" />
+			<var name="editor" value="description" />
 		</execute>
 	</command>
 
@@ -20,8 +22,9 @@
 	</command>
 
 	<command name="addTitle">
-		<execute function="Type#typeEditor" locator1="AlloyEditor#EDITOR" value1="${title}">
-			<var name="key_editor" value="title" />
+		<execute macro="AlloyEditor#typeEditor">
+			<var name="content" value="${title}" />
+			<var name="editor" value="title" />
 		</execute>
 	</command>
 
@@ -66,6 +69,12 @@
 				<execute function="Click" locator1="AlloyEditor#TEXT_FORMATTING_UNDERLINE" />
 			</then>
 		</if>
+	</command>
+
+	<command name="typeEditor">
+		<execute function="Type#typeEditor" locator1="AlloyEditor#EDITOR" value1="${content}">
+			<var name="key_editor" value="${editor}" />
+		</execute>
 	</command>
 
 	<command name="viewNoStylingInAlloyEditor">

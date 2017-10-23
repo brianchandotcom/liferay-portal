@@ -164,8 +164,9 @@
 
 		<execute function="Click" locator1="Form#NAME_FIELD" />
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#EDITOR" value1="${formName}">
-			<var name="key_editor" value="name" />
+		<execute macro="AlloyEditor#typeEditor">
+			<var name="content" value="${formName}" />
+			<var name="editor" value="name" />
 		</execute>
 	</command>
 
@@ -178,8 +179,9 @@
 
 		<execute function="Click" locator1="Form#NAME_FIELD" />
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#EDITOR" value1="${formName}">
-			<var name="key_editor" value="name" />
+		<execute macro="AlloyEditor#typeEditor">
+			<var name="content" value="${formName}" />
+			<var name="editor" value="name" />
 		</execute>
 	</command>
 

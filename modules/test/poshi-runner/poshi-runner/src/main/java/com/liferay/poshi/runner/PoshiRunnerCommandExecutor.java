@@ -35,7 +35,7 @@ public class PoshiRunnerCommandExecutor {
 			evaluatePoshiConsole();
 		}
 		else if (command.equals("help")) {
-			taskHelp();
+			commandHelp();
 		}
 		else if (command.equals("runPoshi")) {
 			runPoshi(args);
@@ -47,10 +47,26 @@ public class PoshiRunnerCommandExecutor {
 			writePoshiProperties();
 		}
 		else {
-			System.out.println("Unrecognized task name: " + command);
+			System.out.println("Unrecognized command name: " + command);
 
-			taskHelp();
+			commandHelp();
 		}
+	}
+
+	protected static void commandHelp() throws Exception {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("Usage: PoshiRunnerCommandExecutor <command> <args>\n");
+		sb.append("\n");
+		sb.append("command options include:\n");
+		sb.append(
+			"\tevaluatePoshiConsole\tEvaluate the console output errors.\n");
+		sb.append("\trunPoshi\t\t\tExecute tests using Poshi Runner.\n");
+		sb.append("\tvalidatePoshi\t\tValidates the Poshi files syntax.\n");
+		sb.append(
+			"\twritePoshiProperties\tWrite the Poshi properties files.\n");
+
+		System.out.println(sb.toString());
 	}
 
 	protected static void evaluatePoshiConsole() throws Exception {
@@ -63,22 +79,6 @@ public class PoshiRunnerCommandExecutor {
 		System.out.println("Executing task: runPoshi");
 
 		JUnitCore.runClasses(PoshiRunner.class);
-	}
-
-	protected static void taskHelp() throws Exception {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("Usage: PoshiRunnerTaskExector <command> <args>\n");
-		sb.append("\n");
-		sb.append("command options include:\n");
-		sb.append(
-			"\tevaluatePoshiConsole\tEvaluate the console output errors.\n");
-		sb.append("\trunPoshi\t\t\tExecute tests using Poshi Runner.\n");
-		sb.append("\tvalidatePoshi\t\tValidates the Poshi files syntax.\n");
-		sb.append(
-			"\twritePoshiProperties\tWrite the Poshi properties files.\n");
-
-		System.out.println(sb.toString());
 	}
 
 	protected static void validatePoshi() throws Exception {

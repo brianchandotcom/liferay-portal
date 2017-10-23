@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.string.CharPool;
+
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;

@@ -46,8 +46,8 @@
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
-			<var name="adtType" value="Breadcrumb" />
 			<var name="portletName" value="Breadcrumb" />
+			<var name="templateName" value="Breadcrumb Test ADT" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

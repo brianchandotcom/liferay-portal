@@ -871,8 +871,8 @@
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#selectPortletADT">
-			<var name="adtType" value="Wiki" />
 			<var name="portletName" value="Wiki" />
+			<var name="templateName" value="Wiki Test ADT" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">

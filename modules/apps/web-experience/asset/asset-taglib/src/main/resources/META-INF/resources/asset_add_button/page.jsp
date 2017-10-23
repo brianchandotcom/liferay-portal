@@ -29,7 +29,7 @@ boolean useDialog = GetterUtil.getBoolean(request.getAttribute("liferay-asset:as
 boolean hasAddPortletURLs = false;
 
 for (long groupId : groupIds) {
-	List<AssetPublisherAddItemHolder> assetPublisherAddItemHolders = AssetUtil.getAssetPublisherAddItemHolders((LiferayPortletRequest)portletRequest, (LiferayPortletResponse)portletResponse, groupId, classNameIds, classTypeIds, allAssetCategoryIds, allAssetTagNames, redirect);
+	List<AssetPublisherAddItemHolder> assetPublisherAddItemHolders = AssetHelperUtil.getAssetPublisherAddItemHolders((LiferayPortletRequest)portletRequest, (LiferayPortletResponse)portletResponse, groupId, classNameIds, classTypeIds, allAssetCategoryIds, allAssetTagNames, redirect);
 
 	if ((assetPublisherAddItemHolders != null) && !assetPublisherAddItemHolders.isEmpty()) {
 		hasAddPortletURLs = true;
@@ -102,7 +102,7 @@ request.setAttribute("liferay-asset:asset-add-button:hasAddPortletURLs", hasAddP
 
 <%!
 private String _getURL(long groupId, long plid, PortletURL addPortletURL, String message, boolean addDisplayPageParameter, Layout layout, PageContext pageContext, PortletResponse portletResponse, boolean useDialog) {
-	String addPortletURLString = AssetUtil.getAddURLPopUp(groupId, plid, addPortletURL, addDisplayPageParameter, layout);
+	String addPortletURLString = AssetHelperUtil.getAddURLPopUp(groupId, plid, addPortletURL, addDisplayPageParameter, layout);
 
 	if (useDialog) {
 		return "javascript:Liferay.Util.openWindow({dialog: {destroyOnHide: true}, dialogIframe: {bodyCssClass: 'dialog-with-footer'}, id: '" + portletResponse.getNamespace() + "editAsset', title: '" + HtmlUtil.escapeJS(LanguageUtil.format((HttpServletRequest) pageContext.getRequest(), "new-x", HtmlUtil.escape(message), false)) + "', uri: '" + HtmlUtil.escapeJS(addPortletURLString) + "'});";

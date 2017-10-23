@@ -1895,6 +1895,10 @@ public abstract class BaseBuild implements Build {
 	protected int getTestCountByStatus(String status) {
 		JSONObject testReportJSONObject = getTestReportJSONObject();
 
+		if (testReportJSONObject == null) {
+			return 0;
+		}
+
 		int failCount = testReportJSONObject.getInt("failCount");
 		int passCount = testReportJSONObject.getInt("passCount");
 

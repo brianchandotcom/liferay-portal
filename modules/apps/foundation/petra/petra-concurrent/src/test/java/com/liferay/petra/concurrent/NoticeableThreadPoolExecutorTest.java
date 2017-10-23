@@ -325,9 +325,11 @@ public class NoticeableThreadPoolExecutorTest {
 
 	@Test
 	public void testStatisticMethods() throws InterruptedException {
+		BlockingQueue<Runnable> taskQueue = new LinkedBlockingQueue<>();
+
 		NoticeableThreadPoolExecutor noticeableThreadPoolExecutor =
 			new NoticeableThreadPoolExecutor(
-				1, 2, 1, TimeUnit.NANOSECONDS, new LinkedBlockingQueue<>(),
+				1, 2, 1, TimeUnit.NANOSECONDS, taskQueue,
 				new MethodNameThreadFactory(),
 				(runnable, threadPoolExecutor) -> {
 				},
@@ -345,12 +347,12 @@ public class NoticeableThreadPoolExecutorTest {
 			0, noticeableThreadPoolExecutor.getPendingTaskCount());
 		Assert.assertEquals(0, noticeableThreadPoolExecutor.getPoolSize());
 
-		BlockingQueue<Object> taskQueue = new LinkedBlockingQueue<>();
+		BlockingQueue<Object> runningTaskQueue = new LinkedBlockingQueue<>();
 
 		Semaphore semaphore = new Semaphore(0);
 
 		Runnable slowRunnable = () -> {
-			taskQueue.add(this);
+			runningTaskQueue.add(this);
 
 			try {
 				semaphore.acquire();
@@ -362,7 +364,7 @@ public class NoticeableThreadPoolExecutorTest {
 
 		noticeableThreadPoolExecutor.execute(slowRunnable);
 
-		taskQueue.take();
+		runningTaskQueue.take();
 
 		Assert.assertEquals(1, noticeableThreadPoolExecutor.getActiveCount());
 		Assert.assertEquals(
@@ -378,7 +380,7 @@ public class NoticeableThreadPoolExecutorTest {
 
 		noticeableThreadPoolExecutor.execute(slowRunnable);
 
-		taskQueue.take();
+		runningTaskQueue.take();
 
 		Assert.assertEquals(2, noticeableThreadPoolExecutor.getActiveCount());
 		Assert.assertEquals(
@@ -393,6 +395,8 @@ public class NoticeableThreadPoolExecutorTest {
 		Assert.assertEquals(2, noticeableThreadPoolExecutor.getPoolSize());
 
 		noticeableThreadPoolExecutor.execute(slowRunnable);
+
+		while (taskQueue.contains(slowRunnable));
 
 		Assert.assertEquals(2, noticeableThreadPoolExecutor.getActiveCount());
 		Assert.assertEquals(
@@ -422,7 +426,9 @@ public class NoticeableThreadPoolExecutorTest {
 
 		semaphore.release();
 
-		taskQueue.take();
+		runningTaskQueue.take();
+
+		while (taskQueue.contains(slowRunnable));
 
 		Assert.assertEquals(2, noticeableThreadPoolExecutor.getActiveCount());
 		Assert.assertEquals(
@@ -438,7 +444,7 @@ public class NoticeableThreadPoolExecutorTest {
 
 		semaphore.release();
 
-		taskQueue.take();
+		runningTaskQueue.take();
 
 		semaphore.release();
 

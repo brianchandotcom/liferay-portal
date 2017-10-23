@@ -459,6 +459,22 @@ public class VerifyProperties extends VerifyProcess {
 		},
 
 		new String[] {
+			"auth.verifier.ImageRequestAuthVerifier.hosts.allowed",
+			"auth.verifier.ImageRequestAuthVerifier.hosts.allowed",
+			"com.liferay.document.library.document.conversion"
+		},
+		new String[] {
+			"auth.verifier.ImageRequestAuthVerifier.urls.excludes",
+			"auth.verifier.ImageRequestAuthVerifier.urls.excludes",
+			"com.liferay.document.library.document.conversion"
+		},
+		new String[] {
+			"auth.verifier.ImageRequestAuthVerifier.urls.includes",
+			"auth.verifier.ImageRequestAuthVerifier.urls.includes",
+			"com.liferay.document.library.document.conversion"
+		},
+
+		new String[] {
 			"auth.verifier.ParameterAutoLogin.hosts.allowed",
 			"auth.verifier.RequestParameterAuthVerifier.hosts.allowed",
 			"com.liferay.portal.security.auth.verifier"

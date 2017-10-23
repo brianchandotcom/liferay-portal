@@ -14,16 +14,16 @@
 
 package com.liferay.message.boards.internal.service.permission;
 
-import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
+import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.message.boards.kernel.exception.NoSuchCategoryException;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBThread;
-import com.liferay.message.boards.kernel.service.MBBanLocalServiceUtil;
-import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil;
-import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
-import com.liferay.message.boards.kernel.service.MBThreadLocalServiceUtil;
+import com.liferay.message.boards.kernel.service.MBCategoryLocalService;
+import com.liferay.message.boards.kernel.service.MBMessageLocalService;
+import com.liferay.message.boards.kernel.service.MBThreadLocalService;
+import com.liferay.message.boards.service.MBBanLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -37,6 +37,7 @@ import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission
 import com.liferay.portlet.messageboards.service.permission.MBPermission;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -71,7 +72,7 @@ public class MBMessagePermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		if (MBBanLocalServiceUtil.hasBan(
+		if (_mbBanLocalService.hasBan(
 				message.getGroupId(), permissionChecker.getUserId())) {
 
 			return false;
@@ -80,7 +81,7 @@ public class MBMessagePermission implements BaseModelPermissionChecker {
 		String portletId = PortletProviderUtil.getPortletId(
 			MBMessage.class.getName(), PortletProvider.Action.EDIT);
 
-		Boolean hasPermission = StagingPermissionUtil.hasPermission(
+		Boolean hasPermission = _stagingPermission.hasPermission(
 			permissionChecker, message.getGroupId(), MBMessage.class.getName(),
 			message.getMessageId(), portletId, actionId);
 
@@ -123,8 +124,8 @@ public class MBMessagePermission implements BaseModelPermissionChecker {
 			}
 			else {
 				try {
-					MBCategory category =
-						MBCategoryLocalServiceUtil.getCategory(categoryId);
+					MBCategory category = _mbCategoryLocalService.getCategory(
+						categoryId);
 
 					if (!MBCategoryPermission.contains(
 							permissionChecker, category, actionId)) {
@@ -160,19 +161,33 @@ public class MBMessagePermission implements BaseModelPermissionChecker {
 
 		return _contains(
 			permissionChecker,
-			MBMessageLocalServiceUtil.getMessage(message.getParentMessageId()),
+			_mbMessageLocalService.getMessage(message.getParentMessageId()),
 			actionId);
 	}
 
 	private MBMessage _getMBMessage(long classPK) throws PortalException {
-		MBThread mbThread = MBThreadLocalServiceUtil.fetchThread(classPK);
+		MBThread mbThread = _mbThreadLocalService.fetchThread(classPK);
 
 		if (mbThread == null) {
-			return MBMessageLocalServiceUtil.getMessage(classPK);
+			return _mbMessageLocalService.getMessage(classPK);
 		}
 
-		return MBMessageLocalServiceUtil.getMessage(
-			mbThread.getRootMessageId());
+		return _mbMessageLocalService.getMessage(mbThread.getRootMessageId());
 	}
+
+	@Reference
+	private MBBanLocalService _mbBanLocalService;
+
+	@Reference
+	private MBCategoryLocalService _mbCategoryLocalService;
+
+	@Reference
+	private MBMessageLocalService _mbMessageLocalService;
+
+	@Reference
+	private MBThreadLocalService _mbThreadLocalService;
+
+	@Reference
+	private StagingPermission _stagingPermission;
 
 }

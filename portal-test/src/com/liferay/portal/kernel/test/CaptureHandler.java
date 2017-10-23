@@ -75,22 +75,7 @@ public class CaptureHandler extends Handler implements Closeable {
 
 	@Override
 	public void publish(LogRecord logRecord) {
-		PrintableLogRecord printableLogRecord = new PrintableLogRecord(
-			logRecord.getLevel(), logRecord.getMessage());
-
-		printableLogRecord.setLoggerName(logRecord.getLoggerName());
-		printableLogRecord.setMillis(logRecord.getMillis());
-		printableLogRecord.setParameters(logRecord.getParameters());
-		printableLogRecord.setResourceBundle(logRecord.getResourceBundle());
-		printableLogRecord.setResourceBundleName(
-			logRecord.getResourceBundleName());
-		printableLogRecord.setSequenceNumber(logRecord.getSequenceNumber());
-		printableLogRecord.setSourceClassName(logRecord.getSourceClassName());
-		printableLogRecord.setSourceMethodName(logRecord.getSourceMethodName());
-		printableLogRecord.setThreadID(logRecord.getThreadID());
-		printableLogRecord.setThrown(logRecord.getThrown());
-
-		_logRecords.add(printableLogRecord);
+		_logRecords.add(new PrintableLogRecord(logRecord));
 	}
 
 	public List<LogRecord> resetLogLevel(Level level) {
@@ -111,37 +96,30 @@ public class CaptureHandler extends Handler implements Closeable {
 
 		@Override
 		public String toString() {
-			StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler(5);
 
-			sb.append('{');
-
-			Level level = getLevel();
-
-			if (level == null) {
-				sb.append("No Level Found");
-			}
-			else {
-				sb.append(level.toString());
-			}
-
-			sb.append(": ");
-
-			String message = getMessage();
-
-			if (message == null) {
-				sb.append("No Message Found");
-			}
-			else {
-				sb.append(message);
-			}
-
-			sb.append('}');
+			sb.append("{level=");
+			sb.append(getLevel());
+			sb.append(", message=");
+			sb.append(getMessage());
+			sb.append("}");
 
 			return sb.toString();
 		}
 
-		private PrintableLogRecord(Level level, String msg) {
-			super(level, msg);
+		private PrintableLogRecord(LogRecord logRecord) {
+			super(logRecord.getLevel(), logRecord.getMessage());
+
+			setLoggerName(logRecord.getLoggerName());
+			setMillis(logRecord.getMillis());
+			setParameters(logRecord.getParameters());
+			setResourceBundle(logRecord.getResourceBundle());
+			setResourceBundleName(logRecord.getResourceBundleName());
+			setSequenceNumber(logRecord.getSequenceNumber());
+			setSourceClassName(logRecord.getSourceClassName());
+			setSourceMethodName(logRecord.getSourceMethodName());
+			setThreadID(logRecord.getThreadID());
+			setThrown(logRecord.getThrown());
 		}
 
 	}

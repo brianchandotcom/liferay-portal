@@ -22,16 +22,13 @@ import java.io.Closeable;
 import java.lang.reflect.Field;
 
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.Category;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.apache.log4j.spi.LocationInfo;
 import org.apache.log4j.spi.LoggingEvent;
-import org.apache.log4j.spi.ThrowableInformation;
 
 /**
  * @author Shuyang Zhou
@@ -80,14 +77,7 @@ public class CaptureAppender extends AppenderSkeleton implements Closeable {
 
 	@Override
 	protected void append(LoggingEvent loggingEvent) {
-		_loggingEvents.add(
-			new PrintableLoggingEvent(
-				loggingEvent.getFQNOfLoggerClass(), loggingEvent.getLogger(),
-				loggingEvent.getTimeStamp(), loggingEvent.getLevel(),
-				loggingEvent.getMessage(), loggingEvent.getThreadName(),
-				loggingEvent.getThrowableInformation(), loggingEvent.getNDC(),
-				loggingEvent.getLocationInformation(),
-				loggingEvent.getProperties()));
+		_loggingEvents.add(new PrintableLoggingEvent(loggingEvent));
 	}
 
 	private static final Field _parentField;
@@ -112,44 +102,25 @@ public class CaptureAppender extends AppenderSkeleton implements Closeable {
 
 		@Override
 		public String toString() {
-			StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler(5);
 
-			sb.append('{');
-
-			Level level = getLevel();
-
-			if (level == null) {
-				sb.append("No Level Found");
-			}
-			else {
-				sb.append(level.toString());
-			}
-
-			sb.append(": ");
-
-			String message = (String)getMessage();
-
-			if (message == null) {
-				sb.append("No Message Found");
-			}
-			else {
-				sb.append(message);
-			}
-
-			sb.append('}');
+			sb.append("{level=");
+			sb.append(getLevel());
+			sb.append(", message=");
+			sb.append(getMessage());
+			sb.append("}");
 
 			return sb.toString();
 		}
 
-		private PrintableLoggingEvent(
-			String fqnOfCategoryClass, Category logger, long timeStamp,
-			Level level, Object message, String threadName,
-			ThrowableInformation throwable, String ndc, LocationInfo info,
-			Map properties) {
-
+		private PrintableLoggingEvent(LoggingEvent loggingEvent) {
 			super(
-				fqnOfCategoryClass, logger, timeStamp, level, message,
-				threadName, throwable, ndc, info, properties);
+				loggingEvent.getFQNOfLoggerClass(), loggingEvent.getLogger(),
+				loggingEvent.getTimeStamp(), loggingEvent.getLevel(),
+				loggingEvent.getMessage(), loggingEvent.getThreadName(),
+				loggingEvent.getThrowableInformation(), loggingEvent.getNDC(),
+				loggingEvent.getLocationInformation(),
+				loggingEvent.getProperties());
 		}
 
 	}

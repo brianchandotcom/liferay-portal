@@ -1,0 +1,10 @@
+.multi-step-progress-bar {
+	> .active {
+		color: $brand-color;
+
+		.divider {
+    		background-color: $brand-color;
+    		color: $brand-color;
+    	}
+	}
+}

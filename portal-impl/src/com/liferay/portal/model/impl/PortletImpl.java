@@ -2429,18 +2429,17 @@ public class PortletImpl extends PortletBaseImpl {
 
 		if (mimeTypePortletModes == null) {
 			mimeTypePortletModes = _portletModes.get("*/*");
+		}
+
+		if (mimeTypePortletModes == null) {
+			String[] mimeTypeParts = StringUtil.split(mimeType, CharPool.SLASH);
+
+			mimeTypePortletModes = _portletModes.get(
+				mimeTypeParts[0].concat("/*"));
 
 			if (mimeTypePortletModes == null) {
-				String[] mimeTypeParts = StringUtil.split(
-					mimeType, CharPool.SLASH);
-
 				mimeTypePortletModes = _portletModes.get(
-					mimeTypeParts[0].concat("/*"));
-
-				if (mimeTypePortletModes == null) {
-					mimeTypePortletModes = _portletModes.get(
-						"*/".concat(mimeTypeParts[1]));
-				}
+					"*/".concat(mimeTypeParts[1]));
 			}
 		}
 

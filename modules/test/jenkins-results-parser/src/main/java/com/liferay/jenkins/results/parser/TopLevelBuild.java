@@ -663,7 +663,7 @@ public class TopLevelBuild extends BaseBuild {
 		}
 
 		if (!branchName.startsWith("ee-") &&
-			getBaseRepositoryName().contains("portal")) {
+			getBaseRepositoryName().contains("liferay-portal")) {
 
 			Dom4JUtil.addToElement(
 				rootElement,

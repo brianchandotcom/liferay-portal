@@ -30,9 +30,7 @@ public class ReindexStatusMessageSenderUtil {
 	 *             #_getReindexStatusMessageSender()}
 	 */
 	@Deprecated
-	public static ReindexStatusMessageSender
-		getReindexStatusMessageSender() {
-
+	public static ReindexStatusMessageSender getReindexStatusMessageSender() {
 		return _getReindexStatusMessageSender();
 	}
 
@@ -50,9 +48,7 @@ public class ReindexStatusMessageSenderUtil {
 			phase, companyId, companyIds);
 	}
 
-	private static ReindexStatusMessageSender
-		_getReindexStatusMessageSender() {
-
+	private static ReindexStatusMessageSender _getReindexStatusMessageSender() {
 		PortalRuntimePermission.checkGetBeanProperty(
 			ReindexStatusMessageSenderUtil.class);
 

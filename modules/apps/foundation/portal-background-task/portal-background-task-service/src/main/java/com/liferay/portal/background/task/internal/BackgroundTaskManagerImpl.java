@@ -190,9 +190,7 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 	}
 
 	@Override
-	public BackgroundTask
-		fetchBackgroundTask(long backgroundTaskId) {
-
+	public BackgroundTask fetchBackgroundTask(long backgroundTaskId) {
 		com.liferay.portal.background.task.model.BackgroundTask backgroundTask =
 			_backgroundTaskLocalService.fetchBackgroundTask(backgroundTaskId);
 

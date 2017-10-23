@@ -1268,9 +1268,9 @@ public abstract class BaseBuild implements Build {
 	protected static boolean isTestFailingInUpstreamJob(TestResult testResult) {
 		try {
 			for (String failure : getUpstreamJobFailures("test")) {
-				Build axisBuild = testResult.getAxisBuild();
+				Build build = testResult.getBuild();
 
-				String jobVariant = axisBuild.getJobVariant();
+				String jobVariant = build.getJobVariant();
 
 				if (jobVariant.contains("/")) {
 					int index = jobVariant.lastIndexOf("/");
@@ -1627,6 +1627,12 @@ public abstract class BaseBuild implements Build {
 		return jsonObject.getJSONArray("builds");
 	}
 
+	protected Element getBuildTimeElement() {
+		return Dom4JUtil.getNewElement(
+			"p", null, "Build Time: ",
+			JenkinsResultsParserUtil.toDurationString(getDuration()));
+	}
+
 	protected int getDownstreamBuildCountByResult(String result) {
 		int count = 0;
 
@@ -1884,6 +1890,27 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return null;
+	}
+
+	protected int getTestCountByStatus(String status) {
+		JSONObject testReportJSONObject = getTestReportJSONObject();
+
+		if (testReportJSONObject == null) {
+			return 0;
+		}
+
+		int failCount = testReportJSONObject.getInt("failCount");
+		int passCount = testReportJSONObject.getInt("passCount");
+
+		if (status.equals("FAILURE")) {
+			return failCount;
+		}
+
+		if (status.equals("SUCCESS")) {
+			return passCount;
+		}
+
+		throw new IllegalArgumentException("Invalid status: " + status);
 	}
 
 	protected boolean isCompareToUpstream() {

@@ -30,7 +30,11 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("passwordPolicyId", String.valueOf(passwordPolicyId));
 
-boolean hasAssignMembersPermission = PasswordPolicyPermissionUtil.contains(permissionChecker, passwordPolicy.getPasswordPolicyId(), ActionKeys.ASSIGN_MEMBERS);
+boolean hasAssignMembersPermission = false;
+
+if (passwordPolicy != null) {
+	hasAssignMembersPermission = PasswordPolicyPermissionUtil.contains(permissionChecker, passwordPolicy.getPasswordPolicyId(), ActionKeys.ASSIGN_MEMBERS);
+}
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">

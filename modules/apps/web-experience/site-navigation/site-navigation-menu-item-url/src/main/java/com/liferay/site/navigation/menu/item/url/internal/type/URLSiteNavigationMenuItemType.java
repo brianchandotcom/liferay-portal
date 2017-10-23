@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.site.navigation.admin.web.internal.type;
+package com.liferay.site.navigation.menu.item.url.internal.type;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.site.navigation.constants.SiteNavigationMenuItemTypeConstants;
+import com.liferay.site.navigation.menu.item.url.internal.constants.SiteNavigationMenuItemTypeURLConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 
@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"site.navigation.menu.item.type=" + SiteNavigationMenuItemTypeConstants.URL},
+	property = {"site.navigation.menu.item.type=" + SiteNavigationMenuItemTypeURLConstants.URL},
 	service = SiteNavigationMenuItemType.class
 )
 public class URLSiteNavigationMenuItemType
@@ -59,7 +59,7 @@ public class URLSiteNavigationMenuItemType
 
 	@Override
 	public String getType() {
-		return SiteNavigationMenuItemTypeConstants.URL;
+		return SiteNavigationMenuItemTypeURLConstants.URL;
 	}
 
 	@Override

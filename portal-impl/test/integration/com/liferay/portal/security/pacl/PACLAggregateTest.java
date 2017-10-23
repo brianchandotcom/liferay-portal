@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.process.ProcessConfig.Builder;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.local.LocalProcessExecutor;
 import com.liferay.portal.kernel.process.local.LocalProcessLauncher.ProcessContext;
-import com.liferay.portal.kernel.process.log.ProcessOutputStream;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.ci.AutoBalanceTestCase;
@@ -411,11 +410,8 @@ public class PACLAggregateTest extends AutoBalanceTestCase {
 
 		@Override
 		protected void bridge(final String methodName, final Object argument) {
-			ProcessOutputStream processOutputStream =
-				ProcessContext.getProcessOutputStream();
-
 			try {
-				processOutputStream.writeProcessCallable(
+				ProcessContext.writeProcessCallable(
 					new ProcessCallable<Serializable>() {
 
 						@Override

@@ -203,9 +203,7 @@ public class FlagsTag extends TemplateRendererTag {
 		return dataJSONObject;
 	}
 
-	private String[] _getReasons(long companyId)
-		throws PortalException {
-
+	private String[] _getReasons(long companyId) throws PortalException {
 		FlagsGroupServiceConfiguration flagsGroupServiceConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
 				FlagsGroupServiceConfiguration.class, companyId);

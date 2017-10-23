@@ -24,7 +24,7 @@ public class GradleFile {
 	public GradleFile(
 		Set<String> applyPlugins, String bodyBlock, String buildScriptBlock,
 		String content, String extScriptBlock, String fileName,
-		Set<String> imports, String initializeBlock, Set<String> properties,
+		String importsBlock, String initializeBlock, Set<String> properties,
 		Set<String> tasks) {
 
 		_applyPlugins = applyPlugins;
@@ -33,7 +33,7 @@ public class GradleFile {
 		_content = content;
 		_extScriptBlock = extScriptBlock;
 		_fileName = fileName;
-		_imports = imports;
+		_importsBlock = importsBlock;
 		_initializeBlock = initializeBlock;
 		_properties = properties;
 		_tasks = tasks;
@@ -63,8 +63,8 @@ public class GradleFile {
 		return _fileName;
 	}
 
-	public Set<String> getImports() {
-		return _imports;
+	public String getImportsBlock() {
+		return _importsBlock;
 	}
 
 	public String getInitializeBlock() {
@@ -85,7 +85,7 @@ public class GradleFile {
 	private final String _content;
 	private final String _extScriptBlock;
 	private final String _fileName;
-	private final Set<String> _imports;
+	private final String _importsBlock;
 	private final String _initializeBlock;
 	private final Set<String> _properties;
 	private final Set<String> _tasks;

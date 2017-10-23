@@ -14,22 +14,34 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.source.formatter.GradleImportsFormatter;
+import com.liferay.source.formatter.parser.GradleFile;
 
 /**
  * @author Hugo Huijser
  */
-public class GradleImportsCheck extends BaseFileCheck {
+public class GradleImportsCheck extends BaseGradleFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
+			String fileName, String absolutePath, GradleFile gradleFile,
+			String content)
 		throws Exception {
+
+		String importsBlock = gradleFile.getImportsBlock();
+
+		if (Validator.isNull(importsBlock)) {
+			return content;
+		}
 
 		ImportsFormatter importsFormatter = new GradleImportsFormatter();
 
-		return importsFormatter.format(content, null, null);
+		return StringUtil.replaceFirst(
+			content, importsBlock,
+			importsFormatter.format(importsBlock, null, null));
 	}
 
 }

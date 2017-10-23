@@ -35,10 +35,19 @@ public class GradleFileParser {
 		String bodyBlock = StringPool.BLANK;
 		String buildScriptBlock = StringPool.BLANK;
 		String extScriptBlock = StringPool.BLANK;
-		Set<String> imports = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+		String importsBlock = StringPool.BLANK;
 		String initializeBlock = StringPool.BLANK;
 		Set<String> properties = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
 		Set<String> tasks = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+
+		Matcher matcher = _importsPattern.matcher(content);
+
+		while (matcher.find()) {
+			importsBlock = importsBlock + matcher.group();
+
+			content = StringUtil.replaceFirst(
+				content, matcher.group(), StringPool.BLANK);
+		}
 
 		Matcher taskMatcher = _taskPattern.matcher(content);
 
@@ -75,10 +84,7 @@ public class GradleFileParser {
 				continue;
 			}
 
-			if (line.matches("^\\s*import\\s+.*$")) {
-				imports.add(line);
-			}
-			else if (line.matches("^apply plugin.*")) {
+			if (line.matches("^apply plugin.*")) {
 				applyPlugins.add(line);
 			}
 			else if (line.matches("^task\\s+.*$") && !line.contains("{")) {
@@ -107,11 +113,13 @@ public class GradleFileParser {
 
 		GradleFile gradleFile = new GradleFile(
 			applyPlugins, bodyBlock, buildScriptBlock, content, extScriptBlock,
-			fileName, imports, initializeBlock, properties, tasks);
+			fileName, importsBlock, initializeBlock, properties, tasks);
 
 		return gradleFile;
 	}
 
+	private static final Pattern _importsPattern = Pattern.compile(
+		"(^[ \t]*import\\s+.*\n+)+", Pattern.MULTILINE);
 	private static final Pattern _taskPattern = Pattern.compile(
 		".*^task\\s+.*$.*", Pattern.DOTALL | Pattern.MULTILINE);
 

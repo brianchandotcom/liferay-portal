@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.tools.ImportsFormatter;
-import com.liferay.source.formatter.GradleImportsFormatter;
 import com.liferay.source.formatter.parser.GradleFile;
 
 import java.util.Collection;
@@ -42,15 +40,7 @@ public class GradleBlockOrderCheck extends BaseGradleFileCheck {
 
 		StringBundler sb = new StringBundler(14);
 
-		Set<String> imports = gradleFile.getImports();
-
-		if (!imports.isEmpty()) {
-			ImportsFormatter importsFormatter = new GradleImportsFormatter();
-
-			String text = _merge(imports, "\n");
-
-			sb.append(importsFormatter.format(text + "\n\n", null, null));
-		}
+		sb.append(gradleFile.getImportsBlock());
 
 		String buildScriptBlock = gradleFile.getBuildScriptBlock();
 

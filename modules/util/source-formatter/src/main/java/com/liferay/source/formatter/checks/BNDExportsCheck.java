@@ -34,6 +34,18 @@ public class BNDExportsCheck extends BaseFileCheck {
 		return true;
 	}
 
+	public void setAllowedExportPackageDirNames(
+		String allowedExportPackageDirNames) {
+
+		_allowedExportPackageDirNames = StringUtil.split(
+			allowedExportPackageDirNames);
+
+		for (int i = 0; i < _allowedExportPackageDirNames.length; i++) {
+			_allowedExportPackageDirNames[i] = StringUtil.trim(
+				_allowedExportPackageDirNames[i]);
+		}
+	}
+
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
@@ -47,7 +59,30 @@ public class BNDExportsCheck extends BaseFileCheck {
 			_checkExports(fileName, content, _exportsPattern, "Export-Package");
 		}
 
+		_checkExportPackage(fileName, absolutePath, content);
+
 		return content;
+	}
+
+	private void _checkExportPackage(
+		String fileName, String absolutePath, String content) {
+
+		for (String allowedExportPackageDirName :
+				_allowedExportPackageDirNames) {
+
+			if (absolutePath.contains(allowedExportPackageDirName)) {
+				return;
+			}
+		}
+
+		if (absolutePath.contains("-service/") &&
+			content.contains("Export-Package")) {
+
+			addMessage(
+				fileName,
+				"Service modules should not be exporting any packages, see " +
+					"LPS-75294");
+		}
 	}
 
 	private void _checkExports(
@@ -101,6 +136,7 @@ public class BNDExportsCheck extends BaseFileCheck {
 		}
 	}
 
+	private String[] _allowedExportPackageDirNames = new String[0];
 	private final Pattern _apiOrServiceBundleSymbolicNamePattern =
 		Pattern.compile("\\.(api|service)$");
 	private final Pattern _exportContentsPattern = Pattern.compile(

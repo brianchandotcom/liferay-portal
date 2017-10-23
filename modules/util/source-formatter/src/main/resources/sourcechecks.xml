@@ -19,7 +19,9 @@
 
 		<check name="BNDBundleInformationCheck" />
 		<check name="BNDDirectoryNameCheck" />
-		<check name="BNDExportsCheck" />
+		<check name="BNDExportsCheck">
+			<property name="allowedExportPackageDirNames" value="     adaptive-media-image-service,     chat/chat-service,     collaboration/blogs/blogs-service/,     collaboration/bookmarks/bookmarks-service,     collaboration/document-library/document-library-service,     collaboration/microblogs/microblogs-service,     collaboration/wiki/wiki-service,     dynamic-data-mapping-service,     forms-and-workflow/calendar/calendar-service,     forms-and-workflow/dynamic-data-lists/dynamic-data-lists-service,     foundation/mobile-device-rules/mobile-device-rules-service,     foundation/portal-security/portal-security-service-access-policy-service,     journal-service,     knowledge-base/knowledge-base-service,     mail-reader/mail-reader-service,     marketplace/marketplace-service,     portal-security-wedeploy-auth/portal-security-wedeploy-auth-service,     push-notifications/push-notifications-service,     shopping/shopping-service,     social-networking/social-networking-service,     social-private-messaging/social-private-messaging-service,     sync/sync-service,     twitter/twitter-service,     web-experience/asset/asset-display-template-service,     web-experience/asset/asset-service,     web-experience/fragment/fragment-service,     web-experience/export-import/export-import-service,     web-experience/layout/layout-page-template-service,     web-experience/site-navigation/site-navigation-service" />
+		</check>
 		<check name="BNDIncludeResourceCheck" />
 		<check name="BNDWebContextPathCheck" />
 	</source-processor>

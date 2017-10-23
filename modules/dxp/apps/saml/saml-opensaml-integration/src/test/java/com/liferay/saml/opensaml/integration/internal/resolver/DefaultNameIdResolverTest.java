@@ -83,12 +83,11 @@ public class DefaultNameIdResolverTest extends BaseSamlTestCase {
 			"emailAddress"
 		);
 
-		NameID nameId = _defaultNameIdResolver.resolve(
-			_user, SP_ENTITY_ID, null);
+		String nameId = _defaultNameIdResolver.resolve(
+			_user, SP_ENTITY_ID, null, null, false, null);
 
 		Assert.assertNotNull(nameId);
-		Assert.assertEquals(NameID.EMAIL.toString(), nameId.getFormat());
-		Assert.assertEquals("test@liferay.com", nameId.getValue());
+		Assert.assertEquals("test@liferay.com", nameId);
 	}
 
 	@Test
@@ -105,12 +104,11 @@ public class DefaultNameIdResolverTest extends BaseSamlTestCase {
 			"expando:customerId"
 		);
 
-		NameID nameId = _defaultNameIdResolver.resolve(
-			_user, SP_ENTITY_ID, null);
+		String nameId = _defaultNameIdResolver.resolve(
+			_user, SP_ENTITY_ID, null, null, false, null);
 
 		Assert.assertNotNull(nameId);
-		Assert.assertEquals(NameID.EMAIL.toString(), nameId.getFormat());
-		Assert.assertEquals("12345", nameId.getValue());
+		Assert.assertEquals("12345", nameId);
 	}
 
 	@Test
@@ -133,13 +131,11 @@ public class DefaultNameIdResolverTest extends BaseSamlTestCase {
 		nameIdPolicy.setFormat(NameID.ENTITY.toString());
 		nameIdPolicy.setSPNameQualifier("urn:liferay");
 
-		NameID nameId = _defaultNameIdResolver.resolve(
-			_user, SP_ENTITY_ID, nameIdPolicy);
+		String nameId = _defaultNameIdResolver.resolve(
+			_user, SP_ENTITY_ID, NameID.ENTITY.toString(), null, false, null);
 
 		Assert.assertNotNull(nameId);
-		Assert.assertEquals(NameID.ENTITY.toString(), nameId.getFormat());
-		Assert.assertEquals("urn:liferay", nameId.getSPNameQualifier());
-		Assert.assertEquals("test", nameId.getValue());
+		Assert.assertEquals("test", nameId);
 	}
 
 	@Test
@@ -163,12 +159,11 @@ public class DefaultNameIdResolverTest extends BaseSamlTestCase {
 			NameID.ENTITY.toString()
 		);
 
-		NameID nameId = _defaultNameIdResolver.resolve(
-			_user, SP_ENTITY_ID, null);
+		String nameId = _defaultNameIdResolver.resolve(
+			_user, SP_ENTITY_ID, null, null, false, null);
 
 		Assert.assertNotNull(nameId);
-		Assert.assertEquals(NameID.ENTITY.toString(), nameId.getFormat());
-		Assert.assertEquals("test", nameId.getValue());
+		Assert.assertEquals("test", nameId);
 	}
 
 	@Test
@@ -179,12 +174,11 @@ public class DefaultNameIdResolverTest extends BaseSamlTestCase {
 			"static:test@liferay.com"
 		);
 
-		NameID nameId = _defaultNameIdResolver.resolve(
-			_user, SP_ENTITY_ID, null);
+		String nameId = _defaultNameIdResolver.resolve(
+			_user, SP_ENTITY_ID, null, null, false, null);
 
 		Assert.assertNotNull(nameId);
-		Assert.assertEquals(NameID.EMAIL.toString(), nameId.getFormat());
-		Assert.assertEquals("test@liferay.com", nameId.getValue());
+		Assert.assertEquals("test@liferay.com", nameId);
 	}
 
 	private BeanProperties _beanProperties;

@@ -21,6 +21,7 @@ import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.opensaml.integration.metadata.MetadataManager;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -37,7 +38,10 @@ import org.opensaml.saml2.core.Assertion;
 import org.opensaml.saml2.core.Attribute;
 import org.opensaml.saml2.core.AttributeStatement;
 import org.opensaml.saml2.core.NameID;
+import org.opensaml.saml2.core.NameIDType;
 import org.opensaml.saml2.core.Response;
+import org.opensaml.saml2.core.Subject;
+import org.opensaml.saml2.core.SubjectConfirmation;
 
 /**
  * @author Mika Koivisto
@@ -109,6 +113,23 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 		Assertion assertion = OpenSamlUtil.buildAssertion();
 
+		NameID subjectNameId = OpenSamlUtil.buildNameId(
+			NameIDType.ENTITY, null, "urn:liferay", "value");
+
+		Subject subject = OpenSamlUtil.buildSubject(subjectNameId);
+
+		SubjectConfirmation subjectConfirmation =
+			OpenSamlUtil.buildSubjectConfirmation();
+
+		subjectConfirmation.setMethod(SubjectConfirmation.METHOD_BEARER);
+
+		List<SubjectConfirmation> subjectConfirmations =
+			subject.getSubjectConfirmations();
+
+		subjectConfirmations.add(subjectConfirmation);
+
+		assertion.setSubject(subject);
+
 		List<AttributeStatement> attributeStatements =
 			assertion.getAttributeStatements();
 
@@ -131,11 +152,22 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		SAMLMessageContext<Response, SAMLObject, NameID> samlMessageContext =
 			new BasicSAMLMessageContext<>();
 
+		Response response = Mockito.mock(Response.class);
+
+		when(
+			response.getAssertions()
+		).thenReturn(
+			Arrays.asList(new Assertion[] {assertion})
+		);
+
+		samlMessageContext.setInboundSAMLMessage(response);
+
 		samlMessageContext.setPeerEntityId(IDP_ENTITY_ID);
 
 		User resolvedUser = _defaultUserResolver.importUser(
 			1, _SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS, "emailAddress",
-			assertion, samlMessageContext, new ServiceContext());
+			new UserResolverSAMLContextImpl(samlMessageContext),
+			new ServiceContext());
 
 		Assert.assertNotNull(resolvedUser);
 	}

@@ -109,6 +109,48 @@ public class TopLevelBuild extends BaseBuild {
 		return getTempMap(tempMapName);
 	}
 
+	public String getCompanionBranchName() {
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		Map<String, String> repositoryGitDetailsTempMap =
+			topLevelBuild.getCompanionGitRepositoryDetailsTempMap();
+
+		return repositoryGitDetailsTempMap.get("github.sender.branch.name");
+	}
+
+	public Map<String, String> getCompanionGitRepositoryDetailsTempMap() {
+		String branchName = getBranchName();
+		String branchType = "ee";
+		String repositoryType = getBaseRepositoryType();
+
+		if (branchName.endsWith("-private")) {
+			branchType = "base";
+		}
+
+		String tempMapName = JenkinsResultsParserUtil.combine(
+			"git.", repositoryType, ".", branchType, ".properties");
+
+		return getTempMap(tempMapName);
+	}
+
+	public String getCompanionRepositorySHA() {
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		Map<String, String> repositoryGitDetailsTempMap =
+			topLevelBuild.getCompanionGitRepositoryDetailsTempMap();
+
+		return repositoryGitDetailsTempMap.get("github.sender.branch.sha");
+	}
+
+	public String getCompanionUsername() {
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		Map<String, String> repositoryGitDetailsTempMap =
+			topLevelBuild.getCompanionGitRepositoryDetailsTempMap();
+
+		return repositoryGitDetailsTempMap.get("github.sender.username");
+	}
+
 	@Override
 	public String getDisplayName() {
 		String displayName = super.getDisplayName();
@@ -338,6 +380,47 @@ public class TopLevelBuild extends BaseBuild {
 		return Dom4JUtil.getNewElement(
 			"p", null, "Build Time: ",
 			JenkinsResultsParserUtil.toDurationString(getDuration()));
+	}
+
+	protected Element getCompanionBranchDetailsElement() {
+		String baseRepositoryName = getBaseRepositoryName();
+		String branchName = getBranchName();
+
+		String companionRepositoryName = baseRepositoryName + "-ee";
+
+		if (branchName.endsWith("-private")) {
+			companionRepositoryName = baseRepositoryName.substring(
+				0, baseRepositoryName.indexOf("-ee") - 1);
+		}
+
+		String companionUsername = getCompanionUsername();
+
+		String companionBranchURL = JenkinsResultsParserUtil.combine(
+			"https://github.com/", companionUsername, "/",
+			companionRepositoryName, "/tree/", getCompanionBranchName());
+
+		String companionRepositorySHA = null;
+
+		companionRepositorySHA = getCompanionRepositorySHA();
+
+		String companionRepositoryCommitURL = JenkinsResultsParserUtil.combine(
+			"https://github.com/", companionUsername, "/",
+			companionRepositoryName, "/commit/", companionRepositorySHA);
+
+		Element companionBranchDetailsElement = Dom4JUtil.getNewElement(
+			"p", null, "Branch Name: ",
+			Dom4JUtil.getNewAnchorElement(
+				companionBranchURL, getCompanionBranchName()));
+
+		if (companionRepositorySHA != null) {
+			Dom4JUtil.addToElement(
+				companionBranchDetailsElement, Dom4JUtil.getNewElement("br"),
+				"Branch GIT ID: ",
+				Dom4JUtil.getNewAnchorElement(
+					companionRepositoryCommitURL, companionRepositorySHA));
+		}
+
+		return companionBranchDetailsElement;
 	}
 
 	protected Element getDownstreamGitHubMessageElement() {
@@ -571,6 +654,22 @@ public class TopLevelBuild extends BaseBuild {
 			"html", null, getResultElement(), getBuildTimeElement(),
 			Dom4JUtil.getNewElement("h4", null, "Base Branch:"),
 			getBaseBranchDetailsElement());
+
+		String branchName = getBranchName();
+		String companionBranchLabel = "Copied in Private Modules Branch:";
+
+		if (branchName.endsWith("-private")) {
+			companionBranchLabel = "Built off of Portal Core Branch:";
+		}
+
+		if (!branchName.startsWith("ee-") &&
+			getBaseRepositoryName().contains("liferay-portal")) {
+
+			Dom4JUtil.addToElement(
+				rootElement,
+				Dom4JUtil.getNewElement("h4", null, companionBranchLabel),
+				getCompanionBranchDetailsElement());
+		}
 
 		int successCount = getDownstreamBuildCountByResult("SUCCESS");
 

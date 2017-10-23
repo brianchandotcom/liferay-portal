@@ -241,23 +241,6 @@ public class TopLevelBuild extends BaseBuild {
 		return null;
 	}
 
-	@Override
-	protected int getTestCountByStatus(String status) {
-		int testCount = 0;
-
-		for (Build downstreamBuild : getDownstreamBuilds(null)) {
-			if (!(downstreamBuild instanceof BaseBuild)) {
-				continue;
-			}
-
-			BaseBuild downstreamBaseBuild = (BaseBuild) downstreamBuild;
-
-			testCount += downstreamBaseBuild.getTestCountByStatus(status);
-		}
-
-		return testCount;
-	}
-
 	public Element getValidationGitHubMessage() {
 		ValidationBuild validationBuild = null;
 
@@ -672,6 +655,23 @@ public class TopLevelBuild extends BaseBuild {
 		}
 
 		return null;
+	}
+
+	@Override
+	protected int getTestCountByStatus(String status) {
+		int testCount = 0;
+
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			if (!(downstreamBuild instanceof BaseBuild)) {
+				continue;
+			}
+
+			BaseBuild downstreamBaseBuild = (BaseBuild)downstreamBuild;
+
+			testCount += downstreamBaseBuild.getTestCountByStatus(status);
+		}
+
+		return testCount;
 	}
 
 	protected Element getTopGitHubMessageElement() {

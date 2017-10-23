@@ -35,6 +35,11 @@ import org.json.JSONObject;
 public class ValidationBuild extends BaseBuild {
 
 	@Override
+	protected FailureMessageGenerator[] getFailureMessageGenerators() {
+		return _FAILURE_MESSAGE_GENERATORS;
+	}
+
+	@Override
 	public Element getGitHubMessageElement() {
 		update();
 
@@ -288,7 +293,7 @@ public class ValidationBuild extends BaseBuild {
 	private static final Pattern _consoleResultPattern = Pattern.compile(
 		"Subrepository task (FAILED|SUCCESSFUL)");
 
-	private static final FailureMessageGenerator[] _failureMessageGenerators = {
+	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS = {
 		new RebaseFailureMessageGenerator(),
 		new SubrepositorySourceFormatFailureMessageGenerator(),
 

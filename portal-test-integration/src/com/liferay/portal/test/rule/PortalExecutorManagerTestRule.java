@@ -19,7 +19,9 @@ import com.liferay.portal.test.rule.callback.PortalExecutorManagerTestCallback;
 
 /**
  * @author Michael C. Han
+ * @deprecated As of 3.3.0, with no direct replacement
  */
+@Deprecated
 public class PortalExecutorManagerTestRule
 	extends BaseTestRule<Object, Object> {
 

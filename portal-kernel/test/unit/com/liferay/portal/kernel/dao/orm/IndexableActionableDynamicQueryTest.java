@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.dao.orm;
 
-import com.liferay.portal.kernel.executor.PortalExecutorManager;
+import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.registry.BasicRegistryImpl;

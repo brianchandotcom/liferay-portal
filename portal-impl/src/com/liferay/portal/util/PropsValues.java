@@ -874,6 +874,10 @@ public class PropsValues {
 
 	public static final boolean LAYOUT_PARALLEL_RENDER_ENABLE = false;
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final boolean LAYOUT_PARALLEL_RENDER_THREAD_POOL_ALLOW_CORE_THREAD_TIMEOUT = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.LAYOUT_PARALLEL_RENDER_THREAD_POOL_ALLOW_CORE_THREAD_TIMEOUT));
 
 	public static final int LAYOUT_PARALLEL_RENDER_THREAD_POOL_CORE_THREAD_COUNT = GetterUtil.getInteger(PropsUtil.get(PropsKeys.LAYOUT_PARALLEL_RENDER_THREAD_POOL_CORE_THREAD_COUNT));

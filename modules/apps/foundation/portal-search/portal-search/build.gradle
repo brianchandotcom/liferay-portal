@@ -5,6 +5,8 @@ dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.osgi.util", version: "3.0.0"
+	provided group: "com.liferay", name: "com.liferay.petra.concurrent", version: "1.1.0"
+	provided group: "com.liferay", name: "com.liferay.petra.executor", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.background.task.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"

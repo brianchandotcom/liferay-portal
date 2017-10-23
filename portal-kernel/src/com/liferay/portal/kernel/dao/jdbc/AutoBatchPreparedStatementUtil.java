@@ -14,10 +14,10 @@
 
 package com.liferay.portal.kernel.dao.jdbc;
 
-import com.liferay.portal.kernel.concurrent.FutureListener;
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
-import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
-import com.liferay.portal.kernel.executor.PortalExecutorManager;
+import com.liferay.petra.concurrent.FutureListener;
+import com.liferay.petra.concurrent.NoticeableExecutorService;
+import com.liferay.petra.concurrent.NoticeableFuture;
+import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -34,7 +34,6 @@ import java.sql.SQLException;
 
 import java.util.Collections;
 import java.util.Set;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -215,21 +214,16 @@ public class AutoBatchPreparedStatementUtil {
 			final PreparedStatement preparedStatement = _preparedStatement;
 
 			NoticeableFuture<Void> noticeableFuture =
-				_threadPoolExecutor.submit(
-					new Callable<Void>() {
-
-						@Override
-						public Void call() throws SQLException {
-							try {
-								preparedStatement.executeBatch();
-							}
-							finally {
-								preparedStatement.close();
-							}
-
-							return null;
+				_noticeableExecutorService.submit(
+					() -> {
+						try {
+							preparedStatement.executeBatch();
+						}
+						finally {
+							preparedStatement.close();
 						}
 
+						return null;
 					});
 
 			_futures.add(noticeableFuture);
@@ -257,11 +251,11 @@ public class AutoBatchPreparedStatementUtil {
 		private int _count;
 		private final Set<Future<Void>> _futures = Collections.newSetFromMap(
 			new ConcurrentHashMap<>());
-		private PreparedStatement _preparedStatement;
-		private final String _sql;
-		private final ThreadPoolExecutor _threadPoolExecutor =
+		private final NoticeableExecutorService _noticeableExecutorService =
 			_portalExecutorManager.getPortalExecutor(
 				ConcurrentBatchInvocationHandler.class.getName());
+		private PreparedStatement _preparedStatement;
+		private final String _sql;
 
 	}
 
@@ -325,21 +319,16 @@ public class AutoBatchPreparedStatementUtil {
 			final PreparedStatement preparedStatement = _preparedStatement;
 
 			NoticeableFuture<Void> noticeableFuture =
-				_threadPoolExecutor.submit(
-					new Callable<Void>() {
-
-						@Override
-						public Void call() throws SQLException {
-							try {
-								preparedStatement.executeUpdate();
-							}
-							finally {
-								preparedStatement.close();
-							}
-
-							return null;
+				_noticeableExecutorService.submit(
+					() -> {
+						try {
+							preparedStatement.executeUpdate();
+						}
+						finally {
+							preparedStatement.close();
 						}
 
+						return null;
 					});
 
 			_futures.add(noticeableFuture);
@@ -366,11 +355,11 @@ public class AutoBatchPreparedStatementUtil {
 		private final Connection _connection;
 		private final Set<Future<Void>> _futures = Collections.newSetFromMap(
 			new ConcurrentHashMap<>());
-		private PreparedStatement _preparedStatement;
-		private final String _sql;
-		private final ThreadPoolExecutor _threadPoolExecutor =
+		private final NoticeableExecutorService _noticeableExecutorService =
 			_portalExecutorManager.getPortalExecutor(
 				ConcurrentNoBatchInvocationHandler.class.getName());
+		private PreparedStatement _preparedStatement;
+		private final String _sql;
 
 	}
 

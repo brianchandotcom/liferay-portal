@@ -14,6 +14,7 @@
 
 package com.liferay.portal.spring.context;
 
+import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.dao.orm.hibernate.FieldInterceptionHelperUtil;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.exception.LoggedExceptionInInitializerError;
-import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageBus;

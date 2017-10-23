@@ -94,6 +94,10 @@ public class DestinationConfiguration implements Serializable {
 		return _maximumQueueSize;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public RejectedExecutionHandler getRejectedExecutionHandler() {
 		return _rejectedExecutionHandler;
 	}
@@ -119,6 +123,10 @@ public class DestinationConfiguration implements Serializable {
 		_maximumQueueSize = maximumQueueSize;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public void setRejectedExecutionHandler(
 		RejectedExecutionHandler rejectedExecutionHandler) {
 

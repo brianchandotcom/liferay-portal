@@ -14,7 +14,10 @@
 
 package com.liferay.portal.layoutconfiguration.util;
 
-import com.liferay.portal.kernel.executor.PortalExecutorManager;
+import com.liferay.petra.concurrent.ThreadPoolHandler;
+import com.liferay.petra.concurrent.ThreadPoolHandlerAdapter;
+import com.liferay.petra.executor.PortalExecutorManager;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.layoutconfiguration.util.RuntimePage;
 import com.liferay.portal.kernel.layoutconfiguration.util.xml.RuntimeLogic;
@@ -86,6 +89,17 @@ import org.apache.commons.lang.time.StopWatch;
  */
 @DoPrivileged
 public class RuntimePageImpl implements RuntimePage {
+
+	public static ThreadPoolHandler getThreadPoolHandler() {
+		return new ThreadPoolHandlerAdapter() {
+
+			@Override
+			public void afterExecute(Runnable runnable, Throwable throwable) {
+				CentralizedThreadLocal.clearShortLivedThreadLocals();
+			}
+
+		};
+	}
 
 	@Override
 	public StringBundler getProcessedTemplate(

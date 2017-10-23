@@ -14,10 +14,16 @@
 
 package com.liferay.portal.kernel.nio.intraband;
 
-import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
+import com.liferay.petra.concurrent.NoticeableThreadPoolExecutor;
+import com.liferay.petra.concurrent.ThreadPoolHandlerAdapter;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Preston Crary
@@ -26,11 +32,13 @@ public class PortalExecutorManagerInvocationHandler
 	implements InvocationHandler {
 
 	@Override
-	public Object invoke(Object proxy, Method method, Object[] args)
-		throws Throwable {
-
+	public Object invoke(Object proxy, Method method, Object[] args) {
 		if ("getPortalExecutor".equals(method.getName())) {
-			return new ThreadPoolExecutor(0, 1) {
+			return new NoticeableThreadPoolExecutor(
+				1, 1, 60, TimeUnit.SECONDS, new LinkedBlockingQueue<>(1),
+				Executors.defaultThreadFactory(),
+				new ThreadPoolExecutor.AbortPolicy(),
+				new ThreadPoolHandlerAdapter()) {
 
 				@Override
 				public void execute(Runnable runnable) {
@@ -40,7 +48,7 @@ public class PortalExecutorManagerInvocationHandler
 			};
 		}
 
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 }

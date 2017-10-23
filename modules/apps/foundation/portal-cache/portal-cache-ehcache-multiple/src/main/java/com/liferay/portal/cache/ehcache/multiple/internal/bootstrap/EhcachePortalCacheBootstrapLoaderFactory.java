@@ -14,20 +14,20 @@
 
 package com.liferay.portal.cache.ehcache.multiple.internal.bootstrap;
 
+import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.cache.PortalCacheBootstrapLoader;
 import com.liferay.portal.cache.PortalCacheBootstrapLoaderFactory;
 import com.liferay.portal.cache.ehcache.multiple.configuration.EhcacheMultipleConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
-import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
 
 import net.sf.ehcache.bootstrap.BootstrapCacheLoaderFactory;
 
@@ -73,7 +73,7 @@ public class EhcachePortalCacheBootstrapLoaderFactory
 			return new EhcachePortalCacheBootstrapLoaderAdapter(
 				bootstrapCacheLoaderFactory.createBootstrapCacheLoader(
 					newProperties),
-				bootstrapAsynchronously, _threadPoolExecutor, _clusterExecutor);
+				bootstrapAsynchronously, _executorService, _clusterExecutor);
 		}
 		catch (Exception e) {
 			throw new SystemException(
@@ -90,14 +90,14 @@ public class EhcachePortalCacheBootstrapLoaderFactory
 			EhcacheMultipleConfiguration.class,
 			componentContext.getProperties());
 
-		_threadPoolExecutor = _portalExecutorManager.getPortalExecutor(
+		_executorService = _portalExecutorManager.getPortalExecutor(
 			EhcachePortalCacheBootstrapLoaderFactory.class.getName());
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		if (_threadPoolExecutor != null) {
-			_threadPoolExecutor.shutdown();
+		if (_executorService != null) {
+			_executorService.shutdown();
 		}
 	}
 
@@ -114,10 +114,9 @@ public class EhcachePortalCacheBootstrapLoaderFactory
 	private ClusterExecutor _clusterExecutor;
 
 	private volatile EhcacheMultipleConfiguration _ehcacheMultipleConfiguration;
+	private ExecutorService _executorService;
 
 	@Reference
 	private PortalExecutorManager _portalExecutorManager;
-
-	private ThreadPoolExecutor _threadPoolExecutor;
 
 }

@@ -14,8 +14,7 @@
 
 package com.liferay.portal.search.internal;
 
-import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
-import com.liferay.portal.kernel.executor.PortalExecutorManager;
+import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
@@ -30,6 +29,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.FutureTask;
 
 import org.apache.commons.lang.time.StopWatch;
@@ -91,7 +91,7 @@ public class SearchEngineInitializer implements Runnable {
 		catch (InterruptedException ie) {
 		}
 
-		ThreadPoolExecutor threadPoolExecutor =
+		ExecutorService executorService =
 			_portalExecutorManager.getPortalExecutor(
 				SearchEngineInitializer.class.getName());
 
@@ -128,7 +128,7 @@ public class SearchEngineInitializer implements Runnable {
 
 					});
 
-				threadPoolExecutor.submit(futureTask);
+				executorService.submit(futureTask);
 
 				futureTasks.add(futureTask);
 			}

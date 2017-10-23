@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.chart.sample.internal.portlet;
+package com.liferay.frontend.taglib.chart.sample.web.internal.portlet;
 
-import com.liferay.frontend.taglib.chart.sample.internal.constants.ChartSamplePortletKeys;
+import com.liferay.frontend.taglib.chart.sample.web.constants.ChartSamplePortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;

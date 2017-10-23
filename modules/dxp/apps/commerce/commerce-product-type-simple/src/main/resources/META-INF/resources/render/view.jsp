@@ -112,7 +112,7 @@ request.setAttribute("cpDefinition", cpDefinition);
 		%>
 
 		<div class="row">
-			<div class="product-detail-body">
+			<div class="product-detail-body w-100">
 				<div class="nav-tabs-centered">
 					<ul class="nav nav-tabs justify-content-center" role="tablist">
 						<li class="nav-item" role="presentation">

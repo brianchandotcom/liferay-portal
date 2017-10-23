@@ -24,7 +24,9 @@ import java.io.ObjectOutputStream;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class ProcessOutputStream extends UnsyncByteArrayOutputStream {
 
 	public ProcessOutputStream(ObjectOutputStream objectOutputStream) {

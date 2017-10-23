@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.message.boards.web.exportimport.data.handler;
+package com.liferay.message.boards.web.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
@@ -34,6 +35,7 @@ import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.message.boards.kernel.service.MBThreadFlagLocalService;
 import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.message.boards.service.MBStatsUserLocalService;
+import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
@@ -52,16 +54,21 @@ import java.util.List;
 import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Farache
  * @author Raymond Augé
  * @author Daniel Kocsis
- * @deprecated As of 1.3.0, replaced by {@link
- *             com.liferay.message.boards.web.internal.exportimport.data.handler.com.liferay.message.boards.web.internal.exportimport.data.handler.MBPortletDataHandler}
  */
-@Deprecated
+@Component(
+	property = {
+		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
+		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN
+	},
+	service = PortletDataHandler.class
+)
 public class MBPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "message_boards";
@@ -359,7 +366,6 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 		_mbMessageLocalService = mbMessageLocalService;
 	}
 
-	@Reference(unbind = "-")
 	protected void setMBStatsUserLocalService(
 		MBStatsUserLocalService mbStatsUserLocalService) {
 

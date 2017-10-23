@@ -68,6 +68,12 @@
 		</if>
 	</command>
 
+	<command name="typeEditor">
+		<execute function="Type#typeEditor" locator1="AlloyEditor#EDITOR" value1="${content}">
+			<var name="key_editor" value="${editor}" />
+		</execute>
+	</command>
+
 	<command name="viewNoStylingInAlloyEditor">
 		<execute macro="AlloyEditor#clickContentField" />
 

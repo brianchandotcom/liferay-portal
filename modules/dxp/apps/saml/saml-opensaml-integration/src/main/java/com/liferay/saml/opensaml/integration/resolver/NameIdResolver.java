@@ -17,16 +17,20 @@ package com.liferay.saml.opensaml.integration.resolver;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 
-import org.opensaml.saml2.core.NameID;
-import org.opensaml.saml2.core.NameIDPolicy;
-
 /**
  * @author Mika Koivisto
  * @author Carlos Sierra
  */
 public interface NameIdResolver extends Resolver {
 
-	public NameID resolve(User user, String entityId, NameIDPolicy nameIdPolicy)
+	public String resolve(
+			User user, String entityId, String format, String spQualifierName,
+			boolean allowCreate,
+			NameIdResolverSAMLContext nameIdResolverSAMLContext)
 		throws PortalException;
+
+	public interface NameIdResolverSAMLContext
+		extends SAMLContext<NameIdResolver> {
+	}
 
 }

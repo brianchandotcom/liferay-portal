@@ -292,12 +292,17 @@
 
 		<execute macro="FormFields#duplicateField" />
 
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Text Field 1" />
-		</execute>
-
 		<execute macro="FormFields#viewFieldName">
 			<var name="fieldName" value="TextField1" />
+		</execute>
+
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="My New Text Field" />
+		</execute>
+
+		<execute macro="FormFields#viewTextLabel">
+			<var name="fieldLabel" value="My New Text Field" />
+			<var name="fieldName" value="MyNewTextField" />
 		</execute>
 
 		<execute macro="Form#closeSidebar" />

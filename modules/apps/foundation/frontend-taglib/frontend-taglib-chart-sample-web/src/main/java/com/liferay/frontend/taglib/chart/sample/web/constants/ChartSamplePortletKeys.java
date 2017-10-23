@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.chart.sample.internal.constants;
+package com.liferay.frontend.taglib.chart.sample.web.constants;
 
 /**
  * @author Chema Balsas
@@ -20,6 +20,6 @@ package com.liferay.frontend.taglib.chart.sample.internal.constants;
 public class ChartSamplePortletKeys {
 
 	public static final String CHART_SAMPLE =
-		"com_liferay_chart_sample_portlet_ChartSamplePortlet";
+		"com_liferay_chart_sample_web_portlet_ChartSamplePortlet";
 
 }

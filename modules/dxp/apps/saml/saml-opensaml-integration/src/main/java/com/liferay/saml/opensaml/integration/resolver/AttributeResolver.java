@@ -15,14 +15,17 @@
 package com.liferay.saml.opensaml.integration.resolver;
 
 import com.liferay.portal.kernel.model.User;
+import com.liferay.saml.opensaml.integration.internal.resolver.SAMLCommands;
 
 import java.net.URI;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Mika Koivisto
  * @author Carlos Sierra
+ * @author Stian Sigvartsen
  */
 public interface AttributeResolver extends Resolver {
 
@@ -60,6 +63,13 @@ public interface AttributeResolver extends Resolver {
 
 	public interface AttributeResolverSAMLContext
 		extends SAMLContext<AttributeResolver> {
+
+		public default List<String> resolveSsoServicesLocationForBinding(
+			String binding) {
+
+			return resolve(SAMLCommands.ssoServicesLocationForBinding(binding));
+		}
+
 	}
 
 }

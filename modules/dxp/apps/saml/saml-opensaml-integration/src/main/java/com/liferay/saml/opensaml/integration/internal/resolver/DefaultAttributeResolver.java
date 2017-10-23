@@ -35,8 +35,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
-import com.liferay.saml.opensaml.integration.internal.util.SamlUtil;
 import com.liferay.saml.opensaml.integration.metadata.MetadataManager;
 import com.liferay.saml.opensaml.integration.resolver.AttributeResolver;
 import com.liferay.saml.util.PortletPropsKeys;
@@ -51,20 +49,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.stream.Stream;
 
-import org.opensaml.common.binding.SAMLMessageContext;
 import org.opensaml.common.xml.SAMLConstants;
 import org.opensaml.saml2.core.Attribute;
-import org.opensaml.saml2.metadata.IDPSSODescriptor;
-import org.opensaml.saml2.metadata.SingleSignOnService;
-import org.opensaml.saml2.metadata.provider.MetadataProviderException;
-import org.opensaml.xml.XMLObject;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
+ * @author Carlos Sierra
  */
 @Component(
 	immediate = true,
@@ -74,81 +69,73 @@ import org.osgi.service.component.annotations.Reference;
 public class DefaultAttributeResolver implements AttributeResolver {
 
 	@Override
-	public List<Attribute> resolve(
-		User user, SAMLMessageContext<?, ?, ?> samlMessageContext) {
+	public void resolve(
+		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
+		AttributePublisher attributePublisher) {
 
-		List<Attribute> attributes = new ArrayList<>();
-
-		String entityId = samlMessageContext.getPeerEntityId();
+		String entityId = attributeResolverSAMLContext.resolvePeerEntityId();
 
 		boolean namespaceEnabled =
-			_metadataManager.isAttributesNamespaceEnabled(
-				samlMessageContext.getPeerEntityId());
+			_metadataManager.isAttributesNamespaceEnabled(entityId);
 
 		for (String attributeName : getAttributeNames(entityId)) {
 			if (attributeName.startsWith("expando:")) {
 				attributeName = attributeName.substring(8);
 
 				addExpandoAttribute(
-					user, samlMessageContext, attributes, attributeName,
-					namespaceEnabled);
+					user, attributeResolverSAMLContext, attributePublisher,
+					attributeName, namespaceEnabled);
 			}
 			else if (attributeName.equals("groups")) {
 				addGroupsAttribute(
-					user, samlMessageContext, attributes, attributeName,
-					namespaceEnabled);
+					user, attributeResolverSAMLContext, attributePublisher,
+					attributeName, namespaceEnabled);
 			}
 			else if (attributeName.equals("organizations")) {
 				addOrganizationsAttribute(
-					user, samlMessageContext, attributes, attributeName,
-					namespaceEnabled);
+					user, attributeResolverSAMLContext, attributePublisher,
+					attributeName, namespaceEnabled);
 			}
 			else if (attributeName.equals("organizationRoles")) {
 				addOrganizationRolesAttribute(
-					user, samlMessageContext, attributes, attributeName,
-					namespaceEnabled);
+					user, attributeResolverSAMLContext, attributePublisher,
+					attributeName, namespaceEnabled);
 			}
 			else if (attributeName.equals("roles")) {
 				addRolesAttribute(
-					user, samlMessageContext, attributes, attributeName,
-					namespaceEnabled);
+					user, attributeResolverSAMLContext, attributePublisher,
+					attributeName, namespaceEnabled);
 			}
 			else if (attributeName.startsWith("static:")) {
 				attributeName = attributeName.substring(7);
 
 				addStaticAttribute(
-					user, samlMessageContext, attributes, attributeName,
-					namespaceEnabled);
+					user, attributeResolverSAMLContext, attributePublisher,
+					attributeName, namespaceEnabled);
 			}
 			else if (attributeName.equals("siteRoles") ||
 					 attributeName.equals("userGroupRoles")) {
 
 				addSiteRolesAttribute(
-					user, samlMessageContext, attributes, attributeName,
-					namespaceEnabled);
+					user, attributeResolverSAMLContext, attributePublisher,
+					attributeName, namespaceEnabled);
 			}
 			else if (attributeName.equals("userGroups")) {
 				addUserGroupsAttribute(
-					user, samlMessageContext, attributes, attributeName,
-					namespaceEnabled);
+					user, attributeResolverSAMLContext, attributePublisher,
+					attributeName, namespaceEnabled);
 			}
 			else {
 				addUserAttribute(
-					user, samlMessageContext, attributes, attributeName,
-					namespaceEnabled);
+					user, attributeResolverSAMLContext, attributePublisher,
+					attributeName, namespaceEnabled);
 			}
 		}
 
 		if (isPeerSalesForce(entityId)) {
-			List<Attribute> salesForceAttributes = getSalesForceAttributes(
-				samlMessageContext);
-
-			if (!salesForceAttributes.isEmpty()) {
-				attributes.addAll(salesForceAttributes);
-			}
+			addSalesForceAttributes(
+				attributeResolverSAMLContext, attributePublisher);
 		}
-
-		return attributes;
 	}
 
 	@Reference(unbind = "-")
@@ -181,31 +168,30 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	protected void addExpandoAttribute(
-		User user, SAMLMessageContext<?, ?, ?> samlMessageContext,
-		List<Attribute> attributes, String attributeName,
+		User user, AttributeResolverSAMLContext samlContext,
+		AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
-
-		Attribute attribute = null;
 
 		ExpandoBridge expandoBridge = user.getExpandoBridge();
 
 		Serializable value = expandoBridge.getAttribute(attributeName, false);
 
 		if (!namespaceEnabled) {
-			attribute = OpenSamlUtil.buildAttribute(attributeName, value);
+			attributePublisher.publish(
+				attributeName, Attribute.UNSPECIFIED,
+				attributePublisher.buildString(value.toString()));
 		}
 		else {
-			attribute = OpenSamlUtil.buildAttribute(
+			attributePublisher.publish(
 				"urn:liferay:user:expando:" + attributeName,
-				Attribute.URI_REFERENCE, value);
+				Attribute.URI_REFERENCE,
+				attributePublisher.buildString(value.toString()));
 		}
-
-		attributes.add(attribute);
 	}
 
 	protected void addGroupsAttribute(
-		User user, SAMLMessageContext<?, ?, ?> samlMessageContext,
-		List<Attribute> attributes, String attributeName,
+		User user, AttributeResolverSAMLContext samlContext,
+		AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
 
 		try {
@@ -215,27 +201,29 @@ public class DefaultAttributeResolver implements AttributeResolver {
 				return;
 			}
 
-			Attribute attribute = OpenSamlUtil.buildAttribute();
+			String name = null;
+			String nameFormat = null;
 
 			if (namespaceEnabled) {
-				attribute.setName("urn:liferay:groups");
-				attribute.setNameFormat(Attribute.URI_REFERENCE);
+				name = "urn:liferay:groups";
+				nameFormat = Attribute.URI_REFERENCE;
 			}
 			else {
-				attribute.setName("groups");
-				attribute.setNameFormat(Attribute.UNSPECIFIED);
+				name = "groups";
+				nameFormat = Attribute.UNSPECIFIED;
 			}
 
-			List<XMLObject> xmlObjects = attribute.getAttributeValues();
+			Stream<Group> groupsStream = groups.stream();
 
-			for (Group group : groups) {
-				XMLObject xmlObject = OpenSamlUtil.buildAttributeValue(
-					group.getName());
-
-				xmlObjects.add(xmlObject);
-			}
-
-			attributes.add(attribute);
+			attributePublisher.publish(
+				name, nameFormat,
+				groupsStream.map(
+					Group::getName
+				).map(
+					attributePublisher::buildString
+				).toArray(
+					AttributePublisher.AttributeValue[]::new
+				));
 		}
 		catch (Exception e) {
 			_log.error("Unable to get groups for user " + user.getUserId(), e);
@@ -243,8 +231,8 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	protected void addOrganizationRolesAttribute(
-		User user, SAMLMessageContext<?, ?, ?> samlMessageContext,
-		List<Attribute> attributes, String attributeName,
+		User user, AttributeResolverSAMLContext samlContext,
+		AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
 
 		try {
@@ -262,13 +250,8 @@ public class DefaultAttributeResolver implements AttributeResolver {
 					continue;
 				}
 
-				Set<Role> roles = groupRoles.get(group.getName());
-
-				if (roles == null) {
-					roles = new HashSet<>();
-
-					groupRoles.put(group.getName(), roles);
-				}
+				Set<Role> roles = groupRoles.computeIfAbsent(
+					group.getName(), k -> new HashSet<>());
 
 				roles.add(userGroupRole.getRole());
 			}
@@ -277,28 +260,30 @@ public class DefaultAttributeResolver implements AttributeResolver {
 				String groupName = entry.getKey();
 				Set<Role> roles = entry.getValue();
 
-				Attribute attribute = OpenSamlUtil.buildAttribute();
+				String name = null;
+				String nameFormat = null;
 
 				if (namespaceEnabled) {
-					attribute.setName(
-						"urn:liferay:organizationRole:" + groupName);
-					attribute.setNameFormat(Attribute.URI_REFERENCE);
+					name = "urn:liferay:organizationRole:" + groupName;
+					nameFormat = Attribute.URI_REFERENCE;
 				}
 				else {
-					attribute.setName("organizationRole:" + groupName);
-					attribute.setNameFormat(Attribute.UNSPECIFIED);
+					name = "organizationRole:" + groupName;
+					nameFormat = Attribute.UNSPECIFIED;
 				}
 
-				List<XMLObject> xmlObjects = attribute.getAttributeValues();
+				Stream<Role> rolesStream = roles.stream();
 
-				for (Role role : roles) {
-					XMLObject xmlObject = OpenSamlUtil.buildAttributeValue(
-						role.getName());
-
-					xmlObjects.add(xmlObject);
-				}
-
-				attributes.add(attribute);
+				attributePublisher.publish(
+					name, nameFormat,
+					rolesStream.map(
+						Role::getName
+					).map(
+						attributePublisher::buildString
+					).toArray(
+						AttributePublisher.AttributeValue[]::new
+					)
+				);
 			}
 		}
 		catch (Exception e) {
@@ -309,8 +294,8 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	protected void addOrganizationsAttribute(
-		User user, SAMLMessageContext<?, ?, ?> samlMessageContext,
-		List<Attribute> attributes, String attributeName,
+		User user, AttributeResolverSAMLContext samlContext,
+		AttributePublisher publisher, String attributeName,
 		boolean namespaceEnabled) {
 
 		try {
@@ -320,27 +305,29 @@ public class DefaultAttributeResolver implements AttributeResolver {
 				return;
 			}
 
-			Attribute attribute = OpenSamlUtil.buildAttribute();
+			String name = null;
+			String nameFormat = null;
 
 			if (namespaceEnabled) {
-				attribute.setName("urn:liferay:organizations");
-				attribute.setNameFormat(Attribute.URI_REFERENCE);
+				name = "urn:liferay:organizations";
+				nameFormat = Attribute.URI_REFERENCE;
 			}
 			else {
-				attribute.setName("organizations");
-				attribute.setNameFormat(Attribute.UNSPECIFIED);
+				name = "organizations";
+				nameFormat = Attribute.UNSPECIFIED;
 			}
 
-			List<XMLObject> xmlObjects = attribute.getAttributeValues();
+			Stream<Organization> organizationsStream = organizations.stream();
 
-			for (Organization organization : organizations) {
-				XMLObject xmlObject = OpenSamlUtil.buildAttributeValue(
-					organization.getName());
-
-				xmlObjects.add(xmlObject);
-			}
-
-			attributes.add(attribute);
+			publisher.publish(
+				name, nameFormat,
+				organizationsStream.map(
+					Organization::getName
+				).map(
+					publisher::buildString
+				).toArray(
+					AttributePublisher.AttributeValue[]::new
+				));
 		}
 		catch (Exception e) {
 			_log.error(
@@ -349,8 +336,8 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	protected void addRolesAttribute(
-		User user, SAMLMessageContext<?, ?, ?> samlMessageContext,
-		List<Attribute> attributes, String attributeName,
+		User user, AttributeResolverSAMLContext samlContext,
+		AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
 
 		try {
@@ -404,36 +391,68 @@ public class DefaultAttributeResolver implements AttributeResolver {
 				return;
 			}
 
-			Attribute attribute = OpenSamlUtil.buildAttribute();
+			String name = null;
+			String nameFormat = null;
 
 			if (namespaceEnabled) {
-				attribute.setName("urn:liferay:roles");
-				attribute.setNameFormat(Attribute.URI_REFERENCE);
+				name = "urn:liferay:roles";
+				nameFormat = Attribute.URI_REFERENCE;
 			}
 			else {
-				attribute.setName("roles");
-				attribute.setNameFormat(Attribute.UNSPECIFIED);
+				name = "roles";
+				nameFormat = Attribute.UNSPECIFIED;
 			}
 
-			List<XMLObject> xmlObjects = attribute.getAttributeValues();
+			Stream<Role> uniqueRolesStream = uniqueRoles.stream();
 
-			for (Role role : uniqueRoles) {
-				XMLObject xmlObject = OpenSamlUtil.buildAttributeValue(
-					role.getName());
-
-				xmlObjects.add(xmlObject);
-			}
-
-			attributes.add(attribute);
+			attributePublisher.publish(
+				name, nameFormat,
+				uniqueRolesStream.map(
+					Role::getName
+				).map(
+					attributePublisher::buildString
+				).toArray(
+					AttributePublisher.AttributeValue[]::new
+				));
 		}
 		catch (Exception e) {
 			_log.error("Unable to get roles for user " + user.getUserId(), e);
 		}
 	}
 
+	protected void addSalesForceAttributes(
+		AttributeResolverSAMLContext samlContext,
+		AttributePublisher attributePublisher) {
+
+		String samlIdpMetadataSalesForceLogoutUrl = GetterUtil.getString(
+			PropsUtil.get(
+				PortletPropsKeys.SAML_IDP_METADATA_SALESFORCE_LOGOUT_URL));
+
+		attributePublisher.publish(
+			"logoutURL", Attribute.UNSPECIFIED,
+			attributePublisher.buildString(samlIdpMetadataSalesForceLogoutUrl));
+
+		String samlIdpMetadataSalesForceSsoStartPage = GetterUtil.getString(
+			PropsUtil.get(
+				PortletPropsKeys.SAML_IDP_METADATA_SALESFORCE_SSO_START_PAGE));
+
+		List<String> locations =
+			samlContext.resolveSsoServicesLocationForBinding(
+				SAMLConstants.SAML2_POST_BINDING_URI);
+
+		if (!locations.isEmpty()) {
+			samlIdpMetadataSalesForceSsoStartPage = locations.get(0);
+		}
+
+		attributePublisher.publish(
+			"ssoStartPage", Attribute.UNSPECIFIED,
+			attributePublisher.buildString(
+				samlIdpMetadataSalesForceSsoStartPage));
+	}
+
 	protected void addSiteRolesAttribute(
-		User user, SAMLMessageContext<?, ?, ?> samlMessageContext,
-		List<Attribute> attributes, String attributeName,
+		User user, AttributeResolverSAMLContext samlContext,
+		AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
 
 		try {
@@ -453,13 +472,8 @@ public class DefaultAttributeResolver implements AttributeResolver {
 					continue;
 				}
 
-				Set<Role> roles = groupRoles.get(group.getName());
-
-				if (roles == null) {
-					roles = new HashSet<>();
-
-					groupRoles.put(group.getName(), roles);
-				}
+				Set<Role> roles = groupRoles.computeIfAbsent(
+					group.getName(), k -> new HashSet<>());
 
 				roles.add(userGroupRole.getRole());
 			}
@@ -472,13 +486,8 @@ public class DefaultAttributeResolver implements AttributeResolver {
 				Group group = userGroupGroupRole.getGroup();
 				Role role = userGroupGroupRole.getRole();
 
-				Set<Role> roles = groupRoles.get(group.getName());
-
-				if (roles == null) {
-					roles = new HashSet<>();
-
-					groupRoles.put(group.getName(), roles);
-				}
+				Set<Role> roles = groupRoles.computeIfAbsent(
+					group.getName(), k -> new HashSet<>());
 
 				roles.add(role);
 			}
@@ -487,40 +496,42 @@ public class DefaultAttributeResolver implements AttributeResolver {
 				String groupName = entry.getKey();
 				Set<Role> roles = entry.getValue();
 
-				Attribute attribute = OpenSamlUtil.buildAttribute();
+				String name = null;
+				String nameFormat = null;
 
 				if (namespaceEnabled) {
 					if (attributeName.equals("siteRoles")) {
-						attribute.setName("urn:liferay:siteRole:" + groupName);
+						name = "urn:liferay:siteRole:" + groupName;
 					}
 					else {
-						attribute.setName(
-							"urn:liferay:userGroupRole:" + groupName);
+						name = "urn:liferay:userGroupRole:" + groupName;
 					}
 
-					attribute.setNameFormat(Attribute.URI_REFERENCE);
+					nameFormat = Attribute.URI_REFERENCE;
 				}
 				else {
 					if (attributeName.equals("siteRoles")) {
-						attribute.setName("siteRole:" + groupName);
+						name = "siteRole:" + groupName;
 					}
 					else {
-						attribute.setName("userGroupRole:" + groupName);
+						name = "userGroupRole:" + groupName;
 					}
 
-					attribute.setNameFormat(Attribute.UNSPECIFIED);
+					nameFormat = Attribute.UNSPECIFIED;
 				}
 
-				List<XMLObject> xmlObjects = attribute.getAttributeValues();
+				Stream<Role> rolesStream = roles.stream();
 
-				for (Role role : roles) {
-					XMLObject xmlObject = OpenSamlUtil.buildAttributeValue(
-						role.getName());
-
-					xmlObjects.add(xmlObject);
-				}
-
-				attributes.add(attribute);
+				attributePublisher.publish(
+					name, nameFormat,
+					rolesStream.map(
+						Role::getName
+					).map(
+						attributePublisher::buildString
+					).toArray(
+						AttributePublisher.AttributeValue[]::new
+					)
+				);
 			}
 		}
 		catch (Exception e) {
@@ -531,8 +542,8 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	protected void addStaticAttribute(
-		User user, SAMLMessageContext<?, ?, ?> samlMessageContext,
-		List<Attribute> attributes, String attributeName,
+		User user, AttributeResolverSAMLContext samlContext,
+		AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
 
 		String attributeValue = StringPool.BLANK;
@@ -551,44 +562,43 @@ public class DefaultAttributeResolver implements AttributeResolver {
 			}
 		}
 
-		Attribute attribute = OpenSamlUtil.buildAttribute(
-			attributeName, attributeValue);
+		String nameFormat = null;
 
 		if (namespaceEnabled) {
-			attribute.setNameFormat(Attribute.URI_REFERENCE);
+			nameFormat = Attribute.URI_REFERENCE;
 		}
 		else {
-			attribute.setNameFormat(Attribute.UNSPECIFIED);
+			nameFormat = Attribute.UNSPECIFIED;
 		}
 
-		attributes.add(attribute);
+		attributePublisher.publish(
+			attributeName, nameFormat,
+			attributePublisher.buildString(attributeValue));
 	}
 
 	protected void addUserAttribute(
-		User user, SAMLMessageContext<?, ?, ?> samlMessageContext,
-		List<Attribute> attributes, String attributeName,
+		User user, AttributeResolverSAMLContext samlContext,
+		AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
-
-		Attribute attribute = null;
 
 		Serializable value = (Serializable)BeanPropertiesUtil.getObject(
 			user, attributeName);
 
 		if (!namespaceEnabled) {
-			attribute = OpenSamlUtil.buildAttribute(attributeName, value);
+			attributePublisher.publish(
+				attributeName, Attribute.UNSPECIFIED,
+				attributePublisher.buildString(value.toString()));
 		}
 		else {
-			attribute = OpenSamlUtil.buildAttribute(
+			attributePublisher.publish(
 				"urn:liferay:user:" + attributeName, Attribute.URI_REFERENCE,
-				value);
+				attributePublisher.buildString(value.toString()));
 		}
-
-		attributes.add(attribute);
 	}
 
 	protected void addUserGroupsAttribute(
-		User user, SAMLMessageContext<?, ?, ?> samlMessageContext,
-		List<Attribute> attributes, String attributeName,
+		User user, AttributeResolverSAMLContext samlContext,
+		AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
 
 		try {
@@ -598,27 +608,29 @@ public class DefaultAttributeResolver implements AttributeResolver {
 				return;
 			}
 
-			Attribute attribute = OpenSamlUtil.buildAttribute();
+			String name = null;
+			String nameFormat = null;
 
 			if (namespaceEnabled) {
-				attribute.setName("urn:liferay:userGroups");
-				attribute.setNameFormat(Attribute.URI_REFERENCE);
+				name = "urn:liferay:userGroups";
+				nameFormat = Attribute.URI_REFERENCE;
 			}
 			else {
-				attribute.setName("userGroups");
-				attribute.setNameFormat(Attribute.UNSPECIFIED);
+				name = "userGroups";
+				nameFormat = Attribute.UNSPECIFIED;
 			}
 
-			List<XMLObject> xmlObjects = attribute.getAttributeValues();
+			Stream<UserGroup> userGroupsStream = userGroups.stream();
 
-			for (UserGroup userGroup : userGroups) {
-				XMLObject xmlObject = OpenSamlUtil.buildAttributeValue(
-					userGroup.getName());
-
-				xmlObjects.add(xmlObject);
-			}
-
-			attributes.add(attribute);
+			attributePublisher.publish(
+				name, nameFormat,
+				userGroupsStream.map(
+					UserGroup::getName
+				).map(
+					attributePublisher::buildString
+				).toArray(
+					AttributePublisher.AttributeValue[]::new
+				));
 		}
 		catch (Exception e) {
 			_log.error(
@@ -628,47 +640,6 @@ public class DefaultAttributeResolver implements AttributeResolver {
 
 	protected String[] getAttributeNames(String entityId) {
 		return _metadataManager.getAttributeNames(entityId);
-	}
-
-	protected List<Attribute> getSalesForceAttributes(
-		SAMLMessageContext<?, ?, ?> samlMessageContext) {
-
-		List<Attribute> attributes = new ArrayList<>();
-
-		String samlIdpMetadataSalesForceLogoutUrl = GetterUtil.getString(
-			PropsUtil.get(
-				PortletPropsKeys.SAML_IDP_METADATA_SALESFORCE_LOGOUT_URL));
-
-		Attribute logoutURLAttribute = OpenSamlUtil.buildAttribute(
-			"logoutURL", samlIdpMetadataSalesForceLogoutUrl);
-
-		attributes.add(logoutURLAttribute);
-
-		String samlIdpMetadataSalesForceSsoStartPage = GetterUtil.getString(
-			PropsUtil.get(
-				PortletPropsKeys.SAML_IDP_METADATA_SALESFORCE_SSO_START_PAGE));
-
-		try {
-			IDPSSODescriptor idpSsoDescriptor =
-				(IDPSSODescriptor)
-					samlMessageContext.getLocalEntityRoleMetadata();
-
-			SingleSignOnService singleSignOnService =
-				SamlUtil.getSingleSignOnServiceForBinding(
-					idpSsoDescriptor, SAMLConstants.SAML2_POST_BINDING_URI);
-
-			samlIdpMetadataSalesForceSsoStartPage =
-				singleSignOnService.getLocation();
-		}
-		catch (MetadataProviderException mpe) {
-		}
-
-		Attribute ssoStartPageAattribute = OpenSamlUtil.buildAttribute(
-			"ssoStartPage", samlIdpMetadataSalesForceSsoStartPage);
-
-		attributes.add(ssoStartPageAattribute);
-
-		return attributes;
 	}
 
 	protected boolean isPeerSalesForce(String entityId) {

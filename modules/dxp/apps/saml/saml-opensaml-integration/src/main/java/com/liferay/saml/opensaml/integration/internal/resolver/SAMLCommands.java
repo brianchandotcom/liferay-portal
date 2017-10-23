@@ -102,6 +102,31 @@ public interface SAMLCommands {
 			});
 	}
 
+	public static SAMLCommand<List<String>, AttributeResolver>
+		ssoServicesLocationForBinding(String binding) {
+
+		return new AttributeResolverSAMLCommand<>(
+			samlMessageContext -> {
+				IDPSSODescriptor idpSsoDescriptor =
+					(IDPSSODescriptor)
+						samlMessageContext.getLocalEntityRoleMetadata();
+
+				List<SingleSignOnService> singleSignOnServices =
+					idpSsoDescriptor.getSingleSignOnServices();
+
+				Stream<SingleSignOnService> singleSignOnServicesStream =
+					singleSignOnServices.stream();
+
+				return singleSignOnServicesStream.filter(
+					ssos -> binding.equals(ssos.getBinding())
+				).map(
+					SingleSignOnService::getLocation
+				).collect(
+					Collectors.toList()
+				);
+			});
+	}
+
 	public SAMLCommand<String, Resolver> peerEntityId = new SAMLCommandImpl<>(
 		SAMLMessageContext::getPeerEntityId);
 	public SAMLCommand<String, Resolver> subjectNameFormat =

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.User;
 /**
  * @author Mika Koivisto
  * @author Carlos Sierra
+ * @author Stian Sigvartsen
  */
 public interface NameIdResolver extends Resolver {
 

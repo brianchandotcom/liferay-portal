@@ -18,12 +18,8 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.opensaml.integration.metadata.MetadataManager;
 import com.liferay.saml.opensaml.integration.resolver.NameIdResolver;
-
-import org.opensaml.saml2.core.NameID;
-import org.opensaml.saml2.core.NameIDPolicy;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,22 +35,12 @@ import org.osgi.service.component.annotations.Reference;
 public class DefaultNameIdResolver implements NameIdResolver {
 
 	@Override
-	public NameID resolve(
-		User user, String entityId, NameIDPolicy nameIdPolicy) {
+	public String resolve(
+		User user, String entityId, String format, String spQualifierName,
+		boolean allowCreate,
+		NameIdResolverSAMLContext nameIdResolverSAMLContext) {
 
-		String nameIdFormat = getNameIdFormat(entityId, nameIdPolicy);
-		String nameIdValue = getNameIdValue(user, entityId);
-
-		String spNameQualifier = null;
-
-		if ((nameIdPolicy != null) &&
-			Validator.isNotNull(nameIdPolicy.getSPNameQualifier())) {
-
-			spNameQualifier = nameIdPolicy.getSPNameQualifier();
-		}
-
-		return OpenSamlUtil.buildNameId(
-			nameIdFormat, null, spNameQualifier, nameIdValue);
+		return getNameIdValue(user, entityId);
 	}
 
 	@Reference(unbind = "-")
@@ -64,18 +50,6 @@ public class DefaultNameIdResolver implements NameIdResolver {
 
 	protected String getNameIdAttributeName(String entityId) {
 		return _metadataManager.getNameIdAttribute(entityId);
-	}
-
-	protected String getNameIdFormat(
-		String entityId, NameIDPolicy nameIdPolicy) {
-
-		if ((nameIdPolicy != null) &&
-			Validator.isNotNull(nameIdPolicy.getFormat())) {
-
-			return nameIdPolicy.getFormat();
-		}
-
-		return _metadataManager.getNameIdFormat(entityId);
 	}
 
 	protected String getNameIdValue(User user, String entityId) {

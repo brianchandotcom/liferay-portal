@@ -2434,6 +2434,11 @@ public class PortletImpl extends PortletBaseImpl {
 		if (mimeTypePortletModes == null) {
 			String[] mimeTypeParts = StringUtil.split(mimeType, CharPool.SLASH);
 
+			if (mimeTypeParts.length != 2) {
+				throw new IllegalArgumentException(
+					"Unable to handle MIME type " + mimeType);
+			}
+
 			mimeTypePortletModes = _portletModes.get(
 				mimeTypeParts[0].concat("/*"));
 

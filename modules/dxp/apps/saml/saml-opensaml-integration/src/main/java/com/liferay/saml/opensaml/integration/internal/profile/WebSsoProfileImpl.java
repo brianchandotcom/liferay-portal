@@ -36,8 +36,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.SamlBinding;
+import com.liferay.saml.opensaml.integration.internal.resolver.AttributePublisherImpl;
 import com.liferay.saml.opensaml.integration.internal.resolver.AttributeResolverRegistry;
+import com.liferay.saml.opensaml.integration.internal.resolver.AttributeResolverSAMLContextImpl;
 import com.liferay.saml.opensaml.integration.internal.resolver.NameIdResolverRegistry;
+import com.liferay.saml.opensaml.integration.internal.resolver.NameIdResolverSAMLContextImpl;
+import com.liferay.saml.opensaml.integration.internal.resolver.UserResolverSAMLContextImpl;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.opensaml.integration.internal.util.SamlUtil;
 import com.liferay.saml.opensaml.integration.metadata.MetadataManager;
@@ -623,7 +627,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			request);
 
 		User user = _userResolver.resolveUser(
-			assertion, samlMessageContext, serviceContext);
+			new UserResolverSAMLContextImpl(samlMessageContext),
+			serviceContext);
 
 		serviceContext.setUserId(user.getUserId());
 
@@ -813,8 +818,14 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			_attributeResolverRegistry.getAttributeResolver(
 				samlMessageContext.getPeerEntityId());
 
-		List<Attribute> attributes = attributeResolver.resolve(
-			user, samlMessageContext);
+		AttributePublisherImpl attributePublisher =
+			new AttributePublisherImpl();
+
+		attributeResolver.resolve(
+			user, new AttributeResolverSAMLContextImpl(samlMessageContext),
+			attributePublisher);
+
+		List<Attribute> attributes = attributePublisher.getAttributes();
 
 		if (attributes.isEmpty()) {
 			return assertion;
@@ -915,20 +926,40 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		User user = samlSsoRequestContext.getUser();
 
-		NameIDPolicy nameIDPolicy = null;
-
 		AuthnRequest authnRequest = samlMessageContext.getInboundSAMLMessage();
 
+		String entityId = samlMessageContext.getPeerEntityId();
+
+		String spNameQualifier = null;
+
+		String nameIdFormat = null;
+
+		boolean allowCreate = false;
+
 		if (authnRequest != null) {
-			nameIDPolicy = authnRequest.getNameIDPolicy();
+			NameIDPolicy nameIDPolicy = authnRequest.getNameIDPolicy();
+
+			if (nameIDPolicy != null) {
+				nameIdFormat = nameIDPolicy.getFormat();
+
+				spNameQualifier = nameIDPolicy.getSPNameQualifier();
+
+				allowCreate = nameIDPolicy.getAllowCreate();
+			}
+		}
+
+		if (nameIdFormat == null) {
+			nameIdFormat = metadataManager.getNameIdFormat(entityId);
 		}
 
 		NameIdResolver nameIdResolver =
-			_nameIdResolverRegistry.getNameIdResolver(
-				samlMessageContext.getPeerEntityId());
+			_nameIdResolverRegistry.getNameIdResolver(entityId);
 
-		return nameIdResolver.resolve(
-			user, samlMessageContext.getPeerEntityId(), nameIDPolicy);
+		return OpenSamlUtil.buildNameId(
+			nameIdFormat, null, spNameQualifier,
+			nameIdResolver.resolve(
+				user, entityId, nameIdFormat, spNameQualifier, allowCreate,
+				new NameIdResolverSAMLContextImpl(samlMessageContext)));
 	}
 
 	protected Response getSuccessResponse(

@@ -21,6 +21,8 @@ import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 import java.io.StringWriter;
 
+import java.net.URI;
+
 import java.util.Date;
 import java.util.List;
 
@@ -72,11 +74,13 @@ import org.opensaml.xml.io.MarshallingException;
 import org.opensaml.xml.io.UnmarshallingException;
 import org.opensaml.xml.parse.ParserPool;
 import org.opensaml.xml.parse.XMLParserException;
+import org.opensaml.xml.schema.XSBase64Binary;
 import org.opensaml.xml.schema.XSBoolean;
 import org.opensaml.xml.schema.XSBooleanValue;
 import org.opensaml.xml.schema.XSDateTime;
 import org.opensaml.xml.schema.XSInteger;
 import org.opensaml.xml.schema.XSString;
+import org.opensaml.xml.schema.XSURI;
 import org.opensaml.xml.security.SecurityConfiguration;
 import org.opensaml.xml.security.SecurityException;
 import org.opensaml.xml.security.SecurityHelper;
@@ -146,7 +150,7 @@ public class OpenSamlUtil {
 	}
 
 	public static Attribute buildAttribute(
-		String name, String friendlyName, String nameFormat, Boolean value) {
+		String name, String friendlyName, String nameFormat) {
 
 		Attribute attribute = buildAttribute();
 
@@ -156,6 +160,14 @@ public class OpenSamlUtil {
 
 		attribute.setName(name);
 		attribute.setNameFormat(nameFormat);
+
+		return attribute;
+	}
+
+	public static Attribute buildAttribute(
+		String name, String friendlyName, String nameFormat, Boolean value) {
+
+		Attribute attribute = buildAttribute(name, friendlyName, nameFormat);
 
 		XMLObject xmlObject = buildAttributeValue(value);
 
@@ -394,6 +406,18 @@ public class OpenSamlUtil {
 		return attribute;
 	}
 
+	public static XMLObject buildAttributeBase64Value(String value) {
+		XMLObjectBuilder<XSBase64Binary> xmlObjectBuilder = _getBuilder(
+			XSBase64Binary.TYPE_NAME);
+
+		XSBase64Binary xsBase64Binary = xmlObjectBuilder.buildObject(
+			AttributeValue.DEFAULT_ELEMENT_NAME, XSBase64Binary.TYPE_NAME);
+
+		xsBase64Binary.setValue(value);
+
+		return xsBase64Binary;
+	}
+
 	public static AttributeStatement buildAttributeStatement() {
 		SAMLObjectBuilder<AttributeStatement> samlObjectBuilder =
 			(SAMLObjectBuilder<AttributeStatement>)_getBuilder(
@@ -450,6 +474,17 @@ public class OpenSamlUtil {
 		xsString.setValue(value);
 
 		return xsString;
+	}
+
+	public static XMLObject buildAttributeValue(URI value) {
+		XMLObjectBuilder<XSURI> xmlObjectBuilder = _getBuilder(XSURI.TYPE_NAME);
+
+		XSURI xsBase64Binary = xmlObjectBuilder.buildObject(
+			AttributeValue.DEFAULT_ELEMENT_NAME, XSURI.TYPE_NAME);
+
+		xsBase64Binary.setValue(value.toString());
+
+		return xsBase64Binary;
 	}
 
 	public static Audience buildAudience() {

@@ -80,6 +80,10 @@ public class JavaClassParser {
 		int x = content.indexOf("\npublic ");
 
 		if (x == -1) {
+			x = content.indexOf("\npublic\n");
+		}
+
+		if (x == -1) {
 			return null;
 		}
 

@@ -79,20 +79,6 @@ public class MBCategoryPermission implements BaseModelPermissionChecker {
 		MBCategory category = MBCategoryLocalServiceUtil.getCategory(
 			categoryId);
 
-		return _contains(permissionChecker, category, actionId);
-	}
-
-	private boolean _contains(
-			PermissionChecker permissionChecker, MBCategory category,
-			String actionId)
-		throws PortalException {
-
-		if (MBBanLocalServiceUtil.hasBan(
-				category.getGroupId(), permissionChecker.getUserId())) {
-
-			return false;
-		}
-
 		if (actionId.equals(ActionKeys.ADD_CATEGORY)) {
 			actionId = ActionKeys.ADD_SUBCATEGORY;
 		}
@@ -113,8 +99,6 @@ public class MBCategoryPermission implements BaseModelPermissionChecker {
 			PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 
 			try {
-				long categoryId = category.getCategoryId();
-
 				while (categoryId !=
 							MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
 

@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.exception.LayoutSetVirtualHostException;
 import com.liferay.portal.kernel.exception.LayoutTypeException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredLayoutException;
 import com.liferay.portal.kernel.exception.SitemapChangeFrequencyException;
 import com.liferay.portal.kernel.exception.SitemapIncludeException;
@@ -47,20 +46,15 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.sites.action.ActionUtil;
-import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.io.IOException;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -99,35 +93,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = {Portlet.class}
 )
 public class LayoutAdminPortlet extends MVCPortlet {
-
-	public void deleteLayout(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long selPlid = ParamUtil.getLong(actionRequest, "selPlid");
-
-		if (selPlid <= 0) {
-			long groupId = ParamUtil.getLong(actionRequest, "groupId");
-			boolean privateLayout = ParamUtil.getBoolean(
-				actionRequest, "privateLayout");
-			long layoutId = ParamUtil.getLong(actionRequest, "layoutId");
-
-			Layout layout = layoutLocalService.getLayout(
-				groupId, privateLayout, layoutId);
-
-			selPlid = layout.getPlid();
-		}
-
-		Layout deleteLayout = layoutLocalService.getLayout(selPlid);
-
-		String redirect = getRedirect(actionRequest, deleteLayout);
-
-		SitesUtil.deleteLayout(actionRequest, actionResponse);
-
-		MultiSessionMessages.add(actionRequest, "layoutDeleted", selPlid);
-
-		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
-	}
 
 	@Override
 	protected void doDispatch(
@@ -196,23 +161,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		}
 	}
 
-	protected String getEmptyLayoutSetURL(
-		PortletRequest portletRequest, long groupId, boolean privateLayout) {
-
-		PortletURL emptyLayoutSetURL = portal.getControlPanelPortletURL(
-			portletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-			PortletRequest.RENDER_PHASE);
-
-		emptyLayoutSetURL.setParameter("mvcPath", "/empty_layout_set.jsp");
-		emptyLayoutSetURL.setParameter(
-			"selPlid", String.valueOf(LayoutConstants.DEFAULT_PLID));
-		emptyLayoutSetURL.setParameter("groupId", String.valueOf(groupId));
-		emptyLayoutSetURL.setParameter(
-			"privateLayout", String.valueOf(privateLayout));
-
-		return emptyLayoutSetURL.toString();
-	}
-
 	protected Group getGroup(PortletRequest portletRequest) throws Exception {
 		return ActionUtil.getGroup(portletRequest);
 	}
@@ -226,96 +174,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		}
 
 		return null;
-	}
-
-	protected long getNewPlid(Layout layout) {
-		long newPlid = LayoutConstants.DEFAULT_PLID;
-
-		if (layout.getParentLayoutId() !=
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
-
-			Layout parentLayout = layoutLocalService.fetchLayout(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getParentLayoutId());
-
-			if (parentLayout != null) {
-				newPlid = parentLayout.getPlid();
-			}
-		}
-
-		if (newPlid <= 0) {
-			Layout firstLayout = layoutLocalService.fetchFirstLayout(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-			if ((firstLayout != null) &&
-				(firstLayout.getPlid() != layout.getPlid())) {
-
-				newPlid = firstLayout.getPlid();
-			}
-
-			if (newPlid <= 0) {
-				Layout otherLayoutSetFirstLayout =
-					layoutLocalService.fetchFirstLayout(
-						layout.getGroupId(), !layout.isPrivateLayout(),
-						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-				if ((otherLayoutSetFirstLayout != null) &&
-					(otherLayoutSetFirstLayout.getPlid() != layout.getPlid())) {
-
-					newPlid = otherLayoutSetFirstLayout.getPlid();
-				}
-			}
-		}
-
-		return newPlid;
-	}
-
-	protected String getRedirect(ActionRequest actionRequest, Layout layout)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		Layout refererLayout = layoutLocalService.fetchLayout(
-			themeDisplay.getRefererPlid());
-
-		if (refererLayout == null) {
-			return redirect;
-		}
-
-		boolean ancestor = false;
-
-		if (layout.getPlid() == themeDisplay.getRefererPlid()) {
-			ancestor = true;
-		}
-		else {
-			for (Layout parentLayout : refererLayout.getAncestors()) {
-				if (parentLayout.getPlid() == layout.getPlid()) {
-					ancestor = true;
-				}
-			}
-		}
-
-		if (!ancestor) {
-			return redirect;
-		}
-
-		long newRefererPlid = getNewPlid(layout);
-
-		Layout redirectLayout = layoutLocalService.fetchLayout(newRefererPlid);
-
-		if (redirectLayout != null) {
-			redirect = portal.getLayoutFullURL(redirectLayout, themeDisplay);
-		}
-		else {
-			redirect = getEmptyLayoutSetURL(
-				actionRequest, layout.getGroupId(), layout.isPrivateLayout());
-		}
-
-		return redirect;
 	}
 
 	@Override

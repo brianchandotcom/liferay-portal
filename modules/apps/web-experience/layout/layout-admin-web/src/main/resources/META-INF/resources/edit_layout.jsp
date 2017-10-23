@@ -112,7 +112,7 @@ renderResponse.setTitle(selLayout.getName(locale));
 
 			<aui:button cssClass="btn-lg remove-layout" id="deleteLayoutButton" name="deleteLayout" value="delete-in-all-pages-variations" />
 
-			<portlet:actionURL name="deleteLayout" var="deleteLayoutURL">
+			<portlet:actionURL name="/layout/delete_layout" var="deleteLayoutURL">
 				<portlet:param name="mvcPath" value="/view.jsp" />
 				<portlet:param name="redirect" value='<%= HttpUtil.addParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selLayout.getParentPlid()) %>' />
 				<portlet:param name="selPlid" value="<%= String.valueOf(layoutsAdminDisplayContext.getSelPlid()) %>" />

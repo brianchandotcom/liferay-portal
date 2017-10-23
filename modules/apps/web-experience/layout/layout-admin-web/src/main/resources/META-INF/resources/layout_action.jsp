@@ -137,7 +137,7 @@ Layout curLayout = (Layout)row.getObject();
 	<c:if test="<%= isDeletable %>">
 		<portlet:actionURL name="/layout/delete_layout" var="deleteLayoutURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="plid" value="<%= String.valueOf(curLayout.getPlid()) %>" />
+			<portlet:param name="selPlid" value="<%= String.valueOf(curLayout.getPlid()) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete

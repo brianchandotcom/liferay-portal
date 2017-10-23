@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>EDITOR</td>
-	<td>//div[contains(@id,'_${key_editor}')][@title='Rich Text Editor'][not(contains(@id,'Container') or contains(@id,'Wrapper') or contains(@id,'Source'))]</td>
+	<td>//div[contains(@id,'_${key_editor}')][contains(@class,'alloy-editor-placeholder')][not(contains(@id,'Container') or contains(@id,'Wrapper') or contains(@id,'Source'))]</td>
 	<td></td>
 </tr>
 <tr>

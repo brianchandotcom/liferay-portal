@@ -17,6 +17,7 @@ package com.liferay.document.library.internal.repository.capabilities;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnsafeRunnable;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.File;
@@ -111,9 +111,13 @@ public class TemporaryFileEntriesCapabilityImpl
 						getTemporaryFileEntriesTimeout()));
 
 		_runWithoutSystemEvents(
-			() -> bulkOperationCapability.execute(
-				bulkFilter,
-				new DeleteExpiredTemporaryFilesRepositoryModelOperation()));
+			() -> {
+				bulkOperationCapability.execute(
+					bulkFilter,
+					new DeleteExpiredTemporaryFilesRepositoryModelOperation());
+
+				return null;
+			});
 	}
 
 	@Override
@@ -139,6 +143,8 @@ public class TemporaryFileEntriesCapabilityImpl
 						_log.debug(nsme, nsme);
 					}
 				}
+
+				return null;
 			});
 	}
 
@@ -307,13 +313,13 @@ public class TemporaryFileEntriesCapabilityImpl
 	}
 
 	private void _runWithoutSystemEvents(
-			UnsafeRunnable<PortalException> unsafeRunnable)
+			UnsafeSupplier<Void, PortalException> unsafeSupplier)
 		throws PortalException {
 
 		SystemEventHierarchyEntryThreadLocal.push(DLFileEntry.class);
 
 		try {
-			unsafeRunnable.run();
+			unsafeSupplier.get();
 		}
 		finally {
 			SystemEventHierarchyEntryThreadLocal.pop(DLFileEntry.class);

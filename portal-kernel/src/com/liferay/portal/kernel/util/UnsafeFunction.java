@@ -16,7 +16,10 @@ package com.liferay.portal.kernel.util;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.petra.function.UnsafeFunction}
  */
+@Deprecated
 public interface UnsafeFunction<T, R, E extends Throwable> {
 
 	public R apply(T t) throws E;

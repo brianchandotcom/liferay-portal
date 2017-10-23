@@ -14,6 +14,7 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.dao.db.BaseDBProcess;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnsafeConsumer;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;

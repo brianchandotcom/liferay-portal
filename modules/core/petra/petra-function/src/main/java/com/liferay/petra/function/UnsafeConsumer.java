@@ -12,16 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.petra.function;
 
 import java.util.Collection;
 
 /**
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, replaced with {@link
- *             com.liferay.petra.function.UnsafeConsumer}
  */
-@Deprecated
+@FunctionalInterface
 public interface UnsafeConsumer<E, T extends Throwable> {
 
 	public static <E> void accept(

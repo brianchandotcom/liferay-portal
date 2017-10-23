@@ -15,6 +15,7 @@
 package com.liferay.portal.configuration.test.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapperException;
 import com.liferay.portal.kernel.search.SearchPermissionChecker;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnsafeConsumer;
 import com.liferay.portal.osgi.util.test.OSGiServiceUtil;
 
 import java.io.IOException;

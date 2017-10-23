@@ -3,6 +3,7 @@
 <module name="com.liferay.portal" xmlns="urn:jboss:module:1.0">
 	<resources>
 		<resource-root path="com.liferay.petra.concurrent.jar" />
+		<resource-root path="com.liferay.petra.function.jar" />
 		<resource-root path="com.liferay.petra.lang.jar" />
 		<resource-root path="com.liferay.petra.memory.jar" />
 		<resource-root path="com.liferay.petra.nio.jar" />

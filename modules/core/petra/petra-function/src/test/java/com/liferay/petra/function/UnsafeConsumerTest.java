@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.petra.function;
 
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
@@ -32,7 +32,15 @@ public class UnsafeConsumerTest {
 
 	@ClassRule
 	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+		new CodeCoverageAssertor() {
+
+			@Override
+			public void appendAssertClasses(List<Class<?>> assertClasses) {
+				assertClasses.add(UnsafeFunction.class);
+				assertClasses.add(UnsafeSupplier.class);
+			}
+
+		};
 
 	@Test
 	public void testAccept1() throws IOException {
@@ -42,7 +50,11 @@ public class UnsafeConsumerTest {
 
 		try {
 			UnsafeConsumer.accept(
-				_exceptions, ReflectionUtil::throwException, IOException.class);
+				_exceptions,
+				exception -> {
+					throw exception;
+				},
+				IOException.class);
 		}
 		catch (Exception e) {
 			Assert.assertSame(_exceptions.get(1), e);
@@ -63,7 +75,10 @@ public class UnsafeConsumerTest {
 
 		try {
 			UnsafeConsumer.accept(
-				_exceptions, ReflectionUtil::throwException,
+				_exceptions,
+				exception -> {
+					throw exception;
+				},
 				RuntimeException.class);
 		}
 		catch (Exception e) {
@@ -84,7 +99,11 @@ public class UnsafeConsumerTest {
 
 		try {
 			UnsafeConsumer.accept(
-				_exceptions, ReflectionUtil::throwException, Exception.class);
+				_exceptions,
+				exception -> {
+					throw exception;
+				},
+				Exception.class);
 		}
 		catch (Exception e) {
 			Assert.assertSame(_exceptions.get(0), e);
@@ -105,7 +124,11 @@ public class UnsafeConsumerTest {
 		// RuntimeException and Exception
 
 		try {
-			UnsafeConsumer.accept(_exceptions, ReflectionUtil::throwException);
+			UnsafeConsumer.accept(
+				_exceptions,
+				exception -> {
+					throw exception;
+				});
 		}
 		catch (Throwable t) {
 			Assert.assertSame(_exceptions.get(0), t);

@@ -14,6 +14,7 @@
 
 package com.liferay.organizations.service.internal.verify;
 
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.UnsafeConsumer;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.verify.VerifyProcess;
 

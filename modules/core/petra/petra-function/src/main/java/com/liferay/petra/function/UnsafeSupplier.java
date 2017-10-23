@@ -12,16 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.petra.function;
 
 /**
- * @author Adolfo Pérez
- * @deprecated As of 7.0.0, with no direct replacement
+ * @author Preston Crary
  */
-@Deprecated
 @FunctionalInterface
-public interface UnsafeRunnable<T extends Throwable> {
+public interface UnsafeSupplier<T, E extends Throwable> {
 
-	public void run() throws T;
+	public T get() throws E;
 
 }

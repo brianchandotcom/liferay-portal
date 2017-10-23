@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.imageio.plugin.internal.activator;
+package com.liferay.imageio.plugins.internal.activator;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -29,7 +29,7 @@ import org.osgi.framework.BundleContext;
 /**
  * @author Adolfo Pérez
  */
-public class ImageIOPluginBundleActivator implements BundleActivator {
+public class ImageIOPluginsBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext context) throws Exception {
@@ -47,7 +47,7 @@ public class ImageIOPluginBundleActivator implements BundleActivator {
 		IIORegistry iioRegistry = IIORegistry.getDefaultInstance();
 
 		Iterator<T> providers = ServiceRegistry.lookupProviders(
-			clazz, ImageIOPluginBundleActivator.class.getClassLoader());
+			clazz, ImageIOPluginsBundleActivator.class.getClassLoader());
 
 		while (providers.hasNext()) {
 			registeredProviders.add(providers.next());

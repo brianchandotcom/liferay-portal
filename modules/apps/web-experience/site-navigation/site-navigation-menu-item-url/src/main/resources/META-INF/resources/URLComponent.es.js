@@ -1,7 +1,8 @@
 import {Component} from 'metal-component';
 import Soy from 'metal-soy';
 
-import templates from './URLComponent.soy';
+import componentTemplates from './URLComponent.soy';
+import typeTemplates from './URLType.soy';
 
 /**
  * URL Component
@@ -9,7 +10,7 @@ import templates from './URLComponent.soy';
  */
 class URLComponent extends Component {}
 
-Soy.register(URLComponent, templates);
+Soy.register(URLComponent, componentTemplates);
 
 export { URLComponent }
 export default URLComponent;

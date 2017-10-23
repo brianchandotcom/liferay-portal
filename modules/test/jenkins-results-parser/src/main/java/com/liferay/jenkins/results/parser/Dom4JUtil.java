@@ -99,11 +99,9 @@ public class Dom4JUtil {
 
 		Element anchorElement = null;
 
-		anchorElement = getNewElement("a", parentElement);
+		anchorElement = getNewElement("a", parentElement, items);
 
 		anchorElement.addAttribute("href", href);
-
-		addToElement(anchorElement, items);
 
 		return anchorElement;
 	}

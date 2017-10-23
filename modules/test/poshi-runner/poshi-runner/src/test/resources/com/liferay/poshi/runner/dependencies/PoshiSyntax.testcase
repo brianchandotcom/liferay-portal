@@ -239,4 +239,18 @@ document.getElementById('demo').innerHTML = 'FAIL';
 			</execute>
 		</task>
 	</command>
+
+	<command name="GotoLinkToPageChildPages">
+		<var name="key_pageName" value="${parentPage}" />
+
+		<toggle name="LPS-68869">
+			<on>
+				<execute function="Click" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_TOGGLER" />
+			</on>
+
+			<off>
+				<execute function="Click" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_CARET" />
+			</off>
+		</toggle>
+	</command>
 </definition>

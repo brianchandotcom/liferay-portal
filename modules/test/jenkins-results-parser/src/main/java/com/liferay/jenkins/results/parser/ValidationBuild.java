@@ -251,7 +251,7 @@ public class ValidationBuild extends BaseBuild {
 		if (noTestResults) {
 			Dom4JUtil.addToElement(
 				testSummaryElement,
-				Dom4JUtil.getNewElement("h5", null, "No tests were ran."));
+				Dom4JUtil.getNewElement("h5", null, "No tests were run."));
 		}
 		else {
 			Dom4JUtil.addToElement(

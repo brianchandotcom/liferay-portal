@@ -32,14 +32,12 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.exportimport.UserImporter;
-import com.liferay.saml.opensaml.integration.internal.util.SamlUtil;
 import com.liferay.saml.opensaml.integration.metadata.MetadataManager;
 import com.liferay.saml.opensaml.integration.resolver.UserResolver;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -51,14 +49,7 @@ import java.util.Properties;
 
 import org.joda.time.DateTime;
 
-import org.opensaml.common.SAMLObject;
-import org.opensaml.common.binding.SAMLMessageContext;
-import org.opensaml.saml2.core.Assertion;
-import org.opensaml.saml2.core.Attribute;
-import org.opensaml.saml2.core.AttributeStatement;
-import org.opensaml.saml2.core.NameID;
 import org.opensaml.saml2.core.NameIDType;
-import org.opensaml.saml2.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -75,17 +66,20 @@ public class DefaultUserResolver implements UserResolver {
 
 	@Override
 	public User resolveUser(
-			Assertion assertion,
-			SAMLMessageContext<Response, SAMLObject, NameID> samlMessageContext,
+			UserResolverSAMLContext userResolverSAMLContext,
 			ServiceContext serviceContext)
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
-			NameID nameId = samlMessageContext.getSubjectNameIdentifier();
+			String subjectNameIdentifier =
+				userResolverSAMLContext.resolveSubjectNameIdentifier();
+
+			String subjectNameFormat =
+				userResolverSAMLContext.resolveSubjectNameFormat();
 
 			_log.debug(
-				"Resolving user with name ID format " + nameId.getFormat() +
-					" and value " + nameId.getValue());
+				"Resolving user with name ID format " + subjectNameFormat +
+					" and value " + subjectNameIdentifier);
 		}
 
 		User user = null;
@@ -93,9 +87,10 @@ public class DefaultUserResolver implements UserResolver {
 		long companyId = CompanyThreadLocal.getCompanyId();
 
 		String subjectNameIdentifier = getSubjectNameIdentifier(
-			companyId, assertion, samlMessageContext);
+			userResolverSAMLContext);
+
 		String subjectNameIdentifierType = getSubjectNameIdentifierType(
-			companyId, assertion, samlMessageContext);
+			userResolverSAMLContext);
 
 		if (_samlProviderConfigurationHelper.isLDAPImportEnabled()) {
 			user = importLdapUser(
@@ -105,7 +100,7 @@ public class DefaultUserResolver implements UserResolver {
 		if (user == null) {
 			return importUser(
 				companyId, subjectNameIdentifier, subjectNameIdentifierType,
-				assertion, samlMessageContext, serviceContext);
+				userResolverSAMLContext, serviceContext);
 		}
 
 		return user;
@@ -199,26 +194,10 @@ public class DefaultUserResolver implements UserResolver {
 		return user;
 	}
 
-	protected List<Attribute> getAttributes(
-		Assertion assertion,
-		SAMLMessageContext<Response, SAMLObject, NameID> samlMessageContext) {
-
-		List<Attribute> attributes = new ArrayList<>();
-
-		for (AttributeStatement attributeStatement :
-				assertion.getAttributeStatements()) {
-
-			attributes.addAll(attributeStatement.getAttributes());
-		}
-
-		return attributes;
-	}
-
 	protected Map<String, List<Serializable>> getAttributesMap(
-		List<Attribute> attributes,
-		SAMLMessageContext<Response, SAMLObject, NameID> samlMessageContext) {
+		UserResolverSAMLContext samlContext) {
 
-		String peerEntityId = samlMessageContext.getPeerEntityId();
+		String peerEntityId = samlContext.resolvePeerEntityId();
 
 		try {
 			String userAttributeMappings =
@@ -237,31 +216,30 @@ public class DefaultUserResolver implements UserResolver {
 					userAttributeMappings);
 			}
 
-			return SamlUtil.getAttributesMap(
-				attributes, userAttributeMappingsProperties);
+			return samlContext.resolveBearerAssertionAttributesWithMapping(
+				userAttributeMappingsProperties);
 		}
 		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e);
+			}
 		}
 
 		return Collections.emptyMap();
 	}
 
 	protected String getSubjectNameIdentifier(
-		long companyId, Assertion assertion,
-		SAMLMessageContext<Response, SAMLObject, NameID> samlMessageContext) {
+		UserResolverSAMLContext samlContext) {
 
-		NameID nameId = samlMessageContext.getSubjectNameIdentifier();
+		String nameId = samlContext.resolveSubjectNameIdentifier();
 
-		return nameId.getValue();
+		return nameId;
 	}
 
 	protected String getSubjectNameIdentifierType(
-		long companyId, Assertion assertion,
-		SAMLMessageContext<Response, SAMLObject, NameID> samlMessageContext) {
+		UserResolverSAMLContext samlContext) {
 
-		NameID nameId = samlMessageContext.getSubjectNameIdentifier();
-
-		String format = SamlUtil.getNameIdFormat(nameId);
+		String format = samlContext.resolveSubjectNameFormat();
 
 		if (format.equals(NameIDType.EMAIL)) {
 			return _SUBJECT_NAME_TYPE_EMAIL_ADDRESS;
@@ -363,9 +341,8 @@ public class DefaultUserResolver implements UserResolver {
 
 	protected User importUser(
 			long companyId, String subjectNameIdentifier,
-			String subjectNameIdentifierType, Assertion assertion,
-			SAMLMessageContext<Response, SAMLObject, NameID> samlMessageContext,
-			ServiceContext serviceContext)
+			String subjectNameIdentifierType,
+			UserResolverSAMLContext samlContext, ServiceContext serviceContext)
 		throws PortalException {
 
 		if (_log.isDebugEnabled()) {
@@ -374,11 +351,8 @@ public class DefaultUserResolver implements UserResolver {
 					" of type " + subjectNameIdentifierType);
 		}
 
-		List<Attribute> attributes = getAttributes(
-			assertion, samlMessageContext);
-
 		Map<String, List<Serializable>> attributesMap = getAttributesMap(
-			attributes, samlMessageContext);
+			samlContext);
 
 		User user = getUser(
 			companyId, subjectNameIdentifier, subjectNameIdentifierType);

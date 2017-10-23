@@ -28,6 +28,18 @@ public interface Resolver {
 
 		public <T> T resolve(SAMLCommand<T, ? super R> command);
 
+		public default String resolvePeerEntityId() {
+			return resolve(SAMLCommands.peerEntityId);
+		}
+
+		public default String resolveSubjectNameFormat() {
+			return resolve(SAMLCommands.subjectNameFormat);
+		}
+
+		public default String resolveSubjectNameIdentifier() {
+			return resolve(SAMLCommands.subjectNameIdentifier);
+		}
+
 	}
 
 }

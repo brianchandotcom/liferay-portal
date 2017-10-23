@@ -14,12 +14,12 @@
 
 package com.liferay.message.boards.internal.service.permission;
 
-import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
+import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.message.boards.kernel.exception.NoSuchCategoryException;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
-import com.liferay.message.boards.kernel.service.MBBanLocalServiceUtil;
-import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil;
+import com.liferay.message.boards.kernel.service.MBCategoryLocalService;
+import com.liferay.message.boards.service.MBBanLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -31,6 +31,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.messageboards.service.permission.MBPermission;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -64,9 +65,7 @@ public class MBCategoryPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		if (MBBanLocalServiceUtil.hasBan(
-				groupId, permissionChecker.getUserId())) {
-
+		if (_mbBanLocalService.hasBan(groupId, permissionChecker.getUserId())) {
 			return false;
 		}
 
@@ -76,8 +75,7 @@ public class MBCategoryPermission implements BaseModelPermissionChecker {
 			return MBPermission.contains(permissionChecker, groupId, actionId);
 		}
 
-		MBCategory category = MBCategoryLocalServiceUtil.getCategory(
-			categoryId);
+		MBCategory category = _mbCategoryLocalService.getCategory(categoryId);
 
 		if (actionId.equals(ActionKeys.ADD_CATEGORY)) {
 			actionId = ActionKeys.ADD_SUBCATEGORY;
@@ -86,7 +84,7 @@ public class MBCategoryPermission implements BaseModelPermissionChecker {
 		String portletId = PortletProviderUtil.getPortletId(
 			MBCategory.class.getName(), PortletProvider.Action.EDIT);
 
-		Boolean hasPermission = StagingPermissionUtil.hasPermission(
+		Boolean hasPermission = _stagingPermission.hasPermission(
 			permissionChecker, category.getGroupId(),
 			MBCategory.class.getName(), category.getCategoryId(), portletId,
 			actionId);
@@ -102,8 +100,7 @@ public class MBCategoryPermission implements BaseModelPermissionChecker {
 				while (categoryId !=
 							MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
 
-					category = MBCategoryLocalServiceUtil.getCategory(
-						categoryId);
+					category = _mbCategoryLocalService.getCategory(categoryId);
 
 					if (!_hasPermission(
 							permissionChecker, category, actionId)) {
@@ -143,5 +140,14 @@ public class MBCategoryPermission implements BaseModelPermissionChecker {
 
 		return false;
 	}
+
+	@Reference
+	private MBBanLocalService _mbBanLocalService;
+
+	@Reference
+	private MBCategoryLocalService _mbCategoryLocalService;
+
+	@Reference
+	private StagingPermission _stagingPermission;
 
 }

@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.site.navigation.constants;
+package com.liferay.site.navigation.menu.item.layout.internal.constants;
 
 /**
  * @author Pavel Savinov
  */
-public class SiteNavigationMenuItemTypeConstants {
+public class SiteNavigationMenuItemTypeLayoutConstants {
 
 	public static final String LAYOUT = "layout";
 

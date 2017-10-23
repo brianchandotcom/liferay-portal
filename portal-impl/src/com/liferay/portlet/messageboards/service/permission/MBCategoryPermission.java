@@ -14,30 +14,18 @@
 
 package com.liferay.portlet.messageboards.service.permission;
 
-import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
-import com.liferay.message.boards.kernel.exception.NoSuchCategoryException;
 import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBCategoryConstants;
-import com.liferay.message.boards.kernel.service.MBBanLocalServiceUtil;
 import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
+import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Mate Thurzo
  */
-@OSGiBeanProperties(
-	property =
-		{"model.class.name=com.liferay.message.boards.kernel.model.MBCategory"}
-)
 public class MBCategoryPermission implements BaseModelPermissionChecker {
 
 	public static void check(
@@ -45,7 +33,14 @@ public class MBCategoryPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, groupId, categoryId, actionId)) {
+		Boolean containsBaseModelPermission =
+			BaseModelPermissionCheckerUtil.containsBaseModelPermission(
+				permissionChecker, groupId, MBCategory.class.getName(),
+				categoryId, actionId);
+
+		if ((containsBaseModelPermission == null) ||
+			!containsBaseModelPermission) {
+
 			throw new PrincipalException.MustHavePermission(
 				permissionChecker, MBCategory.class.getName(), categoryId,
 				actionId);
@@ -57,7 +52,17 @@ public class MBCategoryPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, categoryId, actionId)) {
+		MBCategory category = MBCategoryLocalServiceUtil.getCategory(
+			categoryId);
+
+		Boolean containsBaseModelPermission =
+			BaseModelPermissionCheckerUtil.containsBaseModelPermission(
+				permissionChecker, category.getGroupId(),
+				MBCategory.class.getName(), categoryId, actionId);
+
+		if ((containsBaseModelPermission == null) ||
+			!containsBaseModelPermission) {
+
 			throw new PrincipalException.MustHavePermission(
 				permissionChecker, MBCategory.class.getName(), categoryId,
 				actionId);
@@ -69,7 +74,14 @@ public class MBCategoryPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, category, actionId)) {
+		Boolean containsBaseModelPermission =
+			BaseModelPermissionCheckerUtil.containsBaseModelPermission(
+				permissionChecker, category.getGroupId(),
+				MBCategory.class.getName(), category.getCategoryId(), actionId);
+
+		if ((containsBaseModelPermission == null) ||
+			!containsBaseModelPermission) {
+
 			throw new PrincipalException.MustHavePermission(
 				permissionChecker, MBCategory.class.getName(),
 				category.getCategoryId(), actionId);
@@ -81,22 +93,18 @@ public class MBCategoryPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		if (MBBanLocalServiceUtil.hasBan(
-				groupId, permissionChecker.getUserId())) {
+		Boolean containsBaseModelPermission =
+			BaseModelPermissionCheckerUtil.containsBaseModelPermission(
+				permissionChecker, groupId, MBCategory.class.getName(),
+				categoryId, actionId);
 
-			return false;
+		if ((containsBaseModelPermission != null) &&
+			containsBaseModelPermission) {
+
+			return true;
 		}
 
-		if ((categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ||
-			(categoryId == MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
-
-			return MBPermission.contains(permissionChecker, groupId, actionId);
-		}
-
-		MBCategory category = MBCategoryLocalServiceUtil.getCategory(
-			categoryId);
-
-		return contains(permissionChecker, category, actionId);
+		return false;
 	}
 
 	public static boolean contains(
@@ -107,7 +115,18 @@ public class MBCategoryPermission implements BaseModelPermissionChecker {
 		MBCategory category = MBCategoryLocalServiceUtil.getCategory(
 			categoryId);
 
-		return contains(permissionChecker, category, actionId);
+		Boolean containsBaseModelPermission =
+			BaseModelPermissionCheckerUtil.containsBaseModelPermission(
+				permissionChecker, category.getGroupId(),
+				MBCategory.class.getName(), categoryId, actionId);
+
+		if ((containsBaseModelPermission != null) &&
+			containsBaseModelPermission) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean contains(
@@ -115,86 +134,43 @@ public class MBCategoryPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		if (MBBanLocalServiceUtil.hasBan(
-				category.getGroupId(), permissionChecker.getUserId())) {
+		Boolean containsBaseModelPermission =
+			BaseModelPermissionCheckerUtil.containsBaseModelPermission(
+				permissionChecker, category.getGroupId(),
+				MBCategory.class.getName(), category.getCategoryId(), actionId);
 
-			return false;
+		if ((containsBaseModelPermission != null) &&
+			containsBaseModelPermission) {
+
+			return true;
 		}
 
-		if (actionId.equals(ActionKeys.ADD_CATEGORY)) {
-			actionId = ActionKeys.ADD_SUBCATEGORY;
-		}
-
-		String portletId = PortletProviderUtil.getPortletId(
-			MBCategory.class.getName(), PortletProvider.Action.EDIT);
-
-		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, category.getGroupId(),
-			MBCategory.class.getName(), category.getCategoryId(), portletId,
-			actionId);
-
-		if (hasPermission != null) {
-			return hasPermission.booleanValue();
-		}
-
-		if (actionId.equals(ActionKeys.VIEW) &&
-			PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
-
-			try {
-				long categoryId = category.getCategoryId();
-
-				while (categoryId !=
-							MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-
-					category = MBCategoryLocalServiceUtil.getCategory(
-						categoryId);
-
-					if (!_hasPermission(
-							permissionChecker, category, actionId)) {
-
-						return false;
-					}
-
-					categoryId = category.getParentCategoryId();
-				}
-			}
-			catch (NoSuchCategoryException nsce) {
-				if (!category.isInTrash()) {
-					throw nsce;
-				}
-			}
-
-			return MBPermission.contains(
-				permissionChecker, category.getGroupId(), actionId);
-		}
-
-		return _hasPermission(permissionChecker, category, actionId);
+		return false;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.internal.service.permission.MBCategoryPermission#checkBaseModel(PermissionChecker, long, long, String)}
+	 */
+	@Deprecated
 	@Override
 	public void checkBaseModel(
 			PermissionChecker permissionChecker, long groupId, long primaryKey,
 			String actionId)
 		throws PortalException {
 
-		check(permissionChecker, groupId, primaryKey, actionId);
-	}
+		Boolean containsBaseModelPermission =
+			BaseModelPermissionCheckerUtil.containsBaseModelPermission(
+				permissionChecker, groupId, MBCategory.class.getName(),
+				primaryKey, actionId);
 
-	private static boolean _hasPermission(
-		PermissionChecker permissionChecker, MBCategory category,
-		String actionId) {
+		if ((containsBaseModelPermission == null) ||
+			!containsBaseModelPermission) {
 
-		if (permissionChecker.hasOwnerPermission(
-				category.getCompanyId(), MBCategory.class.getName(),
-				category.getCategoryId(), category.getUserId(), actionId) ||
-			permissionChecker.hasPermission(
-				category.getGroupId(), MBCategory.class.getName(),
-				category.getCategoryId(), actionId)) {
-
-			return true;
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, MBCategory.class.getName(), primaryKey,
+				actionId);
 		}
-
-		return false;
 	}
 
 }

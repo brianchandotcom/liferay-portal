@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Frontend Taglib Chart Sample
+Bundle-SymbolicName: com.liferay.frontend.taglib.chart.sample
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Samples

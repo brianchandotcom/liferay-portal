@@ -38,8 +38,8 @@ request.setAttribute("cpDefinition", cpDefinition);
 	entries="<%= Collections.singletonList(cpDefinition) %>"
 >
 	<div class="container-fluid product-detail" id="<portlet:namespace /><%= cpDefinition.getCPDefinitionId() %>ProductContent">
-		<div class="row">
-			<div class="product-detail-header">
+		<div class="product-detail-header">
+			<div class="row">
 				<div class="col-lg-6 col-md-7">
 					<div class="row">
 						<div class="col-lg-2 col-md-3 col-xs-2">
@@ -114,16 +114,16 @@ request.setAttribute("cpDefinition", cpDefinition);
 		<div class="row">
 			<div class="product-detail-body">
 				<div class="nav-tabs-centered">
-					<ul class="nav nav-tabs" role="tablist">
-						<li class="active" role="presentation">
-							<a aria-controls="<portlet:namespace />description" aria-expanded="true" data-toggle="tab" href="#<portlet:namespace />description" role="tab">
+					<ul class="nav nav-tabs justify-content-center" role="tablist">
+						<li class="nav-item" role="presentation">
+							<a aria-controls="<portlet:namespace />description" aria-expanded="true" data-toggle="tab" href="#<portlet:namespace />description" class="active nav-link" role="tab">
 								<%= LanguageUtil.get(resourceBundle, "description") %>
 							</a>
 						</li>
 
 						<c:if test="<%= !cpDefinitionSpecificationOptionValues.isEmpty() %>">
-							<li role="presentation">
-								<a aria-controls="<portlet:namespace />specification" aria-expanded="false" data-toggle="tab" href="#<portlet:namespace />specification" role="tab">
+							<li class="nav-item" role="presentation">
+								<a aria-controls="<portlet:namespace />specification" aria-expanded="false" class="nav-link" data-toggle="tab" href="#<portlet:namespace />specification" role="tab">
 									<%= LanguageUtil.get(resourceBundle, "specification-options") %>
 								</a>
 							</li>

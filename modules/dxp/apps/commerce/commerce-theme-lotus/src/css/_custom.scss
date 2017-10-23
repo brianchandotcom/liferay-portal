@@ -89,6 +89,8 @@
 }
 
 .product-detail-header {
+	margin-top: 20px;
+
 	.btn-lg + .btn-lg {
 		margin-left: 20px;
 	}
@@ -101,6 +103,8 @@
 
 .product-detail-body {
 	background-color: $brand-color-extra-light;
+	margin-top: 20px;
+	width: 100%;
 }
 
 .collapse-login {

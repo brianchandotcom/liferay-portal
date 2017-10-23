@@ -3,19 +3,13 @@
 	color: $brand-text-color;
 
 	.nav-tabs > li {
-		display: table-cell;
-		float: none;
-		text-align: center;
-		width: 1%;
-
 		> a {
 			border-width: 0;
+			color: $brand-text-color;
 			font-weight: 600;
 			line-height: 80px;
-		}
 
-		&.active {
-			& > a, & > a:hover, & > a:focus {
+			&.active, &:hover, &:focus {
 				background-color: transparent;
 				border-bottom-color: $brand-color;
 				border-style: solid;

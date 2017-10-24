@@ -130,7 +130,7 @@ public class DefaultAnnouncementsDisplayContext
 
 	@Override
 	public String getTabs1Names() {
-		return "new,previous";
+		return "unread,read";
 	}
 
 	@Override
@@ -193,10 +193,10 @@ public class DefaultAnnouncementsDisplayContext
 	}
 
 	@Override
-	public boolean isShowPreviousEntries() {
+	public boolean isShowReadEntries() {
 		String tabs1 = _announcementsRequestHelper.getTabs1();
 
-		return tabs1.equals("previous");
+		return tabs1.equals("read");
 	}
 
 	@Override

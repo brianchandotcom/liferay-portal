@@ -372,19 +372,19 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 				<aui:input helpMessage="use-the-current-user-as-author-help" id="alwaysCurrentUserId" label="use-the-current-user-as-author" name="<%= PortletDataHandlerKeys.USER_ID_STRATEGY %>" type="radio" value="<%= UserIdStrategy.ALWAYS_CURRENT_USER_ID %>" />
 			</aui:fieldset>
 		</aui:fieldset-group>
-
-		<aui:button-row>
-			<portlet:renderURL var="backURL">
-				<portlet:param name="mvcRenderCommandName" value="importLayouts" />
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-			</portlet:renderURL>
-
-			<aui:button cssClass="btn-lg" href="<%= backURL %>" name="back" value="back" />
-
-			<aui:button cssClass="btn-lg" type="submit" value="import" />
-		</aui:button-row>
 	</div>
+
+	<aui:button-row>
+		<portlet:renderURL var="backURL">
+			<portlet:param name="mvcRenderCommandName" value="importLayouts" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+		</portlet:renderURL>
+
+		<aui:button cssClass="btn-lg" href="<%= backURL %>" name="back" value="back" />
+
+		<aui:button cssClass="btn-lg" type="submit" value="import" />
+	</aui:button-row>
 </aui:form>
 
 <aui:script>

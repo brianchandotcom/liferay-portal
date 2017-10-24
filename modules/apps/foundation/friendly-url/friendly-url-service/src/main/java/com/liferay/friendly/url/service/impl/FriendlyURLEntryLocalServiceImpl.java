@@ -20,7 +20,6 @@ import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.model.FriendlyURLEntryMapping;
 import com.liferay.friendly.url.service.base.FriendlyURLEntryLocalServiceBaseImpl;
-import com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingPK;
 import com.liferay.friendly.url.util.comparator.FriendlyURLEntryCreateDateComparator;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -83,16 +82,17 @@ public class FriendlyURLEntryLocalServiceImpl
 
 		validate(groupId, classNameId, classPK, urlTitleMap);
 
-		FriendlyURLEntryMappingPK friendlyURLEntryMappingPK =
-			new FriendlyURLEntryMappingPK(classNameId, classPK);
-
 		FriendlyURLEntryMapping friendlyURLEntryMapping =
-			friendlyURLEntryMappingPersistence.fetchByPrimaryKey(
-				friendlyURLEntryMappingPK);
+			friendlyURLEntryMappingPersistence.fetchByC_C(classNameId, classPK);
 
 		if (friendlyURLEntryMapping == null) {
+			long friendlyURLMappingId = counterLocalService.increment();
+
 			friendlyURLEntryMapping = friendlyURLEntryMappingPersistence.create(
-				friendlyURLEntryMappingPK);
+				friendlyURLMappingId);
+
+			friendlyURLEntryMapping.setClassNameId(classNameId);
+			friendlyURLEntryMapping.setClassPK(classPK);
 		}
 		else if (_containsAllURLTitles(friendlyURLEntryMapping, urlTitleMap)) {
 			return friendlyURLEntryPersistence.fetchByPrimaryKey(
@@ -152,10 +152,9 @@ public class FriendlyURLEntryLocalServiceImpl
 			friendlyURLEntryPersistence.remove(friendlyURLEntry);
 
 		FriendlyURLEntryMapping friendlyURLEntryMapping =
-			friendlyURLEntryMappingPersistence.fetchByPrimaryKey(
-				new FriendlyURLEntryMappingPK(
-					friendlyURLEntry.getClassNameId(),
-					friendlyURLEntry.getClassPK()));
+			friendlyURLEntryMappingPersistence.fetchByC_C(
+				friendlyURLEntry.getClassNameId(),
+				friendlyURLEntry.getClassPK());
 
 		if ((friendlyURLEntryMapping != null) &&
 			(friendlyURLEntryMapping.getFriendlyURLEntryId() ==
@@ -209,8 +208,7 @@ public class FriendlyURLEntryLocalServiceImpl
 			friendlyURLEntryPersistence.remove(friendlyURLEntry);
 		}
 
-		friendlyURLEntryMappingPersistence.remove(
-			new FriendlyURLEntryMappingPK(classNameId, classPK));
+		friendlyURLEntryMappingPersistence.removeByC_C(classNameId, classPK);
 	}
 
 	@Override
@@ -247,9 +245,8 @@ public class FriendlyURLEntryLocalServiceImpl
 					friendlyURLEntryPersistence.remove(friendlyURLEntry);
 
 					FriendlyURLEntryMapping friendlyURLEntryMapping =
-						friendlyURLEntryMappingPersistence.fetchByPrimaryKey(
-							new FriendlyURLEntryMappingPK(
-								classNameId, friendlyURLEntry.getClassPK()));
+						friendlyURLEntryMappingPersistence.fetchByC_C(
+							classNameId, friendlyURLEntry.getClassPK());
 
 					if ((friendlyURLEntryMapping != null) &&
 						(friendlyURLEntryMapping.getFriendlyURLEntryId() ==
@@ -312,8 +309,7 @@ public class FriendlyURLEntryLocalServiceImpl
 		throws PortalException {
 
 		FriendlyURLEntryMapping friendlyURLEntryMapping =
-			friendlyURLEntryMappingPersistence.findByPrimaryKey(
-				new FriendlyURLEntryMappingPK(classNameId, classPK));
+			friendlyURLEntryMappingPersistence.findByC_C(classNameId, classPK);
 
 		return friendlyURLEntryPersistence.findByPrimaryKey(
 			friendlyURLEntryMapping.getFriendlyURLEntryId());
@@ -358,18 +354,20 @@ public class FriendlyURLEntryLocalServiceImpl
 
 	@Override
 	public void setMainFriendlyURLEntry(FriendlyURLEntry friendlyURLEntry) {
-		FriendlyURLEntryMappingPK friendlyURLEntryMappingPK =
-			new FriendlyURLEntryMappingPK(
+		FriendlyURLEntryMapping friendlyURLEntryMapping =
+			friendlyURLEntryMappingPersistence.fetchByC_C(
 				friendlyURLEntry.getClassNameId(),
 				friendlyURLEntry.getClassPK());
 
-		FriendlyURLEntryMapping friendlyURLEntryMapping =
-			friendlyURLEntryMappingPersistence.fetchByPrimaryKey(
-				friendlyURLEntryMappingPK);
-
 		if (friendlyURLEntryMapping == null) {
+			long friendlyURLEntryMappingId = counterLocalService.increment();
+
 			friendlyURLEntryMapping = friendlyURLEntryMappingPersistence.create(
-				friendlyURLEntryMappingPK);
+				friendlyURLEntryMappingId);
+
+			friendlyURLEntryMapping.setClassNameId(
+				friendlyURLEntry.getClassNameId());
+			friendlyURLEntryMapping.setClassPK(friendlyURLEntry.getClassPK());
 		}
 
 		friendlyURLEntryMapping.setFriendlyURLEntryId(

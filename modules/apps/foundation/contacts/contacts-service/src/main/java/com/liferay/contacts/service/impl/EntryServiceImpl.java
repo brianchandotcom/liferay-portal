@@ -44,11 +44,7 @@ public class EntryServiceImpl extends EntryServiceBaseImpl {
 
 		long userId = getUserId();
 
-		User user = userLocalService.getUser(userId);
-
 		Set<BaseModel<?>> contacts = new HashSet<>();
-
-		contacts.add(user);
 
 		JSONObject jsonObject = null;
 
@@ -60,6 +56,10 @@ public class EntryServiceImpl extends EntryServiceBaseImpl {
 					companyId, userId, keywords, start, end));
 		}
 		else {
+			User user = userLocalService.getUser(userId);
+
+			contacts.add(user);
+
 			List<Group> groups = groupLocalService.getUserGroups(userId, true);
 
 			for (Group group : groups) {

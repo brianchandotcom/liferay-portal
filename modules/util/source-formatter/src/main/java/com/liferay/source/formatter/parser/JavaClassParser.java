@@ -77,19 +77,19 @@ public class JavaClassParser {
 
 		String className = JavaSourceUtil.getClassName(fileName);
 
-		int x = content.indexOf("\npublic ");
+		Pattern pattern = Pattern.compile(
+			"\n(public\\s+)?(abstract\\s+)?(final\\s+)?@?" +
+				"(class|enum|interface)\\s+" + className);
 
-		if (x == -1) {
-			x = content.indexOf("\npublic\n");
+		Matcher matcher = pattern.matcher(content);
+
+		if (!matcher.find()) {
+			throw new ParseException("Parsing error");
 		}
 
-		if (x == -1) {
-			return null;
-		}
+		int x = content.lastIndexOf("\n\n", matcher.start() + 1);
 
-		int y = content.lastIndexOf("\n\n", x + 1);
-
-		String classContent = content.substring(y + 2);
+		String classContent = content.substring(x + 2);
 
 		JavaClass javaClass = _parseJavaClass(
 			className, classContent, JavaTerm.ACCESS_MODIFIER_PUBLIC, false);

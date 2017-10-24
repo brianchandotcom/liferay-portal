@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.test;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 import java.io.Closeable;
 
 import java.util.List;
@@ -73,7 +75,7 @@ public class CaptureHandler extends Handler implements Closeable {
 
 	@Override
 	public void publish(LogRecord logRecord) {
-		_logRecords.add(logRecord);
+		_logRecords.add(new PrintableLogRecord(logRecord));
 	}
 
 	public List<LogRecord> resetLogLevel(Level level) {
@@ -89,5 +91,37 @@ public class CaptureHandler extends Handler implements Closeable {
 	private final Logger _logger;
 	private final List<LogRecord> _logRecords = new CopyOnWriteArrayList<>();
 	private final boolean _useParentHandlers;
+
+	private static class PrintableLogRecord extends LogRecord {
+
+		@Override
+		public String toString() {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("{level=");
+			sb.append(getLevel());
+			sb.append(", message=");
+			sb.append(getMessage());
+			sb.append("}");
+
+			return sb.toString();
+		}
+
+		private PrintableLogRecord(LogRecord logRecord) {
+			super(logRecord.getLevel(), logRecord.getMessage());
+
+			setLoggerName(logRecord.getLoggerName());
+			setMillis(logRecord.getMillis());
+			setParameters(logRecord.getParameters());
+			setResourceBundle(logRecord.getResourceBundle());
+			setResourceBundleName(logRecord.getResourceBundleName());
+			setSequenceNumber(logRecord.getSequenceNumber());
+			setSourceClassName(logRecord.getSourceClassName());
+			setSourceMethodName(logRecord.getSourceMethodName());
+			setThreadID(logRecord.getThreadID());
+			setThrown(logRecord.getThrown());
+		}
+
+	}
 
 }

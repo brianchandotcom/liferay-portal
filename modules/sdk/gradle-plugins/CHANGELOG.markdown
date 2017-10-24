@@ -2713,7 +2713,7 @@ to version 2.3.11.
 - [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
 1.0.482.
 
-## 3.5.20 - 2017-10-23
+## 3.5.20 - 2017-10-24
 
 ### Added
 - [LPS-75427]: Log destination directory of the `deploy` task after execution.

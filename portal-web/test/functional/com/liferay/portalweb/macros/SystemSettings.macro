@@ -58,6 +58,12 @@
 		<execute function="Type" locator1="DDMField#TEXT_BOX" value1="${settingValue}" />
 	</command>
 
+	<command name="editTextSetting">
+		<var name="key_fieldDefaultValue" value="${settingName}" />
+
+		<execute function="Type" locator1="DDMField#DDM_INPUT" value1="${settingValue}" />
+	</command>
+
 	<command name="enableSetting">
 		<execute function="Check" locator1="SystemSettings#${checkboxSetting}" />
 	</command>

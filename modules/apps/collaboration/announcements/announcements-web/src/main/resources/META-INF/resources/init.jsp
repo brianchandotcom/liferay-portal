@@ -25,7 +25,8 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.announcements.kernel.exception.EntryContentException" %><%@
+<%@ page import="com.liferay.announcements.constants.AnnouncementsPortletKeys" %><%@
+page import="com.liferay.announcements.kernel.exception.EntryContentException" %><%@
 page import="com.liferay.announcements.kernel.exception.EntryDisplayDateException" %><%@
 page import="com.liferay.announcements.kernel.exception.EntryExpirationDateException" %><%@
 page import="com.liferay.announcements.kernel.exception.EntryTitleException" %><%@
@@ -38,7 +39,6 @@ page import="com.liferay.announcements.kernel.model.AnnouncementsFlagConstants" 
 page import="com.liferay.announcements.kernel.service.AnnouncementsEntryLocalServiceUtil" %><%@
 page import="com.liferay.announcements.kernel.service.AnnouncementsFlagLocalServiceUtil" %><%@
 page import="com.liferay.announcements.kernel.util.AnnouncementsUtil" %><%@
-page import="com.liferay.announcements.web.constants.AnnouncementsPortletKeys" %><%@
 page import="com.liferay.announcements.web.constants.AnnouncementsWebKeys" %><%@
 page import="com.liferay.announcements.web.internal.display.context.AnnouncementsAdminViewDisplayContext" %><%@
 page import="com.liferay.announcements.web.internal.display.context.AnnouncementsDisplayContext" %><%@

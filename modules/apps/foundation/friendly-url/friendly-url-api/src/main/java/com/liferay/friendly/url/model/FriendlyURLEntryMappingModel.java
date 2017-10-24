@@ -18,8 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
-import com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingPK;
-
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -55,14 +53,14 @@ public interface FriendlyURLEntryMappingModel extends AttachedModel,
 	 *
 	 * @return the primary key of this friendly url entry mapping
 	 */
-	public FriendlyURLEntryMappingPK getPrimaryKey();
+	public long getPrimaryKey();
 
 	/**
 	 * Sets the primary key of this friendly url entry mapping.
 	 *
 	 * @param primaryKey the primary key of this friendly url entry mapping
 	 */
-	public void setPrimaryKey(FriendlyURLEntryMappingPK primaryKey);
+	public void setPrimaryKey(long primaryKey);
 
 	/**
 	 * Returns the mvcc version of this friendly url entry mapping.
@@ -79,6 +77,20 @@ public interface FriendlyURLEntryMappingModel extends AttachedModel,
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the friendly url entry mapping ID of this friendly url entry mapping.
+	 *
+	 * @return the friendly url entry mapping ID of this friendly url entry mapping
+	 */
+	public long getFriendlyURLEntryMappingId();
+
+	/**
+	 * Sets the friendly url entry mapping ID of this friendly url entry mapping.
+	 *
+	 * @param friendlyURLEntryMappingId the friendly url entry mapping ID of this friendly url entry mapping
+	 */
+	public void setFriendlyURLEntryMappingId(long friendlyURLEntryMappingId);
 
 	/**
 	 * Returns the fully qualified class name of this friendly url entry mapping.

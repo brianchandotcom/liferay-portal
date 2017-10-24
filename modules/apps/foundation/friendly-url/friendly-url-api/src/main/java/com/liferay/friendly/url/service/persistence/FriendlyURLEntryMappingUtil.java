@@ -115,6 +115,70 @@ public class FriendlyURLEntryMappingUtil {
 	}
 
 	/**
+	* Returns the friendly url entry mapping where classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchFriendlyURLEntryMappingException} if it could not be found.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @return the matching friendly url entry mapping
+	* @throws NoSuchFriendlyURLEntryMappingException if a matching friendly url entry mapping could not be found
+	*/
+	public static FriendlyURLEntryMapping findByC_C(long classNameId,
+		long classPK)
+		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryMappingException {
+		return getPersistence().findByC_C(classNameId, classPK);
+	}
+
+	/**
+	* Returns the friendly url entry mapping where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @return the matching friendly url entry mapping, or <code>null</code> if a matching friendly url entry mapping could not be found
+	*/
+	public static FriendlyURLEntryMapping fetchByC_C(long classNameId,
+		long classPK) {
+		return getPersistence().fetchByC_C(classNameId, classPK);
+	}
+
+	/**
+	* Returns the friendly url entry mapping where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching friendly url entry mapping, or <code>null</code> if a matching friendly url entry mapping could not be found
+	*/
+	public static FriendlyURLEntryMapping fetchByC_C(long classNameId,
+		long classPK, boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByC_C(classNameId, classPK, retrieveFromCache);
+	}
+
+	/**
+	* Removes the friendly url entry mapping where classNameId = &#63; and classPK = &#63; from the database.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @return the friendly url entry mapping that was removed
+	*/
+	public static FriendlyURLEntryMapping removeByC_C(long classNameId,
+		long classPK)
+		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryMappingException {
+		return getPersistence().removeByC_C(classNameId, classPK);
+	}
+
+	/**
+	* Returns the number of friendly url entry mappings where classNameId = &#63; and classPK = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @return the number of matching friendly url entry mappings
+	*/
+	public static int countByC_C(long classNameId, long classPK) {
+		return getPersistence().countByC_C(classNameId, classPK);
+	}
+
+	/**
 	* Caches the friendly url entry mapping in the entity cache if it is enabled.
 	*
 	* @param friendlyURLEntryMapping the friendly url entry mapping
@@ -137,25 +201,23 @@ public class FriendlyURLEntryMappingUtil {
 	/**
 	* Creates a new friendly url entry mapping with the primary key. Does not add the friendly url entry mapping to the database.
 	*
-	* @param friendlyURLEntryMappingPK the primary key for the new friendly url entry mapping
+	* @param friendlyURLEntryMappingId the primary key for the new friendly url entry mapping
 	* @return the new friendly url entry mapping
 	*/
-	public static FriendlyURLEntryMapping create(
-		FriendlyURLEntryMappingPK friendlyURLEntryMappingPK) {
-		return getPersistence().create(friendlyURLEntryMappingPK);
+	public static FriendlyURLEntryMapping create(long friendlyURLEntryMappingId) {
+		return getPersistence().create(friendlyURLEntryMappingId);
 	}
 
 	/**
 	* Removes the friendly url entry mapping with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param friendlyURLEntryMappingPK the primary key of the friendly url entry mapping
+	* @param friendlyURLEntryMappingId the primary key of the friendly url entry mapping
 	* @return the friendly url entry mapping that was removed
 	* @throws NoSuchFriendlyURLEntryMappingException if a friendly url entry mapping with the primary key could not be found
 	*/
-	public static FriendlyURLEntryMapping remove(
-		FriendlyURLEntryMappingPK friendlyURLEntryMappingPK)
+	public static FriendlyURLEntryMapping remove(long friendlyURLEntryMappingId)
 		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryMappingException {
-		return getPersistence().remove(friendlyURLEntryMappingPK);
+		return getPersistence().remove(friendlyURLEntryMappingId);
 	}
 
 	public static FriendlyURLEntryMapping updateImpl(
@@ -166,25 +228,25 @@ public class FriendlyURLEntryMappingUtil {
 	/**
 	* Returns the friendly url entry mapping with the primary key or throws a {@link NoSuchFriendlyURLEntryMappingException} if it could not be found.
 	*
-	* @param friendlyURLEntryMappingPK the primary key of the friendly url entry mapping
+	* @param friendlyURLEntryMappingId the primary key of the friendly url entry mapping
 	* @return the friendly url entry mapping
 	* @throws NoSuchFriendlyURLEntryMappingException if a friendly url entry mapping with the primary key could not be found
 	*/
 	public static FriendlyURLEntryMapping findByPrimaryKey(
-		FriendlyURLEntryMappingPK friendlyURLEntryMappingPK)
+		long friendlyURLEntryMappingId)
 		throws com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryMappingException {
-		return getPersistence().findByPrimaryKey(friendlyURLEntryMappingPK);
+		return getPersistence().findByPrimaryKey(friendlyURLEntryMappingId);
 	}
 
 	/**
 	* Returns the friendly url entry mapping with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param friendlyURLEntryMappingPK the primary key of the friendly url entry mapping
+	* @param friendlyURLEntryMappingId the primary key of the friendly url entry mapping
 	* @return the friendly url entry mapping, or <code>null</code> if a friendly url entry mapping with the primary key could not be found
 	*/
 	public static FriendlyURLEntryMapping fetchByPrimaryKey(
-		FriendlyURLEntryMappingPK friendlyURLEntryMappingPK) {
-		return getPersistence().fetchByPrimaryKey(friendlyURLEntryMappingPK);
+		long friendlyURLEntryMappingId) {
+		return getPersistence().fetchByPrimaryKey(friendlyURLEntryMappingId);
 	}
 
 	public static java.util.Map<java.io.Serializable, FriendlyURLEntryMapping> fetchByPrimaryKeys(

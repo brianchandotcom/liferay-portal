@@ -59,6 +59,8 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("friendlyURLEntryMappingId",
+			getFriendlyURLEntryMappingId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("friendlyURLEntryId", getFriendlyURLEntryId());
@@ -72,6 +74,13 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long friendlyURLEntryMappingId = (Long)attributes.get(
+				"friendlyURLEntryMappingId");
+
+		if (friendlyURLEntryMappingId != null) {
+			setFriendlyURLEntryMappingId(friendlyURLEntryMappingId);
 		}
 
 		Long classNameId = (Long)attributes.get("classNameId");
@@ -149,6 +158,16 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 	}
 
 	/**
+	* Returns the friendly url entry mapping ID of this friendly url entry mapping.
+	*
+	* @return the friendly url entry mapping ID of this friendly url entry mapping
+	*/
+	@Override
+	public long getFriendlyURLEntryMappingId() {
+		return _friendlyURLEntryMapping.getFriendlyURLEntryMappingId();
+	}
+
+	/**
 	* Returns the mvcc version of this friendly url entry mapping.
 	*
 	* @return the mvcc version of this friendly url entry mapping
@@ -164,7 +183,7 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 	* @return the primary key of this friendly url entry mapping
 	*/
 	@Override
-	public com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingPK getPrimaryKey() {
+	public long getPrimaryKey() {
 		return _friendlyURLEntryMapping.getPrimaryKey();
 	}
 
@@ -250,6 +269,16 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 	}
 
 	/**
+	* Sets the friendly url entry mapping ID of this friendly url entry mapping.
+	*
+	* @param friendlyURLEntryMappingId the friendly url entry mapping ID of this friendly url entry mapping
+	*/
+	@Override
+	public void setFriendlyURLEntryMappingId(long friendlyURLEntryMappingId) {
+		_friendlyURLEntryMapping.setFriendlyURLEntryMappingId(friendlyURLEntryMappingId);
+	}
+
+	/**
 	* Sets the mvcc version of this friendly url entry mapping.
 	*
 	* @param mvccVersion the mvcc version of this friendly url entry mapping
@@ -270,8 +299,7 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 	* @param primaryKey the primary key of this friendly url entry mapping
 	*/
 	@Override
-	public void setPrimaryKey(
-		com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingPK primaryKey) {
+	public void setPrimaryKey(long primaryKey) {
 		_friendlyURLEntryMapping.setPrimaryKey(primaryKey);
 	}
 

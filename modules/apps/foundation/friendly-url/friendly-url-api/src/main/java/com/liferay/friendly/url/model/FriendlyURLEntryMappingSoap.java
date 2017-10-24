@@ -16,8 +16,6 @@ package com.liferay.friendly.url.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingPK;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -36,6 +34,7 @@ public class FriendlyURLEntryMappingSoap implements Serializable {
 		FriendlyURLEntryMappingSoap soapModel = new FriendlyURLEntryMappingSoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
+		soapModel.setFriendlyURLEntryMappingId(model.getFriendlyURLEntryMappingId());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setFriendlyURLEntryId(model.getFriendlyURLEntryId());
@@ -86,13 +85,12 @@ public class FriendlyURLEntryMappingSoap implements Serializable {
 	public FriendlyURLEntryMappingSoap() {
 	}
 
-	public FriendlyURLEntryMappingPK getPrimaryKey() {
-		return new FriendlyURLEntryMappingPK(_classNameId, _classPK);
+	public long getPrimaryKey() {
+		return _friendlyURLEntryMappingId;
 	}
 
-	public void setPrimaryKey(FriendlyURLEntryMappingPK pk) {
-		setClassNameId(pk.classNameId);
-		setClassPK(pk.classPK);
+	public void setPrimaryKey(long pk) {
+		setFriendlyURLEntryMappingId(pk);
 	}
 
 	public long getMvccVersion() {
@@ -101,6 +99,14 @@ public class FriendlyURLEntryMappingSoap implements Serializable {
 
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	public long getFriendlyURLEntryMappingId() {
+		return _friendlyURLEntryMappingId;
+	}
+
+	public void setFriendlyURLEntryMappingId(long friendlyURLEntryMappingId) {
+		_friendlyURLEntryMappingId = friendlyURLEntryMappingId;
 	}
 
 	public long getClassNameId() {
@@ -128,6 +134,7 @@ public class FriendlyURLEntryMappingSoap implements Serializable {
 	}
 
 	private long _mvccVersion;
+	private long _friendlyURLEntryMappingId;
 	private long _classNameId;
 	private long _classPK;
 	private long _friendlyURLEntryId;

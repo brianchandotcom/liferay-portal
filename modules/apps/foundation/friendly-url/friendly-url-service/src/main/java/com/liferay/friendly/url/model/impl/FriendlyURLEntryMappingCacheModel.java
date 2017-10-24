@@ -17,7 +17,6 @@ package com.liferay.friendly.url.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.friendly.url.model.FriendlyURLEntryMapping;
-import com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingPK;
 
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
@@ -51,8 +50,7 @@ public class FriendlyURLEntryMappingCacheModel implements CacheModel<FriendlyURL
 
 		FriendlyURLEntryMappingCacheModel friendlyURLEntryMappingCacheModel = (FriendlyURLEntryMappingCacheModel)obj;
 
-		if (friendlyURLEntryMappingPK.equals(
-					friendlyURLEntryMappingCacheModel.friendlyURLEntryMappingPK) &&
+		if ((friendlyURLEntryMappingId == friendlyURLEntryMappingCacheModel.friendlyURLEntryMappingId) &&
 				(mvccVersion == friendlyURLEntryMappingCacheModel.mvccVersion)) {
 			return true;
 		}
@@ -62,7 +60,7 @@ public class FriendlyURLEntryMappingCacheModel implements CacheModel<FriendlyURL
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, friendlyURLEntryMappingPK);
+		int hashCode = HashUtil.hash(0, friendlyURLEntryMappingId);
 
 		return HashUtil.hash(hashCode, mvccVersion);
 	}
@@ -79,10 +77,12 @@ public class FriendlyURLEntryMappingCacheModel implements CacheModel<FriendlyURL
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", friendlyURLEntryMappingId=");
+		sb.append(friendlyURLEntryMappingId);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
 		sb.append(", classPK=");
@@ -99,6 +99,7 @@ public class FriendlyURLEntryMappingCacheModel implements CacheModel<FriendlyURL
 		FriendlyURLEntryMappingImpl friendlyURLEntryMappingImpl = new FriendlyURLEntryMappingImpl();
 
 		friendlyURLEntryMappingImpl.setMvccVersion(mvccVersion);
+		friendlyURLEntryMappingImpl.setFriendlyURLEntryMappingId(friendlyURLEntryMappingId);
 		friendlyURLEntryMappingImpl.setClassNameId(classNameId);
 		friendlyURLEntryMappingImpl.setClassPK(classPK);
 		friendlyURLEntryMappingImpl.setFriendlyURLEntryId(friendlyURLEntryId);
@@ -112,20 +113,21 @@ public class FriendlyURLEntryMappingCacheModel implements CacheModel<FriendlyURL
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
+		friendlyURLEntryMappingId = objectInput.readLong();
+
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
 
 		friendlyURLEntryId = objectInput.readLong();
-
-		friendlyURLEntryMappingPK = new FriendlyURLEntryMappingPK(classNameId,
-				classPK);
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(friendlyURLEntryMappingId);
 
 		objectOutput.writeLong(classNameId);
 
@@ -135,8 +137,8 @@ public class FriendlyURLEntryMappingCacheModel implements CacheModel<FriendlyURL
 	}
 
 	public long mvccVersion;
+	public long friendlyURLEntryMappingId;
 	public long classNameId;
 	public long classPK;
 	public long friendlyURLEntryId;
-	public transient FriendlyURLEntryMappingPK friendlyURLEntryMappingPK;
 }

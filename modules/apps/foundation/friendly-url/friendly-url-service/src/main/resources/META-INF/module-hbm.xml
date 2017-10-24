@@ -33,11 +33,12 @@
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.friendly.url.model.impl.FriendlyURLEntryMappingImpl" table="FriendlyURLEntryMapping">
-		<composite-id class="com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingPK" name="primaryKey">
-			<key-property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-			<key-property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		</composite-id>
+		<id name="friendlyURLEntryMappingId" type="long">
+			<generator class="assigned" />
+		</id>
 		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
+		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="friendlyURLEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 </hibernate-mapping>

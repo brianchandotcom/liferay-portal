@@ -28,6 +28,7 @@
 	</model>
 	<model name="com.liferay.friendly.url.model.FriendlyURLEntryMapping">
 		<field name="mvccVersion" type="long" />
+		<field name="friendlyURLEntryMappingId" type="long" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="friendlyURLEntryId" type="long" />

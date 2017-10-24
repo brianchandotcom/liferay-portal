@@ -18,17 +18,20 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryMappingException;
 import com.liferay.friendly.url.model.FriendlyURLEntryMapping;
-import com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingPK;
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingPersistence;
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingUtil;
 
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -85,8 +88,7 @@ public class FriendlyURLEntryMappingPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		FriendlyURLEntryMappingPK pk = new FriendlyURLEntryMappingPK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong());
+		long pk = RandomTestUtil.nextLong();
 
 		FriendlyURLEntryMapping friendlyURLEntryMapping = _persistence.create(pk);
 
@@ -113,12 +115,15 @@ public class FriendlyURLEntryMappingPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		FriendlyURLEntryMappingPK pk = new FriendlyURLEntryMappingPK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong());
+		long pk = RandomTestUtil.nextLong();
 
 		FriendlyURLEntryMapping newFriendlyURLEntryMapping = _persistence.create(pk);
 
 		newFriendlyURLEntryMapping.setMvccVersion(RandomTestUtil.nextLong());
+
+		newFriendlyURLEntryMapping.setClassNameId(RandomTestUtil.nextLong());
+
+		newFriendlyURLEntryMapping.setClassPK(RandomTestUtil.nextLong());
 
 		newFriendlyURLEntryMapping.setFriendlyURLEntryId(RandomTestUtil.nextLong());
 
@@ -129,12 +134,22 @@ public class FriendlyURLEntryMappingPersistenceTest {
 
 		Assert.assertEquals(existingFriendlyURLEntryMapping.getMvccVersion(),
 			newFriendlyURLEntryMapping.getMvccVersion());
+		Assert.assertEquals(existingFriendlyURLEntryMapping.getFriendlyURLEntryMappingId(),
+			newFriendlyURLEntryMapping.getFriendlyURLEntryMappingId());
 		Assert.assertEquals(existingFriendlyURLEntryMapping.getClassNameId(),
 			newFriendlyURLEntryMapping.getClassNameId());
 		Assert.assertEquals(existingFriendlyURLEntryMapping.getClassPK(),
 			newFriendlyURLEntryMapping.getClassPK());
 		Assert.assertEquals(existingFriendlyURLEntryMapping.getFriendlyURLEntryId(),
 			newFriendlyURLEntryMapping.getFriendlyURLEntryId());
+	}
+
+	@Test
+	public void testCountByC_C() throws Exception {
+		_persistence.countByC_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByC_C(0L, 0L);
 	}
 
 	@Test
@@ -149,10 +164,21 @@ public class FriendlyURLEntryMappingPersistenceTest {
 
 	@Test(expected = NoSuchFriendlyURLEntryMappingException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		FriendlyURLEntryMappingPK pk = new FriendlyURLEntryMappingPK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong());
+		long pk = RandomTestUtil.nextLong();
 
 		_persistence.findByPrimaryKey(pk);
+	}
+
+	@Test
+	public void testFindAll() throws Exception {
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
+	}
+
+	protected OrderByComparator<FriendlyURLEntryMapping> getOrderByComparator() {
+		return OrderByComparatorFactoryUtil.create("FriendlyURLEntryMapping",
+			"mvccVersion", true, "friendlyURLEntryMappingId", true,
+			"classNameId", true, "classPK", true, "friendlyURLEntryId", true);
 	}
 
 	@Test
@@ -167,8 +193,7 @@ public class FriendlyURLEntryMappingPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		FriendlyURLEntryMappingPK pk = new FriendlyURLEntryMappingPK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong());
+		long pk = RandomTestUtil.nextLong();
 
 		FriendlyURLEntryMapping missingFriendlyURLEntryMapping = _persistence.fetchByPrimaryKey(pk);
 
@@ -200,11 +225,9 @@ public class FriendlyURLEntryMappingPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-		FriendlyURLEntryMappingPK pk1 = new FriendlyURLEntryMappingPK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong());
+		long pk1 = RandomTestUtil.nextLong();
 
-		FriendlyURLEntryMappingPK pk2 = new FriendlyURLEntryMappingPK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong());
+		long pk2 = RandomTestUtil.nextLong();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
@@ -221,8 +244,7 @@ public class FriendlyURLEntryMappingPersistenceTest {
 		throws Exception {
 		FriendlyURLEntryMapping newFriendlyURLEntryMapping = addFriendlyURLEntryMapping();
 
-		FriendlyURLEntryMappingPK pk = new FriendlyURLEntryMappingPK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong());
+		long pk = RandomTestUtil.nextLong();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
@@ -272,10 +294,9 @@ public class FriendlyURLEntryMappingPersistenceTest {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(FriendlyURLEntryMapping.class,
 				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.classNameId",
-				newFriendlyURLEntryMapping.getClassNameId()));
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.classPK",
-				newFriendlyURLEntryMapping.getClassPK()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq(
+				"friendlyURLEntryMappingId",
+				newFriendlyURLEntryMapping.getFriendlyURLEntryMappingId()));
 
 		List<FriendlyURLEntryMapping> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -292,10 +313,8 @@ public class FriendlyURLEntryMappingPersistenceTest {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(FriendlyURLEntryMapping.class,
 				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.classNameId",
-				RandomTestUtil.nextLong()));
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.classPK",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq(
+				"friendlyURLEntryMappingId", RandomTestUtil.nextLong()));
 
 		List<FriendlyURLEntryMapping> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -311,20 +330,22 @@ public class FriendlyURLEntryMappingPersistenceTest {
 				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"id.classNameId"));
+				"friendlyURLEntryMappingId"));
 
-		Object newClassNameId = newFriendlyURLEntryMapping.getClassNameId();
+		Object newFriendlyURLEntryMappingId = newFriendlyURLEntryMapping.getFriendlyURLEntryMappingId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("id.classNameId",
-				new Object[] { newClassNameId }));
+		dynamicQuery.add(RestrictionsFactoryUtil.in(
+				"friendlyURLEntryMappingId",
+				new Object[] { newFriendlyURLEntryMappingId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
-		Object existingClassNameId = result.get(0);
+		Object existingFriendlyURLEntryMappingId = result.get(0);
 
-		Assert.assertEquals(existingClassNameId, newClassNameId);
+		Assert.assertEquals(existingFriendlyURLEntryMappingId,
+			newFriendlyURLEntryMappingId);
 	}
 
 	@Test
@@ -333,9 +354,10 @@ public class FriendlyURLEntryMappingPersistenceTest {
 				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"id.classNameId"));
+				"friendlyURLEntryMappingId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("id.classNameId",
+		dynamicQuery.add(RestrictionsFactoryUtil.in(
+				"friendlyURLEntryMappingId",
 				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
@@ -343,14 +365,35 @@ public class FriendlyURLEntryMappingPersistenceTest {
 		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		FriendlyURLEntryMapping newFriendlyURLEntryMapping = addFriendlyURLEntryMapping();
+
+		_persistence.clearCache();
+
+		FriendlyURLEntryMapping existingFriendlyURLEntryMapping = _persistence.findByPrimaryKey(newFriendlyURLEntryMapping.getPrimaryKey());
+
+		Assert.assertEquals(Long.valueOf(
+				existingFriendlyURLEntryMapping.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingFriendlyURLEntryMapping,
+				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(
+				existingFriendlyURLEntryMapping.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingFriendlyURLEntryMapping,
+				"getOriginalClassPK", new Class<?>[0]));
+	}
+
 	protected FriendlyURLEntryMapping addFriendlyURLEntryMapping()
 		throws Exception {
-		FriendlyURLEntryMappingPK pk = new FriendlyURLEntryMappingPK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong());
+		long pk = RandomTestUtil.nextLong();
 
 		FriendlyURLEntryMapping friendlyURLEntryMapping = _persistence.create(pk);
 
 		friendlyURLEntryMapping.setMvccVersion(RandomTestUtil.nextLong());
+
+		friendlyURLEntryMapping.setClassNameId(RandomTestUtil.nextLong());
+
+		friendlyURLEntryMapping.setClassPK(RandomTestUtil.nextLong());
 
 		friendlyURLEntryMapping.setFriendlyURLEntryId(RandomTestUtil.nextLong());
 

@@ -36,29 +36,11 @@ public interface FriendlyURLEntryMapping extends FriendlyURLEntryMappingModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.friendly.url.model.impl.FriendlyURLEntryMappingImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<FriendlyURLEntryMapping, Long> CLASS_NAME_ID_ACCESSOR =
+	public static final Accessor<FriendlyURLEntryMapping, Long> FRIENDLY_URL_ENTRY_MAPPING_ID_ACCESSOR =
 		new Accessor<FriendlyURLEntryMapping, Long>() {
 			@Override
 			public Long get(FriendlyURLEntryMapping friendlyURLEntryMapping) {
-				return friendlyURLEntryMapping.getClassNameId();
-			}
-
-			@Override
-			public Class<Long> getAttributeClass() {
-				return Long.class;
-			}
-
-			@Override
-			public Class<FriendlyURLEntryMapping> getTypeClass() {
-				return FriendlyURLEntryMapping.class;
-			}
-		};
-
-	public static final Accessor<FriendlyURLEntryMapping, Long> CLASS_PK_ACCESSOR =
-		new Accessor<FriendlyURLEntryMapping, Long>() {
-			@Override
-			public Long get(FriendlyURLEntryMapping friendlyURLEntryMapping) {
-				return friendlyURLEntryMapping.getClassPK();
+				return friendlyURLEntryMapping.getFriendlyURLEntryMappingId();
 			}
 
 			@Override

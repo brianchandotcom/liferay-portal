@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Commerce Shipping Web
+Bundle-SymbolicName: com.liferay.commerce.shipping.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /commerce-shipping-web

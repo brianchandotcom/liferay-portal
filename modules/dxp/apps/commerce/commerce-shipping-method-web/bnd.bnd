@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Commerce Shipping Method Web
-Bundle-SymbolicName: com.liferay.commerce.shipping.method.web
-Bundle-Version: 1.0.0
-Web-ContextPath: /commerce-shipping-method-web

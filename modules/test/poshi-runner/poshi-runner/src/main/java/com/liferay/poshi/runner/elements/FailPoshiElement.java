@@ -19,7 +19,7 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class FailPoshiElement extends BasePoshiElement {
+public class FailPoshiElement extends EchoPoshiElement {
 
 	@Override
 	public PoshiElement clone(Element element) {
@@ -41,20 +41,6 @@ public class FailPoshiElement extends BasePoshiElement {
 		return null;
 	}
 
-	@Override
-	public void parseReadableSyntax(String readableSyntax) {
-		String content = getQuotedContent(readableSyntax);
-
-		addAttribute("message", content);
-	}
-
-	@Override
-	public String toReadableSyntax() {
-		String message = attributeValue("message");
-
-		return createReadableBlock(message);
-	}
-
 	protected FailPoshiElement() {
 	}
 
@@ -64,20 +50,6 @@ public class FailPoshiElement extends BasePoshiElement {
 
 	protected FailPoshiElement(String readableSyntax) {
 		super(_ELEMENT_NAME, readableSyntax);
-	}
-
-	@Override
-	protected String createReadableBlock(String content) {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("\n\n");
-		sb.append(getPad());
-		sb.append(getBlockName());
-		sb.append("(\"");
-		sb.append(content.trim());
-		sb.append("\");");
-
-		return sb.toString();
 	}
 
 	@Override

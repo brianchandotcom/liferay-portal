@@ -37,6 +37,7 @@
 		</field>
 		<field name="coverImageCaption" type="String">
 			<hint-collection name="TEXTAREA" />
+			<sanitize content-type="text/html" modes="ALL" />
 		</field>
 		<field name="coverImageFileEntryId" type="long" />
 		<field name="coverImageURL" type="String">

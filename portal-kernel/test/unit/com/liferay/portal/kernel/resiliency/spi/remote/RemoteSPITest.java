@@ -26,8 +26,8 @@ import com.liferay.portal.kernel.nio.intraband.test.MockRegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.welder.Welder;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
+import com.liferay.portal.kernel.process.local.LocalProcessLauncher;
 import com.liferay.portal.kernel.process.local.LocalProcessLauncher.ProcessContext;
-import com.liferay.portal.kernel.process.log.ProcessOutputStream;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtilTestUtil;
 import com.liferay.portal.kernel.resiliency.spi.MockRemoteSPI;
@@ -58,6 +58,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -156,24 +157,30 @@ public class RemoteSPITest {
 
 		// Success
 
-		ProcessOutputStream processOutputStream = new ProcessOutputStream(
-			new ObjectOutputStream(new UnsyncByteArrayOutputStream())) {
+		Class<?> clazz = Class.forName(
+			LocalProcessLauncher.class.getName() + "$ProcessOutputStream");
 
-			@Override
-			public void writeProcessCallable(ProcessCallable<?> processCallable)
-				throws IOException {
+		Constructor<?> constructor = clazz.getDeclaredConstructor(
+			ObjectOutputStream.class, boolean.class);
 
-				if (throwIOException.get()) {
-					throw new IOException();
-				}
-
-				super.writeProcessCallable(processCallable);
-			}
-
-		};
+		constructor.setAccessible(true);
 
 		ReflectionTestUtil.setFieldValue(
-			ProcessContext.class, "_processOutputStream", processOutputStream);
+			ProcessContext.class, "_processOutputStream",
+			constructor.newInstance(
+				new ObjectOutputStream(new UnsyncByteArrayOutputStream()) {
+
+					@Override
+					public void flush() throws IOException {
+						if (throwIOException.get()) {
+							throw new IOException();
+						}
+
+						super.flush();
+					}
+
+				},
+				false));
 
 		ConcurrentMap<String, Object> attributes =
 			ProcessContext.getAttributes();

@@ -34,7 +34,6 @@ import java.io.Serializable;
 import java.nio.ByteBuffer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
@@ -292,90 +291,14 @@ public class PortletSessionImpl implements LiferayPortletSession {
 		 * this for any other purpose.
 		 */
 		public SerializableObjectWrapper() {
-			_hashCode = 0;
 		}
 
 		public SerializableObjectWrapper(Serializable serializable) {
 			_serializable = serializable;
-
-			_hashCode = serializable.hashCode();
-		}
-
-		@Override
-		public boolean equals(Object object) {
-			if (this == object) {
-				return true;
-			}
-
-			if (!(object instanceof SerializableObjectWrapper)) {
-				return false;
-			}
-
-			SerializableObjectWrapper serializableWrapper =
-				(SerializableObjectWrapper)object;
-
-			if (_hashCode != serializableWrapper._hashCode) {
-				return false;
-			}
-
-			if ((_serializable instanceof LazySerializable) &&
-				(serializableWrapper.
-					_serializable instanceof LazySerializable)) {
-
-				LazySerializable lazySerializable1 =
-					(LazySerializable)_serializable;
-				LazySerializable lazySerializable2 =
-					(LazySerializable)serializableWrapper._serializable;
-
-				if (Arrays.equals(
-						lazySerializable1.getData(),
-						lazySerializable2.getData())) {
-
-					return true;
-				}
-			}
-
-			if (_serializable instanceof LazySerializable) {
-				LazySerializable lazySerializable =
-					(LazySerializable)_serializable;
-
-				Serializable serializable = lazySerializable.getSerializable();
-
-				if (serializable == null) {
-					return Arrays.equals(
-						lazySerializable.getData(),
-						serializableWrapper._getData());
-				}
-
-				_serializable = serializable;
-			}
-
-			if (serializableWrapper._serializable instanceof LazySerializable) {
-				LazySerializable lazySerializable =
-					(LazySerializable)serializableWrapper._serializable;
-
-				Serializable serializable = lazySerializable.getSerializable();
-
-				if (serializable == null) {
-					return Arrays.equals(
-						_getData(), lazySerializable.getData());
-				}
-
-				serializableWrapper._serializable = serializable;
-			}
-
-			return _serializable.equals(serializableWrapper._serializable);
-		}
-
-		@Override
-		public int hashCode() {
-			return _hashCode;
 		}
 
 		@Override
 		public void readExternal(ObjectInput objectInput) throws IOException {
-			_hashCode = objectInput.readInt();
-
 			byte[] data = new byte[objectInput.readInt()];
 
 			objectInput.readFully(data);
@@ -386,8 +309,6 @@ public class PortletSessionImpl implements LiferayPortletSession {
 		@Override
 		public void writeExternal(ObjectOutput objectOutput)
 			throws IOException {
-
-			objectOutput.writeInt(_hashCode);
 
 			byte[] data = _getData();
 
@@ -416,7 +337,6 @@ public class PortletSessionImpl implements LiferayPortletSession {
 		private static final Log _log = LogFactoryUtil.getLog(
 			SerializableObjectWrapper.class);
 
-		private int _hashCode;
 		private volatile Serializable _serializable;
 
 		private static class LazySerializable implements Serializable {

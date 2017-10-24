@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 	category = "commerce", scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
-	id = "com.liferay.commerce.payment.money.order.internal.configuration.MoneyOrderCommercePaymentEngineConfiguration",
+	id = "com.liferay.commerce.payment.money.order.internal.configuration.MoneyOrderCommercePaymentEngineGroupServiceConfiguration",
 	localization = "content/Language",
 	name = "commerce-payment-engine-money-order-group-service-configuration-name"
 )

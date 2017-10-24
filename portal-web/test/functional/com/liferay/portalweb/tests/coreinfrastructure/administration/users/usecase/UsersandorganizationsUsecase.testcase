@@ -128,7 +128,9 @@
 		<execute function="AssertTextEquals" locator1="Home#USER_NAME_HEADER" value1="&lt;userfn&gt; userln" />
 	</command>
 
-	<command ignore="true" name="AssignImportedUserGroupToSuborganizationSites" priority="4">
+	<command name="AssignImportedUserGroupToSuborganizationSites" priority="5">
+		<property name="liferay.training.dependency.jars" value="src/01-liferay-fundamentals/02-integrating-identity-management/com.liferay.docs.samplecontent-1.0.0.jar" />
+		<property name="portal.acceptance" value="pending" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="Page#add">

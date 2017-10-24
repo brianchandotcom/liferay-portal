@@ -847,4 +847,6 @@ public interface UserGroupGroupRolePersistence extends BasePersistence<UserGroup
 	* @return the number of user group group roles
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getCompoundPKColumnNames();
 }

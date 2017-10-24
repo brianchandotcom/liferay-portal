@@ -16,7 +16,8 @@ package com.liferay.portal.cache.io;
 
 import com.liferay.portal.kernel.io.Deserializer;
 import com.liferay.portal.kernel.io.Serializer;
-import com.liferay.portal.kernel.util.AggregateClassLoader;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -26,7 +27,7 @@ import java.io.Serializable;
 import java.nio.ByteBuffer;
 
 /**
- * @author     Tina Tian
+ * @author Tina Tian
  */
 public class SerializableObjectWrapper implements Serializable {
 
@@ -67,65 +68,39 @@ public class SerializableObjectWrapper implements Serializable {
 	}
 
 	private void readObject(ObjectInputStream objectInputStream)
-		throws ClassNotFoundException, IOException {
+		throws IOException {
 
-		Thread currentThread = Thread.currentThread();
+		byte[] data = new byte[objectInputStream.readInt()];
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+		objectInputStream.readFully(data);
 
-		currentThread.setContextClassLoader(_classLoader);
+		Deserializer deserializer = new Deserializer(ByteBuffer.wrap(data));
 
 		try {
-			int size = objectInputStream.readInt();
-
-			byte[] data = new byte[size];
-
-			objectInputStream.readFully(data);
-
-			Deserializer deserializer = new Deserializer(ByteBuffer.wrap(data));
-
 			_serializable = deserializer.readObject();
 		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
+		catch (ClassNotFoundException cnfe) {
+			_log.error("Unable to deserialize object", cnfe);
 		}
 	}
 
 	private void writeObject(ObjectOutputStream objectOutputStream)
 		throws IOException {
 
-		Thread currentThread = Thread.currentThread();
+		Serializer serializer = new Serializer();
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+		serializer.writeObject(_serializable);
 
-		currentThread.setContextClassLoader(_classLoader);
+		ByteBuffer byteBuffer = serializer.toByteBuffer();
 
-		try {
-			Serializer serializer = new Serializer();
+		objectOutputStream.writeInt(byteBuffer.remaining());
 
-			serializer.writeObject(_serializable);
-
-			ByteBuffer byteBuffer = serializer.toByteBuffer();
-
-			objectOutputStream.writeInt(byteBuffer.remaining());
-			objectOutputStream.write(
-				byteBuffer.array(), byteBuffer.position(),
-				byteBuffer.remaining());
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
-		}
+		objectOutputStream.write(
+			byteBuffer.array(), byteBuffer.position(), byteBuffer.remaining());
 	}
 
-	private static final ClassLoader _classLoader;
-
-	static {
-		Thread currentThread = Thread.currentThread();
-
-		_classLoader = AggregateClassLoader.getAggregateClassLoader(
-			currentThread.getContextClassLoader(),
-			SerializableObjectWrapper.class.getClassLoader());
-	}
+	private static final Log _log = LogFactoryUtil.getLog(
+		SerializableObjectWrapper.class);
 
 	private Serializable _serializable;
 

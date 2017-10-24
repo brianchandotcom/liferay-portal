@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Commerce Shipping Origin Locator Address
+Bundle-SymbolicName: com.liferay.commerce.shipping.origin.locator.address
+Bundle-Version: 1.0.0
+Web-ContextPath: /commerce-shipping-origin-locator-address

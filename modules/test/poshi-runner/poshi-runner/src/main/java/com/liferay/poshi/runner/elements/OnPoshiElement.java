@@ -59,36 +59,11 @@ public class OnPoshiElement extends BasePoshiElement {
 	public String toReadableSyntax() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("\n");
-
-		sb.append(getPad());
-		sb.append(getBlockName());
-
-		sb.append(" {");
-
-		List<PoshiElement> poshiElements = toPoshiElements(elements());
-
-		for (int i = 0; i < poshiElements.size(); i++) {
-			PoshiElement poshiElement = poshiElements.get(i);
-
-			String readableSyntax = poshiElement.toReadableSyntax();
-
-			if (i == 0) {
-				if (readableSyntax.startsWith("\n\n")) {
-					readableSyntax = readableSyntax.replaceFirst("\n\n", "\n");
-				}
-			}
-
-			readableSyntax = readableSyntax.replaceAll("\n", "\n" + getPad());
-
-			sb.append(readableSyntax.replaceAll("\n\t\n", "\n\n"));
+		for (PoshiElement poshiElement : toPoshiElements(elements())) {
+			sb.append(poshiElement.toReadableSyntax());
 		}
 
-		sb.append("\n");
-		sb.append(getPad());
-		sb.append("}");
-
-		return sb.toString();
+		return createReadableBlock(sb.toString());
 	}
 
 	protected OnPoshiElement() {
@@ -105,11 +80,6 @@ public class OnPoshiElement extends BasePoshiElement {
 	@Override
 	protected String getBlockName() {
 		return "on";
-	}
-
-	@Override
-	protected String getPad() {
-		return super.getPad() + "\t";
 	}
 
 	protected List<String> getReadableBlocks(String readableSyntax) {

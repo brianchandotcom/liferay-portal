@@ -66,36 +66,17 @@ public class TaskPoshiElement extends BasePoshiElement {
 	public String toReadableSyntax() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("\n\n");
+		sb.append("\n");
 
-		sb.append(getPad());
-		sb.append(getBlockName());
+		StringBuilder content = new StringBuilder();
 
-		sb.append(" (\"");
-		sb.append(attributeValue("summary"));
-		sb.append("\") {");
-
-		List<PoshiElement> poshiElements = toPoshiElements(elements());
-
-		for (int i = 0; i < poshiElements.size(); i++) {
-			PoshiElement poshiElement = poshiElements.get(i);
-
-			String readableSyntax = poshiElement.toReadableSyntax();
-
-			if (i == 0) {
-				if (readableSyntax.startsWith("\n\n")) {
-					readableSyntax = readableSyntax.replaceFirst("\n\n", "\n");
-				}
-			}
-
-			readableSyntax = readableSyntax.replaceAll("\n", "\n" + getPad());
-
-			sb.append(readableSyntax.replaceAll("\n\t\n", "\n\n"));
+		for (PoshiElement poshiElement : toPoshiElements(elements())) {
+			content.append(poshiElement.toReadableSyntax());
 		}
 
-		sb.append("\n");
-		sb.append(getPad());
-		sb.append("}");
+		String readableBlock = createReadableBlock(content.toString());
+
+		sb.append(readableBlock);
 
 		return sb.toString();
 	}
@@ -113,7 +94,13 @@ public class TaskPoshiElement extends BasePoshiElement {
 
 	@Override
 	protected String getBlockName() {
-		return "task";
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("task (\"");
+		sb.append(attributeValue("summary"));
+		sb.append("\")");
+
+		return sb.toString();
 	}
 
 	protected List<String> getReadableBlocks(String readableSyntax) {

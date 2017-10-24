@@ -17,6 +17,7 @@ package com.liferay.poshi.runner.elements;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.liferay.poshi.runner.util.Dom4JUtil;
 import org.dom4j.Element;
 
 /**
@@ -66,26 +67,17 @@ public class TogglePoshiElement extends BasePoshiElement {
 	public String toReadableSyntax() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("\n\n");
-
-		sb.append(getPad());
-		sb.append(getBlockName());
-
-		sb.append(" (\"");
-		sb.append(attributeValue("name"));
-		sb.append("\") {");
-
-		PoshiElement onPoshiElement = (PoshiElement)element("on");
-
-		sb.append(onPoshiElement.toReadableSyntax());
-
-		PoshiElement offPoshiElement = (PoshiElement)element("off");
-
-		sb.append(offPoshiElement.toReadableSyntax());
-
 		sb.append("\n");
-		sb.append(getPad());
-		sb.append("}");
+
+		StringBuilder content = new StringBuilder();
+
+		for (PoshiElement poshiElement : toPoshiElements(elements())) {
+			content.append(poshiElement.toReadableSyntax());
+		}
+
+		String readableBlock = createReadableBlock(content.toString());
+
+		sb.append(readableBlock);
 
 		return sb.toString();
 	}
@@ -103,7 +95,13 @@ public class TogglePoshiElement extends BasePoshiElement {
 
 	@Override
 	protected String getBlockName() {
-		return "toggle";
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("toggle (\"");
+		sb.append(attributeValue("name"));
+		sb.append("\")");
+
+		return sb.toString();
 	}
 
 	protected List<String> getReadableBlocks(String readableSyntax) {

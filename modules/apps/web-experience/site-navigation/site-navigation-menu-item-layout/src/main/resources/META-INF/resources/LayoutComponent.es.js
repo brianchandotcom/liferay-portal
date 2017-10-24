@@ -11,9 +11,6 @@ import templates from './LayoutComponent.soy';
  */
 class LayoutComponent extends SelectLayout {}
 
-NavigationMenuTree.STATE = {
-};
-
 Soy.register(LayoutComponent, templates);
 
 export { LayoutComponent }

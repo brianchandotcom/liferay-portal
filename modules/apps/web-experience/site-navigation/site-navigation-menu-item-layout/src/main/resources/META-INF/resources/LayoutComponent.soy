@@ -4,15 +4,11 @@
  * Navigation Menu Toolbox Layout Component
  */
 {template .render}
-	{@param? namespace: string}
-
-	<div class="navigation-menu-tree">
-		<fieldset class="panel-body">
-			<div class="element-tree" id="{$namespace}layoutContainer" ref="treeContainer">
-				<div class="button-holder">
-					<button class="btn btn-lg btn-default" type="button">{msg desc=""}select{/msg}</button>
-				</div>
+	<fieldset class="panel-body">
+		<div class="element-tree" id="layoutContainer" ref="treeContainer">
+			<div class="button-holder">
+				<button class="btn btn-lg btn-default" type="button">{msg desc=""}select{/msg}</button>
 			</div>
-		</fieldset>
-	</div>
+		</div>
+	</fieldset>
 {/template}

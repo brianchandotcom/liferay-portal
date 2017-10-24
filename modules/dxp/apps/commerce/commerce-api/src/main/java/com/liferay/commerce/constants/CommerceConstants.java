@@ -34,4 +34,7 @@ public class CommerceConstants {
 	public static final int
 		CP_DEFINITION_INVENTORY_DEFAULT_MULTIPLE_CART_QUANTITY = 1;
 
+	public static final String SHIPPING_SERVICE_NAME =
+		"com.liferay.commerce.shipping";
+
 }

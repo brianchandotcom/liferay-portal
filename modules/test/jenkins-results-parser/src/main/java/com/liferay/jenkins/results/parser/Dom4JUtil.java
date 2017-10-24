@@ -52,6 +52,14 @@ public class Dom4JUtil {
 				continue;
 			}
 
+			if (item instanceof Element[]) {
+				for (Element itemElement : (Element[])item) {
+					element.add(itemElement);
+				}
+
+				continue;
+			}
+
 			if (item instanceof String) {
 				element.addText((String)item);
 

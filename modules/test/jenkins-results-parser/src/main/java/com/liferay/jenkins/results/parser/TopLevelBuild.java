@@ -25,7 +25,9 @@ import java.io.IOException;
 import java.io.StringWriter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -35,14 +37,26 @@ import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
+
 import org.dom4j.Element;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
  * @author Kevin Yen
  */
 public class TopLevelBuild extends BaseBuild {
+
+	@Override
+	public void addTimelineData(BaseBuild.TimelineData timelineData) {
+		timelineData.addTimelineData(this);
+
+		if (getTopLevelBuild() == this) {
+			addDownstreamBuildsTimelineData(timelineData);
+		}
+	}
 
 	@Override
 	public void archive(String archiveName) {
@@ -184,6 +198,12 @@ public class TopLevelBuild extends BaseBuild {
 		}
 	}
 
+	public Element getJenkinsReportElement() {
+		return Dom4JUtil.getNewElement(
+			"html", null, getJenkinsReportHeadElement(),
+			getJenkinsReportBodyElement());
+	}
+
 	public String getJenkinsReportURL() {
 		if (fromArchive) {
 			return getBuildURL() + "/jenkins-report.html";
@@ -239,6 +259,10 @@ public class TopLevelBuild extends BaseBuild {
 	@Override
 	public JSONObject getTestReportJSONObject() {
 		return null;
+	}
+
+	public BaseBuild.TimelineData getTimelineData() {
+		return new BaseBuild.TimelineData(500, this);
 	}
 
 	@Override
@@ -517,6 +541,243 @@ public class TopLevelBuild extends BaseBuild {
 			topLevelBuild.getJobName(), "/git.", repositoryType, ".properties");
 	}
 
+	protected Element getJenkinsReportBodyElement() {
+		String buildURL = getBuildURL();
+
+		Element headingElement = Dom4JUtil.getNewElement(
+			"h1", null, "Jenkins report for ",
+			Dom4JUtil.getNewAnchorElement(buildURL, buildURL));
+
+		JSONObject jobJSONObject = getBuildJSONObject();
+
+		Element subheadingElement = null;
+
+		try {
+			subheadingElement = Dom4JUtil.getNewElement(
+				"h2", null, jobJSONObject.getString("description"));
+		}
+		catch (JSONException jsone) {
+			jsone.printStackTrace();
+		}
+
+		return Dom4JUtil.getNewElement(
+			"body", null, headingElement, subheadingElement,
+			getJenkinsReportSummaryElement(), getJenkinsReportTimelineElement(),
+			getJenkinsReportTopLevelTableElement(),
+			getJenkinsReportDownstreamElement());
+	}
+
+	protected String getJenkinsReportBuildInfoCellElementTagName() {
+		return "th";
+	}
+
+	protected Element getJenkinsReportChartJsScriptElement(
+		String xData, String y1Data, String y2Data) {
+
+		String resourceFileContent = null;
+
+		try {
+			resourceFileContent =
+				JenkinsResultsParserUtil.getResourceFileContent(
+					"chart-template.js");
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to load resource chart-template.js", ioe);
+		}
+
+		resourceFileContent = resourceFileContent.replace("'xData'", xData);
+		resourceFileContent = resourceFileContent.replace("'y1Data'", y1Data);
+		resourceFileContent = resourceFileContent.replace("'y2Data'", y2Data);
+
+		Element scriptElement = Dom4JUtil.getNewElement("script");
+
+		scriptElement.addText(resourceFileContent);
+
+		return scriptElement;
+	}
+
+	protected Element getJenkinsReportDownstreamElement() {
+		return Dom4JUtil.getNewElement(
+			"div", null,
+			getJenkinsReportDownstreamTableElement(null, "queued", "Queued: "),
+			getJenkinsReportDownstreamTableElement(
+				null, "starting", "Starting: "),
+			getJenkinsReportDownstreamTableElement(
+				null, "running", "Running: "),
+			getJenkinsReportDownstreamTableElement(
+				null, "missing", "Missing: "),
+			Dom4JUtil.getNewElement("h2", null, "Completed: "),
+			getJenkinsReportDownstreamTableElement(
+				"ABORTED", "completed", "---- Aborted: "),
+			getJenkinsReportDownstreamTableElement(
+				"FAILURE", "completed", "---- Failure: "),
+			getJenkinsReportDownstreamTableElement(
+				"UNSTABLE", "completed", "---- Unstable: "),
+			getJenkinsReportDownstreamTableElement(
+				"SUCCESS", "completed", "---- Success: "));
+	}
+
+	protected Element getJenkinsReportDownstreamTableElement(
+		String result, String status, String captionText) {
+
+		List<Element> tableRowElements = getJenkinsReportTableRowsElements(
+			result, status);
+
+		if (tableRowElements.isEmpty()) {
+			return null;
+		}
+
+		return Dom4JUtil.getNewElement(
+			"table", null,
+			Dom4JUtil.getNewElement(
+				"caption", null, captionText,
+				Integer.toString(tableRowElements.size())),
+			getJenkinsReportTableColumnHeadersElement(),
+			tableRowElements.toArray(new Element[tableRowElements.size()]));
+	}
+
+	protected Element getJenkinsReportHeadElement() {
+		Element headElement = Dom4JUtil.getNewElement("head");
+
+		String resourceFileContent = null;
+
+		try {
+			resourceFileContent =
+				JenkinsResultsParserUtil.getResourceFileContent(
+					"jenkins-report.css");
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to load resource jenkins-report.css", ioe);
+		}
+
+		Dom4JUtil.addToElement(
+			headElement,
+			Dom4JUtil.getNewElement("style", null, resourceFileContent));
+
+		return headElement;
+	}
+
+	protected Element getJenkinsReportSummaryElement() {
+		Element summaryElement = Dom4JUtil.getNewElement(
+			"div", null,
+			Dom4JUtil.getNewElement(
+				"p", null, "Start Time: ",
+				JenkinsResultsParserUtil.toDateString(
+					new Date(getStartTimestamp()))),
+			Dom4JUtil.getNewElement(
+				"p", null, "Build Time: ",
+				JenkinsResultsParserUtil.toDurationString(getDuration())),
+			Dom4JUtil.getNewElement(
+				"p", null, "Total CPU Usage Time: ",
+				JenkinsResultsParserUtil.toDurationString(getTotalDuration())),
+			Dom4JUtil.getNewElement(
+				"p", null, "Total number of Jenkins slaves used: ",
+				Integer.toString(getTotalSlavesUsedCount())));
+
+		Build longestRunningDownstreamBuild =
+			getLongestRunningDownstreamBuild();
+
+		if (longestRunningDownstreamBuild != null) {
+			Dom4JUtil.getNewElement(
+				"p", summaryElement, "Longest Running Downstream Build: ",
+				Dom4JUtil.getNewAnchorElement(
+					longestRunningDownstreamBuild.getBuildURL(),
+					longestRunningDownstreamBuild.getDisplayName()),
+				" in: ",
+				JenkinsResultsParserUtil.toDurationString(
+					longestRunningDownstreamBuild.getDuration()));
+		}
+
+		TestResult longestRunningTest = getLongestRunningTest();
+
+		if (longestRunningTest != null) {
+			Dom4JUtil.getNewElement(
+				"p", null, "Longest Running Test: ",
+				Dom4JUtil.getNewAnchorElement(
+					longestRunningTest.getTestReportURL(),
+					longestRunningTest.getDisplayName()),
+				" in: ",
+				JenkinsResultsParserUtil.toDurationString(
+					longestRunningTest.getDuration()));
+		}
+
+		return summaryElement;
+	}
+
+	protected Element getJenkinsReportTableColumnHeadersElement() {
+		Element nameElement = Dom4JUtil.getNewElement("th", null, "Name");
+
+		Element consoleElement = Dom4JUtil.getNewElement("th", null, "Console");
+
+		Element testReportElement = Dom4JUtil.getNewElement(
+			"th", null, "Test Report");
+
+		Element startTimeElement = Dom4JUtil.getNewElement(
+			"th", null, "Start Time");
+
+		Element buildTimeElement = Dom4JUtil.getNewElement(
+			"th", null, "Build Time");
+
+		Element statusElement = Dom4JUtil.getNewElement("th", null, "Status");
+
+		Element resultElement = Dom4JUtil.getNewElement("th", null, "Result");
+
+		Element tableColumnHeaderElement = Dom4JUtil.getNewElement("tr");
+
+		Dom4JUtil.addToElement(
+			tableColumnHeaderElement, nameElement, consoleElement,
+			testReportElement, startTimeElement, buildTimeElement,
+			statusElement, resultElement);
+
+		return tableColumnHeaderElement;
+	}
+
+	protected Element getJenkinsReportTimelineElement() {
+		Element canvasElement = Dom4JUtil.getNewElement("canvas");
+
+		canvasElement.addAttribute("height", "300");
+		canvasElement.addAttribute("id", "timeline");
+
+		Element scriptElement = Dom4JUtil.getNewElement("script");
+
+		scriptElement.addAttribute("src", _CHART_JS_FILE);
+		scriptElement.addText("");
+
+		BaseBuild.TimelineData timelineData = getTimelineData();
+
+		Element chartJSScriptElement = getJenkinsReportChartJsScriptElement(
+			Arrays.toString(timelineData.getIndexData()),
+			Arrays.toString(timelineData.getSlaveUsageData()),
+			Arrays.toString(timelineData.getInvocationsData()));
+
+		return Dom4JUtil.getNewElement(
+			"div", null, canvasElement, scriptElement, chartJSScriptElement);
+	}
+
+	protected Element getJenkinsReportTopLevelTableElement() {
+		Element topLevelTableElement = Dom4JUtil.getNewElement("table");
+
+		if (result != null) {
+			Dom4JUtil.getNewElement(
+				"caption", topLevelTableElement, "Top Level Build - ",
+				Dom4JUtil.getNewElement("strong", null, getResult()));
+		}
+		else {
+			Dom4JUtil.getNewElement(
+				"caption", topLevelTableElement, "Top Level Build - ",
+				Dom4JUtil.getNewElement(
+					"strong", null, StringUtils.upperCase(getStatus())));
+		}
+
+		Dom4JUtil.addToElement(
+			topLevelTableElement, getJenkinsReportTableColumnHeadersElement(),
+			getJenkinsReportTableRowElement());
+
+		return topLevelTableElement;
+	}
+
 	protected Element getJobSummaryListElement() {
 		Element jobSummaryListElement = Dom4JUtil.getNewElement("ul");
 
@@ -559,6 +820,30 @@ public class TopLevelBuild extends BaseBuild {
 		}
 
 		return jobSummaryListElement;
+	}
+
+	protected Build getLongestRunningBatchBuild() {
+		List<Build> downstreamBuilds = getDownstreamBuilds(null);
+
+		long longestDownstreamBuildDuration = 0;
+
+		Build longestRunningDownstreamBuild = null;
+
+		for (Build downstreamBuild : downstreamBuilds) {
+			if (downstreamBuild instanceof BatchBuild ||
+				downstreamBuild instanceof TopLevelBuild) {
+
+				long downstreamBuildDuration = downstreamBuild.getDuration();
+
+				if (downstreamBuildDuration > longestDownstreamBuildDuration) {
+					longestDownstreamBuildDuration = downstreamBuildDuration;
+
+					longestRunningDownstreamBuild = downstreamBuild;
+				}
+			}
+		}
+
+		return longestRunningDownstreamBuild;
 	}
 
 	protected Element getMoreDetailsElement() {
@@ -818,6 +1103,9 @@ public class TopLevelBuild extends BaseBuild {
 
 	protected static final Pattern gitRepositoryTempMapNamePattern =
 		Pattern.compile("git\\.(?<repositoryType>.*)\\.properties");
+
+	private static final String _CHART_JS_FILE =
+		"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js";
 
 	private static final long _DOWNSTREAM_BUILDS_LISTING_INTERVAL =
 		1000 * 60 * 5;

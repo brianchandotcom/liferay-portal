@@ -39,8 +39,11 @@ import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
@@ -481,8 +484,15 @@ public class JenkinsResultsParserUtil {
 		return "";
 	}
 
-	public static String getAxisVariable(String axisBuildURL) throws Exception {
-		String url = decode(axisBuildURL);
+	public static String getAxisVariable(String axisBuildURL) {
+		String url = null;
+
+		try {
+			url = decode(axisBuildURL);
+		}
+		catch (UnsupportedEncodingException uee) {
+			throw new RuntimeException("Unable to encode " + axisBuildURL);
+		}
 
 		String label = "AXIS_VARIABLE=";
 
@@ -750,6 +760,17 @@ public class JenkinsResultsParserUtil {
 		return sb.toString();
 	}
 
+	public static String getResourceFileContent(String resourceName)
+		throws IOException {
+
+		try (InputStream resourceStream =
+				JenkinsResultsParserUtil.class.getResourceAsStream(
+					resourceName)) {
+
+			return readInputStream(resourceStream);
+		}
+	}
+
 	public static List<String> getSlaves(
 		Properties buildProperties, String jenkinsMasterPatternString) {
 
@@ -919,6 +940,12 @@ public class JenkinsResultsParserUtil {
 		String jenkinsMasterName, String offlineReason, String... slaveNames) {
 
 		_setSlaveStatus(jenkinsMasterName, offlineReason, false, slaveNames);
+	}
+
+	public static String toDateString(Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy h:mm:ss a z");
+
+		return sdf.format(date);
 	}
 
 	public static String toDurationString(long duration) {

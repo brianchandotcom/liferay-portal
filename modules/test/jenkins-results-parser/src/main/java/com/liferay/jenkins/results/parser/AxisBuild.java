@@ -50,6 +50,11 @@ import org.json.JSONObject;
 public class AxisBuild extends BaseBuild {
 
 	@Override
+	public void addTimelineData(BaseBuild.TimelineData timelineData) {
+		timelineData.addTimelineData(this);
+	}
+
+	@Override
 	public void findDownstreamBuilds() {
 	}
 

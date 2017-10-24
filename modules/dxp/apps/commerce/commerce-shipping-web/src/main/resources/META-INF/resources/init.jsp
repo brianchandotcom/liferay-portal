@@ -23,12 +23,15 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.constants.CommerceActionKeys" %><%@
+<%@ page import="com.liferay.commerce.configuration.CommerceShippingGroupServiceConfiguration" %><%@
+page import="com.liferay.commerce.constants.CommerceActionKeys" %><%@
 page import="com.liferay.commerce.exception.CommerceShippingMethodNameException" %><%@
 page import="com.liferay.commerce.model.CommerceShippingEngine" %><%@
 page import="com.liferay.commerce.model.CommerceShippingMethod" %><%@
+page import="com.liferay.commerce.model.CommerceShippingOriginLocator" %><%@
 page import="com.liferay.commerce.service.permission.CommercePermission" %><%@
 page import="com.liferay.commerce.shipping.web.internal.display.context.CommerceShippingMethodsDisplayContext" %><%@
+page import="com.liferay.commerce.shipping.web.internal.display.context.CommerceShippingSettingsDisplayContext" %><%@
 page import="com.liferay.commerce.shipping.web.internal.servlet.taglib.ui.CommerceShippingFormNavigatorConstants" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
@@ -37,6 +40,8 @@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
+
+<%@ page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

@@ -15,14 +15,14 @@
 package com.liferay.commerce.shipping.web.internal.util;
 
 import com.liferay.commerce.admin.web.util.CommerceAdminModule;
-import com.liferay.commerce.service.CommerceShippingMethodLocalService;
-import com.liferay.commerce.shipping.web.internal.display.context.CommerceShippingMethodsDisplayContext;
-import com.liferay.commerce.util.CommerceShippingEngineRegistry;
+import com.liferay.commerce.shipping.web.internal.display.context.CommerceShippingSettingsDisplayContext;
+import com.liferay.commerce.util.CommerceShippingOriginLocatorRegistry;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -50,18 +50,16 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.admin.module.key=" + ShippingMethodsCommerceAdminModule.KEY
+	property = "commerce.admin.module.key=" + ShippingSettingsCommerceAdminModule.KEY
 )
-public class ShippingMethodsCommerceAdminModule implements CommerceAdminModule {
+public class ShippingSettingsCommerceAdminModule
+	implements CommerceAdminModule {
 
-	public static final String KEY = "shipping-methods";
+	public static final String KEY = "shipping";
 
 	@Override
 	public void deleteData(PortletDataContext portletDataContext)
 		throws Exception {
-
-		_commerceShippingMethodLocalService.deleteCommerceShippingMethods(
-			portletDataContext.getScopeGroupId());
 	}
 
 	@Override
@@ -85,7 +83,7 @@ public class ShippingMethodsCommerceAdminModule implements CommerceAdminModule {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "shipping-methods");
+		return LanguageUtil.get(resourceBundle, "shipping");
 	}
 
 	@Override
@@ -111,16 +109,15 @@ public class ShippingMethodsCommerceAdminModule implements CommerceAdminModule {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException {
 
-		CommerceShippingMethodsDisplayContext
-			commerceShippingMethodsDisplayContext =
-				new CommerceShippingMethodsDisplayContext(
-					_commerceShippingEngineRegistry,
-					_commerceShippingMethodLocalService, renderRequest,
-					renderResponse);
+		CommerceShippingSettingsDisplayContext
+			commerceShippingSettingsDisplayContext =
+				new CommerceShippingSettingsDisplayContext(
+					_commerceShippingOriginLocatorRegistry,
+					_configurationProvider, renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			commerceShippingMethodsDisplayContext);
+			commerceShippingSettingsDisplayContext);
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
@@ -129,15 +126,15 @@ public class ShippingMethodsCommerceAdminModule implements CommerceAdminModule {
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/view_shipping_methods.jsp");
+			"/edit_shipping_settings.jsp");
 	}
 
 	@Reference
-	private CommerceShippingEngineRegistry _commerceShippingEngineRegistry;
+	private CommerceShippingOriginLocatorRegistry
+		_commerceShippingOriginLocatorRegistry;
 
 	@Reference
-	private CommerceShippingMethodLocalService
-		_commerceShippingMethodLocalService;
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

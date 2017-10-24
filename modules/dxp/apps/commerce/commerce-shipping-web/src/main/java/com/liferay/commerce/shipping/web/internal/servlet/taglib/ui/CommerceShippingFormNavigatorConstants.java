@@ -22,7 +22,13 @@ public class CommerceShippingFormNavigatorConstants {
 	public static final String CATEGORY_KEY_COMMERCE_SHIPPING_METHOD_GENERAL =
 		"general";
 
+	public static final String CATEGORY_KEY_COMMERCE_SHIPPING_SETTINGS_GENERAL =
+		"general";
+
 	public static final String FORM_NAVIGATOR_ID_COMMERCE_SHIPPING_METHOD =
 		"commerce.shipping.method.form";
+
+	public static final String FORM_NAVIGATOR_ID_COMMERCE_SHIPPING_SETTINGS =
+		"commerce.shipping.settings.form";
 
 }

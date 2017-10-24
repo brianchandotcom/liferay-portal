@@ -25,10 +25,10 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Bruno Farache
@@ -46,7 +46,7 @@ public class EntryServiceImpl extends EntryServiceBaseImpl {
 
 		User user = userLocalService.getUser(userId);
 
-		List<BaseModel<?>> contacts = new ArrayList();
+		Set<BaseModel<?>> contacts = new HashSet<>();
 
 		contacts.add(user);
 
@@ -55,8 +55,9 @@ public class EntryServiceImpl extends EntryServiceBaseImpl {
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if (permissionChecker.isCompanyAdmin()) {
-			contacts = entryLocalService.searchUsersAndContacts(
-				companyId, userId, keywords, start, end);
+			contacts.addAll(
+				entryLocalService.searchUsersAndContacts(
+					companyId, userId, keywords, start, end));
 		}
 		else {
 			List<Group> groups = groupLocalService.getUserGroups(userId, true);
@@ -65,7 +66,7 @@ public class EntryServiceImpl extends EntryServiceBaseImpl {
 				List<User> groupUsers = userLocalService.getGroupUsers(
 					group.getGroupId());
 
-				contacts.addAll((List<BaseModel<?>>)(List<?>)groupUsers);
+				contacts.addAll(groupUsers);
 			}
 
 			List<UserGroup> userGroups =
@@ -75,14 +76,11 @@ public class EntryServiceImpl extends EntryServiceBaseImpl {
 				List<User> userGroupUsers = userLocalService.getUserGroupUsers(
 					userGroup.getUserGroupId());
 
-				contacts.addAll((List<BaseModel<?>>)(List<?>)userGroupUsers);
+				contacts.addAll(userGroupUsers);
 			}
 
-			contacts = ListUtil.unique(contacts);
-
 			contacts.addAll(
-				(List<BaseModel<?>>)(List<?>)entryLocalService.search(
-					userId, keywords, start, end));
+				entryLocalService.search(userId, keywords, start, end));
 		}
 
 		for (BaseModel<?> contact : contacts) {

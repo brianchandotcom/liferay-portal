@@ -53,12 +53,17 @@
 
 		<!-- PK fields -->
 
-		<column name="classNameId" primary="true" type="long" />
-		<column name="classPK" primary="true" type="long" />
+		<column name="friendlyURLEntryMappingId" primary="true" type="long" />
 
 		<!-- Other fields -->
 
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
 		<column name="friendlyURLEntryId" type="long" />
+		<finder name="C_C" return-type="FriendlyURLEntryMapping" unique="true">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
 	</entity>
 	<exceptions>
 		<exception>DuplicateFriendlyURLEntry</exception>

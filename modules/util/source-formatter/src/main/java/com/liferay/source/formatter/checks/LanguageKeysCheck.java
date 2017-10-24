@@ -110,7 +110,6 @@ public class LanguageKeysCheck extends BaseFileCheck {
 				}
 
 				if (!isSubrepository() &&
-					!absolutePath.contains("/modules/private/apps/") &&
 					_portalLanguageProperties.containsKey(languageKey)) {
 
 					continue;

@@ -26,8 +26,6 @@ import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
@@ -131,19 +129,12 @@ public class LayoutFriendlyURLStagedModelDataHandler
 		if (existingLayoutFriendlyURL == null) {
 			serviceContext.setUuid(layoutFriendlyURL.getUuid());
 
-			String friendlyURL = layoutFriendlyURL.getFriendlyURL();
-
-			if (Validator.isNumber(friendlyURL.substring(1))) {
-				Layout layout = _layoutLocalService.fetchLayout(plid);
-
-				friendlyURL = StringPool.SLASH + layout.getLayoutId();
-			}
-
 			importedLayoutFriendlyURL =
 				_layoutFriendlyURLLocalService.addLayoutFriendlyURL(
 					userId, portletDataContext.getCompanyId(),
 					portletDataContext.getScopeGroupId(), plid,
-					portletDataContext.isPrivateLayout(), friendlyURL,
+					portletDataContext.isPrivateLayout(),
+					layoutFriendlyURL.getFriendlyURL(),
 					layoutFriendlyURL.getLanguageId(), serviceContext);
 		}
 		else {

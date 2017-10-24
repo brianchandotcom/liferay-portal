@@ -232,7 +232,8 @@ public class PortletSessionImpl implements LiferayPortletSession {
 
 		@Override
 		public Object getAttribute(String name) {
-			return SerializableObjectWrapper.unwrap(super.getAttribute(name));
+			return LazySerializableObjectWrapper.unwrap(
+				super.getAttribute(name));
 		}
 
 		@Override
@@ -248,7 +249,7 @@ public class PortletSessionImpl implements LiferayPortletSession {
 			if (!PortalClassLoaderUtil.isPortalClassLoader(
 					clazz.getClassLoader())) {
 
-				value = new SerializableObjectWrapper((Serializable)value);
+				value = new LazySerializableObjectWrapper((Serializable)value);
 			}
 
 			super.setAttribute(name, value);
@@ -260,19 +261,23 @@ public class PortletSessionImpl implements LiferayPortletSession {
 
 	}
 
-	private static class SerializableObjectWrapper implements Externalizable {
+	private static class LazySerializableObjectWrapper
+		implements Externalizable {
 
 		public static <T> T unwrap(Object object) {
-			if (!(object instanceof SerializableObjectWrapper)) {
+			if (!(object instanceof LazySerializableObjectWrapper)) {
 				return (T)object;
 			}
 
-			SerializableObjectWrapper serializableWrapper =
-				(SerializableObjectWrapper)object;
+			LazySerializableObjectWrapper lazySerializableObjectWrapper =
+				(LazySerializableObjectWrapper)object;
 
-			if (serializableWrapper._serializable instanceof LazySerializable) {
+			if (lazySerializableObjectWrapper.
+					_serializable instanceof LazySerializable) {
+
 				LazySerializable lazySerializable =
-					(LazySerializable)serializableWrapper._serializable;
+					(LazySerializable)
+						lazySerializableObjectWrapper._serializable;
 
 				Serializable serializable = lazySerializable.getSerializable();
 
@@ -280,20 +285,20 @@ public class PortletSessionImpl implements LiferayPortletSession {
 					return null;
 				}
 
-				serializableWrapper._serializable = serializable;
+				lazySerializableObjectWrapper._serializable = serializable;
 			}
 
-			return (T)serializableWrapper._serializable;
+			return (T)lazySerializableObjectWrapper._serializable;
 		}
 
 		/**
 		 * The empty constructor is required by {@link Externalizable}. Do not use
 		 * this for any other purpose.
 		 */
-		public SerializableObjectWrapper() {
+		public LazySerializableObjectWrapper() {
 		}
 
-		public SerializableObjectWrapper(Serializable serializable) {
+		public LazySerializableObjectWrapper(Serializable serializable) {
 			_serializable = serializable;
 		}
 
@@ -335,7 +340,7 @@ public class PortletSessionImpl implements LiferayPortletSession {
 		}
 
 		private static final Log _log = LogFactoryUtil.getLog(
-			SerializableObjectWrapper.class);
+			LazySerializableObjectWrapper.class);
 
 		private volatile Serializable _serializable;
 

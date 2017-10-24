@@ -292,6 +292,11 @@ else {
 		Liferay.Util.openWindow(
 			{
 				dialog: {
+					after: {
+						destroy: function(event) {
+							window.location.reload();
+						}
+					},
 					destroyOnHide: true
 				},
 				id: 'pagesVariationsDialog',
@@ -311,6 +316,11 @@ else {
 		Liferay.Util.openWindow(
 			{
 				dialog: {
+					after: {
+						destroy: function(event) {
+							window.location.reload();
+						}
+					},
 					destroyOnHide: true
 				},
 				id: 'sitePagesVariationDialog',

@@ -1,0 +1,14 @@
+{namespace NavigationMenuToolboxLayoutType}
+
+/**
+ * NavigationMenuToolbox.Type "layout" implementation.
+ */
+{deltemplate NavigationMenuToolbox.Type variant="'layout'"}
+	{call NavigationMenuToolboxLayoutComponent.render data="all" /}
+{/deltemplate}
+
+/**
+ * Empty .render placeholder. Necessary for metal-cli AOP.
+ */
+{template .render}
+{/template}

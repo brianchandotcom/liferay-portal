@@ -73,19 +73,11 @@ public class ElseIfPoshiElement extends IfPoshiElement {
 	}
 
 	protected ElseIfPoshiElement(Element element) {
-		super("elseif", element);
+		super(_ELEMENT_NAME, element);
 	}
 
 	protected ElseIfPoshiElement(String readableSyntax) {
-		super("elseif", readableSyntax);
-	}
-
-	protected ElseIfPoshiElement(String name, Element element) {
-		super(name, element);
-	}
-
-	protected ElseIfPoshiElement(String name, String readableSyntax) {
-		super(name, readableSyntax);
+		super(_ELEMENT_NAME, readableSyntax);
 	}
 
 	@Override

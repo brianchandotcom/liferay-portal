@@ -71,10 +71,8 @@ public class IfPoshiElement extends BasePoshiElement {
 
 		sb.append(createReadableBlock(thenReadableSyntax));
 
-		for (PoshiElement elseifElement :
-				(List<PoshiElement>)elements("elseif")) {
-
-			sb.append(elseifElement.toReadableSyntax());
+		for (PoshiElement elseIfElement : toPoshiElements(elements("elseif"))) {
+			sb.append(elseIfElement.toReadableSyntax());
 		}
 
 		if (element("else") != null) {

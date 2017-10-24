@@ -55,6 +55,7 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 
 			<soy:template-renderer
 				context="<%= context %>"
+				dependencies="<%= siteNavigationMenuItemTypeRegistry.getRequireModules() %>"
 				module="site-navigation-admin-web/js/NavigationMenuBuilder.es"
 				templateNamespace="NavigationMenuBuilder.render"
 			/>

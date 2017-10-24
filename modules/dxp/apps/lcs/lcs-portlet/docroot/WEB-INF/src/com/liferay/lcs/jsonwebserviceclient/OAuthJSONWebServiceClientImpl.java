@@ -65,7 +65,8 @@ public class OAuthJSONWebServiceClientImpl extends JSONWebServiceClientImpl {
 
 	@Override
 	protected String execute(HttpRequestBase httpRequestBase)
-		throws JSONWebServiceTransportException {
+		throws JSONWebServiceTransportException,
+			JSONWebServiceInvocationException  {
 
 		if ((_accessToken == null) && (_accessSecret == null)) {
 			throw new JSONWebServiceTransportException.AuthenticationFailure(

@@ -27,7 +27,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  * @author Tibor Lipusz
+ * @deprecated As of 7.0.0, with no direct replacement.
  */
+@Deprecated
 public class AppViewSearchEntryTag extends IncludeTag {
 
 	@Override

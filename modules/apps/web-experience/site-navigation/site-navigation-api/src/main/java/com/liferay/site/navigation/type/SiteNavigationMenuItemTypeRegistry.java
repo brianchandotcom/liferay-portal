@@ -14,9 +14,15 @@
 
 package com.liferay.site.navigation.type;
 
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 
+import java.net.URL;
+
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -32,6 +38,30 @@ import org.osgi.service.component.annotations.ReferencePolicy;
  */
 @Component(immediate = true, service = SiteNavigationMenuItemTypeRegistry.class)
 public class SiteNavigationMenuItemTypeRegistry {
+
+	public Set<String> getRequireModules() {
+		Set<String> requiredModules = new HashSet<>();
+
+		List<SiteNavigationMenuItemType> siteNavigationMenuItemTypes =
+			ListUtil.fromMapValues(_siteNavigationMenuItemTypes);
+
+		for (SiteNavigationMenuItemType siteNavigationMenuItemType :
+				siteNavigationMenuItemTypes) {
+
+			String moduleName = siteNavigationMenuItemType.getModuleName();
+
+			for (URL resourceURL :
+					siteNavigationMenuItemType.getResourceURLs()) {
+
+				String fileName = _getJavaScriptFileName(resourceURL.getFile());
+
+				requiredModules.add(
+					moduleName.concat(StringPool.SLASH).concat(fileName));
+			}
+		}
+
+		return requiredModules;
+	}
 
 	public SiteNavigationMenuItemType getSiteNavigationMenuItemType(
 		SiteNavigationMenuItem siteNavigationMenuItem) {
@@ -72,6 +102,12 @@ public class SiteNavigationMenuItemTypeRegistry {
 
 		_siteNavigationMenuItemTypes.remove(
 			siteNavigationMenuItemType.getType());
+	}
+
+	private String _getJavaScriptFileName(String fileName) {
+		String shortFileName = FileUtil.getShortFileName(fileName);
+
+		return StringUtil.replace(shortFileName, ".js", StringPool.BLANK);
 	}
 
 	private final Map<String, SiteNavigationMenuItemType>

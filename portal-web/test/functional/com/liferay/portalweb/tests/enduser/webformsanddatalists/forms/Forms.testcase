@@ -4568,7 +4568,7 @@
 		<execute macro="FormPortlet#submitSuccessfully" />
 	</command>
 
-	<command name="ViewFieldValidationIsNotBypassedWhenNextButtonIsHitTwice" priority="5">
+	<command name="ViewFieldValidationIsNotBypassedWhenNextButtonIsHitTwice" priority="4">
 		<description message="This is a use case for LPS-70560." />
 
 		<execute macro="Navigator#openURL" />

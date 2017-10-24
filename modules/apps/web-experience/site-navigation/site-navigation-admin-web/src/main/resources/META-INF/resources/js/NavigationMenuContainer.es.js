@@ -7,9 +7,7 @@ import templates from './NavigationMenuContainer.soy';
  * NavigationMenuContainer
  *
  */
-class NavigationMenuContainer extends Component {
-
-}
+class NavigationMenuContainer extends Component {}
 
 Soy.register(NavigationMenuContainer, templates);
 

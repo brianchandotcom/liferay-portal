@@ -20,7 +20,35 @@
 		<check name="BNDBundleInformationCheck" />
 		<check name="BNDDirectoryNameCheck" />
 		<check name="BNDExportsCheck">
-			<property name="allowedExportPackageDirNames" value="     adaptive-media-image-service,     chat/chat-service,     collaboration/blogs/blogs-service/,     collaboration/bookmarks/bookmarks-service,     collaboration/document-library/document-library-service,     collaboration/microblogs/microblogs-service,     collaboration/wiki/wiki-service,     dynamic-data-mapping-service,     forms-and-workflow/calendar/calendar-service,     forms-and-workflow/dynamic-data-lists/dynamic-data-lists-service,     foundation/mobile-device-rules/mobile-device-rules-service,     foundation/portal-security/portal-security-service-access-policy-service,     journal-service,     knowledge-base/knowledge-base-service,     mail-reader/mail-reader-service,     marketplace/marketplace-service,     portal-security-wedeploy-auth/portal-security-wedeploy-auth-service,     push-notifications/push-notifications-service,     shopping/shopping-service,     social-networking/social-networking-service,     social-private-messaging/social-private-messaging-service,     sync/sync-service,     twitter/twitter-service,     web-experience/asset/asset-display-template-service,     web-experience/asset/asset-service,     web-experience/fragment/fragment-service,     web-experience/export-import/export-import-service,     web-experience/layout/layout-page-template-service,     web-experience/site-navigation/site-navigation-service" />
+			<property name="allowedExportPackageDirName" value="adaptive-media-image-service" />
+			<property name="allowedExportPackageDirName" value="chat/chat-service" />
+			<property name="allowedExportPackageDirName" value="collaboration/blogs/blogs-service" />
+			<property name="allowedExportPackageDirName" value="collaboration/bookmarks/bookmarks-service" />
+			<property name="allowedExportPackageDirName" value="collaboration/document-library/document-library-service" />
+			<property name="allowedExportPackageDirName" value="collaboration/microblogs/microblogs-service" />
+			<property name="allowedExportPackageDirName" value="collaboration/wiki/wiki-service" />
+			<property name="allowedExportPackageDirName" value="dynamic-data-mapping-service" />
+			<property name="allowedExportPackageDirName" value="forms-and-workflow/calendar/calendar-service" />
+			<property name="allowedExportPackageDirName" value="forms-and-workflow/dynamic-data-lists/dynamic-data-lists-service" />
+			<property name="allowedExportPackageDirName" value="foundation/mobile-device-rules/mobile-device-rules-service" />
+			<property name="allowedExportPackageDirName" value="foundation/portal-security/portal-security-service-access-policy-service" />
+			<property name="allowedExportPackageDirName" value="journal-service" />
+			<property name="allowedExportPackageDirName" value="knowledge-base/knowledge-base-service" />
+			<property name="allowedExportPackageDirName" value="mail-reader/mail-reader-service" />
+			<property name="allowedExportPackageDirName" value="marketplace/marketplace-service" />
+			<property name="allowedExportPackageDirName" value="portal-security-wedeploy-auth/portal-security-wedeploy-auth-service" />
+			<property name="allowedExportPackageDirName" value="push-notifications/push-notifications-service" />
+			<property name="allowedExportPackageDirName" value="shopping/shopping-service" />
+			<property name="allowedExportPackageDirName" value="social-networking/social-networking-service" />
+			<property name="allowedExportPackageDirName" value="social-private-messaging/social-private-messaging-service" />
+			<property name="allowedExportPackageDirName" value="sync/sync-service" />
+			<property name="allowedExportPackageDirName" value="twitter/twitter-service" />
+			<property name="allowedExportPackageDirName" value="web-experience/asset/asset-display-template-service" />
+			<property name="allowedExportPackageDirName" value="web-experience/asset/asset-service" />
+			<property name="allowedExportPackageDirName" value="web-experience/export-import/export-import-service" />
+			<property name="allowedExportPackageDirName" value="web-experience/fragment/fragment-service" />
+			<property name="allowedExportPackageDirName" value="web-experience/layout/layout-page-template-service" />
+			<property name="allowedExportPackageDirName" value="web-experience/site-navigation/site-navigation-service" />
 		</check>
 		<check name="BNDIncludeResourceCheck" />
 		<check name="BNDWebContextPathCheck" />

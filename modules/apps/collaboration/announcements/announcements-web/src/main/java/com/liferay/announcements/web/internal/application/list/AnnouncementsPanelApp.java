@@ -14,7 +14,7 @@
 
 package com.liferay.announcements.web.internal.application.list;
 
-import com.liferay.announcements.web.constants.AnnouncementsPortletKeys;
+import com.liferay.announcements.constants.AnnouncementsPortletKeys;
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;

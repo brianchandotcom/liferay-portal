@@ -14,8 +14,8 @@
 
 package com.liferay.announcements.web.internal.display.context;
 
+import com.liferay.announcements.constants.AnnouncementsPortletKeys;
 import com.liferay.announcements.kernel.util.AnnouncementsUtil;
-import com.liferay.announcements.web.constants.AnnouncementsPortletKeys;
 import com.liferay.announcements.web.internal.display.context.util.AnnouncementsRequestHelper;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;

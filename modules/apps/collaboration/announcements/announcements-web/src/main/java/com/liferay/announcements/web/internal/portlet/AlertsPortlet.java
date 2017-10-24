@@ -14,7 +14,7 @@
 
 package com.liferay.announcements.web.internal.portlet;
 
-import com.liferay.announcements.web.constants.AnnouncementsPortletKeys;
+import com.liferay.announcements.constants.AnnouncementsPortletKeys;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 

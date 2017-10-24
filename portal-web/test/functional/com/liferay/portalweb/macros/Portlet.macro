@@ -231,6 +231,8 @@
 	</command>
 
 	<command name="configureCustomTitleViaLookandfeelPG">
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 		<execute macro="Navigator#gotoNavTab">
 			<var name="navTab" value="General" />
 		</execute>

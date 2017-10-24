@@ -2736,6 +2736,15 @@
 
 		<execute function="Click" locator1="TextInput#TITLE" />
 
+		<execute macro="AlloyEditor#addTitle">
+			<var name="title" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="AlloyEditor#typeEditor">
+			<var name="content" value="WC WebContent Content" />
+			<var name="editor" value="HTML" />
+		</execute>
+
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />

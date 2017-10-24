@@ -103,8 +103,9 @@
 	</command>
 
 	<command name="addSubtitle">
-		<execute function="Type#typeEditor" locator1="AlloyEditor#EDITOR" value1="${entrySubtitle}">
-			<var name="key_editor" value="subtitle" />
+		<execute macro="AlloyEditor#typeEditor">
+			<var name="content" value="${entrySubtitle}" />
+			<var name="editor" value="subtitle" />
 		</execute>
 	</command>
 
@@ -285,8 +286,9 @@
 			<var name="key_editor" value="subtitle" />
 		</execute>
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#EDITOR" value1="${entrySubtitleEdit}">
-			<var name="key_editor" value="subtitle" />
+		<execute macro="AlloyEditor#typeEditor">
+			<var name="content" value="${entrySubtitleEdit}" />
+			<var name="editor" value="subtitle" />
 		</execute>
 	</command>
 

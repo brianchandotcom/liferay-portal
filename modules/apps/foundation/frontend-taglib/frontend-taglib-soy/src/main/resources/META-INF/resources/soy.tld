@@ -26,6 +26,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Additional dependencies.</description>
+			<name>dependencies</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>The AMD module of the component's JavaScript.</description>
 			<name>module</name>
 			<required>false</required>

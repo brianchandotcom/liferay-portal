@@ -7153,6 +7153,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<antcall target="prepare-selenium-openid-properties" />
 		<antcall target="prepare-selenium-recaptcha-properties" />
 		<antcall target="prepare-selenium-required-properties" />
+		<antcall target="prepare-selenium-sharepoint-properties" />
 		<antcall target="prepare-selenium-testcase-properties" />
 
 		<if>
@@ -8039,6 +8040,107 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			selenium.logger.enabled=${test.selenium.logger.enabled}
 			test.class.command.name=${test.class}
 		</echo>
+	</target>
+
+	<target name="prepare-selenium-sharepoint-properties">
+		<if>
+			<isset property="sharepoint.oauth.authorization.grant.endpoint" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					sharepoint.oauth.authorization.grant.endpoint=${sharepoint.oauth.authorization.grant.endpoint}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="sharepoint.oauth.authorization.token.endpoint" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					sharepoint.oauth.authorization.token.endpoint=${sharepoint.oauth.authorization.token.endpoint}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="sharepoint.oauth.client.id" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					sharepoint.oauth.client.id=${sharepoint.oauth.client.id}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="sharepoint.oauth.client.secret" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					sharepoint.oauth.client.secret=${sharepoint.oauth.client.secret}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="sharepoint.oauth.configuration.name" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					sharepoint.oauth.configuration.name=${sharepoint.oauth.configuration.name}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="sharepoint.oauth.configuration.resource" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					sharepoint.oauth.configuration.resource=${sharepoint.oauth.configuration.resource}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="sharepoint.oauth.configuration.scope" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					sharepoint.oauth.configuration.scope=${sharepoint.oauth.configuration.scope}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="sharepoint.oauth.site.domain" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					sharepoint.oauth.site.domain=${sharepoint.oauth.site.domain}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="sharepoint.oauth.tenant.id" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					sharepoint.oauth.tenant.id=${sharepoint.oauth.tenant.id}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="sharepoint.oauth.user.name" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					sharepoint.oauth.user.name=${sharepoint.oauth.user.name}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="sharepoint.oauth.user.password" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					sharepoint.oauth.user.password=${sharepoint.oauth.user.password}
+				</echo>
+			</then>
+		</if>
 	</target>
 
 	<target name="prepare-selenium-testcase-properties">

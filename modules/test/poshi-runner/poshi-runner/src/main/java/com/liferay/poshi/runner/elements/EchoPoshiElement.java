@@ -74,7 +74,6 @@ public class EchoPoshiElement extends BasePoshiElement {
 		super(name, readableSyntax);
 	}
 
-
 	@Override
 	protected String createReadableBlock(String content) {
 		StringBuilder sb = new StringBuilder();

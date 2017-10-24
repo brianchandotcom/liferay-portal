@@ -17,7 +17,6 @@ package com.liferay.poshi.runner.elements;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.liferay.poshi.runner.util.Dom4JUtil;
 import org.dom4j.Element;
 
 /**

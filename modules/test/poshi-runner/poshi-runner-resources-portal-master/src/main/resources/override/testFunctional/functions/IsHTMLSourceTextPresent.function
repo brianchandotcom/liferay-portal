@@ -2,6 +2,6 @@
 	<command name="isHTMLSourceTextPresent">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.IsHTMLSourceTextPresent#isHTMLSourceTextPresent" />
 	</command>
 </definition>

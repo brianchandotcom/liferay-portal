@@ -2,7 +2,7 @@
 	<command name="assertVisible">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.AssertVisible#assertVisible" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

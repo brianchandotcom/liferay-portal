@@ -44,7 +44,7 @@
 	<command name="checkToggleSwitch">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.Check#checkToggleSwitch" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -54,7 +54,7 @@
 	<command name="clickAt">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.Check#clickAt" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -64,7 +64,7 @@
 	<command name="toggleSwitch">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.Check#toggleSwitch" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

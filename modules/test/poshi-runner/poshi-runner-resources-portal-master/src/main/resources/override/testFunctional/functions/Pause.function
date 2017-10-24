@@ -2,6 +2,6 @@
 	<command name="pause" summary-ignore="true">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.Pause#pause" />
 	</command>
 </definition>

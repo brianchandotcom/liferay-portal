@@ -2,7 +2,7 @@
 	<command name="assertNotLocation">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.AssertNotLocation#assertNotLocation" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

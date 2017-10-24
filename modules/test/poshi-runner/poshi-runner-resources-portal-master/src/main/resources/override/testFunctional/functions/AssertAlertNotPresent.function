@@ -2,7 +2,7 @@
 	<command name="assertAlertNotPresent">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.AssertAlertNotPresent#assertAlertNotPresent" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

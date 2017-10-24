@@ -2,6 +2,6 @@
 	<command name="assertValue">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.AssertValue#assertValue" />
 	</command>
 </definition>

@@ -2,7 +2,7 @@
 	<command name="mouseMove">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.MouseMove#mouseMove" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -12,7 +12,7 @@
 	<command name="mouseMoveAt">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.MouseMove#mouseMoveAt" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

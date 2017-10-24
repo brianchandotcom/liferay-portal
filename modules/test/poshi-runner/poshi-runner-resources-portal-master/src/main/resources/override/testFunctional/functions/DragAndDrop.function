@@ -2,7 +2,7 @@
 	<command name="dragAndDrop">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.DragAndDrop#dragAndDrop" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -44,7 +44,7 @@
 	<command name="dragAndDropToObject">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.DragAndDrop#dragAndDropToObject" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -54,7 +54,7 @@
 	<command name="dragAndDropToObjectNotVisible">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.DragAndDrop#dragAndDropToObjectNotVisible" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

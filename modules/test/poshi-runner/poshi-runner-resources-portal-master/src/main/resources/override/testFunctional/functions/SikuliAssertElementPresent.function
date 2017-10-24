@@ -2,7 +2,7 @@
 	<command name="sikuliAssertElementPresent">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.SikuliAssertElementPresent#sikuliAssertElementPresent" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

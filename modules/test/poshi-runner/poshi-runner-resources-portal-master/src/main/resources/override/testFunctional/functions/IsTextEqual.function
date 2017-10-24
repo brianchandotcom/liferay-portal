@@ -2,24 +2,24 @@
 	<command name="isPartialText">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.IsTextEqual#isPartialText" />
 	</command>
 
 	<command name="isText">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.IsTextEqual#isText" />
 	</command>
 
 	<command name="isTextEqual">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.IsTextEqual#isTextEqual" />
 	</command>
 
 	<command name="isValue">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.IsTextEqual#isValue" />
 	</command>
 </definition>

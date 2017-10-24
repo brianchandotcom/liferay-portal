@@ -2,7 +2,7 @@
 	<command name="click">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.Click#click" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -12,7 +12,7 @@
 	<command name="clickAt">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.Click#clickAt" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -40,7 +40,7 @@
 	<command name="clickNoMouseOver">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.Click#clickNoMouseOver" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -50,7 +50,7 @@
 	<command name="clickNoWaitForVisible">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.Click#clickNoWaitForVisible" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -79,6 +79,7 @@
 
 		<if>
 			<condition argument1="//div[contains(@class,'cke_editable_inline')]" selenium="isElementPresent" />
+
 			<then>
 				<execute argument1="//script[contains(@src,'http://localhost:8080/o/frontend-editors-web/ckeditor/plugins/wsc/lang/en.js')]" selenium="waitForElementPresent" />
 			</then>
@@ -92,7 +93,7 @@
 	<command name="makeVisibleClickAt">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.Click#makeVisibleClickAt" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -102,7 +103,7 @@
 	<command name="mouseOverClick">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.Click#mouseOverClick" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -114,7 +115,7 @@
 
 		<execute argument1="1000" selenium="pause" />
 
-		<super />
+		<execute function="Poshi.Click#pauseClickAt" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -126,7 +127,7 @@
 
 		<execute argument1="1000" selenium="pause" />
 
-		<super />
+		<execute function="Poshi.Click#pauseMakeVisibleClickAt" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

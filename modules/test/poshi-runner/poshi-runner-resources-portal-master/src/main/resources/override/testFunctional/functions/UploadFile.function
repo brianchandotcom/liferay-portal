@@ -2,7 +2,7 @@
 	<command name="uploadFile">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.UploadFile#uploadFile" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

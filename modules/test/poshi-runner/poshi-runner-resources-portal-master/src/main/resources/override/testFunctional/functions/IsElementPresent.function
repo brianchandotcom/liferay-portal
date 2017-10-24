@@ -2,13 +2,13 @@
 	<command name="isElementPresent">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.IsElementPresent#isElementPresent" />
 	</command>
 
 	<command name="isElementPresentAfterWait">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.IsElementPresent#isElementPresentAfterWait" />
 	</command>
 
 	<command name="isElementPresentClickNavigation">
@@ -30,7 +30,7 @@
 	<command name="isVisible">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.IsElementPresent#isVisible" />
 	</command>
 
 	<command name="pauseIsElementPresent">
@@ -44,6 +44,6 @@
 	<command name="waitForVisible">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.IsElementPresent#waitForVisible" />
 	</command>
 </definition>

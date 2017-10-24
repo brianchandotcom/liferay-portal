@@ -2,7 +2,7 @@
 	<command name="assertNotChecked">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.AssertNotChecked#assertNotChecked" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -12,7 +12,7 @@
 	<command name="assertNotCheckedHiddenToggleSwitch">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.AssertNotChecked#assertNotCheckedHiddenToggleSwitch" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -22,7 +22,7 @@
 	<command name="assertNotCheckedToggleSwitch">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.AssertNotChecked#assertNotCheckedToggleSwitch" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

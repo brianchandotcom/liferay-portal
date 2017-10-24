@@ -2,7 +2,7 @@
 	<command name="doubleClick">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.DoubleClick#doubleClick" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -12,7 +12,7 @@
 	<command name="doubleClickAt">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.DoubleClick#doubleClickAt" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

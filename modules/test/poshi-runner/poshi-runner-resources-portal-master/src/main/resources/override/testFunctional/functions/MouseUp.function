@@ -2,7 +2,7 @@
 	<command name="javaScriptMouseUp">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.MouseUp#javaScriptMouseUp" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -12,7 +12,7 @@
 	<command name="mouseRelease">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.MouseUp#mouseRelease" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -22,7 +22,7 @@
 	<command name="mouseUp">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.MouseUp#mouseUp" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -32,7 +32,7 @@
 	<command name="mouseUpAt">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.MouseUp#mouseUpAt" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

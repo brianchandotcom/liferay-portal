@@ -143,7 +143,17 @@
 		<check name="JavaModuleServiceReferenceCheck" />
 		<check name="JavaModuleTestCheck" />
 		<check name="JavaOSGiReferenceCheck">
-			<property name="serviceReferenceUtilClassNames" value="     com.liferay.exportimport.kernel.lar.ExportImportHelperUtil,     com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistryUtil,     com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil,     com.liferay.exportimport.kernel.lar.PortletDataHandlerStatusMessageSenderUtil,     com.liferay.exportimport.kernel.staging.StagingUtil,     com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil,     com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplayFactoryUtil,     com.liferay.portal.kernel.captcha.CaptchaUtil,     com.liferay.portal.kernel.comment.CommentManagerUtil,     com.liferay.portal.kernel.util.HttpUtil,     com.liferay.portal.kernel.util.PortalUtil" />
+			<property name="serviceReferenceUtilClassName" value="com.liferay.exportimport.kernel.lar.ExportImportHelperUtil" />
+			<property name="serviceReferenceUtilClassName" value="com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistryUtil" />
+			<property name="serviceReferenceUtilClassName" value="com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil" />
+			<property name="serviceReferenceUtilClassName" value="com.liferay.exportimport.kernel.lar.PortletDataHandlerStatusMessageSenderUtill" />
+			<property name="serviceReferenceUtilClassName" value="com.liferay.exportimport.kernel.staging.StagingUtil" />
+			<property name="serviceReferenceUtilClassName" value="com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil" />
+			<property name="serviceReferenceUtilClassName" value="com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplayFactoryUtil" />
+			<property name="serviceReferenceUtilClassName" value="com.liferay.portal.kernel.captcha.CaptchaUtil" />
+			<property name="serviceReferenceUtilClassName" value="com.liferay.portal.kernel.comment.CommentManagerUtil" />
+			<property name="serviceReferenceUtilClassName" value="com.liferay.portal.kernel.util.HttpUtil" />
+			<property name="serviceReferenceUtilClassName" value="com.liferay.portal.kernel.util.PortalUtil" />
 		</check>
 
 		<!-- Plugins checks -->

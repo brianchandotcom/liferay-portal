@@ -52,8 +52,7 @@ public class EntryServiceImpl extends EntryServiceBaseImpl {
 
 		JSONObject jsonObject = null;
 
-		PermissionChecker permissionChecker = permissionCheckerFactory.create(
-			user);
+		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if (permissionChecker.isCompanyAdmin()) {
 			contacts = entryLocalService.searchUsersAndContacts(

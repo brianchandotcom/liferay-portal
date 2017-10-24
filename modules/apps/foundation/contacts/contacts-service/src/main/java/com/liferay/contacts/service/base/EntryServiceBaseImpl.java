@@ -336,8 +336,6 @@ public abstract class EntryServiceBaseImpl extends BaseServiceImpl
 	protected EntryFinder entryFinder;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.security.permission.PermissionCheckerFactory.class)
-	protected com.liferay.portal.kernel.security.permission.PermissionCheckerFactory permissionCheckerFactory;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
 	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameService.class)

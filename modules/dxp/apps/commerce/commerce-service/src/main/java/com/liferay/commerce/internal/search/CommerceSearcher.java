@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.search;
+package com.liferay.commerce.internal.search;
 
 import com.liferay.commerce.model.CommercePriceEntry;
 import com.liferay.commerce.model.CommercePriceList;

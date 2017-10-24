@@ -66,12 +66,6 @@ import javax.servlet.ServletContext;
 public class LayoutTemplateLocalServiceImpl
 	extends LayoutTemplateLocalServiceBaseImpl {
 
-	public static final String DEFAULT_LANG_TYPE =
-		TemplateConstants.LANG_TYPE_VM;
-
-	public static final Set<String> supportedLangTypes = new HashSet<>(
-		Arrays.asList(DEFAULT_LANG_TYPE, TemplateConstants.LANG_TYPE_FTL));
-
 	@Override
 	public String getContent(
 		String layoutTemplateId, boolean standard, String themeId) {
@@ -123,7 +117,7 @@ public class LayoutTemplateLocalServiceImpl
 			layoutTemplateId, standard, themeId);
 
 		if (layoutTemplate == null) {
-			return DEFAULT_LANG_TYPE;
+			return TemplateConstants.LANG_TYPE_VM;
 		}
 
 		return _getSupportedLangType(layoutTemplate);
@@ -533,12 +527,12 @@ public class LayoutTemplateLocalServiceImpl
 		if (index != -1) {
 			String langType = templatePath.substring(index + 1);
 
-			if (supportedLangTypes.contains(langType)) {
+			if (_supportedLangTypes.contains(langType)) {
 				return langType;
 			}
 		}
 
-		return DEFAULT_LANG_TYPE;
+		return TemplateConstants.LANG_TYPE_VM;
 	}
 
 	private Map<String, LayoutTemplate> _getThemesCustom(String themeId) {
@@ -612,6 +606,9 @@ public class LayoutTemplateLocalServiceImpl
 		new HashMap<>();
 	private static final Map<String, Map<String, LayoutTemplate>>
 		_standardThemes = new HashMap<>();
+	private static final Set<String> _supportedLangTypes = new HashSet<>(
+		Arrays.asList(
+			TemplateConstants.LANG_TYPE_VM, TemplateConstants.LANG_TYPE_FTL));
 	private static final Map<String, LayoutTemplate> _warCustom =
 		new LinkedHashMap<>();
 	private static final Map<String, LayoutTemplate> _warStandard =

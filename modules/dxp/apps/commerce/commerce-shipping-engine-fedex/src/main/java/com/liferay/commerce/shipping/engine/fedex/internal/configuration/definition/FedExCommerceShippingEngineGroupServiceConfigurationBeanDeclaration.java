@@ -12,14 +12,24 @@
  * details.
  */
 
-package com.liferay.commerce.shipping.fedex.internal.constants;
+package com.liferay.commerce.shipping.engine.fedex.internal.configuration.definition;
+
+import com.liferay.commerce.shipping.engine.fedex.internal.configuration.FedExCommerceShippingEngineGroupServiceConfiguration;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class FedExCommerceShippingEngineConstants {
+@Component
+public class
+	FedExCommerceShippingEngineGroupServiceConfigurationBeanDeclaration
+		implements ConfigurationBeanDeclaration {
 
-	public static final String SERVICE_NAME =
-		"com.liferay.commerce.shipping.fedex";
+	@Override
+	public Class<?> getConfigurationBeanClass() {
+		return FedExCommerceShippingEngineGroupServiceConfiguration.class;
+	}
 
 }

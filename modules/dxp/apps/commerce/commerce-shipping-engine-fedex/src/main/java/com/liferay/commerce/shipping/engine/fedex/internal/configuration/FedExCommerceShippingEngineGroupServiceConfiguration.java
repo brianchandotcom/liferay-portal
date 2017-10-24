@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.shipping.fedex.internal.configuration;
+package com.liferay.commerce.shipping.engine.fedex.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 	category = "commerce", scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
-	id = "com.liferay.commerce.shipping.fedex.internal.configuration.FedExCommerceShippingEngineConfiguration",
+	id = "com.liferay.commerce.shipping.engine.fedex.internal.configuration.FedExCommerceShippingEngineConfiguration",
 	localization = "content/Language",
 	name = "commerce-shipping-engine-fedex-group-service-configuration-name"
 )

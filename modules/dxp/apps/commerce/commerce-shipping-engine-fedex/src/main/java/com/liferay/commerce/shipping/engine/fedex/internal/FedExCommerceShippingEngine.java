@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.commerce.shipping.fedex.internal;
+package com.liferay.commerce.shipping.engine.fedex.internal;
 
 import com.liferay.commerce.model.CommerceShippingEngine;
-import com.liferay.commerce.shipping.fedex.internal.configuration.FedExCommerceShippingEngineGroupServiceConfiguration;
-import com.liferay.commerce.shipping.fedex.internal.constants.FedExCommerceShippingEngineConstants;
+import com.liferay.commerce.shipping.engine.fedex.internal.configuration.FedExCommerceShippingEngineGroupServiceConfiguration;
+import com.liferay.commerce.shipping.engine.fedex.internal.constants.FedExCommerceShippingEngineConstants;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -137,7 +137,7 @@ public class FedExCommerceShippingEngine implements CommerceShippingEngine {
 	private Portal _portal;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.shipping.fedex)"
+		target = "(osgi.web.symbolicname=com.liferay.commerce.shipping.engine.fedex)"
 	)
 	private ServletContext _servletContext;
 

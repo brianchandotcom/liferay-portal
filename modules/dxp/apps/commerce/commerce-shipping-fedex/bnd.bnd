@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Commerce Shipping FedEx
-Bundle-SymbolicName: com.liferay.commerce.shipping.fedex
-Bundle-Version: 1.0.0
-Web-ContextPath: /commerce-shipping-fedex

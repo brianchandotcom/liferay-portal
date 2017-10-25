@@ -40,10 +40,13 @@ public interface ChatGroupServiceConfiguration {
 	 * "TYPE_BI_ROMANTIC_PARTNER", and 4 for "TYPE_BI_SIBLING" from
 	 * com.liferay.social.kernel.model.SocialRelationConstants
 	 */
-	@Meta.AD(deflt = "2,12", required = false)
+	@Meta.AD(
+		deflt = "2,12", name = "buddy-list-allowed-social-relation-types",
+		required = false
+	)
 	public int[] buddyListAllowedSocialRelationTypes();
 
-	@Meta.AD(deflt = "500", required = false)
+	@Meta.AD(deflt = "500", name = "buddy-list-max-buddies", required = false)
 	public int buddyListMaxBuddies();
 
 	/**
@@ -57,7 +60,7 @@ public interface ChatGroupServiceConfiguration {
 	 * will include a combined list of users from the values of "sites" and
 	 * "social".
 	 */
-	@Meta.AD(deflt = "all", required = false)
+	@Meta.AD(deflt = "all", name = "buddy-list-strategy", required = false)
 	public String buddyListStrategy();
 
 	/**
@@ -65,31 +68,35 @@ public interface ChatGroupServiceConfiguration {
 	 * determining a user's list of buddies. This property is only used if the
 	 * property "buddy.list.strategy" is set to "sites" or "friends|sites".
 	 */
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(deflt = "", name = "buddy-list-site-excludes", required = false)
 	public String[] buddyListSiteExcludes();
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(deflt = "false", name = "jabber-enabled", required = false)
 	public boolean jabberEnabled();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "jabber-import-user-enabled", required = false
+	)
 	public boolean jabberImportUserEnabled();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(deflt = "", name = "jabber-host", required = false)
 	public String jabberHost();
 
-	@Meta.AD(deflt = "5222", required = false)
+	@Meta.AD(deflt = "5222", name = "jabber-port", required = false)
 	public int jabberPort();
 
-	@Meta.AD(deflt = "Liferay", required = false)
+	@Meta.AD(deflt = "Liferay", name = "jabber-resource", required = false)
 	public String jabberResource();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(deflt = "", name = "jabber-service-name", required = false)
 	public String jabberServiceName();
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(
+		deflt = "false", name = "jabber-sock5-proxy-enabled", required = false
+	)
 	public boolean jabberSock5ProxyEnabled();
 
-	@Meta.AD(deflt = "-1", required = false)
+	@Meta.AD(deflt = "-1", name = "jabber-sock5-proxy-port", required = false)
 	public int jabberSock5ProxyPort();
 
 }

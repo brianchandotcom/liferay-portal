@@ -1185,7 +1185,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	public String getLocation() throws Exception {
 		List<Exception> exceptions = new ArrayList<>();
 
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < PropsValues.GET_LOCATION_RETRIES; i++) {
 			FutureTask<String> futureTask = new FutureTask<>(
 				new Callable<String>() {
 
@@ -1212,7 +1212,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 			try {
 				String location = futureTask.get(
-					PropsValues.TIMEOUT_EXPLICIT_WAIT, TimeUnit.SECONDS);
+					PropsValues.GET_LOCATION_WAIT, TimeUnit.SECONDS);
 
 				return location;
 			}

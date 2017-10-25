@@ -1,3 +1,5 @@
+import aQute.bnd.osgi.Domain
+
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
@@ -15,6 +17,18 @@ Set<Project> projectTemplateProjects = project.parent.subprojects.findAll {
 	it.name.startsWith "project-templates-"
 }
 
+buildscript {
+	dependencies {
+		classpath group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.2.0"
+	}
+
+	repositories {
+		maven {
+			url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
 bundle {
 	includeTransitiveDependencies = true
 }
@@ -22,6 +36,9 @@ bundle {
 configurations {
 	mavenDistribution
 	projectTemplates
+	projectTemplatesTests
+
+	testCompile.extendsFrom(projectTemplatesTests)
 }
 
 dependencies {
@@ -29,17 +46,33 @@ dependencies {
 
 	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: mavenDistributionVersion
 
-	projectTemplates project(":sdk:project-templates-activator")
-	projectTemplates project(":sdk:project-templates-api")
-	projectTemplates project(":sdk:project-templates-content-targeting-report")
-	projectTemplates project(":sdk:project-templates-content-targeting-rule")
-	projectTemplates project(":sdk:project-templates-content-targeting-tracking-action")
-	projectTemplates project(":sdk:project-templates-control-menu-entry")
-	projectTemplates project(":sdk:project-templates-form-field")
-	projectTemplates project(":sdk:project-templates-fragment")
-	projectTemplates project(":sdk:project-templates-freemarker-portlet")
-	projectTemplates project(":sdk:project-templates-layout-template")
-	projectTemplates project(":sdk:project-templates-mvc-portlet")
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.activator", version: "1.0.3"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.api", version: "1.0.4"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.content.targeting.report", version: "1.0.3"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.content.targeting.rule", version: "1.0.3"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.content.targeting.tracking.action", version: "1.0.3"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.control.menu.entry", version: "1.0.3"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.form.field", version: "1.0.1"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.fragment", version: "1.0.3"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.freemarker.portlet", version: "1.0.0"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.layout.template", version: "1.0.1"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.mvc.portlet", version: "1.0.3"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.panel.app", version: "1.0.3"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.portlet", version: "1.0.3"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.portlet.configuration.icon", version: "1.0.3"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.portlet.provider", version: "1.0.3"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.portlet.toolbar.contributor", version: "1.0.3"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.rest", version: "1.0.2"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.service", version: "1.0.3"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.service.builder", version: "1.0.4"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.service.wrapper", version: "1.0.3"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.simulation.panel.entry", version: "1.0.3"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.soy.portlet", version: "1.0.0"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.spring.mvc.portlet", version: "1.0.0"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.template.context.contributor", version: "1.0.3"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.theme", version: "1.0.4"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.theme.contributor", version: "1.0.2"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.workspace", version: "1.0.4"
 	projectTemplates project(":sdk:project-templates-npm-angular-portlet")
 	projectTemplates project(":sdk:project-templates-npm-billboardjs-portlet")
 	projectTemplates project(":sdk:project-templates-npm-isomorphic-portlet")
@@ -48,24 +81,46 @@ dependencies {
 	projectTemplates project(":sdk:project-templates-npm-portlet")
 	projectTemplates project(":sdk:project-templates-npm-react-portlet")
 	projectTemplates project(":sdk:project-templates-npm-vuejs-portlet")
-	projectTemplates project(":sdk:project-templates-panel-app")
-	projectTemplates project(":sdk:project-templates-portlet")
-	projectTemplates project(":sdk:project-templates-portlet-configuration-icon")
-	projectTemplates project(":sdk:project-templates-portlet-provider")
-	projectTemplates project(":sdk:project-templates-portlet-toolbar-contributor")
-	projectTemplates project(":sdk:project-templates-rest")
-	projectTemplates project(":sdk:project-templates-service")
-	projectTemplates project(":sdk:project-templates-service-builder")
-	projectTemplates project(":sdk:project-templates-service-wrapper")
-	projectTemplates project(":sdk:project-templates-simulation-panel-entry")
-	projectTemplates project(":sdk:project-templates-soy-portlet")
-	projectTemplates project(":sdk:project-templates-spring-mvc-portlet")
-	projectTemplates project(":sdk:project-templates-template-context-contributor")
-	projectTemplates project(":sdk:project-templates-theme")
-	projectTemplates project(":sdk:project-templates-theme-contributor")
 	projectTemplates project(":sdk:project-templates-war-hook")
 	projectTemplates project(":sdk:project-templates-war-mvc-portlet")
-	projectTemplates project(":sdk:project-templates-workspace")
+
+	projectTemplatesTests project(":sdk:project-templates-activator")
+	projectTemplatesTests project(":sdk:project-templates-api")
+	projectTemplatesTests project(":sdk:project-templates-content-targeting-report")
+	projectTemplatesTests project(":sdk:project-templates-content-targeting-rule")
+	projectTemplatesTests project(":sdk:project-templates-content-targeting-tracking-action")
+	projectTemplatesTests project(":sdk:project-templates-control-menu-entry")
+	projectTemplatesTests project(":sdk:project-templates-form-field")
+	projectTemplatesTests project(":sdk:project-templates-fragment")
+	projectTemplatesTests project(":sdk:project-templates-freemarker-portlet")
+	projectTemplatesTests project(":sdk:project-templates-layout-template")
+	projectTemplatesTests project(":sdk:project-templates-mvc-portlet")
+	projectTemplatesTests project(":sdk:project-templates-npm-angular-portlet")
+	projectTemplatesTests project(":sdk:project-templates-npm-billboardjs-portlet")
+	projectTemplatesTests project(":sdk:project-templates-npm-isomorphic-portlet")
+	projectTemplatesTests project(":sdk:project-templates-npm-jquery-portlet")
+	projectTemplatesTests project(":sdk:project-templates-npm-metaljs-portlet")
+	projectTemplatesTests project(":sdk:project-templates-npm-portlet")
+	projectTemplatesTests project(":sdk:project-templates-npm-react-portlet")
+	projectTemplatesTests project(":sdk:project-templates-npm-vuejs-portlet")
+	projectTemplatesTests project(":sdk:project-templates-panel-app")
+	projectTemplatesTests project(":sdk:project-templates-portlet")
+	projectTemplatesTests project(":sdk:project-templates-portlet-configuration-icon")
+	projectTemplatesTests project(":sdk:project-templates-portlet-provider")
+	projectTemplatesTests project(":sdk:project-templates-portlet-toolbar-contributor")
+	projectTemplatesTests project(":sdk:project-templates-rest")
+	projectTemplatesTests project(":sdk:project-templates-service")
+	projectTemplatesTests project(":sdk:project-templates-service-builder")
+	projectTemplatesTests project(":sdk:project-templates-service-wrapper")
+	projectTemplatesTests project(":sdk:project-templates-simulation-panel-entry")
+	projectTemplatesTests project(":sdk:project-templates-soy-portlet")
+	projectTemplatesTests project(":sdk:project-templates-spring-mvc-portlet")
+	projectTemplatesTests project(":sdk:project-templates-template-context-contributor")
+	projectTemplatesTests project(":sdk:project-templates-theme")
+	projectTemplatesTests project(":sdk:project-templates-theme-contributor")
+	projectTemplatesTests project(":sdk:project-templates-war-hook")
+	projectTemplatesTests project(":sdk:project-templates-war-mvc-portlet")
+	projectTemplatesTests project(":sdk:project-templates-workspace")
 
 	provided group: "org.apache.maven.archetype", name: "archetype-common", version: "2.4"
 
@@ -83,6 +138,10 @@ liferayOSGi {
 
 processResources {
 	from configurations.projectTemplates
+}
+
+processTestResources {
+	from configurations.projectTemplatesTests
 }
 
 test {
@@ -126,16 +185,11 @@ writeProjectTemplateVersions {
 	doLast {
 		Properties properties = new Properties()
 
-		for (Project projectTemplateProject in projectTemplateProjects) {
-			File bndFile = projectTemplateProject.file("bnd.bnd")
-
-			Properties bndProperties = new Properties()
-
-			bndFile.withInputStream {
-				bndProperties.load it
-			}
-
-			properties.setProperty projectTemplateProject.name.substring(18), bndProperties["Bundle-Version"]
+		for (File projectTemplateTestFile in configurations.projectTemplatesTests) {
+			Domain domain = Domain.domain(projectTemplateTestFile)
+			String bundleSymbolicName = domain.bundleSymbolicName.key
+			String bundleVersion = domain.bundleVersion
+			properties.setProperty bundleSymbolicName, bundleVersion
 		}
 
 		File projectTemplateVersionsFile = new File(buildDir, "project-template-versions.properties")

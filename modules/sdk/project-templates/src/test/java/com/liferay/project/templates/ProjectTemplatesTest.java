@@ -1965,6 +1965,12 @@ public class ProjectTemplatesTest {
 
 		List<String> completeArgs = new ArrayList<>(args.length + 6);
 
+		completeArgs.add("--archetypesDir");
+
+		File jarFile = FileUtil.getJarFile(ProjectTemplatesTest.class);
+
+		completeArgs.add(jarFile.getAbsolutePath());
+
 		completeArgs.add("--destination");
 		completeArgs.add(destinationDir.getPath());
 
@@ -2063,14 +2069,13 @@ public class ProjectTemplatesTest {
 		completeArgs.add("archetype:generate");
 		completeArgs.add("--batch-mode");
 
-		if (Validator.isNotNull(template)) {
-			completeArgs.add(
-				"-DarchetypeArtifactId=com.liferay.project.templates." +
-					template.replace('-', '.'));
-		}
+		String archetypeArtifactId =
+			"com.liferay.project.templates." + template.replace('-', '.');
+
+		completeArgs.add("-DarchetypeArtifactId=" + archetypeArtifactId);
 
 		String projectTemplateVersion = _projectTemplateVersions.getProperty(
-			template);
+			archetypeArtifactId);
 
 		Assert.assertTrue(
 			"Unable to get project template version",

@@ -72,6 +72,7 @@ public class Archetyper {
 			ProjectTemplatesArgs projectTemplatesArgs, File destinationDir)
 		throws Exception {
 
+		File archetypesDir = projectTemplatesArgs.getArchetypesDir();
 		String artifactId = projectTemplatesArgs.getName();
 		String author = projectTemplatesArgs.getAuthor();
 		String className = projectTemplatesArgs.getClassName();
@@ -152,17 +153,19 @@ public class Archetyper {
 
 		archetypeGenerationRequest.setVersion("1.0.0");
 
-		ArchetypeManager archetypeManager = _createArchetypeManager();
+		ArchetypeManager archetypeManager = _createArchetypeManager(
+			archetypesDir);
 
 		return archetypeManager.generateProjectFromArchetype(
 			archetypeGenerationRequest);
 	}
 
-	private ArchetypeArtifactManager _createArchetypeArtifactManager()
+	private ArchetypeArtifactManager _createArchetypeArtifactManager(
+			File archetypesDir)
 		throws Exception {
 
 		ArchetypeArtifactManager archetypeArtifactManager =
-			new ArchetyperArchetypeArtifactManager();
+			new ArchetyperArchetypeArtifactManager(archetypesDir);
 
 		ReflectionUtil.setFieldValue(
 			_loggerField, archetypeArtifactManager, _logger);
@@ -170,11 +173,13 @@ public class Archetyper {
 		return archetypeArtifactManager;
 	}
 
-	private ArchetypeGenerator _createArchetypeGenerator() throws Exception {
+	private ArchetypeGenerator _createArchetypeGenerator(File archetypesDir)
+		throws Exception {
+
 		ArchetypeGenerator archetypeGenerator = new DefaultArchetypeGenerator();
 
 		ArchetypeArtifactManager archetypeArtifactManager =
-			_createArchetypeArtifactManager();
+			_createArchetypeArtifactManager(archetypesDir);
 
 		ReflectionUtil.setFieldValue(
 			DefaultArchetypeGenerator.class, "archetypeArtifactManager",
@@ -187,14 +192,16 @@ public class Archetyper {
 		return archetypeGenerator;
 	}
 
-	private ArchetypeManager _createArchetypeManager() throws Exception {
+	private ArchetypeManager _createArchetypeManager(File archetypesDir)
+		throws Exception {
+
 		DefaultArchetypeManager archetypeManager =
 			new DefaultArchetypeManager();
 
 		ReflectionUtil.setFieldValue(_loggerField, archetypeManager, _logger);
 		ReflectionUtil.setFieldValue(
 			DefaultArchetypeManager.class, "generator", archetypeManager,
-			_createArchetypeGenerator());
+			_createArchetypeGenerator(archetypesDir));
 
 		return archetypeManager;
 	}
@@ -272,6 +279,10 @@ public class Archetyper {
 	private static class ArchetyperArchetypeArtifactManager
 		extends DefaultArchetypeArtifactManager {
 
+		public ArchetyperArchetypeArtifactManager(File archetypesDir) {
+			_archetypesDir = archetypesDir;
+		}
+
 		@Override
 		public boolean exists(
 			String archetypeGroupId, String archetypeArtifactId,
@@ -293,7 +304,18 @@ public class Archetyper {
 			File archetypeFile = null;
 
 			try {
-				File file = FileUtil.getJarFile();
+				if (_archetypesDir != null) {
+					Path archetypePath = FileUtil.getFile(
+						_archetypesDir.toPath(), artifactId + "-*.jar");
+
+					if (archetypePath != null) {
+						archetypeFile = archetypePath.toFile();
+					}
+
+					return archetypeFile;
+				}
+
+				File file = FileUtil.getJarFile(Archetyper.class);
 
 				if (file.isDirectory()) {
 					Path archetypePath = FileUtil.getFile(
@@ -360,6 +382,8 @@ public class Archetyper {
 				throw new UnknownArchetype(murle);
 			}
 		}
+
+		private final File _archetypesDir;
 
 	}
 

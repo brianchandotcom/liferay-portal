@@ -56,7 +56,7 @@ public class ProjectTemplates {
 	public static Map<String, String> getTemplates() throws Exception {
 		Map<String, String> templates = new TreeMap<>();
 
-		File file = FileUtil.getJarFile();
+		File file = FileUtil.getJarFile(ProjectTemplates.class);
 
 		if (file.isDirectory()) {
 			try (DirectoryStream<Path> directoryStream =
@@ -144,7 +144,7 @@ public class ProjectTemplates {
 		JCommander jCommander = new JCommander(projectTemplatesArgs);
 
 		try {
-			File jarFile = FileUtil.getJarFile();
+			File jarFile = FileUtil.getJarFile(ProjectTemplates.class);
 
 			if (jarFile.isFile()) {
 				jCommander.setProgramName("java -jar " + jarFile.getName());

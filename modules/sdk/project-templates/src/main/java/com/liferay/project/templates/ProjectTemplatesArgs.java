@@ -28,6 +28,10 @@ public class ProjectTemplatesArgs {
 		_destinationDir = new File(System.getProperty("user.dir"));
 	}
 
+	public File getArchetypesDir() {
+		return _archetypesDir;
+	}
+
 	public String getAuthor() {
 		return _author;
 	}
@@ -78,6 +82,10 @@ public class ProjectTemplatesArgs {
 
 	public boolean isMaven() {
 		return _maven;
+	}
+
+	public void setArchetypesDir(File archetypesDir) {
+		_archetypesDir = archetypesDir;
 	}
 
 	public void setClassName(String className) {
@@ -135,6 +143,9 @@ public class ProjectTemplatesArgs {
 	protected boolean isList() {
 		return _list;
 	}
+
+	@Parameter(hidden = true, names = "--archetypesDir")
+	private File _archetypesDir;
 
 	@Parameter(
 		description = "The name of the user associated with the code.",

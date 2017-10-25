@@ -216,7 +216,8 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 				}
 
 				throw new SearchException(
-					"Unable to determine user {" + field + "=" + value + "}",
+					StringBundler.concat(
+						"Unable to determine user {", field, "=", value, "}"),
 					e);
 			}
 		}

@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -164,8 +165,9 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 		}
 
 		throw new NoSuchFileVersionException(
-			"No CMIS file version with {fileEntryId=" + getFileEntryId() +
-				", version=" + version + "}");
+			StringBundler.concat(
+				"No CMIS file version with {fileEntryId=",
+				String.valueOf(getFileEntryId()), ", version=", version, "}"));
 	}
 
 	@Override
@@ -211,8 +213,9 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 		}
 
 		throw new NoSuchFileVersionException(
-			"No CMIS file version with {fileEntryId=" + getFileEntryId() +
-				", version=" + version + "}");
+			StringBundler.concat(
+				"No CMIS file version with {fileEntryId=",
+				String.valueOf(getFileEntryId()), ", version=", version, "}"));
 	}
 
 	@Override

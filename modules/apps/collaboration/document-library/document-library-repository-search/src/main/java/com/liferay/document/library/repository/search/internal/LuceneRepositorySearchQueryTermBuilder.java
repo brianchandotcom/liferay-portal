@@ -236,8 +236,10 @@ public class LuceneRepositorySearchQueryTermBuilder
 		else {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Ignoring unknown query type " + query.getClass() +
-						" with query " + query);
+					StringBundler.concat(
+						"Ignoring unknown query type ",
+						String.valueOf(query.getClass()), " with query ",
+						String.valueOf(query)));
 			}
 		}
 	}

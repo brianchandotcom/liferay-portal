@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -68,8 +69,9 @@ public class CMISParameterValueUtil {
 			catch (ParseException pe) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Unable to parse date " + value + " for field " +
-							field);
+						StringBundler.concat(
+							"Unable to parse date ", value, " for field ",
+							field));
 				}
 			}
 		}

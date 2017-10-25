@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
@@ -60,8 +61,11 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 		catch (SystemException se) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Add failed, fetch {companyId=" + companyId + ", userId=" +
-						userId + ", fileEntryId=" + fileEntryId + "}");
+					StringBundler.concat(
+						"Add failed, fetch {companyId=",
+						String.valueOf(companyId), ", userId=",
+						String.valueOf(userId), ", fileEntryId=",
+						String.valueOf(fileEntryId), "}"));
 			}
 
 			dlFileRank = dlFileRankPersistence.fetchByC_U_F(
@@ -207,9 +211,11 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Update failed, fetch {companyId=" + companyId +
-							", userId=" + userId + ", fileEntryId=" +
-								fileEntryId + "}");
+						StringBundler.concat(
+							"Update failed, fetch {companyId=",
+							String.valueOf(companyId), ", userId=",
+							String.valueOf(userId), ", fileEntryId=",
+							String.valueOf(fileEntryId), "}"));
 				}
 			}
 		}

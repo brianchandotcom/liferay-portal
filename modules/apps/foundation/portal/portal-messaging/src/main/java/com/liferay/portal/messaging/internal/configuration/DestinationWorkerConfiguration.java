@@ -32,21 +32,24 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface DestinationWorkerConfiguration {
 
-	@Meta.AD(deflt = "", required = true)
+	@Meta.AD(deflt = "", name = "destination-name", required = true)
 	public String destinationName();
 
 	@Meta.AD(
-		deflt = "-1", description = "max-queue-size-help", required = false
+		deflt = "-1", description = "max-queue-size-help",
+		name = "max-queue-size", required = false
 	)
 	public int maxQueueSize();
 
 	@Meta.AD(
-		deflt = "2", description = "worker-core-size-help", required = false
+		deflt = "2", description = "worker-core-size-help",
+		name = "worker-core-size", required = false
 	)
 	public int workerCoreSize();
 
 	@Meta.AD(
-		deflt = "5", description = "worker-max-size-help", required = false
+		deflt = "5", description = "worker-max-size-help",
+		name = "worker-max-size", required = false
 	)
 	public int workerMaxSize();
 

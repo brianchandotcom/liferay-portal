@@ -40,6 +40,10 @@ public class JavaMultiPlusConcatCheck extends BaseJavaTermCheck {
 		String fileName, String absolutePath, JavaTerm javaTerm,
 		String fileContent) {
 
+		if (isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath)) {
+			return javaTerm.getContent();
+		}
+
 		if (absolutePath.contains("/portal-impl/") ||
 			absolutePath.contains("/portal-kernel/") ||
 			absolutePath.contains("/portal-test/") ||

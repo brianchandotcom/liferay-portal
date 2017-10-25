@@ -39,7 +39,10 @@
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Web Proxy Page" />
 			<var name="privacy" value="Public" />
-			<var name="sitePageType" value="1 Column" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Web Proxy Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">

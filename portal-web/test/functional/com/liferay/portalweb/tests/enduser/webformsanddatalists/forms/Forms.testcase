@@ -114,9 +114,9 @@
 			<var name="pageName" value="Private Form Page" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
+		<execute macro="Navigator#gotoPrivateSitePage">
 			<var name="pageName" value="Private Form Page" />
-			<var name="sitePagePrivacy" value="Private Pages" />
+			<var name="siteName" value="Guest" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -135,11 +135,9 @@
 
 		<execute macro="PortletEntry#save" />
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="Navigator#gotoPage">
+		<execute macro="Navigator#gotoPrivateSitePage">
 			<var name="pageName" value="Private Form Page" />
-			<var name="sitePagePrivacy" value="Private Pages" />
+			<var name="siteName" value="Guest" />
 		</execute>
 
 		<execute macro="FormFields#viewTextLabel">

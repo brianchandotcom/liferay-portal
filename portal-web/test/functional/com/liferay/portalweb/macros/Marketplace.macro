@@ -99,8 +99,11 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Blogs Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="site" value="${siteName}" />
+			<var name="pageName" value="Blogs Test Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -241,8 +244,11 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Documents and Media Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="site" value="${siteName}" />
+			<var name="pageName" value="Documents and Media Test Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -362,8 +368,11 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Wiki Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="site" value="${siteName}" />
+			<var name="pageName" value="Wiki Test Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -433,8 +442,11 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Calendar Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="site" value="${siteName}" />
+			<var name="pageName" value="Calendar Test Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -540,8 +552,11 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Bookmarks Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="site" value="${siteName}" />
+			<var name="pageName" value="Bookmarks Test Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -680,8 +695,11 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Blogs Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="site" value="${siteName}" />
+			<var name="pageName" value="Blogs Test Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -822,8 +840,11 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Documents and Media Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="site" value="${siteName}" />
+			<var name="pageName" value="Documents and Media Test Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -946,9 +967,8 @@
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
+			<var name="site" value="${siteName}" />
 			<var name="pageName" value="Wiki Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -1018,8 +1038,11 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Calendar Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="site" value="${siteName}" />
+			<var name="pageName" value="Calendar Test Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -1125,8 +1148,11 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Bookmarks Test Page" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="site" value="${siteName}" />
+			<var name="pageName" value="Bookmarks Test Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">

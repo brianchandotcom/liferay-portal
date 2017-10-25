@@ -23,6 +23,10 @@
 			<var name="pageName" value="Test Page" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Test Page" />
+		</execute>
+
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Test Blob" />
 		</execute>

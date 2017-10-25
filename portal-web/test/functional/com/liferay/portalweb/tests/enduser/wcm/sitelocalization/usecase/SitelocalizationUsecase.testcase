@@ -105,6 +105,10 @@
 			<var name="pageName" value="Language Test Page" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Language Test Page" />
+		</execute>
+
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Language Selector" />
 		</execute>
@@ -157,6 +161,10 @@
 			<var name="pageName" value="Language Test Page" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Language Test Page" />
+		</execute>
+
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Language Selector" />
 		</execute>
@@ -206,6 +214,10 @@
 		</execute>
 
 		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Language Test Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Language Test Page" />
 		</execute>
 

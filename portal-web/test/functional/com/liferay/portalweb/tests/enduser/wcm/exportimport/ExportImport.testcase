@@ -358,6 +358,10 @@
 			<var name="pageName" value="Test Page Name" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Test Page Name" />
+		</execute>
+
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Blogs" />
 		</execute>
@@ -479,9 +483,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
+		<execute macro="Navigator#gotoPrivateSitePage">
 			<var name="pageName" value="Private Page" />
-			<var name="sitePagePrivacy" value="true" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 	</command>
 

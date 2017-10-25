@@ -19,6 +19,10 @@
 			<var name="pageName" value="Wiki Page" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Wiki Page" />
+		</execute>
+
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Wiki" />
 		</execute>

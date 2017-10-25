@@ -23,6 +23,10 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="Portlet#addPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="portletName" value="${portletName}" />

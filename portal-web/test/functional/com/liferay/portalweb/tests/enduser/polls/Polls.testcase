@@ -198,7 +198,7 @@
 			<var name="pageName" value="Polls Page" />
 		</execute>
 
-		<execute macro="Page#add">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Polls Page" />
 		</execute>
 

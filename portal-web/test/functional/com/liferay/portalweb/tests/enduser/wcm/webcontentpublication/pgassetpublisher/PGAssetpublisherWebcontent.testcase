@@ -111,6 +111,10 @@
 			<var name="pageName" value="Test Page 1" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Test Page 1" />
+		</execute>
+
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
@@ -470,6 +474,10 @@
 		</execute>
 
 		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Test Page 1" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Page 1" />
 		</execute>
 

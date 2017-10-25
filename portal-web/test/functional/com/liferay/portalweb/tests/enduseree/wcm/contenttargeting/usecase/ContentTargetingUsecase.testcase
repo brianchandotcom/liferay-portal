@@ -4243,6 +4243,10 @@
 			<var name="pageName" value="User Segment Content Display Page" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="User Segment Content Display Page" />
+		</execute>
+
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="User Segment Content Display" />
 		</execute>
@@ -4586,6 +4590,10 @@
 		</execute>
 
 		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="User Segment Content Display Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="User Segment Content Display Page" />
 		</execute>
 

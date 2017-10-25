@@ -2102,6 +2102,10 @@
 
 		<execute function="Pause" locator1="5000" />
 
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name 1" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Navigation" />
 			<var name="panel" value="Site Administration" />

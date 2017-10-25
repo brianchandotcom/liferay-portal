@@ -25,6 +25,10 @@
 			<var name="pageName" value="Test Misc Localized Title Page" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Test Misc Localized Title Page" />
+		</execute>
+
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Test Misc Localized Title" />
 		</execute>

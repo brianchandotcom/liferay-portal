@@ -928,7 +928,11 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="New Page Name" />
-			<var name="pageStaging" value="true" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="New Page Name" />
+			<var name="siteName" value="Community Site Name" />
 		</execute>
 
 		<execute function="Pause" locator1="30000" />

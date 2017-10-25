@@ -562,7 +562,7 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute macro="Page#add">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
@@ -813,8 +813,9 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute macro="Page#add">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Blog and Message Board Page" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -1074,7 +1075,7 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute macro="Page#add">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 

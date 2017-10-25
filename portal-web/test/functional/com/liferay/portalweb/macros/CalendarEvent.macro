@@ -1682,9 +1682,10 @@
 
 				<execute macro="SitePages#addPublicPage">
 					<var name="pageName" value="Marketplace Calendar Testing" />
+				</execute>
+
+				<execute macro="Navigator#gotoPage">
 					<var name="pageName" value="Marketplace Calendar Testing" />
-					<var name="pageTemplateName" value="${pageTemplateName}" />
-					<var name="sitePageType" value="${pageType}" />
 				</execute>
 
 				<execute macro="Portlet#addPG">

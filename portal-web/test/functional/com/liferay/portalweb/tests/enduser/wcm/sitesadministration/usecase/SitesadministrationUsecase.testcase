@@ -307,6 +307,10 @@
 			<var name="pageName" value="Page Name" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Page Name" />
+		</execute>
+
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Language Selector" />
 		</execute>

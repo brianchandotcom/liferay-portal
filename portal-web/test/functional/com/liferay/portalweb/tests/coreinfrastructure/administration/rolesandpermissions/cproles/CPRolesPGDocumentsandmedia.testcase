@@ -480,6 +480,10 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
 		<execute macro="Portlet#addPG">
 			<var name="pageName" value="Documents and Media Page" />
 			<var name="portletName" value="Documents and Media" />

@@ -32,9 +32,9 @@
 			<var name="pageName" value="Staging Test Page" />
 		</execute>
 
-		<execute macro="Page#add">
+		<execute macro="Navigator#gotoSitePage">
+			<var name="site" value="Site Name" />
 			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Portlet#addPG">

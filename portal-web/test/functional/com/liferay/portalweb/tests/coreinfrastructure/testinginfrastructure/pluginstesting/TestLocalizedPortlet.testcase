@@ -23,6 +23,10 @@
 			<var name="pageName" value="Test Localized Page" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Test Localized Page" />
+		</execute>
+
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Test Localized Portlet" />
 		</execute>
@@ -41,6 +45,10 @@
 		</execute>
 
 		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Test Localized Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Localized Page" />
 		</execute>
 
@@ -67,6 +75,10 @@
 			<var name="pageName" value="Test Localized Page" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Test Localized Page" />
+		</execute>
+
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Test Localized Portlet" />
 		</execute>
@@ -85,6 +97,10 @@
 		</execute>
 
 		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Test Localized Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Localized Page" />
 		</execute>
 

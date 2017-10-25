@@ -921,44 +921,41 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			SamlSsoRequestContext samlSsoRequestContext)
 		throws Exception {
 
+		String nameIdFormat = null;
+		String spNameQualifier = null;
+
 		SAMLMessageContext<AuthnRequest, Response, NameID> samlMessageContext =
 			samlSsoRequestContext.getSAMLMessageContext();
 
-		User user = samlSsoRequestContext.getUser();
-
-		AuthnRequest authnRequest = samlMessageContext.getInboundSAMLMessage();
-
-		String entityId = samlMessageContext.getPeerEntityId();
-
-		String spNameQualifier = null;
-
-		String nameIdFormat = null;
+		NameIdResolver nameIdResolver =
+			_nameIdResolverRegistry.getNameIdResolver(
+				samlMessageContext.getPeerEntityId());
 
 		boolean allowCreate = false;
+
+		AuthnRequest authnRequest = samlMessageContext.getInboundSAMLMessage();
 
 		if (authnRequest != null) {
 			NameIDPolicy nameIDPolicy = authnRequest.getNameIDPolicy();
 
 			if (nameIDPolicy != null) {
 				nameIdFormat = nameIDPolicy.getFormat();
-
 				spNameQualifier = nameIDPolicy.getSPNameQualifier();
-
 				allowCreate = nameIDPolicy.getAllowCreate();
 			}
 		}
 
 		if (nameIdFormat == null) {
-			nameIdFormat = metadataManager.getNameIdFormat(entityId);
+			nameIdFormat = metadataManager.getNameIdFormat(
+				samlMessageContext.getPeerEntityId());
 		}
-
-		NameIdResolver nameIdResolver =
-			_nameIdResolverRegistry.getNameIdResolver(entityId);
 
 		return OpenSamlUtil.buildNameId(
 			nameIdFormat, null, spNameQualifier,
 			nameIdResolver.resolve(
-				user, entityId, nameIdFormat, spNameQualifier, allowCreate,
+				samlSsoRequestContext.getUser(),
+				samlMessageContext.getPeerEntityId(), nameIdFormat,
+				spNameQualifier, allowCreate,
 				new NameIdResolverSAMLContextImpl(samlMessageContext)));
 	}
 

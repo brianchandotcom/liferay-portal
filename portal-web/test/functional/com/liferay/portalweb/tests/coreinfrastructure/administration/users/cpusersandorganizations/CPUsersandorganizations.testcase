@@ -2151,7 +2151,7 @@
 
 		<var name="key_orgName" value="Organization Name 1" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="SitesDirectory#SITE_ENTRY" value1="Liferay" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SitesDirectory#SITE_ENTRY" value1="${siteName}" />
 		<execute function="AssertTextEquals" locator1="SitesDirectory#ORG_SITE_ENTRY" value1="Organization Name 1" />
 		<execute function="AssertElementNotPresent" locator1="SitesDirectory#ORG_SITE_ENTRY">
 			<var name="key_orgName" value="Organization Name 2" />
@@ -2172,7 +2172,7 @@
 		<execute function="AssertClick" locator1="SitesDirectory#ORG_SITE_ENTRY" value1="Organization Name 1" />
 
 		<execute macro="Breadcrumb#viewPG">
-			<var name="breadcrumbListNotVisible" value="Liferay" />
+			<var name="breadcrumbListNotVisible" value="${siteName}" />
 			<var name="breadcrumbListVisible" value="Organization Name 1" />
 			<var name="pathLocator" value="CURRENT_LOCATION" />
 		</execute>

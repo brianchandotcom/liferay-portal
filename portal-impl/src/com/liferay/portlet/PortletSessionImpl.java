@@ -227,6 +227,109 @@ public class PortletSessionImpl implements LiferayPortletSession {
 		return session;
 	}
 
+	private static class LazySerializable implements Serializable {
+
+		public byte[] getData() {
+			return _data;
+		}
+
+		public Serializable getSerializable() {
+			Deserializer deserializer = new Deserializer(
+				ByteBuffer.wrap(_data));
+
+			try {
+				return deserializer.readObject();
+			}
+			catch (ClassNotFoundException cnfe) {
+				_log.error("Unable to deserialize object", cnfe);
+
+				return null;
+			}
+		}
+
+		private LazySerializable(byte[] data) {
+			_data = data;
+		}
+
+		private static final Log _log = LogFactoryUtil.getLog(
+			LazySerializable.class);
+
+		private final byte[] _data;
+
+	}
+
+	private static class LazySerializableObjectWrapper
+		implements Externalizable {
+
+		/**
+		 * The empty constructor is required by {@link Externalizable}. Do not use
+		 * this for any other purpose.
+		 */
+		public LazySerializableObjectWrapper() {
+		}
+
+		public Serializable getSerializable() {
+			if (_serializable instanceof LazySerializable) {
+				LazySerializable lazySerializable =
+					(LazySerializable)_serializable;
+
+				Serializable serializable = lazySerializable.getSerializable();
+
+				if (serializable == null) {
+					return null;
+				}
+
+				_serializable = serializable;
+			}
+
+			return _serializable;
+		}
+
+		@Override
+		public void readExternal(ObjectInput objectInput) throws IOException {
+			byte[] data = new byte[objectInput.readInt()];
+
+			objectInput.readFully(data);
+
+			_serializable = new LazySerializable(data);
+		}
+
+		@Override
+		public void writeExternal(ObjectOutput objectOutput)
+			throws IOException {
+
+			byte[] data = _getData();
+
+			objectOutput.writeInt(data.length);
+
+			objectOutput.write(data, 0, data.length);
+		}
+
+		private LazySerializableObjectWrapper(Serializable serializable) {
+			_serializable = serializable;
+		}
+
+		private byte[] _getData() {
+			if (_serializable instanceof LazySerializable) {
+				LazySerializable lazySerializable =
+					(LazySerializable)_serializable;
+
+				return lazySerializable.getData();
+			}
+
+			Serializer serializer = new Serializer();
+
+			serializer.writeObject(_serializable);
+
+			ByteBuffer byteBuffer = serializer.toByteBuffer();
+
+			return byteBuffer.array();
+		}
+
+		private volatile Serializable _serializable;
+
+	}
+
 	private static class SerializableHttpSessionWrapper
 		extends HttpSessionWrapper {
 
@@ -266,109 +369,6 @@ public class PortletSessionImpl implements LiferayPortletSession {
 		private SerializableHttpSessionWrapper(HttpSession session) {
 			super(session);
 		}
-
-	}
-
-	private static class LazySerializableObjectWrapper
-		implements Externalizable {
-
-		public Serializable getSerializable() {
-			if (_serializable instanceof LazySerializable) {
-				LazySerializable lazySerializable =
-					(LazySerializable)_serializable;
-
-				Serializable serializable = lazySerializable.getSerializable();
-
-				if (serializable == null) {
-					return null;
-				}
-
-				_serializable = serializable;
-			}
-
-			return _serializable;
-		}
-
-		/**
-		 * The empty constructor is required by {@link Externalizable}. Do not use
-		 * this for any other purpose.
-		 */
-		public LazySerializableObjectWrapper() {
-		}
-
-		private LazySerializableObjectWrapper(Serializable serializable) {
-			_serializable = serializable;
-		}
-
-		@Override
-		public void readExternal(ObjectInput objectInput) throws IOException {
-			byte[] data = new byte[objectInput.readInt()];
-
-			objectInput.readFully(data);
-
-			_serializable = new LazySerializable(data);
-		}
-
-		@Override
-		public void writeExternal(ObjectOutput objectOutput)
-			throws IOException {
-
-			byte[] data = _getData();
-
-			objectOutput.writeInt(data.length);
-
-			objectOutput.write(data, 0, data.length);
-		}
-
-		private byte[] _getData() {
-			if (_serializable instanceof LazySerializable) {
-				LazySerializable lazySerializable =
-					(LazySerializable)_serializable;
-
-				return lazySerializable.getData();
-			}
-
-			Serializer serializer = new Serializer();
-
-			serializer.writeObject(_serializable);
-
-			ByteBuffer byteBuffer = serializer.toByteBuffer();
-
-			return byteBuffer.array();
-		}
-
-		private volatile Serializable _serializable;
-
-	}
-
-	private static class LazySerializable implements Serializable {
-
-		public byte[] getData() {
-			return _data;
-		}
-
-		public Serializable getSerializable() {
-			Deserializer deserializer = new Deserializer(
-				ByteBuffer.wrap(_data));
-
-			try {
-				return deserializer.readObject();
-			}
-			catch (ClassNotFoundException cnfe) {
-				_log.error("Unable to deserialize object", cnfe);
-
-				return null;
-			}
-		}
-
-		private LazySerializable(byte[] data) {
-			_data = data;
-		}
-
-		private static final Log _log = LogFactoryUtil.getLog(
-			LazySerializable.class);
-
-		private final byte[] _data;
 
 	}
 

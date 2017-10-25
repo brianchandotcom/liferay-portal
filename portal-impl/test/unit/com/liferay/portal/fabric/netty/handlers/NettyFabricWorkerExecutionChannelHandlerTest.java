@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.util.ObjectGraphUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
@@ -486,11 +487,15 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		Builder builder = new Builder();
 
 		builder.setBootstrapClassPath(
-			bootstrapPath1 + File.pathSeparator + bootstrapPath2 +
-				File.pathSeparator + bootstrapPath3);
+			StringBundler.concat(
+				String.valueOf(bootstrapPath1), File.pathSeparator,
+				String.valueOf(bootstrapPath2), File.pathSeparator,
+				String.valueOf(bootstrapPath3)));
 		builder.setRuntimeClassPath(
-			runtimePath1 + File.pathSeparator + runtimePath2 +
-				File.pathSeparator + runtimePath3);
+			StringBundler.concat(
+				String.valueOf(runtimePath1), File.pathSeparator,
+				String.valueOf(runtimePath2), File.pathSeparator,
+				String.valueOf(runtimePath3)));
 
 		ProcessConfig processConfig = builder.build();
 
@@ -524,14 +529,16 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		processConfig = loadedPaths.toProcessConfig(processConfig);
 
 		Assert.assertEquals(
-			mappedBootstrapPath1 + File.pathSeparator + mappedBootstrapPath2 +
-				File.pathSeparator +
-					mappedBootstrapPath3,
+			StringBundler.concat(
+				String.valueOf(mappedBootstrapPath1), File.pathSeparator,
+				String.valueOf(mappedBootstrapPath2), File.pathSeparator,
+				String.valueOf(mappedBootstrapPath3)),
 			processConfig.getBootstrapClassPath());
 		Assert.assertEquals(
-			mappedRuntimePath1 + File.pathSeparator + mappedRuntimePath2 +
-				File.pathSeparator +
-					mappedRuntimePath3,
+			StringBundler.concat(
+				String.valueOf(mappedRuntimePath1), File.pathSeparator,
+				String.valueOf(mappedRuntimePath2), File.pathSeparator,
+				String.valueOf(mappedRuntimePath3)),
 			processConfig.getRuntimeClassPath());
 	}
 
@@ -574,8 +581,10 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		Builder builder = new Builder();
 
 		builder.setBootstrapClassPath(
-			bootstrapPath1 + File.pathSeparator + bootstrapPath2 +
-				File.pathSeparator + bootstrapPath3);
+			StringBundler.concat(
+				String.valueOf(bootstrapPath1), File.pathSeparator,
+				String.valueOf(bootstrapPath2), File.pathSeparator,
+				String.valueOf(bootstrapPath3)));
 		builder.setRuntimeClassPath(StringPool.BLANK);
 
 		ProcessConfig processConfig = builder.build();
@@ -777,8 +786,10 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 		builder.setBootstrapClassPath(StringPool.BLANK);
 		builder.setRuntimeClassPath(
-			runtimePath1 + File.pathSeparator + runtimePath2 +
-				File.pathSeparator + runtimePath3);
+			StringBundler.concat(
+				String.valueOf(runtimePath1), File.pathSeparator,
+				String.valueOf(runtimePath2), File.pathSeparator,
+				String.valueOf(runtimePath3)));
 
 		ProcessConfig processConfig = builder.build();
 

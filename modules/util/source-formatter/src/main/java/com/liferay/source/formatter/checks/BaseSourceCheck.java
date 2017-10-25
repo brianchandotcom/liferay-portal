@@ -281,8 +281,39 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			s, increaseLevelStrings, decreaseLevelStrings, startLevel);
 	}
 
+	protected String getLine(String content, int lineCount) {
+		int nextLineStartPos = getLineStartPos(content, lineCount);
+
+		if (nextLineStartPos == -1) {
+			return null;
+		}
+
+		int nextLineEndPos = content.indexOf(
+			CharPool.NEW_LINE, nextLineStartPos);
+
+		if (nextLineEndPos == -1) {
+			return content.substring(nextLineStartPos);
+		}
+
+		return content.substring(nextLineStartPos, nextLineEndPos);
+	}
+
 	protected int getLineCount(String content, int pos) {
 		return StringUtil.count(content, 0, pos, CharPool.NEW_LINE) + 1;
+	}
+
+	protected int getLineStartPos(String content, int lineCount) {
+		int x = 0;
+
+		for (int i = 1; i < lineCount; i++) {
+			x = content.indexOf(CharPool.NEW_LINE, x + 1);
+
+			if (x == -1) {
+				return x;
+			}
+		}
+
+		return x + 1;
 	}
 
 	protected int getMaxLineLength() {
@@ -524,6 +555,9 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 		return sb.toString();
 	}
+
+	protected static final String RUN_OUTSIDE_PORTAL_EXCLUDES =
+		"run.outside.portal.excludes";
 
 	private String _baseDirName;
 	private int _maxLineLength;

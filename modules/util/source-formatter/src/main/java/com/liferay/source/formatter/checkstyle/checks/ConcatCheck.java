@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
-import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtils;
 
@@ -147,69 +146,7 @@ public class ConcatCheck extends BaseCheck {
 		}
 	}
 
-	private void _checkMultiPlusStatement(DetailAST detailAST) {
-		FileContents fileContents = getFileContents();
-
-		String fileName = StringUtil.replace(
-			fileContents.getFileName(), '\\', '/');
-
-		if (!fileName.contains("/portal-impl/") &&
-			!fileName.contains("/portal-kernel/") &&
-			!fileName.contains("/portal-test/") &&
-			!fileName.contains("/portal-test-integration/") &&
-			!fileName.contains("/util-bridges/") &&
-			!fileName.contains("/util-java/") &&
-			!fileName.contains("/util-taglib/")) {
-
-			return;
-		}
-
-		DetailAST parentAST = detailAST.getParent();
-
-		if (parentAST.getType() == TokenTypes.PLUS) {
-			return;
-		}
-
-		if (DetailASTUtil.hasParentWithTokenType(
-				detailAST, TokenTypes.ANNOTATION) ||
-			!DetailASTUtil.hasParentWithTokenType(
-				detailAST, TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF)) {
-
-			return;
-		}
-
-		boolean containsLiteralString = false;
-		int count = 1;
-
-		DetailAST firstChild = detailAST;
-
-		while (true) {
-			if (firstChild.getType() != TokenTypes.PLUS) {
-				break;
-			}
-
-			if (!containsLiteralString) {
-				List<DetailAST> listeralStringASTList =
-					DetailASTUtil.getAllChildTokens(
-						firstChild, false, TokenTypes.STRING_LITERAL);
-
-				if (!listeralStringASTList.isEmpty()) {
-					containsLiteralString = true;
-				}
-			}
-
-			count++;
-
-			firstChild = firstChild.getFirstChild();
-		}
-
-		if (containsLiteralString && (count > 3)) {
-			log(detailAST.getLineNo(), _MSG_USE_STRINGBUNDLER_CONCAT);
-		}
-	}
-
 	private void _checkPlusOperator(DetailAST detailAST) {
-		_checkMultiPlusStatement(detailAST);
 		_checkTabbing(detailAST);
 
 		if (detailAST.getChildCount() != 2) {
@@ -433,9 +370,6 @@ public class ConcatCheck extends BaseCheck {
 
 	private static final String _MSG_MOVE_LITERAL_STRING =
 		"literal.string.move";
-
-	private static final String _MSG_USE_STRINGBUNDLER_CONCAT =
-		"use.stringbundler.concat";
 
 	private int _maxLineLength = 80;
 

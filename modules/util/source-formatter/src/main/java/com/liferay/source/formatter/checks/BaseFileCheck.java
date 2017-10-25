@@ -145,23 +145,6 @@ public abstract class BaseFileCheck
 		}
 	}
 
-	protected String getLine(String content, int lineCount) {
-		int nextLineStartPos = getLineStartPos(content, lineCount);
-
-		if (nextLineStartPos == -1) {
-			return null;
-		}
-
-		int nextLineEndPos = content.indexOf(
-			CharPool.NEW_LINE, nextLineStartPos);
-
-		if (nextLineEndPos == -1) {
-			return content.substring(nextLineStartPos);
-		}
-
-		return content.substring(nextLineStartPos, nextLineEndPos);
-	}
-
 	protected int getLineLength(String line) {
 		int lineLength = 0;
 
@@ -189,26 +172,9 @@ public abstract class BaseFileCheck
 		return lineLength;
 	}
 
-	protected int getLineStartPos(String content, int lineCount) {
-		int x = 0;
-
-		for (int i = 1; i < lineCount; i++) {
-			x = content.indexOf(CharPool.NEW_LINE, x + 1);
-
-			if (x == -1) {
-				return x;
-			}
-		}
-
-		return x + 1;
-	}
-
 	protected void putBNDSettings(BNDSettings bndSettings) {
 		_bndSettingsMap.put(bndSettings.getFileLocation(), bndSettings);
 	}
-
-	protected static final String RUN_OUTSIDE_PORTAL_EXCLUDES =
-		"run.outside.portal.excludes";
 
 	private final Map<String, BNDSettings> _bndSettingsMap =
 		new ConcurrentHashMap<>();

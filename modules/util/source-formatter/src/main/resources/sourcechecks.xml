@@ -193,6 +193,7 @@
 
 		<check name="JavaCleanUpMethodVariablesCheck" />
 		<check name="JavaFinderCacheCheck" />
+		<check name="JavaMultiPlusConcatCheck" />
 		<check name="JavaServiceUtilCheck" />
 		<check name="JavaSystemEventAnnotationCheck" />
 		<check name="JavaTestMethodAnnotationsCheck" />

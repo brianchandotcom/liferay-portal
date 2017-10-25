@@ -1786,8 +1786,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				entry.getGroupId(), portletId, serviceContext);
 
 			if (Validator.isNotNull(layoutURL)) {
-				return layoutURL + Portal.FRIENDLY_URL_SEPARATOR + "blogs" +
-					StringPool.SLASH + entry.getEntryId();
+				return StringBundler.concat(
+					layoutURL, Portal.FRIENDLY_URL_SEPARATOR, "blogs",
+					StringPool.SLASH, String.valueOf(entry.getEntryId()));
 			}
 		}
 
@@ -2068,9 +2069,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			return;
 		}
 
-		String sourceUri =
-			layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "blogs/" +
-				entry.getUrlTitle();
+		String sourceUri = StringBundler.concat(
+			layoutFullURL, Portal.FRIENDLY_URL_SEPARATOR, "blogs/",
+			entry.getUrlTitle());
 
 		Source source = new Source(entry.getContent());
 
@@ -2121,9 +2122,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		String excerpt = StringUtil.shorten(
 			HtmlUtil.extractText(entry.getContent()),
 			PropsValues.BLOGS_LINKBACK_EXCERPT_LENGTH);
-		String url =
-			layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "blogs/" +
-				entry.getUrlTitle();
+		String url = StringBundler.concat(
+			layoutFullURL, Portal.FRIENDLY_URL_SEPARATOR, "blogs/",
+			entry.getUrlTitle());
 
 		parts.put("blog_name", entry.getUserName());
 		parts.put("excerpt", excerpt);

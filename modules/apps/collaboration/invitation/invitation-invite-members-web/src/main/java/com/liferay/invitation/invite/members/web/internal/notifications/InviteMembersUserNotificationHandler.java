@@ -209,8 +209,9 @@ public class InviteMembersUserNotificationHandler
 			String userDisplayURL = user.getDisplayURL(
 				serviceContext.getThemeDisplay());
 
-			return "<a href=\"" + userDisplayURL + "\">" +
-				HtmlUtil.escape(userName) + "</a>";
+			return StringBundler.concat(
+				"<a href=\"", userDisplayURL, "\">", HtmlUtil.escape(userName),
+				"</a>");
 		}
 		catch (Exception e) {
 			return StringPool.BLANK;

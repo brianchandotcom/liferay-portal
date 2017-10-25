@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -136,8 +137,9 @@ public class ExtRepositoryFileEntryAdapter
 		}
 
 		throw new NoSuchFileVersionException(
-			"No file version with {fileEntryId=" + getFileEntryId() +
-				", version: " + version + "}");
+			StringBundler.concat(
+				"No file version with {fileEntryId=",
+				String.valueOf(getFileEntryId()), ", version: ", version, "}"));
 	}
 
 	@Override
@@ -252,16 +254,18 @@ public class ExtRepositoryFileEntryAdapter
 		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to obtain version " + version + " for external " +
-						"repository file entry " + getTitle(),
+					StringBundler.concat(
+						"Unable to obtain version ", version, " for external ",
+						"repository file entry ", getTitle()),
 					pe);
 			}
 		}
 		catch (SystemException se) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to obtain version " + version + " for external " +
-						"repository file entry " + getTitle(),
+					StringBundler.concat(
+						"Unable to obtain version ", version, " for external ",
+						"repository file entry ", getTitle()),
 					se);
 			}
 		}

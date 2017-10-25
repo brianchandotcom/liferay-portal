@@ -2441,10 +2441,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			page.getGroupId(), WikiPortletKeys.WIKI, serviceContext);
 
 		if (Validator.isNotNull(layoutFullURL)) {
-			return layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "wiki/" +
-				page.getNodeId() + StringPool.SLASH +
-					URLCodec.encodeURL(
-						WikiEscapeUtil.escapeName(page.getTitle()));
+			return StringBundler.concat(
+				layoutFullURL, Portal.FRIENDLY_URL_SEPARATOR, "wiki/",
+				String.valueOf(page.getNodeId()), StringPool.SLASH,
+				URLCodec.encodeURL(WikiEscapeUtil.escapeName(page.getTitle())));
 		}
 		else {
 			PortletURL portletURL = PortalUtil.getControlPanelPortletURL(

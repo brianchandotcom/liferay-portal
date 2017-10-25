@@ -107,14 +107,16 @@ public class DocumentConversionImpl implements DocumentConversion {
 		}
 		else if (outputDocumentFormat == null) {
 			throw new SystemException(
-				"Conversion is not supported from " +
-					inputDocumentFormat.getName() + " to ." + targetExtension);
+				StringBundler.concat(
+					"Conversion is not supported from ",
+					inputDocumentFormat.getName(), " to .", targetExtension));
 		}
 		else if (!inputDocumentFormat.isExportableTo(outputDocumentFormat)) {
 			throw new SystemException(
-				"Conversion is not supported from " +
-					inputDocumentFormat.getName() + " to " +
-						outputDocumentFormat.getName());
+				StringBundler.concat(
+					"Conversion is not supported from ",
+					inputDocumentFormat.getName(), " to ",
+					outputDocumentFormat.getName()));
 		}
 
 		if (sourceExtension.equals("html")) {
@@ -362,8 +364,9 @@ public class DocumentConversionImpl implements DocumentConversion {
 			else {
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Conversions supported from " + sourceExtension +
-							" to " + conversions);
+						StringBundler.concat(
+							"Conversions supported from ", sourceExtension,
+							" to ", String.valueOf(conversions)));
 				}
 
 				_conversionsMap.put(

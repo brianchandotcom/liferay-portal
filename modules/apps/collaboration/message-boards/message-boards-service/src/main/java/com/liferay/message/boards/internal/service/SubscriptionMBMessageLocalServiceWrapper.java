@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Validator;
@@ -452,8 +453,10 @@ public class SubscriptionMBMessageLocalServiceWrapper
 			}
 			catch (Exception e) {
 				_log.error(
-					"Unable to parse message " + message.getMessageId() + ": " +
-						e.getMessage());
+					StringBundler.concat(
+						"Unable to parse message ",
+						String.valueOf(message.getMessageId()), ": ",
+						e.getMessage()));
 			}
 		}
 

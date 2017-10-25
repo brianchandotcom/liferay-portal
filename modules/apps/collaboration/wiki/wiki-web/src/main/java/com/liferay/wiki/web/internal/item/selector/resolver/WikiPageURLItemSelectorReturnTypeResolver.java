@@ -18,6 +18,7 @@ import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
@@ -70,10 +71,10 @@ public class WikiPageURLItemSelectorReturnTypeResolver implements
 			page.getGroupId(), WikiPortletKeys.WIKI);
 
 		if (Validator.isNotNull(layoutFullURL)) {
-			return layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "wiki/" +
-				page.getNodeId() + StringPool.SLASH +
-					URLCodec.encodeURL(
-						WikiEscapeUtil.escapeName(page.getTitle()));
+			return StringBundler.concat(
+				layoutFullURL, Portal.FRIENDLY_URL_SEPARATOR, "wiki/",
+				String.valueOf(page.getNodeId()), StringPool.SLASH,
+				URLCodec.encodeURL(WikiEscapeUtil.escapeName(page.getTitle())));
 		}
 		else {
 			PortletURL portletURL = _portal.getControlPanelPortletURL(

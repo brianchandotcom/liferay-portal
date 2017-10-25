@@ -16,6 +16,7 @@ package com.liferay.wiki.internal.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -60,8 +61,10 @@ public class UpgradeWikiPageResource extends UpgradeProcess {
 				long groupId = getGroupId(resourcePrimKey);
 
 				runSQL(
-					"update WikiPageResource set groupId = " + groupId +
-						" where resourcePrimKey = " + resourcePrimKey);
+					StringBundler.concat(
+						"update WikiPageResource set groupId = ",
+						String.valueOf(groupId), " where resourcePrimKey = ",
+						String.valueOf(resourcePrimKey)));
 			}
 		}
 	}

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.RSSUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -63,27 +64,27 @@ public class RSSAction extends BaseRSSStrutsAction {
 		String displayStyle = ParamUtil.getString(
 			request, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
 
-		String entryURL =
-			themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
-				"/message_boards/find_message?p_l_id=" + plid;
+		String entryURL = StringBundler.concat(
+			themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+			"/message_boards/find_message?p_l_id=", String.valueOf(plid));
 
 		String rss = StringPool.BLANK;
 
 		if (threadId > 0) {
-			String feedURL =
-				themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
-					"/message_boards/find_thread?p_l_id=" + plid +
-						"&threadId=" + threadId;
+			String feedURL = StringBundler.concat(
+				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+				"/message_boards/find_thread?p_l_id=", String.valueOf(plid),
+				"&threadId=", String.valueOf(threadId));
 
 			rss = _mbMessageService.getThreadMessagesRSS(
 				threadId, WorkflowConstants.STATUS_APPROVED, max, type, version,
 				displayStyle, feedURL, entryURL, themeDisplay);
 		}
 		else if (categoryId > 0) {
-			String feedURL =
-				themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
-					"/message_boards/find_category?p_l_id=" + plid +
-						"&mbCategoryId=" + categoryId;
+			String feedURL = StringBundler.concat(
+				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+				"/message_boards/find_category?p_l_id=", String.valueOf(plid),
+				"&mbCategoryId=", String.valueOf(categoryId));
 
 			rss = _mbMessageService.getCategoryMessagesRSS(
 				groupId, categoryId, WorkflowConstants.STATUS_APPROVED, max,
@@ -98,15 +99,17 @@ public class RSSAction extends BaseRSSStrutsAction {
 			if (mvcRenderCommandName.equals(
 					"/message_boards/view_recent_posts")) {
 
-				feedURL =
-					themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
-						"/message_boards/find_recent_posts?p_l_id=" + plid;
+				feedURL = StringBundler.concat(
+					themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+					"/message_boards/find_recent_posts?p_l_id=",
+					String.valueOf(plid));
 			}
 			else {
-				feedURL =
-					themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
-						"/message_boards/find_category?p_l_id=" + plid +
-							"&mbCategoryId=" + categoryId;
+				feedURL = StringBundler.concat(
+					themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+					"/message_boards/find_category?p_l_id=",
+					String.valueOf(plid), "&mbCategoryId=",
+					String.valueOf(categoryId));
 			}
 
 			if (userId > 0) {

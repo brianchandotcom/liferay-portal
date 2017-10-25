@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -59,8 +60,9 @@ public class ExtRepositoryQueryMapperImpl implements ExtRepositoryQueryMapper {
 			}
 			catch (ParseException pe) {
 				throw new SearchException(
-					"Unable to parse date " + fieldValue + " for field " +
-						fieldName,
+					StringBundler.concat(
+						"Unable to parse date ", fieldValue, " for field ",
+						fieldName),
 					pe);
 			}
 		}

@@ -89,9 +89,11 @@ public class WikiCacheHelper {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"getDisplay for {" + nodeId + ", " + title + ", " +
-					viewPageURL + ", " + editPageURLSupplier.get() +
-						"} takes " + stopWatch.getTime() + " ms");
+				StringBundler.concat(
+					"getDisplay for {", String.valueOf(nodeId), ", ", title,
+					", ", String.valueOf(viewPageURL), ", ",
+					String.valueOf(editPageURLSupplier.get()), "} takes ",
+					String.valueOf(stopWatch.getTime()), " ms"));
 		}
 
 		return pageDisplay;
@@ -168,8 +170,10 @@ public class WikiCacheHelper {
 		try {
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Get page display for {" + nodeId + ", " + title + ", " +
-						viewPageURL + ", " + editPageURL + "}");
+					StringBundler.concat(
+						"Get page display for {", String.valueOf(nodeId), ", ",
+						title, ", ", String.valueOf(viewPageURL), ", ",
+						String.valueOf(editPageURL), "}"));
 			}
 
 			return WikiPageLocalServiceUtil.getPageDisplay(
@@ -178,8 +182,11 @@ public class WikiCacheHelper {
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to get page display for {" + nodeId + ", " + title +
-						", " + viewPageURL + ", " + editPageURL + "}");
+					StringBundler.concat(
+						"Unable to get page display for {",
+						String.valueOf(nodeId), ", ", title, ", ",
+						String.valueOf(viewPageURL), ", ",
+						String.valueOf(editPageURL), "}"));
 			}
 
 			return null;

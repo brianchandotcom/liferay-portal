@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
@@ -66,9 +67,10 @@ public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 			return getSmallImageURL();
 		}
 
-		return themeDisplay.getPathImage() + "/blogs/entry?img_id=" +
-			getSmallImageId() + "&t=" +
-				WebServerServletTokenUtil.getToken(getSmallImageId());
+		return StringBundler.concat(
+			themeDisplay.getPathImage(), "/blogs/entry?img_id=",
+			String.valueOf(getSmallImageId()), "&t=",
+			WebServerServletTokenUtil.getToken(getSmallImageId()));
 	}
 
 	@Override
@@ -105,9 +107,10 @@ public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 		long smallImageId = getSmallImageId();
 
 		if (smallImageId != 0) {
-			return themeDisplay.getPathImage() + "/blogs/entry?img_id=" +
-				getSmallImageId() + "&t=" +
-					WebServerServletTokenUtil.getToken(getSmallImageId());
+			return StringBundler.concat(
+				themeDisplay.getPathImage(), "/blogs/entry?img_id=",
+				String.valueOf(getSmallImageId()), "&t=",
+				WebServerServletTokenUtil.getToken(getSmallImageId()));
 		}
 
 		return getCoverImageURL(themeDisplay);

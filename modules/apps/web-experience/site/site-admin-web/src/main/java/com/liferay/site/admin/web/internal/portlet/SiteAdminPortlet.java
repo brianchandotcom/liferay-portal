@@ -845,8 +845,15 @@ public class SiteAdminPortlet extends MVCPortlet {
 			layoutSetService.updateVirtualHost(
 				stagingGroup.getGroupId(), true, privateVirtualHost);
 
+			UnicodeProperties stagedGroupTypeSettingsProperties =
+				stagingGroup.getTypeSettingsProperties();
+
+			stagedGroupTypeSettingsProperties.putAll(
+				formTypeSettingsProperties);
+
 			groupService.updateGroup(
-				stagingGroup.getGroupId(), typeSettingsProperties.toString());
+				stagingGroup.getGroupId(),
+				stagedGroupTypeSettingsProperties.toString());
 		}
 
 		liveGroup = groupService.updateGroup(

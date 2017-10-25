@@ -340,9 +340,14 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 		return actionableDynamicQuery;
 	}
 
+	/**
+	 * @deprecated As of 1.3.0, with no direct replacement
+	 */
+	@Deprecated
 	@Reference(unbind = "-")
-	protected void setMBBanLocalService(MBBanLocalService mbBanLocalService) {
-		_mbBanLocalService = mbBanLocalService;
+	protected void setMBBanLocalService(
+		com.liferay.message.boards.kernel.service.MBBanLocalService
+			mbBanLocalService) {
 	}
 
 	@Reference(unbind = "-")
@@ -380,7 +385,9 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 		_mbThreadLocalService = mbThreadLocalService;
 	}
 
+	@Reference
 	private MBBanLocalService _mbBanLocalService;
+
 	private MBCategoryLocalService _mbCategoryLocalService;
 	private MBMessageLocalService _mbMessageLocalService;
 	private MBStatsUserLocalService _mbStatsUserLocalService;

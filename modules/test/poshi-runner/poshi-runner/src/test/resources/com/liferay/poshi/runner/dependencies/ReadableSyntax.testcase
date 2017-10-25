@@ -127,11 +127,11 @@ definition {
 			),
 			siteName
 		);
-		var wikiPageContent = "<p id='demo'>PASS</p>
+		var wikiPageContent = escapeText("<p id='demo'>PASS</p>
 
 <script type='text/javascript'>
 document.getElementById('demo').innerHTML = 'FAIL';
-</script>";
+</script>");
 
 		Smoke.viewWelcomePage();
 

@@ -556,6 +556,9 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return sb.toString();
 	}
 
+	protected static final String RUN_OUTSIDE_PORTAL_EXCLUDES =
+		"run.outside.portal.excludes";
+
 	private String _baseDirName;
 	private int _maxLineLength;
 	private List<String> _pluginsInsideModulesDirectoryNames;

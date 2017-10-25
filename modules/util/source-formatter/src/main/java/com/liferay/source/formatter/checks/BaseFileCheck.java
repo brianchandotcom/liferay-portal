@@ -176,9 +176,6 @@ public abstract class BaseFileCheck
 		_bndSettingsMap.put(bndSettings.getFileLocation(), bndSettings);
 	}
 
-	protected static final String RUN_OUTSIDE_PORTAL_EXCLUDES =
-		"run.outside.portal.excludes";
-
 	private final Map<String, BNDSettings> _bndSettingsMap =
 		new ConcurrentHashMap<>();
 

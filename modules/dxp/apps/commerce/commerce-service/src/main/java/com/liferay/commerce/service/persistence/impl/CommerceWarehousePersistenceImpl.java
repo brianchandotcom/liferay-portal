@@ -1490,6 +1490,8 @@ public class CommerceWarehousePersistenceImpl extends BasePersistenceImpl<Commer
 		commerceWarehouseImpl.setZip(commerceWarehouse.getZip());
 		commerceWarehouseImpl.setCommerceRegionId(commerceWarehouse.getCommerceRegionId());
 		commerceWarehouseImpl.setCommerceCountryId(commerceWarehouse.getCommerceCountryId());
+		commerceWarehouseImpl.setLatitude(commerceWarehouse.getLatitude());
+		commerceWarehouseImpl.setLongitude(commerceWarehouse.getLongitude());
 
 		return commerceWarehouseImpl;
 	}

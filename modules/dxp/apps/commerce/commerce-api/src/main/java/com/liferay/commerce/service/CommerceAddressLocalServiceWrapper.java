@@ -223,6 +223,13 @@ public class CommerceAddressLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceAddress geolocateCommerceAddress(
+		long commerceAddressId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceAddressLocalService.geolocateCommerceAddress(commerceAddressId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _commerceAddressLocalService.getActionableDynamicQuery();
 	}

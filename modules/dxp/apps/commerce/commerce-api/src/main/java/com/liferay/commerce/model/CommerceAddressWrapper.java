@@ -75,6 +75,8 @@ public class CommerceAddressWrapper implements CommerceAddress,
 		attributes.put("zip", getZip());
 		attributes.put("commerceRegionId", getCommerceRegionId());
 		attributes.put("commerceCountryId", getCommerceCountryId());
+		attributes.put("latitude", getLatitude());
+		attributes.put("longitude", getLongitude());
 		attributes.put("phoneNumber", getPhoneNumber());
 		attributes.put("defaultBilling", getDefaultBilling());
 		attributes.put("defaultShipping", getDefaultShipping());
@@ -186,6 +188,18 @@ public class CommerceAddressWrapper implements CommerceAddress,
 			setCommerceCountryId(commerceCountryId);
 		}
 
+		Double latitude = (Double)attributes.get("latitude");
+
+		if (latitude != null) {
+			setLatitude(latitude);
+		}
+
+		Double longitude = (Double)attributes.get("longitude");
+
+		if (longitude != null) {
+			setLongitude(longitude);
+		}
+
 		String phoneNumber = (String)attributes.get("phoneNumber");
 
 		if (phoneNumber != null) {
@@ -271,6 +285,12 @@ public class CommerceAddressWrapper implements CommerceAddress,
 		return _commerceAddress.getCommerceCountryId();
 	}
 
+	@Override
+	public CommerceRegion getCommerceRegion()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceAddress.getCommerceRegion();
+	}
+
 	/**
 	* Returns the commerce region ID of this commerce address.
 	*
@@ -344,6 +364,26 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	@Override
 	public long getGroupId() {
 		return _commerceAddress.getGroupId();
+	}
+
+	/**
+	* Returns the latitude of this commerce address.
+	*
+	* @return the latitude of this commerce address
+	*/
+	@Override
+	public double getLatitude() {
+		return _commerceAddress.getLatitude();
+	}
+
+	/**
+	* Returns the longitude of this commerce address.
+	*
+	* @return the longitude of this commerce address
+	*/
+	@Override
+	public double getLongitude() {
+		return _commerceAddress.getLongitude();
 	}
 
 	/**
@@ -645,6 +685,26 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	@Override
 	public void setGroupId(long groupId) {
 		_commerceAddress.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the latitude of this commerce address.
+	*
+	* @param latitude the latitude of this commerce address
+	*/
+	@Override
+	public void setLatitude(double latitude) {
+		_commerceAddress.setLatitude(latitude);
+	}
+
+	/**
+	* Sets the longitude of this commerce address.
+	*
+	* @param longitude the longitude of this commerce address
+	*/
+	@Override
+	public void setLongitude(double longitude) {
+		_commerceAddress.setLongitude(longitude);
 	}
 
 	/**

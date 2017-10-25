@@ -354,6 +354,34 @@ public interface CommerceAddressModel extends BaseModel<CommerceAddress>,
 	public void setCommerceCountryId(long commerceCountryId);
 
 	/**
+	 * Returns the latitude of this commerce address.
+	 *
+	 * @return the latitude of this commerce address
+	 */
+	public double getLatitude();
+
+	/**
+	 * Sets the latitude of this commerce address.
+	 *
+	 * @param latitude the latitude of this commerce address
+	 */
+	public void setLatitude(double latitude);
+
+	/**
+	 * Returns the longitude of this commerce address.
+	 *
+	 * @return the longitude of this commerce address
+	 */
+	public double getLongitude();
+
+	/**
+	 * Sets the longitude of this commerce address.
+	 *
+	 * @param longitude the longitude of this commerce address
+	 */
+	public void setLongitude(double longitude);
+
+	/**
 	 * Returns the phone number of this commerce address.
 	 *
 	 * @return the phone number of this commerce address

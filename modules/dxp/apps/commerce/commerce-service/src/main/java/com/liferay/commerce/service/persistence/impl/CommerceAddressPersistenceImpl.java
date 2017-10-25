@@ -3859,6 +3859,8 @@ public class CommerceAddressPersistenceImpl extends BasePersistenceImpl<Commerce
 		commerceAddressImpl.setZip(commerceAddress.getZip());
 		commerceAddressImpl.setCommerceRegionId(commerceAddress.getCommerceRegionId());
 		commerceAddressImpl.setCommerceCountryId(commerceAddress.getCommerceCountryId());
+		commerceAddressImpl.setLatitude(commerceAddress.getLatitude());
+		commerceAddressImpl.setLongitude(commerceAddress.getLongitude());
 		commerceAddressImpl.setPhoneNumber(commerceAddress.getPhoneNumber());
 		commerceAddressImpl.setDefaultBilling(commerceAddress.isDefaultBilling());
 		commerceAddressImpl.setDefaultShipping(commerceAddress.isDefaultShipping());

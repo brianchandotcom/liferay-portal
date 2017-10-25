@@ -74,6 +74,8 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 		attributes.put("zip", getZip());
 		attributes.put("commerceRegionId", getCommerceRegionId());
 		attributes.put("commerceCountryId", getCommerceCountryId());
+		attributes.put("latitude", getLatitude());
+		attributes.put("longitude", getLongitude());
 
 		return attributes;
 	}
@@ -175,6 +177,18 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 		if (commerceCountryId != null) {
 			setCommerceCountryId(commerceCountryId);
 		}
+
+		Double latitude = (Double)attributes.get("latitude");
+
+		if (latitude != null) {
+			setLatitude(latitude);
+		}
+
+		Double longitude = (Double)attributes.get("longitude");
+
+		if (longitude != null) {
+			setLongitude(longitude);
+		}
 	}
 
 	@Override
@@ -197,6 +211,12 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 		return _commerceWarehouse.getCity();
 	}
 
+	@Override
+	public CommerceCountry getCommerceCountry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceWarehouse.getCommerceCountry();
+	}
+
 	/**
 	* Returns the commerce country ID of this commerce warehouse.
 	*
@@ -205,6 +225,12 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	@Override
 	public long getCommerceCountryId() {
 		return _commerceWarehouse.getCommerceCountryId();
+	}
+
+	@Override
+	public CommerceRegion getCommerceRegion()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceWarehouse.getCommerceRegion();
 	}
 
 	/**
@@ -270,6 +296,26 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	@Override
 	public long getGroupId() {
 		return _commerceWarehouse.getGroupId();
+	}
+
+	/**
+	* Returns the latitude of this commerce warehouse.
+	*
+	* @return the latitude of this commerce warehouse
+	*/
+	@Override
+	public double getLatitude() {
+		return _commerceWarehouse.getLatitude();
+	}
+
+	/**
+	* Returns the longitude of this commerce warehouse.
+	*
+	* @return the longitude of this commerce warehouse
+	*/
+	@Override
+	public double getLongitude() {
+		return _commerceWarehouse.getLongitude();
 	}
 
 	/**
@@ -501,6 +547,26 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	@Override
 	public void setGroupId(long groupId) {
 		_commerceWarehouse.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the latitude of this commerce warehouse.
+	*
+	* @param latitude the latitude of this commerce warehouse
+	*/
+	@Override
+	public void setLatitude(double latitude) {
+		_commerceWarehouse.setLatitude(latitude);
+	}
+
+	/**
+	* Sets the longitude of this commerce warehouse.
+	*
+	* @param longitude the longitude of this commerce warehouse
+	*/
+	@Override
+	public void setLongitude(double longitude) {
+		_commerceWarehouse.setLongitude(longitude);
 	}
 
 	/**

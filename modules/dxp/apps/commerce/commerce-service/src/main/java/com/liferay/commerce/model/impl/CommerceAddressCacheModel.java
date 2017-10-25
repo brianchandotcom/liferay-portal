@@ -66,7 +66,7 @@ public class CommerceAddressCacheModel implements CacheModel<CommerceAddress>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{commerceAddressId=");
 		sb.append(commerceAddressId);
@@ -102,6 +102,10 @@ public class CommerceAddressCacheModel implements CacheModel<CommerceAddress>,
 		sb.append(commerceRegionId);
 		sb.append(", commerceCountryId=");
 		sb.append(commerceCountryId);
+		sb.append(", latitude=");
+		sb.append(latitude);
+		sb.append(", longitude=");
+		sb.append(longitude);
 		sb.append(", phoneNumber=");
 		sb.append(phoneNumber);
 		sb.append(", defaultBilling=");
@@ -196,6 +200,8 @@ public class CommerceAddressCacheModel implements CacheModel<CommerceAddress>,
 
 		commerceAddressImpl.setCommerceRegionId(commerceRegionId);
 		commerceAddressImpl.setCommerceCountryId(commerceCountryId);
+		commerceAddressImpl.setLatitude(latitude);
+		commerceAddressImpl.setLongitude(longitude);
 
 		if (phoneNumber == null) {
 			commerceAddressImpl.setPhoneNumber(StringPool.BLANK);
@@ -237,6 +243,10 @@ public class CommerceAddressCacheModel implements CacheModel<CommerceAddress>,
 		commerceRegionId = objectInput.readLong();
 
 		commerceCountryId = objectInput.readLong();
+
+		latitude = objectInput.readDouble();
+
+		longitude = objectInput.readDouble();
 		phoneNumber = objectInput.readUTF();
 
 		defaultBilling = objectInput.readBoolean();
@@ -320,6 +330,10 @@ public class CommerceAddressCacheModel implements CacheModel<CommerceAddress>,
 
 		objectOutput.writeLong(commerceCountryId);
 
+		objectOutput.writeDouble(latitude);
+
+		objectOutput.writeDouble(longitude);
+
 		if (phoneNumber == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -349,6 +363,8 @@ public class CommerceAddressCacheModel implements CacheModel<CommerceAddress>,
 	public String zip;
 	public long commerceRegionId;
 	public long commerceCountryId;
+	public double latitude;
+	public double longitude;
 	public String phoneNumber;
 	public boolean defaultBilling;
 	public boolean defaultShipping;

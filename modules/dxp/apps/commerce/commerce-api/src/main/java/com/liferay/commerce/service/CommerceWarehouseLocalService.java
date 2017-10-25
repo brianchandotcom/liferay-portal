@@ -76,8 +76,8 @@ public interface CommerceWarehouseLocalService extends BaseLocalService,
 		java.lang.String description, java.lang.String street1,
 		java.lang.String street2, java.lang.String street3,
 		java.lang.String city, java.lang.String zip, long commerceRegionId,
-		long commerceCountryId, ServiceContext serviceContext)
-		throws PortalException;
+		long commerceCountryId, double latitude, double longitude,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new commerce warehouse with the primary key. Does not add the commerce warehouse to the database.
@@ -179,6 +179,9 @@ public interface CommerceWarehouseLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceWarehouse fetchCommerceWarehouse(long commerceWarehouseId);
 
+	public CommerceWarehouse geolocateCommerceWarehouse(
+		long commerceWarehouseId) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -261,6 +264,7 @@ public interface CommerceWarehouseLocalService extends BaseLocalService,
 		java.lang.String name, java.lang.String description,
 		java.lang.String street1, java.lang.String street2,
 		java.lang.String street3, java.lang.String city, java.lang.String zip,
-		long commerceRegionId, long commerceCountryId,
-		ServiceContext serviceContext) throws PortalException;
+		long commerceRegionId, long commerceCountryId, double latitude,
+		double longitude, ServiceContext serviceContext)
+		throws PortalException;
 }

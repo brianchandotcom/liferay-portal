@@ -50,6 +50,8 @@ public class CommerceWarehouseSoap implements Serializable {
 		soapModel.setZip(model.getZip());
 		soapModel.setCommerceRegionId(model.getCommerceRegionId());
 		soapModel.setCommerceCountryId(model.getCommerceCountryId());
+		soapModel.setLatitude(model.getLatitude());
+		soapModel.setLongitude(model.getLongitude());
 
 		return soapModel;
 	}
@@ -233,6 +235,22 @@ public class CommerceWarehouseSoap implements Serializable {
 		_commerceCountryId = commerceCountryId;
 	}
 
+	public double getLatitude() {
+		return _latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		_latitude = latitude;
+	}
+
+	public double getLongitude() {
+		return _longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		_longitude = longitude;
+	}
+
 	private long _commerceWarehouseId;
 	private long _groupId;
 	private long _companyId;
@@ -249,4 +267,6 @@ public class CommerceWarehouseSoap implements Serializable {
 	private String _zip;
 	private long _commerceRegionId;
 	private long _commerceCountryId;
+	private double _latitude;
+	private double _longitude;
 }

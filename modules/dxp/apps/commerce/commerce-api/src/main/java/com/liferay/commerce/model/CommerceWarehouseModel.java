@@ -325,6 +325,34 @@ public interface CommerceWarehouseModel extends BaseModel<CommerceWarehouse>,
 	 */
 	public void setCommerceCountryId(long commerceCountryId);
 
+	/**
+	 * Returns the latitude of this commerce warehouse.
+	 *
+	 * @return the latitude of this commerce warehouse
+	 */
+	public double getLatitude();
+
+	/**
+	 * Sets the latitude of this commerce warehouse.
+	 *
+	 * @param latitude the latitude of this commerce warehouse
+	 */
+	public void setLatitude(double latitude);
+
+	/**
+	 * Returns the longitude of this commerce warehouse.
+	 *
+	 * @return the longitude of this commerce warehouse
+	 */
+	public double getLongitude();
+
+	/**
+	 * Sets the longitude of this commerce warehouse.
+	 *
+	 * @param longitude the longitude of this commerce warehouse
+	 */
+	public void setLongitude(double longitude);
+
 	@Override
 	public boolean isNew();
 

@@ -52,6 +52,8 @@ create table CommerceAddress (
 	zip VARCHAR(75) null,
 	commerceRegionId LONG,
 	commerceCountryId LONG,
+	latitude DOUBLE,
+	longitude DOUBLE,
 	phoneNumber VARCHAR(75) null,
 	defaultBilling BOOLEAN,
 	defaultShipping BOOLEAN
@@ -289,7 +291,9 @@ create table CommerceWarehouse (
 	city VARCHAR(75) null,
 	zip VARCHAR(75) null,
 	commerceRegionId LONG,
-	commerceCountryId LONG
+	commerceCountryId LONG,
+	latitude DOUBLE,
+	longitude DOUBLE
 );
 
 create table CommerceWarehouseItem (

@@ -88,6 +88,8 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 			{ "zip", Types.VARCHAR },
 			{ "commerceRegionId", Types.BIGINT },
 			{ "commerceCountryId", Types.BIGINT },
+			{ "latitude", Types.DOUBLE },
+			{ "longitude", Types.DOUBLE },
 			{ "phoneNumber", Types.VARCHAR },
 			{ "defaultBilling", Types.BOOLEAN },
 			{ "defaultShipping", Types.BOOLEAN }
@@ -112,12 +114,14 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 		TABLE_COLUMNS_MAP.put("zip", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceRegionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceCountryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("latitude", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("longitude", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("phoneNumber", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("defaultBilling", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("defaultShipping", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceAddress (commerceAddressId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,addressUserId LONG,name VARCHAR(75) null,description STRING null,street1 VARCHAR(75) null,street2 VARCHAR(75) null,street3 VARCHAR(75) null,city VARCHAR(75) null,zip VARCHAR(75) null,commerceRegionId LONG,commerceCountryId LONG,phoneNumber VARCHAR(75) null,defaultBilling BOOLEAN,defaultShipping BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceAddress (commerceAddressId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,addressUserId LONG,name VARCHAR(75) null,description STRING null,street1 VARCHAR(75) null,street2 VARCHAR(75) null,street3 VARCHAR(75) null,city VARCHAR(75) null,zip VARCHAR(75) null,commerceRegionId LONG,commerceCountryId LONG,latitude DOUBLE,longitude DOUBLE,phoneNumber VARCHAR(75) null,defaultBilling BOOLEAN,defaultShipping BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceAddress";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceAddress.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceAddress.createDate DESC";
@@ -171,6 +175,8 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 		model.setZip(soapModel.getZip());
 		model.setCommerceRegionId(soapModel.getCommerceRegionId());
 		model.setCommerceCountryId(soapModel.getCommerceCountryId());
+		model.setLatitude(soapModel.getLatitude());
+		model.setLongitude(soapModel.getLongitude());
 		model.setPhoneNumber(soapModel.getPhoneNumber());
 		model.setDefaultBilling(soapModel.getDefaultBilling());
 		model.setDefaultShipping(soapModel.getDefaultShipping());
@@ -256,6 +262,8 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 		attributes.put("zip", getZip());
 		attributes.put("commerceRegionId", getCommerceRegionId());
 		attributes.put("commerceCountryId", getCommerceCountryId());
+		attributes.put("latitude", getLatitude());
+		attributes.put("longitude", getLongitude());
 		attributes.put("phoneNumber", getPhoneNumber());
 		attributes.put("defaultBilling", getDefaultBilling());
 		attributes.put("defaultShipping", getDefaultShipping());
@@ -368,6 +376,18 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 
 		if (commerceCountryId != null) {
 			setCommerceCountryId(commerceCountryId);
+		}
+
+		Double latitude = (Double)attributes.get("latitude");
+
+		if (latitude != null) {
+			setLatitude(latitude);
+		}
+
+		Double longitude = (Double)attributes.get("longitude");
+
+		if (longitude != null) {
+			setLongitude(longitude);
 		}
 
 		String phoneNumber = (String)attributes.get("phoneNumber");
@@ -706,6 +726,28 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 
 	@JSON
 	@Override
+	public double getLatitude() {
+		return _latitude;
+	}
+
+	@Override
+	public void setLatitude(double latitude) {
+		_latitude = latitude;
+	}
+
+	@JSON
+	@Override
+	public double getLongitude() {
+		return _longitude;
+	}
+
+	@Override
+	public void setLongitude(double longitude) {
+		_longitude = longitude;
+	}
+
+	@JSON
+	@Override
 	public String getPhoneNumber() {
 		if (_phoneNumber == null) {
 			return StringPool.BLANK;
@@ -826,6 +868,8 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 		commerceAddressImpl.setZip(getZip());
 		commerceAddressImpl.setCommerceRegionId(getCommerceRegionId());
 		commerceAddressImpl.setCommerceCountryId(getCommerceCountryId());
+		commerceAddressImpl.setLatitude(getLatitude());
+		commerceAddressImpl.setLongitude(getLongitude());
 		commerceAddressImpl.setPhoneNumber(getPhoneNumber());
 		commerceAddressImpl.setDefaultBilling(getDefaultBilling());
 		commerceAddressImpl.setDefaultShipping(getDefaultShipping());
@@ -1021,6 +1065,10 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 
 		commerceAddressCacheModel.commerceCountryId = getCommerceCountryId();
 
+		commerceAddressCacheModel.latitude = getLatitude();
+
+		commerceAddressCacheModel.longitude = getLongitude();
+
 		commerceAddressCacheModel.phoneNumber = getPhoneNumber();
 
 		String phoneNumber = commerceAddressCacheModel.phoneNumber;
@@ -1038,7 +1086,7 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{commerceAddressId=");
 		sb.append(getCommerceAddressId());
@@ -1074,6 +1122,10 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 		sb.append(getCommerceRegionId());
 		sb.append(", commerceCountryId=");
 		sb.append(getCommerceCountryId());
+		sb.append(", latitude=");
+		sb.append(getLatitude());
+		sb.append(", longitude=");
+		sb.append(getLongitude());
 		sb.append(", phoneNumber=");
 		sb.append(getPhoneNumber());
 		sb.append(", defaultBilling=");
@@ -1087,7 +1139,7 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(64);
+		StringBundler sb = new StringBundler(70);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.model.CommerceAddress");
@@ -1162,6 +1214,14 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 		sb.append(getCommerceCountryId());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>latitude</column-name><column-value><![CDATA[");
+		sb.append(getLatitude());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>longitude</column-name><column-value><![CDATA[");
+		sb.append(getLongitude());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>phoneNumber</column-name><column-value><![CDATA[");
 		sb.append(getPhoneNumber());
 		sb.append("]]></column-value></column>");
@@ -1209,6 +1269,8 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 	private long _commerceCountryId;
 	private long _originalCommerceCountryId;
 	private boolean _setOriginalCommerceCountryId;
+	private double _latitude;
+	private double _longitude;
 	private String _phoneNumber;
 	private boolean _defaultBilling;
 	private boolean _originalDefaultBilling;

@@ -39,6 +39,8 @@
 		<property name="zip" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="commerceRegionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="commerceCountryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="latitude" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="longitude" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="phoneNumber" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="defaultBilling" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="defaultShipping" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
@@ -268,6 +270,8 @@
 		<property name="zip" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="commerceRegionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="commerceCountryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="latitude" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="longitude" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 	</class>
 	<class name="com.liferay.commerce.model.impl.CommerceWarehouseItemImpl" table="CommerceWarehouseItem">
 		<id name="commerceWarehouseItemId" type="long">

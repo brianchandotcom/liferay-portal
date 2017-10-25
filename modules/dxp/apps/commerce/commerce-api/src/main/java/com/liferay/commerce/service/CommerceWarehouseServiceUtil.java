@@ -45,18 +45,25 @@ public class CommerceWarehouseServiceUtil {
 		java.lang.String name, java.lang.String description,
 		java.lang.String street1, java.lang.String street2,
 		java.lang.String street3, java.lang.String city, java.lang.String zip,
-		long commerceRegionId, long commerceCountryId,
+		long commerceRegionId, long commerceCountryId, double latitude,
+		double longitude,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCommerceWarehouse(name, description, street1, street2,
-			street3, city, zip, commerceRegionId, commerceCountryId,
-			serviceContext);
+			street3, city, zip, commerceRegionId, commerceCountryId, latitude,
+			longitude, serviceContext);
 	}
 
 	public static void deleteCommerceWarehouse(long commerceWarehouseId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteCommerceWarehouse(commerceWarehouseId);
+	}
+
+	public static com.liferay.commerce.model.CommerceWarehouse geolocateCommerceWarehouse(
+		long commerceWarehouseId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().geolocateCommerceWarehouse(commerceWarehouseId);
 	}
 
 	public static com.liferay.commerce.model.CommerceWarehouse getCommerceWarehouse(
@@ -111,13 +118,14 @@ public class CommerceWarehouseServiceUtil {
 		java.lang.String description, java.lang.String street1,
 		java.lang.String street2, java.lang.String street3,
 		java.lang.String city, java.lang.String zip, long commerceRegionId,
-		long commerceCountryId,
+		long commerceCountryId, double latitude, double longitude,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCommerceWarehouse(commerceWarehouseId, name,
 			description, street1, street2, street3, city, zip,
-			commerceRegionId, commerceCountryId, serviceContext);
+			commerceRegionId, commerceCountryId, latitude, longitude,
+			serviceContext);
 	}
 
 	public static CommerceWarehouseService getService() {

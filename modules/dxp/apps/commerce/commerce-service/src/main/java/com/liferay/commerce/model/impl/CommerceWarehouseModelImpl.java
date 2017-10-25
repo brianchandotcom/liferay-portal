@@ -85,7 +85,9 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 			{ "city", Types.VARCHAR },
 			{ "zip", Types.VARCHAR },
 			{ "commerceRegionId", Types.BIGINT },
-			{ "commerceCountryId", Types.BIGINT }
+			{ "commerceCountryId", Types.BIGINT },
+			{ "latitude", Types.DOUBLE },
+			{ "longitude", Types.DOUBLE }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -106,9 +108,11 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 		TABLE_COLUMNS_MAP.put("zip", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceRegionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceCountryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("latitude", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("longitude", Types.DOUBLE);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceWarehouse (commerceWarehouseId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description VARCHAR(75) null,street1 VARCHAR(75) null,street2 VARCHAR(75) null,street3 VARCHAR(75) null,city VARCHAR(75) null,zip VARCHAR(75) null,commerceRegionId LONG,commerceCountryId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceWarehouse (commerceWarehouseId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description VARCHAR(75) null,street1 VARCHAR(75) null,street2 VARCHAR(75) null,street3 VARCHAR(75) null,city VARCHAR(75) null,zip VARCHAR(75) null,commerceRegionId LONG,commerceCountryId LONG,latitude DOUBLE,longitude DOUBLE)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceWarehouse";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceWarehouse.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceWarehouse.name ASC";
@@ -157,6 +161,8 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 		model.setZip(soapModel.getZip());
 		model.setCommerceRegionId(soapModel.getCommerceRegionId());
 		model.setCommerceCountryId(soapModel.getCommerceCountryId());
+		model.setLatitude(soapModel.getLatitude());
+		model.setLongitude(soapModel.getLongitude());
 
 		return model;
 	}
@@ -238,6 +244,8 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 		attributes.put("zip", getZip());
 		attributes.put("commerceRegionId", getCommerceRegionId());
 		attributes.put("commerceCountryId", getCommerceCountryId());
+		attributes.put("latitude", getLatitude());
+		attributes.put("longitude", getLongitude());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -341,6 +349,18 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 
 		if (commerceCountryId != null) {
 			setCommerceCountryId(commerceCountryId);
+		}
+
+		Double latitude = (Double)attributes.get("latitude");
+
+		if (latitude != null) {
+			setLatitude(latitude);
+		}
+
+		Double longitude = (Double)attributes.get("longitude");
+
+		if (longitude != null) {
+			setLongitude(longitude);
 		}
 	}
 
@@ -608,6 +628,28 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 		return _originalCommerceCountryId;
 	}
 
+	@JSON
+	@Override
+	public double getLatitude() {
+		return _latitude;
+	}
+
+	@Override
+	public void setLatitude(double latitude) {
+		_latitude = latitude;
+	}
+
+	@JSON
+	@Override
+	public double getLongitude() {
+		return _longitude;
+	}
+
+	@Override
+	public void setLongitude(double longitude) {
+		_longitude = longitude;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -655,6 +697,8 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 		commerceWarehouseImpl.setZip(getZip());
 		commerceWarehouseImpl.setCommerceRegionId(getCommerceRegionId());
 		commerceWarehouseImpl.setCommerceCountryId(getCommerceCountryId());
+		commerceWarehouseImpl.setLatitude(getLatitude());
+		commerceWarehouseImpl.setLongitude(getLongitude());
 
 		commerceWarehouseImpl.resetOriginalValues();
 
@@ -826,12 +870,16 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 
 		commerceWarehouseCacheModel.commerceCountryId = getCommerceCountryId();
 
+		commerceWarehouseCacheModel.latitude = getLatitude();
+
+		commerceWarehouseCacheModel.longitude = getLongitude();
+
 		return commerceWarehouseCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{commerceWarehouseId=");
 		sb.append(getCommerceWarehouseId());
@@ -865,6 +913,10 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 		sb.append(getCommerceRegionId());
 		sb.append(", commerceCountryId=");
 		sb.append(getCommerceCountryId());
+		sb.append(", latitude=");
+		sb.append(getLatitude());
+		sb.append(", longitude=");
+		sb.append(getLongitude());
 		sb.append("}");
 
 		return sb.toString();
@@ -872,7 +924,7 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(58);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.model.CommerceWarehouse");
@@ -942,6 +994,14 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 			"<column><column-name>commerceCountryId</column-name><column-value><![CDATA[");
 		sb.append(getCommerceCountryId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>latitude</column-name><column-value><![CDATA[");
+		sb.append(getLatitude());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>longitude</column-name><column-value><![CDATA[");
+		sb.append(getLongitude());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -973,6 +1033,8 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 	private long _commerceCountryId;
 	private long _originalCommerceCountryId;
 	private boolean _setOriginalCommerceCountryId;
+	private double _latitude;
+	private double _longitude;
 	private long _columnBitmask;
 	private CommerceWarehouse _escapedModel;
 }

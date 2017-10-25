@@ -188,6 +188,9 @@ public interface CommerceAddressLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceAddress fetchCommerceAddress(long commerceAddressId);
 
+	public CommerceAddress geolocateCommerceAddress(long commerceAddressId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 

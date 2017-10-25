@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -152,6 +153,10 @@ public class CommerceWarehousePersistenceTest {
 
 		newCommerceWarehouse.setCommerceCountryId(RandomTestUtil.nextLong());
 
+		newCommerceWarehouse.setLatitude(RandomTestUtil.nextDouble());
+
+		newCommerceWarehouse.setLongitude(RandomTestUtil.nextDouble());
+
 		_commerceWarehouses.add(_persistence.update(newCommerceWarehouse));
 
 		CommerceWarehouse existingCommerceWarehouse = _persistence.findByPrimaryKey(newCommerceWarehouse.getPrimaryKey());
@@ -190,6 +195,10 @@ public class CommerceWarehousePersistenceTest {
 			newCommerceWarehouse.getCommerceRegionId());
 		Assert.assertEquals(existingCommerceWarehouse.getCommerceCountryId(),
 			newCommerceWarehouse.getCommerceCountryId());
+		AssertUtils.assertEquals(existingCommerceWarehouse.getLatitude(),
+			newCommerceWarehouse.getLatitude());
+		AssertUtils.assertEquals(existingCommerceWarehouse.getLongitude(),
+			newCommerceWarehouse.getLongitude());
 	}
 
 	@Test
@@ -235,7 +244,8 @@ public class CommerceWarehousePersistenceTest {
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "name", true, "description", true, "street1",
 			true, "street2", true, "street3", true, "city", true, "zip", true,
-			"commerceRegionId", true, "commerceCountryId", true);
+			"commerceRegionId", true, "commerceCountryId", true, "latitude",
+			true, "longitude", true);
 	}
 
 	@Test
@@ -467,6 +477,10 @@ public class CommerceWarehousePersistenceTest {
 		commerceWarehouse.setCommerceRegionId(RandomTestUtil.nextLong());
 
 		commerceWarehouse.setCommerceCountryId(RandomTestUtil.nextLong());
+
+		commerceWarehouse.setLatitude(RandomTestUtil.nextDouble());
+
+		commerceWarehouse.setLongitude(RandomTestUtil.nextDouble());
 
 		_commerceWarehouses.add(_persistence.update(commerceWarehouse));
 

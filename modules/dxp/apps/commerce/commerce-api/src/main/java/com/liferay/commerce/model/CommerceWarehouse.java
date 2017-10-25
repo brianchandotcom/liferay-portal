@@ -54,4 +54,10 @@ public interface CommerceWarehouse extends CommerceWarehouseModel, PersistedMode
 				return CommerceWarehouse.class;
 			}
 		};
+
+	public CommerceCountry getCommerceCountry()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public CommerceRegion getCommerceRegion()
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

@@ -69,13 +69,15 @@ public class CommerceWarehouseServiceSoap {
 		java.lang.String name, java.lang.String description,
 		java.lang.String street1, java.lang.String street2,
 		java.lang.String street3, java.lang.String city, java.lang.String zip,
-		long commerceRegionId, long commerceCountryId,
+		long commerceRegionId, long commerceCountryId, double latitude,
+		double longitude,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.model.CommerceWarehouse returnValue = CommerceWarehouseServiceUtil.addCommerceWarehouse(name,
 					description, street1, street2, street3, city, zip,
-					commerceRegionId, commerceCountryId, serviceContext);
+					commerceRegionId, commerceCountryId, latitude, longitude,
+					serviceContext);
 
 			return com.liferay.commerce.model.CommerceWarehouseSoap.toSoapModel(returnValue);
 		}
@@ -90,6 +92,20 @@ public class CommerceWarehouseServiceSoap {
 		throws RemoteException {
 		try {
 			CommerceWarehouseServiceUtil.deleteCommerceWarehouse(commerceWarehouseId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceWarehouseSoap geolocateCommerceWarehouse(
+		long commerceWarehouseId) throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceWarehouse returnValue = CommerceWarehouseServiceUtil.geolocateCommerceWarehouse(commerceWarehouseId);
+
+			return com.liferay.commerce.model.CommerceWarehouseSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -184,13 +200,14 @@ public class CommerceWarehouseServiceSoap {
 		java.lang.String description, java.lang.String street1,
 		java.lang.String street2, java.lang.String street3,
 		java.lang.String city, java.lang.String zip, long commerceRegionId,
-		long commerceCountryId,
+		long commerceCountryId, double latitude, double longitude,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.model.CommerceWarehouse returnValue = CommerceWarehouseServiceUtil.updateCommerceWarehouse(commerceWarehouseId,
 					name, description, street1, street2, street3, city, zip,
-					commerceRegionId, commerceCountryId, serviceContext);
+					commerceRegionId, commerceCountryId, latitude, longitude,
+					serviceContext);
 
 			return com.liferay.commerce.model.CommerceWarehouseSoap.toSoapModel(returnValue);
 		}

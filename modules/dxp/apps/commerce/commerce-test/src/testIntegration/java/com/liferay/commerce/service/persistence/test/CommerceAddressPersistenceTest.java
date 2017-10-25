@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -154,6 +155,10 @@ public class CommerceAddressPersistenceTest {
 
 		newCommerceAddress.setCommerceCountryId(RandomTestUtil.nextLong());
 
+		newCommerceAddress.setLatitude(RandomTestUtil.nextDouble());
+
+		newCommerceAddress.setLongitude(RandomTestUtil.nextDouble());
+
 		newCommerceAddress.setPhoneNumber(RandomTestUtil.randomString());
 
 		newCommerceAddress.setDefaultBilling(RandomTestUtil.randomBoolean());
@@ -200,6 +205,10 @@ public class CommerceAddressPersistenceTest {
 			newCommerceAddress.getCommerceRegionId());
 		Assert.assertEquals(existingCommerceAddress.getCommerceCountryId(),
 			newCommerceAddress.getCommerceCountryId());
+		AssertUtils.assertEquals(existingCommerceAddress.getLatitude(),
+			newCommerceAddress.getLatitude());
+		AssertUtils.assertEquals(existingCommerceAddress.getLongitude(),
+			newCommerceAddress.getLongitude());
 		Assert.assertEquals(existingCommerceAddress.getPhoneNumber(),
 			newCommerceAddress.getPhoneNumber());
 		Assert.assertEquals(existingCommerceAddress.getDefaultBilling(),
@@ -282,8 +291,8 @@ public class CommerceAddressPersistenceTest {
 			"modifiedDate", true, "addressUserId", true, "name", true,
 			"description", true, "street1", true, "street2", true, "street3",
 			true, "city", true, "zip", true, "commerceRegionId", true,
-			"commerceCountryId", true, "phoneNumber", true, "defaultBilling",
-			true, "defaultShipping", true);
+			"commerceCountryId", true, "latitude", true, "longitude", true,
+			"phoneNumber", true, "defaultBilling", true, "defaultShipping", true);
 	}
 
 	@Test
@@ -516,6 +525,10 @@ public class CommerceAddressPersistenceTest {
 		commerceAddress.setCommerceRegionId(RandomTestUtil.nextLong());
 
 		commerceAddress.setCommerceCountryId(RandomTestUtil.nextLong());
+
+		commerceAddress.setLatitude(RandomTestUtil.nextDouble());
+
+		commerceAddress.setLongitude(RandomTestUtil.nextDouble());
 
 		commerceAddress.setPhoneNumber(RandomTestUtil.randomString());
 

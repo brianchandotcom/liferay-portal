@@ -213,6 +213,12 @@ public class CommerceAddressLocalServiceUtil {
 		return getService().fetchCommerceAddress(commerceAddressId);
 	}
 
+	public static com.liferay.commerce.model.CommerceAddress geolocateCommerceAddress(
+		long commerceAddressId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().geolocateCommerceAddress(commerceAddressId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}

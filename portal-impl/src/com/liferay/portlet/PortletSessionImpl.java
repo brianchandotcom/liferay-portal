@@ -339,38 +339,38 @@ public class PortletSessionImpl implements LiferayPortletSession {
 			return byteBuffer.array();
 		}
 
-		private static final Log _log = LogFactoryUtil.getLog(
-			LazySerializableObjectWrapper.class);
-
 		private volatile Serializable _serializable;
 
-		private static class LazySerializable implements Serializable {
+	}
 
-			public byte[] getData() {
-				return _data;
-			}
+	private static class LazySerializable implements Serializable {
 
-			public Serializable getSerializable() {
-				Deserializer deserializer = new Deserializer(
-					ByteBuffer.wrap(_data));
-
-				try {
-					return deserializer.readObject();
-				}
-				catch (ClassNotFoundException cnfe) {
-					_log.error("Unable to deserialize object", cnfe);
-
-					return null;
-				}
-			}
-
-			private LazySerializable(byte[] data) {
-				_data = data;
-			}
-
-			private final byte[] _data;
-
+		public byte[] getData() {
+			return _data;
 		}
+
+		public Serializable getSerializable() {
+			Deserializer deserializer = new Deserializer(
+				ByteBuffer.wrap(_data));
+
+			try {
+				return deserializer.readObject();
+			}
+			catch (ClassNotFoundException cnfe) {
+				_log.error("Unable to deserialize object", cnfe);
+
+				return null;
+			}
+		}
+
+		private LazySerializable(byte[] data) {
+			_data = data;
+		}
+
+		private static final Log _log = LogFactoryUtil.getLog(
+			LazySerializable.class);
+
+		private final byte[] _data;
 
 	}
 

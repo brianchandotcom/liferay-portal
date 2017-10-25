@@ -91,6 +91,10 @@
 	</command>
 
 	<command name="smoke">
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="${siteName}" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Navigation" />
 			<var name="panel" value="Site Administration" />
@@ -236,6 +240,10 @@
 			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="${siteName}" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Navigation" />
 			<var name="panel" value="Site Administration" />
@@ -360,6 +368,10 @@
 			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="${siteName}" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Navigation" />
 			<var name="panel" value="Site Administration" />
@@ -432,6 +444,10 @@
 			<var name="wikiChildPageTitle" value="Wiki Front Page Child Page Title 3" />
 			<var name="wikiPageContent" value="Wiki FrontPage Content" />
 			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="${siteName}" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -542,6 +558,10 @@
 			<var name="eventTitle" value="Calendar Event All Day Title" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="${siteName}" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -687,6 +707,10 @@
 	</command>
 
 	<command name="smokeSites">
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="${siteName}" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Navigation" />
 			<var name="panel" value="Site Administration" />
@@ -832,6 +856,10 @@
 			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="${siteName}" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Navigation" />
 			<var name="panel" value="Site Administration" />
@@ -956,6 +984,10 @@
 			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="${siteName}" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Navigation" />
 			<var name="panel" value="Site Administration" />
@@ -1028,6 +1060,10 @@
 			<var name="wikiChildPageTitle" value="Wiki Front Page Child Page Title 3" />
 			<var name="wikiPageContent" value="Wiki FrontPage Content" />
 			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="${siteName}" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -1138,6 +1174,10 @@
 			<var name="eventTitle" value="Calendar Event All Day Title" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="${siteName}" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">

@@ -401,6 +401,10 @@
 			<var name="orgName" value="Organization Name" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Organization Name" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Navigation" />
 			<var name="panel" value="Site Administration" />
@@ -445,6 +449,10 @@
 
 		<execute macro="Organization#addSiteCP">
 			<var name="orgName" value="Organization Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Organization Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -532,6 +540,10 @@
 			<var name="userLastName" value="Test" />
 			<var name="userName" value="Test Test" />
 			<var name="userScreenName" value="test" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Organization Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -1600,6 +1612,10 @@
 			<var name="userLastName" value="userln" />
 			<var name="userName" value="userfn userln" />
 			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Organization Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">

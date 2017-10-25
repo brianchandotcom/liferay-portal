@@ -103,7 +103,6 @@
 		<check name="JavaLogClassNameCheck" />
 		<check name="JavaLogLevelCheck" />
 		<check name="JavaLongLinesCheck" />
-		<check name="JavaMultiPlusConcatCheck" />
 		<check name="JavaPackagePathCheck" />
 		<check name="JavaProcessCallableCheck" />
 		<check name="JavaProviderTypeAnnotationCheck" />
@@ -153,6 +152,7 @@
 
 		<check name="JavaCleanUpMethodVariablesCheck" />
 		<check name="JavaFinderCacheCheck" />
+		<check name="JavaMultiPlusConcatCheck" />
 		<check name="JavaServiceUtilCheck" />
 		<check name="JavaSystemEventAnnotationCheck" />
 		<check name="JavaTestMethodAnnotationsCheck" />

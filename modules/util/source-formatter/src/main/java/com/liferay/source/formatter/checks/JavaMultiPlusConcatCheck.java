@@ -31,6 +31,11 @@ import java.util.List;
 public class JavaMultiPlusConcatCheck extends BaseJavaTermCheck {
 
 	@Override
+	public boolean isPortalCheck() {
+		return true;
+	}
+
+	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, JavaTerm javaTerm,
 		String fileContent) {

@@ -342,7 +342,8 @@ public class DefaultUserResolver implements UserResolver {
 	protected User importUser(
 			long companyId, String subjectNameIdentifier,
 			String subjectNameIdentifierType,
-			UserResolverSAMLContext samlContext, ServiceContext serviceContext)
+			UserResolverSAMLContext userResolverSAMLContext,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		if (_log.isDebugEnabled()) {
@@ -352,7 +353,7 @@ public class DefaultUserResolver implements UserResolver {
 		}
 
 		Map<String, List<Serializable>> attributesMap = getAttributesMap(
-			samlContext);
+			userResolverSAMLContext);
 
 		User user = getUser(
 			companyId, subjectNameIdentifier, subjectNameIdentifierType);

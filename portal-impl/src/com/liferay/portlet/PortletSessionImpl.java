@@ -232,8 +232,16 @@ public class PortletSessionImpl implements LiferayPortletSession {
 
 		@Override
 		public Object getAttribute(String name) {
-			return LazySerializableObjectWrapper.unwrap(
-				super.getAttribute(name));
+			Object value = super.getAttribute(name);
+
+			if (value instanceof LazySerializableObjectWrapper) {
+				LazySerializableObjectWrapper lazySerializableObjectWrapper =
+					(LazySerializableObjectWrapper)value;
+
+				return lazySerializableObjectWrapper.getSerializable();
+			}
+
+			return value;
 		}
 
 		@Override
@@ -264,20 +272,10 @@ public class PortletSessionImpl implements LiferayPortletSession {
 	private static class LazySerializableObjectWrapper
 		implements Externalizable {
 
-		public static <T> T unwrap(Object object) {
-			if (!(object instanceof LazySerializableObjectWrapper)) {
-				return (T)object;
-			}
-
-			LazySerializableObjectWrapper lazySerializableObjectWrapper =
-				(LazySerializableObjectWrapper)object;
-
-			if (lazySerializableObjectWrapper.
-					_serializable instanceof LazySerializable) {
-
+		public Serializable getSerializable() {
+			if (_serializable instanceof LazySerializable) {
 				LazySerializable lazySerializable =
-					(LazySerializable)
-						lazySerializableObjectWrapper._serializable;
+					(LazySerializable)_serializable;
 
 				Serializable serializable = lazySerializable.getSerializable();
 
@@ -285,10 +283,10 @@ public class PortletSessionImpl implements LiferayPortletSession {
 					return null;
 				}
 
-				lazySerializableObjectWrapper._serializable = serializable;
+				_serializable = serializable;
 			}
 
-			return (T)lazySerializableObjectWrapper._serializable;
+			return _serializable;
 		}
 
 		/**

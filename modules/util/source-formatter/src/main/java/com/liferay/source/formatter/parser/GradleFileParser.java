@@ -87,14 +87,14 @@ public class GradleFileParser {
 			if (line.matches("^apply plugin.*")) {
 				applyPlugins.add(line);
 			}
-			else if (line.matches("^task\\s+.*$") && !line.contains("{")) {
-				tasks.add(line);
-			}
 			else if (line.matches("^sourceCompatibility\\s*=.*$")) {
 				properties.add(line);
 			}
 			else if (line.matches("^targetCompatibility\\s*=.*$")) {
 				properties.add(line);
+			}
+			else if (line.matches("^task\\s+.*$") && !line.contains("{")) {
+				tasks.add(line);
 			}
 			else {
 				if (taskMatcher.matches() && tasks.isEmpty()) {
@@ -106,16 +106,11 @@ public class GradleFileParser {
 			}
 		}
 
-		bodyBlock = StringUtil.trim(bodyBlock);
-		buildScriptBlock = StringUtil.trim(buildScriptBlock);
-		extScriptBlock = StringUtil.trim(extScriptBlock);
-		initializeBlock = StringUtil.trim(initializeBlock);
-
-		GradleFile gradleFile = new GradleFile(
-			applyPlugins, bodyBlock, buildScriptBlock, content, extScriptBlock,
-			fileName, importsBlock, initializeBlock, properties, tasks);
-
-		return gradleFile;
+		return new GradleFile(
+			applyPlugins, StringUtil.trim(bodyBlock),
+			StringUtil.trim(buildScriptBlock), content,
+			StringUtil.trim(extScriptBlock), fileName, importsBlock,
+			StringUtil.trim(initializeBlock), properties, tasks);
 	}
 
 	private static final Pattern _importsPattern = Pattern.compile(

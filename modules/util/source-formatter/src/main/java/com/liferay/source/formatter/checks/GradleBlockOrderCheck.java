@@ -89,19 +89,19 @@ public class GradleBlockOrderCheck extends BaseGradleFileCheck {
 		return StringUtil.trim(sb.toString());
 	}
 
-	private String _merge(Collection<String> c, String delimiter) {
-		if (c == null) {
+	private String _merge(Collection<String> lines, String delimiter) {
+		if (lines == null) {
 			return null;
 		}
 
-		if (c.isEmpty()) {
+		if (lines.isEmpty()) {
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(2 * c.size());
+		StringBundler sb = new StringBundler(2 * lines.size());
 
-		for (String s : c) {
-			sb.append(s);
+		for (String line : lines) {
+			sb.append(line);
 			sb.append(delimiter);
 		}
 

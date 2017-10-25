@@ -56,7 +56,11 @@ public class LanguageKeysCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		_checkLanguageKeys(fileName, absolutePath, content, getPatterns());
+		if (!isSubrepository() &&
+			!absolutePath.contains("/modules/private/apps/")) {
+
+			_checkLanguageKeys(fileName, absolutePath, content, getPatterns());
+		}
 
 		return content;
 	}
@@ -104,13 +108,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 					languageKey.startsWith(StringPool.OPEN_BRACKET) ||
 					languageKey.startsWith(StringPool.OPEN_CURLY_BRACE) ||
 					languageKey.startsWith(StringPool.PERIOD) ||
-					languageKey.startsWith(StringPool.UNDERLINE)) {
-
-					continue;
-				}
-
-				if (!isSubrepository() &&
-					!absolutePath.contains("/modules/private/apps/") &&
+					languageKey.startsWith(StringPool.UNDERLINE) ||
 					_portalLanguageProperties.containsKey(languageKey)) {
 
 					continue;

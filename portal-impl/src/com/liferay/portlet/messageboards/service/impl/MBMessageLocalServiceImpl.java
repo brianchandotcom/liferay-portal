@@ -804,13 +804,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		mbMessagePersistence.remove(message);
 
-		// Statistics
-
-		if (!message.isDiscussion()) {
-			mbStatsUserLocalService.updateStatsUser(
-				message.getGroupId(), message.getUserId());
-		}
-
 		// Workflow
 
 		workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
@@ -1571,7 +1564,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		serviceContext.setAttribute("className", className);
 		serviceContext.setAttribute("classPK", String.valueOf(classPK));
 
-		return updateMessage(
+		return mbMessageLocalService.updateMessage(
 			userId, messageId, subject, body, inputStreamOVPs, existingFiles,
 			priority, allowPingbacks, serviceContext);
 	}
@@ -1584,7 +1577,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
 
-		return updateMessage(
+		return mbMessageLocalService.updateMessage(
 			userId, messageId, message.getSubject(), body, null, null,
 			message.getPriority(), message.isAllowPingbacks(), serviceContext);
 	}
@@ -1717,16 +1710,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		mbMessagePersistence.update(message);
 
-		// Statistics
-
-		if ((serviceContext.getWorkflowAction() ==
-				WorkflowConstants.ACTION_SAVE_DRAFT) &&
-			!message.isDiscussion()) {
-
-			mbStatsUserLocalService.updateStatsUser(
-				message.getGroupId(), userId, message.getModifiedDate());
-		}
-
 		// Thread
 
 		if ((priority != MBThreadConstants.PRIORITY_NOT_GIVEN) &&
@@ -1781,7 +1764,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return updateStatus(
+		return mbMessageLocalService.updateStatus(
 			userId, messageId, status, serviceContext,
 			new HashMap<String, Serializable>());
 	}
@@ -1940,14 +1923,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			// Indexer
 
 			indexer.delete(message);
-		}
-
-		// Statistics
-
-		if (!message.isDiscussion()) {
-			mbStatsUserLocalService.updateStatsUser(
-				message.getGroupId(), userId,
-				serviceContext.getModifiedDate(now));
 		}
 
 		return message;

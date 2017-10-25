@@ -53,8 +53,11 @@ import java.util.Map;
  * @see MBStatsUserImpl
  * @see MBStatsUser
  * @see MBStatsUserModel
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.model.impl.MBStatsUserImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	implements MBStatsUserModel {

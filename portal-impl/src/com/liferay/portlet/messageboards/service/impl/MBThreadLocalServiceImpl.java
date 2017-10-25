@@ -63,9 +63,7 @@ import com.liferay.trash.kernel.model.TrashVersion;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -200,13 +198,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 			messageIndexer.delete(message);
 
-			// Statistics
-
-			if (!message.isDiscussion()) {
-				mbStatsUserLocalService.updateStatsUser(
-					message.getGroupId(), message.getUserId());
-			}
-
 			// Workflow
 
 			workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
@@ -264,7 +255,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	public void deleteThreads(long groupId, long categoryId)
 		throws PortalException {
 
-		deleteThreads(groupId, categoryId, true);
+		mbThreadLocalService.deleteThreads(groupId, categoryId, true);
 	}
 
 	@Override
@@ -525,8 +516,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			long groupId, long threadId, long trashEntryId)
 		throws PortalException {
 
-		Set<Long> userIds = new HashSet<>();
-
 		MBThread thread = mbThreadLocalService.getThread(threadId);
 
 		List<MBMessage> messages = mbMessageLocalService.getThreadMessages(
@@ -545,8 +534,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			message.setStatus(WorkflowConstants.STATUS_IN_TRASH);
 
 			mbMessagePersistence.update(message);
-
-			userIds.add(message.getUserId());
 
 			// Trash
 
@@ -590,12 +577,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 					message.getCompanyId(), message.getGroupId(),
 					MBMessage.class.getName(), message.getMessageId());
 			}
-		}
-
-		// Statistics
-
-		for (long userId : userIds) {
-			mbStatsUserLocalService.updateStatsUser(groupId, userId);
 		}
 	}
 
@@ -704,7 +685,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 			// Messages
 
-			restoreDependentsFromTrash(thread.getGroupId(), threadId);
+			mbThreadLocalService.restoreDependentsFromTrash(
+				thread.getGroupId(), threadId);
 		}
 
 		return moveThread(thread.getGroupId(), categoryId, threadId);
@@ -766,7 +748,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Messages
 
-		moveDependentsToTrash(
+		mbThreadLocalService.moveDependentsToTrash(
 			thread.getGroupId(), thread.getThreadId(), trashEntry.getEntryId());
 
 		// Social
@@ -789,8 +771,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	@Override
 	public void restoreDependentsFromTrash(long groupId, long threadId)
 		throws PortalException {
-
-		Set<Long> userIds = new HashSet<>();
 
 		MBThread thread = mbThreadLocalService.getThread(threadId);
 
@@ -817,8 +797,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			message.setStatus(oldStatus);
 
 			mbMessagePersistence.update(message);
-
-			userIds.add(message.getUserId());
 
 			// Trash
 
@@ -849,12 +827,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 			indexer.reindex(message);
 		}
-
-		// Statistics
-
-		for (long userId : userIds) {
-			mbStatsUserLocalService.updateStatsUser(groupId, userId);
-		}
 	}
 
 	/**
@@ -867,7 +839,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			long groupId, long threadId, long trashEntryId)
 		throws PortalException {
 
-		restoreDependentsFromTrash(groupId, threadId);
+		mbThreadLocalService.restoreDependentsFromTrash(groupId, threadId);
 	}
 
 	@Override
@@ -896,7 +868,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Messages
 
-		restoreDependentsFromTrash(thread.getGroupId(), threadId);
+		mbThreadLocalService.restoreDependentsFromTrash(
+			thread.getGroupId(), threadId);
 
 		// Trash
 

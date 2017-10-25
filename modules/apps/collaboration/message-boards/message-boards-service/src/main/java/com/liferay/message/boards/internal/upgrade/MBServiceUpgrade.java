@@ -12,26 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.security.pacl.test.hook.service.impl;
+package com.liferay.message.boards.internal.upgrade;
 
-import com.liferay.message.boards.kernel.service.MBStatsUserLocalService;
-import com.liferay.message.boards.kernel.service.MBStatsUserLocalServiceWrapper;
+import com.liferay.message.boards.internal.upgrade.v1_0_0.UpgradeClassNames;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Sergio González
  */
-public class TestPACLMBStatsUserLocalServiceImpl
-	extends MBStatsUserLocalServiceWrapper {
-
-	public TestPACLMBStatsUserLocalServiceImpl(
-		MBStatsUserLocalService mbStatsUserLocalService) {
-
-		super(mbStatsUserLocalService);
-	}
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
+public class MBServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
-	public int getMBStatsUsersCount() {
-		return -456;
+	public void register(Registry registry) {
+		registry.register(
+			"com.liferay.message.boards.service", "0.0.1", "1.0.0",
+			new UpgradeClassNames());
 	}
 
 }

@@ -96,8 +96,6 @@
 	<bean class="com.liferay.portlet.messageboards.service.impl.MBMessageServiceImpl" id="com.liferay.message.boards.kernel.service.MBMessageService" />
 	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBMessagePersistenceImpl" id="com.liferay.message.boards.kernel.service.persistence.MBMessagePersistence" parent="basePersistence" />
 	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBMessageFinderImpl" id="com.liferay.message.boards.kernel.service.persistence.MBMessageFinder" parent="basePersistence" />
-	<bean class="com.liferay.portlet.messageboards.service.impl.MBStatsUserLocalServiceImpl" id="com.liferay.message.boards.kernel.service.MBStatsUserLocalService" />
-	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBStatsUserPersistenceImpl" id="com.liferay.message.boards.kernel.service.persistence.MBStatsUserPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portlet.messageboards.service.impl.MBThreadLocalServiceImpl" id="com.liferay.message.boards.kernel.service.MBThreadLocalService" />
 	<bean class="com.liferay.portlet.messageboards.service.impl.MBThreadServiceImpl" id="com.liferay.message.boards.kernel.service.MBThreadService" />
 	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBThreadPersistenceImpl" id="com.liferay.message.boards.kernel.service.persistence.MBThreadPersistence" parent="basePersistence" />

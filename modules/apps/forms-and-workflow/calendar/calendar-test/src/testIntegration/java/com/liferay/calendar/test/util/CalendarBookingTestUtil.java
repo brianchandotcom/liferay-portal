@@ -372,6 +372,21 @@ public class CalendarBookingTestUtil {
 			null, 0, null, serviceContext);
 	}
 
+	public static CalendarBooking addRegularCalendarBookingWithReminders(
+			Calendar calendar, long startTime, long endTime, int firstReminder,
+			int secondReminder)
+		throws PortalException {
+
+		User user = UserLocalServiceUtil.getUser(calendar.getUserId());
+
+		return CalendarBookingTestUtil.addCalendarBooking(
+			user, calendar, new long[0], RandomTestUtil.randomLocaleStringMap(),
+
+			RandomTestUtil.randomLocaleStringMap(), startTime, endTime, null,
+			firstReminder, NotificationType.EMAIL, secondReminder,
+			NotificationType.EMAIL, createServiceContext(user));
+	}
+
 	public static CalendarBooking
 			addRegularCalendarBookingWithTitleAndDescription(
 				User user, Calendar calendar, Map<Locale, String> titleMap,

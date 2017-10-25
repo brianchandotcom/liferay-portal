@@ -315,7 +315,9 @@ public class CalendarBookingLocalServiceImpl
 				Company company = companyLocalService.getCompany(
 					calendarBooking.getCompanyId());
 
-				if (company.isActive()) {
+				if (company.isActive() &&
+					!isStagingCalendarBooking(calendarBooking)) {
+
 					NotificationUtil.notifyCalendarBookingReminders(
 						calendarBooking, now.getTime());
 				}
@@ -2133,16 +2135,9 @@ public class CalendarBookingLocalServiceImpl
 			serviceContext, "sendNotification", true);
 
 		try {
-			CalendarBooking parentCalendarBooking =
-				calendarBooking.getParentCalendarBooking();
+			if (!sendNotification ||
+				isStagingCalendarBooking(calendarBooking)) {
 
-			CalendarResource calendarResource =
-				parentCalendarBooking.getCalendarResource();
-
-			Group group = groupLocalService.getGroup(
-				calendarResource.getGroupId());
-
-			if (!sendNotification || group.isStagingGroup()) {
 				return;
 			}
 

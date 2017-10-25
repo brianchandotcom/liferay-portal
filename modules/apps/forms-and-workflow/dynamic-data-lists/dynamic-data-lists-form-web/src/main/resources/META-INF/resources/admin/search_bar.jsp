@@ -17,17 +17,38 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-PortletURL portletURL = ddlFormAdminDisplayContext.getPortletURL();
+PortletURL portletURL = renderResponse.createRenderURL();
+
+String currentTab = ParamUtil.getString(request, "currentTab", "forms");
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" id="toolbar" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="forms" selected="<%= true %>" />
+
+		<%
+		portletURL.setParameter("currentTab", "forms");
+		%>
+
+		<aui:nav-item
+			href="<%= portletURL.toString() %>"
+			label="forms"
+			selected='<%= currentTab.equals("forms") %>'
+		/>
+
+		<%
+		portletURL.setParameter("currentTab", "field-set");
+		%>
+
+		<aui:nav-item
+			href="<%= portletURL.toString() %>"
+			label="field-sets"
+			selected='<%= currentTab.equals("field-set") %>'
+		/>
 	</aui:nav>
 
 	<c:if test="<%= ddlFormAdminDisplayContext.isShowSearch() %>">
 		<aui:nav-bar-search>
-			<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
+			<aui:form action="<%= ddlFormAdminDisplayContext.getPortletURL() %>" method="post" name="fm1">
 				<liferay-ui:input-search markupView="lexicon" />
 			</aui:form>
 		</aui:nav-bar-search>

@@ -29,7 +29,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface ReleaseManagerConfiguration {
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "auto-upgrade", required = false)
 	public boolean autoUpgrade();
 
 }

@@ -169,9 +169,9 @@ public class OpenSamlUtil {
 
 		Attribute attribute = buildAttribute(name, friendlyName, nameFormat);
 
-		XMLObject xmlObject = buildAttributeValue(value);
-
 		List<XMLObject> xmlObjects = attribute.getAttributeValues();
+
+		XMLObject xmlObject = buildAttributeValue(value);
 
 		xmlObjects.add(xmlObject);
 

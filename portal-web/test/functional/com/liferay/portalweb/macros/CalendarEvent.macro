@@ -1674,9 +1674,14 @@
 		<if>
 			<equals arg1="${marketplace}" arg2="true" />
 			<then>
-				<execute macro="Page#add">
-					<var name="defaultURL" value="${defaultURL}" />
-					<var name="nodePort" value="${nodePort}" />
+				<execute macro="ProductMenu#gotoPortlet">
+					<var name="category" value="Navigation" />
+					<var name="panel" value="Site Administration" />
+					<var name="portlet" value="Site Pages" />
+				</execute>
+
+				<execute macro="SitePages#addPublicPage">
+					<var name="pageName" value="Marketplace Calendar Testing" />
 					<var name="pageName" value="Marketplace Calendar Testing" />
 					<var name="pageTemplateName" value="${pageTemplateName}" />
 					<var name="sitePageType" value="${pageType}" />

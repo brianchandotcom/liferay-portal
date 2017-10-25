@@ -28,7 +28,13 @@
 	<command name="ViewBlogsPortletAsGuestPG" priority="5">
 		<property name="portal.acceptance" value="false" />
 
-		<execute macro="Page#add">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 

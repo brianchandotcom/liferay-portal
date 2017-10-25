@@ -91,7 +91,13 @@
 	</command>
 
 	<command name="smoke">
-		<execute macro="Page#add">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Blogs Test Page" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="${siteURL}" />
@@ -227,7 +233,13 @@
 			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
-		<execute macro="Page#add">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Documents and Media Test Page" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="${siteURL}" />
@@ -342,7 +354,13 @@
 			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
-		<execute macro="Page#add">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Wiki Test Page" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="${siteURL}" />
@@ -407,7 +425,13 @@
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 
-		<execute macro="Page#add">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Calendar Test Page" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="${siteURL}" />
@@ -508,7 +532,13 @@
 			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
-		<execute macro="Page#add">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Bookmarks Test Page" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="${siteURL}" />
@@ -642,7 +672,13 @@
 	</command>
 
 	<command name="smokeSites">
-		<execute macro="Page#add">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Blogs Test Page" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="${siteURL}" />
@@ -778,7 +814,13 @@
 			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
-		<execute macro="Page#add">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Documents and Media Test Page" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="${siteURL}" />
@@ -893,7 +935,17 @@
 			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
-		<execute macro="Page#add">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Wiki Test Page" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="${siteURL}" />
@@ -958,7 +1010,13 @@
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 
-		<execute macro="Page#add">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Calendar Test Page" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="${siteURL}" />
@@ -1059,7 +1117,13 @@
 			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
-		<execute macro="Page#add">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Bookmarks Test Page" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="${siteURL}" />

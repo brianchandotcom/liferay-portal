@@ -8,7 +8,13 @@
 
 		<execute macro="User#firstLoginPG" />
 
-		<execute macro="Page#add">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
@@ -304,7 +310,13 @@
 	<command name="AddBookmarkViaAP" priority="4">
 		<property name="testray.component.names" value="Asset Publisher,Bookmarks" />
 
-		<execute macro="Page#add">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Bookmarks Page" />
 		</execute>
 
@@ -378,7 +390,13 @@
 	<command name="ConfigureAPPortletDisplaytemplateWithBookmarks" priority="4">
 		<property name="testray.component.names" value="Asset Publisher,Bookmarks,Content and Display Templates" />
 
-		<execute macro="Page#add">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Bookmarks Page" />
 		</execute>
 
@@ -681,7 +699,13 @@
 	<command name="ConfigureAPPortletWithSelectedBookmarksEntry" priority="4">
 		<property name="testray.component.names" value="Asset Publisher,Bookmarks" />
 
-		<execute macro="Page#add">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Bookmarks Page" />
 		</execute>
 
@@ -749,7 +773,13 @@
 	<command name="FilterTagsByNameAP" priority="4">
 		<property name="testray.component.names" value="Asset Publisher,Tags" />
 
-		<execute macro="Page#add">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Tags Navigation Page" />
 		</execute>
 

@@ -33,15 +33,14 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
 		<for list="1,2" param="n">
-			<execute macro="Page#add">
+			<execute macro="SitePages#addPublicPage">
 				<var name="pageName" value="Test Page ${n}" />
-				<var name="siteName" value="Site Name" />
 			</execute>
 		</for>
 

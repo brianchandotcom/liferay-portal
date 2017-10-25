@@ -92,68 +92,15 @@
 			</then>
 		</if>
 
-		<if>
-			<isset var="pageStaging" />
-			<then>
-				<execute macro="Navigator#gotoStagedView" />
-			</then>
-		</if>
-
-		<execute macro="SitePageNavigator#gotoAddPage">
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
-
-		<execute function="Type#typeClickAt" locator1="TextInput#NAME" value1="${pageName}" />
-
-		<if>
-			<isset var="pageTemplateName" />
-			<then>
-				<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" value1="${pageTemplateName}" />
-
-				<execute macro="Page#togglePageTemplateInheritChanges">
-					<var name="toggleValue" value="enable" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<isset var="sitePageType" />
-			<then>
-				<execute macro="Page#_selectPageTypeRadio">
-					<var name="columnName" value="${columnName}" />
-					<var name="componentName" value="${componentName}" />
-					<var name="pageTypeDescription" value="${pageTypeDescription}" />
-					<var name="pageTypeURL" value="${pageTypeURL}" />
-					<var name="portlet" value="${portlet}" />
-					<var name="sitePageType" value="${sitePageType}" />
-				</execute>
-			</then>
-		</if>
-
-		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
-
-		<if>
-			<not>
-				<equals arg1="${sitePageType}" arg2="Page Set" />
-			</not>
-			<then>
-				<if>
-					<contains string="${pageName}" substring="&apos;" />
-					<then>
-						<execute function="AssertVisible" locator1="Home#PAGE_WITH_QUOTES">
-							<var name="key_pageName" value="${pageName}" />
-						</execute>
-					</then>
-					<else>
-						<execute function="AssertVisible" locator1="Home#PAGE">
-							<var name="key_pageName" value="${pageName}" />
-						</execute>
-					</else>
-				</if>
-			</then>
-		</if>
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 	</command>
 
 	<command name="addChild">

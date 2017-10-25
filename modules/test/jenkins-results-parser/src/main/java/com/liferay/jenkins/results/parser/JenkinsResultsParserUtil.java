@@ -41,6 +41,7 @@ import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
@@ -518,6 +519,20 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return properties;
+	}
+
+	public static List<String> getBuildPropertyAsList(String key)
+		throws IOException {
+
+		Properties buildProperties = getBuildProperties();
+
+		String propertyContent = buildProperties.getProperty(key);
+
+		if (propertyContent == null) {
+			return Collections.emptyList();
+		}
+
+		return Arrays.asList(propertyContent.split(","));
 	}
 
 	public static String getHostName(String defaultHostName) {

@@ -223,11 +223,15 @@
 		</execute>
 
 		<for list="Child Page1 Name,Child Page2 Name,Child Page3 Name,Child Page4 Name, Child Page5 Name" param="siteChildPageName">
-			<execute macro="Page#addChild">
-				<var name="page" value="Public Pages" />
-				<var name="pageName" value="Welcome" />
-				<var name="siteChildPageName" value="${siteChildPageName}" />
-				<var name="siteScopeSelected" value="true" />
+			<execute macro="ProductMenu#gotoPortlet">
+				<var name="category" value="Navigation" />
+				<var name="panel" value="Site Administration" />
+				<var name="portlet" value="Site Pages" />
+			</execute>
+
+			<execute macro="SitePages#addPublicChildPage">
+				<var name="childPageName" value="${siteChildPageName}" />
+				<var name="parentPageName" value="Welcome" />
 			</execute>
 		</for>
 

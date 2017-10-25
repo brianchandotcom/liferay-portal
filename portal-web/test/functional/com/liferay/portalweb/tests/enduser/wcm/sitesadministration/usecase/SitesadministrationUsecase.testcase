@@ -1133,13 +1133,16 @@
 			</execute>
 		</for>
 
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
 		<for list="Arena Baltika,Zenit Arena,Kazan Arena" param="childPageName" >
-			<execute macro="Page#addChild">
-				<var name="childSitepageName" value="true" />
-				<var name="page" value="Public Pages" />
-				<var name="pageName" value="Arenas" />
-				<var name="siteChildPageName" value="${childPageName}" />
-				<var name="siteScopeSelected" value="true" />
+			<execute macro="SitePages#addPublicChildPage">
+				<var name="childPageName" value="${childPageName}" />
+				<var name="parentPageName" value="Arenas" />
 			</execute>
 		</for>
 

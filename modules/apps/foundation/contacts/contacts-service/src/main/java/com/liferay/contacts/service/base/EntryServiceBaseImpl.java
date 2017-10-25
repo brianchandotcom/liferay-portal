@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
+import com.liferay.portal.kernel.service.persistence.GroupPersistence;
+import com.liferay.portal.kernel.service.persistence.UserGroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -204,6 +206,62 @@ public abstract class EntryServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the group local service.
+	 *
+	 * @return the group local service
+	 */
+	public com.liferay.portal.kernel.service.GroupLocalService getGroupLocalService() {
+		return groupLocalService;
+	}
+
+	/**
+	 * Sets the group local service.
+	 *
+	 * @param groupLocalService the group local service
+	 */
+	public void setGroupLocalService(
+		com.liferay.portal.kernel.service.GroupLocalService groupLocalService) {
+		this.groupLocalService = groupLocalService;
+	}
+
+	/**
+	 * Returns the group remote service.
+	 *
+	 * @return the group remote service
+	 */
+	public com.liferay.portal.kernel.service.GroupService getGroupService() {
+		return groupService;
+	}
+
+	/**
+	 * Sets the group remote service.
+	 *
+	 * @param groupService the group remote service
+	 */
+	public void setGroupService(
+		com.liferay.portal.kernel.service.GroupService groupService) {
+		this.groupService = groupService;
+	}
+
+	/**
+	 * Returns the group persistence.
+	 *
+	 * @return the group persistence
+	 */
+	public GroupPersistence getGroupPersistence() {
+		return groupPersistence;
+	}
+
+	/**
+	 * Sets the group persistence.
+	 *
+	 * @param groupPersistence the group persistence
+	 */
+	public void setGroupPersistence(GroupPersistence groupPersistence) {
+		this.groupPersistence = groupPersistence;
+	}
+
+	/**
 	 * Returns the resource local service.
 	 *
 	 * @return the resource local service
@@ -278,6 +336,63 @@ public abstract class EntryServiceBaseImpl extends BaseServiceImpl
 		this.userPersistence = userPersistence;
 	}
 
+	/**
+	 * Returns the user group local service.
+	 *
+	 * @return the user group local service
+	 */
+	public com.liferay.portal.kernel.service.UserGroupLocalService getUserGroupLocalService() {
+		return userGroupLocalService;
+	}
+
+	/**
+	 * Sets the user group local service.
+	 *
+	 * @param userGroupLocalService the user group local service
+	 */
+	public void setUserGroupLocalService(
+		com.liferay.portal.kernel.service.UserGroupLocalService userGroupLocalService) {
+		this.userGroupLocalService = userGroupLocalService;
+	}
+
+	/**
+	 * Returns the user group remote service.
+	 *
+	 * @return the user group remote service
+	 */
+	public com.liferay.portal.kernel.service.UserGroupService getUserGroupService() {
+		return userGroupService;
+	}
+
+	/**
+	 * Sets the user group remote service.
+	 *
+	 * @param userGroupService the user group remote service
+	 */
+	public void setUserGroupService(
+		com.liferay.portal.kernel.service.UserGroupService userGroupService) {
+		this.userGroupService = userGroupService;
+	}
+
+	/**
+	 * Returns the user group persistence.
+	 *
+	 * @return the user group persistence
+	 */
+	public UserGroupPersistence getUserGroupPersistence() {
+		return userGroupPersistence;
+	}
+
+	/**
+	 * Sets the user group persistence.
+	 *
+	 * @param userGroupPersistence the user group persistence
+	 */
+	public void setUserGroupPersistence(
+		UserGroupPersistence userGroupPersistence) {
+		this.userGroupPersistence = userGroupPersistence;
+	}
+
 	public void afterPropertiesSet() {
 	}
 
@@ -342,6 +457,12 @@ public abstract class EntryServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portal.kernel.service.ClassNameService classNameService;
 	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
+	@ServiceReference(type = com.liferay.portal.kernel.service.GroupLocalService.class)
+	protected com.liferay.portal.kernel.service.GroupLocalService groupLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.GroupService.class)
+	protected com.liferay.portal.kernel.service.GroupService groupService;
+	@ServiceReference(type = GroupPersistence.class)
+	protected GroupPersistence groupPersistence;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
 	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
@@ -350,4 +471,10 @@ public abstract class EntryServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portal.kernel.service.UserService userService;
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserGroupLocalService.class)
+	protected com.liferay.portal.kernel.service.UserGroupLocalService userGroupLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserGroupService.class)
+	protected com.liferay.portal.kernel.service.UserGroupService userGroupService;
+	@ServiceReference(type = UserGroupPersistence.class)
+	protected UserGroupPersistence userGroupPersistence;
 }

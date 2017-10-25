@@ -124,6 +124,10 @@ public class JavaMultiPlusConcatCheck extends BaseJavaTermCheck {
 
 		for (String part : parts) {
 			if (part.startsWith(StringPool.QUOTE) ||
+				part.startsWith("CharPool.") ||
+				part.startsWith("File.pathSeparator") ||
+				part.startsWith("File.separator") ||
+				part.startsWith("StringPool.") ||
 				(Validator.isVariableName(part) &&
 				 content.matches("(?s).+\\sString\\s+" + part + "\\w.+"))) {
 

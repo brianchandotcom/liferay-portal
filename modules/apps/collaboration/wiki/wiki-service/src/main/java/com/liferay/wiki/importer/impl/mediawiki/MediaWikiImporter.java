@@ -446,7 +446,10 @@ public class MediaWikiImporter implements WikiImporter {
 		zipReader.close();
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Imported " + count + " images into " + node.getName());
+			_log.info(
+				StringBundler.concat(
+					"Imported ", String.valueOf(count), " images into ",
+					node.getName()));
 		}
 	}
 
@@ -531,7 +534,10 @@ public class MediaWikiImporter implements WikiImporter {
 		}
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Imported " + count + " pages into " + node.getName());
+			_log.info(
+				StringBundler.concat(
+					"Imported ", String.valueOf(count), " pages into ",
+					node.getName()));
 		}
 	}
 
@@ -736,7 +742,8 @@ public class MediaWikiImporter implements WikiImporter {
 	protected String translateMediaWikiImagePaths(String content) {
 		return content.replaceAll(
 			_imagesPattern.pattern(),
-			"$1$2" + SHARED_IMAGES_TITLE + StringPool.SLASH + "$3$4");
+			StringBundler.concat(
+				"$1$2", SHARED_IMAGES_TITLE, StringPool.SLASH, "$3$4"));
 	}
 
 	protected String translateMediaWikiToCreole(

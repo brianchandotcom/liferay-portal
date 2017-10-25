@@ -168,8 +168,10 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 		}
 		catch (Exception e) {
 			_log.error(
-				"Error formatting the wiki page " + page.getPageId() +
-					" with the format " + page.getFormat(),
+				StringBundler.concat(
+					"Error formatting the wiki page ",
+					String.valueOf(page.getPageId()), " with the format ",
+					page.getFormat()),
 				e);
 		}
 

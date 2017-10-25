@@ -30,7 +30,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface InactiveRequestHandlerConfiguration {
 
 	@Meta.AD(
-		deflt = "false", id = "show.inactive.request.message", required = false
+		deflt = "false", id = "show.inactive.request.message",
+		name = "show-inactive-request-message", required = false
 	)
 	public boolean showInactiveRequestMessage();
 

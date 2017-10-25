@@ -237,8 +237,10 @@ public class UpgradePermission extends UpgradeProcess {
 			if (!rs1.next()) {
 				if (!_ignoreMissingAddEntryResourceAction) {
 					_log.error(
-						"Unable to upgrade ADD_ENTRY action, ResourceAction " +
-							"for " + name + " is not initialized");
+						StringBundler.concat(
+							"Unable to upgrade ADD_ENTRY action, ",
+							"ResourceAction for ", name,
+							" is not initialized"));
 				}
 
 				return;

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -91,8 +92,9 @@ public class DefaultAnnouncementsAdminViewDisplayContext
 
 		for (Group group : groups) {
 			distributionScopes.put(
-				group.getDescriptiveName(themeDisplay.getLocale()) + " (" +
-					LanguageUtil.get(_request, "site") + ")",
+				StringBundler.concat(
+					group.getDescriptiveName(themeDisplay.getLocale()), " (",
+					LanguageUtil.get(_request, "site"), ")"),
 				PortalUtil.getClassNameId(Group.class) + StringPool.COMMA +
 					group.getGroupId());
 		}
@@ -101,9 +103,12 @@ public class DefaultAnnouncementsAdminViewDisplayContext
 			themeDisplay);
 
 		for (Organization organization : organizations) {
+			String name = StringBundler.concat(
+				organization.getName(), " (",
+				LanguageUtil.get(_request, "organization"), ")");
+
 			distributionScopes.put(
-				organization.getName() + " (" +
-					LanguageUtil.get(_request, "organization") + ")",
+				name,
 				PortalUtil.getClassNameId(Organization.class) +
 					StringPool.COMMA + organization.getOrganizationId());
 		}
@@ -112,8 +117,9 @@ public class DefaultAnnouncementsAdminViewDisplayContext
 
 		for (Role role : roles) {
 			distributionScopes.put(
-				role.getDescriptiveName() + " (" +
-					LanguageUtil.get(_request, "role") + ")",
+				StringBundler.concat(
+					role.getDescriptiveName(), " (",
+					LanguageUtil.get(_request, "role"), ")"),
 				PortalUtil.getClassNameId(Role.class) + StringPool.COMMA +
 					role.getRoleId());
 		}
@@ -123,8 +129,9 @@ public class DefaultAnnouncementsAdminViewDisplayContext
 
 		for (UserGroup userGroup : userGroups) {
 			distributionScopes.put(
-				userGroup.getName() + " (" +
-					LanguageUtil.get(_request, "user-group") + ")",
+				StringBundler.concat(
+					userGroup.getName(), " (",
+					LanguageUtil.get(_request, "user-group"), ")"),
 				PortalUtil.getClassNameId(UserGroup.class) + StringPool.COMMA +
 					userGroup.getUserGroupId());
 		}

@@ -135,6 +135,8 @@ public class EditCommerceWarehouseMVCActionCommand
 			actionRequest, "commerceRegionId");
 		long commerceCountryId = ParamUtil.getLong(
 			actionRequest, "commerceCountryId");
+		double latitude = ParamUtil.getDouble(actionRequest, "latitude");
+		double longitude = ParamUtil.getDouble(actionRequest, "longitude");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommerceWarehouse.class.getName(), actionRequest);
@@ -144,14 +146,15 @@ public class EditCommerceWarehouseMVCActionCommand
 		if (commerceWarehouseId <= 0) {
 			commerceWarehouse = _commerceWarehouseService.addCommerceWarehouse(
 				name, description, street1, street2, street3, city, zip,
-				commerceRegionId, commerceCountryId, serviceContext);
+				commerceRegionId, commerceCountryId, latitude, longitude,
+				serviceContext);
 		}
 		else {
 			commerceWarehouse =
 				_commerceWarehouseService.updateCommerceWarehouse(
 					commerceWarehouseId, name, description, street1, street2,
 					street3, city, zip, commerceRegionId, commerceCountryId,
-					serviceContext);
+					latitude, longitude, serviceContext);
 		}
 
 		return commerceWarehouse;

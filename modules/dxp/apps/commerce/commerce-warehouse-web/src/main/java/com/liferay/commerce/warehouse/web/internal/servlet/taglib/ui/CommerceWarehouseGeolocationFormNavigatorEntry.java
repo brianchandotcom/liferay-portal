@@ -30,10 +30,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Di Giorgi
  */
 @Component(
-	property = {"form.navigator.entry.order:Integer=20"},
+	property = {"form.navigator.entry.order:Integer=10"},
 	service = FormNavigatorEntry.class
 )
-public class CommerceWarehouseAddressFormNavigatorEntry
+public class CommerceWarehouseGeolocationFormNavigatorEntry
 	extends BaseJSPFormNavigatorEntry<CommerceWarehouse> {
 
 	@Override
@@ -50,7 +50,7 @@ public class CommerceWarehouseAddressFormNavigatorEntry
 
 	@Override
 	public String getKey() {
-		return "address";
+		return "geolocation";
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class CommerceWarehouseAddressFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/warehouse/address.jsp";
+		return "/warehouse/geolocation.jsp";
 	}
 
 }

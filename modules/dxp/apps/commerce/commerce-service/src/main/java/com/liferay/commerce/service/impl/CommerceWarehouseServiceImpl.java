@@ -34,7 +34,8 @@ public class CommerceWarehouseServiceImpl
 	public CommerceWarehouse addCommerceWarehouse(
 			String name, String description, String street1, String street2,
 			String street3, String city, String zip, long commerceRegionId,
-			long commerceCountryId, ServiceContext serviceContext)
+			long commerceCountryId, double latitude, double longitude,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CommercePermission.check(
@@ -43,7 +44,8 @@ public class CommerceWarehouseServiceImpl
 
 		return commerceWarehouseLocalService.addCommerceWarehouse(
 			name, description, street1, street2, street3, city, zip,
-			commerceRegionId, commerceCountryId, serviceContext);
+			commerceRegionId, commerceCountryId, latitude, longitude,
+			serviceContext);
 	}
 
 	@Override
@@ -113,7 +115,7 @@ public class CommerceWarehouseServiceImpl
 			long commerceWarehouseId, String name, String description,
 			String street1, String street2, String street3, String city,
 			String zip, long commerceRegionId, long commerceCountryId,
-			ServiceContext serviceContext)
+			double latitude, double longitude, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceWarehouse commerceWarehouse =
@@ -127,7 +129,7 @@ public class CommerceWarehouseServiceImpl
 		return commerceWarehouseLocalService.updateCommerceWarehouse(
 			commerceWarehouse.getCommerceWarehouseId(), name, description,
 			street1, street2, street3, city, zip, commerceRegionId,
-			commerceCountryId, serviceContext);
+			commerceCountryId, latitude, longitude, serviceContext);
 	}
 
 }

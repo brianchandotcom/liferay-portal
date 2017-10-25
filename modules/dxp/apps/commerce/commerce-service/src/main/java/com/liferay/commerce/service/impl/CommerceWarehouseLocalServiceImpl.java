@@ -37,7 +37,8 @@ public class CommerceWarehouseLocalServiceImpl
 	public CommerceWarehouse addCommerceWarehouse(
 			String name, String description, String street1, String street2,
 			String street3, String city, String zip, long commerceRegionId,
-			long commerceCountryId, ServiceContext serviceContext)
+			long commerceCountryId, double latitude, double longitude,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -63,6 +64,8 @@ public class CommerceWarehouseLocalServiceImpl
 		commerceWarehouse.setZip(zip);
 		commerceWarehouse.setCommerceRegionId(commerceRegionId);
 		commerceWarehouse.setCommerceCountryId(commerceCountryId);
+		commerceWarehouse.setLatitude(latitude);
+		commerceWarehouse.setLongitude(longitude);
 
 		commerceWarehousePersistence.update(commerceWarehouse);
 
@@ -156,7 +159,7 @@ public class CommerceWarehouseLocalServiceImpl
 			long commerceWarehouseId, String name, String description,
 			String street1, String street2, String street3, String city,
 			String zip, long commerceRegionId, long commerceCountryId,
-			ServiceContext serviceContext)
+			double latitude, double longitude, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceWarehouse commerceWarehouse =
@@ -173,6 +176,8 @@ public class CommerceWarehouseLocalServiceImpl
 		commerceWarehouse.setZip(zip);
 		commerceWarehouse.setCommerceRegionId(commerceRegionId);
 		commerceWarehouse.setCommerceCountryId(commerceCountryId);
+		commerceWarehouse.setLatitude(latitude);
+		commerceWarehouse.setLongitude(longitude);
 
 		commerceWarehousePersistence.update(commerceWarehouse);
 

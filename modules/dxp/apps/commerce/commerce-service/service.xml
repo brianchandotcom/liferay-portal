@@ -689,6 +689,8 @@
 		<column name="zip" type="String" />
 		<column name="commerceRegionId" type="long" />
 		<column name="commerceCountryId" type="long" />
+		<column name="latitude" type="double" />
+		<column name="longitude" type="double" />
 
 		<!-- Order -->
 

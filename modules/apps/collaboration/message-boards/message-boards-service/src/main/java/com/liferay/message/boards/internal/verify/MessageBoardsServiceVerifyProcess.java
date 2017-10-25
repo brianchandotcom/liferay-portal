@@ -22,6 +22,7 @@ import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -51,6 +52,13 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 		verifyAssetsForMessages();
 		verifyAssetsForThreads();
 		verifyUUIDModels();
+	}
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.message.boards.service)(release.schema.version=1.0.0))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 	protected void verifyAssetsForMessages() throws Exception {

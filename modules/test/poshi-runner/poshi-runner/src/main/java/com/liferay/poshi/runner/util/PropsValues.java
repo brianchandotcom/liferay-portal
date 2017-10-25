@@ -73,11 +73,11 @@ public class PropsValues {
 	public static final String[] FIXED_ISSUES = StringUtil.split(
 		PropsUtil.get("fixed.issues"));
 
-	public static final int GET_LOCATION_RETRIES = GetterUtil.getInteger(
-		PropsUtil.get("get.location.retries"));
+	public static final int GET_LOCATION_MAX_RETRIES = GetterUtil.getInteger(
+		PropsUtil.get("get.location.max.retries"));
 
-	public static final int GET_LOCATION_WAIT = GetterUtil.getInteger(
-		PropsUtil.get("get.location.wait"));
+	public static final int GET_LOCATION_TIMEOUT = GetterUtil.getInteger(
+		PropsUtil.get("get.location.timeout"));
 
 	public static final String GOOGLE_API_KEY = PropsUtil.get("google.api.key");
 

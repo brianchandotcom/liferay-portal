@@ -102,7 +102,6 @@
 			<message key="literal.string.move" value="Add the string ''{0}'' to the previous literal string" />
 			<message key="start.character.invalid" value="When concatenating multiple literal strings using '+', only the first literal string can start with ''{0}''" />
 			<message key="tabbing.incorrect" value="Expected indentation is ''{0}'' tabs" />
-			<message key="use.stringbundler.concat" value="Use method ''StringBundler.concat'' when concatenating more than 3 strings. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/concat.markdown" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.ConstantName">
 			<message key="name.invalidPrivatePattern" value="Private constant ''{0}'' must match pattern ''{1}''" />

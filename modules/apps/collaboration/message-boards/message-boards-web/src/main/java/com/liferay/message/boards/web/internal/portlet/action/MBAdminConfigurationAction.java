@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -98,18 +99,25 @@ public class MBAdminConfigurationAction
 
 			for (int j = 0; j < 10; j++) {
 				String name = ParamUtil.getString(
-					actionRequest, "priorityName" + j + "_" + languageId);
+					actionRequest,
+					StringBundler.concat(
+						"priorityName", String.valueOf(j), "_", languageId));
 				String image = ParamUtil.getString(
-					actionRequest, "priorityImage" + j + "_" + languageId);
+					actionRequest,
+					StringBundler.concat(
+						"priorityImage", String.valueOf(j), "_", languageId));
 				double value = ParamUtil.getDouble(
-					actionRequest, "priorityValue" + j + "_" + languageId);
+					actionRequest,
+					StringBundler.concat(
+						"priorityValue", String.valueOf(j), "_", languageId));
 
 				if (Validator.isNotNull(name) || Validator.isNotNull(image) ||
 					(value != 0.0)) {
 
 					priorities.add(
-						name + StringPool.PIPE + image + StringPool.PIPE +
-							value);
+						StringBundler.concat(
+							name, StringPool.PIPE, image, StringPool.PIPE,
+							String.valueOf(value)));
 				}
 			}
 

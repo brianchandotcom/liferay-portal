@@ -19,6 +19,7 @@ import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryReferen
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
@@ -75,8 +76,10 @@ public class MBMessageBBCodeFormatUploadHandler
 
 	private Pattern _getTempImagePattern(long tempFileId) {
 		return Pattern.compile(
-			"\\[img[^\\]]*?" + EditorConstants.ATTRIBUTE_DATA_IMAGE_ID + "=\"" +
-				tempFileId + "\"[^\\]]*\\][^\\[]+\\[/img\\]");
+			StringBundler.concat(
+				"\\[img[^\\]]*?", EditorConstants.ATTRIBUTE_DATA_IMAGE_ID,
+				"=\"", String.valueOf(tempFileId),
+				"\"[^\\]]*\\][^\\[]+\\[/img\\]"));
 	}
 
 	private PortletFileRepository _portletFileRepository;

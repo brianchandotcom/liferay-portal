@@ -84,8 +84,10 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 				catch (Exception e) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to update asset for message " +
-								message.getMessageId() + ": " + e.getMessage());
+							StringBundler.concat(
+								"Unable to update asset for message ",
+								String.valueOf(message.getMessageId()), ": ",
+								e.getMessage()));
 					}
 				}
 			}
@@ -119,8 +121,10 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 				catch (Exception e) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to update asset for thread " +
-								thread.getThreadId() + ": " + e.getMessage());
+							StringBundler.concat(
+								"Unable to update asset for thread ",
+								String.valueOf(thread.getThreadId()), ": ",
+								e.getMessage()));
 					}
 				}
 			}

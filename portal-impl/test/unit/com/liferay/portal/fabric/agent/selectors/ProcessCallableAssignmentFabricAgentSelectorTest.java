@@ -17,7 +17,6 @@ package com.liferay.portal.fabric.agent.selectors;
 import com.liferay.portal.fabric.agent.FabricAgent;
 import com.liferay.portal.kernel.process.local.ExceptionProcessCallable;
 import com.liferay.portal.kernel.process.local.ReturnProcessCallable;
-import com.liferay.portal.kernel.process.log.LoggingProcessCallable;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.util.ArrayList;
@@ -52,17 +51,11 @@ public class ProcessCallableAssignmentFabricAgentSelectorTest
 					PROCESS_CALLABLE_ASSIGNMENT_EXPRESSION_KEY,
 				".*ReturnProcessCallable"));
 		FabricAgent fabricAgent2 = createFabricAgent(
-			Collections.<String, String>singletonMap(
-				ProcessCallableAssignmentFabricAgentSelector.
-					PROCESS_CALLABLE_ASSIGNMENT_EXPRESSION_KEY,
-				".*LoggingProcessCallable"));
-		FabricAgent fabricAgent3 = createFabricAgent(
 			Collections.<String, String>emptyMap());
 
 		Collection<FabricAgent> fabricAgents = fabricAgentSelector.select(
-			new ArrayList<FabricAgent>(
-				Arrays.asList(fabricAgent1, fabricAgent2, fabricAgent3)),
-			new ReturnProcessCallable<String>(null));
+			new ArrayList<>(Arrays.asList(fabricAgent1, fabricAgent2)),
+			new ReturnProcessCallable<>(null));
 
 		Assert.assertEquals(fabricAgents.toString(), 1, fabricAgents.size());
 
@@ -71,19 +64,7 @@ public class ProcessCallableAssignmentFabricAgentSelectorTest
 		Assert.assertSame(fabricAgent1, iterator.next());
 
 		fabricAgents = fabricAgentSelector.select(
-			new ArrayList<FabricAgent>(
-				Arrays.asList(fabricAgent1, fabricAgent2)),
-			new LoggingProcessCallable(null));
-
-		Assert.assertEquals(fabricAgents.toString(), 1, fabricAgents.size());
-
-		iterator = fabricAgents.iterator();
-
-		Assert.assertSame(fabricAgent2, iterator.next());
-
-		fabricAgents = fabricAgentSelector.select(
-			new ArrayList<FabricAgent>(
-				Arrays.asList(fabricAgent1, fabricAgent2)),
+			new ArrayList<>(Arrays.asList(fabricAgent1)),
 			new ExceptionProcessCallable(null));
 
 		Assert.assertTrue(fabricAgents.isEmpty());

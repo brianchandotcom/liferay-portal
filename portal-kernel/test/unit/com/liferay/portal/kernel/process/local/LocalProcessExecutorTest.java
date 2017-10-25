@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.process.TerminationProcessException;
 import com.liferay.portal.kernel.process.local.LocalProcessLauncher.ProcessContext;
 import com.liferay.portal.kernel.process.local.LocalProcessLauncher.ShutdownHook;
-import com.liferay.portal.kernel.process.log.ProcessOutputStream;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -105,6 +104,22 @@ public class LocalProcessExecutorTest {
 			}
 
 		};
+
+	@Test
+	public void testDeprecatedMethods() {
+		ProcessConfig processConfig = _createJPDAProcessConfig(_JPDA_OPTIONS1);
+
+		Assert.assertArrayEquals(
+			StringUtil.split(
+				processConfig.getBootstrapClassPath(), File.pathSeparatorChar),
+			processConfig.getBootstrapClassPathElements());
+		Assert.assertArrayEquals(
+			StringUtil.split(
+				processConfig.getRuntimeClassPath(), File.pathSeparatorChar),
+			processConfig.getRuntimeClassPathElements());
+
+		Assert.assertNull(ProcessContext.getProcessOutputStream());
+	}
 
 	@Test
 	public void testDestroy() throws Exception {
@@ -276,20 +291,6 @@ public class LocalProcessExecutorTest {
 		Future<String> future = processChannel.getProcessNoticeableFuture();
 
 		Assert.assertEquals(largeFileName, future.get());
-	}
-
-	@Test
-	public void testProcessConfigDeprecatedMethods() {
-		ProcessConfig processConfig = _createJPDAProcessConfig(_JPDA_OPTIONS1);
-
-		Assert.assertArrayEquals(
-			StringUtil.split(
-				processConfig.getBootstrapClassPath(), File.pathSeparatorChar),
-			processConfig.getBootstrapClassPathElements());
-		Assert.assertArrayEquals(
-			StringUtil.split(
-				processConfig.getRuntimeClassPath(), File.pathSeparatorChar),
-			processConfig.getRuntimeClassPathElements());
 	}
 
 	@Test
@@ -683,11 +684,8 @@ public class LocalProcessExecutorTest {
 
 			controller.invoke(
 				() -> {
-					ProcessOutputStream processOutputStream =
-						ProcessContext.getProcessOutputStream();
-
 					try {
-						processOutputStream.writeProcessCallable(
+						ProcessContext.writeProcessCallable(
 							() -> {
 								Map<String, Object> localAttributes =
 									ProcessContext.getAttributes();
@@ -763,11 +761,8 @@ public class LocalProcessExecutorTest {
 
 		controller.invoke(
 			() -> {
-				ProcessOutputStream processOutputStream =
-					ProcessContext.getProcessOutputStream();
-
 				try {
-					processOutputStream.writeProcessCallable(
+					ProcessContext.writeProcessCallable(
 						() -> {
 							Map<String, Object> localAttributes =
 								ProcessContext.getAttributes();
@@ -789,7 +784,12 @@ public class LocalProcessExecutorTest {
 							return null;
 						});
 
-					processOutputStream.close();
+					Object processOutputStream =
+						ReflectionTestUtil.getFieldValue(
+							ProcessContext.class, "_processOutputStream");
+
+					ReflectionTestUtil.invoke(
+						processOutputStream, "close", new Class<?>[0]);
 				}
 				catch (IOException ioe) {
 					throw new ProcessException(ioe);
@@ -864,7 +864,7 @@ public class LocalProcessExecutorTest {
 
 			Assert.assertEquals("DONE", future.get());
 
-			Assert.assertEquals(logRecords.toString(), 2, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 3, logRecords.size());
 
 			LogRecord logRecord1 = logRecords.get(0);
 
@@ -875,6 +875,13 @@ public class LocalProcessExecutorTest {
 			LogRecord logRecord2 = logRecords.get(1);
 
 			String message = logRecord2.getMessage();
+
+			Assert.assertTrue(
+				message.contains("Invoked generic process callable"));
+
+			LogRecord logRecord3 = logRecords.get(2);
+
+			message = logRecord3.getMessage();
 
 			Assert.assertTrue(
 				message.contains("Invoked generic process callable"));
@@ -1414,9 +1421,13 @@ public class LocalProcessExecutorTest {
 
 				fileOutputStream.flush();
 
-				System.out.print("Body log");
+				System.out.print("Body STDOUT log");
 
 				System.out.flush();
+
+				System.err.print("Body STDERR log");
+
+				System.err.flush();
 
 				// Forcibly restore System.out. This is a necessary protection
 				// for code coverage. Cobertura's collector thread will output
@@ -1435,11 +1446,8 @@ public class LocalProcessExecutorTest {
 
 		public static final ProcessCallable<Serializable>
 			PIPING_BACK_EXCEPTION_PROCESS_CALLABLE = () -> {
-				ProcessOutputStream processOutputStream =
-					ProcessContext.getProcessOutputStream();
-
 				try {
-					processOutputStream.writeProcessCallable(
+					ProcessContext.writeProcessCallable(
 						() -> {
 							throw new ProcessException(
 								"Exception ProcessCallable");
@@ -1493,13 +1501,10 @@ public class LocalProcessExecutorTest {
 
 		public static final ProcessCallable<Serializable>
 			PIPING_BACK_WRITE_ABORTED = () -> {
-				ProcessOutputStream processOutputStream =
-					ProcessContext.getProcessOutputStream();
-
 				try {
 					Object obj = new Object();
 
-					processOutputStream.writeProcessCallable(
+					ProcessContext.writeProcessCallable(
 						() -> (Serializable)obj);
 				}
 				catch (IOException ioe) {
@@ -1518,8 +1523,8 @@ public class LocalProcessExecutorTest {
 
 				Thread heartBeatThread = heartbeatThreadReference.get();
 
-				ProcessOutputStream processOutputStream =
-					ProcessContext.getProcessOutputStream();
+				Object processOutputStream = ReflectionTestUtil.getFieldValue(
+					ProcessContext.class, "_processOutputStream");
 
 				ObjectOutputStream objectOutputStream =
 					ReflectionTestUtil.getFieldValue(
@@ -1586,8 +1591,8 @@ public class LocalProcessExecutorTest {
 
 				Thread heartBeatThread = heartbeatThreadReference.get();
 
-				ProcessOutputStream processOutputStream =
-					ProcessContext.getProcessOutputStream();
+				Object processOutputStream = ReflectionTestUtil.getFieldValue(
+					ProcessContext.class, "_processOutputStream");
 
 				ObjectOutputStream objectOutputStream =
 					ReflectionTestUtil.getFieldValue(

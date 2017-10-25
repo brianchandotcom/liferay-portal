@@ -23,7 +23,9 @@ import java.io.IOException;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class LoggingProcessCallable implements ProcessCallable<String> {
 
 	public LoggingProcessCallable(byte[] bytes) {

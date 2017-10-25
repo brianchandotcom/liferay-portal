@@ -14,6 +14,13 @@
 
 package com.liferay.poshi.runner;
 
+import com.liferay.poshi.runner.util.FileUtil;
+
+import java.io.FileInputStream;
+import java.io.InputStream;
+
+import java.util.Properties;
+
 import org.junit.runner.JUnitCore;
 
 /**
@@ -44,6 +51,8 @@ public class PoshiRunnerCommandExecutor {
 			validatePoshi();
 		}
 		else if (command.equals("writePoshiProperties")) {
+			populateSystemProperties();
+
 			writePoshiProperties();
 		}
 		else {
@@ -75,8 +84,33 @@ public class PoshiRunnerCommandExecutor {
 		PoshiRunnerConsoleEvaluator.main(null);
 	}
 
+	protected static void populateSystemProperties() throws Exception {
+		Properties systemProperties = System.getProperties();
+
+		String poshiRunnerExtPropertyFileNames = systemProperties.getProperty(
+			"poshiRunnerExtPropertyFileNames");
+
+		if (poshiRunnerExtPropertyFileNames != null) {
+			for (String poshiRunnerExtPropertyFileName :
+					poshiRunnerExtPropertyFileNames.split(",")) {
+
+				if (FileUtil.exists(poshiRunnerExtPropertyFileName)) {
+					InputStream inputStream = new FileInputStream(
+						poshiRunnerExtPropertyFileName);
+
+					systemProperties.load(inputStream);
+				}
+			}
+		}
+	}
+
 	protected static void runPoshi(String[] args) throws Exception {
 		System.out.println("Executing task: runPoshi");
+		System.out.println("args: ");
+
+		for (String arg : args) {
+			System.out.println(arg);
+		}
 
 		JUnitCore.runClasses(PoshiRunner.class);
 	}

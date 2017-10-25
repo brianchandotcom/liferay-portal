@@ -1,6 +1,10 @@
 <definition>
 	<var name="validationErrorMessage" value="This field is required." />
 
+	<command name="clickNextPage">
+		<execute function="AssertClick" locator1="Button#NEXT" value1="Next" />
+	</command>
+
 	<command name="clickSubmit">
 		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Submit" />
 	</command>

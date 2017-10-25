@@ -1386,6 +1386,16 @@ public class GitWorkingDirectory {
 
 	};
 
+	private static List<String> _getBuildPropertyAsList(String key) {
+		try {
+			return JenkinsResultsParserUtil.getBuildPropertyAsList(key);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to get build property " + key, ioe);
+		}
+	}
+
 	private String _log(int num, File file, String format) {
 		StringBuilder sb = new StringBuilder();
 
@@ -1432,19 +1442,11 @@ public class GitWorkingDirectory {
 	private static final Pattern _gitLsRemotePattern = Pattern.compile(
 		"(?<sha>[^\\s]{40}+)[\\s]+refs/heads/(?<name>[^\\s]+)");
 	private static final List<String> _privateOnlyRepositoryNames =
-		Arrays.asList(
-			new String[] {
-				"liferay-jenkins-ee", "liferay-jenkins-tools-private",
-				"liferay-plugins-ee", "liferay-portal-ee",
-				"liferay-qa-portal-legacy-ee", "liferay-qa-websites-ee",
-				"liferay-release-tool-ee"
-			});
+		_getBuildPropertyAsList(
+			"git.working.directory.private.only.repository.names");
 	private static final List<String> _publicOnlyRepositoryNames =
-		Arrays.asList(
-			new String[] {
-				"liferay-binaries-cache-2017", "liferay-blade-samples",
-				"liferay-plugins", "liferay-portal", "portals-pluto"
-			});
+		_getBuildPropertyAsList(
+			"git.working.directory.public.only.repository.names");
 
 	private File _gitDirectory;
 	private final String _repositoryName;

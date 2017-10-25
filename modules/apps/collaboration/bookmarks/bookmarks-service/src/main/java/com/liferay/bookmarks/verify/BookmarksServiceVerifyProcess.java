@@ -22,6 +22,7 @@ import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.verify.VerifyProcess;
 
 import java.util.List;
@@ -76,8 +77,10 @@ public class BookmarksServiceVerifyProcess extends VerifyProcess {
 				catch (Exception e) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to update asset for entry " +
-								entry.getEntryId() + ": " + e.getMessage());
+							StringBundler.concat(
+								"Unable to update asset for entry ",
+								String.valueOf(entry.getEntryId()), ": ",
+								e.getMessage()));
 					}
 				}
 			}
@@ -106,8 +109,10 @@ public class BookmarksServiceVerifyProcess extends VerifyProcess {
 				catch (Exception e) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to update asset for folder " +
-								folder.getFolderId() + ": " + e.getMessage());
+							StringBundler.concat(
+								"Unable to update asset for folder ",
+								String.valueOf(folder.getFolderId()), ": ",
+								e.getMessage()));
 					}
 				}
 			}

@@ -495,7 +495,6 @@ public class DefaultAttributeResolver implements AttributeResolver {
 
 			for (Entry<String, Set<Role>> entry : groupRoles.entrySet()) {
 				String groupName = entry.getKey();
-				Set<Role> roles = entry.getValue();
 
 				String name = null;
 				String nameFormat = null;
@@ -520,6 +519,8 @@ public class DefaultAttributeResolver implements AttributeResolver {
 
 					nameFormat = Attribute.UNSPECIFIED;
 				}
+
+				Set<Role> roles = entry.getValue();
 
 				Stream<Role> rolesStream = roles.stream();
 

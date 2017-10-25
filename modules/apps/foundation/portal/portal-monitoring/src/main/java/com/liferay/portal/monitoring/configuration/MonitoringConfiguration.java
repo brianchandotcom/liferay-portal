@@ -28,31 +28,47 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface MonitoringConfiguration {
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "monitor-enabled", required = false)
 	public boolean monitorEnabled();
 
-	@Meta.AD(deflt = "200", required = false)
+	@Meta.AD(
+		deflt = "200", name = "monitoring-message-max-queue-size",
+		required = false
+	)
 	public int monitoringMessageMaxQueueSize();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "monitor-portal-request", required = false)
 	public boolean monitorPortalRequest();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "monitor-portlet-action-request",
+		required = false
+	)
 	public boolean monitorPortletActionRequest();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "monitor-portlet-event-request", required = false
+	)
 	public boolean monitorPortletEventRequest();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "monitor-portlet-render-request",
+		required = false
+	)
 	public boolean monitorPortletRenderRequest();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "monitor-portlet-resource-request",
+		required = false
+	)
 	public boolean monitorPortletResourceRequest();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "monitor-service-request", required = false)
 	public boolean monitorServiceRequest();
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(
+		deflt = "false", name = "show-per-request-data-sample", required = false
+	)
 	public boolean showPerRequestDataSample();
 
 }

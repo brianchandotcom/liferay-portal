@@ -168,7 +168,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	protected void addExpandoAttribute(
-		User user, AttributeResolverSAMLContext samlContext,
+		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
 		AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
 
@@ -190,7 +190,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	protected void addGroupsAttribute(
-		User user, AttributeResolverSAMLContext samlContext,
+		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
 		AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
 
@@ -231,7 +231,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	protected void addOrganizationRolesAttribute(
-		User user, AttributeResolverSAMLContext samlContext,
+		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
 		AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
 
@@ -294,7 +294,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	protected void addOrganizationsAttribute(
-		User user, AttributeResolverSAMLContext samlContext,
+		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
 		AttributePublisher publisher, String attributeName,
 		boolean namespaceEnabled) {
 
@@ -336,7 +336,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	protected void addRolesAttribute(
-		User user, AttributeResolverSAMLContext samlContext,
+		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
 		AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
 
@@ -421,7 +421,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	protected void addSalesForceAttributes(
-		AttributeResolverSAMLContext samlContext,
+		AttributeResolverSAMLContext attributeResolverSAMLContext,
 		AttributePublisher attributePublisher) {
 
 		String samlIdpMetadataSalesForceLogoutUrl = GetterUtil.getString(
@@ -437,7 +437,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 				PortletPropsKeys.SAML_IDP_METADATA_SALESFORCE_SSO_START_PAGE));
 
 		List<String> locations =
-			samlContext.resolveSsoServicesLocationForBinding(
+			attributeResolverSAMLContext.resolveSsoServicesLocationForBinding(
 				SAMLConstants.SAML2_POST_BINDING_URI);
 
 		if (!locations.isEmpty()) {
@@ -451,7 +451,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	protected void addSiteRolesAttribute(
-		User user, AttributeResolverSAMLContext samlContext,
+		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
 		AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
 
@@ -542,7 +542,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	protected void addStaticAttribute(
-		User user, AttributeResolverSAMLContext samlContext,
+		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
 		AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
 
@@ -577,7 +577,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	protected void addUserAttribute(
-		User user, AttributeResolverSAMLContext samlContext,
+		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
 		AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
 
@@ -597,7 +597,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	protected void addUserGroupsAttribute(
-		User user, AttributeResolverSAMLContext samlContext,
+		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
 		AttributePublisher attributePublisher, String attributeName,
 		boolean namespaceEnabled) {
 

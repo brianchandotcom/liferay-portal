@@ -20,7 +20,6 @@ import com.liferay.contacts.util.ContactsUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -41,13 +40,9 @@ public class EntryServiceImpl extends EntryServiceBaseImpl {
 			long companyId, String keywords, int start, int end)
 		throws PortalException {
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
 		long userId = getUserId();
 
 		Set<BaseModel<?>> contacts = new HashSet<>();
-
-		JSONObject jsonObject = null;
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
@@ -84,16 +79,16 @@ public class EntryServiceImpl extends EntryServiceBaseImpl {
 				entryLocalService.search(userId, keywords, start, end));
 		}
 
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
 		for (BaseModel<?> contact : contacts) {
 			if (contact instanceof User) {
-				jsonObject = ContactsUtil.getUserJSONObject(
-					userId, (User)contact);
+				jsonArray.put(
+					ContactsUtil.getUserJSONObject(userId, (User)contact));
 			}
 			else {
-				jsonObject = ContactsUtil.getEntryJSONObject((Entry)contact);
+				jsonArray.put(ContactsUtil.getEntryJSONObject((Entry)contact));
 			}
-
-			jsonArray.put(jsonObject);
 		}
 
 		return jsonArray;

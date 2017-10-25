@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
@@ -48,8 +49,9 @@ public class UpgradeNamespace extends UpgradeProcess {
 			if (hasNewTable && hasRows(newTableName)) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Not renaming " + oldTableName + " to " + newTableName +
-							" because " + newTableName + " has data");
+						StringBundler.concat(
+							"Not renaming ", oldTableName, " to ", newTableName,
+							" because ", newTableName, " has data"));
 				}
 
 				return;
@@ -60,8 +62,9 @@ public class UpgradeNamespace extends UpgradeProcess {
 			if (hasOldTable && !hasRows(oldTableName)) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Not renaming " + oldTableName + " to " + newTableName +
-							" because " + oldTableName + " has no data");
+						StringBundler.concat(
+							"Not renaming ", oldTableName, " to ", newTableName,
+							" because ", oldTableName, " has no data"));
 				}
 
 				return;

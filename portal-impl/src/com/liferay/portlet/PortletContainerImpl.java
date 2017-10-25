@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -69,7 +70,6 @@ import com.liferay.util.SerializableUtil;
 import java.io.Serializable;
 import java.io.Writer;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -142,6 +142,13 @@ public class PortletContainerImpl implements PortletContainer {
 	public void processPublicRenderParameters(
 		HttpServletRequest request, Layout layout) {
 
+		processPublicRenderParameters(request, layout, null);
+	}
+
+	@Override
+	public void processPublicRenderParameters(
+		HttpServletRequest request, Layout layout, Portlet targetPortlet) {
+
 		LayoutTypePortlet layoutTypePortlet = null;
 
 		LayoutType layoutType = layout.getLayoutType();
@@ -149,8 +156,14 @@ public class PortletContainerImpl implements PortletContainer {
 		if (layoutType instanceof LayoutTypePortlet) {
 			layoutTypePortlet = (LayoutTypePortlet)layoutType;
 
-			_processPublicRenderParameters(
-				request, layout, layoutTypePortlet.getPortlets());
+			List<Portlet> portlets = ListUtil.copy(
+				layoutTypePortlet.getPortlets());
+
+			if (targetPortlet != null) {
+				portlets.remove(targetPortlet);
+			}
+
+			_processPublicRenderParameters(request, layout, portlets);
 		}
 	}
 
@@ -214,12 +227,6 @@ public class PortletContainerImpl implements PortletContainer {
 		}
 
 		return scopeGroupId;
-	}
-
-	protected void processPublicRenderParameters(
-		HttpServletRequest request, Layout layout, Portlet portlet) {
-
-		_processPublicRenderParameters(request, layout, Arrays.asList(portlet));
 	}
 
 	protected Event serializeEvent(
@@ -288,7 +295,8 @@ public class PortletContainerImpl implements PortletContainer {
 				LanguageUtil.getLanguageId(request));
 		}
 
-		processPublicRenderParameters(request, layout, portlet);
+		_processPublicRenderParameters(
+			request, layout, portlet, themeDisplay.isLifecycleAction());
 
 		if (themeDisplay.isLifecycleRender() ||
 			themeDisplay.isLifecycleResource()) {
@@ -554,8 +562,6 @@ public class PortletContainerImpl implements PortletContainer {
 
 		PortletQName portletQName = PortletQNameUtil.getPortletQName();
 		Map<String, String[]> publicRenderParameters = null;
-		ThemeDisplay themeDisplay = null;
-
 		Map<String, String[]> parameters = request.getParameterMap();
 
 		for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
@@ -587,28 +593,67 @@ public class PortletContainerImpl implements PortletContainer {
 				if (name.startsWith(
 						PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE)) {
 
-					if (themeDisplay == null) {
-						themeDisplay = (ThemeDisplay)request.getAttribute(
-							WebKeys.THEME_DISPLAY);
-					}
-
-					String[] values = entry.getValue();
-
-					if (themeDisplay.isLifecycleAction()) {
-						String[] oldValues = publicRenderParameters.get(
-							publicRenderParameterName);
-
-						if ((oldValues != null) && (oldValues.length != 0)) {
-							values = ArrayUtil.append(values, oldValues);
-						}
-					}
-
 					publicRenderParameters.put(
-						publicRenderParameterName, values);
+						publicRenderParameterName, entry.getValue());
 				}
 				else {
 					publicRenderParameters.remove(publicRenderParameterName);
 				}
+			}
+		}
+	}
+
+	private void _processPublicRenderParameters(
+		HttpServletRequest request, Layout layout, Portlet portlet,
+		boolean lifecycleAction) {
+
+		PortletQName portletQName = PortletQNameUtil.getPortletQName();
+		Map<String, String[]> publicRenderParameters = null;
+		Map<String, String[]> parameters = request.getParameterMap();
+
+		for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
+			String name = entry.getKey();
+
+			QName qName = portletQName.getQName(name);
+
+			if (qName == null) {
+				continue;
+			}
+
+			PublicRenderParameter publicRenderParameter =
+				portlet.getPublicRenderParameter(
+					qName.getNamespaceURI(), qName.getLocalPart());
+
+			if (publicRenderParameter == null) {
+				continue;
+			}
+
+			if (publicRenderParameters == null) {
+				publicRenderParameters = PublicRenderParametersPool.get(
+					request, layout.getPlid());
+			}
+
+			String publicRenderParameterName =
+				portletQName.getPublicRenderParameterName(qName);
+
+			if (name.startsWith(
+					PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE)) {
+
+				String[] values = entry.getValue();
+
+				if (lifecycleAction) {
+					String[] oldValues = publicRenderParameters.get(
+						publicRenderParameterName);
+
+					if ((oldValues != null) && (oldValues.length != 0)) {
+						values = ArrayUtil.append(values, oldValues);
+					}
+				}
+
+				publicRenderParameters.put(publicRenderParameterName, values);
+			}
+			else {
+				publicRenderParameters.remove(publicRenderParameterName);
 			}
 		}
 	}

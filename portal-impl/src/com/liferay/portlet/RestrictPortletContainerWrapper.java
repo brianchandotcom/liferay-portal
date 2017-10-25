@@ -105,6 +105,14 @@ public class RestrictPortletContainerWrapper implements PortletContainer {
 	}
 
 	@Override
+	public void processPublicRenderParameters(
+		HttpServletRequest request, Layout layout, Portlet targetPortlet) {
+
+		_portletContainer.processPublicRenderParameters(
+			request, layout, targetPortlet);
+	}
+
+	@Override
 	public void render(
 			HttpServletRequest request, HttpServletResponse response,
 			Portlet portlet)

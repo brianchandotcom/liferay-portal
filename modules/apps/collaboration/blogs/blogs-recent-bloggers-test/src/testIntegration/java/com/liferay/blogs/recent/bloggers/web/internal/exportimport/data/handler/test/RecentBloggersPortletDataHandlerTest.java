@@ -15,7 +15,7 @@
 package com.liferay.blogs.recent.bloggers.web.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.blogs.recent.bloggers.web.constants.RecentBloggersPortletKeys;
+import com.liferay.blogs.recent.bloggers.constants.RecentBloggersPortletKeys;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;

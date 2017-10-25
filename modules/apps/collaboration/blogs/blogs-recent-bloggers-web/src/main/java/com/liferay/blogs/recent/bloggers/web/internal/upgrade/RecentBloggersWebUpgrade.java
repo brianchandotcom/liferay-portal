@@ -14,7 +14,7 @@
 
 package com.liferay.blogs.recent.bloggers.web.internal.upgrade;
 
-import com.liferay.blogs.recent.bloggers.web.constants.RecentBloggersPortletKeys;
+import com.liferay.blogs.recent.bloggers.constants.RecentBloggersPortletKeys;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;

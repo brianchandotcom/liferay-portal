@@ -14,7 +14,7 @@
 
 package com.liferay.blogs.recent.bloggers.web.internal.exportimport.portlet.preferences.processor;
 
-import com.liferay.blogs.recent.bloggers.web.constants.RecentBloggersPortletKeys;
+import com.liferay.blogs.recent.bloggers.constants.RecentBloggersPortletKeys;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;

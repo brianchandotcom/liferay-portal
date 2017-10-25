@@ -1227,10 +1227,21 @@
 	<command name="WebContentAdministrationSitesPagesPanel" priority="3">
 		<property name="testray.component.names" value="Site Pages Administration" />
 
-		<execute macro="Page#add">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Panel Test Page" />
+		</execute>
+
+		<execute macro="SitePages#configurePage">
 			<var name="componentName" value="Collaboration" />
 			<var name="pageName" value="Panel Test Page" />
 			<var name="portletNameList" value="Blogs,Message Boards" />
+			<var name="privacy" value="Public" />
 			<var name="sitePageType" value="Panel" />
 		</execute>
 
@@ -1319,16 +1330,14 @@
 			<var name="pageName" value="Blank Page" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Link to URL Page" />
 		</execute>
 
-		<execute macro="Page#add">
+		<execute macro="SitePages#configurePage">
 			<var name="pageName" value="Link to URL Page" />
 			<var name="pageTypeURL" value="https://www.google.com/" />
-			<var name="siteName" value="Page Type Test Site Name" />
+			<var name="privacy" value="Public" />
 			<var name="sitePageType" value="Link to URL" />
 		</execute>
 
@@ -1347,22 +1356,30 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="Page#add">
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Embedded Page" />
+		</execute>
+
+		<execute macro="SitePages#configurePage">
 			<var name="pageName" value="Embedded Page" />
 			<var name="pageTypeURL" value="http://iscaliforniaonfire.com/" />
-			<var name="siteName" value="Page Type Test Site Name" />
+			<var name="privacy" value="Public" />
 			<var name="sitePageType" value="Embedded" />
 		</execute>
 
-		<execute macro="Page#add">
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Panel Page" />
+		</execute>
+
+		<execute macro="SitePages#configurePage">
 			<var name="componentName" value="Community" />
 			<var name="pageName" value="Panel Page" />
-			<var name="siteName" value="Page Type Test Site Name" />
+			<var name="privacy" value="Public" />
 			<var name="sitePageType" value="Panel" />
 		</execute>
 
@@ -1473,14 +1490,18 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="Page#add">
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Page Set Type" />
+		</execute>
+
+		<execute macro="SitePages#configurePage">
 			<var name="pageName" value="Page Set Page" />
-			<var name="siteName" value="Page Type Test Site Name" />
+			<var name="privacy" value="Public" />
 			<var name="sitePageType" value="Page Set" />
 		</execute>
 

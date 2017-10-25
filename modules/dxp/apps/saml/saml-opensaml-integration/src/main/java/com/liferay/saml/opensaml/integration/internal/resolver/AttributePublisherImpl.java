@@ -96,8 +96,7 @@ public class AttributePublisherImpl implements AttributePublisher {
 		Attribute attribute = OpenSamlUtil.buildAttribute(
 			name, friendlyName, nameFormat);
 
-		List<XMLObject> attributeXmlObjects =
-			attribute.getAttributeValues();
+		List<XMLObject> attributeXmlObjects = attribute.getAttributeValues();
 
 		Stream<AttributeValue> attributeValuesStream = Arrays.stream(
 			attributeValues);

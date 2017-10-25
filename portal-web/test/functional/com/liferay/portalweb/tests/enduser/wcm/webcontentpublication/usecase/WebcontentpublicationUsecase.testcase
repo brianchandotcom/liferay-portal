@@ -97,11 +97,15 @@
 			<var name="page" value="Public Pages" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
 		<for list="Home,Documents and Media,News" param="sitePageName">
-			<execute macro="Page#add">
+			<execute macro="SitePages#addPrivatePage">
 				<var name="pageName" value="${sitePageName}" />
-				<var name="siteName" value="Organization Name" />
-				<var name="sitePagePrivacy" value="Private" />
 			</execute>
 		</for>
 

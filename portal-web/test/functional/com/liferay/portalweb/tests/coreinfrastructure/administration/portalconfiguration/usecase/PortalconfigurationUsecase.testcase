@@ -397,9 +397,8 @@
 			<var name="pageName" value="Public Page" />
 		</execute>
 
-		<execute macro="Page#add">
+		<execute macro="SitePages#addPrivatePage">
 			<var name="pageName" value="Private Page" />
-			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 
 		<execute macro="Navigator#openSpecificURL">

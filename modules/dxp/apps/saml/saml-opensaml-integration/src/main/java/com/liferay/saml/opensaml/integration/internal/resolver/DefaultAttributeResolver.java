@@ -258,7 +258,6 @@ public class DefaultAttributeResolver implements AttributeResolver {
 
 			for (Entry<String, Set<Role>> entry : groupRoles.entrySet()) {
 				String groupName = entry.getKey();
-				Set<Role> roles = entry.getValue();
 
 				String name = null;
 				String nameFormat = null;
@@ -271,6 +270,8 @@ public class DefaultAttributeResolver implements AttributeResolver {
 					name = "organizationRole:" + groupName;
 					nameFormat = Attribute.UNSPECIFIED;
 				}
+
+				Set<Role> roles = entry.getValue();
 
 				Stream<Role> rolesStream = roles.stream();
 
@@ -424,13 +425,13 @@ public class DefaultAttributeResolver implements AttributeResolver {
 		AttributeResolverSAMLContext attributeResolverSAMLContext,
 		AttributePublisher attributePublisher) {
 
-		String samlIdpMetadataSalesForceLogoutUrl = GetterUtil.getString(
+		String samlIdpMetadataSalesForceLogoutURL = GetterUtil.getString(
 			PropsUtil.get(
 				PortletPropsKeys.SAML_IDP_METADATA_SALESFORCE_LOGOUT_URL));
 
 		attributePublisher.publish(
 			"logoutURL", Attribute.UNSPECIFIED,
-			attributePublisher.buildString(samlIdpMetadataSalesForceLogoutUrl));
+			attributePublisher.buildString(samlIdpMetadataSalesForceLogoutURL));
 
 		String samlIdpMetadataSalesForceSsoStartPage = GetterUtil.getString(
 			PropsUtil.get(

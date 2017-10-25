@@ -17,6 +17,7 @@ package com.liferay.social.user.statistics.web.internal.portlet.action;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.social.user.statistics.web.constants.SocialUserStatisticsPortletKeys;
 
@@ -68,7 +69,9 @@ public class SocialUserStatisticsConfigurationAction
 
 		for (int i = 0;; i++) {
 			String value = ParamUtil.getString(
-				actionRequest, "preferences--" + key + i + "--");
+				actionRequest,
+				StringBundler.concat(
+					"preferences--", key, String.valueOf(i), "--"));
 
 			if (Validator.isNull(value)) {
 				break;

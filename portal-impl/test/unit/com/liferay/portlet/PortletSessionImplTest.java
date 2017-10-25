@@ -17,8 +17,13 @@ package com.liferay.portlet;
 import static com.liferay.portal.kernel.portlet.LiferayPortletSession.LAYOUT_SEPARATOR;
 import static com.liferay.portal.kernel.portlet.LiferayPortletSession.PORTLET_SCOPE_NAMESPACE;
 
-import com.liferay.portal.kernel.io.SerializableObjectWrapper;
+import com.liferay.petra.lang.ClassLoaderPool;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.servlet.HttpSessionWrapper;
+import com.liferay.portal.kernel.test.CaptureHandler;
+import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
@@ -29,12 +34,21 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletSession;
@@ -45,6 +59,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -62,6 +77,24 @@ public class PortletSessionImplTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			AspectJNewEnvTestRule.INSTANCE, CodeCoverageAssertor.INSTANCE);
+
+	@Before
+	public void setUp() {
+		for (Class<?> declaredClass :
+				PortletSessionImpl.class.getDeclaredClasses()) {
+
+			String declaredClassName = declaredClass.getSimpleName();
+
+			if (declaredClassName.equals("LazySerializable")) {
+				_lazySerializableClass = declaredClass;
+			}
+			else if (declaredClassName.equals(
+						"LazySerializableObjectWrapper")) {
+
+				_lazySerializableObjectWrapperClass = declaredClass;
+			}
+		}
+	}
 
 	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
@@ -249,6 +282,96 @@ public class PortletSessionImplTest {
 		Assert.assertFalse(enumeration.hasMoreElements());
 	}
 
+	@Test
+	public void testLazySerializableObjectWrapper() throws Exception {
+		Constructor<?> constructor =
+			_lazySerializableObjectWrapperClass.getDeclaredConstructor(
+				Serializable.class);
+
+		constructor.setAccessible(true);
+
+		TestSerializable testSerializable = new TestSerializable(
+			"testSerializableName");
+
+		Object lazySerializableObjectWrapperObject = constructor.newInstance(
+			testSerializable);
+
+		Assert.assertSame(
+			testSerializable,
+			ReflectionTestUtil.invoke(
+				lazySerializableObjectWrapperObject, "getSerializable",
+				new Class<?>[0]));
+
+		Assert.assertNotSame(
+			testSerializable,
+			ReflectionTestUtil.invoke(
+				_getDeserializedObject(lazySerializableObjectWrapperObject),
+				"getSerializable", new Class<?>[0]));
+
+		Assert.assertEquals(
+			testSerializable,
+			(TestSerializable)ReflectionTestUtil.invoke(
+				_getDeserializedObject(lazySerializableObjectWrapperObject),
+				"getSerializable", new Class<?>[0]));
+
+		Assert.assertEquals(
+			testSerializable,
+			(TestSerializable)ReflectionTestUtil.invoke(
+				_getDeserializedObject(
+					_getDeserializedObject(
+						lazySerializableObjectWrapperObject)),
+				"getSerializable", new Class<?>[0]));
+
+		// Test with broken classloader
+
+		ClassLoaderPool.unregister(ClassLoaderPool.class.getClassLoader());
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		ClassNotFoundException cnfe = new ClassNotFoundException();
+
+		currentThread.setContextClassLoader(
+			new ClassLoader() {
+
+				@Override
+				public Class<?> loadClass(String name)
+					throws ClassNotFoundException {
+
+					if (name.equals(TestSerializable.class.getName())) {
+						throw cnfe;
+					}
+
+					return super.loadClass(name);
+				}
+
+			});
+
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					_lazySerializableClass.getName(), Level.ALL)) {
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertNull(
+				ReflectionTestUtil.invoke(
+					_getDeserializedObject(lazySerializableObjectWrapperObject),
+					"getSerializable", new Class<?>[0]));
+
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Unable to deserialize object", logRecord.getMessage());
+			Assert.assertSame(cnfe, logRecord.getThrown());
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
+		}
+	}
+
 	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testRemoveAttribute() {
@@ -347,8 +470,8 @@ public class PortletSessionImplTest {
 
 		Assert.assertSame(value, portletSessionImpl.getAttribute(key));
 		Assert.assertTrue(
-			_mockHttpSession.getAttribute(scopePrefix.concat(key)) instanceof
-				SerializableObjectWrapper);
+			_lazySerializableObjectWrapperClass.isInstance(
+				_mockHttpSession.getAttribute(scopePrefix.concat(key))));
 
 		// Set/get non-serializable attribute when value class is not loaded by
 		// PortalClassLoader
@@ -447,6 +570,24 @@ public class PortletSessionImplTest {
 
 	}
 
+	private Object _getDeserializedObject(Object object) throws Exception {
+		try (UnsyncByteArrayOutputStream ubaos =
+				new UnsyncByteArrayOutputStream()) {
+
+			try (ObjectOutputStream oos = new ObjectOutputStream(ubaos)) {
+				oos.writeObject(object);
+			}
+
+			try (UnsyncByteArrayInputStream ubais =
+					new UnsyncByteArrayInputStream(
+						ubaos.unsafeGetByteArray(), 0, ubaos.size());
+				ObjectInputStream ois = new ObjectInputStream(ubais)) {
+
+				return ois.readObject();
+			}
+		}
+	}
+
 	private PortletSessionImpl _getPortletSessionImpl() {
 		PortletSessionImpl portletSessionImpl = new PortletSessionImpl(
 			_mockHttpSession, _portletContext, _PORTLET_NAME, _PLID);
@@ -494,11 +635,47 @@ public class PortletSessionImplTest {
 
 			});
 
+	private Class<?> _lazySerializableClass;
+	private Class<?> _lazySerializableObjectWrapperClass;
 	private final MockHttpSession _mockHttpSession = new MockHttpSession();
 	private final Object _value1 = new Object();
 	private final Object _value2 = new Object();
 	private final Object _value3 = new Object();
 	private final Object _value4 = new Object();
 	private final Object _value5 = new Object();
+
+	private static class TestSerializable implements Serializable {
+
+		@Override
+		public boolean equals(Object object) {
+			if (this == object) {
+				return true;
+			}
+
+			if (!(object instanceof TestSerializable)) {
+				return false;
+			}
+
+			TestSerializable testSerializable = (TestSerializable)object;
+
+			return Objects.equals(_name, testSerializable._name);
+		}
+
+		public String getName() {
+			return _name;
+		}
+
+		@Override
+		public int hashCode() {
+			return _name.hashCode();
+		}
+
+		private TestSerializable(String name) {
+			_name = name;
+		}
+
+		private final String _name;
+
+	}
 
 }

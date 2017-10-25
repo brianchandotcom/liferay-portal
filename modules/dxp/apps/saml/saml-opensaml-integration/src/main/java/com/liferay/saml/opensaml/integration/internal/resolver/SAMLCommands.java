@@ -23,6 +23,7 @@ import com.liferay.saml.opensaml.integration.resolver.UserResolver;
 import java.io.Serializable;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -33,6 +34,7 @@ import org.opensaml.common.binding.SAMLMessageContext;
 import org.opensaml.saml2.core.Assertion;
 import org.opensaml.saml2.core.Attribute;
 import org.opensaml.saml2.core.AttributeStatement;
+import org.opensaml.saml2.core.NameID;
 import org.opensaml.saml2.core.Response;
 import org.opensaml.saml2.core.Subject;
 import org.opensaml.saml2.core.SubjectConfirmation;
@@ -52,6 +54,10 @@ public interface SAMLCommands {
 			samlMessageContext
 				-> {
 				Response response = samlMessageContext.getInboundSAMLMessage();
+
+				if (response == null) {
+					return Collections.<String, List<Serializable>>emptyMap();
+				}
 
 				List<Assertion> assertions = response.getAssertions();
 
@@ -111,8 +117,16 @@ public interface SAMLCommands {
 					(IDPSSODescriptor)
 						samlMessageContext.getLocalEntityRoleMetadata();
 
+				if (idpSsoDescriptor == null) {
+					return null;
+				}
+
 				List<SingleSignOnService> singleSignOnServices =
 					idpSsoDescriptor.getSingleSignOnServices();
+
+				if (singleSignOnServices == null) {
+					return null;
+				}
 
 				Stream<SingleSignOnService> singleSignOnServicesStream =
 					singleSignOnServices.stream();
@@ -129,13 +143,29 @@ public interface SAMLCommands {
 
 	public SAMLCommand<String, Resolver> peerEntityId = new SAMLCommandImpl<>(
 		SAMLMessageContext::getPeerEntityId);
+
 	public SAMLCommand<String, Resolver> subjectNameFormat =
 		new SAMLCommandImpl<>(
-			samlMessageContext
-			-> samlMessageContext.getSubjectNameIdentifier().getFormat());
+			samlMessageContext -> {
+				NameID nameId = samlMessageContext.getSubjectNameIdentifier();
+
+				if (nameId == null) {
+					return null;
+				}
+
+				return nameId.getFormat();
+			});
+
 	public SAMLCommand<String, Resolver> subjectNameIdentifier =
 		new SAMLCommandImpl<>(
-			samlMessageContext
-			-> samlMessageContext.getSubjectNameIdentifier().getValue());
+			samlMessageContext -> {
+				NameID nameId = samlMessageContext.getSubjectNameIdentifier();
+
+				if (nameId == null) {
+					return null;
+				}
+
+				return nameId.getValue();
+			});
 
 }

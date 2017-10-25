@@ -26,7 +26,7 @@ public interface Resolver {
 
 	public interface SAMLContext<R extends Resolver> {
 
-		public <T> T resolve(SAMLCommand<T, ? super R> command);
+		public <T> T resolve(SAMLCommand<T, ? super R> samlCommand);
 
 		public default String resolvePeerEntityId() {
 			return resolve(SAMLCommands.peerEntityId);

@@ -147,6 +147,15 @@ public abstract class BasePoshiElement
 		return RegexUtil.getGroup(readableSyntax, ".*?\"(.*)\"", 1);
 	}
 
+	protected String getValueFromAssignment(String assignment) {
+		int end = assignment.length();
+		int start = assignment.indexOf("=");
+
+		String value = assignment.substring(start + 1, end);
+
+		return value.trim();
+	}
+
 	protected boolean isBalancedReadableSyntax(String readableSyntax) {
 		Stack<Character> stack = new Stack<>();
 
@@ -232,6 +241,10 @@ public abstract class BasePoshiElement
 		}
 
 		return false;
+	}
+
+	protected String quoteContent(String content) {
+		return "\"" + content + "\"";
 	}
 
 	protected List<PoshiElementAttribute> toPoshiElementAttributes(

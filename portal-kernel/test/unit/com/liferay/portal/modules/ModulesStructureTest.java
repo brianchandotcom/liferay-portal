@@ -97,7 +97,9 @@ public class ModulesStructureTest {
 
 					String dirName = String.valueOf(dirPath.getFileName());
 
-					if (dirName.charAt(0) == '.') {
+					if ((dirName.charAt(0) == '.') ||
+						dirName.equals("node_modules")) {
+
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 

@@ -52,16 +52,10 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		return true;
 	}
 
-	public void setServiceReferenceUtilClassNames(
-		String serviceReferenceUtilClassNames) {
+	public void setServiceReferenceUtilClassName(
+		String serviceReferenceUtilClassName) {
 
-		_serviceReferenceUtilClassNames = StringUtil.split(
-			serviceReferenceUtilClassNames);
-
-		for (int i = 0; i < _serviceReferenceUtilClassNames.length; i++) {
-			_serviceReferenceUtilClassNames[i] = StringUtil.trim(
-				_serviceReferenceUtilClassNames[i]);
-		}
+		_serviceReferenceUtilClassNames.add(serviceReferenceUtilClassName);
 	}
 
 	@Override
@@ -600,7 +594,8 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		"\n\t@Reference([\\s\\S]*?)\\s+((protected|public) void (\\w+?))\\(" +
 			"\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\n\t\\}\n");
 	private List<String> _serviceProxyFactoryUtilClassNames;
-	private String[] _serviceReferenceUtilClassNames = new String[0];
+	private final List<String> _serviceReferenceUtilClassNames =
+		new ArrayList<>();
 	private final Pattern _serviceUtilImportPattern = Pattern.compile(
 		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
 

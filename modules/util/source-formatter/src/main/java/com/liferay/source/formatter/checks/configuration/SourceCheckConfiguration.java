@@ -14,7 +14,9 @@
 
 package com.liferay.source.formatter.checks.configuration;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -28,14 +30,22 @@ public class SourceCheckConfiguration {
 	}
 
 	public void addAttribute(String name, String value) {
-		_attributesMap.put(name, value);
+		List<String> attributeValues = _attributesMap.get(name);
+
+		if (attributeValues == null) {
+			attributeValues = new ArrayList<>();
+		}
+
+		attributeValues.add(value);
+
+		_attributesMap.put(name, attributeValues);
 	}
 
 	public Set<String> attributeNames() {
 		return _attributesMap.keySet();
 	}
 
-	public String getAttributeValue(String name) {
+	public List<String> getAttributeValues(String name) {
 		return _attributesMap.get(name);
 	}
 
@@ -51,7 +61,7 @@ public class SourceCheckConfiguration {
 		_enabled = enabled;
 	}
 
-	private final Map<String, String> _attributesMap = new HashMap<>();
+	private final Map<String, List<String>> _attributesMap = new HashMap<>();
 	private boolean _enabled;
 	private final String _name;
 

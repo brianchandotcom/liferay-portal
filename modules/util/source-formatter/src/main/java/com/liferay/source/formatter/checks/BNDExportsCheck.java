@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,6 +34,12 @@ public class BNDExportsCheck extends BaseFileCheck {
 	@Override
 	public boolean isModulesCheck() {
 		return true;
+	}
+
+	public void setAllowedExportPackageDirName(
+		String allowedExportPackageDirName) {
+
+		_allowedExportPackageDirNames.add(allowedExportPackageDirName);
 	}
 
 	@Override
@@ -47,7 +55,30 @@ public class BNDExportsCheck extends BaseFileCheck {
 			_checkExports(fileName, content, _exportsPattern, "Export-Package");
 		}
 
+		_checkExportPackage(fileName, absolutePath, content);
+
 		return content;
+	}
+
+	private void _checkExportPackage(
+		String fileName, String absolutePath, String content) {
+
+		for (String allowedExportPackageDirName :
+				_allowedExportPackageDirNames) {
+
+			if (absolutePath.contains(allowedExportPackageDirName)) {
+				return;
+			}
+		}
+
+		if (absolutePath.contains("-service/") &&
+			content.contains("Export-Package")) {
+
+			addMessage(
+				fileName,
+				"Service modules should not be exporting any packages, see " +
+					"LPS-75294");
+		}
 	}
 
 	private void _checkExports(
@@ -101,6 +132,8 @@ public class BNDExportsCheck extends BaseFileCheck {
 		}
 	}
 
+	private final List<String> _allowedExportPackageDirNames =
+		new ArrayList<>();
 	private final Pattern _apiOrServiceBundleSymbolicNamePattern =
 		Pattern.compile("\\.(api|service)$");
 	private final Pattern _exportContentsPattern = Pattern.compile(

@@ -19,7 +19,37 @@
 
 		<check name="BNDBundleInformationCheck" />
 		<check name="BNDDirectoryNameCheck" />
-		<check name="BNDExportsCheck" />
+		<check name="BNDExportsCheck">
+			<property name="allowedExportPackageDirName" value="adaptive-media-image-service" />
+			<property name="allowedExportPackageDirName" value="chat/chat-service" />
+			<property name="allowedExportPackageDirName" value="collaboration/blogs/blogs-service" />
+			<property name="allowedExportPackageDirName" value="collaboration/bookmarks/bookmarks-service" />
+			<property name="allowedExportPackageDirName" value="collaboration/document-library/document-library-service" />
+			<property name="allowedExportPackageDirName" value="collaboration/microblogs/microblogs-service" />
+			<property name="allowedExportPackageDirName" value="collaboration/wiki/wiki-service" />
+			<property name="allowedExportPackageDirName" value="dynamic-data-mapping-service" />
+			<property name="allowedExportPackageDirName" value="forms-and-workflow/calendar/calendar-service" />
+			<property name="allowedExportPackageDirName" value="forms-and-workflow/dynamic-data-lists/dynamic-data-lists-service" />
+			<property name="allowedExportPackageDirName" value="foundation/mobile-device-rules/mobile-device-rules-service" />
+			<property name="allowedExportPackageDirName" value="foundation/portal-security/portal-security-service-access-policy-service" />
+			<property name="allowedExportPackageDirName" value="journal-service" />
+			<property name="allowedExportPackageDirName" value="knowledge-base/knowledge-base-service" />
+			<property name="allowedExportPackageDirName" value="mail-reader/mail-reader-service" />
+			<property name="allowedExportPackageDirName" value="marketplace/marketplace-service" />
+			<property name="allowedExportPackageDirName" value="portal-security-wedeploy-auth/portal-security-wedeploy-auth-service" />
+			<property name="allowedExportPackageDirName" value="push-notifications/push-notifications-service" />
+			<property name="allowedExportPackageDirName" value="shopping/shopping-service" />
+			<property name="allowedExportPackageDirName" value="social-networking/social-networking-service" />
+			<property name="allowedExportPackageDirName" value="social-private-messaging/social-private-messaging-service" />
+			<property name="allowedExportPackageDirName" value="sync/sync-service" />
+			<property name="allowedExportPackageDirName" value="twitter/twitter-service" />
+			<property name="allowedExportPackageDirName" value="web-experience/asset/asset-display-template-service" />
+			<property name="allowedExportPackageDirName" value="web-experience/asset/asset-service" />
+			<property name="allowedExportPackageDirName" value="web-experience/export-import/export-import-service" />
+			<property name="allowedExportPackageDirName" value="web-experience/fragment/fragment-service" />
+			<property name="allowedExportPackageDirName" value="web-experience/layout/layout-page-template-service" />
+			<property name="allowedExportPackageDirName" value="web-experience/site-navigation/site-navigation-service" />
+		</check>
 		<check name="BNDIncludeResourceCheck" />
 		<check name="BNDWebContextPathCheck" />
 	</source-processor>
@@ -141,7 +171,17 @@
 		<check name="JavaModuleServiceReferenceCheck" />
 		<check name="JavaModuleTestCheck" />
 		<check name="JavaOSGiReferenceCheck">
-			<property name="serviceReferenceUtilClassNames" value="     com.liferay.exportimport.kernel.lar.ExportImportHelperUtil,     com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistryUtil,     com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil,     com.liferay.exportimport.kernel.lar.PortletDataHandlerStatusMessageSenderUtil,     com.liferay.exportimport.kernel.staging.StagingUtil,     com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil,     com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplayFactoryUtil,     com.liferay.portal.kernel.captcha.CaptchaUtil,     com.liferay.portal.kernel.comment.CommentManagerUtil,     com.liferay.portal.kernel.util.HttpUtil,     com.liferay.portal.kernel.util.PortalUtil" />
+			<property name="serviceReferenceUtilClassName" value="com.liferay.exportimport.kernel.lar.ExportImportHelperUtil" />
+			<property name="serviceReferenceUtilClassName" value="com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistryUtil" />
+			<property name="serviceReferenceUtilClassName" value="com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil" />
+			<property name="serviceReferenceUtilClassName" value="com.liferay.exportimport.kernel.lar.PortletDataHandlerStatusMessageSenderUtill" />
+			<property name="serviceReferenceUtilClassName" value="com.liferay.exportimport.kernel.staging.StagingUtil" />
+			<property name="serviceReferenceUtilClassName" value="com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil" />
+			<property name="serviceReferenceUtilClassName" value="com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplayFactoryUtil" />
+			<property name="serviceReferenceUtilClassName" value="com.liferay.portal.kernel.captcha.CaptchaUtil" />
+			<property name="serviceReferenceUtilClassName" value="com.liferay.portal.kernel.comment.CommentManagerUtil" />
+			<property name="serviceReferenceUtilClassName" value="com.liferay.portal.kernel.util.HttpUtil" />
+			<property name="serviceReferenceUtilClassName" value="com.liferay.portal.kernel.util.PortalUtil" />
 		</check>
 
 		<!-- Plugins checks -->

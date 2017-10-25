@@ -203,9 +203,13 @@ public class SourceChecksUtil {
 			for (String attributeName :
 					sourceCheckConfiguration.attributeNames()) {
 
-				BeanUtils.setProperty(
-					sourceCheck, attributeName,
-					sourceCheckConfiguration.getAttributeValue(attributeName));
+				for (String attributeValue :
+						sourceCheckConfiguration.getAttributeValues(
+							attributeName)) {
+
+					BeanUtils.setProperty(
+						sourceCheck, attributeName, attributeValue);
+				}
 			}
 
 			sourceChecks.add(sourceCheck);

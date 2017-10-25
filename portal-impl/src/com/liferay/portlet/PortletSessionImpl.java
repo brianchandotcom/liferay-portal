@@ -298,7 +298,7 @@ public class PortletSessionImpl implements LiferayPortletSession {
 		public LazySerializableObjectWrapper() {
 		}
 
-		public LazySerializableObjectWrapper(Serializable serializable) {
+		private LazySerializableObjectWrapper(Serializable serializable) {
 			_serializable = serializable;
 		}
 

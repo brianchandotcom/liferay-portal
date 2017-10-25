@@ -133,6 +133,12 @@ definition {
 document.getElementById('demo').innerHTML = 'FAIL';
 </script>");
 
+		AlloyEditor.addSourceContent(content = escapeText("
+<h2 class="text-center">Space Program 大学生涯教育</h2>
+
+<p class="text-center">地球から、宇宙の果てへ</p>
+"));
+
 		Smoke.viewWelcomePage();
 
 		takeScreenshot();

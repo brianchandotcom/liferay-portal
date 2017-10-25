@@ -153,7 +153,7 @@ public class CommandPoshiElement extends BasePoshiElement {
 			}
 
 			if (isCDATAVar(item)) {
-				item = item.replaceFirst("var ", pad + "var ");
+				item = item.replaceFirst("\t", pad + "\t");
 
 				sb.append(item);
 

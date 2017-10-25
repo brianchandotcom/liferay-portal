@@ -220,15 +220,20 @@ public class ExecutePoshiElement extends BasePoshiElement {
 
 		String trimmedContent = content.trim();
 
-		if (!trimmedContent.equals("")) {
-			if (content.contains("\n")) {
-				content = content.replaceAll("\n", ",\n" + pad);
-				content = content.replaceFirst(",", "");
-				content = content + "\n" + pad;
-			}
-
-			sb.append(content);
+		if (content.contains("escapeText(")) {
+			content = trimmedContent;
 		}
+		else {
+			if (!trimmedContent.equals("")) {
+				if (content.contains("\n")) {
+					content = content.replaceAll("\n", ",\n" + pad);
+					content = content.replaceFirst(",", "");
+					content = content + "\n" + pad;
+				}
+			}
+		}
+
+		sb.append(content);
 
 		sb.append(");");
 
@@ -285,6 +290,6 @@ public class ExecutePoshiElement extends BasePoshiElement {
 	private static final String _ELEMENT_NAME = "execute";
 
 	private static final Pattern _assignmentPattern = Pattern.compile(
-		"([^,]*? = \".*?\")");
+		"([^,]*? = \".*?\"|[^,]*? = escapeText\\(\".*?\\))", Pattern.DOTALL);
 
 }

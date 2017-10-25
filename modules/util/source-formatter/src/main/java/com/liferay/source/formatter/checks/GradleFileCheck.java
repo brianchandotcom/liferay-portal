@@ -12,26 +12,18 @@
  * details.
  */
 
-package com.liferay.source.formatter;
+package com.liferay.source.formatter.checks;
 
-import java.util.List;
+import com.liferay.source.formatter.parser.GradleFile;
 
 /**
- * @author Hugo Huijser
- * @author Andrea Di Giorgi
+ * @author Peter Shin
  */
-public class GradleSourceProcessor extends BaseSourceProcessor {
+public interface GradleFileCheck extends SourceCheck {
 
-	@Override
-	protected List<String> doGetFileNames() throws Exception {
-		return getFileNames(new String[0], getIncludes());
-	}
-
-	@Override
-	protected String[] doGetIncludes() {
-		return _INCLUDES;
-	}
-
-	private static final String[] _INCLUDES = {"**/*.gradle"};
+	public String process(
+			String fileName, String absolutePath, GradleFile gradleFile,
+			String content)
+		throws Exception;
 
 }

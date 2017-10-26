@@ -16,7 +16,6 @@ package com.liferay.commerce.model;
 
 import com.liferay.portal.kernel.service.ServiceContext;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -32,7 +31,8 @@ public interface CommerceShippingOriginLocator {
 
 	public String getName(Locale locale);
 
-	public List<CommerceAddress> getOriginAddresses(CommerceCart commerceCart)
+	public Map<CommerceAddress, Iterable<CommerceCartItem>> getOriginAddresses(
+			CommerceCart commerceCart)
 		throws Exception;
 
 	public void renderConfiguration(

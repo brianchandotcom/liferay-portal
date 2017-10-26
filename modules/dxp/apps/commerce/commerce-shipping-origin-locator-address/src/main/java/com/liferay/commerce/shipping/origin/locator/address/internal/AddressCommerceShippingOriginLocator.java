@@ -16,6 +16,7 @@ package com.liferay.commerce.shipping.origin.locator.address.internal;
 
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.model.CommerceShippingOriginLocator;
 import com.liferay.commerce.service.CommerceAddressLocalService;
 import com.liferay.commerce.shipping.origin.locator.address.internal.configuration.AddressCommerceShippingOriginLocatorGroupServiceConfiguration;
@@ -36,7 +37,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -80,7 +80,8 @@ public class AddressCommerceShippingOriginLocator
 	}
 
 	@Override
-	public List<CommerceAddress> getOriginAddresses(CommerceCart commerceCart)
+	public Map<CommerceAddress, Iterable<CommerceCartItem>> getOriginAddresses(
+			CommerceCart commerceCart)
 		throws Exception {
 
 		CommerceAddress commerceAddress =
@@ -120,7 +121,9 @@ public class AddressCommerceShippingOriginLocator
 			addressCommerceShippingOriginLocatorGroupServiceConfiguration.
 				phoneNumber());
 
-		return Collections.singletonList(commerceAddress);
+		return Collections.singletonMap(
+			commerceAddress,
+			(Iterable<CommerceCartItem>)commerceCart.getCommerceCartItems());
 	}
 
 	@Override

@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>ENTRY_CONTENT_ROW_NUMBER_ELLIPSIS</td>
-	<td>xpath=(//*[@data-qa-id='row'])[${key_rowNumber}]//span[contains(@class,'icon-ellipsis-vertical')]</td>
+	<td>xpath=(//*[@data-qa-id='row']//span/*[name()='svg'][contains(@class,'icon-ellipsis')])[${key_rowNumber}]</td>
 	<td></td>
 </tr>
 <tr>

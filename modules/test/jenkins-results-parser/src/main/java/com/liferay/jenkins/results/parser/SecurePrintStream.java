@@ -40,21 +40,21 @@ public class SecurePrintStream extends PrintStream {
 
 	@Override
 	public PrintStream append(char c) {
-		synchronized(this) {
+		synchronized (this) {
 			return super.append(c);
 		}
 	}
 
 	@Override
 	public PrintStream append(CharSequence charSequence) {
-		synchronized(this) {
+		synchronized (this) {
 			return super.append(charSequence);
 		}
 	}
 
 	@Override
 	public PrintStream append(CharSequence charSequence, int start, int end) {
-		synchronized(this) {
+		synchronized (this) {
 			return super.append(charSequence, start, end);
 		}
 	}
@@ -78,153 +78,154 @@ public class SecurePrintStream extends PrintStream {
 
 	@Override
 	public void print(boolean b) {
-		synchronized(this) {
+		synchronized (this) {
 			super.print(b);
 		}
 	}
 
 	@Override
 	public void print(char c) {
-		synchronized(this) {
+		synchronized (this) {
 			super.print(c);
 		}
 	}
 
 	@Override
 	public void print(char[] chars) {
-		synchronized(this) {
+		synchronized (this) {
 			super.print(chars);
 		}
 	}
 
 	@Override
 	public void print(double d) {
-		synchronized(this) {
+		synchronized (this) {
 			super.print(d);
 		}
 	}
 
 	@Override
 	public void print(float f) {
-		synchronized(this) {
+		synchronized (this) {
 			super.print(f);
 		}
 	}
 
 	@Override
 	public void print(int i) {
-		synchronized(this) {
+		synchronized (this) {
 			super.print(i);
 		}
 	}
+
 	@Override
 	public void print(long l) {
-		synchronized(this) {
+		synchronized (this) {
 			super.print(l);
 		}
 	}
 
 	@Override
 	public void print(Object object) {
-		synchronized(this) {
+		synchronized (this) {
 			super.print(object);
 		}
 	}
 
 	@Override
 	public void print(String string) {
-		synchronized(this) {
+		synchronized (this) {
 			super.print(string);
 		}
 	}
 
 	@Override
 	public void println() {
-		synchronized(this) {
+		synchronized (this) {
 			super.println();
 		}
 	}
 
 	@Override
 	public void println(boolean b) {
-		synchronized(this) {
+		synchronized (this) {
 			super.println(b);
 		}
 	}
 
 	@Override
 	public void println(char c) {
-		synchronized(this) {
+		synchronized (this) {
 			super.println(c);
 		}
 	}
 
 	@Override
 	public void println(char[] chars) {
-		synchronized(this) {
+		synchronized (this) {
 			super.println(chars);
 		}
 	}
 
 	@Override
 	public void println(double d) {
-		synchronized(this) {
+		synchronized (this) {
 			super.println(d);
 		}
 	}
 
 	@Override
 	public void println(float f) {
-		synchronized(this) {
+		synchronized (this) {
 			super.println(f);
 		}
 	}
 
 	@Override
 	public void println(int i) {
-		synchronized(this) {
+		synchronized (this) {
 			super.println(i);
 		}
 	}
 
 	@Override
 	public void println(long l) {
-		synchronized(this) {
+		synchronized (this) {
 			super.println(l);
 		}
 	}
 
 	@Override
 	public void println(Object object) {
-		synchronized(this) {
+		synchronized (this) {
 			super.println(object);
 		}
 	}
 
 	@Override
 	public void println(String string) {
-		synchronized(this) {
+		synchronized (this) {
 			super.println(string);
 		}
 	}
 
 	@Override
 	public void write(byte[] bytes) throws IOException {
-		synchronized(this) {
+		synchronized (this) {
 			super.write(bytes);
 		}
 	}
 
 	@Override
 	public void write(byte[] buffer, int offset, int length) {
-		synchronized(this) {
+		synchronized (this) {
 			super.write(buffer, offset, length);
 		}
 	}
 
 	@Override
 	public void write(int b) {
-		synchronized(this) {
+		synchronized (this) {
 			super.write(b);
 		}
 	}

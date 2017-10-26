@@ -36,21 +36,21 @@ public class ByteArrayFileInputStream extends InputStream {
 				"File " + file.getAbsolutePath() + " does not exist");
 		}
 
-		this.file = file;
+		_file = file;
 
-		fileSize = file.length();
+		_fileSize = file.length();
 
-		this.threshold = threshold;
-		this.deleteOnClose = deleteOnClose;
+		_threshold = threshold;
+		_deleteOnClose = deleteOnClose;
 	}
 
 	@Override
 	public int available() throws IOException {
-		if (data != null) {
-			return data.length - index;
+		if (_data != null) {
+			return _data.length - _index;
 		}
-		else if (fileInputStream != null) {
-			return fileInputStream.available();
+		else if (_fileInputStream != null) {
+			return _fileInputStream.available();
 		}
 		else {
 			return 0;
@@ -60,34 +60,34 @@ public class ByteArrayFileInputStream extends InputStream {
 	@Override
 	public void close() throws IOException {
 		try {
-			if (fileInputStream != null) {
-				fileInputStream.close();
+			if (_fileInputStream != null) {
+				_fileInputStream.close();
 			}
 		}
 		finally {
-			data = null;
-			fileInputStream = null;
+			_data = null;
+			_fileInputStream = null;
 
-			if (deleteOnClose && (file != null)) {
-				file.delete();
+			if (_deleteOnClose && (_file != null)) {
+				_file.delete();
 			}
 
-			file = null;
+			_file = null;
 		}
 	}
 
 	public File getFile() {
-		return file;
+		return _file;
 	}
 
 	@Override
 	public void mark(int readLimit) {
-		markIndex = index;
+		_markIndex = _index;
 	}
 
 	@Override
 	public boolean markSupported() {
-		if (fileSize < threshold) {
+		if (_fileSize < _threshold) {
 			return true;
 		}
 
@@ -96,20 +96,20 @@ public class ByteArrayFileInputStream extends InputStream {
 
 	@Override
 	public int read() throws IOException {
-		if (fileSize < threshold) {
-			initData();
+		if (_fileSize < _threshold) {
+			_initData();
 
-			if (index < data.length) {
-				return data[index++] & 0xff;
+			if (_index < _data.length) {
+				return _data[_index++] & 0xff;
 			}
 			else {
 				return -1;
 			}
 		}
 		else {
-			initFileInputStream();
+			_initFileInputStream();
 
-			return fileInputStream.read();
+			return _fileInputStream.read();
 		}
 	}
 
@@ -124,40 +124,40 @@ public class ByteArrayFileInputStream extends InputStream {
 			return 0;
 		}
 
-		if (fileSize < threshold) {
-			initData();
+		if (_fileSize < _threshold) {
+			_initData();
 
-			if (index >= data.length) {
+			if (_index >= _data.length) {
 				return -1;
 			}
 
 			int read = length;
 
-			if ((index + read) > data.length) {
-				read = data.length - index;
+			if ((_index + read) > _data.length) {
+				read = _data.length - _index;
 			}
 
-			System.arraycopy(data, index, bytes, offset, read);
+			System.arraycopy(_data, _index, bytes, offset, read);
 
-			index += read;
+			_index += read;
 
 			return read;
 		}
 
-		initFileInputStream();
+		_initFileInputStream();
 
-		return fileInputStream.read(bytes, offset, length);
+		return _fileInputStream.read(bytes, offset, length);
 	}
 
 	@Override
 	public void reset() throws IOException {
-		if (data != null) {
-			index = markIndex;
+		if (_data != null) {
+			_index = _markIndex;
 		}
-		else if (fileInputStream != null) {
-			fileInputStream.close();
+		else if (_fileInputStream != null) {
+			_fileInputStream.close();
 
-			fileInputStream = null;
+			_fileInputStream = null;
 		}
 	}
 
@@ -167,40 +167,41 @@ public class ByteArrayFileInputStream extends InputStream {
 			return 0;
 		}
 
-		if (fileSize < threshold) {
-			initData();
+		if (_fileSize < _threshold) {
+			_initData();
 
-			if ((skip + index) > data.length) {
-				skip = data.length - index;
+			if ((skip + _index) > _data.length) {
+				skip = _data.length - _index;
 			}
 
-			index += skip;
+			_index += skip;
 
 			return skip;
 		}
 
-		initFileInputStream();
+		_initFileInputStream();
 
-		return fileInputStream.skip(skip);
+		return _fileInputStream.skip(skip);
 	}
 
-	protected void initData() throws IOException {
-		if (data != null) {
+	private void _initData() throws IOException {
+		if (_data != null) {
 			return;
 		}
 
-		int arraySize = (int)fileSize;
+		int arraySize = (int)_fileSize;
 
-		data = new byte[arraySize];
+		_data = new byte[arraySize];
 
-		FileInputStream fileInputStream = new FileInputStream(file);
+		FileInputStream fileInputStream = new FileInputStream(_file);
 
 		int offset = 0;
 		int length = 0;
 
 		try {
 			while (offset < arraySize) {
-				length = fileInputStream.read(data, offset, arraySize - offset);
+				length = fileInputStream.read(
+					_data, offset, arraySize - offset);
 
 				offset += length;
 			}
@@ -210,19 +211,19 @@ public class ByteArrayFileInputStream extends InputStream {
 		}
 	}
 
-	protected void initFileInputStream() throws IOException {
-		if (fileInputStream == null) {
-			fileInputStream = new FileInputStream(file);
+	private void _initFileInputStream() throws IOException {
+		if (_fileInputStream == null) {
+			_fileInputStream = new FileInputStream(_file);
 		}
 	}
 
-	protected byte[] data;
-	protected boolean deleteOnClose;
-	protected File file;
-	protected FileInputStream fileInputStream;
-	protected long fileSize;
-	protected int index;
-	protected int markIndex;
-	protected int threshold;
+	private byte[] _data;
+	private boolean _deleteOnClose;
+	private File _file;
+	private FileInputStream _fileInputStream;
+	private long _fileSize;
+	private int _index;
+	private int _markIndex;
+	private int _threshold;
 
 }

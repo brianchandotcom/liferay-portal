@@ -14,11 +14,15 @@
 
 package com.liferay.petra.io;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import java.lang.reflect.Field;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -59,7 +63,7 @@ public class ByteArrayFileInputStreamTest {
 	}
 
 	@Test
-	public void testaAailable() throws IOException {
+	public void testaAailable() throws Exception {
 
 		// Uninitialized
 
@@ -75,9 +79,9 @@ public class ByteArrayFileInputStreamTest {
 
 		byteArrayFileInputStream.read();
 
-		Assert.assertNotNull(byteArrayFileInputStream.data);
-		Assert.assertNull(byteArrayFileInputStream.fileInputStream);
-		Assert.assertEquals(1, byteArrayFileInputStream.index);
+		Assert.assertNotNull(_dataField.get(byteArrayFileInputStream));
+		Assert.assertNull(_fileInputStreamField.get(byteArrayFileInputStream));
+		Assert.assertEquals(1, _indexField.getInt(byteArrayFileInputStream));
 		Assert.assertEquals(1023, byteArrayFileInputStream.available());
 
 		byteArrayFileInputStream.close();
@@ -88,12 +92,17 @@ public class ByteArrayFileInputStreamTest {
 
 		byteArrayFileInputStream.read();
 
-		Assert.assertNull(byteArrayFileInputStream.data);
-		Assert.assertNotNull(byteArrayFileInputStream.fileInputStream);
-		Assert.assertEquals(0, byteArrayFileInputStream.index);
+		Assert.assertNull(_dataField.get(byteArrayFileInputStream));
+
+		FileInputStream fileInputStream =
+			(FileInputStream)_fileInputStreamField.get(
+				byteArrayFileInputStream);
+
+		Assert.assertNotNull(fileInputStream);
+
+		Assert.assertEquals(0, _indexField.getInt(byteArrayFileInputStream));
 		Assert.assertEquals(
-			byteArrayFileInputStream.fileInputStream.available(),
-			byteArrayFileInputStream.available());
+			fileInputStream.available(), byteArrayFileInputStream.available());
 
 		byteArrayFileInputStream.close();
 	}
@@ -177,7 +186,7 @@ public class ByteArrayFileInputStreamTest {
 	}
 
 	@Test
-	public void testClose() throws IOException {
+	public void testClose() throws Exception {
 
 		// Do not delete on close
 
@@ -187,9 +196,9 @@ public class ByteArrayFileInputStreamTest {
 		byteArrayFileInputStream.read();
 
 		byteArrayFileInputStream.close();
-		Assert.assertNull(byteArrayFileInputStream.data);
-		Assert.assertNull(byteArrayFileInputStream.file);
-		Assert.assertNull(byteArrayFileInputStream.fileInputStream);
+		Assert.assertNull(_dataField.get(byteArrayFileInputStream));
+		Assert.assertNull(_fileField.get(byteArrayFileInputStream));
+		Assert.assertNull(_fileInputStreamField.get(byteArrayFileInputStream));
 
 		Assert.assertTrue(_testFile.exists());
 
@@ -200,9 +209,9 @@ public class ByteArrayFileInputStreamTest {
 
 		byteArrayFileInputStream.close();
 
-		Assert.assertNull(byteArrayFileInputStream.data);
-		Assert.assertNull(byteArrayFileInputStream.file);
-		Assert.assertNull(byteArrayFileInputStream.fileInputStream);
+		Assert.assertNull(_dataField.get(byteArrayFileInputStream));
+		Assert.assertNull(_fileField.get(byteArrayFileInputStream));
+		Assert.assertNull(_fileInputStreamField.get(byteArrayFileInputStream));
 
 		Assert.assertFalse(_testFile.exists());
 
@@ -210,7 +219,7 @@ public class ByteArrayFileInputStreamTest {
 	}
 
 	@Test
-	public void testConstructor() {
+	public void testConstructor() throws Exception {
 
 		// File is a dir
 
@@ -237,30 +246,42 @@ public class ByteArrayFileInputStreamTest {
 		ByteArrayFileInputStream byteArrayFileInputStream =
 			new ByteArrayFileInputStream(_testFile, 512);
 
-		Assert.assertEquals(_testFile, byteArrayFileInputStream.file);
-		Assert.assertEquals(1024, byteArrayFileInputStream.fileSize);
-		Assert.assertEquals(512, byteArrayFileInputStream.threshold);
-		Assert.assertFalse(byteArrayFileInputStream.deleteOnClose);
+		Assert.assertEquals(
+			_testFile, _fileField.get(byteArrayFileInputStream));
+		Assert.assertEquals(
+			1024, _fileSizeField.getLong(byteArrayFileInputStream));
+		Assert.assertEquals(
+			512, _thresholdField.getInt(byteArrayFileInputStream));
+		Assert.assertFalse(
+			_deleteOnCloseField.getBoolean(byteArrayFileInputStream));
 
 		// Constructor 2, do not delete on close
 
 		byteArrayFileInputStream = new ByteArrayFileInputStream(
 			_testFile, 512, false);
 
-		Assert.assertEquals(_testFile, byteArrayFileInputStream.file);
-		Assert.assertEquals(1024, byteArrayFileInputStream.fileSize);
-		Assert.assertEquals(512, byteArrayFileInputStream.threshold);
-		Assert.assertFalse(byteArrayFileInputStream.deleteOnClose);
+		Assert.assertEquals(
+			_testFile, _fileField.get(byteArrayFileInputStream));
+		Assert.assertEquals(
+			1024, _fileSizeField.getLong(byteArrayFileInputStream));
+		Assert.assertEquals(
+			512, _thresholdField.getInt(byteArrayFileInputStream));
+		Assert.assertFalse(
+			_deleteOnCloseField.getBoolean(byteArrayFileInputStream));
 
 		// Constructor 2, delete on close
 
 		byteArrayFileInputStream = new ByteArrayFileInputStream(
 			_testFile, 512, true);
 
-		Assert.assertEquals(_testFile, byteArrayFileInputStream.file);
-		Assert.assertEquals(1024, byteArrayFileInputStream.fileSize);
-		Assert.assertEquals(512, byteArrayFileInputStream.threshold);
-		Assert.assertTrue(byteArrayFileInputStream.deleteOnClose);
+		Assert.assertEquals(
+			_testFile, _fileField.get(byteArrayFileInputStream));
+		Assert.assertEquals(
+			1024, _fileSizeField.getLong(byteArrayFileInputStream));
+		Assert.assertEquals(
+			512, _thresholdField.getInt(byteArrayFileInputStream));
+		Assert.assertTrue(
+			_deleteOnCloseField.getBoolean(byteArrayFileInputStream));
 	}
 
 	@Test
@@ -376,6 +397,23 @@ public class ByteArrayFileInputStreamTest {
 
 		byteArrayFileInputStream.close();
 	}
+
+	private static final Field _dataField = ReflectionTestUtil.getField(
+		ByteArrayFileInputStream.class, "_data");
+	private static final Field _deleteOnCloseField =
+		ReflectionTestUtil.getField(
+			ByteArrayFileInputStream.class, "_deleteOnClose");
+	private static final Field _fileField = ReflectionTestUtil.getField(
+		ByteArrayFileInputStream.class, "_file");
+	private static final Field _fileInputStreamField =
+		ReflectionTestUtil.getField(
+			ByteArrayFileInputStream.class, "_fileInputStream");
+	private static final Field _fileSizeField = ReflectionTestUtil.getField(
+		ByteArrayFileInputStream.class, "_fileSize");
+	private static final Field _indexField = ReflectionTestUtil.getField(
+		ByteArrayFileInputStream.class, "_index");
+	private static final Field _thresholdField = ReflectionTestUtil.getField(
+		ByteArrayFileInputStream.class, "_threshold");
 
 	private File _testDir;
 	private File _testFile;

@@ -14,6 +14,7 @@
 
 package com.liferay.petra.io.unsync;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.io.ByteArrayInputStream;
@@ -22,6 +23,9 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 
+import java.lang.reflect.Field;
+
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
@@ -46,7 +50,7 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 
 	@Override
 	@Test
-	public void testBlockRead() throws IOException {
+	public void testBlockRead() throws Exception {
 		super.testBlockRead();
 
 		StringReader stringReader = new StringReader("abcdefghi");
@@ -54,12 +58,14 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			stringReader, 5);
 
-		Assert.assertEquals(5, unsyncBufferedReader.buffer.length);
+		char[] buffer = (char[])_bufferField.get(unsyncBufferedReader);
+
+		Assert.assertEquals(Arrays.toString(buffer), 5, buffer.length);
 
 		Assert.assertTrue(stringReader.ready());
 		Assert.assertTrue(unsyncBufferedReader.ready());
 
-		char[] buffer = new char[3];
+		buffer = new char[3];
 
 		// Zero length read
 
@@ -68,8 +74,9 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 		// In-memory
 
 		Assert.assertEquals('a', unsyncBufferedReader.read());
-		Assert.assertEquals(1, unsyncBufferedReader.index);
-		Assert.assertEquals(5, unsyncBufferedReader.firstInvalidIndex);
+		Assert.assertEquals(1, _indexField.getInt(unsyncBufferedReader));
+		Assert.assertEquals(
+			5, _firstInvalidIndexField.getInt(unsyncBufferedReader));
 
 		int read = unsyncBufferedReader.read(buffer);
 
@@ -78,14 +85,16 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 		Assert.assertEquals('b', buffer[0]);
 		Assert.assertEquals('c', buffer[1]);
 		Assert.assertEquals('d', buffer[2]);
-		Assert.assertEquals(4, unsyncBufferedReader.index);
-		Assert.assertEquals(5, unsyncBufferedReader.firstInvalidIndex);
+		Assert.assertEquals(4, _indexField.getInt(unsyncBufferedReader));
+		Assert.assertEquals(
+			5, _firstInvalidIndexField.getInt(unsyncBufferedReader));
 
 		// Exhaust buffer
 
 		Assert.assertEquals('e', unsyncBufferedReader.read());
-		Assert.assertEquals(5, unsyncBufferedReader.index);
-		Assert.assertEquals(5, unsyncBufferedReader.firstInvalidIndex);
+		Assert.assertEquals(5, _indexField.getInt(unsyncBufferedReader));
+		Assert.assertEquals(
+			5, _firstInvalidIndexField.getInt(unsyncBufferedReader));
 
 		// Force reload
 
@@ -97,8 +106,9 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 		Assert.assertEquals('g', buffer[1]);
 		Assert.assertEquals('h', buffer[2]);
 
-		Assert.assertEquals(3, unsyncBufferedReader.index);
-		Assert.assertEquals(4, unsyncBufferedReader.firstInvalidIndex);
+		Assert.assertEquals(3, _indexField.getInt(unsyncBufferedReader));
+		Assert.assertEquals(
+			4, _firstInvalidIndexField.getInt(unsyncBufferedReader));
 
 		// Finish
 
@@ -123,14 +133,14 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 	}
 
 	@Test
-	public void testClose() throws IOException {
+	public void testClose() throws Exception {
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new StringReader(""));
 
 		unsyncBufferedReader.close();
 
-		Assert.assertNull(unsyncBufferedReader.buffer);
-		Assert.assertNull(unsyncBufferedReader.reader);
+		Assert.assertNull(_bufferField.get(unsyncBufferedReader));
+		Assert.assertNull(_readerField.get(unsyncBufferedReader));
 
 		try {
 			unsyncBufferedReader.readLine();
@@ -145,18 +155,22 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 	}
 
 	@Test
-	public void testConstructor() {
+	public void testConstructor() throws Exception {
 		new BoundaryCheckerUtil();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new StringReader(""));
 
-		Assert.assertEquals(8192, unsyncBufferedReader.buffer.length);
+		char[] buffer = (char[])_bufferField.get(unsyncBufferedReader);
+
+		Assert.assertEquals(Arrays.toString(buffer), 8192, buffer.length);
 
 		unsyncBufferedReader = new UnsyncBufferedReader(
 			new StringReader(""), 10);
 
-		Assert.assertEquals(10, unsyncBufferedReader.buffer.length);
+		buffer = (char[])_bufferField.get(unsyncBufferedReader);
+
+		Assert.assertEquals(Arrays.toString(buffer), 10, buffer.length);
 
 		try {
 			new UnsyncBufferedReader(new StringReader(""), 0);
@@ -178,17 +192,19 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 	}
 
 	@Test
-	public void testMarkAndReset() throws IOException {
+	public void testMarkAndReset() throws Exception {
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new StringReader("abcdefghi"), 5);
 
-		Assert.assertEquals(-1, unsyncBufferedReader.markLimitIndex);
+		Assert.assertEquals(
+			-1, _markLimitIndexField.getInt(unsyncBufferedReader));
 
 		// Zero marking
 
 		unsyncBufferedReader.mark(0);
 
-		Assert.assertEquals(-1, unsyncBufferedReader.markLimitIndex);
+		Assert.assertEquals(
+			-1, _markLimitIndexField.getInt(unsyncBufferedReader));
 
 		// Negative marking
 
@@ -201,7 +217,8 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 			Assert.assertEquals("Mark limit is less than 0", iae.getMessage());
 		}
 
-		Assert.assertEquals(-1, unsyncBufferedReader.markLimitIndex);
+		Assert.assertEquals(
+			-1, _markLimitIndexField.getInt(unsyncBufferedReader));
 
 		// Normal
 
@@ -209,32 +226,35 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 
 		unsyncBufferedReader.mark(markLimit);
 
-		Assert.assertEquals(markLimit, unsyncBufferedReader.markLimitIndex);
+		Assert.assertEquals(
+			markLimit, _markLimitIndexField.getInt(unsyncBufferedReader));
 
-		Assert.assertEquals(0, unsyncBufferedReader.index);
+		Assert.assertEquals(0, _indexField.getInt(unsyncBufferedReader));
 		Assert.assertEquals('a', unsyncBufferedReader.read());
 		Assert.assertEquals('b', unsyncBufferedReader.read());
 		Assert.assertEquals('c', unsyncBufferedReader.read());
-		Assert.assertEquals(3, unsyncBufferedReader.index);
+		Assert.assertEquals(3, _indexField.getInt(unsyncBufferedReader));
 
 		unsyncBufferedReader.reset();
 
-		Assert.assertEquals(0, unsyncBufferedReader.index);
+		Assert.assertEquals(0, _indexField.getInt(unsyncBufferedReader));
 		Assert.assertEquals('a', unsyncBufferedReader.read());
 		Assert.assertEquals('b', unsyncBufferedReader.read());
 		Assert.assertEquals('c', unsyncBufferedReader.read());
-		Assert.assertEquals(3, unsyncBufferedReader.index);
+		Assert.assertEquals(3, _indexField.getInt(unsyncBufferedReader));
 
 		// Overrun
 
 		unsyncBufferedReader = new UnsyncBufferedReader(
 			new StringReader("abcdefghi"), 5);
 
-		Assert.assertEquals(-1, unsyncBufferedReader.markLimitIndex);
+		Assert.assertEquals(
+			-1, _markLimitIndexField.getInt(unsyncBufferedReader));
 
 		unsyncBufferedReader.mark(markLimit);
 
-		Assert.assertEquals(markLimit, unsyncBufferedReader.markLimitIndex);
+		Assert.assertEquals(
+			markLimit, _markLimitIndexField.getInt(unsyncBufferedReader));
 
 		Assert.assertEquals('a', unsyncBufferedReader.read());
 		Assert.assertEquals('b', unsyncBufferedReader.read());
@@ -242,8 +262,9 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 		Assert.assertEquals('d', unsyncBufferedReader.read());
 		Assert.assertEquals('e', unsyncBufferedReader.read());
 		Assert.assertEquals('f', unsyncBufferedReader.read());
-		Assert.assertEquals(1, unsyncBufferedReader.index);
-		Assert.assertEquals(-1, unsyncBufferedReader.markLimitIndex);
+		Assert.assertEquals(1, _indexField.getInt(unsyncBufferedReader));
+		Assert.assertEquals(
+			-1, _markLimitIndexField.getInt(unsyncBufferedReader));
 
 		try {
 			unsyncBufferedReader.reset();
@@ -262,11 +283,11 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 		Assert.assertEquals('a', unsyncBufferedReader.read());
 		Assert.assertEquals('b', unsyncBufferedReader.read());
 		Assert.assertEquals('c', unsyncBufferedReader.read());
-		Assert.assertEquals(3, unsyncBufferedReader.index);
+		Assert.assertEquals(3, _indexField.getInt(unsyncBufferedReader));
 
 		unsyncBufferedReader.mark(markLimit);
 
-		Assert.assertEquals(0, unsyncBufferedReader.index);
+		Assert.assertEquals(0, _indexField.getInt(unsyncBufferedReader));
 		Assert.assertEquals('d', unsyncBufferedReader.read());
 		Assert.assertEquals('e', unsyncBufferedReader.read());
 		Assert.assertEquals('f', unsyncBufferedReader.read());
@@ -281,13 +302,15 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 		Assert.assertEquals(_SIZE / 2, unsyncBufferedReader.read(tempBuffer));
 		Assert.assertEquals(_SIZE / 2, unsyncBufferedReader.read(tempBuffer));
 
-		Assert.assertEquals(_SIZE, unsyncBufferedReader.index);
-		Assert.assertEquals(_SIZE, unsyncBufferedReader.firstInvalidIndex);
+		Assert.assertEquals(_SIZE, _indexField.getInt(unsyncBufferedReader));
+		Assert.assertEquals(
+			_SIZE, _firstInvalidIndexField.getInt(unsyncBufferedReader));
 
 		unsyncBufferedReader.mark(markLimit);
 
-		Assert.assertEquals(0, unsyncBufferedReader.index);
-		Assert.assertEquals(0, unsyncBufferedReader.firstInvalidIndex);
+		Assert.assertEquals(0, _indexField.getInt(unsyncBufferedReader));
+		Assert.assertEquals(
+			0, _firstInvalidIndexField.getInt(unsyncBufferedReader));
 
 		// Read line without buffer
 
@@ -302,29 +325,32 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 	}
 
 	@Test
-	public void testRead() throws IOException {
+	public void testRead() throws Exception {
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new StringReader("ab\r\nef"), 3);
 
-		Assert.assertEquals(3, unsyncBufferedReader.buffer.length);
-		Assert.assertEquals(0, unsyncBufferedReader.index);
+		char[] buffer = (char[])_bufferField.get(unsyncBufferedReader);
+
+		Assert.assertEquals(Arrays.toString(buffer), 3, buffer.length);
+
+		Assert.assertEquals(0, _indexField.getInt(unsyncBufferedReader));
 		Assert.assertEquals('a', unsyncBufferedReader.read());
-		Assert.assertEquals(1, unsyncBufferedReader.index);
+		Assert.assertEquals(1, _indexField.getInt(unsyncBufferedReader));
 		Assert.assertEquals('b', unsyncBufferedReader.read());
-		Assert.assertEquals(2, unsyncBufferedReader.index);
+		Assert.assertEquals(2, _indexField.getInt(unsyncBufferedReader));
 		Assert.assertEquals('\r', unsyncBufferedReader.read());
-		Assert.assertEquals(3, unsyncBufferedReader.index);
+		Assert.assertEquals(3, _indexField.getInt(unsyncBufferedReader));
 		Assert.assertEquals('\n', unsyncBufferedReader.read());
-		Assert.assertEquals(1, unsyncBufferedReader.index);
+		Assert.assertEquals(1, _indexField.getInt(unsyncBufferedReader));
 		Assert.assertEquals('e', unsyncBufferedReader.read());
-		Assert.assertEquals(2, unsyncBufferedReader.index);
+		Assert.assertEquals(2, _indexField.getInt(unsyncBufferedReader));
 		Assert.assertEquals('f', unsyncBufferedReader.read());
-		Assert.assertEquals(3, unsyncBufferedReader.index);
+		Assert.assertEquals(3, _indexField.getInt(unsyncBufferedReader));
 		Assert.assertEquals(-1, unsyncBufferedReader.read());
 	}
 
 	@Test
-	public void testReadLine() throws IOException {
+	public void testReadLine() throws Exception {
 
 		// With \r
 
@@ -332,7 +358,7 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 			new StringReader("abc\rde"), 5);
 
 		Assert.assertEquals("abc", unsyncBufferedReader.readLine());
-		Assert.assertEquals(4, unsyncBufferedReader.index);
+		Assert.assertEquals(4, _indexField.getInt(unsyncBufferedReader));
 
 		// With \n
 
@@ -340,7 +366,7 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 			new StringReader("abc\nde"), 5);
 
 		Assert.assertEquals("abc", unsyncBufferedReader.readLine());
-		Assert.assertEquals(4, unsyncBufferedReader.index);
+		Assert.assertEquals(4, _indexField.getInt(unsyncBufferedReader));
 
 		// With \r\n
 
@@ -348,7 +374,7 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 			new StringReader("abc\r\nde"), 5);
 
 		Assert.assertEquals("abc", unsyncBufferedReader.readLine());
-		Assert.assertEquals(5, unsyncBufferedReader.index);
+		Assert.assertEquals(5, _indexField.getInt(unsyncBufferedReader));
 
 		// Without \r or \n
 
@@ -356,7 +382,7 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 			new StringReader("abc"), 5);
 
 		Assert.assertEquals("abc", unsyncBufferedReader.readLine());
-		Assert.assertEquals(0, unsyncBufferedReader.index);
+		Assert.assertEquals(0, _indexField.getInt(unsyncBufferedReader));
 
 		// Empty
 
@@ -368,7 +394,7 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 			new StringReader("abcdefghijklmn\r"), 5);
 
 		Assert.assertEquals("abcdefghijklmn", unsyncBufferedReader.readLine());
-		Assert.assertEquals(5, unsyncBufferedReader.index);
+		Assert.assertEquals(5, _indexField.getInt(unsyncBufferedReader));
 
 		unsyncBufferedReader = new UnsyncBufferedReader(
 			new StringReader("abcdefghijklmn\r"), 5);
@@ -426,7 +452,7 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 
 	@Override
 	@Test
-	public void testSkip() throws IOException {
+	public void testSkip() throws Exception {
 		int size = 10;
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
@@ -450,8 +476,9 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 		// Load data into buffer
 
 		Assert.assertEquals('a', unsyncBufferedReader.read());
-		Assert.assertEquals(1, unsyncBufferedReader.index);
-		Assert.assertEquals(size, unsyncBufferedReader.firstInvalidIndex);
+		Assert.assertEquals(1, _indexField.getInt(unsyncBufferedReader));
+		Assert.assertEquals(
+			size, _firstInvalidIndexField.getInt(unsyncBufferedReader));
 
 		// In-memory
 
@@ -510,6 +537,19 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 		new char[UnsyncBufferedReaderTest._SIZE];
 
 	private static final int _SIZE = 16 * 1024;
+
+	private static final Field _bufferField = ReflectionTestUtil.getField(
+		UnsyncBufferedReader.class, "_buffer");
+	private static final Field _firstInvalidIndexField =
+		ReflectionTestUtil.getField(
+			UnsyncBufferedReader.class, "_firstInvalidIndex");
+	private static final Field _indexField = ReflectionTestUtil.getField(
+		UnsyncBufferedReader.class, "_index");
+	private static final Field _markLimitIndexField =
+		ReflectionTestUtil.getField(
+			UnsyncBufferedReader.class, "_markLimitIndex");
+	private static final Field _readerField = ReflectionTestUtil.getField(
+		UnsyncBufferedReader.class, "_reader");
 
 	static {
 		for (int i = 0; i < _SIZE; i++) {

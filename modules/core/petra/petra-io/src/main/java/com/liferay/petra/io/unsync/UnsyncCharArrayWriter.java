@@ -34,7 +34,7 @@ public class UnsyncCharArrayWriter extends Writer {
 	}
 
 	public UnsyncCharArrayWriter(int initialSize) {
-		buffer = new char[initialSize];
+		_buffer = new char[initialSize];
 	}
 
 	@Override
@@ -85,20 +85,20 @@ public class UnsyncCharArrayWriter extends Writer {
 	}
 
 	public void reset() {
-		index = 0;
+		_index = 0;
 	}
 
 	public int size() {
-		return index;
+		return _index;
 	}
 
 	public CharBuffer toCharBuffer() {
-		return CharBuffer.wrap(buffer, 0, index);
+		return CharBuffer.wrap(_buffer, 0, _index);
 	}
 
 	@Override
 	public String toString() {
-		return new String(buffer, 0, index);
+		return new String(_buffer, 0, _index);
 	}
 
 	@Override
@@ -114,40 +114,40 @@ public class UnsyncCharArrayWriter extends Writer {
 			return;
 		}
 
-		int newIndex = index + length;
+		int newIndex = _index + length;
 
-		if (newIndex > buffer.length) {
-			int newBufferSize = Math.max(buffer.length << 1, newIndex);
+		if (newIndex > _buffer.length) {
+			int newBufferSize = Math.max(_buffer.length << 1, newIndex);
 
 			char[] newBuffer = new char[newBufferSize];
 
-			System.arraycopy(buffer, 0, newBuffer, 0, index);
+			System.arraycopy(_buffer, 0, newBuffer, 0, _index);
 
-			buffer = newBuffer;
+			_buffer = newBuffer;
 		}
 
-		System.arraycopy(chars, offset, buffer, index, length);
+		System.arraycopy(chars, offset, _buffer, _index, length);
 
-		index = newIndex;
+		_index = newIndex;
 	}
 
 	@Override
 	public void write(int c) {
-		int newIndex = index + 1;
+		int newIndex = _index + 1;
 
-		if (newIndex > buffer.length) {
-			int newBufferSize = Math.max(buffer.length << 1, newIndex);
+		if (newIndex > _buffer.length) {
+			int newBufferSize = Math.max(_buffer.length << 1, newIndex);
 
 			char[] newBuffer = new char[newBufferSize];
 
-			System.arraycopy(buffer, 0, newBuffer, 0, buffer.length);
+			System.arraycopy(_buffer, 0, newBuffer, 0, _buffer.length);
 
-			buffer = newBuffer;
+			_buffer = newBuffer;
 		}
 
-		buffer[index] = (char)c;
+		_buffer[_index] = (char)c;
 
-		index = newIndex;
+		_index = newIndex;
 	}
 
 	@Override
@@ -163,35 +163,35 @@ public class UnsyncCharArrayWriter extends Writer {
 			return;
 		}
 
-		int newIndex = index + length;
+		int newIndex = _index + length;
 
-		if (newIndex > buffer.length) {
-			int newBufferSize = Math.max(buffer.length << 1, newIndex);
+		if (newIndex > _buffer.length) {
+			int newBufferSize = Math.max(_buffer.length << 1, newIndex);
 
 			char[] newBuffer = new char[newBufferSize];
 
-			System.arraycopy(buffer, 0, newBuffer, 0, index);
+			System.arraycopy(_buffer, 0, newBuffer, 0, _index);
 
-			buffer = newBuffer;
+			_buffer = newBuffer;
 		}
 
-		string.getChars(offset, offset + length, buffer, index);
+		string.getChars(offset, offset + length, _buffer, _index);
 
-		index = newIndex;
+		_index = newIndex;
 	}
 
 	public int writeTo(CharBuffer charBuffer) {
 		int length = charBuffer.remaining();
 
-		if (length > index) {
-			length = index;
+		if (length > _index) {
+			length = _index;
 		}
 
 		if (length == 0) {
 			return 0;
 		}
 
-		charBuffer.put(buffer, 0, length);
+		charBuffer.put(_buffer, 0, length);
 
 		return length;
 	}
@@ -200,7 +200,7 @@ public class UnsyncCharArrayWriter extends Writer {
 		throws IOException {
 
 		ByteBuffer byteBuffer = CharsetEncoderUtil.encode(
-			charsetName, CharBuffer.wrap(buffer, 0, index));
+			charsetName, CharBuffer.wrap(_buffer, 0, _index));
 
 		int length = byteBuffer.limit();
 
@@ -210,12 +210,12 @@ public class UnsyncCharArrayWriter extends Writer {
 	}
 
 	public int writeTo(Writer writer) throws IOException {
-		writer.write(buffer, 0, index);
+		writer.write(_buffer, 0, _index);
 
-		return index;
+		return _index;
 	}
 
-	protected char[] buffer;
-	protected int index;
+	private char[] _buffer;
+	private int _index;
 
 }

@@ -153,6 +153,7 @@ Liferay bundles by setting the `liferay.workspace.bundle.cache.dir` property in
 ### Fixed
 - [LPS-74818]: Fail the build if the source and destination of the
 `downloadBundle` task are the same.
+- [LPS-75323]: Update the [Liferay Gradle Plugins] dependency to version 3.5.23.
 
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -187,3 +188,4 @@ Liferay bundles by setting the `liferay.workspace.bundle.cache.dir` property in
 [LPS-73967]: https://issues.liferay.com/browse/LPS-73967
 [LPS-74124]: https://issues.liferay.com/browse/LPS-74124
 [LPS-74818]: https://issues.liferay.com/browse/LPS-74818
+[LPS-75323]: https://issues.liferay.com/browse/LPS-75323

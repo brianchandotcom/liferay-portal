@@ -37,7 +37,7 @@ public class UnsyncBufferedInputStream extends UnsyncFilterInputStream {
 			throw new IllegalArgumentException("Size is less than 1");
 		}
 
-		buffer = new byte[size];
+		_buffer = new byte[size];
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class UnsyncBufferedInputStream extends UnsyncFilterInputStream {
 			throw new IOException("Input stream is null");
 		}
 
-		return inputStream.available() + (firstInvalidIndex - index);
+		return inputStream.available() + (_firstInvalidIndex - _index);
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class UnsyncBufferedInputStream extends UnsyncFilterInputStream {
 			inputStream.close();
 
 			inputStream = null;
-			buffer = null;
+			_buffer = null;
 		}
 	}
 
@@ -65,29 +65,29 @@ public class UnsyncBufferedInputStream extends UnsyncFilterInputStream {
 			return;
 		}
 
-		markLimitIndex = readLimit;
+		_markLimitIndex = readLimit;
 
-		if (index == 0) {
+		if (_index == 0) {
 			return;
 		}
 
-		int available = firstInvalidIndex - index;
+		int available = _firstInvalidIndex - _index;
 
 		if (available > 0) {
 
 			// Shuffle mark beginning to buffer beginning
 
-			System.arraycopy(buffer, index, buffer, 0, available);
+			System.arraycopy(_buffer, _index, _buffer, 0, available);
 
-			index = 0;
+			_index = 0;
 
-			firstInvalidIndex = available;
+			_firstInvalidIndex = available;
 		}
 		else {
 
 			// Reset buffer states
 
-			index = firstInvalidIndex = 0;
+			_index = _firstInvalidIndex = 0;
 		}
 	}
 
@@ -102,15 +102,15 @@ public class UnsyncBufferedInputStream extends UnsyncFilterInputStream {
 			throw new IOException("Input stream is null");
 		}
 
-		if (index >= firstInvalidIndex) {
-			fillInBuffer();
+		if (_index >= _firstInvalidIndex) {
+			_fillInBuffer();
 
-			if (index >= firstInvalidIndex) {
+			if (_index >= _firstInvalidIndex) {
 				return -1;
 			}
 		}
 
-		return buffer[index++] & 0xff;
+		return _buffer[_index++] & 0xff;
 	}
 
 	@Override
@@ -138,7 +138,7 @@ public class UnsyncBufferedInputStream extends UnsyncFilterInputStream {
 
 			// Try to at least read some data
 
-			int currentRead = readOnce(bytes, offset + read, length - read);
+			int currentRead = _readOnce(bytes, offset + read, length - read);
 
 			if (currentRead <= 0) {
 				if (read == 0) {
@@ -167,11 +167,11 @@ public class UnsyncBufferedInputStream extends UnsyncFilterInputStream {
 			throw new IOException("Input stream is null");
 		}
 
-		if (markLimitIndex < 0) {
+		if (_markLimitIndex < 0) {
 			throw new IOException("Resetting to invalid mark");
 		}
 
-		index = 0;
+		_index = 0;
 	}
 
 	@Override
@@ -184,10 +184,10 @@ public class UnsyncBufferedInputStream extends UnsyncFilterInputStream {
 			return 0;
 		}
 
-		long available = firstInvalidIndex - index;
+		long available = _firstInvalidIndex - _index;
 
 		if (available <= 0) {
-			if (markLimitIndex < 0) {
+			if (_markLimitIndex < 0) {
 
 				// No mark required, skip the underlying input stream
 
@@ -197,9 +197,9 @@ public class UnsyncBufferedInputStream extends UnsyncFilterInputStream {
 
 				// Mark required, save the skipped data
 
-				fillInBuffer();
+				_fillInBuffer();
 
-				available = firstInvalidIndex - index;
+				available = _firstInvalidIndex - _index;
 
 				if (available <= 0) {
 					return 0;
@@ -213,22 +213,22 @@ public class UnsyncBufferedInputStream extends UnsyncFilterInputStream {
 			skip = available;
 		}
 
-		index += skip;
+		_index += skip;
 
 		return skip;
 	}
 
-	protected void fillInBuffer() throws IOException {
-		if (markLimitIndex < 0) {
+	private void _fillInBuffer() throws IOException {
+		if (_markLimitIndex < 0) {
 
 			// No mark required, fill the buffer
 
-			index = firstInvalidIndex = 0;
+			_index = _firstInvalidIndex = 0;
 
-			int number = inputStream.read(buffer);
+			int number = inputStream.read(_buffer);
 
 			if (number > 0) {
-				firstInvalidIndex = number;
+				_firstInvalidIndex = number;
 			}
 
 			return;
@@ -236,53 +236,53 @@ public class UnsyncBufferedInputStream extends UnsyncFilterInputStream {
 
 		// Mark required
 
-		if (index >= markLimitIndex) {
+		if (_index >= _markLimitIndex) {
 
 			// Passed mark limit indexs, get rid of all cache data
 
-			markLimitIndex = -1;
+			_markLimitIndex = -1;
 
-			index = firstInvalidIndex = 0;
+			_index = _firstInvalidIndex = 0;
 		}
-		else if (index == buffer.length) {
+		else if (_index == _buffer.length) {
 
 			// Cannot get rid of cache data and there is no room to read in any
 			// more data, so grow the buffer
 
-			int newBufferSize = buffer.length * 2;
+			int newBufferSize = _buffer.length * 2;
 
-			if (newBufferSize > markLimitIndex) {
-				newBufferSize = markLimitIndex;
+			if (newBufferSize > _markLimitIndex) {
+				newBufferSize = _markLimitIndex;
 			}
 
 			byte[] newBuffer = new byte[newBufferSize];
 
-			System.arraycopy(buffer, 0, newBuffer, 0, buffer.length);
+			System.arraycopy(_buffer, 0, newBuffer, 0, _buffer.length);
 
-			buffer = newBuffer;
+			_buffer = newBuffer;
 		}
 
 		// Read underlying input stream since the buffer has more space
 
-		firstInvalidIndex = index;
+		_firstInvalidIndex = _index;
 
-		int number = inputStream.read(buffer, index, buffer.length - index);
+		int number = inputStream.read(_buffer, _index, _buffer.length - _index);
 
 		if (number > 0) {
-			firstInvalidIndex += number;
+			_firstInvalidIndex += number;
 		}
 	}
 
-	protected int readOnce(byte[] bytes, int offset, int length)
+	private int _readOnce(byte[] bytes, int offset, int length)
 		throws IOException {
 
-		int available = firstInvalidIndex - index;
+		int available = _firstInvalidIndex - _index;
 
 		if (available <= 0) {
 
 			// Buffer is empty, read from under input stream
 
-			if ((markLimitIndex < 0) && (length >= buffer.length)) {
+			if ((_markLimitIndex < 0) && (length >= _buffer.length)) {
 
 				// No mark required, left read block is no less than buffer,
 				// read through buffer is inefficient, so directly read from
@@ -295,9 +295,9 @@ public class UnsyncBufferedInputStream extends UnsyncFilterInputStream {
 				// Mark is required, has to read through the buffer to remember
 				// data
 
-				fillInBuffer();
+				_fillInBuffer();
 
-				available = firstInvalidIndex - index;
+				available = _firstInvalidIndex - _index;
 
 				if (available <= 0) {
 					return -1;
@@ -309,18 +309,18 @@ public class UnsyncBufferedInputStream extends UnsyncFilterInputStream {
 			length = available;
 		}
 
-		System.arraycopy(buffer, index, bytes, offset, length);
+		System.arraycopy(_buffer, _index, bytes, offset, length);
 
-		index += length;
+		_index += length;
 
 		return length;
 	}
 
-	protected byte[] buffer;
-	protected int firstInvalidIndex;
-	protected int index;
-	protected int markLimitIndex = -1;
-
 	private static final int _DEFAULT_BUFFER_SIZE = 8192;
+
+	private byte[] _buffer;
+	private int _firstInvalidIndex;
+	private int _index;
+	private int _markLimitIndex = -1;
 
 }

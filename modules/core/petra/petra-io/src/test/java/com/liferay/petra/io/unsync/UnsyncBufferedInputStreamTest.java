@@ -14,11 +14,14 @@
 
 package com.liferay.petra.io.unsync;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.lang.reflect.Field;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -164,7 +167,7 @@ public class UnsyncBufferedInputStreamTest extends BaseInputStreamTestCase {
 	}
 
 	@Test
-	public void testClose() throws IOException {
+	public void testClose() throws Exception {
 		int size = 10;
 
 		UnsyncBufferedInputStream unsyncBufferedInputStream =
@@ -173,8 +176,8 @@ public class UnsyncBufferedInputStreamTest extends BaseInputStreamTestCase {
 
 		unsyncBufferedInputStream.close();
 
-		Assert.assertTrue(unsyncBufferedInputStream.inputStream == null);
-		Assert.assertTrue(unsyncBufferedInputStream.buffer == null);
+		Assert.assertNull(unsyncBufferedInputStream.inputStream);
+		Assert.assertNull(_bufferField.get(unsyncBufferedInputStream));
 
 		testClose(unsyncBufferedInputStream, "Input stream is null");
 	}
@@ -216,23 +219,26 @@ public class UnsyncBufferedInputStreamTest extends BaseInputStreamTestCase {
 	}
 
 	@Test
-	public void testMarkAndReset() throws IOException {
+	public void testMarkAndReset() throws Exception {
 		UnsyncBufferedInputStream unsyncBufferedInputStream =
 			new UnsyncBufferedInputStream(new ByteArrayInputStream(_BUFFER));
 
-		Assert.assertEquals(-1, unsyncBufferedInputStream.markLimitIndex);
+		Assert.assertEquals(
+			-1, _markLimitIndexField.getInt(unsyncBufferedInputStream));
 
 		// Zero marking
 
 		unsyncBufferedInputStream.mark(0);
 
-		Assert.assertEquals(-1, unsyncBufferedInputStream.markLimitIndex);
+		Assert.assertEquals(
+			-1, _markLimitIndexField.getInt(unsyncBufferedInputStream));
 
 		// Negative marking
 
 		unsyncBufferedInputStream.mark(-2);
 
-		Assert.assertEquals(-1, unsyncBufferedInputStream.markLimitIndex);
+		Assert.assertEquals(
+			-1, _markLimitIndexField.getInt(unsyncBufferedInputStream));
 
 		// Normal
 
@@ -241,13 +247,14 @@ public class UnsyncBufferedInputStreamTest extends BaseInputStreamTestCase {
 		unsyncBufferedInputStream.mark(markLimitIndex);
 
 		Assert.assertEquals(
-			markLimitIndex, unsyncBufferedInputStream.markLimitIndex);
+			markLimitIndex,
+			_markLimitIndexField.getInt(unsyncBufferedInputStream));
 
 		Assert.assertEquals(_SIZE, unsyncBufferedInputStream.available());
 		Assert.assertEquals(0, unsyncBufferedInputStream.read());
 		Assert.assertEquals(1, unsyncBufferedInputStream.read());
 		Assert.assertEquals(2, unsyncBufferedInputStream.read());
-		Assert.assertEquals(3, unsyncBufferedInputStream.index);
+		Assert.assertEquals(3, _indexField.getInt(unsyncBufferedInputStream));
 
 		unsyncBufferedInputStream.reset();
 
@@ -255,7 +262,7 @@ public class UnsyncBufferedInputStreamTest extends BaseInputStreamTestCase {
 		Assert.assertEquals(0, unsyncBufferedInputStream.read());
 		Assert.assertEquals(1, unsyncBufferedInputStream.read());
 		Assert.assertEquals(2, unsyncBufferedInputStream.read());
-		Assert.assertEquals(3, unsyncBufferedInputStream.index);
+		Assert.assertEquals(3, _indexField.getInt(unsyncBufferedInputStream));
 
 		// Overrun
 
@@ -264,21 +271,26 @@ public class UnsyncBufferedInputStreamTest extends BaseInputStreamTestCase {
 		unsyncBufferedInputStream = new UnsyncBufferedInputStream(
 			new ByteArrayInputStream(_BUFFER), bufferSize);
 
-		Assert.assertEquals(-1, unsyncBufferedInputStream.markLimitIndex);
+		Assert.assertEquals(
+			-1, _markLimitIndexField.getInt(unsyncBufferedInputStream));
 
 		unsyncBufferedInputStream.mark(markLimitIndex);
 
 		Assert.assertEquals(
-			markLimitIndex, unsyncBufferedInputStream.markLimitIndex);
+			markLimitIndex,
+			_markLimitIndexField.getInt(unsyncBufferedInputStream));
 
 		for (int i = 0; i < bufferSize * 2; i++) {
 			Assert.assertEquals(i, unsyncBufferedInputStream.read());
 		}
 
-		Assert.assertEquals(bufferSize, unsyncBufferedInputStream.index);
+		Assert.assertEquals(
+			bufferSize, _indexField.getInt(unsyncBufferedInputStream));
+
 		Assert.assertEquals(
 			_SIZE - bufferSize * 2, unsyncBufferedInputStream.available());
-		Assert.assertEquals(-1, unsyncBufferedInputStream.markLimitIndex);
+		Assert.assertEquals(
+			-1, _markLimitIndexField.getInt(unsyncBufferedInputStream));
 
 		try {
 			unsyncBufferedInputStream.reset();
@@ -297,11 +309,11 @@ public class UnsyncBufferedInputStreamTest extends BaseInputStreamTestCase {
 		Assert.assertEquals(0, unsyncBufferedInputStream.read());
 		Assert.assertEquals(1, unsyncBufferedInputStream.read());
 		Assert.assertEquals(2, unsyncBufferedInputStream.read());
-		Assert.assertEquals(3, unsyncBufferedInputStream.index);
+		Assert.assertEquals(3, _indexField.getInt(unsyncBufferedInputStream));
 
 		unsyncBufferedInputStream.mark(markLimitIndex);
 
-		Assert.assertEquals(0, unsyncBufferedInputStream.index);
+		Assert.assertEquals(0, _indexField.getInt(unsyncBufferedInputStream));
 		Assert.assertEquals(3, unsyncBufferedInputStream.read());
 		Assert.assertEquals(4, unsyncBufferedInputStream.read());
 		Assert.assertEquals(5, unsyncBufferedInputStream.read());
@@ -318,13 +330,16 @@ public class UnsyncBufferedInputStreamTest extends BaseInputStreamTestCase {
 		Assert.assertEquals(
 			_SIZE / 2, unsyncBufferedInputStream.read(tempBuffer));
 
-		Assert.assertEquals(_SIZE, unsyncBufferedInputStream.index);
-		Assert.assertEquals(_SIZE, unsyncBufferedInputStream.firstInvalidIndex);
+		Assert.assertEquals(
+			_SIZE, _indexField.getInt(unsyncBufferedInputStream));
+		Assert.assertEquals(
+			_SIZE, _firstInvalidIndexField.getInt(unsyncBufferedInputStream));
 
 		unsyncBufferedInputStream.mark(markLimitIndex);
 
-		Assert.assertEquals(0, unsyncBufferedInputStream.index);
-		Assert.assertEquals(0, unsyncBufferedInputStream.firstInvalidIndex);
+		Assert.assertEquals(0, _indexField.getInt(unsyncBufferedInputStream));
+		Assert.assertEquals(
+			0, _firstInvalidIndexField.getInt(unsyncBufferedInputStream));
 	}
 
 	@Test
@@ -458,6 +473,17 @@ public class UnsyncBufferedInputStreamTest extends BaseInputStreamTestCase {
 		new byte[UnsyncBufferedInputStreamTest._SIZE];
 
 	private static final int _SIZE = 16 * 1024;
+
+	private static final Field _bufferField = ReflectionTestUtil.getField(
+		UnsyncBufferedInputStream.class, "_buffer");
+	private static final Field _firstInvalidIndexField =
+		ReflectionTestUtil.getField(
+			UnsyncBufferedInputStream.class, "_firstInvalidIndex");
+	private static final Field _indexField = ReflectionTestUtil.getField(
+		UnsyncBufferedInputStream.class, "_index");
+	private static final Field _markLimitIndexField =
+		ReflectionTestUtil.getField(
+			UnsyncBufferedInputStream.class, "_markLimitIndex");
 
 	static {
 		for (int i = 0; i < _SIZE; i++) {

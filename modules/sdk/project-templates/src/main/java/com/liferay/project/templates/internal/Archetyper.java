@@ -304,18 +304,11 @@ public class Archetyper {
 			File archetypeFile = null;
 
 			try {
-				if (_archetypesDir != null) {
-					Path archetypePath = FileUtil.getFile(
-						_archetypesDir.toPath(), artifactId + "-*.jar");
+				File file = _archetypesDir;
 
-					if (archetypePath != null) {
-						archetypeFile = archetypePath.toFile();
-					}
-
-					return archetypeFile;
+				if (file == null) {
+					file = FileUtil.getJarFile(Archetyper.class);
 				}
-
-				File file = FileUtil.getJarFile(Archetyper.class);
 
 				if (file.isDirectory()) {
 					Path archetypePath = FileUtil.getFile(

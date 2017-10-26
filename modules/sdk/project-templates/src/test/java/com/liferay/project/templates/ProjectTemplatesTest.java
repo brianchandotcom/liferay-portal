@@ -1969,7 +1969,7 @@ public class ProjectTemplatesTest {
 
 		File archetypesDir = FileUtil.getJarFile(ProjectTemplatesTest.class);
 
-		completeArgs.add(archetypesDir.getAbsolutePath());
+		completeArgs.add(archetypesDir.getPath());
 
 		completeArgs.add("--destination");
 		completeArgs.add(destinationDir.getPath());

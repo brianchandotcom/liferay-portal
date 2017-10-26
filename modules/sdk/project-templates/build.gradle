@@ -1,6 +1,8 @@
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
+import org.gradle.execution.ProjectConfigurer
+
 task writeProjectTemplateVersions
 
 File mavenWrapperPropertiesFile = file("src/main/resources/maven-wrapper/.mvn/wrapper/maven-wrapper.properties")
@@ -15,6 +17,8 @@ Set<Project> projectTemplateProjects = project.parent.subprojects.findAll {
 	it.name.startsWith "project-templates-"
 }
 
+ProjectConfigurer projectConfigurer = gradle.services.get(ProjectConfigurer)
+
 bundle {
 	includeTransitiveDependencies = true
 }
@@ -22,7 +26,28 @@ bundle {
 configurations {
 	mavenDistribution
 	projectTemplates
-	projectTemplatesTests
+
+	projectTemplatesTests {
+		extendsFrom projectTemplates
+
+		resolutionStrategy.dependencySubstitution.all {
+			DependencySubstitution dependencySubstitution ->
+
+			ComponentSelector componentSelector = dependencySubstitution.requested
+
+			if ((componentSelector instanceof ModuleComponentSelector) && componentSelector.module.startsWith("com.liferay.project.templates.")) {
+				String template = componentSelector.module.substring(30)
+
+				template = template.replace('.' as char, '-' as char)
+
+				Project projectTemplateProject = project.parent.childProjects["project-templates-" + template]
+
+				projectConfigurer.configure projectTemplateProject
+
+				dependencySubstitution.useTarget projectTemplateProject
+			}
+		}
+	}
 }
 
 dependencies {
@@ -67,44 +92,6 @@ dependencies {
 	projectTemplates project(":sdk:project-templates-npm-vuejs-portlet")
 	projectTemplates project(":sdk:project-templates-war-hook")
 	projectTemplates project(":sdk:project-templates-war-mvc-portlet")
-
-	projectTemplatesTests project(":sdk:project-templates-activator")
-	projectTemplatesTests project(":sdk:project-templates-api")
-	projectTemplatesTests project(":sdk:project-templates-content-targeting-report")
-	projectTemplatesTests project(":sdk:project-templates-content-targeting-rule")
-	projectTemplatesTests project(":sdk:project-templates-content-targeting-tracking-action")
-	projectTemplatesTests project(":sdk:project-templates-control-menu-entry")
-	projectTemplatesTests project(":sdk:project-templates-form-field")
-	projectTemplatesTests project(":sdk:project-templates-fragment")
-	projectTemplatesTests project(":sdk:project-templates-freemarker-portlet")
-	projectTemplatesTests project(":sdk:project-templates-layout-template")
-	projectTemplatesTests project(":sdk:project-templates-mvc-portlet")
-	projectTemplatesTests project(":sdk:project-templates-npm-angular-portlet")
-	projectTemplatesTests project(":sdk:project-templates-npm-billboardjs-portlet")
-	projectTemplatesTests project(":sdk:project-templates-npm-isomorphic-portlet")
-	projectTemplatesTests project(":sdk:project-templates-npm-jquery-portlet")
-	projectTemplatesTests project(":sdk:project-templates-npm-metaljs-portlet")
-	projectTemplatesTests project(":sdk:project-templates-npm-portlet")
-	projectTemplatesTests project(":sdk:project-templates-npm-react-portlet")
-	projectTemplatesTests project(":sdk:project-templates-npm-vuejs-portlet")
-	projectTemplatesTests project(":sdk:project-templates-panel-app")
-	projectTemplatesTests project(":sdk:project-templates-portlet")
-	projectTemplatesTests project(":sdk:project-templates-portlet-configuration-icon")
-	projectTemplatesTests project(":sdk:project-templates-portlet-provider")
-	projectTemplatesTests project(":sdk:project-templates-portlet-toolbar-contributor")
-	projectTemplatesTests project(":sdk:project-templates-rest")
-	projectTemplatesTests project(":sdk:project-templates-service")
-	projectTemplatesTests project(":sdk:project-templates-service-builder")
-	projectTemplatesTests project(":sdk:project-templates-service-wrapper")
-	projectTemplatesTests project(":sdk:project-templates-simulation-panel-entry")
-	projectTemplatesTests project(":sdk:project-templates-soy-portlet")
-	projectTemplatesTests project(":sdk:project-templates-spring-mvc-portlet")
-	projectTemplatesTests project(":sdk:project-templates-template-context-contributor")
-	projectTemplatesTests project(":sdk:project-templates-theme")
-	projectTemplatesTests project(":sdk:project-templates-theme-contributor")
-	projectTemplatesTests project(":sdk:project-templates-war-hook")
-	projectTemplatesTests project(":sdk:project-templates-war-mvc-portlet")
-	projectTemplatesTests project(":sdk:project-templates-workspace")
 
 	provided group: "org.apache.maven.archetype", name: "archetype-common", version: "2.4"
 

@@ -109,8 +109,9 @@
 			<var name="pageName" value="Mobile Device Family Test Page" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="Mobile Device Family Test Page" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Configure" />
+			<var name="rowEntry" value="Mobile Device Family Test Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavTab">

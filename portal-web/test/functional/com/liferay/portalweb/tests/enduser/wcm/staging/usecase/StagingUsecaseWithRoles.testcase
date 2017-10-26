@@ -360,20 +360,32 @@
 
 		<execute macro="Navigator#gotoStagedView" />
 
-		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="Home" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="Page#editPageLayoutColumn">
+		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
+			<var name="pageName" value="Home" />
+			<var name="privacy" value="Public" />
+			<var name="sitePageType" value="Empty Page" />
 		</execute>
 
 		<execute macro="SitePageNavigator#gotoPages">
 			<var name="site" value="Community Site Name" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="Home" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Configure" />
+			<var name="rowEntry" value="Home" />
 		</execute>
 
 		<execute macro="Page#viewPageLayoutColumn">
@@ -387,8 +399,15 @@
 
 		<execute macro="Staging#undoStagingPageVersioningPG" />
 
-		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="Home" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Configure" />
+			<var name="rowEntry" value="Home" />
 		</execute>
 
 		<execute macro="Page#viewPageLayoutColumn">
@@ -402,8 +421,15 @@
 
 		<execute macro="Staging#redoStagingPageVersioningPG" />
 
-		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="Home" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Configure" />
+			<var name="rowEntry" value="Home" />
 		</execute>
 
 		<execute macro="Page#viewPageLayoutColumn">
@@ -424,8 +450,15 @@
 			<var name="siteName" value="Community Site Name" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="Home" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Configure" />
+			<var name="rowEntry" value="Home" />
 		</execute>
 
 		<execute macro="Page#viewPageLayoutColumn">

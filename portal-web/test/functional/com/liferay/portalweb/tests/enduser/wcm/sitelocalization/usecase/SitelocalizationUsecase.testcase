@@ -84,7 +84,9 @@
 		<execute macro="Page#viewPageLocalization">
 			<var name="category" value="Navigation" />
 			<var name="defaultSiteLanguageKey" value="es_ES" />
+			<var name="menuItem" value="Configure" />
 			<var name="page" value="Language Test Page" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 	</command>
 
@@ -580,7 +582,9 @@
 		<execute macro="Page#viewPageLocalization">
 			<var name="category" value="Navegación" />
 			<var name="defaultSiteLanguageKey" value="es_ES" />
+			<var name="menuItem" value="Configurar" />
 			<var name="page" value="Site Page 1" />
+			<var name="portlet" value="Páginas del sitio web" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -591,7 +595,9 @@
 		<execute macro="Page#viewPageLocalization">
 			<var name="category" value="Navegación" />
 			<var name="defaultSiteLanguageKey" value="es_ES" />
+			<var name="menuItem" value="Configurar" />
 			<var name="page" value="Site Page 2" />
+			<var name="portlet" value="Páginas del sitio web" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -984,9 +990,15 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoLocalizedEditPage">
+		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Navegación" />
-			<var name="page" value="Site Page Name" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Páginas del sitio web" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Configurar" />
+			<var name="rowEntry" value="Site Page Name" />
 		</execute>
 
 		<execute macro="Page#viewFriendlyURLLanguageOptionsPG">

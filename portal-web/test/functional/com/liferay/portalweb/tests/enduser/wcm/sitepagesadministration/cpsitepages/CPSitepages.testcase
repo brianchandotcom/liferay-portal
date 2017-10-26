@@ -413,24 +413,42 @@
 			<var name="pageLayout" value="2 Column (30/70)" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="Site Page Name" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="Page#editPageTypeLayout">
+		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
+			<var name="pageName" value="Site Page Name" />
+			<var name="privacy" value="Public" />
+			<var name="sitePageType" value="Empty Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Site Page Name" />
 		</execute>
 
 		<execute macro="Page#viewPageLayout">
 			<var name="pageLayout" value="1 Column" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="Site Page Name" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="Page#editPageTypeLayout">
+		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1-2-1 Columns" />
+			<var name="pageName" value="Site Page Name" />
+			<var name="privacy" value="Public" />
+			<var name="sitePageType" value="Empty Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Site Page Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -441,60 +459,105 @@
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="Site Page Name" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="Page#editPageTypeLayout">
+		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="Freeform" />
+			<var name="pageName" value="Site Page Name" />
+			<var name="privacy" value="Public" />
+			<var name="sitePageType" value="Empty Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Site Page Name" />
 		</execute>
 
 		<execute macro="Portlet#viewPG">
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="Site Page Name" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="Page#editPageTypeLayout">
+		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="2 Columns (50/50)" />
+			<var name="pageName" value="Site Page Name" />
+			<var name="privacy" value="Public" />
+			<var name="sitePageType" value="Empty Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Site Page Name" />
 		</execute>
 
 		<execute macro="Portlet#viewPG">
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="Site Page Name" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="Page#editPageTypeLayout">
+		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="2 Columns (70/30)" />
+			<var name="pageName" value="Site Page Name" />
+			<var name="privacy" value="Public" />
+			<var name="sitePageType" value="Empty Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Site Page Name" />
 		</execute>
 
 		<execute macro="Portlet#viewPG">
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="Site Page Name" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="Page#editPageTypeLayout">
+		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="3 Columns" />
+			<var name="pageName" value="Site Page Name" />
+			<var name="privacy" value="Public" />
+			<var name="sitePageType" value="Empty Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Site Page Name" />
 		</execute>
 
 		<execute macro="Portlet#viewPG">
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="Site Page Name" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="Page#editPageTypeLayout">
+		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1-2 Columns (30/70)" />
+			<var name="pageName" value="Site Page Name" />
+			<var name="privacy" value="Public" />
+			<var name="sitePageType" value="Empty Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Site Page Name" />
 		</execute>
 
 		<execute macro="Portlet#viewPG">
@@ -505,72 +568,126 @@
 			<var name="pageName" value="Site Page Name" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="Site Page Name" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="Page#editPageTypeLayout">
+		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1-2 Columns (70/30)" />
+			<var name="pageName" value="Site Page Name" />
+			<var name="privacy" value="Public" />
+			<var name="sitePageType" value="Empty Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Site Page Name" />
 		</execute>
 
 		<execute macro="Portlet#viewPG">
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="Site Page Name" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="Page#editPageTypeLayout">
+		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="2-2 Columns" />
+			<var name="pageName" value="Site Page Name" />
+			<var name="privacy" value="Public" />
+			<var name="sitePageType" value="Empty Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Site Page Name" />
 		</execute>
 
 		<execute macro="Portlet#viewPG">
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="Site Page Name" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="Page#editPageTypeLayout">
+		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1-3-1 Columns" />
+			<var name="pageName" value="Site Page Name" />
+			<var name="privacy" value="Public" />
+			<var name="sitePageType" value="Empty Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Site Page Name" />
 		</execute>
 
 		<execute macro="Portlet#viewPG">
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="Site Page Name" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="Page#editPageTypeLayout">
+		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1-3-2 Columns" />
+			<var name="pageName" value="Site Page Name" />
+			<var name="privacy" value="Public" />
+			<var name="sitePageType" value="Empty Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Site Page Name" />
 		</execute>
 
 		<execute macro="Portlet#viewPG">
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="Site Page Name" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="Page#editPageTypeLayout">
+		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="2-1-2 Columns" />
+			<var name="pageName" value="Site Page Name" />
+			<var name="privacy" value="Public" />
+			<var name="sitePageType" value="Empty Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Site Page Name" />
 		</execute>
 
 		<execute macro="Portlet#viewPG">
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="Site Page Name" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="Page#editPageTypeLayout">
+		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="3-2-3 Columns" />
+			<var name="pageName" value="Site Page Name" />
+			<var name="privacy" value="Public" />
+			<var name="sitePageType" value="Empty Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Site Page Name" />
 		</execute>
 
 		<execute macro="Portlet#viewPG">
@@ -614,8 +731,15 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="Blog Page" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Configure" />
+			<var name="rowEntry" value="Blog Page" />
 		</execute>
 
 		<execute macro="Page#copyApplicationsFromPageToPage">
@@ -680,8 +804,15 @@
 
 		<execute macro="Alert#viewSuccessMessage" />
 
-		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="Site Page" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Configure" />
+			<var name="rowEntry" value="Site Page" />
 		</execute>
 
 		<execute macro="Page#editName">
@@ -696,8 +827,15 @@
 			<var name="pageName" value="Site Page Edit" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="Welcome" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Configure" />
+			<var name="rowEntry" value="Welcome" />
 		</execute>
 
 		<execute macro="Page#viewSelectedLayoutColumn">
@@ -747,8 +885,15 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="Site Page" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Configure" />
+			<var name="rowEntry" value="Site Page" />
 		</execute>
 
 		<execute macro="Page#editSelectPageType">

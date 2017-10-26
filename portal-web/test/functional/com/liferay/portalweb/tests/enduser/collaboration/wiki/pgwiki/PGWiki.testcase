@@ -114,11 +114,25 @@
 
 		<execute macro="PortletEntry#publish" />
 
-		<execute macro="Page#add">
-			<var name="columnName" value="1 Column" />
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Child SiteName" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPrivatePage">
 			<var name="pageName" value="Child Site Page" />
-			<var name="siteName" value="Child SiteName" />
-			<var name="sitePagePrivacy" value="Private" />
+		</execute>
+
+		<execute macro="SitePages#configurePage">
+			<var name="columnName" value="1 Column" />
+			<var name="pageName" value="Wiki Test Page" />
+			<var name="privacy" value="Private" />
+			<var name="sitePageType" value="Empty Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoSpecificURLPage">

@@ -35,39 +35,39 @@ public class UnsyncBufferedWriter extends Writer {
 			throw new IllegalArgumentException("Size is less than 1");
 		}
 
-		this.writer = writer;
-		this.size = size;
+		_writer = writer;
+		_size = size;
 
-		buffer = new char[size];
+		_buffer = new char[size];
 	}
 
 	@Override
 	public void close() throws IOException {
-		if (writer == null) {
+		if (_writer == null) {
 			return;
 		}
 
 		flush();
 
-		writer.close();
+		_writer.close();
 
-		writer = null;
-		buffer = null;
+		_writer = null;
+		_buffer = null;
 	}
 
 	@Override
 	public void flush() throws IOException {
-		if (writer == null) {
+		if (_writer == null) {
 			throw new IOException("Writer is null");
 		}
 
-		if (count > 0) {
-			writer.write(buffer, 0, count);
+		if (_count > 0) {
+			_writer.write(_buffer, 0, _count);
 
-			count = 0;
+			_count = 0;
 		}
 
-		writer.flush();
+		_writer.flush();
 	}
 
 	public void newLine() throws IOException {
@@ -76,55 +76,55 @@ public class UnsyncBufferedWriter extends Writer {
 
 	@Override
 	public void write(char[] chars, int offset, int length) throws IOException {
-		if (writer == null) {
+		if (_writer == null) {
 			throw new IOException("Writer is null");
 		}
 
 		BoundaryCheckerUtil.check(chars.length, offset, length);
 
-		if (length >= size) {
-			if (count > 0) {
-				writer.write(buffer, 0, count);
+		if (length >= _size) {
+			if (_count > 0) {
+				_writer.write(_buffer, 0, _count);
 
-				count = 0;
+				_count = 0;
 			}
 
-			writer.write(chars, offset, length);
+			_writer.write(chars, offset, length);
 
 			return;
 		}
 
-		if ((count > 0) && (length > (size - count))) {
-			writer.write(buffer, 0, count);
+		if ((_count > 0) && (length > (_size - _count))) {
+			_writer.write(_buffer, 0, _count);
 
-			count = 0;
+			_count = 0;
 		}
 
-		System.arraycopy(chars, offset, buffer, count, length);
+		System.arraycopy(chars, offset, _buffer, _count, length);
 
-		count += length;
+		_count += length;
 	}
 
 	@Override
 	public void write(int c) throws IOException {
-		if (writer == null) {
+		if (_writer == null) {
 			throw new IOException("Writer is null");
 		}
 
-		if (count >= size) {
-			writer.write(buffer);
+		if (_count >= _size) {
+			_writer.write(_buffer);
 
-			count = 0;
+			_count = 0;
 		}
 
-		buffer[count++] = (char)c;
+		_buffer[_count++] = (char)c;
 	}
 
 	@Override
 	public void write(String string, int offset, int length)
 		throws IOException {
 
-		if (writer == null) {
+		if (_writer == null) {
 			throw new IOException("Writer is null");
 		}
 
@@ -134,42 +134,42 @@ public class UnsyncBufferedWriter extends Writer {
 		int y = offset + length;
 
 		while (x < y) {
-			if (count >= size) {
-				writer.write(buffer);
+			if (_count >= _size) {
+				_writer.write(_buffer);
 
-				count = 0;
+				_count = 0;
 			}
 
-			int leftFreeSpace = size - count;
+			int leftFreeSpace = _size - _count;
 			int leftDataSize = y - x;
 
 			if (leftFreeSpace > leftDataSize) {
-				string.getChars(x, y, buffer, count);
+				string.getChars(x, y, _buffer, _count);
 
-				count += leftDataSize;
+				_count += leftDataSize;
 
 				break;
 			}
 			else {
 				int copyEnd = x + leftFreeSpace;
 
-				string.getChars(x, copyEnd, buffer, count);
+				string.getChars(x, copyEnd, _buffer, _count);
 
-				count += leftFreeSpace;
+				_count += leftFreeSpace;
 
 				x = copyEnd;
 			}
 		}
 	}
 
-	protected char[] buffer;
-	protected int count;
-	protected int size;
-	protected Writer writer;
-
 	private static final int _DEFAULT_BUFFER_SIZE = 8192;
 
 	private static final String _LINE_SEPARATOR = System.getProperty(
 		"line.separator");
+
+	private char[] _buffer;
+	private int _count;
+	private int _size;
+	private Writer _writer;
 
 }

@@ -799,8 +799,8 @@
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
-			<var name="site" value="Site Name" />
 			<var name="pageName" value="Page Name" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Portlet#addPG">

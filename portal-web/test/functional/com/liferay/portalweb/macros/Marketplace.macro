@@ -106,8 +106,8 @@
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
-			<var name="site" value="${siteName}" />
 			<var name="pageName" value="Blogs Test Page" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -255,8 +255,8 @@
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
-			<var name="site" value="${siteName}" />
 			<var name="pageName" value="Documents and Media Test Page" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -383,8 +383,8 @@
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
-			<var name="site" value="${siteName}" />
 			<var name="pageName" value="Wiki Test Page" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -461,8 +461,8 @@
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
-			<var name="site" value="${siteName}" />
 			<var name="pageName" value="Calendar Test Page" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -575,8 +575,8 @@
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
-			<var name="site" value="${siteName}" />
 			<var name="pageName" value="Bookmarks Test Page" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -722,8 +722,8 @@
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
-			<var name="site" value="${siteName}" />
 			<var name="pageName" value="Blogs Test Page" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -871,8 +871,8 @@
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
-			<var name="site" value="${siteName}" />
 			<var name="pageName" value="Documents and Media Test Page" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -999,8 +999,8 @@
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
-			<var name="site" value="${siteName}" />
 			<var name="pageName" value="Wiki Test Page" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -1077,8 +1077,8 @@
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
-			<var name="site" value="${siteName}" />
 			<var name="pageName" value="Calendar Test Page" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -1191,8 +1191,8 @@
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
-			<var name="site" value="${siteName}" />
 			<var name="pageName" value="Bookmarks Test Page" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">

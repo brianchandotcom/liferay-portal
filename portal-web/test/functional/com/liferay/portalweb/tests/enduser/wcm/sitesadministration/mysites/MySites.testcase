@@ -62,8 +62,8 @@
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
-			<var name="site" value="${siteName}" />
 			<var name="pageName" value="Test Page" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -552,8 +552,8 @@
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
-			<var name="site" value="${siteName}" />
 			<var name="pageName" value="Test Page" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -735,8 +735,8 @@
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
-			<var name="site" value="${siteName}" />
 			<var name="pageName" value="Test Page" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">

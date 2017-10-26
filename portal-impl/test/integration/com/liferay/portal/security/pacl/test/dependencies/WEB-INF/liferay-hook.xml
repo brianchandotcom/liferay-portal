@@ -20,12 +20,12 @@
 		<indexer-post-processor-impl>com.liferay.portal.security.pacl.test.hook.indexer.UserIndexerPostProcessor</indexer-post-processor-impl>
 	</indexer-post-processor>
 	<service>
-		<service-type>com.liferay.message.boards.kernel.service.MBMessageLocalService</service-type>
-		<service-impl>com.liferay.portal.security.pacl.test.hook.service.impl.TestPACLMBMessageLocalServiceImpl</service-impl>
+		<service-type>com.liferay.document.library.kernel.service.DLFileEntryLocalService</service-type>
+		<service-impl>com.liferay.portal.security.pacl.test.hook.service.impl.TestPACLDLFileEntryLocalServiceImpl</service-impl>
 	</service>
 	<service>
-		<service-type>com.liferay.message.boards.kernel.service.MBStatsUserLocalService</service-type>
-		<service-impl>com.liferay.portal.security.pacl.test.hook.service.impl.TestPACLMBStatsUserLocalServiceImpl</service-impl>
+		<service-type>com.liferay.document.library.kernel.service.DLFolderLocalService</service-type>
+		<service-impl>com.liferay.portal.security.pacl.test.hook.service.impl.TestPACLDLFolderLocalServiceImpl</service-impl>
 	</service>
 	<servlet-filter>
 		<servlet-filter-name>Failure Filter</servlet-filter-name>

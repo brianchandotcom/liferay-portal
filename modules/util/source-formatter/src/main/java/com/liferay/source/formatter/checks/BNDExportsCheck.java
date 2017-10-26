@@ -46,16 +46,21 @@ public class BNDExportsCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (fileName.endsWith("/bnd.bnd") &&
-			!absolutePath.contains("/testIntegration/") &&
-			!absolutePath.contains("/third-party/")) {
+		if (!fileName.endsWith("/bnd.bnd") ||
+			absolutePath.contains("/third-party/")) {
 
+			return content;
+		}
+
+		if (!absolutePath.contains("/testIntegration/")) {
 			_checkExports(
 				fileName, content, _exportContentsPattern, "-exportcontents");
 			_checkExports(fileName, content, _exportsPattern, "Export-Package");
 		}
 
-		_checkExportPackage(fileName, absolutePath, content);
+		if (absolutePath.contains("/modules/apps/")) {
+			_checkExportPackage(fileName, absolutePath, content);
+		}
 
 		return content;
 	}

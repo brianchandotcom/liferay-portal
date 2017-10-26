@@ -67,7 +67,7 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 				/>
 
 				<liferay-ui:search-container-row
-					className="com.liferay.message.boards.kernel.model.MBStatsUser"
+					className="com.liferay.message.boards.model.MBStatsUser"
 					keyProperty="statsUserId"
 					modelVar="statsUser"
 				>

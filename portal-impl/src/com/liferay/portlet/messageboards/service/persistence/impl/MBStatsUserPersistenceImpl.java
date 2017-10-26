@@ -62,8 +62,11 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @see MBStatsUserPersistence
  * @see com.liferay.message.boards.kernel.service.persistence.MBStatsUserUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.model.impl.MBStatsUserImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	implements MBStatsUserPersistence {

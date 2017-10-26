@@ -26,7 +26,7 @@
 
 				<execute macro="Team#tearDownCP" />
 
-				<execute macro="Page#tearDownPG" />
+				<execute macro="Page#tearDownCP" />
 
 				<execute macro="UserGroup#tearDownCP" />
 			</else>

@@ -55,7 +55,7 @@
 					<var name="portletName" value="Blogs" />
 				</execute>
 
-				<execute macro="Page#tearDownPG" />
+				<execute macro="Page#tearDownCP" />
 
 				<execute macro="Site#tearDownCP" />
 

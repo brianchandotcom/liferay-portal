@@ -86,7 +86,7 @@
 			<else>
 				<execute macro="DMDocument#tearDownCP" />
 
-				<execute macro="Page#tearDownPG" />
+				<execute macro="Page#tearDownCP" />
 
 				<execute macro="NotificationsPortlet#tearDownUserDeliveries" />
 

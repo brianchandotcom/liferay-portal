@@ -59,7 +59,7 @@
 
 				<execute macro="DMFolder#tearDownCP" />
 
-				<execute macro="Page#tearDownPG" />
+				<execute macro="Page#tearDownCP" />
 
 				<execute macro="User#tearDownCP" />
 			</else>

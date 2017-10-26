@@ -44,7 +44,7 @@
 
 				<execute macro="Role#tearDownCP" />
 
-				<execute macro="Page#tearDownPG" />
+				<execute macro="Page#tearDownCP" />
 
 				<execute macro="Bookmark#tearDownCP" />
 

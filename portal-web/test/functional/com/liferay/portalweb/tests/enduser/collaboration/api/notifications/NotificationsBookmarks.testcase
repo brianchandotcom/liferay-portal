@@ -80,7 +80,7 @@
 
 				<execute macro="BookmarksFolder#tearDownCP" />
 
-				<execute macro="Page#tearDownPG" />
+				<execute macro="Page#tearDownCP" />
 
 				<execute macro="User#tearDownCP" />
 			</else>

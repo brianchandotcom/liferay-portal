@@ -38,7 +38,7 @@
 				<execute macro="PortalInstances#tearDownCP" />
 			</then>
 			<else>
-				<execute macro="Page#tearDownPG">
+				<execute macro="Page#tearDownCP">
 					<var name="site" value="Liferay" />
 				</execute>
 

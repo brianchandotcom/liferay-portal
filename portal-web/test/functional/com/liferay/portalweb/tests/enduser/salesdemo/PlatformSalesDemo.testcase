@@ -25,7 +25,7 @@
 					<var name="userLoginFullName" value="Test Test" />
 				</execute>
 
-				<execute macro="Page#tearDownPG" />
+				<execute macro="Page#tearDownCP" />
 
 				<execute macro="User#tearDownCP" />
 

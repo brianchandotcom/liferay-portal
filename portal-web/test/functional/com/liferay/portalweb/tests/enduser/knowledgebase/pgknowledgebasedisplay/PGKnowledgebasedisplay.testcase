@@ -53,7 +53,7 @@
 
 				<execute macro="KBArticle#tearDownCP" />
 
-				<execute macro="Page#tearDownPG" />
+				<execute macro="Page#tearDownCP" />
 			</else>
 		</if>
 	</tear-down>

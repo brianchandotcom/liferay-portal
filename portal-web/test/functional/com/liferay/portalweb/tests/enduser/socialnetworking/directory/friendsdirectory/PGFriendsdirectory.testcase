@@ -43,9 +43,9 @@
 			<else>
 				<execute macro="User#tearDownCP" />
 
-				<execute macro="Page#tearDownPG" />
+				<execute macro="Page#tearDownCP" />
 
-				<execute macro="Page#tearDownPG">
+				<execute macro="Page#tearDownCP">
 					<var name="site" value="test" />
 					<var name="siteURL" value="true" />
 				</execute>

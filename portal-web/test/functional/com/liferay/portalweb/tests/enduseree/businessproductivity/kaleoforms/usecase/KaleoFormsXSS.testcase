@@ -46,7 +46,7 @@
 
 				<execute macro="KaleoFormsAdmin#deleteFieldSet" />
 
-				<execute macro="Page#tearDownPG" />
+				<execute macro="Page#tearDownCP" />
 
 				<execute macro="Workflow#tearDownWorkflowDefinitionsViaWorkflowCP" />
 			</else>

@@ -19,7 +19,7 @@
 			</then>
 			<else>
 				<execute macro="BlogsEntry#tearDownCP" />
-				<execute macro="Page#tearDownPG" />
+				<execute macro="Page#tearDownCP" />
 				<execute macro="Site#tearDownCP" />
 				<execute macro="User#tearDownCP" />
 			</else>
@@ -54,7 +54,7 @@
 			<var name="pageName" value="Site Page 3" />
 		</execute>
 
-		<execute macro="Page#tearDownPG" />
+		<execute macro="Page#tearDownCP" />
 	</command>
 
 	<command name="AddPagesFullPageApplication" priority="4">

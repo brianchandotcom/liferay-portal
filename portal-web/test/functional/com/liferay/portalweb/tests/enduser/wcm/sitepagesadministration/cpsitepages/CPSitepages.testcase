@@ -800,8 +800,6 @@
 			<var name="pageName" value="Site Page" />
 		</execute>
 
-		<execute macro="Alert#viewSuccessMessage" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Navigation" />
 			<var name="panel" value="Site Administration" />

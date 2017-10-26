@@ -16,7 +16,9 @@ package com.liferay.commerce.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.service.CommerceAddressLocalServiceUtil;
 import com.liferay.commerce.service.CommerceCartItemLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -39,6 +41,18 @@ public class CommerceCartImpl extends CommerceCartBaseImpl {
 	public List<CommerceCartItem> getCommerceCartItems() {
 		return CommerceCartItemLocalServiceUtil.getCommerceCartItems(
 			getCommerceCartId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	@Override
+	public CommerceAddress getShippingAddress() throws PortalException {
+		long shippingAddressId = getShippingAddressId();
+
+		if (shippingAddressId > 0) {
+			return CommerceAddressLocalServiceUtil.getCommerceAddress(
+				shippingAddressId);
+		}
+
+		return null;
 	}
 
 	@Override

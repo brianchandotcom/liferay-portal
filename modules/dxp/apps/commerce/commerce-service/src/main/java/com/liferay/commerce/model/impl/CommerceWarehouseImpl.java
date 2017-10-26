@@ -16,13 +16,43 @@ package com.liferay.commerce.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.model.CommerceCountry;
+import com.liferay.commerce.model.CommerceRegion;
+import com.liferay.commerce.service.CommerceCountryLocalServiceUtil;
+import com.liferay.commerce.service.CommerceRegionLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
- * @author Alessio Antonio Rendina
+ * @author Andrea Di Giorgi
  */
 @ProviderType
 public class CommerceWarehouseImpl extends CommerceWarehouseBaseImpl {
 
 	public CommerceWarehouseImpl() {
+	}
+
+	@Override
+	public CommerceCountry getCommerceCountry() throws PortalException {
+		long commerceCountryId = getCommerceCountryId();
+
+		if (commerceCountryId > 0) {
+			return CommerceCountryLocalServiceUtil.getCommerceCountry(
+				commerceCountryId);
+		}
+
+		return null;
+	}
+
+	@Override
+	public CommerceRegion getCommerceRegion() throws PortalException {
+		long commerceRegionId = getCommerceRegionId();
+
+		if (commerceRegionId > 0) {
+			return CommerceRegionLocalServiceUtil.getCommerceRegion(
+				commerceRegionId);
+		}
+
+		return null;
 	}
 
 }

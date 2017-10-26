@@ -34,42 +34,42 @@ public class UnsyncByteArrayOutputStream extends OutputStream {
 	}
 
 	public UnsyncByteArrayOutputStream(int size) {
-		buffer = new byte[size];
+		_buffer = new byte[size];
 	}
 
 	public void reset() {
-		index = 0;
+		_index = 0;
 	}
 
 	public int size() {
-		return index;
+		return _index;
 	}
 
 	public byte[] toByteArray() {
-		byte[] newBuffer = new byte[index];
+		byte[] newBuffer = new byte[_index];
 
-		System.arraycopy(buffer, 0, newBuffer, 0, index);
+		System.arraycopy(_buffer, 0, newBuffer, 0, _index);
 
 		return newBuffer;
 	}
 
 	@Override
 	public String toString() {
-		return new String(buffer, 0, index);
+		return new String(_buffer, 0, _index);
 	}
 
 	public String toString(String charsetName)
 		throws UnsupportedEncodingException {
 
-		return new String(buffer, 0, index, charsetName);
+		return new String(_buffer, 0, _index, charsetName);
 	}
 
 	public byte[] unsafeGetByteArray() {
-		return buffer;
+		return _buffer;
 	}
 
 	public ByteBuffer unsafeGetByteBuffer() {
-		return ByteBuffer.wrap(buffer, 0, index);
+		return ByteBuffer.wrap(_buffer, 0, _index);
 	}
 
 	@Override
@@ -85,43 +85,43 @@ public class UnsyncByteArrayOutputStream extends OutputStream {
 			return;
 		}
 
-		int newIndex = index + length;
+		int newIndex = _index + length;
 
 		_ensureCapacity(newIndex);
 
-		System.arraycopy(bytes, offset, buffer, index, length);
+		System.arraycopy(bytes, offset, _buffer, _index, length);
 
-		index = newIndex;
+		_index = newIndex;
 	}
 
 	@Override
 	public void write(int b) {
-		int newIndex = index + 1;
+		int newIndex = _index + 1;
 
 		_ensureCapacity(newIndex);
 
-		buffer[index] = (byte)b;
+		_buffer[_index] = (byte)b;
 
-		index = newIndex;
+		_index = newIndex;
 	}
 
 	public void writeTo(OutputStream outputStream) throws IOException {
-		outputStream.write(buffer, 0, index);
+		outputStream.write(_buffer, 0, _index);
 	}
 
-	protected byte[] buffer;
-	protected int index;
-
 	private void _ensureCapacity(int minCapacity) {
-		if (minCapacity > buffer.length) {
-			int newBufferSize = Math.max(buffer.length << 1, minCapacity);
+		if (minCapacity > _buffer.length) {
+			int newBufferSize = Math.max(_buffer.length << 1, minCapacity);
 
 			byte[] newBuffer = new byte[newBufferSize];
 
-			System.arraycopy(buffer, 0, newBuffer, 0, buffer.length);
+			System.arraycopy(_buffer, 0, newBuffer, 0, _buffer.length);
 
-			buffer = newBuffer;
+			_buffer = newBuffer;
 		}
 	}
+
+	private byte[] _buffer;
+	private int _index;
 
 }

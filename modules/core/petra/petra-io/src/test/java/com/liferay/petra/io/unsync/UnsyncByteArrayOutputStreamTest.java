@@ -14,12 +14,15 @@
 
 package com.liferay.petra.io.unsync;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+
+import java.lang.reflect.Field;
 
 import java.nio.ByteBuffer;
 
@@ -144,7 +147,7 @@ public class UnsyncByteArrayOutputStreamTest extends BaseOutputStreamTestCase {
 	}
 
 	@Test
-	public void testUnsafeGetByteArray() {
+	public void testUnsafeGetByteArray() throws Exception {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
@@ -153,7 +156,8 @@ public class UnsyncByteArrayOutputStreamTest extends BaseOutputStreamTestCase {
 		byte[] bytes1 = unsyncByteArrayOutputStream.unsafeGetByteArray();
 
 		Assert.assertTrue(Arrays.equals(_BUFFER, bytes1));
-		Assert.assertSame(unsyncByteArrayOutputStream.buffer, bytes1);
+		Assert.assertSame(
+			_bufferField.get(unsyncByteArrayOutputStream), bytes1);
 
 		byte[] bytes2 = unsyncByteArrayOutputStream.unsafeGetByteArray();
 
@@ -207,6 +211,9 @@ public class UnsyncByteArrayOutputStreamTest extends BaseOutputStreamTestCase {
 		new byte[UnsyncByteArrayOutputStreamTest._BUFFER_SIZE];
 
 	private static final int _BUFFER_SIZE = 64;
+
+	private static final Field _bufferField = ReflectionTestUtil.getField(
+		UnsyncByteArrayOutputStream.class, "_buffer");
 
 	static {
 		for (int i = 0; i < _BUFFER_SIZE; i++) {

@@ -89,11 +89,11 @@
 
 		<execute function="Type" locator1="TextInput#MAX_HEIGHT" value1="${maxHeight}" />
 
-		<execute function="AssertElementPresent" locator1="Message#ERROR_FIELD_REQUIRED" />
-
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertElementNotPresent" locator1="Message#SUCCESS" />
+
+		<execute function="AssertTextEquals" locator1="Message#REQUIRED_INFO" value1="At least one value is required." />
 	</command>
 
 	<command name="deleteImageResolution">

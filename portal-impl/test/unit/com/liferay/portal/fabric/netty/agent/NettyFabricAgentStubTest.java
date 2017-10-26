@@ -15,6 +15,7 @@
 package com.liferay.portal.fabric.netty.agent;
 
 import com.liferay.portal.fabric.OutputResource;
+import com.liferay.portal.fabric.ReturnProcessCallable;
 import com.liferay.portal.fabric.netty.NettyTestUtil;
 import com.liferay.portal.fabric.netty.worker.NettyFabricWorkerConfig;
 import com.liferay.portal.fabric.netty.worker.NettyFabricWorkerStub;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessConfig;
 import com.liferay.portal.kernel.process.ProcessConfig.Builder;
-import com.liferay.portal.kernel.process.local.ReturnProcessCallable;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 

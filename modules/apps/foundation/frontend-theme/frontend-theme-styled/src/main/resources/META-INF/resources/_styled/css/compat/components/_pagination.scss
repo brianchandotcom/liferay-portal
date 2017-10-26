@@ -36,6 +36,9 @@
 	float: left; // Collapse white-space
 	background-color: $pagination-bg;
 	border: $pagination-border-width solid $pagination-border-color;
+
+	@include border-radius($pagination-link-border-radius);
+
 	color: $pagination-color;
 	line-height: $pagination-line-height;
 	margin-left: -1px;

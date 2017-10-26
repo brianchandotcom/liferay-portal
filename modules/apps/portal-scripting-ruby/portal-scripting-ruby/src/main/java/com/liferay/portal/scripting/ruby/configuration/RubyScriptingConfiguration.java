@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portal.scripting.ruby.configuration.RubyScriptingConfiguration",
 	localization = "content/Language",
-	name = "ruby.scripting.configuration.name"
+	name = "ruby-scripting-configuration-name"
 )
 public interface RubyScriptingConfiguration {
 

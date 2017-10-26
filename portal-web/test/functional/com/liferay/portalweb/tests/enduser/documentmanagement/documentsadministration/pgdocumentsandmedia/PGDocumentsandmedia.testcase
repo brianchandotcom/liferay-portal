@@ -1870,10 +1870,6 @@
 			<var name="siteName" value="Site Name 1" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name 1" />
-		</execute>
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Members" />
 			<var name="panel" value="Site Administration" />

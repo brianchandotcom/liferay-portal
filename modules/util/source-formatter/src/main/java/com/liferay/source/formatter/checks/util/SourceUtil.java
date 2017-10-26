@@ -119,7 +119,7 @@ public class SourceUtil {
 		for (String line : lines) {
 			line = StringUtil.trim(line);
 
-			if (line.startsWith("//")) {
+			if (line.startsWith("//") || line.startsWith("*")) {
 				continue;
 			}
 

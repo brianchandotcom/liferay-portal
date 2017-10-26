@@ -308,7 +308,6 @@
 
 	<command name="ViewSiteManageChildSiteSiteRole" priority="4">
 		<execute macro="Permissions#setUpSiteRoleLoginUserCP">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Site Page" />
 			<var name="portletName" value="Sites" />
 			<var name="roleTitle" value="Siterole Name" />

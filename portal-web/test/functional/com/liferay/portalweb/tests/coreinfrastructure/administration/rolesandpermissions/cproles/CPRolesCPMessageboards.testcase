@@ -80,7 +80,6 @@
 
 	<command name="ViewMessageBoardsPortletSiteRole" priority="4">
 		<execute macro="Permissions#setUpSiteRoleLoginUserCP">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Blogs Page" />
 			<var name="portletName" value="Message Boards" />
 			<var name="roleTitle" value="Roles Siterole Name" />

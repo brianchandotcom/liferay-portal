@@ -804,7 +804,6 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

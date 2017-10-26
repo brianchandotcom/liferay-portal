@@ -27,7 +27,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
-import com.liferay.exportimport.portlet.preferences.processor.capability.ReferencedStagedModelImporterCapability;
 import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalPortletKeys;
@@ -86,8 +85,7 @@ public class JournalContentExportImportPortletPreferencesProcessor
 	public List<Capability> getImportCapabilities() {
 		return ListUtil.toList(
 			new Capability[] {
-				_journalContentMetadataExporterImporterCapability,
-				_referencedStagedModelImporterCapability
+				_journalContentMetadataExporterImporterCapability, _capability
 			});
 	}
 
@@ -363,6 +361,9 @@ public class JournalContentExportImportPortletPreferencesProcessor
 	@Reference(unbind = "-")
 	private AssetEntryLocalService _assetEntryLocalService;
 
+	@Reference(target = "(name=ReferencedStagedModelImporter)")
+	private Capability _capability;
+
 	@Reference(unbind = "-")
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 
@@ -388,9 +389,5 @@ public class JournalContentExportImportPortletPreferencesProcessor
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(unbind = "-")
-	private ReferencedStagedModelImporterCapability
-		_referencedStagedModelImporterCapability;
 
 }

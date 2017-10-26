@@ -67,7 +67,6 @@ import org.osgi.service.component.annotations.Reference;
 		"mvc.command.name=/portal_settings/edit_ldap_server"
 	},
 	service = MVCActionCommand.class
-
 )
 public class PortalSettingsEditLDAPServerMVCActionCommand
 	extends BaseMVCActionCommand {

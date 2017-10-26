@@ -36,7 +36,6 @@ public class UpgradeExpando extends UpgradeProcess {
 		try (PreparedStatement ps1 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection, "delete from ExpandoRow where rowId_ = ?");
-
 			PreparedStatement ps2 = connection.prepareStatement(
 				sb.toString())) {
 

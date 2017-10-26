@@ -38,7 +38,57 @@ public class JavaEmptyLinesCheck extends EmptyLinesCheck {
 
 		content = _fixRedundantEmptyLineInLambdaExpression(content);
 
+		content = _fixIncorrectEmptyLineInsideStatement(content);
+
 		return content;
+	}
+
+	private String _fixIncorrectEmptyLineInsideStatement(String content) {
+		int pos = -1;
+
+		while (true) {
+			int previousPos = pos;
+
+			pos = content.indexOf("\n\n", pos + 1);
+
+			if (pos == -1) {
+				return content;
+			}
+
+			if (previousPos == -1) {
+				continue;
+			}
+
+			String s = content.substring(previousPos, pos);
+
+			if (s.endsWith("{") || (getLevel(s) == 0) ||
+				(getLevel(s, "{", "}") != 0)) {
+
+				continue;
+			}
+
+			String lineBefore = StringUtil.trim(
+				getLine(content, getLineCount(content, previousPos)));
+
+			if (lineBefore.startsWith("//")) {
+				continue;
+			}
+
+			String lineAfter = StringUtil.trim(
+				getLine(content, getLineCount(content, pos + 2)));
+
+			if (lineAfter.startsWith("//")) {
+				continue;
+			}
+
+			int x = s.lastIndexOf("{");
+
+			if ((x != -1) && (getLevel(s.substring(x + 1), "{", "}") == 0)) {
+				continue;
+			}
+
+			return StringUtil.replaceFirst(content, "\n\n", "\n", pos);
+		}
 	}
 
 	private String _fixRedundantEmptyLineInLambdaExpression(String content) {

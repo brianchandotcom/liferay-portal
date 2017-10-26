@@ -25,30 +25,30 @@ import java.nio.CharBuffer;
 public class UnsyncCharArrayReader extends Reader {
 
 	public UnsyncCharArrayReader(char[] chars) {
-		buffer = chars;
-		capacity = chars.length;
-		index = 0;
+		_buffer = chars;
+		_capacity = chars.length;
+		_index = 0;
 	}
 
 	public UnsyncCharArrayReader(char[] chars, int offset, int length) {
-		buffer = chars;
-		capacity = Math.min(chars.length, offset + length);
-		index = offset;
-		markIndex = offset;
+		_buffer = chars;
+		_capacity = Math.min(chars.length, offset + length);
+		_index = offset;
+		_markIndex = offset;
 	}
 
 	@Override
 	public void close() {
-		buffer = null;
+		_buffer = null;
 	}
 
 	@Override
 	public void mark(int readAheadLimit) throws IOException {
-		if (buffer == null) {
+		if (_buffer == null) {
 			throw new IOException("Stream closed");
 		}
 
-		markIndex = index;
+		_markIndex = _index;
 	}
 
 	@Override
@@ -58,15 +58,15 @@ public class UnsyncCharArrayReader extends Reader {
 
 	@Override
 	public int read() throws IOException {
-		if (buffer == null) {
+		if (_buffer == null) {
 			throw new IOException("Stream closed");
 		}
 
-		if (index >= capacity) {
+		if (_index >= _capacity) {
 			return -1;
 		}
 		else {
-			return buffer[index++];
+			return _buffer[_index++];
 		}
 	}
 
@@ -77,32 +77,32 @@ public class UnsyncCharArrayReader extends Reader {
 
 	@Override
 	public int read(char[] chars, int offset, int length) throws IOException {
-		if (buffer == null) {
+		if (_buffer == null) {
 			throw new IOException("Stream closed");
 		}
 
 		BoundaryCheckerUtil.check(chars.length, offset, length);
 
-		if (index >= capacity) {
+		if (_index >= _capacity) {
 			return -1;
 		}
 
 		int read = length;
 
-		if ((index + read) > capacity) {
-			read = capacity - index;
+		if ((_index + read) > _capacity) {
+			read = _capacity - _index;
 		}
 
-		System.arraycopy(buffer, index, chars, offset, read);
+		System.arraycopy(_buffer, _index, chars, offset, read);
 
-		index += read;
+		_index += read;
 
 		return read;
 	}
 
 	@Override
 	public int read(CharBuffer charBuffer) throws IOException {
-		if (buffer == null) {
+		if (_buffer == null) {
 			throw new IOException("Stream closed");
 		}
 
@@ -112,28 +112,28 @@ public class UnsyncCharArrayReader extends Reader {
 			return 0;
 		}
 
-		if (index >= capacity) {
+		if (_index >= _capacity) {
 			return -1;
 		}
 
-		if ((index + length) > capacity) {
-			length = capacity - index;
+		if ((_index + length) > _capacity) {
+			length = _capacity - _index;
 		}
 
-		charBuffer.put(buffer, index, length);
+		charBuffer.put(_buffer, _index, length);
 
-		index += length;
+		_index += length;
 
 		return length;
 	}
 
 	@Override
 	public boolean ready() throws IOException {
-		if (buffer == null) {
+		if (_buffer == null) {
 			throw new IOException("Stream closed");
 		}
 
-		if (capacity > index) {
+		if (_capacity > _index) {
 			return true;
 		}
 		else {
@@ -143,16 +143,16 @@ public class UnsyncCharArrayReader extends Reader {
 
 	@Override
 	public void reset() throws IOException {
-		if (buffer == null) {
+		if (_buffer == null) {
 			throw new IOException("Stream closed");
 		}
 
-		index = markIndex;
+		_index = _markIndex;
 	}
 
 	@Override
 	public long skip(long skip) throws IOException {
-		if (buffer == null) {
+		if (_buffer == null) {
 			throw new IOException("Stream closed");
 		}
 
@@ -160,18 +160,18 @@ public class UnsyncCharArrayReader extends Reader {
 			throw new IllegalArgumentException("skip value is negative");
 		}
 
-		if ((index + skip) > capacity) {
-			skip = capacity - index;
+		if ((_index + skip) > _capacity) {
+			skip = _capacity - _index;
 		}
 
-		index += skip;
+		_index += skip;
 
 		return skip;
 	}
 
-	protected char[] buffer;
-	protected int capacity;
-	protected int index;
-	protected int markIndex;
+	private char[] _buffer;
+	private final int _capacity;
+	private int _index;
+	private int _markIndex;
 
 }

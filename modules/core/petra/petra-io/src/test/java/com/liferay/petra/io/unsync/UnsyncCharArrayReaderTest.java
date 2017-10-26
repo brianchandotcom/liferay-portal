@@ -14,10 +14,13 @@
 
 package com.liferay.petra.io.unsync;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.io.IOException;
 import java.io.Reader;
+
+import java.lang.reflect.Field;
 
 import java.nio.CharBuffer;
 
@@ -108,13 +111,13 @@ public class UnsyncCharArrayReaderTest extends BaseReaderTestCase {
 	}
 
 	@Test
-	public void testClose() throws IOException {
+	public void testClose() throws Exception {
 		UnsyncCharArrayReader unsyncCharArrayReader = new UnsyncCharArrayReader(
 			_BUFFER);
 
 		unsyncCharArrayReader.close();
 
-		Assert.assertTrue(unsyncCharArrayReader.buffer == null);
+		Assert.assertNull(_bufferField.get(unsyncCharArrayReader));
 
 		try {
 			unsyncCharArrayReader.read((CharBuffer)null);
@@ -129,24 +132,28 @@ public class UnsyncCharArrayReaderTest extends BaseReaderTestCase {
 	}
 
 	@Test
-	public void testConstructor() {
+	public void testConstructor() throws Exception {
 		new BoundaryCheckerUtil();
 
 		UnsyncCharArrayReader unsyncCharArrayReader = new UnsyncCharArrayReader(
 			_BUFFER);
 
-		Assert.assertEquals(_BUFFER, unsyncCharArrayReader.buffer);
-		Assert.assertEquals(_SIZE, unsyncCharArrayReader.capacity);
-		Assert.assertEquals(0, unsyncCharArrayReader.index);
-		Assert.assertEquals(0, unsyncCharArrayReader.markIndex);
+		Assert.assertEquals(_BUFFER, _bufferField.get(unsyncCharArrayReader));
+		Assert.assertEquals(
+			_SIZE, _capacityField.getInt(unsyncCharArrayReader));
+		Assert.assertEquals(0, _indexField.getInt(unsyncCharArrayReader));
+		Assert.assertEquals(0, _markIndexField.getInt(unsyncCharArrayReader));
 
 		unsyncCharArrayReader = new UnsyncCharArrayReader(
 			_BUFFER, _SIZE / 2, _SIZE / 2);
 
-		Assert.assertEquals(_BUFFER, unsyncCharArrayReader.buffer);
-		Assert.assertEquals(_SIZE, unsyncCharArrayReader.capacity);
-		Assert.assertEquals(_SIZE / 2, unsyncCharArrayReader.index);
-		Assert.assertEquals(_SIZE / 2, unsyncCharArrayReader.markIndex);
+		Assert.assertEquals(_BUFFER, _bufferField.get(unsyncCharArrayReader));
+		Assert.assertEquals(
+			_SIZE, _capacityField.getInt(unsyncCharArrayReader));
+		Assert.assertEquals(
+			_SIZE / 2, _indexField.getInt(unsyncCharArrayReader));
+		Assert.assertEquals(
+			_SIZE / 2, _markIndexField.getInt(unsyncCharArrayReader));
 	}
 
 	@Override
@@ -171,6 +178,15 @@ public class UnsyncCharArrayReaderTest extends BaseReaderTestCase {
 		new char[UnsyncCharArrayReaderTest._SIZE];
 
 	private static final int _SIZE = 10;
+
+	private static final Field _bufferField = ReflectionTestUtil.getField(
+		UnsyncCharArrayReader.class, "_buffer");
+	private static final Field _capacityField = ReflectionTestUtil.getField(
+		UnsyncCharArrayReader.class, "_capacity");
+	private static final Field _indexField = ReflectionTestUtil.getField(
+		UnsyncCharArrayReader.class, "_index");
+	private static final Field _markIndexField = ReflectionTestUtil.getField(
+		UnsyncCharArrayReader.class, "_markIndex");
 
 	static {
 		for (int i = 0; i < _SIZE; i++) {

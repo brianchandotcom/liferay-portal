@@ -243,7 +243,8 @@ public class LCSClusterNodeClientImpl implements LCSClusterNodeClient {
 			String key)
 		throws JSONWebServiceInvocationException {
 
-		_jsonWebServiceClient.doPut(_URL_LCS_CLUSTER_NODE, "key", key);
+		_jsonWebServiceClient.doPut(
+			_URL_LCS_CLUSTER_NODE + "/verifyProperties", "key", key);
 	}
 
 	@Override
@@ -251,7 +252,8 @@ public class LCSClusterNodeClientImpl implements LCSClusterNodeClient {
 		throws JSONWebServiceInvocationException {
 
 		_jsonWebServiceClient.doPut(
-			_URL_LCS_CLUSTER_NODE, "key", key, "siblingKeys", siblingKeys);
+			_URL_LCS_CLUSTER_NODE + "/verifyClusterLink", "key", key,
+			"siblingKeys", siblingKeys);
 	}
 
 	protected void validate(long lcsClusterEntryId, String lcsClusterNodeName)

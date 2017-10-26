@@ -40,7 +40,7 @@ public class LCSMetadataClientImpl implements LCSMetadataClient {
 		StringBuilder sb = new StringBuilder(5);
 
 		sb.append(_URL_LCS_METADATA);
-		sb.append("/");
+		sb.append("/find/");
 		sb.append(buildNumber);
 		sb.append("/");
 		sb.append(portalEdition);
@@ -51,14 +51,6 @@ public class LCSMetadataClientImpl implements LCSMetadataClient {
 		if (supportedLCSPortlet != null) {
 			return supportedLCSPortlet;
 		}
-
-		sb = new StringBuilder(5);
-
-		sb.append(_URL_LCS_METADATA);
-		sb.append("/");
-		sb.append(buildNumber);
-		sb.append("/");
-		sb.append(portalEdition);
 
 		LCSMetadata lcsMetadata = _jsonWebServiceClient.doGetToObject(
 			LCSMetadata.class, sb.toString());

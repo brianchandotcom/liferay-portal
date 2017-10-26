@@ -80,7 +80,7 @@ public class LCSSubscriptionEntryClientImpl
 	public void incrementServerUsed(String key)
 		throws JSONWebServiceInvocationException {
 
-		_jsonWebServiceClient.doPost(
+		_jsonWebServiceClient.doPut(
 			_URL_LCS_SUBSCRIPTION_ENTRY + "/" + key + "/incrementServerUsed");
 	}
 

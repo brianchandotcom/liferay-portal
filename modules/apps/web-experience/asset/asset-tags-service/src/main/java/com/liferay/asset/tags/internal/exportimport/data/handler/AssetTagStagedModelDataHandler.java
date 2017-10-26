@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.asset.tags.admin.web.internal.exportimport.data.handler;
+package com.liferay.asset.tags.internal.exportimport.data.handler;
 
 import com.liferay.asset.kernel.exception.DuplicateTagException;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.asset.tags.admin.web.internal.lar.AssetTagsPortletDataHandler;
-import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
+
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

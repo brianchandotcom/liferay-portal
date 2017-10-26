@@ -341,8 +341,6 @@
 			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Adaptive Media" />
 		</execute>
-
-		<execute function="AssertElementPresent" locator1="Message#EMPTY_INFO" />
 	</command>
 
 	<command name="EditAndDeleteDisabledAMI" priority="5">

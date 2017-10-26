@@ -20,7 +20,9 @@ import java.io.Serializable;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class ReturnProcessCallable<T extends Serializable>
 	implements ProcessCallable<T> {
 

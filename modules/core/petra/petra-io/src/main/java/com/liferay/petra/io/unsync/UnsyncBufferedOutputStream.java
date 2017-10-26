@@ -37,7 +37,7 @@ public class UnsyncBufferedOutputStream extends UnsyncFilterOutputStream {
 			throw new IllegalArgumentException("Size is less than 1");
 		}
 
-		buffer = new byte[size];
+		_buffer = new byte[size];
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class UnsyncBufferedOutputStream extends UnsyncFilterOutputStream {
 
 	@Override
 	public void write(byte[] bytes, int offset, int length) throws IOException {
-		if (length >= buffer.length) {
+		if (length >= _buffer.length) {
 			_flushBuffer();
 
 			outputStream.write(bytes, offset, length);
@@ -62,37 +62,37 @@ public class UnsyncBufferedOutputStream extends UnsyncFilterOutputStream {
 			return;
 		}
 
-		if (length > (buffer.length - count)) {
+		if (length > (_buffer.length - _count)) {
 			_flushBuffer();
 		}
 
-		System.arraycopy(bytes, offset, buffer, count, length);
+		System.arraycopy(bytes, offset, _buffer, _count, length);
 
-		count += length;
+		_count += length;
 	}
 
 	@Override
 	public void write(int b) throws IOException {
-		if (count >= buffer.length) {
-			outputStream.write(buffer, 0, count);
+		if (_count >= _buffer.length) {
+			outputStream.write(_buffer, 0, _count);
 
-			count = 0;
+			_count = 0;
 		}
 
-		buffer[count++] = (byte)b;
+		_buffer[_count++] = (byte)b;
 	}
 
-	protected byte[] buffer;
-	protected int count;
-
 	private void _flushBuffer() throws IOException {
-		if (count > 0) {
-			outputStream.write(buffer, 0, count);
+		if (_count > 0) {
+			outputStream.write(_buffer, 0, _count);
 
-			count = 0;
+			_count = 0;
 		}
 	}
 
 	private static final int _DEFAULT_BUFFER_SIZE = 8192;
+
+	private byte[] _buffer;
+	private int _count;
 
 }

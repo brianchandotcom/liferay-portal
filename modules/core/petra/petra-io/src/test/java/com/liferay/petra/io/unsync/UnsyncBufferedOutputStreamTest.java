@@ -14,11 +14,13 @@
 
 package com.liferay.petra.io.unsync;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
+
+import java.lang.reflect.Field;
 
 import java.util.Arrays;
 
@@ -36,32 +38,35 @@ public class UnsyncBufferedOutputStreamTest extends BaseOutputStreamTestCase {
 		CodeCoverageAssertor.INSTANCE;
 
 	@Test
-	public void testBlockWrite() throws IOException {
+	public void testBlockWrite() throws Exception {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
 
 		UnsyncBufferedOutputStream unsyncBufferedOutputStream =
 			new UnsyncBufferedOutputStream(byteArrayOutputStream, _SIZE * 2);
 
-		Assert.assertEquals(
-			_SIZE * 2, unsyncBufferedOutputStream.buffer.length);
+		byte[] buffer = (byte[])_bufferField.get(unsyncBufferedOutputStream);
+
+		Assert.assertEquals(Arrays.toString(buffer), _SIZE * 2, buffer.length);
 
 		unsyncBufferedOutputStream.write(_BUFFER);
 
 		for (int i = 0; i < _SIZE; i++) {
-			Assert.assertEquals(i, unsyncBufferedOutputStream.buffer[i]);
+			Assert.assertEquals(i, buffer[i]);
 		}
 
 		unsyncBufferedOutputStream.write(_BUFFER);
 
 		for (int i = _SIZE; i < _SIZE * 2; i++) {
-			Assert.assertEquals(
-				i - _SIZE, unsyncBufferedOutputStream.buffer[i]);
+			Assert.assertEquals(i - _SIZE, buffer[i]);
 		}
 
 		unsyncBufferedOutputStream.write(100);
 
-		Assert.assertEquals(100, unsyncBufferedOutputStream.buffer[0]);
+		buffer = (byte[])_bufferField.get(unsyncBufferedOutputStream);
+
+		Assert.assertEquals(100, buffer[0]);
+
 		Assert.assertEquals(_SIZE * 2, byteArrayOutputStream.size());
 
 		byteArrayOutputStream.reset();
@@ -83,8 +88,10 @@ public class UnsyncBufferedOutputStreamTest extends BaseOutputStreamTestCase {
 		Assert.assertEquals(100, bytes[0]);
 		Assert.assertEquals(110, bytes[1]);
 
+		buffer = (byte[])_bufferField.get(unsyncBufferedOutputStream);
+
 		for (int i = 0; i < _SIZE; i++) {
-			Assert.assertEquals(i, unsyncBufferedOutputStream.buffer[i]);
+			Assert.assertEquals(i, buffer[i]);
 		}
 
 		byteArrayOutputStream.reset();
@@ -98,19 +105,23 @@ public class UnsyncBufferedOutputStreamTest extends BaseOutputStreamTestCase {
 	}
 
 	@Test
-	public void testConstructor() {
+	public void testConstructor() throws Exception {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
 
 		UnsyncBufferedOutputStream unsyncBufferedOutputStream =
 			new UnsyncBufferedOutputStream(byteArrayOutputStream);
 
-		Assert.assertEquals(8192, unsyncBufferedOutputStream.buffer.length);
+		byte[] buffer = (byte[])_bufferField.get(unsyncBufferedOutputStream);
+
+		Assert.assertEquals(Arrays.toString(buffer), 8192, buffer.length);
 
 		unsyncBufferedOutputStream = new UnsyncBufferedOutputStream(
 			byteArrayOutputStream, 10);
 
-		Assert.assertEquals(10, unsyncBufferedOutputStream.buffer.length);
+		buffer = (byte[])_bufferField.get(unsyncBufferedOutputStream);
+
+		Assert.assertEquals(Arrays.toString(buffer), 10, buffer.length);
 
 		try {
 			new UnsyncBufferedOutputStream(byteArrayOutputStream, 0);
@@ -128,20 +139,21 @@ public class UnsyncBufferedOutputStreamTest extends BaseOutputStreamTestCase {
 	}
 
 	@Test
-	public void testWrite() throws IOException {
+	public void testWrite() throws Exception {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
 
 		UnsyncBufferedOutputStream unsyncBufferedOutputStream =
 			new UnsyncBufferedOutputStream(byteArrayOutputStream, _SIZE * 2);
 
-		Assert.assertEquals(
-			_SIZE * 2, unsyncBufferedOutputStream.buffer.length);
+		byte[] buffer = (byte[])_bufferField.get(unsyncBufferedOutputStream);
+
+		Assert.assertEquals(Arrays.toString(buffer), _SIZE * 2, buffer.length);
 
 		for (int i = 0; i < _SIZE; i++) {
 			unsyncBufferedOutputStream.write(i);
 
-			Assert.assertEquals(i, unsyncBufferedOutputStream.buffer[i]);
+			Assert.assertEquals(i, buffer[i]);
 		}
 
 		unsyncBufferedOutputStream.flush();
@@ -159,6 +171,9 @@ public class UnsyncBufferedOutputStreamTest extends BaseOutputStreamTestCase {
 		new byte[UnsyncBufferedOutputStreamTest._SIZE];
 
 	private static final int _SIZE = 10;
+
+	private static final Field _bufferField = ReflectionTestUtil.getField(
+		UnsyncBufferedOutputStream.class, "_buffer");
 
 	static {
 		for (int i = 0; i < _SIZE; i++) {

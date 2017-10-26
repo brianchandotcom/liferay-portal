@@ -172,6 +172,22 @@
 
 		<execute macro="Button#clickSave" />
 
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoManageStructures" />
+
+		<var name="key_ddlDataDefinitionName" value="${substructureName}" />
+
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${substructureName}" />
+
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+
+		<var name="key_rowEntry" value="${substructureName}" />
+
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit Default Values">

@@ -3,6 +3,7 @@ import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 import org.gradle.execution.ProjectConfigurer
 
+task cleanProjectTemplateTests(type: Delete)
 task writeProjectTemplateVersions
 
 File mavenWrapperPropertiesFile = file("src/main/resources/maven-wrapper/.mvn/wrapper/maven-wrapper.properties")
@@ -21,6 +22,10 @@ ProjectConfigurer projectConfigurer = gradle.services.get(ProjectConfigurer)
 
 bundle {
 	includeTransitiveDependencies = true
+}
+
+cleanProjectTemplateTests {
+	delete fileTree(dir: processTestResources.destinationDir, include: "*.jar")
 }
 
 configurations {
@@ -112,6 +117,7 @@ processResources {
 }
 
 processTestResources {
+	dependsOn cleanProjectTemplateTests
 	from configurations.projectTemplatesTests
 }
 

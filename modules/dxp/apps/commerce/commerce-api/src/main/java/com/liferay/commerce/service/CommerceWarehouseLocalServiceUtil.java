@@ -245,6 +245,14 @@ public class CommerceWarehouseLocalServiceUtil {
 			end, orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.commerce.model.CommerceWarehouse> getCommerceWarehouses(
+		java.lang.String className, long classPK, int quantity, int start,
+		int end) {
+		return getService()
+				   .getCommerceWarehouses(className, classPK, quantity, start,
+			end);
+	}
+
 	/**
 	* Returns the number of commerce warehouses.
 	*

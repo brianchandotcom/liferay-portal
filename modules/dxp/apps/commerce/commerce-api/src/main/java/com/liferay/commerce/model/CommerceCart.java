@@ -56,6 +56,9 @@ public interface CommerceCart extends CommerceCartModel, PersistedModel {
 
 	public java.util.List<CommerceCartItem> getCommerceCartItems();
 
+	public CommerceAddress getShippingAddress()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public boolean isGuestCart()
 		throws com.liferay.portal.kernel.exception.PortalException;
 }

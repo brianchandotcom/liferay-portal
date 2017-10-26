@@ -287,6 +287,12 @@ public class CPInstanceLocalServiceUtil {
 		return getService().getCPInstance(CPInstanceId);
 	}
 
+	public static com.liferay.commerce.product.model.CPInstance getCPInstance(
+		long cpDefinitionId, java.lang.String sku)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPInstance(cpDefinitionId, sku);
+	}
+
 	/**
 	* Returns the cp instance matching the UUID and group.
 	*

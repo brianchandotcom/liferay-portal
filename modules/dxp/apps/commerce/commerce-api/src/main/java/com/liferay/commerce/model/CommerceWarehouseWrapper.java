@@ -439,6 +439,11 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	}
 
 	@Override
+	public boolean isGeolocated() {
+		return _commerceWarehouse.isGeolocated();
+	}
+
+	@Override
 	public boolean isNew() {
 		return _commerceWarehouse.isNew();
 	}

@@ -60,4 +60,6 @@ public interface CommerceWarehouse extends CommerceWarehouseModel, PersistedMode
 
 	public CommerceRegion getCommerceRegion()
 		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public boolean isGeolocated();
 }

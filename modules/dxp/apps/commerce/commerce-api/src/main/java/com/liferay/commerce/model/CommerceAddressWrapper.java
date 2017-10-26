@@ -537,6 +537,11 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	}
 
 	@Override
+	public boolean isGeolocated() {
+		return _commerceAddress.isGeolocated();
+	}
+
+	@Override
 	public boolean isNew() {
 		return _commerceAddress.isNew();
 	}

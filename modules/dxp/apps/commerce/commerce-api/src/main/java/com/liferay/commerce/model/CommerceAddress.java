@@ -60,4 +60,6 @@ public interface CommerceAddress extends CommerceAddressModel, PersistedModel {
 
 	public CommerceRegion getCommerceRegion()
 		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public boolean isGeolocated();
 }

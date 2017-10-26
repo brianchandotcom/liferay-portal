@@ -256,6 +256,12 @@ public class CommerceCartWrapper implements CommerceCart,
 		return _commerceCart.getPrimaryKeyObj();
 	}
 
+	@Override
+	public CommerceAddress getShippingAddress()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCart.getShippingAddress();
+	}
+
 	/**
 	* Returns the shipping address ID of this commerce cart.
 	*

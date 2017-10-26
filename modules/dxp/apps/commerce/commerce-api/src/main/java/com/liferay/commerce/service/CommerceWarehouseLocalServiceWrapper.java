@@ -257,6 +257,14 @@ public class CommerceWarehouseLocalServiceWrapper
 			commerceCountryId, start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceWarehouse> getCommerceWarehouses(
+		java.lang.String className, long classPK, int quantity, int start,
+		int end) {
+		return _commerceWarehouseLocalService.getCommerceWarehouses(className,
+			classPK, quantity, start, end);
+	}
+
 	/**
 	* Returns the number of commerce warehouses.
 	*

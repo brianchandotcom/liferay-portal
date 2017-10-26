@@ -248,6 +248,10 @@ public interface CPInstanceLocalService extends BaseLocalService,
 	public CPInstance getCPInstance(long CPInstanceId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPInstance getCPInstance(long cpDefinitionId, java.lang.String sku)
+		throws PortalException;
+
 	/**
 	* Returns the cp instance matching the UUID and group.
 	*

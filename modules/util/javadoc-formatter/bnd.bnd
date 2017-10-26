@@ -8,6 +8,7 @@ Import-Package:\
 	*
 Main-Class: com.liferay.javadoc.formatter.JavadocFormatter
 -includeresource:\
+	@com.liferay.petra.string-[0-9]*.jar!/com/liferay/petra/string/CharPool.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/BaseImportsFormatter.class,\
@@ -34,7 +35,6 @@ Main-Class: com.liferay.javadoc.formatter.JavadocFormatter
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/security/xml/SecureXMLFactoryProvider.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/security/xml/SecureXMLFactoryProviderUtil.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/CentralizedThreadLocal.class,\
-	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/CharPool.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/GetterUtil.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/KeyValuePair.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/PropertiesUtil.class,\

@@ -19,12 +19,12 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class EchoPoshiElement extends BasePoshiElement {
+public class TakeScreenshotPoshiElement extends BasePoshiElement {
 
 	@Override
 	public PoshiElement clone(Element element) {
 		if (isElementType(_ELEMENT_NAME, element)) {
-			return new EchoPoshiElement(element);
+			return new TakeScreenshotPoshiElement(element);
 		}
 
 		return null;
@@ -35,7 +35,7 @@ public class EchoPoshiElement extends BasePoshiElement {
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
 		if (_isElementType(readableSyntax)) {
-			return new EchoPoshiElement(readableSyntax);
+			return new TakeScreenshotPoshiElement(readableSyntax);
 		}
 
 		return null;
@@ -43,35 +43,24 @@ public class EchoPoshiElement extends BasePoshiElement {
 
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
-		String content = getQuotedContent(readableSyntax);
-
-		addAttribute("message", content);
 	}
 
 	@Override
 	public String toReadableSyntax() {
-		String message = attributeValue("message");
+		String readableSyntax = super.toReadableSyntax();
 
-		return createReadableBlock(message);
+		return createReadableBlock(readableSyntax);
 	}
 
-	protected EchoPoshiElement() {
+	protected TakeScreenshotPoshiElement() {
 	}
 
-	protected EchoPoshiElement(Element element) {
+	protected TakeScreenshotPoshiElement(Element element) {
 		super(_ELEMENT_NAME, element);
 	}
 
-	protected EchoPoshiElement(String readableSyntax) {
+	protected TakeScreenshotPoshiElement(String readableSyntax) {
 		super(_ELEMENT_NAME, readableSyntax);
-	}
-
-	protected EchoPoshiElement(String name, Element element) {
-		super(name, element);
-	}
-
-	protected EchoPoshiElement(String name, String readableSyntax) {
-		super(name, readableSyntax);
 	}
 
 	@Override
@@ -81,36 +70,24 @@ public class EchoPoshiElement extends BasePoshiElement {
 		sb.append("\n\n");
 		sb.append(getPad());
 		sb.append(getBlockName());
-		sb.append("(\"");
-		sb.append(content.trim());
-		sb.append("\");");
+		sb.append("();");
 
 		return sb.toString();
 	}
 
 	@Override
 	protected String getBlockName() {
-		return "echo";
+		return "takeScreenshot";
 	}
 
 	private boolean _isElementType(String readableSyntax) {
-		readableSyntax = readableSyntax.trim();
-
-		if (!isBalancedReadableSyntax(readableSyntax)) {
-			return false;
+		if (readableSyntax.startsWith(getBlockName())) {
+			return true;
 		}
 
-		if (!readableSyntax.endsWith(");")) {
-			return false;
-		}
-
-		if (!readableSyntax.startsWith("echo(")) {
-			return false;
-		}
-
-		return true;
+		return false;
 	}
 
-	private static final String _ELEMENT_NAME = "echo";
+	private static final String _ELEMENT_NAME = "take-screenshot";
 
 }

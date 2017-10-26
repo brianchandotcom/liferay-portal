@@ -19,12 +19,12 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class EchoPoshiElement extends BasePoshiElement {
+public class FailPoshiElement extends EchoPoshiElement {
 
 	@Override
 	public PoshiElement clone(Element element) {
 		if (isElementType(_ELEMENT_NAME, element)) {
-			return new EchoPoshiElement(element);
+			return new FailPoshiElement(element);
 		}
 
 		return null;
@@ -35,62 +35,26 @@ public class EchoPoshiElement extends BasePoshiElement {
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
 		if (_isElementType(readableSyntax)) {
-			return new EchoPoshiElement(readableSyntax);
+			return new FailPoshiElement(readableSyntax);
 		}
 
 		return null;
 	}
 
-	@Override
-	public void parseReadableSyntax(String readableSyntax) {
-		String content = getQuotedContent(readableSyntax);
-
-		addAttribute("message", content);
+	protected FailPoshiElement() {
 	}
 
-	@Override
-	public String toReadableSyntax() {
-		String message = attributeValue("message");
-
-		return createReadableBlock(message);
-	}
-
-	protected EchoPoshiElement() {
-	}
-
-	protected EchoPoshiElement(Element element) {
+	protected FailPoshiElement(Element element) {
 		super(_ELEMENT_NAME, element);
 	}
 
-	protected EchoPoshiElement(String readableSyntax) {
+	protected FailPoshiElement(String readableSyntax) {
 		super(_ELEMENT_NAME, readableSyntax);
-	}
-
-	protected EchoPoshiElement(String name, Element element) {
-		super(name, element);
-	}
-
-	protected EchoPoshiElement(String name, String readableSyntax) {
-		super(name, readableSyntax);
-	}
-
-	@Override
-	protected String createReadableBlock(String content) {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("\n\n");
-		sb.append(getPad());
-		sb.append(getBlockName());
-		sb.append("(\"");
-		sb.append(content.trim());
-		sb.append("\");");
-
-		return sb.toString();
 	}
 
 	@Override
 	protected String getBlockName() {
-		return "echo";
+		return "fail";
 	}
 
 	private boolean _isElementType(String readableSyntax) {
@@ -104,13 +68,13 @@ public class EchoPoshiElement extends BasePoshiElement {
 			return false;
 		}
 
-		if (!readableSyntax.startsWith("echo(")) {
+		if (!readableSyntax.startsWith("fail(")) {
 			return false;
 		}
 
 		return true;
 	}
 
-	private static final String _ELEMENT_NAME = "echo";
+	private static final String _ELEMENT_NAME = "fail";
 
 }

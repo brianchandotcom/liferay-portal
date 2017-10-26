@@ -22,12 +22,12 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class IfPoshiElement extends BasePoshiElement {
+public class OnPoshiElement extends BasePoshiElement {
 
 	@Override
 	public PoshiElement clone(Element element) {
 		if (isElementType(_ELEMENT_NAME, element)) {
-			return new IfPoshiElement(element);
+			return new OnPoshiElement(_ELEMENT_NAME, element);
 		}
 
 		return null;
@@ -37,8 +37,8 @@ public class IfPoshiElement extends BasePoshiElement {
 	public PoshiElement clone(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
-		if (_isElementType(readableSyntax)) {
-			return new IfPoshiElement(readableSyntax);
+		if (isElementType(readableSyntax)) {
+			return new OnPoshiElement(_ELEMENT_NAME, readableSyntax);
 		}
 
 		return null;
@@ -47,11 +47,7 @@ public class IfPoshiElement extends BasePoshiElement {
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
 		for (String readableBlock : getReadableBlocks(readableSyntax)) {
-			if (readableBlock.startsWith(getName() + " (")) {
-				add(
-					PoshiElementFactory.newPoshiElement(
-						this, getParentheticalContent(readableBlock)));
-
+			if (readableBlock.startsWith(getBlockName() + " {")) {
 				continue;
 			}
 
@@ -63,66 +59,27 @@ public class IfPoshiElement extends BasePoshiElement {
 	public String toReadableSyntax() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("\n");
-
-		PoshiElement thenElement = (PoshiElement)element("then");
-
-		String thenReadableSyntax = thenElement.toReadableSyntax();
-
-		sb.append(createReadableBlock(thenReadableSyntax));
-
-		for (PoshiElement elseIfElement : toPoshiElements(elements("elseif"))) {
-			sb.append(elseIfElement.toReadableSyntax());
+		for (PoshiElement poshiElement : toPoshiElements(elements())) {
+			sb.append(poshiElement.toReadableSyntax());
 		}
 
-		if (element("else") != null) {
-			PoshiElement elseElement = (PoshiElement)element("else");
-
-			sb.append(elseElement.toReadableSyntax());
-		}
-
-		return sb.toString();
+		return createReadableBlock(sb.toString());
 	}
 
-	protected IfPoshiElement() {
+	protected OnPoshiElement() {
 	}
 
-	protected IfPoshiElement(Element element) {
-		super("if", element);
-	}
-
-	protected IfPoshiElement(String readableSyntax) {
-		super("if", readableSyntax);
-	}
-
-	protected IfPoshiElement(String name, Element element) {
+	protected OnPoshiElement(String name, Element element) {
 		super(name, element);
 	}
 
-	protected IfPoshiElement(String name, String readableSyntax) {
+	protected OnPoshiElement(String name, String readableSyntax) {
 		super(name, readableSyntax);
 	}
 
 	@Override
 	protected String getBlockName() {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(getReadableName());
-
-		for (String conditionName : _conditionNames) {
-			if (element(conditionName) != null) {
-				PoshiElement poshiElement = (PoshiElement)element(
-					conditionName);
-
-				sb.append(" (");
-				sb.append(poshiElement.toReadableSyntax());
-				sb.append(")");
-
-				break;
-			}
-		}
-
-		return sb.toString();
+		return "on";
 	}
 
 	protected List<String> getReadableBlocks(String readableSyntax) {
@@ -140,23 +97,21 @@ public class IfPoshiElement extends BasePoshiElement {
 
 				readableBlocks.add(line);
 
-				sb.append("{\n");
-
 				continue;
 			}
 
-			sb.append(line);
-			sb.append("\n");
-
-			readableBlock = sb.toString();
-
-			readableBlock = readableBlock.trim();
+			if (line.endsWith("{") && readableBlocks.isEmpty()) {
+				continue;
+			}
 
 			if (isValidReadableBlock(readableBlock)) {
 				readableBlocks.add(readableBlock);
 
 				sb.setLength(0);
 			}
+
+			sb.append(line);
+			sb.append("\n");
 		}
 
 		return readableBlocks;
@@ -166,14 +121,14 @@ public class IfPoshiElement extends BasePoshiElement {
 		return getName();
 	}
 
-	private boolean _isElementType(String readableSyntax) {
+	protected boolean isElementType(String readableSyntax) {
 		readableSyntax = readableSyntax.trim();
 
 		if (!isBalancedReadableSyntax(readableSyntax)) {
 			return false;
 		}
 
-		if (!readableSyntax.startsWith("if (")) {
+		if (!readableSyntax.startsWith(getBlockName() + " {")) {
 			return false;
 		}
 
@@ -184,9 +139,6 @@ public class IfPoshiElement extends BasePoshiElement {
 		return true;
 	}
 
-	private static final String _ELEMENT_NAME = "if";
-
-	private static final String[] _conditionNames =
-		{"and", "condition", "equals", "isset", "not", "or"};
+	private static final String _ELEMENT_NAME = "on";
 
 }

@@ -43,6 +43,8 @@
 					<execute macro="Alert#viewErrorMessage">
 						<var name="errorMessage" value="A configuration with this ID already exists. Please enter a unique ID." />
 					</execute>
+
+					<echo message="Please enter a unique ID." />
 				</then>
 				<else>
 					<execute macro="Alert#viewSuccessMessage" />
@@ -118,6 +120,16 @@
 		</if>
 
 		<if>
+			<condition function="IsElementPresent" locator1="Blogs#ADD_BLOGS_ENTRY" />
+			<then>
+				<execute macro="Alert#viewSuccessMessage" />
+			</then>
+			<else>
+				<fail message="Element not present" />
+            </else>
+		</if>
+
+		<if>
 			<and>
 				<condition function="IsElementPresent" locator1="Blogs#ADD_BLOGS_ENTRY" />
 				<equals arg1="${check}" arg2="true" />
@@ -139,6 +151,19 @@
 			</then>
 		</if>
 
+		<if>
+			<condition function="IsElementPresent" locator1="Blogs#ADD_BLOGS_ENTRY" />
+			<then>
+				<execute macro="Alert#viewSuccessMessage" />
+			</then>
+			<elseif>
+				<equals arg1="${check}" arg2="true" />
+				<then>
+					<execute macro="Alert#viewErrorMessage" />
+				</then>
+			</elseif>
+		</if>
+
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />
@@ -151,6 +176,8 @@ document.getElementById('demo').innerHTML = 'FAIL';
 </script>]]></var>
 
 		<execute macro="Smoke#viewWelcomePage" />
+
+		<take-screenshot />
 
 		<while>
 			<condition function="IsElementPresent" locator1="AssetCategorization#TAGS_REMOVE_ICON_GENERIC" />
@@ -174,5 +201,56 @@ document.getElementById('demo').innerHTML = 'FAIL';
 		<execute function="Type" value1="Welcome" />
 
 		<execute function="AssertElementPresent#assertElementPresent" locator1="Home#PAGE" value1="Welcome" />
+	</command>
+
+	<command name="AddBlogsEntries" priority="4">
+		<description message="Ensure that a user can add multiple Blogs Entries." />
+
+		<property name="testray.component.names" value="Blogs" />
+		<property name="testray.main.component.name" value="Blogs" />
+
+		<task summary="Add a blogs entry called 'Blogs Entry1 Title' with content 'Blogs Entry1 Content'">
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoPortlet">
+				<var name="category" value="Content" />
+				<var name="panel" value="Site Administration" />
+				<var name="portlet" value="Blogs" />
+			</execute>
+
+			<execute macro="Blogs#addEntry">
+				<var name="entryContent" value="Blogs Entry1 Content" />
+				<var name="entryTitle" value="Blogs Entry1 Title" />
+			</execute>
+		</task>
+
+		<task summary="Add a blogs entry called 'Blogs Entry2 Title' with content 'Blogs Entry2 Content'">
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoPortlet">
+				<var name="category" value="Content" />
+				<var name="panel" value="Site Administration" />
+				<var name="portlet" value="Blogs" />
+			</execute>
+
+			<execute macro="Blogs#addEntry">
+				<var name="entryContent" value="Blogs Entry2 Content" />
+				<var name="entryTitle" value="Blogs Entry2 Title" />
+			</execute>
+		</task>
+	</command>
+
+	<command name="GotoLinkToPageChildPages">
+		<var name="key_pageName" value="${parentPage}" />
+
+		<toggle name="LPS-68869">
+			<on>
+				<execute function="Click" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_TOGGLER" />
+			</on>
+
+			<off>
+				<execute function="Click" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_CARET" />
+			</off>
+		</toggle>
 	</command>
 </definition>

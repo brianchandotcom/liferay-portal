@@ -19,12 +19,12 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class EchoPoshiElement extends BasePoshiElement {
+public class ElseIfPoshiElement extends IfPoshiElement {
 
 	@Override
 	public PoshiElement clone(Element element) {
 		if (isElementType(_ELEMENT_NAME, element)) {
-			return new EchoPoshiElement(element);
+			return new ElseIfPoshiElement(element);
 		}
 
 		return null;
@@ -35,7 +35,7 @@ public class EchoPoshiElement extends BasePoshiElement {
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
 		if (_isElementType(readableSyntax)) {
-			return new EchoPoshiElement(readableSyntax);
+			return new ElseIfPoshiElement(readableSyntax);
 		}
 
 		return null;
@@ -43,54 +43,46 @@ public class EchoPoshiElement extends BasePoshiElement {
 
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
-		String content = getQuotedContent(readableSyntax);
+		for (String readableBlock : getReadableBlocks(readableSyntax)) {
+			if (readableBlock.startsWith("else if (")) {
+				add(
+					PoshiElementFactory.newPoshiElement(
+						this, getParentheticalContent(readableBlock)));
 
-		addAttribute("message", content);
+				continue;
+			}
+
+			add(PoshiElementFactory.newPoshiElement(this, readableBlock));
+		}
 	}
 
 	@Override
 	public String toReadableSyntax() {
-		String message = attributeValue("message");
-
-		return createReadableBlock(message);
-	}
-
-	protected EchoPoshiElement() {
-	}
-
-	protected EchoPoshiElement(Element element) {
-		super(_ELEMENT_NAME, element);
-	}
-
-	protected EchoPoshiElement(String readableSyntax) {
-		super(_ELEMENT_NAME, readableSyntax);
-	}
-
-	protected EchoPoshiElement(String name, Element element) {
-		super(name, element);
-	}
-
-	protected EchoPoshiElement(String name, String readableSyntax) {
-		super(name, readableSyntax);
-	}
-
-	@Override
-	protected String createReadableBlock(String content) {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("\n\n");
-		sb.append(getPad());
-		sb.append(getBlockName());
-		sb.append("(\"");
-		sb.append(content.trim());
-		sb.append("\");");
+		PoshiElement thenElement = (PoshiElement)element("then");
+
+		String thenReadableSyntax = thenElement.toReadableSyntax();
+
+		sb.append(createReadableBlock(thenReadableSyntax));
 
 		return sb.toString();
 	}
 
+	protected ElseIfPoshiElement() {
+	}
+
+	protected ElseIfPoshiElement(Element element) {
+		super(_ELEMENT_NAME, element);
+	}
+
+	protected ElseIfPoshiElement(String readableSyntax) {
+		super(_ELEMENT_NAME, readableSyntax);
+	}
+
 	@Override
-	protected String getBlockName() {
-		return "echo";
+	protected String getReadableName() {
+		return "else if";
 	}
 
 	private boolean _isElementType(String readableSyntax) {
@@ -100,17 +92,17 @@ public class EchoPoshiElement extends BasePoshiElement {
 			return false;
 		}
 
-		if (!readableSyntax.endsWith(");")) {
+		if (!readableSyntax.startsWith("else if (")) {
 			return false;
 		}
 
-		if (!readableSyntax.startsWith("echo(")) {
+		if (!readableSyntax.endsWith("}")) {
 			return false;
 		}
 
 		return true;
 	}
 
-	private static final String _ELEMENT_NAME = "echo";
+	private static final String _ELEMENT_NAME = "elseif";
 
 }

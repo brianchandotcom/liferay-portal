@@ -14,10 +14,12 @@
 
 package com.liferay.petra.io.unsync;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
-import java.io.IOException;
 import java.io.Reader;
+
+import java.lang.reflect.Field;
 
 import java.util.List;
 
@@ -42,35 +44,40 @@ public class UnsyncStringReaderTest extends BaseReaderTestCase {
 		};
 
 	@Test
-	public void testClose() throws IOException {
+	public void testClose() throws Exception {
 		UnsyncStringReader unsyncStringReader = new UnsyncStringReader(
 			"abcdefg");
 
 		unsyncStringReader.close();
 
-		Assert.assertTrue(unsyncStringReader.string == null);
+		Assert.assertNull(_stringField.get(unsyncStringReader));
 
 		testClose(unsyncStringReader, "String is null");
 	}
 
 	@Test
-	public void testConstructor() {
+	public void testConstructor() throws Exception {
 		new BoundaryCheckerUtil();
 
 		UnsyncStringReader unsyncStringReader = new UnsyncStringReader("abc");
 
-		Assert.assertEquals("abc", unsyncStringReader.string);
-		Assert.assertEquals(3, unsyncStringReader.stringLength);
+		Assert.assertEquals("abc", _stringField.get(unsyncStringReader));
+		Assert.assertEquals(3, _stringLengthField.getInt(unsyncStringReader));
 
 		unsyncStringReader = new UnsyncStringReader("defg");
 
-		Assert.assertEquals("defg", unsyncStringReader.string);
-		Assert.assertEquals(4, unsyncStringReader.stringLength);
+		Assert.assertEquals("defg", _stringField.get(unsyncStringReader));
+		Assert.assertEquals(4, _stringLengthField.getInt(unsyncStringReader));
 	}
 
 	@Override
 	protected Reader getReader(String s) {
 		return new UnsyncStringReader(s);
 	}
+
+	private static final Field _stringField = ReflectionTestUtil.getField(
+		UnsyncStringReader.class, "_string");
+	private static final Field _stringLengthField = ReflectionTestUtil.getField(
+		UnsyncStringReader.class, "_stringLength");
 
 }

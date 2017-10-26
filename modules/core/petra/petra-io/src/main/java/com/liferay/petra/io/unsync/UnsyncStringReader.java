@@ -27,23 +27,23 @@ import java.io.Reader;
 public class UnsyncStringReader extends Reader {
 
 	public UnsyncStringReader(String string) {
-		this.string = string;
+		_string = string;
 
-		stringLength = string.length();
+		_stringLength = string.length();
 	}
 
 	@Override
 	public void close() {
-		string = null;
+		_string = null;
 	}
 
 	@Override
 	public void mark(int readAheadLimit) throws IOException {
-		if (string == null) {
+		if (_string == null) {
 			throw new IOException("String is null");
 		}
 
-		markIndex = index;
+		_markIndex = _index;
 	}
 
 	@Override
@@ -53,15 +53,15 @@ public class UnsyncStringReader extends Reader {
 
 	@Override
 	public int read() throws IOException {
-		if (string == null) {
+		if (_string == null) {
 			throw new IOException("String is null");
 		}
 
-		if (index >= stringLength) {
+		if (_index >= _stringLength) {
 			return -1;
 		}
 
-		return string.charAt(index++);
+		return _string.charAt(_index++);
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public class UnsyncStringReader extends Reader {
 
 	@Override
 	public int read(char[] chars, int offset, int length) throws IOException {
-		if (string == null) {
+		if (_string == null) {
 			throw new IOException("String is null");
 		}
 
@@ -81,26 +81,26 @@ public class UnsyncStringReader extends Reader {
 			return 0;
 		}
 
-		if (index >= stringLength) {
+		if (_index >= _stringLength) {
 			return -1;
 		}
 
 		int read = length;
 
-		if ((index + read) > stringLength) {
-			read = stringLength - index;
+		if ((_index + read) > _stringLength) {
+			read = _stringLength - _index;
 		}
 
-		string.getChars(index, index + read, chars, offset);
+		_string.getChars(_index, _index + read, chars, offset);
 
-		index += read;
+		_index += read;
 
 		return read;
 	}
 
 	@Override
 	public boolean ready() throws IOException {
-		if (string == null) {
+		if (_string == null) {
 			throw new IOException("String is null");
 		}
 
@@ -109,11 +109,11 @@ public class UnsyncStringReader extends Reader {
 
 	@Override
 	public void reset() throws IOException {
-		if (string == null) {
+		if (_string == null) {
 			throw new IOException("String is null");
 		}
 
-		index = markIndex;
+		_index = _markIndex;
 	}
 
 	@Override
@@ -122,26 +122,26 @@ public class UnsyncStringReader extends Reader {
 			throw new IllegalArgumentException("skip value is negative");
 		}
 
-		if (string == null) {
+		if (_string == null) {
 			throw new IOException("String is null");
 		}
 
-		if (index >= stringLength) {
+		if (_index >= _stringLength) {
 			return 0;
 		}
 
-		if ((skip + index) > stringLength) {
-			skip = stringLength - index;
+		if ((skip + _index) > _stringLength) {
+			skip = _stringLength - _index;
 		}
 
-		index += skip;
+		_index += skip;
 
 		return skip;
 	}
 
-	protected int index;
-	protected int markIndex;
-	protected String string;
-	protected int stringLength;
+	private int _index;
+	private int _markIndex;
+	private String _string;
+	private final int _stringLength;
 
 }

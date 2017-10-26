@@ -79,21 +79,15 @@ public class PortletSessionImplTest {
 			AspectJNewEnvTestRule.INSTANCE, CodeCoverageAssertor.INSTANCE);
 
 	@Before
-	public void setUp() {
-		for (Class<?> declaredClass :
-				PortletSessionImpl.class.getDeclaredClasses()) {
+	public void setUp() throws ClassNotFoundException {
+		ClassLoader classLoader = PortletSessionImpl.class.getClassLoader();
 
-			String declaredClassName = declaredClass.getSimpleName();
+		_lazySerializableClass = classLoader.loadClass(
+			PortletSessionImpl.class.getName() + "$LazySerializable");
 
-			if (declaredClassName.equals("LazySerializable")) {
-				_lazySerializableClass = declaredClass;
-			}
-			else if (declaredClassName.equals(
-						"LazySerializableObjectWrapper")) {
-
-				_lazySerializableObjectWrapperClass = declaredClass;
-			}
-		}
+		_lazySerializableObjectWrapperClass = classLoader.loadClass(
+			PortletSessionImpl.class.getName() +
+				"$LazySerializableObjectWrapper");
 	}
 
 	@AdviseWith(adviceClasses = PropsUtilAdvice.class)

@@ -203,6 +203,8 @@ public class CommerceAddressLocalServiceImpl
 		commerceAddress.setZip(zip);
 		commerceAddress.setCommerceRegionId(commerceRegionId);
 		commerceAddress.setCommerceCountryId(commerceCountryId);
+		commerceAddress.setLatitude(0);
+		commerceAddress.setLongitude(0);
 		commerceAddress.setPhoneNumber(phoneNumber);
 		commerceAddress.setDefaultBilling(defaultBilling);
 		commerceAddress.setDefaultShipping(defaultShipping);

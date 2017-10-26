@@ -192,8 +192,6 @@
 		<execute function="Type" locator1="SitePages#JAVASCRIPT_TEXTAREA" value1="${javaScript}" />
 
 		<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
-
-		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="addPageCategory">
@@ -499,9 +497,7 @@
 			<var name="name" value="${pageNameEdit}" />
 		</execute>
 
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#SAVE" value1="Save" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Button#clickSave" />
 	</command>
 
 	<command name="editPageLayoutColumn">
@@ -509,9 +505,7 @@
 
 		<execute function="Click" locator1="SitePagesEditPage#LAYOUT_CARD" />
 
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#SAVE" value1="Save" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Button#clickSave" />
 	</command>
 
 	<command name="editPageMetadata">
@@ -521,9 +515,7 @@
 
 		<execute function="Type#typeClickAt" locator1="TextArea#SEO_META_TAGS_KEYWORDS" value1="${metaTagsKeywords}" />
 
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#SAVE" value1="Save" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Button#clickSave" />
 	</command>
 
 	<command name="editPageTypeLayout">
@@ -531,7 +523,7 @@
 
 		<execute function="Click" locator1="SitePagesEditPage#LAYOUT_CARD" />
 
-		<execute macro="PortletEntry#save" />
+		<execute macro="Button#clickSave" />
 	</command>
 
 	<command name="editSelectPageType">
@@ -577,7 +569,7 @@
 
 		<execute function="Pause" locator1="3000" />
 
-		<execute macro="PortletEntry#save" />
+		<execute macro="Button#clickSave" />
 	</command>
 
 	<command name="firstPageCanNotBeOfTypeLinkToURL">

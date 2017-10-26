@@ -15,11 +15,13 @@
 package com.liferay.commerce.warehouse.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.exception.CommerceGeocoderException;
 import com.liferay.commerce.exception.CommerceWarehouseCommerceRegionIdException;
 import com.liferay.commerce.exception.CommerceWarehouseNameException;
 import com.liferay.commerce.exception.NoSuchWarehouseException;
 import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.service.CommerceWarehouseService;
+import com.liferay.commerce.warehouse.web.internal.util.WarehousesCommerceAdminModule;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -83,6 +85,10 @@ public class EditCommerceWarehouseMVCActionCommand
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
+			if (cmd.equals("geolocate")) {
+				geolocateCommerceWarehouse(actionRequest);
+			}
+
 			if (cmd.equals(Constants.DELETE)) {
 				deleteCommerceWarehouses(actionRequest);
 			}
@@ -93,8 +99,17 @@ public class EditCommerceWarehouseMVCActionCommand
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchWarehouseException ||
-				e instanceof PrincipalException) {
+			if (e instanceof CommerceGeocoderException) {
+				hideDefaultErrorMessage(actionRequest);
+
+				SessionErrors.add(actionRequest, e.getClass(), e.getMessage());
+
+				actionResponse.setRenderParameter(
+					"commerceAdminModuleKey",
+					WarehousesCommerceAdminModule.KEY);
+			}
+			else if (e instanceof NoSuchWarehouseException ||
+					 e instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
@@ -115,6 +130,16 @@ public class EditCommerceWarehouseMVCActionCommand
 				throw e;
 			}
 		}
+	}
+
+	protected void geolocateCommerceWarehouse(ActionRequest actionRequest)
+		throws PortalException {
+
+		long commerceWarehouseId = ParamUtil.getLong(
+			actionRequest, "commerceWarehouseId");
+
+		_commerceWarehouseService.geolocateCommerceWarehouse(
+			commerceWarehouseId);
 	}
 
 	protected CommerceWarehouse updateCommerceWarehouse(

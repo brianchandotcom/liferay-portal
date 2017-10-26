@@ -65,6 +65,23 @@ public class CommerceWarehouseServiceImpl
 	}
 
 	@Override
+	public CommerceWarehouse geolocateCommerceWarehouse(
+			long commerceWarehouseId)
+		throws PortalException {
+
+		CommerceWarehouse commerceWarehouse =
+			commerceWarehouseLocalService.getCommerceWarehouse(
+				commerceWarehouseId);
+
+		CommercePermission.check(
+			getPermissionChecker(), commerceWarehouse.getGroupId(),
+			CommerceActionKeys.MANAGE_COMMERCE_WAREHOUSES);
+
+		return commerceWarehouseLocalService.geolocateCommerceWarehouse(
+			commerceWarehouse.getCommerceWarehouseId());
+	}
+
+	@Override
 	public CommerceWarehouse getCommerceWarehouse(long commerceWarehouseId)
 		throws PortalException {
 

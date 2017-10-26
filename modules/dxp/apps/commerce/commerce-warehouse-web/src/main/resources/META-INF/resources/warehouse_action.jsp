@@ -35,6 +35,17 @@ CommerceWarehouse commerceWarehouse = (CommerceWarehouse)row.getObject();
 			url="<%= editURL %>"
 		/>
 
+		<portlet:actionURL name="editCommerceWarehouse" var="geolocateURL">
+			<portlet:param name="<%= Constants.CMD %>" value="geolocate" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="commerceWarehouseId" value="<%= String.valueOf(commerceWarehouse.getCommerceWarehouseId()) %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon
+			message="geolocate"
+			url="<%= geolocateURL %>"
+		/>
+
 		<portlet:actionURL name="editCommerceWarehouse" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

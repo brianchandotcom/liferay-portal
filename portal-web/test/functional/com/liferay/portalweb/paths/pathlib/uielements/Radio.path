@@ -39,11 +39,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CUSTOM_ID</td>
-	<td>//label[contains(.,'Custom')]/input[contains(@id,'AdaptiveMedia') and @type='radio']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FIRST_400_ABSTRACT</td>
 	<td>//label[contains(.,'first 400 characters')]/input[contains(@id,'customAbstract')]</td>
 	<td></td>

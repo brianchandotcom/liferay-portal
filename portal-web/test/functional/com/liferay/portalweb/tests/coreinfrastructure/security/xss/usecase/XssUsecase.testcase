@@ -135,7 +135,7 @@
 
 		<execute function="AssertElementNotPresent" locator1="//body[.='XSS']" />
 
-		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Public Pages" />
+		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Pages" />
 
 		<var name="key_siteName" value="${siteName}" />
 

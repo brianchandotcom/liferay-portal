@@ -51,7 +51,7 @@
 		</if>
 	</command>
 
-	<command name="addPageCP">
+	<command name="gotoAddPageCP">
 		<var name="key_userGroupName" value="${userGroupName}" />
 
 		<execute function="Type" locator1="TextInput#SEARCH" value1="${userGroupName}" />
@@ -62,13 +62,6 @@
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Manage Pages">
 			<var name="key_menuItem" value="Manage Pages" />
-		</execute>
-
-		<execute function="Pause" locator1="5000" />
-
-		<execute macro="Page#add">
-			<var name="pageName" value="${pageName}" />
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
 		</execute>
 	</command>
 

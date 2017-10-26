@@ -204,9 +204,7 @@
 			<var name="portlet" value="User Groups" />
 		</execute>
 
-		<execute macro="UserGroup#addPageCP">
-			<var name="pageName" value="Test User Group Private Page" />
-			<var name="sitePagePrivacy" value="Private" />
+		<execute macro="UserGroup#gotoAddPageCP">
 			<var name="userGroupName" value="UG UserGroup Name" />
 		</execute>
 

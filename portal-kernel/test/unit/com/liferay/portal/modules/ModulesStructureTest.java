@@ -97,7 +97,9 @@ public class ModulesStructureTest {
 
 					String dirName = String.valueOf(dirPath.getFileName());
 
-					if (dirName.charAt(0) == '.') {
+					if ((dirName.charAt(0) == '.') ||
+						dirName.equals("node_modules")) {
+
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
@@ -677,10 +679,6 @@ public class ModulesStructureTest {
 	}
 
 	private void _testAntPluginIgnoreFiles(Path dirPath) throws IOException {
-		if (_isInPrivateModulesDir(dirPath)) {
-			return;
-		}
-
 		if (_getGitRepoPath(dirPath) == null) {
 			Path parentDirPath = dirPath.getParent();
 
@@ -770,14 +768,11 @@ public class ModulesStructureTest {
 		Path gradlePropertiesPath = dirPath.resolve("gradle.properties");
 		Path settingsGradlePath = dirPath.resolve("settings.gradle");
 
-		if (!_isInGitRepoReadOnly(dirPath)) {
-			String buildGradle = ModulesStructureTestUtil.read(buildGradlePath);
+		String buildGradle = ModulesStructureTestUtil.read(buildGradlePath);
 
-			Assert.assertEquals(
-				"Incorrect " + buildGradlePath,
-				_getGitRepoBuildGradle(dirPath, buildGradleTemplate),
-				buildGradle);
-		}
+		Assert.assertEquals(
+			"Incorrect " + buildGradlePath,
+			_getGitRepoBuildGradle(dirPath, buildGradleTemplate), buildGradle);
 
 		String gradleProperties = ModulesStructureTestUtil.read(
 			gradlePropertiesPath);
@@ -954,7 +949,7 @@ public class ModulesStructureTest {
 			return;
 		}
 
-		if (_isInGitRepoReadOnly(dirPath) || _isInPrivateModulesDir(dirPath)) {
+		if (_isInGitRepoReadOnly(dirPath)) {
 			return;
 		}
 
@@ -1029,35 +1024,31 @@ public class ModulesStructureTest {
 
 		Map<String, Boolean> allowedConfigurationsMap = new TreeMap<>();
 
-		if (!_isInGitRepoReadOnly(dirPath)) {
-			boolean hasSrcMainDir = Files.exists(dirPath.resolve("src/main"));
-			boolean hasSrcTestDir = Files.exists(dirPath.resolve("src/test"));
-			boolean hasSrcTestIntegrationDir = Files.exists(
-				dirPath.resolve("src/testIntegration"));
+		boolean hasSrcMainDir = Files.exists(dirPath.resolve("src/main"));
+		boolean hasSrcTestDir = Files.exists(dirPath.resolve("src/test"));
+		boolean hasSrcTestIntegrationDir = Files.exists(
+			dirPath.resolve("src/testIntegration"));
 
-			boolean mainConfigurationsAllowed = false;
+		boolean mainConfigurationsAllowed = false;
 
-			if (hasSrcMainDir ||
-				(!hasSrcMainDir && !hasSrcTestDir &&
-				 !hasSrcTestIntegrationDir) ||
-				content.contains("copyLibs {\n\tenabled = true")) {
+		if (hasSrcMainDir ||
+			(!hasSrcMainDir && !hasSrcTestDir && !hasSrcTestIntegrationDir) ||
+			content.contains("copyLibs {\n\tenabled = true")) {
 
-				mainConfigurationsAllowed = true;
-			}
-
-			allowedConfigurationsMap.put("compile", mainConfigurationsAllowed);
-			allowedConfigurationsMap.put(
-				"compileOnly", mainConfigurationsAllowed);
-			allowedConfigurationsMap.put("provided", mainConfigurationsAllowed);
-
-			allowedConfigurationsMap.put("testCompile", hasSrcTestDir);
-			allowedConfigurationsMap.put("testRuntime", hasSrcTestDir);
-
-			allowedConfigurationsMap.put(
-				"testIntegrationCompile", hasSrcTestIntegrationDir);
-			allowedConfigurationsMap.put(
-				"testIntegrationRuntime", hasSrcTestIntegrationDir);
+			mainConfigurationsAllowed = true;
 		}
+
+		allowedConfigurationsMap.put("compile", mainConfigurationsAllowed);
+		allowedConfigurationsMap.put("compileOnly", mainConfigurationsAllowed);
+		allowedConfigurationsMap.put("provided", mainConfigurationsAllowed);
+
+		allowedConfigurationsMap.put("testCompile", hasSrcTestDir);
+		allowedConfigurationsMap.put("testRuntime", hasSrcTestDir);
+
+		allowedConfigurationsMap.put(
+			"testIntegrationCompile", hasSrcTestIntegrationDir);
+		allowedConfigurationsMap.put(
+			"testIntegrationRuntime", hasSrcTestIntegrationDir);
 
 		for (GradleDependency gradleDependency : gradleDependencies) {
 			Boolean allowed = allowedConfigurationsMap.get(

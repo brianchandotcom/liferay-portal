@@ -446,7 +446,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 			fieldName = columnName;
 		}
 		else if (getCompoundPKColumnNames().contains(fieldName)) {
-			fieldName = "id." + fieldName;
+			fieldName = "id.".concat(fieldName);
 		}
 
 		fieldName = entityAlias.concat(fieldName);

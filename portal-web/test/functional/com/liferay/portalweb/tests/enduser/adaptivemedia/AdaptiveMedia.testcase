@@ -341,6 +341,10 @@
 			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Adaptive Media" />
 		</execute>
+
+		<execute macro="AdaptiveMedia#viewNoImageResolution">
+			<var name="imageName" value="Small Image Variant" />
+		</execute>
 	</command>
 
 	<command name="EditAndDeleteDisabledAMI" priority="5">

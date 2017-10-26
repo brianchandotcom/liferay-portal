@@ -1965,7 +1965,7 @@ public class ProjectTemplatesTest {
 
 		List<String> completeArgs = new ArrayList<>(args.length + 6);
 
-		completeArgs.add("--archetypesDir");
+		completeArgs.add("--archetypes-dir");
 
 		File jarFile = FileUtil.getJarFile(ProjectTemplatesTest.class);
 

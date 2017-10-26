@@ -144,7 +144,7 @@ public class ProjectTemplatesArgs {
 		return _list;
 	}
 
-	@Parameter(hidden = true, names = "--archetypesDir")
+	@Parameter(hidden = true, names = "--archetypes-dir")
 	private File _archetypesDir;
 
 	@Parameter(

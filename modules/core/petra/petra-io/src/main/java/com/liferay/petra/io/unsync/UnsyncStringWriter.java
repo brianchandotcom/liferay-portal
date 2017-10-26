@@ -34,19 +34,19 @@ public class UnsyncStringWriter extends Writer {
 
 	public UnsyncStringWriter(boolean useStringBundler) {
 		if (useStringBundler) {
-			stringBundler = new StringBundler();
+			_stringBundler = new StringBundler();
 		}
 		else {
-			stringBuilder = new StringBuilder();
+			_stringBuilder = new StringBuilder();
 		}
 	}
 
 	public UnsyncStringWriter(boolean useStringBundler, int initialCapacity) {
 		if (useStringBundler) {
-			stringBundler = new StringBundler(initialCapacity);
+			_stringBundler = new StringBundler(initialCapacity);
 		}
 		else {
-			stringBuilder = new StringBuilder(initialCapacity);
+			_stringBuilder = new StringBuilder(initialCapacity);
 		}
 	}
 
@@ -95,29 +95,29 @@ public class UnsyncStringWriter extends Writer {
 	}
 
 	public StringBuilder getStringBuilder() {
-		return stringBuilder;
+		return _stringBuilder;
 	}
 
 	public StringBundler getStringBundler() {
-		return stringBundler;
+		return _stringBundler;
 	}
 
 	public void reset() {
-		if (stringBundler != null) {
-			stringBundler.setIndex(0);
+		if (_stringBundler != null) {
+			_stringBundler.setIndex(0);
 		}
 		else {
-			stringBuilder.setLength(0);
+			_stringBuilder.setLength(0);
 		}
 	}
 
 	@Override
 	public String toString() {
-		if (stringBundler != null) {
-			return stringBundler.toString();
+		if (_stringBundler != null) {
+			return _stringBundler.toString();
 		}
 		else {
-			return stringBuilder.toString();
+			return _stringBuilder.toString();
 		}
 	}
 
@@ -134,38 +134,38 @@ public class UnsyncStringWriter extends Writer {
 			return;
 		}
 
-		if (stringBundler != null) {
-			stringBundler.append(new String(chars, offset, length));
+		if (_stringBundler != null) {
+			_stringBundler.append(new String(chars, offset, length));
 		}
 		else {
-			stringBuilder.append(chars, offset, length);
+			_stringBuilder.append(chars, offset, length);
 		}
 	}
 
 	@Override
 	public void write(int c) {
-		if (stringBundler != null) {
+		if (_stringBundler != null) {
 			char ch = (char)c;
 
 			if (ch <= 127) {
-				stringBundler.append(StringPool.ASCII_TABLE[ch]);
+				_stringBundler.append(StringPool.ASCII_TABLE[ch]);
 			}
 			else {
-				stringBundler.append(String.valueOf(ch));
+				_stringBundler.append(String.valueOf(ch));
 			}
 		}
 		else {
-			stringBuilder.append((char)c);
+			_stringBuilder.append((char)c);
 		}
 	}
 
 	@Override
 	public void write(String string) {
-		if (stringBundler != null) {
-			stringBundler.append(string);
+		if (_stringBundler != null) {
+			_stringBundler.append(string);
 		}
 		else {
-			stringBuilder.append(string);
+			_stringBuilder.append(string);
 		}
 	}
 
@@ -176,15 +176,15 @@ public class UnsyncStringWriter extends Writer {
 
 			write(string);
 		}
-		else if (stringBundler != null) {
-			stringBundler.append(string.substring(offset, offset + length));
+		else if (_stringBundler != null) {
+			_stringBundler.append(string.substring(offset, offset + length));
 		}
 		else {
-			stringBuilder.append(string.substring(offset, offset + length));
+			_stringBuilder.append(string.substring(offset, offset + length));
 		}
 	}
 
-	protected StringBuilder stringBuilder;
-	protected StringBundler stringBundler;
+	private StringBuilder _stringBuilder;
+	private StringBundler _stringBundler;
 
 }

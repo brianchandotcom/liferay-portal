@@ -1606,8 +1606,9 @@
 			<var name="saveButton" value="Save" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoLocalizedSitesAdministration">
+		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Contenido" />
+			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Formularios" />
 		</execute>
 

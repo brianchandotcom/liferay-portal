@@ -3,6 +3,18 @@ import aQute.bnd.osgi.Domain
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
+buildscript {
+	dependencies {
+		classpath group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.2.0"
+	}
+
+	repositories {
+		maven {
+			url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
 task writeProjectTemplateVersions
 
 File mavenWrapperPropertiesFile = file("src/main/resources/maven-wrapper/.mvn/wrapper/maven-wrapper.properties")
@@ -15,18 +27,6 @@ mavenDistributionVersion = mavenDistributionVersion.find(/\d+\.\d+\.\d+/)
 
 Set<Project> projectTemplateProjects = project.parent.subprojects.findAll {
 	it.name.startsWith "project-templates-"
-}
-
-buildscript {
-	dependencies {
-		classpath group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.2.0"
-	}
-
-	repositories {
-		maven {
-			url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
-		}
-	}
 }
 
 bundle {

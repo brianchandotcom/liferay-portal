@@ -260,9 +260,7 @@ public class LocalProcessExecutor implements ProcessExecutor {
 					ProcessCallable<?> processCallable =
 						(ProcessCallable<?>)obj;
 
-					if (processCallable instanceof ExceptionProcessCallable ||
-						processCallable instanceof ReturnProcessCallable) {
-
+					if (processCallable instanceof ResultProcessCallable) {
 						resultProcessCallable =
 							(ProcessCallable<T>)processCallable;
 

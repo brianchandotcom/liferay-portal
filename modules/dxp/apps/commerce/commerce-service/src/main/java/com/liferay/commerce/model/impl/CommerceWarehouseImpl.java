@@ -55,4 +55,13 @@ public class CommerceWarehouseImpl extends CommerceWarehouseBaseImpl {
 		return null;
 	}
 
+	@Override
+	public boolean isGeolocated() {
+		if ((getLatitude() == 0) && (getLongitude() == 0)) {
+			return false;
+		}
+
+		return true;
+	}
+
 }

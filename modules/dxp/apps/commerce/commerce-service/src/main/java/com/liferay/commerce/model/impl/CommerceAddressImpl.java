@@ -55,4 +55,13 @@ public class CommerceAddressImpl extends CommerceAddressBaseImpl {
 		return null;
 	}
 
+	@Override
+	public boolean isGeolocated() {
+		if ((getLatitude() == 0) && (getLongitude() == 0)) {
+			return false;
+		}
+
+		return true;
+	}
+
 }

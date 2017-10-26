@@ -1,19 +1,5 @@
-import aQute.bnd.osgi.Domain
-
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
-
-buildscript {
-	dependencies {
-		classpath group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.2.0"
-	}
-
-	repositories {
-		maven {
-			url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
-		}
-	}
-}
 
 task writeProjectTemplateVersions
 
@@ -185,11 +171,16 @@ writeProjectTemplateVersions {
 	doLast {
 		Properties properties = new Properties()
 
-		for (File projectTemplateTestFile in configurations.projectTemplatesTests) {
-			Domain domain = Domain.domain(projectTemplateTestFile)
-			String bundleSymbolicName = domain.bundleSymbolicName.key
-			String bundleVersion = domain.bundleVersion
-			properties.setProperty bundleSymbolicName, bundleVersion
+		for (Project projectTemplateProject in projectTemplateProjects) {
+			File bndFile = projectTemplateProject.file("bnd.bnd")
+
+			Properties bndProperties = new Properties()
+
+			bndFile.withInputStream {
+				bndProperties.load it
+			}
+
+			properties.setProperty bndProperties["Bundle-SymbolicName"], bndProperties["Bundle-Version"]
 		}
 
 		File projectTemplateVersionsFile = new File(buildDir, "project-template-versions.properties")

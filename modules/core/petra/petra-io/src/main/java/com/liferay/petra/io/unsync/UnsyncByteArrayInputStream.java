@@ -26,28 +26,28 @@ import java.io.InputStream;
 public class UnsyncByteArrayInputStream extends InputStream {
 
 	public UnsyncByteArrayInputStream(byte[] buffer) {
-		this.buffer = buffer;
+		_buffer = buffer;
 
-		index = 0;
-		capacity = buffer.length;
+		_index = 0;
+		_capacity = buffer.length;
 	}
 
 	public UnsyncByteArrayInputStream(byte[] buffer, int offset, int length) {
-		this.buffer = buffer;
+		_buffer = buffer;
 
-		index = offset;
-		capacity = Math.min(buffer.length, offset + length);
-		markIndex = offset;
+		_index = offset;
+		_capacity = Math.min(buffer.length, offset + length);
+		_markIndex = offset;
 	}
 
 	@Override
 	public int available() {
-		return capacity - index;
+		return _capacity - _index;
 	}
 
 	@Override
 	public void mark(int readAheadLimit) {
-		markIndex = index;
+		_markIndex = _index;
 	}
 
 	@Override
@@ -57,8 +57,8 @@ public class UnsyncByteArrayInputStream extends InputStream {
 
 	@Override
 	public int read() {
-		if (index < capacity) {
-			return buffer[index++] & 0xff;
+		if (_index < _capacity) {
+			return _buffer[_index++] & 0xff;
 		}
 		else {
 			return -1;
@@ -80,26 +80,26 @@ public class UnsyncByteArrayInputStream extends InputStream {
 			return 0;
 		}
 
-		if (index >= capacity) {
+		if (_index >= _capacity) {
 			return -1;
 		}
 
 		int read = length;
 
-		if ((index + read) > capacity) {
-			read = capacity - index;
+		if ((_index + read) > _capacity) {
+			read = _capacity - _index;
 		}
 
-		System.arraycopy(buffer, index, bytes, offset, read);
+		System.arraycopy(_buffer, _index, bytes, offset, read);
 
-		index += read;
+		_index += read;
 
 		return read;
 	}
 
 	@Override
 	public void reset() {
-		index = markIndex;
+		_index = _markIndex;
 	}
 
 	@Override
@@ -108,18 +108,18 @@ public class UnsyncByteArrayInputStream extends InputStream {
 			return 0;
 		}
 
-		if ((skip + index) > capacity) {
-			skip = capacity - index;
+		if ((skip + _index) > _capacity) {
+			skip = _capacity - _index;
 		}
 
-		index += skip;
+		_index += skip;
 
 		return skip;
 	}
 
-	protected byte[] buffer;
-	protected int capacity;
-	protected int index;
-	protected int markIndex;
+	private final byte[] _buffer;
+	private final int _capacity;
+	private int _index;
+	private int _markIndex;
 
 }

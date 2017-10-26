@@ -23,8 +23,6 @@ configurations {
 	mavenDistribution
 	projectTemplates
 	projectTemplatesTests
-
-	testCompile.extendsFrom(projectTemplatesTests)
 }
 
 dependencies {

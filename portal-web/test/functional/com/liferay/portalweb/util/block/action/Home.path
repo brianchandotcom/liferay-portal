@@ -218,7 +218,7 @@
 </tr>
 <tr>
 	<td>PAGE_ACTIVE</td>
-	<td>//div[contains(@class,'navbar')]/ul/li[contains(@class,'active')]/a[contains(.,'${key_pageName}')] | //div[contains(@id,'navbar')]/ul/li[contains(.,'${key_pageName}')]/a[contains(@class,'active')]</td>
+	<td>//div[contains(@id,'navbar')]/ul//*[contains(@class,'active')][normalize-space()='${key_pageName}']</td>
 	<td>Page</td>
 </tr>
 <tr>

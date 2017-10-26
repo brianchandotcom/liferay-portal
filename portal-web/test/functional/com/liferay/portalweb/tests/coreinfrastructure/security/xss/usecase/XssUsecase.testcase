@@ -231,6 +231,42 @@
 		<execute function="AssertElementNotPresent" locator1="//body[.='XSS']" />
 	</command>
 
+	<command name="ViewMobileDeviceRulesNoXSS">
+		<description message="This is a use case for LPS-42750." />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Mobile Device Families" />
+		</execute>
+
+		<execute macro="MobileDevice#addDeviceFamilyCP">
+			<var name="deviceFamilyName"><![CDATA[<script>alert(123);</script>]]></var>
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="Welcome" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Advanced" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Mobile Device Rules" />
+		</execute>
+
+		<execute macro="Page#disableMobileDeviceRulesAreInheritedFromPublicPages" />
+
+		<execute macro="Page#selectMobileDeviceFamily">
+			<var name="deviceFamilyName"><![CDATA[<script>alert(123);</script>]]></var>
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="//body[.='123']" />
+	</command>
+
 	<command name="ViewRecycleBinNoXSS" priority="5">
 		<var name="entryTitle"><![CDATA[<script>document.write("XSS"); window.stop();</script>]]></var>
 

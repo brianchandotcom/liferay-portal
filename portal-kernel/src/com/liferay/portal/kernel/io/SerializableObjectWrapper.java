@@ -29,8 +29,7 @@ import java.util.Arrays;
 
 /**
  * @author Tina Tian
- * @deprecated As of 7.0.0, replaced by {@link
- *						com.liferay.portal.util.SerializableObjectWrapper}
+ * @deprecated As of 7.0.0, with no direct replacement
  */
 @Deprecated
 public class SerializableObjectWrapper implements Externalizable {

@@ -77,7 +77,7 @@
 			<var name="pageName" value="Page2" />
 		</execute>
 
-		<execute macro="Page#deletePG">
+		<execute macro="SitePages#deletePage">
 			<var name="pageName" value="Page1" />
 		</execute>
 

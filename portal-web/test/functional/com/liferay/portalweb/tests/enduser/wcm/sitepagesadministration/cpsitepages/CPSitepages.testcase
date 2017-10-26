@@ -783,7 +783,7 @@
 			</execute>
 		</for>
 
-		<execute macro="Page#deletePG">
+		<execute macro="SitePages#deletePage">
 			<var name="pageName" value="Site Page 2" />
 		</execute>
 	</command>

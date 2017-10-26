@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.util.impl;
+package com.liferay.asset.util;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -28,9 +28,7 @@ import javax.portlet.PortletURL;
 
 /**
  * @author Preston Crary
- * @deprecated As of 1.2.0
  */
-@Deprecated
 public class AssetPublisherAddItemHolder
 	implements Comparable<AssetPublisherAddItemHolder> {
 

@@ -42,7 +42,7 @@ copyGradleTestDependencies {
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins", version: "3.5.23"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "1.0.12"
-	compile group: "com.liferay", name: "com.liferay.portal.tools.bundle.support", version: "3.2.0"
+	compile group: "com.liferay", name: "com.liferay.portal.tools.bundle.support", version: "3.2.1"
 	compile group: "de.undercouch", name: "gradle-download-task", version: "3.2.0"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi214], dir: new File(rootProject.buildDir, "gradle-2.14"))

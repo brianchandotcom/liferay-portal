@@ -127,9 +127,8 @@
 			<var name="entryTitle" value="Announcements Entry2 Scoped Title" />
 		</execute>
 
-		<execute macro="Navigator#gotoSitePage">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Announcements Page" />
-			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="AnnouncementsEntry#viewPG">
@@ -170,9 +169,8 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="Navigator#gotoSitePage">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Announcements Page" />
-			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="AnnouncementsEntry#viewViaEntriesPG">

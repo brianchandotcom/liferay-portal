@@ -898,8 +898,6 @@
 
 		<execute function="AssertLocation" value1="${portalURL}/web/liferay/site-page-name" />
 
-		<execute macro="Navigator#openURL" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Site Administration" />

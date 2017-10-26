@@ -172,13 +172,7 @@ writeProjectTemplateVersions {
 		Properties properties = new Properties()
 
 		for (Project projectTemplateProject in projectTemplateProjects) {
-			File bndFile = projectTemplateProject.file("bnd.bnd")
-
-			Properties bndProperties = new Properties()
-
-			bndFile.withInputStream {
-				bndProperties.load it
-			}
+			Properties bndProperties = GUtil.loadProperties(projectTemplateProject.file("bnd.bnd"))
 
 			properties.setProperty bndProperties["Bundle-SymbolicName"], bndProperties["Bundle-Version"]
 		}

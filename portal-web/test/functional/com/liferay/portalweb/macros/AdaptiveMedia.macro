@@ -150,7 +150,7 @@
 		<execute function="AssertElementNotPresent" locator1="Checkbox#ADD_HIGH_DENSITY_DISPLAY" />
 
 		<if>
-			<condition function="IsTextEqual" locator1="Message#INFO" value1="The images for this resolution are already adapted." />
+			<condition function="IsElementPresent" locator1="Message#INFO" value1="The images for this resolution are already adapted." />
 			<then>
 				<execute function="AssertNotEditable" locator1="TextInput#IMAGE_ID" />
 				<execute function="AssertNotEditable" locator1="TextInput#MAX_HEIGHT" />

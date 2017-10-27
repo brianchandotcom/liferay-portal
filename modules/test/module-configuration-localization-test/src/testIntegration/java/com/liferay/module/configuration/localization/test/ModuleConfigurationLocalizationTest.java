@@ -58,7 +58,7 @@ public class ModuleConfigurationLocalizationTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testBundleLocalization() {
+	public void testConfigurationLocalization() {
 		Bundle currentBundle = FrameworkUtil.getBundle(
 			ModuleConfigurationLocalizationTest.class);
 
@@ -137,23 +137,23 @@ public class ModuleConfigurationLocalizationTest {
 			LocaleUtil.getDefault());
 
 		for (String pid : pids) {
-			String metaInfoErrorMessage = _collectMetaInfoError(
+			String configurationError = _collectConfigurationError(
 				pid, extendedMetaTypeInformation, resourceBundle);
 
-			if (metaInfoErrorMessage.isEmpty()) {
+			if (configurationError.isEmpty()) {
 				continue;
 			}
 
 			sb.append("\n\tConfiguration {pid:");
 			sb.append(pid);
 			sb.append("}");
-			sb.append(metaInfoErrorMessage);
+			sb.append(configurationError);
 		}
 
 		return sb.toString();
 	}
 
-	private String _collectMetaInfoError(
+	private String _collectConfigurationError(
 		String pid, ExtendedMetaTypeInformation extendedMetaTypeInformation,
 		ResourceBundle resourceBundle) {
 

@@ -197,6 +197,21 @@ public abstract class BasePoshiElement
 		return false;
 	}
 
+	protected boolean isConditionValidInParent(
+		PoshiElement parentPoshiElement) {
+
+		if (parentPoshiElement instanceof AndPoshiElement ||
+			parentPoshiElement instanceof ElseIfPoshiElement ||
+			parentPoshiElement instanceof IfPoshiElement ||
+			parentPoshiElement instanceof NotPoshiElement ||
+			parentPoshiElement instanceof OrPoshiElement) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	protected boolean isValidReadableBlock(String readableSyntax) {
 		readableSyntax = readableSyntax.trim();
 

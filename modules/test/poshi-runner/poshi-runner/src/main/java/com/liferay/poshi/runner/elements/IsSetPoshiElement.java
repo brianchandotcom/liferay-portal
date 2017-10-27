@@ -76,7 +76,9 @@ public class IsSetPoshiElement extends BasePoshiElement {
 			return false;
 		}
 
-		if (readableSyntax.startsWith("!")) {
+		if (readableSyntax.startsWith("!") ||
+			readableSyntax.startsWith("else if (")) {
+
 			return false;
 		}
 

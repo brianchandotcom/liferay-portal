@@ -101,7 +101,9 @@ public class AndPoshiElement extends BasePoshiElement {
 			return false;
 		}
 
-		if (readableSyntax.contains(" || ")) {
+		if (readableSyntax.contains(" || ") ||
+			readableSyntax.startsWith("else if (")) {
+
 			return false;
 		}
 

@@ -96,7 +96,8 @@ public class EqualsPoshiElement extends BasePoshiElement {
 
 		if (readableSyntax.contains(" && ") ||
 			readableSyntax.contains(" || ") ||
-			readableSyntax.startsWith("!(")) {
+			readableSyntax.startsWith("!(") ||
+			readableSyntax.startsWith("else if (")) {
 
 			return false;
 		}

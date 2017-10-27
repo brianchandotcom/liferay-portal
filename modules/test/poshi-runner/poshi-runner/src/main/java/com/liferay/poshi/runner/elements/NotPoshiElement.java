@@ -88,6 +88,10 @@ public class NotPoshiElement extends BasePoshiElement {
 
 		readableSyntax = readableSyntax.trim();
 
+		if (readableSyntax.startsWith("else if (")) {
+			return false;
+		}
+
 		if (readableSyntax.startsWith("!")) {
 			return true;
 		}

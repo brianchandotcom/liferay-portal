@@ -79,7 +79,8 @@ public class ConditionPoshiElement extends ExecutePoshiElement {
 		}
 
 		if (readableSyntax.contains(" && ") ||
-			readableSyntax.contains(" || ") || readableSyntax.startsWith("!")) {
+			readableSyntax.contains(" || ") || readableSyntax.startsWith("!") ||
+			readableSyntax.startsWith("else if (")) {
 
 			return false;
 		}

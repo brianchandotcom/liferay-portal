@@ -101,6 +101,12 @@ public class OrPoshiElement extends BasePoshiElement {
 			return false;
 		}
 
+		if (readableSyntax.contains(" && ") ||
+			readableSyntax.startsWith("else if (")) {
+
+			return false;
+		}
+
 		if (readableSyntax.contains(" || ")) {
 			return true;
 		}

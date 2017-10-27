@@ -48,7 +48,9 @@ public class PortletResponseHeadersHelperImpl
 	public void transferHeaders(
 		Map<String, Object> headers, HttpServletResponse httpServletResponse) {
 
-		_portletResponseHeaders.set(true);
+		boolean transferringHeaders = _transferringHeaders.get();
+
+		_transferringHeaders.set(true);
 
 		try {
 			for (Map.Entry<String, Object> entry : headers.entrySet()) {
@@ -101,11 +103,11 @@ public class PortletResponseHeadersHelperImpl
 			}
 		}
 		finally {
-			_portletResponseHeaders.set(false);
+			_transferringHeaders.set(transferringHeaders);
 		}
 	}
 
-	private static final ThreadLocal<Boolean> _portletResponseHeaders =
+	private static final ThreadLocal<Boolean> _transferringHeaders =
 		new CentralizedThreadLocal<>(
 			PortletResponseHeadersHelperImpl.class +
 				"._portletResponseHeaders",
@@ -180,7 +182,7 @@ public class PortletResponseHeadersHelperImpl
 
 		@Override
 		public void addCookie(Cookie cookie) {
-			if (_portletResponseHeaders.get()) {
+			if (_transferringHeaders.get()) {
 				_headerActions.add(
 					new HeaderAction<>(cookie.getName(), cookie, false));
 
@@ -192,7 +194,7 @@ public class PortletResponseHeadersHelperImpl
 
 		@Override
 		public void addDateHeader(String name, long value) {
-			if (_portletResponseHeaders.get()) {
+			if (_transferringHeaders.get()) {
 				_headerActions.add(new HeaderAction<>(name, value, false));
 
 				return;
@@ -203,7 +205,7 @@ public class PortletResponseHeadersHelperImpl
 
 		@Override
 		public void addHeader(String name, String value) {
-			if (_portletResponseHeaders.get()) {
+			if (_transferringHeaders.get()) {
 				_headerActions.add(new HeaderAction<>(name, value, false));
 
 				return;
@@ -214,7 +216,7 @@ public class PortletResponseHeadersHelperImpl
 
 		@Override
 		public void addIntHeader(String name, int value) {
-			if (_portletResponseHeaders.get()) {
+			if (_transferringHeaders.get()) {
 				_headerActions.add(new HeaderAction<>(name, value, false));
 
 				return;
@@ -224,7 +226,9 @@ public class PortletResponseHeadersHelperImpl
 		}
 
 		public void reloadHeaders() {
-			_portletResponseHeaders.set(true);
+			boolean transferringHeaders = _transferringHeaders.get();
+
+			_transferringHeaders.set(true);
 
 			try {
 				for (int i = 0; i < _headerActions.size(); i++) {
@@ -276,13 +280,13 @@ public class PortletResponseHeadersHelperImpl
 				}
 			}
 			finally {
-				_portletResponseHeaders.set(false);
+				_transferringHeaders.set(transferringHeaders);
 			}
 		}
 
 		@Override
 		public void setDateHeader(String name, long value) {
-			if (_portletResponseHeaders.get()) {
+			if (_transferringHeaders.get()) {
 				_headerActions.add(new HeaderAction<>(name, value, true));
 
 				return;
@@ -293,7 +297,7 @@ public class PortletResponseHeadersHelperImpl
 
 		@Override
 		public void setHeader(String name, String value) {
-			if (_portletResponseHeaders.get()) {
+			if (_transferringHeaders.get()) {
 				_headerActions.add(new HeaderAction<>(name, value, true));
 
 				return;
@@ -304,7 +308,7 @@ public class PortletResponseHeadersHelperImpl
 
 		@Override
 		public void setIntHeader(String name, int value) {
-			if (_portletResponseHeaders.get()) {
+			if (_transferringHeaders.get()) {
 				_headerActions.add(new HeaderAction<>(name, value, true));
 
 				return;

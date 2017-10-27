@@ -5,8 +5,16 @@
 	color: lighten($body-color, 25%); // lighten the text some for contrast
 }
 
-.has-error {
-	@extend .is-invalid;
+.has-error .help-block {
+	color: $form-feedback-invalid-color;
+}
+
+.has-warning .help-block {
+	color: $form-feedback-warning-color;
+}
+
+.has-success .help-block {
+	color: $form-feedback-valid-color;
 }
 
 .has-feedback {

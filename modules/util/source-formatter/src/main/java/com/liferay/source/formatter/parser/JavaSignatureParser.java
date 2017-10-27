@@ -19,6 +19,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
+import java.util.Set;
+import java.util.TreeSet;
+
 /**
  * @author Hugo Huijser
  */
@@ -60,6 +63,8 @@ public class JavaSignatureParser {
 			}
 		}
 
+		Set<String> parameterAnnotations = new TreeSet<>();
+
 		parameters = StringUtil.replace(
 			parameters, new String[] {"\t", ".\n", "\n"},
 			new String[] {"", ".", " "});
@@ -85,6 +90,7 @@ public class JavaSignatureParser {
 				if ((JavaSourceUtil.getLevel(annotation) == 0) &&
 					(JavaSourceUtil.getLevel(annotation, "<", ">") == 0)) {
 
+					parameterAnnotations.add(annotation);
 					parameters = parameters.substring(pos + 1);
 
 					pos = -1;
@@ -112,16 +118,19 @@ public class JavaSignatureParser {
 			if (y == -1) {
 				String parameterName = parameters.substring(x + 1);
 
-				javaSignature.addParameter(parameterName, parameterType);
+				javaSignature.addParameter(
+					parameterName, parameterType, parameterAnnotations);
 
 				return javaSignature;
 			}
 
 			String parameterName = parameters.substring(x + 1, y);
 
-			javaSignature.addParameter(parameterName, parameterType);
+			javaSignature.addParameter(
+				parameterName, parameterType, parameterAnnotations);
 
 			parameters = parameters.substring(y + 1);
+			parameterAnnotations = new TreeSet<>();
 
 			x = 0;
 		}

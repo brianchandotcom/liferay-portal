@@ -79,7 +79,7 @@ public class ModuleConfigurationLocalizationTest {
 			sb.append(bundle.getSymbolicName());
 			sb.append(", version: ");
 			sb.append(bundle.getVersion());
-			sb.append("}");
+			sb.append(StringPool.CLOSE_CURLY_BRACE);
 			sb.append(bundleError);
 		}
 
@@ -112,7 +112,7 @@ public class ModuleConfigurationLocalizationTest {
 
 			for (String pid : pids) {
 				sb.append(pid);
-				sb.append(",");
+				sb.append(StringPool.COMMA);
 			}
 
 			sb.setIndex(sb.index() - 1);
@@ -146,7 +146,7 @@ public class ModuleConfigurationLocalizationTest {
 
 			sb.append("\n\tConfiguration {pid:");
 			sb.append(pid);
-			sb.append("}");
+			sb.append(StringPool.CLOSE_CURLY_BRACE);
 			sb.append(configurationError);
 		}
 
@@ -190,7 +190,7 @@ public class ModuleConfigurationLocalizationTest {
 
 			for (String attributeName : missingAttributeNames) {
 				sb.append(attributeName);
-				sb.append(",");
+				sb.append(StringPool.COMMA);
 			}
 
 			sb.setIndex(sb.index() - 1);

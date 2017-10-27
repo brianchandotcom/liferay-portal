@@ -27,6 +27,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -37,6 +38,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.lang.StringUtils;
 
 import org.dom4j.Element;
 
@@ -66,6 +69,8 @@ public abstract class BaseBuild implements Build {
 			}
 		}
 	}
+
+	public abstract void addTimelineData(BaseBuild.TimelineData timelineData);
 
 	@Override
 	public void archive(final String archiveName) {
@@ -345,22 +350,38 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public int getDownstreamBuildCount(String status) {
-		List<Build> downstreamBuilds = getDownstreamBuilds(status);
+		return getDownstreamBuildCount(null, status);
+	}
+
+	@Override
+	public int getDownstreamBuildCount(String result, String status) {
+		List<Build> downstreamBuilds = getDownstreamBuilds(result, status);
 
 		return downstreamBuilds.size();
 	}
 
 	@Override
 	public List<Build> getDownstreamBuilds(String status) {
-		if (status == null) {
+		return getDownstreamBuilds(null, status);
+	}
+
+	@Override
+	public List<Build> getDownstreamBuilds(String result, String status) {
+		if ((result == null) && (status == null)) {
 			return downstreamBuilds;
 		}
 
 		List<Build> filteredDownstreamBuilds = new ArrayList<>();
 
 		for (Build downstreamBuild : downstreamBuilds) {
-			if (status.equals(downstreamBuild.getStatus())) {
+			if (((status == null) ||
+				 status.equals(downstreamBuild.getStatus())) &&
+				((result == null) ||
+				 result.equals(downstreamBuild.getResult()))) {
+
 				filteredDownstreamBuilds.add(downstreamBuild);
+
+				continue;
 			}
 		}
 
@@ -609,6 +630,43 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public Build getLongestRunningDownstreamBuild() {
+		Build longestRunningDownstreamBuild = null;
+
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			if ((longestRunningDownstreamBuild == null) ||
+				(downstreamBuild.getDuration() >
+					longestRunningDownstreamBuild.getDuration())) {
+
+				longestRunningDownstreamBuild = downstreamBuild;
+			}
+		}
+
+		return longestRunningDownstreamBuild;
+	}
+
+	@Override
+	public TestResult getLongestRunningTest() {
+		List<TestResult> testResults = getTestResults(null);
+
+		long longestTestDuration = 0;
+
+		TestResult longestRunningTest = null;
+
+		for (TestResult testResult : testResults) {
+			long testDuration = testResult.getDuration();
+
+			if (testDuration > longestTestDuration) {
+				longestTestDuration = testDuration;
+
+				longestRunningTest = testResult;
+			}
+		}
+
+		return longestRunningTest;
+	}
+
+	@Override
 	public String getMaster() {
 		return master;
 	}
@@ -671,6 +729,8 @@ public abstract class BaseBuild implements Build {
 	@Override
 	public Long getStartTimestamp() {
 		JSONObject buildJSONObject = getBuildJSONObject("timestamp");
+
+		//System.out.println(buildJSONObject.toString());
 
 		if (buildJSONObject == null) {
 			return null;
@@ -819,7 +879,12 @@ public abstract class BaseBuild implements Build {
 		List<TestResult> testResults = new ArrayList<>();
 
 		for (Build downstreamBuild : getDownstreamBuilds(null)) {
-			testResults.addAll(downstreamBuild.getTestResults(testStatus));
+			List<TestResult> downstreamTestResults =
+				downstreamBuild.getTestResults(testStatus);
+
+			if (!(downstreamTestResults == null)) {
+				testResults.addAll(downstreamTestResults);
+			}
 		}
 
 		return testResults;
@@ -836,6 +901,28 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return (TopLevelBuild)topLevelBuild;
+	}
+
+	@Override
+	public long getTotalDuration() {
+		long totalDuration = getDuration();
+
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			totalDuration += downstreamBuild.getDuration();
+		}
+
+		return totalDuration;
+	}
+
+	@Override
+	public int getTotalSlavesUsedCount() {
+		int totalSlavesUsedCount = 1;
+
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			totalSlavesUsedCount += downstreamBuild.getTotalSlavesUsedCount();
+		}
+
+		return totalSlavesUsedCount;
 	}
 
 	@Override
@@ -1314,6 +1401,18 @@ public abstract class BaseBuild implements Build {
 		update();
 	}
 
+	protected void addDownstreamBuildsTimelineData(
+		BaseBuild.TimelineData timelineData) {
+
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			if (downstreamBuild instanceof BaseBuild) {
+				BaseBuild downstreamBaseBuild = (BaseBuild)downstreamBuild;
+
+				downstreamBaseBuild.addTimelineData(timelineData);
+			}
+		}
+	}
+
 	protected void archiveConsoleLog() {
 		downloadSampleURL(
 			getArchivePath(), true, getBuildURL(), "/consoleText");
@@ -1676,6 +1775,90 @@ public abstract class BaseBuild implements Build {
 		boolean showCommonFailuresCount) {
 
 		return getGitHubMessageJobResultsElement();
+	}
+
+	protected String getJenkinsReportBuildInfoCellElementTagName() {
+		return "td";
+	}
+
+	protected Element getJenkinsReportTableRowElement() {
+		String cellElementTagName =
+			getJenkinsReportBuildInfoCellElementTagName();
+
+		Element buildInfoElement = Dom4JUtil.getNewElement(
+			"tr", null,
+			Dom4JUtil.getNewElement(
+				cellElementTagName, null,
+				Dom4JUtil.getNewAnchorElement(
+					getBuildURL(), null, getDisplayName())),
+			Dom4JUtil.getNewElement(
+				cellElementTagName, null,
+				Dom4JUtil.getNewAnchorElement(
+					getBuildURL() + "console", null, "Console")),
+			Dom4JUtil.getNewElement(
+				cellElementTagName, null,
+				Dom4JUtil.getNewAnchorElement(
+					getBuildURL() + "testReport", "Test Report")),
+			Dom4JUtil.getNewElement(
+				cellElementTagName, null,
+				JenkinsResultsParserUtil.toDateString(
+					new Date(getStartTimestamp()))),
+			Dom4JUtil.getNewElement(
+				cellElementTagName, null,
+				JenkinsResultsParserUtil.toDurationString(getDuration())));
+
+		String status = getStatus();
+
+		if (status != null) {
+			status = StringUtils.upperCase(status);
+		}
+		else {
+			status = "";
+		}
+
+		Dom4JUtil.getNewElement(cellElementTagName, buildInfoElement, status);
+
+		String result = getResult();
+
+		if (result == null) {
+			result = "";
+		}
+
+		Dom4JUtil.getNewElement(cellElementTagName, buildInfoElement, result);
+
+		return buildInfoElement;
+	}
+
+	protected List<Element> getJenkinsReportTableRowsElements(
+		String result, String status) {
+
+		List<Element> tableRowElements = new ArrayList<>();
+
+		if ((getParentBuild() != null) &&
+			((result == null) || result.equals(getResult())) &&
+			((status == null) || status.equals(getStatus()))) {
+
+			tableRowElements.add(getJenkinsReportTableRowElement());
+		}
+
+		List<Build> downstreamBuilds = getDownstreamBuilds(result, status);
+
+		Collections.sort(
+			downstreamBuilds, new BaseBuild.BuildDisplayNameComparator());
+
+		for (Build downstreamBuild : downstreamBuilds) {
+			if (!(downstreamBuild instanceof BaseBuild)) {
+				continue;
+			}
+
+			BaseBuild downstreamBaseBuild = (BaseBuild)downstreamBuild;
+
+			tableRowElements.addAll(
+				downstreamBaseBuild.getJenkinsReportTableRowsElements(
+					result, status));
+		}
+
+		return tableRowElements;
 	}
 
 	protected Set<String> getJobParameterNames() {
@@ -2177,6 +2360,106 @@ public abstract class BaseBuild implements Build {
 		SlaveOfflineRule.getSlaveOfflineRules();
 	protected long statusModifiedTime;
 	protected Element upstreamJobFailureMessageElement;
+
+	protected static class TimelineData {
+
+		protected TimelineData(int size, TopLevelBuild topLevelBuild) {
+			if (topLevelBuild != topLevelBuild.getTopLevelBuild()) {
+				throw new IllegalArgumentException(
+					"Nested TopLevelBuild objects are invalid");
+			}
+
+			if (size < 1) {
+				throw new IllegalArgumentException("Invalid size " + size);
+			}
+
+			_duration = topLevelBuild.getDuration();
+			_startTimestamp = topLevelBuild.getStartTimestamp();
+			_timeline = new TimelineDataPoint[size];
+
+			for (int i = 0; i < size; i++) {
+				_timeline[i] = new TimelineDataPoint(
+					(int)(i * (_duration / _timeline.length)));
+			}
+
+			topLevelBuild.addTimelineData(this);
+		}
+
+		protected void addTimelineData(BaseBuild build) {
+			int endIndex = _getIndex(
+				build.getStartTimestamp() + build.getDuration());
+			int startIndex = _getIndex(build.getStartTimestamp());
+
+			_timeline[startIndex]._invocationsCount++;
+
+			for (int i = startIndex; i <= endIndex; i++) {
+				_timeline[i]._slaveUsageCount++;
+			}
+		}
+
+		protected int[] getIndexData() {
+			int[] indexes = new int[_timeline.length];
+
+			for (int i = 0; i < _timeline.length; i++) {
+				indexes[i] = _timeline[i]._index;
+			}
+
+			return indexes;
+		}
+
+		protected int[] getInvocationsData() {
+			int[] invocationsData = new int[_timeline.length];
+
+			for (int i = 0; i < _timeline.length; i++) {
+				invocationsData[i] = _timeline[i]._invocationsCount;
+			}
+
+			return invocationsData;
+		}
+
+		protected int[] getSlaveUsageData() {
+			int[] slaveUsageData = new int[_timeline.length];
+
+			for (int i = 0; i < _timeline.length; i++) {
+				slaveUsageData[i] = _timeline[i]._slaveUsageCount;
+			}
+
+			return slaveUsageData;
+		}
+
+		private int _getIndex(long timestamp) {
+			int index =
+				(int)((timestamp - _startTimestamp) *
+					_timeline.length / _duration);
+
+			if (index >= _timeline.length) {
+				return _timeline.length - 1;
+			}
+
+			if (index < 0) {
+				return 0;
+			}
+
+			return index;
+		}
+
+		private final long _duration;
+		private final long _startTimestamp;
+		private final TimelineDataPoint[] _timeline;
+
+		private static class TimelineDataPoint {
+
+			private TimelineDataPoint(int index) {
+				_index = index;
+			}
+
+			private final int _index;
+			private int _invocationsCount;
+			private int _slaveUsageCount;
+
+		}
+
+	}
 
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
 		{

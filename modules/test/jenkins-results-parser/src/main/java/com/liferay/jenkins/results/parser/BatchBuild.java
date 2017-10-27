@@ -37,6 +37,11 @@ import org.json.JSONObject;
 public class BatchBuild extends BaseBuild {
 
 	@Override
+	public void addTimelineData(BaseBuild.TimelineData timelineData) {
+		addDownstreamBuildsTimelineData(timelineData);
+	}
+
+	@Override
 	public String getAppServer() {
 		return getEnvironment("app.server");
 	}
@@ -185,6 +190,18 @@ public class BatchBuild extends BaseBuild {
 		}
 
 		return testResults;
+	}
+
+	@Override
+	public long getTotalDuration() {
+		long totalDuration = super.getTotalDuration();
+
+		return totalDuration - getDuration();
+	}
+
+	@Override
+	public int getTotalSlavesUsedCount() {
+		return super.getTotalSlavesUsedCount() - 1;
 	}
 
 	@Override
@@ -389,6 +406,10 @@ public class BatchBuild extends BaseBuild {
 				JenkinsResultsParserUtil.getNounForm(
 					failCount, " Tests", " Test"),
 				" Failed.", getFailureMessageElement()));
+	}
+
+	protected String getJenkinsReportBuildInfoCellElementTagName() {
+		return "th";
 	}
 
 	protected int getTestCountByStatus(String status) {

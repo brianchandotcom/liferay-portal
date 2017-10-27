@@ -60,7 +60,11 @@ public interface Build {
 
 	public int getDownstreamBuildCount(String status);
 
+	public int getDownstreamBuildCount(String result, String status);
+
 	public List<Build> getDownstreamBuilds(String status);
+
+	public List<Build> getDownstreamBuilds(String result, String status);
 
 	public long getDuration();
 
@@ -85,6 +89,10 @@ public interface Build {
 	public List<Build> getJobVariantsDownstreamBuilds(List<String> jobVariants);
 
 	public Long getLatestStartTimestamp();
+
+	public Build getLongestRunningDownstreamBuild();
+
+	public TestResult getLongestRunningTest();
 
 	public String getMaster();
 
@@ -121,6 +129,10 @@ public interface Build {
 	public List<TestResult> getTestResults(String testStatus);
 
 	public TopLevelBuild getTopLevelBuild();
+
+	public long getTotalDuration();
+
+	public int getTotalSlavesUsedCount();
 
 	public boolean hasBuildURL(String buildURL);
 

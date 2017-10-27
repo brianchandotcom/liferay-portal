@@ -222,6 +222,8 @@
 			<var name="portlet" value="Blogs" />
 		</execute>
 
+		<execute function="AssertElementPresent" locator1="ProductMenu#PRODUCT_MENU_PANEL_SCOPE" />
+
 		<execute function="AssertTextEquals" locator1="ProductMenu#PRODUCT_MENU_PANEL_SCOPE" value1="${contentScopeName}" />
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No entries were found." />

@@ -24,40 +24,38 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Tina Tian
  */
-public class PortletResponseHeadersHelperUtil {
+public class TransferHeadersHelperUtil {
 
-	public static RequestDispatcher getReloadHeadersRequestDispatcher(
+	public static RequestDispatcher getTransferHeadersRequestDispatcher(
 		RequestDispatcher requestDispatcher) {
 
-		return _getPortletResponseHeadersHelper().
-			getReloadHeadersRequestDispatcher(requestDispatcher);
+		return _getTransferHeadersHelper().getTransferHeadersRequestDispatcher(
+			requestDispatcher);
 	}
 
 	public static void transferHeaders(
 		Map<String, Object> headers, HttpServletResponse httpServletResponse) {
 
-		_getPortletResponseHeadersHelper().transferHeaders(
+		_getTransferHeadersHelper().transferHeaders(
 			headers, httpServletResponse);
 	}
 
-	public void setPortletResponseHeadersHelper(
-		PortletResponseHeadersHelper portletResponseHeadersHelper) {
+	public void setTransferHeadersHelper(
+		TransferHeadersHelper transferHeadersHelper) {
 
 		PortalRuntimePermission.checkSetBeanProperty(
-			PortletResponseHeadersHelperUtil.class);
+			TransferHeadersHelperUtil.class);
 
-		_portletResponseHeadersHelper = portletResponseHeadersHelper;
+		_transferHeadersHelper = transferHeadersHelper;
 	}
 
-	private static PortletResponseHeadersHelper
-		_getPortletResponseHeadersHelper() {
-
+	private static TransferHeadersHelper _getTransferHeadersHelper() {
 		PortalRuntimePermission.checkGetBeanProperty(
-			PortletResponseHeadersHelperUtil.class);
+			TransferHeadersHelperUtil.class);
 
-		return _portletResponseHeadersHelper;
+		return _transferHeadersHelper;
 	}
 
-	private static PortletResponseHeadersHelper _portletResponseHeadersHelper;
+	private static TransferHeadersHelper _transferHeadersHelper;
 
 }

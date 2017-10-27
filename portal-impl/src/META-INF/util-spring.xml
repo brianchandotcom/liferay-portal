@@ -296,9 +296,9 @@
 	<bean class="com.liferay.portal.kernel.servlet.DirectServletRegistryUtil" id="com.liferay.portal.kernel.servlet.DirectServletRegistryUtil">
 		<property name="directServletRegistry" ref="com.liferay.portal.kernel.servlet.DirectServletRegistry" />
 	</bean>
-	<bean class="com.liferay.portal.kernel.servlet.PortletResponseHeadersHelperUtil" id="com.liferay.portal.kernel.servlet.PortletResponseHeadersHelperUtil">
-		<property name="portletResponseHeadersHelper">
-			<bean class="com.liferay.portal.servlet.PortletResponseHeadersHelperImpl" />
+	<bean class="com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil" id="com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil">
+		<property name="transferHeadersHelper">
+			<bean class="com.liferay.portal.servlet.TransferHeadersHelperImpl" />
 		</property>
 	</bean>
 	<bean class="com.liferay.portal.servlet.SharedSessionImpl" id="com.liferay.portal.kernel.servlet.SharedSession" />

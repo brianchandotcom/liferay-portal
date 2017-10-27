@@ -22,9 +22,9 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Tina Tian
  */
-public interface PortletResponseHeadersHelper {
+public interface TransferHeadersHelper {
 
-	public RequestDispatcher getReloadHeadersRequestDispatcher(
+	public RequestDispatcher getTransferHeadersRequestDispatcher(
 		RequestDispatcher requestDispatcher);
 
 	public void transferHeaders(

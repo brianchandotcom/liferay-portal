@@ -351,6 +351,24 @@ public class Serializer {
 		return _buffer;
 	}
 
+	private BufferQueue _getBufferQueue() {
+		Reference<BufferQueue> reference = _bufferQueueThreadLocal.get();
+
+		BufferQueue bufferQueue = null;
+
+		if (reference != null) {
+			bufferQueue = reference.get();
+		}
+
+		if (bufferQueue == null) {
+			bufferQueue = new BufferQueue();
+
+			_bufferQueueThreadLocal.set(new SoftReference<>(bufferQueue));
+		}
+
+		return bufferQueue;
+	}
+
 	private static final int _THREADLOCAL_BUFFER_COUNT_LIMIT;
 
 	private static final int _THREADLOCAL_BUFFER_COUNT_MIN = 8;
@@ -525,24 +543,6 @@ public class Serializer {
 			_getBuffer(1)[_index++] = (byte)b;
 		}
 
-	}
-
-	private BufferQueue _getBufferQueue() {
-		Reference<BufferQueue> reference = _bufferQueueThreadLocal.get();
-
-		BufferQueue bufferQueue = null;
-
-		if (reference != null) {
-			bufferQueue = reference.get();
-		}
-
-		if (bufferQueue == null) {
-			bufferQueue = new BufferQueue();
-
-			_bufferQueueThreadLocal.set(new SoftReference<>(bufferQueue));
-		}
-
-		return bufferQueue;
 	}
 
 }

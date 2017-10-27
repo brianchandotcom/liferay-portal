@@ -165,7 +165,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		try {
 			importLayoutReferences(portletDataContext);
 
-			_capability.process(portletDataContext, portletPreferences);
+			capability.process(portletDataContext, portletPreferences);
 
 			return updateImportPortletPreferences(
 				portletDataContext, portletPreferences);
@@ -1350,6 +1350,9 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 	@Reference
 	protected AssetPublisherWebUtil assetPublisherWebUtil;
 
+	@Reference(target = "(name=ReferencedStagedModelImporter)")
+	protected Capability capability;
+
 	@Reference
 	protected Portal portal;
 
@@ -1363,10 +1366,6 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		_assetPublisherPortletDisplayTemplateImportCapability;
 	private AssetPublisherWebConfiguration _assetPublisherWebConfiguration;
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
-
-	@Reference(target = "(name=ReferencedStagedModelImporter)")
-	private Capability _capability;
-
 	private CompanyLocalService _companyLocalService;
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;

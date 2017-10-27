@@ -794,6 +794,10 @@
 		</execute>
 	</command>
 
+	<command name="tearDownPG">
+		<execute macro="Page#tearDownCP" />
+	</command>
+
 	<command name="togglePageTemplateInheritChanges">
 		<if>
 			<equals arg1="${toggleValue}" arg2="enable" />

@@ -14,8 +14,6 @@
 
 package com.liferay.petra.io;
 
-import com.liferay.petra.io.Serializer.BufferNode;
-import com.liferay.petra.io.Serializer.BufferQueue;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.lang.ClassLoaderPool;
@@ -31,6 +29,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -82,15 +85,15 @@ public class SerializerTest {
 	}
 
 	@Test
-	public void testBufferOutputStream() {
+	public void testBufferOutputStream() throws Exception {
 		byte[] data = new byte[1024];
 
 		_random.nextBytes(data);
 
 		Serializer serializer = new Serializer();
 
-		Serializer.BufferOutputStream bufferOutputStream =
-			serializer.new BufferOutputStream();
+		BufferOutputStream bufferOutputStream = new BufferOutputStream(
+			serializer);
 
 		for (int i = 0; i < data.length; i++) {
 			bufferOutputStream.write(data[i]);
@@ -102,7 +105,7 @@ public class SerializerTest {
 
 		serializer = new Serializer();
 
-		bufferOutputStream = serializer.new BufferOutputStream();
+		bufferOutputStream = new BufferOutputStream(serializer);
 
 		bufferOutputStream.write(data);
 
@@ -112,7 +115,7 @@ public class SerializerTest {
 	}
 
 	@Test
-	public void testBufferQueue() {
+	public void testBufferQueue() throws Exception {
 		BufferQueue bufferQueue = new BufferQueue();
 
 		// Insert into empty queue
@@ -121,10 +124,10 @@ public class SerializerTest {
 
 		bufferQueue.enqueue(buffer2);
 
-		BufferNode bufferNode1 = bufferQueue.headBufferNode;
+		BufferNode bufferNode1 = bufferQueue.getHeadBufferNode();
 
-		Assert.assertSame(buffer2, bufferNode1.buffer);
-		Assert.assertNull(bufferNode1.next);
+		Assert.assertSame(buffer2, bufferNode1.getBuffer());
+		Assert.assertNull(bufferNode1.getNext());
 
 		// Insert to head
 
@@ -132,15 +135,15 @@ public class SerializerTest {
 
 		bufferQueue.enqueue(buffer4);
 
-		bufferNode1 = bufferQueue.headBufferNode;
+		bufferNode1 = bufferQueue.getHeadBufferNode();
 
-		BufferNode bufferNode2 = bufferNode1.next;
+		BufferNode bufferNode2 = bufferNode1.getNext();
 
-		Assert.assertSame(buffer4, bufferNode1.buffer);
-		Assert.assertNotNull(bufferNode1.next);
+		Assert.assertSame(buffer4, bufferNode1.getBuffer());
+		Assert.assertNotNull(bufferNode1.getNext());
 
-		Assert.assertSame(buffer2, bufferNode2.buffer);
-		Assert.assertNull(bufferNode2.next);
+		Assert.assertSame(buffer2, bufferNode2.getBuffer());
+		Assert.assertNull(bufferNode2.getNext());
 
 		// Insert to second
 
@@ -148,18 +151,18 @@ public class SerializerTest {
 
 		bufferQueue.enqueue(buffer3);
 
-		bufferNode1 = bufferQueue.headBufferNode;
+		bufferNode1 = bufferQueue.getHeadBufferNode();
 
-		bufferNode2 = bufferNode1.next;
+		bufferNode2 = bufferNode1.getNext();
 
-		BufferNode bufferNode3 = bufferNode2.next;
+		BufferNode bufferNode3 = bufferNode2.getNext();
 
-		Assert.assertSame(buffer4, bufferNode1.buffer);
-		Assert.assertNotNull(bufferNode1.next);
-		Assert.assertSame(buffer3, bufferNode2.buffer);
-		Assert.assertNotNull(bufferNode2.next);
-		Assert.assertSame(buffer2, bufferNode3.buffer);
-		Assert.assertNull(bufferNode3.next);
+		Assert.assertSame(buffer4, bufferNode1.getBuffer());
+		Assert.assertNotNull(bufferNode1.getNext());
+		Assert.assertSame(buffer3, bufferNode2.getBuffer());
+		Assert.assertNotNull(bufferNode2.getNext());
+		Assert.assertSame(buffer2, bufferNode3.getBuffer());
+		Assert.assertNull(bufferNode3.getNext());
 
 		// Insert to last
 
@@ -167,22 +170,22 @@ public class SerializerTest {
 
 		bufferQueue.enqueue(buffer1);
 
-		bufferNode1 = bufferQueue.headBufferNode;
+		bufferNode1 = bufferQueue.getHeadBufferNode();
 
-		bufferNode2 = bufferNode1.next;
+		bufferNode2 = bufferNode1.getNext();
 
-		bufferNode3 = bufferNode2.next;
+		bufferNode3 = bufferNode2.getNext();
 
-		BufferNode bufferNode4 = bufferNode3.next;
+		BufferNode bufferNode4 = bufferNode3.getNext();
 
-		Assert.assertSame(buffer4, bufferNode1.buffer);
-		Assert.assertNotNull(bufferNode1.next);
-		Assert.assertSame(buffer3, bufferNode2.buffer);
-		Assert.assertNotNull(bufferNode2.next);
-		Assert.assertSame(buffer2, bufferNode3.buffer);
-		Assert.assertNotNull(bufferNode3.next);
-		Assert.assertSame(buffer1, bufferNode4.buffer);
-		Assert.assertNull(bufferNode4.next);
+		Assert.assertSame(buffer4, bufferNode1.getBuffer());
+		Assert.assertNotNull(bufferNode1.getNext());
+		Assert.assertSame(buffer3, bufferNode2.getBuffer());
+		Assert.assertNotNull(bufferNode2.getNext());
+		Assert.assertSame(buffer2, bufferNode3.getBuffer());
+		Assert.assertNotNull(bufferNode3.getNext());
+		Assert.assertSame(buffer1, bufferNode4.getBuffer());
+		Assert.assertNull(bufferNode4.getNext());
 
 		// Fill up queue to default count limit
 
@@ -202,38 +205,38 @@ public class SerializerTest {
 
 		bufferQueue.enqueue(buffer10);
 
-		bufferNode1 = bufferQueue.headBufferNode;
+		bufferNode1 = bufferQueue.getHeadBufferNode();
 
-		bufferNode2 = bufferNode1.next;
+		bufferNode2 = bufferNode1.getNext();
 
-		bufferNode3 = bufferNode2.next;
+		bufferNode3 = bufferNode2.getNext();
 
-		bufferNode4 = bufferNode3.next;
+		bufferNode4 = bufferNode3.getNext();
 
-		BufferNode bufferNode5 = bufferNode4.next;
+		BufferNode bufferNode5 = bufferNode4.getNext();
 
-		BufferNode bufferNode6 = bufferNode5.next;
+		BufferNode bufferNode6 = bufferNode5.getNext();
 
-		BufferNode bufferNode7 = bufferNode6.next;
+		BufferNode bufferNode7 = bufferNode6.getNext();
 
-		BufferNode bufferNode8 = bufferNode7.next;
+		BufferNode bufferNode8 = bufferNode7.getNext();
 
-		Assert.assertSame(buffer10, bufferNode1.buffer);
-		Assert.assertNotNull(bufferNode1.next);
-		Assert.assertSame(buffer8, bufferNode2.buffer);
-		Assert.assertNotNull(bufferNode2.next);
-		Assert.assertSame(buffer7, bufferNode3.buffer);
-		Assert.assertNotNull(bufferNode3.next);
-		Assert.assertSame(buffer6, bufferNode4.buffer);
-		Assert.assertNotNull(bufferNode4.next);
-		Assert.assertSame(buffer5, bufferNode5.buffer);
-		Assert.assertNotNull(bufferNode5.next);
-		Assert.assertSame(buffer4, bufferNode6.buffer);
-		Assert.assertNotNull(bufferNode6.next);
-		Assert.assertSame(buffer3, bufferNode7.buffer);
-		Assert.assertNotNull(bufferNode7.next);
-		Assert.assertSame(buffer2, bufferNode8.buffer);
-		Assert.assertNull(bufferNode8.next);
+		Assert.assertSame(buffer10, bufferNode1.getBuffer());
+		Assert.assertNotNull(bufferNode1.getNext());
+		Assert.assertSame(buffer8, bufferNode2.getBuffer());
+		Assert.assertNotNull(bufferNode2.getNext());
+		Assert.assertSame(buffer7, bufferNode3.getBuffer());
+		Assert.assertNotNull(bufferNode3.getNext());
+		Assert.assertSame(buffer6, bufferNode4.getBuffer());
+		Assert.assertNotNull(bufferNode4.getNext());
+		Assert.assertSame(buffer5, bufferNode5.getBuffer());
+		Assert.assertNotNull(bufferNode5.getNext());
+		Assert.assertSame(buffer4, bufferNode6.getBuffer());
+		Assert.assertNotNull(bufferNode6.getNext());
+		Assert.assertSame(buffer3, bufferNode7.getBuffer());
+		Assert.assertNotNull(bufferNode7.getNext());
+		Assert.assertSame(buffer2, bufferNode8.getBuffer());
+		Assert.assertNull(bufferNode8.getNext());
 
 		// Automatically release smallest on insert to second
 
@@ -241,38 +244,38 @@ public class SerializerTest {
 
 		bufferQueue.enqueue(buffer9);
 
-		bufferNode1 = bufferQueue.headBufferNode;
+		bufferNode1 = bufferQueue.getHeadBufferNode();
 
-		bufferNode2 = bufferNode1.next;
+		bufferNode2 = bufferNode1.getNext();
 
-		bufferNode3 = bufferNode2.next;
+		bufferNode3 = bufferNode2.getNext();
 
-		bufferNode4 = bufferNode3.next;
+		bufferNode4 = bufferNode3.getNext();
 
-		bufferNode5 = bufferNode4.next;
+		bufferNode5 = bufferNode4.getNext();
 
-		bufferNode6 = bufferNode5.next;
+		bufferNode6 = bufferNode5.getNext();
 
-		bufferNode7 = bufferNode6.next;
+		bufferNode7 = bufferNode6.getNext();
 
-		bufferNode8 = bufferNode7.next;
+		bufferNode8 = bufferNode7.getNext();
 
-		Assert.assertSame(buffer10, bufferNode1.buffer);
-		Assert.assertNotNull(bufferNode1.next);
-		Assert.assertSame(buffer9, bufferNode2.buffer);
-		Assert.assertNotNull(bufferNode2.next);
-		Assert.assertSame(buffer8, bufferNode3.buffer);
-		Assert.assertNotNull(bufferNode3.next);
-		Assert.assertSame(buffer7, bufferNode4.buffer);
-		Assert.assertNotNull(bufferNode4.next);
-		Assert.assertSame(buffer6, bufferNode5.buffer);
-		Assert.assertNotNull(bufferNode5.next);
-		Assert.assertSame(buffer5, bufferNode6.buffer);
-		Assert.assertNotNull(bufferNode6.next);
-		Assert.assertSame(buffer4, bufferNode7.buffer);
-		Assert.assertNotNull(bufferNode7.next);
-		Assert.assertSame(buffer3, bufferNode8.buffer);
-		Assert.assertNull(bufferNode8.next);
+		Assert.assertSame(buffer10, bufferNode1.getBuffer());
+		Assert.assertNotNull(bufferNode1.getNext());
+		Assert.assertSame(buffer9, bufferNode2.getBuffer());
+		Assert.assertNotNull(bufferNode2.getNext());
+		Assert.assertSame(buffer8, bufferNode3.getBuffer());
+		Assert.assertNotNull(bufferNode3.getNext());
+		Assert.assertSame(buffer7, bufferNode4.getBuffer());
+		Assert.assertNotNull(bufferNode4.getNext());
+		Assert.assertSame(buffer6, bufferNode5.getBuffer());
+		Assert.assertNotNull(bufferNode5.getNext());
+		Assert.assertSame(buffer5, bufferNode6.getBuffer());
+		Assert.assertNotNull(bufferNode6.getNext());
+		Assert.assertSame(buffer4, bufferNode7.getBuffer());
+		Assert.assertNotNull(bufferNode7.getNext());
+		Assert.assertSame(buffer3, bufferNode8.getBuffer());
+		Assert.assertNull(bufferNode8.getNext());
 	}
 
 	@Test
@@ -282,64 +285,68 @@ public class SerializerTest {
 
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
-	public void testCustomizedClassInitialization() {
+	public void testCustomizedClassInitialization() throws Exception {
 		System.setProperty(
 			Serializer.class.getName() + ".thread.local.buffer.count.limit",
-			String.valueOf(Serializer.THREADLOCAL_BUFFER_COUNT_MIN + 1));
+			String.valueOf(_THREADLOCAL_BUFFER_COUNT_MIN + 1));
 		System.setProperty(
 			Serializer.class.getName() + ".thread.local.buffer.size.limit",
-			String.valueOf(Serializer.THREADLOCAL_BUFFER_SIZE_MIN + 1));
+			String.valueOf(_THREADLOCAL_BUFFER_SIZE_MIN + 1));
 
 		Assert.assertEquals(
-			Serializer.THREADLOCAL_BUFFER_COUNT_MIN + 1,
-			Serializer.THREADLOCAL_BUFFER_COUNT_LIMIT);
+			_THREADLOCAL_BUFFER_COUNT_MIN + 1,
+			_threadLocalBufferCountLimitField.getInt(null));
 		Assert.assertEquals(
-			Serializer.THREADLOCAL_BUFFER_SIZE_MIN + 1,
-			Serializer.THREADLOCAL_BUFFER_SIZE_LIMIT);
+			_THREADLOCAL_BUFFER_SIZE_MIN + 1,
+			_threadLocalBufferSizeLimitField.getInt(null));
 	}
 
 	@Test
-	public void testDefaultClassInitialization() {
+	public void testDefaultClassInitialization() throws Exception {
 		Assert.assertEquals(
-			Serializer.THREADLOCAL_BUFFER_COUNT_MIN,
-			Serializer.THREADLOCAL_BUFFER_COUNT_LIMIT);
+			_THREADLOCAL_BUFFER_COUNT_MIN,
+			_threadLocalBufferCountLimitField.getInt(null));
 		Assert.assertEquals(
-			Serializer.THREADLOCAL_BUFFER_SIZE_MIN,
-			Serializer.THREADLOCAL_BUFFER_SIZE_LIMIT);
+			_THREADLOCAL_BUFFER_SIZE_MIN,
+			_threadLocalBufferSizeLimitField.getInt(null));
 	}
 
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
-	public void testDefendedClassInitialization() {
+	public void testDefendedClassInitialization() throws Exception {
 		System.setProperty(
 			Serializer.class.getName() + ".thread.local.buffer.count.limit",
-			String.valueOf(Serializer.THREADLOCAL_BUFFER_COUNT_MIN - 1));
+			String.valueOf(_THREADLOCAL_BUFFER_COUNT_MIN - 1));
 		System.setProperty(
 			Serializer.class.getName() + ".thread.local.buffer.size.limit",
-			String.valueOf(Serializer.THREADLOCAL_BUFFER_SIZE_MIN - 1));
+			String.valueOf(_THREADLOCAL_BUFFER_SIZE_MIN - 1));
 
 		Assert.assertEquals(
-			Serializer.THREADLOCAL_BUFFER_COUNT_MIN,
-			Serializer.THREADLOCAL_BUFFER_COUNT_LIMIT);
+			_THREADLOCAL_BUFFER_COUNT_MIN,
+			_threadLocalBufferCountLimitField.getInt(null));
 		Assert.assertEquals(
-			Serializer.THREADLOCAL_BUFFER_SIZE_MIN,
-			Serializer.THREADLOCAL_BUFFER_SIZE_LIMIT);
+			_THREADLOCAL_BUFFER_SIZE_MIN,
+			_threadLocalBufferSizeLimitField.getInt(null));
 	}
 
 	@Test
-	public void testGetBufferGrow() {
+	public void testGetBufferGrow() throws Exception {
 		Serializer serializer = new Serializer();
 
 		// OOME
 
-		serializer.index = 1;
+		_indexField.set(serializer, 1);
 
 		try {
-			serializer.getBuffer(Integer.MAX_VALUE);
+			_getBufferMethod.invoke(serializer, Integer.MAX_VALUE);
 
 			Assert.fail();
 		}
-		catch (OutOfMemoryError oome) {
+		catch (InvocationTargetException ite) {
+			Throwable cause = ite.getCause();
+
+			Assert.assertTrue(
+				cause.toString(), cause instanceof OutOfMemoryError);
 		}
 
 		// Normal doubling size
@@ -348,10 +355,10 @@ public class SerializerTest {
 
 		_random.nextBytes(bytes);
 
-		serializer.buffer = bytes;
-		serializer.index = bytes.length;
+		_bufferField.set(serializer, bytes);
+		_indexField.set(serializer, bytes.length);
 
-		byte[] newBytes = serializer.getBuffer(1);
+		byte[] newBytes = (byte[])_getBufferMethod.invoke(serializer, 1);
 
 		Assert.assertEquals(
 			Arrays.toString(newBytes), bytes.length * 2, newBytes.length);
@@ -366,10 +373,10 @@ public class SerializerTest {
 
 		// Doubling size is still less than minimum size
 
-		serializer.buffer = bytes;
-		serializer.index = bytes.length;
+		_bufferField.set(serializer, bytes);
+		_indexField.set(serializer, bytes.length);
 
-		newBytes = serializer.getBuffer(_COUNT + 1);
+		newBytes = (byte[])_getBufferMethod.invoke(serializer, _COUNT + 1);
 
 		Assert.assertEquals(
 			Arrays.toString(newBytes), bytes.length * 2 + 1, newBytes.length);
@@ -384,21 +391,26 @@ public class SerializerTest {
 	}
 
 	@Test
-	public void testReleaseLargeBuffer() throws IOException {
-		Serializer.bufferQueueThreadLocal.remove();
+	public void testReleaseLargeBuffer() throws Exception {
+		ThreadLocal<?> bufferQueueThreadLocal =
+			ReflectionTestUtil.getFieldValue(
+				Serializer.class, "_bufferQueueThreadLocal");
+
+		bufferQueueThreadLocal.remove();
 
 		Serializer serializer = new Serializer();
 
-		char[] chars = new char[Serializer.THREADLOCAL_BUFFER_SIZE_LIMIT];
+		char[] chars = new char[_THREADLOCAL_BUFFER_SIZE_MIN];
 
 		serializer.writeString(new String(chars));
 
 		serializer.toByteBuffer();
 
-		BufferQueue bufferQueue = ReflectionTestUtil.invoke(
-			serializer, "_getBufferQueue", new Class<?>[0]);
+		BufferQueue bufferQueue = new BufferQueue(
+			ReflectionTestUtil.invoke(
+				serializer, "_getBufferQueue", new Class<?>[0]));
 
-		Assert.assertEquals(0, bufferQueue.count);
+		Assert.assertEquals(0, bufferQueue.getCount());
 
 		serializer = new Serializer();
 
@@ -409,13 +421,13 @@ public class SerializerTest {
 
 		serializer.writeTo(unsyncByteArrayOutputStream);
 
-		Assert.assertEquals(0, bufferQueue.count);
+		Assert.assertEquals(0, bufferQueue.getCount());
 		Assert.assertEquals(
 			chars.length * 2 + 5, unsyncByteArrayOutputStream.size());
 	}
 
 	@Test
-	public void testWriteBoolean() {
+	public void testWriteBoolean() throws Exception {
 		Serializer serializer = new Serializer();
 
 		boolean[] booleans = new boolean[_COUNT];
@@ -428,7 +440,7 @@ public class SerializerTest {
 
 		byte[] bytes = serializer.toByteBuffer().array();
 
-		Assert.assertNull(serializer.buffer);
+		Assert.assertNull(_bufferField.get(serializer));
 
 		for (int i = 0; i < _COUNT; i++) {
 			if (booleans[i]) {
@@ -898,19 +910,22 @@ public class SerializerTest {
 	}
 
 	@Test
-	public void testWriteString() throws IOException {
+	public void testWriteString() throws Exception {
 		String asciiString = "abcdefghijklmn";
 
 		Serializer serializer = new Serializer();
 
-		serializer.buffer = new byte[0];
+		_bufferField.set(serializer, new byte[0]);
 
 		serializer.writeString(asciiString);
 
-		Assert.assertEquals(serializer.index, 5 + asciiString.length());
-		Assert.assertTrue(BigEndianCodec.getBoolean(serializer.buffer, 0));
+		Assert.assertEquals(
+			_indexField.getInt(serializer), 5 + asciiString.length());
+		Assert.assertTrue(
+			BigEndianCodec.getBoolean((byte[])_bufferField.get(serializer), 0));
 
-		int length = BigEndianCodec.getInt(serializer.buffer, 1);
+		int length = BigEndianCodec.getInt(
+			(byte[])_bufferField.get(serializer), 1);
 
 		Assert.assertEquals(asciiString.length(), length);
 
@@ -939,10 +954,12 @@ public class SerializerTest {
 
 		serializer.writeString(nonAsciiString);
 
-		Assert.assertEquals(serializer.index, 5 + nonAsciiString.length() * 2);
-		Assert.assertFalse(BigEndianCodec.getBoolean(serializer.buffer, 0));
+		Assert.assertEquals(
+			_indexField.getInt(serializer), 5 + nonAsciiString.length() * 2);
+		Assert.assertFalse(
+			BigEndianCodec.getBoolean((byte[])_bufferField.get(serializer), 0));
 
-		length = BigEndianCodec.getInt(serializer.buffer, 1);
+		length = BigEndianCodec.getInt((byte[])_bufferField.get(serializer), 1);
 
 		Assert.assertEquals(nonAsciiString.length(), length);
 
@@ -969,6 +986,161 @@ public class SerializerTest {
 
 	private static final int _COUNT = 1024;
 
+	private static final int _THREADLOCAL_BUFFER_COUNT_MIN = 8;
+
+	private static final int _THREADLOCAL_BUFFER_SIZE_MIN = 16 * 1024;
+
+	private static final Field _bufferField = ReflectionTestUtil.getField(
+		Serializer.class, "_buffer");
+	private static final Method _getBufferMethod = ReflectionTestUtil.getMethod(
+		Serializer.class, "_getBuffer", int.class);
+	private static final Field _indexField = ReflectionTestUtil.getField(
+		Serializer.class, "_index");
+	private static final Field _threadLocalBufferCountLimitField =
+		ReflectionTestUtil.getField(
+			Serializer.class, "_THREADLOCAL_BUFFER_COUNT_LIMIT");
+	private static final Field _threadLocalBufferSizeLimitField =
+		ReflectionTestUtil.getField(
+			Serializer.class, "_THREADLOCAL_BUFFER_SIZE_LIMIT");
+
 	private final Random _random = new Random();
+
+	private static class BufferNode {
+
+		public byte[] getBuffer() throws Exception {
+			return (byte[])_bufferField.get(_bufferNode);
+		}
+
+		public BufferNode getNext() throws Exception {
+			Object next = _nextField.get(_bufferNode);
+
+			if (next == null) {
+				return null;
+			}
+
+			return new BufferNode(next);
+		}
+
+		private BufferNode(Object bufferNode) throws Exception {
+			_bufferNode = bufferNode;
+		}
+
+		private static final Field _bufferField;
+		private static final Field _nextField;
+
+		static {
+			try {
+				Class<?> clazz = Class.forName(
+					Serializer.class.getName() + "$BufferNode");
+
+				_bufferField = ReflectionTestUtil.getField(clazz, "_buffer");
+				_nextField = ReflectionTestUtil.getField(clazz, "_next");
+			}
+			catch (ReflectiveOperationException roe) {
+				throw new ExceptionInInitializerError(roe);
+			}
+		}
+
+		private final Object _bufferNode;
+
+	}
+
+	private static class BufferOutputStream {
+
+		public void write(byte[] bytes) throws Exception {
+			_writeBytesMethod.invoke(_bufferOutputStream, bytes);
+		}
+
+		public void write(int b) throws Exception {
+			_writeByteMethod.invoke(_bufferOutputStream, b);
+		}
+
+		private BufferOutputStream(Serializer serializer) throws Exception {
+			_bufferOutputStream = _constructor.newInstance(serializer);
+		}
+
+		private static final Constructor<?> _constructor;
+		private static final Method _writeByteMethod;
+		private static final Method _writeBytesMethod;
+
+		static {
+			try {
+				Class<?> clazz = Class.forName(
+					Serializer.class.getName() + "$BufferOutputStream");
+
+				_constructor = clazz.getDeclaredConstructor(Serializer.class);
+
+				_constructor.setAccessible(true);
+
+				_writeByteMethod = ReflectionTestUtil.getMethod(
+					clazz, "write", int.class);
+				_writeBytesMethod = ReflectionTestUtil.getMethod(
+					clazz, "write", byte[].class);
+			}
+			catch (ReflectiveOperationException roe) {
+				throw new ExceptionInInitializerError(roe);
+			}
+		}
+
+		private final Object _bufferOutputStream;
+
+	}
+
+	private static class BufferQueue {
+
+		public void enqueue(byte[] bytes) throws Exception {
+			_enqueueMethod.invoke(_bufferQueue, bytes);
+		}
+
+		public int getCount() throws Exception {
+			return _countField.getInt(_bufferQueue);
+		}
+
+		public BufferNode getHeadBufferNode() throws Exception {
+			Object bufferNode = _headBufferNodeField.get(_bufferQueue);
+
+			if (bufferNode == null) {
+				return null;
+			}
+
+			return new BufferNode(bufferNode);
+		}
+
+		private BufferQueue() throws Exception {
+			_bufferQueue = _constructor.newInstance();
+		}
+
+		private BufferQueue(Object bufferQueue) throws Exception {
+			_bufferQueue = bufferQueue;
+		}
+
+		private static final Constructor<?> _constructor;
+		private static final Field _countField;
+		private static final Method _enqueueMethod;
+		private static final Field _headBufferNodeField;
+
+		static {
+			try {
+				Class<?> clazz = Class.forName(
+					Serializer.class.getName() + "$BufferQueue");
+
+				_constructor = clazz.getDeclaredConstructor();
+
+				_constructor.setAccessible(true);
+
+				_countField = ReflectionTestUtil.getField(clazz, "_count");
+				_headBufferNodeField = ReflectionTestUtil.getField(
+					clazz, "_headBufferNode");
+				_enqueueMethod = ReflectionTestUtil.getMethod(
+					clazz, "enqueue", byte[].class);
+			}
+			catch (ReflectiveOperationException roe) {
+				throw new ExceptionInInitializerError(roe);
+			}
+		}
+
+		private final Object _bufferQueue;
+
+	}
 
 }

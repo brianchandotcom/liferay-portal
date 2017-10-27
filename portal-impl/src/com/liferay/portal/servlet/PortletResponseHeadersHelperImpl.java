@@ -48,7 +48,7 @@ public class PortletResponseHeadersHelperImpl
 	public void transferHeaders(
 		Map<String, Object> headers, HttpServletResponse httpServletResponse) {
 
-		PortletResponseHeadersThreadLocal.setPortletResponseHeaders(true);
+		_portletResponseHeaders.set(true);
 
 		try {
 			for (Map.Entry<String, Object> entry : headers.entrySet()) {
@@ -101,29 +101,15 @@ public class PortletResponseHeadersHelperImpl
 			}
 		}
 		finally {
-			PortletResponseHeadersThreadLocal.setPortletResponseHeaders(false);
+			_portletResponseHeaders.set(false);
 		}
 	}
 
-	private static class PortletResponseHeadersThreadLocal {
-
-		public static boolean isPortletResponseHeaders() {
-			return _portletResponseHeaders.get();
-		}
-
-		public static void setPortletResponseHeaders(
-			boolean portletResponseHeaders) {
-
-			_portletResponseHeaders.set(portletResponseHeaders);
-		}
-
-		private static final ThreadLocal<Boolean> _portletResponseHeaders =
-			new CentralizedThreadLocal<>(
-				PortletResponseHeadersThreadLocal.class +
-					"._portletResponseHeaders",
-				() -> false);
-
-	}
+	private static final ThreadLocal<Boolean> _portletResponseHeaders =
+		new CentralizedThreadLocal<>(
+			PortletResponseHeadersHelperImpl.class +
+				"._portletResponseHeaders",
+			() -> false);
 
 	private class HeaderAction<T> {
 
@@ -202,7 +188,7 @@ public class PortletResponseHeadersHelperImpl
 
 		@Override
 		public void addCookie(Cookie cookie) {
-			if (PortletResponseHeadersThreadLocal.isPortletResponseHeaders()) {
+			if (_portletResponseHeaders.get()) {
 				_headerActions.add(
 					new HeaderAction<>(cookie.getName(), cookie, false));
 
@@ -214,7 +200,7 @@ public class PortletResponseHeadersHelperImpl
 
 		@Override
 		public void addDateHeader(String name, long value) {
-			if (PortletResponseHeadersThreadLocal.isPortletResponseHeaders()) {
+			if (_portletResponseHeaders.get()) {
 				_headerActions.add(new HeaderAction<>(name, value, false));
 
 				return;
@@ -225,7 +211,7 @@ public class PortletResponseHeadersHelperImpl
 
 		@Override
 		public void addHeader(String name, String value) {
-			if (PortletResponseHeadersThreadLocal.isPortletResponseHeaders()) {
+			if (_portletResponseHeaders.get()) {
 				_headerActions.add(new HeaderAction<>(name, value, false));
 
 				return;
@@ -236,7 +222,7 @@ public class PortletResponseHeadersHelperImpl
 
 		@Override
 		public void addIntHeader(String name, int value) {
-			if (PortletResponseHeadersThreadLocal.isPortletResponseHeaders()) {
+			if (_portletResponseHeaders.get()) {
 				_headerActions.add(new HeaderAction<>(name, value, false));
 
 				return;
@@ -246,7 +232,7 @@ public class PortletResponseHeadersHelperImpl
 		}
 
 		public void reloadHeaders() {
-			PortletResponseHeadersThreadLocal.setPortletResponseHeaders(true);
+			_portletResponseHeaders.set(true);
 
 			try {
 				for (int i = 0; i < _headerActions.size(); i++) {
@@ -298,14 +284,13 @@ public class PortletResponseHeadersHelperImpl
 				}
 			}
 			finally {
-				PortletResponseHeadersThreadLocal.setPortletResponseHeaders(
-					false);
+				_portletResponseHeaders.set(false);
 			}
 		}
 
 		@Override
 		public void setDateHeader(String name, long value) {
-			if (PortletResponseHeadersThreadLocal.isPortletResponseHeaders()) {
+			if (_portletResponseHeaders.get()) {
 				_headerActions.add(new HeaderAction<>(name, value, true));
 
 				return;
@@ -316,7 +301,7 @@ public class PortletResponseHeadersHelperImpl
 
 		@Override
 		public void setHeader(String name, String value) {
-			if (PortletResponseHeadersThreadLocal.isPortletResponseHeaders()) {
+			if (_portletResponseHeaders.get()) {
 				_headerActions.add(new HeaderAction<>(name, value, true));
 
 				return;
@@ -327,7 +312,7 @@ public class PortletResponseHeadersHelperImpl
 
 		@Override
 		public void setIntHeader(String name, int value) {
-			if (PortletResponseHeadersThreadLocal.isPortletResponseHeaders()) {
+			if (_portletResponseHeaders.get()) {
 				_headerActions.add(new HeaderAction<>(name, value, true));
 
 				return;

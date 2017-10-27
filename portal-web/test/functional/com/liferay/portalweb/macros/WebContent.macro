@@ -1653,7 +1653,7 @@
 	</command>
 
 	<command name="viewDefaultLanguage">
-		<execute function="AssertTextEquals" locator1="NavTab#TAB_LINK" value1="${locale}">
+		<execute function="AssertTextEquals#assertPartialText" locator1="NavTab#TAB_LINK" value1="${locale}">
 			<var name="key_tab" value="${locale}" />
 		</execute>
 

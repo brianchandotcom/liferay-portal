@@ -579,7 +579,7 @@ public class TopLevelBuild extends BaseBuild {
 		try {
 			resourceFileContent =
 				JenkinsResultsParserUtil.getResourceFileContent(
-					"chart-template.js");
+					"dependencies/chart-template.js");
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(
@@ -645,7 +645,7 @@ public class TopLevelBuild extends BaseBuild {
 		try {
 			resourceFileContent =
 				JenkinsResultsParserUtil.getResourceFileContent(
-					"jenkins-report.css");
+					"dependencies/jenkins-report.css");
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(

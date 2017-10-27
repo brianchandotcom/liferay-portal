@@ -128,9 +128,9 @@ public class ModuleConfigurationLocalizationTest {
 			if (resourceBundleLoader.loadResourceBundle(locale) == null) {
 				sb.append("\n\tMissing generated language files, ");
 				sb.append("need to regenerate language files for this bundle.");
-			}
 
-			break;
+				break;
+			}
 		}
 
 		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(

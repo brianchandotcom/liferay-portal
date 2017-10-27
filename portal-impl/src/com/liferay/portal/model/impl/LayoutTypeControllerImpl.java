@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
-import com.liferay.portal.kernel.servlet.PortletResponseHeadersHelperUtil;
+import com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -129,7 +129,7 @@ public class LayoutTypeControllerImpl implements LayoutTypeController {
 			WebKeys.CTX);
 
 		RequestDispatcher requestDispatcher =
-			PortletResponseHeadersHelperUtil.getReloadHeadersRequestDispatcher(
+			TransferHeadersHelperUtil.getTransferHeadersRequestDispatcher(
 				DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
 					servletContext, getEditPage()));
 
@@ -157,7 +157,7 @@ public class LayoutTypeControllerImpl implements LayoutTypeController {
 		String path = getViewPath(portletId);
 
 		RequestDispatcher requestDispatcher =
-			PortletResponseHeadersHelperUtil.getReloadHeadersRequestDispatcher(
+			TransferHeadersHelperUtil.getTransferHeadersRequestDispatcher(
 				DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
 					servletContext, path));
 

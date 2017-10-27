@@ -15,7 +15,7 @@
 package com.liferay.portal.servlet;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
-import com.liferay.portal.kernel.servlet.PortletResponseHeadersHelper;
+import com.liferay.portal.kernel.servlet.TransferHeadersHelper;
 
 import java.io.IOException;
 
@@ -34,14 +34,13 @@ import javax.servlet.http.HttpServletResponseWrapper;
 /**
  * @author Tina Tian
  */
-public class PortletResponseHeadersHelperImpl
-	implements PortletResponseHeadersHelper {
+public class TransferHeadersHelperImpl implements TransferHeadersHelper {
 
 	@Override
-	public RequestDispatcher getReloadHeadersRequestDispatcher(
+	public RequestDispatcher getTransferHeadersRequestDispatcher(
 		RequestDispatcher requestDispatcher) {
 
-		return new ReloadHeadersRequestDispatcher(requestDispatcher);
+		return new TransferHeadersRequestDispatcher(requestDispatcher);
 	}
 
 	@Override
@@ -109,7 +108,7 @@ public class PortletResponseHeadersHelperImpl
 
 	private static final ThreadLocal<Boolean> _transferringHeaders =
 		new CentralizedThreadLocal<>(
-			PortletResponseHeadersHelperImpl.class +
+			TransferHeadersHelperImpl.class +
 				"._portletResponseHeaders",
 			() -> false);
 
@@ -139,7 +138,8 @@ public class PortletResponseHeadersHelperImpl
 
 	}
 
-	private class ReloadHeadersRequestDispatcher implements RequestDispatcher {
+	private class TransferHeadersRequestDispatcher
+		implements RequestDispatcher {
 
 		@Override
 		public void forward(
@@ -154,20 +154,20 @@ public class PortletResponseHeadersHelperImpl
 				ServletRequest servletRequest, ServletResponse servletResponse)
 			throws IOException, ServletException {
 
-			ReloadHeadersServletResponse reloadHeadersServletResponse =
-				new ReloadHeadersServletResponse(
+			TransferHeadersServletResponse transferHeadersServletResponse =
+				new TransferHeadersServletResponse(
 					(HttpServletResponse)servletResponse);
 
 			try {
 				_requestDispatcher.include(
-					servletRequest, reloadHeadersServletResponse);
+					servletRequest, transferHeadersServletResponse);
 			}
 			finally {
-				reloadHeadersServletResponse.reloadHeaders();
+				transferHeadersServletResponse.transferHeaders();
 			}
 		}
 
-		private ReloadHeadersRequestDispatcher(
+		private TransferHeadersRequestDispatcher(
 			RequestDispatcher requestDispatcher) {
 
 			_requestDispatcher = requestDispatcher;
@@ -177,7 +177,7 @@ public class PortletResponseHeadersHelperImpl
 
 	}
 
-	private class ReloadHeadersServletResponse
+	private class TransferHeadersServletResponse
 		extends HttpServletResponseWrapper {
 
 		@Override
@@ -225,7 +225,40 @@ public class PortletResponseHeadersHelperImpl
 			_httpServletResponse.addIntHeader(name, value);
 		}
 
-		public void reloadHeaders() {
+		@Override
+		public void setDateHeader(String name, long value) {
+			if (_transferringHeaders.get()) {
+				_headerActions.add(new HeaderAction<>(name, value, true));
+
+				return;
+			}
+
+			_httpServletResponse.setDateHeader(name, value);
+		}
+
+		@Override
+		public void setHeader(String name, String value) {
+			if (_transferringHeaders.get()) {
+				_headerActions.add(new HeaderAction<>(name, value, true));
+
+				return;
+			}
+
+			_httpServletResponse.setHeader(name, value);
+		}
+
+		@Override
+		public void setIntHeader(String name, int value) {
+			if (_transferringHeaders.get()) {
+				_headerActions.add(new HeaderAction<>(name, value, true));
+
+				return;
+			}
+
+			_httpServletResponse.setIntHeader(name, value);
+		}
+
+		public void transferHeaders() {
 			boolean transferringHeaders = _transferringHeaders.get();
 
 			_transferringHeaders.set(true);
@@ -284,40 +317,7 @@ public class PortletResponseHeadersHelperImpl
 			}
 		}
 
-		@Override
-		public void setDateHeader(String name, long value) {
-			if (_transferringHeaders.get()) {
-				_headerActions.add(new HeaderAction<>(name, value, true));
-
-				return;
-			}
-
-			_httpServletResponse.setDateHeader(name, value);
-		}
-
-		@Override
-		public void setHeader(String name, String value) {
-			if (_transferringHeaders.get()) {
-				_headerActions.add(new HeaderAction<>(name, value, true));
-
-				return;
-			}
-
-			_httpServletResponse.setHeader(name, value);
-		}
-
-		@Override
-		public void setIntHeader(String name, int value) {
-			if (_transferringHeaders.get()) {
-				_headerActions.add(new HeaderAction<>(name, value, true));
-
-				return;
-			}
-
-			_httpServletResponse.setIntHeader(name, value);
-		}
-
-		private ReloadHeadersServletResponse(
+		private TransferHeadersServletResponse(
 			HttpServletResponse httpServletResponse) {
 
 			super(httpServletResponse);

@@ -264,26 +264,10 @@ public class TransferHeadersHelperImpl implements TransferHeadersHelper {
 			_transferringHeaders.set(true);
 
 			try {
-				for (int i = 0; i < _headerActions.size(); i++) {
-					HeaderAction<?> headerAction = _headerActions.get(i);
-
+				for (HeaderAction<?> headerAction : _headerActions) {
 					Object value = headerAction.getValue();
 
-					if (value == null) {
-						continue;
-					}
-
-					if (value instanceof String) {
-						if (headerAction.isOverride()) {
-							_httpServletResponse.setHeader(
-								headerAction.getName(), (String)value);
-						}
-						else {
-							_httpServletResponse.addHeader(
-								headerAction.getName(), (String)value);
-						}
-					}
-					else if (value instanceof Long) {
+					if (value instanceof Long) {
 						if (headerAction.isOverride()) {
 							_httpServletResponse.setDateHeader(
 								headerAction.getName(), (Long)value);
@@ -307,8 +291,14 @@ public class TransferHeadersHelperImpl implements TransferHeadersHelper {
 						}
 					}
 					else {
-						throw new IllegalStateException(
-							"Unable to handle value " + value);
+						if (headerAction.isOverride()) {
+							_httpServletResponse.setHeader(
+								headerAction.getName(), (String)value);
+						}
+						else {
+							_httpServletResponse.addHeader(
+								headerAction.getName(), (String)value);
+						}
 					}
 				}
 			}

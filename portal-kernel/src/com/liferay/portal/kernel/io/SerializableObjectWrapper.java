@@ -29,7 +29,9 @@ import java.util.Arrays;
 
 /**
  * @author Tina Tian
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class SerializableObjectWrapper implements Externalizable {
 
 	public static <T> T unwrap(Object object) {

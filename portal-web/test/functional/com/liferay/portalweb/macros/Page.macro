@@ -776,6 +776,7 @@
 			<condition function="IsElementPresent" locator1="ContentRow#ENTRY_CONTENT_ROW_NUMBER_ELLIPSIS">
 				<var name="key_rowNumber" value="2" />
 			</condition>
+
 			<then>
 				<execute function="Click#waitForMenuToggleJSClick" locator1="ContentRow#ENTRY_CONTENT_ROW_NUMBER_ELLIPSIS">
 					<var name="key_rowNumber" value="2" />

@@ -189,14 +189,6 @@ public abstract class BasePoshiElement
 		return false;
 	}
 
-	protected boolean isElementType(String name, Element element) {
-		if (name.equals(element.getName())) {
-			return true;
-		}
-
-		return false;
-	}
-
 	protected boolean isConditionValidInParent(
 		PoshiElement parentPoshiElement) {
 
@@ -206,6 +198,14 @@ public abstract class BasePoshiElement
 			parentPoshiElement instanceof NotPoshiElement ||
 			parentPoshiElement instanceof OrPoshiElement) {
 
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isElementType(String name, Element element) {
+		if (name.equals(element.getName())) {
 			return true;
 		}
 

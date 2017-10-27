@@ -54,6 +54,25 @@
 				AND (CommerceWarehouse.commerceCountryId = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.commerce.service.persistence.CommerceWarehouseFinder.findByCommerceWarehouseItemQuantity">
+		<![CDATA[
+			SELECT
+				{CommerceWarehouse.*}
+			FROM
+				CommerceWarehouse
+			WHERE
+				(CommerceWarehouse.commerceWarehouseId IN (
+					SELECT
+						commerceWarehouseId
+					FROM
+						CommerceWarehouseItem
+					WHERE
+						(CommerceWarehouseItem.classNameId = ?) AND
+						(CommerceWarehouseItem.classPK = ?) AND
+						(CommerceWarehouseItem.quantity >= ?)
+				))
+		]]>
+	</sql>
 	<sql id="com.liferay.commerce.service.persistence.CommerceWarehouseFinder.findByG_N_D_S_C_Z_C">
 		<![CDATA[
 			SELECT

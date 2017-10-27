@@ -146,6 +146,16 @@ public class CommerceWarehouseLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceWarehouse> getCommerceWarehouses(
+		String className, long classPK, int quantity, int start, int end) {
+
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		return commerceWarehouseFinder.findByCommerceWarehouseItemQuantity(
+			classNameId, classPK, quantity, start, end);
+	}
+
+	@Override
 	public int getCommerceWarehousesCount(
 		long groupId, long commerceCountryId) {
 

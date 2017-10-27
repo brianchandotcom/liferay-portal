@@ -41,6 +41,10 @@ public class CommerceWarehouseFinderImpl
 	public static final String COUNT_BY_G_N_D_S_C_Z_C =
 		CommerceWarehouseFinder.class.getName() + ".countByG_N_D_S_C_Z_C";
 
+	public static final String FIND_BY_COMMERCE_WAREHOUSE_ITEM_QUANTITY =
+		CommerceWarehouseFinder.class.getName() +
+			".findByCommerceWarehouseItemQuantity";
+
 	public static final String FIND_BY_G_N_D_S_C_Z_C =
 		CommerceWarehouseFinder.class.getName() + ".findByG_N_D_S_C_Z_C";
 
@@ -163,6 +167,39 @@ public class CommerceWarehouseFinderImpl
 			}
 
 			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public List<CommerceWarehouse> findByCommerceWarehouseItemQuantity(
+		long classNameId, long classPK, int quantity, int start, int end) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(
+				getClass(), FIND_BY_COMMERCE_WAREHOUSE_ITEM_QUANTITY);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("CommerceWarehouse", CommerceWarehouseImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(classNameId);
+			qPos.add(classPK);
+			qPos.add(quantity);
+
+			return (List<CommerceWarehouse>)QueryUtil.list(
+				q, getDialect(), start, end);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

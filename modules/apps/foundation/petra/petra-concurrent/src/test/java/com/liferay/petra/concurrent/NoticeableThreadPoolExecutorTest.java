@@ -397,7 +397,7 @@ public class NoticeableThreadPoolExecutorTest {
 
 		noticeableThreadPoolExecutor.execute(slowRunnable);
 
-		while (taskBlockingQueue.contains(slowRunnable));
+		while (!taskBlockingQueue.isEmpty());
 
 		Assert.assertEquals(2, noticeableThreadPoolExecutor.getActiveCount());
 		Assert.assertEquals(
@@ -429,7 +429,7 @@ public class NoticeableThreadPoolExecutorTest {
 
 		runningBlockingTaskQueue.take();
 
-		while (taskBlockingQueue.contains(slowRunnable));
+		while (!taskBlockingQueue.isEmpty());
 
 		Assert.assertEquals(2, noticeableThreadPoolExecutor.getActiveCount());
 		Assert.assertEquals(

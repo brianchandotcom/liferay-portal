@@ -32,6 +32,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.junit.Assert;
@@ -144,9 +145,11 @@ public class ModuleConfigurationLocalizationTest {
 
 		StringBundler sb = new StringBundler();
 
+		Locale locale = LocaleUtil.getDefault();
+
 		ExtendedObjectClassDefinition extendedObjectClassDefinition =
 			extendedMetaTypeInformation.getObjectClassDefinition(
-				pid, LocaleUtil.getDefault().getLanguage());
+				pid, locale.getLanguage());
 
 		if (ResourceBundleUtil.getString(
 				resourceBundle, extendedObjectClassDefinition.getName()) ==

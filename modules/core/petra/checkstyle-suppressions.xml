@@ -5,4 +5,5 @@
 	<suppress checks="Concat" files="modules/core/petra/petra-io/src/main/java/com/liferay/petra/io/BigEndianCodec\.java" />
 	<suppress checks="Concat" files="modules/core/petra/petra-string/src/test/java/com/liferay/petra/string/StringBundlerTest\.java" />
 	<suppress checks="Indentation" files="modules/core/petra/petra-io/src/main/java/com/liferay/petra/io/BigEndianCodec\.java" />
+	<suppress checks="MissingModifier" files="modules/core/petra/petra-io/src/main/java/com/liferay/petra/io/unsync/BoundaryCheckerUtil\.java" />
 </suppressions>

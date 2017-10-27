@@ -19,7 +19,6 @@ import com.liferay.portal.configuration.metatype.definitions.ExtendedAttributeDe
 import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeInformation;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeService;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedObjectClassDefinition;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -33,7 +32,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.junit.Assert;
@@ -118,19 +116,6 @@ public class ModuleConfigurationLocalizationTest {
 			sb.setIndex(sb.index() - 1);
 
 			return sb.toString();
-		}
-
-		for (Locale locale : LanguageUtil.getAvailableLocales()) {
-			if (locale.equals(LocaleUtil.getDefault())) {
-				continue;
-			}
-
-			if (resourceBundleLoader.loadResourceBundle(locale) == null) {
-				sb.append("\n\tMissing generated language files, ");
-				sb.append("need to regenerate language files for this bundle.");
-			}
-
-			break;
 		}
 
 		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(

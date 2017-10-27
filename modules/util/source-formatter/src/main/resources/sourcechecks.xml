@@ -142,19 +142,7 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/shopping/shopping-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/social-networking/social-networking-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/social-private-messaging/social-private-messaging-service" />
-			<property name="allowedExportPackageDirName" value="modules/apps/static/osgi/osgi-util" />
-			<property name="allowedExportPackageDirName" value="modules/apps/static/portal/portal-profile" />
-			<property name="allowedExportPackageDirName" value="modules/apps/static/portal-bundle-blacklist/portal-bundle-blacklist" />
-			<property name="allowedExportPackageDirName" value="modules/apps/static/portal-configuration/portal-configuration-metatype" />
-			<property name="allowedExportPackageDirName" value="modules/apps/static/portal-configuration/portal-configuration-persistence" />
-			<property name="allowedExportPackageDirName" value="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer" />
-			<property name="allowedExportPackageDirName" value="modules/apps/static/portal-osgi-web/portal-osgi-web-jasper-plugins" />
-			<property name="allowedExportPackageDirName" value="modules/apps/static/portal-osgi-web/portal-osgi-web-servlet-context-helper" />
-			<property name="allowedExportPackageDirName" value="modules/apps/static/portal-osgi-web/portal-osgi-web-servlet-jsp-compiler" />
-			<property name="allowedExportPackageDirName" value="modules/apps/static/portal-osgi-web/portal-osgi-web-wab-extender" />
-			<property name="allowedExportPackageDirName" value="modules/apps/static/portal-osgi-web/portal-osgi-web-wab-generator" />
-			<property name="allowedExportPackageDirName" value="modules/apps/static/portal-remote/portal-remote-dependency-manager-tccl" />
-			<property name="allowedExportPackageDirName" value="modules/apps/static/portal-target-platform-indexer/portal-target-platform-indexer" />
+			<property name="allowedExportPackageDirName" value="modules/apps/static/" />
 			<property name="allowedExportPackageDirName" value="modules/apps/sync/sync-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/twitter/twitter-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/asset/asset-categories-admin-web" />

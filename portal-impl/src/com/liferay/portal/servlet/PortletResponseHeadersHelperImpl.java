@@ -178,14 +178,6 @@ public class PortletResponseHeadersHelperImpl
 	private class ReloadHeadersServletResponse
 		extends HttpServletResponseWrapper {
 
-		public ReloadHeadersServletResponse(
-			HttpServletResponse httpServletResponse) {
-
-			super(httpServletResponse);
-
-			_httpServletResponse = httpServletResponse;
-		}
-
 		@Override
 		public void addCookie(Cookie cookie) {
 			if (_portletResponseHeaders.get()) {
@@ -319,6 +311,14 @@ public class PortletResponseHeadersHelperImpl
 			}
 
 			_httpServletResponse.setIntHeader(name, value);
+		}
+
+		private ReloadHeadersServletResponse(
+			HttpServletResponse httpServletResponse) {
+
+			super(httpServletResponse);
+
+			_httpServletResponse = httpServletResponse;
 		}
 
 		private final List<HeaderAction<?>> _headerActions = new ArrayList<>();

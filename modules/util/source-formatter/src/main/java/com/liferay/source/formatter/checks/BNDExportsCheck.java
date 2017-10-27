@@ -76,14 +76,23 @@ public class BNDExportsCheck extends BaseFileCheck {
 			}
 		}
 
-		if (absolutePath.contains("-service/") &&
-			content.contains("Export-Package")) {
+		if (fileName.endsWith("/test-bnd.bnd") ||
+			absolutePath.contains("-api/") ||
+			absolutePath.contains("-taglib/") ||
+			absolutePath.contains("-test-util/") ||
+			!content.contains("Export-Package")) {
 
-			addMessage(
-				fileName,
-				"Service modules should not be exporting any packages, see " +
-					"LPS-75294");
+			return;
 		}
+
+		int x = absolutePath.lastIndexOf(StringPool.SLASH);
+
+		int y = absolutePath.lastIndexOf(StringPool.SLASH, x - 1);
+
+		addMessage(
+			fileName,
+			"Exporting packages not allowed in module '" +
+				absolutePath.substring(y + 1, x) + "'");
 	}
 
 	private void _checkExports(

@@ -92,7 +92,8 @@ public class BNDExportsCheck extends BaseFileCheck {
 		addMessage(
 			fileName,
 			"Exporting packages not allowed in module '" +
-				absolutePath.substring(y + 1, x) + "'");
+				absolutePath.substring(y + 1, x) + "'",
+			"bnd_exports.markdown");
 	}
 
 	private void _checkExports(

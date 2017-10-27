@@ -65,10 +65,30 @@ public class JavaSignatureParser {
 			new String[] {"", ".", " "});
 
 		for (x = 0;;) {
-			parameters = StringUtil.trim(parameters);
+			int pos = -1;
 
-			if (parameters.startsWith(StringPool.AT)) {
-				parameters = _stripAnnotations(parameters);
+			while (true) {
+				parameters = StringUtil.trim(parameters);
+
+				if (!parameters.startsWith(StringPool.AT)) {
+					break;
+				}
+
+				pos = parameters.indexOf(CharPool.SPACE, pos + 1);
+
+				if (pos == -1) {
+					break;
+				}
+
+				String annotation = parameters.substring(0, pos);
+
+				if ((JavaSourceUtil.getLevel(annotation) == 0) &&
+					(JavaSourceUtil.getLevel(annotation, "<", ">") == 0)) {
+
+					parameters = parameters.substring(pos + 1);
+
+					pos = -1;
+				}
 			}
 
 			if (parameters.startsWith("final ")) {
@@ -132,34 +152,6 @@ public class JavaSignatureParser {
 		}
 
 		return returnType;
-	}
-
-	private static String _stripAnnotations(String parameters) {
-		int pos = -1;
-
-		while (true) {
-			parameters = StringUtil.trim(parameters);
-
-			if (!parameters.startsWith(StringPool.AT)) {
-				return parameters;
-			}
-
-			pos = parameters.indexOf(CharPool.SPACE, pos + 1);
-
-			if (pos == -1) {
-				return parameters;
-			}
-
-			String annotation = parameters.substring(0, pos);
-
-			if ((JavaSourceUtil.getLevel(annotation) == 0) &&
-				(JavaSourceUtil.getLevel(annotation, "<", ">") == 0)) {
-
-				parameters = parameters.substring(pos + 1);
-
-				pos = -1;
-			}
-		}
 	}
 
 }

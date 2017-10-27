@@ -14,8 +14,8 @@
 
 package com.liferay.exportimport.resources.importer.internal.util;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.PropertiesUtil;

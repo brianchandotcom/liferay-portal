@@ -1,6 +1,10 @@
 Bundle-Name: ${artifactId}
 Bundle-SymbolicName: ${package}
 Bundle-Version: ${version}
+Provide-Capability:\
+	soy;\
+		type="${artifactId}";\
+		version:Version="${version}"
 Require-Capability:\
 	soy;\
 		filter:="(type=metal)"

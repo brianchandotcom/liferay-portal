@@ -35,71 +35,71 @@ import java.nio.CharBuffer;
 public class Deserializer {
 
 	public Deserializer(ByteBuffer byteBuffer) {
-		buffer = byteBuffer.array();
+		_buffer = byteBuffer.array();
 
-		index = byteBuffer.arrayOffset();
+		_index = byteBuffer.arrayOffset();
 
-		limit = index + byteBuffer.remaining();
+		_limit = _index + byteBuffer.remaining();
 	}
 
 	public boolean readBoolean() {
-		detectBufferUnderflow(1);
+		_detectBufferUnderflow(1);
 
-		return BigEndianCodec.getBoolean(buffer, index++);
+		return BigEndianCodec.getBoolean(_buffer, _index++);
 	}
 
 	public byte readByte() {
-		detectBufferUnderflow(1);
+		_detectBufferUnderflow(1);
 
-		return buffer[index++];
+		return _buffer[_index++];
 	}
 
 	public char readChar() {
-		detectBufferUnderflow(2);
+		_detectBufferUnderflow(2);
 
-		char c = BigEndianCodec.getChar(buffer, index);
+		char c = BigEndianCodec.getChar(_buffer, _index);
 
-		index += 2;
+		_index += 2;
 
 		return c;
 	}
 
 	public double readDouble() {
-		detectBufferUnderflow(8);
+		_detectBufferUnderflow(8);
 
-		double d = BigEndianCodec.getDouble(buffer, index);
+		double d = BigEndianCodec.getDouble(_buffer, _index);
 
-		index += 8;
+		_index += 8;
 
 		return d;
 	}
 
 	public float readFloat() {
-		detectBufferUnderflow(4);
+		_detectBufferUnderflow(4);
 
-		float f = BigEndianCodec.getFloat(buffer, index);
+		float f = BigEndianCodec.getFloat(_buffer, _index);
 
-		index += 4;
+		_index += 4;
 
 		return f;
 	}
 
 	public int readInt() {
-		detectBufferUnderflow(4);
+		_detectBufferUnderflow(4);
 
-		int i = BigEndianCodec.getInt(buffer, index);
+		int i = BigEndianCodec.getInt(_buffer, _index);
 
-		index += 4;
+		_index += 4;
 
 		return i;
 	}
 
 	public long readLong() {
-		detectBufferUnderflow(8);
+		_detectBufferUnderflow(8);
 
-		long l = BigEndianCodec.getLong(buffer, index);
+		long l = BigEndianCodec.getLong(_buffer, _index);
 
-		index += 8;
+		_index += 8;
 
 		return l;
 	}
@@ -107,7 +107,7 @@ public class Deserializer {
 	public <T extends Serializable> T readObject()
 		throws ClassNotFoundException {
 
-		byte tcByte = buffer[index++];
+		byte tcByte = _buffer[_index++];
 
 		switch (tcByte) {
 			case SerializationConstants.TC_BOOLEAN:
@@ -167,41 +167,41 @@ public class Deserializer {
 	}
 
 	public short readShort() {
-		detectBufferUnderflow(2);
+		_detectBufferUnderflow(2);
 
-		short s = BigEndianCodec.getShort(buffer, index);
+		short s = BigEndianCodec.getShort(_buffer, _index);
 
-		index += 2;
+		_index += 2;
 
 		return s;
 	}
 
 	public String readString() {
-		detectBufferUnderflow(5);
+		_detectBufferUnderflow(5);
 
-		boolean asciiCode = BigEndianCodec.getBoolean(buffer, index++);
+		boolean asciiCode = BigEndianCodec.getBoolean(_buffer, _index++);
 
-		int length = BigEndianCodec.getInt(buffer, index);
+		int length = BigEndianCodec.getInt(_buffer, _index);
 
-		index += 4;
+		_index += 4;
 
 		if (asciiCode) {
-			detectBufferUnderflow(length);
+			_detectBufferUnderflow(length);
 
-			String s = new String(buffer, index, length);
+			String s = new String(_buffer, _index, length);
 
-			index += length;
+			_index += length;
 
 			return s;
 		}
 
 		length <<= 1;
 
-		detectBufferUnderflow(length);
+		_detectBufferUnderflow(length);
 
-		ByteBuffer byteBuffer = ByteBuffer.wrap(buffer, index, length);
+		ByteBuffer byteBuffer = ByteBuffer.wrap(_buffer, _index, length);
 
-		index += length;
+		_index += length;
 
 		CharBuffer charBuffer = byteBuffer.asCharBuffer();
 
@@ -216,21 +216,21 @@ public class Deserializer {
 	 *
 	 * @param availableBytes number of bytes available in input buffer
 	 */
-	protected final void detectBufferUnderflow(int availableBytes) {
-		if ((index + availableBytes) > limit) {
+	private void _detectBufferUnderflow(int availableBytes) {
+		if ((_index + availableBytes) > _limit) {
 			throw new IllegalStateException("Buffer underflow");
 		}
 	}
 
-	protected byte[] buffer;
-	protected int index;
-	protected int limit;
+	private final byte[] _buffer;
+	private int _index;
+	private final int _limit;
 
-	protected class BufferInputStream extends InputStream {
+	private class BufferInputStream extends InputStream {
 
 		@Override
 		public int read() {
-			return buffer[index++];
+			return _buffer[_index++];
 		}
 
 		@Override
@@ -240,15 +240,15 @@ public class Deserializer {
 
 		@Override
 		public int read(byte[] bytes, int offset, int length) {
-			int remain = limit - index;
+			int remain = _limit - _index;
 
 			if (remain < length) {
 				length = remain;
 			}
 
-			System.arraycopy(buffer, index, bytes, offset, length);
+			System.arraycopy(_buffer, _index, bytes, offset, length);
 
-			index += length;
+			_index += length;
 
 			return length;
 		}

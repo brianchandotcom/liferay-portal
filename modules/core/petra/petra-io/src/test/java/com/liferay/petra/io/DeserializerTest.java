@@ -17,10 +17,15 @@ package com.liferay.petra.io;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -57,15 +62,15 @@ public class DeserializerTest {
 		};
 
 	@Test
-	public void testBufferInputStream() {
+	public void testBufferInputStream() throws Exception {
 		byte[] data = new byte[_COUNT];
 
 		_random.nextBytes(data);
 
 		Deserializer deserializer = new Deserializer(ByteBuffer.wrap(data));
 
-		Deserializer.BufferInputStream bufferInputStream =
-			deserializer.new BufferInputStream();
+		BufferInputStream bufferInputStream = new BufferInputStream(
+			deserializer);
 
 		for (int i = 0; i < _COUNT; i++) {
 			Assert.assertEquals(data[i], bufferInputStream.read());
@@ -73,7 +78,7 @@ public class DeserializerTest {
 
 		deserializer = new Deserializer(ByteBuffer.wrap(data));
 
-		bufferInputStream = deserializer.new BufferInputStream();
+		bufferInputStream = new BufferInputStream(deserializer);
 
 		int size1 = _COUNT * 2 / 3;
 
@@ -101,20 +106,28 @@ public class DeserializerTest {
 	}
 
 	@Test
-	public void testDetectBufferUnderflow() {
+	public void testDetectBufferUnderflow() throws Exception {
+		Method detectBufferUnderflowMethod = ReflectionTestUtil.getMethod(
+			Deserializer.class, "_detectBufferUnderflow", int.class);
+
 		ByteBuffer byteBuffer = ByteBuffer.allocate(4);
 
 		Deserializer deserializer = new Deserializer(byteBuffer);
 
-		deserializer.detectBufferUnderflow(4);
+		detectBufferUnderflowMethod.invoke(deserializer, 4);
 
 		try {
-			deserializer.detectBufferUnderflow(5);
+			detectBufferUnderflowMethod.invoke(deserializer, 5);
 
 			Assert.fail();
 		}
-		catch (IllegalStateException ise) {
-			Assert.assertEquals("Buffer underflow", ise.getMessage());
+		catch (InvocationTargetException ite) {
+			Throwable cause = ite.getCause();
+
+			Assert.assertTrue(
+				cause.toString(), cause instanceof IllegalStateException);
+
+			Assert.assertEquals("Buffer underflow", cause.getMessage());
 		}
 	}
 
@@ -674,5 +687,45 @@ public class DeserializerTest {
 	private static final int _COUNT = 1024;
 
 	private final Random _random = new Random();
+
+	private static class BufferInputStream {
+
+		public int read() throws Exception {
+			return (int)_readByteMethod.invoke(_bufferInputStream);
+		}
+
+		public int read(byte[] bytes) throws Exception {
+			return (int)_readBytesMethod.invoke(_bufferInputStream, bytes);
+		}
+
+		private BufferInputStream(Deserializer deserializer) throws Exception {
+			_bufferInputStream = _constructor.newInstance(deserializer);
+		}
+
+		private static final Constructor<?> _constructor;
+		private static final Method _readByteMethod;
+		private static final Method _readBytesMethod;
+
+		static {
+			try {
+				Class<?> clazz = Class.forName(
+					Deserializer.class.getName() + "$BufferInputStream");
+
+				_constructor = clazz.getDeclaredConstructor(Deserializer.class);
+
+				_constructor.setAccessible(true);
+
+				_readByteMethod = ReflectionTestUtil.getMethod(clazz, "read");
+				_readBytesMethod = ReflectionTestUtil.getMethod(
+					clazz, "read", byte[].class);
+			}
+			catch (ReflectiveOperationException roe) {
+				throw new ExceptionInInitializerError(roe);
+			}
+		}
+
+		private final Object _bufferInputStream;
+
+	}
 
 }

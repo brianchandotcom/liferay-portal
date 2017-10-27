@@ -14,8 +14,8 @@
 
 package com.liferay.source.formatter.checkstyle.util;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.checkstyle.Checker;
 

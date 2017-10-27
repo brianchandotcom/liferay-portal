@@ -14,8 +14,8 @@
 
 package com.liferay.text.localizer.taglib.servlet.taglib;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.model.Address;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
 import com.liferay.text.localizer.address.util.AddressTextLocalizerUtil;

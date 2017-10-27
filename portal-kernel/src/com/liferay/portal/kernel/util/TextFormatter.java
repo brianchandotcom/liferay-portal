@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.string.CharPool;
+
 import java.text.NumberFormat;
 
 import java.util.Locale;

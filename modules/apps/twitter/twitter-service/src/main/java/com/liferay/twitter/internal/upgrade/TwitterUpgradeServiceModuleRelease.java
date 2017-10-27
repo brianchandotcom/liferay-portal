@@ -14,8 +14,8 @@
 
 package com.liferay.twitter.internal.upgrade;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.model.dao.ReleaseDAO;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.upgrade.release.BaseUpgradeServiceModuleRelease;
 

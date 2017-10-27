@@ -217,6 +217,21 @@ public class GitWorkingDirectory {
 		}
 	}
 
+	public void cherryPick(Commit commit) {
+		String cherryPickCommand = JenkinsResultsParserUtil.combine(
+			"git cherry-pick " + commit.getSHA());
+
+		ExecutionResult executionResult = executeBashCommands(
+			cherryPickCommand);
+
+		if (executionResult.getExitValue() != 0) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to cherry-pick commit ", commit.getSHA(), "\n",
+					executionResult.getStandardError()));
+		}
+	}
+
 	public void clean() {
 		clean(null);
 	}

@@ -64,6 +64,7 @@ public class JavaSignatureParser {
 		}
 
 		Set<String> parameterAnnotations = new TreeSet<>();
+		boolean parameterFinal = false;
 
 		parameters = StringUtil.replace(
 			parameters, new String[] {"\t", ".\n", "\n"},
@@ -98,6 +99,7 @@ public class JavaSignatureParser {
 			}
 
 			if (parameters.startsWith("final ")) {
+				parameterFinal = true;
 				parameters = parameters.substring(6);
 			}
 
@@ -119,7 +121,8 @@ public class JavaSignatureParser {
 				String parameterName = parameters.substring(x + 1);
 
 				javaSignature.addParameter(
-					parameterName, parameterType, parameterAnnotations);
+					parameterName, parameterType, parameterAnnotations,
+					parameterFinal);
 
 				return javaSignature;
 			}
@@ -127,10 +130,12 @@ public class JavaSignatureParser {
 			String parameterName = parameters.substring(x + 1, y);
 
 			javaSignature.addParameter(
-				parameterName, parameterType, parameterAnnotations);
+				parameterName, parameterType, parameterAnnotations,
+				parameterFinal);
 
-			parameters = parameters.substring(y + 1);
 			parameterAnnotations = new TreeSet<>();
+			parameterFinal = false;
+			parameters = parameters.substring(y + 1);
 
 			x = 0;
 		}

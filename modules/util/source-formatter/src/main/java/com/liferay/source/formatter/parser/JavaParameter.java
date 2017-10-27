@@ -23,11 +23,12 @@ public class JavaParameter {
 
 	public JavaParameter(
 		String parameterName, String parameterType,
-		Set<String> parameterAnnotations) {
+		Set<String> parameterAnnotations, boolean parameterFinal) {
 
 		_parameterName = parameterName;
 		_parameterType = parameterType;
 		_parameterAnnotations = parameterAnnotations;
+		_parameterFinal = parameterFinal;
 	}
 
 	public Set<String> getParameterAnnotations() {
@@ -42,7 +43,12 @@ public class JavaParameter {
 		return _parameterType;
 	}
 
+	public boolean isParameterFinal() {
+		return _parameterFinal;
+	}
+
 	private final Set<String> _parameterAnnotations;
+	private final boolean _parameterFinal;
 	private final String _parameterName;
 	private final String _parameterType;
 

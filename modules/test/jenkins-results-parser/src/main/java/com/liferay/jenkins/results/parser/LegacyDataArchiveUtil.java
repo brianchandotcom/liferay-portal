@@ -109,7 +109,7 @@ public class LegacyDataArchiveUtil {
 		GitWorkingDirectory.Remote upstreamRemote =
 			_legacyDataGitWorkingDirectory.getRemote("upstream");
 
-		portalLegacyGitWorkingDirectory.pushToRemote(
+		_legacyDataGitWorkingDirectory.pushToRemote(
 			true, temporaryBranch, temporaryBranchName, upstreamRemote);
 
 		return temporaryBranch;
@@ -127,16 +127,16 @@ public class LegacyDataArchiveUtil {
 		return _latestManualCommit;
 	}
 
+	public Set<String> getLegacyDataArchiveTypes() {
+		return _legacyDataArchiveTypes;
+	}
+
 	public GitWorkingDirectory getLegacyDataGitWorkingDirectory() {
 		return _legacyDataGitWorkingDirectory;
 	}
 
 	public File getLegacyDataWorkingDirectory() {
 		return _legacyDataGitWorkingDirectory.getWorkingDirectory();
-	}
-
-	public Set<String> getLegacyDataArchiveTypes() {
-		return _legacyDataArchiveTypes;
 	}
 
 	public Set<String> getPortalVersions() {
@@ -486,7 +486,7 @@ public class LegacyDataArchiveUtil {
 	private final Map<String, LegacyDataArchiveGroup>
 		_legacyDataArchiveGroupMap;
 	private final List<LegacyDataArchive> _legacyDataArchives;
-	private final Set<String> _legacyDataArchiveTypes;
+	private final Set<String> _legacyDataArchiveTypes = new HashSet<>();
 	private final GitWorkingDirectory _legacyDataGitWorkingDirectory;
 	private final Set<String> _portalVersions;
 

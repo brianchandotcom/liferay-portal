@@ -100,6 +100,9 @@ public class LegacyDataArchiveUtil {
 
 			if (!legacyDataArchiveGroup.isUpdated()) {
 				legacyDataArchiveGroup.commitLegacyDataArchives();
+
+				_legacyDataArchiveTypes.add(
+					legacyDataArchiveGroup.getLegacyDataArchiveType());
 			}
 		}
 
@@ -130,6 +133,10 @@ public class LegacyDataArchiveUtil {
 
 	public File getLegacyDataWorkingDirectory() {
 		return _legacyDataGitWorkingDirectory.getWorkingDirectory();
+	}
+
+	public Set<String> getLegacyDataArchiveTypes() {
+		return _legacyDataArchiveTypes;
 	}
 
 	public Set<String> getPortalVersions() {
@@ -479,6 +486,7 @@ public class LegacyDataArchiveUtil {
 	private final Map<String, LegacyDataArchiveGroup>
 		_legacyDataArchiveGroupMap;
 	private final List<LegacyDataArchive> _legacyDataArchives;
+	private final Set<String> _legacyDataArchiveTypes;
 	private final GitWorkingDirectory _legacyDataGitWorkingDirectory;
 	private final Set<String> _portalVersions;
 

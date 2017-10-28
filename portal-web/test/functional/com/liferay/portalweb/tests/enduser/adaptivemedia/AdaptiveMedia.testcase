@@ -1,6 +1,6 @@
 <definition component-name="portal-collaboration">
-	<property name="portal.release" value="false" />
-	<property name="portal.upstream" value="false" />
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
 	<property name="custom.properties" value="default.layout.template.id=1_column" />
 	<property name="testray.main.component.name" value="Adaptive Media" />
 
@@ -342,7 +342,9 @@
 			<var name="portlet" value="Adaptive Media" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="Message#EMPTY_INFO" />
+		<execute macro="AdaptiveMedia#viewNoImageResolution">
+			<var name="imageName" value="Small Image Variant" />
+		</execute>
 	</command>
 
 	<command name="EditAndDeleteDisabledAMI" priority="5">
@@ -743,6 +745,20 @@
 
 	<command name="ViewNumberOfAdaptedImagesAfterAdaptingImages" priority="5">
 		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Adaptive Media" />
@@ -798,11 +814,11 @@
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="New Site" />
+			<var name="siteName" value="Another Site Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="New Site" />
+			<var name="site" value="Another Site Name" />
 		</execute>
 
 		<for list="1,2" param="entryCount" >
@@ -820,7 +836,7 @@
 		</for>
 
 		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Liferay" />
+			<var name="site" value="Site Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">

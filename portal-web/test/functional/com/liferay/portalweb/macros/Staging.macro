@@ -161,6 +161,8 @@
 	</command>
 
 	<command name="addPageVariationPG">
+		<execute function="Pause" locator1="3000" />
+
 		<execute function="Click" locator1="Icon#STAGING_BAR_VERTICAL_ELLIPSIS" />
 
 		<execute function="Click" locator1="Staging#STAGING_MENU_MANAGE_PAGE_VARIATION" />

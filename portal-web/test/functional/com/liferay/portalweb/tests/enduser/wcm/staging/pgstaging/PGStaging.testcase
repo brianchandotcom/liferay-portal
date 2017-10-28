@@ -1007,6 +1007,8 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
+		<execute function="Pause" locator1="5000" />
+
 		<execute macro="Staging#addPageVariationPG">
 			<var name="pageVariationName" value="Test Page Variation" />
 		</execute>

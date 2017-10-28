@@ -515,7 +515,7 @@
 </tr>
 <tr>
 	<td>URL_REQUIRED</td>
-	<td>//div[contains(@class,'url')]</td>
+	<td>//div[contains(@id,'BookmarksAdminPortlet_urlHelper')]/div[contains(@role,'alert')]</td>
 	<td></td>
 </tr>
 <tr>

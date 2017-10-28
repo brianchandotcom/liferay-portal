@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -57,6 +59,7 @@ public class LegacyDataArchiveUtil {
 		Properties buildProperties = _getBuildProperties();
 
 		_legacyDataArchives = _getLegacyDataArchives(buildProperties);
+
 		_latestLegacyDataArchiveCommits = _getLatestLegacyDataArchiveCommits();
 		_latestManualCommit = _getLatestManualCommit();
 		_portalVersions = _getPortalVersions(buildProperties);
@@ -125,6 +128,113 @@ public class LegacyDataArchiveUtil {
 
 	public Set<String> getPortalVersions() {
 		return _portalVersions;
+	}
+
+	public void pushLegacyDataArchivesToUpstream(Build build) {
+		Map<String, Commit> commitCondidates = new HashMap<>();
+
+		List<LegacyDataArchiveGroup> legacyDataArchiveGroupList =
+			new ArrayList<>(_legacyDataArchiveGroupMap.values());
+
+		for (LegacyDataArchiveGroup legacyDataArchiveGroup :
+				legacyDataArchiveGroupList) {
+
+			Commit commit = legacyDataArchiveGroup.getCommit();
+
+			String message = commit.getMessage();
+
+			Matcher commitMatcher = _commitPattern.matcher(message);
+
+			if (!commitMatcher.matches()) {
+				throw new RuntimeException(
+					"Invalid commit message. " + message);
+			}
+
+			String dataArchiveType = commitMatcher.group(1);
+			String portalVersion = commitMatcher.group(2);
+
+			String commitKey = dataArchiveType + "_" + portalVersion;
+
+			commitCondidates.put(commitKey, commit);
+		}
+
+		for (Build downstreamBuild : build.getDownstreamBuilds(null)) {
+			String jobName = downstreamBuild.getJobName();
+
+			if ((downstreamBuild instanceof BatchBuild) &&
+				jobName.equals("legacy-database-dump-batch")) {
+
+				BatchBuild batchBuild = (BatchBuild)downstreamBuild;
+
+				String jobVariant = batchBuild.getJobVariant();
+
+				Matcher jobVariantMatcher = _jobVariantPattern.matcher(
+					jobVariant);
+
+				String dataArchiveType = jobVariantMatcher.group(1);
+				String portalVersion = jobVariantMatcher.group(2);
+
+				String commitKey = dataArchiveType + "_" + portalVersion;
+
+				if (!commitCondidates.containsKey(commitKey)) {
+					continue;
+				}
+
+				String result = batchBuild.getResult();
+
+				if (!result.equals("SUCCESS")) {
+					commitCondidates.remove(commitKey);
+
+					System.out.println("Removed failed commit " + commitKey);
+				}
+			}
+		}
+
+		String upstreamBranchName =
+			_legacyDataGitWorkingDirectory.getUpstreamBranchName();
+
+		GitWorkingDirectory.Remote upstreamRemote =
+			_legacyDataGitWorkingDirectory.getRemote("upstream");
+
+		GitWorkingDirectory.Branch upstreamRemoteBranch =
+			_legacyDataGitWorkingDirectory.getBranch(
+				upstreamBranchName, upstreamRemote);
+
+		_legacyDataGitWorkingDirectory.checkoutBranch(upstreamRemoteBranch);
+
+		_legacyDataGitWorkingDirectory.reset("--hard");
+
+		_legacyDataGitWorkingDirectory.clean();
+
+		String temporaryBranchName =
+			upstreamBranchName + "-temp-" + System.currentTimeMillis();
+
+		GitWorkingDirectory.Branch temporaryBranch =
+			_legacyDataGitWorkingDirectory.getBranch(temporaryBranchName, null);
+
+		if (temporaryBranch != null) {
+			_legacyDataGitWorkingDirectory.deleteBranch(
+				_legacyDataGitWorkingDirectory.getBranch(
+					temporaryBranchName, null));
+		}
+
+		temporaryBranch = _legacyDataGitWorkingDirectory.createLocalBranch(
+			temporaryBranchName);
+
+		_legacyDataGitWorkingDirectory.checkoutBranch(temporaryBranch);
+
+		for (Commit commit : commitCondidates.values()) {
+			_legacyDataGitWorkingDirectory.cherryPick(commit);
+		}
+
+		try {
+			_legacyDataGitWorkingDirectory.pushToRemote(
+				false, temporaryBranch, upstreamBranchName, upstreamRemote);
+		}
+		finally {
+			_legacyDataGitWorkingDirectory.pushToRemote(
+				false, null, temporaryBranchName, upstreamRemote);
+		}
 	}
 
 	private Properties _getBuildProperties() {
@@ -351,6 +461,11 @@ public class LegacyDataArchiveUtil {
 
 		return poshiPropertyValues;
 	}
+
+	private static final Pattern _commitPattern = Pattern.compile(
+		"archive:ignore Update '([^']+)' for '([^']+)'");
+	private static final Pattern _jobVariantPattern = Pattern.compile(
+		"[^/]+/([^/]+)/([^/]+)/\\d+");
 
 	private final File _generatedLegacyDataArchiveDirectory;
 	private final List<LegacyDataArchiveCommit> _latestLegacyDataArchiveCommits;

@@ -745,6 +745,20 @@
 
 	<command name="ViewNumberOfAdaptedImagesAfterAdaptingImages" priority="5">
 		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Adaptive Media" />
@@ -800,11 +814,11 @@
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="New Site" />
+			<var name="siteName" value="Another Site Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="New Site" />
+			<var name="site" value="Another Site Name" />
 		</execute>
 
 		<for list="1,2" param="entryCount" >
@@ -822,7 +836,7 @@
 		</for>
 
 		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Liferay" />
+			<var name="site" value="Site Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">

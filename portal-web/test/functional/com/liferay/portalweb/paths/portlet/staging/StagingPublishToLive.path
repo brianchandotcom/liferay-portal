@@ -143,6 +143,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_CHOOSE_CONTENT_DELETION_HEADER_NOT_EXPANDED</td>
+	<td>//div[contains(@id,'deletionsTitle')]/a[@aria-expanded='false']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK</td>
 	<td>//a[@data-portlettitle='${key_uncheckContent}']</td>
 	<td></td>

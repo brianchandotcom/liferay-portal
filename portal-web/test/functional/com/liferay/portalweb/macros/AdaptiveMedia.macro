@@ -159,9 +159,6 @@
 				<execute function="AssertNotEditable" locator1="Radio#CUSTOM_URL" />
 			</then>
 			<else>
-
-				<execute function="AssertTextEquals" locator1="Message#INFO" value1="At least one dimension value is required (Max. Width or Max. Height)." />
-
 				<if>
 					<not>
 						<contains string="${maxHeightEdit}" substring="{maxHeightEdit}" />

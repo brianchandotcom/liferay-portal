@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StreamUtil;
 
 import java.io.InputStream;
 
@@ -101,10 +100,8 @@ public class AdminPortlet extends MVCPortlet {
 		long oAuthApplicationId = ParamUtil.getLong(
 			actionRequest, "oAuthApplicationId");
 
-		InputStream inputStream = null;
-
-		try {
-			inputStream = uploadPortletRequest.getFileAsStream("fileName");
+		try (InputStream inputStream =
+				uploadPortletRequest.getFileAsStream("fileName")) {
 
 			if (inputStream == null) {
 				throw new UploadException();
@@ -112,9 +109,6 @@ public class AdminPortlet extends MVCPortlet {
 
 			_oAuthApplicationService.updateLogo(
 				oAuthApplicationId, inputStream);
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
 		}
 	}
 

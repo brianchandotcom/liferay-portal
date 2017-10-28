@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsolePortletKeys;
 import com.liferay.portal.reports.engine.console.exception.DefinitionFileException;
@@ -68,9 +67,9 @@ public class EditDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		InputStream inputStream = null;
+		try (InputStream inputStream =
+				uploadPortletRequest.getFileAsStream("templateReport")) {
 
-		try {
 			long definitionId = ParamUtil.getLong(
 				uploadPortletRequest, "definitionId");
 
@@ -84,8 +83,6 @@ public class EditDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			String reportParameters = ParamUtil.getString(
 				uploadPortletRequest, "reportParameters");
 			String fileName = uploadPortletRequest.getFileName(
-				"templateReport");
-			inputStream = uploadPortletRequest.getFileAsStream(
 				"templateReport");
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -111,9 +108,6 @@ public class EditDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest,
 				_portal.getPortletId(actionRequest) +
 					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
 		}
 	}
 

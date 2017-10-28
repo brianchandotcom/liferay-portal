@@ -139,6 +139,10 @@ public abstract class AlloyPortlet extends GenericPortlet {
 		include(path, resourceRequest, resourceResponse);
 	}
 
+	protected AlloyControllerInvokerManager getAlloyInvokerManager() {
+		return _alloyControllerInvokerManager;
+	}
+
 	protected String getControllerPath(PortletRequest portletRequest) {
 		String controllerPath = ParamUtil.getString(
 			portletRequest, "controller");

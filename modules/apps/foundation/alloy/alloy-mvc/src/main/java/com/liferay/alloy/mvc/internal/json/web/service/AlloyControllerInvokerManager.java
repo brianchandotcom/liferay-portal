@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -69,6 +70,24 @@ public class AlloyControllerInvokerManager {
 		_contextName = portletContext.getPortletContextName();
 		_contextPath =
 			StringPool.SLASH + portletContext.getPortletContextName();
+	}
+
+	public JSONSerializable invokeAlloyController(
+			String controller, String lifecycle, String action,
+			Object[] parameters)
+		throws Exception {
+
+		AlloyControllerInvoker alloyControllerInvoker =
+			_alloyControllerInvokers.get(controller);
+
+		parameters = ArrayUtil.append(
+			parameters,
+			new Object[] {
+				"controller", controller, "action", action, "format", "json"
+			});
+
+		return alloyControllerInvoker.invokeAlloyController(
+			lifecycle, parameters);
 	}
 
 	public void registerController(

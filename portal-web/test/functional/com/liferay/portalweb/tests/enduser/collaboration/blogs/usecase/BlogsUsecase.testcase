@@ -1121,7 +1121,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
+			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
 		</execute>
 

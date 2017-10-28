@@ -68,7 +68,7 @@ public class LegacyDataArchiveUtil {
 			_legacyDataArchives);
 	}
 
-	public GitWorkingDirectory.Branch createTemporaryBranch()
+	public GitWorkingDirectory.Branch createAndPushTemporaryBranch()
 		throws IOException {
 
 		GitWorkingDirectory.Branch upstreamBranch =
@@ -102,6 +102,12 @@ public class LegacyDataArchiveUtil {
 				legacyDataArchiveGroup.commitLegacyDataArchives();
 			}
 		}
+
+		GitWorkingDirectory.Remote upstreamRemote =
+			_legacyDataGitWorkingDirectory.getRemote("upstream");
+
+		portalLegacyGitWorkingDirectory.pushToRemote(
+			true, temporaryBranch, temporaryBranchName, upstreamRemote);
 
 		return temporaryBranch;
 	}

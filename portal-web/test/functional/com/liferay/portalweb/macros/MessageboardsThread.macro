@@ -776,6 +776,10 @@
 				</execute>
 			</then>
 			<else>
+				<execute function="AssertElementPresent" locator1="MessageBoardsThread#THREAD_REPLY_BUTTON">
+					<var name="key_threadSubject" value="${threadSubject}" />
+				</execute>
+
 				<execute function="AssertClick" locator1="MessageBoardsThread#THREAD_REPLY_BUTTON" value1="Reply to Main Thread">
 					<var name="key_threadSubject" value="${threadSubject}" />
 				</execute>

@@ -1,5 +1,5 @@
 dependencies {
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.20.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.49.0"
 	provided group: "commons-validator", name: "commons-validator", version: "1.5.0"
 	provided group: "javax.mail", name: "mail", version: "1.4"
 }

@@ -864,9 +864,10 @@ public class DefaultTextExportImportContentProcessor
 			}
 			catch (Exception e) {
 				if (_log.isDebugEnabled() || _log.isWarnEnabled()) {
-					String message =
-						"Unable to get layout with ID " + layoutId +
-							" in group " + portletDataContext.getScopeGroupId();
+					String message = StringBundler.concat(
+						"Unable to get layout with ID ",
+						String.valueOf(layoutId), " in group ",
+						String.valueOf(portletDataContext.getScopeGroupId()));
 
 					if (_log.isDebugEnabled()) {
 						_log.debug(message, e);

@@ -207,8 +207,9 @@ public class FileSystemImporter extends BaseImporter {
 			if (!developerModeEnabled) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"DDM template with name " + name + " and version " +
-							version + " already exists");
+						StringBundler.concat(
+							"DDM template with name ", name, " and version ",
+							String.valueOf(version), " already exists"));
 				}
 
 				return;
@@ -382,8 +383,9 @@ public class FileSystemImporter extends BaseImporter {
 			if (!developerModeEnabled) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"DDM structure with name " + name + " and version " +
-							version + " already exists");
+						StringBundler.concat(
+							"DDM structure with name ", name, " and version ",
+							String.valueOf(version), " already exists"));
 				}
 
 				return;
@@ -486,8 +488,9 @@ public class FileSystemImporter extends BaseImporter {
 			if (!developerModeEnabled) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"DDM structure with name " + name + " and version " +
-							version + " already exists");
+						StringBundler.concat(
+							"DDM structure with name ", name, " and version ",
+							String.valueOf(version), " already exists"));
 				}
 
 				return;
@@ -588,8 +591,9 @@ public class FileSystemImporter extends BaseImporter {
 			if (!developerModeEnabled) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"DDM template with name " + name + " and version " +
-							version + " already exists");
+						StringBundler.concat(
+							"DDM template with name ", name, " and version ",
+							String.valueOf(version), " already exists"));
 				}
 
 				return;
@@ -682,8 +686,9 @@ public class FileSystemImporter extends BaseImporter {
 			if (!developerModeEnabled) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"DDM template with name " + name + " and version " +
-							version + " already exists");
+						StringBundler.concat(
+							"DDM template with name ", name, " and version ",
+							String.valueOf(version), " already exists"));
 				}
 
 				return;
@@ -1296,8 +1301,10 @@ public class FileSystemImporter extends BaseImporter {
 			if (!developerModeEnabled) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Layout prototype with name " + name +
-							" already exists for company " + companyId);
+						StringBundler.concat(
+							"Layout prototype with name ", name,
+							" already exists for company ",
+							String.valueOf(companyId)));
 				}
 
 				return;
@@ -1623,8 +1630,10 @@ public class FileSystemImporter extends BaseImporter {
 				catch (SearchException se) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to index entry for class name " +
-								className + " and primary key " + primaryKey,
+							StringBundler.concat(
+								"Unable to index entry for class name ",
+								className, " and primary key ",
+								String.valueOf(primaryKey)),
 							se);
 					}
 				}

@@ -100,8 +100,10 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 				}
 
 				throw new PrincipalException(
-					"User " + userId + " cannot access thread " + mbThreadId +
-						" through the Private Messaging portlet");
+					StringBundler.concat(
+						"User ", String.valueOf(userId),
+						" cannot access thread ", String.valueOf(mbThreadId),
+						" through the Private Messaging portlet"));
 			}
 
 			List<MBMessage> mbMessages =
@@ -481,10 +483,10 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 		String tokenId = WebServerServletTokenUtil.getToken(
 			sender.getPortraitId());
 
-		String portraitURL =
-			themeDisplay.getPortalURL() + themeDisplay.getPathImage() +
-				"/user_" + (sender.isFemale() ? "female" : "male") +
-					"_portrait?img_id=" + portraitId + "&t=" + tokenId;
+		String portraitURL = StringBundler.concat(
+			themeDisplay.getPortalURL(), themeDisplay.getPathImage(), "/user_",
+			String.valueOf(sender.isFemale() ? "female" : "male"),
+			"_portrait?img_id=", String.valueOf(portraitId), "&t=", tokenId);
 
 		body = StringUtil.replace(
 			body,

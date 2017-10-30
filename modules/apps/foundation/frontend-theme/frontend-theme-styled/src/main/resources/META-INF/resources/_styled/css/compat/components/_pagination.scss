@@ -3,6 +3,7 @@
 
 	&:first-child > a {
 		margin-left: 0;
+
 		@include border-left-radius($border-radius);
 	}
 

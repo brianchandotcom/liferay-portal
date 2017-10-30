@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
@@ -229,7 +230,9 @@ public class EntityCacheImpl
 			if (result == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Load " + clazz + " " + primaryKey + " from session");
+						StringBundler.concat(
+							"Load ", String.valueOf(clazz), " ",
+							String.valueOf(primaryKey), " from session"));
 				}
 
 				Session session = null;

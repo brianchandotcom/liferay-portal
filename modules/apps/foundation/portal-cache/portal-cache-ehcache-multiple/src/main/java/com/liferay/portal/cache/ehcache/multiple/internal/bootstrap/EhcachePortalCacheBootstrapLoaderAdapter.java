@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -61,8 +62,9 @@ public class EhcachePortalCacheBootstrapLoaderAdapter
 		if (clusterNodes.size() == 1) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Not loading cache " + portalCacheName + "from cluster " +
-						"because a cluster peer was not found");
+					StringBundler.concat(
+						"Not loading cache ", portalCacheName, "from cluster ",
+						"because a cluster peer was not found"));
 			}
 
 			return;

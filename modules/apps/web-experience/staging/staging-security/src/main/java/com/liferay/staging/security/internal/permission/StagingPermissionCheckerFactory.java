@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
@@ -59,10 +60,10 @@ public class StagingPermissionCheckerFactory
 		_serviceTracker.close();
 	}
 
-	private static final String _FILTER_STRING =
-		"(&(objectClass=" + PermissionCheckerFactory.class.getName() + ")" +
-			"(!(component.name=" +
-				StagingPermissionCheckerFactory.class.getName() + ")))";
+	private static final String _FILTER_STRING = StringBundler.concat(
+		"(&(objectClass=", PermissionCheckerFactory.class.getName(), ")",
+		"(!(component.name=", StagingPermissionCheckerFactory.class.getName(),
+		")))");
 
 	private ServiceTracker<PermissionCheckerFactory, PermissionCheckerFactory>
 		_serviceTracker;

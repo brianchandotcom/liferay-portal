@@ -461,6 +461,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'dataschema-xml', 'datatype-xml', 'liferay-kaleo-designer-utils']
+		requires: ['aui-base', 'aui-component', 'dataschema-xml', 'datatype-xml', 'liferay-kaleo-designer-utils']
 	}
 );

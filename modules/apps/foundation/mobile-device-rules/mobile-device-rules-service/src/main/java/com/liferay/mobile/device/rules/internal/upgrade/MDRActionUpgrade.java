@@ -19,6 +19,7 @@ import com.liferay.mobile.device.rules.rule.group.action.SimpleRedirectActionHan
 import com.liferay.mobile.device.rules.rule.group.action.SiteRedirectActionHandler;
 import com.liferay.mobile.device.rules.rule.group.action.ThemeModificationActionHandler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.StringBundler;
 
 /**
  * @author Tom Wang
@@ -45,9 +46,10 @@ public class MDRActionUpgrade extends UpgradeProcess {
 		throws Exception {
 
 		runSQL(
-			"update MDRAction set type_ = '" + newType + "' where type_ = " +
-				"'com.liferay.portal.mobile.device.rulegroup.action.impl." +
-					oldType + "'");
+			StringBundler.concat(
+				"update MDRAction set type_ = '", newType, "' where type_ = ",
+				"'com.liferay.portal.mobile.device.rulegroup.action.impl.",
+				oldType, "'"));
 	}
 
 }

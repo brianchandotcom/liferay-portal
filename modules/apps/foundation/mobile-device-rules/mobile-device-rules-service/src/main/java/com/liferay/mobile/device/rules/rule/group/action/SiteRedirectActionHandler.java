@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -88,8 +89,9 @@ public class SiteRedirectActionHandler extends BaseRedirectActionHandler {
 		if ((layout != null) && (layout.getGroupId() != groupId)) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Layout " + layout.getPlid() +
-						" does not belong to group " + groupId);
+					StringBundler.concat(
+						"Layout ", String.valueOf(layout.getPlid()),
+						" does not belong to group ", String.valueOf(groupId)));
 			}
 
 			layout = null;

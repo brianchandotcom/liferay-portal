@@ -29,6 +29,8 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.List;
 
+import javassist.Modifier;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -64,6 +66,9 @@ public class UnsyncByteArrayOutputStreamTest extends BaseOutputStreamTestCase {
 	@Test
 	public void testConstructor() {
 		new BoundaryCheckerUtil();
+
+		Assert.assertTrue(
+			Modifier.isPackage(BoundaryCheckerUtil.class.getModifiers()));
 
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();

@@ -19,6 +19,7 @@ import com.liferay.portal.cache.ehcache.event.EhcachePortalCacheListenerAdapter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -62,8 +63,11 @@ public class EhcachePortalCacheReplicatorAdapter
 
 			if (replicationThread.isAlive() && _log.isWarnEnabled()) {
 				_log.warn(
-					"Give up waiting on thread " + replicationThread +
-						" after waiting for " + _WAIT_TIME + "ms");
+					StringBundler.concat(
+						"Give up waiting on thread ",
+						String.valueOf(replicationThread),
+						" after waiting for ", String.valueOf(_WAIT_TIME),
+						"ms"));
 			}
 		}
 		catch (Exception e) {

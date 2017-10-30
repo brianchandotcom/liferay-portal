@@ -1289,9 +1289,9 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 
 		String simpleClassName = modelClassName.substring(pos + 7);
 
-		String serviceClassName =
-			modelClassName.substring(0, pos) + ".service." + simpleClassName +
-				"LocalService";
+		String serviceClassName = StringBundler.concat(
+			modelClassName.substring(0, pos), ".service.", simpleClassName,
+			"LocalService");
 
 		IdentifiableOSGiService identifiableOSGiService =
 			IdentifiableOSGiServiceUtil.getIdentifiableOSGiService(
@@ -1568,8 +1568,9 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 
 		if (log.isDebugEnabled()) {
 			log.debug(
-				"Touch " + portlet.getRootPortletId() + " by including " +
-					touchPath);
+				StringBundler.concat(
+					"Touch ", portlet.getRootPortletId(), " by including ",
+					touchPath));
 		}
 
 		portletContext.setAttribute(

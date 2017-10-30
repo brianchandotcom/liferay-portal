@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -222,8 +223,10 @@ public class MailEngine {
 					}
 
 					_log.debug(
-						"Attachment " + i + " file " + file.getAbsolutePath() +
-							" and file name " + fileAttachment.getFileName());
+						StringBundler.concat(
+							"Attachment ", String.valueOf(i), " file ",
+							file.getAbsolutePath(), " and file name ",
+							fileAttachment.getFileName()));
 				}
 			}
 		}

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xuggler.XugglerUtil;
 
@@ -67,8 +68,9 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 
 		jsonObject.put(
 			"bodyClass",
-			"html-editor " + HtmlUtil.escape(colorScheme.getCssClass()) + " " +
-				HtmlUtil.escape(cssClasses));
+			StringBundler.concat(
+				"html-editor ", HtmlUtil.escape(colorScheme.getCssClass()), " ",
+				HtmlUtil.escape(cssClasses)));
 
 		jsonObject.put("closeNoticeTimeout", 8000);
 		jsonObject.put("entities", Boolean.FALSE);

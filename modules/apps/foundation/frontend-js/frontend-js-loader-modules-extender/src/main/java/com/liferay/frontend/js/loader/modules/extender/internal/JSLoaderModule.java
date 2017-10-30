@@ -18,6 +18,7 @@ import aQute.bnd.osgi.Constants;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -142,7 +143,8 @@ public class JSLoaderModule {
 
 			String modulePath = name.substring(x);
 
-			moduleName = getName() + "@" + getVersion() + modulePath;
+			moduleName = StringBundler.concat(
+				getName(), "@", getVersion(), modulePath);
 
 			JSONObject nameJSONObject = jsonObject.getJSONObject(name);
 
@@ -162,8 +164,8 @@ public class JSLoaderModule {
 				String dependencyPath = dependency.substring(y);
 
 				if (dependencyName.equals(getName())) {
-					dependencyName =
-						getName() + "@" + getVersion() + dependencyPath;
+					dependencyName = StringBundler.concat(
+						getName(), "@", getVersion(), dependencyPath);
 
 					dependenciesJSONArray.put(j, dependencyName);
 				}
@@ -255,8 +257,8 @@ public class JSLoaderModule {
 			Version version = (Version)attributes.get(
 				Constants.VERSION_ATTRIBUTE);
 
-			dependencyName =
-				dependencyName + "@" + version.toString() + dependencyPath;
+			dependencyName = StringBundler.concat(
+				dependencyName, "@", version.toString(), dependencyPath);
 
 			jsonArray.put(index, dependencyName);
 

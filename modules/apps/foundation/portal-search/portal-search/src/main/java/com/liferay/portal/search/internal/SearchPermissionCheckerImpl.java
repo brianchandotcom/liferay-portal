@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.configuration.SearchPermissionCheckerConfiguration;
@@ -238,8 +239,10 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		if (termsCount > permissionTermsLimit) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Skipping presearch permission checking due to too many " +
-						"roles: " + termsCount + " > " + permissionTermsLimit);
+					StringBundler.concat(
+						"Skipping presearch permission checking due to too ",
+						"many roles: ", String.valueOf(termsCount), " > ",
+						String.valueOf(permissionTermsLimit)));
 			}
 
 			return null;
@@ -260,9 +263,10 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		if (termsCount > permissionTermsLimit) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Skipping presearch permission checking due to too many " +
-						"roles and groups: " + termsCount + " > " +
-							permissionTermsLimit);
+					StringBundler.concat(
+						"Skipping presearch permission checking due to too ",
+						"many roles and groups: ", String.valueOf(termsCount),
+						" > ", String.valueOf(permissionTermsLimit)));
 			}
 
 			return null;
@@ -306,9 +310,11 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			if (termsCount > permissionTermsLimit) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Skipping presearch permission checking due to too " +
-							"many roles, groups, and group roles: " +
-								termsCount + " > " + permissionTermsLimit);
+						StringBundler.concat(
+							"Skipping presearch permission checking due to ",
+							"too many roles, groups, and group roles: ",
+							String.valueOf(termsCount), " > ",
+							String.valueOf(permissionTermsLimit)));
 				}
 
 				return null;

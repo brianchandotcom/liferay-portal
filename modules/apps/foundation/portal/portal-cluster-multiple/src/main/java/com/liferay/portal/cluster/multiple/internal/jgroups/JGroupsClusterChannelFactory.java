@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SocketUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -99,8 +100,9 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Autodetecting JGroups outgoing IP address and interface for " +
-					host + ":" + port);
+				StringBundler.concat(
+					"Autodetecting JGroups outgoing IP address and interface ",
+					"for ", host, ":", String.valueOf(port)));
 		}
 
 		try {
@@ -137,8 +139,9 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 			String name = _bindNetworkInterface.getName();
 
 			_log.info(
-				"Setting JGroups outgoing IP address to " + hostAddress +
-					" and interface to " + name);
+				StringBundler.concat(
+					"Setting JGroups outgoing IP address to ", hostAddress,
+					" and interface to ", name));
 		}
 	}
 
@@ -157,8 +160,9 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Setting system property {key=" + key + ", value=" + value +
-						"}");
+					StringBundler.concat(
+						"Setting system property {key=", key, ", value=", value,
+						"}"));
 			}
 		}
 	}

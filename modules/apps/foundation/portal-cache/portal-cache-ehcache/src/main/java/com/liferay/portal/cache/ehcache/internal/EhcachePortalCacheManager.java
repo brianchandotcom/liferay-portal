@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -330,8 +331,10 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		try {
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Reconfiguring caches in cache manager " +
-						getPortalCacheManagerName() + " using " + url);
+					StringBundler.concat(
+						"Reconfiguring caches in cache manager ",
+						getPortalCacheManagerName(), " using ",
+						String.valueOf(url)));
 			}
 
 			reconfigurePortalCaches(url);

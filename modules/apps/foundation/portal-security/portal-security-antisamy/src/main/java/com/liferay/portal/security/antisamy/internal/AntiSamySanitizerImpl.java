@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.BaseSanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -79,7 +80,9 @@ public class AntiSamySanitizerImpl extends BaseSanitizer {
 		throws SanitizerException {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Sanitizing " + className + "#" + classPK);
+			_log.debug(
+				StringBundler.concat(
+					"Sanitizing ", className, "#", String.valueOf(classPK)));
 		}
 
 		if (Validator.isNull(content)) {

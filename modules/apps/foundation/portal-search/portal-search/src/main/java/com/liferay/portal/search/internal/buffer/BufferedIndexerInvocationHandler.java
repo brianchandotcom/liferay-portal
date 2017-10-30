@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.search.buffer.IndexerRequest;
 import com.liferay.portal.search.buffer.IndexerRequestBuffer;
 import com.liferay.portal.search.buffer.IndexerRequestBufferOverflowHandler;
@@ -152,8 +153,10 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 			catch (Exception e) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Unable to get resource primary key for class " +
-							className + " with primary key " + classPK);
+						StringBundler.concat(
+							"Unable to get resource primary key for class ",
+							className, " with primary key ",
+							String.valueOf(classPK)));
 				}
 			}
 

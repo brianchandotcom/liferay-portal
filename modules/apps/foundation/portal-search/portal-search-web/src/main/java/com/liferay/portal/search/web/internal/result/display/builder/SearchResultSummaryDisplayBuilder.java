@@ -515,8 +515,9 @@ public class SearchResultSummaryDisplayBuilder {
 		}
 		catch (Exception e) {
 			throw new IllegalStateException(
-				"Unable to get asset renderer for class " + className +
-					" with primary key " + classPK,
+				StringBundler.concat(
+					"Unable to get asset renderer for class ", className,
+					" with primary key ", String.valueOf(classPK)),
 				e);
 		}
 	}

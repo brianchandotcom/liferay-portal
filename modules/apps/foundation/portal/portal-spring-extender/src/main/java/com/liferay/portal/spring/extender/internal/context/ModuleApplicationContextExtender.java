@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -242,8 +243,10 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 			serviceDependency.setService(
 				Release.class,
-				"(&(release.bundle.symbolic.name=" + _bundle.getSymbolicName() +
-					")(release.schema.version=" + _bundle.getVersion() + "))");
+				StringBundler.concat(
+					"(&(release.bundle.symbolic.name=",
+					_bundle.getSymbolicName(), ")(release.schema.version=",
+					String.valueOf(_bundle.getVersion()), "))"));
 
 			_component.add(serviceDependency);
 		}
@@ -312,9 +315,10 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 							}
 							catch (Exception e) {
 								throw new UpgradeException(
-									"Bundle " + _bundle +
-										" has invalid content in " +
-											"tables.sql:\n" + tablesSQL,
+									StringBundler.concat(
+										"Bundle ", String.valueOf(_bundle),
+										" has invalid content in ",
+										"tables.sql:\n", tablesSQL),
 									e);
 							}
 						}
@@ -326,9 +330,10 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 							}
 							catch (Exception e) {
 								throw new UpgradeException(
-									"Bundle " + _bundle +
-										" has invalid content in " +
-											"sequences.sql:\n" + sequencesSQL,
+									StringBundler.concat(
+										"Bundle ", String.valueOf(_bundle),
+										" has invalid content in ",
+										"sequences.sql:\n", sequencesSQL),
 									e);
 							}
 						}
@@ -339,9 +344,10 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 							}
 							catch (Exception e) {
 								throw new UpgradeException(
-									"Bundle " + _bundle +
-										" has invalid content in " +
-											"indexes.sql:\n" + indexesSQL,
+									StringBundler.concat(
+										"Bundle ", String.valueOf(_bundle),
+										" has invalid content in ",
+										"indexes.sql:\n", indexesSQL),
 									e);
 							}
 						}

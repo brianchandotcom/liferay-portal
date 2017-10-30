@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -111,8 +112,9 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Screen name " + screenName + " and email address " +
-					emailAddress);
+				StringBundler.concat(
+					"Screen name ", screenName, " and email address ",
+					emailAddress));
 		}
 
 		String firstName = LDAPUtil.getAttributeString(

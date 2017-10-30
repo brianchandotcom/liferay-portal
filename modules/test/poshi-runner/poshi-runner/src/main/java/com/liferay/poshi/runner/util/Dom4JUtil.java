@@ -65,12 +65,24 @@ public class Dom4JUtil {
 	}
 
 	public static String format(Element element) throws IOException {
-		return format(element, true);
+		Node node = element;
+
+		return format(node, true);
 	}
 
 	public static String format(Element element, boolean pretty)
 		throws IOException {
 
+		Node node = element;
+
+		return format(node, pretty);
+	}
+
+	public static String format(Node node) throws IOException {
+		return format(node, true);
+	}
+
+	public static String format(Node node, boolean pretty) throws IOException {
 		Writer writer = new CharArrayWriter();
 
 		OutputFormat outputFormat = OutputFormat.createPrettyPrint();
@@ -87,7 +99,7 @@ public class Dom4JUtil {
 			xmlWriter = new XMLWriter(writer);
 		}
 
-		xmlWriter.write(element);
+		xmlWriter.write(node);
 
 		return writer.toString();
 	}

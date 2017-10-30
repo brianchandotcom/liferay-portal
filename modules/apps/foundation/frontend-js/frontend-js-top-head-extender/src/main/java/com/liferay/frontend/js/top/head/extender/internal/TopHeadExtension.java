@@ -16,6 +16,7 @@ package com.liferay.frontend.js.top.head.extender.internal;
 
 import com.liferay.frontend.js.top.head.extender.TopHeadResources;
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -55,9 +56,9 @@ public class TopHeadExtension implements Extension {
 	public void start() throws Exception {
 		final BundleContext bundleContext = _bundle.getBundleContext();
 
-		String filterString =
-			"(&(objectClass=" + ServletContext.class.getName() +
-				")(osgi.web.symbolicname=" + _bundle.getSymbolicName() + "))";
+		String filterString = StringBundler.concat(
+			"(&(objectClass=", ServletContext.class.getName(),
+			")(osgi.web.symbolicname=", _bundle.getSymbolicName(), "))");
 
 		final Dictionary<String, Object> properties = new Hashtable<>();
 

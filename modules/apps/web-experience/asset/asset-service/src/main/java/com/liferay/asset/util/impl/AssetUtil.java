@@ -753,8 +753,9 @@ public class AssetUtil {
 				if (c == invalidChar) {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
-							"Word " + word + " is not valid because " + c +
-								" is not allowed");
+							StringBundler.concat(
+								"Word ", word, " is not valid because ",
+								String.valueOf(c), " is not allowed"));
 					}
 
 					return false;

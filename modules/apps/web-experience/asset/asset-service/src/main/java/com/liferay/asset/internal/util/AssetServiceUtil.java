@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 
@@ -93,8 +94,9 @@ public class AssetServiceUtil {
 				if (c == invalidChar) {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
-							"Word " + word + " is not valid because " + c +
-								" is not allowed");
+							StringBundler.concat(
+								"Word ", word, " is not valid because ",
+								String.valueOf(c), " is not allowed"));
 					}
 
 					return false;

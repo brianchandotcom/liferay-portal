@@ -628,9 +628,9 @@ public class ShoppingUtil {
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			renderRequest);
 
-		String categoriesLink =
-			"<a href=\"" + categoriesURL.toString() + "\">" +
-				LanguageUtil.get(request, "categories") + "</a>";
+		String categoriesLink = StringBundler.concat(
+			"<a href=\"", categoriesURL.toString(), "\">",
+			LanguageUtil.get(request, "categories"), "</a>");
 
 		if (category == null) {
 			return "<span class=\"first last\">" + categoriesLink + "</span>";
@@ -659,9 +659,9 @@ public class ShoppingUtil {
 					//portletURL.setWindowState(WindowState.MAXIMIZED);
 				}
 
-				String categoryLink =
-					"<a href=\"" + portletURL.toString() + "\">" +
-						category.getName() + "</a>";
+				String categoryLink = StringBundler.concat(
+					"<a href=\"", portletURL.toString(), "\">",
+					category.getName(), "</a>");
 
 				if (i == 0) {
 					breadcrumbs =
@@ -680,9 +680,9 @@ public class ShoppingUtil {
 			}
 		}
 
-		breadcrumbs =
-			"<span class=\"first\">" + categoriesLink + " &raquo; </span>" +
-				breadcrumbs;
+		breadcrumbs = StringBundler.concat(
+			"<span class=\"first\">", categoriesLink, " &raquo; </span>",
+			breadcrumbs);
 
 		return breadcrumbs;
 	}

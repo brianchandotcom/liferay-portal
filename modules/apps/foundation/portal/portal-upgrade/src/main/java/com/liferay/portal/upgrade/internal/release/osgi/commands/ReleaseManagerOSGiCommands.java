@@ -97,8 +97,9 @@ public class ReleaseManagerOSGiCommands {
 
 			if (size > 1) {
 				System.out.println(
-					"There are " + size + " possible end nodes for " +
-						schemaVersionString);
+					StringBundler.concat(
+						"There are ", String.valueOf(size),
+						" possible end nodes for ", schemaVersionString));
 			}
 
 			if (size == 0) {
@@ -186,8 +187,9 @@ public class ReleaseManagerOSGiCommands {
 			bundleSymbolicName);
 
 		System.out.println(
-			"Registered upgrade processes for " + bundleSymbolicName + " " +
-				getSchemaVersionString(bundleSymbolicName));
+			StringBundler.concat(
+				"Registered upgrade processes for ", bundleSymbolicName, " ",
+				getSchemaVersionString(bundleSymbolicName)));
 
 		for (UpgradeInfo upgradeProcess : upgradeProcesses) {
 			System.out.println("\t" + upgradeProcess);
@@ -224,8 +226,9 @@ public class ReleaseManagerOSGiCommands {
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, UpgradeStep.class,
-			"(&(upgrade.bundle.symbolic.name=*)(|(upgrade.db.type=any)" +
-				"(upgrade.db.type=" + db.getDBType() + ")))",
+			StringBundler.concat(
+				"(&(upgrade.bundle.symbolic.name=*)(|(upgrade.db.type=any)",
+				"(upgrade.db.type=", String.valueOf(db.getDBType()), ")))"),
 			new PropertyServiceReferenceMapper<String, UpgradeStep>(
 				"upgrade.bundle.symbolic.name"),
 			new UpgradeServiceTrackerCustomizer(bundleContext),
@@ -251,8 +254,10 @@ public class ReleaseManagerOSGiCommands {
 
 		if (size > 1) {
 			throw new IllegalStateException(
-				"There are " + size + " possible end nodes for " +
-					getSchemaVersionString(bundleSymbolicName));
+				StringBundler.concat(
+					"There are ", String.valueOf(size),
+					" possible end nodes for ",
+					getSchemaVersionString(bundleSymbolicName)));
 		}
 
 		if (size == 0) {

@@ -17,6 +17,7 @@ package com.liferay.portal.store.jcr;
 import com.liferay.petra.memory.FinalizeAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.lang.ref.Reference;
 import java.lang.reflect.InvocationHandler;
@@ -75,7 +76,9 @@ public class JCRSessionInvocationHandler
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Tracking binary " + key + " for session " + _session);
+					StringBundler.concat(
+						"Tracking binary ", key, " for session ",
+						String.valueOf(_session)));
 			}
 
 			_binaries.put(key, binary);

@@ -125,7 +125,7 @@ public class ModulesStructureTest {
 
 						Assert.assertFalse(
 							"Forbidden " + gradlePropertiesPath,
-							Files.exists(gradlePropertiesPath));
+							Files.deleteIfExists(gradlePropertiesPath));
 
 						Path settingsGradlePath = dirPath.resolve(
 							"settings.gradle");
@@ -141,11 +141,11 @@ public class ModulesStructureTest {
 							Files.exists(buildGradlePath));
 						Assert.assertFalse(
 							"Forbidden " + buildXMLPath,
-							Files.exists(buildXMLPath));
+							Files.deleteIfExists(buildXMLPath));
 
 						Assert.assertFalse(
 							"Forbidden " + ivyXmlPath,
-							Files.exists(ivyXmlPath));
+							Files.deleteIfExists(ivyXmlPath));
 
 						return FileVisitResult.SKIP_SUBTREE;
 					}

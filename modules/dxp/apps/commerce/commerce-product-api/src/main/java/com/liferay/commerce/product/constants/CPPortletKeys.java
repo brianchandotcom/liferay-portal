@@ -23,15 +23,6 @@ public class CPPortletKeys {
 		"com_liferay_commerce_product_asset_categories_navigation_web" +
 			"_internal_portlet_CPAssetCategoriesNavigationPortlet";
 
-	/**
-	 * @deprecated As of 1.0.0, Replaced by {@link
-	 *             CP_ASSET_CATEGORIES_NAVIGATION}
-	 */
-	@Deprecated
-	public static final String CP_ASSET_CATEGORY_NAVIGATION =
-		"com_liferay_commerce_product_asset_category_navigation_web_internal" +
-			"_portlet_CPAssetCategoryNavigationPortlet";
-
 	public static final String CP_CATEGORY_CONTENT_WEB =
 		"com_liferay_commerce_product_content_web_internal_portlet_" +
 			"CPCategoryContentPortlet";

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ContactConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -224,8 +225,10 @@ public class JabberImpl implements Jabber {
 
 					if (message2.contains("conflict(409)")) {
 						_log.error(
-							"User " + userId + " already exists but password " +
-								"is not synchronized with Jabber");
+							StringBundler.concat(
+								"User ", String.valueOf(userId),
+								" already exists but password is not ",
+								"synchronized with Jabber"));
 					}
 				}
 				catch (Exception e) {
@@ -250,8 +253,10 @@ public class JabberImpl implements Jabber {
 			if (connection == null) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"User " + fromUserId + " is not connected to Jabber " +
-							"and cannot send messages");
+						StringBundler.concat(
+							"User ", String.valueOf(fromUserId),
+							" is not connected to Jabber and cannot send ",
+							"messages"));
 				}
 
 				return;

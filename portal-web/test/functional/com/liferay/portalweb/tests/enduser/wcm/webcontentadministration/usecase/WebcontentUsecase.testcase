@@ -2745,11 +2745,6 @@
 			<var name="editor" value="HTML" />
 		</execute>
 
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
 		<execute macro="PortletEntry#publish" />
 
 		<execute macro="WebContent#viewTitle">

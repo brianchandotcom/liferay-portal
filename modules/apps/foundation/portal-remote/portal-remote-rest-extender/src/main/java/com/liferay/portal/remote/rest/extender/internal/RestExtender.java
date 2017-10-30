@@ -15,6 +15,7 @@
 package com.liferay.portal.remote.rest.extender.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.remote.dependency.manager.tccl.TCCLDependencyManager;
 import com.liferay.portal.remote.rest.extender.configuration.RestExtenderConfiguration;
@@ -90,8 +91,9 @@ public class RestExtender {
 
 			addTCCLServiceDependency(
 				true, Bus.class,
-				"(" + HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH +
-					"=" + contextPath + ")",
+				StringBundler.concat(
+					"(", HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH,
+					"=", contextPath, ")"),
 				"addBus", "removeBus");
 		}
 	}

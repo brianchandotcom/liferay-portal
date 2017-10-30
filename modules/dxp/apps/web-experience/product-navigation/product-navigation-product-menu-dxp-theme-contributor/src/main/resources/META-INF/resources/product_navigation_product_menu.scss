@@ -598,3 +598,28 @@ body {
 		background-color: transparent;
 	}
 }
+
+.sidenav-menu-slider {
+	.product-menu {
+		background-color: $product-menu-body-bg;
+		
+		.search-bar {
+			.form-control {
+				background-color: $product-menu-panel-title-active-bg;
+				color: #6A708B;
+
+				@include placeholder {
+					color: #C0CCD3;
+				}
+
+				&:focus {
+					color: #44A5AA;
+
+					@include placeholder {
+						color: #44A5AA;
+					}
+				}
+			}
+		}
+	}
+}

@@ -81,7 +81,7 @@ public class JavaParameterAnnotationsCheck extends BaseJavaTermCheck {
 				sb.append(StringPool.SPACE);
 			}
 
-			if (javaParameter.isParameterFinal()) {
+			if (javaParameter.isFinal()) {
 				sb.append("final ");
 			}
 

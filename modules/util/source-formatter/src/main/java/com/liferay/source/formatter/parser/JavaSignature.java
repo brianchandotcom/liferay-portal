@@ -25,12 +25,11 @@ public class JavaSignature {
 
 	public void addParameter(
 		String parameterName, String parameterType,
-		Set<String> parameterAnnotations, boolean parameterFinal) {
+		Set<String> parameterAnnotations, boolean isFinal) {
 
 		_parameters.add(
 			new JavaParameter(
-				parameterName, parameterType, parameterAnnotations,
-				parameterFinal));
+				parameterName, parameterType, parameterAnnotations, isFinal));
 	}
 
 	public List<JavaParameter> getParameters() {

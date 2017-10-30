@@ -97,6 +97,10 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 		String className = clazz.getName();
 
 		if (className.startsWith("com.liferay.")) {
+			if (object instanceof TemplateNode) {
+				return new LiferayTemplateModel((TemplateNode)object, this);
+			}
+
 			if (object instanceof Collection) {
 				return _COLLECTION_MODEL_FACTORY.create(object, this);
 			}
@@ -112,10 +116,6 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 
 		if (modelFactory != null) {
 			return modelFactory.create(object, this);
-		}
-
-		if (object instanceof TemplateNode) {
-			return new LiferayTemplateModel((TemplateNode)object, this);
 		}
 
 		return super.wrap(object);

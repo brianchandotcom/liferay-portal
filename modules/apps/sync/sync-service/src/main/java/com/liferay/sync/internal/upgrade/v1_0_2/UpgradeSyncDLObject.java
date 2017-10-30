@@ -244,9 +244,10 @@ public class UpgradeSyncDLObject extends UpgradeProcess {
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update SyncDLObject set lockExpirationDate = ?, " +
-						"lockUserId = ?, lockUserName = ? where typePK = ? " +
-							"and repositoryId = " + groupId);
+					StringBundler.concat(
+						"update SyncDLObject set lockExpirationDate = ?, ",
+						"lockUserId = ?, lockUserName = ? where typePK = ? ",
+						"and repositoryId = ", String.valueOf(groupId)));
 			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {

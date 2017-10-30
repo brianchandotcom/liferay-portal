@@ -81,6 +81,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
@@ -664,9 +665,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		if (kbArticle == null) {
 			throw new NoSuchArticleException(
-				"No KBArticle exists with the key {groupId=" + groupId +
-					", kbFolderId=" + kbFolderId + ", urlTitle=" + urlTitle +
-						"}");
+				StringBundler.concat(
+					"No KBArticle exists with the key {groupId=",
+					String.valueOf(groupId), ", kbFolderId=",
+					String.valueOf(kbFolderId), ", urlTitle=", urlTitle, "}"));
 		}
 
 		return kbArticle;
@@ -685,9 +687,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		if (kbArticle == null) {
 			throw new NoSuchArticleException(
-				"No KBArticle with the key {groupId=" + groupId +
-					", urlTitle=" + urlTitle + "} found in a folder with URL " +
-						"title " + kbFolderUrlTitle);
+				StringBundler.concat(
+					"No KBArticle with the key {groupId=",
+					String.valueOf(groupId), ", urlTitle=", urlTitle,
+					"} found in a folder with URL title ", kbFolderUrlTitle));
 		}
 
 		return kbArticle;
@@ -833,9 +836,11 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		if (latestKBArticle == null) {
 			throw new NoSuchArticleException(
-				"No KBArticle exists with the key {groupId=" + groupId +
-					", kbFolderId=" + kbFolderId + ", urlTitle=" + urlTitle +
-						", status=" + status + "}");
+				StringBundler.concat(
+					"No KBArticle exists with the key {groupId=",
+					String.valueOf(groupId), ", kbFolderId=",
+					String.valueOf(kbFolderId), ", urlTitle=", urlTitle,
+					", status=", String.valueOf(status), "}"));
 		}
 
 		return latestKBArticle;

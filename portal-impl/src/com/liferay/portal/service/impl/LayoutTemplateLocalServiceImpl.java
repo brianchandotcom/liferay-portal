@@ -66,6 +66,10 @@ import javax.servlet.ServletContext;
 public class LayoutTemplateLocalServiceImpl
 	extends LayoutTemplateLocalServiceBaseImpl {
 
+	public static final Set<String> supportedLangTypes = new HashSet<>(
+		Arrays.asList(
+			TemplateConstants.LANG_TYPE_VM, TemplateConstants.LANG_TYPE_FTL));
+
 	@Override
 	public String getContent(
 		String layoutTemplateId, boolean standard, String themeId) {
@@ -527,7 +531,7 @@ public class LayoutTemplateLocalServiceImpl
 		if (index != -1) {
 			String langType = templatePath.substring(index + 1);
 
-			if (_supportedLangTypes.contains(langType)) {
+			if (supportedLangTypes.contains(langType)) {
 				return langType;
 			}
 		}
@@ -606,9 +610,6 @@ public class LayoutTemplateLocalServiceImpl
 		new HashMap<>();
 	private static final Map<String, Map<String, LayoutTemplate>>
 		_standardThemes = new HashMap<>();
-	private static final Set<String> _supportedLangTypes = new HashSet<>(
-		Arrays.asList(
-			TemplateConstants.LANG_TYPE_VM, TemplateConstants.LANG_TYPE_FTL));
 	private static final Map<String, LayoutTemplate> _warCustom =
 		new LinkedHashMap<>();
 	private static final Map<String, LayoutTemplate> _warStandard =

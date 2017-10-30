@@ -45,7 +45,7 @@ public class NPMResolverImpl implements NPMResolver {
 
 	@Override
 	public JSPackage getDependencyJSPackage(String packageName) {
-		JSPackage jsPackage = _npmRegistry.getJSPackage(_jsPackageIdentifier);
+		JSPackage jsPackage = getJSPackage();
 
 		JSPackageDependency jsPackageDependency =
 			jsPackage.getJSPackageDependency(packageName);
@@ -58,22 +58,34 @@ public class NPMResolverImpl implements NPMResolver {
 	}
 
 	@Override
+	public JSPackage getJSPackage() {
+		return _npmRegistry.getJSPackage(_jsPackageIdentifier);
+	}
+
+	@Override
 	public String resolveModuleName(String moduleName) {
 		String packageName = ModuleNameUtil.getPackageName(moduleName);
 
-		JSPackage jsPackage = getDependencyJSPackage(packageName);
+		JSPackage jsPackage = getJSPackage();
 
-		if (jsPackage == null) {
-			return null;
+		if (!packageName.equals(jsPackage.getName())) {
+			jsPackage = getDependencyJSPackage(packageName);
+
+			if (jsPackage == null) {
+				return null;
+			}
 		}
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(3);
 
-		sb.append(jsPackage.getName());
-		sb.append(StringPool.AT);
-		sb.append(jsPackage.getVersion());
-		sb.append(StringPool.SLASH);
-		sb.append(ModuleNameUtil.getPackagePath(moduleName));
+		sb.append(jsPackage.getResolvedId());
+
+		String packagePath = ModuleNameUtil.getPackagePath(moduleName);
+
+		if (packagePath != null) {
+			sb.append(StringPool.SLASH);
+			sb.append(packagePath);
+		}
 
 		return sb.toString();
 	}
@@ -89,9 +101,15 @@ public class NPMResolverImpl implements NPMResolver {
 			String name = jsonObject.getString("name");
 			String version = jsonObject.getString("version");
 
-			return
-				bundle.getBundleId() + StringPool.SLASH + name + StringPool.AT +
-					version;
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(bundle.getBundleId());
+			sb.append(StringPool.SLASH);
+			sb.append(name);
+			sb.append(StringPool.AT);
+			sb.append(version);
+
+			return sb.toString();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

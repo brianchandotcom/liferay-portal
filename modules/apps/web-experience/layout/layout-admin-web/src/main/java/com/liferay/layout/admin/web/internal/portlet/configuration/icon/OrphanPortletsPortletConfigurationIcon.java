@@ -14,6 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.portlet.configuration.icon;
 
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.display.context.OrphanPortletsDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -107,6 +108,10 @@ public class OrphanPortletsPortletConfigurationIcon
 				return false;
 			}
 
+			if (_staging.isIncomplete(layout)) {
+				return false;
+			}
+
 			OrphanPortletsDisplayContext orphanPortletsDisplayContext =
 				new OrphanPortletsDisplayContext(portletRequest);
 
@@ -147,5 +152,8 @@ public class OrphanPortletsPortletConfigurationIcon
 	}
 
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Staging _staging;
 
 }

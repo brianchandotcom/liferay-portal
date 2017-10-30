@@ -75,6 +75,8 @@ if (layoutRevision != null) {
 		if (LayoutSetBranchConstants.MASTER_BRANCH_NAME.equals(layoutSetBranchName)) {
 			layoutSetBranchName = LanguageUtil.get(request, layoutSetBranchName);
 		}
+
+		portletDisplay.setShowStagingIcon(false);
 	}
 }
 

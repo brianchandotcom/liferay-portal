@@ -260,6 +260,8 @@ public interface Staging {
 	public boolean isGroupAccessible(long groupId, long fromGroupId)
 		throws PortalException;
 
+	public boolean isIncomplete(Layout layout);
+
 	public boolean isIncomplete(Layout layout, long layoutSetBranchId);
 
 	/**

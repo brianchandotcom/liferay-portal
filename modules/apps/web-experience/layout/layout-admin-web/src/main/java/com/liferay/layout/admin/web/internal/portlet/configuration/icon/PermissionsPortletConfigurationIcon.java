@@ -14,6 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.portlet.configuration.icon;
 
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -94,6 +95,10 @@ public class PermissionsPortletConfigurationIcon
 				return false;
 			}
 
+			if (_staging.isIncomplete(layout)) {
+				return false;
+			}
+
 			Group group = layout.getGroup();
 
 			if (group.isLayoutPrototype()) {
@@ -142,5 +147,8 @@ public class PermissionsPortletConfigurationIcon
 	}
 
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Staging _staging;
 
 }

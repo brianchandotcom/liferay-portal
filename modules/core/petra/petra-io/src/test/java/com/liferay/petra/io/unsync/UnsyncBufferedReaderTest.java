@@ -191,6 +191,7 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 		}
 	}
 
+	@Override
 	@Test
 	public void testMarkAndReset() throws Exception {
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
@@ -324,6 +325,7 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 		Assert.assertEquals("bcdefghi", unsyncBufferedReader.readLine());
 	}
 
+	@Override
 	@Test
 	public void testRead() throws Exception {
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(

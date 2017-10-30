@@ -171,7 +171,7 @@ public class UnsyncCharArrayWriterTest extends BaseWriterTestCase {
 
 		CharBuffer charBuffer = unsyncCharArrayWriter.toCharBuffer();
 
-		Assert.assertEquals(buffer, charBuffer.array());
+		Assert.assertSame(buffer, charBuffer.array());
 
 		Assert.assertEquals(0, charBuffer.position());
 		Assert.assertEquals(5, charBuffer.limit());

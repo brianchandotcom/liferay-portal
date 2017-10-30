@@ -213,11 +213,9 @@ public class UnsyncStringWriterTest extends BaseWriterTestCase {
 
 	@Test
 	public void testFlushAndClose() {
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		unsyncStringWriter.flush();
-
-		unsyncStringWriter.close();
+		try (UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter()) {
+			unsyncStringWriter.flush();
+		}
 	}
 
 	@Test
@@ -425,6 +423,7 @@ public class UnsyncStringWriterTest extends BaseWriterTestCase {
 		Assert.assertEquals("cd", stringBundler.stringAt(1));
 	}
 
+	@Override
 	@Test
 	public void testWriteNullString() throws Exception {
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter(true);

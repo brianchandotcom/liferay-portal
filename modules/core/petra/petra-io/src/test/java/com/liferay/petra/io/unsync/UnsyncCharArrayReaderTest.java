@@ -46,6 +46,7 @@ public class UnsyncCharArrayReaderTest extends BaseReaderTestCase {
 
 		};
 
+	@Override
 	@Test
 	public void testBlockRead() throws IOException {
 		UnsyncCharArrayReader unsyncCharArrayReader = new UnsyncCharArrayReader(

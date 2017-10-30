@@ -184,10 +184,10 @@ public class AlloyControllerInvokerManager {
 					generateAlloyControllerInvokerClassData(
 						controllerClass, alloyControllerInvokerClassName);
 
-				final String fileName =
-					PropsUtil.get(PropsKeys.LIFERAY_HOME) + "/data/alloy/" +
-						getClassBinaryName(alloyControllerInvokerClassName) +
-							".class";
+				final String fileName = StringBundler.concat(
+					PropsUtil.get(PropsKeys.LIFERAY_HOME), "/data/alloy/",
+					getClassBinaryName(alloyControllerInvokerClassName),
+					".class");
 
 				ClassLoader customClassLoader = new ClassLoader(classLoader) {
 

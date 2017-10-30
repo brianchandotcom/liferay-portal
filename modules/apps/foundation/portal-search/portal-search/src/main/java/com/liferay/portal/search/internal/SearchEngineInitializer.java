@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.util.PropsValues;
 
@@ -169,8 +170,11 @@ public class SearchEngineInitializer implements Runnable {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Reindexing with " + indexer.getClass() + " completed in " +
-					(stopWatch.getTime() / Time.SECOND) + " seconds");
+				StringBundler.concat(
+					"Reindexing with ", String.valueOf(indexer.getClass()),
+					" completed in ",
+					String.valueOf(stopWatch.getTime() / Time.SECOND),
+					" seconds"));
 		}
 	}
 

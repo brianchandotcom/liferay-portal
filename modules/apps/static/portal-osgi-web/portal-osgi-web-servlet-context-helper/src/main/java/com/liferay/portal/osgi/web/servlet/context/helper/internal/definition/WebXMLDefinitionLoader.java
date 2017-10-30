@@ -333,8 +333,9 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 			_logger.log(
 				Logger.LOG_WARNING,
-				qName + " from web.xml in bundle " + _bundle +
-					" is not supported");
+				StringBundler.concat(
+					qName, " from web.xml in bundle ", String.valueOf(_bundle),
+					" is not supported"));
 		}
 		else if (qName.equals("servlet")) {
 			_webXMLDefinition.setServletDefinition(
@@ -715,8 +716,9 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 						// Servlet 3 spec 8.2.3
 
 						throw new Exception(
-							"Init paramter name " + initParameterName +
-								" conflicts with filter name " + filterName);
+							StringBundler.concat(
+								"Init paramter name ", initParameterName,
+								" conflicts with filter name ", filterName));
 					}
 					else {
 						assembledInitParameters.put(
@@ -840,8 +842,9 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 						// Servlet 3 spec 8.2.3
 
 						throw new Exception(
-							"Init paramter name " + initParameterName +
-								" conflicts with servlet name " + servletName);
+							StringBundler.concat(
+								"Init paramter name ", initParameterName,
+								" conflicts with servlet name ", servletName));
 					}
 					else {
 						assembledInitInitParameters.put(
@@ -1077,8 +1080,9 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 		catch (Exception e) {
 			_logger.log(
 				Logger.LOG_ERROR,
-				"Bundle " + _bundle + " is unable to load filter " +
-					filterClassName);
+				StringBundler.concat(
+					"Bundle ", String.valueOf(_bundle),
+					" is unable to load filter ", filterClassName));
 
 			return null;
 		}
@@ -1096,8 +1100,9 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 		catch (Exception e) {
 			_logger.log(
 				Logger.LOG_ERROR,
-				"Bundle " + _bundle + " is unable to load listener " +
-					listenerClassName);
+				StringBundler.concat(
+					"Bundle ", String.valueOf(_bundle),
+					" is unable to load listener ", listenerClassName));
 
 			return null;
 		}

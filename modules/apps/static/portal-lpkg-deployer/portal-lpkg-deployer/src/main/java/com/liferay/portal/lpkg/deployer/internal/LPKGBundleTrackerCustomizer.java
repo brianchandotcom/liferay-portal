@@ -291,8 +291,10 @@ public class LPKGBundleTrackerCustomizer
 
 					if (_log.isInfoEnabled()) {
 						_log.info(
-							"Uninstalled " + installedBundle + "because " +
-								bundle + " was updated");
+							StringBundler.concat(
+								"Uninstalled ", String.valueOf(installedBundle),
+								"because ", String.valueOf(bundle),
+								" was updated"));
 					}
 				}
 			}
@@ -341,8 +343,10 @@ public class LPKGBundleTrackerCustomizer
 			}
 			catch (Throwable t) {
 				_log.error(
-					"Unable to uninstall " + newBundle +
-						" in response to uninstallation of " + bundle,
+					StringBundler.concat(
+						"Unable to uninstall ", String.valueOf(newBundle),
+						" in response to uninstallation of ",
+						String.valueOf(bundle)),
 					t);
 			}
 		}
@@ -408,7 +412,9 @@ public class LPKGBundleTrackerCustomizer
 			}
 
 			if (_log.isInfoEnabled()) {
-				_log.info("Disabled " + symbolicName + ":" + url.getPath());
+				_log.info(
+					StringBundler.concat(
+						"Disabled ", symbolicName, ":", url.getPath()));
 			}
 
 			return true;
@@ -703,7 +709,8 @@ public class LPKGBundleTrackerCustomizer
 		attributes.putValue(Constants.BUNDLE_MANIFESTVERSION, "2");
 		attributes.putValue(
 			Constants.BUNDLE_SYMBOLICNAME,
-			bundle.getSymbolicName() + "-" + contextName + "-wrapper");
+			StringBundler.concat(
+				bundle.getSymbolicName(), "-", contextName, "-wrapper"));
 
 		attributes.putValue(Constants.BUNDLE_VERSION, version);
 		attributes.putValue(

@@ -147,9 +147,11 @@ public class LPKGIndexValidator {
 				Collections.sort(actualKeys);
 
 				_log.info(
-					"Running validation because expected keys: " +
-						expectedKeys + " do not match actual keys: " +
-							actualKeys);
+					StringBundler.concat(
+						"Running validation because expected keys: ",
+						String.valueOf(expectedKeys),
+						" do not match actual keys: ",
+						String.valueOf(actualKeys)));
 			}
 
 			return false;

@@ -522,9 +522,10 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			if (ldapContext == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"No LDAP server configuration available for LDAP " +
-							"server " + ldapServerId + " and company " +
-								companyId);
+						StringBundler.concat(
+							"No LDAP server configuration available for LDAP ",
+							"server ", String.valueOf(ldapServerId),
+							" and company ", String.valueOf(companyId)));
 				}
 
 				return null;
@@ -610,9 +611,11 @@ public class DefaultPortalLDAP implements PortalLDAP {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to retrieve user with LDAP server " + ldapServerId +
-						", company " + companyId + ", loginMapping " +
-							loginMapping + ", and login " + login);
+					StringBundler.concat(
+						"Unable to retrieve user with LDAP server ",
+						String.valueOf(ldapServerId), ", company ",
+						String.valueOf(companyId), ", loginMapping ",
+						loginMapping, ", and login ", login));
 			}
 
 			return null;
@@ -822,8 +825,9 @@ public class DefaultPortalLDAP implements PortalLDAP {
 		catch (NameNotFoundException nnfe) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to determine if user DN " + userDN +
-						" is a member of group DN " + groupDN,
+					StringBundler.concat(
+						"Unable to determine if user DN ", userDN,
+						" is a member of group DN ", groupDN),
 					nnfe);
 			}
 		}
@@ -877,8 +881,9 @@ public class DefaultPortalLDAP implements PortalLDAP {
 		catch (NameNotFoundException nnfe) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to determine if group DN " + groupDN +
-						" is a member of user DN " + userDN,
+					StringBundler.concat(
+						"Unable to determine if group DN ", groupDN,
+						" is a member of user DN ", userDN),
 					nnfe);
 			}
 		}

@@ -206,7 +206,11 @@
 	</command>
 
 	<command name="clickPortletPlusIconPG">
-		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN">
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Portlet#ICON_PLUS_SIGN">
+			<var name="key_portletName" value="${portletName}" />
+		</execute>
+
+		<execute function="Click" locator1="Portlet#ICON_PLUS_SIGN">
 			<var name="key_portletName" value="${portletName}" />
 		</execute>
 	</command>
@@ -250,7 +254,9 @@
 	<command name="deletePG">
 		<var name="key_portletName" value="${portletName}" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="Portlet#SPECIFIC_ELLIPSIS_ICON" />
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Portlet#SPECIFIC_ELLIPSIS_ICON" />
+
+		<execute function="Click" locator1="Portlet#SPECIFIC_ELLIPSIS_ICON" />
 
 		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Remove">
 			<var name="key_menuItem" value="Remove" />
@@ -285,10 +291,14 @@
 			<then>
 				<var name="key_portletName" value="${portletName}" />
 
-				<execute function="Click#makeVisibleClickAt" locator1="Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON" />
+				<execute function="MouseOver#mouseOverNotVisible" locator1="Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON" />
+
+				<execute function="Click" locator1="Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON" />
 			</then>
 			<else>
-				<execute function="Click#makeVisibleClickAt" locator1="Portlet#OPTIONS_ICON" />
+				<execute function="MouseOver#mouseOverNotVisible" locator1="Portlet#OPTIONS_ICON" />
+
+				<execute function="Click" locator1="Portlet#OPTIONS_ICON" />
 			</else>
 		</if>
 
@@ -495,7 +505,9 @@
 	</command>
 
 	<command name="viewPortletOptionsMenulist">
-		<execute function="Click#makeVisibleClickAt" locator1="Portlet#OPTIONS_ICON" />
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Portlet#OPTIONS_ICON" />
+
+		<execute function="Click" locator1="Portlet#OPTIONS_ICON" />
 
 		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Look and Feel Configuration">
 			<var name="key_menuItem" value="Look and Feel Configuration" />

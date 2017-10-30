@@ -104,7 +104,9 @@
 	</command>
 
 	<command name="addSubfolderCP">
-		<execute function="Click#makeVisibleClickAt" locator1="Button#PLUS" />
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Button#PLUS" />
+
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="AssertClick#assertTextClickAt" locator1="MenuItem#ANY_MENU_ITEM" value1="Subfolder">
 			<var name="key_menuItem" value="Subfolder" />

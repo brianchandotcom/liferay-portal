@@ -99,7 +99,11 @@
 	<command name="gotoArticleMenuPGViaWCD">
 		<execute function="MouseOver" locator1="WCD#WEB_CONTENT_CONTENT" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="WCD#ARTICLE_ELLIPSIS_ICON">
+		<execute function="MouseOver#mouseOverNotVisible" locator1="WCD#ARTICLE_ELLIPSIS_ICON">
+			<var name="key_webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute function="Click" locator1="WCD#ARTICLE_ELLIPSIS_ICON">
 			<var name="key_webContentTitle" value="${webContentTitle}" />
 		</execute>
 	</command>

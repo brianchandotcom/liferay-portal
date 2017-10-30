@@ -63,7 +63,9 @@
 	</command>
 
 	<command name="removeUserFacetDisplayPG">
-		<execute function="Click#makeVisibleClickAt" locator1="Search#SEARCH_PORTLET_OPTIONS_WRENCH" />
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Search#SEARCH_PORTLET_OPTIONS_WRENCH" />
+
+		<execute function="Click" locator1="Search#SEARCH_PORTLET_OPTIONS_WRENCH" />
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Configuration">
 			<var name="key_menuItem" value="Configuration" />

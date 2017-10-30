@@ -1345,6 +1345,14 @@
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="That password uses common words. Please enter a password that is harder to guess (i.e. contains a mix of numbers and letters)." />
 			</then>
 			<elseif>
+				<equals arg1="${passwordTooShort}" arg2="true" />
+				<then>
+					<execute macro="Alert#viewRequestFailedToComplete" />
+
+					<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="That password is too short. Please make sure your password is at least 6 characters long." />
+				</then>
+			</elseif>
+			<elseif>
 				<isset var="regex" />
 				<then>
 					<execute macro="Alert#viewRequestFailedToComplete" />

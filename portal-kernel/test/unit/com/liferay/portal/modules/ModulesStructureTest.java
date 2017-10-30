@@ -127,12 +127,12 @@ public class ModulesStructureTest {
 							"Forbidden " + gradlePropertiesPath,
 							Files.exists(gradlePropertiesPath));
 
-						Path settinsGradlePath = dirPath.resolve(
+						Path settingsGradlePath = dirPath.resolve(
 							"settings.gradle");
 
 						Assert.assertFalse(
-							"Forbidden " + settinsGradlePath,
-							Files.deleteIfExists(settinsGradlePath));
+							"Forbidden " + settingsGradlePath,
+							Files.deleteIfExists(settingsGradlePath));
 					}
 
 					if (Files.exists(dirPath.resolve("bnd.bnd"))) {

@@ -207,13 +207,13 @@ else {
 						<liferay-ui:message key="site-pages-variation" />
 					</a>
 				</li>
-				<li>
-					<a href="javascript:;" id="manageLayoutRevisions" onclick="<%= renderResponse.getNamespace() + "openPageVariationsDialog();" %>">
-						<liferay-ui:message key="page-variations" />
-					</a>
-				</li>
 
 				<c:if test="<%= !layoutRevision.isIncomplete() %>">
+					<li>
+						<a href="javascript:;" id="manageLayoutRevisions" onclick="<%= renderResponse.getNamespace() + "openPageVariationsDialog();" %>">
+							<liferay-ui:message key="page-variations" />
+						</a>
+					</li>
 					<li>
 						<a href="javascript:Liferay.fire('<%= liferayPortletResponse.getNamespace() %>viewHistory', {layoutRevisionId: '<%= layoutRevision.getLayoutRevisionId() %>', layoutSetBranchId: '<%= layoutRevision.getLayoutSetBranchId() %>'}); void(0);" id="viewHistoryLink">
 							<liferay-ui:message key="history" />

@@ -262,9 +262,9 @@ public class WebFormUtil {
 			}
 		}
 		catch (Exception e) {
-			String msg =
-				"The following script has execution errors:\n" +
-					validationScript + "\n" + e.getMessage();
+			String msg = StringBundler.concat(
+				"The following script has execution errors:\n",
+				validationScript, "\n", e.getMessage());
 
 			_log.error(msg);
 

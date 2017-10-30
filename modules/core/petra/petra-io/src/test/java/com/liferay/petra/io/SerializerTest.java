@@ -1036,8 +1036,8 @@ public class SerializerTest {
 				_bufferField = ReflectionTestUtil.getField(clazz, "_buffer");
 				_nextField = ReflectionTestUtil.getField(clazz, "_next");
 			}
-			catch (ReflectiveOperationException roe) {
-				throw new ExceptionInInitializerError(roe);
+			catch (ClassNotFoundException cnfe) {
+				throw new ExceptionInInitializerError(cnfe);
 			}
 		}
 

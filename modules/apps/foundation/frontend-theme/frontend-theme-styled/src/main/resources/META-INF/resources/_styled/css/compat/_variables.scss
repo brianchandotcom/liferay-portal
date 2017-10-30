@@ -9,13 +9,13 @@ $navbar-border-left-width: 0 !default;
 $navbar-border-right-width: 0 !default;
 $navbar-border-top-width: 0 !default;
 
+$navbar-light-active-highlight: lighten(#1865FB, 22%) !default;
 $navbar-light-bg: #FFF !default;
 $navbar-light-border-color: transparent !default;
-$navbar-light-active-highlight: lighten(#1865FB, 22%) !default;
 
+$navbar-dark-active-highlight: lighten(#1865FB, 22%) !default;
 $navbar-dark-bg: #31323F !default;
 $navbar-dark-border-color: transparent !default;
-$navbar-dark-active-highlight: lighten(#1865FB, 22%) !default;
 
 $zindex-basic-search-close: 5 !default;
 
@@ -42,8 +42,8 @@ $management-bar-desktop-link-line-height: $line-height-base !default;
 $management-bar-margin-bottom: 1.25rem !default; // 20px
 
 $management-bar-desktop-padding-horizontal: null !default;
-$management-bar-padding-horizontal: $nav-link-padding-x !default;
 $management-bar-desktop-padding-vertical: null !default;
+$management-bar-padding-horizontal: $nav-link-padding-x !default;
 $management-bar-padding-vertical: ($management-bar-height - 1.25rem - $management-bar-border-bottom-width - $management-bar-border-top-width) / 2 !default;
 
 $management-bar-btn-padding-horizontal: $management-bar-padding-horizontal !default;
@@ -89,14 +89,14 @@ $management-bar-default-btn-default-active-color: $management-bar-default-btn-de
 
 $screen-lg: 1200px !default;
 
-$screen-xs-min: map-get($grid-breakpoints, sm) !default;
-$screen-sm-min: map-get($grid-breakpoints, md) !default;
-$screen-md-min: map-get($grid-breakpoints, lg) !default;
 $screen-lg-min: map-get($grid-breakpoints, xl) !default;
+$screen-md-min: map-get($grid-breakpoints, lg) !default;
+$screen-sm-min: map-get($grid-breakpoints, md) !default;
+$screen-xs-min: map-get($grid-breakpoints, sm) !default;
 
-$screen-xs-max: ($screen-sm-min - 1) !default;
-$screen-sm-max: ($screen-md-min - 1) !default;
 $screen-md-max: ($screen-lg-min - 1) !default;
+$screen-sm-max: ($screen-md-min - 1) !default;
+$screen-xs-max: ($screen-sm-min - 1) !default;
 
 $grid-float-breakpoint: $screen-sm-min !default;
 
@@ -115,8 +115,8 @@ $pager-disabled-color: $pagination-disabled-color !default;
 
 // Progress
 
-$progress-bar-xs-height: 8px !default;
 $progress-bar-xl-height: 52px !default;
+$progress-bar-xs-height: 8px !default;
 
 // List groups
 

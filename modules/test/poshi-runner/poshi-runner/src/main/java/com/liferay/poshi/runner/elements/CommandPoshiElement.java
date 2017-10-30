@@ -183,27 +183,32 @@ public class CommandPoshiElement extends BasePoshiElement {
 		List<String> readableBlocks = new ArrayList<>();
 
 		for (String line : readableSyntax.split("\n")) {
-			line = line.trim();
+			String trimmedLine = line.trim();
 
-			if (line.length() == 0) {
+			if (trimmedLine.length() == 0) {
 				sb.append("\n");
 
 				continue;
 			}
 
-			if (line.startsWith("setUp") || line.startsWith("tearDown")) {
-				continue;
-			}
-
-			if ((line.endsWith(" {") && line.startsWith("test")) ||
-				line.startsWith("@")) {
-
-				readableBlocks.add(line);
+			if (trimmedLine.startsWith("setUp") ||
+				trimmedLine.startsWith("tearDown")) {
 
 				continue;
 			}
 
-			if (!line.startsWith("else {") && !line.startsWith("else if")) {
+			if ((trimmedLine.endsWith(" {") &&
+				 trimmedLine.startsWith("test")) ||
+				trimmedLine.startsWith("@")) {
+
+				readableBlocks.add(trimmedLine);
+
+				continue;
+			}
+
+			if (!trimmedLine.startsWith("else {") &&
+				!trimmedLine.startsWith("else if")) {
+
 				String readableBlock = sb.toString();
 
 				readableBlock = readableBlock.trim();

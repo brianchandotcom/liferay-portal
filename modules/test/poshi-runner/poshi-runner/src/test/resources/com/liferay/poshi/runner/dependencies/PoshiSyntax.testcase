@@ -172,7 +172,7 @@
 		<var name="wikiPageContent"><![CDATA[<p id='demo'>PASS</p>
 
 <script type='text/javascript'>
-document.getElementById('demo').innerHTML = 'FAIL';
+	document.getElementById('demo').innerHTML = 'FAIL';
 </script>]]></var>
 
 		<execute macro="AlloyEditor#addSourceContent">

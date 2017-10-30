@@ -26,7 +26,6 @@ import java.io.Serializable;
 import java.io.Writer;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -84,67 +83,56 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 	public void writeTo(Writer writer) throws IOException {
 		writer.write("<script type=\"text/javascript\">\n// <![CDATA[\n");
 
-		StringBundler auiModulesSB = new StringBundler(_portletDataMap.size());
-		Set<String> auiModulesSet = new HashSet<>();
-		StringBundler es6ModulesSB = new StringBundler(_portletDataMap.size());
-		Set<String> es6ModulesSet = new HashSet<>();
-
 		for (PortletData portletData : _portletDataMap.values()) {
 			portletData._rawSB.writeTo(writer);
+		}
 
+		for (PortletData portletData : _portletDataMap.values()) {
+			if (portletData._es6ModulesSet.size() > 0) {
+				writer.write("Liferay.Loader.require(");
+
+				for (String es6Module : portletData._es6ModulesSet) {
+					writer.write(StringPool.APOSTROPHE);
+					writer.write(_generateModuleName(es6Module));
+					writer.write(StringPool.APOSTROPHE);
+					writer.write(StringPool.COMMA_AND_SPACE);
+				}
+
+				writer.write("function(");
+
+				Set<String> variableNames = new HashSet<>(
+					portletData._es6ModulesSet.size());
+
+				boolean firstEs6Module = true;
+
+				for (String es6Module : portletData._es6ModulesSet) {
+					if (!firstEs6Module) {
+						writer.write(StringPool.COMMA_AND_SPACE);
+					}
+
+					firstEs6Module = false;
+
+					writer.write(_generateVariable(es6Module, variableNames));
+				}
+
+				writer.write(") {\n");
+
+				portletData._es6CallbackSB.writeTo(writer);
+
+				writer.write(
+					"},\nfunction(error) {\nconsole.error(error);\n});");
+			}
+		}
+
+		StringBundler auiModulesSB = new StringBundler(_portletDataMap.size());
+		Set<String> auiModulesSet = new HashSet<>();
+
+		for (PortletData portletData : _portletDataMap.values()) {
 			if (!portletData._auiModulesSet.isEmpty()) {
 				auiModulesSB.append(portletData._auiCallbackSB);
 			}
 
-			if (!portletData._es6ModulesSet.isEmpty()) {
-				es6ModulesSB.append(portletData._es6CallbackSB);
-			}
-
 			auiModulesSet.addAll(portletData._auiModulesSet);
-			es6ModulesSet.addAll(portletData._es6ModulesSet);
-		}
-
-		if ((auiModulesSB.index() == 0) && (es6ModulesSB.index() == 0)) {
-			writer.write("\n// ]]>\n</script>");
-
-			return;
-		}
-
-		if (!es6ModulesSet.isEmpty()) {
-			writer.write("Liferay.Loader.require(");
-
-			Iterator<String> iterator = es6ModulesSet.iterator();
-
-			while (iterator.hasNext()) {
-				writer.write(StringPool.APOSTROPHE);
-				writer.write(iterator.next());
-				writer.write(StringPool.APOSTROPHE);
-
-				if (iterator.hasNext()) {
-					writer.write(StringPool.COMMA_AND_SPACE);
-				}
-			}
-
-			writer.write(StringPool.COMMA_AND_SPACE);
-			writer.write("function(");
-
-			iterator = es6ModulesSet.iterator();
-
-			Set<String> variableNames = new HashSet<>(es6ModulesSet.size());
-
-			while (iterator.hasNext()) {
-				writer.write(_generateVariable(iterator.next(), variableNames));
-
-				if (iterator.hasNext()) {
-					writer.write(StringPool.COMMA_AND_SPACE);
-				}
-			}
-
-			writer.write(") {\n");
-
-			es6ModulesSB.writeTo(writer);
-
-			writer.write("},\nfunction(error) {\nconsole.error(error);\n});");
 		}
 
 		if (!auiModulesSet.isEmpty()) {
@@ -173,7 +161,21 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 
 	}
 
+	private String _generateModuleName(String name) {
+		String[] nameAlias = _splitNameAlias(name);
+
+		return nameAlias[0];
+	}
+
 	private String _generateVariable(String name, Set<String> names) {
+		String[] nameAlias = _splitNameAlias(name);
+
+		if (!Validator.isBlank(nameAlias[1])) {
+			return nameAlias[1];
+		}
+
+		name = nameAlias[0];
+
 		StringBuilder sb = new StringBuilder(name.length());
 
 		char c = name.charAt(0);
@@ -261,6 +263,18 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 		}
 
 		return portletData;
+	}
+
+	private String[] _splitNameAlias(String name) {
+		String[] parts = name.split("\\s+");
+
+		if ((parts.length == 3) &&
+			StringUtil.equalsIgnoreCase(parts[1], "as")) {
+
+			return new String[] {parts[0], parts[2]};
+		}
+
+		return new String[] {name, StringPool.BLANK};
 	}
 
 	private static final long serialVersionUID = 1L;

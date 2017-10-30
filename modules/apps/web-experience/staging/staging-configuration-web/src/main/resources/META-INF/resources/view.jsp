@@ -240,7 +240,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 										%>
 
 										<li class="flex-container list-group-item">
-											<span class="flex-item-center staging-configuration-control-label <%= branchingPublic ? "staging-configuration-control-label-bold" : StringPool.BLANK %>">
+											<span class="flex-item-center staging-configuration-control-label">
 												<liferay-ui:message key="enabled-on-public-pages" />
 											</span>
 											<span class="staging-configuration-control-toggle">
@@ -253,7 +253,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 										%>
 
 										<li class="flex-container list-group-item">
-											<span class="flex-item-center staging-configuration-control-label <%= branchingPrivate ? "staging-configuration-control-label-bold" : StringPool.BLANK %>">
+											<span class="flex-item-center staging-configuration-control-label">
 												<liferay-ui:message key="enabled-on-private-pages" />
 											</span>
 											<span class="staging-configuration-control-toggle">
@@ -302,7 +302,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 									%>
 
 										<li class="flex-container list-group-item">
-											<span class="flex-item-center staging-configuration-control-label <%= staged ? "staging-configuration-control-label-bold" : StringPool.BLANK %>">
+											<span class="flex-item-center staging-configuration-control-label">
 												<liferay-ui:message key="<%= PortalUtil.getPortletTitle(curPortlet, application, locale) %>" />
 											</span>
 											<span class="staging-configuration-control-toggle">

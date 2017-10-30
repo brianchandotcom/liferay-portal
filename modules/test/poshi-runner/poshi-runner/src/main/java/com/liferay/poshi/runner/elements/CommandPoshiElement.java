@@ -15,10 +15,10 @@
 package com.liferay.poshi.runner.elements;
 
 import com.liferay.poshi.runner.util.RegexUtil;
-import com.liferay.poshi.runner.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
 
 import org.dom4j.Element;
 
@@ -154,6 +154,20 @@ public class CommandPoshiElement extends BasePoshiElement {
 
 			if (isCDATAVar(item)) {
 				item = item.replaceFirst("\t", pad + "\t");
+
+				String trimmedItem = item.trim();
+
+				if (!trimmedItem.startsWith("var")) {
+					Matcher matcher = nestedVarAssignmentPattern.matcher(item);
+
+					item = matcher.replaceAll("\t$1");
+
+					if (item.endsWith(");")) {
+						item = item.substring(0, item.length() - 2);
+
+						item = item + "\t);";
+					}
+				}
 
 				sb.append(item);
 

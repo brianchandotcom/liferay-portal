@@ -97,11 +97,11 @@ public class AbortedMultipartUploadCleaner extends BaseMessageListener {
 	private S3Store _s3Store;
 
 	@Reference(unbind = "-")
-	private volatile SchedulerEngineHelper _schedulerEngineHelper;
+	private SchedulerEngineHelper _schedulerEngineHelper;
 
 	private TransferManager _transferManager;
 
 	@Reference(unbind = "-")
-	private volatile TriggerFactory _triggerFactory;
+	private TriggerFactory _triggerFactory;
 
 }

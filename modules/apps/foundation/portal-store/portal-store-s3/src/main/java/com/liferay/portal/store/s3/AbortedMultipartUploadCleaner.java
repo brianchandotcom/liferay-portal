@@ -19,6 +19,7 @@ import com.amazonaws.services.s3.transfer.TransferManager;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
@@ -44,10 +45,12 @@ import org.osgi.service.component.annotations.Reference;
  * @author Samuel Ziemer
  */
 @Component
-public class AbortedMultipartUploadCleaner extends BaseMessageListener {
+public class AbortedMultipartUploadCleaner {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
+		_messageListener = new AbortedMultipartUploadMessageListener(_s3Store);
+
 		Class<?> clazz = getClass();
 
 		String className = clazz.getName();
@@ -59,36 +62,16 @@ public class AbortedMultipartUploadCleaner extends BaseMessageListener {
 			className, trigger);
 
 		_schedulerEngineHelper.register(
-			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
+			_messageListener, schedulerEntry,
+			DestinationNames.SCHEDULER_DISPATCH);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_schedulerEngineHelper.unregister(this);
+		_schedulerEngineHelper.unregister(_messageListener);
 	}
 
-	@Override
-	protected void doReceive(Message message) throws Exception {
-		TransferManager transferManager = _s3Store.getTransferManager();
-
-		transferManager.abortMultipartUploads(
-			_s3Store.getBucketName(), _computeStartDate());
-	}
-
-	private Date _computeStartDate() {
-		Date date = new Date();
-
-		LocalDateTime localDateTime = LocalDateTime.ofInstant(
-			date.toInstant(), ZoneId.systemDefault());
-
-		LocalDateTime previousDayLocalDateTime = localDateTime.minus(
-			1, ChronoUnit.DAYS);
-
-		ZonedDateTime zonedDateTime = previousDayLocalDateTime.atZone(
-			ZoneId.systemDefault());
-
-		return Date.from(zonedDateTime.toInstant());
-	}
+	private MessageListener _messageListener;
 
 	@Reference(unbind = "-")
 	private S3Store _s3Store;
@@ -98,5 +81,39 @@ public class AbortedMultipartUploadCleaner extends BaseMessageListener {
 
 	@Reference(unbind = "-")
 	private TriggerFactory _triggerFactory;
+
+	private static class AbortedMultipartUploadMessageListener
+		extends BaseMessageListener {
+
+		@Override
+		protected void doReceive(Message message) throws Exception {
+			TransferManager transferManager = _s3Store.getTransferManager();
+
+			transferManager.abortMultipartUploads(
+				_s3Store.getBucketName(), _computeStartDate());
+		}
+
+		private AbortedMultipartUploadMessageListener(S3Store s3Store) {
+			_s3Store = s3Store;
+		}
+
+		private Date _computeStartDate() {
+			Date date = new Date();
+
+			LocalDateTime localDateTime = LocalDateTime.ofInstant(
+				date.toInstant(), ZoneId.systemDefault());
+
+			LocalDateTime previousDayLocalDateTime = localDateTime.minus(
+				1, ChronoUnit.DAYS);
+
+			ZonedDateTime zonedDateTime = previousDayLocalDateTime.atZone(
+				ZoneId.systemDefault());
+
+			return Date.from(zonedDateTime.toInstant());
+		}
+
+		private final S3Store _s3Store;
+
+	}
 
 }

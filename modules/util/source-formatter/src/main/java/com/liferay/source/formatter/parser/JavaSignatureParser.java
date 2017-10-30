@@ -92,6 +92,7 @@ public class JavaSignatureParser {
 					(JavaSourceUtil.getLevel(annotation, "<", ">") == 0)) {
 
 					parameterAnnotations.add(annotation);
+
 					parameters = parameters.substring(pos + 1);
 
 					pos = -1;

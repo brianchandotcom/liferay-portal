@@ -27,10 +27,10 @@ public class JavaSignature {
 		String parameterName, String parameterType,
 		Set<String> parameterAnnotations, boolean parameterFinal) {
 
-		JavaParameter javaParameter = new JavaParameter(
-			parameterName, parameterType, parameterAnnotations, parameterFinal);
-
-		_parameters.add(javaParameter);
+		_parameters.add(
+			new JavaParameter(
+				parameterName, parameterType, parameterAnnotations,
+				parameterFinal));
 	}
 
 	public List<JavaParameter> getParameters() {

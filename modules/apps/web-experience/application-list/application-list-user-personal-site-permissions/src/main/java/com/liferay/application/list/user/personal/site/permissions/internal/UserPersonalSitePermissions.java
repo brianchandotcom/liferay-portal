@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -75,9 +76,10 @@ public class UserPersonalSitePermissions {
 			}
 			catch (PortalException pe) {
 				_log.error(
-					"Unable to initialize user personal site permissions for " +
-						"portlet " + portlet.getPortletId() + " in company " +
-							companyId,
+					StringBundler.concat(
+						"Unable to initialize user personal site permissions ",
+						"for portlet ", portlet.getPortletId(), " in company ",
+						String.valueOf(companyId)),
 					pe);
 			}
 		}
@@ -105,9 +107,10 @@ public class UserPersonalSitePermissions {
 			}
 			catch (PortalException pe) {
 				_log.error(
-					"Unable to initialize user personal site permissions for " +
-						"portlet " + portlet.getPortletId() + " in company " +
-							companyId,
+					StringBundler.concat(
+						"Unable to initialize user personal site permissions ",
+						"for portlet ", portlet.getPortletId(), " in company ",
+						String.valueOf(companyId)),
 					pe);
 			}
 		}
@@ -117,10 +120,10 @@ public class UserPersonalSitePermissions {
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		String filter =
-			"(&(objectClass=" + PanelApp.class.getName() + ")" +
-				"(panel.category.key=" + PanelCategoryKeys.SITE_ADMINISTRATION +
-					"*))";
+		String filter = StringBundler.concat(
+			"(&(objectClass=", PanelApp.class.getName(), ")",
+			"(panel.category.key=", PanelCategoryKeys.SITE_ADMINISTRATION,
+			"*))");
 
 		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext, filter, new PanelAppServiceTrackerCustomizer());
@@ -259,8 +262,9 @@ public class UserPersonalSitePermissions {
 					Class<?> panelAppClass = panelApp.getClass();
 
 					_log.error(
-						"Unable to get portlet " + panelApp.getPortletId() +
-							" for panel app " + panelAppClass.getName());
+						StringBundler.concat(
+							"Unable to get portlet ", panelApp.getPortletId(),
+							" for panel app ", panelAppClass.getName()));
 
 					return panelApp;
 				}

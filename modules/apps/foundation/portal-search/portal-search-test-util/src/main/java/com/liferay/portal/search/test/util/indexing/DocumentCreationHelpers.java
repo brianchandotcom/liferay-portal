@@ -32,6 +32,12 @@ public class DocumentCreationHelpers {
 		return document -> document.addKeyword(fieldName, value);
 	}
 
+	public static DocumentCreationHelper singleNumber(
+		String fieldName, double value) {
+
+		return document -> document.addNumber(fieldName, value);
+	}
+
 	public static DocumentCreationHelper singleNumberSortable(
 		String fieldName, double value) {
 

@@ -42,6 +42,8 @@
 			<finder-column name="userId" />
 			<finder-column name="emailAddress" />
 		</finder>
+		<reference entity="Group" package-path="com.liferay.portal" />
+		<reference entity="UserGroup" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>
 		<exception>DuplicateEntryEmailAddress</exception>

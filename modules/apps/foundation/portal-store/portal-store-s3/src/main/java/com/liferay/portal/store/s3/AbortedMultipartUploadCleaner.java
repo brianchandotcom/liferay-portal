@@ -16,6 +16,7 @@ package com.liferay.portal.store.s3;
 
 import com.amazonaws.services.s3.transfer.TransferManager;
 
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -33,12 +34,17 @@ import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 
 import java.util.Date;
-import java.util.Map;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Minhchau Dang
@@ -48,36 +54,27 @@ import org.osgi.service.component.annotations.Reference;
 public class AbortedMultipartUploadCleaner {
 
 	@Activate
-	protected void activate(Map<String, Object> properties) {
-		_messageListener = new AbortedMultipartUploadMessageListener(_s3Store);
+	protected void activate(BundleContext bundleContext)
+		throws InvalidSyntaxException {
 
-		Class<?> clazz = getClass();
-
-		String className = clazz.getName();
-
-		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, null, null, 1, TimeUnit.DAY);
-
-		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
-			className, trigger);
-
-		_schedulerEngineHelper.register(
-			_messageListener, schedulerEntry,
-			DestinationNames.SCHEDULER_DISPATCH);
+		_serviceTracker = new ServiceTracker<>(
+			bundleContext,
+			bundleContext.createFilter(
+				"(&(" + Constants.OBJECTCLASS + "=" + Store.class.getName() +
+					")(store.type=" + S3Store.class.getName() + "))"),
+			new S3StoreServiceTrackerCustomizer(
+				bundleContext, _schedulerEngineHelper, _triggerFactory));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_schedulerEngineHelper.unregister(_messageListener);
+		_serviceTracker.close();
 	}
-
-	private MessageListener _messageListener;
-
-	@Reference(unbind = "-")
-	private S3Store _s3Store;
 
 	@Reference(unbind = "-")
 	private SchedulerEngineHelper _schedulerEngineHelper;
+
+	private ServiceTracker<S3Store, MessageListener> _serviceTracker;
 
 	@Reference(unbind = "-")
 	private TriggerFactory _triggerFactory;
@@ -113,6 +110,64 @@ public class AbortedMultipartUploadCleaner {
 		}
 
 		private final S3Store _s3Store;
+
+	}
+
+	private static class S3StoreServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<S3Store, MessageListener> {
+
+		@Override
+		public MessageListener addingService(
+			ServiceReference<S3Store> serviceReference) {
+
+			MessageListener messageListener =
+				new AbortedMultipartUploadMessageListener(
+					_bundleContext.getService(serviceReference));
+
+			Class<?> clazz = getClass();
+
+			String className = clazz.getName();
+
+			Trigger trigger = _triggerFactory.createTrigger(
+				className, className, null, null, 1, TimeUnit.DAY);
+
+			SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
+				className, trigger);
+
+			_schedulerEngineHelper.register(
+				messageListener, schedulerEntry,
+				DestinationNames.SCHEDULER_DISPATCH);
+
+			return messageListener;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<S3Store> serviceReference,
+			MessageListener messageListener) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<S3Store> serviceReference,
+			MessageListener messageListener) {
+
+			_schedulerEngineHelper.unregister(messageListener);
+		}
+
+		private S3StoreServiceTrackerCustomizer(
+			BundleContext bundleContext,
+			SchedulerEngineHelper schedulerEngineHelper,
+			TriggerFactory triggerFactory) {
+
+			_bundleContext = bundleContext;
+			_schedulerEngineHelper = schedulerEngineHelper;
+			_triggerFactory = triggerFactory;
+		}
+
+		private final BundleContext _bundleContext;
+		private final SchedulerEngineHelper _schedulerEngineHelper;
+		private final TriggerFactory _triggerFactory;
 
 	}
 

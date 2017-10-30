@@ -183,6 +183,11 @@
 ]]></var>
 		</execute>
 
+		<execute macro="KaleoDesigner#viewSourceXMLLine">
+			<var name="kdSourceXML"><![CDATA[<name>Timer Name</name>]]></var>
+			<var name="line" value="21" />
+		</execute>
+
 		<execute macro="Smoke#viewWelcomePage" />
 
 		<take-screenshot />

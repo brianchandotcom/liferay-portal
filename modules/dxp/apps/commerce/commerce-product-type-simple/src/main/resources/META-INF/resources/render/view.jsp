@@ -114,9 +114,9 @@ request.setAttribute("cpDefinition", cpDefinition);
 		<div class="row">
 			<div class="product-detail-body w-100">
 				<div class="nav-tabs-centered">
-					<ul class="nav nav-tabs justify-content-center" role="tablist">
+					<ul class="justify-content-center nav nav-tabs" role="tablist">
 						<li class="nav-item" role="presentation">
-							<a aria-controls="<portlet:namespace />description" aria-expanded="true" data-toggle="tab" href="#<portlet:namespace />description" class="active nav-link" role="tab">
+							<a aria-controls="<portlet:namespace />description" aria-expanded="true" class="active nav-link" data-toggle="tab" href="#<portlet:namespace />description" role="tab">
 								<%= LanguageUtil.get(resourceBundle, "description") %>
 							</a>
 						</li>

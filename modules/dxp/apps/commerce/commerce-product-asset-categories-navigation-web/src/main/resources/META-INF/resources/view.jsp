@@ -27,8 +27,8 @@ List<AssetCategory> assetCategories = cpAssetCategoriesNavigationDisplayContext.
 		for (AssetCategory assetCategory : assetCategories) {
 		%>
 
-			<li class="nav-item lfr-nav-item">
-				<a class="nav-link dropdown-toggle" href="#"><span><%= HtmlUtil.escape(assetCategory.getTitle(locale)) %></span></a>
+			<li class="lfr-nav-item nav-item">
+				<a class="dropdown-toggle nav-link" href="#"><span><%= HtmlUtil.escape(assetCategory.getTitle(locale)) %></span></a>
 
 				<ul class="child-menu dropdown-menu" role="menu">
 

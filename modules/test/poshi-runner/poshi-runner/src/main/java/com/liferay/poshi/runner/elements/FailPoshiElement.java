@@ -19,12 +19,12 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class IsSetPoshiElement extends BasePoshiElement {
+public class FailPoshiElement extends EchoPoshiElement {
 
 	@Override
 	public PoshiElement clone(Element element) {
 		if (isElementType(_ELEMENT_NAME, element)) {
-			return new IsSetPoshiElement(element);
+			return new FailPoshiElement(element);
 		}
 
 		return null;
@@ -34,61 +34,47 @@ public class IsSetPoshiElement extends BasePoshiElement {
 	public PoshiElement clone(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
-		if (_isElementType(parentPoshiElement, readableSyntax)) {
-			return new IsSetPoshiElement(readableSyntax);
+		if (_isElementType(readableSyntax)) {
+			return new FailPoshiElement(readableSyntax);
 		}
 
 		return null;
 	}
 
-	@Override
-	public void parseReadableSyntax(String readableSyntax) {
-		String issetContent = getParentheticalContent(readableSyntax);
-
-		addAttribute("var", issetContent);
+	protected FailPoshiElement() {
 	}
 
-	@Override
-	public String toReadableSyntax() {
-		return "isSet(" + attributeValue("var") + ")";
-	}
-
-	protected IsSetPoshiElement() {
-	}
-
-	protected IsSetPoshiElement(Element element) {
+	protected FailPoshiElement(Element element) {
 		super(_ELEMENT_NAME, element);
 	}
 
-	protected IsSetPoshiElement(String readableSyntax) {
+	protected FailPoshiElement(String readableSyntax) {
 		super(_ELEMENT_NAME, readableSyntax);
 	}
 
 	@Override
 	protected String getBlockName() {
-		return "isSet";
+		return "fail";
 	}
 
-	private boolean _isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
+	private boolean _isElementType(String readableSyntax) {
+		readableSyntax = readableSyntax.trim();
 
-		if (!isConditionValidInParent(parentPoshiElement)) {
+		if (!isBalancedReadableSyntax(readableSyntax)) {
 			return false;
 		}
 
-		if (readableSyntax.startsWith("!") ||
-			readableSyntax.startsWith("else if (")) {
-
+		if (!readableSyntax.endsWith(");")) {
 			return false;
 		}
 
-		if (readableSyntax.startsWith("isSet(")) {
-			return true;
+		if (!readableSyntax.startsWith("fail(")) {
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
-	private static final String _ELEMENT_NAME = "isset";
+	private static final String _ELEMENT_NAME = "fail";
 
 }

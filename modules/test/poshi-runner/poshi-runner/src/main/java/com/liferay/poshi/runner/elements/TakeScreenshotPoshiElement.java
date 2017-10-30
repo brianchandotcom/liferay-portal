@@ -19,12 +19,12 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class NotPoshiElement extends BasePoshiElement {
+public class TakeScreenshotPoshiElement extends BasePoshiElement {
 
 	@Override
 	public PoshiElement clone(Element element) {
 		if (isElementType(_ELEMENT_NAME, element)) {
-			return new NotPoshiElement(element);
+			return new TakeScreenshotPoshiElement(element);
 		}
 
 		return null;
@@ -34,8 +34,8 @@ public class NotPoshiElement extends BasePoshiElement {
 	public PoshiElement clone(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
-		if (_isElementType(parentPoshiElement, readableSyntax)) {
-			return new NotPoshiElement(readableSyntax);
+		if (_isElementType(readableSyntax)) {
+			return new TakeScreenshotPoshiElement(readableSyntax);
 		}
 
 		return null;
@@ -43,62 +43,51 @@ public class NotPoshiElement extends BasePoshiElement {
 
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
-		add(
-			PoshiElementFactory.newPoshiElement(
-				this, getParentheticalContent(readableSyntax)));
 	}
 
 	@Override
 	public String toReadableSyntax() {
-		StringBuilder sb = new StringBuilder();
+		String readableSyntax = super.toReadableSyntax();
 
-		for (PoshiElement poshiElement : toPoshiElements(elements())) {
-			sb.append("!(");
-
-			sb.append(poshiElement.toReadableSyntax());
-
-			sb.append(")");
-		}
-
-		return sb.toString();
+		return createReadableBlock(readableSyntax);
 	}
 
-	protected NotPoshiElement() {
+	protected TakeScreenshotPoshiElement() {
 	}
 
-	protected NotPoshiElement(Element element) {
+	protected TakeScreenshotPoshiElement(Element element) {
 		super(_ELEMENT_NAME, element);
 	}
 
-	protected NotPoshiElement(String readableSyntax) {
+	protected TakeScreenshotPoshiElement(String readableSyntax) {
 		super(_ELEMENT_NAME, readableSyntax);
 	}
 
 	@Override
-	protected String getBlockName() {
-		return "not";
+	protected String createReadableBlock(String content) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("\n\n");
+		sb.append(getPad());
+		sb.append(getBlockName());
+		sb.append("();");
+
+		return sb.toString();
 	}
 
-	private boolean _isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
+	@Override
+	protected String getBlockName() {
+		return "takeScreenshot";
+	}
 
-		if (!isConditionValidInParent(parentPoshiElement)) {
-			return false;
-		}
-
-		readableSyntax = readableSyntax.trim();
-
-		if (readableSyntax.startsWith("else if (")) {
-			return false;
-		}
-
-		if (readableSyntax.startsWith("!")) {
+	private boolean _isElementType(String readableSyntax) {
+		if (readableSyntax.startsWith(getBlockName())) {
 			return true;
 		}
 
 		return false;
 	}
 
-	private static final String _ELEMENT_NAME = "not";
+	private static final String _ELEMENT_NAME = "take-screenshot";
 
 }

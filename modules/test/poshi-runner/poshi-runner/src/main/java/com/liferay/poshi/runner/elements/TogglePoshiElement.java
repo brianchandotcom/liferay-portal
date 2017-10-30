@@ -22,12 +22,12 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class IfPoshiElement extends BasePoshiElement {
+public class TogglePoshiElement extends BasePoshiElement {
 
 	@Override
 	public PoshiElement clone(Element element) {
 		if (isElementType(_ELEMENT_NAME, element)) {
-			return new IfPoshiElement(element);
+			return new TogglePoshiElement(element);
 		}
 
 		return null;
@@ -38,7 +38,7 @@ public class IfPoshiElement extends BasePoshiElement {
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
 		if (_isElementType(readableSyntax)) {
-			return new IfPoshiElement(readableSyntax);
+			return new TogglePoshiElement(readableSyntax);
 		}
 
 		return null;
@@ -47,10 +47,13 @@ public class IfPoshiElement extends BasePoshiElement {
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
 		for (String readableBlock : getReadableBlocks(readableSyntax)) {
-			if (readableBlock.startsWith(getName() + " (")) {
-				add(
-					PoshiElementFactory.newPoshiElement(
-						this, getParentheticalContent(readableBlock)));
+			if (readableBlock.startsWith("toggle (")) {
+				String parentheticalContent = getParentheticalContent(
+					readableBlock);
+
+				String summary = getQuotedContent(parentheticalContent);
+
+				addAttribute("name", summary);
 
 				continue;
 			}
@@ -65,62 +68,37 @@ public class IfPoshiElement extends BasePoshiElement {
 
 		sb.append("\n");
 
-		PoshiElement thenElement = (PoshiElement)element("then");
+		StringBuilder content = new StringBuilder();
 
-		String thenReadableSyntax = thenElement.toReadableSyntax();
-
-		sb.append(createReadableBlock(thenReadableSyntax));
-
-		for (PoshiElement elseIfElement : toPoshiElements(elements("elseif"))) {
-			sb.append(elseIfElement.toReadableSyntax());
+		for (PoshiElement poshiElement : toPoshiElements(elements())) {
+			content.append(poshiElement.toReadableSyntax());
 		}
 
-		if (element("else") != null) {
-			PoshiElement elseElement = (PoshiElement)element("else");
+		String readableBlock = createReadableBlock(content.toString());
 
-			sb.append(elseElement.toReadableSyntax());
-		}
+		sb.append(readableBlock);
 
 		return sb.toString();
 	}
 
-	protected IfPoshiElement() {
+	protected TogglePoshiElement() {
 	}
 
-	protected IfPoshiElement(Element element) {
-		super("if", element);
+	protected TogglePoshiElement(Element element) {
+		super(_ELEMENT_NAME, element);
 	}
 
-	protected IfPoshiElement(String readableSyntax) {
-		super("if", readableSyntax);
-	}
-
-	protected IfPoshiElement(String name, Element element) {
-		super(name, element);
-	}
-
-	protected IfPoshiElement(String name, String readableSyntax) {
-		super(name, readableSyntax);
+	protected TogglePoshiElement(String readableSyntax) {
+		super(_ELEMENT_NAME, readableSyntax);
 	}
 
 	@Override
 	protected String getBlockName() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(getReadableName());
-
-		for (String conditionName : _conditionNames) {
-			if (element(conditionName) != null) {
-				PoshiElement poshiElement = (PoshiElement)element(
-					conditionName);
-
-				sb.append(" (");
-				sb.append(poshiElement.toReadableSyntax());
-				sb.append(")");
-
-				break;
-			}
-		}
+		sb.append("toggle (\"");
+		sb.append(attributeValue("name"));
+		sb.append("\")");
 
 		return sb.toString();
 	}
@@ -140,23 +118,21 @@ public class IfPoshiElement extends BasePoshiElement {
 
 				readableBlocks.add(line);
 
-				sb.append("{\n");
-
 				continue;
 			}
 
-			sb.append(line);
-			sb.append("\n");
-
-			readableBlock = sb.toString();
-
-			readableBlock = readableBlock.trim();
+			if (line.endsWith("{") && readableBlocks.isEmpty()) {
+				continue;
+			}
 
 			if (isValidReadableBlock(readableBlock)) {
 				readableBlocks.add(readableBlock);
 
 				sb.setLength(0);
 			}
+
+			sb.append(line);
+			sb.append("\n");
 		}
 
 		return readableBlocks;
@@ -173,7 +149,7 @@ public class IfPoshiElement extends BasePoshiElement {
 			return false;
 		}
 
-		if (!readableSyntax.startsWith("if (")) {
+		if (!readableSyntax.startsWith("toggle (")) {
 			return false;
 		}
 
@@ -184,9 +160,6 @@ public class IfPoshiElement extends BasePoshiElement {
 		return true;
 	}
 
-	private static final String _ELEMENT_NAME = "if";
-
-	private static final String[] _conditionNames =
-		{"and", "condition", "equals", "isset", "not", "or"};
+	private static final String _ELEMENT_NAME = "toggle";
 
 }

@@ -19,12 +19,12 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class IsSetPoshiElement extends BasePoshiElement {
+public class OffPoshiElement extends OnPoshiElement {
 
 	@Override
 	public PoshiElement clone(Element element) {
 		if (isElementType(_ELEMENT_NAME, element)) {
-			return new IsSetPoshiElement(element);
+			return new OffPoshiElement(element);
 		}
 
 		return null;
@@ -34,61 +34,29 @@ public class IsSetPoshiElement extends BasePoshiElement {
 	public PoshiElement clone(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
-		if (_isElementType(parentPoshiElement, readableSyntax)) {
-			return new IsSetPoshiElement(readableSyntax);
+		if (isElementType(readableSyntax)) {
+			return new OffPoshiElement(readableSyntax);
 		}
 
 		return null;
 	}
 
-	@Override
-	public void parseReadableSyntax(String readableSyntax) {
-		String issetContent = getParentheticalContent(readableSyntax);
-
-		addAttribute("var", issetContent);
+	protected OffPoshiElement() {
 	}
 
-	@Override
-	public String toReadableSyntax() {
-		return "isSet(" + attributeValue("var") + ")";
-	}
-
-	protected IsSetPoshiElement() {
-	}
-
-	protected IsSetPoshiElement(Element element) {
+	protected OffPoshiElement(Element element) {
 		super(_ELEMENT_NAME, element);
 	}
 
-	protected IsSetPoshiElement(String readableSyntax) {
+	protected OffPoshiElement(String readableSyntax) {
 		super(_ELEMENT_NAME, readableSyntax);
 	}
 
 	@Override
 	protected String getBlockName() {
-		return "isSet";
+		return "off";
 	}
 
-	private boolean _isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
-
-		if (!isConditionValidInParent(parentPoshiElement)) {
-			return false;
-		}
-
-		if (readableSyntax.startsWith("!") ||
-			readableSyntax.startsWith("else if (")) {
-
-			return false;
-		}
-
-		if (readableSyntax.startsWith("isSet(")) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private static final String _ELEMENT_NAME = "isset";
+	private static final String _ELEMENT_NAME = "off";
 
 }

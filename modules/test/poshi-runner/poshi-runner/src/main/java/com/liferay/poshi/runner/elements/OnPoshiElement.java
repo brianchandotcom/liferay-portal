@@ -22,12 +22,12 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class AndPoshiElement extends BasePoshiElement {
+public class OnPoshiElement extends BasePoshiElement {
 
 	@Override
 	public PoshiElement clone(Element element) {
 		if (isElementType(_ELEMENT_NAME, element)) {
-			return new AndPoshiElement(element);
+			return new OnPoshiElement(_ELEMENT_NAME, element);
 		}
 
 		return null;
@@ -37,8 +37,8 @@ public class AndPoshiElement extends BasePoshiElement {
 	public PoshiElement clone(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
-		if (_isElementType(parentPoshiElement, readableSyntax)) {
-			return new AndPoshiElement(readableSyntax);
+		if (isElementType(readableSyntax)) {
+			return new OnPoshiElement(_ELEMENT_NAME, readableSyntax);
 		}
 
 		return null;
@@ -47,6 +47,10 @@ public class AndPoshiElement extends BasePoshiElement {
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
 		for (String readableBlock : getReadableBlocks(readableSyntax)) {
+			if (readableBlock.startsWith(getBlockName() + " {")) {
+				continue;
+			}
+
 			add(PoshiElementFactory.newPoshiElement(this, readableBlock));
 		}
 	}
@@ -56,64 +60,85 @@ public class AndPoshiElement extends BasePoshiElement {
 		StringBuilder sb = new StringBuilder();
 
 		for (PoshiElement poshiElement : toPoshiElements(elements())) {
-			sb.append("(");
 			sb.append(poshiElement.toReadableSyntax());
-			sb.append(") && ");
 		}
 
-		sb.setLength(sb.length() - 4);
-
-		return sb.toString();
+		return createReadableBlock(sb.toString());
 	}
 
-	protected AndPoshiElement() {
+	protected OnPoshiElement() {
 	}
 
-	protected AndPoshiElement(Element element) {
-		super(_ELEMENT_NAME, element);
+	protected OnPoshiElement(String name, Element element) {
+		super(name, element);
 	}
 
-	protected AndPoshiElement(String readableSyntax) {
-		super(_ELEMENT_NAME, readableSyntax);
+	protected OnPoshiElement(String name, String readableSyntax) {
+		super(name, readableSyntax);
 	}
 
 	@Override
 	protected String getBlockName() {
-		return "and";
+		return "on";
 	}
 
 	protected List<String> getReadableBlocks(String readableSyntax) {
+		StringBuilder sb = new StringBuilder();
+
 		List<String> readableBlocks = new ArrayList<>();
 
-		for (String condition : readableSyntax.split(" && ")) {
-			condition = getParentheticalContent(condition);
+		for (String line : readableSyntax.split("\n")) {
+			String readableBlock = sb.toString();
 
-			readableBlocks.add(condition);
+			readableBlock = readableBlock.trim();
+
+			if (line.startsWith(getReadableName() + " (") &&
+				line.endsWith("{") && (readableBlock.length() == 0)) {
+
+				readableBlocks.add(line);
+
+				continue;
+			}
+
+			if (line.endsWith("{") && readableBlocks.isEmpty()) {
+				continue;
+			}
+
+			if (isValidReadableBlock(readableBlock)) {
+				readableBlocks.add(readableBlock);
+
+				sb.setLength(0);
+			}
+
+			sb.append(line);
+			sb.append("\n");
 		}
 
 		return readableBlocks;
 	}
 
-	private boolean _isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
-
-		if (!isConditionValidInParent(parentPoshiElement)) {
-			return false;
-		}
-
-		if (readableSyntax.contains(" || ") ||
-			readableSyntax.startsWith("else if (")) {
-
-			return false;
-		}
-
-		if (readableSyntax.contains(" && ")) {
-			return true;
-		}
-
-		return false;
+	protected String getReadableName() {
+		return getName();
 	}
 
-	private static final String _ELEMENT_NAME = "and";
+	protected boolean isElementType(String readableSyntax) {
+		readableSyntax = readableSyntax.trim();
+
+		if (!isBalancedReadableSyntax(readableSyntax)) {
+			return false;
+		}
+
+		if (!readableSyntax.startsWith(getBlockName() + " {")) {
+			return false;
+		}
+
+		if (!readableSyntax.endsWith("}")) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private static final String _ELEMENT_NAME = "on";
 
 }

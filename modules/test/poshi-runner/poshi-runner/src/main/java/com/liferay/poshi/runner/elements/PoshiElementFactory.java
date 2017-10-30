@@ -24,6 +24,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.dom4j.Document;
@@ -107,7 +109,11 @@ public class PoshiElementFactory {
 
 			File dir = basePoshiElementClassFile.getParentFile();
 
-			for (File file : dir.listFiles()) {
+			List<File> dirFiles = Arrays.asList(dir.listFiles());
+
+			Collections.sort(dirFiles);
+
+			for (File file : dirFiles) {
 				String fileName = file.getName();
 
 				if (fileName.endsWith(

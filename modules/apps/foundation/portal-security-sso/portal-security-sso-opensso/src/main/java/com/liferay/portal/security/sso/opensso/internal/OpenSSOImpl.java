@@ -331,8 +331,9 @@ public class OpenSSOImpl implements OpenSSO {
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"URL " + url + " is invalid with response code " +
-							responseCode);
+						StringBundler.concat(
+							"URL ", url, " is invalid with response code ",
+							String.valueOf(responseCode)));
 				}
 
 				return false;
@@ -340,8 +341,9 @@ public class OpenSSOImpl implements OpenSSO {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"URL " + url + " is valid with response code " +
-						responseCode);
+					StringBundler.concat(
+						"URL ", url, " is valid with response code ",
+						String.valueOf(responseCode)));
 			}
 		}
 		catch (IOException ioe) {

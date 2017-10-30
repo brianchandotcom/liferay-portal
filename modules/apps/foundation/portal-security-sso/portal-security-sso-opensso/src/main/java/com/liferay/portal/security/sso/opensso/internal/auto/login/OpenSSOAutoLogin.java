@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PwdGenerator;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -149,9 +150,10 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Validating user information for " + firstName + " " +
-					lastName + " with screen name " + screenName +
-						" and email address " + emailAddress);
+				StringBundler.concat(
+					"Validating user information for ", firstName, " ",
+					lastName, " with screen name ", screenName,
+					" and email address ", emailAddress));
 		}
 
 		User user = null;

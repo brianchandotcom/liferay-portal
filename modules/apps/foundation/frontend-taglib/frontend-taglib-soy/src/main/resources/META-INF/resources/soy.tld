@@ -14,13 +14,13 @@
 		<tag-class>com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>The ID of the component that can be referenced by <![CDATA[<code>Liferay.component()</code>]]>.</description>
+			<description>The component's ID that can be referenced by <![CDATA[<code>Liferay.component()</code>]]>.</description>
 			<name>componentId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The context map for the chosen template.</description>
+			<description>The chosen template's context map.</description>
 			<name>context</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -38,7 +38,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The namespace of the Soy template.</description>
+			<description>The Soy template's namespace.</description>
 			<name>templateNamespace</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

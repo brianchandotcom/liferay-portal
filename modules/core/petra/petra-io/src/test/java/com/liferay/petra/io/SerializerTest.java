@@ -1048,7 +1048,7 @@ public class SerializerTest {
 	private static class BufferOutputStream {
 
 		public void write(byte[] bytes) throws Exception {
-			_writeBytesMethod.invoke(_bufferOutputStream, bytes);
+			_writeBytesMethod.invoke(_bufferOutputStream, new Object[] {bytes});
 		}
 
 		public void write(int b) throws Exception {
@@ -1089,7 +1089,7 @@ public class SerializerTest {
 	private static class BufferQueue {
 
 		public void enqueue(byte[] bytes) throws Exception {
-			_enqueueMethod.invoke(_bufferQueue, bytes);
+			_enqueueMethod.invoke(_bufferQueue, new Object[] {bytes});
 		}
 
 		public int getCount() throws Exception {

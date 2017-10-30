@@ -695,7 +695,8 @@ public class DeserializerTest {
 		}
 
 		public int read(byte[] bytes) throws Exception {
-			return (int)_readBytesMethod.invoke(_bufferInputStream, bytes);
+			return (int)_readBytesMethod.invoke(
+				_bufferInputStream, new Object[] {bytes});
 		}
 
 		private BufferInputStream(Deserializer deserializer) throws Exception {

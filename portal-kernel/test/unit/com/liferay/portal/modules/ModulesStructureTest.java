@@ -660,9 +660,7 @@ public class ModulesStructureTest {
 			return false;
 		}
 
-		String gitRepo = ModulesStructureTestUtil.read(gitRepoPath);
-
-		if (gitRepo.contains("mode = pull")) {
+		if (ModulesStructureTestUtil.contains(gitRepoPath, "mode = pull")) {
 			return true;
 		}
 

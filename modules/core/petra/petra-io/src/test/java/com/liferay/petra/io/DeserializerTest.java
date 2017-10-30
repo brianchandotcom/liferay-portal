@@ -333,7 +333,7 @@ public class DeserializerTest {
 		Object object = deserializer.readObject();
 
 		Assert.assertTrue(object instanceof Character);
-		Assert.assertSame(Character.valueOf('a'), object);
+		Assert.assertSame('a', object);
 	}
 
 	@Test
@@ -441,7 +441,7 @@ public class DeserializerTest {
 		Object object = deserializer.readObject();
 
 		Assert.assertTrue(object instanceof Integer);
-		Assert.assertSame(Integer.valueOf(101), object);
+		Assert.assertSame(101, object);
 	}
 
 	@Test
@@ -552,7 +552,7 @@ public class DeserializerTest {
 		Object object = deserializer.readObject();
 
 		Assert.assertTrue(object instanceof Short);
-		Assert.assertSame(Short.valueOf((short)101), object);
+		Assert.assertSame((short)101, object);
 	}
 
 	@Test

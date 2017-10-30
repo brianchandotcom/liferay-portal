@@ -610,7 +610,7 @@ public class SerializerTest {
 	public void testWriteObjectByte() {
 		Serializer serializer = new Serializer();
 
-		serializer.writeObject(Byte.valueOf((byte)101));
+		serializer.writeObject((byte)101);
 
 		ByteBuffer byteBuffer = serializer.toByteBuffer();
 
@@ -623,7 +623,7 @@ public class SerializerTest {
 	public void testWriteObjectCharacter() {
 		Serializer serializer = new Serializer();
 
-		serializer.writeObject(Character.valueOf('a'));
+		serializer.writeObject('a');
 
 		ByteBuffer byteBuffer = serializer.toByteBuffer();
 
@@ -713,7 +713,7 @@ public class SerializerTest {
 	public void testWriteObjectDouble() {
 		Serializer serializer = new Serializer();
 
-		serializer.writeObject(Double.valueOf(17.58D));
+		serializer.writeObject(17.58D);
 
 		ByteBuffer byteBuffer = serializer.toByteBuffer();
 
@@ -726,7 +726,7 @@ public class SerializerTest {
 	public void testWriteObjectFloat() {
 		Serializer serializer = new Serializer();
 
-		serializer.writeObject(Float.valueOf(17.58F));
+		serializer.writeObject(17.58F);
 
 		ByteBuffer byteBuffer = serializer.toByteBuffer();
 
@@ -739,7 +739,7 @@ public class SerializerTest {
 	public void testWriteObjectInteger() {
 		Serializer serializer = new Serializer();
 
-		serializer.writeObject(Integer.valueOf(101));
+		serializer.writeObject(101);
 
 		ByteBuffer byteBuffer = serializer.toByteBuffer();
 
@@ -837,7 +837,7 @@ public class SerializerTest {
 	public void testWriteObjectShort() {
 		Serializer serializer = new Serializer();
 
-		serializer.writeObject(Short.valueOf((short)101));
+		serializer.writeObject((short)101);
 
 		ByteBuffer byteBuffer = serializer.toByteBuffer();
 
@@ -862,7 +862,7 @@ public class SerializerTest {
 		Assert.assertEquals(asciiString.length(), byteBuffer.getInt());
 
 		for (int i = 0; i < asciiString.length(); i++) {
-			Assert.assertEquals(asciiString.charAt(i), byteBuffer.get());
+			Assert.assertEquals(asciiString.charAt(i), (char)byteBuffer.get());
 		}
 
 		String nonAsciiString = "非ASCII Code中文测试";

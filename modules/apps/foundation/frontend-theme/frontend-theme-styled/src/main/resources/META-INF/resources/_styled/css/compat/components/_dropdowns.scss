@@ -1,4 +1,5 @@
 // Moved .caret to .dropdown-toggle:after in BS4
+
 .caret {
 	border-top: $caret-width dashed;
 	display: inline-block;
@@ -16,11 +17,13 @@
 }
 
 // Moved .dropdown-menu > li > a to .dropdown-item in BS4
-.dropdown-menu > li > a {
+.dropdown-menu > li > a,
+.dropdown-menu .link-list > li > a {
 	@extend .dropdown-item;
 }
 
-.dropdown-menu > li.disabled > a {
+.dropdown-menu > li.disabled > a,
+.dropdown-menu .link-list > .disabled > a {
 	@extend .dropdown-item.disabled;
 }
 

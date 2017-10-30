@@ -133,6 +133,14 @@ public class ModulesStructureTest {
 						Assert.assertFalse(
 							"Forbidden " + settingsGradlePath,
 							Files.deleteIfExists(settingsGradlePath));
+
+						Assert.assertFalse(
+							"Forbidden " + buildGradlePath,
+							Files.exists(buildGradlePath) &&
+							ModulesStructureTestUtil.contains(
+								buildGradlePath,
+								"apply plugin: " +
+									"\"com.liferay.defaults.plugin\""));
 					}
 
 					if (Files.exists(dirPath.resolve("bnd.bnd"))) {

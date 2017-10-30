@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.util.StringBundler;
 
 /**
  * @author Michael C. Han
@@ -56,8 +57,10 @@ public class BackgroundTaskStatusMessageListener extends BaseMessageListener {
 		if (backgroundTaskStatus == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to locate status for background task " +
-						backgroundTaskId + " to process " + message);
+					StringBundler.concat(
+						"Unable to locate status for background task ",
+						String.valueOf(backgroundTaskId), " to process ",
+						String.valueOf(message)));
 			}
 
 			return;

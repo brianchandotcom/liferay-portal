@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.StackTraceUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -167,8 +168,10 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 		finally {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Completing background task " + backgroundTaskId +
-						" with status: " + status);
+					StringBundler.concat(
+						"Completing background task ",
+						String.valueOf(backgroundTaskId), " with status: ",
+						String.valueOf(status)));
 			}
 
 			_backgroundTaskManager.amendBackgroundTask(

@@ -149,11 +149,11 @@ public abstract class BaseTinyMCEEditorConfigContributor
 				"liferay-ui:input-editor:showSource"));
 	}
 
-	private static final String _EXTENDED_VALID_ELEMENTS =
-		"a[name|href|target|title|onclick],img[class|src|border=0" +
-			"|alt|title|hspace|vspace|width|height|align|onmouseover" +
-				"|onmouseout|name|usemap],hr[class|width|size|noshade]," +
-					"font[face|size|color|style],span[class|align|style]";
+	private static final String _EXTENDED_VALID_ELEMENTS = StringBundler.concat(
+		"a[name|href|target|title|onclick],img[class|src|border=0",
+		"|alt|title|hspace|vspace|width|height|align|onmouseover",
+		"|onmouseout|name|usemap],hr[class|width|size|noshade],",
+		"font[face|size|color|style],span[class|align|style]");
 
 	private static final Map<String, String> _tinyMCELanguages =
 		new HashMap<>();

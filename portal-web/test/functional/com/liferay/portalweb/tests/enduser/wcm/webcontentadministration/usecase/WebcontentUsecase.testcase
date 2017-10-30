@@ -2736,7 +2736,7 @@
 
 		<execute function="Click" locator1="TextInput#TITLE" />
 
-		<execute macro="AlloyEditor#addTitle">
+		<execute macro="PortletEntry#inputTitle">
 			<var name="title" value="WC WebContent Title" />
 		</execute>
 

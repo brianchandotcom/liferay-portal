@@ -48,9 +48,6 @@ public class AbortedMultipartUploadCleaner extends BaseMessageListener {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_bucketName = _s3Store.getBucketName();
-		_transferManager = _s3Store.getTransferManager();
-
 		Class<?> clazz = getClass();
 
 		String className = clazz.getName();
@@ -72,8 +69,10 @@ public class AbortedMultipartUploadCleaner extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		_transferManager.abortMultipartUploads(
-			_bucketName, _computeStartDate());
+		TransferManager transferManager = _s3Store.getTransferManager();
+
+		transferManager.abortMultipartUploads(
+			_s3Store.getBucketName(), _computeStartDate());
 	}
 
 	private Date _computeStartDate() {
@@ -91,15 +90,11 @@ public class AbortedMultipartUploadCleaner extends BaseMessageListener {
 		return Date.from(zonedDateTime.toInstant());
 	}
 
-	private String _bucketName;
-
 	@Reference(unbind = "-")
 	private S3Store _s3Store;
 
 	@Reference(unbind = "-")
 	private SchedulerEngineHelper _schedulerEngineHelper;
-
-	private TransferManager _transferManager;
 
 	@Reference(unbind = "-")
 	private TriggerFactory _triggerFactory;

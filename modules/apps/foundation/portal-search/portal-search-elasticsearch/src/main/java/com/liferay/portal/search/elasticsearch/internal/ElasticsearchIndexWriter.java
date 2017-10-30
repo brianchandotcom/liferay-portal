@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.suggest.SpellCheckIndexWriter;
 import com.liferay.portal.kernel.util.PortalRunMode;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.document.ElasticsearchUpdateDocumentCommand;
 import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
@@ -126,8 +127,9 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 		catch (IndexNotFoundException infe) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"No index found while attempting to delete " + uid +
-						" in index " + indexName);
+					StringBundler.concat(
+						"No index found while attempting to delete ", uid,
+						" in index ", indexName));
 			}
 		}
 		catch (Exception e) {
@@ -202,10 +204,11 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 		catch (IndexNotFoundException infe) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"No index found while attempting to delete documents for " +
-						className + " in index " +
-							indexNameBuilder.getIndexName(
-								searchContext.getCompanyId()));
+					StringBundler.concat(
+						"No index found while attempting to delete documents ",
+						"for ", className, " in index ",
+						indexNameBuilder.getIndexName(
+							searchContext.getCompanyId())));
 			}
 		}
 		catch (Exception e) {

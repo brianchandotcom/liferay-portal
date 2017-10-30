@@ -113,26 +113,6 @@
 		<execute selenium="click" />
 	</command>
 
-	<command name="makeVisibleClickAt">
-		<execute function="WaitForSPARefresh" />
-
-		<execute selenium="waitForElementPresent" />
-
-		<execute selenium="mouseOver" />
-
-		<execute argument1="1000" selenium="pause" />
-
-		<execute selenium="makeVisible" />
-
-		<execute selenium="waitForVisible" />
-
-		<execute selenium="clickAt" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
 	<command name="mouseOverClick">
 		<execute function="WaitForSPARefresh" />
 
@@ -157,18 +137,6 @@
 		<execute selenium="mouseOver" />
 
 		<execute function="Click#clickAt" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
-	<command name="pauseMakeVisibleClickAt">
-		<execute function="WaitForSPARefresh" />
-
-		<execute argument1="1000" selenium="pause" />
-
-		<execute function="Click#makeVisibleClickAt" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

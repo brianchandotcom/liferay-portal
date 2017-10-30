@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
+import java.util.regex.Pattern;
 
 import org.dom4j.Attribute;
 import org.dom4j.Element;
@@ -277,6 +278,9 @@ public abstract class BasePoshiElement
 
 		return poshiElements;
 	}
+
+	protected static final Pattern nestedVarAssignmentPattern = Pattern.compile(
+		"(\\w*? = \".*?\"|\\w*? = escapeText\\(\".*?\\))", Pattern.DOTALL);
 
 	private void _addAttributes(Element element) {
 		for (Attribute attribute :

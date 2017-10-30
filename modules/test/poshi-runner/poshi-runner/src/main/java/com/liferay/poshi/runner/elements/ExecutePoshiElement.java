@@ -94,7 +94,7 @@ public class ExecutePoshiElement extends BasePoshiElement {
 
 		List<String> assignments = new ArrayList<>();
 
-		Matcher matcher = _assignmentPattern.matcher(content);
+		Matcher matcher = nestedVarAssignmentPattern.matcher(content);
 
 		while (matcher.find()) {
 			assignments.add(matcher.group());
@@ -288,8 +288,5 @@ public class ExecutePoshiElement extends BasePoshiElement {
 	}
 
 	private static final String _ELEMENT_NAME = "execute";
-
-	private static final Pattern _assignmentPattern = Pattern.compile(
-		"([^,]*? = \".*?\"|[^,]*? = escapeText\\(\".*?\\))", Pattern.DOTALL);
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.server.manager.internal.executor;
 
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.File;
 
@@ -49,8 +50,9 @@ public class ErrorLogExecutor extends OutputLogExecutor {
 		}
 		else if (ServerDetector.isTomcat()) {
 			logFile = new File(
-				System.getProperty("catalina.base") + "/logs/catalina." +
-					getTomcatDateString() + ".log");
+				StringBundler.concat(
+					System.getProperty("catalina.base"), "/logs/catalina.",
+					getTomcatDateString(), ".log"));
 		}
 
 		return logFile;

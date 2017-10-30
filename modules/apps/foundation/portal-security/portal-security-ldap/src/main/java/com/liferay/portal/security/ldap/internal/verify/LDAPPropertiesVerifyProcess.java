@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -171,8 +172,10 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Adding LDAP auth configuration for company " + companyId +
-					" with properties: " + dictionary);
+				StringBundler.concat(
+					"Adding LDAP auth configuration for company ",
+					String.valueOf(companyId), " with properties: ",
+					String.valueOf(dictionary)));
 		}
 
 		_ldapAuthConfigurationProvider.updateProperties(companyId, dictionary);
@@ -193,8 +196,10 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Adding LDAP export configuration for company " + companyId +
-					" with properties: " + dictionary);
+				StringBundler.concat(
+					"Adding LDAP export configuration for company ",
+					String.valueOf(companyId), " with properties: ",
+					String.valueOf(dictionary)));
 		}
 
 		_ldapExportConfigurationProvider.updateProperties(
@@ -259,8 +264,10 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Adding LDAP import configuration for company " + companyId +
-					" with properties: " + dictionary);
+				StringBundler.concat(
+					"Adding LDAP import configuration for company ",
+					String.valueOf(companyId), " with properties: ",
+					String.valueOf(dictionary)));
 		}
 
 		_ldapImportConfigurationProvider.updateProperties(
@@ -310,8 +317,9 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Removing preference keys " + keys + " for company " +
-							companyId);
+						StringBundler.concat(
+							"Removing preference keys ", String.valueOf(keys),
+							" for company ", String.valueOf(companyId)));
 				}
 
 				_companyLocalService.removePreferences(
@@ -323,9 +331,10 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Removing LDAP server IDs " +
-							ListUtil.toList(ldapServerIds) + " for company " +
-								companyId);
+						StringBundler.concat(
+							"Removing LDAP server IDs ",
+							String.valueOf(ListUtil.toList(ldapServerIds)),
+							" for company ", String.valueOf(companyId)));
 				}
 
 				_companyLocalService.updatePreferences(companyId, properties);
@@ -449,9 +458,11 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Adding LDAP servier configuration for company " + companyId +
-					" and LDAP server ID " + ldapServerId +
-						" with properties: " + dictionary);
+				StringBundler.concat(
+					"Adding LDAP servier configuration for company ",
+					String.valueOf(companyId), " and LDAP server ID ",
+					String.valueOf(ldapServerId), " with properties: ",
+					String.valueOf(dictionary)));
 		}
 
 		_ldapServerConfigurationProvider.updateProperties(
@@ -548,8 +559,10 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Adding system LDAP configurations for company " + companyId +
-					" with properties: " + dictionary);
+				StringBundler.concat(
+					"Adding system LDAP configurations for company ",
+					String.valueOf(companyId), " with properties: ",
+					String.valueOf(dictionary)));
 		}
 
 		_systemLDAPConfigurationProvider.updateProperties(

@@ -179,7 +179,7 @@ public class ExportConfigurationMVCResourceCommand
 		for (ConfigurationModel factoryInstance : factoryInstances) {
 			String curPid = factoryInstance.getID();
 
-			String curFileName = getFileName(null, curPid);
+			String curFileName = getFileName(factoryPid, curPid);
 
 			zipWriter.addEntry(
 				curFileName,

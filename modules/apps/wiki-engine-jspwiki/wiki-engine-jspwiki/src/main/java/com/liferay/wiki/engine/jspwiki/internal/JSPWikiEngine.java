@@ -353,9 +353,9 @@ public class JSPWikiEngine extends BaseInputEditorWikiEngine {
 				url = linkValues.substring(0, pos);
 			}
 
-			String newLink =
-				"[[" + _encodeJSPWikiName(url) + "|" +
-					_encodeJSPWikiName(name) + "]]";
+			String newLink = StringBundler.concat(
+				"[[", _encodeJSPWikiName(url), "|", _encodeJSPWikiName(name),
+				"]]");
 
 			content = StringUtil.replace(content, link, newLink);
 		}

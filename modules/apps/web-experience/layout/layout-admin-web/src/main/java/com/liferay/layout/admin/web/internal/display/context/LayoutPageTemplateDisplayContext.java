@@ -14,6 +14,10 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
+import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentCollectionServiceUtil;
+import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.util.LayoutPageTemplatePortletUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -25,10 +29,14 @@ import com.liferay.layout.page.template.service.permission.LayoutPageTemplatePer
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -87,6 +95,55 @@ public class LayoutPageTemplateDisplayContext {
 		}
 
 		return portletURL.toString();
+	}
+
+	public JSONArray getFragmentCollections() throws PortalException {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		JSONArray fragmentCollectionsJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
+		List<FragmentCollection> fragmentCollections =
+			FragmentCollectionServiceUtil.getFragmentCollections(
+				themeDisplay.getScopeGroupId());
+
+		for (FragmentCollection fragmentCollection : fragmentCollections) {
+			List<FragmentEntry> fragmentEntries =
+				FragmentEntryServiceUtil.fetchFragmentEntries(
+					fragmentCollection.getFragmentCollectionId());
+
+			if (ListUtil.isNotEmpty(fragmentEntries)) {
+				JSONObject fragmentCollectionJSONObject =
+					JSONFactoryUtil.createJSONObject();
+
+				fragmentCollectionJSONObject.put(
+					"id", fragmentCollection.getFragmentCollectionId());
+				fragmentCollectionJSONObject.put(
+					"name", fragmentCollection.getName());
+
+				JSONArray fragmentEntriesJSONArray =
+					JSONFactoryUtil.createJSONArray();
+
+				for (FragmentEntry fragmentEntry : fragmentEntries) {
+					JSONObject jsonFragmentEntry =
+						JSONFactoryUtil.createJSONObject();
+
+					jsonFragmentEntry.put(
+						"id", fragmentEntry.getFragmentEntryId());
+					jsonFragmentEntry.put("name", fragmentEntry.getName());
+
+					fragmentEntriesJSONArray.put(jsonFragmentEntry);
+				}
+
+				fragmentCollectionJSONObject.put(
+					"entries", fragmentEntriesJSONArray);
+
+				fragmentCollectionsJSONArray.put(fragmentCollectionJSONObject);
+			}
+		}
+
+		return fragmentCollectionsJSONArray;
 	}
 
 	public String getKeywords() {

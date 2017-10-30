@@ -14,8 +14,6 @@
 
 package com.liferay.project.templates.internal.util;
 
-import com.liferay.project.templates.ProjectTemplates;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -101,7 +99,7 @@ public class FileUtil {
 			String dirName, final Path destinationDirPath)
 		throws Exception {
 
-		File file = getJarFile();
+		File file = getJarFile(FileUtil.class);
 
 		if (file.isDirectory()) {
 			Path jarDirPath = file.toPath();
@@ -184,9 +182,8 @@ public class FileUtil {
 		return null;
 	}
 
-	public static File getJarFile() throws Exception {
-		ProtectionDomain protectionDomain =
-			ProjectTemplates.class.getProtectionDomain();
+	public static File getJarFile(Class<?> clazz) throws Exception {
+		ProtectionDomain protectionDomain = clazz.getProtectionDomain();
 
 		CodeSource codeSource = protectionDomain.getCodeSource();
 

@@ -1,0 +1,46 @@
+{namespace LayoutPageTemplateEditor}
+
+/**
+ * LayoutPageTemplateEditor
+ */
+{template .render}
+	{@param fragmentCollections: list<?>}
+	{@param portletNamespace: string}
+	{@param spritemap: string}
+	{@param? _handleFragmentCollectionEntryClick: any}
+	{@param? fragments: list<?>}
+	{@param? id: string}
+
+	<div class="row mr-0" id="{$id}">
+		<div class="col-lg-9 col-md-8 fragment-panel-target">
+			{if $fragments}
+				{foreach $fragment in $fragments}
+					<div class="fragment-panel-item-instance" data-position="{index($fragment)}">
+						{call LayoutPageTemplateFragment.render}
+							{param name: $fragment.name /}
+						{/call}
+					</div>
+				{/foreach}
+			{/if}
+		</div>
+		<div class="col-lg-3 col-md-4 sidebar sidebar-light sidebar-light-bg fragment-panel-sidebar">
+			<div class="px-0 sidebar-header">
+				<div class="sidebar-section">
+					<h4 class="sidebar-title">
+						{msg desc=""}fragments{/msg}
+					</h4>
+				</div>
+			</div>
+			<div class="px-0 sidebar-body">
+				{foreach $fragmentCollection in $fragmentCollections}
+					{call LayoutPageTemplateFragmentCollection.render}
+						{param collection: $fragmentCollection /}
+						{param events: [ 'collectionEntryClick': $_handleFragmentCollectionEntryClick ]/}
+						{param portletNamespace: $portletNamespace /}
+						{param spritemap: $spritemap /}
+					{/call}
+				{/foreach}
+			</div>
+		</div>
+	</div>
+{/template}

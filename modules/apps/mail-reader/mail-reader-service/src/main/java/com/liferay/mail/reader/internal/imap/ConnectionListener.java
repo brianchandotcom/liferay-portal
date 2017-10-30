@@ -16,6 +16,7 @@ package com.liferay.mail.reader.internal.imap;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import javax.mail.event.ConnectionEvent;
 
@@ -33,7 +34,10 @@ public class ConnectionListener implements javax.mail.event.ConnectionListener {
 		if (_log.isDebugEnabled()) {
 			long uptime = (System.currentTimeMillis() - _startTime) / 1000;
 
-			_log.debug("Closed " + _service + " after " + uptime + "seconds");
+			_log.debug(
+				StringBundler.concat(
+					"Closed ", _service, " after ", String.valueOf(uptime),
+					"seconds"));
 		}
 	}
 
@@ -43,7 +47,9 @@ public class ConnectionListener implements javax.mail.event.ConnectionListener {
 			long uptime = (System.currentTimeMillis() - _startTime) / 1000;
 
 			_log.debug(
-				"Disconnected " + _service + " after " + uptime + "seconds");
+				StringBundler.concat(
+					"Disconnected ", _service, " after ",
+					String.valueOf(uptime), "seconds"));
 		}
 	}
 

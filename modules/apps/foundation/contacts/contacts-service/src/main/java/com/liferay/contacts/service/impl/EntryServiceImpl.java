@@ -59,8 +59,16 @@ public class EntryServiceImpl extends EntryServiceBaseImpl {
 			List<Group> groups = groupLocalService.getUserGroups(userId, true);
 
 			for (Group group : groups) {
-				List<User> groupUsers = userLocalService.getGroupUsers(
-					group.getGroupId());
+				List<User> groupUsers;
+
+				if (group.isOrganization()) {
+					groupUsers = userLocalService.getOrganizationUsers(
+						group.getClassPK());
+				}
+				else {
+					groupUsers = userLocalService.getGroupUsers(
+						group.getGroupId());
+				}
 
 				contacts.addAll(groupUsers);
 			}

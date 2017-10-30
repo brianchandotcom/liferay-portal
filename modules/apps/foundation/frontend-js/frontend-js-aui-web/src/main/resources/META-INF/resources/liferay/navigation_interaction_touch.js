@@ -78,6 +78,12 @@ AUI.add(
 								'.lfr-nav-child-toggle'
 							);
 						}
+
+						if (!A.UA.mobile) {
+							navigation.delegate(['mouseenter', 'mouseleave'], instance._onMouseToggle, '> li', instance);
+
+							navigation.delegate('keydown', instance._handleKeyDown, 'a', instance);
+						}
 					}
 				},
 

@@ -92,11 +92,8 @@ public class LegacyDataArchiveUtil {
 
 		_legacyDataGitWorkingDirectory.checkoutBranch(temporaryBranch);
 
-		List<LegacyDataArchiveGroup> legacyDataArchiveGroupList =
-			new ArrayList<>(_legacyDataArchiveGroupMap.values());
-
 		for (LegacyDataArchiveGroup legacyDataArchiveGroup :
-				legacyDataArchiveGroupList) {
+				_legacyDataArchiveGroupMap.values()) {
 
 			if (!legacyDataArchiveGroup.isUpdated()) {
 				legacyDataArchiveGroup.commitLegacyDataArchives();
@@ -146,11 +143,8 @@ public class LegacyDataArchiveUtil {
 	public void pushLegacyDataArchivesToUpstream(Build build) {
 		Map<String, Commit> commitCondidates = new HashMap<>();
 
-		List<LegacyDataArchiveGroup> legacyDataArchiveGroupList =
-			new ArrayList<>(_legacyDataArchiveGroupMap.values());
-
 		for (LegacyDataArchiveGroup legacyDataArchiveGroup :
-				legacyDataArchiveGroupList) {
+				_legacyDataArchiveGroupMap.values()) {
 
 			Commit commit = legacyDataArchiveGroup.getCommit();
 

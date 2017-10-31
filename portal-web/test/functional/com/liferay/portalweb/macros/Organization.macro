@@ -607,28 +607,30 @@
 	</command>
 
 	<command name="removeMemberCP">
-		<execute macro="Organization#gotoActionsCmd">
+		<execute macro="Organization#gotoCP">
 			<var name="orgName" value="${orgName}" />
+			<var name="searchToken" value="${orgName}" />
 		</execute>
 
-		<var name="key_orgName" value="${orgName}" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userFullName}" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Assign Users">
-			<var name="key_menuItem" value="Assign Users" />
+		<execute function="Click" locator1="Button#SUBMIT" />
+
+		<execute function="AssertVisible" locator1="UsersAndOrganizations#USERS_AND_SUBORGANIZATIONS_TABLE_NAME_GENERIC" />
+
+		<var name="key_userFullName" value="${userFullName}" />
+
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USERS_AND_SUBORGANIZATIONS_TABLE_NAME" value1="${userFullName}" />
+
+		<execute function="Click" locator1="UsersAndOrganizations#USERS_AND_SUBORGANIZATIONS_TABLE_ACTIONS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Remove">
+			<var name="key_menuItem" value="Remove" />
 		</execute>
-
-		<var name="key_userScreenName" value="${userScreenName}" />
-
-		<execute function="AssertClick" locator1="UsersAndOrganizationsAssignUsers#CURRENT_TAB" value1="Current" />
-
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-		<execute function="Uncheck" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_CHECKBOX" />
-
-		<execute function="AssertClick" locator1="Button#UPDATE_ASSOCIATIONS" value1="Update Associations" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No users were found." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No results were found." />
 	</command>
 
 	<command name="searchCP">

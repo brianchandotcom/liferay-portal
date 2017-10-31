@@ -21,129 +21,33 @@ CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayC
 
 CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 
-long cpDefinitionId = cpDefinitionsDisplayContext.getCPDefinitionId();
+PortletURL portletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("mvcRenderCommandName", "editProductDefinition");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(catalogURL);
 
-renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, "add-product") : cpDefinition.getTitle(languageId));
+String title = LanguageUtil.get(request, "add-product");
 
-String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
+if (cpDefinition != null) {
+	title = cpDefinition.getTitle(languageId);
+}
 
-Set<Locale> availableLocalesSet = new HashSet<>();
+renderResponse.setTitle(title);
 
-availableLocalesSet.add(LocaleUtil.fromLanguageId(defaultLanguageId));
-availableLocalesSet.addAll(cpDefinitionsDisplayContext.getAvailableLocales());
-
-Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
+request.setAttribute("view.jsp-cpDefinition", cpDefinition);
+request.setAttribute("view.jsp-cpType", cpDefinitionsDisplayContext.getCPType());
+request.setAttribute("view.jsp-portletURL", portletURL);
+request.setAttribute("view.jsp-showSearch", false);
 %>
 
-<portlet:actionURL name="editProductDefinition" var="editProductDefinitionActionURL" />
+<div class="container-fluid-1280">
+	<h1><%= title %></h1>
+</div>
 
-<aui:form action="<%= editProductDefinitionActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpDefinition == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="cpDefinitionId" type="hidden" value="<%= String.valueOf(cpDefinitionId) %>" />
-	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
-
-	<c:if test="<%= (cpDefinition != null) && !cpDefinition.isNew() %>">
-		<liferay-frontend:info-bar>
-			<aui:workflow-status
-				id="<%= String.valueOf(cpDefinitionId) %>"
-				markupView="lexicon"
-				showHelpMessage="<%= false %>"
-				showIcon="<%= false %>"
-				showLabel="<%= false %>"
-				status="<%= cpDefinition.getStatus() %>"
-			/>
-		</liferay-frontend:info-bar>
-	</c:if>
-
-	<liferay-frontend:translation-manager
-		availableLocales="<%= availableLocales %>"
-		changeableDefaultLanguage="<%= true %>"
-		componentId='<%= renderResponse.getNamespace() + "translationManager" %>'
-		defaultLanguageId="<%= defaultLanguageId %>"
-		id="translationManager"
-	/>
-
-	<div class="lfr-form-content">
-		<liferay-ui:form-navigator
-			backURL="<%= catalogURL %>"
-			formModelBean="<%= cpDefinition %>"
-			id="<%= CPDefinitionFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION %>"
-			markupView="lexicon"
-			showButtons="<%= false %>"
-		/>
-
-		<%
-		boolean pending = false;
-
-		if (cpDefinition != null) {
-			pending = cpDefinition.isPending();
-		}
-		%>
-
-		<c:if test="<%= pending %>">
-			<div class="alert alert-info">
-				<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
-			</div>
-		</c:if>
-	</div>
-
-	<aui:button-row cssClass="product-definition-button-row">
-
-		<%
-		String saveButtonLabel = "save";
-
-		if ((cpDefinition == null) || cpDefinition.isDraft() || cpDefinition.isApproved() || cpDefinition.isExpired() || cpDefinition.isScheduled()) {
-			saveButtonLabel = "save-as-draft";
-		}
-
-		String publishButtonLabel = "publish";
-
-		if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, CPDefinition.class.getName())) {
-			publishButtonLabel = "submit-for-publication";
-		}
-		%>
-
-		<aui:button cssClass="btn-lg" disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
-
-		<aui:button cssClass="btn-lg" name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
-
-		<aui:button cssClass="btn-lg" href="<%= catalogURL %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
-
-<aui:script use="aui-base,event-input">
-	var publishButton = A.one('#<portlet:namespace />publishButton');
-
-	publishButton.on(
-		'click',
-		function() {
-			var workflowActionInput = A.one('#<portlet:namespace />workflowAction');
-
-			if (workflowActionInput) {
-				workflowActionInput.val('<%= WorkflowConstants.ACTION_PUBLISH %>');
-			}
-		}
-	);
-</aui:script>
-
-<c:if test="<%= cpDefinition == null %>">
-	<aui:script sandbox="<%= true %>">
-		var form = $(document.<portlet:namespace />fm);
-
-		var titleInput = form.fm('titleMapAsXML');
-		var urlInput = form.fm('urlTitleMapAsXML');
-
-		var onTitleInput = _.debounce(
-			function(event) {
-				urlInput.val(titleInput.val());
-			},
-			200
-		);
-
-		titleInput.on('input', onTitleInput);
-	</aui:script>
-</c:if>
+<liferay-frontend:screen-navigation
+	key="<%= CPDefinitionScreenNavigationConstants.SCREEN_NAVIGATION_KEY_CP_DEFINITION_GENERAL %>"
+	modelBean="<%= cpDefinition %>"
+	portletURL="<%= currentURLObj %>"
+/>

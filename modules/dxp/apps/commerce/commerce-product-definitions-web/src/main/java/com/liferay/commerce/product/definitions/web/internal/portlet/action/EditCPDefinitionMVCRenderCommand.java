@@ -84,7 +84,7 @@ public class EditCPDefinitionMVCRenderCommand implements MVCRenderCommand {
 			}
 		}
 
-		return "/edit_definition_screen_navigation.jsp";
+		return "/edit_definition.jsp";
 	}
 
 	protected void setCPDefinitionRequestAttribute(RenderRequest renderRequest)

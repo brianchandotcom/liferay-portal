@@ -141,9 +141,23 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 
 		_checkLambdaLineBreaks(trimmedLine, fileName, lineCount);
 
-		if (trimmedLine.startsWith("},") && !trimmedLine.equals("},")) {
+		if (trimmedLine.startsWith("}") && !trimmedLine.equals("}")) {
+			if (trimmedLine.startsWith("},") && !trimmedLine.equals("},")) {
+				addMessage(
+					fileName, "There should be a line break after '},'",
+					lineCount);
+			}
+
+			if (!trimmedLine.matches("\\}\\)*( \\{|[;,]|\\..*)")) {
+				addMessage(
+					fileName, "There should be a line break after '}'",
+					lineCount);
+			}
+		}
+
+		if (trimmedLine.endsWith("( {")) {
 			addMessage(
-				fileName, "There should be a line break after '},'", lineCount);
+				fileName, "There should be a line before ' {'", lineCount);
 		}
 
 		for (int x = 0;;) {

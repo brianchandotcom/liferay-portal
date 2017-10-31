@@ -523,7 +523,7 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${bookmarkName}" />
 
-		<execute function="AssertClick" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${bookmarkName}" />
+		<execute function="AssertClick#assertTextClickAtNoJavaScript" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${bookmarkName}" />
 
 		<execute function="AssertLocation" value1="${bookmarkURL}/" />
 	</command>

@@ -439,6 +439,18 @@ public class LayoutRevisionLocalServiceImpl
 
 		LayoutRevision layoutRevision = null;
 
+		if (_layoutRevisionId.get() > 0) {
+			LayoutRevision threadLayoutRevision =
+				layoutRevisionPersistence.findByPrimaryKey(
+					_layoutRevisionId.get());
+
+			if (threadLayoutRevision.getParentLayoutRevisionId() ==
+					oldLayoutRevision.getLayoutRevisionId()) {
+
+				layoutRevision = threadLayoutRevision;
+			}
+		}
+
 		int workflowAction = serviceContext.getWorkflowAction();
 
 		boolean revisionInProgress = ParamUtil.getBoolean(
@@ -446,7 +458,7 @@ public class LayoutRevisionLocalServiceImpl
 
 		if (!MergeLayoutPrototypesThreadLocal.isInProgress() &&
 			(workflowAction != WorkflowConstants.ACTION_PUBLISH) &&
-			(_layoutRevisionId.get() <= 0) && !revisionInProgress) {
+			(layoutRevision == null) && !revisionInProgress) {
 
 			long newLayoutRevisionId = counterLocalService.increment();
 
@@ -497,11 +509,7 @@ public class LayoutRevisionLocalServiceImpl
 				layoutRevision.getPlid(), layoutRevision.getLayoutRevisionId());
 		}
 		else {
-			if (_layoutRevisionId.get() > 0) {
-				layoutRevision = layoutRevisionPersistence.findByPrimaryKey(
-					_layoutRevisionId.get());
-			}
-			else {
+			if (layoutRevision == null) {
 				layoutRevision = oldLayoutRevision;
 			}
 

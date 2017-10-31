@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<suppress checks="JavaDeserializationSecurityCheck" files="modules/core/petra/petra-io/src/main/java/com/liferay/petra/io/AnnotatedObjectInputStream\.java" />
+	<suppress checks="JavaDeserializationSecurityCheck" files="modules/core/petra/petra-io/src/main/java/com/liferay/petra/io/ClassLoaderObjectInputStream\.java" />
+	<suppress checks="JavaDeserializationSecurityCheck" files="modules/core/petra/petra-io/src/main/java/com/liferay/petra/io/ProtectedObjectInputStream\.java" />
+</suppressions>

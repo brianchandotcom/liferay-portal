@@ -69,10 +69,12 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Adam Brandizzi
  */
-@PrepareForTest( {
-	LocaleUtil.class, ResourceBundleUtil.class, ResourceBundleLoaderUtil.class,
-	ServiceTrackerCollections.class
-})
+@PrepareForTest(
+	{
+		LocaleUtil.class, ResourceBundleUtil.class,
+		ResourceBundleLoaderUtil.class, ServiceTrackerCollections.class
+	}
+)
 @RunWith(PowerMockRunner.class)
 public class DDLFormAdminDisplayContextTest extends PowerMockito {
 

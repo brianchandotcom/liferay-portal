@@ -358,6 +358,7 @@ Import-Package: !*
 	@lib/com.liferay.petra.mail.jar,\
 	@lib/com.liferay.petra.memory.jar,\
 	@lib/com.liferay.petra.nio.jar,\
+	@lib/com.liferay.petra.reflect.jar,\
 	@lib/com.liferay.registry.api.jar
 -removeheaders:\
 	Private-Package,\

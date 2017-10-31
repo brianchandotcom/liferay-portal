@@ -1,0 +1,21 @@
+.portlet-decorate {
+	.portlet {
+		margin-bottom: 24px;
+	}
+
+	.portlet-title-text {
+		color: map-get($theme-colors, secondary);
+		font-size: 16px;
+		font-weight: 600;
+		letter-spacing: 0.5px;
+		line-height: 1.5;
+		text-transform: uppercase;
+	}
+
+	.portlet-content {
+		background-color: $portlet-decorate-bg;
+		border: $portlet-decorate-border;
+		border-radius: 0.5rem;
+		padding: 24px;
+	}
+}

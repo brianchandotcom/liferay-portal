@@ -59,7 +59,9 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		if (!isSubrepository() &&
 			!absolutePath.contains("/modules/private/apps/")) {
 
-			_checkLanguageKeys(fileName, absolutePath, content, getPatterns());
+			_checkLanguageKeys(
+				fileName, absolutePath, content, getPatterns(),
+				_portalLanguageProperties);
 		}
 
 		return content;
@@ -74,7 +76,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 
 	private void _checkLanguageKeys(
 			String fileName, String absolutePath, String content,
-			List<Pattern> patterns)
+			List<Pattern> patterns, Properties properties)
 		throws Exception {
 
 		if (fileName.endsWith(".vm")) {
@@ -82,7 +84,8 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		}
 
 		for (Pattern pattern : patterns) {
-			_checkLanguageKeys(fileName, absolutePath, content, pattern);
+			_checkLanguageKeys(
+				fileName, absolutePath, content, pattern, properties);
 		}
 	}
 

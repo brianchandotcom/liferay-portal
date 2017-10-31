@@ -219,6 +219,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	testGotoLinkToPageChildPages {
 		var key_pageName = "${parentPage}";
 

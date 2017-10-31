@@ -49,6 +49,7 @@ public class DefinitionPoshiElement extends BasePoshiElement {
 		for (String readableBlock : getReadableBlocks(readableSyntax)) {
 			if (readableBlock.startsWith("@") &&
 				!readableBlock.startsWith("@description") &&
+				!readableBlock.startsWith("@ignore") &&
 				!readableBlock.startsWith("@priority")) {
 
 				String name = getNameFromAssignment(readableBlock);
@@ -152,6 +153,7 @@ public class DefinitionPoshiElement extends BasePoshiElement {
 
 			if (trimmedLine.startsWith("@") &&
 				!trimmedLine.startsWith("@description") &&
+				!trimmedLine.startsWith("@ignore") &&
 				!trimmedLine.startsWith("@priority")) {
 
 				readableBlocks.add(line);

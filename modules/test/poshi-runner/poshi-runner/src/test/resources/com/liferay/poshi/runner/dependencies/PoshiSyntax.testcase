@@ -267,7 +267,7 @@
 		</task>
 	</command>
 
-	<command name="GotoLinkToPageChildPages">
+	<command ignore="true" name="GotoLinkToPageChildPages">
 		<var name="key_pageName" value="${parentPage}" />
 
 		<toggle name="LPS-68869">

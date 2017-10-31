@@ -32,6 +32,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -231,6 +233,62 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 		return SourceFormatterUtil.scanForFiles(
 			basedir, excludes, includes, _sourceFormatterExcludes, true);
+	}
+
+	protected Properties getGitHubPortalLanguageProperties(
+			String absolutePath,
+			Map<String, Properties> gitHubPortalLanguagePropertiesMap)
+		throws Exception {
+
+		String propertiesFileLocation = null;
+
+		for (Map.Entry<String, Properties> entry :
+				gitHubPortalLanguagePropertiesMap.entrySet()) {
+
+			String curPropertiesFileLocation = entry.getKey();
+
+			if (!absolutePath.startsWith(curPropertiesFileLocation)) {
+				continue;
+			}
+
+			if ((propertiesFileLocation == null) ||
+				propertiesFileLocation.startsWith(curPropertiesFileLocation)) {
+
+				propertiesFileLocation = curPropertiesFileLocation;
+			}
+		}
+
+		return gitHubPortalLanguagePropertiesMap.get(propertiesFileLocation);
+	}
+
+	protected Map<String, Properties> getGitHubPortalLanguagePropertiesMap()
+		throws Exception {
+
+		Map<String, Properties> gitHubPortalLanguagePropertiesMap =
+			new HashMap<>();
+
+		for (Map.Entry<String, Properties> entry : _propertiesMap.entrySet()) {
+			Properties properties = entry.getValue();
+
+			String s = properties.getProperty(GIT_HUB_LIFERAY_PORTAL_BRANCH);
+
+			if (Validator.isNull(s)) {
+				continue;
+			}
+
+			Properties gitHubPortalLanguageProperties = new Properties();
+
+			URL url = new URL(
+				_GIT_HUB_LIFERAY_PORTAL_URL + s +
+					"/portal-impl/src/content/Language.properties");
+
+			gitHubPortalLanguageProperties.load(url.openStream());
+
+			gitHubPortalLanguagePropertiesMap.put(
+				entry.getKey(), gitHubPortalLanguageProperties);
+		}
+
+		return gitHubPortalLanguagePropertiesMap;
 	}
 
 	protected int getLeadingTabCount(String line) {
@@ -546,8 +604,14 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return sb.toString();
 	}
 
+	protected static final String GIT_HUB_LIFERAY_PORTAL_BRANCH =
+		"git.hub.liferay.portal.branch";
+
 	protected static final String RUN_OUTSIDE_PORTAL_EXCLUDES =
 		"run.outside.portal.excludes";
+
+	private static final String _GIT_HUB_LIFERAY_PORTAL_URL =
+		"https://raw.githubusercontent.com/liferay/liferay-portal/";
 
 	private String _baseDirName;
 	private int _maxLineLength;

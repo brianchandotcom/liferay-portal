@@ -43,6 +43,8 @@ public class LanguageKeysCheck extends BaseFileCheck {
 
 	@Override
 	public void init() throws Exception {
+		_gitHubPortalLanguagePropertiesMap =
+			getGitHubPortalLanguagePropertiesMap();
 		_portalLanguageProperties = getPortalLanguageProperties();
 	}
 
@@ -55,6 +57,16 @@ public class LanguageKeysCheck extends BaseFileCheck {
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
 		throws Exception {
+
+		Properties gitHubPortalLanguageProperties =
+			getGitHubPortalLanguageProperties(
+				absolutePath, _gitHubPortalLanguagePropertiesMap);
+
+		if (gitHubPortalLanguageProperties != null) {
+			_checkLanguageKeys(
+				fileName, absolutePath, content, getPatterns(),
+				gitHubPortalLanguageProperties);
+		}
 
 		if (!isSubrepository() &&
 			!absolutePath.contains("/modules/private/apps/")) {
@@ -397,6 +409,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 	private final Pattern _applyLangMergerPluginPattern = Pattern.compile(
 		"^apply[ \t]+plugin[ \t]*:[ \t]+\"com.liferay.lang.merger\"$",
 		Pattern.MULTILINE);
+	private Map<String, Properties> _gitHubPortalLanguagePropertiesMap;
 	private final Pattern _mergeLangPattern = Pattern.compile(
 		"mergeLang \\{\\s*sourceDirs = \\[(.*?)\\]", Pattern.DOTALL);
 	private final Map<String, Properties> _moduleLangLanguagePropertiesMap =

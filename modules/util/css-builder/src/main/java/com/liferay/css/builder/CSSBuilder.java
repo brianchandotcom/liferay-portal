@@ -162,6 +162,12 @@ public class CSSBuilder implements AutoCloseable {
 		return false;
 	}
 
+	private static boolean _isAbsolute(String fileName) {
+		Path path = Paths.get(fileName);
+
+		return path.isAbsolute();
+	}
+
 	private static void _printHelp(JCommander jCommander) throws Exception {
 		jCommander.usage();
 	}
@@ -437,20 +443,32 @@ public class CSSBuilder implements AutoCloseable {
 
 		String outputFileName;
 
+		boolean absolute = _isAbsolute(_cssBuilderArgs.getOutputDirName());
+
+		String outputFileNameDir =
+			absolute ? StringPool.BLANK : _cssBuilderArgs.getOutputDirName();
+
 		if (rtl) {
 			String rtlFileName = CSSBuilderUtil.getRtlCustomFileName(fileName);
 
 			outputFileName = CSSBuilderUtil.getOutputFileName(
-				rtlFileName, _cssBuilderArgs.getOutputDirName(),
-				StringPool.BLANK);
+				rtlFileName, outputFileNameDir, StringPool.BLANK);
 		}
 		else {
 			outputFileName = CSSBuilderUtil.getOutputFileName(
-				fileName, _cssBuilderArgs.getOutputDirName(), StringPool.BLANK);
+				fileName, outputFileNameDir, StringPool.BLANK);
 		}
 
-		File outputFile = new File(
-			_cssBuilderArgs.getDocrootDir(), outputFileName);
+		File outputFile;
+
+		if (absolute) {
+			outputFile = new File(
+				_cssBuilderArgs.getOutputDirName(), outputFileName);
+		}
+		else {
+			outputFile = new File(
+				_cssBuilderArgs.getDocrootDir(), outputFileName);
+		}
 
 		FileUtil.write(outputFile, content);
 

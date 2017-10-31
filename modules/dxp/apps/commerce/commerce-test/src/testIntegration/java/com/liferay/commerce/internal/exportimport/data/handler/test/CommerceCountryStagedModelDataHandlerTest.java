@@ -15,7 +15,7 @@
 package com.liferay.commerce.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.internal.test.util.CommerceAddressTestUtil;
+import com.liferay.commerce.internal.test.util.CommerceTestUtil;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.service.CommerceCountryLocalServiceUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -55,7 +55,7 @@ public class CommerceCountryStagedModelDataHandlerTest
 			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
-		return CommerceAddressTestUtil.addCommerceCountry(group.getGroupId());
+		return CommerceTestUtil.addCommerceCountry(group.getGroupId());
 	}
 
 	@Override

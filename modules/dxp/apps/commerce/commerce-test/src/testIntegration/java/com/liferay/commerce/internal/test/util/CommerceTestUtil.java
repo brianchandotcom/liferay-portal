@@ -15,7 +15,12 @@
 package com.liferay.commerce.internal.test.util;
 
 import com.liferay.commerce.model.CommerceCountry;
+import com.liferay.commerce.model.CommerceWarehouse;
+import com.liferay.commerce.model.CommerceWarehouseItem;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.service.CommerceCountryLocalServiceUtil;
+import com.liferay.commerce.service.CommerceWarehouseItemLocalServiceUtil;
+import com.liferay.commerce.service.CommerceWarehouseLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -23,7 +28,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 /**
  * @author Andrea Di Giorgi
  */
-public class CommerceAddressTestUtil {
+public class CommerceTestUtil {
 
 	public static CommerceCountry addCommerceCountry(long groupId)
 		throws Exception {
@@ -38,6 +43,35 @@ public class CommerceAddressTestUtil {
 			RandomTestUtil.randomInt(), RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomDouble(), RandomTestUtil.randomBoolean(),
 			serviceContext);
+	}
+
+	public static CommerceWarehouse addCommerceWarehouse(
+			long groupId, String name)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		return CommerceWarehouseLocalServiceUtil.addCommerceWarehouse(
+			name, RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0, 0,
+			RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble(),
+			serviceContext);
+	}
+
+	public static CommerceWarehouseItem addCommerceWarehouseItem(
+			CommerceWarehouse commerceWarehouse, long cpInstanceId,
+			int quantity)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				commerceWarehouse.getGroupId());
+
+		return CommerceWarehouseItemLocalServiceUtil.addCommerceWarehouseItem(
+			commerceWarehouse.getCommerceWarehouseId(),
+			CPInstance.class.getName(), cpInstanceId, quantity, serviceContext);
 	}
 
 }

@@ -64,6 +64,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -142,7 +143,7 @@ public class CPTestUtil {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
-		return addCPDefinition(productTypeName, serviceContext);
+		return addCPDefinition(productTypeName, false, serviceContext);
 	}
 
 	public static CPDefinitionLink addCPDefinitionLink(
@@ -220,7 +221,7 @@ public class CPTestUtil {
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 
 			CPDefinition cpDefinition = addCPDefinition(
-				SimpleCPTypeConstants.NAME, serviceContext);
+				SimpleCPTypeConstants.NAME, false, serviceContext);
 
 			if (approved) {
 				return updateStatus(cpDefinition, serviceContext);
@@ -231,6 +232,17 @@ public class CPTestUtil {
 		finally {
 			WorkflowThreadLocal.setEnabled(workflowEnabled);
 		}
+	}
+
+	public static CPInstance addCPInstance(long groupId) throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		CPDefinition cpDefinition = addCPDefinition(
+			SimpleCPTypeConstants.NAME, true, serviceContext);
+
+		return CPInstanceLocalServiceUtil.getCPInstance(
+			cpDefinition.getCPDefinitionId(), CPConstants.INSTANCE_DEFAULT_SKU);
 	}
 
 	public static CPInstance addCPInstance(
@@ -378,12 +390,36 @@ public class CPTestUtil {
 	}
 
 	protected static CPDefinition addCPDefinition(
-			String productTypeName, ServiceContext serviceContext)
+			String productTypeName, boolean hasDefaultInstance,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		User user = UserLocalServiceUtil.getUser(serviceContext.getUserId());
 
 		long now = System.currentTimeMillis();
+
+		Map<Locale, String> titleMap = RandomTestUtil.randomLocaleStringMap();
+		Map<Locale, String> shortDescriptionMap =
+			RandomTestUtil.randomLocaleStringMap();
+		Map<Locale, String> descriptionMap =
+			RandomTestUtil.randomLocaleStringMap();
+		Map<Locale, String> metaTitleMap =
+			RandomTestUtil.randomLocaleStringMap();
+		Map<Locale, String> metaKeywordsMap =
+			RandomTestUtil.randomLocaleStringMap();
+		Map<Locale, String> metaDescriptionMap =
+			RandomTestUtil.randomLocaleStringMap();
+		String layoutUuid = PortalUUIDUtil.generate();
+		boolean ignoreSKUCombinations = RandomTestUtil.randomBoolean();
+		boolean shippable = RandomTestUtil.randomBoolean();
+		boolean freeShipping = RandomTestUtil.randomBoolean();
+		boolean shipSeparately = RandomTestUtil.randomBoolean();
+		double shippingExtraPrice = RandomTestUtil.randomDouble();
+		double width = RandomTestUtil.randomDouble();
+		double height = RandomTestUtil.randomDouble();
+		double depth = RandomTestUtil.randomDouble();
+		double weight = RandomTestUtil.randomDouble();
+		String ddmStructureKey = null;
 
 		Date displayDate = new Date(now - Time.HOUR);
 		Date expirationDate = new Date(now + Time.DAY);
@@ -418,22 +454,17 @@ public class CPTestUtil {
 			expirationDateHour += 12;
 		}
 
+		boolean neverExpire = false;
+
 		return CPDefinitionLocalServiceUtil.addCPDefinition(
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(), PortalUUIDUtil.generate(),
-			productTypeName, RandomTestUtil.randomBoolean(),
-			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
-			RandomTestUtil.randomBoolean(), RandomTestUtil.randomDouble(),
-			RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble(),
-			RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble(), null,
+			titleMap, shortDescriptionMap, descriptionMap, metaTitleMap,
+			metaKeywordsMap, metaDescriptionMap, layoutUuid, productTypeName,
+			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
+			shippingExtraPrice, width, height, depth, weight, ddmStructureKey,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute, false,
-			serviceContext);
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, hasDefaultInstance, serviceContext);
 	}
 
 	protected static String getJSON(

@@ -14,6 +14,7 @@
 
 package com.liferay.layout.item.selector.web.internal.display.context;
 
+import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -341,6 +342,10 @@ public class LayoutItemSelectorViewDisplayContext {
 			groupId, privateLayout, parentLayoutId);
 
 		for (Layout layout : layouts) {
+			if (StagingUtil.isIncomplete(layout)) {
+				continue;
+			}
+
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			JSONArray actionsJSONArray = _getActionsJSONArray(layout);

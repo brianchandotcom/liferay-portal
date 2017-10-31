@@ -80,7 +80,7 @@ public class EditCPInstanceMVCRenderCommand implements MVCRenderCommand {
 			}
 		}
 
-		return "/edit_instance_screen_navigation.jsp";
+		return "/edit_instance.jsp";
 	}
 
 	@Reference

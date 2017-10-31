@@ -11,5 +11,7 @@ Import-Package:\
 	test-classes/integration,\
 	@test-lib/biz.aQute.bndlib.jar!/aQute/lib/filter/*,\
 	@test-lib/org.apache.felix.utils.jar,\
+	@test-lib/com.liferay.petra.concurrent.jar,\
+	@test-lib/com.liferay.petra.memory.jar,\
 	@test-lib/com.liferay.portal.kernel.jar,\
 	@test-lib/com.liferay.registry.api.jar

@@ -69,25 +69,36 @@ public class ConcatCheck extends BaseCheck {
 			if (childAST.getType() == TokenTypes.EXPR) {
 				DetailAST grandChildAST = childAST.getFirstChild();
 
+				childAST = childAST.getNextSibling();
+
 				if (grandChildAST.getType() != TokenTypes.STRING_LITERAL) {
 					previousLiteralStringAST = null;
 				}
 				else {
 					if (previousLiteralStringAST != null) {
+						boolean hasNextParameter = false;
+
+						if (childAST != null) {
+							hasNextParameter = true;
+						}
+
 						_checkConcatMethodCallLiteralStrings(
-							previousLiteralStringAST, grandChildAST);
+							previousLiteralStringAST, grandChildAST,
+							hasNextParameter);
 					}
 
 					previousLiteralStringAST = grandChildAST;
 				}
 			}
-
-			childAST = childAST.getNextSibling();
+			else {
+				childAST = childAST.getNextSibling();
+			}
 		}
 	}
 
 	private void _checkConcatMethodCallLiteralStrings(
-		DetailAST literalStringAST1, DetailAST literalStringAST2) {
+		DetailAST literalStringAST1, DetailAST literalStringAST2,
+		boolean hasNextParameter) {
 
 		String literalStringValue1 = literalStringAST1.getText();
 
@@ -107,14 +118,33 @@ public class ConcatCheck extends BaseCheck {
 			return;
 		}
 
-		_checkLiteralStringStartAndEndCharacter(
-			literalStringValue1, literalStringValue2,
-			literalStringAST1.getLineNo());
-
 		String line = getLine(literalStringAST1.getLineNo() - 1);
 
 		int lineLength = CommonUtils.lengthExpandedTabs(
 			line, line.length(), getTabWidth());
+
+		int newLineLength = -1;
+
+		if (hasNextParameter) {
+			newLineLength = lineLength + literalStringValue2.length();
+		}
+		else {
+			String nextLine = getLine(literalStringAST2.getLineNo() - 1);
+
+			int pos = nextLine.indexOf(StringPool.QUOTE);
+
+			newLineLength = lineLength + nextLine.length() - pos - 3;
+		}
+
+		if (newLineLength <= _maxLineLength) {
+			log(
+				literalStringAST1.getLineNo(), _MSG_COMBINE_LITERAL_STRINGS,
+				literalStringValue1, literalStringValue2);
+		}
+
+		_checkLiteralStringStartAndEndCharacter(
+			literalStringValue1, literalStringValue2,
+			literalStringAST1.getLineNo());
 
 		int pos = _getStringBreakPos(
 			literalStringValue1, literalStringValue2,

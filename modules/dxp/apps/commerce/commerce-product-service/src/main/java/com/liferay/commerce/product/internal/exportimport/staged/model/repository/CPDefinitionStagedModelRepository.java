@@ -119,8 +119,8 @@ public class CPDefinitionStagedModelRepository
 
 		return _cpDefinitionLocalService.addCPDefinition(
 			cpDefinition.getTitleMap(), cpDefinition.getShortDescriptionMap(),
-			cpDefinition.getDescriptionMap(), cpDefinition.getMetaTitleMap(),
-			cpDefinition.getMetaKeywordsMap(),
+			cpDefinition.getDescriptionMap(), cpDefinition.getUrlTitleMap(),
+			cpDefinition.getMetaTitleMap(), cpDefinition.getMetaKeywordsMap(),
 			cpDefinition.getMetaDescriptionMap(), cpDefinition.getLayoutUuid(),
 			cpDefinition.getProductTypeName(),
 			cpDefinition.isIgnoreSKUCombinations(), cpDefinition.isShippable(),

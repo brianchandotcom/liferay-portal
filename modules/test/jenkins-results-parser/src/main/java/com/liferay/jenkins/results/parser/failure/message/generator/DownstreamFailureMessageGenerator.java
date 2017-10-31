@@ -40,8 +40,11 @@ public class DownstreamFailureMessageGenerator
 
 	@Override
 	public Element getMessageElement(Build build) {
-		String consoleOutput = build.getConsoleText();
+		return getMessageElement(build.getConsoleText());
+	}
 
+	@Override
+	public Element getMessageElement(String consoleOutput) {
 		if (consoleOutput.contains("Downstream jobs FAILED.")) {
 			return Dom4JUtil.toCodeSnippetElement("Downstream jobs FAILED.");
 		}

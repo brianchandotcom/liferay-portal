@@ -35,8 +35,11 @@ public class CompileFailureMessageGenerator
 
 	@Override
 	public Element getMessageElement(Build build) {
-		String consoleOutput = build.getConsoleText();
+		return getMessageElement(build.getConsoleText());
+	}
 
+	@Override
+	public Element getMessageElement(String consoleOutput) {
 		int end = consoleOutput.indexOf("Compile failed;");
 
 		if (end == -1) {

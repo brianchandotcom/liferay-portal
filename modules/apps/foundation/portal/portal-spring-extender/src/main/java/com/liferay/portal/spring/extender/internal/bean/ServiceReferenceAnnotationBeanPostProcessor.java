@@ -85,13 +85,22 @@ public class ServiceReferenceAnnotationBeanPostProcessor
 			}
 
 			Class<?> typeClass = serviceReference.type();
+			String filterString = serviceReference.filterString();
 
-			org.osgi.framework.ServiceReference<?> osgiServiceReference =
-				_bundleContext.getServiceReference(typeClass.getName());
-
-			ReflectionUtils.makeAccessible(field);
+			org.osgi.framework.ServiceReference<?> osgiServiceReference = null;
 
 			try {
+				if (filterString.isEmpty()) {
+					osgiServiceReference = _bundleContext.getServiceReference(
+						typeClass.getName());
+				}
+				else {
+					osgiServiceReference = _bundleContext.getServiceReferences(
+						typeClass.getName(), filterString)[0];
+				}
+
+				ReflectionUtils.makeAccessible(field);
+
 				field.set(
 					targetBean,
 					_bundleContext.getService(osgiServiceReference));

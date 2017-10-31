@@ -19,7 +19,6 @@ import com.liferay.commerce.price.list.web.internal.portlet.action.CommercePrice
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.service.CommercePriceEntryService;
-import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
@@ -46,18 +45,15 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = {
-		"screen.navigation.category.order:Integer=30",
-		"screen.navigation.entry.order:Integer=30"
-	},
-	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
+	property = {"screen.navigation.entry.order:Integer=30"},
+	service = ScreenNavigationEntry.class
 )
 public class CPInstancePriceListsScreenNavigationEntry
-	implements ScreenNavigationCategory, ScreenNavigationEntry<CPInstance> {
+	implements ScreenNavigationEntry<CPInstance> {
 
 	@Override
 	public String getCategoryKey() {
-		return "price-lists";
+		return "details";
 	}
 
 	@Override

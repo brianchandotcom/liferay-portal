@@ -22,7 +22,6 @@ import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -48,19 +47,15 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = {
-		"screen.navigation.category.order:Integer=40",
-		"screen.navigation.entry.order:Integer=40"
-	},
-	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
+	property = {"screen.navigation.entry.order:Integer=50"},
+	service = ScreenNavigationEntry.class
 )
 public class CPInstanceShippingInfoScreenNavigationEntry
-	implements ScreenNavigationCategory, ScreenNavigationEntry<CPInstance> {
+	implements ScreenNavigationEntry<CPInstance> {
 
 	@Override
 	public String getCategoryKey() {
-		return CPInstanceScreenNavigationConstants.
-			CATEGORY_KEY_SHIPPING_ADJUSTMENT;
+		return CPInstanceScreenNavigationConstants.CATEGORY_KEY_DETAILS;
 	}
 
 	@Override

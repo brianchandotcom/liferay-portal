@@ -22,7 +22,6 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.service.CPDefinitionAvailabilityRangeService;
 import com.liferay.commerce.service.CommerceAvailabilityRangeService;
 import com.liferay.commerce.stock.activity.CommerceLowStockActivityRegistry;
-import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -48,18 +47,15 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = {
-		"screen.navigation.category.order:Integer=25",
-		"screen.navigation.entry.order:Integer=25"
-	},
-	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
+	property = {"screen.navigation.entry.order:Integer=10"},
+	service = ScreenNavigationEntry.class
 )
 public class CPDefinitionInventoryScreenNavigationEntry
-	implements ScreenNavigationCategory, ScreenNavigationEntry<CPDefinition> {
+	implements ScreenNavigationEntry<CPDefinition> {
 
 	@Override
 	public String getCategoryKey() {
-		return "inventory";
+		return "configuration";
 	}
 
 	@Override

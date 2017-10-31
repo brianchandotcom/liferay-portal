@@ -25,13 +25,11 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -65,12 +63,8 @@ public class CPDefinitionDetailsScreenNavigationEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
 		return LanguageUtil.get(
-			resourceBundle,
-			CPDefinitionScreenNavigationConstants.CATEGORY_KEY_DETAILS);
+			locale, CPDefinitionScreenNavigationConstants.CATEGORY_KEY_DETAILS);
 	}
 
 	@Override
@@ -100,7 +94,7 @@ public class CPDefinitionDetailsScreenNavigationEntry
 
 		_jspRenderer.renderJSP(
 			_setServletContext, httpServletRequest, httpServletResponse,
-			"/edit_definition.jsp");
+			"/definition/details.jsp");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

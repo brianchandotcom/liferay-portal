@@ -220,7 +220,7 @@ public class StagedLayoutSetStagedModelRepository
 			portletDataContext.getParameterMap(),
 			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS);
 
-		if (layoutSetPrototypeSettings ||
+		if (layoutSetPrototypeSettings &&
 			Validator.isNotNull(stagedLayoutSet.getLayoutSetPrototypeUuid())) {
 
 			existingLayoutSet.setLayoutSetPrototypeUuid(

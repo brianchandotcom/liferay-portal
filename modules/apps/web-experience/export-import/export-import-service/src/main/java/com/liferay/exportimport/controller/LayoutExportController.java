@@ -301,7 +301,13 @@ public class LayoutExportController implements ExportController {
 
 		String layoutSetPrototypeUuid = layoutSet.getLayoutSetPrototypeUuid();
 
-		if (!group.isStaged() && Validator.isNotNull(layoutSetPrototypeUuid)) {
+		boolean layoutSetPrototypeSettings = MapUtil.getBoolean(
+			portletDataContext.getParameterMap(),
+			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS);
+
+		if (!group.isStaged() && Validator.isNotNull(layoutSetPrototypeUuid) &&
+			layoutSetPrototypeSettings) {
+
 			LayoutSetPrototype layoutSetPrototype =
 				_layoutSetPrototypeLocalService.
 					getLayoutSetPrototypeByUuidAndCompanyId(

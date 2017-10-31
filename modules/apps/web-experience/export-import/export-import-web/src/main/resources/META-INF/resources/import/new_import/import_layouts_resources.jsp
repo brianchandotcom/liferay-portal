@@ -114,14 +114,11 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
-	<aui:input name="<%= PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS %>" type="hidden" value="<%= true %>" />
-	<aui:input name="<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>" type="hidden" value="<%= true %>" />
-	<aui:input name="<%= PortletDataHandlerKeys.LOGO %>" type="hidden" value="<%= true %>" />
+	<aui:input name="<%= PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED %>" type="hidden" value="<%= true %>" />
 	<aui:input name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>" type="hidden" value="<%= true %>" />
 	<aui:input name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="hidden" value="<%= true %>" />
 	<aui:input name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="hidden" value="<%= true %>" />
 	<aui:input name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>" type="hidden" value="<%= true %>" />
-	<aui:input name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>" type="hidden" value="<%= true %>" />
 
 	<div class="export-dialog-tree">
 		<aui:fieldset-group markupView="lexicon">
@@ -168,7 +165,23 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 						<aui:input id="privatePages" label="private-pages" name="privateLayout" type="radio" value="<%= true %>" />
 
-						<aui:input helpMessage="delete-missing-layouts-help" label="delete-missing-layouts" name="<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>" type="checkbox" value="<%= false %>" />
+						<%
+						String themeSettingsLabel = "<span style='font-weight: bold;'>" + LanguageUtil.get(request, "theme-settings") + ":</span> " + LanguageUtil.get(request, "export-import-theme-settings-help");
+						%>
+
+						<aui:input label="<%= themeSettingsLabel %>" name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>" type="checkbox" value="<%= true %>" />
+
+						<aui:input label="logo" name="<%= PortletDataHandlerKeys.LOGO %>" type="checkbox" value="<%= true %>" />
+
+						<aui:input label="site-pages-settings" name="<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>" type="checkbox" value="<%= true %>" />
+
+						<aui:input label="site-template-settings" name="<%= PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS %>" type="checkbox" value="<%= true %>" />
+
+						<%
+						String deleteMissingLayoutsLabel = "<span style='font-weight: bold;'>" + LanguageUtil.get(request, "delete-missing-layouts") + ":</span> " + LanguageUtil.get(request, "delete-missing-layouts-help");
+						%>
+
+						<aui:input label="<%= deleteMissingLayoutsLabel %>" name="<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>" type="checkbox" value="<%= false %>" />
 					</aui:fieldset>
 				</c:when>
 				<c:otherwise>

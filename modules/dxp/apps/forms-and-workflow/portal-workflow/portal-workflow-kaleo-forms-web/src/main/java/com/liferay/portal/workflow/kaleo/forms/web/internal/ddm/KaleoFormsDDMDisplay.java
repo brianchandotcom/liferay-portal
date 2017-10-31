@@ -24,7 +24,11 @@ import com.liferay.dynamic.data.mapping.util.DDMNavigationHelper;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
@@ -32,7 +36,11 @@ import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -61,7 +69,9 @@ public class KaleoFormsDDMDisplay extends BaseDDMDisplay {
 		if (ddmNavigationHelper.isNavigationStartsOnSelectTemplate(
 				liferayPortletRequest)) {
 
-			return ParamUtil.getString(liferayPortletRequest, "redirect");
+			return getSelectTemplateURL(
+				liferayPortletRequest, liferayPortletResponse, classNameId,
+				classPK, resourceClassNameId);
 		}
 
 		return super.getEditTemplateBackURL(
@@ -163,5 +173,37 @@ public class KaleoFormsDDMDisplay extends BaseDDMDisplay {
 
 		return LanguageUtil.get(resourceBundle, "forms");
 	}
+
+	protected String getSelectTemplateURL(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse, long classNameId,
+			long classPK, long resourceClassNameId)
+		throws Exception {
+
+		String portletId = PortletProviderUtil.getPortletId(
+			DDMStructure.class.getName(), PortletProvider.Action.VIEW);
+
+		PortletURL portletURL = _portal.getControlPanelPortletURL(
+			liferayPortletRequest, portletId, PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcPath", "/select_template.jsp");
+		portletURL.setParameter("classNameId", String.valueOf(classNameId));
+		portletURL.setParameter("classPK", String.valueOf(classPK));
+		portletURL.setParameter("eventName", "selectStructure");
+
+		String mode = ParamUtil.getString(liferayPortletRequest, "mode");
+
+		portletURL.setParameter("mode", mode);
+
+		portletURL.setParameter(
+			"resourceClassNameId", String.valueOf(resourceClassNameId));
+
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+		return portletURL.toString();
+	}
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -1819,9 +1819,6 @@
 
 		<execute macro="Organization#addMemberCP">
 			<var name="orgName" value="Organization Name" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userName" value="userfn userln" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
@@ -1835,8 +1832,7 @@
 
 		<execute macro="Organization#removeMemberCP">
 			<var name="orgName" value="Organization Name" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">

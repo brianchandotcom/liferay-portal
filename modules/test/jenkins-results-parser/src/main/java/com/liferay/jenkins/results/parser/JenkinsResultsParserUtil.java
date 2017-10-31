@@ -1423,11 +1423,4 @@ public class JenkinsResultsParserUtil {
 
 		};
 
-	static {
-		System.out.println("Securing standard error and out");
-
-		System.setErr(SecurePrintStream.getInstance());
-		System.setOut(SecurePrintStream.getInstance());
-	}
-
 }

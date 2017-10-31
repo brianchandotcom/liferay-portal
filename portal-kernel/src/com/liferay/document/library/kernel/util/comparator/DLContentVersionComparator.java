@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, replaced by {@link
+ *            com.liferay.document.library.content.service.util.comparator.DLContentVersionComparator}
  */
+@Deprecated
 public class DLContentVersionComparator extends OrderByComparator<DLContent> {
 
 	public static final String ORDER_BY_ASC = "DLContent.version ASC";

@@ -51,8 +51,11 @@ import java.util.List;
  * @see DLContentLocalServiceUtil
  * @see com.liferay.portlet.documentlibrary.service.base.DLContentLocalServiceBaseImpl
  * @see com.liferay.portlet.documentlibrary.service.impl.DLContentLocalServiceImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+           com.liferay.document.library.content.service.impl.DLContentLocalServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})

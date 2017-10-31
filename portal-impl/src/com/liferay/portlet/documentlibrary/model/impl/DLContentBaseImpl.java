@@ -29,8 +29,11 @@ import com.liferay.document.library.kernel.service.DLContentLocalServiceUtil;
  * @author Brian Wing Shun Chan
  * @see DLContentImpl
  * @see DLContent
+ * @deprecated As of 7.0.0, replaced by {@link
+           com.liferay.document.library.content.model.impl.DLContentImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public abstract class DLContentBaseImpl extends DLContentModelImpl
 	implements DLContent {

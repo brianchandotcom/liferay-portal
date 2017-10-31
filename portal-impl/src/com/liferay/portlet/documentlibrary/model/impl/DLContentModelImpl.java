@@ -52,8 +52,11 @@ import java.util.Map;
  * @see DLContentImpl
  * @see DLContent
  * @see DLContentModel
+ * @deprecated As of 7.0.0, replaced by {@link
+           com.liferay.document.library.content.model.impl.DLContentImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	implements DLContentModel {

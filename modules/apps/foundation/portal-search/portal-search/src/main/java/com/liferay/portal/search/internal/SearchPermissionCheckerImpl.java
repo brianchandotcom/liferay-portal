@@ -172,6 +172,16 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 				SearchPermissionCheckerConfiguration.class, properties);
 	}
 
+	private void _addGroup(
+		Group group, List<Role> groupRoles,
+		List<UsersGroupIdRoles> usersGroupIdsRoles) {
+
+		if (group != null) {
+			usersGroupIdsRoles.add(
+				new UsersGroupIdRoles(group.getGroupId(), groupRoles));
+		}
+	}
+
 	private void _addPermissionFields(
 			long companyId, long groupId, String className, String classPK,
 			String viewActionId, Document doc)
@@ -298,8 +308,9 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 				groupRoles.add(siteMemberRole);
 			}
 
-			usersGroupIdsRoles.add(
-				new UsersGroupIdRoles(group.getGroupId(), groupRoles));
+			_addGroup(group, groupRoles, usersGroupIdsRoles);
+
+			_addGroup(group.getStagingGroup(), groupRoles, usersGroupIdsRoles);
 
 			termsCount += groupRoles.size();
 

@@ -138,7 +138,7 @@ public class JavaMultiPlusConcatCheck extends BaseJavaTermCheck {
 				part.startsWith("File.separator") ||
 				part.startsWith("StringPool.") ||
 				(Validator.isVariableName(part) &&
-				 content.matches("(?s).+\\sString\\s+" + part + "\\w.+"))) {
+				 content.matches("(?s).+\\sString\\s+" + part + "\\W.+"))) {
 
 				return true;
 			}

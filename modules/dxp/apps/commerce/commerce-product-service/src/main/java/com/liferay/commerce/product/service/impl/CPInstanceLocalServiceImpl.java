@@ -365,6 +365,13 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	}
 
 	@Override
+	public CPInstance getCPInstance(long cpDefinitionId, String sku)
+		throws PortalException {
+
+		return cpInstancePersistence.findByC_S(cpDefinitionId, sku);
+	}
+
+	@Override
 	public List<CPInstance> getCPInstances(
 			long groupId, int status, int start, int end,
 			OrderByComparator<CPInstance> orderByComparator)

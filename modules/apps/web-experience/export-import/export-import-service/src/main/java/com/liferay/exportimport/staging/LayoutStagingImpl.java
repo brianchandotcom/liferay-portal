@@ -260,19 +260,29 @@ public class LayoutStagingImpl implements LayoutStaging {
 			return false;
 		}
 
-		LayoutRevision layoutRevision = getLayoutRevision(layout);
+		LayoutRevision layoutRevision = null;
 
-		if (layoutRevision != null) {
-			layoutRevision = _layoutRevisionLocalService.fetchLayoutRevision(
-				layoutSetBranchId, layoutRevision.getLayoutBranchId(), true,
-				layout.getPlid());
-		}
-		else {
-			List<LayoutRevision> layoutRevisions =
-				_layoutRevisionLocalService.getLayoutRevisions(
-					layoutSetBranchId, layout.getPlid(), true);
+		List<LayoutRevision> layoutRevisions =
+			_layoutRevisionLocalService.getLayoutRevisions(
+				layoutSetBranchId, layout.getPlid(), true);
 
-			if (!layoutRevisions.isEmpty()) {
+		if (!layoutRevisions.isEmpty()) {
+			if (layoutRevisions.size() > 1) {
+				layoutRevision = getLayoutRevision(layout);
+
+				long layoutBranchId = GetterUtil.DEFAULT_LONG;
+
+				if (layoutRevision != null) {
+					layoutBranchId = layoutRevision.getLayoutBranchId();
+				}
+
+				layoutRevision =
+					_layoutRevisionLocalService.fetchLayoutRevision(
+						layoutSetBranchId, layoutBranchId, true,
+						layout.getPlid());
+			}
+
+			if ((layoutRevision == null) && !layoutRevisions.isEmpty()) {
 				layoutRevision = layoutRevisions.get(0);
 			}
 		}

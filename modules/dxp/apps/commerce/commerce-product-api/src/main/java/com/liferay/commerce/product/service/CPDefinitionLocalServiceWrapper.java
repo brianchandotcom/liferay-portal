@@ -50,6 +50,7 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
@@ -66,8 +67,8 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionLocalService.addCPDefinition(titleMap,
-			shortDescriptionMap, descriptionMap, metaTitleMap, metaKeywordsMap,
-			metaDescriptionMap, layoutUuid, productTypeName,
+			shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
+			metaKeywordsMap, metaDescriptionMap, layoutUuid, productTypeName,
 			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
 			shippingExtraPrice, width, height, depth, weight, ddmStructureKey,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
@@ -81,6 +82,7 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
@@ -96,8 +98,8 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionLocalService.addCPDefinition(titleMap,
-			shortDescriptionMap, descriptionMap, metaTitleMap, metaKeywordsMap,
-			metaDescriptionMap, layoutUuid, productTypeName,
+			shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
+			metaKeywordsMap, metaDescriptionMap, layoutUuid, productTypeName,
 			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
 			shippingExtraPrice, width, height, depth, weight, ddmStructureKey,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
@@ -111,6 +113,10 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap,
+		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
+		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
+		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
 		java.lang.String layoutUuid, java.lang.String productTypeName,
 		boolean ignoreSKUCombinations, java.lang.String ddmStructureKey,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
@@ -120,7 +126,8 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionLocalService.addCPDefinition(titleMap,
-			shortDescriptionMap, descriptionMap, layoutUuid, productTypeName,
+			shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
+			metaKeywordsMap, metaDescriptionMap, layoutUuid, productTypeName,
 			ignoreSKUCombinations, ddmStructureKey, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
@@ -650,6 +657,10 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap,
+		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
+		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
+		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
 		java.lang.String layoutUuid, boolean ignoreSKUCombinations,
 		java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
@@ -659,26 +670,13 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionLocalService.updateCPDefinition(cpDefinitionId,
-			titleMap, shortDescriptionMap, descriptionMap, layoutUuid,
+			titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
+			metaTitleMap, metaKeywordsMap, metaDescriptionMap, layoutUuid,
 			ignoreSKUCombinations, ddmStructureKey, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, serviceContext);
-	}
-
-	@Override
-	public com.liferay.commerce.product.model.CPDefinition updateSEOInfo(
-		long cpDefinitionId,
-		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap,
-		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
-		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
-		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionLocalService.updateSEOInfo(cpDefinitionId,
-			urlTitleMap, metaTitleMap, metaKeywordsMap, metaDescriptionMap,
-			serviceContext);
 	}
 
 	@Override

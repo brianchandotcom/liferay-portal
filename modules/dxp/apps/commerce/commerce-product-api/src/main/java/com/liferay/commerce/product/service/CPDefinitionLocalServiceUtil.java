@@ -57,6 +57,7 @@ public class CPDefinitionLocalServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
@@ -74,20 +75,21 @@ public class CPDefinitionLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCPDefinition(titleMap, shortDescriptionMap,
-			descriptionMap, metaTitleMap, metaKeywordsMap, metaDescriptionMap,
-			layoutUuid, productTypeName, ignoreSKUCombinations, shippable,
-			freeShipping, shipSeparately, shippingExtraPrice, width, height,
-			depth, weight, ddmStructureKey, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			hasDefaultInstance, serviceContext);
+			descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
+			metaDescriptionMap, layoutUuid, productTypeName,
+			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
+			shippingExtraPrice, width, height, depth, weight, ddmStructureKey,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, hasDefaultInstance, serviceContext);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinition addCPDefinition(
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
@@ -104,20 +106,24 @@ public class CPDefinitionLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCPDefinition(titleMap, shortDescriptionMap,
-			descriptionMap, metaTitleMap, metaKeywordsMap, metaDescriptionMap,
-			layoutUuid, productTypeName, ignoreSKUCombinations, shippable,
-			freeShipping, shipSeparately, shippingExtraPrice, width, height,
-			depth, weight, ddmStructureKey, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
+			metaDescriptionMap, layoutUuid, productTypeName,
+			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
+			shippingExtraPrice, width, height, depth, weight, ddmStructureKey,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinition addCPDefinition(
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap,
+		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
+		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
+		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
 		java.lang.String layoutUuid, java.lang.String productTypeName,
 		boolean ignoreSKUCombinations, java.lang.String ddmStructureKey,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
@@ -128,11 +134,13 @@ public class CPDefinitionLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCPDefinition(titleMap, shortDescriptionMap,
-			descriptionMap, layoutUuid, productTypeName, ignoreSKUCombinations,
-			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, serviceContext);
+			descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
+			metaDescriptionMap, layoutUuid, productTypeName,
+			ignoreSKUCombinations, ddmStructureKey, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	public static void checkCPDefinitions()
@@ -601,6 +609,10 @@ public class CPDefinitionLocalServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap,
+		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
+		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
+		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
 		java.lang.String layoutUuid, boolean ignoreSKUCombinations,
 		java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
@@ -611,25 +623,13 @@ public class CPDefinitionLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCPDefinition(cpDefinitionId, titleMap,
-			shortDescriptionMap, descriptionMap, layoutUuid,
+			shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
+			metaKeywordsMap, metaDescriptionMap, layoutUuid,
 			ignoreSKUCombinations, ddmStructureKey, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, serviceContext);
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinition updateSEOInfo(
-		long cpDefinitionId,
-		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap,
-		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
-		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
-		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateSEOInfo(cpDefinitionId, urlTitleMap, metaTitleMap,
-			metaKeywordsMap, metaDescriptionMap, serviceContext);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinition updateShippingInfo(

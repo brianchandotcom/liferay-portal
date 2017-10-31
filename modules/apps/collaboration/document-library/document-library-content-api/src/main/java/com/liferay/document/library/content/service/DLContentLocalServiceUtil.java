@@ -41,12 +41,6 @@ public class DLContentLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.document.library.content.service.impl.DLContentLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	* NOTE FOR DEVELOPERS:
-	*
-	* Never reference this class directly. Always use {@link DLContentLocalServiceUtil} to access the document library content local service.
-	*/
 	public static com.liferay.document.library.content.model.DLContent addContent(
 		long companyId, long repositoryId, java.lang.String path,
 		java.lang.String version, byte[] bytes) {

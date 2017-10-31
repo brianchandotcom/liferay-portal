@@ -33,11 +33,6 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService,
 		_dlContentLocalService = dlContentLocalService;
 	}
 
-	/**
-	* NOTE FOR DEVELOPERS:
-	*
-	* Never reference this class directly. Always use {@link DLContentLocalServiceUtil} to access the document library content local service.
-	*/
 	@Override
 	public com.liferay.document.library.content.model.DLContent addContent(
 		long companyId, long repositoryId, java.lang.String path,

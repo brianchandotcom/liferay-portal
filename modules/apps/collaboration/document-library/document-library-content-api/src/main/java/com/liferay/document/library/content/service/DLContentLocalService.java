@@ -63,12 +63,6 @@ public interface DLContentLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLContentLocalServiceUtil} to access the document library content local service. Add custom service methods to {@link com.liferay.document.library.content.service.impl.DLContentLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-
-	/**
-	* NOTE FOR DEVELOPERS:
-	*
-	* Never reference this class directly. Always use {@link DLContentLocalServiceUtil} to access the document library content local service.
-	*/
 	public DLContent addContent(long companyId, long repositoryId,
 		java.lang.String path, java.lang.String version, byte[] bytes);
 

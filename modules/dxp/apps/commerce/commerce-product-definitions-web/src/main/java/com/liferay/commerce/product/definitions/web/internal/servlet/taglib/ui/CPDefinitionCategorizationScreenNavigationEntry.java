@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui;
 
-import com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionsSEOInfoDisplayContext;
+import com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionsDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
@@ -46,22 +46,24 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"screen.navigation.category.order:Integer=30",
-		"screen.navigation.entry.order:Integer=30"
+		"screen.navigation.category.order:Integer=90",
+		"screen.navigation.entry.order:Integer=10"
 	},
 	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
-public class CPDefinitionSEOInfoScreenNavigationEntry
+public class CPDefinitionCategorizationScreenNavigationEntry
 	implements ScreenNavigationCategory, ScreenNavigationEntry<CPDefinition> {
 
 	@Override
 	public String getCategoryKey() {
-		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SEO;
+		return CPDefinitionScreenNavigationConstants.
+			CATEGORY_KEY_CATEGORIZATION;
 	}
 
 	@Override
 	public String getEntryKey() {
-		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SEO;
+		return CPDefinitionScreenNavigationConstants.
+			CATEGORY_KEY_CATEGORIZATION;
 	}
 
 	@Override
@@ -71,7 +73,7 @@ public class CPDefinitionSEOInfoScreenNavigationEntry
 
 		return LanguageUtil.get(
 			resourceBundle,
-			CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SEO);
+			CPDefinitionScreenNavigationConstants.CATEGORY_KEY_CATEGORIZATION);
 	}
 
 	@Override
@@ -96,15 +98,13 @@ public class CPDefinitionSEOInfoScreenNavigationEntry
 		throws IOException {
 
 		try {
-			CPDefinitionsSEOInfoDisplayContext
-				cpDefinitionsSEOInfoDisplayContext =
-					new CPDefinitionsSEOInfoDisplayContext(
-						_actionHelper, httpServletRequest, _cpDefinitionService,
-						_itemSelector);
+			CPDefinitionsDisplayContext cpDefinitionsDisplayContext =
+				new CPDefinitionsDisplayContext(
+					_actionHelper, httpServletRequest, _cpDefinitionService,
+					_itemSelector);
 
 			httpServletRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				cpDefinitionsSEOInfoDisplayContext);
+				WebKeys.PORTLET_DISPLAY_CONTEXT, cpDefinitionsDisplayContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -112,11 +112,11 @@ public class CPDefinitionSEOInfoScreenNavigationEntry
 
 		_jspRenderer.renderJSP(
 			_setServletContext, httpServletRequest, httpServletResponse,
-			"/edit_definition_seo_info.jsp");
+			"/definition_categorization.jsp");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CPDefinitionSEOInfoScreenNavigationEntry.class);
+		CPDefinitionCategorizationScreenNavigationEntry.class);
 
 	@Reference
 	private ActionHelper _actionHelper;

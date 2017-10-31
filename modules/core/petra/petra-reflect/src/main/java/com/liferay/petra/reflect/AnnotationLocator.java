@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.annotation;
+package com.liferay.petra.reflect;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

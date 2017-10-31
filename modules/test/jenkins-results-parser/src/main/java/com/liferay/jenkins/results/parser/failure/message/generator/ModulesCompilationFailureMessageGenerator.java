@@ -51,7 +51,11 @@ public class ModulesCompilationFailureMessageGenerator
 	public Element getMessageElement(Build build) {
 		String consoleText = build.getConsoleText();
 
-		if (!consoleText.contains(_TOKEN_COULD_NOT_RESOLVE_CONFIG)) {
+		String jobName = build.getJobName();
+
+		if (!consoleText.contains(_TOKEN_COULD_NOT_RESOLVE_CONFIG) ||
+			!jobName.contains("modules-compile")) {
+
 			return null;
 		}
 

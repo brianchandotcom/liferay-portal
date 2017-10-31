@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.test.rule;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessChannel;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.process.local.LocalProcessLauncher.ShutdownHook
 import com.liferay.portal.kernel.test.rule.BaseTestRule.StatementWrapper;
 import com.liferay.portal.kernel.test.rule.NewEnv.Environment;
 import com.liferay.portal.kernel.test.rule.NewEnv.JVMArgsLine;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.MethodKey;

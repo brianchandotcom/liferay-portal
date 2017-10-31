@@ -14,9 +14,9 @@
 
 package com.liferay.portal.test.rule;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.test.rule.BaseTestRule;
 import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.test.rule.callback.HypersonicServerTestCallback;
 import com.liferay.portal.util.PropsImpl;

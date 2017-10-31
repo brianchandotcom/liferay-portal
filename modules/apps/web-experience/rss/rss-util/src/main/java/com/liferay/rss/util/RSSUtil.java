@@ -14,7 +14,7 @@
 
 package com.liferay.rss.util;
 
-import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 
 import com.sun.syndication.feed.synd.SyndContent;

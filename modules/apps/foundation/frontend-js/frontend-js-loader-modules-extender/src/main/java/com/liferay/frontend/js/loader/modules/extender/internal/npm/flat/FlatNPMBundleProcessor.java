@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -285,8 +286,9 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 		}
 		catch (Exception e) {
 			_log.error(
-				"Unable to parse package of " + flatJSBundle + ": " + location +
-					"/package.json",
+				StringBundler.concat(
+					"Unable to parse package of ", String.valueOf(flatJSBundle),
+					": ", location, "/package.json"),
 				e);
 
 			return;

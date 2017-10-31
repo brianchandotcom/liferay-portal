@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServiceUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.TextFormatter;
 
 import java.lang.reflect.Method;
@@ -38,9 +39,9 @@ public class AlloyServiceInvoker {
 
 		String simpleClassName = className.substring(pos + 7);
 
-		String serviceClassName =
-			className.substring(0, pos) + ".service." + simpleClassName +
-				"LocalService";
+		String serviceClassName = StringBundler.concat(
+			className.substring(0, pos), ".service.", simpleClassName,
+			"LocalService");
 
 		try {
 			identifiableOSGiService =

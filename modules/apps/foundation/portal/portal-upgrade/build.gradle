@@ -7,7 +7,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.osgi.util", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.output.stream.container", version: "2.0.0"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.5.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.49.0"
 	provided group: "org.apache.felix", name: "org.apache.felix.gogo.runtime", version: "0.10.0"
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 }

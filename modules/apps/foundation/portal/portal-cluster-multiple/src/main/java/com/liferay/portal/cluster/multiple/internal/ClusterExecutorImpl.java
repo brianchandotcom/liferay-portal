@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.PortalInetSocketAddressEventListener;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -150,8 +151,10 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 				if (clusterNodeStatus == null) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to get cluster node " + clusterNodeId +
-								" while executing " + clusterRequest);
+							StringBundler.concat(
+								"Unable to get cluster node ", clusterNodeId,
+								" while executing ",
+								String.valueOf(clusterRequest)));
 					}
 
 					continue;
@@ -331,8 +334,9 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 				_localClusterNodeStatus.getClusterNode(),
 				clusterRequest.getUuid(),
 				new ClusterException(
-					methodHandler + " returned value " + result +
-						" that is not serializable"));
+					StringBundler.concat(
+						String.valueOf(methodHandler), " returned value ",
+						String.valueOf(result), " that is not serializable")));
 		}
 		catch (Exception e) {
 			return ClusterNodeResponse.createExceptionClusterNodeResponse(
@@ -462,8 +466,10 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 			ClusterNode clusterNode = clusterNodeResponse.getClusterNode();
 
 			_log.warn(
-				"Unexpected cluster node ID " + clusterNode.getClusterNodeId() +
-					" for response container with UUID " + uuid);
+				StringBundler.concat(
+					"Unexpected cluster node ID ",
+					clusterNode.getClusterNodeId(),
+					" for response container with UUID ", uuid));
 		}
 	}
 

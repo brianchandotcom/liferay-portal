@@ -20,9 +20,15 @@ definition {
 
 	@priority = "5"
 	testAddUser {
+		var specialCharacters = "&quot;\&quot;";
 		var userEmailAddress = "userea@liferay.com";
 		var userFirstName = "userfn";
 		var userLastName = "userln";
+
+		FormFields.editText(
+			fieldName = "label",
+			fieldValue = ",-+!@#$%^*()=_.?/;:{}[]\|"
+		);
 
 		ProductMenu.gotoControlPanelUsers(
 			portlet = "Users and Organizations"

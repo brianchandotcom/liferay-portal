@@ -18,9 +18,15 @@
 	</tear-down>
 
 	<command name="AddUser" priority="5">
+		<var name="specialCharacters" value="&quot;\&quot;" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="label" />
+			<var name="fieldValue" value=",-+!@#$%^*()=_.?/;:{}[]\|" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />

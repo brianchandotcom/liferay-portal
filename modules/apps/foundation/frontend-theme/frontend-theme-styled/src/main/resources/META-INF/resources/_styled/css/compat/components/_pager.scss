@@ -3,7 +3,9 @@
 	margin: $line-height-base 0;
 	padding-left: 0;
 	text-align: center;
+
 	@include clearfix;
+
 	li {
 		display: inline;
 		> a,

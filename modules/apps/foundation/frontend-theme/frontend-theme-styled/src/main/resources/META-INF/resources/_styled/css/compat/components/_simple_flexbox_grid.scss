@@ -15,12 +15,12 @@
 }
 
 .flex-container {
+	-ms-flex-direction: row;
+	-ms-flex-wrap: wrap;
 	display: -ms-flexbox;
 	display: flex;
-	-ms-flex-direction: row;
 	flex-direction: row;
 	flex-flow: row;
-	-ms-flex-wrap: wrap;
 	flex-wrap: wrap;
 }
 
@@ -30,24 +30,24 @@
 }
 
 .flex-row-vertical {
+	-ms-flex-direction: column;
 	display: -ms-flexbox;
 	display: flex;
-	-ms-flex-direction: column;
 	flex-direction: column;
 }
 
 .flex-item-expand {
 	-ms-flex: 1;
-	flex: 1;
 	-ms-flex-wrap: wrap;
+	flex: 1;
 	flex-wrap: wrap;
 	min-width: 0;
 }
 
 .flex-item-full {
 	-ms-flex: 1 100%;
-	flex: 1 100%;
 	-ms-flex-wrap: wrap;
+	flex: 1 100%;
 	flex-wrap: wrap;
 
 	+ .flex-item-expand {

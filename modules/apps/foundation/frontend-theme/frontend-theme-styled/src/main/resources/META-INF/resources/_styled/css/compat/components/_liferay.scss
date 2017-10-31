@@ -48,6 +48,12 @@
 	}
 }
 
+// Modals
+
+.dialog-with-footer .button-holder.dialog-footer {
+	background-color: $modal-content-bg;
+}
+
 // Friendly URL
 
 .lfr-friendly-url-input-group.input-group {
@@ -63,9 +69,18 @@
 
 // Forms builder
 
+#settings .lfr-ddm-form-page {
+	margin-top: 0;
+}
+
+.autosave-bar .toolbar {
+	align-items: center;
+}
+
 .form-builder-sidebar {
 	.tab-content .tab-pane {
 		padding: 24px;
+		position: static;
 	}
 
 	.input-group-container {

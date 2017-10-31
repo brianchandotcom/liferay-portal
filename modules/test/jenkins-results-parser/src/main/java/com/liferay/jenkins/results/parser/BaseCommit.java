@@ -25,8 +25,13 @@ import org.json.JSONObject;
 public class BaseCommit implements Commit {
 
 	public BaseCommit(String message, String sha) {
+		this(message, sha, null);
+	}
+
+	public BaseCommit(String message, String sha, Type type) {
 		_message = message;
 		_sha = sha;
+		_type = type;
 	}
 
 	@Override
@@ -51,6 +56,11 @@ public class BaseCommit implements Commit {
 	}
 
 	@Override
+	public Type getType() {
+		return _type;
+	}
+
+	@Override
 	public int hashCode() {
 		JSONObject jsonObject = _toJSONObject();
 
@@ -72,5 +82,6 @@ public class BaseCommit implements Commit {
 
 	private final String _message;
 	private final String _sha;
+	private final Type _type;
 
 }

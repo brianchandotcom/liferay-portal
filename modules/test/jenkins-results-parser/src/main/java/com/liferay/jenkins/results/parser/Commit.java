@@ -28,4 +28,11 @@ public interface Commit {
 
 	public String getSHA();
 
+	public Type getType();
+
+	public enum Type {
+
+		LEGACY_ARCHIVE, MANUAL
+	};
+
 }

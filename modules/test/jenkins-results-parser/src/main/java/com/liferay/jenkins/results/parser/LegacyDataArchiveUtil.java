@@ -116,11 +116,11 @@ public class LegacyDataArchiveUtil {
 		return _generatedLegacyDataArchiveDirectory;
 	}
 
-	public List<LegacyDataArchiveCommit> getLatestLegacyDataArchiveCommits() {
+	public List<Commit> getLatestLegacyDataArchiveCommits() {
 		return _latestLegacyDataArchiveCommits;
 	}
 
-	public ManualCommit getLatestManualCommit() {
+	public Commit getLatestManualCommit() {
 		return _latestManualCommit;
 	}
 
@@ -286,9 +286,8 @@ public class LegacyDataArchiveUtil {
 			Arrays.asList(legacyDataArchiveDatabaseNames.split(",")));
 	}
 
-	private List<LegacyDataArchiveCommit> _getLatestLegacyDataArchiveCommits() {
-		List<LegacyDataArchiveCommit> latestLegacyDataArchiveCommits =
-			new ArrayList<>();
+	private List<Commit> _getLatestLegacyDataArchiveCommits() {
+		List<Commit> latestLegacyDataArchiveCommits = new ArrayList<>();
 
 		String gitLog = _legacyDataGitWorkingDirectory.log(50);
 
@@ -297,9 +296,8 @@ public class LegacyDataArchiveUtil {
 		for (String gitLogEntity : gitLogEntities) {
 			Commit commit = CommitFactory.newCommit(gitLogEntity);
 
-			if (commit instanceof LegacyDataArchiveCommit) {
-				latestLegacyDataArchiveCommits.add(
-					(LegacyDataArchiveCommit)commit);
+			if (commit.getType() == Commit.Type.LEGACY_ARCHIVE) {
+				latestLegacyDataArchiveCommits.add(commit);
 
 				continue;
 			}
@@ -310,7 +308,7 @@ public class LegacyDataArchiveUtil {
 		return latestLegacyDataArchiveCommits;
 	}
 
-	private ManualCommit _getLatestManualCommit() {
+	private Commit _getLatestManualCommit() {
 		String gitLog = _legacyDataGitWorkingDirectory.log(50);
 
 		String[] gitLogEntities = gitLog.split("\n");
@@ -318,11 +316,11 @@ public class LegacyDataArchiveUtil {
 		for (String gitLogEntity : gitLogEntities) {
 			Commit commit = CommitFactory.newCommit(gitLogEntity);
 
-			if (!(commit instanceof ManualCommit)) {
+			if (commit.getType() != Commit.Type.MANUAL) {
 				continue;
 			}
 
-			return (ManualCommit)commit;
+			return commit;
 		}
 
 		return null;
@@ -475,8 +473,8 @@ public class LegacyDataArchiveUtil {
 		"[^/]+/([^/]+)/([^/]+)/\\d+");
 
 	private final File _generatedLegacyDataArchiveDirectory;
-	private final List<LegacyDataArchiveCommit> _latestLegacyDataArchiveCommits;
-	private final ManualCommit _latestManualCommit;
+	private final List<Commit> _latestLegacyDataArchiveCommits;
+	private final Commit _latestManualCommit;
 	private final Map<String, LegacyDataArchiveGroup>
 		_legacyDataArchiveGroupMap;
 	private final List<LegacyDataArchive> _legacyDataArchives;

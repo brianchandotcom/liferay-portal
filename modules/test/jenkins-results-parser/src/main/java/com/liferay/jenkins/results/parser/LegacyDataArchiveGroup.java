@@ -53,7 +53,7 @@ public class LegacyDataArchiveGroup {
 			!status.contains(
 				"nothing added to commit but untracked files present")) {
 
-			ManualCommit latestManualCommit =
+			Commit latestManualCommit =
 				_legacyDataArchiveUtil.getLatestManualCommit();
 
 			legacyDataGitWorkingDirectory.commitStagedFilesToCurrentBranch(

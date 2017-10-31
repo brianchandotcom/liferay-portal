@@ -68,10 +68,10 @@ public class LegacyDataArchive {
 			return false;
 		}
 
-		List<LegacyDataArchiveCommit> latestLegacyDataArchiveCommits =
+		List<Commit> latestLegacyDataArchiveCommits =
 			_legacyDataArchiveBranch.getLatestLegacyDataArchiveCommits();
 
-		for (LegacyDataArchiveCommit latestLegacyDataArchiveCommit :
+		for (Commit latestLegacyDataArchiveCommit :
 				latestLegacyDataArchiveCommits) {
 
 			if (_commit.equals(latestLegacyDataArchiveCommit)) {

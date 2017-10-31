@@ -302,7 +302,7 @@
 		</execute>
 
 		<execute macro="LAR#importSiteCP">
-			<var name="larFileName" value="HR_Home_Page_Content.lar" />
+			<var name="larFileName" value="HR_Home_Page_Content_master.lar" />
 			<var name="mirrorWithOverwriting" value="true" />
 			<var name="uploadFrom" value="dependencies" />
 		</execute>

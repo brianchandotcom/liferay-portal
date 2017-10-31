@@ -53,15 +53,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
-import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
-import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -73,14 +64,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -172,6 +157,10 @@ public class S3Store extends BaseStore {
 		}
 	}
 
+	public String getBucketName() {
+		return _bucketName;
+	}
+
 	@Override
 	public File getFile(
 			long companyId, long repositoryId, String fileName,
@@ -261,6 +250,10 @@ public class S3Store extends BaseStore {
 		}
 
 		return objectMetadata.getContentLength();
+	}
+
+	public TransferManager getTransferManager() {
+		return _transferManager;
 	}
 
 	@Override
@@ -408,12 +401,6 @@ public class S3Store extends BaseStore {
 					iae);
 			}
 		}
-
-		_abortedMultipartUploadCleaner = new AbortedMultipartUploadCleaner(
-			_bucketName, _transferManager, _triggerFactory,
-			_schedulerEngineHelper);
-
-		_abortedMultipartUploadCleaner.start();
 	}
 
 	protected void configureProxySettings(
@@ -453,8 +440,6 @@ public class S3Store extends BaseStore {
 		_awsCredentialsProvider = null;
 		_bucketName = null;
 		_s3StoreConfiguration = null;
-
-		_abortedMultipartUploadCleaner.stop();
 	}
 
 	protected void deleteObjects(String prefix) {
@@ -823,75 +808,7 @@ public class S3Store extends BaseStore {
 	private String _bucketName;
 	private S3FileCache _s3FileCache;
 	private S3KeyTransformer _s3KeyTransformer;
-
-	@Reference(unbind = "-")
-	private volatile SchedulerEngineHelper _schedulerEngineHelper;
-
 	private StorageClass _storageClass;
 	private TransferManager _transferManager;
-
-	@Reference(unbind = "-")
-	private volatile TriggerFactory _triggerFactory;
-
-	private static class AbortedMultipartUploadCleaner
-		extends BaseMessageListener {
-
-		public AbortedMultipartUploadCleaner(
-			String bucketName, TransferManager transferManager,
-			TriggerFactory triggerFactory,
-			SchedulerEngineHelper schedulerEngineHelper) {
-
-			_bucketName = bucketName;
-			_transferManager = transferManager;
-			_triggerFactory = triggerFactory;
-			_schedulerEngineHelper = schedulerEngineHelper;
-		}
-
-		public void start() {
-			Class<?> clazz = getClass();
-
-			String className = clazz.getName();
-
-			Trigger trigger = _triggerFactory.createTrigger(
-				className, className, null, null, 1, TimeUnit.DAY);
-
-			SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
-				className, trigger);
-
-			_schedulerEngineHelper.register(
-				this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
-		}
-
-		public void stop() {
-			_schedulerEngineHelper.unregister(this);
-		}
-
-		@Override
-		protected void doReceive(Message message) throws Exception {
-			_transferManager.abortMultipartUploads(
-				_bucketName, _computeStartDate());
-		}
-
-		private Date _computeStartDate() {
-			Date date = new Date();
-
-			LocalDateTime localDateTime = LocalDateTime.ofInstant(
-				date.toInstant(), ZoneId.systemDefault());
-
-			LocalDateTime previousDayLocalDateTime = localDateTime.minus(
-				1, ChronoUnit.DAYS);
-
-			ZonedDateTime zonedDateTime = previousDayLocalDateTime.atZone(
-				ZoneId.systemDefault());
-
-			return Date.from(zonedDateTime.toInstant());
-		}
-
-		private String _bucketName;
-		private final SchedulerEngineHelper _schedulerEngineHelper;
-		private TransferManager _transferManager;
-		private volatile TriggerFactory _triggerFactory;
-
-	}
 
 }

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.taglib.util.CustomAttributesUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -230,6 +231,16 @@ public class CPInstanceDisplayContext
 
 		return actionHelper.getSkuContributorCPDefinitionOptionRels(
 			getCPDefinitionId());
+	}
+
+	public boolean hasCustomAttributesAvailable() throws Exception {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return CustomAttributesUtil.hasCustomAttributes(
+			themeDisplay.getCompanyId(), CPInstance.class.getName(),
+			getCPInstanceId(), null);
 	}
 
 	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>

@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.taglib.util.CustomAttributesUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -300,6 +301,16 @@ public class CPDefinitionsDisplayContext
 		}
 
 		return _cpDefinitionService.getUrlTitleMapAsXML(cpDefinitionId);
+	}
+
+	public boolean hasCustomAttributesAvailable() throws Exception {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return CustomAttributesUtil.hasCustomAttributes(
+			themeDisplay.getCompanyId(), CPDefinition.class.getName(),
+			getCPDefinitionId(), null);
 	}
 
 	private final CPDefinitionService _cpDefinitionService;

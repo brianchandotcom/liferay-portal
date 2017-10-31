@@ -17,25 +17,31 @@ package com.liferay.portal.kernel.process.local;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
 
+import java.io.Serializable;
+
 /**
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, with no direct replacement
  */
-@Deprecated
-public class ExceptionProcessCallable
-	implements ProcessCallable<ProcessException> {
+class ResultProcessCallable <T extends Serializable>
+	implements ProcessCallable<T> {
 
-	public ExceptionProcessCallable(ProcessException processException) {
+	ResultProcessCallable(T returnValue, ProcessException processException) {
+		_returnValue = returnValue;
 		_processException = processException;
 	}
 
 	@Override
-	public ProcessException call() throws ProcessException {
-		throw _processException;
+	public T call() throws ProcessException {
+		if (_processException != null) {
+			throw _processException;
+		}
+
+		return _returnValue;
 	}
 
 	private static final long serialVersionUID = 1L;
 
 	private final ProcessException _processException;
+	private final T _returnValue;
 
 }

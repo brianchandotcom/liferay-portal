@@ -130,7 +130,7 @@ public class LocalProcessLauncher {
 			System.out.flush();
 
 			outProcessOutputStream.writeProcessCallable(
-				new ReturnProcessCallable<Serializable>(result));
+				new ResultProcessCallable<>(result, null));
 
 			outProcessOutputStream.flush();
 		}
@@ -147,7 +147,7 @@ public class LocalProcessLauncher {
 			}
 
 			errProcessOutputStream.writeProcessCallable(
-				new ExceptionProcessCallable(processException));
+				new ResultProcessCallable<>(null, processException));
 
 			errProcessOutputStream.flush();
 		}

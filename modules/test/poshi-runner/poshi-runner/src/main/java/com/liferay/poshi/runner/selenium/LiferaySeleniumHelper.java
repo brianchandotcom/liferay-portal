@@ -417,6 +417,10 @@ public class LiferaySeleniumHelper {
 	}
 
 	public static String getTestConsoleLogFileContent() throws Exception {
+		if (Validator.isNull(PropsValues.TEST_CONSOLE_LOG_FILE_NAME)) {
+			return "";
+		}
+
 		Map<String, File> consoleLogFiles = new TreeMap<>();
 
 		String baseDirName = PropsValues.TEST_CONSOLE_LOG_FILE_NAME;

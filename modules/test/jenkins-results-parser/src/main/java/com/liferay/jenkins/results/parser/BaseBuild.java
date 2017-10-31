@@ -987,6 +987,12 @@ public abstract class BaseBuild implements Build {
 			return;
 		}
 
+		if (_offlinedSlaves.contains(slave)) {
+			return;
+		}
+
+		_offlinedSlaves.add(slave);
+
 		String message = JenkinsResultsParserUtil.combine(
 			slaveOfflineRule.getName(), " failure detected at ", getBuildURL(),
 			". ", slave, " will be taken offline.\n\n",
@@ -2185,6 +2191,8 @@ public abstract class BaseBuild implements Build {
 
 	private static final String[] _HIGH_PRIORITY_CONTENT_FLAGS =
 		{"compileJSP", "SourceFormatter.format", "Unable to compile JSPs"};
+
+	private static final Set<String> _offlinedSlaves = new HashSet<>();
 
 	private int _buildNumber = -1;
 	private int _consoleReadCursor;

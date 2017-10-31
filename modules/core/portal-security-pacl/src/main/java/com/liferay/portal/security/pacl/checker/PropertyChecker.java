@@ -16,6 +16,7 @@ package com.liferay.portal.security.pacl.checker;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.security.Permission;
 import java.security.Permissions;
@@ -72,7 +73,9 @@ public class PropertyChecker extends BaseChecker {
 		String action = permission.getActions();
 
 		logSecurityException(
-			_log, "Attempted to " + action + " system property " + name);
+			_log,
+			StringBundler.concat(
+				"Attempted to ", action, " system property ", name));
 
 		return false;
 	}

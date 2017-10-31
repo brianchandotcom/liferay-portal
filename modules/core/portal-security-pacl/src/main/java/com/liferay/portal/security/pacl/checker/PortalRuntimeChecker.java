@@ -169,14 +169,16 @@ public class PortalRuntimeChecker extends BaseChecker {
 				if (Validator.isNotNull(property)) {
 					logSecurityException(
 						_log,
-						"Attempted to get bean property " + property + " on " +
-							subject + " from " + servletContextName);
+						StringBundler.concat(
+							"Attempted to get bean property ", property, " on ",
+							subject, " from ", servletContextName));
 				}
 				else {
 					logSecurityException(
 						_log,
-						"Attempted to get bean property on " + subject +
-							" from " + servletContextName);
+						StringBundler.concat(
+							"Attempted to get bean property on ", subject,
+							" from ", servletContextName));
 				}
 
 				return false;
@@ -213,14 +215,16 @@ public class PortalRuntimeChecker extends BaseChecker {
 				if (Validator.isNotNull(property)) {
 					logSecurityException(
 						_log,
-						"Attempted to set bean property " + property + " on " +
-							subject + " from " + servletContextName);
+						StringBundler.concat(
+							"Attempted to set bean property ", property, " on ",
+							subject, " from ", servletContextName));
 				}
 				else {
 					logSecurityException(
 						_log,
-						"Attempted to set bean property on " + subject +
-							" from " + servletContextName);
+						StringBundler.concat(
+							"Attempted to set bean property on ", subject,
+							" from ", servletContextName));
 				}
 
 				return false;
@@ -452,8 +456,9 @@ public class PortalRuntimeChecker extends BaseChecker {
 
 				for (String className : classNames) {
 					_log.debug(
-						"Allowing get bean property from " +
-							servletContextName + " on class " + className);
+						StringBundler.concat(
+							"Allowing get bean property from ",
+							servletContextName, " on class ", className));
 				}
 			}
 		}
@@ -480,9 +485,9 @@ public class PortalRuntimeChecker extends BaseChecker {
 
 			for (String className : classNames) {
 				_log.debug(
-					"Allowing get bean property from " +
-						_PORTAL_SERVLET_CONTEXT_NAME + " on class " +
-							className);
+					StringBundler.concat(
+						"Allowing get bean property from ",
+						_PORTAL_SERVLET_CONTEXT_NAME, " on class ", className));
 			}
 		}
 	}
@@ -552,8 +557,9 @@ public class PortalRuntimeChecker extends BaseChecker {
 
 				for (String className : classNames) {
 					_log.debug(
-						"Allowing set bean property from " +
-							servletContextName + " on class " + className);
+						StringBundler.concat(
+							"Allowing set bean property from ",
+							servletContextName, " on class ", className));
 				}
 			}
 		}
@@ -580,9 +586,9 @@ public class PortalRuntimeChecker extends BaseChecker {
 
 			for (String className : classNames) {
 				_log.debug(
-					"Allowing set bean property from " +
-						_PORTAL_SERVLET_CONTEXT_NAME + " on class " +
-							className);
+					StringBundler.concat(
+						"Allowing set bean property from ",
+						_PORTAL_SERVLET_CONTEXT_NAME, " on class ", className));
 			}
 		}
 	}

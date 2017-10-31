@@ -16,6 +16,7 @@ package com.liferay.portal.tools.target.platform.indexer.client;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.target.platform.indexer.Indexer;
 import com.liferay.portal.target.platform.indexer.TargetPlatformIndexerUtil;
 import com.liferay.portal.target.platform.indexer.internal.DefaultIndexValidator;
@@ -76,9 +77,10 @@ public class TargetPlatformIndexerClient {
 
 		String indexesFileName = System.getProperty(
 			"indexes.file",
-			liferayHome + "/osgi/" + Indexer.DIR_NAME_TARGET_PLATFORM +
-				"/target-platform-indexes-" + System.currentTimeMillis() +
-					".zip");
+			StringBundler.concat(
+				liferayHome, "/osgi/", Indexer.DIR_NAME_TARGET_PLATFORM,
+				"/target-platform-indexes-",
+				String.valueOf(System.currentTimeMillis()), ".zip"));
 		long stopWaitTimeout = Long.parseLong(
 			System.getProperty("stop.wait.timeout", "30000"));
 		String moduleFrameworkStaticDirName = System.getProperty(
@@ -102,8 +104,9 @@ public class TargetPlatformIndexerClient {
 		if (_validate(uris)) {
 			String integrityPropertiesFileName = System.getProperty(
 				"integrity.properties",
-				liferayHome + "/osgi/" + Indexer.DIR_NAME_TARGET_PLATFORM +
-					"/integrity.properties");
+				StringBundler.concat(
+					liferayHome, "/osgi/", Indexer.DIR_NAME_TARGET_PLATFORM,
+					"/integrity.properties"));
 
 			_updateIntegrityProperties(
 				uris, Paths.get(integrityPropertiesFileName));

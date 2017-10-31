@@ -18,6 +18,7 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 
 import com.liferay.css.builder.internal.util.FileUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -145,8 +146,10 @@ public class CSSBuilder implements AutoCloseable {
 			_parseSassFile(fileName);
 
 			System.out.println(
-				"Parsed " + fileName + " in " +
-					(System.currentTimeMillis() - startTime) + "ms");
+				StringBundler.concat(
+					"Parsed ", fileName, " in ",
+					String.valueOf(System.currentTimeMillis() - startTime),
+					"ms"));
 		}
 	}
 
@@ -240,8 +243,9 @@ public class CSSBuilder implements AutoCloseable {
 		}
 		catch (Exception e) {
 			System.out.println(
-				"Unable to generate RTL version for " + fileName +
-					StringPool.COMMA_AND_SPACE + e.getMessage());
+				StringBundler.concat(
+					"Unable to generate RTL version for ", fileName,
+					StringPool.COMMA_AND_SPACE, e.getMessage()));
 		}
 
 		return rtlCss;

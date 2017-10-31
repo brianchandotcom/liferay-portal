@@ -280,7 +280,8 @@ public abstract class BasePoshiElement
 	}
 
 	protected static final Pattern nestedVarAssignmentPattern = Pattern.compile(
-		"(\\w*? = \".*?\"|\\w*? = escapeText\\(\".*?\\))", Pattern.DOTALL);
+		"(\\w*? = \".*?\"|\\w*? = escapeText\\(\".*?\"\\))($|\\s|,)",
+		Pattern.DOTALL);
 
 	private void _addAttributes(Element element) {
 		for (Attribute attribute :

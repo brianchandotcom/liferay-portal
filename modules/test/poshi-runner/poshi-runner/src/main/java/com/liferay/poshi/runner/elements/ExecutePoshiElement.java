@@ -247,12 +247,12 @@ public class ExecutePoshiElement extends BasePoshiElement {
 		StringBuffer formattedContent = new StringBuffer();
 
 		while (matcher.find()) {
-			String matcherGroup = matcher.group();
+			String replacementString =
+				pad + matcher.group(1) + "," + matcher.group(2);
 
-			matcherGroup = matcherGroup.replace("$", "\\$");
+			replacementString = replacementString.replace("$", "\\$");
 
-			matcher.appendReplacement(
-				formattedContent, pad + matcherGroup + ",");
+			matcher.appendReplacement(formattedContent, replacementString);
 		}
 
 		if (formattedContent.length() > 1) {

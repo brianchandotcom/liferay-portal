@@ -169,6 +169,8 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
+		<var name="testCDATA"><![CDATA['alert(0)'"alert(0)"><img src=x onerror=alert(0)><script>alert(0)</script>]]></var>
+
 		<var name="wikiPageContent"><![CDATA[<p id='demo'>PASS</p>
 
 <script type='text/javascript'>
@@ -186,6 +188,12 @@
 		<execute macro="KaleoDesigner#viewSourceXMLLine">
 			<var name="kdSourceXML"><![CDATA[<name>Timer Name</name>]]></var>
 			<var name="line" value="21" />
+		</execute>
+
+		<execute macro="User#editDetailsViaMyAccount">
+			<var name="userFirstNameEdit"><![CDATA['alert(0)'"alert(0)"><img src=x onerror=alert(0)><script>alert(0)</script>]]></var>
+			<var name="userLastNameEdit"><![CDATA[<script>document.write("XSS"); window.stop();</script>]]></var>
+			<var name="userMiddleNameEdit"><![CDATA[<script>document.write("XSS"); window.stop();</script>]]></var>
 		</execute>
 
 		<execute macro="Smoke#viewWelcomePage" />

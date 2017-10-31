@@ -127,6 +127,7 @@ definition {
 			),
 			siteName
 		);
+		var testCDATA = escapeText("'alert(0)'"alert(0)"><img src=x onerror=alert(0)><script>alert(0)</script>");
 		var wikiPageContent = escapeText("<p id='demo'>PASS</p>
 
 <script type='text/javascript'>
@@ -144,6 +145,12 @@ definition {
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = escapeText("<name>Timer Name</name>"),
 			line = "21"
+		);
+
+		User.editDetailsViaMyAccount(
+			userFirstNameEdit = escapeText("'alert(0)'"alert(0)"><img src=x onerror=alert(0)><script>alert(0)</script>"),
+			userLastNameEdit = escapeText("<script>document.write("XSS"); window.stop();</script>"),
+			userMiddleNameEdit = escapeText("<script>document.write("XSS"); window.stop();</script>")
 		);
 
 		Smoke.viewWelcomePage();

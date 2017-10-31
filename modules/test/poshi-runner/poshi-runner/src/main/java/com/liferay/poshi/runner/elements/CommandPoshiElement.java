@@ -160,7 +160,7 @@ public class CommandPoshiElement extends BasePoshiElement {
 				if (!trimmedItem.startsWith("var")) {
 					Matcher matcher = nestedVarAssignmentPattern.matcher(item);
 
-					item = matcher.replaceAll("\t$1");
+					item = matcher.replaceAll("\t$1$2");
 
 					if (item.endsWith(");")) {
 						item = item.substring(0, item.length() - 2);

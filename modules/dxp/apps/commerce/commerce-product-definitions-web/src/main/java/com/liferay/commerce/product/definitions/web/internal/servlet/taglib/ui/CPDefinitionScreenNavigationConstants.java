@@ -21,6 +21,10 @@ public class CPDefinitionScreenNavigationConstants {
 
 	public static final String CATEGORY_KEY_ATTACHMENTS = "attachments";
 
+	public static final String CATEGORY_KEY_CATEGORIZATION = "categorization";
+
+	public static final String CATEGORY_KEY_CONFIGURATION = "configuration";
+
 	public static final String CATEGORY_KEY_CROSS_SELL_PRODUCTS =
 		"cross-sell-products";
 
@@ -30,12 +34,8 @@ public class CPDefinitionScreenNavigationConstants {
 
 	public static final String CATEGORY_KEY_OPTIONS = "options";
 
-	public static final String CATEGORY_KEY_PRICING = "pricing";
-
 	public static final String CATEGORY_KEY_RELATED_PRODUCTS =
 		"related-products";
-
-	public static final String CATEGORY_KEY_SEO = "seo";
 
 	public static final String CATEGORY_KEY_SHIPPING = "shipping";
 

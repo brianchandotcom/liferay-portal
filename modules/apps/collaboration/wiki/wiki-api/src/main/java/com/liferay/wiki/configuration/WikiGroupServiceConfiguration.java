@@ -105,7 +105,7 @@ public interface WikiGroupServiceConfiguration {
 	)
 	public String getCreoleEditor();
 
-	@Meta.AD(deflt = "alloyeditor", name = "get-htmleditor", required = false)
+	@Meta.AD(deflt = "alloyeditor", name = "get-html-editor", required = false)
 	public String getHTMLEditor();
 
 	@Meta.AD(deflt = "simple", name = "get-media-wiki-editor", required = false)

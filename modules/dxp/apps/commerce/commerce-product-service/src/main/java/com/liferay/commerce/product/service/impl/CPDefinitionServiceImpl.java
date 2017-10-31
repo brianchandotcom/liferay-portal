@@ -47,7 +47,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	public CPDefinition addCPDefinition(
 			Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
-			Map<Locale, String> descriptionMap,
+			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
 			Map<Locale, String> metaTitleMap,
 			Map<Locale, String> metaKeywordsMap,
 			Map<Locale, String> metaDescriptionMap, String layoutUuid,
@@ -67,21 +67,24 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			CPActionKeys.ADD_COMMERCE_PRODUCT_DEFINITION);
 
 		return cpDefinitionLocalService.addCPDefinition(
-			titleMap, shortDescriptionMap, descriptionMap, metaTitleMap,
-			metaKeywordsMap, metaDescriptionMap, layoutUuid, productTypeName,
-			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
-			shippingExtraPrice, width, height, depth, weight, ddmStructureKey,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
+			titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
+			metaTitleMap, metaKeywordsMap, metaDescriptionMap, layoutUuid,
+			productTypeName, ignoreSKUCombinations, shippable, freeShipping,
+			shipSeparately, shippingExtraPrice, width, height, depth, weight,
+			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
 	}
 
 	@Override
 	public CPDefinition addCPDefinition(
 			Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
-			Map<Locale, String> descriptionMap, String layoutUuid,
+			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
+			Map<Locale, String> metaTitleMap,
+			Map<Locale, String> metaKeywordsMap,
+			Map<Locale, String> metaDescriptionMap, String layoutUuid,
 			String productTypeName, boolean ignoreSKUCombinations,
 			String ddmStructureKey, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -96,7 +99,8 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			CPActionKeys.ADD_COMMERCE_PRODUCT_DEFINITION);
 
 		return cpDefinitionLocalService.addCPDefinition(
-			titleMap, shortDescriptionMap, descriptionMap, layoutUuid,
+			titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
+			metaTitleMap, metaKeywordsMap, metaDescriptionMap, layoutUuid,
 			productTypeName, ignoreSKUCombinations, ddmStructureKey,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
@@ -300,7 +304,10 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	public CPDefinition updateCPDefinition(
 			long cpDefinitionId, Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
-			Map<Locale, String> descriptionMap, String layoutUuid,
+			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
+			Map<Locale, String> metaTitleMap,
+			Map<Locale, String> metaKeywordsMap,
+			Map<Locale, String> metaDescriptionMap, String layoutUuid,
 			boolean ignoreSKUCombinations, String ddmStructureKey,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
@@ -314,28 +321,12 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 		return cpDefinitionLocalService.updateCPDefinition(
 			cpDefinitionId, titleMap, shortDescriptionMap, descriptionMap,
+			urlTitleMap, metaTitleMap, metaKeywordsMap, metaDescriptionMap,
 			layoutUuid, ignoreSKUCombinations, ddmStructureKey,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, serviceContext);
-	}
-
-	@Override
-	public CPDefinition updateSEOInfo(
-			long cpDefinitionId, Map<Locale, String> urlTitleMap,
-			Map<Locale, String> metaTitleMap,
-			Map<Locale, String> metaKeywordsMap,
-			Map<Locale, String> metaDescriptionMap,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
-
-		return cpDefinitionLocalService.updateSEOInfo(
-			cpDefinitionId, urlTitleMap, metaTitleMap, metaKeywordsMap,
-			metaDescriptionMap, serviceContext);
 	}
 
 	@Override

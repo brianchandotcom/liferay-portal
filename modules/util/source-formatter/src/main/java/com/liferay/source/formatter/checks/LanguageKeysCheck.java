@@ -88,7 +88,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 
 	private void _checkLanguageKeys(
 			String fileName, String absolutePath, String content,
-			Pattern pattern)
+			Pattern pattern, Properties properties)
 		throws Exception {
 
 		Matcher matcher = pattern.matcher(content);
@@ -109,7 +109,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 					languageKey.startsWith(StringPool.OPEN_CURLY_BRACE) ||
 					languageKey.startsWith(StringPool.PERIOD) ||
 					languageKey.startsWith(StringPool.UNDERLINE) ||
-					_portalLanguageProperties.containsKey(languageKey)) {
+					properties.containsKey(languageKey)) {
 
 					continue;
 				}

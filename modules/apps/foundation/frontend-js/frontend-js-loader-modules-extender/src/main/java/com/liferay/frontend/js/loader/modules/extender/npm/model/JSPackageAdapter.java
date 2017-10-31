@@ -19,7 +19,6 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
@@ -52,16 +51,9 @@ public abstract class JSPackageAdapter implements JSPackage {
 		_name = name;
 		_version = version;
 		_mainModuleName = mainModuleName;
+		_resolvedId = name + StringPool.AT + version;
 
-		StringBundler id = new StringBundler(5);
-
-		id.append(jsBundle.getId());
-		id.append(StringPool.SLASH);
-		id.append(_name);
-		id.append(StringPool.AT);
-		id.append(_version);
-
-		_id = id.toString();
+		_id = jsBundle.getId() + StringPool.SLASH + _resolvedId;
 	}
 
 	/**
@@ -130,6 +122,11 @@ public abstract class JSPackageAdapter implements JSPackage {
 	}
 
 	@Override
+	public String getResolvedId() {
+		return _resolvedId;
+	}
+
+	@Override
 	public String getVersion() {
 		return _version;
 	}
@@ -142,6 +139,7 @@ public abstract class JSPackageAdapter implements JSPackage {
 		new HashMap<>();
 	private final String _mainModuleName;
 	private final String _name;
+	private final String _resolvedId;
 	private final String _version;
 
 }

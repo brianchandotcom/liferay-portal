@@ -21,6 +21,8 @@ public interface NPMResolver {
 
 	public JSPackage getDependencyJSPackage(String packageName);
 
+	public JSPackage getJSPackage();
+
 	public String resolveModuleName(String moduleName);
 
 }

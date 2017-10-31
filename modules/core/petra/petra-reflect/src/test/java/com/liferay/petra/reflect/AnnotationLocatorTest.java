@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.kernel.annotation;
+package com.liferay.petra.reflect;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;

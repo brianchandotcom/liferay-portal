@@ -437,26 +437,28 @@ public class CSSBuilder implements AutoCloseable {
 
 		String outputFileName;
 
-		boolean absolute = FileUtil.isAbsolute(
-			_cssBuilderArgs.getOutputDirName());
+		boolean absoluteOutputDir = false;
+		String outputFileDirName = _cssBuilderArgs.getOutputDirName();
 
-		String outputFileNameDir =
-			absolute ? StringPool.BLANK : _cssBuilderArgs.getOutputDirName();
+		if (FileUtil.isAbsolute(outputFileDirName)) {
+			absoluteOutputDir = true;
+			outputFileDirName = StringPool.BLANK;
+		}
 
 		if (rtl) {
 			String rtlFileName = CSSBuilderUtil.getRtlCustomFileName(fileName);
 
 			outputFileName = CSSBuilderUtil.getOutputFileName(
-				rtlFileName, outputFileNameDir, StringPool.BLANK);
+				rtlFileName, outputFileDirName, StringPool.BLANK);
 		}
 		else {
 			outputFileName = CSSBuilderUtil.getOutputFileName(
-				fileName, outputFileNameDir, StringPool.BLANK);
+				fileName, outputFileDirName, StringPool.BLANK);
 		}
 
 		File outputFile;
 
-		if (absolute) {
+		if (absoluteOutputDir) {
 			outputFile = new File(
 				_cssBuilderArgs.getOutputDirName(), outputFileName);
 		}

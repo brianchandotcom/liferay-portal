@@ -69,6 +69,22 @@
 	<td>//fieldset[contains(.,'Certificate and Private Key')]//button[contains(.,'Save')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--IDENTITY_PROVIDER-->
+<tr>
+	<td>IDENTITY_PROVIDER_SESSION_IDLE_TIMEOUT</td>
+	<td>//input[contains(@id,'saml-idp-session-timeout')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IDENTITY_PROVIDER_SESSION_MAXIMUM_AGE</td>
+	<td>//input[contains(@id,'saml-idp-session-maximum-age')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

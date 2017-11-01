@@ -53,7 +53,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.scheduler.SchedulerClusterInvokingThreadLocal;
-import com.liferay.portal.scheduler.configuration.SchedulerEngineHelperConfiguration;
+import com.liferay.portal.scheduler.internal.configuration.SchedulerEngineHelperConfiguration;
 import com.liferay.portal.scheduler.internal.messaging.config.SchedulerProxyMessagingConfigurator;
 import com.liferay.portal.scheduler.internal.messaging.config.ScriptingMessageListener;
 

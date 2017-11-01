@@ -114,11 +114,8 @@ public class PoshiRunnerCommandExecutor {
 	protected static void printSystemProperties() throws Exception {
 		Properties systemProperties = System.getProperties();
 
-		StringBuilder sb = new StringBuilder();
-
-		for (Entry<Object, Object> e : systemProperties.entrySet()) {
-			sb.append(e);
-			sb.append("\n");
+		for (Entry<Object, Object> entry : systemProperties.entrySet()) {
+			System.out.println(entry);
 		}
 	}
 

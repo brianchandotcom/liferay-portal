@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.scheduler;
+package com.liferay.portal.scheduler.internal;
 
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.proxy.BaseProxyBean;
@@ -25,10 +25,7 @@ import java.util.List;
 
 /**
  * @author Tina Tian
- * @deprecated As of 3.1.0, replaced by {@link
- *              com.liferay.portal.scheduler.internal.SchedulerEngineProxyBean}
  */
-@Deprecated
 public class SchedulerEngineProxyBean
 	extends BaseProxyBean implements SchedulerEngine {
 

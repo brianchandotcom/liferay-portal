@@ -2767,6 +2767,9 @@ to version 2.3.17.
 ## 3.5.26 - 2017-11-01
 
 ### Changed
+- [LPS-75589]: Update the [Liferay CSS Builder] dependency to version 2.0.1.
+- [LPS-75589]: Update the [Liferay Gradle Plugins CSS Builder] dependency to
+version 2.1.6.
 - [LPS-75624]: Set the default Node.js version to 8.9.0.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
@@ -3017,6 +3020,7 @@ to version 2.3.17.
 [LPS-75427]: https://issues.liferay.com/browse/LPS-75427
 [LPS-75430]: https://issues.liferay.com/browse/LPS-75430
 [LPS-75488]: https://issues.liferay.com/browse/LPS-75488
+[LPS-75589]: https://issues.liferay.com/browse/LPS-75589
 [LPS-75613]: https://issues.liferay.com/browse/LPS-75613
 [LPS-75624]: https://issues.liferay.com/browse/LPS-75624
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

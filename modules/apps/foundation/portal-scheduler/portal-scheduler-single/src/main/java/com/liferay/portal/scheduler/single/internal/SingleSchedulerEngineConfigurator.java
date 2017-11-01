@@ -15,13 +15,16 @@
 package com.liferay.portal.scheduler.single.internal;
 
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
-import com.liferay.portal.scheduler.BaseSchedulerEngineConfigurator;
+import com.liferay.portal.kernel.util.HashMapDictionary;
+
+import java.util.Dictionary;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Tina Tian
@@ -30,15 +33,17 @@ import org.osgi.service.component.annotations.Deactivate;
 	enabled = false, immediate = true,
 	service = SingleSchedulerEngineConfigurator.class
 )
-public class SingleSchedulerEngineConfigurator
-	extends BaseSchedulerEngineConfigurator {
+public class SingleSchedulerEngineConfigurator {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		SchedulerEngine schedulerEngine = createSchedulerEngineProxy();
+		Dictionary<String, Object> schedulerEngineDictionary =
+			new HashMapDictionary<>();
 
-		_schedulerEngineServiceRegistration = registerSchedulerEngine(
-			bundleContext, schedulerEngine);
+		schedulerEngineDictionary.put("scheduler.engine.proxy", Boolean.TRUE);
+
+		_schedulerEngineServiceRegistration = bundleContext.registerService(
+			SchedulerEngine.class, _schedulerEngine, schedulerEngineDictionary);
 	}
 
 	@Deactivate
@@ -48,6 +53,12 @@ public class SingleSchedulerEngineConfigurator
 		}
 	}
 
+	@Reference(target = "(scheduler.engine.proxy.bean=true)", unbind = "-")
+	protected void setSchedulerEngine(SchedulerEngine schedulerEngine) {
+		_schedulerEngine = schedulerEngine;
+	}
+
+	private SchedulerEngine _schedulerEngine;
 	private volatile ServiceRegistration<SchedulerEngine>
 		_schedulerEngineServiceRegistration;
 

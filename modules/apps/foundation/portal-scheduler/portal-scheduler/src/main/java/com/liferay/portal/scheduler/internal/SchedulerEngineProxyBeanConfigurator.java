@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.scheduler;
+package com.liferay.portal.scheduler.internal;
 
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.proxy.MessagingProxyInvocationHandler;
@@ -28,15 +28,18 @@ import java.util.Dictionary;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Tina Tian
- * @deprecated As of 3.1.0, with no direct replacement
  */
-@Deprecated
-public abstract class BaseSchedulerEngineConfigurator {
+@Component(immediate = true)
+public class SchedulerEngineProxyBeanConfigurator {
 
-	protected SchedulerEngine createSchedulerEngineProxy() {
+	@Activate
+	protected void activate(BundleContext bundleContext) {
 		SchedulerEngineProxyBean schedulerEngineProxyBean =
 			new SchedulerEngineProxyBean();
 
@@ -47,8 +50,6 @@ public abstract class BaseSchedulerEngineConfigurator {
 		schedulerEngineProxyBean.setSynchronousMessageSenderMode(
 			SynchronousMessageSender.Mode.DIRECT);
 
-		schedulerEngineProxyBean.afterPropertiesSet();
-
 		InvocationHandlerFactory invocationHandlerFactory =
 			MessagingProxyInvocationHandler.getInvocationHandlerFactory();
 
@@ -58,21 +59,31 @@ public abstract class BaseSchedulerEngineConfigurator {
 
 		Class<?> beanClass = schedulerEngineProxyBean.getClass();
 
-		return (SchedulerEngine)ProxyUtil.newProxyInstance(
-			beanClass.getClassLoader(), beanClass.getInterfaces(),
-			invocationHandler);
-	}
-
-	protected ServiceRegistration<SchedulerEngine> registerSchedulerEngine(
-		BundleContext bundleContext, SchedulerEngine schedulerEngine) {
+		SchedulerEngine schedulerEngine =
+			(SchedulerEngine)ProxyUtil.newProxyInstance(
+				beanClass.getClassLoader(), beanClass.getInterfaces(),
+				invocationHandler);
 
 		Dictionary<String, Object> schedulerEngineDictionary =
 			new HashMapDictionary<>();
 
-		schedulerEngineDictionary.put("scheduler.engine.proxy", Boolean.TRUE);
+		schedulerEngineDictionary.put(
+			"scheduler.engine.proxy.bean", Boolean.TRUE);
 
-		return bundleContext.registerService(
-			SchedulerEngine.class, schedulerEngine, schedulerEngineDictionary);
+		_schedulerEngineProxyBeanServiceRegistration =
+			bundleContext.registerService(
+				SchedulerEngine.class, schedulerEngine,
+				schedulerEngineDictionary);
 	}
+
+	@Deactivate
+	protected void deactivate() {
+		if (_schedulerEngineProxyBeanServiceRegistration != null) {
+			_schedulerEngineProxyBeanServiceRegistration.unregister();
+		}
+	}
+
+	private ServiceRegistration<SchedulerEngine>
+		_schedulerEngineProxyBeanServiceRegistration;
 
 }

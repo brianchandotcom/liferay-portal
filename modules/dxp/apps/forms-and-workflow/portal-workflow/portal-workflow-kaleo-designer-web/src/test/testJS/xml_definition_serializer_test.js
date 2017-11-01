@@ -72,6 +72,44 @@ describe(
 						done();
 					}
 				);
+
+				it(
+					'should serialize <user> element if given.',
+					function(done) {
+						var jsonDefinition = {
+							nodes: [
+								{
+									name: 'task1',
+									notifications: {
+										name: ['notification1'],
+										recipients: [
+											{
+												assignmentType: ['user'],
+												emailAddress: [null],
+												screenName: [null],
+												userId: [null]
+											}
+										]
+									},
+									xmlType: 'task'
+								}
+							]
+						};
+
+						var definition = serializeDefinition(
+							XML_NAMESPACE,
+							METADATA,
+							jsonDefinition
+						);
+
+						assert(
+							definition.includes('<user'),
+							'<users/> element not serialized.'
+						);
+
+						done();
+					}
+				);
 			}
 		);
 	}

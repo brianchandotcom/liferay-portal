@@ -47,5 +47,45 @@ describe(
 				);
 			}
 		);
+
+		describe(
+			'regression',
+			function() {
+				describe(
+					'.forEachField()',
+					function() {
+						it(
+							'should retrieve "receptionType" attribute value',
+							function(done) {
+								Liferay.Test.loadResource('recipients-with-reception-type-bcc.xml')
+								.then(
+									function(definition) {
+										var xmlDefinition = new Liferay.KaleoDesignerXMLDefinition(
+											{
+												value: definition
+											}
+										);
+
+										xmlDefinition.forEachField(
+											function(tagName, fieldData) {
+												var result = fieldData.results[0];
+
+												var notification = result.notifications[0];
+
+												var recipient = notification.recipients[0];
+
+												assert.equal(recipient.receptionType, 'bcc');
+											}
+										);
+
+										done();
+									}
+								);
+							}
+						);
+					}
+				);
+			}
+		);
 	}
 );

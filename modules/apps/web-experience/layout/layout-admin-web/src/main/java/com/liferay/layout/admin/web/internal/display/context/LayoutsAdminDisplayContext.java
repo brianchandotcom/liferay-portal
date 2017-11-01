@@ -120,28 +120,6 @@ public class LayoutsAdminDisplayContext {
 		return _displayStyle;
 	}
 
-	public PortletURL getEditLayoutURL(long selPlid, Boolean privateLayout) {
-		PortletURL editLayoutURL = PortalUtil.getControlPanelPortletURL(
-			_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-			PortletRequest.RENDER_PHASE);
-
-		if (selPlid >= LayoutConstants.DEFAULT_PLID) {
-			editLayoutURL.setParameter("selPlid", String.valueOf(selPlid));
-		}
-
-		if (privateLayout != null) {
-			editLayoutURL.setParameter(
-				"privateLayout", String.valueOf(privateLayout));
-		}
-
-		Group selGroup = getSelGroup();
-
-		editLayoutURL.setParameter(
-			"groupId", String.valueOf(selGroup.getGroupId()));
-
-		return editLayoutURL;
-	}
-
 	public Group getGroup() {
 		return _groupDisplayContextHelper.getGroup();
 	}

@@ -17,9 +17,7 @@ package com.liferay.layout.admin.web.internal.portlet.configuration.icon;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -59,23 +57,19 @@ public class EditPublicPagesPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		LiferayPortletRequest liferayPortletRequest =
-			_portal.getLiferayPortletRequest(portletRequest);
+		PortletURL editLayoutSetURL = _portal.getControlPanelPortletURL(
+			portletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+			PortletRequest.RENDER_PHASE);
 
-		LiferayPortletResponse liferayPortletResponse =
-			_portal.getLiferayPortletResponse(portletResponse);
+		editLayoutSetURL.setParameter("mvcPath", "/edit_layout_set.jsp");
+		editLayoutSetURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		editLayoutSetURL.setParameter("backURL", themeDisplay.getURLCurrent());
+		editLayoutSetURL.setParameter(
+			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+		editLayoutSetURL.setParameter(
+			"privateLayout", Boolean.FALSE.toString());
 
-		LayoutsAdminDisplayContext layoutsAdminDisplayContext =
-			new LayoutsAdminDisplayContext(
-				liferayPortletRequest, liferayPortletResponse);
-
-		PortletURL editLayoutURL = layoutsAdminDisplayContext.getEditLayoutURL(
-			LayoutConstants.DEFAULT_PLID, false);
-
-		editLayoutURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		editLayoutURL.setParameter("backURL", themeDisplay.getURLCurrent());
-
-		return editLayoutURL.toString();
+		return editLayoutSetURL.toString();
 	}
 
 	@Override

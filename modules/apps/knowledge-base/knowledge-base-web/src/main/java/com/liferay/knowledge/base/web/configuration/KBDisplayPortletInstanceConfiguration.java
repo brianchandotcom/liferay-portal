@@ -113,7 +113,7 @@ public interface KBDisplayPortletInstanceConfiguration {
 	)
 	public String contentRootPrefix();
 
-	@Meta.AD(deflt = "3", name = "max-nesting-level", required = false)
+	@Meta.AD(deflt = "3", name = "maximum-nesting-level", required = false)
 	public int maxNestingLevel();
 
 }

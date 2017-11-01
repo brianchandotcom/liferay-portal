@@ -14,6 +14,7 @@
 			<fileset dir="${sdk.dir}/dist" includes="com.liferay.dynamic.data.*.jar" />
 			<fileset dir="${sdk.dir}/dist" includes="com.liferay.friendly.url.*.jar" />
 			<fileset dir="${sdk.dir}/dist" includes="com.liferay.journal.*.jar" />
+			<fileset dir="${sdk.dir}/dist" includes="com.liferay.message.boards.*.jar" />
 			<fileset dir="${sdk.dir}/dist" includes="com.liferay.portal.tools.sample.sql.builder*.jar" />
 			<fileset dir="${sdk.dir}/dist" includes="com.liferay.subscription.*.jar" />
 			<fileset dir="${sdk.dir}/dist" includes="com.liferay.wiki.*.jar" />

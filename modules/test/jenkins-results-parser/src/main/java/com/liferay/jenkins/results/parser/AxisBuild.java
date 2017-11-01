@@ -244,7 +244,8 @@ public class AxisBuild extends BaseBuild {
 		Element messageElement = Dom4JUtil.getNewElement(
 			"div", null,
 			Dom4JUtil.getNewAnchorElement(
-				getBuildURL(), null, getDisplayName()));
+				getBuildURL() + "/consoleText", null,
+				getDisplayName() + "(consoleText)"));
 
 		if (result.equals("ABORTED")) {
 			messageElement.add(

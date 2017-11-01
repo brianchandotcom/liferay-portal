@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 
@@ -63,7 +64,9 @@ public class LiferayPageProvider implements WikiPageProvider {
 	public void deleteVersion(String title, int version) {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Invoking deleteVersion(" + title + ", " + version + ")");
+				StringBundler.concat(
+					"Invoking deleteVersion(", title, ", ",
+					String.valueOf(version), ")"));
 		}
 	}
 
@@ -136,7 +139,10 @@ public class LiferayPageProvider implements WikiPageProvider {
 		throws ProviderException {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Invoking getPageInfo(" + title + ", " + version + ")");
+			_log.debug(
+				StringBundler.concat(
+					"Invoking getPageInfo(", title, ", ",
+					String.valueOf(version), ")"));
 		}
 
 		try {
@@ -158,7 +164,10 @@ public class LiferayPageProvider implements WikiPageProvider {
 		throws ProviderException {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Invoking getPageText(" + title + ", " + version + ")");
+			_log.debug(
+				StringBundler.concat(
+					"Invoking getPageText(", title, ", ",
+					String.valueOf(version), ")"));
 		}
 
 		try {
@@ -193,7 +202,10 @@ public class LiferayPageProvider implements WikiPageProvider {
 	@Override
 	public void initialize(WikiEngine engine, Properties props) {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Invoking initialize(" + engine + ", " + props + ")");
+			_log.debug(
+				StringBundler.concat(
+					"Invoking initialize(", String.valueOf(engine), ", ",
+					String.valueOf(props), ")"));
 		}
 
 		_engine = engine;
@@ -203,7 +215,9 @@ public class LiferayPageProvider implements WikiPageProvider {
 	@Override
 	public void movePage(String from, String to) {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Invoking movePage(" + from + ", " + to + ")");
+			_log.debug(
+				StringBundler.concat(
+					"Invoking movePage(", from, ", ", to, ")"));
 		}
 	}
 
@@ -234,7 +248,10 @@ public class LiferayPageProvider implements WikiPageProvider {
 	@Override
 	public void putPageText(WikiPage page, String text) {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Invoking putPageText(" + page + ", " + text + ")");
+			_log.debug(
+				StringBundler.concat(
+					"Invoking putPageText(", String.valueOf(page), ", ", text,
+					")"));
 		}
 	}
 

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.sync.constants.SyncDLObjectConstants;
@@ -79,7 +80,10 @@ public class VerifyUtil {
 	protected void logCount(long count, long totalCount, String name) {
 		if (_log.isDebugEnabled()) {
 			if ((count % 1000) == 0) {
-				_log.debug("Verified " + count + "/" + totalCount + " " + name);
+				_log.debug(
+					StringBundler.concat(
+						"Verified ", String.valueOf(count), "/",
+						String.valueOf(totalCount), " ", name));
 			}
 		}
 	}

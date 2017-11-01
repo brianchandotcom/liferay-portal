@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.module.framework.ThrowableCollector;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 import com.liferay.portal.lpkg.deployer.LPKGVerifier;
@@ -108,9 +109,10 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 
 		if (!lpkgFilePath.startsWith(_deploymentDirPath)) {
 			throw new LPKGVerifyException(
-				"Unable to deploy " + lpkgFile +
-					" from outside the deployment directory " +
-						_deploymentDirPath);
+				StringBundler.concat(
+					"Unable to deploy ", String.valueOf(lpkgFile),
+					" from outside the deployment directory ",
+					String.valueOf(_deploymentDirPath)));
 		}
 
 		List<Bundle> oldBundles = _lpkgVerifier.verify(lpkgFile);
@@ -121,8 +123,10 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Uninstalled older LPKG bundle " + bundle +
-							" in order to install " + lpkgFile);
+						StringBundler.concat(
+							"Uninstalled older LPKG bundle ",
+							String.valueOf(bundle), " in order to install ",
+							String.valueOf(lpkgFile)));
 				}
 
 				String location = bundle.getLocation();
@@ -137,8 +141,9 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 			}
 			catch (BundleException be) {
 				_log.error(
-					"Unable to uninstall " + bundle + " in order to install " +
-						lpkgFile,
+					StringBundler.concat(
+						"Unable to uninstall ", String.valueOf(bundle),
+						" in order to install ", String.valueOf(lpkgFile)),
 					be);
 			}
 		}
@@ -205,9 +210,11 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 				}
 				else {
 					throw new Exception(
-						"Unable to refresh references to the new bundle " +
-							lpkgBundle + " because of framework event " +
-								frameworkEvent,
+						StringBundler.concat(
+							"Unable to refresh references to the new bundle ",
+							String.valueOf(lpkgBundle),
+							" because of framework event ",
+							String.valueOf(frameworkEvent)),
 						frameworkEvent.getThrowable());
 				}
 			}

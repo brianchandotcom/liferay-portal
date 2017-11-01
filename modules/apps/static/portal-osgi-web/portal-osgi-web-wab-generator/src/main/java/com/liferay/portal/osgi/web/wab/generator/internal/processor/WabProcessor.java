@@ -325,8 +325,9 @@ public class WabProcessor {
 	}
 
 	protected String getVersionedServicePackageName(String partialPackageName) {
-		return _servicePackageName + partialPackageName + ";version=" +
-			_bundleVersion;
+		return StringBundler.concat(
+			_servicePackageName, partialPackageName, ";version=",
+			_bundleVersion);
 	}
 
 	protected String getWebContextPath() {
@@ -1158,7 +1159,7 @@ public class WabProcessor {
 				text = text.substring(1);
 			}
 
-			value = "!" + text + "/*," + value;
+			value = StringBundler.concat("!", text, "/*,", value);
 		}
 
 		analyzer.setProperty("-jsp", value);

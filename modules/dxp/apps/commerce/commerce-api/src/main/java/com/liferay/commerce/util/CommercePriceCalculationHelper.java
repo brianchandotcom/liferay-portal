@@ -23,12 +23,12 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public interface CommercePriceCalculationHelper {
 
-	public double getPrice(CommerceCartItem commerceCartItemId)
+	public double getPrice(CommerceCartItem commerceCartItem)
 		throws PortalException;
 
 	public double getPrice(long cpInstanceId, int quantity)
 		throws PortalException;
 
-	public double getTotal(CommerceCart commerceCartId) throws PortalException;
+	public double getTotal(CommerceCart commerceCart) throws PortalException;
 
 }

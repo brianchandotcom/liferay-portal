@@ -98,9 +98,10 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 
 			if (!renamed) {
 				throw new SystemException(
-					"File name version file was not renamed from " +
-						fileNameVersionFile.getPath() + " to " +
-							newFileNameVersionFile.getPath());
+					StringBundler.concat(
+						"File name version file was not renamed from ",
+						fileNameVersionFile.getPath(), " to ",
+						newFileNameVersionFile.getPath()));
 			}
 		}
 	}

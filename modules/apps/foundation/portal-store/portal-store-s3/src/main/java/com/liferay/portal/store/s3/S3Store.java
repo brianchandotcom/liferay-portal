@@ -699,8 +699,9 @@ public class S3Store extends BaseStore {
 
 		if (!newS3ObjectSummaries.isEmpty()) {
 			throw new DuplicateFileException(
-				"Duplicate S3 object found when moving files from " +
-					oldPrefix + " to " + newPrefix);
+				StringBundler.concat(
+					"Duplicate S3 object found when moving files from ",
+					oldPrefix, " to ", newPrefix));
 		}
 
 		List<S3ObjectSummary> oldS3ObjectSummaries = getS3ObjectSummaries(

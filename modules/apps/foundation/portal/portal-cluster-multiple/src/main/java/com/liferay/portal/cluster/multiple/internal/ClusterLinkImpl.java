@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -131,8 +132,9 @@ public class ClusterLinkImpl implements ClusterLink {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Select channel number " + channelIndex + " for priority " +
-					priority);
+				StringBundler.concat(
+					"Select channel number ", String.valueOf(channelIndex),
+					" for priority ", String.valueOf(priority)));
 		}
 
 		return _clusterChannels.get(channelIndex);
@@ -235,8 +237,9 @@ public class ClusterLinkImpl implements ClusterLink {
 		if (Validator.isNotNull(destinationName)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Sending local cluster link message " + message + " to " +
-						destinationName);
+					StringBundler.concat(
+						"Sending local cluster link message ",
+						String.valueOf(message), " to ", destinationName));
 			}
 
 			ClusterInvokeThreadLocal.setEnabled(false);

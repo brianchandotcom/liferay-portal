@@ -89,9 +89,9 @@ public class NPMResolverImpl implements NPMResolver {
 			String name = jsonObject.getString("name");
 			String version = jsonObject.getString("version");
 
-			return
-				bundle.getBundleId() + StringPool.SLASH + name + StringPool.AT +
-					version;
+			return StringBundler.concat(
+				String.valueOf(bundle.getBundleId()), StringPool.SLASH, name,
+				StringPool.AT, version);
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

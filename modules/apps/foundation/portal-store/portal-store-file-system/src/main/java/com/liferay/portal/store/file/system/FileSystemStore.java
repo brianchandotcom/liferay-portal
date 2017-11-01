@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.store.file.system.configuration.FileSystemStoreConfiguration;
@@ -383,8 +384,9 @@ public class FileSystemStore extends BaseStore {
 
 		if (!renamed) {
 			throw new SystemException(
-				"File name directory was not renamed from " +
-					fileNameDir.getPath() + " to " + newFileNameDir.getPath());
+				StringBundler.concat(
+					"File name directory was not renamed from ",
+					fileNameDir.getPath(), " to ", newFileNameDir.getPath()));
 		}
 
 		deleteEmptyAncestors(companyId, repositoryId, parentFile);
@@ -421,8 +423,9 @@ public class FileSystemStore extends BaseStore {
 
 		if (!renamed) {
 			throw new SystemException(
-				"File name directory was not renamed from " +
-					fileNameDir.getPath() + " to " + newFileNameDir.getPath());
+				StringBundler.concat(
+					"File name directory was not renamed from ",
+					fileNameDir.getPath(), " to ", newFileNameDir.getPath()));
 		}
 
 		deleteEmptyAncestors(companyId, repositoryId, parentFile);
@@ -477,9 +480,10 @@ public class FileSystemStore extends BaseStore {
 
 		if (!renamed) {
 			throw new SystemException(
-				"File name version file was not renamed from " +
-					fromFileNameVersionFile.getPath() + " to " +
-						toFileNameVersionFile.getPath());
+				StringBundler.concat(
+					"File name version file was not renamed from ",
+					fromFileNameVersionFile.getPath(), " to ",
+					toFileNameVersionFile.getPath()));
 		}
 	}
 

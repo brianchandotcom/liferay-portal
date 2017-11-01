@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -228,8 +229,9 @@ public class Encryptor {
 
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"WebSphere does not have " + SUN_PROVIDER_CLASS +
-							", using " + IBM_PROVIDER_CLASS + " instead");
+						StringBundler.concat(
+							"WebSphere does not have ", SUN_PROVIDER_CLASS,
+							", using ", IBM_PROVIDER_CLASS, " instead"));
 				}
 
 				providerClass = Class.forName(IBM_PROVIDER_CLASS);
@@ -239,8 +241,9 @@ public class Encryptor {
 
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"IBM JVM does not have " + SUN_PROVIDER_CLASS +
-							", using " + IBM_PROVIDER_CLASS + " instead");
+						StringBundler.concat(
+							"IBM JVM does not have ", SUN_PROVIDER_CLASS,
+							", using ", IBM_PROVIDER_CLASS, " instead"));
 				}
 
 				providerClass = Class.forName(IBM_PROVIDER_CLASS);

@@ -16,6 +16,8 @@ package com.liferay.petra.doulos.processor;
 
 import com.googlecode.concurrentlinkedhashmap.ConcurrentLinkedHashMap;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -101,7 +103,8 @@ public abstract class BaseShellDoulosRequestProcessor
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Status " + shellStatus.status + " for " + shellStatus.key);
+				StringBundler.concat(
+					"Status ", shellStatus.status, " for ", shellStatus.key));
 		}
 	}
 

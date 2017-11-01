@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.scripting.executor.constants.ScriptingExecutorConstants;
 import com.liferay.portal.scripting.executor.internal.ScriptingExecutorMessagingConstants;
 import com.liferay.portal.scripting.executor.provider.ScriptBundleProvider;
@@ -177,8 +178,10 @@ public class ScriptingExecutorExtender {
 			if (!_scriptingLanguages.contains(scriptingLanguage)) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"No " + scriptingLanguage + " executors available to " +
-							"process scripts from " + bundle.getSymbolicName());
+						StringBundler.concat(
+							"No ", scriptingLanguage,
+							" executors available to process scripts from ",
+							bundle.getSymbolicName()));
 				}
 
 				return null;

@@ -964,6 +964,10 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 			CalendarBooking calendarBooking)
 		throws PortalException {
 
+		CalendarPermission.check(
+			getPermissionChecker(), calendarBooking.getCalendarId(),
+			ActionKeys.VIEW);
+
 		if (!CalendarPermission.contains(
 				getPermissionChecker(), calendarBooking.getCalendarId(),
 				CalendarActionKeys.VIEW_BOOKING_DETAILS)) {

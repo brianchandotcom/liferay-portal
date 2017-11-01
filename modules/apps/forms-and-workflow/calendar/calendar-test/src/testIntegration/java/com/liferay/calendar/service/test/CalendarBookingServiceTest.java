@@ -159,9 +159,6 @@ public class CalendarBookingServiceTest {
 
 		CalendarStagingTestUtil.enableLocalStaging(_liveGroup, true);
 
-		Calendar stagingCalendar = CalendarStagingTestUtil.getStagingCalendar(
-			_liveGroup, liveCalendar);
-
 		CalendarBooking childCalendarBooking =
 			CalendarBookingTestUtil.addChildCalendarBooking(
 				invitingCalendar, liveCalendar);

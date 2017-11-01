@@ -65,11 +65,11 @@ public interface KBGroupServiceConfiguration {
 	)
 	public String markdownImporterImageFolder();
 
-	@Meta.AD(deflt = "false", name = "source-urlenabled", required = false)
+	@Meta.AD(deflt = "false", name = "source-url-enabled", required = false)
 	public boolean sourceURLEnabled();
 
 	@Meta.AD(
-		deflt = "edit-on-github", name = "source-urledit-message-key",
+		deflt = "edit-on-github", name = "source-url-edit-message-key",
 		required = false
 	)
 	public String sourceURLEditMessageKey();
@@ -87,92 +87,94 @@ public interface KBGroupServiceConfiguration {
 	public String emailFromAddress();
 
 	@Meta.AD(
-		deflt = "true", name = "email-kbarticle-added-enabled", required = false
+		deflt = "true", name = "email-kb-article-added-enabled",
+		required = false
 	)
 	public boolean emailKBArticleAddedEnabled();
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/knowledge/base/dependencies/email_kb_article_added_subject.tmpl}",
-		name = "email-kbarticle-added-subject", required = false
+		name = "email-kb-article-added-subject", required = false
 	)
 	public String emailKBArticleAddedSubject();
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/knowledge/base/dependencies/email_kb_article_added_body.tmpl}",
-		name = "email-kbarticle-added-body", required = false
+		name = "email-kb-article-added-body", required = false
 	)
 	public String emailKBArticleAddedBody();
 
 	@Meta.AD(
-		deflt = "true", name = "email-kbarticle-updated-enabled",
+		deflt = "true", name = "email-kb-article-updated-enabled",
 		required = false
 	)
 	public boolean emailKBArticleUpdatedEnabled();
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/knowledge/base/dependencies/email_kb_article_updated_subject.tmpl}",
-		name = "email-kbarticle-updated-subject", required = false
+		name = "email-kb-article-updated-subject", required = false
 	)
 	public String emailKBArticleUpdatedSubject();
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/knowledge/base/dependencies/email_kb_article_updated_body.tmpl}",
-		name = "email-kbarticle-updated-body", required = false
+		name = "email-kb-article-updated-body", required = false
 	)
 	public String emailKBArticleUpdatedBody();
 
 	@Meta.AD(
-		deflt = "true", name = "email-kbarticle-suggestion-in-progress-enabled",
+		deflt = "true",
+		name = "email-kb-article-suggestion-in-progress-enabled",
 		required = false
 	)
 	public boolean emailKBArticleSuggestionInProgressEnabled();
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/knowledge/base/dependencies/email_kb_suggestion_in_progress_subject.tmpl}",
-		name = "email-kbarticle-suggestion-in-progress-subject",
+		name = "email-kb-article-suggestion-in-progress-subject",
 		required = false
 	)
 	public String emailKBArticleSuggestionInProgressSubject();
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/knowledge/base/dependencies/email_kb_suggestion_in_progress_body.tmpl}",
-		name = "email-kbarticle-suggestion-in-progress-body", required = false
+		name = "email-kb-article-suggestion-in-progress-body", required = false
 	)
 	public String emailKBArticleSuggestionInProgressBody();
 
 	@Meta.AD(
-		deflt = "true", name = "email-kbarticle-suggestion-received-enabled",
+		deflt = "true", name = "email-kb-article-suggestion-received-enabled",
 		required = false
 	)
 	public boolean emailKBArticleSuggestionReceivedEnabled();
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/knowledge/base/dependencies/email_kb_suggestion_received_subject.tmpl}",
-		name = "email-kbarticle-suggestion-received-subject", required = false
+		name = "email-kb-article-suggestion-received-subject", required = false
 	)
 	public String emailKBArticleSuggestionReceivedSubject();
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/knowledge/base/dependencies/email_kb_suggestion_received_body.tmpl}",
-		name = "email-kbarticle-suggestion-received-body", required = false
+		name = "email-kb-article-suggestion-received-body", required = false
 	)
 	public String emailKBArticleSuggestionReceivedBody();
 
 	@Meta.AD(
-		deflt = "true", name = "email-kbarticle-suggestion-resolved-enabled",
+		deflt = "true", name = "email-kb-article-suggestion-resolved-enabled",
 		required = false
 	)
 	public boolean emailKBArticleSuggestionResolvedEnabled();
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/knowledge/base/dependencies/email_kb_suggestion_resolved_subject.tmpl}",
-		name = "email-kbarticle-suggestion-resolved-subject", required = false
+		name = "email-kb-article-suggestion-resolved-subject", required = false
 	)
 	public String emailKBArticleSuggestionResolvedSubject();
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/knowledge/base/dependencies/email_kb_suggestion_resolved_body.tmpl}",
-		name = "email-kbarticle-suggestion-resolved-body", required = false
+		name = "email-kb-article-suggestion-resolved-body", required = false
 	)
 	public String emailKBArticleSuggestionResolvedBody();
 

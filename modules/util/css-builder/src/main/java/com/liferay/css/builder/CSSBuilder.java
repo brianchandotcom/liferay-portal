@@ -162,12 +162,6 @@ public class CSSBuilder implements AutoCloseable {
 		return false;
 	}
 
-	private static boolean _isAbsolute(String fileName) {
-		Path path = Paths.get(fileName);
-
-		return path.isAbsolute();
-	}
-
 	private static void _printHelp(JCommander jCommander) throws Exception {
 		jCommander.usage();
 	}
@@ -443,7 +437,8 @@ public class CSSBuilder implements AutoCloseable {
 
 		String outputFileName;
 
-		boolean absolute = _isAbsolute(_cssBuilderArgs.getOutputDirName());
+		boolean absolute = FileUtil.isAbsolute(
+			_cssBuilderArgs.getOutputDirName());
 
 		String outputFileNameDir =
 			absolute ? StringPool.BLANK : _cssBuilderArgs.getOutputDirName();

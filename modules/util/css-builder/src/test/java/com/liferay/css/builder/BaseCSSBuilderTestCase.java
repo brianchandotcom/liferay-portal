@@ -87,9 +87,9 @@ public abstract class BaseCSSBuilderTestCase {
 
 		File absoluteFile = absolutePath.toFile();
 
-		int fileCount = absoluteFile.list().length;
+		File[] files = absoluteFile.listFiles();
 
-		Assert.assertTrue(fileCount > 0);
+		Assert.assertTrue(files.length > 0);
 	}
 
 	@Test

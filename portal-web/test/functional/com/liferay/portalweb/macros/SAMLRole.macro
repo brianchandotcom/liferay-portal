@@ -24,6 +24,13 @@
 		<execute function="AssertElementPresent" locator1="Button#REPLACE_CERTIFICATE" value1="Replace Certificate" />
 	</command>
 
+	<command name="configureIdentityProvider">
+		<execute function="Type" locator1="CPSAMLAdmin#IDENTITY_PROVIDER_SESSION_MAXIMUM_AGE" value1="${idpSessionMaximumAge}" />
+		<execute function="Type" locator1="CPSAMLAdmin#IDENTITY_PROVIDER_SESSION_IDLE_TIMEOUT" value1="${idpSessionIdleTimeout}" />
+
+		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Save" />
+	</command>
+
 	<command name="enable">
 		<execute function="AssertTextEquals" locator1="CPSAMLAdmin#SAML_ENTITY_ID_FIELD" value1="${samlEntityID}" />
 		<execute function="Check" locator1="CPSAMLAdmin#SAML_ENABLED_CHECKBOX" />

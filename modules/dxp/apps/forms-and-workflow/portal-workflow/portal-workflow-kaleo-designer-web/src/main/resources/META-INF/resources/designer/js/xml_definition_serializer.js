@@ -235,6 +235,8 @@ AUI.add(
 
 					dataAssignments.userId.forEach(
 						function(item, index, collection) {
+							buffer.push(xmlUser.open);
+
 							var userContent = null;
 
 							if (isValue(item)) {
@@ -248,12 +250,10 @@ AUI.add(
 							}
 
 							if (userContent) {
-								buffer.push(
-									xmlUser.open,
-									userContent,
-									xmlUser.close
-								);
+								buffer.push(userContent);
 							}
+
+							buffer.push(xmlUser.close);
 						}
 					);
 				}

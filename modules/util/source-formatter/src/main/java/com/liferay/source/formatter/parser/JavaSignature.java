@@ -16,14 +16,20 @@ package com.liferay.source.formatter.parser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Hugo Huijser
  */
 public class JavaSignature {
 
-	public void addParameter(String parameterName, String parameterType) {
-		_parameters.add(new JavaParameter(parameterName, parameterType));
+	public void addParameter(
+		String parameterName, String parameterType,
+		Set<String> parameterAnnotations, boolean isFinal) {
+
+		_parameters.add(
+			new JavaParameter(
+				parameterName, parameterType, parameterAnnotations, isFinal));
 	}
 
 	public List<JavaParameter> getParameters() {

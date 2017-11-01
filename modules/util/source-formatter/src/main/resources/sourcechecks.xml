@@ -135,6 +135,7 @@
 		<check name="JavaLogLevelCheck" />
 		<check name="JavaLongLinesCheck" />
 		<check name="JavaPackagePathCheck" />
+		<check name="JavaParameterAnnotationsCheck" />
 		<check name="JavaProcessCallableCheck" />
 		<check name="JavaProviderTypeAnnotationCheck" />
 		<check name="JavaRedundantConstructorCheck" />

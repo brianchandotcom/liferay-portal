@@ -135,7 +135,7 @@ renderResponse.setTitle(selLayout.getName(locale));
 			<portlet:param name="mvcPath" value="/edit_layout.jsp" />
 		</portlet:actionURL>
 
-		<aui:form action='<%= HttpUtil.addParameter(editLayoutURL, "refererPlid", plid) %>' cssClass="edit-layout-form" data-senna-off="true" enctype="multipart/form-data" method="post" name="editLayoutFm">
+		<aui:form action='<%= HttpUtil.addParameter(editLayoutURL, "refererPlid", plid) %>' cssClass="container-fluid-1280" data-senna-off="true" enctype="multipart/form-data" method="post" name="editLayoutFm">
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 			<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 			<aui:input name="groupId" type="hidden" value="<%= layoutsAdminDisplayContext.getGroupId() %>" />

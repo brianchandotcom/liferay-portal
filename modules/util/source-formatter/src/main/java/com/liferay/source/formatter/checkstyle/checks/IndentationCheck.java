@@ -1005,21 +1005,27 @@ public class IndentationCheck extends BaseCheck {
 			}
 
 			if (parentAST.getType() == TokenTypes.PARAMETER_DEF) {
-				parentAST = parentAST.getParent();
-
-				if (parentAST.getType() == TokenTypes.PARAMETERS) {
-					parentAST = parentAST.getParent();
-
-					if ((parentAST.getType() == TokenTypes.CTOR_DEF) ||
-						(parentAST.getType() == TokenTypes.METHOD_DEF)) {
-
-						return true;
-					}
-				}
+				break;
 			}
 
 			parentAST = parentAST.getParent();
 		}
+
+		parentAST = parentAST.getParent();
+
+		if (parentAST.getType() != TokenTypes.PARAMETERS) {
+			return false;
+		}
+
+		parentAST = parentAST.getParent();
+
+		if ((parentAST.getType() == TokenTypes.CTOR_DEF) ||
+			(parentAST.getType() == TokenTypes.METHOD_DEF)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final int[] _ARITHMETIC_OPERATORS = {

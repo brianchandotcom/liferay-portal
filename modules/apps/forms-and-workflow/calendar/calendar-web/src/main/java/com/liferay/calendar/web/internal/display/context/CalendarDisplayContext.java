@@ -21,6 +21,7 @@ import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.recurrence.Recurrence;
 import com.liferay.calendar.service.CalendarBookingLocalService;
+import com.liferay.calendar.service.CalendarBookingService;
 import com.liferay.calendar.service.CalendarLocalService;
 import com.liferay.calendar.service.CalendarService;
 import com.liferay.calendar.service.permission.CalendarPermission;
@@ -51,14 +52,26 @@ public class CalendarDisplayContext {
 	public CalendarDisplayContext(
 		GroupLocalService groupLocalService,
 		CalendarBookingLocalService calendarBookingLocalService,
-		CalendarService calendarService,
-		CalendarLocalService calendarLocalService, ThemeDisplay themeDisplay) {
+		CalendarBookingService calendarBookingService,
+		CalendarLocalService calendarLocalService,
+		CalendarService calendarService, ThemeDisplay themeDisplay) {
 
 		_groupLocalService = groupLocalService;
 		_calendarBookingLocalService = calendarBookingLocalService;
-		_calendarService = calendarService;
+		_calendarBookingService = calendarBookingService;
 		_calendarLocalService = calendarLocalService;
+		_calendarService = calendarService;
 		_themeDisplay = themeDisplay;
+	}
+
+	public List<CalendarBooking> getChildCalendarBookings(
+			CalendarBooking calendarBooking)
+		throws PortalException {
+
+		Group group = _themeDisplay.getScopeGroup();
+
+		return _calendarBookingService.getChildCalendarBookings(
+			calendarBooking.getCalendarBookingId(), group.isStagingGroup());
 	}
 
 	public Calendar getDefaultCalendar(
@@ -219,6 +232,7 @@ public class CalendarDisplayContext {
 		CalendarDisplayContext.class.getName());
 
 	private final CalendarBookingLocalService _calendarBookingLocalService;
+	private final CalendarBookingService _calendarBookingService;
 	private final CalendarLocalService _calendarLocalService;
 	private final CalendarService _calendarService;
 	private final GroupLocalService _groupLocalService;

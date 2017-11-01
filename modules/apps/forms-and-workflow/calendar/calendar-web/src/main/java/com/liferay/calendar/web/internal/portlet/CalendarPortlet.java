@@ -1175,9 +1175,11 @@ public class CalendarPortlet extends MVCPortlet {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
+		Group group = themeDisplay.getScopeGroup();
+
 		List<CalendarBooking> childCalendarBookings =
 			_calendarBookingService.getChildCalendarBookings(
-				parentCalendarBookingId);
+				parentCalendarBookingId, group.isStagingGroup());
 
 		Collection<CalendarResource> calendarResources =
 			CalendarUtil.getCalendarResources(childCalendarBookings);
@@ -1600,7 +1602,8 @@ public class CalendarPortlet extends MVCPortlet {
 		CalendarDisplayContext calendarDisplayContext =
 			new CalendarDisplayContext(
 				_groupLocalService, _calendarBookingLocalService,
-				_calendarService, _calendarLocalService, themeDisplay);
+				_calendarBookingService, _calendarLocalService,
+				_calendarService, themeDisplay);
 
 		renderRequest.setAttribute(
 			CalendarWebKeys.CALENDAR_DISPLAY_CONTEXT, calendarDisplayContext);

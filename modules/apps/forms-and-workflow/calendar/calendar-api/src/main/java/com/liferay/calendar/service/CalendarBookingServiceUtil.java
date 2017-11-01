@@ -234,6 +234,14 @@ public class CalendarBookingServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.calendar.model.CalendarBooking> getChildCalendarBookings(
+		long parentCalendarBookingId, boolean includeStagingCalendarBookings)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getChildCalendarBookings(parentCalendarBookingId,
+			includeStagingCalendarBookings);
+	}
+
+	public static java.util.List<com.liferay.calendar.model.CalendarBooking> getChildCalendarBookings(
 		long parentCalendarBookingId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

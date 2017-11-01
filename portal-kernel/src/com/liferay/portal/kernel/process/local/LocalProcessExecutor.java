@@ -19,13 +19,13 @@ import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessChannel;
 import com.liferay.portal.kernel.process.ProcessConfig;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutor;
+import com.liferay.portal.kernel.process.ProcessLog;
+import com.liferay.portal.kernel.process.ProcessLog.Level;
 import com.liferay.portal.kernel.process.TerminationProcessException;
 import com.liferay.portal.kernel.util.ClassLoaderObjectInputStream;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -49,6 +49,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.function.Consumer;
 
 /**
  * @author Shuyang Zhou
@@ -111,7 +112,8 @@ public class LocalProcessExecutor implements ProcessExecutor {
 			AsyncBroker<Long, Serializable> asyncBroker = new AsyncBroker<>();
 
 			SubprocessReactor<T> subprocessReactor = new SubprocessReactor<>(
-				process, processConfig.getReactClassLoader(), asyncBroker);
+				process, processConfig.getProcessLogConsumer(),
+				processConfig.getReactClassLoader(), asyncBroker);
 
 			NoticeableFuture<T> noticeableFuture = _submit(
 				_buildThreadName(processCallable, arguments),
@@ -167,17 +169,16 @@ public class LocalProcessExecutor implements ProcessExecutor {
 		return defaultNoticeableFuture;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		LocalProcessExecutor.class);
-
 	private class SubprocessReactor<T extends Serializable>
 		implements Callable<T> {
 
 		public SubprocessReactor(
-			Process process, ClassLoader reactClassLoader,
+			Process process, Consumer<ProcessLog> processLogConsumer,
+			ClassLoader reactClassLoader,
 			AsyncBroker<Long, Serializable> asyncBroker) {
 
 			_process = process;
+			_processLogConsumer = processLogConsumer;
 			_reactClassLoader = reactClassLoader;
 			_asyncBroker = asyncBroker;
 		}
@@ -211,11 +212,12 @@ public class LocalProcessExecutor implements ProcessExecutor {
 						// out corrupted log if necessary.
 
 						if (unsyncByteArrayOutputStream.size() > 0) {
-							if (_log.isWarnEnabled()) {
-								_log.warn(
+							_processLogConsumer.accept(
+								new LocalProcessLog(
+									Level.WARN,
 									"Found corrupt leading log " +
-										unsyncByteArrayOutputStream.toString());
-							}
+										unsyncByteArrayOutputStream.toString(),
+									null));
 						}
 
 						unsyncByteArrayOutputStream = null;
@@ -240,19 +242,21 @@ public class LocalProcessExecutor implements ProcessExecutor {
 						obj = objectInputStream.readObject();
 					}
 					catch (WriteAbortedException wae) {
-						if (_log.isWarnEnabled()) {
-							_log.warn("Caught a write aborted exception", wae);
-						}
+						_processLogConsumer.accept(
+							new LocalProcessLog(
+								Level.WARN, "Caught a write aborted exception",
+								wae));
 
 						continue;
 					}
 
 					if (!(obj instanceof ProcessCallable)) {
-						if (_log.isInfoEnabled()) {
-							_log.info(
+						_processLogConsumer.accept(
+							new LocalProcessLog(
+								Level.INFO,
 								"Received a nonprocess callable piping back " +
-									obj);
-						}
+									obj,
+								null));
 
 						continue;
 					}
@@ -270,18 +274,22 @@ public class LocalProcessExecutor implements ProcessExecutor {
 					try {
 						Serializable returnValue = processCallable.call();
 
-						if (_log.isDebugEnabled()) {
-							_log.debug(
+						_processLogConsumer.accept(
+							new LocalProcessLog(
+								Level.DEBUG,
 								StringBundler.concat(
 									"Invoked generic process callable ",
 									String.valueOf(processCallable),
 									" with return value ",
-									String.valueOf(returnValue)));
-						}
+									String.valueOf(returnValue)),
+								null));
 					}
 					catch (Throwable t) {
-						_log.error(
-							"Unable to invoke generic process callable", t);
+						_processLogConsumer.accept(
+							new LocalProcessLog(
+								Level.ERROR,
+								"Unable to invoke generic process callable",
+								t));
 					}
 				}
 			}
@@ -289,10 +297,12 @@ public class LocalProcessExecutor implements ProcessExecutor {
 				Path path = Files.createTempFile(
 					"corrupted-stream-dump-", ".log");
 
-				_log.error(
-					"Dumping content of corrupted object input stream to " +
-						path.toAbsolutePath(),
-					sce);
+				_processLogConsumer.accept(
+					new LocalProcessLog(
+						Level.ERROR,
+						"Dumping content of corrupted object input stream to " +
+							path.toAbsolutePath(),
+						sce));
 
 				Files.copy(
 					unsyncBufferedInputStream, path,
@@ -306,7 +316,9 @@ public class LocalProcessExecutor implements ProcessExecutor {
 					"Subprocess piping back ended prematurely", eofe);
 			}
 			catch (Throwable t) {
-				_log.error("Abort subprocess piping", t);
+				_processLogConsumer.accept(
+					new LocalProcessLog(
+						Level.ERROR, "Abort subprocess piping", t));
 
 				throw t;
 			}
@@ -338,6 +350,7 @@ public class LocalProcessExecutor implements ProcessExecutor {
 
 		private final AsyncBroker<Long, Serializable> _asyncBroker;
 		private final Process _process;
+		private final Consumer<ProcessLog> _processLogConsumer;
 		private final ClassLoader _reactClassLoader;
 
 	}

@@ -72,22 +72,18 @@ public abstract class BaseCSSBuilderTestCase {
 
 	@Test
 	public void testCSSBuilderOutputPath() throws Exception {
-		Path absolutePath = _docrootDirPath.resolve(
-			"absolute").toAbsolutePath();
+		Path outputDirPath = _docrootDirPath.resolve("absolute");
 
-		String absolutePathString = absolutePath.toString();
-
-		if (!Files.exists(absolutePath)) {
-			Files.createDirectory(absolutePath);
-		}
+		Files.createDirectories(outputDirPath);
 
 		executeCSSBuilder(
-			"/css", _docrootDirPath, false, absolutePathString,
+			"/css", _docrootDirPath, false,
+			String.valueOf(outputDirPath.toAbsolutePath()),
 			_portalCommonDirPath, 6, new String[0], "jni");
 
-		File absoluteFile = absolutePath.toFile();
+		File outputDir = outputDirPath.toFile();
 
-		File[] files = absoluteFile.listFiles();
+		File[] files = outputDir.listFiles();
 
 		Assert.assertTrue(files.length > 0);
 	}

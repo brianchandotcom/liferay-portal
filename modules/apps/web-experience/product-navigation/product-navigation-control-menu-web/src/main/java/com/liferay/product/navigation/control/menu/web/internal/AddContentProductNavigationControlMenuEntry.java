@@ -158,4 +158,5 @@ public class AddContentProductNavigationControlMenuEntry
 
 	@Reference
 	private Staging _staging;
+
 }

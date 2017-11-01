@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
@@ -129,8 +130,10 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		catch (PortalException pe) {
 			if (pe instanceof DuplicateLockException) {
 				throw new WorkflowException(
-					"Workflow task " + workflowTaskInstanceId +
-						" is locked by user " + userId,
+					StringBundler.concat(
+						"Workflow task ",
+						String.valueOf(workflowTaskInstanceId),
+						" is locked by user ", String.valueOf(userId)),
 					pe);
 			}
 

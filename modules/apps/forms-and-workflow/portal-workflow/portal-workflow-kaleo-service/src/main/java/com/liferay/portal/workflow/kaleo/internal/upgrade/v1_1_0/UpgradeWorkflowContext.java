@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.kaleo.internal.upgrade.v1_1_0;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v1_3_0.WorkflowContextUpgradeHelper;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
@@ -67,9 +68,10 @@ public class UpgradeWorkflowContext extends UpgradeProcess {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer(tableName);
 			PreparedStatement ps = connection.prepareStatement(
-				"select " + fieldName + ", workflowContext from " + tableName +
-					" where workflowContext is not null and workflowContext " +
-						"not like '%serializable%'");
+				StringBundler.concat(
+					"select ", fieldName, ", workflowContext from ", tableName,
+					" where workflowContext is not null and workflowContext ",
+					"not like '%serializable%'"));
 			ResultSet rs = ps.executeQuery()) {
 
 			JSONSerializer jsonSerializer = getJSONSerializer();
@@ -107,8 +109,9 @@ public class UpgradeWorkflowContext extends UpgradeProcess {
 		throws Exception {
 
 		try (PreparedStatement ps = connection.prepareStatement(
-				"update " + tableName + " set workflowContext = ? where " +
-					primaryKeyName + " = ?")) {
+				StringBundler.concat(
+					"update ", tableName, " set workflowContext = ? where ",
+					primaryKeyName, " = ?"))) {
 
 			ps.setString(1, workflowContext);
 			ps.setLong(2, primaryKeyValue);

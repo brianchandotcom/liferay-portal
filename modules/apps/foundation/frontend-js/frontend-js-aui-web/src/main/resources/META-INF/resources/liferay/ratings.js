@@ -504,7 +504,7 @@ AUI.add(
 						var ratingThumbDown = elements.item(1);
 
 						if (isNaN(thumbScore.negativeVotes)) {
-							var sessionTimeout = Liferay.Language.get('you-need-to-be-signed-in-to-rate');
+							var sessionTimeout = Liferay.Language.get('you-must-be-signed-in-to-rate');
 
 							ratingThumbUp.attr('title', sessionTimeout);
 							ratingThumbUp.addClass(cssClasses.off);

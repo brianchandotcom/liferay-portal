@@ -69,6 +69,7 @@
 							path: 'xml_definition.js',
 							requires: [
 								'aui-base',
+								'aui-component',
 								'dataschema-xml',
 								'datatype-xml'
 							]
@@ -76,6 +77,7 @@
 						'liferay-kaleo-designer-xml-definition-serializer': {
 							path: 'xml_definition_serializer.js',
 							requires: [
+								'escape',
 								'liferay-kaleo-designer-xml-util',
 								'liferay-xml-formatter'
 							]

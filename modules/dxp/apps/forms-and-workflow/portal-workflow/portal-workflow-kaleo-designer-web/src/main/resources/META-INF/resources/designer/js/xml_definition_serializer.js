@@ -434,6 +434,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-kaleo-designer-utils', 'liferay-kaleo-designer-xml-util', 'liferay-xml-formatter']
+		requires: ['escape', 'liferay-kaleo-designer-utils', 'liferay-kaleo-designer-xml-util', 'liferay-xml-formatter']
 	}
 );

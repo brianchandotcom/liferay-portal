@@ -2331,6 +2331,11 @@ check.
 ### Changed
 - [LPS-75488]: Update the [Liferay Gradle Plugins] dependency to version 3.5.24.
 
+## 5.1.31 - 2017-11-01
+
+### Changed
+- [LPS-75624]: Update the [Liferay Gradle Plugins] dependency to version 3.5.25.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -2593,6 +2598,7 @@ check.
 [LPS-75323]: https://issues.liferay.com/browse/LPS-75323
 [LPS-75430]: https://issues.liferay.com/browse/LPS-75430
 [LPS-75488]: https://issues.liferay.com/browse/LPS-75488
+[LPS-75624]: https://issues.liferay.com/browse/LPS-75624
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

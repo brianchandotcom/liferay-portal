@@ -147,8 +147,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 					fileName, "There should be a line break after '},'",
 					lineCount);
 			}
-
-			if (!trimmedLine.matches("\\}\\)*( \\{|[;,]|\\..*)")) {
+			else if (!trimmedLine.matches("\\}\\)*( \\{|[;,]|\\..*)")) {
 				addMessage(
 					fileName, "There should be a line break after '}'",
 					lineCount);

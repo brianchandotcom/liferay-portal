@@ -496,7 +496,7 @@ AUI.add(
 						var instance = this;
 
 						var cssClasses = instance.ratings.get('cssClasses');
-						
+
 						var elements = instance.ratings.get('elements');
 
 						var ratingThumbUp = elements.item(0);

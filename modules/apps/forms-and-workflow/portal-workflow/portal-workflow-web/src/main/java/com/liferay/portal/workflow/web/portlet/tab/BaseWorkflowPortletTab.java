@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.web.internal.servlet.taglib;
+package com.liferay.portal.workflow.web.portlet.tab;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -35,8 +35,8 @@ import javax.servlet.ServletContext;
 /**
  * @author Adam Brandizzi
  */
-public abstract class BaseWorkflowDynamicInclude
-	extends BaseJSPDynamicInclude implements WorkflowDynamicInclude {
+public abstract class BaseWorkflowPortletTab
+	extends BaseJSPDynamicInclude implements WorkflowPortletTab {
 
 	public PortletURL getSearchURL(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
@@ -50,7 +50,7 @@ public abstract class BaseWorkflowDynamicInclude
 			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
 
 		searchURL.setParameter("mvcPath", "/view.jsp");
-		searchURL.setParameter("tab", getTabName());
+		searchURL.setParameter("tab", getName());
 
 		return searchURL;
 	}
@@ -80,7 +80,7 @@ public abstract class BaseWorkflowDynamicInclude
 
 	@Override
 	protected Log getLog() {
-		Class<? extends BaseWorkflowDynamicInclude> clazz = getClass();
+		Class<? extends BaseWorkflowPortletTab> clazz = getClass();
 
 		if (!_logs.containsKey(clazz)) {
 			_logs.put(clazz, LogFactoryUtil.getLog(clazz));
@@ -95,7 +95,7 @@ public abstract class BaseWorkflowDynamicInclude
 		super.setServletContext(servletContext);
 	}
 
-	private static final Map<Class<? extends BaseWorkflowDynamicInclude>, Log>
+	private static final Map<Class<? extends BaseWorkflowPortletTab>, Log>
 		_logs = new HashMap<>();
 
 	private ServletContext _servletContext;

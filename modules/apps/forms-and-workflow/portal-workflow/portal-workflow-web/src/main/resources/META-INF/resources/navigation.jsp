@@ -26,7 +26,8 @@ String searchURL = ParamUtil.getString(request, "searchURL");
 	<aui:nav cssClass="navbar-nav">
 
 		<%
-		for (String tabName : tabNames) {
+		for (WorkflowPortletTab portletTab : portletTabs) {
+			String tabName = portletTab.getName();
 		%>
 
 			<portlet:renderURL var="renderURL">
@@ -36,7 +37,7 @@ String searchURL = ParamUtil.getString(request, "searchURL");
 			<aui:nav-item
 				href="<%= renderURL.toString() %>"
 				label="<%= tabName %>"
-				selected="<%= tabName.equals(tab) %>"
+				selected="<%= tabName.equals(selectedPortletTab.getName()) %>"
 			/>
 
 		<%
@@ -47,7 +48,7 @@ String searchURL = ParamUtil.getString(request, "searchURL");
 
 	<aui:nav-bar-search>
 		<aui:form action="<%= searchURL %>" method="post" name="fm1">
-			<liferay-util:include page="<%= searchPage %>" servletContext="<%= dynamicInclude.getServletContext() %>" />
+			<liferay-util:include page="<%= searchPage %>" servletContext="<%= selectedPortletTab.getServletContext() %>" />
 		</aui:form>
 	</aui:nav-bar-search>
 </aui:nav-bar>

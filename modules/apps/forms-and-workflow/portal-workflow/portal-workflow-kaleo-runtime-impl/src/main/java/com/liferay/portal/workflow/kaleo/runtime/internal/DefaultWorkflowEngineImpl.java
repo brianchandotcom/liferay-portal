@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
@@ -451,9 +452,10 @@ public class DefaultWorkflowEngineImpl
 
 			if (!kaleoDefinition.isActive()) {
 				throw new WorkflowException(
-					"Inactive workflow definition with name " +
-						workflowDefinitionName + " and version " +
-							workflowDefinitionVersion);
+					StringBundler.concat(
+						"Inactive workflow definition with name ",
+						workflowDefinitionName, " and version ",
+						String.valueOf(workflowDefinitionVersion)));
 			}
 
 			KaleoNode kaleoStartNode = kaleoDefinition.getKaleoStartNode();

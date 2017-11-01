@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
@@ -152,8 +153,9 @@ public class DefaultPortalKaleoManager
 			if (inputStream == null) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Unable to find definition file for " + definitionName +
-							" with file name " + fileName);
+						StringBundler.concat(
+							"Unable to find definition file for ",
+							definitionName, " with file name ", fileName));
 				}
 
 				return;

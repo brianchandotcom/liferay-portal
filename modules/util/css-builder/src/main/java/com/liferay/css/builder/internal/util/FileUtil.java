@@ -104,6 +104,12 @@ public class FileUtil {
 		}
 	}
 
+	public static boolean isAbsolute(String fileName) {
+		Path path = Paths.get(fileName);
+
+		return path.isAbsolute();
+	}
+
 	public static void write(File file, String content) throws IOException {
 		File parentFile = file.getParentFile();
 

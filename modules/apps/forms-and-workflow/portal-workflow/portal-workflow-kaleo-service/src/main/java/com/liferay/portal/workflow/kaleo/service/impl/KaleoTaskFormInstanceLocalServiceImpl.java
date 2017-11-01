@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskForm;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance;
@@ -86,9 +87,10 @@ public class KaleoTaskFormInstanceLocalServiceImpl
 			else {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"No form value processor defined to for form: " +
-							kaleoTaskForm.getKaleoTaskFormId() +
-								" and values: " + formValues);
+						StringBundler.concat(
+							"No form value processor defined to for form: ",
+							String.valueOf(kaleoTaskForm.getKaleoTaskFormId()),
+							" and values: ", formValues));
 				}
 			}
 		}

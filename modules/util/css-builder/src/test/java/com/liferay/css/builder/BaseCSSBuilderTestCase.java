@@ -71,6 +71,24 @@ public abstract class BaseCSSBuilderTestCase {
 	}
 
 	@Test
+	public void testCSSBuilderOutputPath() throws Exception {
+		Path outputDirPath = _docrootDirPath.resolve("absolute");
+
+		Files.createDirectories(outputDirPath);
+
+		executeCSSBuilder(
+			"/css", _docrootDirPath, false,
+			String.valueOf(outputDirPath.toAbsolutePath()),
+			_portalCommonDirPath, 6, new String[0], "jni");
+
+		File outputDir = outputDirPath.toFile();
+
+		File[] files = outputDir.listFiles();
+
+		Assert.assertTrue(files.length > 0);
+	}
+
+	@Test
 	public void testCSSBuilderWithFragmentChange() throws Exception {
 		Path fragmentChangePath = _docrootDirPath.resolve(
 			"css/_import_change.scss");

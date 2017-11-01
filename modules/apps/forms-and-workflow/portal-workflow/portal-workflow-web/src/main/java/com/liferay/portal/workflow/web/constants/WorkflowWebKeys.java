@@ -12,14 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.workflow.web.internal.constants;
+package com.liferay.portal.workflow.web.constants;
 
 /**
  * @author Adam Brandizzi
  */
 public class WorkflowWebKeys {
-
-	public static final String WORKFLOW_DEFAULT_TAB = "WORKFLOW_DEFAULT_TAB";
 
 	public static final String WORKFLOW_DEFINITION_DISPLAY_CONTEXT =
 		"WORKFLOW_DEFINITION_DISPLAY_CONTEXT";
@@ -27,17 +25,17 @@ public class WorkflowWebKeys {
 	public static final String WORKFLOW_DEFINITION_LINK_DISPLAY_CONTEXT =
 		"WORKFLOW_DEFINITION_LINK_DISPLAY_CONTEXT";
 
+	public static final String WORKFLOW_PORTLET_TABS = "WORKFLOW_PORTLET_TABS";
+
+	public static final String WORKFLOW_SELECTED_PORTLET_TAB =
+		"WORKFLOW_PORTLET_TAB";
+
 	public static final String WORKFLOW_TAB_DEFINITION = "workflows";
 
 	public static final String WORKFLOW_TAB_DEFINITION_LINK = "schemes";
 
-	public static final String WORKFLOW_TAB_DYNAMIC_INCLUDES =
-		"WORKFLOW_TAB_DYNAMIC_INCLUDES";
-
 	public static final String WORKFLOW_TAB_INSTANCE = "monitoring";
 
 	public static final String WORKFLOW_TAB_MY_SUBMISSIONS = "my-submissions";
-
-	public static final String WORKFLOW_TAB_NAMES = "WORKFLOW_TAB_NAMES";
 
 }

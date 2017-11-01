@@ -23,5 +23,5 @@ Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 %>
 
 <p class="asset-description">
-	<%= HtmlUtil.escape(StringUtil.shorten(folder.getDescription(), abstractLength)) %>
+	<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(StringUtil.shorten(folder.getDescription(), abstractLength))) %>
 </p>

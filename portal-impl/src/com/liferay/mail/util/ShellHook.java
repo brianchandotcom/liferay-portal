@@ -128,7 +128,16 @@ public class ShellHook implements Hook {
 
 		try {
 			Future<?> future = ProcessUtil.execute(
-				LoggingOutputProcessor.INSTANCE, cmdLine);
+				new LoggingOutputProcessor(
+					(stdErr, line) -> {
+						if (stdErr) {
+							_log.error(line);
+						}
+						else if (_log.isInfoEnabled()) {
+							_log.info(line);
+						}
+					}),
+				cmdLine);
 
 			future.get();
 		}

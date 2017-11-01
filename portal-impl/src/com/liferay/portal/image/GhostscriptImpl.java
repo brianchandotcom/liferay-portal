@@ -72,7 +72,17 @@ public class GhostscriptImpl implements Ghostscript {
 			_log.info("Executing command '" + sb.toString() + "'");
 		}
 
-		return ProcessUtil.execute(LoggingOutputProcessor.INSTANCE, arguments);
+		return ProcessUtil.execute(
+			new LoggingOutputProcessor(
+				(stdErr, line) -> {
+					if (stdErr) {
+						_log.error(line);
+					}
+					else if (_log.isInfoEnabled()) {
+						_log.info(line);
+					}
+				}),
+			arguments);
 	}
 
 	@Override

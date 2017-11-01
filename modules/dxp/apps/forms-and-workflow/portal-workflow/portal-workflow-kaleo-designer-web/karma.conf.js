@@ -15,11 +15,17 @@ module.exports = function(config) {
 	};
 
 	var resourcesPath = 'src/main/resources/META-INF/resources';
+	var resourcesTestPath = 'src/test/resources';
 
 	config.files.push(
 		{
 			included: true,
 			pattern: resourcesPath + '/**/!(config)*.js'
+		},
+		{
+			included: false,
+			pattern: resourcesTestPath + '/*.xml',
+			served: true
 		},
 		'src/test/testJS/*_test.js'
 	);

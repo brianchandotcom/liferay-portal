@@ -23,24 +23,35 @@ describe(
 						it(
 							'should have name',
 							function(done) {
-								var definition = '<?xml version="1.0"?>' +
-									'<workflow-definition xmlns="urn:liferay.com:liferay-workflow_6.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:liferay.com:liferay-workflow_6.2.0 http://www.liferay.com/dtd/liferay-workflow-definition_6_2_0.xsd">' +
-									'<name>Single Approver</name>' +
-									'<description>A single approver can approve a workflow content.</description>' +
-									'<version>1</version>' +
-									'</workflow-definition>';
+								AUI().use(
+									'aui-io',
+									'liferay-kaleo-designer-xml-definition',
+									function(A) {
+										A.io.request(
+											'/base/src/test/resources/metadata-only.xml',
+											{
+												dataType: 'text',
+												on: {
+													success: function() {
+														var definition = this.get('responseData');
 
-								var xmlDefinition = new Liferay.KaleoDesignerXMLDefinition(
-									{
-										value: definition
+														var xmlDefinition = new Liferay.KaleoDesignerXMLDefinition(
+															{
+																value: definition
+															}
+														);
+
+														var metadata = xmlDefinition.getDefinitionMetadata();
+
+														assert.equal(metadata.name, 'Single Approver');
+
+														done();
+													}
+												}
+											}
+										);
 									}
 								);
-
-								var metadata = xmlDefinition.getDefinitionMetadata();
-
-								assert.equal(metadata.name, 'Single Approver');
-
-								done();
 							}
 						);
 					}

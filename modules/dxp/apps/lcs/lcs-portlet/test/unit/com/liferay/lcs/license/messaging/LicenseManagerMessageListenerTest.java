@@ -63,46 +63,38 @@ public class LicenseManagerMessageListenerTest extends PowerMockito {
 		).thenReturn(
 			null
 		);
-
 		mockStatic(
 			JSONFactoryUtil.class, KeyGeneratorUtil.class,
 			LCSSubscriptionEntryServiceUtil.class, LCSUtil.class,
 			MessageBusUtil.class);
-
 		doNothing(
 
 		).when(
 			MessageBusUtil.class
 		);
-
 		MessageBusUtil.sendMessage(
 			Matchers.anyString(), Matchers.any(Message.class));
-
 		when(
 			JSONFactoryUtil.createJSONObject()
 		).thenReturn(
 			new JSONObjectImpl()
 		);
-
 		when(
 			KeyGeneratorUtil.getKey()
 		).thenReturn(
 			StringPool.BLANK
 		);
-
 		when(
 			LCSSubscriptionEntryServiceUtil.fetchLCSSubscriptionEntry(
 				Matchers.anyString())
 		).thenReturn(
 			new LCSSubscriptionEntryImpl()
 		);
-
 		when(
 			LCSUtil.isLCSClusterNodeRegistered()
 		).thenReturn(
 			false
 		);
-
 		for (LicenseManagerMessageType licenseManagerMessageType :
 				LicenseManagerMessageType.values()) {
 

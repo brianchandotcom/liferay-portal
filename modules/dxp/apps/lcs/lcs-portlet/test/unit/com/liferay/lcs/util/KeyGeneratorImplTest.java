@@ -99,7 +99,6 @@ public class KeyGeneratorImplTest extends PowerMockito {
 		KeyGeneratorImpl keyGenerator = spy(new KeyGeneratorImpl());
 
 		doNothing(
-
 		).when(
 			keyGenerator
 		).writeLcsServerProperties(

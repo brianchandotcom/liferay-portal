@@ -54,7 +54,6 @@ public class UptimeMonitoringAdvisorTest extends PowerMockito {
 			JSONFactoryUtil.class, LCSUtil.class, ManagementFactory.class);
 
 		doNothing(
-
 		).when(
 			_uptimeMonitoringAdvisor
 		).storeUptimesJSONArray(

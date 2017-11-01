@@ -35,7 +35,6 @@ import javax.validation.constraints.NotNull;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonSubTypes(
 	{@JsonSubTypes.Type(name = "AT", value = AnalyticsEventsMessage.class)}
-
 )
 @JsonTypeInfo(
 	include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "messageFormat",

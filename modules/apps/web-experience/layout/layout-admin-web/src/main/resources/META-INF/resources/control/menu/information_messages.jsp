@@ -42,7 +42,7 @@ page import="javax.portlet.PortletURL" %>
 <liferay-theme:defineObjects />
 
 <%
-String portletNamespace = PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.LAYOUT_ADMIN);
+String portletNamespace = PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.GROUP_PAGES);
 
 Map<String, Object> data = new HashMap<>();
 

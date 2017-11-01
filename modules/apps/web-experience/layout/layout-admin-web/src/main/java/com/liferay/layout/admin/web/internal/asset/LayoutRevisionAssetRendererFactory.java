@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + LayoutAdminPortletKeys.LAYOUT_ADMIN},
+	property = {"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES},
 	service = AssetRendererFactory.class
 )
 public class LayoutRevisionAssetRendererFactory
@@ -52,7 +52,7 @@ public class LayoutRevisionAssetRendererFactory
 	public LayoutRevisionAssetRendererFactory() {
 		setClassName(LayoutRevision.class.getName());
 		setCategorizable(false);
-		setPortletId(LayoutAdminPortletKeys.LAYOUT_ADMIN);
+		setPortletId(LayoutAdminPortletKeys.GROUP_PAGES);
 		setSelectable(false);
 	}
 

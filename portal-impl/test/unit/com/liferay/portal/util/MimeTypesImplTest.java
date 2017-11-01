@@ -90,6 +90,17 @@ public class MimeTypesImplTest {
 	}
 
 	@Test
+	public void testLar() throws Exception {
+		String validContentType = "application/zip";
+
+		String contentTypeStream = getContentType("test.lar", true);
+		String contentTypeName = getContentType("test.lar", false);
+
+		Assert.assertEquals(validContentType, contentTypeStream);
+		Assert.assertEquals(validContentType, contentTypeName);
+	}
+
+	@Test
 	public void testOdt() throws Exception {
 		String validContentType = "application/vnd.oasis.opendocument.text";
 

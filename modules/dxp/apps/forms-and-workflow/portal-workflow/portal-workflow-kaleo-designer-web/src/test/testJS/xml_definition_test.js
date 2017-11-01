@@ -23,33 +23,22 @@ describe(
 						it(
 							'should have name',
 							function(done) {
-								AUI().use(
-									'aui-io',
-									'liferay-kaleo-designer-xml-definition',
-									function(A) {
-										A.io.request(
-											'/base/src/test/resources/metadata-only.xml',
+								Liferay.Test.loadResource('metadata-only.xml')
+								.then(
+									function(definition) {
+										var xmlDefinition = new Liferay.KaleoDesignerXMLDefinition(
 											{
-												dataType: 'text',
-												on: {
-													success: function() {
-														var definition = this.get('responseData');
-
-														var xmlDefinition = new Liferay.KaleoDesignerXMLDefinition(
-															{
-																value: definition
-															}
-														);
-
-														var metadata = xmlDefinition.getDefinitionMetadata();
-
-														assert.equal(metadata.name, 'Single Approver');
-
-														done();
-													}
-												}
+												value: definition
 											}
 										);
+
+										var metadata = xmlDefinition.getDefinitionMetadata();
+
+										assert.equal(metadata.description, 'It only has metadata');
+										assert.equal(metadata.name, 'Metadata only');
+										assert.equal(metadata.version, 42);
+
+										done();
 									}
 								);
 							}

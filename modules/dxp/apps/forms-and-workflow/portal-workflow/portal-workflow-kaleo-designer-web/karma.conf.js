@@ -14,8 +14,9 @@ module.exports = function(config) {
 		terminal: true
 	};
 
-	var resourcesPath = 'src/main/resources/META-INF/resources';
-	var resourcesTestPath = 'src/test/resources';
+	var resourcesPath = 'src/main/resources/META-INF/resources/';
+	var resourcesTestPath = 'src/test/resources/';
+	var testPath = 'src/test/testJS/';
 
 	config.files.push(
 		{
@@ -26,6 +27,10 @@ module.exports = function(config) {
 			included: false,
 			pattern: resourcesTestPath + '/*.xml',
 			served: true
+		},
+		{
+			included: true,
+			pattern: testPath + '/*_util.js'
 		},
 		'src/test/testJS/*_test.js'
 	);

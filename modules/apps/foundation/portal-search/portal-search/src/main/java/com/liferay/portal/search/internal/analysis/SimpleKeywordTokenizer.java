@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.internal.analysis;
 
-import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.analysis.KeywordTokenizer;

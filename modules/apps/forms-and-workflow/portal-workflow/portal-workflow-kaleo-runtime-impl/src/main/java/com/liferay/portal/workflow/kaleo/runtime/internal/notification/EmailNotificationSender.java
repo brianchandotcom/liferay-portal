@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.kaleo.definition.NotificationReceptionType;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
-import com.liferay.portal.workflow.kaleo.runtime.internal.WorkflowGroupServiceSettings;
+import com.liferay.portal.workflow.kaleo.runtime.internal.settings.WorkflowGroupServiceSettings;
 import com.liferay.portal.workflow.kaleo.runtime.notification.BaseNotificationSender;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationRecipient;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationSender;

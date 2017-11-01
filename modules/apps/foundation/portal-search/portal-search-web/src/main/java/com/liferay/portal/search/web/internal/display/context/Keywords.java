@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.web.internal.display.context;
 
-import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.petra.string.CharPool;
 
 /**
  * @author André de Oliveira

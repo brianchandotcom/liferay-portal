@@ -14,10 +14,11 @@
 
 package com.liferay.portal.workflow.kaleo.definition.internal.export;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -84,9 +85,10 @@ public class XMLDefinitionExporter implements DefinitionExporter {
 				"xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
 			workflowDefinitionElement.addAttribute(
 				"xsi:schemaLocation",
-				"urn:liferay.com:liferay-workflow_" + _version +
-					" http://www.liferay.com/dtd/liferay-workflow-definition_" +
-						_schemaVersion + ".xsd");
+				StringBundler.concat(
+					"urn:liferay.com:liferay-workflow_", _version,
+					" http://www.liferay.com/dtd/liferay-workflow-definition_",
+					_schemaVersion, ".xsd"));
 			workflowDefinitionElement.addNamespace(
 				"", "urn:liferay.com:liferay-workflow_" + _version);
 

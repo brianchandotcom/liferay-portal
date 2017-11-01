@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.workflow.web.internal.servlet.taglib;
+package com.liferay.portal.workflow.web.internal.portlet.tab;
 
-import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
+import com.liferay.portal.workflow.web.constants.WorkflowWebKeys;
+import com.liferay.portal.workflow.web.portlet.tab.WorkflowPortletTab;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,13 +25,12 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {"portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_MY_SUBMISSIONS},
-	service = {DynamicInclude.class, WorkflowDynamicInclude.class}
+	service = WorkflowPortletTab.class
 )
-public class MyWorkflowInstanceDynamicInclude
-	extends WorkflowInstanceDynamicInclude {
+public class MyWorkflowInstancePortletTab extends WorkflowInstancePortletTab {
 
 	@Override
-	public String getTabName() {
+	public String getName() {
 		return WorkflowWebKeys.WORKFLOW_TAB_MY_SUBMISSIONS;
 	}
 

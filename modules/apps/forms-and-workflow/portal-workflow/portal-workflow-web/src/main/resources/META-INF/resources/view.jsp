@@ -17,15 +17,15 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-util:include page="/navigation.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="searchPage" value="<%= dynamicInclude.getSearchJspPath() %>" />
+	<liferay-util:param name="searchPage" value="<%= selectedPortletTab.getSearchJspPath() %>" />
 
 	<%
-	PortletURL searchURL = dynamicInclude.getSearchURL(renderRequest, renderResponse);
+	PortletURL searchURL = selectedPortletTab.getSearchURL(renderRequest, renderResponse);
 	%>
 
 	<liferay-util:param name="searchURL" value="<%= searchURL.toString() %>" />
 </liferay-util:include>
 
 <%
-dynamicInclude.include(request, PipingServletResponse.createPipingServletResponse(pageContext), null);
+selectedPortletTab.include(request, PipingServletResponse.createPipingServletResponse(pageContext), null);
 %>

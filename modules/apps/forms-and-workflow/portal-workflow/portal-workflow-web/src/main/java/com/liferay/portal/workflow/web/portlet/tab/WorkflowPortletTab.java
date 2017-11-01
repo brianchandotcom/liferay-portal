@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.web.internal.servlet.taglib;
+package com.liferay.portal.workflow.web.portlet.tab;
 
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 
@@ -28,7 +28,9 @@ import javax.servlet.ServletContext;
 /**
  * @author Adam Brandizzi
  */
-public interface WorkflowDynamicInclude extends DynamicInclude {
+public interface WorkflowPortletTab extends DynamicInclude {
+
+	public String getName();
 
 	public String getSearchJspPath();
 
@@ -36,8 +38,6 @@ public interface WorkflowDynamicInclude extends DynamicInclude {
 		RenderRequest renderRequest, RenderResponse renderResponse);
 
 	public ServletContext getServletContext();
-
-	public String getTabName();
 
 	public void prepareDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)

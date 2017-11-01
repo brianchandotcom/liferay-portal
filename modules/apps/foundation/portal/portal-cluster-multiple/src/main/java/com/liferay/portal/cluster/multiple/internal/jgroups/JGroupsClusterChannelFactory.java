@@ -14,12 +14,12 @@
 
 package com.liferay.portal.cluster.multiple.internal.jgroups;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.cluster.multiple.internal.ClusterChannel;
 import com.liferay.portal.cluster.multiple.internal.ClusterChannelFactory;
 import com.liferay.portal.cluster.multiple.internal.ClusterReceiver;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;

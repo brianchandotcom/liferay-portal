@@ -527,7 +527,8 @@ public class UpgradeJournal extends UpgradeProcess {
 				invalidDDMFormFieldNamesMap.entrySet()) {
 
 			content = StringUtil.replace(
-				content, entry.getKey(), entry.getValue());
+				content, "name=\"" + entry.getKey() + "\"",
+				"name=\"" + entry.getValue() + "\"");
 		}
 
 		return content;

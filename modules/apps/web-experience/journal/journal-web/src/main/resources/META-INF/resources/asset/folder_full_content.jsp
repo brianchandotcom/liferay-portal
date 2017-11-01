@@ -31,7 +31,7 @@ JournalFolder folder = journalDisplayContext.getFolder();
 		<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= 100 %>">
 			<c:if test="<%= Validator.isNotNull(folder.getDescription()) %>">
 				<div class="lfr-asset-description">
-					<%= HtmlUtil.escape(folder.getDescription()) %>
+					<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(folder.getDescription())) %>
 				</div>
 			</c:if>
 

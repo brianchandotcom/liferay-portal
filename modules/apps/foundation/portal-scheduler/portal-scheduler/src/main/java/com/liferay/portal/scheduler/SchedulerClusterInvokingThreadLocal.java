@@ -18,7 +18,9 @@ import com.liferay.petra.lang.CentralizedThreadLocal;
 
 /**
  * @author Tina Tian
+ * @deprecated As of 3.1.0, with no direct replacement
  */
+@Deprecated
 public class SchedulerClusterInvokingThreadLocal {
 
 	public static boolean isEnabled() {

@@ -85,6 +85,9 @@ public interface SchedulerEngine {
 
 	public static final String SCHEDULER = "SCHEDULER";
 
+	public static final String SCHEDULER_CLUSTER_INVOKING =
+		"scheduler.cluster.invoking";
+
 	public static final String SCRIPT = "SCRIPT";
 
 	public static final String START_TIME = "START_TIME";

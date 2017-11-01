@@ -149,11 +149,11 @@ AUI.add(
 			}
 		};
 
-		var appendXMLAssignments = function(buffer, dataAssignments, wrapperNodeName) {
+		var appendXMLAssignments = function(buffer, dataAssignments, wrapperNodeName, wrapperNodeAttrs) {
 			if (dataAssignments) {
 				var assignmentType = AArray(dataAssignments.assignmentType)[0];
 
-				var xmlAssignments = XMLUtil.createObj(wrapperNodeName || 'assignments');
+				var xmlAssignments = XMLUtil.createObj(wrapperNodeName || 'assignments', wrapperNodeAttrs);
 
 				buffer.push(xmlAssignments.open);
 
@@ -308,10 +308,17 @@ AUI.add(
 							);
 						}
 
+						var recipientsAttrs = {};
+
+						if (recipients[index].receptionType && recipients[index].receptionType.length > 0) {
+							recipientsAttrs['receptionType'] = recipients[index].receptionType;
+						}
+
 						appendXMLAssignments(
 							buffer,
 							recipients[index],
-							'recipients'
+							'recipients',
+							recipientsAttrs
 						);
 
 						if (executionType) {

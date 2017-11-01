@@ -81,7 +81,7 @@ public class IndentationCheck extends BaseCheck {
 	protected void doVisitToken(DetailAST detailAST) {
 
 		// Only check types at the beginning of the line. We can skip if/while
-		// statements since we have logic in BaseSourceProcessor in place to
+		// statements since we have logic in JavaIfStatementCheck in place to
 		// automatically fix incorrect indentations inside those. Indentations
 		// for method parameter declarations are automatically fixed by
 		// JavaSignatureStylingCheck.

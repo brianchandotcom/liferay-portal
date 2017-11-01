@@ -837,6 +837,7 @@
 		<exception>CommercePriceListDisplayDate</exception>
 		<exception>CommercePriceListExpirationDate</exception>
 		<exception>CommerceRegionName</exception>
+		<exception>CommerceShippingEngine</exception>
 		<exception>CommerceShippingMethodEngineKey</exception>
 		<exception>CommerceShippingMethodName</exception>
 		<exception>CommerceWarehouseCommerceRegionId</exception>

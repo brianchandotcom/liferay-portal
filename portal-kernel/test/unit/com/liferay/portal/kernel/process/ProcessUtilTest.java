@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.process;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -76,13 +78,21 @@ public class ProcessUtilTest {
 
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
-					LoggingOutputProcessor.class.getName(), Level.INFO)) {
+					ProcessUtilTest.class.getName(), Level.INFO)) {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			Future<ObjectValuePair<Void, Void>> loggingFuture =
 				ProcessUtil.execute(
-					LoggingOutputProcessor.INSTANCE,
+					new LoggingOutputProcessor(
+						(stdErr, line) -> {
+							if (stdErr) {
+								_log.error(line);
+							}
+							else if (_log.isInfoEnabled()) {
+								_log.info(line);
+							}
+						}),
 					_buildArguments(Echo.class, "2"));
 
 			loggingFuture.get();
@@ -364,6 +374,9 @@ public class ProcessUtilTest {
 	}
 
 	private static final String _CLASS_PATH;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ProcessUtilTest.class);
 
 	private static class DummyJob implements Callable<Void> {
 

@@ -34,7 +34,7 @@ public interface CommerceCartHelper {
 			HttpServletRequest httpServletRequest, int type)
 		throws PortalException;
 
-	public PortletURL getCommerceCheckutPortletURL(
+	public PortletURL getCommerceCheckoutPortletURL(
 			HttpServletRequest httpServletRequest)
 		throws PortalException;
 

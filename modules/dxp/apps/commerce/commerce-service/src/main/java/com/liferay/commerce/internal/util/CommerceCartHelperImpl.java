@@ -82,7 +82,7 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 	}
 
 	@Override
-	public PortletURL getCommerceCheckutPortletURL(
+	public PortletURL getCommerceCheckoutPortletURL(
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 

@@ -1,6 +1,10 @@
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
+dependencies {
+	testCompile group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
+}
+
 liferay {
 	deployDir = appServerLibGlobalDir
 }

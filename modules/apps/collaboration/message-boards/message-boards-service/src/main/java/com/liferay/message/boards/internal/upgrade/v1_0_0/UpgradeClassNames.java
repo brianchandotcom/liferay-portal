@@ -12,26 +12,32 @@
  * details.
  */
 
-package com.liferay.portal.security.pacl.test.hook.service.impl;
+package com.liferay.message.boards.internal.upgrade.v1_0_0;
 
-import com.liferay.message.boards.kernel.service.MBMessageLocalService;
-import com.liferay.message.boards.kernel.service.MBMessageLocalServiceWrapper;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeKernelPackage;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Sergio González
  */
-public class TestPACLMBMessageLocalServiceImpl
-	extends MBMessageLocalServiceWrapper {
+public class UpgradeClassNames extends UpgradeKernelPackage {
 
-	public TestPACLMBMessageLocalServiceImpl(
-		MBMessageLocalService mbMessageLocalService) {
-
-		super(mbMessageLocalService);
+	@Override
+	protected String[][] getClassNames() {
+		return _CLASS_NAMES;
 	}
 
 	@Override
-	public int getMBMessagesCount() {
-		return -123;
+	protected String[][] getResourceNames() {
+		return _RESOURCE_NAMES;
 	}
+
+	private static final String[][] _CLASS_NAMES = {
+		{
+			"com.liferay.message.boards.kernel.model.MBStatsUser",
+			"com.liferay.message.boards.model.MBStatsUser"
+		}
+	};
+
+	private static final String[][] _RESOURCE_NAMES = new String[0][0];
 
 }

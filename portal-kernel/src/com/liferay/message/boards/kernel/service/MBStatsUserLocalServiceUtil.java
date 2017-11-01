@@ -31,8 +31,11 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @see MBStatsUserLocalService
  * @see com.liferay.portlet.messageboards.service.base.MBStatsUserLocalServiceBaseImpl
  * @see com.liferay.portlet.messageboards.service.impl.MBStatsUserLocalServiceImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.message.boards.service.impl.MBStatsUserLocalServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBStatsUserLocalServiceUtil {
 	/*

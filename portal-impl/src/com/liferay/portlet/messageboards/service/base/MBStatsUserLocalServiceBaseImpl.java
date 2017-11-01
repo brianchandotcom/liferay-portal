@@ -66,8 +66,11 @@ import javax.sql.DataSource;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.messageboards.service.impl.MBStatsUserLocalServiceImpl
  * @see com.liferay.message.boards.kernel.service.MBStatsUserLocalServiceUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.service.impl.MBStatsUserLocalServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public abstract class MBStatsUserLocalServiceBaseImpl
 	extends BaseLocalServiceImpl implements MBStatsUserLocalService,

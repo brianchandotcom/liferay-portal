@@ -103,7 +103,7 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 					<%
 					MBStatsUser statsUser = MBStatsUserLocalServiceUtil.getStatsUser(scopeGroupId, themeDisplay.getUserId());
 
-					String[] ranks = MBUtil.getUserRank(mbGroupServiceSettings, themeDisplay.getLanguageId(), statsUser);
+					String[] ranks = MBUserRankUtil.getUserRank(mbGroupServiceSettings, themeDisplay.getLanguageId(), statsUser);
 					%>
 
 					<c:if test="<%= Validator.isNotNull(ranks[1]) %>">

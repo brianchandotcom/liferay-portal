@@ -275,9 +275,6 @@ create index IX_3321F142 on MBMessage (userId, classNameId, status);
 create index IX_57CA9FEC on MBMessage (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_8D12316E on MBMessage (uuid_[$COLUMN_LENGTH:75$], groupId);
 
-create unique index IX_9168E2C9 on MBStatsUser (groupId, userId);
-create index IX_847F92B5 on MBStatsUser (userId);
-
 create index IX_41F6DC8A on MBThread (categoryId, priority);
 create index IX_50F1904A on MBThread (groupId, categoryId, lastPostDate);
 create index IX_485F7E98 on MBThread (groupId, categoryId, status);

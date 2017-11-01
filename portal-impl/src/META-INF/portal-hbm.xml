@@ -30,7 +30,6 @@
 	<import class="com.liferay.message.boards.kernel.model.MBDiscussion" />
 	<import class="com.liferay.message.boards.kernel.model.MBMailingList" />
 	<import class="com.liferay.message.boards.kernel.model.MBMessage" />
-	<import class="com.liferay.message.boards.kernel.model.MBStatsUser" />
 	<import class="com.liferay.message.boards.kernel.model.MBThread" />
 	<import class="com.liferay.message.boards.kernel.model.MBThreadFlag" />
 	<import class="com.liferay.portal.kernel.model.Account" />
@@ -1591,16 +1590,6 @@
 		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
-	</class>
-	<class name="com.liferay.portlet.messageboards.model.impl.MBStatsUserImpl" table="MBStatsUser">
-		<id name="statsUserId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="messageCount" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="lastPostDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portlet.messageboards.model.impl.MBThreadImpl" table="MBThread">
 		<id name="threadId" type="long">

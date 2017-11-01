@@ -2741,7 +2741,6 @@
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 		<reference entity="MBBan" package-path="com.liferay.portlet.messageboards" />
 		<reference entity="MBMessage" package-path="com.liferay.portlet.messageboards" />
-		<reference entity="MBStatsUser" package-path="com.liferay.portlet.messageboards" />
 		<reference entity="MBThreadFlag" package-path="com.liferay.portlet.messageboards" />
 		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
 		<reference entity="SocialActivity" package-path="com.liferay.portlet.social" />

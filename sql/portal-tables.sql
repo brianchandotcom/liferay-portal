@@ -854,15 +854,6 @@ create table MBMessage (
 	statusDate DATE null
 );
 
-create table MBStatsUser (
-	statsUserId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	messageCount INTEGER,
-	lastPostDate DATE null
-);
-
 create table MBThread (
 	uuid_ VARCHAR(75) null,
 	threadId LONG not null primary key,

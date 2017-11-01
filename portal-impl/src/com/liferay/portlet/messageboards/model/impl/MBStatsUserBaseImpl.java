@@ -29,8 +29,11 @@ import com.liferay.message.boards.kernel.service.MBStatsUserLocalServiceUtil;
  * @author Brian Wing Shun Chan
  * @see MBStatsUserImpl
  * @see MBStatsUser
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.model.impl.MBStatsUserImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public abstract class MBStatsUserBaseImpl extends MBStatsUserModelImpl
 	implements MBStatsUser {

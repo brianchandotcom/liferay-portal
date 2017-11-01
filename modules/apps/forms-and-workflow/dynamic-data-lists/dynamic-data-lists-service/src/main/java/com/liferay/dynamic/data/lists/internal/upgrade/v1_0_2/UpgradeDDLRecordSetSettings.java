@@ -68,7 +68,6 @@ public class UpgradeDDLRecordSetSettings extends UpgradeProcess {
 
 		try (PreparedStatement ps1 = connection.prepareStatement(sql);
 			ResultSet rs = ps1.executeQuery();
-
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

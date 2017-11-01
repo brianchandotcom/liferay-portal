@@ -382,7 +382,6 @@ public class ServiceTestUtil {
 		(MessageBus)ProxyUtil.newProxyInstance(
 			MessageBus.class.getClassLoader(),
 			new Class<?>[] {MessageBus.class},
-
 			new InvocationHandler() {
 
 				@Override

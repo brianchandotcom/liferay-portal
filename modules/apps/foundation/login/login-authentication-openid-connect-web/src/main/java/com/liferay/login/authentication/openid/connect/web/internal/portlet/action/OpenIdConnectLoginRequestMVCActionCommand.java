@@ -49,7 +49,6 @@ import org.osgi.service.component.annotations.Reference;
 		"mvc.command.name=" + OpenIdConnectWebKeys.OPEN_ID_CONNECT_REQUEST_ACTION_NAME
 	},
 	service = MVCActionCommand.class
-
 )
 public class OpenIdConnectLoginRequestMVCActionCommand
 	extends BaseMVCActionCommand {

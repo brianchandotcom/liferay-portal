@@ -105,7 +105,6 @@ import org.osgi.service.component.annotations.Reference;
 		"mvc.command.name=/login/openid"
 	},
 	service = MVCActionCommand.class
-
 )
 public class OpenIdLoginMVCActionCommand extends BaseMVCActionCommand {
 

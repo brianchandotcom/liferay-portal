@@ -828,7 +828,7 @@
 		</execute>
 
 		<execute macro="AlloyEditor#addContent">
-			<var name="title" value="${kbArticleContentEdit}" />
+			<var name="content" value="${kbArticleContentEdit}" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Button#PUBLISH_LOCALIZED" value1="Publicar" />

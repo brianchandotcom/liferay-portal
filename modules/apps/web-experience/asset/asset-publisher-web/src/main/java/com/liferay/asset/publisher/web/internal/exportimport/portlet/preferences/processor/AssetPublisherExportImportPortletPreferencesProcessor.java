@@ -73,6 +73,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
@@ -725,9 +726,10 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		if (Validator.isNull(newPreferencesValue)) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to export portlet preferences value for class " +
-						DDMStructure.class.getName() + " with primary key " +
-							primaryKeyLong);
+					StringBundler.concat(
+						"Unable to export portlet preferences value for class ",
+						DDMStructure.class.getName(), " with primary key ",
+						String.valueOf(primaryKeyLong)));
 			}
 
 			return;
@@ -1304,8 +1306,9 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			if (Validator.isNumber(newValue)) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Ignoring group " + newValue + " because it cannot " +
-							"be converted to scope");
+						StringBundler.concat(
+							"Ignoring group ", newValue, " because it cannot ",
+							"be converted to scope"));
 				}
 
 				continue;
@@ -1324,25 +1327,28 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			catch (NoSuchGroupException nsge) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Ignoring scope " + newValue + " because the " +
-							"referenced group was not found",
+						StringBundler.concat(
+							"Ignoring scope ", newValue, " because the ",
+							"referenced group was not found"),
 						nsge);
 				}
 			}
 			catch (NoSuchLayoutException nsle) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Ignoring scope " + newValue + " because the " +
-							"referenced layout was not found",
+						StringBundler.concat(
+							"Ignoring scope ", newValue, " because the ",
+							"referenced layout was not found"),
 						nsle);
 				}
 			}
 			catch (PrincipalException pe) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Ignoring scope " + newValue + " because the " +
-							"referenced parent group no longer allows " +
-								"sharing content with child sites",
+						StringBundler.concat(
+							"Ignoring scope ", newValue, " because the ",
+							"referenced parent group no longer allows sharing ",
+							"content with child sites"),
 						pe);
 				}
 			}

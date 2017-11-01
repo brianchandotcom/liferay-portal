@@ -92,6 +92,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThemeFactoryUtil;
@@ -1226,9 +1227,9 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			String key = entry.getKey();
 			ThemeSetting themeSetting = entry.getValue();
 
-			String property =
-				device + "ThemeSettingsProperties--" + key +
-					StringPool.DOUBLE_DASH;
+			String property = StringBundler.concat(
+				device, "ThemeSettingsProperties--", key,
+				StringPool.DOUBLE_DASH);
 
 			String value = ParamUtil.getString(
 				actionRequest, property, themeSetting.getValue());

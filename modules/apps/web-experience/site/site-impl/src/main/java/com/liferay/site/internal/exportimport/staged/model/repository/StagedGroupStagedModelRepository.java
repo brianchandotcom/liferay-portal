@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.site.model.adapter.StagedGroup;
 
@@ -98,9 +99,11 @@ public class StagedGroupStagedModelRepository
 		}
 		catch (PortalException pe) {
 			_log.error(
-				"Unable to fetch Layout Set with groupId " +
-					stagedGroup.getGroupId() + " and private layout " +
-						portletDataContext.isPrivateLayout(),
+				StringBundler.concat(
+					"Unable to fetch Layout Set with groupId ",
+					String.valueOf(stagedGroup.getGroupId()),
+					" and private layout ",
+					String.valueOf(portletDataContext.isPrivateLayout())),
 				pe);
 		}
 

@@ -12,10 +12,8 @@
  * details.
  */
 
-package com.liferay.portal.scheduler;
+package com.liferay.portal.kernel.scheduler;
 
-import com.liferay.portal.kernel.scheduler.JobState;
-import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.util.ArrayList;
@@ -25,10 +23,7 @@ import java.util.Map;
 
 /**
  * @author Tina Tian
- * @deprecated As of 3.1.0, replaced by {@link
- *              com.liferay.portal.kernel.scheduler.JobStateSerializeUtil}
  */
-@Deprecated
 public class JobStateSerializeUtil {
 
 	public static JobState deserialize(Map<String, Object> jobStateMap) {

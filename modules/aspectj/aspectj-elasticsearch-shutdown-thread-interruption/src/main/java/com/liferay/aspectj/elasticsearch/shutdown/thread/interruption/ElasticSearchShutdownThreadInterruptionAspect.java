@@ -14,6 +14,8 @@
 
 package com.liferay.aspectj.elasticsearch.shutdown.thread.interruption;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 import java.lang.reflect.Field;
 
 import java.util.concurrent.CountDownLatch;
@@ -103,8 +105,9 @@ public class ElasticSearchShutdownThreadInterruptionAspect {
 		if (namePrefix.endsWith("[http_server_worker]")) {
 			if (_locked) {
 				LogUtil.log(
-					"Called " + executorService +
-						"#shutdownNow with name prefix " + namePrefix);
+					StringBundler.concat(
+						"Called ", String.valueOf(executorService),
+						"#shutdownNow with name prefix ", namePrefix));
 			}
 
 			_shutdownCountDownLatch.countDown();

@@ -148,7 +148,7 @@ version 3.1.0.
 Liferay bundles by setting the `liferay.workspace.bundle.cache.dir` property in
 `gradle.properties`.
 
-## 1.7.1 - 2017-10-26
+## 1.7.1 - 2017-10-29
 
 ### Fixed
 - [LPS-74818]: Fail the build if the source and destination of the

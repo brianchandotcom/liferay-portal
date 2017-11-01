@@ -27,7 +27,9 @@ String backURL = (String)row.getParameter("backURL");
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 
 	<%
-	long kaleoProcessId = ParamUtil.getLong(request, "kaleoProcessId");
+	KaleoProcess kaleoProcess = (KaleoProcess)request.getAttribute(KaleoFormsWebKeys.KALEO_PROCESS);
+
+	long kaleoProcessId = BeanParamUtil.getLong(kaleoProcess, request, "kaleoProcessId");
 
 	long ddmStructureId = KaleoFormsUtil.getKaleoProcessDDMStructureId(kaleoProcessId, portletSession);
 

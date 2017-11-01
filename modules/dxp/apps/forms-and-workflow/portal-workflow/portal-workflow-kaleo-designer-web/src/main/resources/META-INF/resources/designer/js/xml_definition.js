@@ -277,6 +277,10 @@ AUI.add(
 											],
 											resultListLocator: 'user'
 										}
+									},
+									{
+										key: 'receptionType',
+										locator: '@receptionType'
 									}
 								],
 								resultListLocator: tagName || 'assignments'

@@ -48,8 +48,9 @@ public class AmazonSignedRequestsUtil {
 			amazonRankingsConfiguration,
 			"GET\necs.amazonaws.com\n/onca/xml\n" + canonicalizedParameters);
 
-		return "http://ecs.amazonaws.com/onca/xml?" + canonicalizedParameters +
-			"&Signature=" + signature;
+		return StringBundler.concat(
+			"http://ecs.amazonaws.com/onca/xml?", canonicalizedParameters,
+			"&Signature=", signature);
 	}
 
 	private static String _canonicalizeParameters(

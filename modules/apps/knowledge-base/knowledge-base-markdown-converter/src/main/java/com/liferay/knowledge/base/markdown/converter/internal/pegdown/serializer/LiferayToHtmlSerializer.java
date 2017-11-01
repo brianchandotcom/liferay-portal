@@ -63,7 +63,8 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 					String match = matcher.group(1);
 
 					printer.print(
-						"<a href=\"#" + match + "\" id=\"" + match + "\">");
+						StringBundler.concat(
+							"<a href=\"#", match, "\" id=\"", match, "\">"));
 
 					anchorInserted = true;
 				}

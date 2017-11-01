@@ -112,8 +112,9 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 
 				while (rs.next()) {
 					runSQL(
-						"delete from ResourceAction where actionId = '" +
-							rs.getString(1) + "' and name= '" + oldName + "'");
+						StringBundler.concat(
+							"delete from ResourceAction where actionId = '",
+							rs.getString(1), "' and name= '", oldName, "'"));
 				}
 			}
 			catch (Exception e) {

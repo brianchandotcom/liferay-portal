@@ -16,6 +16,7 @@ package com.liferay.knowledge.base.internal.upgrade.v1_1_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -76,8 +77,9 @@ public class UpgradeClassName extends UpgradeProcess {
 				"delete from ClassName_ where classNameId = " + newClassNameId);
 
 			runSQL(
-				"update ClassName_ set value = '" + newClassName +
-					"' where classNameId = " + oldClassNameId);
+				StringBundler.concat(
+					"update ClassName_ set value = '", newClassName,
+					"' where classNameId = ", String.valueOf(oldClassNameId)));
 		}
 	}
 

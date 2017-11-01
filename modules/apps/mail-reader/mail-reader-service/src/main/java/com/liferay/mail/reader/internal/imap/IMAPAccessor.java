@@ -674,9 +674,11 @@ public class IMAPAccessor {
 			stopWatch.stop();
 
 			_log.debug(
-				"Downloaded " + jxMessages.length + " messages from folder " +
-					jxFolder.getFullName() + " completed in " +
-						stopWatch.getTime() + " ms");
+				StringBundler.concat(
+					"Downloaded ", String.valueOf(jxMessages.length),
+					" messages from folder ", jxFolder.getFullName(),
+					" completed in ", String.valueOf(stopWatch.getTime()),
+					" ms"));
 		}
 	}
 

@@ -27,7 +27,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.trash.api", version: "1.0.0-20170719.172911-2"
 	provided group: "com.liferay", name: "com.liferay.xstream.configurator.api", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.19.0"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.6.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.49.0"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
 	provided group: "javax.mail", name: "mail", version: "1.4"
 	provided group: "javax.portlet", name: "portlet-api", version: "2.0"

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.List;
 
@@ -145,8 +146,10 @@ public class OAuthManager {
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Unable to setup Marketplace for company " +
-							company.getCompanyId() + ": " + e.getMessage());
+						StringBundler.concat(
+							"Unable to setup Marketplace for company ",
+							String.valueOf(company.getCompanyId()), ": ",
+							e.getMessage()));
 				}
 			}
 		}

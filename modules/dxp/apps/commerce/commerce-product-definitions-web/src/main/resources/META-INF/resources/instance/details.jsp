@@ -56,7 +56,7 @@ renderResponse.setTitle((cpInstance == null) ? LanguageUtil.get(request, "add-sk
 	<aui:input name="cpInstanceId" type="hidden" value="<%= String.valueOf(cpInstanceId) %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
-	<c: class="lfr-form-content">
+	<div class="lfr-form-content">
 		<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
 
 		<aui:model-context bean="<%= cpInstance %>" model="<%= CPInstance.class %>" />

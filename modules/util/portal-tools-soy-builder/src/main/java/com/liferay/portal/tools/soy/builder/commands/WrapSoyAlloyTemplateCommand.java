@@ -17,6 +17,8 @@ package com.liferay.portal.tools.soy.builder.commands;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 import java.io.IOException;
 
 import java.nio.charset.StandardCharsets;
@@ -40,10 +42,12 @@ public class WrapSoyAlloyTemplateCommand extends BaseSoyJsCommand {
 		String namespace = getNamespace();
 
 		content = content.replace(
-			"(typeof " + namespace + " == 'undefined') { var " + namespace +
-				" = {}; }",
-			"(typeof " + namespace + " == 'undefined') { window." + namespace +
-				" = {}; }");
+			StringBundler.concat(
+				"(typeof ", namespace, " == 'undefined') { var ", namespace,
+				" = {}; }"),
+			StringBundler.concat(
+				"(typeof ", namespace, " == 'undefined') { window.", namespace,
+				" = {}; }"));
 
 		content = getWrapperHeader() + content + getWrapperFooter();
 

@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.users.admin.item.selector.criterion.UserItemSelectorCriterion;
+import com.liferay.users.admin.item.selector.web.internal.constants.UserItemSelectorViewConstants;
 import com.liferay.users.admin.item.selector.web.internal.display.context.UserItemSelectorViewDisplayContext;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
 
@@ -100,7 +100,8 @@ public class UserItemSelectorView
 				itemSelectedEventName);
 
 		request.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			UserItemSelectorViewConstants.
+				USER_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
 			userItemSelectorViewDisplayContext);
 
 		ServletContext servletContext = getServletContext();

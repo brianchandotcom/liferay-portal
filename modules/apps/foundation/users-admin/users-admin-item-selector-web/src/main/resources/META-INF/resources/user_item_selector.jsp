@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-UserItemSelectorViewDisplayContext userItemSelectorViewDisplayContext = (UserItemSelectorViewDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+UserItemSelectorViewDisplayContext userItemSelectorViewDisplayContext = (UserItemSelectorViewDisplayContext)request.getAttribute(UserItemSelectorViewConstants.USER_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
 
 String itemSelectedEventName = userItemSelectorViewDisplayContext.getItemSelectedEventName();
 

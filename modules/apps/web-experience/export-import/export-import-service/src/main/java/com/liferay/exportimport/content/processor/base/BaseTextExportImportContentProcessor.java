@@ -1075,9 +1075,17 @@ public class BaseTextExportImportContentProcessor
 			int groupUuidPos =
 				groupFriendlyUrlPos + DATA_HANDLER_GROUP_FRIENDLY_URL.length();
 
-			String groupUuid = content.substring(
-				groupUuidPos + 1,
-				content.indexOf(StringPool.AT, groupUuidPos + 1));
+			int endIndex = content.indexOf(StringPool.AT, groupUuidPos + 1);
+
+			if (endIndex < (groupUuidPos + 1)) {
+				content = StringUtil.replaceFirst(
+					content, DATA_HANDLER_GROUP_FRIENDLY_URL, StringPool.BLANK,
+					groupFriendlyUrlPos);
+
+				continue;
+			}
+
+			String groupUuid = content.substring(groupUuidPos + 1, endIndex);
 
 			Group groupFriendlyUrlGroup =
 				GroupLocalServiceUtil.fetchGroupByUuidAndCompanyId(

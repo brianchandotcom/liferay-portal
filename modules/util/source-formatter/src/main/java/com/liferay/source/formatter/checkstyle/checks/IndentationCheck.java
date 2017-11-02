@@ -81,13 +81,16 @@ public class IndentationCheck extends BaseCheck {
 	protected void doVisitToken(DetailAST detailAST) {
 
 		// Only check types at the beginning of the line. We can skip if/while
-		// statements since we have logic in BaseSourceProcessor in place to
-		// automatically fix incorrect indentations inside those.
+		// statements since we have logic in JavaIfStatementCheck in place to
+		// automatically fix incorrect indentations inside those. Indentations
+		// for method parameter declarations are automatically fixed by
+		// JavaSignatureStylingCheck.
 
 		if (!_isAtLineStart(detailAST) ||
 			_isCatchStatementParameter(detailAST) ||
 			_isInsideChainedConcatMethod(detailAST) ||
-			_isInsideDoIfOrWhileStatementCriterium(detailAST)) {
+			_isInsideDoIfOrWhileStatementCriterium(detailAST) ||
+			_isInsideMethodParameterDeclaration(detailAST)) {
 
 			return;
 		}
@@ -991,6 +994,38 @@ public class IndentationCheck extends BaseCheck {
 				return true;
 			}
 		}
+	}
+
+	private boolean _isInsideMethodParameterDeclaration(DetailAST detailAST) {
+		DetailAST parentAST = detailAST.getParent();
+
+		while (true) {
+			if (parentAST == null) {
+				return false;
+			}
+
+			if (parentAST.getType() == TokenTypes.PARAMETER_DEF) {
+				break;
+			}
+
+			parentAST = parentAST.getParent();
+		}
+
+		parentAST = parentAST.getParent();
+
+		if (parentAST.getType() != TokenTypes.PARAMETERS) {
+			return false;
+		}
+
+		parentAST = parentAST.getParent();
+
+		if ((parentAST.getType() == TokenTypes.CTOR_DEF) ||
+			(parentAST.getType() == TokenTypes.METHOD_DEF)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final int[] _ARITHMETIC_OPERATORS = {

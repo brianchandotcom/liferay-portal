@@ -71,12 +71,7 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Site Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="pageName" value="Site Page" />
 			<var name="pageTemplateName" value="Page Template Name" />
-			<var name="privacy" value="Public" />
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">

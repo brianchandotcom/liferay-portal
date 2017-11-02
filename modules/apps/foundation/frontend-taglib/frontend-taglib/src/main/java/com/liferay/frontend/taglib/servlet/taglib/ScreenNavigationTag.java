@@ -181,8 +181,11 @@ public class ScreenNavigationTag extends IncludeTag {
 
 	private ScreenNavigationEntry _getSelectedScreenNavigationEntry() {
 		String screenNavigationEntryKey = ParamUtil.getString(
-			request, "screenNavigationEntryKey",
-			_getDefaultScreenNavigationEntryKey());
+			request, "screenNavigationEntryKey");
+
+		if (Validator.isNull(screenNavigationEntryKey)) {
+			screenNavigationEntryKey = _getDefaultScreenNavigationEntryKey();
+		}
 
 		List<ScreenNavigationEntry> screenNavigationEntries =
 			_getScreenNavigationEntries();

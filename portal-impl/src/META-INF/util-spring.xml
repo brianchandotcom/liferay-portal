@@ -300,6 +300,11 @@
 	<bean class="com.liferay.portal.kernel.servlet.SharedSessionUtil" id="com.liferay.portal.kernel.servlet.SharedSessionUtil">
 		<property name="sharedSession" ref="com.liferay.portal.kernel.servlet.SharedSession" />
 	</bean>
+	<bean class="com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil" id="com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil">
+		<property name="transferHeadersHelper">
+			<bean class="com.liferay.portal.servlet.TransferHeadersHelperImpl" />
+		</property>
+	</bean>
 	<bean class="com.liferay.portal.kernel.spring.orm.LastSessionRecorderHelperUtil" id="com.liferay.portal.kernel.spring.orm.LastSessionRecorderHelperUtil">
 		<property name="lastSessionRecorderHelper">
 			<bean class="com.liferay.portal.spring.hibernate.LastSessionRecorderHelperImpl" />

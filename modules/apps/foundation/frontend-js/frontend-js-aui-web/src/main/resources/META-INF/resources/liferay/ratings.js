@@ -495,26 +495,25 @@ AUI.add(
 					_updateScores: function(thumbScore) {
 						var instance = this;
 
-						var cssClasses = instance.ratings.get('cssClasses');
+						var ratings = instance.ratings;
 
-						var elements = instance.ratings.get('elements');
-
-						var ratingThumbUp = elements.item(0);
+						var cssClasses = ratings.get('cssClasses');
+						var elements = ratings.get('elements');
 
 						var ratingThumbDown = elements.item(1);
+						var ratingThumbUp = elements.item(0);
 
-						if (isNaN(thumbScore.negativeVotes)) {
-							var sessionTimeout = Liferay.Language.get('you-must-be-signed-in-to-rate');
+						if (isNaN(thumbScore.negativeVotes) && isNaN(thumbScore.positiveVotes)) {
+							ratingThumbDown.attr('title', Liferay.Language.get('you-must-be-signed-in-to-rate'));
+							ratingThumbUp.attr('title', Liferay.Language.get('you-must-be-signed-in-to-rate'));
 
-							ratingThumbUp.attr('title', sessionTimeout);
+							ratingThumbDown.addClass(cssClasses.off);
 							ratingThumbUp.addClass(cssClasses.off);
+
+							ratingThumbDown.removeClass(cssClasses.on);
 							ratingThumbUp.removeClass(cssClasses.on);
 
-							ratingThumbDown.attr('title', sessionTimeout);
-							ratingThumbDown.addClass(cssClasses.off);
-							ratingThumbDown.removeClass(cssClasses.on);
-
-							instance.ratings.set('disabled', true);
+							ratings.set('disabled', true);
 						}
 						else {
 							var cssClassesOn = cssClasses.on;

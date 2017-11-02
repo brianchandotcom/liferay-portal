@@ -75,6 +75,15 @@
 			flex-direction: column;
 		}
 	}
+
+	.navbar-nav {
+		flex-direction: row;
+
+		@include media-breakpoint-down($scaling-breakpoint-down) {
+			flex: 1;
+			flex-direction: column;
+		}
+	}
 }
 
 .navbar-no-collapse {

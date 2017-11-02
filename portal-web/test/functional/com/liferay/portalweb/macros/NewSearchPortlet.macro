@@ -1,0 +1,53 @@
+<definition>
+	<command name="assertFacetURL">
+		<var method="StringUtil#lowerCase('${searchPage}')" name="searchPage" />
+
+		<if>
+			<contains string="${searchPage}" substring=" " />
+			<then>
+				<var method="StringUtil#replace('${searchPage}', ' ', '-')" name="searchPage" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${searchAssetType}" arg2="Web Content" />
+			<then>
+				<var name="typeURL" value="com.liferay.journal.model.JournalArticle" />
+			</then>
+		</if>
+
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute function="AssertLocation" value1="${portalURL}/web/guest/${searchPage}?q=${searchTerm}&amp;type=${typeURL}" />
+	</command>
+
+	<command name="checkFacetOption">
+		<execute function="Check" locator1="Checkbox#ANY_CHECKBOX">
+			<var name="checkboxName" value="${facetOption}" />
+		</execute>
+
+		<execute function="AssertChecked" locator1="Checkbox#ANY_CHECKBOX">
+			<var name="checkboxName" value="${facetOption}" />
+		</execute>
+	</command>
+
+	<command name="search">
+		<execute function="Type" locator1="Search#NEW_SEARCH_PORTLET_SEARCH_FIELD" value1="${searchTerm}" />
+
+		<execute function="KeyPress" locator1="Search#NEW_SEARCH_PORTLET_SEARCH_FIELD" value1="\RETURN" />
+	</command>
+
+	<command name="uncheckFacetOption">
+		<execute function="Uncheck" locator1="Checkbox#ANY_CHECKBOX">
+			<var name="checkboxName" value="${facetOption}" />
+		</execute>
+
+		<execute function="AssertNotChecked" locator1="Checkbox#ANY_CHECKBOX">
+			<var name="checkboxName" value="${facetOption}" />
+		</execute>
+	</command>
+
+	<command name="viewResultDetails">
+		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${searchTerm}" />
+	</command>
+</definition>

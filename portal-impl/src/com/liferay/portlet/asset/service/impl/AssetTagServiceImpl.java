@@ -19,6 +19,9 @@ import com.liferay.asset.kernel.model.AssetTagDisplay;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Autocomplete;
@@ -34,6 +37,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Provides the remote service for accessing, adding, checking, deleting,
@@ -93,19 +98,20 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 
 	@Override
 	public List<AssetTag> getGroupTags(long groupId) {
-		return assetTagPersistence.findByGroupId(groupId);
+		return assetTagPersistence.filterFindByGroupId(groupId);
 	}
 
 	@Override
 	public List<AssetTag> getGroupTags(
 		long groupId, int start, int end, OrderByComparator<AssetTag> obc) {
 
-		return assetTagPersistence.findByGroupId(groupId, start, end, obc);
+		return
+			assetTagPersistence.filterFindByGroupId(groupId, start, end, obc);
 	}
 
 	@Override
 	public int getGroupTagsCount(long groupId) {
-		return assetTagPersistence.countByGroupId(groupId);
+		return assetTagPersistence.filterCountByGroupId(groupId);
 	}
 
 	@Override
@@ -131,14 +137,20 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 
 	@Override
 	public AssetTag getTag(long tagId) throws PortalException {
-		return assetTagLocalService.getTag(tagId);
+		AssetTag assetTag = assetTagLocalService.getTag(tagId);
+
+		AssetTagPermission.check(
+			getPermissionChecker(), assetTag, ActionKeys.VIEW);
+
+		return assetTag;
 	}
 
 	@Override
 	public List<AssetTag> getTags(long groupId, long classNameId, String name) {
-		return assetTagFinder.findByG_C_N(
-			groupId, classNameId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+		return filterTags(
+			assetTagFinder.findByG_C_N(
+				groupId, classNameId, name, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null));
 	}
 
 	@Override
@@ -146,8 +158,9 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 		long groupId, long classNameId, String name, int start, int end,
 		OrderByComparator<AssetTag> obc) {
 
-		return assetTagFinder.findByG_C_N(
-			groupId, classNameId, name, start, end, obc);
+		return filterTags(
+			assetTagFinder.findByG_C_N(
+				groupId, classNameId, name, start, end, obc));
 	}
 
 	@Override
@@ -179,25 +192,26 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 		OrderByComparator<AssetTag> obc) {
 
 		if (Validator.isNull(name)) {
-			return assetTagPersistence.findByGroupId(groupIds, start, end, obc);
+			return assetTagPersistence.filterFindByGroupId(
+				groupIds, start, end, obc);
 		}
 
-		return assetTagPersistence.findByG_LikeN(
+		return assetTagPersistence.filterFindByG_LikeN(
 			groupIds, name, start, end, obc);
 	}
 
 	@Override
 	public List<AssetTag> getTags(String className, long classPK) {
-		return assetTagLocalService.getTags(className, classPK);
+		return filterTags(assetTagLocalService.getTags(className, classPK));
 	}
 
 	@Override
 	public int getTagsCount(long groupId, String name) {
 		if (Validator.isNull(name)) {
-			return assetTagPersistence.countByGroupId(groupId);
+			return assetTagPersistence.filterCountByGroupId(groupId);
 		}
 
-		return assetTagPersistence.countByG_LikeN(groupId, name);
+		return assetTagPersistence.filterCountByG_LikeN(groupId, name);
 	}
 
 	@Override
@@ -252,5 +266,30 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 		return assetTagLocalService.updateTag(
 			getUserId(), tagId, name, serviceContext);
 	}
+
+	protected List<AssetTag> filterTags(List<AssetTag> tags) {
+		Stream<AssetTag> tagsStream = tags.stream();
+
+		return tagsStream.filter(
+			this::hasAssetTagViewPermission
+		).collect(
+			Collectors.toList()
+		);
+	}
+
+	protected boolean hasAssetTagViewPermission(AssetTag assetTag) {
+		try {
+			return AssetTagPermission.contains(
+				getPermissionChecker(), assetTag, ActionKeys.VIEW);
+		}
+		catch (PrincipalException pe) {
+			_log.error(pe);
+		}
+
+		return false;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetTagServiceImpl.class);
 
 }

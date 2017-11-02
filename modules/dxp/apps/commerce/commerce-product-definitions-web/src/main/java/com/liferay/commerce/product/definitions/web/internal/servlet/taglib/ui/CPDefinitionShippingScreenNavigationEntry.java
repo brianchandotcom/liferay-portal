@@ -63,8 +63,7 @@ public class CPDefinitionShippingScreenNavigationEntry
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(
-			locale,
-			CPDefinitionScreenNavigationConstants.ENTRY_KEY_SHIPPING);
+			locale, CPDefinitionScreenNavigationConstants.ENTRY_KEY_SHIPPING);
 	}
 
 	@Override

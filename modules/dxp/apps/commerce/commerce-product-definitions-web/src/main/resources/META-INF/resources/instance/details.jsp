@@ -79,17 +79,17 @@ renderResponse.setTitle((cpInstance == null) ? LanguageUtil.get(request, "add-sk
 						StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
 					%>
 
-					<h6 class="text-default">
-						<strong><%= HtmlUtil.escape(cpDefinitionOptionRel.getTitle(languageId)) %></strong>
+						<h6 class="text-default">
+							<strong><%= HtmlUtil.escape(cpDefinitionOptionRel.getTitle(languageId)) %></strong>
 
-						<%
-						for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels) {
-							stringJoiner.add(cpDefinitionOptionValueRel.getTitle(languageId));
-						}
-						%>
+							<%
+							for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels) {
+								stringJoiner.add(cpDefinitionOptionValueRel.getTitle(languageId));
+							}
+							%>
 
-						<%= HtmlUtil.escape(stringJoiner.toString()) %>
-					</h6>
+							<%= HtmlUtil.escape(stringJoiner.toString()) %>
+						</h6>
 
 					<%
 					}

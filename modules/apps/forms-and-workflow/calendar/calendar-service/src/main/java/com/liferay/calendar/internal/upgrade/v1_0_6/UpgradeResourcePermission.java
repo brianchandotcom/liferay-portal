@@ -18,12 +18,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PermissionedModel;
 import com.liferay.portal.kernel.model.ResourceAction;
-import com.liferay.portal.kernel.model.ResourceBlockConstants;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
-import com.liferay.portal.kernel.service.ResourceBlockLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -35,6 +35,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,11 +46,11 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 
 	public UpgradeResourcePermission(
 		ResourceActionLocalService resourceActionLocalService,
-		ResourceBlockLocalService resourceBlockLocalService,
+		ResourcePermissionLocalService resourcePermissionLocalService,
 		RoleLocalService roleLocalService) {
 
 		_resourceActionLocalService = resourceActionLocalService;
-		_resourceBlockLocalService = resourceBlockLocalService;
+		_resourcePermissionLocalService = resourcePermissionLocalService;
 		_roleLocalService = roleLocalService;
 	}
 
@@ -58,10 +59,10 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 		upgradeGuestResourceBlockPermissions();
 	}
 
-	protected long getCalendarResourceUnsupportedActionsBitwiseValue()
+	protected List<String> getCalendarResourceUnsupportedActionIds()
 		throws PortalException {
 
-		int unsupportedBitwiseValue = 0;
+		List<String> actionIds = new ArrayList<>();
 
 		List<String> guestUnsupportedActions =
 			getModelResourceGuestUnsupportedActions();
@@ -72,11 +73,11 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 					_resourceActionLocalService.getResourceAction(
 						_CALENDAR_RESOURCE_NAME, resourceActionId);
 
-				unsupportedBitwiseValue |= resourceAction.getBitwiseValue();
+				actionIds.add(resourceAction.getActionId());
 			}
 		}
 
-		return unsupportedBitwiseValue;
+		return actionIds;
 	}
 
 	protected List<String> getModelResourceGuestUnsupportedActions()
@@ -102,10 +103,10 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 	}
 
 	protected void upgradeGuestResourceBlockPermissions() throws Exception {
-		long unsupportedBitwiseValue =
-			getCalendarResourceUnsupportedActionsBitwiseValue();
+		List<String> unsupportedActionIds =
+			getCalendarResourceUnsupportedActionIds();
 
-		if (unsupportedBitwiseValue == 0) {
+		if (unsupportedActionIds.isEmpty()) {
 			return;
 		}
 
@@ -119,7 +120,6 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 
 			while (rs.next()) {
 				long companyId = rs.getLong(1);
-				long groupId = rs.getLong(2);
 				final long calendarResourceId = rs.getLong(3);
 				final long resourceBlockId = rs.getLong(4);
 
@@ -167,11 +167,13 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 
 				};
 
-				_resourceBlockLocalService.updateIndividualScopePermissions(
-					companyId, groupId, _CALENDAR_RESOURCE_NAME,
-					permissionedModel, guestRole.getRoleId(),
-					unsupportedBitwiseValue,
-					ResourceBlockConstants.OPERATOR_REMOVE);
+				for (String unsupportedActionId : unsupportedActionIds) {
+					_resourcePermissionLocalService.removeResourcePermission(
+						companyId, _CALENDAR_RESOURCE_NAME,
+						ResourceConstants.SCOPE_INDIVIDUAL,
+						String.valueOf(permissionedModel),
+						guestRole.getRoleId(), unsupportedActionId);
+				}
 			}
 		}
 	}
@@ -183,7 +185,8 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 		{ActionKeys.PERMISSIONS, ActionKeys.VIEW};
 
 	private final ResourceActionLocalService _resourceActionLocalService;
-	private final ResourceBlockLocalService _resourceBlockLocalService;
+	private final ResourcePermissionLocalService
+		_resourcePermissionLocalService;
 	private final RoleLocalService _roleLocalService;
 
 }

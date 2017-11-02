@@ -828,7 +828,7 @@
 		</execute>
 
 		<execute macro="AlloyEditor#addContent">
-			<var name="title" value="${kbArticleContentEdit}" />
+			<var name="content" value="${kbArticleContentEdit}" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Button#PUBLISH_LOCALIZED" value1="Publicar" />
@@ -1560,7 +1560,7 @@
 		<if>
 			<equals arg1="${sourceURL}" arg2="true" />
 			<then>
-				<execute function="AssertClick" locator1="KnowledgeBaseArticle#EDIT_ON_GITHUB" value1="Edit on GitHub" />
+				<execute function="AssertClick" locator1="KnowledgeBaseArticle#EDIT_ON_GITHUB" value1="Edit On GitHub" />
 
 				<execute function="SelectWindow" locator1="Google#PAGE_TITLE">
 					<var name="key_pageTitle" value="Google" />

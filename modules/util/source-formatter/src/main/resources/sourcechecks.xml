@@ -39,7 +39,6 @@
 			<property name="allowedExportPackageDirName" value="journal-service" />
 			<property name="allowedExportPackageDirName" value="journal-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/chat/chat-service" />
-			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/announcements/announcements-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/blogs/blogs-item-selector-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/blogs/blogs-recent-bloggers-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/blogs/blogs-service" />

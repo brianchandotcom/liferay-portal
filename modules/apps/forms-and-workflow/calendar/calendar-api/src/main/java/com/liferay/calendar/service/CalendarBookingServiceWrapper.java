@@ -240,6 +240,14 @@ public class CalendarBookingServiceWrapper implements CalendarBookingService,
 
 	@Override
 	public java.util.List<com.liferay.calendar.model.CalendarBooking> getChildCalendarBookings(
+		long parentCalendarBookingId, boolean includeStagingCalendarBookings)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _calendarBookingService.getChildCalendarBookings(parentCalendarBookingId,
+			includeStagingCalendarBookings);
+	}
+
+	@Override
+	public java.util.List<com.liferay.calendar.model.CalendarBooking> getChildCalendarBookings(
 		long parentCalendarBookingId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarBookingService.getChildCalendarBookings(parentCalendarBookingId,

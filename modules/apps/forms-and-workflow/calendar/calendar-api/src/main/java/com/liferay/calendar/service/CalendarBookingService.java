@@ -173,6 +173,11 @@ public interface CalendarBookingService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CalendarBooking> getChildCalendarBookings(
+		long parentCalendarBookingId, boolean includeStagingCalendarBookings)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CalendarBooking> getChildCalendarBookings(
 		long parentCalendarBookingId, int status) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

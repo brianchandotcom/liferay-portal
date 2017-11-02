@@ -24,6 +24,8 @@ CPDefinition cpDefinition = cpDefinitionShippingInfoDisplayContext.getCPDefiniti
 long cpDefinitionId = cpDefinitionShippingInfoDisplayContext.getCPDefinitionId();
 
 boolean shippable = BeanParamUtil.getBoolean(cpDefinition, request, "shippable", true);
+boolean freeShipping = BeanParamUtil.getBoolean(cpDefinition, request, "freeShipping", false);
+boolean shipSeparately = BeanParamUtil.getBoolean(cpDefinition, request, "shipSeparately", false);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(catalogURL);
@@ -42,12 +44,12 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<aui:input name="shippable" value="<%= shippable %>" />
+			<aui:input checked="<%= shippable %>" name="shippable" type="toggle-switch" value="<%= shippable %>" />
 
 			<div class="<%= shippable ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />shippableOptions">
-				<aui:input name="freeShipping" />
+				<aui:input checked="<%= freeShipping %>" name="freeShipping" type="toggle-switch" />
 
-				<aui:input name="shipSeparately" />
+				<aui:input checked="<%= shipSeparately %>" name="shipSeparately" type="toggle-switch" />
 
 				<aui:input name="shippingExtraPrice" />
 			</div>

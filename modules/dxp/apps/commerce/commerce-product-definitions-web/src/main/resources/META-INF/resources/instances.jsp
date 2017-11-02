@@ -23,6 +23,8 @@ CPDefinition cpDefinition = cpInstanceDisplayContext.getCPDefinition();
 
 long cpDefinitionId = cpInstanceDisplayContext.getCPDefinitionId();
 
+boolean isIgnoreSKUCombinations = cpDefinition.isIgnoreSKUCombinations();
+
 List<CPDefinitionOptionRel> cpDefinitionOptionRels = cpInstanceDisplayContext.getCPDefinitionOptionRels();
 
 SearchContainer<CPInstance> cpInstanceSearchContainer = cpInstanceDisplayContext.getSearchContainer();
@@ -95,6 +97,16 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPInstances();" %>' icon="times" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
+
+<portlet:actionURL name="editProductInstance" var="editProductDefinitionIgnoreSKUCombinationsActionURL" />
+
+<aui:form action="<%= editProductDefinitionIgnoreSKUCombinationsActionURL %>" cssClass="container-fluid-1280" method="post" name="fm1">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateCPDefinitionIgnoreSKUCombinations" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinition.getCPDefinitionId() %>" />
+
+	<aui:input checked="<%= isIgnoreSKUCombinations %>" helpMessage="ignore-sku-combinations-help" name="ignoreSKUCombinations" onChange='<%= renderResponse.getNamespace() + "updateCPDefinitionIgnoreSKUCombinations();" %>' type="toggle-switch" />
+</aui:form>
 
 <div id="<portlet:namespace />productInstancesContainer">
 	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
@@ -209,5 +221,13 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 
 			submitForm(form, '<portlet:actionURL name="editProductInstance" />');
 		}
+	}
+
+	function <portlet:namespace />updateCPDefinitionIgnoreSKUCombinations() {
+		var form = AUI.$(document.<portlet:namespace />fm1);
+
+		var form = AUI.$(document.<portlet:namespace />fm1);
+
+		submitForm(form, '<portlet:actionURL name="editProductInstance" />');
 	}
 </aui:script>

@@ -849,6 +849,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Home" />
+			<var name="privacy" value="Public" />
 		</execute>
 	</command>
 

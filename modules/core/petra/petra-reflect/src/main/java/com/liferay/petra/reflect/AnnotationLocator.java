@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.annotation;
+package com.liferay.petra.reflect;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -24,10 +24,7 @@ import java.util.Queue;
 
 /**
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.petra.reflect.AnnotationLocator}
  */
-@Deprecated
 public class AnnotationLocator {
 
 	public static List<Annotation> locate(Class<?> targetClass) {

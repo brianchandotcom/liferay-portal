@@ -14,7 +14,7 @@
 
 package com.liferay.portal.spring.aop;
 
-import com.liferay.portal.kernel.annotation.AnnotationLocator;
+import com.liferay.petra.reflect.AnnotationLocator;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

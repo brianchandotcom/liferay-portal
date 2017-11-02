@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -3680,6 +3681,16 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			}
 
 			boolean containsName = matches(group.getNameCurrentValue(), names);
+
+			if (!containsName) {
+				AssetEntry assetEntry = assetEntryPersistence.fetchByC_C(
+					group.getClassNameId(), group.getGroupId());
+
+				if (assetEntry != null) {
+					containsName = matches(assetEntry.getTitle(), names);
+				}
+			}
+
 			boolean containsDescription = matches(
 				group.getDescriptionCurrentValue(), descriptions);
 

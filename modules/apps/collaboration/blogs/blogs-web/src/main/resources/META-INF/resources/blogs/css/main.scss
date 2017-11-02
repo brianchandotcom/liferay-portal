@@ -397,4 +397,8 @@
 	.separator {
 		border-color: transparent;
 	}
+
+	.reading-time:before {
+		content: " - "
+	}
 }

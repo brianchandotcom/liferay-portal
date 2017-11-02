@@ -19,7 +19,6 @@ import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.service.BlogsEntryService;
-import com.liferay.blogs.web.internal.util.BlogsUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Release;
@@ -30,7 +29,6 @@ import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -55,15 +53,6 @@ public class BlogsPortletDisplayTemplateHandler
 	@Override
 	public String getClassName() {
 		return BlogsEntry.class.getName();
-	}
-
-	@Override
-	public Map<String, Object> getCustomContextObjects() {
-		Map<String, Object> customContextObjects = new HashMap<>(1);
-
-		customContextObjects.put("blogsUtil", new BlogsUtil());
-
-		return customContextObjects;
 	}
 
 	@Override
@@ -92,9 +81,6 @@ public class BlogsPortletDisplayTemplateHandler
 
 		TemplateVariableGroup blogsUtilTemplateVariableGroup =
 			new TemplateVariableGroup("blogs-util", restrictedVariables);
-
-		blogsUtilTemplateVariableGroup.addVariable(
-			"blogs-util", BlogsUtil.class, "blogsUtil");
 
 		templateVariableGroups.put(
 			"blogs-util", blogsUtilTemplateVariableGroup);

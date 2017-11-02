@@ -25,6 +25,8 @@ dependencies {
 
 	compile group: "org.aspectj", name: "aspectjrt", version: "1.8.9"
 	compile group: "org.aspectj", name: "aspectjweaver", version: "1.8.9"
+
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.49.0"
 }
 
 liferay {

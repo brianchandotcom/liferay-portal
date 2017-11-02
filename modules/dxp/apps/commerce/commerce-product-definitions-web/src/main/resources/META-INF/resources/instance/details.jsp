@@ -76,6 +76,7 @@ renderResponse.setTitle((cpInstance == null) ? LanguageUtil.get(request, "add-sk
 					<%
 					for (CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels) {
 						List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = cpDefinitionOptionRelListMap.get(cpDefinitionOptionRel);
+
 						StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
 					%>
 

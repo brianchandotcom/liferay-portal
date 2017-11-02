@@ -215,66 +215,66 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		CPDefinition cpDefinition = _cpDefinitionService.fetchCPDefinition(
 			cpDefinitionId);
 
-		if (cpDefinition != null) {
-			Date displayDate = cpDefinition.getDisplayDate();
-			Date expirationDate = cpDefinition.getExpirationDate();
-
-			Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
-				displayDate.getTime());
-
-			int displayDateMonth = displayCalendar.get(Calendar.MONTH);
-			int displayDateDay = displayCalendar.get(Calendar.DAY_OF_MONTH);
-			int displayDateYear = displayCalendar.get(Calendar.YEAR);
-			int displayDateHour = displayCalendar.get(Calendar.HOUR);
-			int displayDateMinute = displayCalendar.get(Calendar.MINUTE);
-			int displayDateAmPm = displayCalendar.get(Calendar.AM_PM);
-
-			if (displayDateAmPm == Calendar.PM) {
-				displayDateHour += 12;
-			}
-
-			int expirationDateMonth = 0;
-			int expirationDateDay = 0;
-			int expirationDateYear = 0;
-			int expirationDateHour = 0;
-			int expirationDateMinute = 0;
-			int expirationDateAmPm = 0;
-
-			boolean neverExpire = true;
-
-			if (expirationDate != null) {
-				Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
-					expirationDate.getTime());
-
-				expirationDateMonth = expirationCalendar.get(Calendar.MONTH);
-				expirationDateDay = expirationCalendar.get(
-					Calendar.DAY_OF_MONTH);
-				expirationDateYear = expirationCalendar.get(Calendar.YEAR);
-				expirationDateHour = expirationCalendar.get(Calendar.HOUR);
-				expirationDateMinute = expirationCalendar.get(Calendar.MINUTE);
-				expirationDateAmPm = expirationCalendar.get(Calendar.AM_PM);
-
-				if (expirationDateAmPm == Calendar.PM) {
-					expirationDateHour += 12;
-				}
-
-				neverExpire = false;
-			}
-
-			_cpDefinitionService.updateCPDefinition(
-				cpDefinitionId, cpDefinition.getTitleMap(),
-				cpDefinition.getShortDescriptionMap(),
-				cpDefinition.getDescriptionMap(), cpDefinition.getUrlTitleMap(),
-				cpDefinition.getMetaTitleMap(),
-				cpDefinition.getMetaKeywordsMap(),
-				cpDefinition.getMetaDescriptionMap(),
-				cpDefinition.getIgnoreSKUCombinations(),
-				cpDefinition.getDDMStructureKey(), displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, expirationDateMonth, expirationDateDay,
-				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, serviceContext);
+		if (cpDefinition == null) {
+			return;
 		}
+
+		Date displayDate = cpDefinition.getDisplayDate();
+		Date expirationDate = cpDefinition.getExpirationDate();
+
+		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
+			displayDate.getTime());
+
+		int displayDateMonth = displayCalendar.get(Calendar.MONTH);
+		int displayDateDay = displayCalendar.get(Calendar.DAY_OF_MONTH);
+		int displayDateYear = displayCalendar.get(Calendar.YEAR);
+		int displayDateHour = displayCalendar.get(Calendar.HOUR);
+		int displayDateMinute = displayCalendar.get(Calendar.MINUTE);
+		int displayDateAmPm = displayCalendar.get(Calendar.AM_PM);
+
+		if (displayDateAmPm == Calendar.PM) {
+			displayDateHour += 12;
+		}
+
+		int expirationDateMonth = 0;
+		int expirationDateDay = 0;
+		int expirationDateYear = 0;
+		int expirationDateHour = 0;
+		int expirationDateMinute = 0;
+		int expirationDateAmPm = 0;
+
+		boolean neverExpire = true;
+
+		if (expirationDate != null) {
+			Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
+				expirationDate.getTime());
+
+			expirationDateMonth = expirationCalendar.get(Calendar.MONTH);
+			expirationDateDay = expirationCalendar.get(Calendar.DAY_OF_MONTH);
+			expirationDateYear = expirationCalendar.get(Calendar.YEAR);
+			expirationDateHour = expirationCalendar.get(Calendar.HOUR);
+			expirationDateMinute = expirationCalendar.get(Calendar.MINUTE);
+			expirationDateAmPm = expirationCalendar.get(Calendar.AM_PM);
+
+			if (expirationDateAmPm == Calendar.PM) {
+				expirationDateHour += 12;
+			}
+
+			neverExpire = false;
+		}
+
+		_cpDefinitionService.updateCPDefinition(
+			cpDefinitionId, cpDefinition.getTitleMap(),
+			cpDefinition.getShortDescriptionMap(),
+			cpDefinition.getDescriptionMap(), cpDefinition.getUrlTitleMap(),
+			cpDefinition.getMetaTitleMap(), cpDefinition.getMetaKeywordsMap(),
+			cpDefinition.getMetaDescriptionMap(),
+			cpDefinition.getIgnoreSKUCombinations(),
+			cpDefinition.getDDMStructureKey(), displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	protected CPDefinition updateCPDefinition(ActionRequest actionRequest)

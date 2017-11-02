@@ -26,6 +26,21 @@ class LayoutPageTemplateEditor extends Component {
 			},
 		];
 	}
+
+	/**
+	 * Removes a fragment from the fragment list. The fragment to
+	 * be removed should be specified inside the event as fragmentIndex
+	 * @param {Event} event
+	 * @private
+	 */
+	_handleFragmentRemoveButtonClick(event) {
+		const index = event.fragmentIndex;
+
+		this.fragments = [
+			...this.fragments.slice(0, index),
+			...this.fragments.slice(index + 1),
+		];
+	}
 }
 
 /**

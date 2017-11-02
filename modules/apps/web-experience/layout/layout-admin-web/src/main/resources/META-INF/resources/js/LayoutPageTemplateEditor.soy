@@ -8,6 +8,7 @@
 	{@param portletNamespace: string}
 	{@param spritemap: string}
 	{@param? _handleFragmentCollectionEntryClick: any}
+	{@param? _handleFragmentRemoveButtonClick: any}
 	{@param? fragments: list<?>}
 	{@param? id: string}
 
@@ -17,7 +18,10 @@
 				{foreach $fragment in $fragments}
 					<div class="fragment-panel-item-instance" data-position="{index($fragment)}">
 						{call LayoutPageTemplateFragment.render}
+							{param events: [ 'fragmentRemoveButtonClick': $_handleFragmentRemoveButtonClick ] /}
+							{param index: index($fragment) /}
 							{param name: $fragment.name /}
+							{param spritemap: $spritemap /}
 						{/call}
 					</div>
 				{/foreach}

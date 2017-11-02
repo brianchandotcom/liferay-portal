@@ -31,7 +31,7 @@ public interface RecentDocumentsConfiguration {
 
 	@Meta.AD(
 		deflt = "1", description = "check-file-ranks-interval-help",
-		required = false
+		name = "check-file-ranks-interval", required = false
 	)
 	public int checkFileRanksInterval();
 

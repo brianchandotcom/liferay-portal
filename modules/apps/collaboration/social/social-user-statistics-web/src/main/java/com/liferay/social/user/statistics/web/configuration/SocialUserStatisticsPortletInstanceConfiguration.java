@@ -32,22 +32,28 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface SocialUserStatisticsPortletInstanceConfiguration {
 
-	@Meta.AD(deflt = "user.achievements", required = false)
+	@Meta.AD(
+		deflt = "user.achievements", name = "display-activity-counter-name",
+		required = false
+	)
 	public String[] displayActivityCounterName();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "display-additional-activity-counters",
+		required = false
+	)
 	public boolean displayAdditionalActivityCounters();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "rank-by-contribution", required = false)
 	public boolean rankByContribution();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "rank-by-participation", required = false)
 	public boolean rankByParticipation();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "show-header-text", required = false)
 	public boolean showHeaderText();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "show-totals", required = false)
 	public boolean showTotals();
 
 }

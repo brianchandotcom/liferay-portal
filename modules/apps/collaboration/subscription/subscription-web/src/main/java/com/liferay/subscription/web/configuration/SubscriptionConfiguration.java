@@ -33,13 +33,18 @@ public interface SubscriptionConfiguration {
 	 * DeleteExpiredTicketsMessageListener will run to check for expired tickets
 	 * and delete them.
 	 */
-	@Meta.AD(deflt = "24", required = false)
+	@Meta.AD(
+		deflt = "24", name = "delete-expired-tickets-interval", required = false
+	)
 	public int deleteExpiredTicketsInterval();
 
 	/**
 	 * Set the time in days when the unsubscription tickets will expire.
 	 */
-	@Meta.AD(deflt = "31", required = false)
+	@Meta.AD(
+		deflt = "31", name = "unsubscription-ticket-expiration-time",
+		required = false
+	)
 	public int unsubscriptionTicketExpirationTime();
 
 }

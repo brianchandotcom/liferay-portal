@@ -209,11 +209,10 @@
 		</loadfile>
 
 		<exec executable="git" failonerror="false" resultproperty="return.code">
-			<arg value="fetch" />
+			<arg value="tag" />
 			<arg value="--force" />
-			<arg value="--no-tags" />
-			<arg value="upstream" />
-			<arg value="${portal.git.commit}:refs/tags/git-commit-portal" />
+			<arg value="git-commit-portal" />
+			<arg value="${portal.git.commit}" />
 		</exec>
 
 		<fail message="Please fetch the public branch from upstream before using this command.">
@@ -273,11 +272,10 @@
 		</fail>
 
 		<exec executable="git" failonerror="false" resultproperty="return.code">
-			<arg value="fetch" />
+			<arg value="tag" />
 			<arg value="--force" />
-			<arg value="--no-tags" />
-			<arg value="upstream" />
-			<arg value="${portal.private.git.commit}:refs/tags/git-commit-portal-private" />
+			<arg value="git-commit-portal-private" />
+			<arg value="${portal.private.git.commit}" />
 		</exec>
 
 		<fail message="Please fetch the private branch from upstream before using this command.">

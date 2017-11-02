@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
@@ -409,7 +408,8 @@ public class CPTestUtil {
 			RandomTestUtil.randomLocaleStringMap();
 		Map<Locale, String> metaDescriptionMap =
 			RandomTestUtil.randomLocaleStringMap();
-		String layoutUuid = PortalUUIDUtil.generate();
+		Map<Locale, String> urlTitleMap =
+			RandomTestUtil.randomLocaleStringMap();
 		boolean ignoreSKUCombinations = RandomTestUtil.randomBoolean();
 		boolean shippable = RandomTestUtil.randomBoolean();
 		boolean freeShipping = RandomTestUtil.randomBoolean();
@@ -457,8 +457,8 @@ public class CPTestUtil {
 		boolean neverExpire = false;
 
 		return CPDefinitionLocalServiceUtil.addCPDefinition(
-			titleMap, shortDescriptionMap, descriptionMap, metaTitleMap,
-			metaKeywordsMap, metaDescriptionMap, layoutUuid, productTypeName,
+			titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
+			metaTitleMap, metaKeywordsMap, metaDescriptionMap, productTypeName,
 			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
 			shippingExtraPrice, width, height, depth, weight, ddmStructureKey,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,

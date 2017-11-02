@@ -17,6 +17,8 @@
 
 	<property name="build.modules.excludes" value="**/adaptive-media/**" />
 
+	<property name="global.lib.dir" value="${app.server.tomcat.lib.global.dir}" />
+
 	<property name="portal.lib.dir" value="${app.server.tomcat.lib.portal.dir}" />
 
 	<property name="osgi.dir" value="${liferay.home}/osgi" />
@@ -320,6 +322,7 @@
 
 			<!-- Order is important -->
 
+			<fileset dir="${global.lib.dir}" includes="*.jar" />
 			<fileset dir="${liferay.home}/tools/portal-tools-target-platform-indexer-client" includes="com.liferay.portal.target.platform.indexer.jar,com.liferay.portal.tools.target.platform.indexer.client.jar" />
 			<fileset dir="${osgi.dir}/core" includes="com.liferay.portal.bootstrap.jar,org.eclipse.osgi.jar" />
 		</path>

@@ -14,6 +14,8 @@
 
 package com.liferay.osgi.service.tracker.collections.internal;
 
+import com.liferay.petra.string.StringBundler;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Filter;
 import org.osgi.framework.InvalidSyntaxException;
@@ -32,8 +34,9 @@ public class ServiceTrackerUtil {
 		if (filterString != null) {
 			try {
 				Filter filter = bundleContext.createFilter(
-					"(&(objectClass=" + clazz.getName() + ")" + filterString +
-						")");
+					StringBundler.concat(
+						"(&(objectClass=", clazz.getName(), ")", filterString,
+						")"));
 
 				return new ServiceTracker<>(
 					bundleContext, filter, serviceTrackerCustomizer);

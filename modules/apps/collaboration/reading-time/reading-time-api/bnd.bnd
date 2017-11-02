@@ -4,6 +4,7 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.reading.time.calculator,\
 	com.liferay.reading.time.exception,\
+	com.liferay.reading.time.message,\
 	com.liferay.reading.time.model,\
 	com.liferay.reading.time.service,\
 	com.liferay.reading.time.service.persistence

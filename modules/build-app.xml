@@ -319,10 +319,10 @@
 
 	<target name="index-modules-and-app-lpkgs">
 		<path id="target.platform.indexer.classpath">
-			<fileset dir="${global.lib.dir}" includes="*.jar" />
 
 			<!-- Order is important -->
 
+			<fileset dir="${global.lib.dir}" includes="*.jar" />
 			<fileset dir="${liferay.home}/tools/portal-tools-target-platform-indexer-client" includes="com.liferay.portal.target.platform.indexer.jar,com.liferay.portal.tools.target.platform.indexer.client.jar" />
 			<fileset dir="${osgi.dir}/core" includes="com.liferay.portal.bootstrap.jar,org.eclipse.osgi.jar" />
 		</path>

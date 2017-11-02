@@ -1,5 +1,6 @@
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.portal.target.platform.indexer", version: "4.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.49.0"
 	provided group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 }
 

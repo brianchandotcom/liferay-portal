@@ -92,7 +92,7 @@ gradle.beforeProject {
 			}
 		}
 
-		if (project.path.startsWith(":sdk:project-templates-")) {
+		if (project.path.startsWith(":sdk:project-templates:project-templates-")) {
 			buildCSS {
 				enabled = false
 			}

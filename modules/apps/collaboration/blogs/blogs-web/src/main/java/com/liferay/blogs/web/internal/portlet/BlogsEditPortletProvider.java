@@ -14,7 +14,7 @@
 
 package com.liferay.blogs.web.internal.portlet;
 
-import com.liferay.blogs.web.constants.BlogsPortletKeys;
+import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.EditPortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;

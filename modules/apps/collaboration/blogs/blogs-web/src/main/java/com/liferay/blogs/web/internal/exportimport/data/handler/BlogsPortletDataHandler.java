@@ -15,11 +15,11 @@
 package com.liferay.blogs.web.internal.exportimport.data.handler;
 
 import com.liferay.blogs.constants.BlogsConstants;
+import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.service.BlogsStatsUserLocalService;
 import com.liferay.blogs.service.permission.BlogsPermission;
-import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;

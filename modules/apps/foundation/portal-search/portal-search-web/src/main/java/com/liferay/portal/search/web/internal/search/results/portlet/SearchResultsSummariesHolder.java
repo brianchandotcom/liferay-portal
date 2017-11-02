@@ -21,7 +21,7 @@ import java.io.Serializable;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -31,7 +31,7 @@ import java.util.Objects;
 public class SearchResultsSummariesHolder implements Serializable {
 
 	public SearchResultsSummariesHolder(int capacity) {
-		_map = new HashMap<>(capacity);
+		_map = new LinkedHashMap<>(capacity);
 	}
 
 	public SearchResultSummaryDisplayContext get(Document document) {

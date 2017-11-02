@@ -34,7 +34,6 @@ import javax.portlet.RenderResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -120,10 +119,7 @@ public class UserItemSelectorViewDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private SearchContainer<User> _searchContainer;
-
-	@Reference
-	private UserLocalService _userLocalService;
-
+	private final UserLocalService _userLocalService;
 	private final UsersAdmin _usersAdmin;
 
 }

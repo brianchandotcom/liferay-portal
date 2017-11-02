@@ -29,14 +29,13 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -73,7 +72,7 @@ public class WarehouseCommerceShippingOriginLocator
 	}
 
 	@Override
-	public Map<CommerceAddress, Iterable<CommerceCartItem>> getOriginAddresses(
+	public Map<CommerceAddress, List<CommerceCartItem>> getOriginAddresses(
 			CommerceCart commerceCart)
 		throws Exception {
 
@@ -83,20 +82,22 @@ public class WarehouseCommerceShippingOriginLocator
 			return Collections.emptyMap();
 		}
 
-		Map<CommerceWarehouse, Set<CommerceCartItem>>
+		Map<CommerceWarehouse, List<CommerceCartItem>>
 			commerceWarehouseCartItemsMap = new HashMap<>();
 
-		for (CommerceCartItem commerceCartItem :
-				commerceCart.getCommerceCartItems()) {
+		List<CommerceCartItem> commerceCartItems =
+			commerceCart.getCommerceCartItems();
 
+		for (CommerceCartItem commerceCartItem : commerceCartItems) {
 			CommerceWarehouse commerceWarehouse = _getClosestCommerceWarehouse(
 				commerceAddress, commerceCartItem);
 
-			Set<CommerceCartItem> commerceWarehouseCartItems =
+			List<CommerceCartItem> commerceWarehouseCartItems =
 				commerceWarehouseCartItemsMap.get(commerceWarehouse);
 
 			if (commerceWarehouseCartItems == null) {
-				commerceWarehouseCartItems = new HashSet<>();
+				commerceWarehouseCartItems = new ArrayList<>(
+					commerceCartItems.size());
 
 				commerceWarehouseCartItemsMap.put(
 					commerceWarehouse, commerceWarehouseCartItems);
@@ -105,10 +106,10 @@ public class WarehouseCommerceShippingOriginLocator
 			commerceWarehouseCartItems.add(commerceCartItem);
 		}
 
-		Map<CommerceAddress, Iterable<CommerceCartItem>> originAddress =
+		Map<CommerceAddress, List<CommerceCartItem>> originAddress =
 			new HashMap<>();
 
-		for (Map.Entry<CommerceWarehouse, Set<CommerceCartItem>> entry :
+		for (Map.Entry<CommerceWarehouse, List<CommerceCartItem>> entry :
 				commerceWarehouseCartItemsMap.entrySet()) {
 
 			CommerceWarehouse commerceWarehouse = entry.getKey();

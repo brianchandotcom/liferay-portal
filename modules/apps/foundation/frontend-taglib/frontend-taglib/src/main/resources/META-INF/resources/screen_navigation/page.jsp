@@ -33,6 +33,7 @@ List<ScreenNavigationEntry> screenNavigationEntries = (List<ScreenNavigationEntr
 				PortletURL screenNavigationCategoryURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
 
 				screenNavigationCategoryURL.setParameter("screenNavigationCategoryKey", screenNavigationCategory.getCategoryKey());
+				screenNavigationCategoryURL.setParameter("screenNavigationEntryKey", StringPool.BLANK);
 			%>
 
 				<aui:nav-item href="<%= screenNavigationCategoryURL.toString() %>" label="<%= screenNavigationCategory.getLabel(themeDisplay.getLocale()) %>" selected="<%= Objects.equals(selectedScreenNavigationCategory.getCategoryKey(), screenNavigationCategory.getCategoryKey()) %>" />

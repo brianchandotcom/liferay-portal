@@ -485,7 +485,7 @@
 
 		<execute function="Confirm" value1="Are you sure you want to copy from live and update the existing staging portlet information?" />
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		<execute function="AssertTextEquals" locator1="Staging#STAGING_STATUS_PORTLET" value1="Successful" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 

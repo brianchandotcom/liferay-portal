@@ -620,6 +620,8 @@ public class CalendarPortlet extends MVCPortlet {
 			remindersType, instanceIndex, updateInstance, allFollowing,
 			serviceContext);
 
+		hideDefaultSuccessMessage(actionRequest);
+
 		JSONObject jsonObject = CalendarUtil.toCalendarBookingJSONObject(
 			themeDisplay, calendarBooking, timeZone);
 

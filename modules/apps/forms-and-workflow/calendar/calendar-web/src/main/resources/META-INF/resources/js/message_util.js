@@ -126,6 +126,41 @@ AUI.add(
 				).render(container);
 			},
 
+			showSuccessMessage: function(container, message) {
+				var instance = this;
+
+				if (!message) {
+					message = Liferay.Language.get('your-request-completed-successfully');
+				}
+
+				var alert = instance._alert;
+
+				if (alert) {
+					alert.destroy();
+				}
+
+				alert = new Liferay.Alert(
+					{
+						closeable: true,
+						delay: {
+							hide: 3000,
+							show: 0
+						},
+						icon: 'check',
+						message: message,
+						type: 'success'
+					}
+				);
+
+				if (!alert.get('rendered')) {
+					alert.render(container);
+				}
+
+				alert.show();
+
+				instance._alert = alert;
+			},
+
 			_queueableQuestionUpdateAllInvited: function(data) {
 				var instance = this;
 

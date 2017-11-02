@@ -4,7 +4,7 @@
 <layout-templates>
 	<custom>
 		<layout-template id="${artifactId}" name="${artifactId}">
-			<template-path>/${artifactId}.tpl</template-path>
+			<template-path>/${artifactId}.ftl</template-path>
 			<thumbnail-path>/${artifactId}.png</thumbnail-path>
 		</layout-template>
 	</custom>

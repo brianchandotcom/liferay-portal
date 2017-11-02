@@ -56,7 +56,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.InactiveRequestHandler;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
-import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -78,6 +77,7 @@ import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.plugin.PluginPackageUtil;
+import com.liferay.portal.service.impl.LayoutTemplateLocalServiceImpl;
 import com.liferay.portal.servlet.filters.absoluteredirects.AbsoluteRedirectsResponse;
 import com.liferay.portal.servlet.filters.i18n.I18nFilter;
 import com.liferay.portal.setup.SetupWizardSampleDataUtil;
@@ -104,6 +104,7 @@ import com.liferay.util.servlet.EncryptedServletRequest;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -878,17 +879,26 @@ public class MainServlet extends ActionServlet {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		Filter freeMarkerFilter = registry.getFilter(
-			StringBundler.concat(
-				"(&(language.type=", TemplateConstants.LANG_TYPE_FTL,
-				")(objectClass=", TemplateManager.class.getName(), "))"));
-		Filter velocityFilter = registry.getFilter(
-			StringBundler.concat(
-				"(&(language.type=", TemplateConstants.LANG_TYPE_VM,
-				")(objectClass=", TemplateManager.class.getName(), "))"));
+		Collection<Filter> filters = new ArrayList<>();
+
+		for (String langType :
+				LayoutTemplateLocalServiceImpl.supportedLangTypes) {
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("(&(language.type=");
+			sb.append(langType);
+			sb.append(")(objectClass=");
+			sb.append(TemplateManager.class.getName());
+			sb.append("))");
+
+			Filter filter = registry.getFilter(sb.toString());
+
+			filters.add(filter);
+		}
 
 		serviceDependencyManager.registerDependencies(
-			freeMarkerFilter, velocityFilter);
+			filters.toArray(new Filter[0]));
 	}
 
 	protected PluginPackage initPluginPackage() throws Exception {

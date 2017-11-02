@@ -4,56 +4,56 @@
 <layout-templates>
 	<standard>
 		<layout-template id="max">
-			<template-path>/layouttpl/standard/max.tpl</template-path>
+			<template-path>/layouttpl/standard/max.ftl</template-path>
 			<thumbnail-path>/layouttpl/standard/max.png</thumbnail-path>
 		</layout-template>
 		<layout-template id="pop_up">
-			<template-path>/layouttpl/standard/pop_up.tpl</template-path>
+			<template-path>/layouttpl/standard/pop_up.ftl</template-path>
 			<thumbnail-path>/layouttpl/standard/pop_up.png</thumbnail-path>
 		</layout-template>
 	</standard>
 	<custom>
 		<layout-template id="freeform">
-			<template-path>/layouttpl/custom/freeform.tpl</template-path>
+			<template-path>/layouttpl/custom/freeform.ftl</template-path>
 			<thumbnail-path>/layouttpl/custom/freeform.png</thumbnail-path>
 			<roles>
 				<role-name>User</role-name>
 			</roles>
 		</layout-template>
 		<layout-template id="1_column">
-			<template-path>/layouttpl/custom/1_column.tpl</template-path>
+			<template-path>/layouttpl/custom/1_column.ftl</template-path>
 			<thumbnail-path>/layouttpl/custom/1_column.png</thumbnail-path>
 		</layout-template>
 		<layout-template id="2_columns_i">
-			<template-path>/layouttpl/custom/2_columns_i.tpl</template-path>
+			<template-path>/layouttpl/custom/2_columns_i.ftl</template-path>
 			<thumbnail-path>/layouttpl/custom/2_columns_i.png</thumbnail-path>
 		</layout-template>
 		<layout-template id="2_columns_ii">
-			<template-path>/layouttpl/custom/2_columns_ii.tpl</template-path>
+			<template-path>/layouttpl/custom/2_columns_ii.ftl</template-path>
 			<thumbnail-path>/layouttpl/custom/2_columns_ii.png</thumbnail-path>
 		</layout-template>
 		<layout-template id="2_columns_iii">
-			<template-path>/layouttpl/custom/2_columns_iii.tpl</template-path>
+			<template-path>/layouttpl/custom/2_columns_iii.ftl</template-path>
 			<thumbnail-path>/layouttpl/custom/2_columns_iii.png</thumbnail-path>
 		</layout-template>
 		<layout-template id="3_columns">
-			<template-path>/layouttpl/custom/3_columns.tpl</template-path>
+			<template-path>/layouttpl/custom/3_columns.ftl</template-path>
 			<thumbnail-path>/layouttpl/custom/3_columns.png</thumbnail-path>
 		</layout-template>
 		<layout-template id="1_2_columns_i">
-			<template-path>/layouttpl/custom/1_2_columns_i.tpl</template-path>
+			<template-path>/layouttpl/custom/1_2_columns_i.ftl</template-path>
 			<thumbnail-path>/layouttpl/custom/1_2_columns_i.png</thumbnail-path>
 		</layout-template>
 		<layout-template id="1_2_columns_ii">
-			<template-path>/layouttpl/custom/1_2_columns_ii.tpl</template-path>
+			<template-path>/layouttpl/custom/1_2_columns_ii.ftl</template-path>
 			<thumbnail-path>/layouttpl/custom/1_2_columns_ii.png</thumbnail-path>
 		</layout-template>
 		<layout-template id="1_2_1_columns">
-			<template-path>/layouttpl/custom/1_2_1_columns.tpl</template-path>
+			<template-path>/layouttpl/custom/1_2_1_columns.ftl</template-path>
 			<thumbnail-path>/layouttpl/custom/1_2_1_columns.png</thumbnail-path>
 		</layout-template>
 		<layout-template id="2_2_columns">
-			<template-path>/layouttpl/custom/2_2_columns.tpl</template-path>
+			<template-path>/layouttpl/custom/2_2_columns.ftl</template-path>
 			<thumbnail-path>/layouttpl/custom/2_2_columns.png</thumbnail-path>
 		</layout-template>
 	</custom>

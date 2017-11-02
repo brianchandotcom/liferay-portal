@@ -485,12 +485,12 @@ public class ProjectTemplatesTest {
 		_testExists(gradleProjectDir, "src/main/webapp/foo.png");
 
 		_testContains(
-			gradleProjectDir, "src/main/webapp/foo.tpl", "class=\"foo\"");
+			gradleProjectDir, "src/main/webapp/foo.ftl", "class=\"foo\"");
 		_testContains(
 			gradleProjectDir,
 			"src/main/webapp/WEB-INF/liferay-layout-templates.xml",
 			"<layout-template id=\"foo\" name=\"foo\">",
-			"<template-path>/foo.tpl</template-path>",
+			"<template-path>/foo.ftl</template-path>",
 			"<thumbnail-path>/foo.png</thumbnail-path>");
 		_testContains(
 			gradleProjectDir,

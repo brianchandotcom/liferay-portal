@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Alexander Chow
  */
 @Component(
-	configurationPid = "com.liferay.document.library.document.conversion.configuration.OpenOfficeConfiguration",
+	configurationPid = "com.liferay.document.library.document.conversion.internal.configuration.OpenOfficeConfiguration",
 	immediate = true, service = DocumentConversion.class
 )
 public class DocumentConversionImpl implements DocumentConversion {

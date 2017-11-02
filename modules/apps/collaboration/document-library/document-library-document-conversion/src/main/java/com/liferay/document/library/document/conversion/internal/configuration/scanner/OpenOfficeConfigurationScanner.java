@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
  * @author Matthew Tambara
  */
 @Component(
-	configurationPid = "com.liferay.document.library.document.conversion.configuration.OpenOfficeConfiguration",
+	configurationPid = "com.liferay.document.library.document.conversion.internal.configuration.OpenOfficeConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true
 )
 public class OpenOfficeConfigurationScanner {

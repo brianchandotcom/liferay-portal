@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "other")
 @Meta.OCD(
-	id = "com.liferay.document.library.document.conversion.configuration.OpenOfficeConfiguration",
+	id = "com.liferay.document.library.document.conversion.internal.configuration.OpenOfficeConfiguration",
 	localization = "content/Language", name = "openoffice-configuration-name"
 )
 public interface OpenOfficeConfiguration {

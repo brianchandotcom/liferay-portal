@@ -917,6 +917,8 @@
 			<var name="pageStaging" value="true" />
 		</execute>
 
+		<execute function="Pause" locator1="30000" />
+
 		<execute macro="Staging#schedulePublishToLivePG">
 			<var name="scheduleTitleName" value="Staging Schedule Title" />
 		</execute>

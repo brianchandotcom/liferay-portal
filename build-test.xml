@@ -8498,7 +8498,9 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 
 				<delete dir="dist" />
 
-				<ant antfile="build.xml" inheritAll="false" target="update-app-server-scripts" />
+				<ant antfile="build.xml" inheritAll="false" target="update-app-server-scripts">
+					<property name="portal.war.url" value="${test.build.portal.war.url}" />
+				</ant>
 
 				<mirrors-get
 					dest="liferay-portal-dependencies.zip"

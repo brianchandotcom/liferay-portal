@@ -23,7 +23,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.users.admin.item.selector.web.internal.constants.UserItemSelectorViewConstants" %><%@
-page import="com.liferay.users.admin.item.selector.web.internal.display.context.OrganizationItemSelectorViewDisplayContext" %><%@
 page import="com.liferay.users.admin.item.selector.web.internal.display.context.UserItemSelectorViewDisplayContext" %>
 
 <%@ page import="javax.portlet.PortletURL" %>

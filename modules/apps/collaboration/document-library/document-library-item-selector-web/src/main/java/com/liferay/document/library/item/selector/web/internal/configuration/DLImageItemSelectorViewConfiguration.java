@@ -33,7 +33,10 @@ public interface DLImageItemSelectorViewConfiguration {
 	 * image item selector view. A file extension of * will permit all file
 	 * extensions
 	 */
-	@Meta.AD(deflt = ".bmp|.gif|.jpeg|.jpg|.png|.tiff", required = false)
+	@Meta.AD(
+		deflt = ".bmp|.gif|.jpeg|.jpg|.png|.tiff", name = "valid-extensions",
+		required = false
+	)
 	public String[] validExtensions();
 
 }

@@ -35,73 +35,81 @@ public interface BookmarksGroupServiceConfiguration {
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/bookmarks/configuration/dependencies/email_entry_added_body.tmpl}",
-		required = false
+		name = "email-entry-added-body", required = false
 	)
 	public LocalizedValuesMap emailEntryAddedBody();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "email-entry-added-enabled", required = false
+	)
 	public boolean emailEntryAddedEnabled();
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/bookmarks/configuration/dependencies/email_entry_added_subject.tmpl}",
-		required = false
+		name = "email-entry-added-subject", required = false
 	)
 	public LocalizedValuesMap emailEntryAddedSubject();
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/bookmarks/configuration/dependencies/email_entry_updated_body.tmpl}",
-		required = false
+		name = "email-entry-updated-body", required = false
 	)
 	public LocalizedValuesMap emailEntryUpdatedBody();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", name = "email-entry-updated-enabled", required = false
+	)
 	public boolean emailEntryUpdatedEnabled();
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/bookmarks/configuration/dependencies/email_entry_updated_subject.tmpl}",
-		required = false
+		name = "email-entry-updated-subject", required = false
 	)
 	public LocalizedValuesMap emailEntryUpdatedSubject();
 
 	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/admin.email.from.address}",
-		required = false
+		name = "email-from-address", required = false
 	)
 	public String emailFromAddress();
 
 	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/admin.email.from.name}",
-		required = false
+		name = "email-from-name", required = false
 	)
 	public String emailFromName();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "enable-related-assets", required = false)
 	public boolean enableRelatedAssets();
 
 	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/search.container.page.default.delta}",
-		required = false
+		name = "entries-per-page", required = false
 	)
 	public String entriesPerPage();
 
-	@Meta.AD(deflt = "name|url|visits|modified-date|action", required = false)
+	@Meta.AD(
+		deflt = "name|url|visits|modified-date|action", name = "entry-columns",
+		required = false
+	)
 	public String[] entryColumns();
 
 	@Meta.AD(
-		deflt = "folder|num-of-folders|num-of-entries|action", required = false
+		deflt = "folder|num-of-folders|num-of-entries|action",
+		name = "folder-columns", required = false
 	)
 	public String[] folderColumns();
 
 	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/search.container.page.default.delta}",
-		required = false
+		name = "folders-per-page", required = false
 	)
 	public String foldersPerPage();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "show-folders-search", required = false)
 	public boolean showFoldersSearch();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "show-subfolders", required = false)
 	public boolean showSubfolders();
 
 }

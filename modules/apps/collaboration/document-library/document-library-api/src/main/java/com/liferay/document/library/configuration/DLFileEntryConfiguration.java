@@ -32,7 +32,8 @@ public interface DLFileEntryConfiguration {
 
 	@Meta.AD(
 		deflt = "104857600",
-		description = "previewable-processor-max-size-help", required = false
+		description = "previewable-processor-max-size-help",
+		name = "previewable-processor-max-size", required = false
 	)
 	public long previewableProcessorMaxSize();
 

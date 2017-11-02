@@ -29,7 +29,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface DLFileRankServiceConfiguration {
 
-	@Meta.AD(deflt = "5", required = false)
+	@Meta.AD(deflt = "5", name = "max-size", required = false)
 	public int maxSize();
 
 }

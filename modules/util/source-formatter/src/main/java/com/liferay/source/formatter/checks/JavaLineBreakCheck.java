@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -372,7 +373,8 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 			if (getLineLength(newLine) <= getMaxLineLength()) {
 				return StringUtil.replace(
 					content, matcher.group(),
-					matcher.group(1) + "\n" + newLine + "\n");
+					StringBundler.concat(
+						matcher.group(1), "\n", newLine, "\n"));
 			}
 		}
 
@@ -401,8 +403,9 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 
 				return StringUtil.replaceFirst(
 					content, inBetweenCurlyBraces + "}",
-					"\n\n\t" + indent + StringUtil.trim(inBetweenCurlyBraces) +
-						"\n\n" + indent + "}",
+					StringBundler.concat(
+						"\n\n\t", indent, StringUtil.trim(inBetweenCurlyBraces),
+						"\n\n", indent, "}"),
 					matcher.start(8));
 			}
 
@@ -451,7 +454,8 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 				String tabs = matcher.group(2);
 
 				Pattern pattern = Pattern.compile(
-					"\n" + tabs + "([^\t]{2})(?!.*\n" + tabs + "[^\t])",
+					StringBundler.concat(
+						"\n", tabs, "([^\t]{2})(?!.*\n", tabs, "[^\t])"),
 					Pattern.DOTALL);
 
 				Matcher matcher2 = pattern.matcher(

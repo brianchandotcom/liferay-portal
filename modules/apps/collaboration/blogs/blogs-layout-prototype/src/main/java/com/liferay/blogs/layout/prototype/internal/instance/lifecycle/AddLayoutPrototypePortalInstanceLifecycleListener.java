@@ -15,9 +15,9 @@
 package com.liferay.blogs.layout.prototype.internal.instance.lifecycle;
 
 import com.liferay.asset.tags.navigation.web.constants.AssetTagsNavigationPortletKeys;
+import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.recent.bloggers.web.constants.RecentBloggersPortletKeys;
-import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;

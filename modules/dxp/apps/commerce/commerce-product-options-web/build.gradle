@@ -18,3 +18,7 @@ dependencies {
 	provided project(":private:apps:commerce:commerce-product-api")
 	provided project(":private:apps:commerce:commerce-product-service")
 }
+
+node {
+	nodeVersion = "8.4.0"
+}

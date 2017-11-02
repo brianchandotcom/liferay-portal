@@ -67,13 +67,19 @@
 
 <aui:script use="aui-tooltip">
 	if (!Liferay.Data.LFR_PORTAL_TOOLTIP) {
+		var triggerShowEvent = ['mouseenter', 'MSPointerDown', 'touchstart'];
+
+		if (A.UA.ios) {
+			triggerShowEvent = ['touchstart'];
+		}
+
 		Liferay.Data.LFR_PORTAL_TOOLTIP = new A.TooltipDelegate(
 			{
 				constrain: true,
 				opacity: 1,
 				trigger: '.lfr-portal-tooltip',
 				triggerHideEvent: ['click', 'mouseleave', 'MSPointerUp', 'touchend'],
-				triggerShowEvent: ['mouseenter', 'MSPointerDown', 'touchstart'],
+				triggerShowEvent: triggerShowEvent,
 				visible: false,
 				zIndex: Liferay.zIndex.TOOLTIP
 			}

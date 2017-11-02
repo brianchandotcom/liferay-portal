@@ -25,24 +25,6 @@ long cpDefinitionId = cpDefinitionsDisplayContext.getCPDefinitionId();
 
 String productTypeName = BeanParamUtil.getString(cpDefinition, request, "productTypeName");
 
-CPType cpType = cpDefinitionsDisplayContext.getCPType(productTypeName);
-
-String layoutUuid = cpDefinitionsDisplayContext.getLayoutUuid();
-
-String layoutBreadcrumb = StringPool.BLANK;
-
-if (Validator.isNotNull(layoutUuid)) {
-	Layout selLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(layoutUuid, themeDisplay.getSiteGroupId(), false);
-
-	if (selLayout == null) {
-		selLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(layoutUuid, themeDisplay.getSiteGroupId(), true);
-	}
-
-	if (selLayout != null) {
-		layoutBreadcrumb = cpDefinitionsDisplayContext.getLayoutBreadcrumb(selLayout);
-	}
-}
-
 String friendlyURLBase = themeDisplay.getPortalURL() + CPConstants.SEPARATOR_PRODUCT_URL;
 
 boolean neverExpire = ParamUtil.getBoolean(request, "neverExpire", true);
@@ -67,6 +49,7 @@ Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLoca
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpDefinition == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="cpDefinitionId" type="hidden" value="<%= String.valueOf(cpDefinitionId) %>" />
+	<aui:input name="productTypeName" type="hidden" value="<%= productTypeName %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
 	<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
@@ -121,42 +104,6 @@ Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLoca
 				<liferay-ui:input-localized editorName="alloyeditor" name="descriptionMapAsXML" type="editor" xml="<%= descriptionMapAsXML %>" />
 			</div>
 		</aui:field-wrapper>
-	</aui:fieldset>
-
-	<aui:fieldset collapsible="<%= true %>" label="base-information">
-		<aui:input name="productTypeName" type="hidden" value="<%= productTypeName %>" />
-
-		<aui:field-wrapper label="product-type">
-			<h5 class="text-default">
-				<%= cpType.getLabel(locale) %>
-			</h5>
-		</aui:field-wrapper>
-
-		<aui:input id="pagesContainerInput" ignoreRequestValue="<%= true %>" name="layoutUuid" type="hidden" value="<%= layoutUuid %>" />
-
-		<aui:field-wrapper helpMessage="product-display-page-help" label="product-display-page">
-			<p class="text-default">
-				<span class="<%= Validator.isNull(layoutBreadcrumb) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />displayPageItemRemove" role="button">
-					<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
-				</span>
-				<span id="<portlet:namespace />displayPageNameInput">
-					<c:choose>
-						<c:when test="<%= Validator.isNull(layoutBreadcrumb) %>">
-							<span class="text-muted"><liferay-ui:message key="none" /></span>
-						</c:when>
-						<c:otherwise>
-							<%= layoutBreadcrumb %>
-						</c:otherwise>
-					</c:choose>
-				</span>
-			</p>
-		</aui:field-wrapper>
-
-		<aui:button-row>
-			<aui:button name="chooseDisplayPage" value="choose" />
-		</aui:button-row>
-
-		<aui:input helpMessage="ignore-sku-combinations-help" name="ignoreSKUCombinations" />
 	</aui:fieldset>
 
 	<aui:fieldset collapsible="<%= true %>" label="seo">
@@ -315,53 +262,6 @@ Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLoca
 		translationManager.on('deleteAvailableLocale', afterDeletingAvailableLocale);
 		translationManager.on('editingLocaleChange', afterEditingLocaleChange);
 	}
-</aui:script>
-
-<aui:script use="liferay-item-selector-dialog">
-	var displayPageItemContainer = $('#<portlet:namespace />displayPageItemContainer');
-	var displayPageItemRemove = $('#<portlet:namespace />displayPageItemRemove');
-	var displayPageNameInput = $('#<portlet:namespace />displayPageNameInput');
-	var pagesContainerInput = $('#<portlet:namespace />pagesContainerInput');
-
-	$('#<portlet:namespace />chooseDisplayPage').on(
-		'click',
-		function(event) {
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-				{
-					eventName: 'selectDisplayPage',
-					on: {
-						selectedItemChange: function(event) {
-							var selectedItem = event.newVal;
-
-							if (selectedItem) {
-								pagesContainerInput.val(selectedItem.id);
-
-								displayPageNameInput.html(selectedItem.name);
-
-								displayPageItemRemove.removeClass('hide');
-							}
-						}
-					},
-					'strings.add': '<liferay-ui:message key="done" />',
-					title: '<liferay-ui:message key="select-product-display-page" />',
-					url: '<%= cpDefinitionsDisplayContext.getItemSelectorUrl() %>'
-				}
-			);
-
-			itemSelectorDialog.open();
-		}
-	);
-
-	displayPageItemRemove.on(
-		'click',
-		function(event) {
-			displayPageNameInput.html('<liferay-ui:message key="none" />');
-
-			pagesContainerInput.val('');
-
-			displayPageItemRemove.addClass('hide');
-		}
-	);
 </aui:script>
 
 <aui:script use="aui-base,event-input">

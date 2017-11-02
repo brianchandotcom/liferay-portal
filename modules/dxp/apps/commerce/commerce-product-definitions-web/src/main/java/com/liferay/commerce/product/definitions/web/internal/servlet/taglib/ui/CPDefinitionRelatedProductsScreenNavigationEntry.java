@@ -20,7 +20,6 @@ import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLinkService;
-import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
@@ -47,25 +46,21 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = {
-		"screen.navigation.category.order:Integer=110",
-		"screen.navigation.entry.order:Integer=110"
-	},
-	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
+	property = {"screen.navigation.entry.order:Integer=10"},
+	service = ScreenNavigationEntry.class
 )
 public class CPDefinitionRelatedProductsScreenNavigationEntry
-	implements ScreenNavigationCategory, ScreenNavigationEntry<CPDefinition> {
+	implements ScreenNavigationEntry<CPDefinition> {
 
 	@Override
 	public String getCategoryKey() {
-		return
-			CPDefinitionScreenNavigationConstants.CATEGORY_KEY_RELATED_PRODUCTS;
+		return CPDefinitionScreenNavigationConstants.
+			CATEGORY_KEY_PRODUCT_RELATIONS;
 	}
 
 	@Override
 	public String getEntryKey() {
-		return
-			CPDefinitionScreenNavigationConstants.CATEGORY_KEY_RELATED_PRODUCTS;
+		return CPDefinitionScreenNavigationConstants.ENTRY_KEY_RELATED_PRODUCTS;
 	}
 
 	@Override
@@ -75,8 +70,7 @@ public class CPDefinitionRelatedProductsScreenNavigationEntry
 
 		return LanguageUtil.get(
 			resourceBundle,
-			CPDefinitionScreenNavigationConstants.
-				CATEGORY_KEY_RELATED_PRODUCTS);
+			CPDefinitionScreenNavigationConstants.ENTRY_KEY_RELATED_PRODUCTS);
 	}
 
 	@Override

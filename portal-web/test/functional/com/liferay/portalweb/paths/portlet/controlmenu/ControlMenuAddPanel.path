@@ -56,6 +56,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_PORTLET_DRAG_LINK</td>
+	<td>//span[contains(@data-search,'-${portletName}') and contains(@class,'drag-content-item')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_PORTLET_LINK</td>
 	<td>//span[contains(@data-search,'-${portletName}') and contains(@class,'add-content-item')]</td>
 	<td></td>

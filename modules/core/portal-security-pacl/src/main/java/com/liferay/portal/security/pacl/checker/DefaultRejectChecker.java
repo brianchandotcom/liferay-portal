@@ -16,6 +16,7 @@ package com.liferay.portal.security.pacl.checker;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.security.Permission;
@@ -42,13 +43,15 @@ public class DefaultRejectChecker extends BaseChecker {
 		if (Validator.isNotNull(actions)) {
 			logSecurityException(
 				_log,
-				"Permission " + clazz.getName() + " attempted to " + name +
-					" on " + actions);
+				StringBundler.concat(
+					"Permission ", clazz.getName(), " attempted to ", name,
+					" on ", actions));
 		}
 		else {
 			logSecurityException(
 				_log,
-				"Permission " + clazz.getName() + " attempted to " + name);
+				StringBundler.concat(
+					"Permission ", clazz.getName(), " attempted to ", name));
 		}
 
 		return false;

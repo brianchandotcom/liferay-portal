@@ -138,6 +138,9 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			else if (cmd.equals("updateCategorization")) {
 				updateCategorization(actionRequest);
 			}
+			else if (cmd.equals("updateCPDisplayLayout")) {
+				updateCPDisplayLayout(actionRequest);
+			}
 			else if (cmd.equals("updateShippingInfo")) {
 				updateShippingInfo(actionRequest);
 			}
@@ -265,7 +268,6 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				cpDefinition.getMetaTitleMap(),
 				cpDefinition.getMetaKeywordsMap(),
 				cpDefinition.getMetaDescriptionMap(),
-				cpDefinition.getLayoutUuid(),
 				cpDefinition.getIgnoreSKUCombinations(),
 				cpDefinition.getDDMStructureKey(), displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
@@ -301,9 +303,6 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		Map<Locale, String> metaDescriptionMap =
 			LocalizationUtil.getLocalizationMap(
 				actionRequest, "metaDescriptionMapAsXML");
-		String layoutUuid = ParamUtil.getString(actionRequest, "layoutUuid");
-		boolean ignoreSKUCombinations = ParamUtil.getBoolean(
-			actionRequest, "ignoreSKUCombinations");
 
 		int displayDateMonth = ParamUtil.getInteger(
 			actionRequest, "displayDateMonth");
@@ -353,28 +352,46 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			cpDefinition = _cpDefinitionService.addCPDefinition(
 				titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
-				metaTitleMap, metaKeywordsMap, metaDescriptionMap, layoutUuid,
-				productTypeName, ignoreSKUCombinations, null, displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, expirationDateMonth, expirationDateDay,
-				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, serviceContext);
+				metaTitleMap, metaKeywordsMap, metaDescriptionMap,
+				productTypeName, false, null, displayDateMonth, displayDateDay,
+				displayDateYear, displayDateHour, displayDateMinute,
+				expirationDateMonth, expirationDateDay, expirationDateYear,
+				expirationDateHour, expirationDateMinute, neverExpire,
+				serviceContext);
 		}
 		else {
 
 			// Update commerce product definition
 
+			CPDefinition oldCPDefinition = _cpDefinitionService.getCPDefinition(
+				cpDefinitionId);
+
 			cpDefinition = _cpDefinitionService.updateCPDefinition(
 				cpDefinitionId, titleMap, shortDescriptionMap, descriptionMap,
 				urlTitleMap, metaTitleMap, metaKeywordsMap, metaDescriptionMap,
-				layoutUuid, ignoreSKUCombinations, null, displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, expirationDateMonth, expirationDateDay,
-				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, serviceContext);
+				oldCPDefinition.isIgnoreSKUCombinations(), null,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, neverExpire, serviceContext);
 		}
 
 		return cpDefinition;
+	}
+
+	protected void updateCPDisplayLayout(ActionRequest actionRequest)
+		throws PortalException {
+
+		long cpDefinitionId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionId");
+
+		String layoutUuid = ParamUtil.getString(actionRequest, "layoutUuid");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CPDefinition.class.getName(), actionRequest);
+
+		_cpDefinitionService.updateCPDisplayLayout(
+			cpDefinitionId, layoutUuid, serviceContext);
 	}
 
 	protected void updateShippingInfo(ActionRequest actionRequest)

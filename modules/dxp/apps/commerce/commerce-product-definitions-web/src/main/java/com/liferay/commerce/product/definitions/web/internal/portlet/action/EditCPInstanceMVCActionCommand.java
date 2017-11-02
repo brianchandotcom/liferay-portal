@@ -18,6 +18,7 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -111,6 +112,9 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteCPInstances(actionRequest);
 			}
+			else if (cmd.equals("updateCPDefinitionIgnoreSKUCombinations")) {
+				updateCPDefinitionIgnoreSKUCombinations(actionRequest);
+			}
 			else if (cmd.equals("updatePricingInfo")) {
 				updatePricingInfo(actionRequest);
 			}
@@ -160,6 +164,20 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 			"cpInstanceId", String.valueOf(cpInstance.getCPInstanceId()));
 
 		return portletURL.toString();
+	}
+
+	protected void updateCPDefinitionIgnoreSKUCombinations(
+			ActionRequest actionRequest)
+		throws PortalException {
+
+		long cpDefinitionId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionId");
+
+		boolean ignoreSKUCombinations = ParamUtil.getBoolean(
+			actionRequest, "ignoreSKUCombinations");
+
+		_cpDefinitionService.updateCPDefinitionIgnoreSKUCombinations(
+			cpDefinitionId, ignoreSKUCombinations);
 	}
 
 	protected CPInstance updateCPInstance(ActionRequest actionRequest)
@@ -272,6 +290,9 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		_cpInstanceService.updateShippingInfo(
 			cpInstanceId, width, height, depth, weight, serviceContext);
 	}
+
+	@Reference
+	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;

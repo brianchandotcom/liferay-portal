@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.warehouse.web.internal.servlet.taglib.ui;
 
+import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPInstanceScreenNavigationConstants;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.service.CommerceWarehouseItemService;
@@ -54,7 +55,7 @@ public class CPInstanceWarehouseItemsScreenNavigationEntry
 
 	@Override
 	public String getCategoryKey() {
-		return "details";
+		return CPInstanceScreenNavigationConstants.CATEGORY_KEY_DETAILS;
 	}
 
 	@Override
@@ -72,7 +73,8 @@ public class CPInstanceWarehouseItemsScreenNavigationEntry
 
 	@Override
 	public String getScreenNavigationKey() {
-		return "cp.instance.general";
+		return CPInstanceScreenNavigationConstants.
+			SCREEN_NAVIGATION_KEY_CP_INSTANCE_GENERAL;
 	}
 
 	@Override

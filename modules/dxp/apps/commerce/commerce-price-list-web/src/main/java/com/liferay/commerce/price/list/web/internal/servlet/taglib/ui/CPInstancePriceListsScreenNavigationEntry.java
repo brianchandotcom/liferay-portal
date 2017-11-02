@@ -17,6 +17,7 @@ package com.liferay.commerce.price.list.web.internal.servlet.taglib.ui;
 import com.liferay.commerce.price.list.web.internal.display.context.CPInstanceCommercePriceEntryDisplayContext;
 import com.liferay.commerce.price.list.web.internal.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
+import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPInstanceScreenNavigationConstants;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.service.CommercePriceEntryService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
@@ -28,18 +29,15 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.io.IOException;
-
-import java.util.Locale;
-import java.util.ResourceBundle;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * @author Alessio Antonio Rendina
@@ -53,7 +51,7 @@ public class CPInstancePriceListsScreenNavigationEntry
 
 	@Override
 	public String getCategoryKey() {
-		return "details";
+		return CPInstanceScreenNavigationConstants.CATEGORY_KEY_DETAILS;
 	}
 
 	@Override
@@ -71,7 +69,8 @@ public class CPInstancePriceListsScreenNavigationEntry
 
 	@Override
 	public String getScreenNavigationKey() {
-		return "cp.instance.general";
+		return CPInstanceScreenNavigationConstants.
+			SCREEN_NAVIGATION_KEY_CP_INSTANCE_GENERAL;
 	}
 
 	@Override

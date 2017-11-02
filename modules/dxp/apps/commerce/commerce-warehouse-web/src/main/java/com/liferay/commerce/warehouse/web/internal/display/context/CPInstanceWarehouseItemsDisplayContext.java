@@ -15,6 +15,8 @@
 package com.liferay.commerce.warehouse.web.internal.display.context;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
+import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPInstanceScreenNavigationConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
@@ -69,7 +71,9 @@ public class CPInstanceWarehouseItemsDisplayContext
 		portletURL.setParameter(
 			"cpDefinitionId", String.valueOf(cpInstance.getCPDefinitionId()));
 
-		portletURL.setParameter("screenNavigationCategoryKey", "skus");
+		portletURL.setParameter(
+			"screenNavigationCategoryKey",
+			CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SKUS);
 
 		return portletURL.toString();
 	}
@@ -99,7 +103,11 @@ public class CPInstanceWarehouseItemsDisplayContext
 		portletURL.setParameter(
 			"cpInstanceId", String.valueOf(cpInstance.getCPInstanceId()));
 
-		portletURL.setParameter("screenNavigationCategoryKey", "warehouses");
+		portletURL.setParameter(
+			"screenNavigationCategoryKey",
+			CPInstanceScreenNavigationConstants.CATEGORY_KEY_DETAILS);
+
+		portletURL.setParameter("screenNavigationEntryKey", "warehouses");
 
 		return portletURL;
 	}

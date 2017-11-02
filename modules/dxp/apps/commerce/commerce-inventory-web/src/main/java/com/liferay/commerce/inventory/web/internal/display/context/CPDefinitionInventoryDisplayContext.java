@@ -24,6 +24,7 @@ import com.liferay.commerce.model.CommerceAvailabilityRange;
 import com.liferay.commerce.model.impl.CPDefinitionInventoryImpl;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
+import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.service.CPDefinitionAvailabilityRangeService;
 import com.liferay.commerce.service.CommerceAvailabilityRangeService;
 import com.liferay.commerce.stock.activity.CommerceLowStockActivity;
@@ -32,10 +33,9 @@ import com.liferay.commerce.util.comparator.CommerceAvailabilityRangePriorityCom
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Alessio Antonio Rendina
@@ -123,7 +123,7 @@ public class CPDefinitionInventoryDisplayContext
 
 	@Override
 	public String getScreenNavigationCategoryKey() throws PortalException {
-		return "inventory";
+		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_CONFIGURATION;
 	}
 
 	private final CommerceAvailabilityRangeService

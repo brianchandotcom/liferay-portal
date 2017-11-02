@@ -34,13 +34,11 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import javax.portlet.PortletURL;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import javax.portlet.PortletURL;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Alessio Antonio Rendina
@@ -141,13 +139,9 @@ public class CPInstanceCommercePriceEntryDisplayContext
 			"cpInstanceId", String.valueOf(getCPInstanceId()));
 		portletURL.setParameter(
 			"screenNavigationCategoryKey", getScreenNavigationCategoryKey());
+		portletURL.setParameter("screenNavigationEntryKey", "price-lists");
 
 		return portletURL;
-	}
-
-	@Override
-	public String getScreenNavigationCategoryKey() throws PortalException {
-		return "price-lists";
 	}
 
 	@Override

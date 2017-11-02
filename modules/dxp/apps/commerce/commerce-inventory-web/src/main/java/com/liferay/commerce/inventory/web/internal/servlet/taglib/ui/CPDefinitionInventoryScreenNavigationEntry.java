@@ -18,6 +18,7 @@ import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.inventory.web.internal.display.context.CPDefinitionInventoryDisplayContext;
 import com.liferay.commerce.inventory.web.internal.portlet.action.CPDefinitionInventoryActionHelper;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
+import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.service.CPDefinitionAvailabilityRangeService;
 import com.liferay.commerce.service.CommerceAvailabilityRangeService;
@@ -30,18 +31,15 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.io.IOException;
-
-import java.util.Locale;
-import java.util.ResourceBundle;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * @author Alessio Antonio Rendina
@@ -55,7 +53,7 @@ public class CPDefinitionInventoryScreenNavigationEntry
 
 	@Override
 	public String getCategoryKey() {
-		return "configuration";
+		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_CONFIGURATION;
 	}
 
 	@Override
@@ -73,7 +71,8 @@ public class CPDefinitionInventoryScreenNavigationEntry
 
 	@Override
 	public String getScreenNavigationKey() {
-		return "cp.definition.general";
+		return CPDefinitionScreenNavigationConstants.
+			SCREEN_NAVIGATION_KEY_CP_DEFINITION_GENERAL;
 	}
 
 	@Override

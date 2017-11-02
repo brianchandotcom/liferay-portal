@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.users.admin.item.selector.criterion.UserItemSelectorCriterion;
 import com.liferay.users.admin.item.selector.web.internal.display.context.UserItemSelectorViewDisplayContext;
+import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.io.IOException;
 
@@ -95,7 +96,7 @@ public class UserItemSelectorView
 
 		UserItemSelectorViewDisplayContext userItemSelectorViewDisplayContext =
 			new UserItemSelectorViewDisplayContext(
-				_userLocalService, httpServletRequest, portletURL,
+				_userLocalService, _usersAdmin, httpServletRequest, portletURL,
 				itemSelectedEventName);
 
 		request.setAttribute(
@@ -124,5 +125,8 @@ public class UserItemSelectorView
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private UsersAdmin _usersAdmin;
 
 }

@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.users.admin.item.selector.web.internal.search.UserItemSelectorChecker;
-import com.liferay.users.admin.item.selector.web.internal.util.UsersAdminItemSelectorViewUtil;
+import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.util.List;
 
@@ -33,6 +33,7 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -41,11 +42,12 @@ import org.osgi.service.component.annotations.Reference;
 public class UserItemSelectorViewDisplayContext {
 
 	public UserItemSelectorViewDisplayContext(
-		UserLocalService userLocalService,
+		UserLocalService userLocalService, UsersAdmin usersAdmin,
 		HttpServletRequest httpServletRequest, PortletURL portletURL,
 		String itemSelectedEventName) {
 
 		_userLocalService = userLocalService;
+		_usersAdmin = usersAdmin;
 		_httpServletRequest = httpServletRequest;
 		_portletURL = portletURL;
 		_itemSelectedEventName = itemSelectedEventName;
@@ -85,7 +87,7 @@ public class UserItemSelectorViewDisplayContext {
 		_searchContainer.setEmptyResultsMessage("there-are-no-users");
 
 		OrderByComparator<User> orderByComparator =
-			UsersAdminItemSelectorViewUtil.getUserOrderByComparator(
+			_usersAdmin.getUserOrderByComparator(
 				getOrderByCol(), getOrderByType());
 
 		RowChecker rowChecker = new UserItemSelectorChecker(
@@ -121,5 +123,7 @@ public class UserItemSelectorViewDisplayContext {
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	private final UsersAdmin _usersAdmin;
 
 }

@@ -76,7 +76,8 @@ import javax.portlet.PortletResponse;
 @OSGiBeanProperties(
 	property = {
 		"related.entry.indexer.class.name=com.liferay.message.boards.kernel.model.MBMessage"
-	}
+	},
+	service = {Indexer.class, RelatedEntryIndexer.class}
 )
 public class MBMessageIndexer
 	extends BaseIndexer<MBMessage> implements RelatedEntryIndexer {

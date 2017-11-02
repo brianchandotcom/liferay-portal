@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.db.upgrade.client;
 
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.tools.db.upgrade.client.util.GogoTelnetClient;
 import com.liferay.portal.tools.db.upgrade.client.util.Properties;
 import com.liferay.portal.tools.db.upgrade.client.util.TeePrintStream;
@@ -443,9 +444,10 @@ public class UpgradeClient {
 			}
 
 			System.out.println(
-				"Please enter your extra library directories in application " +
-					"server directory (" + _appServer.getExtraLibDirNames() +
-						"): ");
+				StringBundler.concat(
+					"Please enter your extra library directories in ",
+					"application server directory (",
+					_appServer.getExtraLibDirNames(), "): "));
 
 			response = _consoleReader.readLine();
 
@@ -454,9 +456,10 @@ public class UpgradeClient {
 			}
 
 			System.out.println(
-				"Please enter your global library directory in application " +
-					"server directory (" + _appServer.getGlobalLibDirName() +
-						"): ");
+				StringBundler.concat(
+					"Please enter your global library directory in ",
+					"application server directory (",
+					_appServer.getGlobalLibDirName(), "): "));
 
 			response = _consoleReader.readLine();
 
@@ -465,8 +468,9 @@ public class UpgradeClient {
 			}
 
 			System.out.println(
-				"Please enter your portal directory in application server " +
-					"directory (" + _appServer.getPortalDirName() + "): ");
+				StringBundler.concat(
+					"Please enter your portal directory in application server ",
+					"directory (", _appServer.getPortalDirName(), "): "));
 
 			response = _consoleReader.readLine();
 

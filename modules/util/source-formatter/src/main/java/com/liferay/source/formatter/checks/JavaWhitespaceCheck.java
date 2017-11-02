@@ -54,6 +54,10 @@ public class JavaWhitespaceCheck extends WhitespaceCheck {
 
 				String trimmedLine = StringUtil.trimLeading(line);
 
+				if (trimmedLine.startsWith("*\t")) {
+					line = StringUtil.replaceFirst(line, "*\t", "* ");
+				}
+
 				if (trimmedLine.startsWith(StringPool.DOUBLE_SLASH) ||
 					trimmedLine.startsWith(StringPool.STAR)) {
 

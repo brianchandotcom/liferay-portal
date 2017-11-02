@@ -24,7 +24,7 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 /**
- *	@author Yi-Chen Tsai
+ * @author Yi-Chen Tsai
  */
 @RunWith(Parameterized.class)
 public class CustomScriptTest {

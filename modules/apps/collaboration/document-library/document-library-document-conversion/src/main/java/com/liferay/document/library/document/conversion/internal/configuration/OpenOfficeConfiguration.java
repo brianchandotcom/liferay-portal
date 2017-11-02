@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.document.conversion.configuration;
+package com.liferay.document.library.document.conversion.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 

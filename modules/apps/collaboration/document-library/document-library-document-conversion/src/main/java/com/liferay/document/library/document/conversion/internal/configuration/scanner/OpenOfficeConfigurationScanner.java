@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.document.library.document.conversion.configuration.scanner;
+package com.liferay.document.library.document.conversion.internal.configuration.scanner;
 
-import com.liferay.document.library.document.conversion.configuration.OpenOfficeConfiguration;
+import com.liferay.document.library.document.conversion.internal.configuration.OpenOfficeConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

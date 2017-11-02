@@ -2,7 +2,7 @@
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-	<category name="com.liferay.document.library.document.conversion.configuration.scanner">
+	<category name="com.liferay.document.library.document.conversion.internal.configuration.scanner">
 		<priority value="WARN" />
 	</category>
 </log4j:configuration>

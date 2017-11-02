@@ -172,10 +172,21 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit Default Values">
-			<var name="key_menuItem" value="Edit Default Values" />
+		<execute macro="WebContentNavigator#gotoManageStructures" />
+
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${substructureName}" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit Default Values" />
+			<var name="rowEntry" value="${substructureName}" />
 		</execute>
 
 		<for list="${editSubstructureFieldNames}" param="structureFieldName">

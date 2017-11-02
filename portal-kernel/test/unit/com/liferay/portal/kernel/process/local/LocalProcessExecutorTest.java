@@ -22,11 +22,11 @@ import com.liferay.portal.kernel.process.ProcessConfig;
 import com.liferay.portal.kernel.process.ProcessConfig.Builder;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutor;
+import com.liferay.portal.kernel.process.ProcessLog;
+import com.liferay.portal.kernel.process.ProcessLog.Level;
 import com.liferay.portal.kernel.process.TerminationProcessException;
 import com.liferay.portal.kernel.process.local.LocalProcessLauncher.ProcessContext;
 import com.liferay.portal.kernel.process.local.LocalProcessLauncher.ShutdownHook;
-import com.liferay.portal.kernel.test.CaptureHandler;
-import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.CharPool;
@@ -75,9 +75,8 @@ import java.util.concurrent.Future;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
-import java.util.logging.Level;
-import java.util.logging.LogRecord;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -480,262 +479,249 @@ public class LocalProcessExecutorTest {
 
 	@Test
 	public void testSubprocessReactorAbort() throws Exception {
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					LocalProcessExecutor.class.getName(), Level.SEVERE)) {
+		List<ProcessLog> processLogs = new ArrayList<>();
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+		Builder builder = new Builder();
 
-			Builder builder = new Builder();
+		builder.setArguments(_createArguments(_JPDA_OPTIONS1));
+		builder.setBootstrapClassPath(System.getProperty("java.class.path"));
+		builder.setProcessLogConsumer(
+			processLog -> {
+				if (processLog.getLevel() == Level.ERROR) {
+					processLogs.add(processLog);
+				}
+			});
+		builder.setReactClassLoader(new URLClassLoader(new URL[0], null));
 
-			builder.setArguments(_createArguments(_JPDA_OPTIONS1));
-			builder.setBootstrapClassPath(
-				System.getProperty("java.class.path"));
-			builder.setReactClassLoader(new URLClassLoader(new URL[0], null));
+		ProcessChannel<Boolean> processChannel = _localProcessExecutor.execute(
+			builder.build(), Operations.IS_ATTACHED);
 
-			ProcessChannel<Boolean> processChannel =
-				_localProcessExecutor.execute(
-					builder.build(), Operations.IS_ATTACHED);
+		Future<Boolean> future = processChannel.getProcessNoticeableFuture();
 
-			Future<Boolean> future =
-				processChannel.getProcessNoticeableFuture();
+		try {
+			future.get();
 
-			try {
-				future.get();
-
-				Assert.fail();
-			}
-			catch (ExecutionException ee) {
-				Throwable cause = ee.getCause();
-
-				Assert.assertSame(
-					ClassNotFoundException.class, cause.getClass());
-			}
-
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
-
-			LogRecord logRecord = logRecords.get(0);
-
-			Assert.assertEquals(
-				"Abort subprocess piping", logRecord.getMessage());
-
-			Throwable throwable = logRecord.getThrown();
-
-			Assert.assertSame(
-				ClassNotFoundException.class, throwable.getClass());
+			Assert.fail();
 		}
+		catch (ExecutionException ee) {
+			Throwable cause = ee.getCause();
+
+			Assert.assertSame(ClassNotFoundException.class, cause.getClass());
+		}
+
+		Assert.assertEquals(processLogs.toString(), 1, processLogs.size());
+
+		ProcessLog processLog = processLogs.get(0);
+
+		Assert.assertEquals("Abort subprocess piping", processLog.getMessage());
+
+		Throwable throwable = processLog.getThrowable();
+
+		Assert.assertSame(ClassNotFoundException.class, throwable.getClass());
 	}
 
 	@Test
 	public void testSubprocessReactorCorruptedStream() throws Exception {
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					LocalProcessExecutor.class.getName(), Level.SEVERE)) {
+		List<ProcessLog> processLogs = new ArrayList<>();
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+		ProcessChannel<Serializable> processChannel =
+			_localProcessExecutor.execute(
+				_createJPDAProcessConfig(
+					_JPDA_OPTIONS1,
+					processLog -> {
+						if (processLog.getLevel() == Level.ERROR) {
+							processLogs.add(processLog);
+						}
+					}),
+				Operations.CORRUPTED_STREAM);
 
-			ProcessChannel<Serializable> processChannel =
-				_localProcessExecutor.execute(
-					_createJPDAProcessConfig(_JPDA_OPTIONS1),
-					Operations.CORRUPTED_STREAM);
+		Future<Serializable> future =
+			processChannel.getProcessNoticeableFuture();
 
-			Future<Serializable> future =
-				processChannel.getProcessNoticeableFuture();
+		try {
+			future.get();
 
-			try {
-				future.get();
-
-				Assert.fail();
-			}
-			catch (ExecutionException ee) {
-				Throwable cause = ee.getCause();
-
-				Assert.assertTrue(cause instanceof ProcessException);
-
-				Assert.assertEquals(
-					"Corrupted object input stream", cause.getMessage());
-
-				cause = cause.getCause();
-
-				Assert.assertSame(
-					StreamCorruptedException.class, cause.getClass());
-			}
-
-			Assert.assertFalse(future.isCancelled());
-			Assert.assertTrue(future.isDone());
-
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
-
-			LogRecord logRecord = logRecords.get(0);
-
-			String message = logRecord.getMessage();
-
-			int index = message.lastIndexOf(' ');
-
-			Assert.assertTrue(index != -1);
-			Assert.assertEquals(
-				"Dumping content of corrupted object input stream to",
-				message.substring(0, index));
-
-			File file = new File(message.substring(index + 1));
-
-			Assert.assertTrue(file.exists());
-
-			file.delete();
-
-			Throwable throwable = logRecord.getThrown();
-
-			Assert.assertSame(
-				StreamCorruptedException.class, throwable.getClass());
+			Assert.fail();
 		}
+		catch (ExecutionException ee) {
+			Throwable cause = ee.getCause();
+
+			Assert.assertTrue(cause instanceof ProcessException);
+
+			Assert.assertEquals(
+				"Corrupted object input stream", cause.getMessage());
+
+			cause = cause.getCause();
+
+			Assert.assertSame(StreamCorruptedException.class, cause.getClass());
+		}
+
+		Assert.assertFalse(future.isCancelled());
+		Assert.assertTrue(future.isDone());
+
+		Assert.assertEquals(processLogs.toString(), 1, processLogs.size());
+
+		ProcessLog processLog = processLogs.get(0);
+
+		String message = processLog.getMessage();
+
+		int index = message.lastIndexOf(' ');
+
+		Assert.assertTrue(index != -1);
+		Assert.assertEquals(
+			"Dumping content of corrupted object input stream to",
+			message.substring(0, index));
+
+		File file = new File(message.substring(index + 1));
+
+		Assert.assertTrue(file.exists());
+
+		file.delete();
+
+		Throwable throwable = processLog.getThrowable();
+
+		Assert.assertSame(StreamCorruptedException.class, throwable.getClass());
 	}
 
 	@Test
 	public void testSubprocessReactorCrash() throws Exception {
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					LocalProcessExecutor.class.getName(), Level.OFF)) {
 
-			// One crash
+		// One crash
 
-			ProcessChannel<Serializable> processChannel =
-				_localProcessExecutor.execute(
-					_createJPDAProcessConfig(_JPDA_OPTIONS1),
-					Operations.crashJVM(1));
-
-			Future<Serializable> future =
-				processChannel.getProcessNoticeableFuture();
-
-			try {
-				future.get();
-
-				Assert.fail();
-			}
-			catch (ExecutionException ee) {
-				Throwable throwable = ee.getCause();
-
-				Assert.assertSame(
-					TerminationProcessException.class, throwable.getClass());
-				Assert.assertEquals(
-					"Subprocess terminated with exit code 1",
-					throwable.getMessage());
-
-				TerminationProcessException terminationProcessException =
-					(TerminationProcessException)throwable;
-
-				Assert.assertEquals(
-					1, terminationProcessException.getExitCode());
-			}
-
-			// Zero crash
-
-			processChannel = _localProcessExecutor.execute(
+		ProcessChannel<Serializable> processChannel =
+			_localProcessExecutor.execute(
 				_createJPDAProcessConfig(_JPDA_OPTIONS1),
-				Operations.crashJVM(0));
+				Operations.crashJVM(1));
 
-			future = processChannel.getProcessNoticeableFuture();
+		Future<Serializable> future =
+			processChannel.getProcessNoticeableFuture();
 
-			try {
-				future.get();
+		try {
+			future.get();
 
-				Assert.fail();
-			}
-			catch (ExecutionException ee) {
-				Throwable throwable = ee.getCause();
+			Assert.fail();
+		}
+		catch (ExecutionException ee) {
+			Throwable throwable = ee.getCause();
 
-				Assert.assertSame(ProcessException.class, throwable.getClass());
+			Assert.assertSame(
+				TerminationProcessException.class, throwable.getClass());
+			Assert.assertEquals(
+				"Subprocess terminated with exit code 1",
+				throwable.getMessage());
 
-				Assert.assertEquals(
-					"Subprocess piping back ended prematurely",
-					throwable.getMessage());
+			TerminationProcessException terminationProcessException =
+				(TerminationProcessException)throwable;
 
-				throwable = throwable.getCause();
+			Assert.assertEquals(1, terminationProcessException.getExitCode());
+		}
 
-				Assert.assertSame(EOFException.class, throwable.getClass());
-			}
+		// Zero crash
+
+		processChannel = _localProcessExecutor.execute(
+			_createJPDAProcessConfig(_JPDA_OPTIONS1), Operations.crashJVM(0));
+
+		future = processChannel.getProcessNoticeableFuture();
+
+		try {
+			future.get();
+
+			Assert.fail();
+		}
+		catch (ExecutionException ee) {
+			Throwable throwable = ee.getCause();
+
+			Assert.assertSame(ProcessException.class, throwable.getClass());
+
+			Assert.assertEquals(
+				"Subprocess piping back ended prematurely",
+				throwable.getMessage());
+
+			throwable = throwable.getCause();
+
+			Assert.assertSame(EOFException.class, throwable.getClass());
 		}
 	}
 
 	@Test
 	public void testSubprocessReactorKillByCancel() throws Exception {
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					LocalProcessExecutor.class.getName(), Level.SEVERE)) {
+		List<ProcessLog> processLogs = new ArrayList<>();
 
-			ProcessChannel<String> processChannel =
-				_localProcessExecutor.execute(
-					_createJPDAProcessConfig(_JPDA_OPTIONS1),
-					Operations.asControllable(Operations.SLEEP));
-
-			Future<Controller> future = processChannel.write(
-				Operations.GET_CONTROLLER);
-
-			Controller controller = future.get();
-
-			Assert.assertTrue(controller.isAlive());
-
-			Map<String, Object> attributes = ProcessContext.getAttributes();
-
-			BlockingQueue<Thread> reactorThreadBlockingQueue =
-				new SynchronousQueue<>();
-
-			attributes.put(
-				"reactorThreadBlockingQueue", reactorThreadBlockingQueue);
-
-			controller.invoke(
-				() -> {
-					try {
-						ProcessContext.writeProcessCallable(
-							() -> {
-								Map<String, Object> localAttributes =
-									ProcessContext.getAttributes();
-
-								BlockingQueue<Thread>
-									localReactorThreadBlockingQueue =
-										(BlockingQueue<Thread>)
-											localAttributes.remove(
-												"reactorThreadBlockingQueue");
-
-								try {
-									localReactorThreadBlockingQueue.put(
-										Thread.currentThread());
-								}
-								catch (InterruptedException ie) {
-									throw new ProcessException(ie);
-								}
-
-								return null;
-							});
+		ProcessChannel<String> processChannel = _localProcessExecutor.execute(
+			_createJPDAProcessConfig(
+				_JPDA_OPTIONS1,
+				processLog -> {
+					if (processLog.getLevel() == Level.ERROR) {
+						processLogs.add(processLog);
 					}
-					catch (IOException ioe) {
-						throw new ProcessException(ioe);
-					}
+				}),
+			Operations.asControllable(Operations.SLEEP));
 
-					return null;
-				});
+		Future<Controller> future = processChannel.write(
+			Operations.GET_CONTROLLER);
 
-			Thread reactorThread = reactorThreadBlockingQueue.take();
+		Controller controller = future.get();
 
-			NoticeableFuture<String> noticeableFuture =
-				processChannel.getProcessNoticeableFuture();
+		Assert.assertTrue(controller.isAlive());
 
-			noticeableFuture.cancel(false);
+		Map<String, Object> attributes = ProcessContext.getAttributes();
 
-			reactorThread.join();
+		BlockingQueue<Thread> reactorThreadBlockingQueue =
+			new SynchronousQueue<>();
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+		attributes.put(
+			"reactorThreadBlockingQueue", reactorThreadBlockingQueue);
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+		controller.invoke(
+			() -> {
+				try {
+					ProcessContext.writeProcessCallable(
+						() -> {
+							Map<String, Object> localAttributes =
+								ProcessContext.getAttributes();
 
-			LogRecord logRecord = logRecords.get(0);
+							BlockingQueue<Thread>
+								localReactorThreadBlockingQueue =
+									(BlockingQueue<Thread>)
+										localAttributes.remove(
+											"reactorThreadBlockingQueue");
 
-			Assert.assertEquals(
-				"Abort subprocess piping", logRecord.getMessage());
+							try {
+								localReactorThreadBlockingQueue.put(
+									Thread.currentThread());
+							}
+							catch (InterruptedException ie) {
+								throw new ProcessException(ie);
+							}
 
-			Throwable throwable = logRecord.getThrown();
+							return null;
+						});
+				}
+				catch (IOException ioe) {
+					throw new ProcessException(ioe);
+				}
 
-			Assert.assertSame(IOException.class, throwable.getClass());
-		}
+				return null;
+			});
+
+		Thread reactorThread = reactorThreadBlockingQueue.take();
+
+		NoticeableFuture<String> noticeableFuture =
+			processChannel.getProcessNoticeableFuture();
+
+		noticeableFuture.cancel(false);
+
+		reactorThread.join();
+
+		Assert.assertEquals(processLogs.toString(), 1, processLogs.size());
+
+		ProcessLog processLog = processLogs.get(0);
+
+		Assert.assertEquals("Abort subprocess piping", processLog.getMessage());
+
+		Throwable throwable = processLog.getThrowable();
+
+		Assert.assertSame(IOException.class, throwable.getClass());
 	}
 
 	@Test
@@ -827,249 +813,197 @@ public class LocalProcessExecutorTest {
 
 	@Test
 	public void testSubprocessReactorLeadingLog() throws Exception {
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					LocalProcessExecutor.class.getName(), Level.WARNING)) {
+		List<ProcessLog> processLogs = new ArrayList<>();
 
-			// Warn level
+		AtomicReference<Level> levelReference = new AtomicReference<>(
+			Level.WARN);
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+		Consumer<ProcessLog> processLogConsumer = processLog -> {
+			Level level = processLog.getLevel();
 
-			ProcessChannel<String> processChannel =
-				_localProcessExecutor.execute(
-					_createJPDAProcessConfig(_JPDA_OPTIONS1),
-					Operations.LEADING_LOG);
+			if (level.compareTo(levelReference.get()) >= 0) {
+				processLogs.add(processLog);
+			}
+		};
 
-			Future<String> future = processChannel.getProcessNoticeableFuture();
+		// Warn level
 
-			Assert.assertEquals("DONE", future.get());
+		ProcessChannel<String> processChannel = _localProcessExecutor.execute(
+			_createJPDAProcessConfig(_JPDA_OPTIONS1, processLogConsumer),
+			Operations.LEADING_LOG);
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+		Future<String> future = processChannel.getProcessNoticeableFuture();
 
-			LogRecord logRecord = logRecords.get(0);
+		Assert.assertEquals("DONE", future.get());
 
-			Assert.assertEquals(
-				"Found corrupt leading log Leading log",
-				logRecord.getMessage());
+		Assert.assertEquals(processLogs.toString(), 1, processLogs.size());
 
-			// Fine level
+		ProcessLog processLog = processLogs.remove(0);
 
-			logRecords = captureHandler.resetLogLevel(Level.FINE);
+		Assert.assertEquals(
+			"Found corrupt leading log Leading log", processLog.getMessage());
 
-			processChannel = _localProcessExecutor.execute(
-				_createJPDAProcessConfig(_JPDA_OPTIONS1),
-				Operations.LEADING_LOG);
+		// Fine level
 
-			future = processChannel.getProcessNoticeableFuture();
+		levelReference.set(Level.DEBUG);
 
-			Assert.assertEquals("DONE", future.get());
+		processChannel = _localProcessExecutor.execute(
+			_createJPDAProcessConfig(_JPDA_OPTIONS1, processLogConsumer),
+			Operations.LEADING_LOG);
 
-			Assert.assertEquals(logRecords.toString(), 3, logRecords.size());
+		future = processChannel.getProcessNoticeableFuture();
 
-			LogRecord logRecord1 = logRecords.get(0);
+		Assert.assertEquals("DONE", future.get());
 
-			Assert.assertEquals(
-				"Found corrupt leading log Leading log",
-				logRecord1.getMessage());
+		Assert.assertEquals(processLogs.toString(), 3, processLogs.size());
 
-			LogRecord logRecord2 = logRecords.get(1);
+		processLog = processLogs.remove(0);
 
-			String message = logRecord2.getMessage();
+		Assert.assertEquals(
+			"Found corrupt leading log Leading log", processLog.getMessage());
 
-			Assert.assertTrue(
-				message.contains("Invoked generic process callable"));
+		processLog = processLogs.remove(0);
 
-			LogRecord logRecord3 = logRecords.get(2);
+		String message = processLog.getMessage();
 
-			message = logRecord3.getMessage();
+		Assert.assertTrue(message.contains("Invoked generic process callable"));
 
-			Assert.assertTrue(
-				message.contains("Invoked generic process callable"));
+		processLog = processLogs.remove(0);
 
-			// Severe level
+		message = processLog.getMessage();
 
-			logRecords = captureHandler.resetLogLevel(Level.SEVERE);
+		Assert.assertTrue(message.contains("Invoked generic process callable"));
 
-			processChannel = _localProcessExecutor.execute(
-				_createJPDAProcessConfig(_JPDA_OPTIONS1),
-				Operations.LEADING_LOG);
+		// Severe level
 
-			future = processChannel.getProcessNoticeableFuture();
+		levelReference.set(Level.ERROR);
 
-			Assert.assertEquals("DONE", future.get());
+		processChannel = _localProcessExecutor.execute(
+			_createJPDAProcessConfig(_JPDA_OPTIONS1, processLogConsumer),
+			Operations.LEADING_LOG);
 
-			Assert.assertEquals(logRecords.toString(), 0, logRecords.size());
-		}
+		future = processChannel.getProcessNoticeableFuture();
+
+		Assert.assertEquals("DONE", future.get());
+
+		Assert.assertTrue(processLogs.toString(), processLogs.isEmpty());
 	}
 
 	@Test
 	public void testSubprocessReactorPipingBackExceptionProcessCallable()
 		throws Exception {
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					LocalProcessExecutor.class.getName(), Level.SEVERE)) {
+		List<ProcessLog> processLogs = new ArrayList<>();
 
-			ProcessChannel<Serializable> processChannel =
-				_localProcessExecutor.execute(
-					_createJPDAProcessConfig(_JPDA_OPTIONS1),
-					Operations.PIPING_BACK_EXCEPTION_PROCESS_CALLABLE);
+		ProcessChannel<Serializable> processChannel =
+			_localProcessExecutor.execute(
+				_createJPDAProcessConfig(
+					_JPDA_OPTIONS1,
+					processLog -> {
+						if (processLog.getLevel() == Level.ERROR) {
+							processLogs.add(processLog);
+						}
+					}),
+				Operations.PIPING_BACK_EXCEPTION_PROCESS_CALLABLE);
 
-			NoticeableFuture<Serializable> noticeableFuture =
-				processChannel.getProcessNoticeableFuture();
+		NoticeableFuture<Serializable> noticeableFuture =
+			processChannel.getProcessNoticeableFuture();
 
-			Assert.assertNull(noticeableFuture.get());
+		Assert.assertNull(noticeableFuture.get());
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+		Assert.assertEquals(processLogs.toString(), 1, processLogs.size());
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+		ProcessLog processLog = processLogs.get(0);
 
-			LogRecord logRecord = logRecords.get(0);
+		Assert.assertEquals(
+			"Unable to invoke generic process callable",
+			processLog.getMessage());
 
-			Assert.assertEquals(
-				"Unable to invoke generic process callable",
-				logRecord.getMessage());
+		Throwable throwable = processLog.getThrowable();
 
-			Throwable throwable = logRecord.getThrown();
-
-			Assert.assertSame(ProcessException.class, throwable.getClass());
-			Assert.assertEquals(
-				"Exception ProcessCallable", throwable.getMessage());
-		}
+		Assert.assertSame(ProcessException.class, throwable.getClass());
+		Assert.assertEquals(
+			"Exception ProcessCallable", throwable.getMessage());
 	}
 
 	@Test
 	public void testSubprocessReactorPipingBackNonProcessCallable()
 		throws Exception {
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					LocalProcessExecutor.class.getName(), Level.INFO)) {
+		List<ProcessLog> processLogs = new ArrayList<>();
 
-			ProcessChannel<Serializable> processChannel =
-				_localProcessExecutor.execute(
-					_createJPDAProcessConfig(_JPDA_OPTIONS1),
-					Operations.PIPING_BACK_NON_PROCESS_CALLABLE);
+		ProcessChannel<Serializable> processChannel =
+			_localProcessExecutor.execute(
+				_createJPDAProcessConfig(
+					_JPDA_OPTIONS1,
+					processLog -> {
+						if (processLog.getLevel() == Level.INFO) {
+							processLogs.add(processLog);
+						}
+					}),
+				Operations.PIPING_BACK_NON_PROCESS_CALLABLE);
 
-			NoticeableFuture<Serializable> noticeableFuture =
-				processChannel.getProcessNoticeableFuture();
+		NoticeableFuture<Serializable> noticeableFuture =
+			processChannel.getProcessNoticeableFuture();
 
-			noticeableFuture.get();
+		noticeableFuture.get();
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+		Assert.assertEquals(processLogs.toString(), 1, processLogs.size());
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+		ProcessLog processLog = processLogs.get(0);
 
-			LogRecord logRecord = logRecords.get(0);
-
-			Assert.assertEquals(
-				"Received a nonprocess callable piping back string piping " +
-					"back object",
-				logRecord.getMessage());
-		}
-
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					LocalProcessExecutor.class.getName(), Level.OFF)) {
-
-			ProcessChannel<Serializable> processChannel =
-				_localProcessExecutor.execute(
-					_createJPDAProcessConfig(_JPDA_OPTIONS1),
-					Operations.PIPING_BACK_NON_PROCESS_CALLABLE);
-
-			NoticeableFuture<Serializable> noticeableFuture =
-				processChannel.getProcessNoticeableFuture();
-
-			noticeableFuture.get();
-
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
-
-			Assert.assertTrue(logRecords.isEmpty());
-		}
+		Assert.assertEquals(
+			"Received a nonprocess callable piping back string piping back " +
+				"object",
+			processLog.getMessage());
 	}
 
 	@Test
 	public void testSubprocessReactorPipingBackWriteAborted() throws Exception {
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					LocalProcessExecutor.class.getName(), Level.WARNING)) {
+		List<ProcessLog> processLogs = new ArrayList<>();
 
-			ProcessChannel<Serializable> processChannel =
-				_localProcessExecutor.execute(
-					_createJPDAProcessConfig(_JPDA_OPTIONS1),
-					Operations.PIPING_BACK_WRITE_ABORTED);
+		ProcessChannel<Serializable> processChannel =
+			_localProcessExecutor.execute(
+				_createJPDAProcessConfig(
+					_JPDA_OPTIONS1,
+					processLog -> {
+						if (processLog.getLevel() == Level.WARN) {
+							processLogs.add(processLog);
+						}
+					}),
+				Operations.PIPING_BACK_WRITE_ABORTED);
 
-			NoticeableFuture<Serializable> noticeableFuture =
-				processChannel.getProcessNoticeableFuture();
+		NoticeableFuture<Serializable> noticeableFuture =
+			processChannel.getProcessNoticeableFuture();
 
-			try {
-				noticeableFuture.get();
+		try {
+			noticeableFuture.get();
 
-				Assert.fail();
-			}
-			catch (ExecutionException ee) {
-				Throwable cause = ee.getCause();
-
-				Assert.assertSame(ProcessException.class, cause.getClass());
-
-				cause = cause.getCause();
-
-				Assert.assertSame(
-					NotSerializableException.class, cause.getClass());
-
-				List<LogRecord> logRecords = captureHandler.getLogRecords();
-
-				Assert.assertEquals(
-					logRecords.toString(), 1, logRecords.size());
-
-				LogRecord logRecord = logRecords.get(0);
-
-				Assert.assertEquals(
-					"Caught a write aborted exception", logRecord.getMessage());
-
-				cause = logRecord.getThrown();
-
-				Assert.assertSame(
-					WriteAbortedException.class, cause.getClass());
-
-				cause = cause.getCause();
-
-				Assert.assertSame(
-					NotSerializableException.class, cause.getClass());
-			}
+			Assert.fail();
 		}
+		catch (ExecutionException ee) {
+			Throwable cause = ee.getCause();
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					LocalProcessExecutor.class.getName(), Level.OFF)) {
+			Assert.assertSame(ProcessException.class, cause.getClass());
 
-			ProcessChannel<Serializable> processChannel =
-				_localProcessExecutor.execute(
-					_createJPDAProcessConfig(_JPDA_OPTIONS1),
-					Operations.PIPING_BACK_WRITE_ABORTED);
+			cause = cause.getCause();
 
-			NoticeableFuture<Serializable> noticeableFuture =
-				processChannel.getProcessNoticeableFuture();
+			Assert.assertSame(NotSerializableException.class, cause.getClass());
 
-			try {
-				noticeableFuture.get();
+			Assert.assertEquals(processLogs.toString(), 1, processLogs.size());
 
-				Assert.fail();
-			}
-			catch (ExecutionException ee) {
-				Throwable cause = ee.getCause();
+			ProcessLog processLog = processLogs.get(0);
 
-				Assert.assertSame(ProcessException.class, cause.getClass());
+			Assert.assertEquals(
+				"Caught a write aborted exception", processLog.getMessage());
 
-				cause = cause.getCause();
+			cause = processLog.getThrowable();
 
-				Assert.assertSame(
-					NotSerializableException.class, cause.getClass());
+			Assert.assertSame(WriteAbortedException.class, cause.getClass());
 
-				List<LogRecord> logRecords = captureHandler.getLogRecords();
+			cause = cause.getCause();
 
-				Assert.assertTrue(logRecords.isEmpty());
-			}
+			Assert.assertSame(NotSerializableException.class, cause.getClass());
 		}
 	}
 
@@ -1111,10 +1045,21 @@ public class LocalProcessExecutorTest {
 	}
 
 	private static ProcessConfig _createJPDAProcessConfig(String jpdaOption) {
+		return _createJPDAProcessConfig(jpdaOption, null);
+	}
+
+	private static ProcessConfig _createJPDAProcessConfig(
+		String jpdaOption, Consumer<ProcessLog> processLogConsumer) {
+
 		Builder builder = new Builder();
 
 		builder.setArguments(_createArguments(jpdaOption));
 		builder.setBootstrapClassPath(System.getProperty("java.class.path"));
+
+		if (processLogConsumer != null) {
+			builder.setProcessLogConsumer(processLogConsumer);
+		}
+
 		builder.setReactClassLoader(
 			LocalProcessExecutorTest.class.getClassLoader());
 

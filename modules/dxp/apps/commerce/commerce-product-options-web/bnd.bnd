@@ -1,4 +1,11 @@
 Bundle-Name: Liferay Commerce Product Options Web
 Bundle-SymbolicName: com.liferay.commerce.product.options.web
 Bundle-Version: 1.0.0
+Provide-Capability:\
+	soy;\
+		type="commerce-product-options-web";\
+		version:Version="${Bundle-Version}"
+Require-Capability:\
+	osgi.extender;\
+		filter:="(&(osgi.extender=liferay.js)(version>=1.0)(!(version>=2.0)))"
 Web-ContextPath: /commerce-product-options-web

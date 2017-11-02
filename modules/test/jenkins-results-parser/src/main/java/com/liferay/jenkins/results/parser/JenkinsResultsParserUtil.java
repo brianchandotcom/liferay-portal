@@ -765,6 +765,17 @@ public class JenkinsResultsParserUtil {
 		return sb.toString();
 	}
 
+	public static String getResourceFileContent(String resourceName)
+		throws IOException {
+
+		try (InputStream resourceStream =
+				JenkinsResultsParserUtil.class.getResourceAsStream(
+					resourceName)) {
+
+			return readInputStream(resourceStream);
+		}
+	}
+
 	public static List<String> getSlaves(
 		Properties buildProperties, String jenkinsMasterPatternString) {
 

@@ -2429,22 +2429,23 @@ public class PortletImpl extends PortletBaseImpl {
 
 		if (mimeTypePortletModes == null) {
 			mimeTypePortletModes = _portletModes.get("*/*");
-		}
-
-		if (mimeTypePortletModes == null) {
-			String[] mimeTypeParts = StringUtil.split(mimeType, CharPool.SLASH);
-
-			if (mimeTypeParts.length != 2) {
-				throw new IllegalArgumentException(
-					"Unable to handle MIME type " + mimeType);
-			}
-
-			mimeTypePortletModes = _portletModes.get(
-				mimeTypeParts[0].concat("/*"));
 
 			if (mimeTypePortletModes == null) {
+				String[] mimeTypeParts = StringUtil.split(
+					mimeType, CharPool.SLASH);
+
+				if (mimeTypeParts.length != 2) {
+					throw new IllegalArgumentException(
+						"Unable to handle MIME type " + mimeType);
+				}
+
 				mimeTypePortletModes = _portletModes.get(
-					"*/".concat(mimeTypeParts[1]));
+					mimeTypeParts[0].concat("/*"));
+
+				if (mimeTypePortletModes == null) {
+					mimeTypePortletModes = _portletModes.get(
+						"*/".concat(mimeTypeParts[1]));
+				}
 			}
 		}
 

@@ -23,4 +23,4 @@ int abstractLength = GetterUtil.getInteger(request.getAttribute(WebKeys.ASSET_EN
 String summary = StringUtil.shorten(assetRenderer.getSummary(renderRequest, renderResponse), abstractLength);
 %>
 
-<%= HtmlUtil.escape(summary) %>
+<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(summary)) %>

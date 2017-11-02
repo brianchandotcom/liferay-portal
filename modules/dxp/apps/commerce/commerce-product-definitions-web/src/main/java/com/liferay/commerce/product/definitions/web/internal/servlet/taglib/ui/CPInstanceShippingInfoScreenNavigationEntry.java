@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = {"screen.navigation.entry.order:Integer=50"},
+	property = "screen.navigation.entry.order:Integer=50",
 	service = ScreenNavigationEntry.class
 )
 public class CPInstanceShippingInfoScreenNavigationEntry

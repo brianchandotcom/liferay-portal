@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = {"screen.navigation.category.order:Integer=100"},
+	property = "screen.navigation.category.order:Integer=100",
 	service = ScreenNavigationCategory.class
 )
 public class CPDefinitionConfigurationScreenNavigationCategory

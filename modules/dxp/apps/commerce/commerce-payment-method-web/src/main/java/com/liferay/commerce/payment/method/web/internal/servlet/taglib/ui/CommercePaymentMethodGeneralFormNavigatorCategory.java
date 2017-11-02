@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Andrea Di Giorgi
  */
 @Component(
-	property = {"form.navigator.category.order:Integer=10"},
+	property = "form.navigator.category.order:Integer=10",
 	service = FormNavigatorCategory.class
 )
 public class CommercePaymentMethodGeneralFormNavigatorCategory

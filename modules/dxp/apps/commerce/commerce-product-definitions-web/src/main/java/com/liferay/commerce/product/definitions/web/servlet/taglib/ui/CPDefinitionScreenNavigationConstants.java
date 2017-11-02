@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui;
+package com.liferay.commerce.product.definitions.web.servlet.taglib.ui;
 
 /**
  * @author Alessio Antonio Rendina
@@ -37,8 +37,6 @@ public class CPDefinitionScreenNavigationConstants {
 	public static final String CATEGORY_KEY_RELATED_PRODUCTS =
 		"related-products";
 
-	public static final String CATEGORY_KEY_SHIPPING = "shipping";
-
 	public static final String CATEGORY_KEY_SKUS = "skus";
 
 	public static final String CATEGORY_KEY_SPECIFICATION_OPTIONS =
@@ -46,6 +44,8 @@ public class CPDefinitionScreenNavigationConstants {
 
 	public static final String CATEGORY_KEY_UP_SELL_PRODUCTS =
 		"up-sell-products";
+
+	public static final String ENTRY_KEY_SHIPPING = "shipping";
 
 	public static final String SCREEN_NAVIGATION_KEY_CP_DEFINITION_GENERAL =
 		"cp.definition.general";

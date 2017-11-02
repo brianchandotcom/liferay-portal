@@ -16,6 +16,7 @@ package com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionShippingInfoDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
+import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
@@ -56,14 +57,14 @@ public class CPDefinitionShippingScreenNavigationEntry
 
 	@Override
 	public String getEntryKey() {
-		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SHIPPING;
+		return CPDefinitionScreenNavigationConstants.ENTRY_KEY_SHIPPING;
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(
 			locale,
-			CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SHIPPING);
+			CPDefinitionScreenNavigationConstants.ENTRY_KEY_SHIPPING);
 	}
 
 	@Override

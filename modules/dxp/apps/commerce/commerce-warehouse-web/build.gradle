@@ -13,6 +13,7 @@ dependencies {
 	provided project(":private:apps:commerce:commerce-api")
 	provided project(":private:apps:commerce:commerce-item-selector-api")
 	provided project(":private:apps:commerce:commerce-product-api")
+	provided project(":private:apps:commerce:commerce-product-definitions-web")
 	provided project(":private:apps:commerce:commerce-product-service")
 	provided project(":private:apps:commerce:commerce-service")
 }

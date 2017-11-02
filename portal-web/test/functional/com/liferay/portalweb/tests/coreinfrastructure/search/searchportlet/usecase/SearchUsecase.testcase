@@ -1161,6 +1161,43 @@
 		</execute>
 	</command>
 
+	<command name="ViewSearchResultForLongURL" priority="4">
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="DM Document Description 1" />
+			<var name="dmDocumentTitle" value="DM Document Title 1" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Document" />
+		</execute>
+
+		<execute macro="Search#viewSearchAssetTitle">
+			<var name="searchAssetTitle" value="DM Document Title 1" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Document" />
+		</execute>
+
+		<execute macro="Search#viewSearchAssetTitle">
+			<var name="searchAssetTitle" value="DM Document Title 1" />
+		</execute>
+
+		<execute macro="Search#gotoSearchResultPG">
+			<var name="searchAssetTitle" value="DM Document Title 1" />
+		</execute>
+
+		<execute macro="Search#viewSearchAssetDetailPage">
+			<var name="searchAssetTitle" value="DM Document Title 1" />
+		</execute>
+	</command>
+
 	<command name="ViewURLChangesWithUpdatedSearchAndFacetParameters" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
@@ -1250,7 +1287,7 @@
 			<var name="searchAssetTitle" value="Test Test" />
 		</execute>
 
-		<execute macro="Search#gotoUserSearchResultPG">
+		<execute macro="Search#gotoSearchResultPG">
 			<var name="searchAssetTitle" value="Test Test" />
 		</execute>
 

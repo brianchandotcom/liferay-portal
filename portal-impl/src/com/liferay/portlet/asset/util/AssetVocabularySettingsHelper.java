@@ -15,8 +15,8 @@
 package com.liferay.portlet.asset.util;
 
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefixPredicateFilter;
 import com.liferay.portal.kernel.util.StringPool;

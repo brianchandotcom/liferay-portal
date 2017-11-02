@@ -31,6 +31,7 @@ import com.liferay.exportimport.resources.importer.portlet.preferences.PortletPr
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -40,7 +41,6 @@ import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ThemeLocalService;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypes;
 import com.liferay.portal.kernel.util.Portal;

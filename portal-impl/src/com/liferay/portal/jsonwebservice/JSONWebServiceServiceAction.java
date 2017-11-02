@@ -14,6 +14,7 @@
 
 package com.liferay.portal.jsonwebservice;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.action.JSONServiceAction;
 import com.liferay.portal.jsonwebservice.action.JSONWebServiceDiscoverAction;
 import com.liferay.portal.jsonwebservice.action.JSONWebServiceInvokerAction;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.upload.UploadException;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;

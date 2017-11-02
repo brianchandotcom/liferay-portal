@@ -14,11 +14,11 @@
 
 package com.liferay.portal.servlet;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.JavaConstants;

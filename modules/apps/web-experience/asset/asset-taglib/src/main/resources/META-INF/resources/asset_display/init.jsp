@@ -25,11 +25,11 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
 page import="com.liferay.asset.kernel.model.AssetRenderer" %><%@
 page import="com.liferay.asset.kernel.model.AssetRendererFactory" %><%@
+page import="com.liferay.petra.string.CharPool" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.service.permission.PortletPermissionUtil" %><%@
-page import="com.liferay.portal.kernel.util.CharPool" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@

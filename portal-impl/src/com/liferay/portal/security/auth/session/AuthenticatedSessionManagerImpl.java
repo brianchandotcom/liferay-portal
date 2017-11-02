@@ -15,6 +15,7 @@
 package com.liferay.portal.security.auth.session;
 
 import com.liferay.petra.encryptor.Encryptor;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterNode;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;

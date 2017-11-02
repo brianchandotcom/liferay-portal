@@ -1,6 +1,7 @@
 dependencies {
 	compileInclude group: "org.quartz-scheduler", name: "quartz", version: "2.1.7"
 
+	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.profile", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.49.0"

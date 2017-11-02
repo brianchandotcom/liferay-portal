@@ -4,7 +4,6 @@ import java.util.jar.JarFile
 task writeReleases
 
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.blogs.web", version: "1.0.0"
 	compile group: "com.liferay", name: "com.liferay.document.library.api", version: "3.0.0"
 	compile group: "com.liferay", name: "com.liferay.document.library.web", version: "1.0.0"
 	compile group: "com.liferay", name: "com.liferay.login.web", version: "1.0.0"

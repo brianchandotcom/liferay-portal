@@ -19,6 +19,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -241,11 +242,17 @@ public class CPDefinitionDemoDataCreatorHelper
 
 		cpDefinition = _cpDefinitionLocalService.addCPDefinition(
 			titleMap, null, descriptionMap, titleMap, null, null, null,
-			layoutUuid, productTypeName, false, false, false, false, 0, 0, 0, 0,
-			0, null, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, true, serviceContext);
+			productTypeName, false, false, false, false, 0, 0, 0, 0, 0, null,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute, true,
+			serviceContext);
+
+		// Commerce product display layout
+
+		_cpDisplayLayoutLocalService.addCPDisplayLayout(
+			CPDefinition.class, cpDefinition.getCPDefinitionId(), layoutUuid,
+			serviceContext);
 
 		_cpDefinitions.put(title, cpDefinition);
 
@@ -328,6 +335,9 @@ public class CPDefinitionDemoDataCreatorHelper
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	private Map<String, CPDefinition> _cpDefinitions;
+
+	@Reference
+	private CPDisplayLayoutLocalService _cpDisplayLayoutLocalService;
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;

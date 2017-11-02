@@ -73,11 +73,10 @@ public interface CPDefinitionService extends BaseService {
 		Map<Locale, java.lang.String> metaTitleMap,
 		Map<Locale, java.lang.String> metaKeywordsMap,
 		Map<Locale, java.lang.String> metaDescriptionMap,
-		java.lang.String layoutUuid, java.lang.String productTypeName,
-		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
-		boolean shipSeparately, double shippingExtraPrice, double width,
-		double height, double depth, double weight,
-		java.lang.String ddmStructureKey, int displayDateMonth,
+		java.lang.String productTypeName, boolean ignoreSKUCombinations,
+		boolean shippable, boolean freeShipping, boolean shipSeparately,
+		double shippingExtraPrice, double width, double height, double depth,
+		double weight, java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
@@ -92,11 +91,11 @@ public interface CPDefinitionService extends BaseService {
 		Map<Locale, java.lang.String> metaTitleMap,
 		Map<Locale, java.lang.String> metaKeywordsMap,
 		Map<Locale, java.lang.String> metaDescriptionMap,
-		java.lang.String layoutUuid, java.lang.String productTypeName,
-		boolean ignoreSKUCombinations, java.lang.String ddmStructureKey,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		java.lang.String productTypeName, boolean ignoreSKUCombinations,
+		java.lang.String ddmStructureKey, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
@@ -174,10 +173,10 @@ public interface CPDefinitionService extends BaseService {
 		Map<Locale, java.lang.String> metaTitleMap,
 		Map<Locale, java.lang.String> metaKeywordsMap,
 		Map<Locale, java.lang.String> metaDescriptionMap,
-		java.lang.String layoutUuid, boolean ignoreSKUCombinations,
-		boolean shippable, boolean freeShipping, boolean shipSeparately,
-		double shippingExtraPrice, double width, double height, double depth,
-		double weight, java.lang.String ddmStructureKey, int displayDateMonth,
+		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
+		boolean shipSeparately, double shippingExtraPrice, double width,
+		double height, double depth, double weight,
+		java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
@@ -192,13 +191,20 @@ public interface CPDefinitionService extends BaseService {
 		Map<Locale, java.lang.String> metaTitleMap,
 		Map<Locale, java.lang.String> metaKeywordsMap,
 		Map<Locale, java.lang.String> metaDescriptionMap,
-		java.lang.String layoutUuid, boolean ignoreSKUCombinations,
-		java.lang.String ddmStructureKey, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
+		boolean ignoreSKUCombinations, java.lang.String ddmStructureKey,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
+
+	public CPDefinition updateCPDefinitionIgnoreSKUCombinations(
+		long cpDefinitionId, boolean ignoreSKUCombinations)
+		throws PortalException;
+
+	public void updateCPDisplayLayout(long cpDefinitionId,
+		java.lang.String layoutUuid, ServiceContext serviceContext)
+		throws PortalException;
 
 	public CPDefinition updateShippingInfo(long cpDefinitionId,
 		boolean shippable, boolean freeShipping, boolean shipSeparately,

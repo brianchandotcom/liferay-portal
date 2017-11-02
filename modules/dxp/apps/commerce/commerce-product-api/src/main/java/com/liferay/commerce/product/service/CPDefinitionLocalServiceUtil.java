@@ -61,11 +61,10 @@ public class CPDefinitionLocalServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
-		java.lang.String layoutUuid, java.lang.String productTypeName,
-		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
-		boolean shipSeparately, double shippingExtraPrice, double width,
-		double height, double depth, double weight,
-		java.lang.String ddmStructureKey, int displayDateMonth,
+		java.lang.String productTypeName, boolean ignoreSKUCombinations,
+		boolean shippable, boolean freeShipping, boolean shipSeparately,
+		double shippingExtraPrice, double width, double height, double depth,
+		double weight, java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
@@ -76,10 +75,10 @@ public class CPDefinitionLocalServiceUtil {
 		return getService()
 				   .addCPDefinition(titleMap, shortDescriptionMap,
 			descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
-			metaDescriptionMap, layoutUuid, productTypeName,
-			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
-			shippingExtraPrice, width, height, depth, weight, ddmStructureKey,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			metaDescriptionMap, productTypeName, ignoreSKUCombinations,
+			shippable, freeShipping, shipSeparately, shippingExtraPrice, width,
+			height, depth, weight, ddmStructureKey, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, hasDefaultInstance, serviceContext);
@@ -93,11 +92,10 @@ public class CPDefinitionLocalServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
-		java.lang.String layoutUuid, java.lang.String productTypeName,
-		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
-		boolean shipSeparately, double shippingExtraPrice, double width,
-		double height, double depth, double weight,
-		java.lang.String ddmStructureKey, int displayDateMonth,
+		java.lang.String productTypeName, boolean ignoreSKUCombinations,
+		boolean shippable, boolean freeShipping, boolean shipSeparately,
+		double shippingExtraPrice, double width, double height, double depth,
+		double weight, java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
@@ -107,10 +105,10 @@ public class CPDefinitionLocalServiceUtil {
 		return getService()
 				   .addCPDefinition(titleMap, shortDescriptionMap,
 			descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
-			metaDescriptionMap, layoutUuid, productTypeName,
-			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
-			shippingExtraPrice, width, height, depth, weight, ddmStructureKey,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			metaDescriptionMap, productTypeName, ignoreSKUCombinations,
+			shippable, freeShipping, shipSeparately, shippingExtraPrice, width,
+			height, depth, weight, ddmStructureKey, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, serviceContext);
@@ -124,23 +122,22 @@ public class CPDefinitionLocalServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
-		java.lang.String layoutUuid, java.lang.String productTypeName,
-		boolean ignoreSKUCombinations, java.lang.String ddmStructureKey,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		java.lang.String productTypeName, boolean ignoreSKUCombinations,
+		java.lang.String ddmStructureKey, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCPDefinition(titleMap, shortDescriptionMap,
 			descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
-			metaDescriptionMap, layoutUuid, productTypeName,
-			ignoreSKUCombinations, ddmStructureKey, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
+			metaDescriptionMap, productTypeName, ignoreSKUCombinations,
+			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
 	}
 
 	public static void checkCPDefinitions()
@@ -582,10 +579,10 @@ public class CPDefinitionLocalServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
-		java.lang.String layoutUuid, boolean ignoreSKUCombinations,
-		boolean shippable, boolean freeShipping, boolean shipSeparately,
-		double shippingExtraPrice, double width, double height, double depth,
-		double weight, java.lang.String ddmStructureKey, int displayDateMonth,
+		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
+		boolean shipSeparately, double shippingExtraPrice, double width,
+		double height, double depth, double weight,
+		java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
@@ -595,10 +592,10 @@ public class CPDefinitionLocalServiceUtil {
 		return getService()
 				   .updateCPDefinition(cpDefinitionId, titleMap,
 			shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
-			metaKeywordsMap, metaDescriptionMap, layoutUuid,
-			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
-			shippingExtraPrice, width, height, depth, weight, ddmStructureKey,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			metaKeywordsMap, metaDescriptionMap, ignoreSKUCombinations,
+			shippable, freeShipping, shipSeparately, shippingExtraPrice, width,
+			height, depth, weight, ddmStructureKey, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, serviceContext);
@@ -613,23 +610,29 @@ public class CPDefinitionLocalServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
-		java.lang.String layoutUuid, boolean ignoreSKUCombinations,
-		java.lang.String ddmStructureKey, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
+		boolean ignoreSKUCombinations, java.lang.String ddmStructureKey,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCPDefinition(cpDefinitionId, titleMap,
 			shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
-			metaKeywordsMap, metaDescriptionMap, layoutUuid,
-			ignoreSKUCombinations, ddmStructureKey, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
+			metaKeywordsMap, metaDescriptionMap, ignoreSKUCombinations,
+			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinition updateCPDefinitionIgnoreSKUCombinations(
+		long cpDefinitionId, boolean ignoreSKUCombinations)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCPDefinitionIgnoreSKUCombinations(cpDefinitionId,
+			ignoreSKUCombinations);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinition updateShippingInfo(

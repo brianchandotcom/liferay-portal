@@ -41,11 +41,10 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
-		java.lang.String layoutUuid, java.lang.String productTypeName,
-		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
-		boolean shipSeparately, double shippingExtraPrice, double width,
-		double height, double depth, double weight,
-		java.lang.String ddmStructureKey, int displayDateMonth,
+		java.lang.String productTypeName, boolean ignoreSKUCombinations,
+		boolean shippable, boolean freeShipping, boolean shipSeparately,
+		double shippingExtraPrice, double width, double height, double depth,
+		double weight, java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
@@ -54,7 +53,7 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionService.addCPDefinition(titleMap,
 			shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
-			metaKeywordsMap, metaDescriptionMap, layoutUuid, productTypeName,
+			metaKeywordsMap, metaDescriptionMap, productTypeName,
 			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
 			shippingExtraPrice, width, height, depth, weight, ddmStructureKey,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
@@ -72,17 +71,17 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
-		java.lang.String layoutUuid, java.lang.String productTypeName,
-		boolean ignoreSKUCombinations, java.lang.String ddmStructureKey,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		java.lang.String productTypeName, boolean ignoreSKUCombinations,
+		java.lang.String ddmStructureKey, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionService.addCPDefinition(titleMap,
 			shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
-			metaKeywordsMap, metaDescriptionMap, layoutUuid, productTypeName,
+			metaKeywordsMap, metaDescriptionMap, productTypeName,
 			ignoreSKUCombinations, ddmStructureKey, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
@@ -216,10 +215,10 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
-		java.lang.String layoutUuid, boolean ignoreSKUCombinations,
-		boolean shippable, boolean freeShipping, boolean shipSeparately,
-		double shippingExtraPrice, double width, double height, double depth,
-		double weight, java.lang.String ddmStructureKey, int displayDateMonth,
+		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
+		boolean shipSeparately, double shippingExtraPrice, double width,
+		double height, double depth, double weight,
+		java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
@@ -228,7 +227,7 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionService.updateCPDefinition(cpDefinitionId,
 			titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
-			metaTitleMap, metaKeywordsMap, metaDescriptionMap, layoutUuid,
+			metaTitleMap, metaKeywordsMap, metaDescriptionMap,
 			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
 			shippingExtraPrice, width, height, depth, weight, ddmStructureKey,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
@@ -247,22 +246,38 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
-		java.lang.String layoutUuid, boolean ignoreSKUCombinations,
-		java.lang.String ddmStructureKey, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
+		boolean ignoreSKUCombinations, java.lang.String ddmStructureKey,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionService.updateCPDefinition(cpDefinitionId,
 			titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
-			metaTitleMap, metaKeywordsMap, metaDescriptionMap, layoutUuid,
+			metaTitleMap, metaKeywordsMap, metaDescriptionMap,
 			ignoreSKUCombinations, ddmStructureKey, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPDefinition updateCPDefinitionIgnoreSKUCombinations(
+		long cpDefinitionId, boolean ignoreSKUCombinations)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionService.updateCPDefinitionIgnoreSKUCombinations(cpDefinitionId,
+			ignoreSKUCombinations);
+	}
+
+	@Override
+	public void updateCPDisplayLayout(long cpDefinitionId,
+		java.lang.String layoutUuid,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_cpDefinitionService.updateCPDisplayLayout(cpDefinitionId, layoutUuid,
+			serviceContext);
 	}
 
 	@Override

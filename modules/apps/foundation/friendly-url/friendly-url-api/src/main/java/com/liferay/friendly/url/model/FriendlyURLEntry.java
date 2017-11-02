@@ -55,7 +55,6 @@ public interface FriendlyURLEntry extends FriendlyURLEntryModel, PersistedModel 
 			}
 		};
 
-	public java.lang.String getUrlTitle(java.util.Locale locale);
-
-	public boolean isLocalized();
+	public boolean isMain()
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

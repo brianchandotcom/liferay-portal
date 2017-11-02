@@ -17,7 +17,6 @@ package com.liferay.friendly.url.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
-import com.liferay.friendly.url.service.FriendlyURLEntryLocalizationLocalServiceUtil;
 
 /**
  * The extended model base implementation for the FriendlyURLEntryLocalization service. Represents a row in the &quot;FriendlyURLEntryLocalization&quot; database table, with each column mapped to a property of this class.
@@ -40,13 +39,4 @@ public abstract class FriendlyURLEntryLocalizationBaseImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a friendly url entry localization model instance should use the {@link FriendlyURLEntryLocalization} interface instead.
 	 */
-	@Override
-	public void persist() {
-		if (this.isNew()) {
-			FriendlyURLEntryLocalizationLocalServiceUtil.addFriendlyURLEntryLocalization(this);
-		}
-		else {
-			FriendlyURLEntryLocalizationLocalServiceUtil.updateFriendlyURLEntryLocalization(this);
-		}
-	}
 }

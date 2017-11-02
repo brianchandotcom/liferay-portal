@@ -22,13 +22,16 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.model.FriendlyURLEntryModel;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -41,7 +44,9 @@ import java.sql.Types;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the FriendlyURLEntry service. Represents a row in the &quot;FriendlyURLEntry&quot; database table, with each column mapped to a property of this class.
@@ -66,6 +71,7 @@ public class FriendlyURLEntryModelImpl extends BaseModelImpl<FriendlyURLEntry>
 	 */
 	public static final String TABLE_NAME = "FriendlyURLEntry";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "mvccVersion", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "friendlyURLEntryId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
@@ -74,12 +80,12 @@ public class FriendlyURLEntryModelImpl extends BaseModelImpl<FriendlyURLEntry>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
-			{ "urlTitle", Types.VARCHAR },
-			{ "main", Types.BOOLEAN }
+			{ "defaultLanguageId", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("friendlyURLEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -88,11 +94,10 @@ public class FriendlyURLEntryModelImpl extends BaseModelImpl<FriendlyURLEntry>
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("urlTitle", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("main", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("defaultLanguageId", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table FriendlyURLEntry (uuid_ VARCHAR(75) null,friendlyURLEntryId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,urlTitle VARCHAR(255) null,main BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table FriendlyURLEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,friendlyURLEntryId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,defaultLanguageId VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table FriendlyURLEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY friendlyURLEntry.friendlyURLEntryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY FriendlyURLEntry.friendlyURLEntryId ASC";
@@ -112,10 +117,8 @@ public class FriendlyURLEntryModelImpl extends BaseModelImpl<FriendlyURLEntry>
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
 	public static final long GROUPID_COLUMN_BITMASK = 8L;
-	public static final long MAIN_COLUMN_BITMASK = 16L;
-	public static final long URLTITLE_COLUMN_BITMASK = 32L;
-	public static final long UUID_COLUMN_BITMASK = 64L;
-	public static final long FRIENDLYURLENTRYID_COLUMN_BITMASK = 128L;
+	public static final long UUID_COLUMN_BITMASK = 16L;
+	public static final long FRIENDLYURLENTRYID_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.friendly.url.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.friendly.url.model.FriendlyURLEntry"));
 
@@ -156,6 +159,7 @@ public class FriendlyURLEntryModelImpl extends BaseModelImpl<FriendlyURLEntry>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("friendlyURLEntryId", getFriendlyURLEntryId());
 		attributes.put("groupId", getGroupId());
@@ -164,8 +168,7 @@ public class FriendlyURLEntryModelImpl extends BaseModelImpl<FriendlyURLEntry>
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
-		attributes.put("urlTitle", getUrlTitle());
-		attributes.put("main", getMain());
+		attributes.put("defaultLanguageId", getDefaultLanguageId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -175,6 +178,12 @@ public class FriendlyURLEntryModelImpl extends BaseModelImpl<FriendlyURLEntry>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -223,17 +232,91 @@ public class FriendlyURLEntryModelImpl extends BaseModelImpl<FriendlyURLEntry>
 			setClassPK(classPK);
 		}
 
-		String urlTitle = (String)attributes.get("urlTitle");
+		String defaultLanguageId = (String)attributes.get("defaultLanguageId");
 
-		if (urlTitle != null) {
-			setUrlTitle(urlTitle);
+		if (defaultLanguageId != null) {
+			setDefaultLanguageId(defaultLanguageId);
+		}
+	}
+
+	@Override
+	public String[] getAvailableLanguageIds() {
+		List<FriendlyURLEntryLocalization> friendlyURLEntryLocalizations = FriendlyURLEntryLocalServiceUtil.getFriendlyURLEntryLocalizations(getPrimaryKey());
+
+		String[] availableLanguageIds = new String[friendlyURLEntryLocalizations.size()];
+
+		for (int i = 0; i < availableLanguageIds.length; i++) {
+			FriendlyURLEntryLocalization friendlyURLEntryLocalization = friendlyURLEntryLocalizations.get(i);
+
+			availableLanguageIds[i] = friendlyURLEntryLocalization.getLanguageId();
 		}
 
-		Boolean main = (Boolean)attributes.get("main");
+		return availableLanguageIds;
+	}
 
-		if (main != null) {
-			setMain(main);
+	@Override
+	public String getUrlTitle() {
+		return getUrlTitle(getDefaultLanguageId(), false);
+	}
+
+	@Override
+	public String getUrlTitle(String languageId) {
+		return getUrlTitle(languageId, true);
+	}
+
+	@Override
+	public String getUrlTitle(String languageId, boolean useDefault) {
+		if (useDefault) {
+			return LocalizationUtil.getLocalization(new Function<String, String>() {
+					@Override
+					public String apply(String languageId) {
+						return _getUrlTitle(languageId);
+					}
+				}, languageId, getDefaultLanguageId());
 		}
+
+		return _getUrlTitle(languageId);
+	}
+
+	@Override
+	public String getUrlTitleMapAsXML() {
+		return LocalizationUtil.getXml(getLanguageIdToUrlTitleMap(),
+			getDefaultLanguageId(), "UrlTitle");
+	}
+
+	@Override
+	public Map<String, String> getLanguageIdToUrlTitleMap() {
+		Map<String, String> languageIdToUrlTitleMap = new HashMap<String, String>();
+
+		List<FriendlyURLEntryLocalization> friendlyURLEntryLocalizations = FriendlyURLEntryLocalServiceUtil.getFriendlyURLEntryLocalizations(getPrimaryKey());
+
+		for (FriendlyURLEntryLocalization friendlyURLEntryLocalization : friendlyURLEntryLocalizations) {
+			languageIdToUrlTitleMap.put(friendlyURLEntryLocalization.getLanguageId(),
+				friendlyURLEntryLocalization.getUrlTitle());
+		}
+
+		return languageIdToUrlTitleMap;
+	}
+
+	private String _getUrlTitle(String languageId) {
+		FriendlyURLEntryLocalization friendlyURLEntryLocalization = FriendlyURLEntryLocalServiceUtil.fetchFriendlyURLEntryLocalization(getPrimaryKey(),
+				languageId);
+
+		if (friendlyURLEntryLocalization == null) {
+			return StringPool.BLANK;
+		}
+
+		return friendlyURLEntryLocalization.getUrlTitle();
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -404,55 +487,18 @@ public class FriendlyURLEntryModelImpl extends BaseModelImpl<FriendlyURLEntry>
 	}
 
 	@Override
-	public String getUrlTitle() {
-		if (_urlTitle == null) {
+	public String getDefaultLanguageId() {
+		if (_defaultLanguageId == null) {
 			return StringPool.BLANK;
 		}
 		else {
-			return _urlTitle;
+			return _defaultLanguageId;
 		}
 	}
 
 	@Override
-	public void setUrlTitle(String urlTitle) {
-		_columnBitmask |= URLTITLE_COLUMN_BITMASK;
-
-		if (_originalUrlTitle == null) {
-			_originalUrlTitle = _urlTitle;
-		}
-
-		_urlTitle = urlTitle;
-	}
-
-	public String getOriginalUrlTitle() {
-		return GetterUtil.getString(_originalUrlTitle);
-	}
-
-	@Override
-	public boolean getMain() {
-		return _main;
-	}
-
-	@Override
-	public boolean isMain() {
-		return _main;
-	}
-
-	@Override
-	public void setMain(boolean main) {
-		_columnBitmask |= MAIN_COLUMN_BITMASK;
-
-		if (!_setOriginalMain) {
-			_setOriginalMain = true;
-
-			_originalMain = _main;
-		}
-
-		_main = main;
-	}
-
-	public boolean getOriginalMain() {
-		return _originalMain;
+	public void setDefaultLanguageId(String defaultLanguageId) {
+		_defaultLanguageId = defaultLanguageId;
 	}
 
 	@Override
@@ -492,6 +538,7 @@ public class FriendlyURLEntryModelImpl extends BaseModelImpl<FriendlyURLEntry>
 	public Object clone() {
 		FriendlyURLEntryImpl friendlyURLEntryImpl = new FriendlyURLEntryImpl();
 
+		friendlyURLEntryImpl.setMvccVersion(getMvccVersion());
 		friendlyURLEntryImpl.setUuid(getUuid());
 		friendlyURLEntryImpl.setFriendlyURLEntryId(getFriendlyURLEntryId());
 		friendlyURLEntryImpl.setGroupId(getGroupId());
@@ -500,8 +547,7 @@ public class FriendlyURLEntryModelImpl extends BaseModelImpl<FriendlyURLEntry>
 		friendlyURLEntryImpl.setModifiedDate(getModifiedDate());
 		friendlyURLEntryImpl.setClassNameId(getClassNameId());
 		friendlyURLEntryImpl.setClassPK(getClassPK());
-		friendlyURLEntryImpl.setUrlTitle(getUrlTitle());
-		friendlyURLEntryImpl.setMain(getMain());
+		friendlyURLEntryImpl.setDefaultLanguageId(getDefaultLanguageId());
 
 		friendlyURLEntryImpl.resetOriginalValues();
 
@@ -584,18 +630,14 @@ public class FriendlyURLEntryModelImpl extends BaseModelImpl<FriendlyURLEntry>
 
 		friendlyURLEntryModelImpl._setOriginalClassPK = false;
 
-		friendlyURLEntryModelImpl._originalUrlTitle = friendlyURLEntryModelImpl._urlTitle;
-
-		friendlyURLEntryModelImpl._originalMain = friendlyURLEntryModelImpl._main;
-
-		friendlyURLEntryModelImpl._setOriginalMain = false;
-
 		friendlyURLEntryModelImpl._columnBitmask = 0;
 	}
 
 	@Override
 	public CacheModel<FriendlyURLEntry> toCacheModel() {
 		FriendlyURLEntryCacheModel friendlyURLEntryCacheModel = new FriendlyURLEntryCacheModel();
+
+		friendlyURLEntryCacheModel.mvccVersion = getMvccVersion();
 
 		friendlyURLEntryCacheModel.uuid = getUuid();
 
@@ -633,15 +675,13 @@ public class FriendlyURLEntryModelImpl extends BaseModelImpl<FriendlyURLEntry>
 
 		friendlyURLEntryCacheModel.classPK = getClassPK();
 
-		friendlyURLEntryCacheModel.urlTitle = getUrlTitle();
+		friendlyURLEntryCacheModel.defaultLanguageId = getDefaultLanguageId();
 
-		String urlTitle = friendlyURLEntryCacheModel.urlTitle;
+		String defaultLanguageId = friendlyURLEntryCacheModel.defaultLanguageId;
 
-		if ((urlTitle != null) && (urlTitle.length() == 0)) {
-			friendlyURLEntryCacheModel.urlTitle = null;
+		if ((defaultLanguageId != null) && (defaultLanguageId.length() == 0)) {
+			friendlyURLEntryCacheModel.defaultLanguageId = null;
 		}
-
-		friendlyURLEntryCacheModel.main = getMain();
 
 		return friendlyURLEntryCacheModel;
 	}
@@ -650,7 +690,9 @@ public class FriendlyURLEntryModelImpl extends BaseModelImpl<FriendlyURLEntry>
 	public String toString() {
 		StringBundler sb = new StringBundler(21);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(getMvccVersion());
+		sb.append(", uuid=");
 		sb.append(getUuid());
 		sb.append(", friendlyURLEntryId=");
 		sb.append(getFriendlyURLEntryId());
@@ -666,10 +708,8 @@ public class FriendlyURLEntryModelImpl extends BaseModelImpl<FriendlyURLEntry>
 		sb.append(getClassNameId());
 		sb.append(", classPK=");
 		sb.append(getClassPK());
-		sb.append(", urlTitle=");
-		sb.append(getUrlTitle());
-		sb.append(", main=");
-		sb.append(getMain());
+		sb.append(", defaultLanguageId=");
+		sb.append(getDefaultLanguageId());
 		sb.append("}");
 
 		return sb.toString();
@@ -683,6 +723,10 @@ public class FriendlyURLEntryModelImpl extends BaseModelImpl<FriendlyURLEntry>
 		sb.append("com.liferay.friendly.url.model.FriendlyURLEntry");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>uuid</column-name><column-value><![CDATA[");
 		sb.append(getUuid());
@@ -716,12 +760,8 @@ public class FriendlyURLEntryModelImpl extends BaseModelImpl<FriendlyURLEntry>
 		sb.append(getClassPK());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>urlTitle</column-name><column-value><![CDATA[");
-		sb.append(getUrlTitle());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>main</column-name><column-value><![CDATA[");
-		sb.append(getMain());
+			"<column><column-name>defaultLanguageId</column-name><column-value><![CDATA[");
+		sb.append(getDefaultLanguageId());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -733,6 +773,7 @@ public class FriendlyURLEntryModelImpl extends BaseModelImpl<FriendlyURLEntry>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			FriendlyURLEntry.class
 		};
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _friendlyURLEntryId;
@@ -751,11 +792,7 @@ public class FriendlyURLEntryModelImpl extends BaseModelImpl<FriendlyURLEntry>
 	private long _classPK;
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;
-	private String _urlTitle;
-	private String _originalUrlTitle;
-	private boolean _main;
-	private boolean _originalMain;
-	private boolean _setOriginalMain;
+	private String _defaultLanguageId;
 	private long _columnBitmask;
 	private FriendlyURLEntry _escapedModel;
 }

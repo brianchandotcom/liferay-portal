@@ -19,6 +19,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryHelper;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -65,9 +66,7 @@ public class FriendlyURLEntryStagedModelRepository
 	public void deleteStagedModel(FriendlyURLEntry friendlyURLEntry)
 		throws PortalException {
 
-		_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
-			friendlyURLEntry.getGroupId(), friendlyURLEntry.getClassNameId(),
-			friendlyURLEntry.getClassPK(), friendlyURLEntry.getUrlTitle());
+		_friendlyURLEntryLocalService.deleteFriendlyURLEntry(friendlyURLEntry);
 	}
 
 	@Override
@@ -138,26 +137,23 @@ public class FriendlyURLEntryStagedModelRepository
 	public FriendlyURLEntry saveStagedModel(FriendlyURLEntry friendlyURLEntry)
 		throws PortalException {
 
-		if (friendlyURLEntry.isMain()) {
-			FriendlyURLEntry mainFriendlyURLEntry =
-				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+		List<FriendlyURLEntryLocalization> friendlyURLEntryLocalizations =
+			_friendlyURLEntryLocalService.getFriendlyURLEntryLocalizations(
+				friendlyURLEntry.getFriendlyURLEntryId());
+
+		for (FriendlyURLEntryLocalization friendlyURLEntryLocalization :
+				friendlyURLEntryLocalizations) {
+
+			friendlyURLEntryLocalization.setUrlTitle(
+				_friendlyURLEntryLocalService.getUniqueUrlTitle(
 					friendlyURLEntry.getGroupId(),
 					friendlyURLEntry.getClassNameId(),
-					friendlyURLEntry.getClassPK());
+					friendlyURLEntry.getClassPK(),
+					friendlyURLEntryLocalization.getUrlTitle()));
 
-			if (!mainFriendlyURLEntry.equals(friendlyURLEntry)) {
-				mainFriendlyURLEntry.setMain(false);
-
-				_friendlyURLEntryLocalService.updateFriendlyURLEntry(
-					mainFriendlyURLEntry);
-			}
+			_friendlyURLEntryLocalService.updateFriendlyURLLocalization(
+				friendlyURLEntryLocalization);
 		}
-
-		friendlyURLEntry.setUrlTitle(
-			_friendlyURLEntryLocalService.getUniqueUrlTitle(
-				friendlyURLEntry.getGroupId(),
-				friendlyURLEntry.getClassNameId(),
-				friendlyURLEntry.getClassPK(), friendlyURLEntry.getUrlTitle()));
 
 		return _friendlyURLEntryLocalService.updateFriendlyURLEntry(
 			friendlyURLEntry);

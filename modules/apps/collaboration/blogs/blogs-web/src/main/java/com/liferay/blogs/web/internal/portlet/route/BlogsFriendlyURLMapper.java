@@ -14,7 +14,7 @@
 
 package com.liferay.blogs.web.internal.portlet.route;
 
-import com.liferay.blogs.web.constants.BlogsPortletKeys;
+import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 

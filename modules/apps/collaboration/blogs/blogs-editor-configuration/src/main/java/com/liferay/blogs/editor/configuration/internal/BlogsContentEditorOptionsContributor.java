@@ -14,7 +14,7 @@
 
 package com.liferay.blogs.editor.configuration.internal;
 
-import com.liferay.blogs.web.constants.BlogsPortletKeys;
+import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.EditorOptions;
 import com.liferay.portal.kernel.editor.configuration.EditorOptionsContributor;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;

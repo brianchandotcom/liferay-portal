@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.FieldConstants;
+import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -49,7 +50,11 @@ public class ConfigurationModelToDDMFormConverter {
 	}
 
 	public DDMForm getDDMForm() {
-		DDMForm ddmForm = new DDMForm();
+		DDMForm ddmForm = getConfigurationDDMForm();
+
+		if (ddmForm == null) {
+			ddmForm = new DDMForm();
+		}
 
 		ddmForm.addAvailableLocale(_locale);
 		ddmForm.setDefaultLocale(_locale);
@@ -90,6 +95,22 @@ public class ConfigurationModelToDDMFormConverter {
 				ObjectClassDefinition.REQUIRED);
 
 		addDDMFormFields(requiredAttributeDefinitions, ddmForm, true);
+	}
+
+	protected DDMForm getConfigurationDDMForm() {
+		Class<?> formClass =
+			ConfigurationDDMFormDeclarationUtil.getConfigurationDDMFormClass(
+				_configurationModel);
+
+		if (formClass != null) {
+			try {
+				return DDMFormFactory.create(formClass);
+			}
+			catch (IllegalArgumentException iae) {
+			}
+		}
+
+		return null;
 	}
 
 	protected DDMFormFieldOptions getDDMFieldOptions(

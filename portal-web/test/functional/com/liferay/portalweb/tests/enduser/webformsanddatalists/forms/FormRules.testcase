@@ -1136,6 +1136,16 @@
 
 		<execute macro="Form#closeSidebar" />
 
+		<execute macro="Form#gotoAddField">
+			<var name="fieldType" value="Text Field" />
+		</execute>
+
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="Text Field 2" />
+		</execute>
+
+		<execute macro="Form#closeSidebar" />
+
 		<execute macro="FormsAdminNavigator#gotoRules" />
 
 		<execute macro="FormRules#addRule" />
@@ -1151,7 +1161,7 @@
 		<execute macro="FormRules#configureActionOptions">
 			<var name="action" value="Require" />
 			<var name="actionRowNumber" value="1" />
-			<var name="actionTarget" value="Text Field 1" />
+			<var name="actionTarget" value="Text Field 2" />
 		</execute>
 
 		<execute macro="FormRules#save" />
@@ -1173,6 +1183,15 @@
 
 		<execute macro="FormFields#viewRequiredAsterisk" />
 
+		<execute macro="FormPortlet#submit" />
+
+		<execute macro="FormFields#viewFieldValidationErrorMessage">
+			<var name="fieldName" value="TextField1" />
+			<var name="fieldValidationErrorMessage" value="This field is required." />
+		</execute>
+
+		<execute function="Refresh" />
+
 		<execute macro="FormFields#editText">
 			<var name="fieldName" value="TextField" />
 			<var name="fieldValue" value="testing" />
@@ -1180,11 +1199,8 @@
 
 		<execute macro="FormFields#viewRequiredAsteriskNotPresent" />
 
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="TextField" />
-			<var name="fieldValue" value="test" />
-		</execute>
+		<execute macro="FormPortlet#submit" />
 
-		<execute macro="FormFields#viewRequiredAsterisk" />
+		<execute macro="FormPortlet#submitSuccessfully" />		
 	</command>
 </definition>

@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.regex.Matcher;
@@ -57,7 +58,9 @@ public class JavaDiamondOperatorCheck extends BaseFileCheck {
 			String whitespace = matcher.group(4);
 
 			String replacement = StringUtil.replaceFirst(
-				match, whitespace + "<" + parameterType + ">", "<>");
+				match,
+				StringBundler.concat(whitespace, "<", parameterType, ">"),
+				"<>");
 
 			content = StringUtil.replace(content, match, replacement);
 		}

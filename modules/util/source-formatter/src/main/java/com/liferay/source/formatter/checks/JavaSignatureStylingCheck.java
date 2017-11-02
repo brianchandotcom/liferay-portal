@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
@@ -38,8 +39,9 @@ public class JavaSignatureStylingCheck extends BaseJavaTermCheck {
 		String indent = SourceUtil.getIndent(javaTermContent);
 
 		Pattern pattern = Pattern.compile(
-			"(" + indent + javaTerm.getAccessModifier() +
-				" .*?[;{]\\s*?\n)((\n*)([^\n]+)\n)?",
+			StringBundler.concat(
+				"(", indent, javaTerm.getAccessModifier(),
+				" .*?[;{]\\s*?\n)((\n*)([^\n]+)\n)?"),
 			Pattern.DOTALL);
 
 		Matcher matcher = pattern.matcher(javaTermContent);

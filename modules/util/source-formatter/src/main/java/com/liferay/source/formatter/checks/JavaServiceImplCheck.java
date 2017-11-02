@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
@@ -65,7 +66,8 @@ public class JavaServiceImplCheck extends BaseJavaTermCheck {
 		String indent = SourceUtil.getIndent(javaTermContent) + "\t";
 
 		return StringUtil.replaceFirst(
-			javaTermContent, "{\n", "{\n" + indent + superMethodCall + "\n\n");
+			javaTermContent, "{\n",
+			StringBundler.concat("{\n", indent, superMethodCall, "\n\n"));
 	}
 
 }

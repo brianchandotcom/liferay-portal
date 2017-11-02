@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaTerm;
 
@@ -96,8 +97,9 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 		else if (matcher.find() && !javaTerm.hasAnnotation("Override")) {
 			addMessage(
 				fileName,
-				"Annotation @" + annotation + " required for '" + methodName +
-					"', see LPS-36303");
+				StringBundler.concat(
+					"Annotation @", annotation, " required for '", methodName,
+					"', see LPS-36303"));
 		}
 	}
 

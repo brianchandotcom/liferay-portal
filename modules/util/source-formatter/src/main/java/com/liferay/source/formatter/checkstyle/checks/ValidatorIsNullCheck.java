@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -53,7 +54,7 @@ public class ValidatorIsNullCheck extends BaseCheck {
 			if (child.getType() == TokenTypes.NUM_INT) {
 				log(
 					methodCallAST.getLineNo(), _MSG_METHOD_INVALID_NAME,
-					className + "." + methodName + "(long)");
+					StringBundler.concat(className, ".", methodName, "(long)"));
 
 				continue;
 			}
@@ -76,7 +77,7 @@ public class ValidatorIsNullCheck extends BaseCheck {
 
 				log(
 					methodCallAST.getLineNo(), _MSG_METHOD_INVALID_NAME,
-					className + "." + methodName + "(long)");
+					StringBundler.concat(className, ".", methodName, "(long)"));
 			}
 		}
 	}

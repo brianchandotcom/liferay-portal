@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -91,8 +92,9 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 
 							content = StringUtil.replace(
 								content, "\n" + line + "\n",
-								"\n" + line.substring(0, x) + "\n" + indent +
-									line.substring(x) + "\n");
+								StringBundler.concat(
+									"\n", line.substring(0, x), "\n", indent,
+									line.substring(x), "\n"));
 
 							return content;
 						}
@@ -146,9 +148,10 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 
 							content = StringUtil.replace(
 								content, "\n" + previousLine + "\n",
-								"\n" + previousLine.substring(0, x + 1) + "\n" +
-									indent + previousLine.substring(x + 2) +
-										"\n");
+								StringBundler.concat(
+									"\n", previousLine.substring(0, x + 1),
+									"\n", indent, previousLine.substring(x + 2),
+									"\n"));
 
 							return content;
 						}
@@ -477,8 +480,9 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 				if (line.endsWith(StringPool.OPEN_CURLY_BRACE)) {
 					addMessage(
 						fileName,
-						"'" + trimmedLine + "' should be added to previous " +
-							"line",
+						StringBundler.concat(
+							"'", trimmedLine, "' should be added to previous ",
+							"line"),
 						lineCount);
 
 					return null;
@@ -503,8 +507,9 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 
 							addMessage(
 								fileName,
-								"'" + trimmedLine + "' should be added to " +
-									"previous line",
+								StringBundler.concat(
+									"'", trimmedLine, "' should be added to ",
+									"previous line"),
 								lineCount);
 
 							return null;

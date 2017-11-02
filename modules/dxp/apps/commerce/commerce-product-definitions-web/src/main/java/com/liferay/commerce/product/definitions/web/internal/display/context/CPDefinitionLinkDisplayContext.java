@@ -16,9 +16,9 @@ package com.liferay.commerce.product.definitions.web.internal.display.context;
 
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
-import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.definitions.web.internal.util.CPDefinitionsPortletUtil;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
+import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.item.selector.criterion.CPDefinitionItemSelectorCriterion;
 import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
@@ -132,6 +132,8 @@ public class CPDefinitionLinkDisplayContext
 			"mvcRenderCommandName", "editProductDefinition");
 		portletURL.setParameter(
 			"screenNavigationCategoryKey", getScreenNavigationCategoryKey());
+		portletURL.setParameter(
+			"screenNavigationEntryKey", getScreenNavigationEntryKey());
 		portletURL.setParameter("type", String.valueOf(getType()));
 
 		return portletURL;
@@ -139,28 +141,32 @@ public class CPDefinitionLinkDisplayContext
 
 	@Override
 	public String getScreenNavigationCategoryKey() throws PortalException {
-		String screenNavigationCategoryKey =
-			super.getScreenNavigationCategoryKey();
+		return CPDefinitionScreenNavigationConstants.
+			CATEGORY_KEY_PRODUCT_RELATIONS;
+	}
+
+	public String getScreenNavigationEntryKey() throws PortalException {
+		String screenNavigationEntryKey = StringPool.BLANK;
 
 		int type = getType();
 
 		if (type == CPConstants.DEFINITION_LINK_TYPE_RELATED) {
-			screenNavigationCategoryKey =
+			screenNavigationEntryKey =
 				CPDefinitionScreenNavigationConstants.
-					CATEGORY_KEY_RELATED_PRODUCTS;
+					ENTRY_KEY_RELATED_PRODUCTS;
 		}
 		else if (type == CPConstants.DEFINITION_LINK_TYPE_UP_SELL) {
-			screenNavigationCategoryKey =
+			screenNavigationEntryKey =
 				CPDefinitionScreenNavigationConstants.
-					CATEGORY_KEY_UP_SELL_PRODUCTS;
+					ENTRY_KEY_UP_SELL_PRODUCTS;
 		}
 		else if (type == CPConstants.DEFINITION_LINK_TYPE_CROSS_SELL) {
-			screenNavigationCategoryKey =
+			screenNavigationEntryKey =
 				CPDefinitionScreenNavigationConstants.
-					CATEGORY_KEY_CROSS_SELL_PRODUCTS;
+					ENTRY_KEY_CROSS_SELL_PRODUCTS;
 		}
 
-		return screenNavigationCategoryKey;
+		return screenNavigationEntryKey;
 	}
 
 	@Override

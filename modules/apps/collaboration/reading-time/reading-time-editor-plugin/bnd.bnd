@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Reading Time Editor Plugin
+Bundle-SymbolicName: com.liferay.reading.time.editor.plugin
+Bundle-Version: 1.0.0
+Fragment-Host: com.liferay.frontend.editor.ckeditor.web
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Reading Time

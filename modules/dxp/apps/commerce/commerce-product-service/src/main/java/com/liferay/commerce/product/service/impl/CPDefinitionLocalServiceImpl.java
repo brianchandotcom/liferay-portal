@@ -95,9 +95,9 @@ public class CPDefinitionLocalServiceImpl
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
 			Map<Locale, String> metaTitleMap,
 			Map<Locale, String> metaKeywordsMap,
-			Map<Locale, String> metaDescriptionMap, String layoutUuid,
-			String productTypeName, boolean ignoreSKUCombinations,
-			boolean shippable, boolean freeShipping, boolean shipSeparately,
+			Map<Locale, String> metaDescriptionMap, String productTypeName,
+			boolean ignoreSKUCombinations, boolean shippable,
+			boolean freeShipping, boolean shipSeparately,
 			double shippingExtraPrice, double width, double height,
 			double depth, double weight, String ddmStructureKey,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
@@ -198,11 +198,6 @@ public class CPDefinitionLocalServiceImpl
 			groupId, serviceContext.getCompanyId(), CPDefinition.class,
 			cpDefinitionId, urlTitleMap);
 
-		// Commerce product display layout
-
-		cpDisplayLayoutLocalService.addCPDisplayLayout(
-			CPDefinition.class, cpDefinitionId, layoutUuid, serviceContext);
-
 		// Resources
 
 		resourceLocalService.addModelResources(cpDefinition, serviceContext);
@@ -229,9 +224,9 @@ public class CPDefinitionLocalServiceImpl
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
 			Map<Locale, String> metaTitleMap,
 			Map<Locale, String> metaKeywordsMap,
-			Map<Locale, String> metaDescriptionMap, String layoutUuid,
-			String productTypeName, boolean ignoreSKUCombinations,
-			boolean shippable, boolean freeShipping, boolean shipSeparately,
+			Map<Locale, String> metaDescriptionMap, String productTypeName,
+			boolean ignoreSKUCombinations, boolean shippable,
+			boolean freeShipping, boolean shipSeparately,
 			double shippingExtraPrice, double width, double height,
 			double depth, double weight, String ddmStructureKey,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
@@ -243,13 +238,13 @@ public class CPDefinitionLocalServiceImpl
 
 		return addCPDefinition(
 			titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
-			metaTitleMap, metaKeywordsMap, metaDescriptionMap, layoutUuid,
-			productTypeName, ignoreSKUCombinations, shippable, freeShipping,
-			shipSeparately, shippingExtraPrice, width, height, depth, weight,
-			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, true, serviceContext);
+			metaTitleMap, metaKeywordsMap, metaDescriptionMap, productTypeName,
+			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
+			shippingExtraPrice, width, height, depth, weight, ddmStructureKey,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, true, serviceContext);
 	}
 
 	@Override
@@ -259,25 +254,23 @@ public class CPDefinitionLocalServiceImpl
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
 			Map<Locale, String> metaTitleMap,
 			Map<Locale, String> metaKeywordsMap,
-			Map<Locale, String> metaDescriptionMap, String layoutUuid,
-			String productTypeName, boolean ignoreSKUCombinations,
-			String ddmStructureKey, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			ServiceContext serviceContext)
+			Map<Locale, String> metaDescriptionMap, String productTypeName,
+			boolean ignoreSKUCombinations, String ddmStructureKey,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
 		return addCPDefinition(
 			titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
-			metaTitleMap, metaKeywordsMap, metaDescriptionMap, layoutUuid,
-			productTypeName, ignoreSKUCombinations, false, false, false, 0, 0,
-			0, 0, 0, ddmStructureKey, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			metaTitleMap, metaKeywordsMap, metaDescriptionMap, productTypeName,
+			ignoreSKUCombinations, false, false, false, 0, 0, 0, 0, 0,
+			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
 	}
 
 	@Override
@@ -830,7 +823,7 @@ public class CPDefinitionLocalServiceImpl
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
 			Map<Locale, String> metaTitleMap,
 			Map<Locale, String> metaKeywordsMap,
-			Map<Locale, String> metaDescriptionMap, String layoutUuid,
+			Map<Locale, String> metaDescriptionMap,
 			boolean ignoreSKUCombinations, boolean shippable,
 			boolean freeShipping, boolean shipSeparately,
 			double shippingExtraPrice, double width, double height,
@@ -910,11 +903,6 @@ public class CPDefinitionLocalServiceImpl
 			groupId, serviceContext.getCompanyId(), CPDefinition.class,
 			cpDefinitionId, urlTitleMap);
 
-		// Commerce product display layout
-
-		cpDisplayLayoutLocalService.addCPDisplayLayout(
-			CPDefinition.class, cpDefinitionId, layoutUuid, serviceContext);
-
 		// Asset
 
 		updateAsset(
@@ -937,7 +925,7 @@ public class CPDefinitionLocalServiceImpl
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
 			Map<Locale, String> metaTitleMap,
 			Map<Locale, String> metaKeywordsMap,
-			Map<Locale, String> metaDescriptionMap, String layoutUuid,
+			Map<Locale, String> metaDescriptionMap,
 			boolean ignoreSKUCombinations, String ddmStructureKey,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
@@ -952,7 +940,7 @@ public class CPDefinitionLocalServiceImpl
 		return updateCPDefinition(
 			cpDefinitionId, titleMap, shortDescriptionMap, descriptionMap,
 			urlTitleMap, metaTitleMap, metaKeywordsMap, metaDescriptionMap,
-			layoutUuid, ignoreSKUCombinations, cpDefinition.isShippable(),
+			ignoreSKUCombinations, cpDefinition.isShippable(),
 			cpDefinition.isFreeShipping(), cpDefinition.isShipSeparately(),
 			cpDefinition.getShippingExtraPrice(), cpDefinition.getWidth(),
 			cpDefinition.getHeight(), cpDefinition.getDepth(),
@@ -961,6 +949,20 @@ public class CPDefinitionLocalServiceImpl
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			serviceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CPDefinition updateCPDefinitionIgnoreSKUCombinations(
+			long cpDefinitionId, boolean ignoreSKUCombinations)
+		throws PortalException {
+
+		CPDefinition cpDefinition = cpDefinitionPersistence.findByPrimaryKey(
+			cpDefinitionId);
+
+		cpDefinition.setIgnoreSKUCombinations(ignoreSKUCombinations);
+
+		return cpDefinitionPersistence.update(cpDefinition);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

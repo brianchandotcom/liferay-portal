@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Reading Time Taglib
+Bundle-SymbolicName: com.liferay.reading.time.taglib
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.reading.time.taglib.servlet.taglib
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Reading Time
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/reading-time";\
+		version:Version="${Bundle-Version}"
+Web-ContextPath: /reading-time-taglib

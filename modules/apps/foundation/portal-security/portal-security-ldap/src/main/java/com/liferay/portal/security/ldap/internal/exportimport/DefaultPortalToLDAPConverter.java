@@ -494,8 +494,9 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Unable to map field " + fieldName + " to class " +
-							object.getClass(),
+						StringBundler.concat(
+							"Unable to map field ", fieldName, " to class ",
+							String.valueOf(object.getClass())),
 						e);
 				}
 			}
@@ -573,8 +574,9 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Unable to map field " + fieldName + " to class " +
-							object.getClass(),
+						StringBundler.concat(
+							"Unable to map field ", fieldName, " to class ",
+							String.valueOf(object.getClass())),
 						e);
 				}
 			}

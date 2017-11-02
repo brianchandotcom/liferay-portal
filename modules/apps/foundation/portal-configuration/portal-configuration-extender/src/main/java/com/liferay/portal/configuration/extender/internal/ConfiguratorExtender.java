@@ -19,6 +19,7 @@ import com.liferay.portal.configuration.extender.BundleStorage;
 import com.liferay.portal.configuration.extender.ConfigurationDescriptionFactory;
 import com.liferay.portal.configuration.extender.NamedConfigurationContent;
 import com.liferay.portal.configuration.extender.NamedConfigurationContentFactory;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.IOException;
 
@@ -91,7 +92,9 @@ public class ConfiguratorExtender extends AbstractExtender {
 
 	@Override
 	protected void debug(Bundle bundle, String s) {
-		_logger.log(Logger.LOG_DEBUG, "[" + bundle + "] " + s);
+		_logger.log(
+			Logger.LOG_DEBUG,
+			StringBundler.concat("[", String.valueOf(bundle), "] ", s));
 	}
 
 	@Override
@@ -154,7 +157,9 @@ public class ConfiguratorExtender extends AbstractExtender {
 
 	@Override
 	protected void warn(Bundle bundle, String s, Throwable throwable) {
-		_logger.log(Logger.LOG_WARNING, "[" + bundle + "] " + s);
+		_logger.log(
+			Logger.LOG_WARNING,
+			StringBundler.concat("[", String.valueOf(bundle), "] ", s));
 	}
 
 	private ConfigurationAdmin _configurationAdmin;

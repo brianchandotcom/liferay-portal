@@ -20,6 +20,7 @@ import com.liferay.portal.configuration.extender.FactoryConfigurationDescription
 import com.liferay.portal.configuration.extender.NamedConfigurationContent;
 import com.liferay.portal.configuration.extender.SingleConfigurationDescription;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Supplier;
 
@@ -114,9 +115,10 @@ public class ConfiguratorExtension implements Extension {
 			else {
 				_logger.log(
 					Logger.LOG_ERROR,
-					configurationDescriptionFactory + " returned an " +
-						"unsupported configuration description " +
-							configurationDescription);
+					StringBundler.concat(
+						String.valueOf(configurationDescriptionFactory),
+						" returned an unsupported configuration description ",
+						String.valueOf(configurationDescription)));
 			}
 		}
 	}
@@ -186,8 +188,9 @@ public class ConfiguratorExtension implements Extension {
 		catch (Throwable t) {
 			_logger.log(
 				Logger.LOG_WARNING,
-				"Supplier from description " + description + " threw an " +
-					"exception: ",
+				StringBundler.concat(
+					"Supplier from description ", String.valueOf(description),
+					" threw an exception: "),
 				t);
 
 			return;

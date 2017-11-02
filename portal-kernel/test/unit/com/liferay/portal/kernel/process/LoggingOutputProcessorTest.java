@@ -15,10 +15,13 @@
 package com.liferay.portal.kernel.process;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.util.StringPool;
+
+import java.nio.charset.Charset;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -39,18 +42,17 @@ public class LoggingOutputProcessorTest extends BaseOutputProcessorTestCase {
 
 	@Test
 	public void testLoggingFail() {
-		testFailToRead(new LoggingOutputProcessor());
+		testFailToRead(new LoggingOutputProcessor(null));
 	}
 
 	@Test
 	public void testLoggingSuccess() throws Exception {
 		LoggingOutputProcessor loggingOutputProcessor =
-			new LoggingOutputProcessor();
+			(LoggingOutputProcessor)LoggingOutputProcessor.INSTANCE;
 
 		String stdErrString = "This is standard error message.";
 
-		byte[] stdErrBytes = stdErrString.getBytes(
-			StringPool.DEFAULT_CHARSET_NAME);
+		byte[] stdErrBytes = stdErrString.getBytes(Charset.defaultCharset());
 
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
@@ -77,7 +79,7 @@ public class LoggingOutputProcessorTest extends BaseOutputProcessorTestCase {
 			String stdOutString = "This is standard out message.";
 
 			byte[] stdOutBytes = stdOutString.getBytes(
-				StringPool.DEFAULT_CHARSET_NAME);
+				Charset.defaultCharset());
 
 			Assert.assertNull(
 				loggingOutputProcessor.processStdOut(
@@ -99,5 +101,8 @@ public class LoggingOutputProcessorTest extends BaseOutputProcessorTestCase {
 			Assert.assertEquals(stdOutString, logRecord.getMessage());
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LoggingOutputProcessorTest.class);
 
 }

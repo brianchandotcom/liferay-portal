@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.expando.kernel.model.CustomAttributesDisplay;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.application.type.ApplicationType;
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
 import com.liferay.portal.kernel.log.Log;
@@ -2425,6 +2426,28 @@ public class PortletImpl extends PortletBaseImpl {
 		}
 
 		Set<String> mimeTypePortletModes = _portletModes.get(mimeType);
+
+		if (mimeTypePortletModes == null) {
+			mimeTypePortletModes = _portletModes.get("*/*");
+
+			if (mimeTypePortletModes == null) {
+				String[] mimeTypeParts = StringUtil.split(
+					mimeType, CharPool.SLASH);
+
+				if (mimeTypeParts.length != 2) {
+					throw new IllegalArgumentException(
+						"Unable to handle MIME type " + mimeType);
+				}
+
+				mimeTypePortletModes = _portletModes.get(
+					mimeTypeParts[0].concat("/*"));
+
+				if (mimeTypePortletModes == null) {
+					mimeTypePortletModes = _portletModes.get(
+						"*/".concat(mimeTypeParts[1]));
+				}
+			}
+		}
 
 		if (mimeTypePortletModes == null) {
 			return false;

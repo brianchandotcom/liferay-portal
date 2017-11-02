@@ -2,6 +2,10 @@
 	<command name="addEntryWithFutureDate">
 		<execute function="AssertClick" locator1="Button#ADD_ANNOUNCEMENT" value1="Add Announcement" />
 
+		<execute function="AssertElementPresent" locator1="AlloyEditor#EDITOR">
+			<var name="key_editor" value="title" />
+		</execute>
+
 		<execute macro="AlloyEditor#addTitleAndContent">
 			<var name="content" value="${entryContent}" />
 			<var name="title" value="${entryTitle}" />
@@ -53,6 +57,10 @@
 
 	<command name="addPG">
 		<execute function="AssertClick" locator1="Button#ADD_ANNOUNCEMENT" value1="Add Announcement" />
+
+		<execute function="AssertElementPresent" locator1="AlloyEditor#EDITOR">
+			<var name="key_editor" value="title" />
+		</execute>
 
 		<execute macro="AlloyEditor#addTitleAndContent">
 			<var name="content" value="${entryContent}" />

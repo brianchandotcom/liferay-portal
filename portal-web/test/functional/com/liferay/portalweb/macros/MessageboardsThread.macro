@@ -986,7 +986,7 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsThread#MESSAGE_ANSWER_1" value1="Answer" />
 
-		<execute function="AssertClick" locator1="MessageBoardsThread#THREAD_CONTROLS_BACK" value1="Back" />
+		<execute function="Click" locator1="MessageBoardsThread#THREAD_CONTROLS_BACK" />
 	</command>
 
 	<command name="viewAsWorkflowAsset">

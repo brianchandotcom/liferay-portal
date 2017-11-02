@@ -18,22 +18,23 @@ import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portlet.usersadmin.search.UserSearch;
+import com.liferay.portlet.usersadmin.search.UserSearchTerms;
 import com.liferay.users.admin.item.selector.web.internal.search.UserItemSelectorChecker;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.util.List;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
-
-import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 /**
  * @author Alessio Antonio Rendina
@@ -51,7 +52,7 @@ public class UserItemSelectorViewDisplayContext {
 		_portletURL = portletURL;
 		_itemSelectedEventName = itemSelectedEventName;
 
-		_renderRequest = (RenderRequest)httpServletRequest.getAttribute(
+		_portletRequest = (PortletRequest)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 		_renderResponse = (RenderResponse)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE);
@@ -63,12 +64,14 @@ public class UserItemSelectorViewDisplayContext {
 
 	public String getOrderByCol() {
 		return ParamUtil.getString(
-			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM, "name");
+			_portletRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM,
+			"name");
 	}
 
 	public String getOrderByType() {
 		return ParamUtil.getString(
-			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM, "asc");
+			_portletRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM,
+			"asc");
 	}
 
 	public PortletURL getPortletURL() {
@@ -80,8 +83,7 @@ public class UserItemSelectorViewDisplayContext {
 			return _searchContainer;
 		}
 
-		_searchContainer = new SearchContainer<>(
-			_renderRequest, getPortletURL(), null, null);
+		_searchContainer = new UserSearch(_portletRequest, getPortletURL());
 
 		_searchContainer.setEmptyResultsMessage("there-are-no-users");
 
@@ -97,12 +99,21 @@ public class UserItemSelectorViewDisplayContext {
 		_searchContainer.setOrderByType(getOrderByType());
 		_searchContainer.setRowChecker(rowChecker);
 
-		int total = _userLocalService.getUsersCount();
+		UserSearchTerms userSearchTerms =
+			(UserSearchTerms)_searchContainer.getSearchTerms();
+
+		long companyId = CompanyThreadLocal.getCompanyId();
+		String keywords = userSearchTerms.getKeywords();
+		int status = userSearchTerms.getStatus();
+
+		int total = _userLocalService.searchCount(
+			companyId, keywords, status, null);
 
 		_searchContainer.setTotal(total);
 
-		List<User> results = _userLocalService.getUsers(
-			_searchContainer.getStart(), _searchContainer.getEnd());
+		List<User> results = _userLocalService.search(
+			companyId, keywords, status, null, _searchContainer.getStart(),
+			_searchContainer.getEnd(), orderByComparator);
 
 		_searchContainer.setResults(results);
 
@@ -110,13 +121,13 @@ public class UserItemSelectorViewDisplayContext {
 	}
 
 	protected long[] getCheckedUserIds() {
-		return ParamUtil.getLongValues(_renderRequest, "checkedUserIds");
+		return ParamUtil.getLongValues(_portletRequest, "checkedUserIds");
 	}
 
 	private final HttpServletRequest _httpServletRequest;
 	private final String _itemSelectedEventName;
+	private final PortletRequest _portletRequest;
 	private final PortletURL _portletURL;
-	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private SearchContainer<User> _searchContainer;
 	private final UserLocalService _userLocalService;

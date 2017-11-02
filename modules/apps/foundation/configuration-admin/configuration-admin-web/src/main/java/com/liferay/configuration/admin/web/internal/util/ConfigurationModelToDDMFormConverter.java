@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -73,11 +74,16 @@ public class ConfigurationModelToDDMFormConverter {
 			return;
 		}
 
-		for (AttributeDefinition attributeDefinition : attributeDefinitions) {
-			DDMFormField ddmFormField = getDDMFormField(
-				attributeDefinition, required);
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(false);
 
-			ddmForm.addDDMFormField(ddmFormField);
+		for (AttributeDefinition attributeDefinition : attributeDefinitions) {
+			if (!ddmFormFieldsMap.containsKey(attributeDefinition.getID())) {
+				DDMFormField ddmFormField = getDDMFormField(
+					attributeDefinition, required);
+
+				ddmForm.addDDMFormField(ddmFormField);
+			}
 		}
 	}
 

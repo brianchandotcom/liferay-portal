@@ -62,7 +62,7 @@
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
 
 		<execute function="Type#sendKeys" locator1="AlloyEditor#EDITOR" value1="@${mentionsUserScreenName}">
-			<var name="key_editor" value="content" />
+			<var name="key_editor" value="body" />
 		</execute>
 
 		<execute function="Click#clickNoMouseOver" locator1="Mentions#MENTIONS_USER_DISPLAY_OPTION" />

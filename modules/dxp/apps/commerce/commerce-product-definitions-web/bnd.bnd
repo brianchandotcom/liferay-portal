@@ -4,6 +4,7 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.commerce.product.definitions.web.configuration,\
 	com.liferay.commerce.product.definitions.web.display.context,\
-	com.liferay.commerce.product.definitions.web.portlet.action
+	com.liferay.commerce.product.definitions.web.portlet.action,\
+	com.liferay.commerce.product.definitions.web.servlet.taglib.ui
 Web-ContextPath: /commerce-product-definitions-web
 -dsannotations-options: inherit

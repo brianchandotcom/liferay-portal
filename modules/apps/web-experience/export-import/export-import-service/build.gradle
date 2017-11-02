@@ -22,4 +22,5 @@ dependencies {
 	provided project(":apps:web-experience:export-import:export-import-api")
 	provided project(":apps:web-experience:layout:layout-api")
 	provided project(":apps:web-experience:site:site-api")
+	provided project(":apps:web-experience:trash:trash-api")
 }

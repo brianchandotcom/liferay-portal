@@ -243,6 +243,19 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 			systemEventLocalService.deleteSystemEvents(
 				trashEntry.getGroupId(), trashEntry.getSystemEventSetKey());
+
+			TrashHandler trashHandler =
+				TrashHandlerRegistryUtil.getTrashHandler(
+					trashEntry.getClassName());
+
+			if (trashHandler != null) {
+				try {
+					trashHandler.deleteTrashEntry(trashEntry.getClassPK());
+				}
+				catch (Exception e) {
+					_log.error(e, e);
+				}
+			}
 		}
 
 		return trashEntry;

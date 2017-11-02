@@ -1676,6 +1676,8 @@ public class DataFactory {
 			getClassNameId(JournalArticle.class));
 		ddmStorageLinkModel.setClassPK(journalArticleModel.getId());
 		ddmStorageLinkModel.setStructureId(structureId);
+		ddmStorageLinkModel.setStructureVersionId(
+			_defaultJournalDDMStructureVersionModel.getStructureVersionId());
 
 		return ddmStorageLinkModel;
 	}
@@ -1691,6 +1693,8 @@ public class DataFactory {
 		ddmStorageLinkModel.setClassNameId(getClassNameId(DDMContent.class));
 		ddmStorageLinkModel.setClassPK(ddmContentModel.getContentId());
 		ddmStorageLinkModel.setStructureId(structureId);
+		ddmStorageLinkModel.setStructureVersionId(
+			_defaultDLDDMStructureVersionModel.getStructureVersionId());
 
 		return ddmStorageLinkModel;
 	}

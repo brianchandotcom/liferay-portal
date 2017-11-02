@@ -7,12 +7,6 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.blogs.web", version: "1.0.0"
 	compile group: "com.liferay", name: "com.liferay.document.library.api", version: "3.0.0"
 	compile group: "com.liferay", name: "com.liferay.document.library.web", version: "1.0.0"
-	compile group: "com.liferay", name: "com.liferay.dynamic.data.lists.api", version: "2.0.0"
-	compile group: "com.liferay", name: "com.liferay.dynamic.data.lists.service", version: "1.0.0"
-	compile group: "com.liferay", name: "com.liferay.dynamic.data.lists.web", version: "1.0.0"
-	compile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "3.0.0"
-	compile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.service", version: "2.0.0"
-	compile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.web", version: "1.0.0"
 	compile group: "com.liferay", name: "com.liferay.login.web", version: "1.0.0"
 	compile group: "com.liferay", name: "com.liferay.message.boards.web", version: "1.0.0"
 	compile group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
@@ -25,6 +19,12 @@ dependencies {
 	compile project(":apps:collaboration:subscription:subscription-service")
 	compile project(":apps:collaboration:wiki:wiki-api")
 	compile project(":apps:collaboration:wiki:wiki-service")
+	compile project(":apps:forms-and-workflow:dynamic-data-lists:dynamic-data-lists-api")
+	compile project(":apps:forms-and-workflow:dynamic-data-lists:dynamic-data-lists-service")
+	compile project(":apps:forms-and-workflow:dynamic-data-lists:dynamic-data-lists-web")
+	compile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
+	compile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-service")
+	compile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-web")
 	compile project(":apps:foundation:friendly-url:friendly-url-api")
 	compile project(":apps:foundation:friendly-url:friendly-url-service")
 	compile project(":apps:web-experience:journal:journal-api")

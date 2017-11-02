@@ -1,0 +1,17 @@
+{
+	"dependencies": {
+		"metal": "^2.5.18",
+		"metal-autocomplete": "^2.0.0",
+		"metal-component": "^2.4.5",
+		"metal-dropdown": "^2.0.0",
+		"metal-promise": "^2.0.0",
+		"metal-soy": "^2.4.5",
+		"metal-state": "^2.6.0"
+	},
+	"devDependencies": {
+		"liferay-module-config-generator": "^1.2.1",
+		"metal-cli": "^4.0.1"
+	},
+	"name": "commerce-product-options-web",
+	"version": "1.0.0"
+}

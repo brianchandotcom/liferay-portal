@@ -2772,6 +2772,14 @@ to version 2.3.17.
 version 2.1.6.
 - [LPS-75624]: Set the default Node.js version to 8.9.0.
 
+## 3.5.27 - 2017-11-02
+
+### Changed
+- [LPS-75399]: Update the [Liferay Gradle Plugins Service Builder] dependency
+to version 1.0.58.
+- [LPS-75399]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.174.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -3017,6 +3025,7 @@ version 2.1.6.
 [LPS-75254]: https://issues.liferay.com/browse/LPS-75254
 [LPS-75273]: https://issues.liferay.com/browse/LPS-75273
 [LPS-75323]: https://issues.liferay.com/browse/LPS-75323
+[LPS-75399]: https://issues.liferay.com/browse/LPS-75399
 [LPS-75427]: https://issues.liferay.com/browse/LPS-75427
 [LPS-75430]: https://issues.liferay.com/browse/LPS-75430
 [LPS-75488]: https://issues.liferay.com/browse/LPS-75488

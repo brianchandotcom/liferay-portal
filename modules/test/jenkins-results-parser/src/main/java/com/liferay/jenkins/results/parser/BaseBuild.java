@@ -886,7 +886,12 @@ public abstract class BaseBuild implements Build {
 		List<TestResult> testResults = new ArrayList<>();
 
 		for (Build downstreamBuild : getDownstreamBuilds(null)) {
-			testResults.addAll(downstreamBuild.getTestResults(testStatus));
+			List<TestResult> downstreamTestResults =
+				downstreamBuild.getTestResults(testStatus);
+
+			if (!(downstreamTestResults == null)) {
+				testResults.addAll(downstreamTestResults);
+			}
 		}
 
 		return testResults;

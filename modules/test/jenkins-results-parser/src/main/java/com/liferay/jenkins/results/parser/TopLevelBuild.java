@@ -27,6 +27,7 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -572,6 +573,7 @@ public class TopLevelBuild extends BaseBuild {
 
 		return Dom4JUtil.getNewElement(
 			"body", null, headingElement, subheadingElement,
+			getJenkinsReportSummaryElement(),
 			getJenkinsReportTimelineElement());
 	}
 
@@ -623,6 +625,53 @@ public class TopLevelBuild extends BaseBuild {
 			Dom4JUtil.getNewElement("style", null, resourceFileContent));
 
 		return headElement;
+	}
+
+	protected Element getJenkinsReportSummaryElement() {
+		Element summaryElement = Dom4JUtil.getNewElement(
+			"div", null,
+			Dom4JUtil.getNewElement(
+				"p", null, "Start Time: ",
+				JenkinsResultsParserUtil.toDateString(
+					new Date(getStartTimestamp()))),
+			Dom4JUtil.getNewElement(
+				"p", null, "Build Time: ",
+				JenkinsResultsParserUtil.toDurationString(getDuration())),
+			Dom4JUtil.getNewElement(
+				"p", null, "Total CPU Usage Time: ",
+				JenkinsResultsParserUtil.toDurationString(getTotalDuration())),
+			Dom4JUtil.getNewElement(
+				"p", null, "Total number of Jenkins slaves used: ",
+				Integer.toString(getTotalSlavesUsedCount())));
+
+		Build longestRunningDownstreamBuild =
+			getLongestRunningDownstreamBuild();
+
+		if (longestRunningDownstreamBuild != null) {
+			Dom4JUtil.getNewElement(
+				"p", summaryElement, "Longest Running Downstream Build: ",
+				Dom4JUtil.getNewAnchorElement(
+					longestRunningDownstreamBuild.getBuildURL(),
+					longestRunningDownstreamBuild.getDisplayName()),
+				" in: ",
+				JenkinsResultsParserUtil.toDurationString(
+					longestRunningDownstreamBuild.getDuration()));
+		}
+
+		TestResult longestRunningTest = getLongestRunningTest();
+
+		if (longestRunningTest != null) {
+			Dom4JUtil.getNewElement(
+				"p", null, "Longest Running Test: ",
+				Dom4JUtil.getNewAnchorElement(
+					longestRunningTest.getTestReportURL(),
+					longestRunningTest.getDisplayName()),
+				" in: ",
+				JenkinsResultsParserUtil.toDurationString(
+					longestRunningTest.getDuration()));
+		}
+
+		return summaryElement;
 	}
 
 	protected Element getJenkinsReportTimelineElement() {

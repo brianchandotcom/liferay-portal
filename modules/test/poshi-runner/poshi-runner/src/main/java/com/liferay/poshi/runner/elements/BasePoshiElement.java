@@ -149,10 +149,9 @@ public abstract class BasePoshiElement
 	}
 
 	protected String getValueFromAssignment(String assignment) {
-		int end = assignment.length();
 		int start = assignment.indexOf("=");
 
-		String value = assignment.substring(start + 1, end);
+		String value = assignment.substring(start + 1);
 
 		return value.trim();
 	}

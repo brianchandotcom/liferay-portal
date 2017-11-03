@@ -89,8 +89,7 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 				if (propertyFileName.contains(StringPool.STAR) ||
 					propertyFileName.endsWith("-ext.properties") ||
 					(isPortalSource() && !_hasPrivateAppsDir &&
-					 isModulesApp(
-						 propertyFileName, _projectPathPrefix, true))) {
+					 isModulesApp(propertyFileName, true))) {
 
 					continue;
 				}

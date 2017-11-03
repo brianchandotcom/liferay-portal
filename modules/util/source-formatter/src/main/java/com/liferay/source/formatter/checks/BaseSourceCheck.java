@@ -441,21 +441,19 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return isExcludedPath(key, path, -1, parameter);
 	}
 
-	protected boolean isModulesApp(
-		String absolutePath, String projectPathPrefix, boolean privateOnly) {
-
+	protected boolean isModulesApp(String absolutePath, boolean privateOnly) {
 		if (absolutePath.contains("/modules/private/apps/") ||
 			(!privateOnly && absolutePath.contains("/modules/apps/"))) {
 
 			return true;
 		}
 
-		if (projectPathPrefix == null) {
+		if (_projectPathPrefix == null) {
 			return false;
 		}
 
-		if (projectPathPrefix.startsWith(":private:apps") ||
-			(!privateOnly && projectPathPrefix.startsWith(":apps:"))) {
+		if (_projectPathPrefix.startsWith(":private:apps") ||
+			(!privateOnly && _projectPathPrefix.startsWith(":apps:"))) {
 
 			return true;
 		}

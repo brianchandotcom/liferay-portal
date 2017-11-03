@@ -114,7 +114,7 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		for (String dependency : uniqueDependencies) {
 			String configuration = _getConfiguration(dependency);
 
-			if (isModulesApp(absolutePath, _projectPathPrefix, false) &&
+			if (isModulesApp(absolutePath, false) &&
 				_hasBNDFile(absolutePath)) {
 
 				if (configuration.equals("compile")) {

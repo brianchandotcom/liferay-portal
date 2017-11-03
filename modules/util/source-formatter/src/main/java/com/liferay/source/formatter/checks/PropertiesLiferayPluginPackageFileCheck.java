@@ -43,7 +43,7 @@ public class PropertiesLiferayPluginPackageFileCheck extends BaseFileCheck {
 	}
 
 	private String _fixIncorrectLicenses(String absolutePath, String content) {
-		if (!isModulesApp(absolutePath, _projectPathPrefix, false)) {
+		if (!isModulesApp(absolutePath, false)) {
 			return content;
 		}
 
@@ -57,7 +57,7 @@ public class PropertiesLiferayPluginPackageFileCheck extends BaseFileCheck {
 
 		String expectedLicenses = "LGPL";
 
-		if (isModulesApp(absolutePath, _projectPathPrefix, true)) {
+		if (isModulesApp(absolutePath, true)) {
 			expectedLicenses = "DXP";
 		}
 

@@ -71,10 +71,12 @@ public class WikiNodeServiceImpl extends WikiNodeServiceBaseImpl {
 
 	@Override
 	public WikiNode getNode(long groupId, String name) throws PortalException {
-		WikiNodePermissionChecker.check(
-			getPermissionChecker(), groupId, name, ActionKeys.VIEW);
+		WikiNode node = wikiNodeLocalService.getNode(groupId, name);
 
-		return wikiNodeLocalService.getNode(groupId, name);
+		WikiNodePermissionChecker.check(
+			getPermissionChecker(), node, ActionKeys.VIEW);
+
+		return node;
 	}
 
 	@Override

@@ -853,6 +853,17 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public long getTotalDuration() {
+		long totalDuration = getDuration();
+
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			totalDuration += downstreamBuild.getDuration();
+		}
+
+		return totalDuration;
+	}
+
+	@Override
 	public boolean hasBuildURL(String buildURL) {
 		try {
 			buildURL = JenkinsResultsParserUtil.decode(buildURL);

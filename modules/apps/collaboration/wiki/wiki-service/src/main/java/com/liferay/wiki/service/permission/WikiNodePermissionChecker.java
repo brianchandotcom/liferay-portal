@@ -44,6 +44,10 @@ public class WikiNodePermissionChecker implements BaseModelPermissionChecker {
 		check(permissionChecker, node, actionId);
 	}
 
+	/**
+	 * @deprecated As of 1.7.0, with no direct replacement
+	 */
+	@Deprecated
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String name,
 			String actionId)
@@ -74,6 +78,10 @@ public class WikiNodePermissionChecker implements BaseModelPermissionChecker {
 		return contains(permissionChecker, node, actionId);
 	}
 
+	/**
+	 * @deprecated As of 1.7.0, with no direct replacement
+	 */
+	@Deprecated
 	public static boolean contains(
 			PermissionChecker permissionChecker, long groupId, String name,
 			String actionId)

@@ -9688,11 +9688,19 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 		<if>
 			<isset property="web.xml.timeout" />
 			<then>
-				<replace
-					file="${app.server.dir}/webapps/ROOT/WEB-INF/web.xml"
-					token="&lt;session-timeout&gt;30&lt;/session-timeout&gt;"
-					value="&lt;session-timeout&gt;${web.xml.timeout}&lt;/session-timeout&gt;"
-				/>
+				<if>
+					<equals arg1="${app.server.type}" arg2="tomcat" />
+					<then>
+						<replace
+							file="${app.server.dir}/webapps/ROOT/WEB-INF/web.xml"
+							token="&lt;session-timeout&gt;30&lt;/session-timeout&gt;"
+							value="&lt;session-timeout&gt;${web.xml.timeout}&lt;/session-timeout&gt;"
+						/>
+					</then>
+					<else>
+						<fail message="Changing the session timeout for ${app.server.type} is not supported." />
+					</else>
+				</if>
 			</then>
 		</if>
 

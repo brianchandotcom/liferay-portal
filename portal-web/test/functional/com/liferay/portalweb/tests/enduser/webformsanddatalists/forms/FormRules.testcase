@@ -1199,8 +1199,6 @@
 
 		<execute macro="FormFields#viewRequiredAsteriskNotPresent" />
 
-		<execute macro="FormPortlet#submit" />
-
 		<execute macro="FormPortlet#submitSuccessfully" />		
 	</command>
 </definition>

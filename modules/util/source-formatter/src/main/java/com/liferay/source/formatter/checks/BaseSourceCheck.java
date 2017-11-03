@@ -100,6 +100,11 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	@Override
+	public void setProjectPathPrefix(String projectPathPrefix) {
+		_projectPathPrefix = projectPathPrefix;
+	}
+
+	@Override
 	public void setPropertiesMap(Map<String, Properties> propertiesMap) {
 		_propertiesMap = propertiesMap;
 	}
@@ -341,23 +346,8 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return portalLanguageProperties;
 	}
 
-	protected String getProjectPathPrefix() throws Exception {
-		if (!_subrepository) {
-			return null;
-		}
-
-		File file = getFile(
-			"gradle.properties", ToolsUtil.PORTAL_MAX_DIR_LEVEL);
-
-		if (!file.exists()) {
-			return null;
-		}
-
-		Properties properties = new Properties();
-
-		properties.load(new FileInputStream(file));
-
-		return properties.getProperty("project.path.prefix");
+	protected String getProjectPathPrefix() {
+		return _projectPathPrefix;
 	}
 
 	protected SourceFormatterExcludes getSourceFormatterExcludes() {
@@ -563,6 +553,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	private int _maxLineLength;
 	private List<String> _pluginsInsideModulesDirectoryNames;
 	private boolean _portalSource;
+	private String _projectPathPrefix;
 	private Map<String, Properties> _propertiesMap;
 	private SourceFormatterExcludes _sourceFormatterExcludes;
 	private final Map<String, Set<SourceFormatterMessage>>

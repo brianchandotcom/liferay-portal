@@ -48,6 +48,8 @@ public interface SourceProcessor {
 	public void setProgressStatusQueue(
 		BlockingQueue<ProgressStatusUpdate> progressStatusQueue);
 
+	public void setProjectPathPrefix(String projectPathPrefix);
+
 	public void setPropertiesMap(Map<String, Properties> propertiesMap);
 
 	public void setSourceChecksSuppressions(

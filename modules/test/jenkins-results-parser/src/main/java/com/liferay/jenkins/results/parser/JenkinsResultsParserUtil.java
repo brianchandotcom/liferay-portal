@@ -39,9 +39,12 @@ import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
@@ -981,6 +984,12 @@ public class JenkinsResultsParserUtil {
 		catch (InterruptedException ie) {
 			throw new RuntimeException(ie);
 		}
+	}
+
+	public static String toDateString(Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy h:mm:ss a z");
+
+		return sdf.format(date);
 	}
 
 	public static String toDurationString(long duration) {

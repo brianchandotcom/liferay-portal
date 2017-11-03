@@ -88,6 +88,8 @@ public interface Build {
 
 	public Build getLongestRunningDownstreamBuild();
 
+	public TestResult getLongestRunningTest();
+
 	public String getMaster();
 
 	public String getOperatingSystem();

@@ -56,49 +56,56 @@ public class JniSassCompiler implements SassCompiler {
 
 		_precision = precision;
 		_tmpDirName = tmpDirName;
+		_cleanTmpDir = Boolean.valueOf(
+			System.getProperty("sass.compiler.jni.clean.temp.dir", "false"));
 	}
 
 	@Override
 	public void close() throws IOException {
-		try {
-			Field field = Platform.class.getDeclaredField(
-				"temporaryExtractedLibraryCanonicalFiles");
+		if (_cleanTmpDir) {
+			try {
+				Field field = Platform.class.getDeclaredField(
+					"temporaryExtractedLibraryCanonicalFiles");
 
-			field.setAccessible(true);
+				field.setAccessible(true);
 
-			Set<File> temporaryExtractedLibraryCanonicalFiles =
-				(Set<File>)field.get(null);
+				Set<File> temporaryExtractedLibraryCanonicalFiles =
+					(Set<File>)field.get(null);
 
-			Iterator<File> iterator =
-				temporaryExtractedLibraryCanonicalFiles.iterator();
+				Iterator<File> iterator =
+					temporaryExtractedLibraryCanonicalFiles.iterator();
 
-			while (iterator.hasNext()) {
-				File file = iterator.next();
+				while (iterator.hasNext()) {
+					File file = iterator.next();
 
-				if (file.isFile() && file.delete()) {
-					iterator.remove();
+					if (file.isFile() && file.delete()) {
+						iterator.remove();
+					}
+				}
+
+				field = Platform.class.getDeclaredField(
+					"extractedLibrariesTempDir");
+
+				field.setAccessible(true);
+
+				File extractedLibrariesTempDir = (File)field.get(null);
+
+				iterator = temporaryExtractedLibraryCanonicalFiles.iterator();
+
+				while (iterator.hasNext()) {
+					File file = iterator.next();
+
+					if (!file.equals(extractedLibrariesTempDir) &&
+						file.delete()) {
+
+						iterator.remove();
+					}
 				}
 			}
-
-			field = Platform.class.getDeclaredField(
-				"extractedLibrariesTempDir");
-
-			field.setAccessible(true);
-
-			File extractedLibrariesTempDir = (File)field.get(null);
-
-			iterator = temporaryExtractedLibraryCanonicalFiles.iterator();
-
-			while (iterator.hasNext()) {
-				File file = iterator.next();
-
-				if (!file.equals(extractedLibrariesTempDir) && file.delete()) {
-					iterator.remove();
-				}
+			catch (Exception e) {
+				throw new IOException(
+					"Unable to clean up BridJ's temp folder", e);
 			}
-		}
-		catch (Exception e) {
-			throw new IOException("Unable to clean up BridJ's temp folder", e);
 		}
 	}
 
@@ -345,6 +352,7 @@ public class JniSassCompiler implements SassCompiler {
 
 	private static final int _PRECISION_DEFAULT = 5;
 
+	private final boolean _cleanTmpDir;
 	private final int _precision;
 	private final String _tmpDirName;
 

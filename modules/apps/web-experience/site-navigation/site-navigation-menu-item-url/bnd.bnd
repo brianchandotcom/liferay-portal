@@ -1,0 +1,14 @@
+Bundle-Name: Liferay Site Navigation Menu Item URL
+Bundle-SymbolicName: com.liferay.site.navigation.menu.item.url
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Site Navigation
+Provide-Capability:\
+	soy;\
+		type="site-navigation-menu-item-url";\
+		version:Version="${Bundle-Version}"
+Require-Capability:\
+	soy;\
+		filter:="(type=metal)"
+Web-ContextPath: /site-navigation-menu-item-url
+-dsannotations-options: inherit

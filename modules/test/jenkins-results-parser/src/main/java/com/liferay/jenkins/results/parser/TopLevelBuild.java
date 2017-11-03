@@ -541,7 +541,25 @@ public class TopLevelBuild extends BaseBuild {
 	}
 
 	protected Element getJenkinsReportHeadElement() {
-		return null;
+		Element headElement = Dom4JUtil.getNewElement("head");
+
+		String resourceFileContent = null;
+
+		try {
+			resourceFileContent =
+				JenkinsResultsParserUtil.getResourceFileContent(
+					"dependencies/jenkins-report.css");
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to load resource jenkins-report.css", ioe);
+		}
+
+		Dom4JUtil.addToElement(
+			headElement,
+			Dom4JUtil.getNewElement("style", null, resourceFileContent));
+
+		return headElement;
 	}
 
 	protected Element getJobSummaryListElement() {

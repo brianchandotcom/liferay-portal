@@ -1566,8 +1566,8 @@ public class CalendarBookingLocalServiceTest {
 		CalendarBookingTestUtil.addMasterCalendarBookingWithWorkflow(
 			stagingCalendar, invitedCalendar, WorkflowConstants.ACTION_PUBLISH);
 
-		String mailBody = "You have been invited";
-		String mailSubject = "Invitation";
+		String mailBody = RandomTestUtil.randomString();
+		String mailSubject = RandomTestUtil.randomString();
 
 		CalendarNotificationTemplateTestUtil.addCalendarNotificationTemplate(
 			stagingCalendar, NotificationTemplateType.INVITE,

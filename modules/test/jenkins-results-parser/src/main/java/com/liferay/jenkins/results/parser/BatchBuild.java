@@ -408,6 +408,10 @@ public class BatchBuild extends BaseBuild {
 				" Failed.", getFailureMessageElement()));
 	}
 
+	protected String getJenkinsReportBuildInfoCellElementTagName() {
+		return "th";
+	}
+
 	@Override
 	protected int getTestCountByStatus(String status) {
 		JSONObject testReportJSONObject = getTestReportJSONObject();

@@ -560,6 +560,34 @@ public class TopLevelBuild extends BaseBuild {
 			"body", null, headingElement, subheadingElement);
 	}
 
+	protected Element getJenkinsReportChartJsScriptElement(
+		String xData, String y1Data, String y2Data) {
+
+		String resourceFileContent = null;
+
+		try {
+			resourceFileContent =
+				JenkinsResultsParserUtil.getResourceFileContent(
+					"dependencies/chart-template.js");
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to load resource chart-template.js", ioe);
+		}
+
+		resourceFileContent = resourceFileContent.replace("'xData'", xData);
+
+		resourceFileContent = resourceFileContent.replace("'y1Data'", y1Data);
+
+		resourceFileContent = resourceFileContent.replace("'y2Data'", y2Data);
+
+		Element scriptElement = Dom4JUtil.getNewElement("script");
+
+		scriptElement.addText(resourceFileContent);
+
+		return scriptElement;
+	}
+
 	protected Element getJenkinsReportHeadElement() {
 		Element headElement = Dom4JUtil.getNewElement("head");
 

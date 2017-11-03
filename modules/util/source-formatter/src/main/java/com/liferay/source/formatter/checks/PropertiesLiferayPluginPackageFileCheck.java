@@ -26,11 +26,6 @@ import java.util.regex.Pattern;
 public class PropertiesLiferayPluginPackageFileCheck extends BaseFileCheck {
 
 	@Override
-	public void init() throws Exception {
-		_projectPathPrefix = getProjectPathPrefix();
-	}
-
-	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
 		throws Exception {
@@ -43,7 +38,7 @@ public class PropertiesLiferayPluginPackageFileCheck extends BaseFileCheck {
 	}
 
 	private String _fixIncorrectLicenses(String absolutePath, String content) {
-		if (!isModulesApp(absolutePath, _projectPathPrefix, false)) {
+		if (!isModulesApp(absolutePath, false)) {
 			return content;
 		}
 
@@ -57,7 +52,7 @@ public class PropertiesLiferayPluginPackageFileCheck extends BaseFileCheck {
 
 		String expectedLicenses = "LGPL";
 
-		if (isModulesApp(absolutePath, _projectPathPrefix, true)) {
+		if (isModulesApp(absolutePath, true)) {
 			expectedLicenses = "DXP";
 		}
 
@@ -90,7 +85,6 @@ public class PropertiesLiferayPluginPackageFileCheck extends BaseFileCheck {
 
 	private final Pattern _licensesPattern = Pattern.compile(
 		"\nlicenses=(\\w+)\n");
-	private String _projectPathPrefix;
 	private final Pattern _singleValueOnMultipleLinesPattern = Pattern.compile(
 		"\n.*=(\\\\\n *).*(\n[^ ]|\\Z)");
 

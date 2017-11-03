@@ -36,7 +36,6 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 	@Override
 	public void init() throws Exception {
 		_hasPrivateAppsDir = _hasPrivateAppsDir();
-		_projectPathPrefix = getProjectPathPrefix();
 	}
 
 	@Override
@@ -89,8 +88,7 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 				if (propertyFileName.contains(StringPool.STAR) ||
 					propertyFileName.endsWith("-ext.properties") ||
 					(isPortalSource() && !_hasPrivateAppsDir &&
-					 isModulesApp(
-						 propertyFileName, _projectPathPrefix, true))) {
+					 isModulesApp(propertyFileName, true))) {
 
 					continue;
 				}
@@ -129,6 +127,5 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 	}
 
 	private boolean _hasPrivateAppsDir;
-	private String _projectPathPrefix;
 
 }

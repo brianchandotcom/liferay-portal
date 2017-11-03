@@ -37,11 +37,6 @@ import java.util.regex.Pattern;
 public class GradleDependenciesCheck extends BaseFileCheck {
 
 	@Override
-	public void init() throws Exception {
-		_projectPathPrefix = getProjectPathPrefix();
-	}
-
-	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
@@ -114,7 +109,7 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		for (String dependency : uniqueDependencies) {
 			String configuration = _getConfiguration(dependency);
 
-			if (isModulesApp(absolutePath, _projectPathPrefix, false) &&
+			if (isModulesApp(absolutePath, false) &&
 				_hasBNDFile(absolutePath)) {
 
 				if (configuration.equals("compile")) {
@@ -168,7 +163,6 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		"(^[^\\s]+)\\s+\"([^:]+?):([^:]+?):([^\"]+?)\"(.*?)", Pattern.DOTALL);
 	private final Pattern _incorrectWhitespacePattern = Pattern.compile(
 		":[^ \n]");
-	private String _projectPathPrefix;
 
 	private class GradleDependencyComparator
 		implements Comparator<String>, Serializable {

@@ -1341,6 +1341,18 @@ public abstract class BaseBuild implements Build {
 		update();
 	}
 
+	protected void addDownstreamBuildsTimelineData(
+		BaseBuild.TimelineData timelineData) {
+
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			if (downstreamBuild instanceof BaseBuild) {
+				BaseBuild downstreamBaseBuild = (BaseBuild)downstreamBuild;
+
+				downstreamBaseBuild.addTimelineData(timelineData);
+			}
+		}
+	}
+
 	protected void archiveConsoleLog() {
 		downloadSampleURL(
 			getArchivePath(), true, getBuildURL(), "/consoleText");

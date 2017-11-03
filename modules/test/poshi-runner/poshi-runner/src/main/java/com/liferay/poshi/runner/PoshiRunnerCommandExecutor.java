@@ -14,6 +14,14 @@
 
 package com.liferay.poshi.runner;
 
+import com.liferay.poshi.runner.util.FileUtil;
+
+import java.io.FileInputStream;
+import java.io.InputStream;
+
+import java.util.Map.Entry;
+import java.util.Properties;
+
 import org.junit.runner.JUnitCore;
 
 /**
@@ -32,43 +40,39 @@ public class PoshiRunnerCommandExecutor {
 		}
 
 		if (command.equals("evaluatePoshiConsole")) {
+			populateSystemProperties();
+
 			evaluatePoshiConsole();
 		}
 		else if (command.equals("help")) {
-			taskHelp();
+			commandHelp();
 		}
 		else if (command.equals("runPoshi")) {
+			populateSystemProperties();
+
 			runPoshi(args);
 		}
 		else if (command.equals("validatePoshi")) {
+			populateSystemProperties();
+
 			validatePoshi();
 		}
 		else if (command.equals("writePoshiProperties")) {
+			populateSystemProperties();
+
 			writePoshiProperties();
 		}
 		else {
-			System.out.println("Unrecognized task name: " + command);
+			System.out.println("Unrecognized command name: " + command);
 
-			taskHelp();
+			commandHelp();
 		}
 	}
 
-	protected static void evaluatePoshiConsole() throws Exception {
-		System.out.println("Executing task: evaluatePoshiConsole");
-
-		PoshiRunnerConsoleEvaluator.main(null);
-	}
-
-	protected static void runPoshi(String[] args) throws Exception {
-		System.out.println("Executing task: runPoshi");
-
-		JUnitCore.runClasses(PoshiRunner.class);
-	}
-
-	protected static void taskHelp() throws Exception {
+	protected static void commandHelp() throws Exception {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("Usage: PoshiRunnerTaskExector <command> <args>\n");
+		sb.append("Usage: PoshiRunnerCommandExecutor <command> <args>\n");
 		sb.append("\n");
 		sb.append("command options include:\n");
 		sb.append(
@@ -79,6 +83,47 @@ public class PoshiRunnerCommandExecutor {
 			"\twritePoshiProperties\tWrite the Poshi properties files.\n");
 
 		System.out.println(sb.toString());
+	}
+
+	protected static void evaluatePoshiConsole() throws Exception {
+		System.out.println("Executing task: evaluatePoshiConsole");
+
+		PoshiRunnerConsoleEvaluator.main(null);
+	}
+
+	protected static void populateSystemProperties() throws Exception {
+		Properties systemProperties = System.getProperties();
+
+		String poshiRunnerExtPropertyFileNames = systemProperties.getProperty(
+			"poshiRunnerExtPropertyFileNames");
+
+		if (poshiRunnerExtPropertyFileNames != null) {
+			for (String poshiRunnerExtPropertyFileName :
+					poshiRunnerExtPropertyFileNames.split(",")) {
+
+				if (FileUtil.exists(poshiRunnerExtPropertyFileName)) {
+					try (InputStream inputStream = new FileInputStream(
+							poshiRunnerExtPropertyFileName)) {
+
+						systemProperties.load(inputStream);
+					}
+				}
+			}
+		}
+	}
+
+	protected static void printSystemProperties() throws Exception {
+		Properties systemProperties = System.getProperties();
+
+		for (Entry<Object, Object> entry : systemProperties.entrySet()) {
+			System.out.println(entry);
+		}
+	}
+
+	protected static void runPoshi(String[] args) throws Exception {
+		System.out.println("Executing task: runPoshi");
+
+		JUnitCore.runClasses(PoshiRunner.class);
 	}
 
 	protected static void validatePoshi() throws Exception {

@@ -33,6 +33,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>CSS classes to be applied to the element.</description>
+			<name>elementClasses</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>enabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

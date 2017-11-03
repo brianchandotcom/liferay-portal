@@ -90,6 +90,8 @@ public interface Build {
 
 	public Long getLatestStartTimestamp();
 
+	public Build getLongestRunningDownstreamBuild();
+
 	public String getOperatingSystem();
 
 	public Map<String, String> getParameters();

@@ -4,5 +4,12 @@ Bundle-Version: 1.0.55
 Liferay-JS-Config: /META-INF/resources/js/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Management
+Provide-Capability:\
+	soy;\
+		type="layout-admin-web";\
+		version:Version="${Bundle-Version}"
+Require-Capability:\
+	osgi.extender;\
+		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))"
 Web-ContextPath: /layout-admin-web
 -dsannotations-options: inherit

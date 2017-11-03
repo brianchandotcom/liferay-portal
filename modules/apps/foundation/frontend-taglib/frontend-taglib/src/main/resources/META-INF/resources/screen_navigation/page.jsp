@@ -24,7 +24,7 @@ List<ScreenNavigationCategory> screenNavigationCategories = (List<ScreenNavigati
 List<ScreenNavigationEntry> screenNavigationEntries = (List<ScreenNavigationEntry>)request.getAttribute("liferay-frontend:screen-navigation:screenNavigationEntries");
 %>
 
-<c:if test="<%= (screenNavigationCategories.size() > 1) %>">
+<c:if test="<%= screenNavigationCategories.size() > 1 %>">
 	<aui:nav-bar markupView="lexicon">
 		<aui:nav cssClass="navbar-nav">
 

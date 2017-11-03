@@ -2211,7 +2211,9 @@ public class JavadocFormatter {
 		}
 
 		System.out.println(
-			"Updating " + _languagePropertiesFile + " key " + key);
+			StringBundler.concat(
+				"Updating ", String.valueOf(_languagePropertiesFile), " key ",
+				key));
 	}
 
 	private String _wrap(String text, int width) {

@@ -95,8 +95,9 @@ public interface CommerceCartService extends BaseService {
 		throws PortalException;
 
 	public CommerceCart updateCommerceCart(long commerceCartId,
-		long billingAddressId, long shippingAddressId)
-		throws PortalException;
+		long billingAddressId, long shippingAddressId,
+		long commerceShippingMethodId,
+		java.lang.String commerceShippingOptionName) throws PortalException;
 
 	public CommerceCart updateUser(long commerceCartId, long userId)
 		throws PortalException;

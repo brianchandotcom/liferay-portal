@@ -267,6 +267,11 @@ public class CPMeasurementUnitLocalServiceUtil {
 			orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.commerce.product.model.CPMeasurementUnit> getCPMeasurementUnits(
+		long groupId, java.lang.String[] keys, int type) {
+		return getService().getCPMeasurementUnits(groupId, keys, type);
+	}
+
 	/**
 	* Returns all the cp measurement units matching the UUID and company.
 	*

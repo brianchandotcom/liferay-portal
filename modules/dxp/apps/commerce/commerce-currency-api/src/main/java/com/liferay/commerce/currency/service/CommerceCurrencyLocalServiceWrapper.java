@@ -248,6 +248,13 @@ public class CommerceCurrencyLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.currency.model.CommerceCurrency> getCommerceCurrencies(
+		long groupId, boolean active) {
+		return _commerceCurrencyLocalService.getCommerceCurrencies(groupId,
+			active);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.currency.model.CommerceCurrency> getCommerceCurrencies(
 		long groupId, boolean active, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.currency.model.CommerceCurrency> orderByComparator) {
 		return _commerceCurrencyLocalService.getCommerceCurrencies(groupId,

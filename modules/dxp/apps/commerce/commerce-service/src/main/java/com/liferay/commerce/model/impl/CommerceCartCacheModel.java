@@ -66,7 +66,7 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -92,6 +92,10 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 		sb.append(billingAddressId);
 		sb.append(", shippingAddressId=");
 		sb.append(shippingAddressId);
+		sb.append(", commerceShippingMethodId=");
+		sb.append(commerceShippingMethodId);
+		sb.append(", commerceShippingOptionName=");
+		sb.append(commerceShippingOptionName);
 		sb.append("}");
 
 		return sb.toString();
@@ -144,6 +148,14 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 		commerceCartImpl.setType(type);
 		commerceCartImpl.setBillingAddressId(billingAddressId);
 		commerceCartImpl.setShippingAddressId(shippingAddressId);
+		commerceCartImpl.setCommerceShippingMethodId(commerceShippingMethodId);
+
+		if (commerceShippingOptionName == null) {
+			commerceCartImpl.setCommerceShippingOptionName(StringPool.BLANK);
+		}
+		else {
+			commerceCartImpl.setCommerceShippingOptionName(commerceShippingOptionName);
+		}
 
 		commerceCartImpl.resetOriginalValues();
 
@@ -171,6 +183,9 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 		billingAddressId = objectInput.readLong();
 
 		shippingAddressId = objectInput.readLong();
+
+		commerceShippingMethodId = objectInput.readLong();
+		commerceShippingOptionName = objectInput.readUTF();
 	}
 
 	@Override
@@ -213,6 +228,15 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 		objectOutput.writeLong(billingAddressId);
 
 		objectOutput.writeLong(shippingAddressId);
+
+		objectOutput.writeLong(commerceShippingMethodId);
+
+		if (commerceShippingOptionName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(commerceShippingOptionName);
+		}
 	}
 
 	public String uuid;
@@ -227,4 +251,6 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 	public int type;
 	public long billingAddressId;
 	public long shippingAddressId;
+	public long commerceShippingMethodId;
+	public String commerceShippingOptionName;
 }

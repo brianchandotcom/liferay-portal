@@ -85,7 +85,9 @@ create table CommerceCart (
 	name VARCHAR(75) null,
 	type_ INTEGER,
 	billingAddressId LONG,
-	shippingAddressId LONG
+	shippingAddressId LONG,
+	commerceShippingMethodId LONG,
+	commerceShippingOptionName VARCHAR(75) null
 );
 
 create table CommerceCartItem (

@@ -72,6 +72,9 @@ public class CommerceCartWrapper implements CommerceCart,
 		attributes.put("type", getType());
 		attributes.put("billingAddressId", getBillingAddressId());
 		attributes.put("shippingAddressId", getShippingAddressId());
+		attributes.put("commerceShippingMethodId", getCommerceShippingMethodId());
+		attributes.put("commerceShippingOptionName",
+			getCommerceShippingOptionName());
 
 		return attributes;
 	}
@@ -149,6 +152,20 @@ public class CommerceCartWrapper implements CommerceCart,
 		if (shippingAddressId != null) {
 			setShippingAddressId(shippingAddressId);
 		}
+
+		Long commerceShippingMethodId = (Long)attributes.get(
+				"commerceShippingMethodId");
+
+		if (commerceShippingMethodId != null) {
+			setCommerceShippingMethodId(commerceShippingMethodId);
+		}
+
+		String commerceShippingOptionName = (String)attributes.get(
+				"commerceShippingOptionName");
+
+		if (commerceShippingOptionName != null) {
+			setCommerceShippingOptionName(commerceShippingOptionName);
+		}
 	}
 
 	@Override
@@ -190,6 +207,26 @@ public class CommerceCartWrapper implements CommerceCart,
 	@Override
 	public java.util.List<CommerceCartItem> getCommerceCartItems() {
 		return _commerceCart.getCommerceCartItems();
+	}
+
+	/**
+	* Returns the commerce shipping method ID of this commerce cart.
+	*
+	* @return the commerce shipping method ID of this commerce cart
+	*/
+	@Override
+	public long getCommerceShippingMethodId() {
+		return _commerceCart.getCommerceShippingMethodId();
+	}
+
+	/**
+	* Returns the commerce shipping option name of this commerce cart.
+	*
+	* @return the commerce shipping option name of this commerce cart
+	*/
+	@Override
+	public java.lang.String getCommerceShippingOptionName() {
+		return _commerceCart.getCommerceShippingOptionName();
 	}
 
 	/**
@@ -382,6 +419,27 @@ public class CommerceCartWrapper implements CommerceCart,
 	@Override
 	public void setCommerceCartId(long commerceCartId) {
 		_commerceCart.setCommerceCartId(commerceCartId);
+	}
+
+	/**
+	* Sets the commerce shipping method ID of this commerce cart.
+	*
+	* @param commerceShippingMethodId the commerce shipping method ID of this commerce cart
+	*/
+	@Override
+	public void setCommerceShippingMethodId(long commerceShippingMethodId) {
+		_commerceCart.setCommerceShippingMethodId(commerceShippingMethodId);
+	}
+
+	/**
+	* Sets the commerce shipping option name of this commerce cart.
+	*
+	* @param commerceShippingOptionName the commerce shipping option name of this commerce cart
+	*/
+	@Override
+	public void setCommerceShippingOptionName(
+		java.lang.String commerceShippingOptionName) {
+		_commerceCart.setCommerceShippingOptionName(commerceShippingOptionName);
 	}
 
 	/**

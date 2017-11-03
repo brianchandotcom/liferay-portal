@@ -267,6 +267,35 @@ public interface CommerceCartModel extends BaseModel<CommerceCart>, GroupedModel
 	 */
 	public void setShippingAddressId(long shippingAddressId);
 
+	/**
+	 * Returns the commerce shipping method ID of this commerce cart.
+	 *
+	 * @return the commerce shipping method ID of this commerce cart
+	 */
+	public long getCommerceShippingMethodId();
+
+	/**
+	 * Sets the commerce shipping method ID of this commerce cart.
+	 *
+	 * @param commerceShippingMethodId the commerce shipping method ID of this commerce cart
+	 */
+	public void setCommerceShippingMethodId(long commerceShippingMethodId);
+
+	/**
+	 * Returns the commerce shipping option name of this commerce cart.
+	 *
+	 * @return the commerce shipping option name of this commerce cart
+	 */
+	@AutoEscape
+	public String getCommerceShippingOptionName();
+
+	/**
+	 * Sets the commerce shipping option name of this commerce cart.
+	 *
+	 * @param commerceShippingOptionName the commerce shipping option name of this commerce cart
+	 */
+	public void setCommerceShippingOptionName(String commerceShippingOptionName);
+
 	@Override
 	public boolean isNew();
 

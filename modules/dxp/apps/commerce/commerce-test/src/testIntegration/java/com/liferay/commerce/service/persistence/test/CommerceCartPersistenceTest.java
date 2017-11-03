@@ -147,6 +147,10 @@ public class CommerceCartPersistenceTest {
 
 		newCommerceCart.setShippingAddressId(RandomTestUtil.nextLong());
 
+		newCommerceCart.setCommerceShippingMethodId(RandomTestUtil.nextLong());
+
+		newCommerceCart.setCommerceShippingOptionName(RandomTestUtil.randomString());
+
 		_commerceCarts.add(_persistence.update(newCommerceCart));
 
 		CommerceCart existingCommerceCart = _persistence.findByPrimaryKey(newCommerceCart.getPrimaryKey());
@@ -177,6 +181,10 @@ public class CommerceCartPersistenceTest {
 			newCommerceCart.getBillingAddressId());
 		Assert.assertEquals(existingCommerceCart.getShippingAddressId(),
 			newCommerceCart.getShippingAddressId());
+		Assert.assertEquals(existingCommerceCart.getCommerceShippingMethodId(),
+			newCommerceCart.getCommerceShippingMethodId());
+		Assert.assertEquals(existingCommerceCart.getCommerceShippingOptionName(),
+			newCommerceCart.getCommerceShippingOptionName());
 	}
 
 	@Test
@@ -266,7 +274,8 @@ public class CommerceCartPersistenceTest {
 			true, "commerceCartId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "name", true, "type", true,
-			"billingAddressId", true, "shippingAddressId", true);
+			"billingAddressId", true, "shippingAddressId", true,
+			"commerceShippingMethodId", true, "commerceShippingOptionName", true);
 	}
 
 	@Test
@@ -505,6 +514,10 @@ public class CommerceCartPersistenceTest {
 		commerceCart.setBillingAddressId(RandomTestUtil.nextLong());
 
 		commerceCart.setShippingAddressId(RandomTestUtil.nextLong());
+
+		commerceCart.setCommerceShippingMethodId(RandomTestUtil.nextLong());
+
+		commerceCart.setCommerceShippingOptionName(RandomTestUtil.randomString());
 
 		_commerceCarts.add(_persistence.update(commerceCart));
 

@@ -245,6 +245,10 @@ public interface CPMeasurementUnitLocalService extends BaseLocalService,
 		int type, int start, int end,
 		OrderByComparator<CPMeasurementUnit> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPMeasurementUnit> getCPMeasurementUnits(long groupId,
+		java.lang.String[] keys, int type);
+
 	/**
 	* Returns all the cp measurement units matching the UUID and company.
 	*

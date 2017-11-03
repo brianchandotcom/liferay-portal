@@ -313,8 +313,9 @@ public interface CommerceCartLocalService extends BaseLocalService,
 	public CommerceCart updateCommerceCart(CommerceCart commerceCart);
 
 	public CommerceCart updateCommerceCart(long commerceCartId,
-		long billingAddressId, long shippingAddressId)
-		throws PortalException;
+		long billingAddressId, long shippingAddressId,
+		long commerceShippingMethodId,
+		java.lang.String commerceShippingOptionName) throws PortalException;
 
 	public CommerceCart updateUser(long commerceCartId, long userId)
 		throws PortalException;

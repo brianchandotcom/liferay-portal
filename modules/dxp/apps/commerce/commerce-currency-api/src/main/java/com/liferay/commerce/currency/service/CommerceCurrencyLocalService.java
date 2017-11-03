@@ -220,6 +220,10 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceCurrency> getCommerceCurrencies(long groupId,
+		boolean active);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceCurrency> getCommerceCurrencies(long groupId,
 		boolean active, int start, int end,
 		OrderByComparator<CommerceCurrency> orderByComparator);
 

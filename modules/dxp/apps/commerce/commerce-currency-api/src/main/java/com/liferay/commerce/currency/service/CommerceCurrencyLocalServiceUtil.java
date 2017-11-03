@@ -234,6 +234,11 @@ public class CommerceCurrencyLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.currency.model.CommerceCurrency> getCommerceCurrencies(
+		long groupId, boolean active) {
+		return getService().getCommerceCurrencies(groupId, active);
+	}
+
+	public static java.util.List<com.liferay.commerce.currency.model.CommerceCurrency> getCommerceCurrencies(
 		long groupId, boolean active, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.currency.model.CommerceCurrency> orderByComparator) {
 		return getService()

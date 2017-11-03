@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.document.library.document.conversion.configuration.definition;
+package com.liferay.document.library.document.conversion.internal.configuration.definition;
 
-import com.liferay.document.library.document.conversion.configuration.OpenOfficeConfiguration;
+import com.liferay.document.library.document.conversion.internal.configuration.OpenOfficeConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;

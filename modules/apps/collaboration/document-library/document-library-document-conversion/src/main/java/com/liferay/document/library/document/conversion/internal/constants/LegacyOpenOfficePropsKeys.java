@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.document.conversion.constants;
+package com.liferay.document.library.document.conversion.internal.constants;
 
 /**
  * @author Pei-Jung Lan

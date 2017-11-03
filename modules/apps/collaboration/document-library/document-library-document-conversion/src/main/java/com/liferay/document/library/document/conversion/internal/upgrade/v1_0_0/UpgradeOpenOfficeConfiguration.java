@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.document.conversion.internal.upgrade.v1_0_0;
 
-import com.liferay.document.library.document.conversion.configuration.OpenOfficeConfiguration;
-import com.liferay.document.library.document.conversion.constants.LegacyOpenOfficePropsKeys;
+import com.liferay.document.library.document.conversion.internal.configuration.OpenOfficeConfiguration;
+import com.liferay.document.library.document.conversion.internal.constants.LegacyOpenOfficePropsKeys;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;

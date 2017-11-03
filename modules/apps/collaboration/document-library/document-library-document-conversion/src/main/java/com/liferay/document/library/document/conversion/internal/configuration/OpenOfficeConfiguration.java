@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.document.conversion.configuration;
+package com.liferay.document.library.document.conversion.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "other")
 @Meta.OCD(
-	id = "com.liferay.document.library.document.conversion.configuration.OpenOfficeConfiguration",
+	id = "com.liferay.document.library.document.conversion.internal.configuration.OpenOfficeConfiguration",
 	localization = "content/Language", name = "openoffice-configuration-name"
 )
 public interface OpenOfficeConfiguration {

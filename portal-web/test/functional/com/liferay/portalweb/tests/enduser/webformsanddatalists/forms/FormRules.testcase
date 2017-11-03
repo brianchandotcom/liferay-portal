@@ -1102,7 +1102,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewRuleWithPredifinedValuesWorksAsExpected" priority="2">
+	<command name="ViewPredefinedValueCanBeUsedToRequireAnotherField" priority="2">
 		<description message="This is a use case for LPS-71466." />
 
 		<execute macro="Navigator#openURL" />

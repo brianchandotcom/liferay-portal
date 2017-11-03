@@ -46,6 +46,15 @@ import org.json.JSONObject;
 public class TopLevelBuild extends BaseBuild {
 
 	@Override
+	public void addTimelineData(BaseBuild.TimelineData timelineData) {
+		timelineData.addTimelineData(this);
+
+		if (getTopLevelBuild() == this) {
+			addDownstreamBuildsTimelineData(timelineData);
+		}
+	}
+
+	@Override
 	public void archive(String archiveName) {
 		super.archive(archiveName);
 

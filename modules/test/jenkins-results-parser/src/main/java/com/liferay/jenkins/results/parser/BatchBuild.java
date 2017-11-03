@@ -37,6 +37,11 @@ import org.json.JSONObject;
 public class BatchBuild extends BaseBuild {
 
 	@Override
+	public void addTimelineData(BaseBuild.TimelineData timelineData) {
+		addDownstreamBuildsTimelineData(timelineData);
+	}
+
+	@Override
 	public String getAppServer() {
 		return getEnvironment("app.server");
 	}

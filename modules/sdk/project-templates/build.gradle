@@ -87,16 +87,16 @@ dependencies {
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.theme", version: "1.0.5"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.theme.contributor", version: "1.0.3"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.workspace", version: "1.0.5"
-	projectTemplates project(":sdk:project-templates-npm-angular-portlet")
-	projectTemplates project(":sdk:project-templates-npm-billboardjs-portlet")
-	projectTemplates project(":sdk:project-templates-npm-isomorphic-portlet")
-	projectTemplates project(":sdk:project-templates-npm-jquery-portlet")
-	projectTemplates project(":sdk:project-templates-npm-metaljs-portlet")
-	projectTemplates project(":sdk:project-templates-npm-portlet")
-	projectTemplates project(":sdk:project-templates-npm-react-portlet")
-	projectTemplates project(":sdk:project-templates-npm-vuejs-portlet")
-	projectTemplates project(":sdk:project-templates-war-hook")
-	projectTemplates project(":sdk:project-templates-war-mvc-portlet")
+	projectTemplates project(":sdk:project-templates:project-templates-npm-angular-portlet")
+	projectTemplates project(":sdk:project-templates:project-templates-npm-billboardjs-portlet")
+	projectTemplates project(":sdk:project-templates:project-templates-npm-isomorphic-portlet")
+	projectTemplates project(":sdk:project-templates:project-templates-npm-jquery-portlet")
+	projectTemplates project(":sdk:project-templates:project-templates-npm-metaljs-portlet")
+	projectTemplates project(":sdk:project-templates:project-templates-npm-portlet")
+	projectTemplates project(":sdk:project-templates:project-templates-npm-react-portlet")
+	projectTemplates project(":sdk:project-templates:project-templates-npm-vuejs-portlet")
+	projectTemplates project(":sdk:project-templates:project-templates-war-hook")
+	projectTemplates project(":sdk:project-templates:project-templates-war-mvc-portlet")
 
 	provided group: "org.apache.maven.archetype", name: "archetype-common", version: "2.4"
 

@@ -1858,6 +1858,38 @@ public abstract class BaseBuild implements Build {
 		return buildInfoElement;
 	}
 
+	protected List<Element> getJenkinsReportTableRowsElements(
+		String result, String status) {
+
+		List<Element> tableRowElements = new ArrayList<>();
+
+		if ((getParentBuild() != null) &&
+			((result == null) || result.equals(getResult())) &&
+			((status == null) || status.equals(getStatus()))) {
+
+			tableRowElements.add(getJenkinsReportTableRowElement());
+		}
+
+		List<Build> downstreamBuilds = getDownstreamBuilds(result, status);
+
+		Collections.sort(
+			downstreamBuilds, new BaseBuild.BuildDisplayNameComparator());
+
+		for (Build downstreamBuild : downstreamBuilds) {
+			if (!(downstreamBuild instanceof BaseBuild)) {
+				continue;
+			}
+
+			BaseBuild downstreamBaseBuild = (BaseBuild)downstreamBuild;
+
+			tableRowElements.addAll(
+				downstreamBaseBuild.getJenkinsReportTableRowsElements(
+					result, status));
+		}
+
+		return tableRowElements;
+	}
+
 	protected Set<String> getJobParameterNames() {
 		JSONObject jsonObject;
 

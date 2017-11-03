@@ -518,6 +518,24 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public JenkinsSlave getJenkinsSlave() {
+		if (_jenkinsSlave != null) {
+			return _jenkinsSlave;
+		}
+
+		String master = getMaster();
+		String slave = getSlave();
+
+		if ((master == null) || (slave == null)) {
+			return null;
+		}
+
+		_jenkinsSlave = new JenkinsSlave(master, slave);
+
+		return _jenkinsSlave;
+	}
+
+	@Override
 	public String getJobName() {
 		return jobName;
 	}
@@ -987,6 +1005,25 @@ public abstract class BaseBuild implements Build {
 			return;
 		}
 
+		JenkinsSlave jenkinsSlave = getJenkinsSlave();
+
+		if (jenkinsSlave == null) {
+			return;
+		}
+
+		boolean slaveOffline = false;
+
+		try {
+			slaveOffline = jenkinsSlave.isOffline();
+		}
+		catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+
+		if (!slaveOffline) {
+			return;
+		}
+
 		String message = JenkinsResultsParserUtil.combine(
 			slaveOfflineRule.getName(), " failure detected at ", getBuildURL(),
 			". ", slave, " will be taken offline.\n\n",
@@ -1002,7 +1039,7 @@ public abstract class BaseBuild implements Build {
 				message, "Top Level Build URL: ", topLevelBuild.getBuildURL());
 		}
 
-		JenkinsResultsParserUtil.takeSlavesOffline(master, message, slave);
+		jenkinsSlave.takeSlavesOffline(message);
 
 		String notificationRecipients =
 			slaveOfflineRule.getNotificationRecipients();
@@ -2216,6 +2253,7 @@ public abstract class BaseBuild implements Build {
 	private int _buildNumber = -1;
 	private int _consoleReadCursor;
 	private String _consoleText;
+	private JenkinsSlave _jenkinsSlave;
 	private Map<String, String> _parameters = new HashMap<>();
 	private final Build _parentBuild;
 	private String _status;

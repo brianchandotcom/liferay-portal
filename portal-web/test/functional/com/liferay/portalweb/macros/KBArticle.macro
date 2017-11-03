@@ -49,6 +49,10 @@
 			<var name="key_menuItem" value="Add Child Article" />
 		</execute>
 
+		<execute function="AssertElementPresent" locator1="AlloyEditor#EDITOR">
+			<var name="key_editor" value="title" />
+		</execute>
+
 		<execute macro="AlloyEditor#addTitleAndContent">
 			<var name="content" value="${kbChildArticleContent}" />
 			<var name="title" value="${kbChildArticleTitle}" />
@@ -60,6 +64,10 @@
 	<command name="addChildPGViaKBDisplay">
 		<execute function="AssertClick" locator1="KnowledgeBase#KB_TOOLS" value1="Add Child Article">
 			<var name="key_kbTool" value="Add Child Article" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="AlloyEditor#EDITOR">
+			<var name="key_editor" value="title" />
 		</execute>
 
 		<execute macro="AlloyEditor#addTitleAndContent">
@@ -116,6 +124,10 @@
 				<execute macro="KBArticle#_gotoAddBasicArticle" />
 			</else>
 		</if>
+
+		<execute function="AssertElementPresent" locator1="AlloyEditor#EDITOR">
+			<var name="key_editor" value="title" />
+		</execute>
 
 		<if>
 			<isset var="specialCharacters" />
@@ -273,6 +285,10 @@
 			<var name="key_menuItem" value="Basic Article" />
 		</execute>
 
+		<execute function="AssertElementPresent" locator1="AlloyEditor#EDITOR">
+			<var name="key_editor" value="title" />
+		</execute>
+
 		<execute macro="AlloyEditor#addTitleAndContent">
 			<var name="content" value="${kbArticleContent}" />
 			<var name="title" value="${kbArticleTitle}" />
@@ -292,6 +308,10 @@
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Article">
 			<var name="key_menuItem" value="Basic Article" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="AlloyEditor#EDITOR">
+			<var name="key_editor" value="title" />
 		</execute>
 
 		<execute macro="AlloyEditor#addTitleAndContent">
@@ -315,6 +335,10 @@
 			<var name="key_menuItem" value="Basic Article" />
 		</execute>
 
+		<execute function="AssertElementPresent" locator1="AlloyEditor#EDITOR">
+			<var name="key_editor" value="title" />
+		</execute>
+
 		<execute macro="AlloyEditor#addTitleAndContent">
 			<var name="content" value="${kbArticleContent}" />
 			<var name="title" value="${kbArticleTitle}" />
@@ -329,6 +353,10 @@
 	<command name="addPGViaAP">
 		<execute macro="AssetPublisherPortlet#addAsset">
 			<var name="assetType" value="Knowledge Base Article" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="AlloyEditor#EDITOR">
+			<var name="key_editor" value="title" />
 		</execute>
 
 		<execute macro="AlloyEditor#addTitleAndContent">
@@ -359,6 +387,10 @@
 
 	<command name="cancelAddKBArticle">
 		<execute macro="KBArticle#_gotoAddBasicArticle" />
+
+		<execute function="AssertElementPresent" locator1="AlloyEditor#EDITOR">
+			<var name="key_editor" value="title" />
+		</execute>
 
 		<execute macro="AlloyEditor#addTitleAndContent">
 			<var name="content" value="${kbArticleContent}" />
@@ -721,6 +753,10 @@
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="A new version is created automatically if this content is modified." />
 
+		<execute function="AssertElementPresent" locator1="AlloyEditor#EDITOR">
+			<var name="key_editor" value="title" />
+		</execute>
+
 		<execute macro="AlloyEditor#addTitleAndContent">
 			<var name="content" value="${kbArticleContentEdit}" />
 			<var name="title" value="${kbArticleTitleEdit}" />
@@ -790,6 +826,10 @@
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="A new version is created automatically if this content is modified." />
 
+		<execute function="AssertElementPresent" locator1="AlloyEditor#EDITOR">
+			<var name="key_editor" value="title" />
+		</execute>
+
 		<execute macro="AlloyEditor#addTitleAndContent">
 			<var name="content" value="${kbArticleContentEdit}" />
 			<var name="title" value="${kbArticleTitleEdit}" />
@@ -823,8 +863,8 @@
 
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#HEADER_TITLE" value1="${kbArticleTitle}" />
 
-		<execute macro="AlloyEditor#addTitle">
-			<var name="title" value="${kbArticleTitleEdit}" />
+		<execute function="AssertElementPresent" locator1="AlloyEditor#EDITOR">
+			<var name="key_editor" value="title" />
 		</execute>
 
 		<execute macro="AlloyEditor#addContent">

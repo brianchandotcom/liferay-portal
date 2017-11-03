@@ -16,6 +16,13 @@
 - [LPS-75327]: Automatically convert `.sh` files to Unix-style line endings when
 building the app's Docker image.
 
+## 1.0.4 - 2017-11-03
+
+### Changed
+- [LPS-75704]: Update the [Gradle Docker Plugin] dependency to version 3.2.0.
+
+[Gradle Docker Plugin]: https://github.com/bmuschko/gradle-docker-plugin
 [LPS-74785]: https://issues.liferay.com/browse/LPS-74785
 [LPS-74811]: https://issues.liferay.com/browse/LPS-74811
 [LPS-75327]: https://issues.liferay.com/browse/LPS-75327
+[LPS-75704]: https://issues.liferay.com/browse/LPS-75704

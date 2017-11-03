@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -257,6 +258,10 @@ public class TopLevelBuild extends BaseBuild {
 	@Override
 	public JSONObject getTestReportJSONObject() {
 		return null;
+	}
+
+	public BaseBuild.TimelineData getTimelineData() {
+		return new BaseBuild.TimelineData(500, this);
 	}
 
 	public Element getValidationGitHubMessage() {
@@ -566,7 +571,8 @@ public class TopLevelBuild extends BaseBuild {
 		}
 
 		return Dom4JUtil.getNewElement(
-			"body", null, headingElement, subheadingElement);
+			"body", null, headingElement, subheadingElement,
+			getJenkinsReportTimelineElement());
 	}
 
 	protected Element getJenkinsReportChartJsScriptElement(
@@ -617,6 +623,28 @@ public class TopLevelBuild extends BaseBuild {
 			Dom4JUtil.getNewElement("style", null, resourceFileContent));
 
 		return headElement;
+	}
+
+	protected Element getJenkinsReportTimelineElement() {
+		Element canvasElement = Dom4JUtil.getNewElement("canvas");
+
+		canvasElement.addAttribute("height", "300");
+		canvasElement.addAttribute("id", "timeline");
+
+		Element scriptElement = Dom4JUtil.getNewElement("script");
+
+		scriptElement.addAttribute("src", _CHART_JS_FILE);
+		scriptElement.addText("");
+
+		BaseBuild.TimelineData timelineData = getTimelineData();
+
+		Element chartJSScriptElement = getJenkinsReportChartJsScriptElement(
+			Arrays.toString(timelineData.getIndexData()),
+			Arrays.toString(timelineData.getSlaveUsageData()),
+			Arrays.toString(timelineData.getInvocationsData()));
+
+		return Dom4JUtil.getNewElement(
+			"div", null, canvasElement, scriptElement, chartJSScriptElement);
 	}
 
 	protected Element getJobSummaryListElement() {
@@ -941,6 +969,9 @@ public class TopLevelBuild extends BaseBuild {
 
 	protected static final Pattern gitRepositoryTempMapNamePattern =
 		Pattern.compile("git\\.(?<repositoryType>.*)\\.properties");
+
+	private static final String _CHART_JS_FILE =
+		"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js";
 
 	private static final long _DOWNSTREAM_BUILDS_LISTING_INTERVAL =
 		1000 * 60 * 5;

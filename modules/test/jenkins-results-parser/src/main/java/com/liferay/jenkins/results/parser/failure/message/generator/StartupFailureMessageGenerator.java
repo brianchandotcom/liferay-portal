@@ -29,9 +29,9 @@ public class StartupFailureMessageGenerator
 
 	@Override
 	public String getMessage(
-		String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
+		String buildURL, String consoleText, Hashtable<?, ?> properties) {
 
-		if (!consoleOutput.contains(_TOKEN_UNRESOLVED_REQUIREMENT)) {
+		if (!consoleText.contains(_TOKEN_UNRESOLVED_REQUIREMENT)) {
 			return null;
 		}
 
@@ -40,40 +40,38 @@ public class StartupFailureMessageGenerator
 		sb.append(
 			"<p>Startup error: <strong>Unresolved Requirement(s)</strong></p>");
 
-		int start = consoleOutput.indexOf(_TOKEN_UNRESOLVED_REQUIREMENT);
+		int start = consoleText.indexOf(_TOKEN_UNRESOLVED_REQUIREMENT);
 
-		start = consoleOutput.lastIndexOf(
-			_TOKEN_COULD_NOT_RESOLVE_MODULE, start);
+		start = consoleText.lastIndexOf(_TOKEN_COULD_NOT_RESOLVE_MODULE, start);
 
-		start = consoleOutput.lastIndexOf("\n", start);
+		start = consoleText.lastIndexOf("\n", start);
 
-		int end = consoleOutput.indexOf(_TOKEN_DELETING);
+		int end = consoleText.indexOf(_TOKEN_DELETING);
 
-		end = consoleOutput.lastIndexOf("\n", end);
+		end = consoleText.lastIndexOf("\n", end);
 
-		sb.append(getConsoleOutputSnippet(consoleOutput, true, start, end));
+		sb.append(getConsoleTextSnippet(consoleText, true, start, end));
 
 		return sb.toString();
 	}
 
 	@Override
 	public Element getMessageElement(Build build) {
-		String consoleOutput = build.getConsoleText();
+		String consoleText = build.getConsoleText();
 
-		if (!consoleOutput.contains(_TOKEN_UNRESOLVED_REQUIREMENT)) {
+		if (!consoleText.contains(_TOKEN_UNRESOLVED_REQUIREMENT)) {
 			return null;
 		}
 
-		int start = consoleOutput.indexOf(_TOKEN_UNRESOLVED_REQUIREMENT);
+		int start = consoleText.indexOf(_TOKEN_UNRESOLVED_REQUIREMENT);
 
-		start = consoleOutput.lastIndexOf(
-			_TOKEN_COULD_NOT_RESOLVE_MODULE, start);
+		start = consoleText.lastIndexOf(_TOKEN_COULD_NOT_RESOLVE_MODULE, start);
 
-		start = consoleOutput.lastIndexOf("\n", start);
+		start = consoleText.lastIndexOf("\n", start);
 
-		int end = consoleOutput.indexOf(_TOKEN_DELETING, start);
+		int end = consoleText.indexOf(_TOKEN_DELETING, start);
 
-		end = consoleOutput.lastIndexOf("\n", end);
+		end = consoleText.lastIndexOf("\n", end);
 
 		return Dom4JUtil.getNewElement(
 			"div", null,
@@ -81,7 +79,7 @@ public class StartupFailureMessageGenerator
 				"p", null, "Startup error: ",
 				Dom4JUtil.getNewElement(
 					"strong", null, "Unresolved Requirement(s)")),
-			getConsoleOutputSnippetElement(consoleOutput, true, start, end));
+			getConsoleTextSnippetElement(consoleText, true, start, end));
 	}
 
 	private static final String _TOKEN_COULD_NOT_RESOLVE_MODULE =

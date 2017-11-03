@@ -30,48 +30,48 @@ public class SubrepositorySourceFormatFailureMessageGenerator
 
 	@Override
 	public String getMessage(
-		String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
+		String buildURL, String consoleText, Hashtable<?, ?> properties) {
 
-		if (!consoleOutput.contains(_TOKEN_SOURCE_FORMAT)) {
+		if (!consoleText.contains(_TOKEN_SOURCE_FORMAT)) {
 			return null;
 		}
 
-		int start = consoleOutput.indexOf(_TOKEN_FORMAT_SOURCE);
+		int start = consoleText.indexOf(_TOKEN_FORMAT_SOURCE);
 
-		start = consoleOutput.indexOf(_TOKEN_SYNC_RESULTS, start);
+		start = consoleText.indexOf(_TOKEN_SYNC_RESULTS, start);
 
-		start = consoleOutput.indexOf("\n", start);
+		start = consoleText.indexOf("\n", start);
 
-		int end = consoleOutput.indexOf(_TOKEN_EXCEPTION_IS, start);
+		int end = consoleText.indexOf(_TOKEN_EXCEPTION_IS, start);
 
-		end = consoleOutput.lastIndexOf(_TOKEN_SOURCE_FORMAT, end);
+		end = consoleText.lastIndexOf(_TOKEN_SOURCE_FORMAT, end);
 
-		end = consoleOutput.indexOf("\n", end);
+		end = consoleText.indexOf("\n", end);
 
-		return getConsoleOutputSnippet(consoleOutput, true, start, end);
+		return getConsoleTextSnippet(consoleText, true, start, end);
 	}
 
 	@Override
 	public Element getMessageElement(Build build) {
-		String consoleOutput = build.getConsoleText();
+		String consoleText = build.getConsoleText();
 
-		if (!consoleOutput.contains(_TOKEN_SOURCE_FORMAT)) {
+		if (!consoleText.contains(_TOKEN_SOURCE_FORMAT)) {
 			return null;
 		}
 
-		int start = consoleOutput.lastIndexOf(_TOKEN_FORMAT_SOURCE);
+		int start = consoleText.lastIndexOf(_TOKEN_FORMAT_SOURCE);
 
-		start = consoleOutput.indexOf(_TOKEN_SYNC_RESULTS, start);
+		start = consoleText.indexOf(_TOKEN_SYNC_RESULTS, start);
 
-		start = consoleOutput.indexOf("\n", start);
+		start = consoleText.indexOf("\n", start);
 
-		int end = consoleOutput.indexOf(_TOKEN_EXCEPTION_IS, start);
+		int end = consoleText.indexOf(_TOKEN_EXCEPTION_IS, start);
 
-		end = consoleOutput.lastIndexOf(_TOKEN_SOURCE_FORMAT, end);
+		end = consoleText.lastIndexOf(_TOKEN_SOURCE_FORMAT, end);
 
-		end = consoleOutput.indexOf("\n", end);
+		end = consoleText.indexOf("\n", end);
 
-		return getConsoleOutputSnippetElement(consoleOutput, true, start, end);
+		return getConsoleTextSnippetElement(consoleText, true, start, end);
 	}
 
 	private static final String _TOKEN_EXCEPTION_IS =

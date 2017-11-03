@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -60,8 +61,9 @@ public class AbortedMultipartUploadCleaner {
 		_serviceTracker = new ServiceTracker<>(
 			bundleContext,
 			bundleContext.createFilter(
-				"(&(" + Constants.OBJECTCLASS + "=" + Store.class.getName() +
-					")(store.type=" + S3Store.class.getName() + "))"),
+				StringBundler.concat(
+					"(&(", Constants.OBJECTCLASS, "=", Store.class.getName(),
+					")(store.type=", S3Store.class.getName(), "))")),
 			new S3StoreServiceTrackerCustomizer(
 				bundleContext, _schedulerEngineHelper, _triggerFactory));
 	}

@@ -956,20 +956,20 @@ message.
 							int majorVersion = Integer.parseInt(versionString.substring(versionString.indexOf("-", periodIndex - 2) + 1, periodIndex));
 
 							if ((majorVersion < 7) || (versionString.indexOf("ce") != -1)) {
-								project.setProperty("petra.use", false);
+								project.setProperty("petra.use", "false");
 							}
 							else {
 								if (versionString.indexOf("sp") == -1) {
-									project.setProperty("petra.use", false);
+									project.setProperty("petra.use", "false");
 								}
 								else {
 									int servicePackNumber = Integer.parseInt(versionString.substring(versionString.indexOf("sp") + 2, endIndex));
 
 									if (servicePackNumber < 5) {
-										project.setProperty("petra.use", false);
+										project.setProperty("petra.use", "false");
 									}
 									else {
-										project.setProperty("petra.use", true);
+										project.setProperty("petra.use", "true");
 									}
 								}
 							}
@@ -977,7 +977,7 @@ message.
 					]]>
 				</beanshell>
 				<if>
-					<isfalse value="${petra.use}" />
+					<equals arg1="${petra.use}" arg2="false" />
 					<then>
 						<beanshell>
 							<![CDATA[

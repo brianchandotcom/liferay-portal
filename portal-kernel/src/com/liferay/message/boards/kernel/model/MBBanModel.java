@@ -40,8 +40,11 @@ import java.util.Date;
  * @see MBBan
  * @see com.liferay.portlet.messageboards.model.impl.MBBanImpl
  * @see com.liferay.portlet.messageboards.model.impl.MBBanModelImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.model.impl.MBBanImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface MBBanModel extends BaseModel<MBBan>, ShardedModel,
 	StagedGroupedModel {

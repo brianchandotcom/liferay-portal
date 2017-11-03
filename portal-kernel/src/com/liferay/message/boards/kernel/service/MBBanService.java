@@ -36,8 +36,11 @@ import com.liferay.portal.kernel.transaction.Transactional;
  * @see MBBanServiceUtil
  * @see com.liferay.portlet.messageboards.service.base.MBBanServiceBaseImpl
  * @see com.liferay.portlet.messageboards.service.impl.MBBanServiceImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.service.impl.MBBanServiceImpl}
  * @generated
  */
+@Deprecated
 @AccessControlled
 @JSONWebService
 @ProviderType

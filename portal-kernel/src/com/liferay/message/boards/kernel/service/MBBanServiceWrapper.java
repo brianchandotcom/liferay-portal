@@ -23,8 +23,11 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  *
  * @author Brian Wing Shun Chan
  * @see MBBanService
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.message.boards.service.impl.MBBanServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBBanServiceWrapper implements MBBanService,
 	ServiceWrapper<MBBanService> {

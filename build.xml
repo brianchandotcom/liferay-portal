@@ -946,12 +946,12 @@ message.
 						String portalUrl = project.getProperty("portal.war.url");
 
 						if (portalUrl != null) {
-							int startIndex = portalUrl.lastIndexOf("/");
+							int startIndex = portalUrl.lastIndexOf("/") + 1;
 							int endIndex = portalUrl.lastIndexOf("-");
 
 							String versionString = portalUrl.substring(startIndex, endIndex);
 
-							int periodIndex = portalUrl.indexOf(".");
+							int periodIndex = versionString.indexOf(".");
 
 							int majorVersion = Integer.parseInt(versionString.substring(versionString.indexOf("-", periodIndex - 2) + 1, periodIndex));
 

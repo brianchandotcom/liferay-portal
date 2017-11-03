@@ -21,11 +21,44 @@
 
 		<execute macro="SAML#configureLiferaySAMLAsSP">
 			<var name="samlEntityID" value="samlsp" />
-			<var name="spURL" value="http://www.able.com:9080" />
+			<var name="spURL" value="http://www.able.com:9080/" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
 	</set-up>
+
+	<command name="AssertSSOSessionExistsAfterSPSessionTimeout" priority="4">
+		<property name="test.name.skip.portal.instance" value="CPSAML#AssertSSOSessionExistsAfterSPSessionTimeout" />
+		<property name="web.xml.timeout" value="2" />
+
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute macro="SAML#executeIdPInitiatedSSO">
+			<var name="idpInitiatedSSOURL" value="${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080" />
+			<var name="password" value="test" />
+			<var name="rememberMeChecked" value="false" />
+			<var name="spURL" value="http://www.able.com:9080/" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="User#viewLoggedInPG">
+			<var name="userFirstName" value="Test" />
+			<var name="userLastName" value="Test" />
+		</execute>
+
+		<execute function="Pause" locator1="120000" />
+
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
+
+		<execute function="Refresh" />
+
+		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
+
+		<execute macro="User#viewLoggedInPG">
+			<var name="userFirstName" value="Test" />
+			<var name="userLastName" value="Test" />
+		</execute>
+	</command>
 
 	<command name="ViewIdPInitiatedSSO" priority="4">
 		<description message="Sign into portal by executing a IdP initiated SSO login. After a successful login, the IdP will redirect to the SP. If the same users with the same email address are present on both instances, it will authenticate and show the SP. SAML can authenticate across major portal versions, that is, the IdP can be Portal 6.1 EE GA3 and the SP can be Portal 6.2. EE GA1. For testing purposes, it is obvious if the authentication succeeds or fails if the IdP and SP are different portal versions." />
@@ -40,8 +73,7 @@
 			<var name="idpInitiatedSSOURL" value="${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080" />
 			<var name="password" value="test" />
 			<var name="rememberMeChecked" value="false" />
-			<var name="samlEnabled" value="true" />
-			<var name="spURL" value="http://www.able.com:9080" />
+			<var name="spURL" value="http://www.able.com:9080/" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
@@ -87,8 +119,7 @@
 			<var name="idpInitiatedSSOURL" value="${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080" />
 			<var name="password" value="test" />
 			<var name="rememberMeChecked" value="true" />
-			<var name="samlEnabled" value="true" />
-			<var name="spURL" value="http://www.able.com:9080" />
+			<var name="spURL" value="http://www.able.com:9080/" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
@@ -150,8 +181,7 @@
 			<var name="idpInitiatedSSOURL" value="${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080" />
 			<var name="password" value="test" />
 			<var name="rememberMeChecked" value="true" />
-			<var name="samlEnabled" value="true" />
-			<var name="spURL" value="http://www.able.com:9080" />
+			<var name="spURL" value="http://www.able.com:9080/" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
@@ -184,7 +214,7 @@
 		<execute macro="SAML#executeSPInitiatedSSO">
 			<var name="password" value="test" />
 			<var name="specificURL" value="http://www.able.com:9080" />
-			<var name="spURL" value="http://www.able.com:9080" />
+			<var name="spURL" value="http://www.able.com:9080/" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
@@ -246,7 +276,7 @@
 		<execute macro="SAML#executeSPInitiatedSSO">
 			<var name="password" value="test" />
 			<var name="specificURL" value="http://www.able.com:9080" />
-			<var name="spURL" value="http://www.able.com:9080" />
+			<var name="spURL" value="http://www.able.com:9080/" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 

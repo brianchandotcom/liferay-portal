@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -70,8 +70,7 @@ public class OrganizationItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+		ResourceBundle resourceBundle = _portal.getResourceBundle(locale);
 
 		return LanguageUtil.get(resourceBundle, "organizations");
 	}
@@ -123,6 +122,9 @@ public class OrganizationItemSelectorView
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.users.admin.item.selector.web)"

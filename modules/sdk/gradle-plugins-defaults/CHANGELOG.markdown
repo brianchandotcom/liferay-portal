@@ -2341,6 +2341,12 @@ check.
 ### Changed
 - [LPS-75399]: Update the [Liferay Gradle Plugins] dependency to version 3.5.27.
 
+## 5.1.33 - 2017-11-03
+
+### Changed
+- [LPS-75705]: Always exclude `build` and `node_modules` directories from the
+multi-project build.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -2605,6 +2611,7 @@ check.
 [LPS-75430]: https://issues.liferay.com/browse/LPS-75430
 [LPS-75488]: https://issues.liferay.com/browse/LPS-75488
 [LPS-75624]: https://issues.liferay.com/browse/LPS-75624
+[LPS-75705]: https://issues.liferay.com/browse/LPS-75705
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

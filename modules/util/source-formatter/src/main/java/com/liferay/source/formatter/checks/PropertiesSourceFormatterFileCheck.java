@@ -36,7 +36,6 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 	@Override
 	public void init() throws Exception {
 		_hasPrivateAppsDir = _hasPrivateAppsDir();
-		_projectPathPrefix = getProjectPathPrefix();
 	}
 
 	@Override
@@ -128,6 +127,5 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 	}
 
 	private boolean _hasPrivateAppsDir;
-	private String _projectPathPrefix;
 
 }

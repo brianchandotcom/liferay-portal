@@ -576,7 +576,8 @@ public class TopLevelBuild extends BaseBuild {
 		return Dom4JUtil.getNewElement(
 			"body", null, headingElement, subheadingElement,
 			getJenkinsReportSummaryElement(), getJenkinsReportTimelineElement(),
-			getJenkinsReportTopLevelTableElement());
+			getJenkinsReportTopLevelTableElement(),
+			getJenkinsReportDownstreamElement());
 	}
 
 	protected String getJenkinsReportBuildInfoCellElementTagName() {
@@ -609,6 +610,46 @@ public class TopLevelBuild extends BaseBuild {
 		scriptElement.addText(resourceFileContent);
 
 		return scriptElement;
+	}
+
+	protected Element getJenkinsReportDownstreamElement() {
+		return Dom4JUtil.getNewElement(
+			"div", null,
+			getJenkinsReportDownstreamTableElement(null, "queued", "Queued: "),
+			getJenkinsReportDownstreamTableElement(
+				null, "starting", "Starting: "),
+			getJenkinsReportDownstreamTableElement(
+				null, "running", "Running: "),
+			getJenkinsReportDownstreamTableElement(
+				null, "missing", "Missing: "),
+			Dom4JUtil.getNewElement("h2", null, "Completed: "),
+			getJenkinsReportDownstreamTableElement(
+				"ABORTED", "completed", "---- Aborted: "),
+			getJenkinsReportDownstreamTableElement(
+				"FAILURE", "completed", "---- Failure: "),
+			getJenkinsReportDownstreamTableElement(
+				"UNSTABLE", "completed", "---- Unstable: "),
+			getJenkinsReportDownstreamTableElement(
+				"SUCCESS", "completed", "---- Success: "));
+	}
+
+	protected Element getJenkinsReportDownstreamTableElement(
+		String result, String status, String captionText) {
+
+		List<Element> tableRowElements = getJenkinsReportTableRowsElements(
+			result, status);
+
+		if (tableRowElements.isEmpty()) {
+			return null;
+		}
+
+		return Dom4JUtil.getNewElement(
+			"table", null,
+			Dom4JUtil.getNewElement(
+				"caption", null, captionText,
+				Integer.toString(tableRowElements.size())),
+			getJenkinsReportTableColumnHeadersElement(),
+			tableRowElements.toArray(new Element[tableRowElements.size()]));
 	}
 
 	protected Element getJenkinsReportHeadElement() {

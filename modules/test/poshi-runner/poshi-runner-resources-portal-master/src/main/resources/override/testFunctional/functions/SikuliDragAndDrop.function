@@ -2,7 +2,7 @@
 	<command name="sikuliDragAndDrop">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.SikuliDragAndDrop#sikuliDragAndDrop" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

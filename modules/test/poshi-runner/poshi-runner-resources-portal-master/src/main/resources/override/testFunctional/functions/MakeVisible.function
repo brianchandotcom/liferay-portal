@@ -2,7 +2,7 @@
 	<command name="makeVisible" summary-ignore="true">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.MakeVisible#makeVisible" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

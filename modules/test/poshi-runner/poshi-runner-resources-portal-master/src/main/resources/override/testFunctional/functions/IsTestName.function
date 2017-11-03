@@ -2,6 +2,6 @@
 	<command name="isTestName">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.IsTestName#isTestName" />
 	</command>
 </definition>

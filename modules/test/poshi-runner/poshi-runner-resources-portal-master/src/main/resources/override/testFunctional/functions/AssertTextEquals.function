@@ -2,7 +2,7 @@
 	<command name="assertCKEditorText">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.AssertTextEquals#assertCKEditorText" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -12,7 +12,7 @@
 	<command name="assertPartialText" summary="Assert that '${locator1}' contains the value '${value1}'">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.AssertTextEquals#assertPartialText" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -22,7 +22,7 @@
 	<command name="assertPartialTextAceEditor">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.AssertTextEquals#assertPartialTextAceEditor" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -32,7 +32,7 @@
 	<command name="assertText">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.AssertTextEquals#assertText" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -42,13 +42,13 @@
 	<command name="assertTextEquals">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.AssertTextEquals#assertTextEquals" />
 	</command>
 
 	<command name="assertTextWaitForCKEditor">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.AssertTextEquals#assertTextWaitForCKEditor" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -75,7 +75,7 @@
 	<command name="assertValue">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.AssertTextEquals#assertValue" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

@@ -2,6 +2,6 @@
 	<command name="scrollBy">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.ScrollBy#scrollBy" />
 	</command>
 </definition>

@@ -2,7 +2,7 @@
 	<command name="assertPartialSelectedLabel">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.AssertSelectedLabel#assertPartialSelectedLabel" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -12,7 +12,7 @@
 	<command name="assertSelectedLabel">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.AssertSelectedLabel#assertSelectedLabel" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

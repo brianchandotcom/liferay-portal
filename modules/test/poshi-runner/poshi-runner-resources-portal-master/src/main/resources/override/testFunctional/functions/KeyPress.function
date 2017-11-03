@@ -2,7 +2,7 @@
 	<command name="keyDown">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.KeyPress#keyDown" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -12,7 +12,7 @@
 	<command name="keyPress">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.KeyPress#keyPress" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -22,13 +22,13 @@
 	<command name="keyPressNoError">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.KeyPress#keyPressNoError" />
 	</command>
 
 	<command name="keyUp">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.KeyPress#keyUp" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

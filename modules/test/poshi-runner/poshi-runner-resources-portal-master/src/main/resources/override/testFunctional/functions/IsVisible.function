@@ -2,12 +2,12 @@
 	<command name="isVisible">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.IsVisible#isVisible" />
 	</command>
 
 	<command name="waitForVisible">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.IsVisible#waitForVisible" />
 	</command>
 </definition>

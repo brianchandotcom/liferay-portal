@@ -1,6 +1,6 @@
 <definition default="selectFrameTop">
 	<command name="selectFrameTop">
-		<super />
+		<execute function="Poshi.SelectFrameTop#selectFrameTop" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

@@ -2,7 +2,7 @@
 	<command name="ckEditorPaste">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.Paste#ckEditorPaste" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -12,7 +12,7 @@
 	<command name="paste">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.Paste#paste" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

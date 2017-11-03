@@ -2,6 +2,6 @@
 	<command name="typeScreen">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.TypeScreen#typeScreen" />
 	</command>
 </definition>

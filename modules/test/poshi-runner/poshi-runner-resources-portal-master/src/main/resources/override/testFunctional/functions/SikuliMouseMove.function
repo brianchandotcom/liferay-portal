@@ -2,7 +2,7 @@
 	<command name="sikuliMouseMove">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.SikuliMouseMove#sikuliMouseMove" />
 
 		<execute argument1="1000" selenium="pause" />
 

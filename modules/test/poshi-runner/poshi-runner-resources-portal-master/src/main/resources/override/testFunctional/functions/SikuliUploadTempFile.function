@@ -2,7 +2,7 @@
 	<command name="sikuliUploadTempFile">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.SikuliUploadTempFile#sikuliUploadTempFile" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

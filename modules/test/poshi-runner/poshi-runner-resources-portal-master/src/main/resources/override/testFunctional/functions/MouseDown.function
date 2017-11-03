@@ -2,7 +2,7 @@
 	<command name="javaScriptMouseDown">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.MouseDown#javaScriptMouseDown" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -12,7 +12,7 @@
 	<command name="mouseDown">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.MouseDown#mouseDown" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -22,7 +22,7 @@
 	<command name="mouseDownAt">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.MouseDown#mouseDownAt" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

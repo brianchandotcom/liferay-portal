@@ -2,12 +2,12 @@
 	<command name="isElementNotPresent">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.IsElementNotPresent#isElementNotPresent" />
 	</command>
 
 	<command name="isNotVisible">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.IsElementNotPresent#isNotVisible" />
 	</command>
 </definition>

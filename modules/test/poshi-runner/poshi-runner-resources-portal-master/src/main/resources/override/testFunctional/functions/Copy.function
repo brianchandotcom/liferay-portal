@@ -2,7 +2,7 @@
 	<command name="ckEditorCopy">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.Copy#ckEditorCopy" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -12,13 +12,13 @@
 	<command name="copy">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.Copy#copy" />
 	</command>
 
 	<command name="textCopy">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.Copy#textCopy" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -28,7 +28,7 @@
 	<command name="valueCopy">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.Copy#valueCopy" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

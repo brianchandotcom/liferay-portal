@@ -2,7 +2,7 @@
 	<command name="assertLocation">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.AssertLocation#assertLocation" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -12,7 +12,7 @@
 	<command name="assertPartialLocation">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.AssertLocation#assertPartialLocation" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

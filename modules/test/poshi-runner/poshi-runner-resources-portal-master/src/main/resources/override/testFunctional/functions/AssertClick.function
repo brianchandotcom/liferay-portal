@@ -2,13 +2,13 @@
 	<command name="assertClick">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.AssertClick#assertClick" />
 	</command>
 
 	<command name="assertPartialTextClickAt">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.AssertClick#assertPartialTextClickAt" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -30,7 +30,7 @@
 	<command name="assertTextClick">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.AssertClick#assertTextClick" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -40,7 +40,7 @@
 	<command name="assertTextClickAt">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.AssertClick#assertTextClickAt" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -64,7 +64,7 @@
 	<command name="assertTextClickAtAndPause">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.AssertClick#assertTextClickAtAndPause" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -90,7 +90,7 @@
 	<command name="assertTextClickNoMouseOver">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.AssertClick#assertTextClickNoMouseOver" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -114,7 +114,7 @@
 	<command name="assertValueClickAt">
 		<execute function="WaitForSPARefresh" />
 
-		<super />
+		<execute function="Poshi.AssertClick#assertValueClickAt" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -126,7 +126,7 @@
 
 		<execute argument1="1000" selenium="pause" />
 
-		<super />
+		<execute function="Poshi.AssertClick#pauseAssertPartialTextClickAt" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -138,7 +138,7 @@
 
 		<execute argument1="1000" selenium="pause" />
 
-		<super />
+		<execute function="Poshi.AssertClick#pauseAssertTextClickAt" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -150,7 +150,7 @@
 
 		<execute argument1="1000" selenium="pause" />
 
-		<super />
+		<execute function="Poshi.AssertClick#pauseMakeVisibleAssertTextEqualsClickAt" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

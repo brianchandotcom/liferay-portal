@@ -27,6 +27,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -37,6 +38,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.lang.StringUtils;
 
 import org.dom4j.Element;
 
@@ -1805,6 +1808,54 @@ public abstract class BaseBuild implements Build {
 
 	protected String getJenkinsReportBuildInfoCellElementTagName() {
 		return "td";
+	}
+
+	protected Element getJenkinsReportTableRowElement() {
+		String cellElementTagName =
+			getJenkinsReportBuildInfoCellElementTagName();
+
+		Element buildInfoElement = Dom4JUtil.getNewElement(
+			"tr", null,
+			Dom4JUtil.getNewElement(
+				cellElementTagName, null,
+				Dom4JUtil.getNewAnchorElement(
+					getBuildURL(), null, getDisplayName())),
+			Dom4JUtil.getNewElement(
+				cellElementTagName, null,
+				Dom4JUtil.getNewAnchorElement(
+					getBuildURL() + "console", null, "Console")),
+			Dom4JUtil.getNewElement(
+				cellElementTagName, null,
+				Dom4JUtil.getNewAnchorElement(
+					getBuildURL() + "testReport", "Test Report")),
+			Dom4JUtil.getNewElement(
+				cellElementTagName, null,
+				JenkinsResultsParserUtil.toDateString(
+					new Date(getStartTimestamp()))),
+			Dom4JUtil.getNewElement(
+				cellElementTagName, null,
+				JenkinsResultsParserUtil.toDurationString(getDuration())));
+
+		String status = getStatus();
+
+		if (status != null) {
+			status = StringUtils.upperCase(status);
+		}
+		else {
+			status = "";
+		}
+
+		Dom4JUtil.getNewElement(cellElementTagName, buildInfoElement, status);
+
+		String result = getResult();
+
+		if (result == null) {
+			result = "";
+		}
+
+		Dom4JUtil.getNewElement(cellElementTagName, buildInfoElement, result);
+
+		return buildInfoElement;
 	}
 
 	protected Set<String> getJobParameterNames() {

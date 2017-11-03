@@ -979,30 +979,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	public WikiPage getDraftPage(long nodeId, String title)
 		throws PortalException {
 
-		List<WikiPage> pages = wikiPagePersistence.findByN_T_S(
-			nodeId, title, WorkflowConstants.STATUS_DRAFT, 0, 1);
+		WikiPage page = wikiPagePersistence.fetchByN_T_S_First(
+			nodeId, title, WorkflowConstants.STATUS_DRAFT, null);
 
-		if (!pages.isEmpty()) {
-			return pages.get(0);
+		if (page != null) {
+			return page;
 		}
 
-		pages = wikiPagePersistence.findByN_T_S(
-			nodeId, title, WorkflowConstants.STATUS_PENDING, 0, 1);
-
-		if (!pages.isEmpty()) {
-			return pages.get(0);
-		}
-		else {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("{nodeId=");
-			sb.append(nodeId);
-			sb.append(", title=");
-			sb.append(title);
-			sb.append("}");
-
-			throw new NoSuchPageException(sb.toString());
-		}
+		return wikiPagePersistence.findByN_T_S_First(
+			nodeId, title, WorkflowConstants.STATUS_PENDING, null);
 	}
 
 	@Override
@@ -1173,53 +1158,18 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	@Override
 	public WikiPage getPage(long nodeId, String title) throws PortalException {
-		WikiPage page = fetchPage(nodeId, title);
-
-		if (page != null) {
-			return page;
-		}
-		else {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("{nodeId=");
-			sb.append(nodeId);
-			sb.append(", title=");
-			sb.append(title);
-			sb.append("}");
-
-			throw new NoSuchPageException(sb.toString());
-		}
+		return wikiPagePersistence.findByN_T_H_First(nodeId, title, true, null);
 	}
 
 	@Override
 	public WikiPage getPage(long nodeId, String title, Boolean head)
 		throws PortalException {
 
-		List<WikiPage> pages;
-
 		if (head == null) {
-			pages = wikiPagePersistence.findByN_T(nodeId, title, 0, 1);
-		}
-		else {
-			pages = wikiPagePersistence.findByN_T_H(nodeId, title, head, 0, 1);
+			return wikiPagePersistence.findByN_T_First(nodeId, title, null);
 		}
 
-		if (!pages.isEmpty()) {
-			return pages.get(0);
-		}
-		else {
-			StringBundler sb = new StringBundler(7);
-
-			sb.append("{nodeId=");
-			sb.append(nodeId);
-			sb.append(", title=");
-			sb.append(title);
-			sb.append(", head=");
-			sb.append(head);
-			sb.append("}");
-
-			throw new NoSuchPageException(sb.toString());
-		}
+		return wikiPagePersistence.findByN_T_H_First(nodeId, title, head, null);
 	}
 
 	@Override
@@ -1627,11 +1577,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	public WikiPage movePageToTrash(long userId, long nodeId, String title)
 		throws PortalException {
 
-		List<WikiPage> wikiPages = wikiPagePersistence.findByN_T_H(
-			nodeId, title, true, 0, 1);
+		WikiPage page = wikiPagePersistence.fetchByN_T_H_First(
+			nodeId, title, true, null);
 
-		if (!wikiPages.isEmpty()) {
-			return movePageToTrash(userId, wikiPages.get(0));
+		if (page != null) {
+			return movePageToTrash(userId, page);
 		}
 
 		return null;
@@ -2039,19 +1989,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		WikiPageResource pageResource =
 			wikiPageResourcePersistence.findByPrimaryKey(resourcePrimKey);
 
-		List<WikiPage> pages = wikiPagePersistence.findByN_T(
-			pageResource.getNodeId(), pageResource.getTitle(), 0, 1,
+		WikiPage page = wikiPagePersistence.findByN_T_First(
+			pageResource.getNodeId(), pageResource.getTitle(),
 			new PageVersionComparator());
-
-		WikiPage page = null;
-
-		if (!pages.isEmpty()) {
-			page = pages.get(0);
-		}
-		else {
-			throw new NoSuchPageException(
-				"{resourcePrimKey=" + resourcePrimKey + "}");
-		}
 
 		return updateStatus(
 			userId, page, status, serviceContext,

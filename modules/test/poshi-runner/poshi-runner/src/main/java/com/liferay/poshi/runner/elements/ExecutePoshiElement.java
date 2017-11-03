@@ -15,6 +15,7 @@
 package com.liferay.poshi.runner.elements;
 
 import com.liferay.poshi.runner.util.RegexUtil;
+import com.liferay.poshi.runner.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -247,8 +248,8 @@ public class ExecutePoshiElement extends BasePoshiElement {
 		StringBuffer formattedContent = new StringBuffer();
 
 		while (matcher.find()) {
-			String replacementString =
-				pad + matcher.group(1) + "," + matcher.group(2);
+			String replacementString = StringUtil.combine(
+				pad, matcher.group(1), ",", matcher.group(2));
 
 			replacementString = replacementString.replace("$", "\\$");
 

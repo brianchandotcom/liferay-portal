@@ -251,16 +251,6 @@ public class KBFolderKBArticleSelector implements KBArticleSelector {
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setKBArticleLocalService(KBArticleService kbArticleService) {
-		_kbArticleService = kbArticleService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBFolderLocalService(KBFolderService kbFolderService) {
-		_kbFolderService = kbFolderService;
-	}
-
 	private static final KBFolder _rootKBFolder;
 
 	static {
@@ -269,7 +259,10 @@ public class KBFolderKBArticleSelector implements KBArticleSelector {
 		_rootKBFolder.setKbFolderId(KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
+	@Reference
 	private KBArticleService _kbArticleService;
+
+	@Reference
 	private KBFolderService _kbFolderService;
 
 }

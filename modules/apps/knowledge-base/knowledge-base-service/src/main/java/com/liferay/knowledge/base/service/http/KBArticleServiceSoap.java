@@ -174,6 +174,22 @@ public class KBArticleServiceSoap {
 		}
 	}
 
+	public static com.liferay.knowledge.base.model.KBArticleSoap fetchLatestKBArticleByUrlTitle(
+		long groupId, long kbFolderId, java.lang.String urlTitle, int status)
+		throws RemoteException {
+		try {
+			com.liferay.knowledge.base.model.KBArticle returnValue = KBArticleServiceUtil.fetchLatestKBArticleByUrlTitle(groupId,
+					kbFolderId, urlTitle, status);
+
+			return com.liferay.knowledge.base.model.KBArticleSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* @deprecated As of 1.1.0, replaced by {@link
 	#getAllDescendantKBArticles(long, long, int,

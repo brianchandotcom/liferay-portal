@@ -533,8 +533,15 @@ public class JenkinsResultsParserUtil {
 		return "";
 	}
 
-	public static String getAxisVariable(String axisBuildURL) throws Exception {
-		String url = decode(axisBuildURL);
+	public static String getAxisVariable(String axisBuildURL) {
+		String url = null;
+
+		try {
+			url = decode(axisBuildURL);
+		}
+		catch (UnsupportedEncodingException uee) {
+			throw new RuntimeException("Unable to encode " + axisBuildURL);
+		}
 
 		String label = "AXIS_VARIABLE=";
 

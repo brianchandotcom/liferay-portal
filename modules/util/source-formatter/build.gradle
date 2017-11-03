@@ -25,8 +25,9 @@ dependencies {
 	compile group: "org.apache.maven", name: "maven-artifact", version: "3.3.9"
 	compile group: "xerces", name: "xercesImpl", version: "2.11.0"
 
+	compileInclude group: "com.liferay", name: "com.liferay.petra.nio", version: "1.0.0"
+
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	provided group: "com.liferay", name: "com.liferay.petra.nio", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.49.0"
@@ -40,6 +41,10 @@ formatSource {
 
 liferay {
 	deployDir = "../../../tools/sdk/dependencies/com.liferay.source.formatter/lib"
+}
+
+liferayOSGi {
+	expandCompileInclude = true
 }
 
 updateFileVersions {

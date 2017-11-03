@@ -19,7 +19,10 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.util.DDMFormLayoutFactory;
+import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -56,7 +59,8 @@ public class DDMFormRendererHelper {
 			DDMForm ddmForm = getDDMForm();
 
 			return _ddmFormRenderer.render(
-				ddmForm, createDDMFormRenderingContext(ddmForm));
+				ddmForm, getDDMFormLayout(ddmForm),
+				createDDMFormRenderingContext(ddmForm));
 		}
 		catch (DDMFormRenderingException ddmfre) {
 			_log.error("Unable to render DDM Form ", ddmfre);
@@ -101,6 +105,22 @@ public class DDMFormRendererHelper {
 					_configurationModel, locale, resourceBundle);
 
 		return configurationModelToDDMFormConverter.getDDMForm();
+	}
+
+	protected DDMFormLayout getDDMFormLayout(DDMForm ddmForm) {
+		Class<?> formClass =
+			ConfigurationDDMFormDeclarationUtil.getConfigurationDDMFormClass(
+				_configurationModel);
+
+		if (formClass != null) {
+			try {
+				return DDMFormLayoutFactory.create(formClass);
+			}
+			catch (IllegalArgumentException iae) {
+			}
+		}
+
+		return DDMUtil.getDefaultDDMFormLayout(ddmForm);
 	}
 
 	protected DDMFormValues getDDMFormValues(DDMForm ddmForm) {

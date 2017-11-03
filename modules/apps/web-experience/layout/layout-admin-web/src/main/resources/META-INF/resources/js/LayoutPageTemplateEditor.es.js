@@ -1,4 +1,5 @@
 import Component from 'metal-component';
+import debounce from 'metal-debounce';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
@@ -10,6 +11,28 @@ import templates from './LayoutPageTemplateEditor.soy';
  * Component that allows creating/editing Layout Page Templates
  */
 class LayoutPageTemplateEditor extends Component {
+	/**
+	 * @inheritDoc
+	 */
+	created() {
+		this._updatePageTemplate = this._updatePageTemplate.bind(this);
+		this._updatePageTemplate = debounce(this._updatePageTemplate, 1000);
+	}
+
+	/**
+	 * @inheritDoc
+	 * If there are changes on any fragment, it sets the _dirty property
+	 * to true and queues an update.
+	 */
+	shouldUpdate(changes) {
+		if (changes.fragments) {
+			this._dirty = true;
+			this._updatePageTemplate();
+		}
+
+		return true;
+	}
+
 	/**
 	 * Callback executed when a fragment entry of a collection is clicked.
 	 * It receives fragmentEntryId and fragmentName as event data.
@@ -41,6 +64,38 @@ class LayoutPageTemplateEditor extends Component {
 			...this.fragments.slice(index + 1),
 		];
 	}
+
+	/**
+	 * Sends the page template accumulated changes to the server and, if
+	 * success, sets the _dirty property to false.
+	 * @private
+	 */
+	_updatePageTemplate() {
+		this._dirty = false;
+
+		const body = new FormData();
+
+		body.append(
+			`${this.portletNamespace}layoutPageTemplateEntryId`,
+			this.layoutPageTemplateEntryId
+		);
+
+		this.fragments.forEach(fragment => {
+			body.append(
+				`${this.portletNamespace}fragmentIds`,
+				fragment.fragmentEntryId
+			);
+		});
+
+		fetch(this.updatePageTemplateURL, {
+			body,
+			credentials: 'include',
+			method: 'POST',
+		}).then(() => {
+			this._lastSaveDate = new Date().toLocaleTimeString();
+			this._dirty = false;
+		});
+	}
 }
 
 /**
@@ -71,6 +126,15 @@ LayoutPageTemplateEditor.STATE = {
 	).required(),
 
 	/**
+	 * Optional ID provided by the template system.
+	 * @default ''
+	 * @instance
+	 * @memberOf LayoutPageTemplateEditor
+	 * @type {string}
+	 */
+	id: Config.string().value(''),
+
+	/**
 	 * List of fragment instances part of the Layout Page Template, the order
 	 * of the elements in this array defines their position.
 	 * @default []
@@ -87,13 +151,13 @@ LayoutPageTemplateEditor.STATE = {
 	).value([]),
 
 	/**
-	 * Optional ID provided by the template system.
-	 * @default ''
+	 * Layout page template entry id used for storing changes.
+	 * @default undefined
 	 * @instance
-	 * @memberOf LayoutPageTemplateEditor
-	 * @type {string}
+	 * @memberOf PageTemplateEditor
+	 * @type {!string}
 	 */
-	id: Config.string().value(''),
+	layoutPageTemplateEntryId: Config.string().required(),
 
 	/**
 	 * Portlet namespace needed for prefixing form inputs
@@ -112,6 +176,39 @@ LayoutPageTemplateEditor.STATE = {
 	 * @type {!string}
 	 */
 	spritemap: Config.string().required(),
+
+	/**
+	 * URL for updating the layout page template.
+	 * @default undefined
+	 * @instance
+	 * @memberOf LayoutPageTemplateEditor
+	 * @type {!string}
+	 */
+	updatePageTemplateURL: Config.string().required(),
+
+	/**
+	 * When true, it indicates that are changes pending to save.
+	 * @default false
+	 * @instance
+	 * @memberOf PageTemplateEditor
+	 * @private
+	 * @type {bool}
+	 */
+	_dirty: Config.bool()
+		.internal()
+		.value(false),
+
+	/**
+	 * Last data when the autosave has been executed.
+	 * @default ''
+	 * @instance
+	 * @memberOf PageTemplateEditor
+	 * @private
+	 * @type {string}
+	 */
+	_lastSaveDate: Config.string()
+		.internal()
+		.value(''),
 };
 
 Soy.register(LayoutPageTemplateEditor, templates);

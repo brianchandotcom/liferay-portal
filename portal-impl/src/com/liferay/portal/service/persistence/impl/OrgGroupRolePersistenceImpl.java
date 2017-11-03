@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.service.persistence.OrgGroupRolePK;
 import com.liferay.portal.kernel.service.persistence.OrgGroupRolePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.impl.OrgGroupRoleImpl;
@@ -1696,6 +1697,11 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	}
 
 	@Override
+	public Set<String> getCompoundPKColumnNames() {
+		return _compoundPKColumnNames;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return OrgGroupRoleModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1725,4 +1731,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No OrgGroupRole exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No OrgGroupRole exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(OrgGroupRolePersistenceImpl.class);
+	private static final Set<String> _compoundPKColumnNames = SetUtil.fromArray(new String[] {
+				"organizationId", "groupId", "roleId"
+			});
 }

@@ -1484,6 +1484,13 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		}
 	</#if>
 
+	<#if entity.hasCompoundPK()>
+		@Override
+		public Set<String> getCompoundPKColumnNames() {
+			return _compoundPKColumnNames;
+		}
+	</#if>
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return ${entity.name}ModelImpl.TABLE_COLUMNS_MAP;
@@ -1843,6 +1850,19 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		private static final Set<String> _badColumnNames = SetUtil.fromArray(
 			new String[] {
 				<#list entity.badNamedColumnsList as column>
+					"${column.name}"
+
+					<#if column_has_next>
+						,
+					</#if>
+				</#list>
+			});
+	</#if>
+
+	<#if entity.hasCompoundPK()>
+		private static final Set<String> _compoundPKColumnNames = SetUtil.fromArray(
+			new String[] {
+				<#list entity.getPKList() as column>
 					"${column.name}"
 
 					<#if column_has_next>

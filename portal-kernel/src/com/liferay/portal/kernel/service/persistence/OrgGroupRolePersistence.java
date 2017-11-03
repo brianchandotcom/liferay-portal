@@ -422,4 +422,6 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	* @return the number of org group roles
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getCompoundPKColumnNames();
 }

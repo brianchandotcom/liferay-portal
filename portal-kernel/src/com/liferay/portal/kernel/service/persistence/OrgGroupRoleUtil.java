@@ -570,6 +570,10 @@ public class OrgGroupRoleUtil {
 		return getPersistence().countAll();
 	}
 
+	public static java.util.Set<java.lang.String> getCompoundPKColumnNames() {
+		return getPersistence().getCompoundPKColumnNames();
+	}
+
 	public static OrgGroupRolePersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (OrgGroupRolePersistence)PortalBeanLocatorUtil.locate(OrgGroupRolePersistence.class.getName());

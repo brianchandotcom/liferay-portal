@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.service.persistence.UserGroupGroupRolePK;
 import com.liferay.portal.kernel.service.persistence.UserGroupGroupRolePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.impl.UserGroupGroupRoleImpl;
@@ -3405,6 +3406,11 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 	}
 
 	@Override
+	public Set<String> getCompoundPKColumnNames() {
+		return _compoundPKColumnNames;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return UserGroupGroupRoleModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3434,4 +3440,7 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No UserGroupGroupRole exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No UserGroupGroupRole exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(UserGroupGroupRolePersistenceImpl.class);
+	private static final Set<String> _compoundPKColumnNames = SetUtil.fromArray(new String[] {
+				"userGroupId", "groupId", "roleId"
+			});
 }

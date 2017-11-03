@@ -577,6 +577,10 @@ public class TopLevelBuild extends BaseBuild {
 			getJenkinsReportTimelineElement());
 	}
 
+	protected String getJenkinsReportBuildInfoCellElementTagName() {
+		return "th";
+	}
+
 	protected Element getJenkinsReportChartJsScriptElement(
 		String xData, String y1Data, String y2Data) {
 

@@ -1020,7 +1020,7 @@ public abstract class BaseBuild implements Build {
 			ioe.printStackTrace();
 		}
 
-		if (!slaveOffline) {
+		if (slaveOffline) {
 			return;
 		}
 
@@ -1138,7 +1138,7 @@ public abstract class BaseBuild implements Build {
 						return;
 					}
 
-					if (!(this instanceof TopLevelBuild) && !fromArchive) {
+					if (!fromArchive) {
 						for (SlaveOfflineRule slaveOfflineRule :
 								slaveOfflineRules) {
 

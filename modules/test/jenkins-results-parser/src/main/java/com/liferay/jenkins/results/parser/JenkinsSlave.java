@@ -32,16 +32,10 @@ public class JenkinsSlave {
 	}
 
 	public boolean isOffline() throws IOException {
-		if (_offline != null) {
-			return _offline;
-		}
-
 		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
 			_localURL + "api/json?tree=offline");
 
-		_offline = jsonObject.getBoolean("offline");
-
-		return _offline;
+		return jsonObject.getBoolean("offline");
 	}
 
 	public void takeSlavesOffline(String offlineReason) {
@@ -81,7 +75,6 @@ public class JenkinsSlave {
 
 	private final String _localURL;
 	private final String _masterName;
-	private Boolean _offline;
 	private final String _slaveName;
 
 }

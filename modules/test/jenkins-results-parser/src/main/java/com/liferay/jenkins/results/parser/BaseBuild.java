@@ -611,6 +611,22 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public Build getLongestRunningDownstreamBuild() {
+		Build longestRunningDownstreamBuild = null;
+
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			if ((longestRunningDownstreamBuild == null) ||
+				(downstreamBuild.getDuration() >
+					longestRunningDownstreamBuild.getDuration())) {
+
+				longestRunningDownstreamBuild = downstreamBuild;
+			}
+		}
+
+		return longestRunningDownstreamBuild;
+	}
+
+	@Override
 	public String getMaster() {
 		return master;
 	}

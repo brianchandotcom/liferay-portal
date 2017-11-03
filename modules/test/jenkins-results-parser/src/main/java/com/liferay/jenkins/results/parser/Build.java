@@ -86,6 +86,8 @@ public interface Build {
 
 	public Long getLatestStartTimestamp();
 
+	public Build getLongestRunningDownstreamBuild();
+
 	public String getMaster();
 
 	public String getOperatingSystem();

@@ -8497,6 +8497,13 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					src="dist/liferay-portal-${lp.version}.war"
 				/>
 
+				<if>
+					<equals arg1="${app.server.type}" arg2="jboss" />
+					<then>
+						<touch file="${app.server.portal.dir}.dodeploy" />
+					</then>
+				</if>
+
 				<delete dir="dist" />
 
 				<ant antfile="build.xml" inheritAll="false" target="update-app-server-scripts">

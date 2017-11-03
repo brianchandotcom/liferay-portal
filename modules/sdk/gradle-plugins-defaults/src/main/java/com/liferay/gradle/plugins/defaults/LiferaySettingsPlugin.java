@@ -199,6 +199,14 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
+					String dirName = String.valueOf(dirPath.getFileName());
+
+					if (dirName.equals("build") ||
+						dirName.equals("node_modules")) {
+
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
 					ProjectDirType projectDirType = _getProjectDirType(dirPath);
 
 					if (projectDirType == ProjectDirType.UNKNOWN) {

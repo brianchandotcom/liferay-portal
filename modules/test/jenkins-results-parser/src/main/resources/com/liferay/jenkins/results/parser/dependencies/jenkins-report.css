@@ -1,0 +1,18 @@
+caption, table, td, th {
+	padding: .5em;
+	text-align: left;
+	white-space: nowrap;
+}
+
+th:first-child {
+	text-indent: 1em;
+}
+
+td:first-child {
+	text-indent: 4em;
+}
+
+caption {
+	font-size: 150%;
+	font-weight: bold;
+}

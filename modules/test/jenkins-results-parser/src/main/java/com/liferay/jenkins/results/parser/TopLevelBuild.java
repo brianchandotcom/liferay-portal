@@ -37,6 +37,7 @@ import java.util.regex.Pattern;
 
 import org.dom4j.Element;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -537,7 +538,26 @@ public class TopLevelBuild extends BaseBuild {
 	}
 
 	protected Element getJenkinsReportBodyElement() {
-		return null;
+		String buildURL = getBuildURL();
+
+		Element headingElement = Dom4JUtil.getNewElement(
+			"h1", null, "Jenkins report for ",
+			Dom4JUtil.getNewAnchorElement(buildURL, buildURL));
+
+		JSONObject jobJSONObject = getBuildJSONObject();
+
+		Element subheadingElement = null;
+
+		try {
+			subheadingElement = Dom4JUtil.getNewElement(
+				"h2", null, jobJSONObject.getString("description"));
+		}
+		catch (JSONException jsone) {
+			jsone.printStackTrace();
+		}
+
+		return Dom4JUtil.getNewElement(
+			"body", null, headingElement, subheadingElement);
 	}
 
 	protected Element getJenkinsReportHeadElement() {

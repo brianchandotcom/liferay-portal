@@ -200,6 +200,11 @@ public class BatchBuild extends BaseBuild {
 	}
 
 	@Override
+	public int getTotalSlavesUsedCount() {
+		return super.getTotalSlavesUsedCount() - 1;
+	}
+
+	@Override
 	public void update() {
 		super.update();
 

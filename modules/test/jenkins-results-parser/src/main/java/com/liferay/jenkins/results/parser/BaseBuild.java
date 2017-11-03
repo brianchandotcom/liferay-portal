@@ -864,6 +864,17 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public int getTotalSlavesUsedCount() {
+		int totalSlavesUsedCount = 1;
+
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			totalSlavesUsedCount += downstreamBuild.getTotalSlavesUsedCount();
+		}
+
+		return totalSlavesUsedCount;
+	}
+
+	@Override
 	public boolean hasBuildURL(String buildURL) {
 		try {
 			buildURL = JenkinsResultsParserUtil.decode(buildURL);

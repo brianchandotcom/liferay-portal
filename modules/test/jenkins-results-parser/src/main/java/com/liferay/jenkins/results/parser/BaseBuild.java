@@ -348,22 +348,38 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public int getDownstreamBuildCount(String status) {
-		List<Build> downstreamBuilds = getDownstreamBuilds(status);
+		return getDownstreamBuildCount(null, status);
+	}
+
+	@Override
+	public int getDownstreamBuildCount(String result, String status) {
+		List<Build> downstreamBuilds = getDownstreamBuilds(result, status);
 
 		return downstreamBuilds.size();
 	}
 
 	@Override
 	public List<Build> getDownstreamBuilds(String status) {
-		if (status == null) {
+		return getDownstreamBuilds(null, status);
+	}
+
+	@Override
+	public List<Build> getDownstreamBuilds(String result, String status) {
+		if ((result == null) && (status == null)) {
 			return downstreamBuilds;
 		}
 
 		List<Build> filteredDownstreamBuilds = new ArrayList<>();
 
 		for (Build downstreamBuild : downstreamBuilds) {
-			if (status.equals(downstreamBuild.getStatus())) {
+			if (((status == null) ||
+				 status.equals(downstreamBuild.getStatus())) &&
+				((result == null) ||
+				 result.equals(downstreamBuild.getResult()))) {
+
 				filteredDownstreamBuilds.add(downstreamBuild);
+
+				continue;
 			}
 		}
 

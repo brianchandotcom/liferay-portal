@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.calendar.exception.CalendarBookingRecurrenceException;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
+import com.liferay.calendar.notification.NotificationTemplateType;
 import com.liferay.calendar.notification.NotificationType;
 import com.liferay.calendar.recurrence.Recurrence;
 import com.liferay.calendar.recurrence.RecurrenceSerializer;
@@ -25,6 +26,7 @@ import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.calendar.service.CalendarLocalServiceUtil;
 import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
 import com.liferay.calendar.test.util.CalendarBookingTestUtil;
+import com.liferay.calendar.test.util.CalendarNotificationTemplateTestUtil;
 import com.liferay.calendar.test.util.CalendarStagingTestUtil;
 import com.liferay.calendar.test.util.CalendarTestUtil;
 import com.liferay.calendar.test.util.CalendarWorkflowTestUtil;
@@ -1547,6 +1549,38 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
+	public void testNotificationIsSendWithLastPublishedEmailTemplate()
+		throws Exception {
+
+		_liveGroup = GroupTestUtil.addGroup();
+
+		Calendar liveCalendar = CalendarTestUtil.getDefaultCalendar(_liveGroup);
+
+		CalendarStagingTestUtil.enableLocalStaging(_liveGroup, true);
+
+		Calendar stagingCalendar = CalendarStagingTestUtil.getStagingCalendar(
+			_liveGroup, liveCalendar);
+
+		Calendar invitedCalendar = CalendarTestUtil.addCalendar(_user);
+
+		CalendarBookingTestUtil.addMasterCalendarBookingWithWorkflow(
+			stagingCalendar, invitedCalendar, WorkflowConstants.ACTION_PUBLISH);
+
+		String mailBody = RandomTestUtil.randomString();
+		String mailSubject = RandomTestUtil.randomString();
+
+		CalendarNotificationTemplateTestUtil.addCalendarNotificationTemplate(
+			stagingCalendar, NotificationTemplateType.INVITE,
+			"test@liferay.com", "Test Test", mailSubject, mailBody);
+
+		CalendarStagingTestUtil.publishLayouts(_liveGroup, true);
+
+		CalendarBookingLocalServiceUtil.checkCalendarBookings();
+
+		assertMailBody(mailSubject, mailBody);
+	}
+
+	@Test
 	public void testPublishCalendarBooking() throws Exception {
 		ServiceContext serviceContext = createServiceContext();
 
@@ -2986,6 +3020,18 @@ public class CalendarBookingLocalServiceTest {
 			hour, jCalendar.get(java.util.Calendar.HOUR_OF_DAY));
 
 		Assert.assertEquals(minute, jCalendar.get(java.util.Calendar.MINUTE));
+	}
+
+	protected void assertMailBody(String subject, String expectedBody) {
+		List<MailMessage> mailMessages = MailServiceTestUtil.getMailMessages(
+			"Subject", subject);
+
+		Assert.assertFalse(mailMessages.isEmpty());
+
+		MailMessage mailMessage = mailMessages.get(0);
+
+		Assert.assertEquals(
+			mailMessages.toString(), mailMessage.getBody(), expectedBody);
 	}
 
 	protected void assertMailSubjectCount(String messageSubject, int count) {

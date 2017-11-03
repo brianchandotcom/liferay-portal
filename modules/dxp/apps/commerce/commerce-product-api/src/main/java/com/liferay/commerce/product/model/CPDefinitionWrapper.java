@@ -311,6 +311,11 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	@Override
+	public java.util.List<CPInstance> getCPDefinitionInstances() {
+		return _cpDefinition.getCPDefinitionInstances();
+	}
+
+	@Override
 	public java.util.List<CPDefinitionOptionRel> getCPDefinitionOptionRels() {
 		return _cpDefinition.getCPDefinitionOptionRels();
 	}

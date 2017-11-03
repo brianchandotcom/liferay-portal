@@ -58,6 +58,8 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 
 	public java.util.List<CPDefinitionSpecificationOptionValue> getCPDefinitionSpecificationOptionValues();
 
+	public java.util.List<CPInstance> getCPDefinitionInstances();
+
 	public java.lang.String getDefaultImageThumbnailSrc(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws java.lang.Exception;

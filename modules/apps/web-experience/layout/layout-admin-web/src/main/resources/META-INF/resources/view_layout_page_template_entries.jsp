@@ -127,11 +127,52 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateCo
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-page-template") %>' url="<%= addLayoutPageTemplateEntryURL.toString() %>" />
+		<liferay-frontend:add-menu-item id="addLayoutPageTemplateEntryMenuItem" title='<%= LanguageUtil.get(request, "add-page-template") %>' url="<%= addLayoutPageTemplateEntryURL.toString() %>" />
 	</liferay-frontend:add-menu>
 </c:if>
 
-<aui:script sandbox="<%= true %>">
+<portlet:actionURL name="/layout/add_layout_page_template_entry" var="addLayoutPageTemplateEntryURL">
+	<portlet:param name="mvcPath" value="/edit_layout_page_template_entry.jsp" />
+	<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionId()) %>" />
+</portlet:actionURL>
+
+<aui:script require="layout-admin-web/js/LayoutPageTemplateNameEditor.es">
+	var layoutPageTemplateNameEditor;
+
+	function handleAddLayoutPageTemplateEntryMenuItemClick (event) {
+		event.preventDefault();
+
+		layoutPageTemplateNameEditor = new layoutAdminWebJsLayoutPageTemplateNameEditorEs.default(
+			{
+				actionURL: '<%= addLayoutPageTemplateEntryURL.toString() %>',
+				editorTitle: '<liferay-ui:message key="add-page-template" />',
+				events: {
+					hide: function() {
+						layoutPageTemplateNameEditor.dispose();
+
+						layoutPageTemplateNameEditor = null;
+					}
+				},
+				namespace: '<portlet:namespace />',
+				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+			}
+		);
+	}
+
+	function handleDestroyPortlet () {
+		addLayoutPageTemplateEntryMenuItem.removeEventListener('click', handleAddLayoutPageTemplateEntryMenuItemClick);
+
+		if (layoutPageTemplateNameEditor) {
+			layoutPageTemplateNameEditor.dispose();
+		}
+
+		Liferay.detach('destroyPortlet', handleDestroyPortlet);
+	}
+
+	var addLayoutPageTemplateEntryMenuItem = document.getElementById('<portlet:namespace />addLayoutPageTemplateEntryMenuItem');
+
+	addLayoutPageTemplateEntryMenuItem.addEventListener('click', handleAddLayoutPageTemplateEntryMenuItemClick);
+
 	$('#<portlet:namespace />deleteSelectedLayoutPageTemplateEntries').on(
 		'click',
 		function() {
@@ -140,4 +181,6 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateCo
 			}
 		}
 	);
+
+	Liferay.on('destroyPortlet', handleDestroyPortlet);
 </aui:script>

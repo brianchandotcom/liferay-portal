@@ -26,10 +26,11 @@ public class LegacyDataArchiveGroup {
 
 	public LegacyDataArchiveGroup(
 		LegacyDataArchiveUtil legacyDataArchiveUtil,
-		String legacyDataArchiveType) {
+		String legacyDataArchiveType, String portalVersion) {
 
 		_legacyDataArchiveUtil = legacyDataArchiveUtil;
 		_legacyDataArchiveType = legacyDataArchiveType;
+		_portalVersion = portalVersion;
 	}
 
 	public void addLegacyDataArchive(LegacyDataArchive legacyDataArchive) {
@@ -48,15 +49,27 @@ public class LegacyDataArchiveGroup {
 
 		String status = legacyDataGitWorkingDirectory.status();
 
-		if (!status.contains("nothing to commit, working directory clean")) {
-			ManualCommit latestManualCommit =
+		if (!status.contains("nothing to commit, working directory clean") &&
+			!status.contains(
+				"nothing added to commit but untracked files present")) {
+
+			Commit latestManualCommit =
 				_legacyDataArchiveUtil.getLatestManualCommit();
 
 			legacyDataGitWorkingDirectory.commitStagedFilesToCurrentBranch(
 				JenkinsResultsParserUtil.combine(
-					"archive:ignore Update '", _legacyDataArchiveType, "' at ",
+					"archive:ignore Update '", _legacyDataArchiveType,
+					"' for '", _portalVersion, "' at ",
 					latestManualCommit.getAbbreviatedSHA(), "."));
+
+			String gitLog = legacyDataGitWorkingDirectory.log(1);
+
+			_commit = CommitFactory.newCommit(gitLog);
 		}
+	}
+
+	public Commit getCommit() {
+		return _commit;
 	}
 
 	public String getLegacyDataArchiveType() {
@@ -73,8 +86,10 @@ public class LegacyDataArchiveGroup {
 		return true;
 	}
 
+	private Commit _commit;
 	private List<LegacyDataArchive> _legacyDataArchives = new ArrayList<>();
 	private final String _legacyDataArchiveType;
 	private final LegacyDataArchiveUtil _legacyDataArchiveUtil;
+	private final String _portalVersion;
 
 }

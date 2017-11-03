@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -54,15 +56,19 @@ public class LegacyDataArchiveUtil {
 
 		_legacyDataGitWorkingDirectory.clean();
 
-		_legacyDataArchives = _getLegacyDataArchives(_getBuildProperties());
+		Properties buildProperties = _getBuildProperties();
+
+		_legacyDataArchives = _getLegacyDataArchives(buildProperties);
+
 		_latestLegacyDataArchiveCommits = _getLatestLegacyDataArchiveCommits();
 		_latestManualCommit = _getLatestManualCommit();
+		_portalVersions = _getPortalVersions(buildProperties);
 
 		_legacyDataArchiveGroupMap = _getLegacyDataArchiveGroupMap(
 			_legacyDataArchives);
 	}
 
-	public GitWorkingDirectory.Branch createTemporaryBranch()
+	public GitWorkingDirectory.Branch createAndPushTemporaryBranch()
 		throws IOException {
 
 		GitWorkingDirectory.Branch upstreamBranch =
@@ -86,16 +92,22 @@ public class LegacyDataArchiveUtil {
 
 		_legacyDataGitWorkingDirectory.checkoutBranch(temporaryBranch);
 
-		List<LegacyDataArchiveGroup> legacyDataArchiveGroupList =
-			new ArrayList<>(_legacyDataArchiveGroupMap.values());
-
 		for (LegacyDataArchiveGroup legacyDataArchiveGroup :
-				legacyDataArchiveGroupList) {
+				_legacyDataArchiveGroupMap.values()) {
 
 			if (!legacyDataArchiveGroup.isUpdated()) {
 				legacyDataArchiveGroup.commitLegacyDataArchives();
+
+				_legacyDataArchiveTypes.add(
+					legacyDataArchiveGroup.getLegacyDataArchiveType());
 			}
 		}
+
+		GitWorkingDirectory.Remote upstreamRemote =
+			_legacyDataGitWorkingDirectory.getRemote("upstream");
+
+		_legacyDataGitWorkingDirectory.pushToRemote(
+			true, temporaryBranch, temporaryBranchName, upstreamRemote);
 
 		return temporaryBranch;
 	}
@@ -104,12 +116,16 @@ public class LegacyDataArchiveUtil {
 		return _generatedLegacyDataArchiveDirectory;
 	}
 
-	public List<LegacyDataArchiveCommit> getLatestLegacyDataArchiveCommits() {
+	public List<Commit> getLatestLegacyDataArchiveCommits() {
 		return _latestLegacyDataArchiveCommits;
 	}
 
-	public ManualCommit getLatestManualCommit() {
+	public Commit getLatestManualCommit() {
 		return _latestManualCommit;
+	}
+
+	public Set<String> getLegacyDataArchiveTypes() {
+		return _legacyDataArchiveTypes;
 	}
 
 	public GitWorkingDirectory getLegacyDataGitWorkingDirectory() {
@@ -118,6 +134,114 @@ public class LegacyDataArchiveUtil {
 
 	public File getLegacyDataWorkingDirectory() {
 		return _legacyDataGitWorkingDirectory.getWorkingDirectory();
+	}
+
+	public Set<String> getPortalVersions() {
+		return _portalVersions;
+	}
+
+	public void pushLegacyDataArchivesToUpstream(Build build) {
+		Map<String, Commit> commitCondidates = new HashMap<>();
+
+		for (LegacyDataArchiveGroup legacyDataArchiveGroup :
+				_legacyDataArchiveGroupMap.values()) {
+
+			Commit commit = legacyDataArchiveGroup.getCommit();
+
+			String message = commit.getMessage();
+
+			Matcher commitMatcher = _commitPattern.matcher(message);
+
+			if (!commitMatcher.matches()) {
+				throw new RuntimeException(
+					"Invalid commit message. " + message);
+			}
+
+			String dataArchiveType = commitMatcher.group(1);
+			String portalVersion = commitMatcher.group(2);
+
+			String commitKey = dataArchiveType + "_" + portalVersion;
+
+			commitCondidates.put(commitKey, commit);
+		}
+
+		for (Build downstreamBuild : build.getDownstreamBuilds(null)) {
+			String jobName = downstreamBuild.getJobName();
+
+			if ((downstreamBuild instanceof BatchBuild) &&
+				jobName.equals("legacy-database-dump-batch")) {
+
+				BatchBuild batchBuild = (BatchBuild)downstreamBuild;
+
+				String jobVariant = batchBuild.getJobVariant();
+
+				Matcher jobVariantMatcher = _jobVariantPattern.matcher(
+					jobVariant);
+
+				String dataArchiveType = jobVariantMatcher.group(1);
+				String portalVersion = jobVariantMatcher.group(2);
+
+				String commitKey = dataArchiveType + "_" + portalVersion;
+
+				if (!commitCondidates.containsKey(commitKey)) {
+					continue;
+				}
+
+				String result = batchBuild.getResult();
+
+				if (!result.equals("SUCCESS")) {
+					commitCondidates.remove(commitKey);
+
+					System.out.println("Removed failed commit " + commitKey);
+				}
+			}
+		}
+
+		String upstreamBranchName =
+			_legacyDataGitWorkingDirectory.getUpstreamBranchName();
+
+		GitWorkingDirectory.Remote upstreamRemote =
+			_legacyDataGitWorkingDirectory.getRemote("upstream");
+
+		GitWorkingDirectory.Branch upstreamRemoteBranch =
+			_legacyDataGitWorkingDirectory.getBranch(
+				upstreamBranchName, upstreamRemote);
+
+		_legacyDataGitWorkingDirectory.checkoutBranch(upstreamRemoteBranch);
+
+		_legacyDataGitWorkingDirectory.reset("--hard");
+
+		_legacyDataGitWorkingDirectory.clean();
+
+		String temporaryBranchName =
+			upstreamBranchName + "-temp-" + System.currentTimeMillis();
+
+		GitWorkingDirectory.Branch temporaryBranch =
+			_legacyDataGitWorkingDirectory.getBranch(temporaryBranchName, null);
+
+		if (temporaryBranch != null) {
+			_legacyDataGitWorkingDirectory.deleteBranch(
+				_legacyDataGitWorkingDirectory.getBranch(
+					temporaryBranchName, null));
+		}
+
+		temporaryBranch = _legacyDataGitWorkingDirectory.createLocalBranch(
+			temporaryBranchName);
+
+		_legacyDataGitWorkingDirectory.checkoutBranch(temporaryBranch);
+
+		for (Commit commit : commitCondidates.values()) {
+			_legacyDataGitWorkingDirectory.cherryPick(commit);
+		}
+
+		try {
+			_legacyDataGitWorkingDirectory.pushToRemote(
+				false, temporaryBranch, upstreamBranchName, upstreamRemote);
+		}
+		finally {
+			_legacyDataGitWorkingDirectory.pushToRemote(
+				false, null, temporaryBranchName, upstreamRemote);
+		}
 	}
 
 	private Properties _getBuildProperties() {
@@ -162,9 +286,8 @@ public class LegacyDataArchiveUtil {
 			Arrays.asList(legacyDataArchiveDatabaseNames.split(",")));
 	}
 
-	private List<LegacyDataArchiveCommit> _getLatestLegacyDataArchiveCommits() {
-		List<LegacyDataArchiveCommit> latestLegacyDataArchiveCommits =
-			new ArrayList<>();
+	private List<Commit> _getLatestLegacyDataArchiveCommits() {
+		List<Commit> latestLegacyDataArchiveCommits = new ArrayList<>();
 
 		String gitLog = _legacyDataGitWorkingDirectory.log(50);
 
@@ -173,9 +296,8 @@ public class LegacyDataArchiveUtil {
 		for (String gitLogEntity : gitLogEntities) {
 			Commit commit = CommitFactory.newCommit(gitLogEntity);
 
-			if (commit instanceof LegacyDataArchiveCommit) {
-				latestLegacyDataArchiveCommits.add(
-					(LegacyDataArchiveCommit)commit);
+			if (commit.getType() == Commit.Type.LEGACY_ARCHIVE) {
+				latestLegacyDataArchiveCommits.add(commit);
 
 				continue;
 			}
@@ -186,7 +308,7 @@ public class LegacyDataArchiveUtil {
 		return latestLegacyDataArchiveCommits;
 	}
 
-	private ManualCommit _getLatestManualCommit() {
+	private Commit _getLatestManualCommit() {
 		String gitLog = _legacyDataGitWorkingDirectory.log(50);
 
 		String[] gitLogEntities = gitLog.split("\n");
@@ -194,11 +316,11 @@ public class LegacyDataArchiveUtil {
 		for (String gitLogEntity : gitLogEntities) {
 			Commit commit = CommitFactory.newCommit(gitLogEntity);
 
-			if (!(commit instanceof ManualCommit)) {
+			if (commit.getType() != Commit.Type.MANUAL) {
 				continue;
 			}
 
-			return (ManualCommit)commit;
+			return commit;
 		}
 
 		return null;
@@ -213,19 +335,23 @@ public class LegacyDataArchiveUtil {
 		for (LegacyDataArchive legacyDataArchive : legacyDataArchives) {
 			String legacyDataArchiveType =
 				legacyDataArchive.getLegacyDataArchiveType();
+			String portalVersion = legacyDataArchive.getPortalVersion();
+
+			String legacyDataArchiveKey = JenkinsResultsParserUtil.combine(
+				legacyDataArchiveType, "+", portalVersion);
 
 			LegacyDataArchiveGroup legacyDataArchiveGroup =
-				legacyDataArchiveGroupMap.get(legacyDataArchiveType);
+				legacyDataArchiveGroupMap.get(legacyDataArchiveKey);
 
 			if (legacyDataArchiveGroup == null) {
 				legacyDataArchiveGroup = new LegacyDataArchiveGroup(
-					this, legacyDataArchiveType);
+					this, legacyDataArchiveType, portalVersion);
 			}
 
 			legacyDataArchiveGroup.addLegacyDataArchive(legacyDataArchive);
 
 			legacyDataArchiveGroupMap.put(
-				legacyDataArchiveType, legacyDataArchiveGroup);
+				legacyDataArchiveKey, legacyDataArchiveGroup);
 		}
 
 		return legacyDataArchiveGroupMap;
@@ -341,12 +467,19 @@ public class LegacyDataArchiveUtil {
 		return poshiPropertyValues;
 	}
 
+	private static final Pattern _commitPattern = Pattern.compile(
+		"archive:ignore Update '([^']+)' for '([^']+)'");
+	private static final Pattern _jobVariantPattern = Pattern.compile(
+		"[^/]+/([^/]+)/([^/]+)/\\d+");
+
 	private final File _generatedLegacyDataArchiveDirectory;
-	private final List<LegacyDataArchiveCommit> _latestLegacyDataArchiveCommits;
-	private final ManualCommit _latestManualCommit;
+	private final List<Commit> _latestLegacyDataArchiveCommits;
+	private final Commit _latestManualCommit;
 	private final Map<String, LegacyDataArchiveGroup>
 		_legacyDataArchiveGroupMap;
 	private final List<LegacyDataArchive> _legacyDataArchives;
+	private final Set<String> _legacyDataArchiveTypes = new HashSet<>();
 	private final GitWorkingDirectory _legacyDataGitWorkingDirectory;
+	private final Set<String> _portalVersions;
 
 }

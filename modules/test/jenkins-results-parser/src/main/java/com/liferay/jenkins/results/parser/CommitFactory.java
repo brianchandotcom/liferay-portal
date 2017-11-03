@@ -31,12 +31,13 @@ public class CommitFactory {
 
 		String message = matcher.group("message");
 		String sha = matcher.group("sha");
+		Commit.Type type = Commit.Type.MANUAL;
 
 		if (message.startsWith("archive:ignore")) {
-			return new LegacyDataArchiveCommit(message, sha);
+			type = Commit.Type.LEGACY_ARCHIVE;
 		}
 
-		return new ManualCommit(message, sha);
+		return new BaseCommit(message, sha, type);
 	}
 
 	private static final Pattern _pattern = Pattern.compile(

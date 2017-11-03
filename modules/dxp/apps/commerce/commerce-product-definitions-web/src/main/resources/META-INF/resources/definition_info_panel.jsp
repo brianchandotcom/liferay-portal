@@ -25,65 +25,161 @@ if (cpDefinitions == null) {
 %>
 
 <c:choose>
-	<c:when test="<%= cpDefinitions.size() == 1 %>">
+	<c:when test="<%= cpDefinitions.size() >= 1 %>">
+		<div class="carousel slide w100" data-interval="false" id="carousel-product-definitions">
+			<div class="carousel-inner" role="listbox">
 
-		<%
-		CPDefinition cpDefinition = cpDefinitions.get(0);
+				<%
+				int carouselItemsCount = 1;
 
-		request.setAttribute("info_panel.jsp-entry", cpDefinition);
-		%>
+				for (CPDefinition cpDefinition : cpDefinitions) {
+					request.setAttribute("info_panel.jsp-entry", cpDefinition);
 
-		<div class="sidebar-header">
-			<ul class="sidebar-header-actions">
-				<li>
-					<liferay-util:include
-						page="/definition_action.jsp"
-						servletContext="<%= application %>"
-					/>
-				</li>
-			</ul>
+					String carouselItemCssClass = "carousel-item ";
 
-			<h4><%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %></h4>
-		</div>
+					if (carouselItemsCount == 1) {
+						carouselItemCssClass += "active";
+					}
+				%>
 
-		<aui:nav-bar markupView="lexicon">
-			<aui:nav cssClass="navbar-nav">
-				<aui:nav-item label="details" selected="<%= true %>" />
-			</aui:nav>
-		</aui:nav-bar>
+					<div class="<%= carouselItemCssClass %>">
+						<div class="sidebar-header">
+							<ul class="sidebar-header-actions">
+								<li>
+									<liferay-util:include
+										page="/definition_action.jsp"
+										servletContext="<%= application %>"
+									/>
+								</li>
+							</ul>
 
-		<div class="sidebar-body">
-			<h5><liferay-ui:message key="id" /></h5>
+							<h1><%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %></h1>
 
-			<p>
-				<%= HtmlUtil.escape(String.valueOf(cpDefinition.getCPDefinitionId())) %>
-			</p>
+							<div class="lfr-asset-categories sidebar-block">
+								<liferay-asset:asset-categories-summary
+									className="<%= cpDefinition.getModelClassName() %>"
+									classPK="<%= cpDefinition.getCPDefinitionId() %>"
+								/>
+							</div>
+						</div>
 
-			<h5><liferay-ui:message key="status" /></h5>
+						<div class="carousel-label">
 
-			<p>
-				<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= cpDefinition.getStatus() %>" />
-			</p>
+							<%
+							Object[] arguments = {carouselItemsCount, cpDefinitions.size()};
+							%>
 
-			<%
-			Date createDate = cpDefinition.getCreateDate();
-			Date modifiedDate = cpDefinition.getModifiedDate();
+							<p><liferay-ui:message arguments="<%= arguments %>" key="product-x-of-x" /></p>
+						</div>
 
-			String createDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
-			String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
-			%>
+						<liferay-ui:tabs names="details,specs,skus" param="<%= String.valueOf(cpDefinition.getCPDefinitionId()) %>" refresh="<%= false %>" type="tabs nav-tabs-default">
+							<liferay-ui:section>
+								<div class="sidebar-body">
+									<dl class="sidebar-block">
 
-			<h5><liferay-ui:message key="create-date" /></h5>
+										<%
+										String defaultImageThumbnailSrc = cpDefinition.getDefaultImageThumbnailSrc(themeDisplay);
+										%>
 
-			<p>
-				<liferay-ui:message arguments="<%= createDateDescription %>" key="x-ago" />
-			</p>
+										<c:if test="<%= Validator.isNotNull(defaultImageThumbnailSrc) %>">
+											<div class="default-image" style="background-image: url(<%= defaultImageThumbnailSrc %>); height: 300px; background-size: cover;"></div>
+										</c:if>
 
-			<h5><liferay-ui:message key="modified-date" /></h5>
+										<%
+										String description = cpDefinition.getDescription(languageId);
+										%>
 
-			<p>
-				<liferay-ui:message arguments="<%= modifiedDateDescription %>" key="x-ago" />
-			</p>
+										<c:if test="<%= Validator.isNotNull(description) %>">
+											<dt class="h5 uppercase">
+												<liferay-ui:message key="description" />
+											</dt>
+											<dd class="h6 sidebar-caption">
+												<%= HtmlUtil.escape(description) %>
+											</dd>
+										</c:if>
+
+										<dt class="h5 uppercase">
+											<liferay-ui:message key="created" />
+										</dt>
+										<dd class="h6 sidebar-caption">
+											<%= HtmlUtil.escape(cpDefinition.getUserName()) %>
+										</dd>
+									</dl>
+
+									<div class="lfr-asset-tags sidebar-block">
+										<liferay-asset:asset-tags-summary
+											className="<%= cpDefinition.getModelClassName() %>"
+											classPK="<%= cpDefinition.getCPDefinitionId() %>"
+											message="tags"
+										/>
+									</div>
+								</div>
+							</liferay-ui:section>
+
+							<liferay-ui:section>
+								<div class="sidebar-body">
+									<dl class="sidebar-block">
+
+										<%
+										List<CPDefinitionSpecificationOptionValue> cpDefinitionSpecificationOptionValues = cpDefinition.getCPDefinitionSpecificationOptionValues();
+
+										for (CPDefinitionSpecificationOptionValue cpDefinitionSpecificationOptionValue : cpDefinitionSpecificationOptionValues) {
+											CPSpecificationOption cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
+										%>
+
+											<dt class="h5 uppercase">
+												<%= HtmlUtil.escape(cpSpecificationOption.getTitle(languageId)) %>
+											</dt>
+											<dd class="h6 sidebar-caption">
+												<%= HtmlUtil.escape(cpDefinitionSpecificationOptionValue.getValue(languageId)) %>
+											</dd>
+
+										<%
+										}
+										%>
+
+									</dl>
+								</div>
+							</liferay-ui:section>
+
+							<liferay-ui:section>
+								<div class="sidebar-body">
+
+									<%
+									List<CPInstance> cpInstances = cpDefinition.getCPDefinitionInstances();
+
+									for (CPInstance cpInstance : cpInstances) {
+									%>
+
+										<dt class="h5">
+											<%= HtmlUtil.escape(cpInstance.getSku()) %>
+										</dt>
+
+									<%
+									}
+									%>
+
+								</div>
+							</liferay-ui:section>
+						</liferay-ui:tabs>
+					</div>
+
+				<%
+					carouselItemsCount += 1;
+				}
+				%>
+
+			</div>
+
+			<a class="carousel-control carousel-control-left left" data-slide="prev" href="#carousel-product-definitions" role="button">
+				<span aria-hidden="true" class="glyphicon glyphicon-chevron-left"></span>
+				<span class="sr-only">Previous</span>
+			</a>
+
+			<a class="carousel-control carousel-control-right right" data-slide="next" href="#carousel-product-definitions" role="button">
+				<span aria-hidden="true" class="glyphicon glyphicon-chevron-right"></span>
+				<span class="sr-only">Next</span>
+			</a>
 		</div>
 	</c:when>
 	<c:otherwise>

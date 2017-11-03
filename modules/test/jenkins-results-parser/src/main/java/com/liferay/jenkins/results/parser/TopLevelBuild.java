@@ -184,6 +184,12 @@ public class TopLevelBuild extends BaseBuild {
 		}
 	}
 
+	public Element getJenkinsReportElement() {
+		return Dom4JUtil.getNewElement(
+			"html", null, getJenkinsReportHeadElement(),
+			getJenkinsReportBodyElement());
+	}
+
 	public String getJenkinsReportURL() {
 		if (fromArchive) {
 			return getBuildURL() + "/jenkins-report.html";
@@ -528,6 +534,14 @@ public class TopLevelBuild extends BaseBuild {
 			topLevelBuild.getJobName(), "/",
 			Integer.toString(topLevelBuild.getBuildNumber()), "/",
 			topLevelBuild.getJobName(), "/git.", repositoryType, ".properties");
+	}
+
+	protected Element getJenkinsReportBodyElement() {
+		return null;
+	}
+
+	protected Element getJenkinsReportHeadElement() {
+		return null;
 	}
 
 	protected Element getJobSummaryListElement() {

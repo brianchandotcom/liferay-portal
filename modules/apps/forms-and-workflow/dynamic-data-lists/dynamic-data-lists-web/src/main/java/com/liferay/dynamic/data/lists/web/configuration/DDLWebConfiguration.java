@@ -36,7 +36,8 @@ public interface DDLWebConfiguration {
 	public boolean changeableDefaultLanguage();
 
 	@Meta.AD(
-		deflt = "list", optionLabels = {"List", "Descriptive"},
+		deflt = "list", name = "default-display-view",
+		optionLabels = {"List", "Descriptive"},
 		optionValues = {"list", "descriptive"}, required = false
 	)
 	public String defaultDisplayView();

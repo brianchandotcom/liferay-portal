@@ -104,7 +104,9 @@ public class PropertiesLanguageKeysCheck extends BaseFileCheck {
 		"uploaded-by-x-x", "use-my-account-to-change-regular-account-settings",
 		"webdav-help", "webdav-windows-help", "x-added-a-comment",
 		"x-joined-the-project-x", "x-was-added-to-the-project-x",
-		"xuggler-help", "you-can-also-forcibly-disable-remote-staging",
+		"xuggler-help",
+		"you-are-about-to-report-a-violation-of-our-x-terms-of-use.-all-reports-are-strictly-confidential",
+		"you-can-also-forcibly-disable-remote-staging",
 		"you-have-to-be-signed-in-to-register-for-this-meetup",
 		"your-request-for-membership-on-the-project-x-was-accepted",
 		"your-server-needs-to-have-liferay-connected-services-client-x-or-a-later-version-installed"

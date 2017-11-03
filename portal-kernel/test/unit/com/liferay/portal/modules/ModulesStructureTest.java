@@ -18,6 +18,7 @@ import aQute.bnd.version.Version;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -1178,7 +1179,10 @@ public class ModulesStructureTest {
 	private static final Pattern _gitRepoGradleProjectGroupPattern =
 		Pattern.compile("com\\.liferay(?:\\.[a-z]+)+");
 	private static final Set<String> _gitRepoGradlePropertiesKeys =
-		Collections.singleton("com.liferay.source.formatter.version");
+		SetUtil.fromList(
+			Arrays.asList(
+				"com.liferay.portal.tools.service.builder.version",
+				"com.liferay.source.formatter.version"));
 	private static final List<String> _gradleConfigurations = Arrays.asList(
 		"compileOnly", "provided", "compile", "runtime", "testCompile",
 		"testRuntime", "testIntegrationCompile", "testIntegrationRuntime");

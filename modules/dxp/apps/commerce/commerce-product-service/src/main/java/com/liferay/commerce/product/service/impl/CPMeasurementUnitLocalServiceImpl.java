@@ -116,6 +116,13 @@ public class CPMeasurementUnitLocalServiceImpl
 	}
 
 	@Override
+	public List<CPMeasurementUnit> getCPMeasurementUnits(
+		long groupId, String[] keys, int type) {
+
+		return cpMeasurementUnitPersistence.findByG_OrK_T(groupId, keys, type);
+	}
+
+	@Override
 	public int getCPMeasurementUnitsCount(long groupId, int type) {
 		return cpMeasurementUnitPersistence.countByG_T(groupId, type);
 	}

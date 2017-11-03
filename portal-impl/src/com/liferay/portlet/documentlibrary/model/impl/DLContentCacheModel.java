@@ -33,8 +33,11 @@ import java.io.ObjectOutput;
  *
  * @author Brian Wing Shun Chan
  * @see DLContent
+ * @deprecated As of 7.0.0, replaced by {@link
+           com.liferay.document.library.content.model.impl.DLContentImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class DLContentCacheModel implements CacheModel<DLContent>,
 	Externalizable {

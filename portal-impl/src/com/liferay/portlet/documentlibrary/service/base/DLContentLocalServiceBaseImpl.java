@@ -60,8 +60,11 @@ import javax.sql.DataSource;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.documentlibrary.service.impl.DLContentLocalServiceImpl
  * @see com.liferay.document.library.kernel.service.DLContentLocalServiceUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+           com.liferay.document.library.content.service.impl.DLContentLocalServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public abstract class DLContentLocalServiceBaseImpl extends BaseLocalServiceImpl
 	implements DLContentLocalService, IdentifiableOSGiService {

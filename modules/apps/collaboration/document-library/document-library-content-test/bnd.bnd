@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Document Library Content Test
+Bundle-SymbolicName: com.liferay.document.library.content.test
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Document Library
+-includeresource: test-classes/integration

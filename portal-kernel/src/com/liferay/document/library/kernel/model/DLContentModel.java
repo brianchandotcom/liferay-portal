@@ -39,8 +39,11 @@ import java.sql.Blob;
  * @see DLContent
  * @see com.liferay.portlet.documentlibrary.model.impl.DLContentImpl
  * @see com.liferay.portlet.documentlibrary.model.impl.DLContentModelImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+           com.liferay.document.library.content.model.impl.DLContentImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface DLContentModel extends BaseModel<DLContent>, ShardedModel {
 	/*

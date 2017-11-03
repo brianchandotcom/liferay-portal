@@ -4,4 +4,57 @@
 			display: none;
 		}
 	}
+
+	#carousel-product-definitions {
+		position: relative;
+
+		.carousel-control {
+			color: #000000;
+			position: absolute;
+		}
+
+		.carousel-control-left {
+			left: 5px;
+			top: 5px;
+		}
+
+		.carousel-control-right {
+			right: 5px;
+			top: 5px;
+		}
+
+		.carousel-label {
+			color: #414456;
+			font-size: 12px;
+			left: 0;
+			position: absolute;
+			right: 0;
+			text-align: center;
+			top: 5px;
+		}
+
+		dt.h5 {
+			color: #6B6C7E;
+		}
+
+		.icon-monospaced {
+			color: #6B6C7E;
+		}
+
+		.nav-tabs-default > .active > a {
+			font-weight: 600;
+		}
+
+		.sidebar-header {
+			padding-top: 40px;
+		}
+
+		.taglib-asset-categories-summary {
+			color: #6B6C7E;
+		}
+
+		.uppercase {
+			text-transform: uppercase;
+		}
+	}
 }

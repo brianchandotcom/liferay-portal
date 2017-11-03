@@ -74,6 +74,8 @@ public interface Build {
 
 	public String getJDK();
 
+	public JenkinsSlave getJenkinsSlave();
+
 	public String getJobName();
 
 	public String getJobURL();

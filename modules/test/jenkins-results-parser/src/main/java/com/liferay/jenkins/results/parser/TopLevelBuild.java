@@ -37,6 +37,8 @@ import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
+
 import org.dom4j.Element;
 
 import org.json.JSONException;
@@ -573,8 +575,8 @@ public class TopLevelBuild extends BaseBuild {
 
 		return Dom4JUtil.getNewElement(
 			"body", null, headingElement, subheadingElement,
-			getJenkinsReportSummaryElement(),
-			getJenkinsReportTimelineElement());
+			getJenkinsReportSummaryElement(), getJenkinsReportTimelineElement(),
+			getJenkinsReportTopLevelTableElement());
 	}
 
 	protected String getJenkinsReportBuildInfoCellElementTagName() {
@@ -726,6 +728,28 @@ public class TopLevelBuild extends BaseBuild {
 
 		return Dom4JUtil.getNewElement(
 			"div", null, canvasElement, scriptElement, chartJSScriptElement);
+	}
+
+	protected Element getJenkinsReportTopLevelTableElement() {
+		Element topLevelTableElement = Dom4JUtil.getNewElement("table");
+
+		if (result != null) {
+			Dom4JUtil.getNewElement(
+				"caption", topLevelTableElement, "Top Level Build - ",
+				Dom4JUtil.getNewElement("strong", null, getResult()));
+		}
+		else {
+			Dom4JUtil.getNewElement(
+				"caption", topLevelTableElement, "Top Level Build - ",
+				Dom4JUtil.getNewElement(
+					"strong", null, StringUtils.upperCase(getStatus())));
+		}
+
+		Dom4JUtil.addToElement(
+			topLevelTableElement, getJenkinsReportTableColumnHeadersElement(),
+			getJenkinsReportTableRowElement());
+
+		return topLevelTableElement;
 	}
 
 	protected Element getJobSummaryListElement() {

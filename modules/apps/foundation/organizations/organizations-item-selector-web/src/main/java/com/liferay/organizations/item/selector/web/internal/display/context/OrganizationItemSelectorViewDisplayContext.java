@@ -15,7 +15,6 @@
 package com.liferay.organizations.item.selector.web.internal.display.context;
 
 import com.liferay.organizations.item.selector.web.internal.search.OrganizationItemSelectorChecker;
-import com.liferay.organizations.item.selector.web.internal.util.OrganizationsItemSelectorViewUtil;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -24,6 +23,7 @@ import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.util.List;
 
@@ -42,10 +42,11 @@ public class OrganizationItemSelectorViewDisplayContext {
 
 	public OrganizationItemSelectorViewDisplayContext(
 		OrganizationLocalService organizationLocalService,
-		HttpServletRequest httpServletRequest, PortletURL portletURL,
-		String itemSelectedEventName) {
+		UsersAdmin usersAdmin, HttpServletRequest httpServletRequest,
+		PortletURL portletURL, String itemSelectedEventName) {
 
 		_organizationLocalService = organizationLocalService;
+		_usersAdmin = usersAdmin;
 		_httpServletRequest = httpServletRequest;
 		_portletURL = portletURL;
 		_itemSelectedEventName = itemSelectedEventName;
@@ -87,7 +88,7 @@ public class OrganizationItemSelectorViewDisplayContext {
 		_searchContainer.setEmptyResultsMessage("there-are-no-organizations");
 
 		OrderByComparator<Organization> orderByComparator =
-			OrganizationsItemSelectorViewUtil.getOrganizationOrderByComparator(
+			_usersAdmin.getOrganizationOrderByComparator(
 				getOrderByCol(), getOrderByType());
 
 		RowChecker rowChecker = new OrganizationItemSelectorChecker(
@@ -125,5 +126,6 @@ public class OrganizationItemSelectorViewDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private SearchContainer<Organization> _searchContainer;
+	private final UsersAdmin _usersAdmin;
 
 }

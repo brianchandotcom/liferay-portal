@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.io.IOException;
 
@@ -97,8 +98,8 @@ public class OrganizationItemSelectorView
 		OrganizationItemSelectorViewDisplayContext
 			organizationItemSelectorViewDisplayContext =
 				new OrganizationItemSelectorViewDisplayContext(
-					_organizationLocalService, httpServletRequest, portletURL,
-					itemSelectedEventName);
+					_organizationLocalService, _usersAdmin, httpServletRequest,
+					portletURL, itemSelectedEventName);
 
 		request.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -130,5 +131,8 @@ public class OrganizationItemSelectorView
 		target = "(osgi.web.symbolicname=com.liferay.users.admin.item.selector.web)"
 	)
 	private ServletContext _servletContext;
+
+	@Reference
+	private UsersAdmin _usersAdmin;
 
 }

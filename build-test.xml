@@ -9049,6 +9049,22 @@ go</echo>
 
 		<loadfile property="copyright.content" srcFile="${project.dir}/copyright.txt" />
 
+		<if>
+			<available file="${project.dir}/git-commit-portal" />
+			<then>
+				<loadfile property="git.commit.portal.base.branch" srcFile="${project.dir}/git-commit-portal" />
+
+				<antelope:stringutil property="git.commit.portal.base.branch" string="${git.commit.portal.base.branch}">
+					<antelope:trim />
+				</antelope:stringutil>
+
+				<property name="git.commit.information" value="Commit: &lt;a href=&quot;https://github.com/liferay/liferay-portal/commit/${git.commit.portal.rev.parse}&quot; target=&quot;_blank&quot;&gt;${git.commit.portal.rev.parse}&lt;/a&gt;&lt;br /&gt;Base Branch Commit: &lt;a href=&quot;https://github.com/liferay/liferay-portal/commit/${git.commit.portal.base.branch}&quot; target=&quot;_blank&quot;&gt;${git.commit.portal.base.branch}&lt;/a&gt;&lt;br /&gt;Updated on: ${git.commit.portal.current.date}" />
+			</then>
+			<else>
+				<property name="git.commit.information" value="Commit: &lt;a href=&quot;https://github.com/liferay/liferay-portal/commit/${git.commit.portal.rev.parse}&quot; target=&quot;_blank&quot;&gt;${git.commit.portal.rev.parse}&lt;/a&gt;&lt;br /&gt;Updated on: ${git.commit.portal.current.date}" />
+			</else>
+		</if>
+
 		<echo file="${app.server.dir}/webapps/ROOT/html/common/themes/bottom-test.jsp"><![CDATA[<%--
 ${copyright.content}
 --%>
@@ -9062,7 +9078,7 @@ if (ppstate.equals("normal")) {
 %>
 
 	<div class="alert alert-info" id="currentHead" style="margin: 2em">
-		Commit <a href="https://github.com/liferay/liferay-portal/commit/${git.commit.portal.rev.parse}" target="_blank">${git.commit.portal.rev.parse} - ${git.commit.portal.current.date}</a>
+		${git.commit.information}
 	</div>
 
 <%

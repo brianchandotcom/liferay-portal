@@ -345,6 +345,8 @@ public class BuildCSSTask extends JavaExec {
 			args.add("sass.compiler.class.name=" + sassCompilerClassName);
 		}
 
+		args.add("sass.compiler.jni.clean.temp.dir=" + true);
+
 		return args;
 	}
 

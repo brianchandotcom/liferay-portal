@@ -18,13 +18,13 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.organizations.item.selector.criterion.OrganizationItemSelectorCriterion;
+import com.liferay.organizations.item.selector.web.internal.constants.OrganizationItemSelectorViewConstants;
 import com.liferay.organizations.item.selector.web.internal.display.context.OrganizationItemSelectorViewDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.io.IOException;
@@ -102,7 +102,8 @@ public class OrganizationItemSelectorView
 					portletURL, itemSelectedEventName);
 
 		request.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			OrganizationItemSelectorViewConstants.
+				ORGANIZATION_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
 			organizationItemSelectorViewDisplayContext);
 
 		ServletContext servletContext = getServletContext();

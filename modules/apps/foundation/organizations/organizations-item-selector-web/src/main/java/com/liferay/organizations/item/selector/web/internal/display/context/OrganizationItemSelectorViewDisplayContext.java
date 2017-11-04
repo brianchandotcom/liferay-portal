@@ -19,10 +19,13 @@ import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portlet.usersadmin.search.OrganizationSearch;
+import com.liferay.portlet.usersadmin.search.OrganizationSearchTerms;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.util.List;
@@ -82,8 +85,8 @@ public class OrganizationItemSelectorViewDisplayContext {
 			return _searchContainer;
 		}
 
-		_searchContainer = new SearchContainer<>(
-			_renderRequest, getPortletURL(), null, null);
+		_searchContainer = new OrganizationSearch(
+			_renderRequest, getPortletURL());
 
 		_searchContainer.setEmptyResultsMessage("there-are-no-organizations");
 
@@ -99,12 +102,27 @@ public class OrganizationItemSelectorViewDisplayContext {
 		_searchContainer.setOrderByType(getOrderByType());
 		_searchContainer.setRowChecker(rowChecker);
 
-		int total = _organizationLocalService.getOrganizationsCount();
+		OrganizationSearchTerms organizationSearchTerms =
+			(OrganizationSearchTerms)_searchContainer.getSearchTerms();
+
+		long companyId = CompanyThreadLocal.getCompanyId();
+		long parentOrganizationId =
+			organizationSearchTerms.getParentOrganizationId();
+		String keywords = organizationSearchTerms.getKeywords();
+		String type = organizationSearchTerms.getType();
+		long regionId = organizationSearchTerms.getRegionId();
+		long countryId = organizationSearchTerms.getCountryId();
+
+		int total = _organizationLocalService.searchCount(
+			companyId, parentOrganizationId, keywords, type, regionId,
+			countryId, null);
 
 		_searchContainer.setTotal(total);
 
-		List<Organization> results = _organizationLocalService.getOrganizations(
-			_searchContainer.getStart(), _searchContainer.getEnd());
+		List<Organization> results = _organizationLocalService.search(
+			companyId, parentOrganizationId, keywords, type, regionId,
+			countryId, null, _searchContainer.getStart(),
+			_searchContainer.getEnd());
 
 		_searchContainer.setResults(results);
 

@@ -65,7 +65,7 @@ public class UserItemSelectorViewDisplayContext {
 	public String getOrderByCol() {
 		return ParamUtil.getString(
 			_portletRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM,
-			"name");
+			"first-name");
 	}
 
 	public String getOrderByType() {

@@ -21,4 +21,16 @@
 		<field name="messageCount" type="int" />
 		<field name="lastPostDate" type="Date" />
 	</model>
+	<model name="com.liferay.message.boards.model.MBThreadFlag">
+		<field name="uuid" type="String" />
+		<field name="threadFlagId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="threadId" type="long" />
+		<field name="lastPublishDate" type="Date" />
+	</model>
 </model-hints>

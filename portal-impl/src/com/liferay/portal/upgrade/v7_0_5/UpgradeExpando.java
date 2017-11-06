@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v7_0_5;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringBundler;
 
 /**
  * @author Cristina González
@@ -23,12 +22,9 @@ import com.liferay.portal.kernel.util.StringBundler;
 public class UpgradeExpando extends UpgradeProcess {
 
 	protected void deleteOrphanExpandoRow() throws Exception {
-		StringBundler sb = new StringBundler(2);
-
-		sb.append("delete from ExpandoRow where rowId_ not in (select rowId_ ");
-		sb.append("from ExpandoValue)");
-
-		runSQL(sb.toString());
+		runSQL(
+			"delete from ExpandoRow where rowId_ not in (select rowId_ from " +
+				"ExpandoValue)");
 	}
 
 	@Override

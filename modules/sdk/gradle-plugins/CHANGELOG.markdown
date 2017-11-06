@@ -2788,6 +2788,14 @@ to version 1.0.17.
 - [LPS-75247]: Update the [Liferay Javadoc Formatter] dependency to version
 1.0.23.
 
+## 3.5.29 - 2017-11-06
+
+### Changed
+- [LPS-74544]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.18.
+- [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
+1.0.489.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

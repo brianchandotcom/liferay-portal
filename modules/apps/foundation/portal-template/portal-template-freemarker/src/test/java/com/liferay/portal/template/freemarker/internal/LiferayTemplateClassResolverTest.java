@@ -25,9 +25,6 @@ import freemarker.template.TemplateException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-import java.util.Dictionary;
-import java.util.Hashtable;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -41,18 +38,12 @@ public class LiferayTemplateClassResolverTest {
 	public void setUp() throws Exception {
 		_liferayTemplateClassResolver = new LiferayTemplateClassResolver();
 
-		_updateProperties(new Hashtable<>());
+		_updateProperties(null, null);
 	}
 
 	@Test
 	public void testResolveAllowedClassByClassName() throws Exception {
-		Dictionary<String, Object> properties = new Hashtable<>();
-
-		properties.put(
-			"allowedClasses", "freemarker.template.utility.ClassUtil");
-		properties.put("restrictedClasses", "");
-
-		_updateProperties(properties);
+		_updateProperties("freemarker.template.utility.ClassUtil", "");
 
 		_liferayTemplateClassResolver.resolve(
 			"freemarker.template.utility.ClassUtil", null, null);
@@ -60,12 +51,7 @@ public class LiferayTemplateClassResolverTest {
 
 	@Test
 	public void testResolveAllowedClassByStar() throws Exception {
-		Dictionary<String, Object> properties = new Hashtable<>();
-
-		properties.put("allowedClasses", "freemarker.template.utility.*");
-		properties.put("restrictedClasses", "");
-
-		_updateProperties(properties);
+		_updateProperties("freemarker.template.utility.*", "");
 
 		_liferayTemplateClassResolver.resolve(
 			"freemarker.template.utility.ClassUtil", null, null);
@@ -73,12 +59,7 @@ public class LiferayTemplateClassResolverTest {
 
 	@Test(expected = TemplateException.class)
 	public void testResolveAllowedExecuteClass() throws Exception {
-		Dictionary<String, Object> properties = new Hashtable<>();
-
-		properties.put("allowedClasses", "freemarker.template.utility.*");
-		properties.put("restrictedClasses", "");
-
-		_updateProperties(properties);
+		_updateProperties("freemarker.template.utility.*", "");
 
 		_liferayTemplateClassResolver.resolve(
 			"freemarker.template.utility.Execute", null, null);
@@ -86,12 +67,7 @@ public class LiferayTemplateClassResolverTest {
 
 	@Test(expected = TemplateException.class)
 	public void testResolveAllowedObjectConstructorClass() throws Exception {
-		Dictionary<String, Object> properties = new Hashtable<>();
-
-		properties.put("allowedClasses", "freemarker.template.utility.*");
-		properties.put("restrictedClasses", "");
-
-		_updateProperties(properties);
+		_updateProperties("freemarker.template.utility.*", "");
 
 		_liferayTemplateClassResolver.resolve(
 			"freemarker.template.utility.ObjectConstructor", null, null);
@@ -99,12 +75,7 @@ public class LiferayTemplateClassResolverTest {
 
 	@Test
 	public void testResolveAllowedPortalClass() throws Exception {
-		Dictionary<String, Object> properties = new Hashtable<>();
-
-		properties.put(
-			"allowedClasses", "com.liferay.portal.kernel.model.User");
-
-		_updateProperties(properties);
+		_updateProperties("com.liferay.portal.kernel.model.User", null);
 
 		_liferayTemplateClassResolver.resolve(
 			"com.liferay.portal.kernel.model.User", null, null);
@@ -114,14 +85,9 @@ public class LiferayTemplateClassResolverTest {
 	public void testResolveAllowedPortalClassExplicitlyRestricted()
 		throws Exception {
 
-		Dictionary<String, Object> properties = new Hashtable<>();
-
-		properties.put(
-			"allowedClasses", "com.liferay.portal.kernel.model.User");
-		properties.put(
-			"restrictedClasses", "com.liferay.portal.kernel.model.*");
-
-		_updateProperties(properties);
+		_updateProperties(
+			"com.liferay.portal.kernel.model.User",
+			"com.liferay.portal.kernel.model.*");
 
 		_liferayTemplateClassResolver.resolve(
 			"com.liferay.portal.kernel.model.User", null, null);
@@ -161,11 +127,9 @@ public class LiferayTemplateClassResolverTest {
 		_liferayTemplateClassResolver.resolve("java.lang.Thread", null, null);
 	}
 
-	private void _updateProperties(Dictionary<String, Object> dictionary)
+	private void _updateProperties(
+			String allowedClasses, String restrictedClasses)
 		throws Exception {
-
-		String allowedClasses = (String)dictionary.get("allowedClasses");
-		String restrictedClasses = (String)dictionary.get("restrictedClasses");
 
 		Object freeMarkerEngineConfiguration = ProxyUtil.newProxyInstance(
 			LiferayTemplateClassResolverTest.class.getClassLoader(),

@@ -1922,7 +1922,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Message boards
 
-		mbThreadFlagLocalService.deleteThreadFlagsByUserId(user.getUserId());
+		mbBanLocalService.deleteBansByBanUserId(user.getUserId());
 
 		// Membership requests
 

@@ -73,7 +73,10 @@ public class AxisBuild extends BaseBuild {
 			sb.append("/");
 		}
 
-		sb.append(getMaster());
+		JenkinsMaster jenkinsMaster = getJenkinsMaster();
+
+		sb.append(jenkinsMaster.getName());
+
 		sb.append("/");
 		sb.append(getJobName());
 		sb.append("/");
@@ -190,10 +193,13 @@ public class AxisBuild extends BaseBuild {
 
 	@Override
 	public String getBuildURLRegex() {
+		JenkinsMaster jenkinsMaster = getJenkinsMaster();
+
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("http[s]*:\\/\\/");
-		sb.append(JenkinsResultsParserUtil.getRegexLiteral(getMaster()));
+		sb.append(
+			JenkinsResultsParserUtil.getRegexLiteral(jenkinsMaster.getName()));
 		sb.append("[^\\/]*");
 		sb.append("[\\/]+job[\\/]+");
 
@@ -396,9 +402,13 @@ public class AxisBuild extends BaseBuild {
 
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
+		JenkinsMaster topLevelBuildJenkinsMaster =
+			topLevelBuild.getJenkinsMaster();
+
 		return JenkinsResultsParserUtil.combine(
 			"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/map/",
-			topLevelBuild.getMaster(), "/", topLevelBuild.getJobName(), "/",
+			topLevelBuildJenkinsMaster.getName(), "/",
+			topLevelBuild.getJobName(), "/",
 			Integer.toString(topLevelBuild.getBuildNumber()), "/", getJobName(),
 			"/", getAxisVariable(), "/", getParameterValue("JOB_VARIANT"), "/",
 			"stop.properties");
@@ -446,7 +456,7 @@ public class AxisBuild extends BaseBuild {
 
 		axisVariable = matcher.group("axisVariable");
 		jobName = matcher.group("jobName");
-		master = matcher.group("master");
+		setJenkinsMaster(new JenkinsMaster(matcher.group("master")));
 
 		setBuildNumber(Integer.parseInt(matcher.group("buildNumber")));
 

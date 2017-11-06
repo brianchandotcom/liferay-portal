@@ -74,6 +74,10 @@ public interface Build {
 
 	public String getJDK();
 
+	public JenkinsMaster getJenkinsMaster();
+
+	public JenkinsSlave getJenkinsSlave();
+
 	public String getJobName();
 
 	public String getJobURL();
@@ -86,8 +90,6 @@ public interface Build {
 
 	public Long getLatestStartTimestamp();
 
-	public String getMaster();
-
 	public String getOperatingSystem();
 
 	public Map<String, String> getParameters();
@@ -97,8 +99,6 @@ public interface Build {
 	public Build getParentBuild();
 
 	public String getResult();
-
-	public String getSlave();
 
 	public Map<String, String> getStartPropertiesTempMap();
 

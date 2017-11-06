@@ -139,16 +139,14 @@ public class LoadBalancerUtilTest extends BaseJenkinsResultsParserTestCase {
 
 		for (JenkinsMaster jenkinsMaster : jenkinsMasters) {
 			downloadSampleURL(
-				new File(sampleDir, jenkinsMaster.getMasterName()),
-				JenkinsResultsParserUtil.createURL(
-					jenkinsMaster.getMasterURL()),
+				new File(sampleDir, jenkinsMaster.getName()),
+				JenkinsResultsParserUtil.createURL(jenkinsMaster.getURL()),
 				"/computer/api/json?pretty&tree=computer" +
 					"[displayName,idle,offline]");
 
 			downloadSampleURL(
-				new File(sampleDir, jenkinsMaster.getMasterName()),
-				JenkinsResultsParserUtil.createURL(
-					jenkinsMaster.getMasterURL()),
+				new File(sampleDir, jenkinsMaster.getName()),
+				JenkinsResultsParserUtil.createURL(jenkinsMaster.getURL()),
 				"/queue/api/json");
 		}
 	}

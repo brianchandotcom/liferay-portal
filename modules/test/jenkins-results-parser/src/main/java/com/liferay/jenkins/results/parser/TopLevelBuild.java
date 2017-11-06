@@ -189,10 +189,12 @@ public class TopLevelBuild extends BaseBuild {
 			return getBuildURL() + "/jenkins-report.html";
 		}
 
+		JenkinsMaster jenkinsMaster = getJenkinsMaster();
+
 		return JenkinsResultsParserUtil.combine(
-			"https://", getMaster(), ".liferay.com/", "userContent/jobs/",
-			getJobName(), "/builds/", Integer.toString(getBuildNumber()),
-			"/jenkins-report.html");
+			"https://", jenkinsMaster.getName(), ".liferay.com/",
+			"userContent/jobs/", getJobName(), "/builds/",
+			Integer.toString(getBuildNumber()), "/jenkins-report.html");
 	}
 
 	@Override
@@ -264,8 +266,6 @@ public class TopLevelBuild extends BaseBuild {
 
 	@Override
 	public void takeSlaveOffline(SlaveOfflineRule slaveOfflineRule) {
-		throw new RuntimeException(
-			"Top Level Build slaves should not be taken offline");
 	}
 
 	@Override
@@ -520,8 +520,11 @@ public class TopLevelBuild extends BaseBuild {
 
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
+		JenkinsMaster topLevelBuildJenkinsMaster =
+			topLevelBuild.getJenkinsMaster();
+
 		return JenkinsResultsParserUtil.combine(
-			TEMP_MAP_BASE_URL, topLevelBuild.getMaster(), "/",
+			TEMP_MAP_BASE_URL, topLevelBuildJenkinsMaster.getName(), "/",
 			topLevelBuild.getJobName(), "/",
 			Integer.toString(topLevelBuild.getBuildNumber()), "/",
 			topLevelBuild.getJobName(), "/git.", repositoryType, ".properties");
@@ -600,8 +603,10 @@ public class TopLevelBuild extends BaseBuild {
 			return getBuildURL() + "/start.properties.json";
 		}
 
+		JenkinsMaster jenkinsMaster = getJenkinsMaster();
+
 		return JenkinsResultsParserUtil.combine(
-			TEMP_MAP_BASE_URL, getMaster(), "/", getJobName(), "/",
+			TEMP_MAP_BASE_URL, jenkinsMaster.getName(), "/", getJobName(), "/",
 			Integer.toString(getBuildNumber()), "/", getJobName(), "/",
 			"start.properties");
 	}
@@ -612,8 +617,10 @@ public class TopLevelBuild extends BaseBuild {
 			return getBuildURL() + "/stop.properties.json";
 		}
 
+		JenkinsMaster jenkinsMaster = getJenkinsMaster();
+
 		return JenkinsResultsParserUtil.combine(
-			TEMP_MAP_BASE_URL, getMaster(), "/", getJobName(), "/",
+			TEMP_MAP_BASE_URL, jenkinsMaster.getName(), "/", getJobName(), "/",
 			Integer.toString(getBuildNumber()), "/", getJobName(), "/",
 			"stop.properties");
 	}

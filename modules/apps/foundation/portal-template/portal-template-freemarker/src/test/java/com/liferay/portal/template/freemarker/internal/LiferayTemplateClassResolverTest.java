@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.template.freemarker.test;
+package com.liferay.portal.template.freemarker.internal;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 

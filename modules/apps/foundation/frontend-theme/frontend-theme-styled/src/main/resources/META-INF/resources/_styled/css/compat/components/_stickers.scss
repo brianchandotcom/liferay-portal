@@ -1,20 +1,22 @@
-.sticker-default {
-	@extend .sticker-secondary;
-}
+@if $compat-stickers {
+	.sticker-default {
+		@extend .sticker-secondary;
+	}
 
-// Sticker Positions
+	// Sticker Positions
 
-.sticker-bottom {
-	bottom: $sticker-inside-offset;
-	left: $sticker-inside-offset;
-	position: absolute;
-	right: auto;
-	top: auto;
-}
+	.sticker-bottom {
+		bottom: $sticker-inside-offset;
+		left: $sticker-inside-offset;
+		position: absolute;
+		right: auto;
+		top: auto;
+	}
 
-.sticker-right {
-	left: auto;
-	position: absolute;
-	right: $sticker-inside-offset;
-	top: $sticker-inside-offset;
+	.sticker-right {
+		left: auto;
+		position: absolute;
+		right: $sticker-inside-offset;
+		top: $sticker-inside-offset;
+	}
 }

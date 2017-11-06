@@ -1,9 +1,11 @@
-.modal-header {
-	.btn-toolbar {
-		@extend .order-2;
-	}
+@if $compat-modals {
+	.modal-header {
+		.btn-toolbar {
+			@extend .order-2;
+		}
 
-	.btn-toolbar + .modal-title {
-		@extend .order-1;
+		.btn-toolbar + .modal-title {
+			@extend .order-1;
+		}
 	}
 }

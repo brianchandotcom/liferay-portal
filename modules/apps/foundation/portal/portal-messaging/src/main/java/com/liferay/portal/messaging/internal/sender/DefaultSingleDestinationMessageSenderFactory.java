@@ -34,10 +34,12 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
+ * @deprecated As of 4.0.0, with no direct replacement
  */
 @Component(
 	immediate = true, service = SingleDestinationMessageSenderFactory.class
 )
+@Deprecated
 public class DefaultSingleDestinationMessageSenderFactory
 	implements SingleDestinationMessageSenderFactory {
 

@@ -17,21 +17,21 @@
 <%@ include file="/init.jsp" %>
 
 <%
-BillingAddressCheckoutStepDisplayContext billingAddressCheckoutStepDisplayContext = (BillingAddressCheckoutStepDisplayContext)request.getAttribute(CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT);
+BaseAddressCheckoutStepDisplayContext baseAddressCheckoutStepDisplayContext = (BaseAddressCheckoutStepDisplayContext)request.getAttribute(CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT);
 
-List<CommerceAddress> commerceAddresses = billingAddressCheckoutStepDisplayContext.getCommerceAddresses();
-long defaultBillingAddressId = billingAddressCheckoutStepDisplayContext.getDefaultBillingAddressId();
+List<CommerceAddress> commerceAddresses = baseAddressCheckoutStepDisplayContext.getCommerceAddresses();
+long defaultCommerceAddressId = baseAddressCheckoutStepDisplayContext.getDefaultCommerceAddressId();
 
-long billingAddressId = BeanParamUtil.getLong(billingAddressCheckoutStepDisplayContext.getCommerceCart(), request, "billingAddressId", defaultBillingAddressId);
+long commerceAddressId = BeanParamUtil.getLong(baseAddressCheckoutStepDisplayContext.getCommerceCart(), request, baseAddressCheckoutStepDisplayContext.getParamName(), defaultCommerceAddressId);
 
 long commerceCountryId = ParamUtil.getLong(request, "commerceCountryId");
 long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 %>
 
-<h3><liferay-ui:message key="billing-address" /></h3>
+<h3><liferay-ui:message key="<%= baseAddressCheckoutStepDisplayContext.getTitle() %>" /></h3>
 
 <aui:fieldset>
-	<div id="<portlet:namespace />billingAddressChoice">
+	<div id="<portlet:namespace />commerceAddressChoice">
 		<div class="row">
 
 			<%
@@ -42,7 +42,7 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 				<div class="col-md-4">
 					<div class="radio radio-card radio-middle-left">
 						<label>
-							<aui:input checked="<%= billingAddressId == commerceAddress.getCommerceAddressId() %>" label="" name="billingAddressId" type="radio" value="<%= commerceAddress.getCommerceAddressId() %>" />
+							<aui:input checked="<%= commerceAddressId == commerceAddress.getCommerceAddressId() %>" label="" name="<%= baseAddressCheckoutStepDisplayContext.getParamName() %>" type="radio" value="<%= commerceAddress.getCommerceAddressId() %>" />
 
 							<div class="card card-horizontal">
 								<div class="card-row">
@@ -101,6 +101,7 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 		<liferay-ui:error exception="<%= CommerceAddressNameException.class %>" message="please-enter-a-valid-name" />
 		<liferay-ui:error exception="<%= CommerceAddressStreetException.class %>" message="please-enter-a-valid-street" />
 		<liferay-ui:error exception="<%= CommerceCartBillingAddressException.class %>" message="please-enter-a-valid-address" />
+		<liferay-ui:error exception="<%= CommerceCartShippingAddressException.class %>" message="please-enter-a-valid-address" />
 
 		<div class="alert alert-info">
 			<liferay-ui:message key="please-enter-your-personal-information-and-address" />
@@ -139,10 +140,10 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 				select: '<portlet:namespace />commerceCountryId',
 				selectData: function(callback) {
 					Liferay.Service(
-						'/commerce.commercecountry/get-billing-commerce-countries',
+						'/commerce.commercecountry/<%= baseAddressCheckoutStepDisplayContext.getCommerceCountrySelectionMethodName() %>',
 						{
 							groupId: <%= scopeGroupId %>,
-							billingAllowed: true,
+							<%= baseAddressCheckoutStepDisplayContext.getCommerceCountrySelectionColumnName() %>: true,
 							active: true
 						},
 						callback
@@ -197,7 +198,7 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 			function(event) {
 				A.one('#<portlet:namespace />newAddressContainer').show();
 				A.one('#<portlet:namespace />newAddress').val('1');
-				A.one('#<portlet:namespace />billingAddressChoice').hide();
+				A.one('#<portlet:namespace />commerceAddressChoice').hide();
 
 			}
 		);
@@ -211,7 +212,7 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 			function(event) {
 				A.one('#<portlet:namespace />newAddressContainer').hide();
 				A.one('#<portlet:namespace />newAddress').val('0');
-				A.one('#<portlet:namespace />billingAddressChoice').show();
+				A.one('#<portlet:namespace />commerceAddressChoice').show();
 
 			}
 		);

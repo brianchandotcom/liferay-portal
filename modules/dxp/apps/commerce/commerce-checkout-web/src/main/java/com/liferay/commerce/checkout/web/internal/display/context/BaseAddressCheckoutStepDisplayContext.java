@@ -14,7 +14,9 @@
 
 package com.liferay.commerce.checkout.web.internal.display.context;
 
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceAddress;
+import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.util.CommerceCartHelper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,63 +29,42 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Andrea Di Giorgi
  */
-public class BillingAddressCheckoutStepDisplayContext
-	extends BaseAddressCheckoutStepDisplayContext {
+public abstract class BaseAddressCheckoutStepDisplayContext {
 
-	public BillingAddressCheckoutStepDisplayContext(
+	public BaseAddressCheckoutStepDisplayContext(
 			CommerceAddressService commerceAddressService,
 			CommerceCartHelper commerceCartHelper,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
-		super(
-			commerceAddressService, commerceCartHelper, httpServletRequest,
-			httpServletResponse);
+		_commerceAddressService = commerceAddressService;
+
+		_commerceCart = commerceCartHelper.getCurrentCommerceCart(
+			httpServletRequest, httpServletResponse,
+			CommerceConstants.COMMERCE_CART_TYPE_CART);
 	}
 
-	@Override
-	public String getCommerceCountrySelectionColumnName() {
-		return "billingAllowed";
+	public List<CommerceAddress> getCommerceAddresses() throws PortalException {
+		return _commerceAddressService.getCommerceAddresses(
+			_commerceCart.getGroupId(), _commerceCart.getUserId());
 	}
 
-	@Override
-	public String getCommerceCountrySelectionMethodName() {
-		return "get-billing-commerce-countries";
+	public CommerceCart getCommerceCart() {
+		return _commerceCart;
 	}
 
-	@Override
-	public long getDefaultCommerceAddressId() throws PortalException {
-		long defaultCommerceAddressId = 0;
+	public abstract String getCommerceCountrySelectionColumnName();
 
-		List<CommerceAddress> commerceAddresses = getCommerceAddresses();
+	public abstract String getCommerceCountrySelectionMethodName();
 
-		for (CommerceAddress commerceAddress : commerceAddresses) {
-			if (commerceAddress.isDefaultBilling()) {
-				defaultCommerceAddressId =
-					commerceAddress.getCommerceAddressId();
+	public abstract long getDefaultCommerceAddressId() throws PortalException;
 
-				break;
-			}
-		}
+	public abstract String getParamName();
 
-		if ((defaultCommerceAddressId == 0) && !commerceAddresses.isEmpty()) {
-			CommerceAddress commerceAddress = commerceAddresses.get(0);
+	public abstract String getTitle();
 
-			defaultCommerceAddressId = commerceAddress.getCommerceAddressId();
-		}
-
-		return defaultCommerceAddressId;
-	}
-
-	@Override
-	public String getParamName() {
-		return "billingAddressId";
-	}
-
-	@Override
-	public String getTitle() {
-		return "billing-address";
-	}
+	private final CommerceAddressService _commerceAddressService;
+	private final CommerceCart _commerceCart;
 
 }

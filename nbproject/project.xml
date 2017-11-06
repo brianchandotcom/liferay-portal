@@ -20,12 +20,6 @@
 					<encoding>UTF-8</encoding>
 				</source-folder>
 				<source-folder>
-					<label>modules\apps\foundation\petra\petra-concurrent\src\main\java</label>
-					<type>java</type>
-					<location>modules/apps/foundation/petra/petra-concurrent/src/main/java</location>
-					<encoding>UTF-8</encoding>
-				</source-folder>
-				<source-folder>
 					<label>modules\apps\foundation\petra\petra-content\src\main\java</label>
 					<type>java</type>
 					<location>modules/apps/foundation/petra/petra-content/src/main/java</location>
@@ -35,12 +29,6 @@
 					<label>modules\apps\foundation\petra\petra-encryptor\src\main\java</label>
 					<type>java</type>
 					<location>modules/apps/foundation/petra/petra-encryptor/src/main/java</location>
-					<encoding>UTF-8</encoding>
-				</source-folder>
-				<source-folder>
-					<label>modules\apps\foundation\petra\petra-lang\src\main\java</label>
-					<type>java</type>
-					<location>modules/apps/foundation/petra/petra-lang/src/main/java</location>
 					<encoding>UTF-8</encoding>
 				</source-folder>
 				<source-folder>
@@ -56,9 +44,9 @@
 					<encoding>UTF-8</encoding>
 				</source-folder>
 				<source-folder>
-					<label>modules\apps\foundation\petra\petra-memory\src\main\java</label>
+					<label>modules\core\petra\petra-concurrent\src\main\java</label>
 					<type>java</type>
-					<location>modules/apps/foundation/petra/petra-memory/src/main/java</location>
+					<location>modules/core/petra/petra-concurrent/src/main/java</location>
 					<encoding>UTF-8</encoding>
 				</source-folder>
 				<source-folder>
@@ -77,6 +65,18 @@
 					<label>modules\core\petra\petra-io\src\main\java</label>
 					<type>java</type>
 					<location>modules/core/petra/petra-io/src/main/java</location>
+					<encoding>UTF-8</encoding>
+				</source-folder>
+				<source-folder>
+					<label>modules\core\petra\petra-lang\src\main\java</label>
+					<type>java</type>
+					<location>modules/core/petra/petra-lang/src/main/java</location>
+					<encoding>UTF-8</encoding>
+				</source-folder>
+				<source-folder>
+					<label>modules\core\petra\petra-memory\src\main\java</label>
+					<type>java</type>
+					<location>modules/core/petra/petra-memory/src/main/java</location>
 					<encoding>UTF-8</encoding>
 				</source-folder>
 				<source-folder>
@@ -230,20 +230,12 @@
 			<view>
 				<items>
 					<source-folder style="packages">
-						<label>modules\apps\foundation\petra\petra-concurrent\src</label>
-						<location>modules/apps/foundation/petra/petra-concurrent/src</location>
-					</source-folder>
-					<source-folder style="packages">
 						<label>modules\apps\foundation\petra\petra-content\src</label>
 						<location>modules/apps/foundation/petra/petra-content/src</location>
 					</source-folder>
 					<source-folder style="packages">
 						<label>modules\apps\foundation\petra\petra-encryptor\src</label>
 						<location>modules/apps/foundation/petra/petra-encryptor/src</location>
-					</source-folder>
-					<source-folder style="packages">
-						<label>modules\apps\foundation\petra\petra-lang\src</label>
-						<location>modules/apps/foundation/petra/petra-lang/src</location>
 					</source-folder>
 					<source-folder style="packages">
 						<label>modules\apps\foundation\petra\petra-log4j\src</label>
@@ -254,8 +246,8 @@
 						<location>modules/apps/foundation/petra/petra-mail/src</location>
 					</source-folder>
 					<source-folder style="packages">
-						<label>modules\apps\foundation\petra\petra-memory\src</label>
-						<location>modules/apps/foundation/petra/petra-memory/src</location>
+						<label>modules\core\petra\petra-concurrent\src</label>
+						<location>modules/core/petra/petra-concurrent/src</location>
 					</source-folder>
 					<source-folder style="packages">
 						<label>modules\core\petra\petra-executor\src</label>
@@ -268,6 +260,14 @@
 					<source-folder style="packages">
 						<label>modules\core\petra\petra-io\src</label>
 						<location>modules/core/petra/petra-io/src</location>
+					</source-folder>
+					<source-folder style="packages">
+						<label>modules\core\petra\petra-lang\src</label>
+						<location>modules/core/petra/petra-lang/src</location>
+					</source-folder>
+					<source-folder style="packages">
+						<label>modules\core\petra\petra-memory\src</label>
+						<location>modules/core/petra/petra-memory/src</location>
 					</source-folder>
 					<source-folder style="packages">
 						<label>modules\core\petra\petra-nio\src</label>
@@ -364,16 +364,16 @@
 		</general-data>
 		<java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/4">
 			<compilation-unit>
-				<package-root>modules/apps/foundation/petra/petra-concurrent/src/main/java</package-root>
 				<package-root>modules/apps/foundation/petra/petra-content/src/main/java</package-root>
 				<package-root>modules/apps/foundation/petra/petra-encryptor/src/main/java</package-root>
-				<package-root>modules/apps/foundation/petra/petra-lang/src/main/java</package-root>
 				<package-root>modules/apps/foundation/petra/petra-log4j/src/main/java</package-root>
 				<package-root>modules/apps/foundation/petra/petra-mail/src/main/java</package-root>
-				<package-root>modules/apps/foundation/petra/petra-memory/src/main/java</package-root>
+				<package-root>modules/core/petra/petra-concurrent/src/main/java</package-root>
 				<package-root>modules/core/petra/petra-executor/src/main/java</package-root>
 				<package-root>modules/core/petra/petra-function/src/main/java</package-root>
 				<package-root>modules/core/petra/petra-io/src/main/java</package-root>
+				<package-root>modules/core/petra/petra-lang/src/main/java</package-root>
+				<package-root>modules/core/petra/petra-memory/src/main/java</package-root>
 				<package-root>modules/core/petra/petra-nio/src/main/java</package-root>
 				<package-root>modules/core/petra/petra-reflect/src/main/java</package-root>
 				<package-root>modules/core/petra/petra-string/src/main/java</package-root>

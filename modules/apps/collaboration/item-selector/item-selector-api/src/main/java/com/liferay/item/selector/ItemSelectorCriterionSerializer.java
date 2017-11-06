@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.item.selector.web;
-
-import com.liferay.item.selector.ItemSelectorCriterion;
+package com.liferay.item.selector;
 
 /**
  * @author Roberto Díaz

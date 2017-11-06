@@ -1,0 +1,24 @@
+{namespace NavigationMenuToolboxURLComponent}
+
+/**
+ * Navigation Menu Toolbox URL Component
+ */
+{template .render}
+	<fieldset>
+		<div>
+			<label class="control-label" for="name">{msg desc=""}name{/msg}</label>
+
+			<input class="form-control" id="name" name="name" type="text" value=""/>
+		</div>
+
+		<div>
+			<label class="control-label" for="url">{msg desc=""}url{/msg}</label>
+
+			<input class="form-control" id="url" name="url" type="text" value=""/>
+		</div>
+
+		<div class="button-holder">
+			<button class="btn btn-lg btn-default" type="button">{msg desc=""}add{/msg}</button>
+		</div>
+	</fieldset>
+{/template}

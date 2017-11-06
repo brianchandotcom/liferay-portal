@@ -3,5 +3,12 @@ Bundle-SymbolicName: com.liferay.site.navigation.admin.web
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Navigation
+Provide-Capability:\
+	soy;\
+		type="navigation-menu";\
+		version:Version="${Bundle-Version}"
+Require-Capability:\
+	osgi.extender;\
+		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))"
 Web-ContextPath: /site-navigation-admin-web
 -dsannotations-options: inherit

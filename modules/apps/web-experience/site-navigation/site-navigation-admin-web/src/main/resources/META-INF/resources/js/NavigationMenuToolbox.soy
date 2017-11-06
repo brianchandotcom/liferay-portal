@@ -1,0 +1,51 @@
+{namespace NavigationMenuToolbox}
+
+/**
+ * This renders the main element of NavigationMenuToolbox.
+ */
+{template .render}
+	{@param availableItemTypes: list<?>}
+	{@param selectedItemType: ?}
+	{@param? pathThemeImages: string}
+
+	<div class="sidebar">
+		<div class="sidebar-header">
+			{call Dropdown.render}
+				{param header kind="html"}
+					<a data-onclick="toggle" href="javascript:;">
+						<span>{$selectedItemType.label}</span>
+
+						<svg class="lexicon-icon" data-icon="caret-double">
+							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#caret-double"></use>
+						</svg>
+					</a>
+				{/param}
+
+				{param body kind="html"}
+					{if $availableItemTypes}
+						{foreach $availableItemType in $availableItemTypes}
+							<li class="{($selectedItemType.type == $availableItemType.type) ? 'active' : ''} dropdown-item" data-onclick="toggle">
+								<a data-type="{$availableItemType.type}" href="javascript:;">
+									<span>{$availableItemType.label}</span>
+								</a>
+							</li>
+						{/foreach}
+					{/if}
+				{/param}
+			{/call}
+		</div>
+
+		<div class="sidebar-body">
+			{delcall NavigationMenuToolbox.Type variant="$selectedItemType.type" /}
+		</div>
+	</div>
+{/template}
+
+/**
+ * Default NavigationMenuToolbox.Type implementation. This implementation serves
+ * as a mere placeholder for the incr-dom compiler. Tools are expected to
+ * provide their own NavigationMenuToolbox.Type implementation to activate their
+ * UIs and components.
+ */
+{deltemplate NavigationMenuToolbox.Type}
+{/deltemplate}

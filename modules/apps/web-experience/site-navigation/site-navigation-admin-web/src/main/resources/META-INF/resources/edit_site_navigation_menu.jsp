@@ -42,6 +42,24 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 		<aui:fieldset>
 			<aui:input autoFocus="<%= true %>" label="name" name="name" placeholder="name" />
 		</aui:fieldset>
+
+		<aui:fieldset>
+
+			<%
+			Map<String, Object> context = new HashMap<>();
+
+			context.put("availableItemTypes", siteNavigationAdminDisplayContext.getAvailableItemsJSONArray());
+			context.put("pathThemeImages", themeDisplay.getPathThemeImages());
+			context.put("selectedItemType", siteNavigationAdminDisplayContext.getSelectedItemTypeJSONObject());
+			%>
+
+			<soy:template-renderer
+				context="<%= context %>"
+				dependencies="<%= siteNavigationMenuItemTypeRegistry.getRequireModules() %>"
+				module="site-navigation-admin-web/js/NavigationMenuBuilder.es"
+				templateNamespace="NavigationMenuBuilder.render"
+			/>
+		</aui:fieldset>
 	</aui:fieldset-group>
 
 	<aui:button-row>

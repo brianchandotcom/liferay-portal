@@ -46,7 +46,6 @@ public class UpgradeProcess_7_0_5 extends UpgradeProcess {
 		upgrade(UpgradeEmailAddress.class);
 		upgrade(UpgradeExpando.class);
 		upgrade(UpgradeMBMailingList.class);
-		upgrade(UpgradeModules.class);
 		upgrade(UpgradePortalPreferences.class);
 		upgrade(UpgradeUser.class);
 		upgrade(UpgradeVirtualHost.class);

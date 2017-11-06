@@ -35,6 +35,8 @@ import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.metadata.LocalEntityManager;
 import com.liferay.saml.web.internal.constants.SamlAdminPortletKeys;
 
+import java.security.KeyStoreException;
+import java.security.UnrecoverableKeyException;
 import java.security.cert.X509Certificate;
 
 import java.util.List;
@@ -116,12 +118,59 @@ public class DefaultViewMVCRenderCommand implements MVCRenderCommand {
 				SamlWebKeys.SAML_CERTIFICATE_TOOL, _certificateTool);
 		}
 		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get local entity certificate", e);
-			}
+			Throwable cause = _getCause(e, KeyStoreException.class);
 
-			renderRequest.setAttribute(
-				SamlWebKeys.SAML_X509_CERTIFICATE_AUTH_NEEDED, Boolean.TRUE);
+			if (cause != null) {
+				Throwable unrecoverableKeyException;
+
+				unrecoverableKeyException = _getCause(
+					cause, UnrecoverableKeyException.class);
+
+				if (unrecoverableKeyException != null) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Unable to get local entity certificate because " +
+								"of incorrect keystore password",
+							cause);
+					}
+
+					renderRequest.setAttribute(
+						SamlWebKeys.SAML_KEYSTORE_PASSWORD_INCORRECT,
+						Boolean.TRUE);
+				}
+				else {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Unable to get local entity certificate because " +
+								"of KeyStore loading issue",
+							cause);
+					}
+
+					renderRequest.setAttribute(
+						SamlWebKeys.SAML_KEYSTORE_EXCEPTION, Boolean.TRUE);
+				}
+			}
+			else {
+				cause = _getCause(e, UnrecoverableKeyException.class);
+
+				if (cause != null) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Unable to get local entity certificate because " +
+								"of incorrect key credential password",
+							cause);
+					}
+
+					renderRequest.setAttribute(
+						SamlWebKeys.SAML_X509_CERTIFICATE_AUTH_NEEDED,
+						Boolean.TRUE);
+				}
+				else {
+					if (_log.isDebugEnabled()) {
+						_log.debug("Unable to get local entity certificate", e);
+					}
+				}
+			}
 		}
 	}
 
@@ -194,6 +243,22 @@ public class DefaultViewMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			SamlWebKeys.SAML_IDP_SP_CONNECTIONS_COUNT,
 			samlIdpSpConnectionsCount);
+	}
+
+	private Throwable _getCause(Throwable e, Class<?> exceptionType) {
+		if (e == null) {
+			return null;
+		}
+
+		Throwable cause;
+
+		for (cause = e.getCause(); cause != null; cause = cause.getCause()) {
+			if (exceptionType.isInstance(cause)) {
+				return cause;
+			}
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

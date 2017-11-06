@@ -25,6 +25,8 @@ CertificateTool certificateTool = (CertificateTool)request.getAttribute(SamlWebK
 
 X509Certificate x509Certificate = (X509Certificate)request.getAttribute(SamlWebKeys.SAML_X509_CERTIFICATE);
 
+boolean keystoreIncorrectPassword = GetterUtil.getBoolean(request.getAttribute(SamlWebKeys.SAML_KEYSTORE_PASSWORD_INCORRECT));
+boolean keystoreException = GetterUtil.getBoolean(request.getAttribute(SamlWebKeys.SAML_KEYSTORE_EXCEPTION));
 boolean certificateAuthNeeded = GetterUtil.getBoolean(request.getAttribute(SamlWebKeys.SAML_X509_CERTIFICATE_AUTH_NEEDED));
 %>
 
@@ -135,6 +137,16 @@ boolean certificateAuthNeeded = GetterUtil.getBoolean(request.getAttribute(SamlW
 			<c:when test="<%= (x509Certificate == null) && Validator.isNull(samlProviderConfiguration.entityId()) %>">
 				<div class="portlet-msg-info">
 					<liferay-ui:message key="entity-id-must-be-set-before-private-key-and-certificate-can-be-generated" />
+				</div>
+			</c:when>
+			<c:when test="<%= keystoreIncorrectPassword %>">
+				<div class="portlet-msg-error">
+					<liferay-ui:message key="keystore-password-incorrect" />
+				</div>
+			</c:when>
+			<c:when test="<%= keystoreException %>">
+				<div class="portlet-msg-error">
+					<liferay-ui:message key="keystore-exception" />
 				</div>
 			</c:when>
 			<c:when test="<%= certificateAuthNeeded %>">

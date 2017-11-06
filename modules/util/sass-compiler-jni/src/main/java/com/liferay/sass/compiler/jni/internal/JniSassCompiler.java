@@ -56,12 +56,12 @@ public class JniSassCompiler implements SassCompiler {
 
 		_precision = precision;
 		_tmpDirName = tmpDirName;
-		_cleanTmpDir = Boolean.getBoolean("sass.compiler.jni.clean.temp.dir");
+		_cleanTempDir = Boolean.getBoolean("sass.compiler.jni.clean.temp.dir");
 	}
 
 	@Override
 	public void close() throws IOException {
-		if (_cleanTmpDir) {
+		if (_cleanTempDir) {
 			try {
 				Field field = Platform.class.getDeclaredField(
 					"temporaryExtractedLibraryCanonicalFiles");
@@ -351,7 +351,7 @@ public class JniSassCompiler implements SassCompiler {
 
 	private static final int _PRECISION_DEFAULT = 5;
 
-	private final boolean _cleanTmpDir;
+	private final boolean _cleanTempDir;
 	private final int _precision;
 	private final String _tmpDirName;
 

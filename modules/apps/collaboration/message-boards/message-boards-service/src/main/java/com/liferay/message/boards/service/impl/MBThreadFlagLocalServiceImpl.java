@@ -21,10 +21,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 
@@ -41,7 +43,7 @@ public class MBThreadFlagLocalServiceImpl
 			long userId, MBThread thread, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = _userLocalService.getUser(userId);
 
 		if (user.isDefaultUser()) {
 			return null;
@@ -118,7 +120,7 @@ public class MBThreadFlagLocalServiceImpl
 	public MBThreadFlag getThreadFlag(long userId, MBThread thread)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = _userLocalService.getUser(userId);
 
 		if (user.isDefaultUser()) {
 			return null;
@@ -131,7 +133,7 @@ public class MBThreadFlagLocalServiceImpl
 	public boolean hasThreadFlag(long userId, MBThread thread)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = _userLocalService.getUser(userId);
 
 		if (user.isDefaultUser()) {
 			return true;
@@ -150,5 +152,8 @@ public class MBThreadFlagLocalServiceImpl
 			return false;
 		}
 	}
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

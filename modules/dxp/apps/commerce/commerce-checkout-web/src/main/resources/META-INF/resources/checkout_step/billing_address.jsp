@@ -51,6 +51,7 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 
 			<%
 			for (CommerceAddress commerceAddress : commerceAddresses) {
+				commerceAddress = commerceAddress.toEscapedModel();
 			%>
 
 				<div class="col-md-4">
@@ -79,7 +80,7 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 										%>
 
 										<c:if test="<%= commerceCountry != null %>">
-											<p><%= commerceCountry.getName(locale) %></p>
+											<p><%= HtmlUtil.escape(commerceCountry.getName(locale)) %></p>
 										</c:if>
 									</div>
 								</div>

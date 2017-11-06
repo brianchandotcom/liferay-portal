@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Export Import REST
+Bundle-SymbolicName: com.liferay.exportimport.rest
+Bundle-Version: 1.0.0
+Liferay-Configuration-Path: /configuration

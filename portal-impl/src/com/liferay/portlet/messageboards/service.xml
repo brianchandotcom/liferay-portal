@@ -3,50 +3,6 @@
 
 <service-builder api-package-path="com.liferay.message.boards.kernel" auto-import-default-references="false" package-path="com.liferay.portlet.messageboards">
 	<namespace>MB</namespace>
-	<entity human-name="message boards ban" local-service="true" name="MBBan" remote-service="true" uuid="true">
-
-		<!-- PK fields -->
-
-		<column name="banId" primary="true" type="long" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column name="banUserId" type="long" />
-		<column name="lastPublishDate" type="Date" />
-
-		<!-- Finder methods -->
-
-		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
-		</finder>
-		<finder name="UserId" return-type="Collection">
-			<finder-column name="userId" />
-		</finder>
-		<finder name="BanUserId" return-type="Collection">
-			<finder-column name="banUserId" />
-		</finder>
-		<finder name="G_B" return-type="MBBan" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="banUserId" />
-		</finder>
-
-		<!-- References -->
-
-		<reference entity="SystemEvent" package-path="com.liferay.portal" />
-		<reference entity="User" package-path="com.liferay.portal" />
-	</entity>
 	<entity human-name="message boards category" local-service="true" name="MBCategory" remote-service="true" trash-enabled="true" uuid="true">
 
 		<!-- PK fields -->
@@ -565,7 +521,6 @@
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>
-		<exception>BannedUser</exception>
 		<exception>CategoryName</exception>
 		<exception>DiscussionMaxComments</exception>
 		<exception>LockedThread</exception>

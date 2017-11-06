@@ -15,16 +15,19 @@
 package com.liferay.message.boards.internal.verify;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.message.boards.internal.verify.model.MBBanVerifiableModel;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.verify.VerifyProcess;
+import com.liferay.portal.verify.VerifyUUID;
 
 import java.util.List;
 
@@ -48,6 +51,14 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 		verifyStatisticsForThreads();
 		verifyAssetsForMessages();
 		verifyAssetsForThreads();
+		verifyUUIDModels();
+	}
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.message.boards.service)(release.schema.version=1.0.0))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 	protected void verifyAssetsForMessages() throws Exception {
@@ -188,6 +199,12 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Statistics verified for threads");
 			}
+		}
+	}
+
+	protected void verifyUUIDModels() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			VerifyUUID.verify(new MBBanVerifiableModel());
 		}
 	}
 

@@ -27,8 +27,11 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see MBBanModel
  * @see com.liferay.portlet.messageboards.model.impl.MBBanImpl
  * @see com.liferay.portlet.messageboards.model.impl.MBBanModelImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.message.boards.model.impl.MBBanImpl}
  * @generated
  */
+@Deprecated
 @ImplementationClassName("com.liferay.portlet.messageboards.model.impl.MBBanImpl")
 @ProviderType
 public interface MBBan extends MBBanModel, PersistedModel {

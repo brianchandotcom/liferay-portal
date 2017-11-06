@@ -37,8 +37,11 @@ import java.util.Objects;
  *
  * @author Brian Wing Shun Chan
  * @see MBBan
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.message.boards.model.impl.MBBanImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	public MBBanWrapper(MBBan mbBan) {

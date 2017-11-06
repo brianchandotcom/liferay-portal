@@ -61,8 +61,11 @@ import java.rmi.RemoteException;
  * @see MBBanServiceHttp
  * @see com.liferay.message.boards.kernel.model.MBBanSoap
  * @see MBBanServiceUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.service.impl.MBBanServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBBanServiceSoap {
 	public static com.liferay.message.boards.kernel.model.MBBanSoap addBan(

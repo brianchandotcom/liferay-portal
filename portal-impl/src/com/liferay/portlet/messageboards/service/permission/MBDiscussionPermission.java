@@ -16,7 +16,6 @@ package com.liferay.portlet.messageboards.service.permission;
 
 import com.liferay.message.boards.kernel.model.MBDiscussion;
 import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.service.MBBanLocalServiceUtil;
 import com.liferay.message.boards.kernel.service.MBDiscussionLocalServiceUtil;
 import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -75,12 +74,6 @@ public class MBDiscussionPermission implements BaseModelPermissionChecker {
 	public static boolean contains(
 		PermissionChecker permissionChecker, long companyId, long groupId,
 		String className, long classPK, String actionId) {
-
-		if (MBBanLocalServiceUtil.hasBan(
-				groupId, permissionChecker.getUserId())) {
-
-			return false;
-		}
 
 		MBDiscussion mbDiscussion =
 			MBDiscussionLocalServiceUtil.fetchDiscussion(className, classPK);

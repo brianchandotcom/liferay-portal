@@ -16,59 +16,33 @@ package com.liferay.portlet.messageboards.service.impl;
 
 import com.liferay.message.boards.kernel.model.MBBan;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portlet.messageboards.service.base.MBBanServiceBaseImpl;
-import com.liferay.portlet.messageboards.service.permission.MBPermission;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.message.boards.service.impl.MBBanServiceImpl}
  */
+@Deprecated
 public class MBBanServiceImpl extends MBBanServiceBaseImpl {
 
 	@Override
 	public MBBan addBan(long banUserId, ServiceContext serviceContext)
 		throws PortalException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		MBPermission.check(
-			permissionChecker, serviceContext.getScopeGroupId(),
-			ActionKeys.BAN_USER);
-
-		User banUser = userPersistence.findByPrimaryKey(banUserId);
-
-		boolean groupAdmin = false;
-
-		try {
-			groupAdmin = PortalUtil.isGroupAdmin(
-				banUser, serviceContext.getScopeGroupId());
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-
-		if (groupAdmin) {
-			throw new PrincipalException();
-		}
-
-		return mbBanLocalService.addBan(getUserId(), banUserId, serviceContext);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBBanServiceImpl");
 	}
 
 	@Override
 	public void deleteBan(long banUserId, ServiceContext serviceContext)
 		throws PortalException {
 
-		MBPermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ActionKeys.BAN_USER);
-
-		mbBanLocalService.deleteBan(banUserId, serviceContext);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBBanServiceImpl");
 	}
 
 }

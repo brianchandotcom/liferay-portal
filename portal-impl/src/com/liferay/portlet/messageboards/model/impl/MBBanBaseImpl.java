@@ -29,8 +29,11 @@ import com.liferay.message.boards.kernel.service.MBBanLocalServiceUtil;
  * @author Brian Wing Shun Chan
  * @see MBBanImpl
  * @see MBBan
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.model.impl.MBBanImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public abstract class MBBanBaseImpl extends MBBanModelImpl implements MBBan {
 	/*

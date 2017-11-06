@@ -13,6 +13,34 @@
 		<field name="banUserId" type="long" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
+	<model name="com.liferay.message.boards.model.MBMailingList">
+		<field name="uuid" type="String" />
+		<field name="mailingListId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="categoryId" type="long" />
+		<field name="emailAddress" type="String" />
+		<field name="inProtocol" type="String" />
+		<field name="inServerName" type="String" />
+		<field name="inServerPort" type="int" />
+		<field name="inUseSSL" type="boolean" />
+		<field name="inUserName" type="String" />
+		<field name="inPassword" type="String" />
+		<field name="inReadInterval" type="int" />
+		<field name="outEmailAddress" type="String" />
+		<field name="outCustom" type="boolean" />
+		<field name="outServerName" type="String" />
+		<field name="outServerPort" type="int" />
+		<field name="outUseSSL" type="boolean" />
+		<field name="outUserName" type="String" />
+		<field name="outPassword" type="String" />
+		<field name="allowAnonymous" type="boolean" />
+		<field name="active" type="boolean" />
+	</model>
 	<model name="com.liferay.message.boards.model.MBStatsUser">
 		<field name="statsUserId" type="long" />
 		<field name="groupId" type="long" />

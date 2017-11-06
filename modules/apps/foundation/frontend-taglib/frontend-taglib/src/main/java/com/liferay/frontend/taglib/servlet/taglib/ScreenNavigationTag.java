@@ -93,9 +93,12 @@ public class ScreenNavigationTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_containerCssClass = "col-md-9";
 		_context = null;
+		_fullContainerCssClass = "col-md-12";
 		_key = null;
 		_modelBean = null;
+		_navCssClass = "col-md-3";
 		_portletURL = null;
 	}
 
@@ -111,6 +114,14 @@ public class ScreenNavigationTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		request.setAttribute(
+			"liferay-frontend:screen-navigation:containerCssClass",
+			_containerCssClass);
+		request.setAttribute(
+			"liferay-frontend:screen-navigation:fullContainerCssClass",
+			_fullContainerCssClass);
+		request.setAttribute(
+			"liferay-frontend:screen-navigation:navCssClass", _navCssClass);
 		request.setAttribute(
 			"liferay-frontend:screen-navigation:portletURL", _portletURL);
 		request.setAttribute(
@@ -208,9 +219,12 @@ public class ScreenNavigationTag extends IncludeTag {
 
 	private static final String _PAGE = "/screen_navigation/page.jsp";
 
+	private String _containerCssClass = "col-md-9";
 	private Object _context;
+	private String _fullContainerCssClass = "col-md-12";
 	private String _key;
 	private Object _modelBean;
+	private String _navCssClass = "col-md-3";
 	private PortletURL _portletURL;
 	private List<ScreenNavigationCategory> _screenNavigationCategories;
 

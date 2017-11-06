@@ -14,10 +14,10 @@
 
 package com.liferay.lcs.util;
 
-import com.liferay.lcs.InvalidLCSClusterEntryException;
 import com.liferay.lcs.advisor.LCSAlertAdvisor;
 import com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor;
 import com.liferay.lcs.exception.InitializationException;
+import com.liferay.lcs.exception.InvalidLCSClusterEntryException;
 import com.liferay.lcs.exception.MissingLCSCredentialsException;
 import com.liferay.lcs.jsonwebserviceclient.OAuthJSONWebServiceClientImpl;
 import com.liferay.lcs.oauth.OAuthUtil;

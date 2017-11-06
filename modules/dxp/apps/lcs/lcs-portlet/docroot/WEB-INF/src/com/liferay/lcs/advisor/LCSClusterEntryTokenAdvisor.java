@@ -16,8 +16,8 @@ package com.liferay.lcs.advisor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.liferay.lcs.InvalidLCSClusterEntryTokenException;
 import com.liferay.lcs.activation.LCSClusterEntryTokenContentAdvisor;
+import com.liferay.lcs.exception.InvalidLCSClusterEntryTokenException;
 import com.liferay.lcs.exception.MissingLCSClusterEntryTokenException;
 import com.liferay.lcs.exception.MultipleLCSClusterEntryTokenException;
 import com.liferay.lcs.rest.LCSClusterEntryToken;
@@ -45,7 +45,6 @@ import com.liferay.util.Encryptor;
 import com.liferay.util.EncryptorException;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 
 import java.security.Key;
@@ -160,7 +159,7 @@ public class LCSClusterEntryTokenAdvisor {
 		try {
 			FileUtil.delete(getLCSClusterEntryTokenFileName());
 		}
-		catch (FileNotFoundException fnfe) {
+		catch (MissingLCSClusterEntryTokenException mlcscete) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("LCS activation token file is not present");
 			}

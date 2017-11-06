@@ -14,8 +14,8 @@
 
 package com.liferay.lcs.runnable;
 
-import com.liferay.lcs.InvalidLCSClusterEntryTokenException;
 import com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor;
+import com.liferay.lcs.exception.InvalidLCSClusterEntryTokenException;
 import com.liferay.lcs.exception.MissingLCSClusterEntryTokenException;
 import com.liferay.lcs.oauth.OAuthUtil;
 import com.liferay.lcs.rest.LCSClusterEntryToken;

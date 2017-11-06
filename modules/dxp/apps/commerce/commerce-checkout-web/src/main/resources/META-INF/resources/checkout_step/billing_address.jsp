@@ -20,22 +20,7 @@
 BillingAddressCheckoutStepDisplayContext billingAddressCheckoutStepDisplayContext = (BillingAddressCheckoutStepDisplayContext)request.getAttribute("CommerceCheckoutStepDisplayContext");
 
 List<CommerceAddress> commerceAddresses = billingAddressCheckoutStepDisplayContext.getCommerceAddresses();
-
-long defaultBillingAddressId = 0;
-
-for (CommerceAddress commerceAddress : commerceAddresses) {
-	if (commerceAddress.isDefaultBilling()) {
-		defaultBillingAddressId = commerceAddress.getCommerceAddressId();
-
-		break;
-	}
-}
-
-if ((defaultBillingAddressId == 0) && !commerceAddresses.isEmpty()) {
-	CommerceAddress commerceAddress = commerceAddresses.get(0);
-
-	defaultBillingAddressId = commerceAddress.getCommerceAddressId();
-}
+long defaultBillingAddressId = billingAddressCheckoutStepDisplayContext.getDefaultBillingAddressId();
 
 long billingAddressId = BeanParamUtil.getLong(billingAddressCheckoutStepDisplayContext.getCommerceCart(), request, "billingAddressId", defaultBillingAddressId);
 

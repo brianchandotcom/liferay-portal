@@ -55,6 +55,29 @@ public class BillingAddressCheckoutStepDisplayContext {
 		return _commerceCart;
 	}
 
+	public long getDefaultBillingAddressId() throws PortalException {
+		long defaultBillingAddressId = 0;
+
+		List<CommerceAddress> commerceAddresses = getCommerceAddresses();
+
+		for (CommerceAddress commerceAddress : commerceAddresses) {
+			if (commerceAddress.isDefaultBilling()) {
+				defaultBillingAddressId =
+					commerceAddress.getCommerceAddressId();
+
+				break;
+			}
+		}
+
+		if ((defaultBillingAddressId == 0) && !commerceAddresses.isEmpty()) {
+			CommerceAddress commerceAddress = commerceAddresses.get(0);
+
+			defaultBillingAddressId = commerceAddress.getCommerceAddressId();
+		}
+
+		return defaultBillingAddressId;
+	}
+
 	private final CommerceAddressService _commerceAddressService;
 	private final CommerceCart _commerceCart;
 

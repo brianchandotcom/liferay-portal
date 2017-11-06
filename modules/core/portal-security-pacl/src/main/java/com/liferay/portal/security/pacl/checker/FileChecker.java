@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.PathUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -201,8 +202,9 @@ public class FileChecker extends BaseChecker {
 
 		logSecurityException(
 			_log,
-			"Attempted to " + permission.getActions() + " on file " +
-				permission.getName());
+			StringBundler.concat(
+				"Attempted to ", permission.getActions(), " on file ",
+				permission.getName()));
 
 		return false;
 	}
@@ -274,7 +276,8 @@ public class FileChecker extends BaseChecker {
 
 	protected void addPermission(String path, String actions) {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Allowing " + actions + " on " + path);
+			_log.debug(
+				StringBundler.concat("Allowing ", actions, " on ", path));
 		}
 
 		String unixPath = PathUtil.toUnixPath(path);

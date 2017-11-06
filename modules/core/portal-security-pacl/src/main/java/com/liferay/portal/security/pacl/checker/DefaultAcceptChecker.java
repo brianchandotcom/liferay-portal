@@ -16,6 +16,7 @@ package com.liferay.portal.security.pacl.checker;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.security.Permission;
@@ -45,11 +46,14 @@ public class DefaultAcceptChecker extends BaseChecker {
 
 		if (Validator.isNotNull(actions)) {
 			_log.info(
-				"Allowing permission " + clazz.getName() + " to " + name +
-					" on " + actions);
+				StringBundler.concat(
+					"Allowing permission ", clazz.getName(), " to ", name,
+					" on ", actions));
 		}
 		else {
-			_log.info("Allowing permission " + clazz.getName() + " to " + name);
+			_log.info(
+				StringBundler.concat(
+					"Allowing permission ", clazz.getName(), " to ", name));
 		}
 
 		return true;

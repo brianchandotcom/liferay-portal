@@ -17,6 +17,7 @@ package com.liferay.portal.security.pacl.checker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.net.SocketPermission;
@@ -100,7 +101,9 @@ public class SocketChecker extends BaseChecker {
 
 		if (!_permissions.implies(permission)) {
 			logSecurityException(
-				_log, "Attempted " + actions + " for address " + name);
+				_log,
+				StringBundler.concat(
+					"Attempted ", actions, " for address ", name));
 
 			return false;
 		}

@@ -18,7 +18,10 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.message.boards.exception.NoSuchBanException}
  */
+@Deprecated
 public class NoSuchBanException extends NoSuchModelException {
 
 	public NoSuchBanException() {

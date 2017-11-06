@@ -16,6 +16,9 @@ package com.liferay.portlet.messageboards.model.impl;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.message.boards.model.impl.MBBanImpl}
  */
+@Deprecated
 public class MBBanImpl extends MBBanBaseImpl {
 }

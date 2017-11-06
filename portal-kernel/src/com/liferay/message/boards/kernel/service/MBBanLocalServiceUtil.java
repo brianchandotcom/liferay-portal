@@ -31,8 +31,11 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @see MBBanLocalService
  * @see com.liferay.portlet.messageboards.service.base.MBBanLocalServiceBaseImpl
  * @see com.liferay.portlet.messageboards.service.impl.MBBanLocalServiceImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.message.boards.service.impl.MBBanLocalServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBBanLocalServiceUtil {
 	/*

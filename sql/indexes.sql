@@ -235,12 +235,6 @@ create index IX_D9FFCA84 on LayoutSetPrototype (uuid_[$COLUMN_LENGTH:75$], compa
 create index IX_77729718 on ListType (name[$COLUMN_LENGTH:75$], type_[$COLUMN_LENGTH:75$]);
 create index IX_2932DD37 on ListType (type_[$COLUMN_LENGTH:75$]);
 
-create index IX_69951A25 on MBBan (banUserId);
-create unique index IX_8ABC4E3B on MBBan (groupId, banUserId);
-create index IX_48814BBA on MBBan (userId);
-create index IX_4F841574 on MBBan (uuid_[$COLUMN_LENGTH:75$], companyId);
-create unique index IX_2A3B68F6 on MBBan (uuid_[$COLUMN_LENGTH:75$], groupId);
-
 create index IX_D1642361 on MBCategory (categoryId, groupId, parentCategoryId, status);
 create index IX_E15A5DB5 on MBCategory (companyId, status);
 create index IX_C295DBEE on MBCategory (groupId, parentCategoryId, status);

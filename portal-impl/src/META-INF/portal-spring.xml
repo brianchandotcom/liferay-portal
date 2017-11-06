@@ -79,9 +79,6 @@
 	<bean class="com.liferay.portlet.exportimport.service.persistence.impl.ExportImportConfigurationFinderImpl" id="com.liferay.exportimport.kernel.service.persistence.ExportImportConfigurationFinder" parent="basePersistence" />
 	<bean class="com.liferay.portlet.exportimport.service.impl.StagingLocalServiceImpl" id="com.liferay.exportimport.kernel.service.StagingLocalService" />
 	<bean class="com.liferay.portlet.exportimport.service.impl.StagingServiceImpl" id="com.liferay.exportimport.kernel.service.StagingService" />
-	<bean class="com.liferay.portlet.messageboards.service.impl.MBBanLocalServiceImpl" id="com.liferay.message.boards.kernel.service.MBBanLocalService" />
-	<bean class="com.liferay.portlet.messageboards.service.impl.MBBanServiceImpl" id="com.liferay.message.boards.kernel.service.MBBanService" />
-	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBBanPersistenceImpl" id="com.liferay.message.boards.kernel.service.persistence.MBBanPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portlet.messageboards.service.impl.MBCategoryLocalServiceImpl" id="com.liferay.message.boards.kernel.service.MBCategoryLocalService" />
 	<bean class="com.liferay.portlet.messageboards.service.impl.MBCategoryServiceImpl" id="com.liferay.message.boards.kernel.service.MBCategoryService" />
 	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBCategoryPersistenceImpl" id="com.liferay.message.boards.kernel.service.persistence.MBCategoryPersistence" parent="basePersistence" />

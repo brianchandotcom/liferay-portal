@@ -35,8 +35,11 @@ import java.util.Date;
  *
  * @author Brian Wing Shun Chan
  * @see MBBan
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.model.impl.MBBanImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 	@Override

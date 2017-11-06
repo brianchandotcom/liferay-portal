@@ -68,8 +68,11 @@ import javax.sql.DataSource;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.messageboards.service.impl.MBBanLocalServiceImpl
  * @see com.liferay.message.boards.kernel.service.MBBanLocalServiceUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.service.impl.MBBanLocalServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public abstract class MBBanLocalServiceBaseImpl extends BaseLocalServiceImpl
 	implements MBBanLocalService, IdentifiableOSGiService {

@@ -24,6 +24,7 @@ import com.liferay.message.boards.kernel.service.MBDiscussionLocalService;
 import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.message.boards.kernel.util.comparator.MessageThreadComparator;
+import com.liferay.message.boards.service.MBBanLocalService;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentConstants;
 import com.liferay.portal.kernel.comment.CommentManager;
@@ -232,7 +233,8 @@ public class MBCommentManagerImpl implements CommentManager {
 	public DiscussionPermission getDiscussionPermission(
 		PermissionChecker permissionChecker) {
 
-		return new MBDiscussionPermissionImpl(permissionChecker);
+		return new MBDiscussionPermissionImpl(
+			permissionChecker, _mbBanLocalService, _mbMessageLocalService);
 	}
 
 	@Override
@@ -389,6 +391,9 @@ public class MBCommentManagerImpl implements CommentManager {
 
 		_mbThreadLocalService = mbThreadLocalService;
 	}
+
+	@Reference
+	private MBBanLocalService _mbBanLocalService;
 
 	private MBDiscussionLocalService _mbDiscussionLocalService;
 	private MBMessageLocalService _mbMessageLocalService;

@@ -60,8 +60,11 @@ import java.util.Map;
  * @see MBBanImpl
  * @see MBBan
  * @see MBBanModel
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.model.impl.MBBanImpl}
  * @generated
  */
+@Deprecated
 @JSON(strict = true)
 @ProviderType
 public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {

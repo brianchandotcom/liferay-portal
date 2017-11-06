@@ -14,12 +14,8 @@
 
 package com.liferay.portal.upgrade.v7_0_5;
 
-import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 /**
  * @author Cristina González
@@ -27,29 +23,12 @@ import java.sql.ResultSet;
 public class UpgradeExpando extends UpgradeProcess {
 
 	protected void deleteOrphanExpandoRow() throws Exception {
-		StringBundler sb = new StringBundler(3);
+		StringBundler sb = new StringBundler(2);
 
-		sb.append("select rowId_ from ExpandoRow where rowId_ not in (select ");
-		sb.append("rowId_ from ExpandoValue)");
+		sb.append("delete from ExpandoRow where rowId_ not in (select rowId_ ");
+		sb.append("from ExpandoValue)");
 
-		try (PreparedStatement ps1 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection, "delete from ExpandoRow where rowId_ = ?");
-			PreparedStatement ps2 = connection.prepareStatement(
-				sb.toString())) {
-
-			try (ResultSet rs = ps2.executeQuery()) {
-				while (rs.next()) {
-					long rowId = rs.getInt(1);
-
-					ps1.setLong(1, rowId);
-
-					ps1.addBatch();
-				}
-
-				ps1.executeBatch();
-			}
-		}
+		runSQL(sb.toString());
 	}
 
 	@Override

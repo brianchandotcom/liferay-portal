@@ -740,7 +740,7 @@ public class JenkinsResultsParserUtil {
 			JenkinsMaster randomJenkinsMaster = availableJenkinsMasters.get(
 				random.nextInt(availableJenkinsMasters.size()));
 
-			return "http://" + randomJenkinsMaster.getMasterName();
+			return "http://" + randomJenkinsMaster.getName();
 		}
 	}
 

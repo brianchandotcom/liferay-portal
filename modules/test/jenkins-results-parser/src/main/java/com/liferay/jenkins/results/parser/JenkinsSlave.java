@@ -28,7 +28,7 @@ public class JenkinsSlave {
 		_slaveName = slaveName;
 
 		_localURL = JenkinsResultsParserUtil.combine(
-			"http://", _jenkinsMaster.getMasterName(), "/computer/", _slaveName,
+			"http://", _jenkinsMaster.getName(), "/computer/", _slaveName,
 			"/");
 	}
 
@@ -73,7 +73,7 @@ public class JenkinsSlave {
 				"${offline.status}", String.valueOf(offlineStatus));
 
 			JenkinsResultsParserUtil.executeJenkinsScript(
-				_jenkinsMaster.getMasterName(), script);
+				_jenkinsMaster.getName(), script);
 		}
 		catch (IOException ioe) {
 			System.out.println(

@@ -19,20 +19,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Igor Beslic
  */
-public class NoLCSClusterEntryTokenException extends PortalException {
+public class MissingLCSClusterEntryTokenException extends PortalException {
 
-	public NoLCSClusterEntryTokenException() {
+	public MissingLCSClusterEntryTokenException() {
 	}
 
-	public NoLCSClusterEntryTokenException(String msg) {
+	public MissingLCSClusterEntryTokenException(String msg) {
 		super(msg);
 	}
 
-	public NoLCSClusterEntryTokenException(String msg, Throwable cause) {
+	public MissingLCSClusterEntryTokenException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoLCSClusterEntryTokenException(Throwable cause) {
+	public MissingLCSClusterEntryTokenException(Throwable cause) {
 		super(cause);
 	}
 

@@ -20,12 +20,15 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.BNDSettings;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+
+import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -79,9 +82,87 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		return content;
 	}
 
+	protected Properties getGitHubPortalLanguageProperties(
+			String absolutePath,
+			Map<String, Properties> gitHubPortalLanguagePropertiesMap)
+		throws Exception {
+
+		String propertiesFileLocation = null;
+
+		for (Map.Entry<String, Properties> entry :
+				gitHubPortalLanguagePropertiesMap.entrySet()) {
+
+			String curPropertiesFileLocation = entry.getKey();
+
+			if (!absolutePath.startsWith(curPropertiesFileLocation)) {
+				continue;
+			}
+
+			if ((propertiesFileLocation == null) ||
+				propertiesFileLocation.startsWith(curPropertiesFileLocation)) {
+
+				propertiesFileLocation = curPropertiesFileLocation;
+			}
+		}
+
+		return gitHubPortalLanguagePropertiesMap.get(propertiesFileLocation);
+	}
+
+	protected Map<String, Properties> getGitHubPortalLanguagePropertiesMap()
+		throws Exception {
+
+		Map<String, Properties> gitHubPortalLanguagePropertiesMap =
+			new HashMap<>();
+
+		Map<String, Properties> propertiesMap = getPropertiesMap();
+
+		for (Map.Entry<String, Properties> entry : propertiesMap.entrySet()) {
+			Properties properties = entry.getValue();
+
+			String s = properties.getProperty(GIT_HUB_LIFERAY_PORTAL_BRANCH);
+
+			if (Validator.isNull(s)) {
+				continue;
+			}
+
+			Properties gitHubPortalLanguageProperties = new Properties();
+
+			URL url = new URL(
+				_GIT_HUB_LIFERAY_PORTAL_URL + s +
+					"/portal-impl/src/content/Language.properties");
+
+			gitHubPortalLanguageProperties.load(url.openStream());
+
+			gitHubPortalLanguagePropertiesMap.put(
+				entry.getKey(), gitHubPortalLanguageProperties);
+		}
+
+		return gitHubPortalLanguagePropertiesMap;
+	}
+
 	protected List<Pattern> getPatterns() {
 		return Arrays.asList(languageKeyPattern);
 	}
+
+	protected Properties getPortalLanguageProperties() throws Exception {
+		Properties portalLanguageProperties = new Properties();
+
+		File portalLanguagePropertiesFile = getFile(
+			"portal-impl/src/content/Language.properties",
+			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		if (portalLanguagePropertiesFile != null) {
+			InputStream inputStream = new FileInputStream(
+				portalLanguagePropertiesFile);
+
+			portalLanguageProperties.load(inputStream);
+		}
+
+		return portalLanguageProperties;
+	}
+
+	protected static final String GIT_HUB_LIFERAY_PORTAL_BRANCH =
+		"git.hub.liferay.portal.branch";
 
 	protected final Pattern languageKeyPattern = Pattern.compile(
 		"LanguageUtil.(?:get|format)\\([^;%]+|Liferay.Language.get\\('([^']+)");
@@ -405,6 +486,9 @@ public class LanguageKeysCheck extends BaseFileCheck {
 
 		return null;
 	}
+
+	private static final String _GIT_HUB_LIFERAY_PORTAL_URL =
+		"https://raw.githubusercontent.com/liferay/liferay-portal/";
 
 	private final Pattern _applyLangMergerPluginPattern = Pattern.compile(
 		"^apply[ \t]+plugin[ \t]*:[ \t]+\"com.liferay.lang.merger\"$",

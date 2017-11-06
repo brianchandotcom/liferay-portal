@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean class="com.liferay.message.boards.service.impl.MBMailingListLocalServiceImpl" id="com.liferay.message.boards.service.MBMailingListLocalService" />
+	<bean class="com.liferay.message.boards.service.persistence.impl.MBMailingListPersistenceImpl" id="com.liferay.message.boards.service.persistence.MBMailingListPersistence" parent="basePersistence" />
 	<bean class="com.liferay.message.boards.service.impl.MBStatsUserLocalServiceImpl" id="com.liferay.message.boards.service.MBStatsUserLocalService" />
 	<bean class="com.liferay.message.boards.service.persistence.impl.MBStatsUserPersistenceImpl" id="com.liferay.message.boards.service.persistence.MBStatsUserPersistence" parent="basePersistence" />
 </beans>

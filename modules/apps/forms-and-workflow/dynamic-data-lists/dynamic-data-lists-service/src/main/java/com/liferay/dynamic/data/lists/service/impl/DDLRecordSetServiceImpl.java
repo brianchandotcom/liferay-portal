@@ -394,8 +394,11 @@ public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 			int minDisplayRows, ServiceContext serviceContext)
 		throws PortalException {
 
+		DDLRecordSet recordSet = ddlRecordSetPersistence.findByG_R(
+			groupId, recordSetKey);
+
 		DDLRecordSetPermission.check(
-			getPermissionChecker(), groupId, recordSetKey, ActionKeys.UPDATE);
+			getPermissionChecker(), recordSet, ActionKeys.UPDATE);
 
 		return ddlRecordSetLocalService.updateRecordSet(
 			groupId, ddmStructureId, recordSetKey, nameMap, descriptionMap,

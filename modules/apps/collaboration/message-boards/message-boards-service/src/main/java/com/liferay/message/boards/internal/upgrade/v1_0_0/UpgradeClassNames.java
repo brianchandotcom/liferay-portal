@@ -33,6 +33,10 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 
 	private static final String[][] _CLASS_NAMES = {
 		{
+			"com.liferay.message.boards.kernel.model.MBMailingList",
+			"com.liferay.message.boards.model.MBMailingList"
+		},
+		{
 			"com.liferay.message.boards.kernel.model.MBStatsUser",
 			"com.liferay.message.boards.model.MBStatsUser"
 		}

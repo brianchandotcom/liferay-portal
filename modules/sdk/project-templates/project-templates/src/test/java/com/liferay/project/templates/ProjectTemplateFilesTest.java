@@ -624,6 +624,7 @@ public class ProjectTemplateFilesTest {
 		_testBuildGradle(projectTemplateDirName, archetypeResourcesDirPath);
 
 		_testGitIgnore(projectTemplateDirName, archetypeResourcesDirPath);
+
 		_testGradleWrapper(archetypeResourcesDirPath);
 		_testMavenWrapper(archetypeResourcesDirPath);
 		_testPomXml(archetypeResourcesDirPath, documentBuilder);
@@ -764,7 +765,7 @@ public class ProjectTemplateFilesTest {
 				text.startsWith(xmlDeclaration));
 		}
 
-		if (!fileName.endsWith(".es.js")) {
+		if (!fileName.endsWith(".js")) {
 			matcher = _archetypeResourcePropertyNamePattern.matcher(text);
 
 			while (matcher.find()) {
@@ -827,8 +828,8 @@ public class ProjectTemplateFilesTest {
 		"[a-z]+(?:-[a-z]+)*");
 	private static final Set<String> _textFileExtensions = new HashSet<>(
 		Arrays.asList(
-			"bnd", "gradle", "java", "js", "jsp", "jspf", "properties", "vm",
-			"xml"));
+			"bnd", "gradle", "java", "js", "json", "jsp", "jspf", "properties",
+			"vm", "xml"));
 	private static final Pattern _velocityDirectivePattern = Pattern.compile(
 		"#(if|set)\\s*\\(\\s*(.+)\\s*\\)");
 	private static final Pattern _velocitySetDirectivePattern = Pattern.compile(

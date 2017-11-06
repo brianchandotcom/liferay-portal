@@ -88,26 +88,33 @@ dlSearchContainer.setResults(foldersAndFileEntriesAndFileShortcuts);
 						</liferay-ui:search-container-column-text>
 					</c:when>
 					<c:when test="<%= (fileEntry != null) && (fileShortcut == null) %>">
-						<liferay-ui:search-container-column-text
-							name="title"
-						>
 
-							<%
-							Map<String, Object> data = new HashMap<String, Object>();
+						<%
+						FileVersion fileVersion = fileEntry.getFileVersion();
+						%>
 
-							data.put("entryid", fileEntry.getFileEntryId());
-							data.put("entryname", fileEntry.getTitle());
-							%>
+						<c:if test="<%= fileVersion.isApproved() %>">
+							<liferay-ui:search-container-column-text
+								name="title"
+							>
 
-							<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
-								<%= HtmlUtil.escape(fileEntry.getTitle()) %>
-							</aui:a>
+								<%
+								Map<String, Object> data = new HashMap<String, Object>();
 
-							<c:if test="<%= Validator.isNotNull(fileEntry.getDescription()) %>">
-								<br />
-								<%= HtmlUtil.escape(fileEntry.getDescription()) %>
-							</c:if>
-						</liferay-ui:search-container-column-text>
+								data.put("entryid", fileEntry.getFileEntryId());
+								data.put("entryname", fileEntry.getTitle());
+								%>
+
+								<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+									<%= HtmlUtil.escape(fileEntry.getTitle()) %>
+								</aui:a>
+
+								<c:if test="<%= Validator.isNotNull(fileEntry.getDescription()) %>">
+									<br />
+									<%= HtmlUtil.escape(fileEntry.getDescription()) %>
+								</c:if>
+							</liferay-ui:search-container-column-text>
+						</c:if>
 					</c:when>
 				</c:choose>
 			</liferay-ui:search-container-row>

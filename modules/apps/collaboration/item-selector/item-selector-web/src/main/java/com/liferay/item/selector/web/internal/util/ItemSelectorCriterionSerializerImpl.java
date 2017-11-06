@@ -15,11 +15,11 @@
 package com.liferay.item.selector.web.internal.util;
 
 import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.ItemSelectorCriterionSerializer;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewReturnTypeProvider;
 import com.liferay.item.selector.ItemSelectorViewReturnTypeProviderHandler;
-import com.liferay.item.selector.web.ItemSelectorCriterionSerializer;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.util.ServiceTrackerFactory;

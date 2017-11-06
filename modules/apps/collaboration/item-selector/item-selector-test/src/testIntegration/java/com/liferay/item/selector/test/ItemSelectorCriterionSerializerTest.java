@@ -19,7 +19,7 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewReturnTypeProvider;
-import com.liferay.item.selector.web.ItemSelectorCriterionSerializer;
+import com.liferay.item.selector.ItemSelectorCriterionSerializer;
 
 import java.util.ArrayList;
 import java.util.Arrays;

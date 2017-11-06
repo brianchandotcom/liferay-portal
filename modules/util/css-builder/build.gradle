@@ -11,6 +11,9 @@ targetCompatibility = "1.8"
 buildPluginDescriptor {
 	configurationScopeMapping "mavenCompile", Conf2ScopeMappingContainer.COMPILE
 
+	dependsOn ":util:sass-compiler-jni:install"
+	dependsOn ":util:sass-compiler-ruby:install"
+
 	ext {
 		autoClean = false
 	}

@@ -12,30 +12,30 @@
  * details.
  */
 
-package com.liferay.message.boards.kernel.exception;
+package com.liferay.message.boards.exception;
 
-import com.liferay.portal.kernel.exception.NoSuchModelException;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.exception.NoSuchMailingListException}
  */
-@Deprecated
-public class NoSuchMailingListException extends NoSuchModelException {
+@ProviderType
+public class MailingListInUserNameException extends PortalException {
 
-	public NoSuchMailingListException() {
+	public MailingListInUserNameException() {
 	}
 
-	public NoSuchMailingListException(String msg) {
+	public MailingListInUserNameException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchMailingListException(String msg, Throwable cause) {
+	public MailingListInUserNameException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchMailingListException(Throwable cause) {
+	public MailingListInUserNameException(Throwable cause) {
 		super(cause);
 	}
 

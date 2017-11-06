@@ -82,87 +82,9 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private Properties _getGitHubPortalLanguageProperties(
-			String absolutePath,
-			Map<String, Properties> gitHubPortalLanguagePropertiesMap)
-		throws Exception {
-
-		String propertiesFileLocation = null;
-
-		for (Map.Entry<String, Properties> entry :
-				gitHubPortalLanguagePropertiesMap.entrySet()) {
-
-			String curPropertiesFileLocation = entry.getKey();
-
-			if (!absolutePath.startsWith(curPropertiesFileLocation)) {
-				continue;
-			}
-
-			if ((propertiesFileLocation == null) ||
-				propertiesFileLocation.startsWith(curPropertiesFileLocation)) {
-
-				propertiesFileLocation = curPropertiesFileLocation;
-			}
-		}
-
-		return gitHubPortalLanguagePropertiesMap.get(propertiesFileLocation);
-	}
-
-	private Map<String, Properties> _getGitHubPortalLanguagePropertiesMap()
-		throws Exception {
-
-		Map<String, Properties> gitHubPortalLanguagePropertiesMap =
-			new HashMap<>();
-
-		Map<String, Properties> propertiesMap = getPropertiesMap();
-
-		for (Map.Entry<String, Properties> entry : propertiesMap.entrySet()) {
-			Properties properties = entry.getValue();
-
-			String s = properties.getProperty(_GIT_HUB_LIFERAY_PORTAL_BRANCH);
-
-			if (Validator.isNull(s)) {
-				continue;
-			}
-
-			Properties gitHubPortalLanguageProperties = new Properties();
-
-			URL url = new URL(
-				_GIT_HUB_LIFERAY_PORTAL_URL + s +
-					"/portal-impl/src/content/Language.properties");
-
-			gitHubPortalLanguageProperties.load(url.openStream());
-
-			gitHubPortalLanguagePropertiesMap.put(
-				entry.getKey(), gitHubPortalLanguageProperties);
-		}
-
-		return gitHubPortalLanguagePropertiesMap;
-	}
-
 	protected List<Pattern> getPatterns() {
 		return Arrays.asList(languageKeyPattern);
 	}
-
-	private Properties _getPortalLanguageProperties() throws Exception {
-		Properties portalLanguageProperties = new Properties();
-
-		File portalLanguagePropertiesFile = getFile(
-			"portal-impl/src/content/Language.properties",
-			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
-
-		if (portalLanguagePropertiesFile != null) {
-			InputStream inputStream = new FileInputStream(
-				portalLanguagePropertiesFile);
-
-			portalLanguageProperties.load(inputStream);
-		}
-
-		return portalLanguageProperties;
-	}
-
-	private static final String _GIT_HUB_LIFERAY_PORTAL_BRANCH =
-		"git.hub.liferay.portal.branch";
 
 	protected final Pattern languageKeyPattern = Pattern.compile(
 		"LanguageUtil.(?:get|format)\\([^;%]+|Liferay.Language.get\\('([^']+)");
@@ -250,6 +172,64 @@ public class LanguageKeysCheck extends BaseFileCheck {
 				putBNDSettings(bndSettings);
 			}
 		}
+	}
+
+	private Properties _getGitHubPortalLanguageProperties(
+			String absolutePath,
+			Map<String, Properties> gitHubPortalLanguagePropertiesMap)
+		throws Exception {
+
+		String propertiesFileLocation = null;
+
+		for (Map.Entry<String, Properties> entry :
+				gitHubPortalLanguagePropertiesMap.entrySet()) {
+
+			String curPropertiesFileLocation = entry.getKey();
+
+			if (!absolutePath.startsWith(curPropertiesFileLocation)) {
+				continue;
+			}
+
+			if ((propertiesFileLocation == null) ||
+				propertiesFileLocation.startsWith(curPropertiesFileLocation)) {
+
+				propertiesFileLocation = curPropertiesFileLocation;
+			}
+		}
+
+		return gitHubPortalLanguagePropertiesMap.get(propertiesFileLocation);
+	}
+
+	private Map<String, Properties> _getGitHubPortalLanguagePropertiesMap()
+		throws Exception {
+
+		Map<String, Properties> gitHubPortalLanguagePropertiesMap =
+			new HashMap<>();
+
+		Map<String, Properties> propertiesMap = getPropertiesMap();
+
+		for (Map.Entry<String, Properties> entry : propertiesMap.entrySet()) {
+			Properties properties = entry.getValue();
+
+			String s = properties.getProperty(_GIT_HUB_LIFERAY_PORTAL_BRANCH);
+
+			if (Validator.isNull(s)) {
+				continue;
+			}
+
+			Properties gitHubPortalLanguageProperties = new Properties();
+
+			URL url = new URL(
+				_GIT_HUB_LIFERAY_PORTAL_URL + s +
+					"/portal-impl/src/content/Language.properties");
+
+			gitHubPortalLanguageProperties.load(url.openStream());
+
+			gitHubPortalLanguagePropertiesMap.put(
+				entry.getKey(), gitHubPortalLanguageProperties);
+		}
+
+		return gitHubPortalLanguagePropertiesMap;
 	}
 
 	private String[] _getLanguageKeys(Matcher matcher) {
@@ -486,6 +466,26 @@ public class LanguageKeysCheck extends BaseFileCheck {
 
 		return null;
 	}
+
+	private Properties _getPortalLanguageProperties() throws Exception {
+		Properties portalLanguageProperties = new Properties();
+
+		File portalLanguagePropertiesFile = getFile(
+			"portal-impl/src/content/Language.properties",
+			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		if (portalLanguagePropertiesFile != null) {
+			InputStream inputStream = new FileInputStream(
+				portalLanguagePropertiesFile);
+
+			portalLanguageProperties.load(inputStream);
+		}
+
+		return portalLanguageProperties;
+	}
+
+	private static final String _GIT_HUB_LIFERAY_PORTAL_BRANCH =
+		"git.hub.liferay.portal.branch";
 
 	private static final String _GIT_HUB_LIFERAY_PORTAL_URL =
 		"https://raw.githubusercontent.com/liferay/liferay-portal/";

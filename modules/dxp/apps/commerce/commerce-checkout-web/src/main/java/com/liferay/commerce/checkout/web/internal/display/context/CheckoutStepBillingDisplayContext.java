@@ -40,9 +40,8 @@ public class CheckoutStepBillingDisplayContext {
 		throws PortalException {
 
 		_commerceAddressService = commerceAddressService;
-		_commerceCartHelper = commerceCartHelper;
 
-		_commerceCart = _commerceCartHelper.getCurrentCommerceCart(
+		_commerceCart = commerceCartHelper.getCurrentCommerceCart(
 			httpServletRequest, httpServletResponse,
 			CommerceConstants.COMMERCE_CART_TYPE_CART);
 	}
@@ -58,6 +57,5 @@ public class CheckoutStepBillingDisplayContext {
 
 	private final CommerceAddressService _commerceAddressService;
 	private final CommerceCart _commerceCart;
-	private final CommerceCartHelper _commerceCartHelper;
 
 }

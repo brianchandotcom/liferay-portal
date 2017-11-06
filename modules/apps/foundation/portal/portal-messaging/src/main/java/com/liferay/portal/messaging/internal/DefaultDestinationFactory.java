@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.messaging.DestinationPrototype;
 
 import java.util.Collection;
 import java.util.Collections;

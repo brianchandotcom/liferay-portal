@@ -12,31 +12,16 @@
  * details.
  */
 
-package com.liferay.message.boards.kernel.exception;
+package com.liferay.message.boards.model.impl;
 
-import com.liferay.portal.kernel.exception.NoSuchModelException;
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.exception.NoSuchMailingListException}
+ * @deprecated As of 1.0.0, replaced by {@link
+ *             com.liferay.message.boards.service.impl.MBMailingListImpl}
  */
 @Deprecated
-public class NoSuchMailingListException extends NoSuchModelException {
-
-	public NoSuchMailingListException() {
-	}
-
-	public NoSuchMailingListException(String msg) {
-		super(msg);
-	}
-
-	public NoSuchMailingListException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
-	public NoSuchMailingListException(Throwable cause) {
-		super(cause);
-	}
-
+@ProviderType
+public class MBMailingListImpl extends MBMailingListBaseImpl {
 }

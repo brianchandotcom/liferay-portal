@@ -109,19 +109,21 @@ public class TaskPoshiElement extends BasePoshiElement {
 		List<String> readableBlocks = new ArrayList<>();
 
 		for (String line : readableSyntax.split("\n")) {
+			String trimmedLine = line.trim();
+
 			String readableBlock = sb.toString();
 
 			readableBlock = readableBlock.trim();
 
-			if (line.startsWith(getReadableName() + " (") &&
-				line.endsWith("{") && (readableBlock.length() == 0)) {
+			if (trimmedLine.startsWith(getReadableName() + " (") &&
+				trimmedLine.endsWith("{") && (readableBlock.length() == 0)) {
 
 				readableBlocks.add(line);
 
 				continue;
 			}
 
-			if (line.endsWith("{") && readableBlocks.isEmpty()) {
+			if (trimmedLine.endsWith("{") && readableBlocks.isEmpty()) {
 				continue;
 			}
 

@@ -142,23 +142,24 @@ public class DefinitionPoshiElement extends BasePoshiElement {
 		List<String> readableBlocks = new ArrayList<>();
 
 		for (String line : readableSyntax.split("\n")) {
-			line = line.trim();
+			String trimmedLine = line.trim();
 
-			if (line.length() == 0) {
+			if (trimmedLine.length() == 0) {
 				sb.append("\n");
 
 				continue;
 			}
 
-			if (line.startsWith("@") && !line.startsWith("@description") &&
-				!line.startsWith("@priority")) {
+			if (trimmedLine.startsWith("@") &&
+				!trimmedLine.startsWith("@description") &&
+				!trimmedLine.startsWith("@priority")) {
 
 				readableBlocks.add(line);
 
 				continue;
 			}
 
-			if (line.startsWith("definition {")) {
+			if (trimmedLine.startsWith("definition {")) {
 				continue;
 			}
 

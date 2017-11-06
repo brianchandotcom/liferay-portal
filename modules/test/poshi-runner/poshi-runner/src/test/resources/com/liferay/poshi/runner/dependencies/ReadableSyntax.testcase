@@ -127,11 +127,31 @@ definition {
 			),
 			siteName
 		);
-		var wikiPageContent = "<p id='demo'>PASS</p>
+		var testCDATA = escapeText("'alert(0)'"alert(0)"><img src=x onerror=alert(0)><script>alert(0)</script>");
+		var wikiPageContent = escapeText("<p id='demo'>PASS</p>
 
 <script type='text/javascript'>
-document.getElementById('demo').innerHTML = 'FAIL';
-</script>";
+	document.getElementById('demo').innerHTML = 'FAIL';
+</script>");
+
+		AlloyEditor.addSourceContent(
+			content = escapeText("
+<h2 class="text-center">Space Program 大学生涯教育</h2>
+
+<p class="text-center">地球から、宇宙の果てへ</p>
+")
+		);
+
+		KaleoDesigner.viewSourceXMLLine(
+			kdSourceXML = escapeText("<name>Timer Name</name>"),
+			line = "21"
+		);
+
+		User.editDetailsViaMyAccount(
+			userFirstNameEdit = escapeText("'alert(0)'"alert(0)"><img src=x onerror=alert(0)><script>alert(0)</script>"),
+			userLastNameEdit = escapeText("<script>document.write("XSS"); window.stop();</script>"),
+			userMiddleNameEdit = escapeText("<script>document.write("XSS"); window.stop();</script>")
+		);
 
 		Smoke.viewWelcomePage();
 

@@ -73,6 +73,20 @@ public class StringUtil {
 		return s;
 	}
 
+	public static String combine(String...strings) {
+		if ((strings == null) || (strings.length == 0)) {
+			return "";
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		for (String string : strings) {
+			sb.append(string);
+		}
+
+		return sb.toString();
+	}
+
 	public static boolean contains(String s, String text) {
 		return contains(s, text, StringPool.COMMA);
 	}

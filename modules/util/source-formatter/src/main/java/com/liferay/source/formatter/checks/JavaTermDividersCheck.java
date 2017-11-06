@@ -70,6 +70,7 @@ public class JavaTermDividersCheck extends BaseJavaTermCheck {
 	private String _fixJavaTermDivider(
 		String classContent, JavaTerm previousJavaTerm, JavaTerm javaTerm) {
 
+		String javaTermContent = javaTerm.getContent();
 		String previousJavaTermContent = previousJavaTerm.getContent();
 
 		String afterPreviousJavaTerm = StringUtil.trim(
@@ -77,11 +78,11 @@ public class JavaTermDividersCheck extends BaseJavaTermCheck {
 				classContent.indexOf(previousJavaTermContent) +
 					previousJavaTermContent.length()));
 
-		if (afterPreviousJavaTerm.startsWith("//")) {
+		if (!afterPreviousJavaTerm.startsWith(
+				StringUtil.trim(javaTermContent))) {
+
 			return classContent;
 		}
-
-		String javaTermContent = javaTerm.getContent();
 
 		if (!(javaTerm instanceof JavaVariable) ||
 			!(previousJavaTerm instanceof JavaVariable)) {

@@ -410,6 +410,11 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 	}
 
 	@Override
+	public int getPortletsCount(long companyId) {
+		return _portletLocalService.getPortletsCount(companyId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Portlet> getScopablePortlets() {
 		return _portletLocalService.getScopablePortlets();
 	}

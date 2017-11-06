@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.service;
+package com.liferay.company.service.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
@@ -47,14 +48,13 @@ import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.PasswordPolicyLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.VirtualHostLocalServiceUtil;
-import com.liferay.portal.kernel.service.persistence.PasswordPolicyUtil;
-import com.liferay.portal.kernel.service.persistence.PortalPreferencesUtil;
-import com.liferay.portal.kernel.service.persistence.PortletUtil;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -71,6 +71,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.portal.test.rule.callback.SybaseDump;
 import com.liferay.portal.test.rule.callback.SybaseDumpTransactionLog;
 import com.liferay.portal.util.PortalInstances;
@@ -94,6 +95,7 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.mock.web.MockServletContext;
@@ -102,6 +104,7 @@ import org.springframework.mock.web.MockServletContext;
  * @author Mika Koivisto
  * @author Dale Shan
  */
+@RunWith(Arquillian.class)
 @SybaseDumpTransactionLog(dumpBefore = {SybaseDump.CLASS, SybaseDump.METHOD})
 @Sync
 public class CompanyLocalServiceTest {
@@ -111,6 +114,7 @@ public class CompanyLocalServiceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
+			PermissionCheckerTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
 	public void resetBackgroundTaskThreadLocal() throws Exception {
@@ -222,7 +226,7 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testAddAndDeleteCompanyWithLayoutSetPrototype()
-		throws Exception {
+		throws Throwable {
 
 		Company company = addCompany();
 
@@ -230,15 +234,28 @@ public class CompanyLocalServiceTest {
 
 		long userId = UserLocalServiceUtil.getDefaultUserId(companyId);
 
-		Group group = GroupTestUtil.addGroup(
+		final Group group = GroupTestUtil.addGroup(
 			companyId, userId, GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 		LayoutSetPrototype layoutSetPrototype = addLayoutSetPrototype(
 			companyId, userId, RandomTestUtil.randomString());
 
-		SitesUtil.updateLayoutSetPrototypesLinks(
-			group, layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
-			false);
+		final long layoutSetPrototypeId =
+			layoutSetPrototype.getLayoutSetPrototypeId();
+
+		TransactionInvokerUtil.invoke(
+			_transactionConfig,
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					SitesUtil.updateLayoutSetPrototypesLinks(
+						group, layoutSetPrototypeId, 0, true, false);
+
+					return null;
+				}
+
+			});
 
 		addUser(
 			companyId, userId, group.getGroupId(),
@@ -255,7 +272,7 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testAddAndDeleteCompanyWithLayoutSetPrototypeLinkedUserGroup()
-		throws Exception {
+		throws Throwable {
 
 		Company company = addCompany();
 
@@ -266,15 +283,27 @@ public class CompanyLocalServiceTest {
 		Group group = GroupTestUtil.addGroup(
 			companyId, userId, GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
-		UserGroup userGroup = UserGroupTestUtil.addUserGroup(
+		final UserGroup userGroup = UserGroupTestUtil.addUserGroup(
 			group.getGroupId());
 
-		LayoutSetPrototype layoutSetPrototype = addLayoutSetPrototype(
+		final LayoutSetPrototype layoutSetPrototype = addLayoutSetPrototype(
 			companyId, userId, RandomTestUtil.randomString());
 
-		SitesUtil.updateLayoutSetPrototypesLinks(
-			userGroup.getGroup(), layoutSetPrototype.getLayoutSetPrototypeId(),
-			0, true, false);
+		TransactionInvokerUtil.invoke(
+			_transactionConfig,
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					SitesUtil.updateLayoutSetPrototypesLinks(
+						userGroup.getGroup(),
+						layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
+						false);
+
+					return null;
+				}
+
+			});
 
 		CompanyLocalServiceUtil.deleteCompany(companyId);
 	}
@@ -442,7 +471,7 @@ public class CompanyLocalServiceTest {
 			layoutSetPrototypes.toString(), 0, layoutSetPrototypes.size());
 	}
 
-	@Test
+	@Test(expected = NoSuchPasswordPolicyException.class)
 	public void testDeleteCompanyDeletesNonDefaultPasswordPolicies()
 		throws Throwable {
 
@@ -456,10 +485,8 @@ public class CompanyLocalServiceTest {
 
 				@Override
 				public Void call() throws Exception {
-					int count = PasswordPolicyUtil.countByC_DP(
+					PasswordPolicyLocalServiceUtil.getPasswordPolicy(
 						company.getCompanyId(), false);
-
-					Assert.assertEquals(0, count);
 
 					return null;
 				}
@@ -506,9 +533,10 @@ public class CompanyLocalServiceTest {
 				@Override
 				public Void call() throws Exception {
 					PortalPreferences portalPreferences =
-						PortalPreferencesUtil.fetchByO_O(
-							company.getCompanyId(),
-							PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+						PortalPreferencesLocalServiceUtil.
+							fetchPortalPreferences(
+								company.getCompanyId(),
+								PortletKeys.PREFS_OWNER_TYPE_COMPANY);
 
 					Assert.assertNull(portalPreferences);
 
@@ -530,7 +558,7 @@ public class CompanyLocalServiceTest {
 
 				@Override
 				public Void call() {
-					int count = PortletUtil.countByCompanyId(
+					int count = PortletLocalServiceUtil.getPortletsCount(
 						company.getCompanyId());
 
 					Assert.assertEquals(0, count);
@@ -598,12 +626,14 @@ public class CompanyLocalServiceTest {
 
 		UserLocalServiceUtil.updateUser(user);
 
+		String languageId = LocaleUtil.toLanguageId(LocaleUtil.HUNGARY);
+
 		CompanyLocalServiceUtil.updateDisplay(
-			company.getCompanyId(), "hu", "CET");
+			company.getCompanyId(), languageId, "CET");
 
 		user = UserLocalServiceUtil.getDefaultUser(company.getCompanyId());
 
-		Assert.assertEquals("hu", user.getLanguageId());
+		Assert.assertEquals(languageId, user.getLanguageId());
 		Assert.assertEquals("CET", user.getTimeZoneId());
 	}
 

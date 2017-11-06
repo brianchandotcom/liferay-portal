@@ -659,6 +659,11 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	}
 
 	@Override
+	public int getPortletsCount(long companyId) {
+		return portletPersistence.countByCompanyId(companyId);
+	}
+
+	@Override
 	@Skip
 	public List<Portlet> getScopablePortlets() {
 		List<Portlet> portlets = ListUtil.fromMapValues(_portletsMap);

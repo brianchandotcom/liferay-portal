@@ -87,6 +87,13 @@ public class PortalPreferencesLocalServiceImpl
 	}
 
 	@Override
+	public PortalPreferences fetchPortalPreferences(
+		long ownerId, int ownerType) {
+
+		return portalPreferencesPersistence.fetchByO_O(ownerId, ownerType);
+	}
+
+	@Override
 	public PortletPreferences getPreferences(long ownerId, int ownerType) {
 		return getPreferences(ownerId, ownerType, null);
 	}

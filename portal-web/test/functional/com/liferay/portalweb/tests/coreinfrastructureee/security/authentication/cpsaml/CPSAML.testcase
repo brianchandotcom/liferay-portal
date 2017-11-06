@@ -27,6 +27,89 @@
 		<execute macro="User#logoutPG" />
 	</set-up>
 
+	<command name="AssertSSOIdleSessionTakesPrecedenceOverIdPSessionTimeout" priority="4">
+		<property name="test.name.skip.portal.instance" value="CPSAML#AssertSSOIdleSessionTakesPrecedenceOverIdPSessionTimeout" />
+		<property name="web.xml.timeout" value="2" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="SAML Admin" />
+		</execute>
+
+		<execute macro="SAMLNavigation#gotoIdentityProvider" />
+
+		<execute macro="SAMLRole#configureIdentityProvider">
+			<var name="idpSessionIdleTimeout" value="480" />
+			<var name="idpSessionMaximumAge" value="0" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute macro="SAML#executeIdPInitiatedSSO">
+			<var name="idpInitiatedSSOURL" value="${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080" />
+			<var name="password" value="test" />
+			<var name="rememberMeChecked" value="false" />
+			<var name="samlEnabled" value="true" />
+			<var name="spURL" value="http://www.able.com:9080/" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute function="Pause" locator1="120000" />
+
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
+
+		<execute function="Refresh" />
+
+		<execute macro="User#viewLoggedInPG">
+			<var name="userFirstName" value="Test" />
+			<var name="userLastName" value="Test" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="SAML Admin" />
+		</execute>
+
+		<execute macro="SAMLNavigation#gotoIdentityProvider" />
+
+		<execute macro="SAMLRole#configureIdentityProvider">
+			<var name="idpSessionIdleTimeout" value="60" />
+			<var name="idpSessionMaximumAge" value="0" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="SAML#executeIdPInitiatedSSO">
+			<var name="idpInitiatedSSOURL" value="${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080" />
+			<var name="password" value="test" />
+			<var name="rememberMeChecked" value="false" />
+			<var name="samlEnabled" value="true" />
+			<var name="spURL" value="http://www.able.com:9080/" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute function="Pause" locator1="120000" />
+
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
+
+		<execute function="Refresh" />
+
+		<execute macro="User#viewLoggedOutPG" />
+	</command>
+
 	<command name="AssertSSOSessionExistsAfterSPSessionTimeout" priority="4">
 		<property name="test.name.skip.portal.instance" value="CPSAML#AssertSSOSessionExistsAfterSPSessionTimeout" />
 		<property name="web.xml.timeout" value="2" />
@@ -58,6 +141,63 @@
 			<var name="userFirstName" value="Test" />
 			<var name="userLastName" value="Test" />
 		</execute>
+	</command>
+
+	<command name="AssertSSOSessionExpiresAfterMaximumSessionAge" priority="4">
+		<property name="test.name.skip.portal.instance" value="CPSAML#AssertSSOSessionExpiresAfterMaximumSessionAge" />
+		<property name="web.xml.timeout" value="2" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="SAML Admin" />
+		</execute>
+
+		<execute macro="SAMLNavigation#gotoIdentityProvider" />
+
+		<execute macro="SAMLRole#configureIdentityProvider">
+			<var name="idpSessionIdleTimeout" value="0" />
+			<var name="idpSessionMaximumAge" value="180" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute macro="SAML#executeIdPInitiatedSSO">
+			<var name="idpInitiatedSSOURL" value="${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080" />
+			<var name="password" value="test" />
+			<var name="rememberMeChecked" value="false" />
+			<var name="samlEnabled" value="true" />
+			<var name="spURL" value="http://www.able.com:9080/" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute function="Pause" locator1="120000" />
+
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
+
+		<execute function="Refresh" />
+
+		<execute macro="User#viewLoggedInPG">
+			<var name="userFirstName" value="Test" />
+			<var name="userLastName" value="Test" />
+		</execute>
+
+		<execute function="Pause" locator1="120000" />
+
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
+
+		<execute function="Refresh" />
+
+		<execute macro="User#viewLoggedOutPG" />
 	</command>
 
 	<command name="ViewIdPInitiatedSSO" priority="4">

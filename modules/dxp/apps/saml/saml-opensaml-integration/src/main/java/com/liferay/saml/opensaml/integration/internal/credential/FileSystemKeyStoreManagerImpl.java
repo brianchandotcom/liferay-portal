@@ -56,6 +56,7 @@ public class FileSystemKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 			_keyStore = KeyStore.getInstance(samlKeyStoreType);
 		}
 		catch (KeyStoreException kse) {
+			_keyStoreException = kse;
 			_log.error(
 				"Unable instantiate keystore with type " + samlKeyStoreType,
 				kse);
@@ -67,7 +68,11 @@ public class FileSystemKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 	}
 
 	@Override
-	public KeyStore getKeyStore() {
+	public KeyStore getKeyStore() throws KeyStoreException {
+		if (_keyStoreException != null) {
+			throw _keyStoreException;
+		}
+
 		return _keyStore;
 	}
 
@@ -127,7 +132,12 @@ public class FileSystemKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 		String samlKeyStorePassword = getSamlKeyStorePassword();
 
 		try (InputStream inputStream = _getInputStream()) {
+			_keyStoreException = null;
 			_keyStore.load(inputStream, samlKeyStorePassword.toCharArray());
+		}
+		catch (Exception e) {
+			_keyStoreException = new KeyStoreException(e);
+			throw e;
 		}
 	}
 
@@ -184,6 +194,7 @@ public class FileSystemKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 		FileSystemKeyStoreManagerImpl.class);
 
 	private KeyStore _keyStore;
+	private KeyStoreException _keyStoreException;
 	private volatile FileWatcher _samlKeyStoreFileWatcher;
 
 }

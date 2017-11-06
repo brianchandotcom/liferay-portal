@@ -46,21 +46,12 @@ import org.osgi.service.component.annotations.Modified;
 public class DLKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 
 	@Override
-	public KeyStore getKeyStore() {
+	public KeyStore getKeyStore() throws KeyStoreException {
 		KeyStore keyStore = null;
 
 		String samlKeyStoreType = getSamlKeyStoreType();
 
-		try {
-			keyStore = KeyStore.getInstance(samlKeyStoreType);
-		}
-		catch (KeyStoreException kse) {
-			_log.error(
-				"Unable instantiate keystore with type " + samlKeyStoreType,
-				kse);
-
-			return null;
-		}
+		keyStore = KeyStore.getInstance(samlKeyStoreType);
 
 		try (InputStream inputStream = DLStoreUtil.getFileAsStream(
 				getCompanyId(), CompanyConstants.SYSTEM, _SAML_KEYSTORE_PATH)) {
@@ -89,6 +80,7 @@ public class DLKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 				"Unable to load keystore: " + getCompanyId() + "/" +
 					_SAML_KEYSTORE_PATH,
 				e);
+			throw new KeyStoreException(e);
 		}
 
 		return keyStore;

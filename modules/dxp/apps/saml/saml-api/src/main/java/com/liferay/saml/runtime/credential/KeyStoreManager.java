@@ -15,13 +15,14 @@
 package com.liferay.saml.runtime.credential;
 
 import java.security.KeyStore;
+import java.security.KeyStoreException;
 
 /**
  * @author Mika Koivisto
  */
 public interface KeyStoreManager {
 
-	public KeyStore getKeyStore();
+	public KeyStore getKeyStore() throws KeyStoreException;
 
 	public void saveKeyStore(KeyStore keyStore) throws Exception;
 

@@ -36,8 +36,11 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @see MBThreadFlagPersistence
  * @see com.liferay.portlet.messageboards.service.persistence.impl.MBThreadFlagPersistenceImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.message.boards.model.impl.MBThreadFlagImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBThreadFlagUtil {
 	/*

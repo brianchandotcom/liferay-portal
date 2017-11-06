@@ -40,8 +40,11 @@ import java.util.Date;
  * @see MBThreadFlag
  * @see com.liferay.portlet.messageboards.model.impl.MBThreadFlagImpl
  * @see com.liferay.portlet.messageboards.model.impl.MBThreadFlagModelImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.model.impl.MBThreadFlagImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface MBThreadFlagModel extends BaseModel<MBThreadFlag>, ShardedModel,
 	StagedGroupedModel {

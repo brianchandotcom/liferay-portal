@@ -29,8 +29,11 @@ import com.liferay.message.boards.kernel.service.MBThreadFlagLocalServiceUtil;
  * @author Brian Wing Shun Chan
  * @see MBThreadFlagImpl
  * @see MBThreadFlag
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.model.impl.MBThreadFlagImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public abstract class MBThreadFlagBaseImpl extends MBThreadFlagModelImpl
 	implements MBThreadFlag {

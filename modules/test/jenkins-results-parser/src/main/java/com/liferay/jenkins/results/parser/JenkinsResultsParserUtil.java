@@ -359,12 +359,15 @@ public class JenkinsResultsParserUtil {
 			httpURLConnection.connect();
 
 			System.out.println(
-				"Response from " + urlObject + ": " +
-					httpURLConnection.getResponseCode() + " " +
-						httpURLConnection.getResponseMessage());
+				combine(
+					"Response from ", urlObject.toString(), ": ",
+					Integer.toString(httpURLConnection.getResponseCode()), " ",
+					httpURLConnection.getResponseMessage()));
 		}
 		catch (IOException ioe) {
 			System.out.println("Unable to execute Jenkins script");
+
+			ioe.printStackTrace();
 		}
 	}
 

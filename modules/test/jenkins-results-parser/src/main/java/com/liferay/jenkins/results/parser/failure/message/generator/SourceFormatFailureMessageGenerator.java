@@ -29,25 +29,25 @@ public class SourceFormatFailureMessageGenerator
 
 	@Override
 	public String getMessage(
-		String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
+		String buildURL, String consoleText, Hashtable<?, ?> properties) {
 
-		if (!consoleOutput.contains(_TOKEN_SOURCE_FORMAT)) {
+		if (!consoleText.contains(_TOKEN_SOURCE_FORMAT)) {
 			return null;
 		}
 
-		int start = consoleOutput.lastIndexOf(_TOKEN_FORMAT_SOURCE);
+		int start = consoleText.lastIndexOf(_TOKEN_FORMAT_SOURCE);
 
-		start = consoleOutput.indexOf(_TOKEN_UTIL_SYSTEM_EXT_PROPERTIES, start);
+		start = consoleText.indexOf(_TOKEN_UTIL_SYSTEM_EXT_PROPERTIES, start);
 
-		start = consoleOutput.indexOf("\n", start);
+		start = consoleText.indexOf("\n", start);
 
-		int end = consoleOutput.indexOf(_TOKEN_MERGE_TEST_RESULTS, start);
+		int end = consoleText.indexOf(_TOKEN_MERGE_TEST_RESULTS, start);
 
-		end = consoleOutput.lastIndexOf(_TOKEN_SOURCE_FORMAT, end);
+		end = consoleText.lastIndexOf(_TOKEN_SOURCE_FORMAT, end);
 
-		end = consoleOutput.indexOf("\n", end);
+		end = consoleText.indexOf("\n", end);
 
-		return getConsoleOutputSnippet(consoleOutput, true, start, end);
+		return getConsoleTextSnippet(consoleText, true, start, end);
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class SourceFormatFailureMessageGenerator
 
 		end = consoleText.indexOf("\n", end);
 
-		return getConsoleOutputSnippetElement(consoleText, true, start, end);
+		return getConsoleTextSnippetElement(consoleText, true, start, end);
 	}
 
 	private static final String _TOKEN_FORMAT_SOURCE = "format-source:";

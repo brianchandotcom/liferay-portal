@@ -29,10 +29,10 @@ public class LocalGitMirrorFailureMessageGenerator
 
 	@Override
 	public String getMessage(
-		String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
+		String buildURL, String consoleText, Hashtable<?, ?> properties) {
 
-		if (!consoleOutput.contains(_TOKEN_LOCAL_GIT_FAILURE_END) ||
-			!consoleOutput.contains(_TOKEN_LOCAL_GIT_FAILURE_START)) {
+		if (!consoleText.contains(_TOKEN_LOCAL_GIT_FAILURE_END) ||
+			!consoleText.contains(_TOKEN_LOCAL_GIT_FAILURE_START)) {
 
 			return null;
 		}
@@ -42,17 +42,17 @@ public class LocalGitMirrorFailureMessageGenerator
 		sb.append("<p>Unable to synchronize with <strong>local Git mirror");
 		sb.append("</strong>.</p>");
 
-		int end = consoleOutput.indexOf(_TOKEN_LOCAL_GIT_FAILURE_END);
+		int end = consoleText.indexOf(_TOKEN_LOCAL_GIT_FAILURE_END);
 
-		int start = consoleOutput.lastIndexOf(
+		int start = consoleText.lastIndexOf(
 			_TOKEN_LOCAL_GIT_FAILURE_START, end);
 
-		consoleOutput = consoleOutput.substring(start, end);
+		consoleText = consoleText.substring(start, end);
 
-		int minIndex = consoleOutput.length();
+		int minIndex = consoleText.length();
 
 		for (String string : new String[] {"error: ", "fatal: "}) {
-			int index = consoleOutput.indexOf(string);
+			int index = consoleText.indexOf(string);
 
 			if (index != -1) {
 				if (index < minIndex) {
@@ -61,17 +61,17 @@ public class LocalGitMirrorFailureMessageGenerator
 			}
 		}
 
-		int gitCommandIndex = consoleOutput.lastIndexOf("+ git", minIndex);
+		int gitCommandIndex = consoleText.lastIndexOf("+ git", minIndex);
 
 		if (gitCommandIndex != -1) {
 			start = gitCommandIndex;
 		}
 
-		start = consoleOutput.lastIndexOf("\n", start);
+		start = consoleText.lastIndexOf("\n", start);
 
-		end = consoleOutput.lastIndexOf("\n");
+		end = consoleText.lastIndexOf("\n");
 
-		sb.append(getConsoleOutputSnippet(consoleOutput, false, start, end));
+		sb.append(getConsoleTextSnippet(consoleText, false, start, end));
 
 		return sb.toString();
 	}
@@ -122,7 +122,7 @@ public class LocalGitMirrorFailureMessageGenerator
 		end = consoleText.lastIndexOf("\n");
 
 		messageElement.add(
-			getConsoleOutputSnippetElement(consoleText, false, start, end));
+			getConsoleTextSnippetElement(consoleText, false, start, end));
 
 		return messageElement;
 	}

@@ -31,10 +31,9 @@ public class PoshiValidationFailureMessageGenerator
 
 	@Override
 	public String getMessage(
-		String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
+		String buildURL, String consoleText, Hashtable<?, ?> properties) {
 
-		Matcher poshiFailureMatcher = _poshiFailurePattern.matcher(
-			consoleOutput);
+		Matcher poshiFailureMatcher = _poshiFailurePattern.matcher(consoleText);
 
 		if (poshiFailureMatcher.find()) {
 			String poshiFailureMessage = poshiFailureMatcher.group(1);
@@ -48,9 +47,8 @@ public class PoshiValidationFailureMessageGenerator
 
 	@Override
 	public Element getMessageElement(Build build) {
-		String consoleText = build.getConsoleText();
-
-		Matcher poshiFailureMatcher = _poshiFailurePattern.matcher(consoleText);
+		Matcher poshiFailureMatcher = _poshiFailurePattern.matcher(
+			build.getConsoleText());
 
 		if (!poshiFailureMatcher.find()) {
 			return null;

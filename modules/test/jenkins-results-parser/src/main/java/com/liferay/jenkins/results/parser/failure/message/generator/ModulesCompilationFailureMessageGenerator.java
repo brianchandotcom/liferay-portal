@@ -28,29 +28,28 @@ public class ModulesCompilationFailureMessageGenerator
 
 	@Override
 	public String getMessage(
-		String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
+		String buildURL, String consoleText, Hashtable<?, ?> properties) {
 
-		if (!consoleOutput.contains(_TOKEN_COULD_NOT_RESOLVE_CONFIG)) {
+		if (!consoleText.contains(_TOKEN_COULD_NOT_RESOLVE_CONFIG)) {
 			return null;
 		}
 
-		int end = consoleOutput.indexOf(_TOKEN_MERGE_TEST_RESULTS);
+		int end = consoleText.indexOf(_TOKEN_MERGE_TEST_RESULTS);
 
-		end = consoleOutput.lastIndexOf(_TOKEN_TRY, end);
+		end = consoleText.lastIndexOf(_TOKEN_TRY, end);
 
-		end = consoleOutput.lastIndexOf("\n", end);
+		end = consoleText.lastIndexOf("\n", end);
 
-		int start = consoleOutput.lastIndexOf(_TOKEN_WHAT_WENT_WRONG, end);
+		int start = consoleText.lastIndexOf(_TOKEN_WHAT_WENT_WRONG, end);
 
-		start = consoleOutput.lastIndexOf("\n", start);
+		start = consoleText.lastIndexOf("\n", start);
 
-		return getConsoleOutputSnippet(consoleOutput, true, start, end);
+		return getConsoleTextSnippet(consoleText, true, start, end);
 	}
 
 	@Override
 	public Element getMessageElement(Build build) {
 		String consoleText = build.getConsoleText();
-
 		String jobName = build.getJobName();
 
 		if (!consoleText.contains(_TOKEN_COULD_NOT_RESOLVE_CONFIG) ||
@@ -69,7 +68,7 @@ public class ModulesCompilationFailureMessageGenerator
 
 		start = consoleText.lastIndexOf("\n", start);
 
-		return getConsoleOutputSnippetElement(consoleText, true, start, end);
+		return getConsoleTextSnippetElement(consoleText, true, start, end);
 	}
 
 	private static final String _TOKEN_COULD_NOT_RESOLVE_CONFIG =

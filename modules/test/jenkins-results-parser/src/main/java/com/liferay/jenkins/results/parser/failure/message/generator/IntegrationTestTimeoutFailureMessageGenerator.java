@@ -31,9 +31,9 @@ public class IntegrationTestTimeoutFailureMessageGenerator
 
 	@Override
 	public String getMessage(
-		String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
+		String buildURL, String consoleText, Hashtable<?, ?> properties) {
 
-		Matcher matcher = _pattern.matcher(consoleOutput);
+		Matcher matcher = _pattern.matcher(consoleText);
 
 		if (!matcher.find()) {
 			return null;
@@ -48,16 +48,14 @@ public class IntegrationTestTimeoutFailureMessageGenerator
 
 		String snippet = matcher.group(0);
 
-		sb.append(getConsoleOutputSnippet(snippet, false, 0, snippet.length()));
+		sb.append(getConsoleTextSnippet(snippet, false, 0, snippet.length()));
 
 		return sb.toString();
 	}
 
 	@Override
 	public Element getMessageElement(Build build) {
-		String consoleText = build.getConsoleText();
-
-		Matcher matcher = _pattern.matcher(consoleText);
+		Matcher matcher = _pattern.matcher(build.getConsoleText());
 
 		if (!matcher.find()) {
 			return null;
@@ -74,8 +72,7 @@ public class IntegrationTestTimeoutFailureMessageGenerator
 		String snippet = matcher.group(0);
 
 		messageElement.add(
-			getConsoleOutputSnippetElement(
-				snippet, false, 0, snippet.length()));
+			getConsoleTextSnippetElement(snippet, false, 0, snippet.length()));
 
 		return messageElement;
 	}

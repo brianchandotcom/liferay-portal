@@ -36,7 +36,7 @@ public class PluginFailureMessageGenerator extends BaseFailureMessageGenerator {
 
 	@Override
 	public String getMessage(
-		String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
+		String buildURL, String consoleText, Hashtable<?, ?> properties) {
 
 		if (!buildURL.contains("portal-acceptance")) {
 			return null;
@@ -60,7 +60,7 @@ public class PluginFailureMessageGenerator extends BaseFailureMessageGenerator {
 
 		StringBuilder sb = new StringBuilder();
 
-		Matcher matcher = _pattern.matcher(consoleOutput);
+		Matcher matcher = _pattern.matcher(consoleText);
 
 		if (matcher.find()) {
 			String group = matcher.group(0);
@@ -81,9 +81,9 @@ public class PluginFailureMessageGenerator extends BaseFailureMessageGenerator {
 					break;
 				}
 
-				int y = consoleOutput.indexOf("\n", x);
+				int y = consoleText.indexOf("\n", x);
 
-				String pluginName = consoleOutput.substring(x, y);
+				String pluginName = consoleText.substring(x, y);
 
 				sb.append("<li>");
 				sb.append(pluginName.replace("[echo] ", ""));
@@ -110,9 +110,9 @@ public class PluginFailureMessageGenerator extends BaseFailureMessageGenerator {
 				"global.engineering/blog/-/blogs/new-tests-for-the-pull-");
 			sb.append("request-tester-\">here</a> for more details.</p>");
 
-			int end = consoleOutput.indexOf("merge-test-results:");
+			int end = consoleText.indexOf("merge-test-results:");
 
-			sb.append(getConsoleOutputSnippet(consoleOutput, true, end));
+			sb.append(getConsoleTextSnippet(consoleText, true, end));
 		}
 
 		return sb.toString();
@@ -184,7 +184,7 @@ public class PluginFailureMessageGenerator extends BaseFailureMessageGenerator {
 				getGitCommitPluginsAnchorElement(topLevelBuild), ". Click ",
 				Dom4JUtil.getNewAnchorElement(_blogURL, "here"),
 				" for more details.",
-				getConsoleOutputSnippetElement(consoleText, true, end));
+				getConsoleTextSnippetElement(consoleText, true, end));
 		}
 
 		return messageElement;

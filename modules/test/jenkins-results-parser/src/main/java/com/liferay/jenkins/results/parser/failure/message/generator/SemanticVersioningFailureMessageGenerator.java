@@ -31,10 +31,10 @@ public class SemanticVersioningFailureMessageGenerator
 
 	@Override
 	public String getMessage(
-		String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
+		String buildURL, String consoleText, Hashtable<?, ?> properties) {
 
-		if (!consoleOutput.contains(_TOKEN_SEMVER_INCORRECT) ||
-			!consoleOutput.contains(_TOKEN_SEMVER_PACKAGE)) {
+		if (!consoleText.contains(_TOKEN_SEMVER_INCORRECT) ||
+			!consoleText.contains(_TOKEN_SEMVER_PACKAGE)) {
 
 			return null;
 		}
@@ -54,17 +54,17 @@ public class SemanticVersioningFailureMessageGenerator
 		sb.append(properties.get("github.sender.branch.name"));
 		sb.append("</a></strong>.</p>");
 
-		int end = consoleOutput.indexOf(_TOKEN_SEMVER_INCORRECT);
+		int end = consoleText.indexOf(_TOKEN_SEMVER_INCORRECT);
 
-		end = consoleOutput.indexOf("\n", end);
+		end = consoleText.indexOf("\n", end);
 
-		int start = consoleOutput.lastIndexOf(_TOKEN_BASELINE_CHECK, end);
+		int start = consoleText.lastIndexOf(_TOKEN_BASELINE_CHECK, end);
 
-		start = consoleOutput.indexOf(_TOKEN_SEMVER_PACKAGE, start);
+		start = consoleText.indexOf(_TOKEN_SEMVER_PACKAGE, start);
 
-		start = consoleOutput.lastIndexOf("\n", start);
+		start = consoleText.lastIndexOf("\n", start);
 
-		sb.append(getConsoleOutputSnippet(consoleOutput, true, start, end));
+		sb.append(getConsoleTextSnippet(consoleText, true, start, end));
 
 		return sb.toString();
 	}
@@ -98,7 +98,7 @@ public class SemanticVersioningFailureMessageGenerator
 				Dom4JUtil.getNewElement(
 					"strong", null,
 					getBaseBranchAnchorElement(build.getTopLevelBuild())),
-				getConsoleOutputSnippetElement(consoleText, true, start, end)));
+				getConsoleTextSnippetElement(consoleText, true, start, end)));
 	}
 
 	private static final String _TOKEN_BASELINE_CHECK =

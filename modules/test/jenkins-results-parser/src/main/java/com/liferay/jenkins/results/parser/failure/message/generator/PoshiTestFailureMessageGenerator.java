@@ -31,10 +31,10 @@ public class PoshiTestFailureMessageGenerator
 
 	@Override
 	public String getMessage(
-		String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
+		String buildURL, String consoleText, Hashtable<?, ?> properties) {
 
 		Matcher poshiTestFailureMatcher = _poshiTestFailurePattern.matcher(
-			consoleOutput);
+			consoleText);
 
 		if (!poshiTestFailureMatcher.find()) {
 			return null;
@@ -42,15 +42,15 @@ public class PoshiTestFailureMessageGenerator
 
 		String failedPoshiTaskToken = poshiTestFailureMatcher.group(1);
 
-		int end = consoleOutput.indexOf(failedPoshiTaskToken);
+		int end = consoleText.indexOf(failedPoshiTaskToken);
 
-		end = consoleOutput.indexOf(_TOKEN_TRY, end);
+		end = consoleText.indexOf(_TOKEN_TRY, end);
 
-		end = consoleOutput.lastIndexOf("\n", end);
+		end = consoleText.lastIndexOf("\n", end);
 
-		int start = consoleOutput.lastIndexOf(_TOKEN_JAVA_LANG_EXCEPTION, end);
+		int start = consoleText.lastIndexOf(_TOKEN_JAVA_LANG_EXCEPTION, end);
 
-		start = consoleOutput.lastIndexOf("\n", start);
+		start = consoleText.lastIndexOf("\n", start);
 
 		StringBuilder sb = new StringBuilder();
 
@@ -60,7 +60,7 @@ public class PoshiTestFailureMessageGenerator
 
 		sb.append("</strong><pre><code>");
 
-		sb.append(getConsoleOutputSnippet(consoleOutput, true, start, end));
+		sb.append(getConsoleTextSnippet(consoleText, true, start, end));
 
 		sb.append("</code></pre>");
 
@@ -95,7 +95,7 @@ public class PoshiTestFailureMessageGenerator
 			Dom4JUtil.getNewElement(
 				"p", null, "POSHI Test Failure: ",
 				Dom4JUtil.getNewElement("strong", null, failedPoshiTaskToken)),
-			getConsoleOutputSnippetElement(consoleText, true, start, end));
+			getConsoleTextSnippetElement(consoleText, true, start, end));
 	}
 
 	private static final String _TOKEN_JAVA_LANG_EXCEPTION =

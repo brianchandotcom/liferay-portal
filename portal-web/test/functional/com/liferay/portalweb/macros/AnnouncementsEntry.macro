@@ -244,8 +244,8 @@
 		<execute function="AssertTextEquals" locator1="Announcements#CARD_VIEW_ENTRY_CONTENT" value1="${entryContent}" />
 	</command>
 
-	<command name="viewPreviousPG">
-		<execute function="Click" locator1="Announcements#NAVIGATION_ENTRIES_PREVIOUS" value1="Previous" />
+	<command name="viewReadPG">
+		<execute function="Click" locator1="Announcements#NAVIGATION_ENTRIES_READ" value1="Read" />
 
 		<execute macro="AnnouncementsEntry#viewPG">
 			<var name="announcementType" value="${announcementType}" />

@@ -208,12 +208,28 @@
 			</filterchain>
 		</loadfile>
 
+		<local name="return.code" />
+
 		<exec executable="git" failonerror="false" resultproperty="return.code">
-			<arg value="fetch" />
+			<arg value="log" />
+			<arg value="-n" />
+			<arg value="1" />
+			<arg value="${portal.git.commit}" />
+		</exec>
+
+		<condition property="portal.git.commit.available">
+			<equals arg1="${return.code}" arg2="0" />
+		</condition>
+
+		<antcall target="fetch-portal" />
+
+		<local name="return.code" />
+
+		<exec executable="git" failonerror="false" resultproperty="return.code">
+			<arg value="tag" />
 			<arg value="--force" />
-			<arg value="--no-tags" />
-			<arg value="upstream" />
-			<arg value="${portal.git.commit}:refs/tags/git-commit-portal" />
+			<arg value="git-commit-portal" />
+			<arg value="${portal.git.commit}" />
 		</exec>
 
 		<fail message="Please fetch the public branch from upstream before using this command.">
@@ -272,12 +288,28 @@
 			</condition>
 		</fail>
 
+		<local name="return.code" />
+
 		<exec executable="git" failonerror="false" resultproperty="return.code">
-			<arg value="fetch" />
+			<arg value="log" />
+			<arg value="-n" />
+			<arg value="1" />
+			<arg value="${portal.private.git.commit}" />
+		</exec>
+
+		<condition property="portal.private.git.commit.available">
+			<equals arg1="${return.code}" arg2="0" />
+		</condition>
+
+		<antcall target="fetch-portal-private" />
+
+		<local name="return.code" />
+
+		<exec executable="git" failonerror="false" resultproperty="return.code">
+			<arg value="tag" />
 			<arg value="--force" />
-			<arg value="--no-tags" />
-			<arg value="upstream" />
-			<arg value="${portal.private.git.commit}:refs/tags/git-commit-portal-private" />
+			<arg value="git-commit-portal-private" />
+			<arg value="${portal.private.git.commit}" />
 		</exec>
 
 		<fail message="Please fetch the private branch from upstream before using this command.">
@@ -308,6 +340,24 @@
 			<arg value="tag" />
 			<arg value="--delete" />
 			<arg value="git-commit-portal-private" />
+		</exec>
+	</target>
+
+	<target name="fetch-portal" unless="${portal.git.commit.available}">
+		<exec executable="git">
+			<arg value="fetch" />
+			<arg value="--force" />
+			<arg value="upstream" />
+			<arg value="${public.branch.name}" />
+		</exec>
+	</target>
+
+	<target name="fetch-portal-private" unless="${portal.private.git.commit.available}">
+		<exec executable="git">
+			<arg value="fetch" />
+			<arg value="--force" />
+			<arg value="upstream" />
+			<arg value="${private.branch.name}" />
 		</exec>
 	</target>
 

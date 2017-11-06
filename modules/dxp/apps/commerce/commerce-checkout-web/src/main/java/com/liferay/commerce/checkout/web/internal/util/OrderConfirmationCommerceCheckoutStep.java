@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"commerce.checkout.step.name=orderConfirmation",
+		"commerce.checkout.step.name=" + OrderConfirmationCommerceCheckoutStep.NAME,
 		"commerce.checkout.step.order:Integer=" + (Integer.MAX_VALUE)
 	},
 	service = CommerceCheckoutStep.class
@@ -49,17 +49,19 @@ import org.osgi.service.component.annotations.Reference;
 public class OrderConfirmationCommerceCheckoutStep
 	implements CommerceCheckoutStep {
 
+	public static final String NAME = "order-confirmation";
+
 	@Override
 	public String getLabel(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "order-confirmation");
+		return LanguageUtil.get(resourceBundle, NAME);
 	}
 
 	@Override
 	public String getName() {
-		return "orderConfirmation";
+		return NAME;
 	}
 
 	@Override

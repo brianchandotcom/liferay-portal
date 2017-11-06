@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.checkout.web.internal.util;
 
-import com.liferay.commerce.checkout.web.internal.display.context.CheckoutStepBillingDisplayContext;
+import com.liferay.commerce.checkout.web.internal.display.context.BillingAddressCheckoutStepDisplayContext;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.exception.CommerceAddressCityException;
 import com.liferay.commerce.exception.CommerceAddressCountryException;
@@ -53,24 +53,27 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"commerce.checkout.step.name=billing",
+		"commerce.checkout.step.name=" + BillingAddressCommerceCheckoutStep.NAME,
 		"commerce.checkout.step.order:Integer=10"
 	},
 	service = CommerceCheckoutStep.class
 )
-public class BillingCommerceCheckoutStep implements CommerceCheckoutStep {
+public class BillingAddressCommerceCheckoutStep
+	implements CommerceCheckoutStep {
+
+	public static final String NAME = "billing-address";
 
 	@Override
 	public String getLabel(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "billing-address");
+		return LanguageUtil.get(resourceBundle, NAME);
 	}
 
 	@Override
 	public String getName() {
-		return "billing";
+		return NAME;
 	}
 
 	@Override
@@ -124,18 +127,19 @@ public class BillingCommerceCheckoutStep implements CommerceCheckoutStep {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		CheckoutStepBillingDisplayContext checkoutStepBillingDisplayContext =
-			new CheckoutStepBillingDisplayContext(
-				_commerceAddressService, _commerceCartHelper,
-				httpServletRequest, httpServletResponse);
+		BillingAddressCheckoutStepDisplayContext
+			billingAddressCheckoutStepDisplayContext =
+				new BillingAddressCheckoutStepDisplayContext(
+					_commerceAddressService, _commerceCartHelper,
+					httpServletRequest, httpServletResponse);
 
 		httpServletRequest.setAttribute(
 			"CommerceCheckoutStepDisplayContext",
-			checkoutStepBillingDisplayContext);
+			billingAddressCheckoutStepDisplayContext);
 
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,
-			"/checkout_step/billing.jsp");
+			"/checkout_step/billing_address.jsp");
 	}
 
 	@Override

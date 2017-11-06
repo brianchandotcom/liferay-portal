@@ -24,9 +24,9 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys" %><%@
+page import="com.liferay.commerce.checkout.web.internal.display.context.BillingAddressCheckoutStepDisplayContext" %><%@
 page import="com.liferay.commerce.checkout.web.internal.display.context.CheckoutDisplayContext" %><%@
-page import="com.liferay.commerce.checkout.web.internal.display.context.CheckoutStepBillingDisplayContext" %><%@
-page import="com.liferay.commerce.checkout.web.internal.display.context.CheckoutStepOrderSummaryDisplayContext" %><%@
+page import="com.liferay.commerce.checkout.web.internal.display.context.OrderSummaryCheckoutStepDisplayContext" %><%@
 page import="com.liferay.commerce.checkout.web.util.CommerceCheckoutStep" %><%@
 page import="com.liferay.commerce.exception.CommerceAddressCityException" %><%@
 page import="com.liferay.commerce.exception.CommerceAddressCountryException" %><%@

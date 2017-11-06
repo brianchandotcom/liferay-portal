@@ -30,9 +30,9 @@ import javax.servlet.http.HttpServletResponse;
  * @author Andrea Di Giorgi
  * @author Marco Leo
  */
-public class CheckoutStepBillingDisplayContext {
+public class BillingAddressCheckoutStepDisplayContext {
 
-	public CheckoutStepBillingDisplayContext(
+	public BillingAddressCheckoutStepDisplayContext(
 			CommerceAddressService commerceAddressService,
 			CommerceCartHelper commerceCartHelper,
 			HttpServletRequest httpServletRequest,

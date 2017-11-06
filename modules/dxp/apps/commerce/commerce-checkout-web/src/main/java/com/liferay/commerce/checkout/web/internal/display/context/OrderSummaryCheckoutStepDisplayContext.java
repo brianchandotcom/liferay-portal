@@ -41,9 +41,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
 * @author Marco Leo
  */
-public class CheckoutStepOrderSummaryDisplayContext {
+public class OrderSummaryCheckoutStepDisplayContext {
 
-	public CheckoutStepOrderSummaryDisplayContext(
+	public OrderSummaryCheckoutStepDisplayContext(
 			CommerceAddressService commerceAddressService,
 			CommerceCartService commerceCartService,
 			CommercePriceCalculationHelper commercePriceCalculationHelper,

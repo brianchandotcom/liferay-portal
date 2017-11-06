@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.checkout.web.internal.util;
 
-import com.liferay.commerce.checkout.web.internal.display.context.CheckoutStepOrderSummaryDisplayContext;
+import com.liferay.commerce.checkout.web.internal.display.context.OrderSummaryCheckoutStepDisplayContext;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrder;
@@ -25,14 +25,17 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommercePriceCalculationHelper;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -51,21 +54,26 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"commerce.checkout.step.name=orderSummary",
+		"commerce.checkout.step.name=" + OrderSummaryCommerceCheckoutStep.NAME,
 		"commerce.checkout.step.order:Integer=" + (Integer.MAX_VALUE - 1)
 	},
 	service = CommerceCheckoutStep.class
 )
 public class OrderSummaryCommerceCheckoutStep implements CommerceCheckoutStep {
 
+	public static final String NAME = "order-summary";
+
 	@Override
 	public String getLabel(Locale locale) {
-		return "ORDER_SUMMARY_TO_CHANGE";
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		return LanguageUtil.get(resourceBundle, NAME);
 	}
 
 	@Override
 	public String getName() {
-		return "orderSummary";
+		return NAME;
 	}
 
 	@Override
@@ -124,16 +132,16 @@ public class OrderSummaryCommerceCheckoutStep implements CommerceCheckoutStep {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		CheckoutStepOrderSummaryDisplayContext
-			checkoutStepOrderSummaryDisplayContext =
-				new CheckoutStepOrderSummaryDisplayContext(
+		OrderSummaryCheckoutStepDisplayContext
+			orderSummaryCheckoutStepDisplayContext =
+				new OrderSummaryCheckoutStepDisplayContext(
 					_commerceAddressService, _commerceCartService,
 					_commercePriceCalculationHelper, _commercePriceFormatter,
 					_cpInstanceHelper, httpServletRequest);
 
 		httpServletRequest.setAttribute(
 			"CommerceCheckoutStepDisplayContext",
-			checkoutStepOrderSummaryDisplayContext);
+			orderSummaryCheckoutStepDisplayContext);
 
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,

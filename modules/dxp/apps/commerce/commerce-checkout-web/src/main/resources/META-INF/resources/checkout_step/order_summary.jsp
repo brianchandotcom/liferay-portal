@@ -17,11 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CheckoutStepOrderSummaryDisplayContext checkoutStepOrderSummaryDisplayContext = (CheckoutStepOrderSummaryDisplayContext)request.getAttribute("CommerceCheckoutStepDisplayContext");
+OrderSummaryCheckoutStepDisplayContext orderSummaryCheckoutStepDisplayContext = (OrderSummaryCheckoutStepDisplayContext)request.getAttribute("CommerceCheckoutStepDisplayContext");
 
-CommerceCart commerceCart = checkoutStepOrderSummaryDisplayContext.getCommerceCart();
+CommerceCart commerceCart = orderSummaryCheckoutStepDisplayContext.getCommerceCart();
 
-CommerceAddress billingAddress = checkoutStepOrderSummaryDisplayContext.getBillingAddress();
+CommerceAddress billingAddress = orderSummaryCheckoutStepDisplayContext.getBillingAddress();
 %>
 
 <div class="address-container row">
@@ -72,7 +72,7 @@ CommerceAddress billingAddress = checkoutStepOrderSummaryDisplayContext.getBilli
 				<div class="card-col-content card-col-gutters">
 					<h3>Order Total</h3>
 					<h3>
-						<%= HtmlUtil.escape(checkoutStepOrderSummaryDisplayContext.getCommerceCartTotal()) %>
+						<%= HtmlUtil.escape(orderSummaryCheckoutStepDisplayContext.getCommerceCartTotal()) %>
 					</h3>
 				</div>
 			</div>
@@ -100,9 +100,9 @@ CommerceAddress billingAddress = checkoutStepOrderSummaryDisplayContext.getBilli
 					<%
 					CPDefinition cpDefinition = commerceCartItem.getCPDefinition();
 
-					String thumbnailSrc = checkoutStepOrderSummaryDisplayContext.getCommerceCartItemThumb(commerceCartItem, themeDisplay);
+					String thumbnailSrc = orderSummaryCheckoutStepDisplayContext.getCommerceCartItemThumb(commerceCartItem, themeDisplay);
 
-					List<KeyValuePair> keyValuePairs = checkoutStepOrderSummaryDisplayContext.parseJSONString(commerceCartItem.getJson(), locale);
+					List<KeyValuePair> keyValuePairs = orderSummaryCheckoutStepDisplayContext.parseJSONString(commerceCartItem.getJson(), locale);
 
 					StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
 
@@ -133,7 +133,7 @@ CommerceAddress billingAddress = checkoutStepOrderSummaryDisplayContext.getBilli
 
 					<liferay-ui:search-container-column-text
 						name="price"
-						value="<%= checkoutStepOrderSummaryDisplayContext.getFormattedPrice(commerceCartItem) %>"
+						value="<%= orderSummaryCheckoutStepDisplayContext.getFormattedPrice(commerceCartItem) %>"
 					/>
 				</liferay-ui:search-container-row>
 

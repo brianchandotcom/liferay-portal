@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CheckoutStepBillingDisplayContext checkoutStepBillingDisplayContext = (CheckoutStepBillingDisplayContext)request.getAttribute("CommerceCheckoutStepDisplayContext");
+BillingAddressCheckoutStepDisplayContext billingAddressCheckoutStepDisplayContext = (BillingAddressCheckoutStepDisplayContext)request.getAttribute("CommerceCheckoutStepDisplayContext");
 
-List<CommerceAddress> commerceAddresses = checkoutStepBillingDisplayContext.getCommerceAddresses();
+List<CommerceAddress> commerceAddresses = billingAddressCheckoutStepDisplayContext.getCommerceAddresses();
 
 long defaultBillingAddressId = 0;
 
@@ -37,7 +37,7 @@ if ((defaultBillingAddressId == 0) && !commerceAddresses.isEmpty()) {
 	defaultBillingAddressId = commerceAddress.getCommerceAddressId();
 }
 
-long billingAddressId = BeanParamUtil.getLong(checkoutStepBillingDisplayContext.getCommerceCart(), request, "billingAddressId", defaultBillingAddressId);
+long billingAddressId = BeanParamUtil.getLong(billingAddressCheckoutStepDisplayContext.getCommerceCart(), request, "billingAddressId", defaultBillingAddressId);
 
 long commerceCountryId = ParamUtil.getLong(request, "commerceCountryId");
 long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");

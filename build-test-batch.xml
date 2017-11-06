@@ -3087,6 +3087,39 @@ information. Make sure to commit in all build services results.
 		</run-batch-test>
 	</target>
 
+	<target name="subrepository-assemble-jdk8">
+		<fail message="Please set the property ${subrepository.name}." unless="subrepository.name" />
+
+		<run-batch-test tomcat.gc.log="true">
+			<test-action>
+				<get-module-base-dir-from-subrepository-name subrepository.name="${subrepository.name}" />
+
+				<trycatch property="failure.property">
+					<try>
+						<gradle-execute checktask="true" dir="${module.base.dir}" outputproperty="gradle.output" task="assemble" />
+					</try>
+					<catch>
+						<echo message="${gradle.output.error}" />
+
+						<fail message="${failure.property}" />
+					</catch>
+				</trycatch>
+			</test-action>
+
+			<test-set-up>
+				<if>
+					<isset property="env.DIST_PATH" />
+					<then>
+						<prepare-test-environment />
+					</then>
+					<else>
+						<prepare-test-build />
+					</else>
+				</if>
+			</test-set-up>
+		</run-batch-test>
+	</target>
+
 	<target name="subrepository-compile-jdk8">
 		<fail message="Please set the property ${subrepository.name}." unless="subrepository.name" />
 
@@ -3094,18 +3127,13 @@ information. Make sure to commit in all build services results.
 
 		<trycatch property="failure.property">
 			<try>
-				<move file="${module.base.dir}/settings.gradle" tofile="${module.base.dir}/settings.gradle.temp" />
-
-				<gradle-execute checktask="true" dir="${module.base.dir}" outputproperty="gradle.output" task="assemble" />
+				<gradle-execute checktask="true" dir="${module.base.dir}" outputproperty="gradle.output" task="compileJava" />
 			</try>
 			<catch>
 				<echo message="${gradle.output.error}" />
 
 				<fail message="${failure.property}" />
 			</catch>
-			<finally>
-				<move file="${module.base.dir}/settings.gradle.temp" tofile="${module.base.dir}/settings.gradle" />
-			</finally>
 		</trycatch>
 	</target>
 
@@ -3126,8 +3154,6 @@ information. Make sure to commit in all build services results.
 
 		<trycatch property="failure.property">
 			<try>
-				<move file="${module.base.dir}/settings.gradle" tofile="${module.base.dir}/settings.gradle.temp" />
-
 				<gradle-execute checktask="true" dir="${module.base.dir}" outputproperty="gradle.output" task="pmdMain">
 					<arg value="pmdTest" />
 					<arg value="pmdTestIntegration" />
@@ -3138,9 +3164,6 @@ information. Make sure to commit in all build services results.
 
 				<fail message="${failure.property}" />
 			</catch>
-			<finally>
-				<move file="${module.base.dir}/settings.gradle.temp" tofile="${module.base.dir}/settings.gradle" />
-			</finally>
 		</trycatch>
 	</target>
 
@@ -3164,8 +3187,6 @@ information. Make sure to commit in all build services results.
 
 		<trycatch property="failure.property">
 			<try>
-				<move file="${module.base.dir}/settings.gradle" tofile="${module.base.dir}/settings.gradle.temp" />
-
 				<gradle-execute checktask="true" dir="${module.base.dir}" forcedcacheenabled="false" outputproperty="gradle.output" task="baseline" />
 			</try>
 			<catch>
@@ -3173,9 +3194,6 @@ information. Make sure to commit in all build services results.
 
 				<fail message="${failure.property}" />
 			</catch>
-			<finally>
-				<move file="${module.base.dir}/settings.gradle.temp" tofile="${module.base.dir}/settings.gradle" />
-			</finally>
 		</trycatch>
 
 		<echo>Checking for baseline log files.</echo>
@@ -3214,8 +3232,6 @@ information. Make sure to commit in all build services results.
 
 		<trycatch property="failure.property">
 			<try>
-				<move file="${module.base.dir}/settings.gradle" tofile="${module.base.dir}/settings.gradle.temp" />
-
 				<gradle-execute dir="${module.base.dir}" outputproperty="gradle.output" task="checkSourceFormatting">
 					<arg value="-PdependencyCheckerIgnoreFailures=false" />
 				</gradle-execute>
@@ -3225,9 +3241,6 @@ information. Make sure to commit in all build services results.
 
 				<fail message="${failure.property}" />
 			</catch>
-			<finally>
-				<move file="${module.base.dir}/settings.gradle.temp" tofile="${module.base.dir}/settings.gradle" />
-			</finally>
 		</trycatch>
 	</target>
 
@@ -3238,8 +3251,6 @@ information. Make sure to commit in all build services results.
 
 		<trycatch property="failure.property">
 			<try>
-				<move file="${module.base.dir}/settings.gradle" tofile="${module.base.dir}/settings.gradle.temp" />
-
 				<gradle-execute checktask="true" dir="${module.base.dir}" forcedcacheenabled="false" outputproperty="gradle.output" task="test" />
 			</try>
 			<catch>
@@ -3249,8 +3260,6 @@ information. Make sure to commit in all build services results.
 			</catch>
 			<finally>
 				<merge-test-results />
-
-				<move file="${module.base.dir}/settings.gradle.temp" tofile="${module.base.dir}/settings.gradle" />
 			</finally>
 		</trycatch>
 	</target>

@@ -45,6 +45,15 @@ public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService
 		return _mbThreadFlagLocalService.addMBThreadFlag(mbThreadFlag);
 	}
 
+	@Override
+	public com.liferay.message.boards.model.MBThreadFlag addThreadFlag(
+		long userId, com.liferay.message.boards.kernel.model.MBThread thread,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbThreadFlagLocalService.addThreadFlag(userId, thread,
+			serviceContext);
+	}
+
 	/**
 	* Creates a new message boards thread flag with the primary key. Does not add the message boards thread flag to the database.
 	*
@@ -91,6 +100,28 @@ public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService
 		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbThreadFlagLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public void deleteThreadFlag(long threadFlagId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_mbThreadFlagLocalService.deleteThreadFlag(threadFlagId);
+	}
+
+	@Override
+	public void deleteThreadFlag(
+		com.liferay.message.boards.model.MBThreadFlag threadFlag) {
+		_mbThreadFlagLocalService.deleteThreadFlag(threadFlag);
+	}
+
+	@Override
+	public void deleteThreadFlagsByThreadId(long threadId) {
+		_mbThreadFlagLocalService.deleteThreadFlagsByThreadId(threadId);
+	}
+
+	@Override
+	public void deleteThreadFlagsByUserId(long userId) {
+		_mbThreadFlagLocalService.deleteThreadFlagsByUserId(userId);
 	}
 
 	@Override
@@ -318,6 +349,20 @@ public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbThreadFlagLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.message.boards.model.MBThreadFlag getThreadFlag(
+		long userId, com.liferay.message.boards.kernel.model.MBThread thread)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbThreadFlagLocalService.getThreadFlag(userId, thread);
+	}
+
+	@Override
+	public boolean hasThreadFlag(long userId,
+		com.liferay.message.boards.kernel.model.MBThread thread)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbThreadFlagLocalService.hasThreadFlag(userId, thread);
 	}
 
 	/**

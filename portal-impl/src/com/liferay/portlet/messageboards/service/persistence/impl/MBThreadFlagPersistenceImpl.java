@@ -72,8 +72,11 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @see MBThreadFlagPersistence
  * @see com.liferay.message.boards.kernel.service.persistence.MBThreadFlagUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.model.impl.MBThreadFlagImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFlag>
 	implements MBThreadFlagPersistence {

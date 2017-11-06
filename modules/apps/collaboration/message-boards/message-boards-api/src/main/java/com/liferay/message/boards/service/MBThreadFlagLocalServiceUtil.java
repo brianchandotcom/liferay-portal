@@ -53,6 +53,13 @@ public class MBThreadFlagLocalServiceUtil {
 		return getService().addMBThreadFlag(mbThreadFlag);
 	}
 
+	public static com.liferay.message.boards.model.MBThreadFlag addThreadFlag(
+		long userId, com.liferay.message.boards.kernel.model.MBThread thread,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addThreadFlag(userId, thread, serviceContext);
+	}
+
 	/**
 	* Creates a new message boards thread flag with the primary key. Does not add the message boards thread flag to the database.
 	*
@@ -95,6 +102,24 @@ public class MBThreadFlagLocalServiceUtil {
 		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static void deleteThreadFlag(long threadFlagId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteThreadFlag(threadFlagId);
+	}
+
+	public static void deleteThreadFlag(
+		com.liferay.message.boards.model.MBThreadFlag threadFlag) {
+		getService().deleteThreadFlag(threadFlag);
+	}
+
+	public static void deleteThreadFlagsByThreadId(long threadId) {
+		getService().deleteThreadFlagsByThreadId(threadId);
+	}
+
+	public static void deleteThreadFlagsByUserId(long userId) {
+		getService().deleteThreadFlagsByUserId(userId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -300,6 +325,18 @@ public class MBThreadFlagLocalServiceUtil {
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static com.liferay.message.boards.model.MBThreadFlag getThreadFlag(
+		long userId, com.liferay.message.boards.kernel.model.MBThread thread)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getThreadFlag(userId, thread);
+	}
+
+	public static boolean hasThreadFlag(long userId,
+		com.liferay.message.boards.kernel.model.MBThread thread)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().hasThreadFlag(userId, thread);
 	}
 
 	/**

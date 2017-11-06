@@ -31,8 +31,11 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @see MBThreadFlagLocalService
  * @see com.liferay.portlet.messageboards.service.base.MBThreadFlagLocalServiceBaseImpl
  * @see com.liferay.portlet.messageboards.service.impl.MBThreadFlagLocalServiceImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.message.boards.service.impl.MBThreadFlagLocalServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBThreadFlagLocalServiceUtil {
 	/*

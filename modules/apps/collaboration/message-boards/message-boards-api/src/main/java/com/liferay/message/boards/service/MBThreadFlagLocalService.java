@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 
+import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.model.MBThreadFlag;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -28,10 +29,13 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -73,6 +77,10 @@ public interface MBThreadFlagLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public MBThreadFlag addMBThreadFlag(MBThreadFlag mbThreadFlag);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBThreadFlag addThreadFlag(long userId, MBThread thread,
+		ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* Creates a new message boards thread flag with the primary key. Does not add the message boards thread flag to the database.
 	*
@@ -107,6 +115,15 @@ public interface MBThreadFlagLocalService extends BaseLocalService,
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
+
+	public void deleteThreadFlag(long threadFlagId) throws PortalException;
+
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public void deleteThreadFlag(MBThreadFlag threadFlag);
+
+	public void deleteThreadFlagsByThreadId(long threadId);
+
+	public void deleteThreadFlagsByUserId(long userId);
 
 	public DynamicQuery dynamicQuery();
 
@@ -272,6 +289,14 @@ public interface MBThreadFlagLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBThreadFlag getThreadFlag(long userId, MBThread thread)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasThreadFlag(long userId, MBThread thread)
 		throws PortalException;
 
 	/**

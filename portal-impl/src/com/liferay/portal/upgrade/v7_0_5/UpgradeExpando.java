@@ -30,8 +30,7 @@ public class UpgradeExpando extends UpgradeProcess {
 		StringBundler sb = new StringBundler(3);
 
 		sb.append("select rowId_ from ExpandoRow where rowId_ not in (select ");
-		sb.append("distinct ExpandoRow.rowId_ from  ExpandoRow inner join ");
-		sb.append("ExpandoValue on ExpandoRow.rowId_ = ExpandoValue.rowId_)");
+		sb.append("rowId_ from ExpandoValue)");
 
 		try (PreparedStatement ps1 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(

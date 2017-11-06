@@ -28,7 +28,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + DummyFolderPortletKeys.DUMMY_FOLDER},
+	property = {
+		"javax.portlet.name=" + DummyFolderPortletKeys.DUMMY_FOLDER,
+		"javax.portlet.resource-bundle=content.Language"
+	},
 	service = {DummyFolderPortlet.class, Portlet.class}
 )
 public class DummyFolderPortlet extends MVCPortlet {

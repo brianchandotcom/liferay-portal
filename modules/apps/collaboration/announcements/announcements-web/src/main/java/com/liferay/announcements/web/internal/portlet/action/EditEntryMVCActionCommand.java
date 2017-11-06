@@ -14,6 +14,7 @@
 
 package com.liferay.announcements.web.internal.portlet.action;
 
+import com.liferay.announcements.constants.AnnouncementsPortletKeys;
 import com.liferay.announcements.kernel.exception.EntryContentException;
 import com.liferay.announcements.kernel.exception.EntryDisplayDateException;
 import com.liferay.announcements.kernel.exception.EntryExpirationDateException;
@@ -21,7 +22,6 @@ import com.liferay.announcements.kernel.exception.EntryTitleException;
 import com.liferay.announcements.kernel.exception.EntryURLException;
 import com.liferay.announcements.kernel.exception.NoSuchEntryException;
 import com.liferay.announcements.kernel.service.AnnouncementsEntryService;
-import com.liferay.announcements.web.constants.AnnouncementsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;

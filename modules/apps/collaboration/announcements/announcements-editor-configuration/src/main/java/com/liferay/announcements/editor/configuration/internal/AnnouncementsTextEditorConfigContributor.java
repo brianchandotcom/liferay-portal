@@ -14,7 +14,7 @@
 
 package com.liferay.announcements.editor.configuration.internal;
 
-import com.liferay.announcements.web.constants.AnnouncementsPortletKeys;
+import com.liferay.announcements.constants.AnnouncementsPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;

@@ -14,7 +14,7 @@
 
 package com.liferay.announcements.web.internal.portlet.action;
 
-import com.liferay.announcements.web.constants.AnnouncementsPortletKeys;
+import com.liferay.announcements.constants.AnnouncementsPortletKeys;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 

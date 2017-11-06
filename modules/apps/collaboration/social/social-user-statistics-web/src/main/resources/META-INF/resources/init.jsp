@@ -43,8 +43,8 @@ page import="com.liferay.social.kernel.model.SocialActivityCounterConstants" %><
 page import="com.liferay.social.kernel.service.SocialActivityCounterLocalServiceUtil" %><%@
 page import="com.liferay.social.kernel.util.SocialConfigurationUtil" %><%@
 page import="com.liferay.social.kernel.util.comparator.SocialActivityCounterNameComparator" %><%@
+page import="com.liferay.social.user.statistics.constants.SocialUserStatisticsPortletKeys" %><%@
 page import="com.liferay.social.user.statistics.web.configuration.SocialUserStatisticsPortletInstanceConfiguration" %><%@
-page import="com.liferay.social.user.statistics.web.constants.SocialUserStatisticsPortletKeys" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.util.ArrayList" %><%@

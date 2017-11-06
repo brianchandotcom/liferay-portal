@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.DefaultLayoutPrototypesUtil;
 import com.liferay.portal.kernel.util.DefaultLayoutSetPrototypesUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.social.user.statistics.web.constants.SocialUserStatisticsPortletKeys;
+import com.liferay.social.user.statistics.constants.SocialUserStatisticsPortletKeys;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
 import java.util.HashMap;

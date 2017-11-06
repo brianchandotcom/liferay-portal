@@ -69,10 +69,10 @@ public class LCSConnectorRunnable implements Runnable {
 					_log.debug(e.getMessage(), e);
 				}
 				else {
-					if (_log.isInfoEnabled() &&
+					if (_log.isWarnEnabled() &&
 						Validator.isNotNull(e.getMessage())) {
 
-						_log.info(e.getMessage());
+						_log.warn(e.getMessage());
 					}
 				}
 
@@ -121,8 +121,8 @@ public class LCSConnectorRunnable implements Runnable {
 					Thread.sleep(60000);
 				}
 				catch (InterruptedException ie) {
-					if (_log.isInfoEnabled()) {
-						_log.info("Interrupted while waiting for connection");
+					if (_log.isWarnEnabled()) {
+						_log.warn("Interrupted while waiting for connection");
 					}
 				}
 			}

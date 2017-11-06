@@ -269,6 +269,13 @@ public class ProjectTemplateFilesTest {
 				buildGradlePath + " is missing non-workspace specific variant",
 				matcher.matches());
 		}
+
+		String buildGradleContent = FileUtil.read(buildGradlePath);
+
+		Assert.assertFalse(
+			buildGradlePath + " contatins latest.release. Should use a " +
+				"tokenized version from /modules/build.gradle",
+			buildGradleContent.contains("latest.release"));
 	}
 
 	private void _testGitIgnore(

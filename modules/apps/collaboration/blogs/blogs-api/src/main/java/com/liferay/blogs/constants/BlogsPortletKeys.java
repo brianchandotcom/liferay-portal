@@ -12,27 +12,20 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.notifications;
-
-import com.liferay.blogs.constants.BlogsPortletKeys;
-import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
-import com.liferay.portal.kernel.notifications.UserNotificationHandler;
-
-import org.osgi.service.component.annotations.Component;
+package com.liferay.blogs.constants;
 
 /**
  * @author Sergio González
  */
-@Component(
-	immediate = true,
-	property = {"javax.portlet.name=" + BlogsPortletKeys.BLOGS},
-	service = UserNotificationHandler.class
-)
-public class BlogsUserNotificationHandler
-	extends BaseModelUserNotificationHandler {
+public class BlogsPortletKeys {
 
-	public BlogsUserNotificationHandler() {
-		setPortletId(BlogsPortletKeys.BLOGS);
-	}
+	public static final String BLOGS =
+		"com_liferay_blogs_web_portlet_BlogsPortlet";
+
+	public static final String BLOGS_ADMIN =
+		"com_liferay_blogs_web_portlet_BlogsAdminPortlet";
+
+	public static final String BLOGS_AGGREGATOR =
+		"com_liferay_blogs_web_portlet_BlogsAgreggatorPortlet";
 
 }

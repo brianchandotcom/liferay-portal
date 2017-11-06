@@ -1,7 +1,6 @@
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.asset.tags.navigation.web", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.blogs.recent.bloggers.web", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.blogs.web", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.instance.lifecycle", version: "3.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"

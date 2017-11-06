@@ -29,7 +29,7 @@ CommerceAddress billingAddress = orderSummaryCheckoutStepDisplayContext.getBilli
 		<div class="card card-horizontal">
 			<div class="card-row card-row-valign-top">
 				<div class="card-col-content card-col-gutters">
-					<h3>Billing Adrress</h3>
+					<h3><liferay-ui:message key="billing-address" /></h3>
 
 					<h4><%= billingAddress.getName() %></h4>
 					<p><%= billingAddress.getStreet1() %></p>
@@ -60,7 +60,7 @@ CommerceAddress billingAddress = orderSummaryCheckoutStepDisplayContext.getBilli
 		<div class="card card-horizontal">
 			<div class="card-row card-row-valign-top">
 				<div class="card-col-content card-col-gutters">
-					<h3>Shipping Address</h3>
+					<h3><liferay-ui:message key="shipping-address" /></h3>
 				</div>
 			</div>
 		</div>

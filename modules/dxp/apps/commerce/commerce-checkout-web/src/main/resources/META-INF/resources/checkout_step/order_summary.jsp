@@ -21,7 +21,7 @@ OrderSummaryCheckoutStepDisplayContext orderSummaryCheckoutStepDisplayContext = 
 
 CommerceCart commerceCart = orderSummaryCheckoutStepDisplayContext.getCommerceCart();
 
-CommerceAddress billingAddress = orderSummaryCheckoutStepDisplayContext.getBillingAddress();
+CommerceAddress billingAddress = commerceCart.getBillingAddress();
 %>
 
 <div class="address-container row">

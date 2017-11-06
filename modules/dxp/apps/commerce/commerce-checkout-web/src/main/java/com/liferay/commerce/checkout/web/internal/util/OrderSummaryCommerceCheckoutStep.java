@@ -20,7 +20,6 @@ import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceCartService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommercePriceCalculationHelper;
@@ -136,9 +135,9 @@ public class OrderSummaryCommerceCheckoutStep implements CommerceCheckoutStep {
 		OrderSummaryCheckoutStepDisplayContext
 			orderSummaryCheckoutStepDisplayContext =
 				new OrderSummaryCheckoutStepDisplayContext(
-					_commerceAddressService, _commerceCartService,
-					_commercePriceCalculationHelper, _commercePriceFormatter,
-					_cpInstanceHelper, httpServletRequest);
+					_commerceCartService, _commercePriceCalculationHelper,
+					_commercePriceFormatter, _cpInstanceHelper,
+					httpServletRequest);
 
 		httpServletRequest.setAttribute(
 			CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT,
@@ -156,9 +155,6 @@ public class OrderSummaryCommerceCheckoutStep implements CommerceCheckoutStep {
 
 		return true;
 	}
-
-	@Reference
-	private CommerceAddressService _commerceAddressService;
 
 	@Reference
 	private CommerceCartService _commerceCartService;

@@ -14,19 +14,16 @@
 
 package com.liferay.commerce.checkout.web.internal.display.context;
 
-import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceCartService;
 import com.liferay.commerce.util.CommercePriceCalculationHelper;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.document.library.kernel.util.DLUtil;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -44,7 +41,6 @@ import javax.servlet.http.HttpServletRequest;
 public class OrderSummaryCheckoutStepDisplayContext {
 
 	public OrderSummaryCheckoutStepDisplayContext(
-			CommerceAddressService commerceAddressService,
 			CommerceCartService commerceCartService,
 			CommercePriceCalculationHelper commercePriceCalculationHelper,
 			CommercePriceFormatter commercePriceFormatter,
@@ -52,7 +48,6 @@ public class OrderSummaryCheckoutStepDisplayContext {
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		_commerceAddressService = commerceAddressService;
 		_commerceCartService = commerceCartService;
 		_commercePriceCalculationHelper = commercePriceCalculationHelper;
 		_commercePriceFormatter = commercePriceFormatter;
@@ -63,11 +58,6 @@ public class OrderSummaryCheckoutStepDisplayContext {
 			httpServletRequest, "commerceCartId");
 
 		_commerceCart = _commerceCartService.getCommerceCart(commerceCartId);
-	}
-
-	public CommerceAddress getBillingAddress() throws PortalException {
-		return _commerceAddressService.getCommerceAddress(
-			_commerceCart.getBillingAddressId());
 	}
 
 	public CommerceCart getCommerceCart() {
@@ -125,7 +115,6 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		return _cpInstanceHelper.parseJSONString(json, locale);
 	}
 
-	private final CommerceAddressService _commerceAddressService;
 	private final CommerceCart _commerceCart;
 	private final CommerceCartService _commerceCartService;
 	private final CommercePriceCalculationHelper
@@ -133,6 +122,5 @@ public class OrderSummaryCheckoutStepDisplayContext {
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private final CPInstanceHelper _cpInstanceHelper;
 	private final HttpServletRequest _httpServletRequest;
-	private SearchContainer<CommerceCartItem> _searchContainer;
 
 }

@@ -43,21 +43,30 @@ public abstract class BaseMessageStatusMessageListener
 		finally {
 			messageStatus.stopTimer();
 
-			_statusSender.send(messageStatus);
+			message = new Message();
+
+			message.setPayload(messageStatus);
+
+			Destination destination = getDestination();
+
+			destination.send(message);
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public void setStatusSender(SingleDestinationMessageSender statusSender) {
-		_statusSender = statusSender;
 	}
 
 	protected abstract void doReceive(
 			Message message, MessageStatus messageStatus)
 		throws Exception;
 
+	protected abstract Destination getDestination();
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseMessageStatusMessageListener.class);
-
-	private SingleDestinationMessageSender _statusSender;
 
 }

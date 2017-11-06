@@ -22,7 +22,11 @@ BaseAddressCheckoutStepDisplayContext baseAddressCheckoutStepDisplayContext = (B
 List<CommerceAddress> commerceAddresses = baseAddressCheckoutStepDisplayContext.getCommerceAddresses();
 long defaultCommerceAddressId = baseAddressCheckoutStepDisplayContext.getDefaultCommerceAddressId();
 
-long commerceAddressId = BeanParamUtil.getLong(baseAddressCheckoutStepDisplayContext.getCommerceCart(), request, baseAddressCheckoutStepDisplayContext.getParamName(), defaultCommerceAddressId);
+long commerceAddressId = BeanParamUtil.getLong(baseAddressCheckoutStepDisplayContext.getCommerceCart(), request, baseAddressCheckoutStepDisplayContext.getParamName());
+
+if (commerceAddressId == 0) {
+	commerceAddressId = defaultCommerceAddressId;
+}
 
 long commerceCountryId = ParamUtil.getLong(request, "commerceCountryId");
 long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");

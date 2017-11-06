@@ -18,13 +18,10 @@ import com.liferay.lcs.service.LCSGatewayService;
 import com.liferay.lcs.util.LCSConnectionManager;
 import com.liferay.lcs.util.LCSUtil;
 import com.liferay.lcs.util.PortletPropsValues;
-import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 import com.liferay.portal.kernel.license.messaging.LCSPortletState;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 
-import java.util.Map;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
@@ -38,12 +35,10 @@ import javax.servlet.http.HttpServletResponse;
 public class LCSGatewayUnavailableRunnable implements Runnable {
 
 	public LCSGatewayUnavailableRunnable(
-		long heartbeatInterval, JSONWebServiceTransportException jsonwste,
-		LCSConnectionManager lcsConnectionManager,
+		int statusCode, LCSConnectionManager lcsConnectionManager,
 		LCSGatewayService lcsGatewayService) {
 
-		_heartbeatInterval = heartbeatInterval;
-		_jsonwste = jsonwste;
+		_statusCode = statusCode;
 		_lcsConnectionManager = lcsConnectionManager;
 		_lcsGatewayService = lcsGatewayService;
 
@@ -58,7 +53,7 @@ public class LCSGatewayUnavailableRunnable implements Runnable {
 			_log.info("Recovering connection to LCS gateway");
 		}
 
-		if (_jsonwste.getStatus() == HttpServletResponse.SC_FORBIDDEN) {
+		if (_statusCode == HttpServletResponse.SC_FORBIDDEN) {
 			for (int i = 0; i < _multipliers.length; i++) {
 				if (_lcsConnectionManager.isShutdownRequested()) {
 					if (_log.isDebugEnabled()) {
@@ -189,13 +184,6 @@ public class LCSGatewayUnavailableRunnable implements Runnable {
 		}
 	}
 
-	private long _getLastMessageSent() {
-		Map<String, String> lcsConnectionMetadata =
-			_lcsConnectionManager.getLCSConnectionMetadata();
-
-		return GetterUtil.getLong(lcsConnectionMetadata.get("lastMessageSent"));
-	}
-
 	private boolean _signInToLCSGateway() {
 		if (_log.isTraceEnabled()) {
 			_log.trace("Sign in to LCS gateway");
@@ -229,8 +217,7 @@ public class LCSGatewayUnavailableRunnable implements Runnable {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LCSGatewayUnavailableRunnable.class);
 
-	private final long _heartbeatInterval;
-	private final JSONWebServiceTransportException _jsonwste;
+	private final int _statusCode;
 	private final LCSConnectionManager _lcsConnectionManager;
 	private final LCSGatewayService _lcsGatewayService;
 	private final float[] _multipliers = {0.5F, 1, 2, 5};

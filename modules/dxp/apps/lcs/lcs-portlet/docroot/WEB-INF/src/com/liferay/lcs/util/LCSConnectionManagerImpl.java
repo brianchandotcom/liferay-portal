@@ -29,6 +29,7 @@ import com.liferay.lcs.task.LicenseManagerTask;
 import com.liferay.lcs.task.SignOffTask;
 import com.liferay.lcs.task.UptimeMonitoringTask;
 import com.liferay.lcs.task.scheduler.TaskSchedulerService;
+import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -62,9 +63,19 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 			_lcsGatewayService.deleteMessages(key);
 		}
 		catch (SystemException se) {
-			if (se.getCause() instanceof JSONWebServiceTransportException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(se.getMessage(), se);
+			}
+
+			Throwable cause = se.getCause();
+
+			if (cause instanceof JSONWebServiceInvocationException) {
 				handleLCSGatewayUnavailable(
-					(JSONWebServiceTransportException)se.getCause());
+					((JSONWebServiceInvocationException)cause).getStatus());
+			}
+			else if (cause instanceof JSONWebServiceTransportException) {
+				handleLCSGatewayUnavailable(
+					((JSONWebServiceTransportException)cause).getStatus());
 			}
 			else {
 				throw se;
@@ -145,14 +156,27 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 			return _lcsGatewayService.getMessages(key);
 		}
 		catch (SystemException se) {
-			if (se.getCause() instanceof JSONWebServiceTransportException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(se.getMessage(), se);
+			}
+
+			Throwable cause = se.getCause();
+
+			if (cause instanceof JSONWebServiceInvocationException) {
 				handleLCSGatewayUnavailable(
-					(JSONWebServiceTransportException)se.getCause());
+					((JSONWebServiceInvocationException)cause).getStatus());
 
 				return Collections.emptyList();
 			}
+			else if (cause instanceof JSONWebServiceTransportException) {
+				handleLCSGatewayUnavailable(
+					((JSONWebServiceTransportException)cause).getStatus());
 
-			throw se;
+				return Collections.emptyList();
+			}
+			else {
+				throw se;
+			}
 		}
 	}
 
@@ -237,7 +261,15 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 				"lastMessageSent", String.valueOf(System.currentTimeMillis()));
 		}
 		catch (SystemException se) {
-			if (se.getCause() instanceof JSONWebServiceTransportException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(se.getMessage(), se);
+			}
+
+			Throwable cause = se.getCause();
+
+			if (cause instanceof JSONWebServiceInvocationException ||
+				cause instanceof JSONWebServiceTransportException) {
+
 				if (_shutdownRequested) {
 					if (_log.isTraceEnabled()) {
 						_log.trace(
@@ -247,18 +279,24 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 					return;
 				}
 
-				JSONWebServiceTransportException jsonwste =
-					(JSONWebServiceTransportException)se.getCause();
+				int statusCode;
 
-				String errorMesage =
-					"Stopping communication because LCS gateway is " +
-						"unavailable with status " + jsonwste.getStatus();
-
-				if (_log.isWarnEnabled()) {
-					_log.warn(errorMesage);
+				if (cause instanceof JSONWebServiceInvocationException) {
+					statusCode =
+						((JSONWebServiceInvocationException)cause).getStatus();
+				}
+				else {
+					statusCode =
+						((JSONWebServiceTransportException)cause).getStatus();
 				}
 
-				handleLCSGatewayUnavailable(jsonwste);
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Stopping communication because LCS gateway is " +
+							"unavailable with status " + statusCode);
+				}
+
+				handleLCSGatewayUnavailable(statusCode);
 			}
 			else {
 				throw se;
@@ -417,13 +455,7 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 		}
 	}
 
-	protected synchronized void handleLCSGatewayUnavailable(
-		JSONWebServiceTransportException jsonwste) {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(jsonwste.getMessage(), jsonwste);
-		}
-
+	protected synchronized void handleLCSGatewayUnavailable(int statusCode) {
 		if (!isLCSGatewayAvailable()) {
 			return;
 		}
@@ -448,7 +480,7 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 
 		_lcsGatewayUnavailableFuture = _scheduledExecutorService.submit(
 			new LCSGatewayUnavailableRunnable(
-				_heartbeatInterval, jsonwste, this, _lcsGatewayService));
+				statusCode, this, _lcsGatewayService));
 	}
 
 	private void _executeLCSConnectorRunnable() {

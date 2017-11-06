@@ -56,10 +56,16 @@ public class JniSassCompiler implements SassCompiler {
 
 		_precision = precision;
 		_tmpDirName = tmpDirName;
+
+		_cleanTempDir = Boolean.getBoolean("sass.compiler.jni.clean.temp.dir");
 	}
 
 	@Override
 	public void close() throws IOException {
+		if (!_cleanTempDir) {
+			return;
+		}
+
 		try {
 			Field field = Platform.class.getDeclaredField(
 				"temporaryExtractedLibraryCanonicalFiles");
@@ -98,7 +104,8 @@ public class JniSassCompiler implements SassCompiler {
 			}
 		}
 		catch (Exception e) {
-			throw new IOException("Unable to clean up BridJ's temp folder", e);
+			throw new IOException(
+				"Unable to clean up BridJ's temporary directory", e);
 		}
 	}
 
@@ -345,6 +352,7 @@ public class JniSassCompiler implements SassCompiler {
 
 	private static final int _PRECISION_DEFAULT = 5;
 
+	private final boolean _cleanTempDir;
 	private final int _precision;
 	private final String _tmpDirName;
 

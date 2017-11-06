@@ -56,8 +56,7 @@ public class JniSassCompiler implements SassCompiler {
 
 		_precision = precision;
 		_tmpDirName = tmpDirName;
-		_cleanTmpDir = Boolean.valueOf(
-			System.getProperty("sass.compiler.jni.clean.temp.dir", "false"));
+		_cleanTmpDir = Boolean.getBoolean("sass.compiler.jni.clean.temp.dir");
 	}
 
 	@Override

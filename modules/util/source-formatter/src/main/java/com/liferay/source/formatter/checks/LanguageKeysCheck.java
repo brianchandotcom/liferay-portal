@@ -47,8 +47,8 @@ public class LanguageKeysCheck extends BaseFileCheck {
 	@Override
 	public void init() throws Exception {
 		_gitHubPortalLanguagePropertiesMap =
-			getGitHubPortalLanguagePropertiesMap();
-		_portalLanguageProperties = getPortalLanguageProperties();
+			_getGitHubPortalLanguagePropertiesMap();
+		_portalLanguageProperties = _getPortalLanguageProperties();
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		throws Exception {
 
 		Properties gitHubPortalLanguageProperties =
-			getGitHubPortalLanguageProperties(
+			_getGitHubPortalLanguageProperties(
 				absolutePath, _gitHubPortalLanguagePropertiesMap);
 
 		if (gitHubPortalLanguageProperties != null) {
@@ -82,7 +82,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		return content;
 	}
 
-	protected Properties getGitHubPortalLanguageProperties(
+	private Properties _getGitHubPortalLanguageProperties(
 			String absolutePath,
 			Map<String, Properties> gitHubPortalLanguagePropertiesMap)
 		throws Exception {
@@ -108,7 +108,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		return gitHubPortalLanguagePropertiesMap.get(propertiesFileLocation);
 	}
 
-	protected Map<String, Properties> getGitHubPortalLanguagePropertiesMap()
+	private Map<String, Properties> _getGitHubPortalLanguagePropertiesMap()
 		throws Exception {
 
 		Map<String, Properties> gitHubPortalLanguagePropertiesMap =
@@ -119,7 +119,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		for (Map.Entry<String, Properties> entry : propertiesMap.entrySet()) {
 			Properties properties = entry.getValue();
 
-			String s = properties.getProperty(GIT_HUB_LIFERAY_PORTAL_BRANCH);
+			String s = properties.getProperty(_GIT_HUB_LIFERAY_PORTAL_BRANCH);
 
 			if (Validator.isNull(s)) {
 				continue;
@@ -144,7 +144,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		return Arrays.asList(languageKeyPattern);
 	}
 
-	protected Properties getPortalLanguageProperties() throws Exception {
+	private Properties _getPortalLanguageProperties() throws Exception {
 		Properties portalLanguageProperties = new Properties();
 
 		File portalLanguagePropertiesFile = getFile(
@@ -161,7 +161,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		return portalLanguageProperties;
 	}
 
-	protected static final String GIT_HUB_LIFERAY_PORTAL_BRANCH =
+	private static final String _GIT_HUB_LIFERAY_PORTAL_BRANCH =
 		"git.hub.liferay.portal.branch";
 
 	protected final Pattern languageKeyPattern = Pattern.compile(

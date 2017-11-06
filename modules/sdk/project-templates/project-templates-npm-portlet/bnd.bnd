@@ -2,7 +2,6 @@ Bundle-Description: Creates a Liferay MVC portlet with npm support as a module p
 Bundle-Name: Liferay Project Templates npm Portlet
 Bundle-SymbolicName: com.liferay.project.templates.npm.portlet
 Bundle-Version: 1.0.1
--includeresource: ../project-templates-npm-angular-portlet/src/main/resources/definitions.vm
 -removeheaders:\
 	Import-Package,\
 	Private-Package,\

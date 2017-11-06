@@ -240,59 +240,13 @@ public class ProjectTemplateFilesTest {
 
 		requiredPropertyNames.addAll(_archetypeMetadataXmlDefaultPropertyNames);
 
-		List<Path> definitionsVmPaths = new ArrayList<>();
-
-		Path definitionsVmPath = projectTemplateDirPath.resolve(
-			"src/main/resources/definitions.vm");
-
-		if (Files.exists(definitionsVmPath)) {
-			definitionsVmPaths.add(definitionsVmPath);
-		}
-
-		String includeResource = bndProperties.getProperty(
-			Constants.INCLUDERESOURCE);
-
-		if (Validator.isNotNull(includeResource)) {
-			for (String fileName : includeResource.split(",")) {
-				if (!fileName.endsWith("/definitions.vm")) {
-					continue;
-				}
-
-				definitionsVmPath = projectTemplateDirPath.resolve(fileName);
-
-				if (Files.exists(definitionsVmPath)) {
-					definitionsVmPaths.add(definitionsVmPath);
-				}
-			}
-		}
-
-		Set<String> declaredVariables = new HashSet<>();
 		StringBuilder messageSuffix = new StringBuilder(
 			archetypeMetadataXmlPath.toString());
-
-		for (int i = 0; i < definitionsVmPaths.size(); i++) {
-			definitionsVmPath = definitionsVmPaths.get(i);
-
-			String definitionsVm = FileUtil.read(definitionsVmPath);
-
-			matcher = _velocitySetDirectivePattern.matcher(definitionsVm);
-
-			while (matcher.find()) {
-				declaredVariables.add(matcher.group(1));
-			}
-
-			messageSuffix.append(", ");
-
-			if (i == (definitionsVmPaths.size() - 1)) {
-				messageSuffix.append("or ");
-			}
-		}
 
 		for (String name : archetypeResourcePropertyNames) {
 			Assert.assertTrue(
 				"Undeclared \"" + name + "\" property. Please add it to " +
 					messageSuffix,
-				declaredVariables.contains(name) ||
 				requiredPropertyNames.contains(name));
 		}
 	}

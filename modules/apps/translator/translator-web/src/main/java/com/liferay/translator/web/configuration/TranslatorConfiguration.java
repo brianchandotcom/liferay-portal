@@ -34,11 +34,14 @@ public interface TranslatorConfiguration {
 
 	@Meta.AD(
 		deflt = "ar|bg|ca|cs|da|de|el|en|es|et|fi|fr|hi_IN|ht|hu|in|it|iw|ja|ko|lt|lv|mww|nb|nl|pl|pt_PT|ro|ru|sk|sl|sv|th|tr|uk|vi|zh_CN|zh_TW",
-		id = "language.ids", required = false
+		id = "language.ids", name = "language-ids", required = false
 	)
 	public String[] languageIds();
 
-	@Meta.AD(deflt = "en_es", id = "translation.id", required = false)
+	@Meta.AD(
+		deflt = "en_es", id = "translation.id", name = "translation-id",
+		required = false
+	)
 	public String translationId();
 
 }

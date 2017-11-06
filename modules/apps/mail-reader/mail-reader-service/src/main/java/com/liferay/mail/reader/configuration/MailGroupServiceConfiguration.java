@@ -30,17 +30,21 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface MailGroupServiceConfiguration {
 
-	@Meta.AD(deflt = "109|110|143|220|993|995|1110|2221", required = false)
+	@Meta.AD(
+		deflt = "109|110|143|220|993|995|1110|2221", name = "incoming-ports",
+		required = false
+	)
 	public String[] incomingPorts();
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(deflt = "false", name = "javamail-debug", required = false)
 	public boolean javamailDebug();
 
-	@Meta.AD(deflt = "1000", required = false)
+	@Meta.AD(deflt = "1000", name = "message-sync-count", required = false)
 	public int messagesSyncCount();
 
 	@Meta.AD(
-		deflt = "25|26|79|110|143|465|587|2500|2525|3535", required = false
+		deflt = "25|26|79|110|143|465|587|2500|2525|3535",
+		name = "outgoing-ports", required = false
 	)
 	public String[] outgoingPorts();
 

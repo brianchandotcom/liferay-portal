@@ -31,7 +31,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface TwitterGroupServiceConfiguration {
 
-	@Meta.AD(deflt = "5", required = false)
+	@Meta.AD(
+		deflt = "5", name = "twitter-synchronization-interval", required = false
+	)
 	public int twitterSynchronizationInterval();
 
 }

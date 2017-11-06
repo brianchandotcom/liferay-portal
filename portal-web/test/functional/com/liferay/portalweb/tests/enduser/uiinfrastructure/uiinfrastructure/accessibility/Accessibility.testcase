@@ -6,8 +6,6 @@
 
 	<set-up>
 		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
 	</set-up>
 
 	<tear-down>
@@ -22,6 +20,8 @@
 	</tear-down>
 
 	<command name="Smoke" priority="3">
+		<execute macro="User#firstLoginPG" />
+
 		<execute macro="Page#add">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
@@ -48,6 +48,14 @@
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Page1" />
 		</execute>
+
+		<execute function="AssertAccessible" />
+	</command>
+
+	<command name="ViewDefaultLandingPageAsGuestUser" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute function="AssertAccessible" />
 	</command>

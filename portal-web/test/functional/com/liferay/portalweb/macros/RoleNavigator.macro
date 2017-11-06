@@ -17,7 +17,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="NavBar#${assigneeTypeUppercase}" value1="${assigneeType}" />
+		<execute function="AssertClick" locator1="NavTab#${assigneeTypeUppercase}" value1="${assigneeType}" />
 	</command>
 
 	<command name="gotoPermissionSectionViaDropdown">

@@ -100,6 +100,11 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	@Override
+	public void setProjectPathPrefix(String projectPathPrefix) {
+		_projectPathPrefix = projectPathPrefix;
+	}
+
+	@Override
 	public void setPropertiesMap(Map<String, Properties> propertiesMap) {
 		_propertiesMap = propertiesMap;
 	}
@@ -222,17 +227,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	protected File getFile(String fileName, int level) {
-		for (int i = 0; i < level; i++) {
-			File file = new File(_baseDirName + fileName);
-
-			if (file.exists()) {
-				return file;
-			}
-
-			fileName = "../" + fileName;
-		}
-
-		return null;
+		return SourceFormatterUtil.getFile(_baseDirName, fileName, level);
 	}
 
 	protected List<String> getFileNames(
@@ -341,23 +336,8 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return portalLanguageProperties;
 	}
 
-	protected String getProjectPathPrefix() throws Exception {
-		if (!_subrepository) {
-			return null;
-		}
-
-		File file = getFile(
-			"gradle.properties", ToolsUtil.PORTAL_MAX_DIR_LEVEL);
-
-		if (!file.exists()) {
-			return null;
-		}
-
-		Properties properties = new Properties();
-
-		properties.load(new FileInputStream(file));
-
-		return properties.getProperty("project.path.prefix");
+	protected String getProjectPathPrefix() {
+		return _projectPathPrefix;
 	}
 
 	protected SourceFormatterExcludes getSourceFormatterExcludes() {
@@ -451,21 +431,19 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return isExcludedPath(key, path, -1, parameter);
 	}
 
-	protected boolean isModulesApp(
-		String absolutePath, String projectPathPrefix, boolean privateOnly) {
-
+	protected boolean isModulesApp(String absolutePath, boolean privateOnly) {
 		if (absolutePath.contains("/modules/private/apps/") ||
 			(!privateOnly && absolutePath.contains("/modules/apps/"))) {
 
 			return true;
 		}
 
-		if (projectPathPrefix == null) {
+		if (_projectPathPrefix == null) {
 			return false;
 		}
 
-		if (projectPathPrefix.startsWith(":private:apps") ||
-			(!privateOnly && projectPathPrefix.startsWith(":apps:"))) {
+		if (_projectPathPrefix.startsWith(":private:apps") ||
+			(!privateOnly && _projectPathPrefix.startsWith(":apps:"))) {
 
 			return true;
 		}
@@ -563,6 +541,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	private int _maxLineLength;
 	private List<String> _pluginsInsideModulesDirectoryNames;
 	private boolean _portalSource;
+	private String _projectPathPrefix;
 	private Map<String, Properties> _propertiesMap;
 	private SourceFormatterExcludes _sourceFormatterExcludes;
 	private final Map<String, Set<SourceFormatterMessage>>

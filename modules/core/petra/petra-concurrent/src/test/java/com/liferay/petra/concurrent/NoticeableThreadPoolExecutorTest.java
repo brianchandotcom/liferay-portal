@@ -628,9 +628,11 @@ public class NoticeableThreadPoolExecutorTest {
 	private void _testShutdownNow(boolean shutdownBeforeShutdownNow)
 		throws InterruptedException {
 
+		BlockingQueue<Runnable> taskBlockingQueue = new LinkedBlockingQueue<>();
+
 		NoticeableThreadPoolExecutor noticeableThreadPoolExecutor =
 			new NoticeableThreadPoolExecutor(
-				1, 1, 1, TimeUnit.NANOSECONDS, new LinkedBlockingQueue<>(),
+				1, 1, 1, TimeUnit.NANOSECONDS, taskBlockingQueue,
 				new MethodNameThreadFactory(),
 				(runnable, threadPoolExecutor) -> {
 				},
@@ -650,6 +652,8 @@ public class NoticeableThreadPoolExecutorTest {
 
 		noticeableThreadPoolExecutor.execute(slowRunnable);
 
+		while (!taskBlockingQueue.isEmpty());
+
 		noticeableThreadPoolExecutor.execute(slowRunnable);
 
 		if (shutdownBeforeShutdownNow) {
@@ -659,7 +663,7 @@ public class NoticeableThreadPoolExecutorTest {
 		List<Runnable> shutdownTasks =
 			noticeableThreadPoolExecutor.shutdownNow();
 
-		Assert.assertEquals(shutdownTasks.toString(), 2, shutdownTasks.size());
+		Assert.assertEquals(shutdownTasks.toString(), 1, shutdownTasks.size());
 
 		shutdownTasks = noticeableThreadPoolExecutor.shutdownNow();
 

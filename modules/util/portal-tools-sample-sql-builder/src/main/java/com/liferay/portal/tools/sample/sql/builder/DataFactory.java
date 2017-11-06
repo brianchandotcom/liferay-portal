@@ -1856,6 +1856,8 @@ public class DataFactory {
 		String languageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());
 
+		friendlyURLEntryLocalizationModel.setFriendlyURLEntryLocalizationId(
+			_counter.get());
 		friendlyURLEntryLocalizationModel.setFriendlyURLEntryId(
 			friendlyURLEntryModel.getFriendlyURLEntryId());
 		friendlyURLEntryLocalizationModel.setGroupId(
@@ -1879,10 +1881,14 @@ public class DataFactory {
 		FriendlyURLEntryMappingModel friendlyURLEntryMappingModel =
 			new FriendlyURLEntryMappingModelImpl();
 
+		friendlyURLEntryMappingModel.setFriendlyURLEntryMappingId(
+			_counter.get());
 		friendlyURLEntryMappingModel.setClassNameId(
 			friendlyURLEntryModel.getClassNameId());
 		friendlyURLEntryMappingModel.setClassPK(
 			friendlyURLEntryModel.getClassPK());
+		friendlyURLEntryMappingModel.setFriendlyURLEntryId(
+			friendlyURLEntryModel.getFriendlyURLEntryId());
 
 		return friendlyURLEntryMappingModel;
 	}

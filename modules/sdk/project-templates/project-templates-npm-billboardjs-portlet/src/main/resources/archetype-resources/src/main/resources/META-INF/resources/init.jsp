@@ -10,3 +10,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
+
+<%
+String bootstrapRequire = (String)renderRequest.getAttribute("bootstrapRequire");
+String stylesheetURL = (String)renderRequest.getAttribute("stylesheetURL");
+%>

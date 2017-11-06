@@ -119,7 +119,7 @@ CommerceAddress billingAddress = orderSummaryCheckoutStepDisplayContext.getBilli
 					<liferay-ui:search-container-column-text
 						name="description"
 					>
-						<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>
+						<%= HtmlUtil.escape(cpDefinition.getTitle(themeDisplay.getLanguageId())) %>
 
 						<h6 class="text-default">
 							<%= HtmlUtil.escape(stringJoiner.toString()) %>

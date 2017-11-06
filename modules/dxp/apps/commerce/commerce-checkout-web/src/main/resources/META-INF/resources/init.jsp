@@ -39,7 +39,6 @@ page import="com.liferay.commerce.model.CommerceCountry" %><%@
 page import="com.liferay.commerce.model.CommerceOrder" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
-page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.KeyValuePair" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
@@ -55,7 +54,3 @@ page import="java.util.StringJoiner" %>
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
-
-<%
-String languageId = LanguageUtil.getLanguageId(locale);
-%>

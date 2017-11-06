@@ -1,6 +1,5 @@
 Bundle-Name: Liferay Document Library Repository Search
 Bundle-SymbolicName: com.liferay.document.library.repository.search
-Bundle-Version: 2.0.7
-Export-Package: com.liferay.document.library.repository.search.util
+Bundle-Version: 3.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Document Library

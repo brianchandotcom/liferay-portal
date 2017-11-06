@@ -47,6 +47,12 @@ public interface SamlWebKeys {
 
 	public static final String SAML_KEEP_ALIVE_URLS = "SAML_KEEP_ALIVE_URLS";
 
+	public static final String SAML_KEYSTORE_EXCEPTION =
+		"SAML_KEYSTORE_EXCEPTION";
+
+	public static final String SAML_KEYSTORE_PASSWORD_INCORRECT =
+		"SAML_KEYSTORE_PASSWORD_INCORRECT";
+
 	public static final String SAML_SLO_CONTEXT = "SAML_SLO_CONTEXT";
 
 	public static final String SAML_SLO_REQUEST_INFO = "SAML_SLO_REQUEST_INFO";

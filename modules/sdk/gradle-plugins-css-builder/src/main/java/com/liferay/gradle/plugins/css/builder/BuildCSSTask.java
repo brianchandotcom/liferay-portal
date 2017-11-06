@@ -55,6 +55,7 @@ public class BuildCSSTask extends JavaExec {
 		setDefaultCharacterEncoding(StandardCharsets.UTF_8.toString());
 		setDirNames("/");
 		setMain("com.liferay.css.builder.CSSBuilder");
+		systemProperty("sass.compiler.jni.clean.temp.dir", true);
 	}
 
 	public BuildCSSTask dirNames(Iterable<Object> dirNames) {
@@ -344,8 +345,6 @@ public class BuildCSSTask extends JavaExec {
 		if (Validator.isNotNull(sassCompilerClassName)) {
 			args.add("sass.compiler.class.name=" + sassCompilerClassName);
 		}
-
-		args.add("sass.compiler.jni.clean.temp.dir=" + true);
 
 		return args;
 	}

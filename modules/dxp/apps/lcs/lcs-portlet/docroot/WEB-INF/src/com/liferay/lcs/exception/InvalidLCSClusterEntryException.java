@@ -12,27 +12,27 @@
  * details.
  */
 
-package com.liferay.lcs;
+package com.liferay.lcs.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Igor Beslic
  */
-public class InvalidLCSClusterEntryTokenException extends PortalException {
+public class InvalidLCSClusterEntryException extends PortalException {
 
-	public InvalidLCSClusterEntryTokenException() {
+	public InvalidLCSClusterEntryException() {
 	}
 
-	public InvalidLCSClusterEntryTokenException(String msg) {
+	public InvalidLCSClusterEntryException(String msg) {
 		super(msg);
 	}
 
-	public InvalidLCSClusterEntryTokenException(String msg, Throwable cause) {
+	public InvalidLCSClusterEntryException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public InvalidLCSClusterEntryTokenException(Throwable cause) {
+	public InvalidLCSClusterEntryException(Throwable cause) {
 		super(cause);
 	}
 

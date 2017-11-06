@@ -56,55 +56,56 @@ public class JniSassCompiler implements SassCompiler {
 
 		_precision = precision;
 		_tmpDirName = tmpDirName;
+
 		_cleanTempDir = Boolean.getBoolean("sass.compiler.jni.clean.temp.dir");
 	}
 
 	@Override
 	public void close() throws IOException {
-		if (_cleanTempDir) {
-			try {
-				Field field = Platform.class.getDeclaredField(
-					"temporaryExtractedLibraryCanonicalFiles");
+		if (!_cleanTempDir) {
+			return;
+		}
 
-				field.setAccessible(true);
+		try {
+			Field field = Platform.class.getDeclaredField(
+				"temporaryExtractedLibraryCanonicalFiles");
 
-				Set<File> temporaryExtractedLibraryCanonicalFiles =
-					(Set<File>)field.get(null);
+			field.setAccessible(true);
 
-				Iterator<File> iterator =
-					temporaryExtractedLibraryCanonicalFiles.iterator();
+			Set<File> temporaryExtractedLibraryCanonicalFiles =
+				(Set<File>)field.get(null);
 
-				while (iterator.hasNext()) {
-					File file = iterator.next();
+			Iterator<File> iterator =
+				temporaryExtractedLibraryCanonicalFiles.iterator();
 
-					if (file.isFile() && file.delete()) {
-						iterator.remove();
-					}
-				}
+			while (iterator.hasNext()) {
+				File file = iterator.next();
 
-				field = Platform.class.getDeclaredField(
-					"extractedLibrariesTempDir");
-
-				field.setAccessible(true);
-
-				File extractedLibrariesTempDir = (File)field.get(null);
-
-				iterator = temporaryExtractedLibraryCanonicalFiles.iterator();
-
-				while (iterator.hasNext()) {
-					File file = iterator.next();
-
-					if (!file.equals(extractedLibrariesTempDir) &&
-						file.delete()) {
-
-						iterator.remove();
-					}
+				if (file.isFile() && file.delete()) {
+					iterator.remove();
 				}
 			}
-			catch (Exception e) {
-				throw new IOException(
-					"Unable to clean up BridJ's temporary directory", e);
+
+			field = Platform.class.getDeclaredField(
+				"extractedLibrariesTempDir");
+
+			field.setAccessible(true);
+
+			File extractedLibrariesTempDir = (File)field.get(null);
+
+			iterator = temporaryExtractedLibraryCanonicalFiles.iterator();
+
+			while (iterator.hasNext()) {
+				File file = iterator.next();
+
+				if (!file.equals(extractedLibrariesTempDir) && file.delete()) {
+					iterator.remove();
+				}
 			}
+		}
+		catch (Exception e) {
+			throw new IOException(
+				"Unable to clean up BridJ's temporary directory", e);
 		}
 	}
 

@@ -17,7 +17,6 @@ package com.liferay.portal.configuration.settings.internal.util;
 import aQute.bnd.annotation.metatype.Meta;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -26,32 +25,28 @@ import java.lang.reflect.Method;
 public class ConfigurationPidUtil {
 
 	public static String getConfigurationPid(Class<?> configurationBeanClass) {
-		Object ocdId = null;
+		String configurationPid = null;
 
 		for (Annotation annotation : configurationBeanClass.getAnnotations()) {
-			Class<? extends Annotation> type = annotation.annotationType();
+			Class<? extends Annotation> annotationType =
+				annotation.annotationType();
 
-			if (type.getName().equals(Meta.OCD.class.getName())) {
-				for (Method method : type.getDeclaredMethods()) {
-					if (method.getName().equals("id")) {
-						try {
-							ocdId = method.invoke(annotation);
-						}
-						catch (IllegalAccessException iae) {
-							iae.printStackTrace();
-						}
-						catch (IllegalArgumentException iae) {
-							iae.printStackTrace();
-						}
-						catch (InvocationTargetException ite) {
-							ite.printStackTrace();
-						}
-					}
+			String name = annotationType.getName();
+
+			if (name.equals(Meta.OCD.class.getName())) {
+				try {
+					Method method = annotationType.getMethod("id");
+
+					method.setAccessible(true);
+
+					configurationPid = (String)method.invoke(annotation);
+				}
+				catch (ReflectiveOperationException roe) {
 				}
 			}
 		}
 
-		return (String)ocdId;
+		return configurationPid;
 	}
 
 }

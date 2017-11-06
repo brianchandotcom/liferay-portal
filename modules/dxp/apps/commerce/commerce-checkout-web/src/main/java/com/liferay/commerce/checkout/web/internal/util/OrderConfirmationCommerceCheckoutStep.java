@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"commerce.checkout.step.name=" + OrderConfirmationCommerceCheckoutStep.NAME,
-		"commerce.checkout.step.order:Integer=" + (Integer.MAX_VALUE)
+		"commerce.checkout.step.order:Integer=" + Integer.MAX_VALUE
 	},
 	service = CommerceCheckoutStep.class
 )

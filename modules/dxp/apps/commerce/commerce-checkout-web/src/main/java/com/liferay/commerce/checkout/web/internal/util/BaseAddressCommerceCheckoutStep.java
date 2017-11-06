@@ -22,6 +22,7 @@ import com.liferay.commerce.exception.CommerceAddressCountryException;
 import com.liferay.commerce.exception.CommerceAddressNameException;
 import com.liferay.commerce.exception.CommerceAddressStreetException;
 import com.liferay.commerce.exception.CommerceCartBillingAddressException;
+import com.liferay.commerce.exception.CommerceCartShippingAddressException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.service.CommerceAddressService;
@@ -91,7 +92,8 @@ public abstract class BaseAddressCommerceCheckoutStep
 				e instanceof CommerceAddressCountryException ||
 				e instanceof CommerceAddressNameException ||
 				e instanceof CommerceAddressStreetException ||
-				e instanceof CommerceCartBillingAddressException) {
+				e instanceof CommerceCartBillingAddressException ||
+				e instanceof CommerceCartShippingAddressException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 

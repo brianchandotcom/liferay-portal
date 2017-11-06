@@ -18,10 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 1.0.0, replaced by {@link
- *             com.liferay.message.boards.service.impl.MBMailingListImpl}
  */
-@Deprecated
 @ProviderType
 public class MBMailingListImpl extends MBMailingListBaseImpl {
 }

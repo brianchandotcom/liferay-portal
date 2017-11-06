@@ -103,7 +103,7 @@ public class JniSassCompiler implements SassCompiler {
 			}
 			catch (Exception e) {
 				throw new IOException(
-					"Unable to clean up BridJ's temp folder", e);
+					"Unable to clean up BridJ's temporary directory", e);
 			}
 		}
 	}

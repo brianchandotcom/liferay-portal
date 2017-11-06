@@ -17,7 +17,6 @@ package com.liferay.portlet.messageboards.service.impl;
 import com.liferay.message.boards.kernel.exception.CategoryNameException;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
-import com.liferay.message.boards.kernel.model.MBMailingList;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -115,15 +114,6 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			addCategoryResources(
 				category, serviceContext.getModelPermissions());
 		}
-
-		// Mailing list
-
-		mbMailingListLocalService.addMailingList(
-			userId, groupId, category.getCategoryId(), emailAddress, inProtocol,
-			inServerName, inServerPort, inUseSSL, inUserName, inPassword,
-			inReadInterval, outEmailAddress, outCustom, outServerName,
-			outServerPort, outUseSSL, outUserName, outPassword, allowAnonymous,
-			mailingListActive, serviceContext);
 
 		return category;
 	}
@@ -237,16 +227,6 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		mbThreadLocalService.deleteThreads(
 			category.getGroupId(), category.getCategoryId(),
 			includeTrashedEntries);
-
-		// Mailing list
-
-		MBMailingList mbMailingList =
-			mbMailingListLocalService.fetchCategoryMailingList(
-				category.getGroupId(), category.getCategoryId());
-
-		if (mbMailingList != null) {
-			mbMailingListLocalService.deleteMailingList(mbMailingList);
-		}
 
 		// Expando
 
@@ -773,29 +753,6 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		category.setExpandoBridgeAttributes(serviceContext);
 
 		mbCategoryPersistence.update(category);
-
-		// Mailing list
-
-		MBMailingList mailingList = mbMailingListPersistence.fetchByG_C(
-			category.getGroupId(), category.getCategoryId());
-
-		if (mailingList != null) {
-			mbMailingListLocalService.updateMailingList(
-				mailingList.getMailingListId(), emailAddress, inProtocol,
-				inServerName, inServerPort, inUseSSL, inUserName, inPassword,
-				inReadInterval, outEmailAddress, outCustom, outServerName,
-				outServerPort, outUseSSL, outUserName, outPassword,
-				allowAnonymous, mailingListActive, serviceContext);
-		}
-		else {
-			mbMailingListLocalService.addMailingList(
-				category.getUserId(), category.getGroupId(),
-				category.getCategoryId(), emailAddress, inProtocol,
-				inServerName, inServerPort, inUseSSL, inUserName, inPassword,
-				inReadInterval, outEmailAddress, outCustom, outServerName,
-				outServerPort, outUseSSL, outUserName, outPassword,
-				allowAnonymous, mailingListActive, serviceContext);
-		}
 
 		return category;
 	}

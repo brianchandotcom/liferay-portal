@@ -17,40 +17,43 @@ package com.liferay.portal.search.web.internal.search.results.portlet;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.search.web.internal.result.display.context.SearchResultSummaryDisplayContext;
 
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
+import org.junit.Assert;
+import org.junit.Test;
+
+import org.mockito.Mockito;
 
 /**
  * @author André de Oliveira
  */
-public class SearchResultsSummariesHolder implements Serializable {
+public class SearchResultsSummariesHolderTest {
 
-	public SearchResultsSummariesHolder(int capacity) {
-		_map = new LinkedHashMap<>(capacity);
+	@Test
+	public void testOrder() {
+		int capacity = 1000;
+
+		List<Document> expectedDocuments = new ArrayList<>(capacity);
+
+		SearchResultsSummariesHolder searchResultsSummariesHolder =
+			new SearchResultsSummariesHolder(capacity);
+
+		for (int i = 0; i < capacity; i++) {
+			Document document = Mockito.mock(Document.class);
+
+			expectedDocuments.add(document);
+
+			searchResultsSummariesHolder.put(
+				document, new SearchResultSummaryDisplayContext());
+		}
+
+		List<Document> actualDocuments = new ArrayList<>(
+			searchResultsSummariesHolder.getDocuments());
+
+		for (int i = 0; i < capacity; i++) {
+			Assert.assertSame(expectedDocuments.get(i), actualDocuments.get(i));
+		}
 	}
-
-	public SearchResultSummaryDisplayContext get(Document document) {
-		return _map.get(document);
-	}
-
-	public Collection<Document> getDocuments() {
-		return Collections.unmodifiableSet(_map.keySet());
-	}
-
-	public void put(
-		Document document,
-		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
-
-		_map.put(
-			document,
-			Objects.requireNonNull(searchResultSummaryDisplayContext));
-	}
-
-	private final Map<Document, SearchResultSummaryDisplayContext> _map;
 
 }

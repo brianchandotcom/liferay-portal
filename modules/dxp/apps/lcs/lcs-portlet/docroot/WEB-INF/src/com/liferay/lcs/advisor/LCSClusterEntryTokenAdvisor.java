@@ -17,8 +17,8 @@ package com.liferay.lcs.advisor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.lcs.InvalidLCSClusterEntryTokenException;
-import com.liferay.lcs.NoLCSClusterEntryTokenException;
 import com.liferay.lcs.activation.LCSClusterEntryTokenContentAdvisor;
+import com.liferay.lcs.exception.MissingLCSClusterEntryTokenException;
 import com.liferay.lcs.exception.MultipleLCSClusterEntryTokenException;
 import com.liferay.lcs.rest.LCSClusterEntryToken;
 import com.liferay.lcs.rest.LCSClusterEntryTokenImpl;
@@ -47,7 +47,6 @@ import com.liferay.util.EncryptorException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
-import java.io.IOException;
 
 import java.security.Key;
 import java.security.KeyStore;
@@ -184,7 +183,7 @@ public class LCSClusterEntryTokenAdvisor {
 		if (lcsClusterEntryToken == null) {
 			_lcsAlertAdvisor.add(LCSAlert.WARNING_MISSING_TOKEN);
 
-			throw new NoLCSClusterEntryTokenException(
+			throw new MissingLCSClusterEntryTokenException(
 				"Unable to find LCS activation token");
 		}
 
@@ -204,7 +203,7 @@ public class LCSClusterEntryTokenAdvisor {
 
 			_lcsAlertAdvisor.add(LCSAlert.ERROR_INVALID_TOKEN);
 
-			throw new NoLCSClusterEntryTokenException(
+			throw new MissingLCSClusterEntryTokenException(
 				"Unable to find LCS activation token");
 		}
 
@@ -237,11 +236,14 @@ public class LCSClusterEntryTokenAdvisor {
 				lcsClusterEntryTokenJSON, LCSClusterEntryTokenImpl.class);
 		}
 		catch (Exception e) {
-			if (e instanceof IOException) {
-				_log.error("Unable to find the LCS activation token file");
+			if ((e instanceof MissingLCSClusterEntryTokenException) ||
+				(e instanceof MultipleLCSClusterEntryTokenException)) {
+
+				_log.error(e.getMessage());
 			}
 			else {
-				_log.error("Unable to read the LCS activation token file", e);
+				_log.error(
+					"Unable to process the LCS activation token file", e);
 			}
 
 			return null;
@@ -345,7 +347,8 @@ public class LCSClusterEntryTokenAdvisor {
 	}
 
 	protected String getLCSClusterEntryTokenFileName()
-		throws FileNotFoundException, MultipleLCSClusterEntryTokenException {
+		throws MissingLCSClusterEntryTokenException,
+			MultipleLCSClusterEntryTokenException {
 
 		StringBundler sb = new StringBundler(4);
 
@@ -387,7 +390,11 @@ public class LCSClusterEntryTokenAdvisor {
 			});
 
 		if (lcsClusterEntryTokenFileNames.length == 0) {
-			throw new FileNotFoundException();
+			_lcsAlertAdvisor.add(LCSAlert.ERROR_TOKEN_FILE_IS_MISSING);
+
+			throw new MissingLCSClusterEntryTokenException(
+				"LCS activation token file misses at directory " +
+					sb.toString());
 		}
 		else if (lcsClusterEntryTokenFileNames.length > 1) {
 			_lcsAlertAdvisor.add(LCSAlert.WARNING_MULTIPLE_TOKENS);

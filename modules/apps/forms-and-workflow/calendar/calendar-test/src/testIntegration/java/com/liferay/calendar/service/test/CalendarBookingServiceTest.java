@@ -23,7 +23,16 @@ import com.liferay.calendar.test.util.CalendarBookingTestUtil;
 import com.liferay.calendar.test.util.CalendarStagingTestUtil;
 import com.liferay.calendar.test.util.CalendarTestUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -31,6 +40,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -69,11 +79,15 @@ public class CalendarBookingServiceTest {
 		_omnidminUser = UserTestUtil.addOmniAdminUser();
 		_user1 = UserTestUtil.addUser();
 		_user2 = UserTestUtil.addUser();
+
+		_permissionChecker = PermissionThreadLocal.getPermissionChecker();
 	}
 
 	@After
 	public void tearDown() {
 		CalendarStagingTestUtil.cleanUp();
+
+		PermissionThreadLocal.setPermissionChecker(_permissionChecker);
 	}
 
 	@Test
@@ -178,6 +192,28 @@ public class CalendarBookingServiceTest {
 			childCalendarBookings.toString(), 1, childCalendarBookings.size());
 	}
 
+	@Test(expected = PrincipalException.MustHavePermission.class)
+	public void testUserWithoutPermissionInCalendarShouldNotViewCalendarBooking()
+		throws Exception {
+
+		ServiceContext serviceContext = createServiceContext();
+
+		Calendar calendar = CalendarTestUtil.addCalendar(
+			_user1, serviceContext);
+
+		deleteGuestAndUserPermission(calendar);
+
+		CalendarBooking calendarBooking =
+			CalendarBookingTestUtil.addRegularCalendarBooking(
+				_user1, calendar, serviceContext);
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user2));
+
+		CalendarBookingServiceUtil.getCalendarBooking(
+			calendarBooking.getCalendarBookingId());
+	}
+
 	protected ServiceContext createServiceContext() {
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -187,11 +223,35 @@ public class CalendarBookingServiceTest {
 		return serviceContext;
 	}
 
+	protected void deleteGuestAndUserPermission(Calendar calendar)
+		throws Exception {
+
+		Role role = RoleLocalServiceUtil.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
+
+		ResourcePermissionLocalServiceUtil.setResourcePermissions(
+			TestPropsValues.getCompanyId(), Calendar.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(calendar.getPrimaryKey()), role.getRoleId(),
+			new String[0]);
+
+		role = RoleLocalServiceUtil.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.USER);
+
+		ResourcePermissionLocalServiceUtil.setResourcePermissions(
+			TestPropsValues.getCompanyId(), Calendar.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(calendar.getPrimaryKey()), role.getRoleId(),
+			new String[0]);
+	}
+
 	@DeleteAfterTestRun
 	private Group _liveGroup;
 
 	@DeleteAfterTestRun
 	private User _omnidminUser;
+
+	private PermissionChecker _permissionChecker;
 
 	@DeleteAfterTestRun
 	private User _user1;

@@ -31,9 +31,11 @@ import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portlet.messageboards.messaging.MailingListRequest;
 
 import java.util.Calendar;
@@ -57,7 +59,7 @@ public class MBMailingListLocalServiceImpl
 
 		// Mailing list
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = _userLocalService.getUser(userId);
 
 		validate(
 			emailAddress, inServerName, inUserName, outEmailAddress, outCustom,
@@ -276,5 +278,8 @@ public class MBMailingListLocalServiceImpl
 			}
 		}
 	}
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

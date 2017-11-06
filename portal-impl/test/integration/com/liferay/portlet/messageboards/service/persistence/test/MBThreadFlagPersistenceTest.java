@@ -57,8 +57,11 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.model.impl.MBThreadFlagImpl}
  * @generated
  */
+@Deprecated
 public class MBThreadFlagPersistenceTest {
 	@ClassRule
 	@Rule

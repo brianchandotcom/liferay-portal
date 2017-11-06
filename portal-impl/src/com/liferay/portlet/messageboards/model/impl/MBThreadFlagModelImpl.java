@@ -56,8 +56,11 @@ import java.util.Map;
  * @see MBThreadFlagImpl
  * @see MBThreadFlag
  * @see MBThreadFlagModel
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.model.impl.MBThreadFlagImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 	implements MBThreadFlagModel {

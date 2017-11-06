@@ -55,8 +55,11 @@ import java.util.List;
  * @see MBThreadFlagLocalServiceUtil
  * @see com.liferay.portlet.messageboards.service.base.MBThreadFlagLocalServiceBaseImpl
  * @see com.liferay.portlet.messageboards.service.impl.MBThreadFlagLocalServiceImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.service.impl.MBThreadFlagLocalServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})

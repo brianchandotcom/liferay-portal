@@ -33,24 +33,6 @@ import org.osgi.service.component.annotations.Reference;
 public class LCSProjectClientImpl implements LCSProjectClient {
 
 	@Override
-	public LCSProject addDefaultLCSProject()
-		throws JSONWebServiceInvocationException,
-			   JSONWebServiceSerializeException {
-
-		return _jsonWebServiceClient.doPostToObject(
-			LCSProject.class, _URL_LCS_PROJECT);
-	}
-
-	@Override
-	public LCSProject getLCSProject(String key)
-		throws JSONWebServiceInvocationException,
-			   JSONWebServiceSerializeException {
-
-		return _jsonWebServiceClient.doGetToObject(
-			LCSProject.class, _URL_LCS_PROJECT + "/find", "key", key);
-	}
-
-	@Override
 	public List<LCSProject> getUserManageableLCSProjects()
 		throws JSONWebServiceInvocationException,
 			   JSONWebServiceSerializeException {

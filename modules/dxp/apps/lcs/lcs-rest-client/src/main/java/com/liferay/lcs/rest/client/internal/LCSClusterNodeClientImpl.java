@@ -43,53 +43,6 @@ public class LCSClusterNodeClientImpl implements LCSClusterNodeClient {
 	@Override
 	public LCSClusterNode addLCSClusterNode(
 			long lcsClusterEntryId, String name, String description,
-			int buildNumber, long heartbeatInterval, long lastHeartbeat,
-			String key, String location, int patchingToolVersion,
-			String portalEdition, int processorCoresTotal,
-			String protocolVersion)
-		throws DuplicateLCSClusterNodeNameException,
-			   JSONWebServiceInvocationException,
-			   JSONWebServiceSerializeException,
-			   NoSuchLCSSubscriptionEntryException,
-			   RequiredLCSClusterNodeNameException {
-
-		validate(lcsClusterEntryId, name);
-
-		if ((description != null) && description.equals("")) {
-			description = null;
-		}
-
-		if ((location != null) && location.equals("")) {
-			location = null;
-		}
-
-		try {
-			return _jsonWebServiceClient.doPostToObject(
-				LCSClusterNode.class, _URL_LCS_CLUSTER_NODE, "buildNumber",
-				String.valueOf(buildNumber), "name", name, "description",
-				description, "heartbeatInterval",
-				String.valueOf(heartbeatInterval), "lastHeartbeat",
-				String.valueOf(lastHeartbeat), "lcsClusterEntryId",
-				String.valueOf(lcsClusterEntryId), "location", location, "key",
-				key, "patchingToolVersion", String.valueOf(patchingToolVersion),
-				"portalEdition", portalEdition, "processorCoresTotal",
-				String.valueOf(processorCoresTotal), "protocolVersion",
-				protocolVersion);
-		}
-		catch (JSONWebServiceInvocationException jsonwsie) {
-			if (LCSClientError.getRESTError(jsonwsie) ==
-					LCSClientError.NO_SUCH_LCS_SUBSCRIPTION_ENTRY) {
-
-				throw new NoSuchLCSSubscriptionEntryException(jsonwsie);
-			}
-
-			throw jsonwsie;
-		}
-	}
-
-	@Override
-	public LCSClusterNode addLCSClusterNode(
-			long lcsClusterEntryId, String name, String description,
 			int buildNumber, String key, String location,
 			int processorCoresTotal)
 		throws DuplicateLCSClusterNodeNameException,
@@ -176,84 +129,10 @@ public class LCSClusterNodeClientImpl implements LCSClusterNodeClient {
 		return lcsClusterNodes;
 	}
 
-	@Override
-	public List<LCSClusterNode> getLCSClusterNodes(
-			int status, int start, int end)
-		throws JSONWebServiceInvocationException,
-			   JSONWebServiceSerializeException {
-
-		List<LCSClusterNode> remoteLCSClusterNodes = null;
-
-		StringBuilder sb = new StringBuilder(5);
-
-		sb.append(_URL_LCS_CLUSTER_NODE);
-		sb.append("/find/");
-		sb.append(start);
-		sb.append("/");
-		sb.append(end);
-
-		remoteLCSClusterNodes = _jsonWebServiceClient.doGetToList(
-			LCSClusterNode.class, sb.toString(), "status",
-			String.valueOf(status));
-
-		List<LCSClusterNode> lcsClusterNodes = new ArrayList<LCSClusterNode>();
-
-		for (LCSClusterNode lcsClusterNode : remoteLCSClusterNodes) {
-			lcsClusterNodes.add(lcsClusterNode);
-		}
-
-		return lcsClusterNodes;
-	}
-
-	@Override
-	public void mergeStatus(String key, int status)
-		throws JSONWebServiceInvocationException {
-
-		_jsonWebServiceClient.doPut(
-			_URL_LCS_CLUSTER_NODE + "/updateStatus", "key", key, "status",
-			String.valueOf(status), "merge", String.valueOf(true));
-	}
-
 	public void setJSONWebServiceClient(
 		JSONWebServiceClient jsonWebServiceClient) {
 
 		_jsonWebServiceClient = jsonWebServiceClient;
-	}
-
-	@Override
-	public void updateBuildNumber(String key, int buildNumber)
-		throws JSONWebServiceInvocationException {
-
-		_jsonWebServiceClient.doPut(
-			_URL_LCS_CLUSTER_NODE + "/updateBuildNumber", "key", key,
-			"buildNumber", String.valueOf(buildNumber));
-	}
-
-	@Override
-	public void updateStatus(String key, int status)
-		throws JSONWebServiceInvocationException {
-
-		_jsonWebServiceClient.doPut(
-			_URL_LCS_CLUSTER_NODE, "key", key, "status", String.valueOf(status),
-			"merge", String.valueOf(true));
-	}
-
-	@Override
-	public void verifyLCSClusterEntryLCSClusterNodesPropertiesDifferences(
-			String key)
-		throws JSONWebServiceInvocationException {
-
-		_jsonWebServiceClient.doPut(
-			_URL_LCS_CLUSTER_NODE + "/verifyProperties", "key", key);
-	}
-
-	@Override
-	public void verifyLCSClusterNodeClusterLink(String key, String siblingKeys)
-		throws JSONWebServiceInvocationException {
-
-		_jsonWebServiceClient.doPut(
-			_URL_LCS_CLUSTER_NODE + "/verifyClusterLink", "key", key,
-			"siblingKeys", siblingKeys);
 	}
 
 	protected void validate(long lcsClusterEntryId, String lcsClusterNodeName)

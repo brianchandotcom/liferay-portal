@@ -24,14 +24,6 @@ import java.util.List;
  */
 public interface LCSProjectClient {
 
-	public LCSProject addDefaultLCSProject()
-		throws JSONWebServiceInvocationException,
-			   JSONWebServiceSerializeException;
-
-	public LCSProject getLCSProject(String key)
-		throws JSONWebServiceInvocationException,
-			   JSONWebServiceSerializeException;
-
 	public List<LCSProject> getUserManageableLCSProjects()
 		throws JSONWebServiceInvocationException,
 			   JSONWebServiceSerializeException;

@@ -36,28 +36,6 @@ public class LCSSubscriptionEntryClientImpl
 	implements LCSSubscriptionEntryClient {
 
 	@Override
-	public void addCorpProjectLCSSubscriptionEntries(
-			long corpProjectId, String lcsSubscriptionEntriesJSON)
-		throws JSONWebServiceInvocationException {
-
-		_jsonWebServiceClient.doPost(
-			_URL_LCS_SUBSCRIPTION_ENTRY, "corpProjectId",
-			String.valueOf(corpProjectId), "lcsSubscriptionEntriesJSON",
-			lcsSubscriptionEntriesJSON);
-
-		if (_logger.isInfoEnabled()) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("Sent LCS subscription message with corp project ID ");
-			sb.append(corpProjectId);
-			sb.append(" and LCS subscription entries ");
-			sb.append(lcsSubscriptionEntriesJSON);
-
-			_logger.info(sb.toString());
-		}
-	}
-
-	@Override
 	public LCSSubscriptionEntry fetchLCSSubscriptionEntry(String key)
 		throws JSONWebServiceInvocationException,
 			   JSONWebServiceSerializeException {
@@ -74,14 +52,6 @@ public class LCSSubscriptionEntryClientImpl
 
 			throw jsonwsie;
 		}
-	}
-
-	@Override
-	public void incrementServerUsed(String key)
-		throws JSONWebServiceInvocationException {
-
-		_jsonWebServiceClient.doPut(
-			_URL_LCS_SUBSCRIPTION_ENTRY + "/" + key + "/incrementServerUsed");
 	}
 
 	public void setJSONWebServiceClient(

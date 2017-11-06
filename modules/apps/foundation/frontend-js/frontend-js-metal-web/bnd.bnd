@@ -1,7 +1,7 @@
 Bundle-Name: Liferay Frontend JS Metal Web
 Bundle-SymbolicName: com.liferay.frontend.js.metal.web
 Bundle-Version: 1.0.20
-Liferay-Export-JS-Submodules: *
+Liferay-Export-JS-Submodules: metal*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Frontend Infrastructure
 Provide-Capability:\

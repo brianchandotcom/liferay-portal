@@ -410,6 +410,8 @@
 			<var name="portletOption" value="Look and Feel Configuration" />
 		</execute>
 
+		<execute function="Pause" locator1="5000" />
+
 		<execute macro="Portlet#selectApplicationDecorator">
 			<var name="decorator" value="Barebone" />
 		</execute>

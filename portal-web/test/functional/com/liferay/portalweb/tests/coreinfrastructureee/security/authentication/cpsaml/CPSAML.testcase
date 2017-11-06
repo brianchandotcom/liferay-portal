@@ -143,6 +143,63 @@
 		</execute>
 	</command>
 
+	<command name="AssertSSOSessionExpiresAfterMaximumSessionAge" priority="4">
+		<property name="test.name.skip.portal.instance" value="CPSAML#AssertSSOSessionExpiresAfterMaximumSessionAge" />
+		<property name="web.xml.timeout" value="2" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="SAML Admin" />
+		</execute>
+
+		<execute macro="SAMLNavigation#gotoIdentityProvider" />
+
+		<execute macro="SAMLRole#configureIdentityProvider">
+			<var name="idpSessionIdleTimeout" value="0" />
+			<var name="idpSessionMaximumAge" value="180" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute macro="SAML#executeIdPInitiatedSSO">
+			<var name="idpInitiatedSSOURL" value="${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080" />
+			<var name="password" value="test" />
+			<var name="rememberMeChecked" value="false" />
+			<var name="samlEnabled" value="true" />
+			<var name="spURL" value="http://www.able.com:9080/" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute function="Pause" locator1="120000" />
+
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
+
+		<execute function="Refresh" />
+
+		<execute macro="User#viewLoggedInPG">
+			<var name="userFirstName" value="Test" />
+			<var name="userLastName" value="Test" />
+		</execute>
+
+		<execute function="Pause" locator1="120000" />
+
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
+
+		<execute function="Refresh" />
+
+		<execute macro="User#viewLoggedOutPG" />
+	</command>
+
 	<command name="ViewIdPInitiatedSSO" priority="4">
 		<description message="Sign into portal by executing a IdP initiated SSO login. After a successful login, the IdP will redirect to the SP. If the same users with the same email address are present on both instances, it will authenticate and show the SP. SAML can authenticate across major portal versions, that is, the IdP can be Portal 6.1 EE GA3 and the SP can be Portal 6.2. EE GA1. For testing purposes, it is obvious if the authentication succeeds or fails if the IdP and SP are different portal versions." />
 

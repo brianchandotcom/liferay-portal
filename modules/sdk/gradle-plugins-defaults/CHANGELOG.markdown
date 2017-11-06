@@ -2344,8 +2344,14 @@ check.
 ## 5.1.33 - 2017-11-03
 
 ### Changed
+- [LPS-75247]: Update the [Liferay Gradle Plugins] dependency to version 3.5.28.
 - [LPS-75705]: Always exclude `build` and `node_modules` directories from the
 multi-project build.
+
+## 5.1.34 - 2017-11-06
+
+### Changed
+- [LPS-75633]: Update the [Liferay Gradle Plugins] dependency to version 3.5.29.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -2604,6 +2610,7 @@ multi-project build.
 [LPS-75100]: https://issues.liferay.com/browse/LPS-75100
 [LPS-75175]: https://issues.liferay.com/browse/LPS-75175
 [LPS-75239]: https://issues.liferay.com/browse/LPS-75239
+[LPS-75247]: https://issues.liferay.com/browse/LPS-75247
 [LPS-75254]: https://issues.liferay.com/browse/LPS-75254
 [LPS-75273]: https://issues.liferay.com/browse/LPS-75273
 [LPS-75323]: https://issues.liferay.com/browse/LPS-75323
@@ -2611,6 +2618,7 @@ multi-project build.
 [LPS-75430]: https://issues.liferay.com/browse/LPS-75430
 [LPS-75488]: https://issues.liferay.com/browse/LPS-75488
 [LPS-75624]: https://issues.liferay.com/browse/LPS-75624
+[LPS-75633]: https://issues.liferay.com/browse/LPS-75633
 [LPS-75705]: https://issues.liferay.com/browse/LPS-75705
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841

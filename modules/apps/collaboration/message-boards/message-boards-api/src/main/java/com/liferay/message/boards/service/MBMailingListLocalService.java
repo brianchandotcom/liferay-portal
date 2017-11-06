@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -63,6 +64,16 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MBMailingListLocalServiceUtil} to access the message boards mailing list local service. Add custom service methods to {@link com.liferay.message.boards.service.impl.MBMailingListLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public MBMailingList addMailingList(long userId, long groupId,
+		long categoryId, java.lang.String emailAddress,
+		java.lang.String inProtocol, java.lang.String inServerName,
+		int inServerPort, boolean inUseSSL, java.lang.String inUserName,
+		java.lang.String inPassword, int inReadInterval,
+		java.lang.String outEmailAddress, boolean outCustom,
+		java.lang.String outServerName, int outServerPort, boolean outUseSSL,
+		java.lang.String outUserName, java.lang.String outPassword,
+		boolean allowAnonymous, boolean active, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Adds the message boards mailing list to the database. Also notifies the appropriate model listeners.
@@ -80,6 +91,14 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	* @return the new message boards mailing list
 	*/
 	public MBMailingList createMBMailingList(long mailingListId);
+
+	public void deleteCategoryMailingList(long groupId, long categoryId)
+		throws PortalException;
+
+	public void deleteMailingList(long mailingListId) throws PortalException;
+
+	public void deleteMailingList(MBMailingList mailingList)
+		throws PortalException;
 
 	/**
 	* Deletes the message boards mailing list with the primary key from the database. Also notifies the appropriate model listeners.
@@ -168,6 +187,9 @@ public interface MBMailingListLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMailingList fetchCategoryMailingList(long groupId, long categoryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBMailingList fetchMBMailingList(long mailingListId);
 
 	/**
@@ -183,6 +205,10 @@ public interface MBMailingListLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMailingList getCategoryMailingList(long groupId, long categoryId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -273,6 +299,16 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	public MBMailingList updateMailingList(long mailingListId,
+		java.lang.String emailAddress, java.lang.String inProtocol,
+		java.lang.String inServerName, int inServerPort, boolean inUseSSL,
+		java.lang.String inUserName, java.lang.String inPassword,
+		int inReadInterval, java.lang.String outEmailAddress,
+		boolean outCustom, java.lang.String outServerName, int outServerPort,
+		boolean outUseSSL, java.lang.String outUserName,
+		java.lang.String outPassword, boolean allowAnonymous, boolean active,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Updates the message boards mailing list in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

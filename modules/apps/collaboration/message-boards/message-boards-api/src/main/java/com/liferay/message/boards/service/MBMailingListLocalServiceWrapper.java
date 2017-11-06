@@ -34,6 +34,25 @@ public class MBMailingListLocalServiceWrapper
 		_mbMailingListLocalService = mbMailingListLocalService;
 	}
 
+	@Override
+	public com.liferay.message.boards.model.MBMailingList addMailingList(
+		long userId, long groupId, long categoryId,
+		java.lang.String emailAddress, java.lang.String inProtocol,
+		java.lang.String inServerName, int inServerPort, boolean inUseSSL,
+		java.lang.String inUserName, java.lang.String inPassword,
+		int inReadInterval, java.lang.String outEmailAddress,
+		boolean outCustom, java.lang.String outServerName, int outServerPort,
+		boolean outUseSSL, java.lang.String outUserName,
+		java.lang.String outPassword, boolean allowAnonymous, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMailingListLocalService.addMailingList(userId, groupId,
+			categoryId, emailAddress, inProtocol, inServerName, inServerPort,
+			inUseSSL, inUserName, inPassword, inReadInterval, outEmailAddress,
+			outCustom, outServerName, outServerPort, outUseSSL, outUserName,
+			outPassword, allowAnonymous, active, serviceContext);
+	}
+
 	/**
 	* Adds the message boards mailing list to the database. Also notifies the appropriate model listeners.
 	*
@@ -56,6 +75,25 @@ public class MBMailingListLocalServiceWrapper
 	public com.liferay.message.boards.model.MBMailingList createMBMailingList(
 		long mailingListId) {
 		return _mbMailingListLocalService.createMBMailingList(mailingListId);
+	}
+
+	@Override
+	public void deleteCategoryMailingList(long groupId, long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_mbMailingListLocalService.deleteCategoryMailingList(groupId, categoryId);
+	}
+
+	@Override
+	public void deleteMailingList(long mailingListId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_mbMailingListLocalService.deleteMailingList(mailingListId);
+	}
+
+	@Override
+	public void deleteMailingList(
+		com.liferay.message.boards.model.MBMailingList mailingList)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_mbMailingListLocalService.deleteMailingList(mailingList);
 	}
 
 	/**
@@ -180,6 +218,13 @@ public class MBMailingListLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.message.boards.model.MBMailingList fetchCategoryMailingList(
+		long groupId, long categoryId) {
+		return _mbMailingListLocalService.fetchCategoryMailingList(groupId,
+			categoryId);
+	}
+
+	@Override
 	public com.liferay.message.boards.model.MBMailingList fetchMBMailingList(
 		long mailingListId) {
 		return _mbMailingListLocalService.fetchMBMailingList(mailingListId);
@@ -202,6 +247,14 @@ public class MBMailingListLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _mbMailingListLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.message.boards.model.MBMailingList getCategoryMailingList(
+		long groupId, long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMailingListLocalService.getCategoryMailingList(groupId,
+			categoryId);
 	}
 
 	@Override
@@ -319,6 +372,25 @@ public class MBMailingListLocalServiceWrapper
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMailingListLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.message.boards.model.MBMailingList updateMailingList(
+		long mailingListId, java.lang.String emailAddress,
+		java.lang.String inProtocol, java.lang.String inServerName,
+		int inServerPort, boolean inUseSSL, java.lang.String inUserName,
+		java.lang.String inPassword, int inReadInterval,
+		java.lang.String outEmailAddress, boolean outCustom,
+		java.lang.String outServerName, int outServerPort, boolean outUseSSL,
+		java.lang.String outUserName, java.lang.String outPassword,
+		boolean allowAnonymous, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMailingListLocalService.updateMailingList(mailingListId,
+			emailAddress, inProtocol, inServerName, inServerPort, inUseSSL,
+			inUserName, inPassword, inReadInterval, outEmailAddress, outCustom,
+			outServerName, outServerPort, outUseSSL, outUserName, outPassword,
+			allowAnonymous, active, serviceContext);
 	}
 
 	/**

@@ -2157,6 +2157,56 @@
 		</if>
 	</command>
 
+	<command name="tearDownSpecificUser">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute function="Click" locator1="Dropdown#FILTER" />
+
+		<var name="key_filterValue" value="Active" />
+
+		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Active" />
+
+		<execute macro="User#searchCP">
+			<var name="searchTerm" value="${userScreenName}" />
+		</execute>
+
+		<if>
+			<condition function="IsElementPresent" locator1="ContentRow#ENTRY_CONTENT_ROW_1" />
+			<then>
+				<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
+
+				<execute function="AssertClickNoError" locator1="Button#DEACTIVATE" value1="Deactivate" />
+
+				<execute function="Confirm" value1="Are you sure you want to deactivate the selected users?" />
+
+				<execute macro="Alert#viewSuccessMessage" />
+			</then>
+		</if>
+
+		<execute function="Click" locator1="Dropdown#FILTER" />
+
+		<var name="key_filterValue" value="Inactive" />
+
+		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Inactive" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="ContentRow#ENTRY_CONTENT_ROW_1" />
+			<then>
+				<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
+
+				<execute function="AssertClickNoError" locator1="Button#DELETE" value1="Delete" />
+
+				<execute function="Confirm#waitForConfirmation" />
+
+				<execute macro="Alert#viewSuccessMessage" />
+			</then>
+		</if>
+	</command>
+
 	<command name="unassignRegularRoleCP">
 		<execute function="Pause" locator1="1000" />
 

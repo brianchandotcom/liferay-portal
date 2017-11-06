@@ -1017,6 +1017,39 @@
 		</execute>
 	</command>
 
+	<command name="removeStagingAdminRole">
+		<var name="roleTitle" value="Staging Admin" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Roles" />
+		</execute>
+
+		<execute macro="RoleNavigator#gotoRoleType">
+			<var name="roleType" value="Site" />
+		</execute>
+
+		<execute function="Type#sendKeys" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${roleTitle}" />
+
+		<execute function="Click" locator1="Button#SUBMIT" />
+
+		<var name="key_itemName" value="${roleTitle}" />
+
+		<if>
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="ListGroupItem#ITEM_NAME" />
+			<then>
+				<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS" />
+
+				<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
+					<var name="key_menuItem" value="Delete" />
+				</execute>
+
+				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+			</then>
+		</if>
+	</command>
+
 	<command name="tearDownCP">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />

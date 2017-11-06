@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.checkout.web.internal.util;
 
+import com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.checkout.web.internal.display.context.OrderSummaryCheckoutStepDisplayContext;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.constants.CommercePortletKeys;
@@ -140,7 +141,7 @@ public class OrderSummaryCommerceCheckoutStep implements CommerceCheckoutStep {
 					_cpInstanceHelper, httpServletRequest);
 
 		httpServletRequest.setAttribute(
-			"CommerceCheckoutStepDisplayContext",
+			CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT,
 			orderSummaryCheckoutStepDisplayContext);
 
 		_jspRenderer.renderJSP(

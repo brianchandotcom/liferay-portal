@@ -23,6 +23,9 @@ public class CommerceCheckoutWebKeys {
 
 	public static final String COMMERCE_CART = "COMMERCE_CART";
 
+	public static final String COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT =
+		"COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT";
+
 	public static final String COMMERCE_ORDER = "COMMERCE_ORDER";
 
 }

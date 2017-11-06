@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.checkout.web.internal.util;
 
+import com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.checkout.web.internal.display.context.BillingAddressCheckoutStepDisplayContext;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.exception.CommerceAddressCityException;
@@ -134,7 +135,7 @@ public class BillingAddressCommerceCheckoutStep
 					httpServletRequest, httpServletResponse);
 
 		httpServletRequest.setAttribute(
-			"CommerceCheckoutStepDisplayContext",
+			CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT,
 			billingAddressCheckoutStepDisplayContext);
 
 		_jspRenderer.renderJSP(

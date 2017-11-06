@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-OrderSummaryCheckoutStepDisplayContext orderSummaryCheckoutStepDisplayContext = (OrderSummaryCheckoutStepDisplayContext)request.getAttribute("CommerceCheckoutStepDisplayContext");
+OrderSummaryCheckoutStepDisplayContext orderSummaryCheckoutStepDisplayContext = (OrderSummaryCheckoutStepDisplayContext)request.getAttribute(CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT);
 
 CommerceCart commerceCart = orderSummaryCheckoutStepDisplayContext.getCommerceCart();
 

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-BillingAddressCheckoutStepDisplayContext billingAddressCheckoutStepDisplayContext = (BillingAddressCheckoutStepDisplayContext)request.getAttribute("CommerceCheckoutStepDisplayContext");
+BillingAddressCheckoutStepDisplayContext billingAddressCheckoutStepDisplayContext = (BillingAddressCheckoutStepDisplayContext)request.getAttribute(CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT);
 
 List<CommerceAddress> commerceAddresses = billingAddressCheckoutStepDisplayContext.getCommerceAddresses();
 long defaultBillingAddressId = billingAddressCheckoutStepDisplayContext.getDefaultBillingAddressId();

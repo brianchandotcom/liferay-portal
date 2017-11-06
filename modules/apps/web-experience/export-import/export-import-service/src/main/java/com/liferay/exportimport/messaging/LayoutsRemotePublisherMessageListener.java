@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageStatus;
-import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactory;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -62,7 +61,7 @@ public class LayoutsRemotePublisherMessageListener
 
 	@Activate
 	protected void activate(ComponentContext componentContext) {
-		initialize(componentContext, _singleDestinationMessageSenderFactory);
+		initialize(componentContext);
 	}
 
 	@Deactivate
@@ -134,6 +133,11 @@ public class LayoutsRemotePublisherMessageListener
 		}
 	}
 
+	@Override
+	protected Destination getDestination() {
+		return _destination;
+	}
+
 	@Reference(
 		target = "(destination.name=" + DestinationNames.LAYOUTS_REMOTE_PUBLISHER + ")",
 		unbind = "-"
@@ -151,13 +155,14 @@ public class LayoutsRemotePublisherMessageListener
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutsRemotePublisherMessageListener.class);
 
+	@Reference(
+		target = "(destination.name=" + DestinationNames.MESSAGE_BUS_MESSAGE_STATUS + ")"
+	)
+	private Destination _destination;
+
 	@Reference
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
-
-	@Reference
-	private SingleDestinationMessageSenderFactory
-		_singleDestinationMessageSenderFactory;
 
 	@Reference
 	private Staging _staging;

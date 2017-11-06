@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.kernel.model;
+package com.liferay.message.boards.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -25,20 +25,17 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Brian Wing Shun Chan
  * @see MBThreadFlagModel
- * @see com.liferay.portlet.messageboards.model.impl.MBThreadFlagImpl
- * @see com.liferay.portlet.messageboards.model.impl.MBThreadFlagModelImpl
- * @deprecated As of 7.0.0, replaced by {@link
-com.liferay.message.boards.model.impl.MBThreadFlagImpl}
+ * @see com.liferay.message.boards.model.impl.MBThreadFlagImpl
+ * @see com.liferay.message.boards.model.impl.MBThreadFlagModelImpl
  * @generated
  */
-@Deprecated
-@ImplementationClassName("com.liferay.portlet.messageboards.model.impl.MBThreadFlagImpl")
+@ImplementationClassName("com.liferay.message.boards.model.impl.MBThreadFlagImpl")
 @ProviderType
 public interface MBThreadFlag extends MBThreadFlagModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.messageboards.model.impl.MBThreadFlagImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to {@link com.liferay.message.boards.model.impl.MBThreadFlagImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static final Accessor<MBThreadFlag, Long> THREAD_FLAG_ID_ACCESSOR = new Accessor<MBThreadFlag, Long>() {
 			@Override

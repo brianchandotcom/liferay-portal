@@ -3,4 +3,6 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	<bean class="com.liferay.message.boards.service.impl.MBStatsUserLocalServiceImpl" id="com.liferay.message.boards.service.MBStatsUserLocalService" />
 	<bean class="com.liferay.message.boards.service.persistence.impl.MBStatsUserPersistenceImpl" id="com.liferay.message.boards.service.persistence.MBStatsUserPersistence" parent="basePersistence" />
+	<bean class="com.liferay.message.boards.service.impl.MBThreadFlagLocalServiceImpl" id="com.liferay.message.boards.service.MBThreadFlagLocalService" />
+	<bean class="com.liferay.message.boards.service.persistence.impl.MBThreadFlagPersistenceImpl" id="com.liferay.message.boards.service.persistence.MBThreadFlagPersistence" parent="basePersistence" />
 </beans>

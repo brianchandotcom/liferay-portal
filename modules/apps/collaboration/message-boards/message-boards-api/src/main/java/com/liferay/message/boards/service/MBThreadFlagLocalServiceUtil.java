@@ -12,16 +12,17 @@
  * details.
  */
 
-package com.liferay.message.boards.kernel.service;
+package com.liferay.message.boards.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for MBThreadFlag. This utility wraps
- * {@link com.liferay.portlet.messageboards.service.impl.MBThreadFlagLocalServiceImpl} and is the
+ * {@link com.liferay.message.boards.service.impl.MBThreadFlagLocalServiceImpl} and is the
  * primary access point for service operations in application layer code running
  * on the local server. Methods of this service will not have security checks
  * based on the propagated JAAS credentials because this service can only be
@@ -29,19 +30,16 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  *
  * @author Brian Wing Shun Chan
  * @see MBThreadFlagLocalService
- * @see com.liferay.portlet.messageboards.service.base.MBThreadFlagLocalServiceBaseImpl
- * @see com.liferay.portlet.messageboards.service.impl.MBThreadFlagLocalServiceImpl
- * @deprecated As of 7.0.0, replaced by {@link
-com.liferay.message.boards.service.impl.MBThreadFlagLocalServiceImpl}
+ * @see com.liferay.message.boards.service.base.MBThreadFlagLocalServiceBaseImpl
+ * @see com.liferay.message.boards.service.impl.MBThreadFlagLocalServiceImpl
  * @generated
  */
-@Deprecated
 @ProviderType
 public class MBThreadFlagLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.messageboards.service.impl.MBThreadFlagLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.message.boards.service.impl.MBThreadFlagLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 
 	/**
@@ -50,12 +48,12 @@ public class MBThreadFlagLocalServiceUtil {
 	* @param mbThreadFlag the message boards thread flag
 	* @return the message boards thread flag that was added
 	*/
-	public static com.liferay.message.boards.kernel.model.MBThreadFlag addMBThreadFlag(
-		com.liferay.message.boards.kernel.model.MBThreadFlag mbThreadFlag) {
+	public static com.liferay.message.boards.model.MBThreadFlag addMBThreadFlag(
+		com.liferay.message.boards.model.MBThreadFlag mbThreadFlag) {
 		return getService().addMBThreadFlag(mbThreadFlag);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBThreadFlag addThreadFlag(
+	public static com.liferay.message.boards.model.MBThreadFlag addThreadFlag(
 		long userId, com.liferay.message.boards.kernel.model.MBThread thread,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -68,7 +66,7 @@ public class MBThreadFlagLocalServiceUtil {
 	* @param threadFlagId the primary key for the new message boards thread flag
 	* @return the new message boards thread flag
 	*/
-	public static com.liferay.message.boards.kernel.model.MBThreadFlag createMBThreadFlag(
+	public static com.liferay.message.boards.model.MBThreadFlag createMBThreadFlag(
 		long threadFlagId) {
 		return getService().createMBThreadFlag(threadFlagId);
 	}
@@ -80,7 +78,7 @@ public class MBThreadFlagLocalServiceUtil {
 	* @return the message boards thread flag that was removed
 	* @throws PortalException if a message boards thread flag with the primary key could not be found
 	*/
-	public static com.liferay.message.boards.kernel.model.MBThreadFlag deleteMBThreadFlag(
+	public static com.liferay.message.boards.model.MBThreadFlag deleteMBThreadFlag(
 		long threadFlagId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteMBThreadFlag(threadFlagId);
@@ -92,8 +90,8 @@ public class MBThreadFlagLocalServiceUtil {
 	* @param mbThreadFlag the message boards thread flag
 	* @return the message boards thread flag that was removed
 	*/
-	public static com.liferay.message.boards.kernel.model.MBThreadFlag deleteMBThreadFlag(
-		com.liferay.message.boards.kernel.model.MBThreadFlag mbThreadFlag) {
+	public static com.liferay.message.boards.model.MBThreadFlag deleteMBThreadFlag(
+		com.liferay.message.boards.model.MBThreadFlag mbThreadFlag) {
 		return getService().deleteMBThreadFlag(mbThreadFlag);
 	}
 
@@ -112,7 +110,7 @@ public class MBThreadFlagLocalServiceUtil {
 	}
 
 	public static void deleteThreadFlag(
-		com.liferay.message.boards.kernel.model.MBThreadFlag threadFlag) {
+		com.liferay.message.boards.model.MBThreadFlag threadFlag) {
 		getService().deleteThreadFlag(threadFlag);
 	}
 
@@ -143,7 +141,7 @@ public class MBThreadFlagLocalServiceUtil {
 	* Performs a dynamic query on the database and returns a range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBThreadFlagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.message.boards.model.impl.MBThreadFlagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -161,7 +159,7 @@ public class MBThreadFlagLocalServiceUtil {
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBThreadFlagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.message.boards.model.impl.MBThreadFlagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -202,7 +200,7 @@ public class MBThreadFlagLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBThreadFlag fetchMBThreadFlag(
+	public static com.liferay.message.boards.model.MBThreadFlag fetchMBThreadFlag(
 		long threadFlagId) {
 		return getService().fetchMBThreadFlag(threadFlagId);
 	}
@@ -214,7 +212,7 @@ public class MBThreadFlagLocalServiceUtil {
 	* @param groupId the primary key of the group
 	* @return the matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	*/
-	public static com.liferay.message.boards.kernel.model.MBThreadFlag fetchMBThreadFlagByUuidAndGroupId(
+	public static com.liferay.message.boards.model.MBThreadFlag fetchMBThreadFlagByUuidAndGroupId(
 		java.lang.String uuid, long groupId) {
 		return getService().fetchMBThreadFlagByUuidAndGroupId(uuid, groupId);
 	}
@@ -239,7 +237,7 @@ public class MBThreadFlagLocalServiceUtil {
 	* @return the message boards thread flag
 	* @throws PortalException if a message boards thread flag with the primary key could not be found
 	*/
-	public static com.liferay.message.boards.kernel.model.MBThreadFlag getMBThreadFlag(
+	public static com.liferay.message.boards.model.MBThreadFlag getMBThreadFlag(
 		long threadFlagId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMBThreadFlag(threadFlagId);
@@ -253,7 +251,7 @@ public class MBThreadFlagLocalServiceUtil {
 	* @return the matching message boards thread flag
 	* @throws PortalException if a matching message boards thread flag could not be found
 	*/
-	public static com.liferay.message.boards.kernel.model.MBThreadFlag getMBThreadFlagByUuidAndGroupId(
+	public static com.liferay.message.boards.model.MBThreadFlag getMBThreadFlagByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMBThreadFlagByUuidAndGroupId(uuid, groupId);
@@ -263,14 +261,14 @@ public class MBThreadFlagLocalServiceUtil {
 	* Returns a range of all the message boards thread flags.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBThreadFlagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.message.boards.model.impl.MBThreadFlagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of message boards thread flags
 	* @param end the upper bound of the range of message boards thread flags (not inclusive)
 	* @return the range of message boards thread flags
 	*/
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBThreadFlag> getMBThreadFlags(
+	public static java.util.List<com.liferay.message.boards.model.MBThreadFlag> getMBThreadFlags(
 		int start, int end) {
 		return getService().getMBThreadFlags(start, end);
 	}
@@ -282,7 +280,7 @@ public class MBThreadFlagLocalServiceUtil {
 	* @param companyId the primary key of the company
 	* @return the matching message boards thread flags, or an empty list if no matches were found
 	*/
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBThreadFlag> getMBThreadFlagsByUuidAndCompanyId(
+	public static java.util.List<com.liferay.message.boards.model.MBThreadFlag> getMBThreadFlagsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId) {
 		return getService().getMBThreadFlagsByUuidAndCompanyId(uuid, companyId);
 	}
@@ -297,9 +295,9 @@ public class MBThreadFlagLocalServiceUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the range of matching message boards thread flags, or an empty list if no matches were found
 	*/
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBThreadFlag> getMBThreadFlagsByUuidAndCompanyId(
+	public static java.util.List<com.liferay.message.boards.model.MBThreadFlag> getMBThreadFlagsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.message.boards.kernel.model.MBThreadFlag> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.message.boards.model.MBThreadFlag> orderByComparator) {
 		return getService()
 				   .getMBThreadFlagsByUuidAndCompanyId(uuid, companyId, start,
 			end, orderByComparator);
@@ -329,7 +327,7 @@ public class MBThreadFlagLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBThreadFlag getThreadFlag(
+	public static com.liferay.message.boards.model.MBThreadFlag getThreadFlag(
 		long userId, com.liferay.message.boards.kernel.model.MBThread thread)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getThreadFlag(userId, thread);
@@ -347,21 +345,15 @@ public class MBThreadFlagLocalServiceUtil {
 	* @param mbThreadFlag the message boards thread flag
 	* @return the message boards thread flag that was updated
 	*/
-	public static com.liferay.message.boards.kernel.model.MBThreadFlag updateMBThreadFlag(
-		com.liferay.message.boards.kernel.model.MBThreadFlag mbThreadFlag) {
+	public static com.liferay.message.boards.model.MBThreadFlag updateMBThreadFlag(
+		com.liferay.message.boards.model.MBThreadFlag mbThreadFlag) {
 		return getService().updateMBThreadFlag(mbThreadFlag);
 	}
 
 	public static MBThreadFlagLocalService getService() {
-		if (_service == null) {
-			_service = (MBThreadFlagLocalService)PortalBeanLocatorUtil.locate(MBThreadFlagLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(MBThreadFlagLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
-	private static MBThreadFlagLocalService _service;
+	private static ServiceTracker<MBThreadFlagLocalService, MBThreadFlagLocalService> _serviceTracker =
+		ServiceTrackerFactory.open(MBThreadFlagLocalService.class);
 }

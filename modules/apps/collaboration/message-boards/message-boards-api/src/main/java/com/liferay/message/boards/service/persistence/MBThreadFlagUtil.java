@@ -12,37 +12,104 @@
  * details.
  */
 
-package com.liferay.message.boards.kernel.service.persistence;
+package com.liferay.message.boards.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.message.boards.kernel.exception.NoSuchThreadFlagException;
-import com.liferay.message.boards.kernel.model.MBThreadFlag;
+import com.liferay.message.boards.model.MBThreadFlag;
 
-import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.util.tracker.ServiceTracker;
+
+import java.util.List;
 
 /**
- * The persistence interface for the message boards thread flag service.
+ * The persistence utility for the message boards thread flag service. This utility wraps {@link com.liferay.message.boards.service.persistence.impl.MBThreadFlagPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see com.liferay.portlet.messageboards.service.persistence.impl.MBThreadFlagPersistenceImpl
- * @see MBThreadFlagUtil
- * @deprecated As of 7.0.0, replaced by {@link
-com.liferay.message.boards.model.impl.MBThreadFlagImpl}
+ * @see MBThreadFlagPersistence
+ * @see com.liferay.message.boards.service.persistence.impl.MBThreadFlagPersistenceImpl
  * @generated
  */
-@Deprecated
 @ProviderType
-public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
+public class MBThreadFlagUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link MBThreadFlagUtil} to access the message boards thread flag persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
+	 * Never modify this class directly. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
+	 */
+	public static void clearCache() {
+		getPersistence().clearCache();
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void clearCache(MBThreadFlag mbThreadFlag) {
+		getPersistence().clearCache(mbThreadFlag);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
+	 */
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
+		return getPersistence().countWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
+	 */
+	public static List<MBThreadFlag> findWithDynamicQuery(
+		DynamicQuery dynamicQuery) {
+		return getPersistence().findWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
+	 */
+	public static List<MBThreadFlag> findWithDynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
+		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
+	 */
+	public static List<MBThreadFlag> findWithDynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<MBThreadFlag> orderByComparator) {
+		return getPersistence()
+				   .findWithDynamicQuery(dynamicQuery, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static MBThreadFlag update(MBThreadFlag mbThreadFlag) {
+		return getPersistence().update(mbThreadFlag);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
+	 */
+	public static MBThreadFlag update(MBThreadFlag mbThreadFlag,
+		ServiceContext serviceContext) {
+		return getPersistence().update(mbThreadFlag, serviceContext);
+	}
 
 	/**
 	* Returns all the message boards thread flags where uuid = &#63;.
@@ -50,7 +117,9 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param uuid the uuid
 	* @return the matching message boards thread flags
 	*/
-	public java.util.List<MBThreadFlag> findByUuid(java.lang.String uuid);
+	public static List<MBThreadFlag> findByUuid(java.lang.String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
 
 	/**
 	* Returns a range of all the message boards thread flags where uuid = &#63;.
@@ -64,8 +133,10 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param end the upper bound of the range of message boards thread flags (not inclusive)
 	* @return the range of matching message boards thread flags
 	*/
-	public java.util.List<MBThreadFlag> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public static List<MBThreadFlag> findByUuid(java.lang.String uuid,
+		int start, int end) {
+		return getPersistence().findByUuid(uuid, start, end);
+	}
 
 	/**
 	* Returns an ordered range of all the message boards thread flags where uuid = &#63;.
@@ -80,9 +151,10 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message boards thread flags
 	*/
-	public java.util.List<MBThreadFlag> findByUuid(java.lang.String uuid,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator);
+	public static List<MBThreadFlag> findByUuid(java.lang.String uuid,
+		int start, int end, OrderByComparator<MBThreadFlag> orderByComparator) {
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
 
 	/**
 	* Returns an ordered range of all the message boards thread flags where uuid = &#63;.
@@ -98,10 +170,13 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching message boards thread flags
 	*/
-	public java.util.List<MBThreadFlag> findByUuid(java.lang.String uuid,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator,
-		boolean retrieveFromCache);
+	public static List<MBThreadFlag> findByUuid(java.lang.String uuid,
+		int start, int end, OrderByComparator<MBThreadFlag> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByUuid(uuid, start, end, orderByComparator,
+			retrieveFromCache);
+	}
 
 	/**
 	* Returns the first message boards thread flag in the ordered set where uuid = &#63;.
@@ -111,9 +186,11 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @return the first matching message boards thread flag
 	* @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
 	*/
-	public MBThreadFlag findByUuid_First(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator)
-		throws NoSuchThreadFlagException;
+	public static MBThreadFlag findByUuid_First(java.lang.String uuid,
+		OrderByComparator<MBThreadFlag> orderByComparator)
+		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
+		return getPersistence().findByUuid_First(uuid, orderByComparator);
+	}
 
 	/**
 	* Returns the first message boards thread flag in the ordered set where uuid = &#63;.
@@ -122,8 +199,10 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	*/
-	public MBThreadFlag fetchByUuid_First(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator);
+	public static MBThreadFlag fetchByUuid_First(java.lang.String uuid,
+		OrderByComparator<MBThreadFlag> orderByComparator) {
+		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
+	}
 
 	/**
 	* Returns the last message boards thread flag in the ordered set where uuid = &#63;.
@@ -133,9 +212,11 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @return the last matching message boards thread flag
 	* @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
 	*/
-	public MBThreadFlag findByUuid_Last(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator)
-		throws NoSuchThreadFlagException;
+	public static MBThreadFlag findByUuid_Last(java.lang.String uuid,
+		OrderByComparator<MBThreadFlag> orderByComparator)
+		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
+		return getPersistence().findByUuid_Last(uuid, orderByComparator);
+	}
 
 	/**
 	* Returns the last message boards thread flag in the ordered set where uuid = &#63;.
@@ -144,8 +225,10 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	*/
-	public MBThreadFlag fetchByUuid_Last(java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator);
+	public static MBThreadFlag fetchByUuid_Last(java.lang.String uuid,
+		OrderByComparator<MBThreadFlag> orderByComparator) {
+		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
+	}
 
 	/**
 	* Returns the message boards thread flags before and after the current message boards thread flag in the ordered set where uuid = &#63;.
@@ -156,17 +239,21 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @return the previous, current, and next message boards thread flag
 	* @throws NoSuchThreadFlagException if a message boards thread flag with the primary key could not be found
 	*/
-	public MBThreadFlag[] findByUuid_PrevAndNext(long threadFlagId,
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator)
-		throws NoSuchThreadFlagException;
+	public static MBThreadFlag[] findByUuid_PrevAndNext(long threadFlagId,
+		java.lang.String uuid, OrderByComparator<MBThreadFlag> orderByComparator)
+		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
+		return getPersistence()
+				   .findByUuid_PrevAndNext(threadFlagId, uuid, orderByComparator);
+	}
 
 	/**
 	* Removes all the message boards thread flags where uuid = &#63; from the database.
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public static void removeByUuid(java.lang.String uuid) {
+		getPersistence().removeByUuid(uuid);
+	}
 
 	/**
 	* Returns the number of message boards thread flags where uuid = &#63;.
@@ -174,7 +261,9 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param uuid the uuid
 	* @return the number of matching message boards thread flags
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public static int countByUuid(java.lang.String uuid) {
+		return getPersistence().countByUuid(uuid);
+	}
 
 	/**
 	* Returns the message boards thread flag where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchThreadFlagException} if it could not be found.
@@ -184,8 +273,10 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @return the matching message boards thread flag
 	* @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
 	*/
-	public MBThreadFlag findByUUID_G(java.lang.String uuid, long groupId)
-		throws NoSuchThreadFlagException;
+	public static MBThreadFlag findByUUID_G(java.lang.String uuid, long groupId)
+		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
+		return getPersistence().findByUUID_G(uuid, groupId);
+	}
 
 	/**
 	* Returns the message boards thread flag where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -194,7 +285,9 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param groupId the group ID
 	* @return the matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	*/
-	public MBThreadFlag fetchByUUID_G(java.lang.String uuid, long groupId);
+	public static MBThreadFlag fetchByUUID_G(java.lang.String uuid, long groupId) {
+		return getPersistence().fetchByUUID_G(uuid, groupId);
+	}
 
 	/**
 	* Returns the message boards thread flag where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -204,8 +297,10 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	*/
-	public MBThreadFlag fetchByUUID_G(java.lang.String uuid, long groupId,
-		boolean retrieveFromCache);
+	public static MBThreadFlag fetchByUUID_G(java.lang.String uuid,
+		long groupId, boolean retrieveFromCache) {
+		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+	}
 
 	/**
 	* Removes the message boards thread flag where uuid = &#63; and groupId = &#63; from the database.
@@ -214,8 +309,11 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param groupId the group ID
 	* @return the message boards thread flag that was removed
 	*/
-	public MBThreadFlag removeByUUID_G(java.lang.String uuid, long groupId)
-		throws NoSuchThreadFlagException;
+	public static MBThreadFlag removeByUUID_G(java.lang.String uuid,
+		long groupId)
+		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
+		return getPersistence().removeByUUID_G(uuid, groupId);
+	}
 
 	/**
 	* Returns the number of message boards thread flags where uuid = &#63; and groupId = &#63;.
@@ -224,7 +322,9 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param groupId the group ID
 	* @return the number of matching message boards thread flags
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+		return getPersistence().countByUUID_G(uuid, groupId);
+	}
 
 	/**
 	* Returns all the message boards thread flags where uuid = &#63; and companyId = &#63;.
@@ -233,8 +333,10 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param companyId the company ID
 	* @return the matching message boards thread flags
 	*/
-	public java.util.List<MBThreadFlag> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public static List<MBThreadFlag> findByUuid_C(java.lang.String uuid,
+		long companyId) {
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
 
 	/**
 	* Returns a range of all the message boards thread flags where uuid = &#63; and companyId = &#63;.
@@ -249,8 +351,10 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param end the upper bound of the range of message boards thread flags (not inclusive)
 	* @return the range of matching message boards thread flags
 	*/
-	public java.util.List<MBThreadFlag> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end);
+	public static List<MBThreadFlag> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end) {
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
 
 	/**
 	* Returns an ordered range of all the message boards thread flags where uuid = &#63; and companyId = &#63;.
@@ -266,9 +370,12 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message boards thread flags
 	*/
-	public java.util.List<MBThreadFlag> findByUuid_C(java.lang.String uuid,
+	public static List<MBThreadFlag> findByUuid_C(java.lang.String uuid,
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator);
+		OrderByComparator<MBThreadFlag> orderByComparator) {
+		return getPersistence()
+				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
+	}
 
 	/**
 	* Returns an ordered range of all the message boards thread flags where uuid = &#63; and companyId = &#63;.
@@ -285,10 +392,14 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching message boards thread flags
 	*/
-	public java.util.List<MBThreadFlag> findByUuid_C(java.lang.String uuid,
+	public static List<MBThreadFlag> findByUuid_C(java.lang.String uuid,
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator,
-		boolean retrieveFromCache);
+		OrderByComparator<MBThreadFlag> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByUuid_C(uuid, companyId, start, end,
+			orderByComparator, retrieveFromCache);
+	}
 
 	/**
 	* Returns the first message boards thread flag in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -299,10 +410,12 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @return the first matching message boards thread flag
 	* @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
 	*/
-	public MBThreadFlag findByUuid_C_First(java.lang.String uuid,
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator)
-		throws NoSuchThreadFlagException;
+	public static MBThreadFlag findByUuid_C_First(java.lang.String uuid,
+		long companyId, OrderByComparator<MBThreadFlag> orderByComparator)
+		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
+		return getPersistence()
+				   .findByUuid_C_First(uuid, companyId, orderByComparator);
+	}
 
 	/**
 	* Returns the first message boards thread flag in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -312,9 +425,11 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	*/
-	public MBThreadFlag fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator);
+	public static MBThreadFlag fetchByUuid_C_First(java.lang.String uuid,
+		long companyId, OrderByComparator<MBThreadFlag> orderByComparator) {
+		return getPersistence()
+				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
+	}
 
 	/**
 	* Returns the last message boards thread flag in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -325,10 +440,12 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @return the last matching message boards thread flag
 	* @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
 	*/
-	public MBThreadFlag findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator)
-		throws NoSuchThreadFlagException;
+	public static MBThreadFlag findByUuid_C_Last(java.lang.String uuid,
+		long companyId, OrderByComparator<MBThreadFlag> orderByComparator)
+		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
+		return getPersistence()
+				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
+	}
 
 	/**
 	* Returns the last message boards thread flag in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -338,9 +455,11 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	*/
-	public MBThreadFlag fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator);
+	public static MBThreadFlag fetchByUuid_C_Last(java.lang.String uuid,
+		long companyId, OrderByComparator<MBThreadFlag> orderByComparator) {
+		return getPersistence()
+				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
+	}
 
 	/**
 	* Returns the message boards thread flags before and after the current message boards thread flag in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -352,10 +471,14 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @return the previous, current, and next message boards thread flag
 	* @throws NoSuchThreadFlagException if a message boards thread flag with the primary key could not be found
 	*/
-	public MBThreadFlag[] findByUuid_C_PrevAndNext(long threadFlagId,
+	public static MBThreadFlag[] findByUuid_C_PrevAndNext(long threadFlagId,
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator)
-		throws NoSuchThreadFlagException;
+		OrderByComparator<MBThreadFlag> orderByComparator)
+		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
+		return getPersistence()
+				   .findByUuid_C_PrevAndNext(threadFlagId, uuid, companyId,
+			orderByComparator);
+	}
 
 	/**
 	* Removes all the message boards thread flags where uuid = &#63; and companyId = &#63; from the database.
@@ -363,7 +486,9 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+		getPersistence().removeByUuid_C(uuid, companyId);
+	}
 
 	/**
 	* Returns the number of message boards thread flags where uuid = &#63; and companyId = &#63;.
@@ -372,7 +497,9 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param companyId the company ID
 	* @return the number of matching message boards thread flags
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+		return getPersistence().countByUuid_C(uuid, companyId);
+	}
 
 	/**
 	* Returns all the message boards thread flags where userId = &#63;.
@@ -380,7 +507,9 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param userId the user ID
 	* @return the matching message boards thread flags
 	*/
-	public java.util.List<MBThreadFlag> findByUserId(long userId);
+	public static List<MBThreadFlag> findByUserId(long userId) {
+		return getPersistence().findByUserId(userId);
+	}
 
 	/**
 	* Returns a range of all the message boards thread flags where userId = &#63;.
@@ -394,8 +523,10 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param end the upper bound of the range of message boards thread flags (not inclusive)
 	* @return the range of matching message boards thread flags
 	*/
-	public java.util.List<MBThreadFlag> findByUserId(long userId, int start,
-		int end);
+	public static List<MBThreadFlag> findByUserId(long userId, int start,
+		int end) {
+		return getPersistence().findByUserId(userId, start, end);
+	}
 
 	/**
 	* Returns an ordered range of all the message boards thread flags where userId = &#63;.
@@ -410,9 +541,11 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message boards thread flags
 	*/
-	public java.util.List<MBThreadFlag> findByUserId(long userId, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator);
+	public static List<MBThreadFlag> findByUserId(long userId, int start,
+		int end, OrderByComparator<MBThreadFlag> orderByComparator) {
+		return getPersistence()
+				   .findByUserId(userId, start, end, orderByComparator);
+	}
 
 	/**
 	* Returns an ordered range of all the message boards thread flags where userId = &#63;.
@@ -428,10 +561,13 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching message boards thread flags
 	*/
-	public java.util.List<MBThreadFlag> findByUserId(long userId, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator,
-		boolean retrieveFromCache);
+	public static List<MBThreadFlag> findByUserId(long userId, int start,
+		int end, OrderByComparator<MBThreadFlag> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByUserId(userId, start, end, orderByComparator,
+			retrieveFromCache);
+	}
 
 	/**
 	* Returns the first message boards thread flag in the ordered set where userId = &#63;.
@@ -441,9 +577,11 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @return the first matching message boards thread flag
 	* @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
 	*/
-	public MBThreadFlag findByUserId_First(long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator)
-		throws NoSuchThreadFlagException;
+	public static MBThreadFlag findByUserId_First(long userId,
+		OrderByComparator<MBThreadFlag> orderByComparator)
+		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
+		return getPersistence().findByUserId_First(userId, orderByComparator);
+	}
 
 	/**
 	* Returns the first message boards thread flag in the ordered set where userId = &#63;.
@@ -452,8 +590,10 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	*/
-	public MBThreadFlag fetchByUserId_First(long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator);
+	public static MBThreadFlag fetchByUserId_First(long userId,
+		OrderByComparator<MBThreadFlag> orderByComparator) {
+		return getPersistence().fetchByUserId_First(userId, orderByComparator);
+	}
 
 	/**
 	* Returns the last message boards thread flag in the ordered set where userId = &#63;.
@@ -463,9 +603,11 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @return the last matching message boards thread flag
 	* @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
 	*/
-	public MBThreadFlag findByUserId_Last(long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator)
-		throws NoSuchThreadFlagException;
+	public static MBThreadFlag findByUserId_Last(long userId,
+		OrderByComparator<MBThreadFlag> orderByComparator)
+		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
+		return getPersistence().findByUserId_Last(userId, orderByComparator);
+	}
 
 	/**
 	* Returns the last message boards thread flag in the ordered set where userId = &#63;.
@@ -474,8 +616,10 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	*/
-	public MBThreadFlag fetchByUserId_Last(long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator);
+	public static MBThreadFlag fetchByUserId_Last(long userId,
+		OrderByComparator<MBThreadFlag> orderByComparator) {
+		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
+	}
 
 	/**
 	* Returns the message boards thread flags before and after the current message boards thread flag in the ordered set where userId = &#63;.
@@ -486,17 +630,22 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @return the previous, current, and next message boards thread flag
 	* @throws NoSuchThreadFlagException if a message boards thread flag with the primary key could not be found
 	*/
-	public MBThreadFlag[] findByUserId_PrevAndNext(long threadFlagId,
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator)
-		throws NoSuchThreadFlagException;
+	public static MBThreadFlag[] findByUserId_PrevAndNext(long threadFlagId,
+		long userId, OrderByComparator<MBThreadFlag> orderByComparator)
+		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
+		return getPersistence()
+				   .findByUserId_PrevAndNext(threadFlagId, userId,
+			orderByComparator);
+	}
 
 	/**
 	* Removes all the message boards thread flags where userId = &#63; from the database.
 	*
 	* @param userId the user ID
 	*/
-	public void removeByUserId(long userId);
+	public static void removeByUserId(long userId) {
+		getPersistence().removeByUserId(userId);
+	}
 
 	/**
 	* Returns the number of message boards thread flags where userId = &#63;.
@@ -504,7 +653,9 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param userId the user ID
 	* @return the number of matching message boards thread flags
 	*/
-	public int countByUserId(long userId);
+	public static int countByUserId(long userId) {
+		return getPersistence().countByUserId(userId);
+	}
 
 	/**
 	* Returns all the message boards thread flags where threadId = &#63;.
@@ -512,7 +663,9 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param threadId the thread ID
 	* @return the matching message boards thread flags
 	*/
-	public java.util.List<MBThreadFlag> findByThreadId(long threadId);
+	public static List<MBThreadFlag> findByThreadId(long threadId) {
+		return getPersistence().findByThreadId(threadId);
+	}
 
 	/**
 	* Returns a range of all the message boards thread flags where threadId = &#63;.
@@ -526,8 +679,10 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param end the upper bound of the range of message boards thread flags (not inclusive)
 	* @return the range of matching message boards thread flags
 	*/
-	public java.util.List<MBThreadFlag> findByThreadId(long threadId,
-		int start, int end);
+	public static List<MBThreadFlag> findByThreadId(long threadId, int start,
+		int end) {
+		return getPersistence().findByThreadId(threadId, start, end);
+	}
 
 	/**
 	* Returns an ordered range of all the message boards thread flags where threadId = &#63;.
@@ -542,9 +697,11 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message boards thread flags
 	*/
-	public java.util.List<MBThreadFlag> findByThreadId(long threadId,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator);
+	public static List<MBThreadFlag> findByThreadId(long threadId, int start,
+		int end, OrderByComparator<MBThreadFlag> orderByComparator) {
+		return getPersistence()
+				   .findByThreadId(threadId, start, end, orderByComparator);
+	}
 
 	/**
 	* Returns an ordered range of all the message boards thread flags where threadId = &#63;.
@@ -560,10 +717,13 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching message boards thread flags
 	*/
-	public java.util.List<MBThreadFlag> findByThreadId(long threadId,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator,
-		boolean retrieveFromCache);
+	public static List<MBThreadFlag> findByThreadId(long threadId, int start,
+		int end, OrderByComparator<MBThreadFlag> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByThreadId(threadId, start, end, orderByComparator,
+			retrieveFromCache);
+	}
 
 	/**
 	* Returns the first message boards thread flag in the ordered set where threadId = &#63;.
@@ -573,9 +733,11 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @return the first matching message boards thread flag
 	* @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
 	*/
-	public MBThreadFlag findByThreadId_First(long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator)
-		throws NoSuchThreadFlagException;
+	public static MBThreadFlag findByThreadId_First(long threadId,
+		OrderByComparator<MBThreadFlag> orderByComparator)
+		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
+		return getPersistence().findByThreadId_First(threadId, orderByComparator);
+	}
 
 	/**
 	* Returns the first message boards thread flag in the ordered set where threadId = &#63;.
@@ -584,8 +746,11 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	*/
-	public MBThreadFlag fetchByThreadId_First(long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator);
+	public static MBThreadFlag fetchByThreadId_First(long threadId,
+		OrderByComparator<MBThreadFlag> orderByComparator) {
+		return getPersistence()
+				   .fetchByThreadId_First(threadId, orderByComparator);
+	}
 
 	/**
 	* Returns the last message boards thread flag in the ordered set where threadId = &#63;.
@@ -595,9 +760,11 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @return the last matching message boards thread flag
 	* @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
 	*/
-	public MBThreadFlag findByThreadId_Last(long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator)
-		throws NoSuchThreadFlagException;
+	public static MBThreadFlag findByThreadId_Last(long threadId,
+		OrderByComparator<MBThreadFlag> orderByComparator)
+		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
+		return getPersistence().findByThreadId_Last(threadId, orderByComparator);
+	}
 
 	/**
 	* Returns the last message boards thread flag in the ordered set where threadId = &#63;.
@@ -606,8 +773,10 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	*/
-	public MBThreadFlag fetchByThreadId_Last(long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator);
+	public static MBThreadFlag fetchByThreadId_Last(long threadId,
+		OrderByComparator<MBThreadFlag> orderByComparator) {
+		return getPersistence().fetchByThreadId_Last(threadId, orderByComparator);
+	}
 
 	/**
 	* Returns the message boards thread flags before and after the current message boards thread flag in the ordered set where threadId = &#63;.
@@ -618,17 +787,22 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @return the previous, current, and next message boards thread flag
 	* @throws NoSuchThreadFlagException if a message boards thread flag with the primary key could not be found
 	*/
-	public MBThreadFlag[] findByThreadId_PrevAndNext(long threadFlagId,
-		long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator)
-		throws NoSuchThreadFlagException;
+	public static MBThreadFlag[] findByThreadId_PrevAndNext(long threadFlagId,
+		long threadId, OrderByComparator<MBThreadFlag> orderByComparator)
+		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
+		return getPersistence()
+				   .findByThreadId_PrevAndNext(threadFlagId, threadId,
+			orderByComparator);
+	}
 
 	/**
 	* Removes all the message boards thread flags where threadId = &#63; from the database.
 	*
 	* @param threadId the thread ID
 	*/
-	public void removeByThreadId(long threadId);
+	public static void removeByThreadId(long threadId) {
+		getPersistence().removeByThreadId(threadId);
+	}
 
 	/**
 	* Returns the number of message boards thread flags where threadId = &#63;.
@@ -636,7 +810,9 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param threadId the thread ID
 	* @return the number of matching message boards thread flags
 	*/
-	public int countByThreadId(long threadId);
+	public static int countByThreadId(long threadId) {
+		return getPersistence().countByThreadId(threadId);
+	}
 
 	/**
 	* Returns the message boards thread flag where userId = &#63; and threadId = &#63; or throws a {@link NoSuchThreadFlagException} if it could not be found.
@@ -646,8 +822,10 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @return the matching message boards thread flag
 	* @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
 	*/
-	public MBThreadFlag findByU_T(long userId, long threadId)
-		throws NoSuchThreadFlagException;
+	public static MBThreadFlag findByU_T(long userId, long threadId)
+		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
+		return getPersistence().findByU_T(userId, threadId);
+	}
 
 	/**
 	* Returns the message boards thread flag where userId = &#63; and threadId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -656,7 +834,9 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param threadId the thread ID
 	* @return the matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	*/
-	public MBThreadFlag fetchByU_T(long userId, long threadId);
+	public static MBThreadFlag fetchByU_T(long userId, long threadId) {
+		return getPersistence().fetchByU_T(userId, threadId);
+	}
 
 	/**
 	* Returns the message boards thread flag where userId = &#63; and threadId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -666,8 +846,10 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	*/
-	public MBThreadFlag fetchByU_T(long userId, long threadId,
-		boolean retrieveFromCache);
+	public static MBThreadFlag fetchByU_T(long userId, long threadId,
+		boolean retrieveFromCache) {
+		return getPersistence().fetchByU_T(userId, threadId, retrieveFromCache);
+	}
 
 	/**
 	* Removes the message boards thread flag where userId = &#63; and threadId = &#63; from the database.
@@ -676,8 +858,10 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param threadId the thread ID
 	* @return the message boards thread flag that was removed
 	*/
-	public MBThreadFlag removeByU_T(long userId, long threadId)
-		throws NoSuchThreadFlagException;
+	public static MBThreadFlag removeByU_T(long userId, long threadId)
+		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
+		return getPersistence().removeByU_T(userId, threadId);
+	}
 
 	/**
 	* Returns the number of message boards thread flags where userId = &#63; and threadId = &#63;.
@@ -686,21 +870,27 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param threadId the thread ID
 	* @return the number of matching message boards thread flags
 	*/
-	public int countByU_T(long userId, long threadId);
+	public static int countByU_T(long userId, long threadId) {
+		return getPersistence().countByU_T(userId, threadId);
+	}
 
 	/**
 	* Caches the message boards thread flag in the entity cache if it is enabled.
 	*
 	* @param mbThreadFlag the message boards thread flag
 	*/
-	public void cacheResult(MBThreadFlag mbThreadFlag);
+	public static void cacheResult(MBThreadFlag mbThreadFlag) {
+		getPersistence().cacheResult(mbThreadFlag);
+	}
 
 	/**
 	* Caches the message boards thread flags in the entity cache if it is enabled.
 	*
 	* @param mbThreadFlags the message boards thread flags
 	*/
-	public void cacheResult(java.util.List<MBThreadFlag> mbThreadFlags);
+	public static void cacheResult(List<MBThreadFlag> mbThreadFlags) {
+		getPersistence().cacheResult(mbThreadFlags);
+	}
 
 	/**
 	* Creates a new message boards thread flag with the primary key. Does not add the message boards thread flag to the database.
@@ -708,7 +898,9 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param threadFlagId the primary key for the new message boards thread flag
 	* @return the new message boards thread flag
 	*/
-	public MBThreadFlag create(long threadFlagId);
+	public static MBThreadFlag create(long threadFlagId) {
+		return getPersistence().create(threadFlagId);
+	}
 
 	/**
 	* Removes the message boards thread flag with the primary key from the database. Also notifies the appropriate model listeners.
@@ -717,10 +909,14 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @return the message boards thread flag that was removed
 	* @throws NoSuchThreadFlagException if a message boards thread flag with the primary key could not be found
 	*/
-	public MBThreadFlag remove(long threadFlagId)
-		throws NoSuchThreadFlagException;
+	public static MBThreadFlag remove(long threadFlagId)
+		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
+		return getPersistence().remove(threadFlagId);
+	}
 
-	public MBThreadFlag updateImpl(MBThreadFlag mbThreadFlag);
+	public static MBThreadFlag updateImpl(MBThreadFlag mbThreadFlag) {
+		return getPersistence().updateImpl(mbThreadFlag);
+	}
 
 	/**
 	* Returns the message boards thread flag with the primary key or throws a {@link NoSuchThreadFlagException} if it could not be found.
@@ -729,8 +925,10 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @return the message boards thread flag
 	* @throws NoSuchThreadFlagException if a message boards thread flag with the primary key could not be found
 	*/
-	public MBThreadFlag findByPrimaryKey(long threadFlagId)
-		throws NoSuchThreadFlagException;
+	public static MBThreadFlag findByPrimaryKey(long threadFlagId)
+		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
+		return getPersistence().findByPrimaryKey(threadFlagId);
+	}
 
 	/**
 	* Returns the message boards thread flag with the primary key or returns <code>null</code> if it could not be found.
@@ -738,18 +936,23 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param threadFlagId the primary key of the message boards thread flag
 	* @return the message boards thread flag, or <code>null</code> if a message boards thread flag with the primary key could not be found
 	*/
-	public MBThreadFlag fetchByPrimaryKey(long threadFlagId);
+	public static MBThreadFlag fetchByPrimaryKey(long threadFlagId) {
+		return getPersistence().fetchByPrimaryKey(threadFlagId);
+	}
 
-	@Override
-	public java.util.Map<java.io.Serializable, MBThreadFlag> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
+	public static java.util.Map<java.io.Serializable, MBThreadFlag> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
 
 	/**
 	* Returns all the message boards thread flags.
 	*
 	* @return the message boards thread flags
 	*/
-	public java.util.List<MBThreadFlag> findAll();
+	public static List<MBThreadFlag> findAll() {
+		return getPersistence().findAll();
+	}
 
 	/**
 	* Returns a range of all the message boards thread flags.
@@ -762,7 +965,9 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param end the upper bound of the range of message boards thread flags (not inclusive)
 	* @return the range of message boards thread flags
 	*/
-	public java.util.List<MBThreadFlag> findAll(int start, int end);
+	public static List<MBThreadFlag> findAll(int start, int end) {
+		return getPersistence().findAll(start, end);
+	}
 
 	/**
 	* Returns an ordered range of all the message boards thread flags.
@@ -776,8 +981,10 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of message boards thread flags
 	*/
-	public java.util.List<MBThreadFlag> findAll(int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator);
+	public static List<MBThreadFlag> findAll(int start, int end,
+		OrderByComparator<MBThreadFlag> orderByComparator) {
+		return getPersistence().findAll(start, end, orderByComparator);
+	}
 
 	/**
 	* Returns an ordered range of all the message boards thread flags.
@@ -792,22 +999,37 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of message boards thread flags
 	*/
-	public java.util.List<MBThreadFlag> findAll(int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator,
-		boolean retrieveFromCache);
+	public static List<MBThreadFlag> findAll(int start, int end,
+		OrderByComparator<MBThreadFlag> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findAll(start, end, orderByComparator, retrieveFromCache);
+	}
 
 	/**
 	* Removes all the message boards thread flags from the database.
 	*/
-	public void removeAll();
+	public static void removeAll() {
+		getPersistence().removeAll();
+	}
 
 	/**
 	* Returns the number of message boards thread flags.
 	*
 	* @return the number of message boards thread flags
 	*/
-	public int countAll();
+	public static int countAll() {
+		return getPersistence().countAll();
+	}
 
-	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
+	public static MBThreadFlagPersistence getPersistence() {
+		return _serviceTracker.getService();
+	}
+
+	private static ServiceTracker<MBThreadFlagPersistence, MBThreadFlagPersistence> _serviceTracker =
+		ServiceTrackerFactory.open(MBThreadFlagPersistence.class);
 }

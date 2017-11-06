@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.message.boards.kernel.service.persistence;
+package com.liferay.message.boards.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.message.boards.kernel.exception.NoSuchThreadFlagException;
-import com.liferay.message.boards.kernel.model.MBThreadFlag;
+import com.liferay.message.boards.exception.NoSuchThreadFlagException;
+import com.liferay.message.boards.model.MBThreadFlag;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
@@ -29,13 +29,10 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see com.liferay.portlet.messageboards.service.persistence.impl.MBThreadFlagPersistenceImpl
+ * @see com.liferay.message.boards.service.persistence.impl.MBThreadFlagPersistenceImpl
  * @see MBThreadFlagUtil
- * @deprecated As of 7.0.0, replaced by {@link
-com.liferay.message.boards.model.impl.MBThreadFlagImpl}
  * @generated
  */
-@Deprecated
 @ProviderType
 public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	/*

@@ -124,6 +124,34 @@ public class CommerceShippingMethodServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.commerce.model.CommerceShippingMethod> getCommerceShippingMethods(
+		HttpPrincipal httpPrincipal, long groupId, boolean active) {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceShippingMethodServiceUtil.class,
+					"getCommerceShippingMethods",
+					_getCommerceShippingMethodsParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					active);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.commerce.model.CommerceShippingMethod>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceShippingMethod updateCommerceShippingMethod(
 		HttpPrincipal httpPrincipal, long commerceShippingMethodId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -135,7 +163,7 @@ public class CommerceShippingMethodServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceShippingMethodServiceUtil.class,
 					"updateCommerceShippingMethod",
-					_updateCommerceShippingMethodParameterTypes2);
+					_updateCommerceShippingMethodParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceShippingMethodId, nameMap, descriptionMap,
@@ -171,7 +199,10 @@ public class CommerceShippingMethodServiceHttp {
 		};
 	private static final Class<?>[] _deleteCommerceShippingMethodParameterTypes1 =
 		new Class[] { long.class };
-	private static final Class<?>[] _updateCommerceShippingMethodParameterTypes2 =
+	private static final Class<?>[] _getCommerceShippingMethodsParameterTypes2 = new Class[] {
+			long.class, boolean.class
+		};
+	private static final Class<?>[] _updateCommerceShippingMethodParameterTypes3 =
 		new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
 			java.util.Map.class, double.class, boolean.class,

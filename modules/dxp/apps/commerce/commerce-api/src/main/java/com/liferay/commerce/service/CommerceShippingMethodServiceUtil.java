@@ -60,6 +60,11 @@ public class CommerceShippingMethodServiceUtil {
 		getService().deleteCommerceShippingMethod(commerceShippingMethodId);
 	}
 
+	public static java.util.List<com.liferay.commerce.model.CommerceShippingMethod> getCommerceShippingMethods(
+		long groupId, boolean active) {
+		return getService().getCommerceShippingMethods(groupId, active);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

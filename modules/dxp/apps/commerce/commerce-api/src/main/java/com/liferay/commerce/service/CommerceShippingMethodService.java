@@ -26,8 +26,10 @@ import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -65,6 +67,10 @@ public interface CommerceShippingMethodService extends BaseService {
 
 	public void deleteCommerceShippingMethod(long commerceShippingMethodId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceShippingMethod> getCommerceShippingMethods(
+		long groupId, boolean active);
 
 	/**
 	* Returns the OSGi service identifier.

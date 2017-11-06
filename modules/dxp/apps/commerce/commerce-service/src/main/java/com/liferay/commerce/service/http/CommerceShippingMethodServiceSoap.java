@@ -77,5 +77,21 @@ public class CommerceShippingMethodServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceShippingMethodSoap[] getCommerceShippingMethods(
+		long groupId, boolean active) throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.model.CommerceShippingMethod> returnValue =
+				CommerceShippingMethodServiceUtil.getCommerceShippingMethods(groupId,
+					active);
+
+			return com.liferay.commerce.model.CommerceShippingMethodSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(CommerceShippingMethodServiceSoap.class);
 }

@@ -161,6 +161,12 @@ public class CommerceCartWrapper implements CommerceCart,
 		return _commerceCart.compareTo(commerceCart);
 	}
 
+	@Override
+	public CommerceAddress getBillingAddress()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCart.getBillingAddress();
+	}
+
 	/**
 	* Returns the billing address ID of this commerce cart.
 	*

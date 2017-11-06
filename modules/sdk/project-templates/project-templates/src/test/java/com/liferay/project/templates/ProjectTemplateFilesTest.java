@@ -14,8 +14,6 @@
 
 package com.liferay.project.templates;
 
-import aQute.bnd.osgi.Constants;
-
 import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.Validator;
 import com.liferay.project.templates.internal.util.WorkspaceUtil;
@@ -159,7 +157,7 @@ public class ProjectTemplateFilesTest {
 
 	private void _testArchetypeMetadataXml(
 			Path projectTemplateDirPath, String projectTemplateDirName,
-			Properties bndProperties, boolean requireAuthorProperty,
+			boolean requireAuthorProperty,
 			Set<String> archetypeResourcePropertyNames)
 		throws IOException {
 
@@ -249,32 +247,6 @@ public class ProjectTemplateFilesTest {
 					messageSuffix,
 				requiredPropertyNames.contains(name));
 		}
-	}
-
-	private Properties _testBndBnd(Path projectTemplateDirPath)
-		throws IOException {
-
-		Path bndBndPath = projectTemplateDirPath.resolve("bnd.bnd");
-
-		Properties properties = FileUtil.readProperties(bndBndPath);
-
-		String bundleDescription = properties.getProperty(
-			Constants.BUNDLE_DESCRIPTION);
-
-		Assert.assertTrue(
-			"Missing \"" + Constants.BUNDLE_DESCRIPTION + "\" header in " +
-				bndBndPath,
-			Validator.isNotNull(bundleDescription));
-
-		Matcher matcher = _bundleDescriptionPattern.matcher(bundleDescription);
-
-		Assert.assertTrue(
-			"Header \"" + Constants.BUNDLE_DESCRIPTION + "\" in " + bndBndPath +
-				" must match pattern \"" + _bundleDescriptionPattern.pattern() +
-					"\"",
-			matcher.matches());
-
-		return properties;
 	}
 
 	private void _testBuildGradle(
@@ -649,8 +621,6 @@ public class ProjectTemplateFilesTest {
 		String projectTemplateDirName = String.valueOf(
 			projectTemplateDirPath.getFileName());
 
-		Properties bndProperties = _testBndBnd(projectTemplateDirPath);
-
 		_testBuildGradle(projectTemplateDirName, archetypeResourcesDirPath);
 
 		_testGitIgnore(projectTemplateDirName, archetypeResourcesDirPath);
@@ -729,7 +699,7 @@ public class ProjectTemplateFilesTest {
 			});
 
 		_testArchetypeMetadataXml(
-			projectTemplateDirPath, projectTemplateDirName, bndProperties,
+			projectTemplateDirPath, projectTemplateDirName,
 			requireAuthorProperty.get(), archetypeResourcePropertyNames);
 	}
 

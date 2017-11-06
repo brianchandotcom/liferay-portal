@@ -1920,10 +1920,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		expandoRowLocalService.deleteRows(user.getUserId());
 
-		// Message boards
-
-		mbThreadFlagLocalService.deleteThreadFlagsByUserId(user.getUserId());
-
 		// Membership requests
 
 		membershipRequestLocalService.deleteMembershipRequestsByUserId(

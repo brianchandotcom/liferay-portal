@@ -2353,7 +2353,7 @@ multi-project build.
 ### Changed
 - [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version 3.5.29.
 
-## 5.1.35 - 2017-11-06
+## 5.1.35 - 2017-11-07
 
 ### Changed
 - [LPS-75633]: Update the [Liferay Gradle Plugins] dependency to version 3.5.30.

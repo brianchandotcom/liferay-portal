@@ -19,6 +19,9 @@ package com.liferay.portal.security.service.access.policy.constants;
  */
 public class SAPConstants {
 
+	public static final String RESOURCE_NAME =
+		"com.liferay.portal.security.service.access.policy";
+
 	public static final String SERVICE_NAME =
 		"com.liferay.portal.security.service.access.policy";
 

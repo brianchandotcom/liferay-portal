@@ -5,7 +5,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -153,20 +152,19 @@ public class ${entity.PKClassName} implements Comparable<${entity.PKClassName}>,
 	public String toString() {
 		StringBundler sb = new StringBundler(${entity.PKList?size * 5});
 
-		sb.append(StringPool.OPEN_CURLY_BRACE);
+		sb.append("{");
 
 		<#list entity.PKList as column>
 			sb.append("${column.name}");
-			sb.append(StringPool.EQUAL);
+			sb.append("=");
 			sb.append(${column.name});
 
 			<#if column_has_next>
-				sb.append(StringPool.COMMA);
-				sb.append(StringPool.SPACE);
+				sb.append(", ");
 			</#if>
 		</#list>
 
-		sb.append(StringPool.CLOSE_CURLY_BRACE);
+		sb.append("}");
 
 		return sb.toString();
 	}

@@ -58,7 +58,6 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -516,7 +515,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 				${localizedEntity.name} ${localizedEntity.varName} = ${entity.name}LocalServiceUtil.fetch${localizedEntity.name}(getPrimaryKey(), languageId);
 
 				if (${localizedEntity.varName} == null) {
-					return StringPool.BLANK;
+					return "";
 				}
 
 				return ${localizedEntity.varName}.get${column.methodName}();
@@ -529,7 +528,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			@Override
 			public String getClassName() {
 				if (getClassNameId() <= 0) {
-					return StringPool.BLANK;
+					return "";
 				}
 
 				return PortalUtil.getClassName(getClassNameId());
@@ -557,7 +556,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		public ${column.genericizedType} get${column.methodName}() {
 			<#if stringUtil.equals(column.type, "String") && column.isConvertNull()>
 				if (_${column.name} == null) {
-					return StringPool.BLANK;
+					return "";
 				}
 				else {
 					return _${column.name};
@@ -757,7 +756,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 					return user.getUuid();
 				}
 				catch (PortalException pe) {
-					return StringPool.BLANK;
+					return "";
 				}
 			}
 
@@ -1169,7 +1168,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 					String xml = get${column.methodName}();
 
 					if (xml == null) {
-						return StringPool.BLANK;
+						return "";
 					}
 
 					<#if entity.isGroupedModel()>

@@ -239,14 +239,14 @@ public interface SingleModelMessageMapper<T> {
 	}
 
 	/**
-	 * Returns {@code true} if the mapper can map all things
-	 * related to the current request.
+	 * Returns {@code true} if the mapper can map all things related to the
+	 * current request.
 	 *
 	 * @param  model the model
 	 * @param  modelClass the model class
 	 * @param  httpHeaders the HTTP headers of the current request
-	 * @return {@code true} if the mapper can map the request;
-	 *         {@code false} otherwise
+	 * @return {@code true} if the mapper can map the request; {@code false}
+	 *         otherwise
 	 */
 	public default boolean supports(
 		T model, Class<T> modelClass, HttpHeaders httpHeaders) {

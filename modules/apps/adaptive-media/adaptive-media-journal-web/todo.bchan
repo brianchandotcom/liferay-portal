@@ -1,0 +1,10 @@
+1.) In AMJournalTransformerListenerTest
+
+String originalOutput = "some content";
+String transformedOutput = "some transformed content";
+
+String originalScript = "some script content";
+
+Can these be randomString() instead?
+
+Thx.

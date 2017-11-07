@@ -467,17 +467,15 @@ public class WriterHelper {
 	}
 
 	/**
-	 * Writes the model's related collection URL. This method uses a {@code
-	 * BiConsumer} to write the URL.
+	 * Writes the related collection's URL, using a {@code BiConsumer}.
 	 *
-	 * @param  relatedCollection the related collection
-	 * @param  parentSingleModel the parent single model.
-	 * @param  parentEmbeddedPathElements the list of embedded path elements
-	 * @param  httpServletRequest the HTTP servlet request
-	 * @param  fields the requested fields
-	 * @param  biConsumer the {@code BiConsumer} called to write the related
-	 *         collection URL.
-	 * @review
+	 * @param relatedCollection the related collection
+	 * @param parentSingleModel the parent single model
+	 * @param parentEmbeddedPathElements the list of embedded path elements
+	 * @param httpServletRequest the HTTP servlet request
+	 * @param fields the requested fields
+	 * @param biConsumer the {@code BiConsumer} that writes the related
+	 *        collection URL
 	 */
 	public <U, V> void writeRelatedCollection(
 		RelatedCollection<U, V> relatedCollection,
@@ -516,22 +514,20 @@ public class WriterHelper {
 	}
 
 	/**
-	 * Helper method to write a model related models. It uses two consumers (one
-	 * for writing the model info, and another for writing its URL) so each
-	 * {@link javax.ws.rs.ext.MessageBodyWriter} can write the related model
+	 * Writes related models. This method uses two consumers (one that writes
+	 * the model's info, and one that writes its URL), so each {@link
+	 * javax.ws.rs.ext.MessageBodyWriter} can write the related model
 	 * differently.
 	 *
-	 * @param  relatedModel the instance of the related model.
-	 * @param  parentSingleModel the parent single model.
-	 * @param  parentEmbeddedPathElements list of embedded path elements.
-	 * @param  httpServletRequest the actual HTTP servlet request.
-	 * @param  fields the requested fields.
-	 * @param  embedded the embedded resources info.
-	 * @param  modelBiConsumer the consumer that will be called to write the
-	 *         related model info.
-	 * @param  urlTriConsumer the consumer that will be called to write the
-	 *         related model URL.
-	 * @review
+	 * @param relatedModel the related model instance
+	 * @param parentSingleModel the parent single model
+	 * @param parentEmbeddedPathElements list of embedded path elements
+	 * @param httpServletRequest the HTTP servlet request
+	 * @param fields the requested fields
+	 * @param embedded the information about the embedded resources
+	 * @param modelBiConsumer the consumer that writes the related model's
+	 *        information
+	 * @param urlTriConsumer the consumer that writes the related model's URL
 	 */
 	public <T, U> void writeRelatedModel(
 		RelatedModel<T, U> relatedModel, SingleModel<T> parentSingleModel,
@@ -593,15 +589,14 @@ public class WriterHelper {
 	}
 
 	/**
-	 * Helper method to write a model string fields. It uses a consumer so each
+	 * Writes the model's string fields. This method uses a consumer so each
 	 * {@link javax.ws.rs.ext.MessageBodyWriter} can write each field
 	 * differently.
 	 *
-	 * @param  model a model.
-	 * @param  modelClass a model class.
-	 * @param  fields the requested fields.
-	 * @param  biConsumer the consumer that will be called to write each field.
-	 * @review
+	 * @param model the model
+	 * @param modelClass the model's class
+	 * @param fields the requested fields
+	 * @param biConsumer the consumer that writes each field
 	 */
 	public <T> void writeStringFields(
 		T model, Class<T> modelClass, Fields fields,
@@ -637,12 +632,11 @@ public class WriterHelper {
 	}
 
 	/**
-	 * Helper method to write a model types. It uses a consumer so each {@link
+	 * Writes the model's types. This method uses a consumer so each {@link
 	 * javax.ws.rs.ext.MessageBodyWriter} can write the types differently.
 	 *
-	 * @param  modelClass the model class.
-	 * @param  consumer the consumer that will be called to write the types.
-	 * @review
+	 * @param modelClass the model class
+	 * @param consumer the consumer that writes the types
 	 */
 	public <U> void writeTypes(
 		Class<U> modelClass, Consumer<List<String>> consumer) {

@@ -89,7 +89,6 @@
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
 		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
-		<reference entity="MBMailingList" package-path="com.liferay.portlet.messageboards" />
 		<reference entity="MBMessage" package-path="com.liferay.portlet.messageboards" />
 		<reference entity="MBThread" package-path="com.liferay.portlet.messageboards" />
 		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
@@ -138,62 +137,8 @@
 
 		<reference entity="ClassName" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
-		<reference entity="MBMailingList" package-path="com.liferay.portlet.messageboards" />
 		<reference entity="MBMessage" package-path="com.liferay.portlet.messageboards" />
 		<reference entity="MBThread" package-path="com.liferay.portlet.messageboards" />
-	</entity>
-	<entity human-name="message boards mailing list" local-service="true" name="MBMailingList" remote-service="false" uuid="true">
-
-		<!-- PK fields -->
-
-		<column name="mailingListId" primary="true" type="long" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column name="categoryId" type="long" />
-		<column name="emailAddress" type="String" />
-		<column name="inProtocol" type="String" />
-		<column name="inServerName" type="String" />
-		<column name="inServerPort" type="int" />
-		<column name="inUseSSL" type="boolean" />
-		<column name="inUserName" type="String" />
-		<column name="inPassword" type="String" />
-		<column name="inReadInterval" type="int" />
-		<column name="outEmailAddress" type="String" />
-		<column name="outCustom" type="boolean" />
-		<column name="outServerName" type="String" />
-		<column name="outServerPort" type="int" />
-		<column name="outUseSSL" type="boolean" />
-		<column name="outUserName" type="String" />
-		<column name="outPassword" type="String" />
-		<column name="allowAnonymous" type="boolean" />
-		<column name="active" type="boolean" />
-
-		<!-- Finder methods -->
-
-		<finder name="Active" return-type="Collection">
-			<finder-column name="active" />
-		</finder>
-		<finder name="G_C" return-type="MBMailingList" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="categoryId" />
-		</finder>
-
-		<!-- References -->
-
-		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity human-name="message-boards message" local-service="true" name="MBMessage" remote-service="true" trash-enabled="true" uuid="true">
 
@@ -524,12 +469,6 @@
 		<exception>CategoryName</exception>
 		<exception>DiscussionMaxComments</exception>
 		<exception>LockedThread</exception>
-		<exception>MailingListEmailAddress</exception>
-		<exception>MailingListInServerName</exception>
-		<exception>MailingListInUserName</exception>
-		<exception>MailingListOutEmailAddress</exception>
-		<exception>MailingListOutServerName</exception>
-		<exception>MailingListOutUserName</exception>
 		<exception>MessageBody</exception>
 		<exception>MessageSubject</exception>
 		<exception>RequiredMessage</exception>

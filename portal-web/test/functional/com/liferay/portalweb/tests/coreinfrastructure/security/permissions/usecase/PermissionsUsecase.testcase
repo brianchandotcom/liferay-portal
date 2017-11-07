@@ -26,6 +26,7 @@
 	</tear-down>
 
 	<command name="ViewNoDisplayPortletConfigurationPermission" priority="4">
+		<property name="custom.properties" value="virtual.hosts.default.site.name=Guest" />
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 

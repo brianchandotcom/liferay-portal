@@ -36,10 +36,9 @@ public interface AggregateRatingIdentifier extends Identifier {
 	 * Creates and returns a new aggregate rating identifier from a class name
 	 * and class PK.
 	 *
-	 * @param  className the identifier's class name
-	 * @param  classPK the identifier's class PK
+	 * @param  className the class name
+	 * @param  classPK the class PK
 	 * @return the new aggregate rating identifier
-	 * @review
 	 */
 	public static AggregateRatingIdentifier create(
 		String className, long classPK) {
@@ -73,18 +72,16 @@ public interface AggregateRatingIdentifier extends Identifier {
 	}
 
 	/**
-	 * Returns the class name.
+	 * Returns the aggregate rating identifier's class name.
 	 *
-	 * @return the class name.
-	 * @review
+	 * @return the aggregate rating identifier's class name
 	 */
 	public String getClassName();
 
 	/**
-	 * Returns the class PK.
+	 * Returns the aggregate rating identifier's class PK.
 	 *
-	 * @return the class PK.
-	 * @review
+	 * @return the aggregate rating identifier's class PK
 	 */
 	public long getClassPK();
 

@@ -39,11 +39,10 @@ public interface CommentableIdentifier extends Identifier {
 	 * Creates and returns a new commentable identifier from a class name, class
 	 * PK, and group ID.
 	 *
-	 * @param  className the identifier's class name
-	 * @param  classPK the identifier's class PK
-	 * @param  groupId the identifier's group ID
+	 * @param  className the class name
+	 * @param  classPK the class PK
+	 * @param  groupId the group ID
 	 * @return the new commentable identifier
-	 * @review
 	 */
 	public static CommentableIdentifier create(
 		String className, long classPK, long groupId) {
@@ -83,26 +82,23 @@ public interface CommentableIdentifier extends Identifier {
 	}
 
 	/**
-	 * Returns the class name.
+	 * Returns the commentable identifier's class name.
 	 *
-	 * @return the class name.
-	 * @review
+	 * @return the commentable identifier's class name
 	 */
 	public String getClassName();
 
 	/**
-	 * Returns the class PK.
+	 * Returns the commentable identifier's class PK.
 	 *
-	 * @return the class PK.
-	 * @review
+	 * @return the commentable identifier's class PK
 	 */
 	public long getClassPK();
 
 	/**
-	 * Returns the group ID.
+	 * Returns the commentable identifier's group ID.
 	 *
-	 * @return the group ID.
-	 * @review
+	 * @return the commentable identifier's group ID
 	 */
 	public long getGroupId();
 

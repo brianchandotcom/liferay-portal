@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.cal.DayAndPosition;
 import com.liferay.portal.kernel.cal.Duration;
 import com.liferay.portal.kernel.cal.Recurrence;
 import com.liferay.portal.kernel.cal.RecurrenceSerializer;
+import com.liferay.portal.kernel.cluster.ClusterableContextThreadLocal;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -52,8 +53,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.scheduler.SchedulerClusterInvokingThreadLocal;
-import com.liferay.portal.scheduler.configuration.SchedulerEngineHelperConfiguration;
+import com.liferay.portal.scheduler.internal.configuration.SchedulerEngineHelperConfiguration;
 import com.liferay.portal.scheduler.internal.messaging.config.SchedulerProxyMessagingConfigurator;
 import com.liferay.portal.scheduler.internal.messaging.config.ScriptingMessageListener;
 
@@ -972,7 +972,8 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 				destinationName = DestinationNames.SCHEDULER_DISPATCH;
 			}
 
-			SchedulerClusterInvokingThreadLocal.setEnabled(false);
+			ClusterableContextThreadLocal.putThreadLocalContext(
+				SchedulerEngine.SCHEDULER_CLUSTER_INVOKING, false);
 
 			try {
 				schedule(
@@ -1020,7 +1021,8 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 				_log.error(se, se);
 			}
 			finally {
-				SchedulerClusterInvokingThreadLocal.setEnabled(true);
+				ClusterableContextThreadLocal.putThreadLocalContext(
+					SchedulerEngine.SCHEDULER_CLUSTER_INVOKING, true);
 			}
 
 			return null;
@@ -1049,7 +1051,8 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 				storageType = storageTypeAware.getStorageType();
 			}
 
-			SchedulerClusterInvokingThreadLocal.setEnabled(false);
+			ClusterableContextThreadLocal.putThreadLocalContext(
+				SchedulerEngine.SCHEDULER_CLUSTER_INVOKING, false);
 
 			try {
 				update(schedulerEntry.getTrigger(), storageType);
@@ -1058,7 +1061,8 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 				_log.error(se, se);
 			}
 			finally {
-				SchedulerClusterInvokingThreadLocal.setEnabled(true);
+				ClusterableContextThreadLocal.putThreadLocalContext(
+					SchedulerEngine.SCHEDULER_CLUSTER_INVOKING, true);
 			}
 		}
 
@@ -1089,7 +1093,8 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 				storageType = storageTypeAware.getStorageType();
 			}
 
-			SchedulerClusterInvokingThreadLocal.setEnabled(false);
+			ClusterableContextThreadLocal.putThreadLocalContext(
+				SchedulerEngine.SCHEDULER_CLUSTER_INVOKING, false);
 
 			try {
 				delete(schedulerEntry, storageType);
@@ -1098,7 +1103,8 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 				_log.error(se, se);
 			}
 			finally {
-				SchedulerClusterInvokingThreadLocal.setEnabled(true);
+				ClusterableContextThreadLocal.putThreadLocalContext(
+					SchedulerEngine.SCHEDULER_CLUSTER_INVOKING, true);
 			}
 
 			ServiceRegistration<MessageListener>

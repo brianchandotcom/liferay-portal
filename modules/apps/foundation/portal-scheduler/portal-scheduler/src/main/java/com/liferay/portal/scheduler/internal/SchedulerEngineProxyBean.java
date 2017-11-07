@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.scheduler;
+package com.liferay.portal.scheduler.internal;
 
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.proxy.BaseProxyBean;

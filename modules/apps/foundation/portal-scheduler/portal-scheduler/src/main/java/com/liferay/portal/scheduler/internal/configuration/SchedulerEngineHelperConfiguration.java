@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.scheduler.configuration;
+package com.liferay.portal.scheduler.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -20,10 +20,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 
 /**
  * @author Michael C. Han
- * @deprecated As of 3.1.0, replaced by {@link
- *              com.liferay.portal.scheduler.internal.configuration.SchedulerEngineHelperConfiguration}
  */
-@Deprecated
 @ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
 	id = "com.liferay.portal.scheduler.configuration.SchedulerEngineHelperConfiguration",

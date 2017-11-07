@@ -12,10 +12,8 @@
  * details.
  */
 
-package com.liferay.portal.scheduler;
+package com.liferay.portal.kernel.scheduler;
 
-import com.liferay.portal.kernel.scheduler.JobState;
-import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.util.ArrayList;

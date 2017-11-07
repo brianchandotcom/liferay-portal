@@ -23,7 +23,8 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.scheduler.BaseSchedulerEngineConfigurator;
+
+import java.util.Dictionary;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -36,16 +37,13 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tina Tian
  */
 @Component(immediate = true, service = ClusterSchedulerEngineConfigurator.class)
-public class ClusterSchedulerEngineConfigurator
-	extends BaseSchedulerEngineConfigurator {
+public class ClusterSchedulerEngineConfigurator {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		SchedulerEngine schedulerEngine = createSchedulerEngineProxy();
-
 		if (_clusterLink.isEnabled()) {
 			ClusterSchedulerEngine clusterSchedulerEngine =
-				new ClusterSchedulerEngine(schedulerEngine, _triggerFactory);
+				new ClusterSchedulerEngine(_schedulerEngine, _triggerFactory);
 
 			clusterSchedulerEngine.setClusterExecutor(_clusterExecutor);
 			clusterSchedulerEngine.setClusterMasterExecutor(
@@ -56,12 +54,17 @@ public class ClusterSchedulerEngineConfigurator
 				IdentifiableOSGiService.class, clusterSchedulerEngine,
 				new HashMapDictionary<String, Object>());
 
-			schedulerEngine = ClusterableProxyFactory.createClusterableProxy(
+			_schedulerEngine = ClusterableProxyFactory.createClusterableProxy(
 				clusterSchedulerEngine);
 		}
 
-		_schedulerEngineServiceRegistration = registerSchedulerEngine(
-			bundleContext, schedulerEngine);
+		Dictionary<String, Object> schedulerEngineDictionary =
+			new HashMapDictionary<>();
+
+		schedulerEngineDictionary.put("scheduler.engine.proxy", Boolean.TRUE);
+
+		_schedulerEngineServiceRegistration = bundleContext.registerService(
+			SchedulerEngine.class, _schedulerEngine, schedulerEngineDictionary);
 	}
 
 	@Deactivate
@@ -97,6 +100,11 @@ public class ClusterSchedulerEngineConfigurator
 		_props = props;
 	}
 
+	@Reference(target = "(scheduler.engine.proxy.bean=true)", unbind = "-")
+	protected void setSchedulerEngine(SchedulerEngine schedulerEngine) {
+		_schedulerEngine = schedulerEngine;
+	}
+
 	@Reference(unbind = "-")
 	protected void setSingleDestinationMessageSenderFactory(
 		SingleDestinationMessageSenderFactory
@@ -112,6 +120,7 @@ public class ClusterSchedulerEngineConfigurator
 	private ClusterLink _clusterLink;
 	private ClusterMasterExecutor _clusterMasterExecutor;
 	private Props _props;
+	private SchedulerEngine _schedulerEngine;
 	private volatile ServiceRegistration<SchedulerEngine>
 		_schedulerEngineServiceRegistration;
 	private ServiceRegistration<IdentifiableOSGiService> _serviceRegistration;

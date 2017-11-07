@@ -45,7 +45,7 @@ public class ReadingTimeTag extends AttributesTagSupport {
 	@Override
 	public int doEndTag() throws JspException {
 		try {
-			JspWriter out = pageContext.getOut();
+			JspWriter jspWriter = pageContext.getOut();
 
 			if (_model != null) {
 				long classNameId = ClassNameLocalServiceUtil.getClassNameId(
@@ -60,24 +60,22 @@ public class ReadingTimeTag extends AttributesTagSupport {
 						readingTimeEntry);
 
 					if (Validator.isNotNull(readingTimeMessage)) {
-						StringBundler sb = new StringBundler(10);
-
-						sb.append("<time class=\"reading-time\" datetime=\"");
-						sb.append(readingTimeEntry.getReadingTimeInSeconds());
-						sb.append("\"");
+						jspWriter.write(
+							"<time class=\"reading-time\" datetime=\"");
+						jspWriter.write(
+							readingTimeEntry.getReadingTimeInSeconds());
+						jspWriter.write("\"");
 
 						if (Validator.isNotNull(_id)) {
-							sb.append(" id=\"");
-							sb.append(_getNamespace());
-							sb.append(_id);
-							sb.append("\"");
+							jspWriter.write(" id=\"");
+							jspWriter.write(_getNamespace());
+							jspWriter.write(_id);
+							jspWriter.write("\"");
 						}
 
-						sb.append(">");
-						sb.append(readingTimeMessage);
-						sb.append("</time>");
-
-						out.print(sb);
+						jspWriter.write(">");
+						jspWriter.write(readingTimeMessage);
+						jspWriter.write("</time>");
 					}
 				}
 			}

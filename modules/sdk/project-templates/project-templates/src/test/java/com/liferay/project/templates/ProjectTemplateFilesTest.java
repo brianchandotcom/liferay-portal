@@ -159,7 +159,7 @@ public class ProjectTemplateFilesTest {
 
 	private void _testArchetypeMetadataXml(
 			Path projectTemplateDirPath, String projectTemplateDirName,
-			Properties bndProperties, boolean requireAuthorProperty,
+			boolean requireAuthorProperty,
 			Set<String> archetypeResourcePropertyNames)
 		throws IOException {
 
@@ -240,59 +240,10 @@ public class ProjectTemplateFilesTest {
 
 		requiredPropertyNames.addAll(_archetypeMetadataXmlDefaultPropertyNames);
 
-		List<Path> definitionsVmPaths = new ArrayList<>();
-
-		Path definitionsVmPath = projectTemplateDirPath.resolve(
-			"src/main/resources/definitions.vm");
-
-		if (Files.exists(definitionsVmPath)) {
-			definitionsVmPaths.add(definitionsVmPath);
-		}
-
-		String includeResource = bndProperties.getProperty(
-			Constants.INCLUDERESOURCE);
-
-		if (Validator.isNotNull(includeResource)) {
-			for (String fileName : includeResource.split(",")) {
-				if (!fileName.endsWith("/definitions.vm")) {
-					continue;
-				}
-
-				definitionsVmPath = projectTemplateDirPath.resolve(fileName);
-
-				if (Files.exists(definitionsVmPath)) {
-					definitionsVmPaths.add(definitionsVmPath);
-				}
-			}
-		}
-
-		Set<String> declaredVariables = new HashSet<>();
-		StringBuilder messageSuffix = new StringBuilder(
-			archetypeMetadataXmlPath.toString());
-
-		for (int i = 0; i < definitionsVmPaths.size(); i++) {
-			definitionsVmPath = definitionsVmPaths.get(i);
-
-			String definitionsVm = FileUtil.read(definitionsVmPath);
-
-			matcher = _velocitySetDirectivePattern.matcher(definitionsVm);
-
-			while (matcher.find()) {
-				declaredVariables.add(matcher.group(1));
-			}
-
-			messageSuffix.append(", ");
-
-			if (i == (definitionsVmPaths.size() - 1)) {
-				messageSuffix.append("or ");
-			}
-		}
-
 		for (String name : archetypeResourcePropertyNames) {
 			Assert.assertTrue(
 				"Undeclared \"" + name + "\" property. Please add it to " +
-					messageSuffix,
-				declaredVariables.contains(name) ||
+					archetypeMetadataXmlPath,
 				requiredPropertyNames.contains(name));
 		}
 	}
@@ -333,9 +284,9 @@ public class ProjectTemplateFilesTest {
 		Assert.assertTrue(
 			"Missing " + buildGradlePath, Files.exists(buildGradlePath));
 
-		if (!projectTemplateDirName.equals("project-templates-workspace")) {
-			String buildGradle = FileUtil.read(buildGradlePath);
+		String buildGradle = FileUtil.read(buildGradlePath);
 
+		if (!projectTemplateDirName.equals("project-templates-workspace")) {
 			Matcher matcher = _buildGradleWorkspaceVariantPattern.matcher(
 				buildGradle);
 
@@ -343,6 +294,11 @@ public class ProjectTemplateFilesTest {
 				buildGradlePath + " is missing non-workspace specific variant",
 				matcher.matches());
 		}
+
+		Assert.assertFalse(
+			buildGradlePath + " contains \"latest.release\". Please use a " +
+				"tokenized version from /modules/build.gradle",
+			buildGradle.contains("latest.release"));
 	}
 
 	private void _testGitIgnore(
@@ -695,10 +651,8 @@ public class ProjectTemplateFilesTest {
 		String projectTemplateDirName = String.valueOf(
 			projectTemplateDirPath.getFileName());
 
-		Properties bndProperties = _testBndBnd(projectTemplateDirPath);
-
+		_testBndBnd(projectTemplateDirPath);
 		_testBuildGradle(projectTemplateDirName, archetypeResourcesDirPath);
-
 		_testGitIgnore(projectTemplateDirName, archetypeResourcesDirPath);
 		_testGradleWrapper(archetypeResourcesDirPath);
 		_testMavenWrapper(archetypeResourcesDirPath);
@@ -775,7 +729,7 @@ public class ProjectTemplateFilesTest {
 			});
 
 		_testArchetypeMetadataXml(
-			projectTemplateDirPath, projectTemplateDirName, bndProperties,
+			projectTemplateDirPath, projectTemplateDirName,
 			requireAuthorProperty.get(), archetypeResourcePropertyNames);
 	}
 
@@ -840,7 +794,7 @@ public class ProjectTemplateFilesTest {
 				text.startsWith(xmlDeclaration));
 		}
 
-		if (!fileName.endsWith(".es.js")) {
+		if (!fileName.endsWith(".js")) {
 			matcher = _archetypeResourcePropertyNamePattern.matcher(text);
 
 			while (matcher.find()) {
@@ -903,12 +857,10 @@ public class ProjectTemplateFilesTest {
 		"[a-z]+(?:-[a-z]+)*");
 	private static final Set<String> _textFileExtensions = new HashSet<>(
 		Arrays.asList(
-			"bnd", "gradle", "java", "js", "jsp", "jspf", "properties", "vm",
-			"xml"));
+			"bnd", "gradle", "java", "js", "json", "jsp", "jspf", "properties",
+			"vm", "xml"));
 	private static final Pattern _velocityDirectivePattern = Pattern.compile(
 		"#(if|set)\\s*\\(\\s*(.+)\\s*\\)");
-	private static final Pattern _velocitySetDirectivePattern = Pattern.compile(
-		"#set\\s*\\(\\s*\\$(\\S+)\\s*=");
 	private static final Map<String, String> _xmlDeclarations = new HashMap<>();
 
 	static {

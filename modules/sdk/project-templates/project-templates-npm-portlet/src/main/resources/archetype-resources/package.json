@@ -6,7 +6,7 @@
 		"liferay-npm-bundler": "1.2.2",
 		"liferay-npm-bundler-preset-standard": "1.2.2"
 	},
-	"main": "js/index.es.js",
+	"main": "js/index.js",
 	"name": "${artifactId}",
 	"scripts": {
 		"build": "babel --source-maps -d build/resources/main/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler"

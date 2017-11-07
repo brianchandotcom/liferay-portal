@@ -12,7 +12,7 @@
 		"liferay-npm-bundler-preset-standard": "1.2.2",
 		"metal-tools-soy": "4.2.7"
 	},
-	"main": "js/index.es.js",
+	"main": "js/index.js",
 	"name": "${artifactId}",
 	"scripts": {
 		"build": "metalsoy && babel --source-maps -d build/resources/main/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler"

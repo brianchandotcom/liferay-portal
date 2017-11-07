@@ -2,7 +2,6 @@ Bundle-Description: Creates a Liferay MVC portlet with npm and isomorphic code s
 Bundle-Name: Liferay Project Templates npm Isomorphic Portlet
 Bundle-SymbolicName: com.liferay.project.templates.npm.isomorphic.portlet
 Bundle-Version: 1.0.1
--includeresource: ../project-templates-npm-angular-portlet/src/main/resources/definitions.vm
 -removeheaders:\
 	Import-Package,\
 	Private-Package,\

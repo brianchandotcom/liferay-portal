@@ -258,7 +258,7 @@ public class SharepointServerResponseConverter {
 		SharepointFileVersion _createFileVersion(
 			T extRepositoryFileEntry, JSONObject jsonObject) {
 
-		String id = jsonObject.getString("Id");
+		String id = jsonObject.getString("ID");
 
 		String extRepositoryModelKey =
 			extRepositoryFileEntry.getExtRepositoryModelKey() +

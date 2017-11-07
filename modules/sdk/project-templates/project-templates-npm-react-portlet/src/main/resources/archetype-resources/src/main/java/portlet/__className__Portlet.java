@@ -38,16 +38,16 @@ public class ${className}Portlet extends MVCPortlet {
 	@Override
 	public void doView(
 		RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
+			throws IOException, PortletException {
 
 		JSPackage jsPackage = _npmResolver.getJSPackage();
 
 		renderRequest.setAttribute(
-		"bootstrapRequire",
-		jsPackage.getResolvedId() + " as bootstrapRequire");
+			"bootstrapRequire",
+			jsPackage.getResolvedId() + " as bootstrapRequire");
 
 		super.doView(renderRequest, renderResponse);
-		}
+	}
 
 	@Reference
 	private NPMResolver _npmResolver;

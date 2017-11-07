@@ -7,11 +7,12 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
+import java.io.IOException;
+
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import java.io.IOException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,6 +51,6 @@ public class ${className}Portlet extends MVCPortlet {
 	}
 
 	@Reference
-    private NPMResolver _npmResolver;
+	private NPMResolver _npmResolver;
 
 }

@@ -20,8 +20,6 @@
 OrderSummaryCheckoutStepDisplayContext orderSummaryCheckoutStepDisplayContext = (OrderSummaryCheckoutStepDisplayContext)request.getAttribute(CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT);
 
 CommerceCart commerceCart = orderSummaryCheckoutStepDisplayContext.getCommerceCart();
-
-CommerceAddress billingAddress = commerceCart.getBillingAddress();
 %>
 
 <div class="address-container row">
@@ -31,26 +29,11 @@ CommerceAddress billingAddress = commerceCart.getBillingAddress();
 				<div class="card-col-content card-col-gutters">
 					<h3><liferay-ui:message key="billing-address" /></h3>
 
-					<h4><%= billingAddress.getName() %></h4>
-					<p><%= billingAddress.getStreet1() %></p>
-
-					<c:if test="<%= Validator.isNotNull(billingAddress.getStreet2()) %>">
-						<p><%= billingAddress.getStreet2() %></p>
-					</c:if>
-
-					<c:if test="<%= Validator.isNotNull(billingAddress.getStreet3()) %>">
-						<p><%= billingAddress.getStreet3() %></p>
-					</c:if>
-
-					<p><%= billingAddress.getCity() %></p>
-
 					<%
-					CommerceCountry commerceCountry = billingAddress.getCommerceCountry();
+					request.setAttribute("address.jsp-commerceAddress", commerceCart.getBillingAddress());
 					%>
 
-					<c:if test="<%= commerceCountry != null %>">
-						<p><%= commerceCountry.getName(locale) %></p>
-					</c:if>
+					<liferay-util:include page="/address.jsp" servletContext="<%= application %>" />
 				</div>
 			</div>
 		</div>

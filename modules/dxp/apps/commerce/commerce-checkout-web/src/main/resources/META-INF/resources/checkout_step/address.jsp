@@ -40,7 +40,6 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 
 			<%
 			for (CommerceAddress commerceAddress : commerceAddresses) {
-				commerceAddress = commerceAddress.toEscapedModel();
 			%>
 
 				<div class="col-md-4">
@@ -51,26 +50,12 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 							<div class="card card-horizontal">
 								<div class="card-row">
 									<div class="card-col-content card-col-gutters">
-										<h4><%= commerceAddress.getName() %></h4>
-										<p><%= commerceAddress.getStreet1() %></p>
-
-										<c:if test="<%= Validator.isNotNull(commerceAddress.getStreet2()) %>">
-											<p><%= commerceAddress.getStreet2() %></p>
-										</c:if>
-
-										<c:if test="<%= Validator.isNotNull(commerceAddress.getStreet3()) %>">
-											<p><%= commerceAddress.getStreet3() %></p>
-										</c:if>
-
-										<p><%= commerceAddress.getCity() %></p>
 
 										<%
-										CommerceCountry commerceCountry = commerceAddress.getCommerceCountry();
+										request.setAttribute("address.jsp-commerceAddress", commerceAddress);
 										%>
 
-										<c:if test="<%= commerceCountry != null %>">
-											<p><%= HtmlUtil.escape(commerceCountry.getName(locale)) %></p>
-										</c:if>
+										<liferay-util:include page="/address.jsp" servletContext="<%= application %>" />
 									</div>
 								</div>
 							</div>

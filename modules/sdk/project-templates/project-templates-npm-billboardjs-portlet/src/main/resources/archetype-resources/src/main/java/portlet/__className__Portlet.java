@@ -53,7 +53,7 @@ public class ${className}Portlet extends MVCPortlet {
 			"stylesheetURL",
 			contextPath + "/node_modules/" +
 				_npmResolver.resolveModuleName("billboard.js") +
-				"/dist/billboard.css");
+					"/dist/billboard.css");
 
 		super.doView(renderRequest, renderResponse);
 	}

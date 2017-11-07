@@ -14,6 +14,8 @@
 
 package com.liferay.project.templates;
 
+import aQute.bnd.osgi.Constants;
+
 import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.Validator;
 import com.liferay.project.templates.internal.util.WorkspaceUtil;
@@ -238,15 +240,38 @@ public class ProjectTemplateFilesTest {
 
 		requiredPropertyNames.addAll(_archetypeMetadataXmlDefaultPropertyNames);
 
-		StringBuilder messageSuffix = new StringBuilder(
-			archetypeMetadataXmlPath.toString());
-
 		for (String name : archetypeResourcePropertyNames) {
 			Assert.assertTrue(
 				"Undeclared \"" + name + "\" property. Please add it to " +
-					messageSuffix,
+					archetypeMetadataXmlPath.toString(),
 				requiredPropertyNames.contains(name));
 		}
+	}
+
+	private Properties _testBndBnd(Path projectTemplateDirPath)
+		throws IOException {
+
+		Path bndBndPath = projectTemplateDirPath.resolve("bnd.bnd");
+
+		Properties properties = FileUtil.readProperties(bndBndPath);
+
+		String bundleDescription = properties.getProperty(
+			Constants.BUNDLE_DESCRIPTION);
+
+		Assert.assertTrue(
+			"Missing \"" + Constants.BUNDLE_DESCRIPTION + "\" header in " +
+				bndBndPath,
+			Validator.isNotNull(bundleDescription));
+
+		Matcher matcher = _bundleDescriptionPattern.matcher(bundleDescription);
+
+		Assert.assertTrue(
+			"Header \"" + Constants.BUNDLE_DESCRIPTION + "\" in " + bndBndPath +
+				" must match pattern \"" + _bundleDescriptionPattern.pattern() +
+					"\"",
+			matcher.matches());
+
+		return properties;
 	}
 
 	private void _testBuildGradle(
@@ -273,7 +298,7 @@ public class ProjectTemplateFilesTest {
 		String buildGradleContent = FileUtil.read(buildGradlePath);
 
 		Assert.assertFalse(
-			buildGradlePath + " contatins latest.release. Should use a " +
+			buildGradlePath + " contains latest.release. Should use a " +
 				"tokenized version from /modules/build.gradle",
 			buildGradleContent.contains("latest.release"));
 	}
@@ -628,10 +653,9 @@ public class ProjectTemplateFilesTest {
 		String projectTemplateDirName = String.valueOf(
 			projectTemplateDirPath.getFileName());
 
+		_testBndBnd(projectTemplateDirPath);
 		_testBuildGradle(projectTemplateDirName, archetypeResourcesDirPath);
-
 		_testGitIgnore(projectTemplateDirName, archetypeResourcesDirPath);
-
 		_testGradleWrapper(archetypeResourcesDirPath);
 		_testMavenWrapper(archetypeResourcesDirPath);
 		_testPomXml(archetypeResourcesDirPath, documentBuilder);
@@ -839,8 +863,6 @@ public class ProjectTemplateFilesTest {
 			"vm", "xml"));
 	private static final Pattern _velocityDirectivePattern = Pattern.compile(
 		"#(if|set)\\s*\\(\\s*(.+)\\s*\\)");
-	private static final Pattern _velocitySetDirectivePattern = Pattern.compile(
-		"#set\\s*\\(\\s*\\$(\\S+)\\s*=");
 	private static final Map<String, String> _xmlDeclarations = new HashMap<>();
 
 	static {

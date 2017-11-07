@@ -46,9 +46,12 @@ public class ${className}Portlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			"bootstrapRequire",
 			jsPackage.getResolvedId() + " as bootstrapRequire");
+
+		String contextPath = renderRequest.getContextPath();
+
 		renderRequest.setAttribute(
 			"stylesheetURL",
-			"/o/${artifactId}/node_modules/" +
+			contextPath + "/node_modules/" +
 				_npmResolver.resolveModuleName("billboard.js") +
 				"/dist/billboard.css");
 

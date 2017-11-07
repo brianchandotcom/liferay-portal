@@ -283,7 +283,9 @@ public class AxisBuild extends BaseBuild {
 					continue;
 				}
 
-				if (isTestFailingInUpstreamJob(testResult)) {
+				if (UpstreamFailureUtil.isTestFailingInUpstreamJob(
+						testResult)) {
+
 					upstreamJobFailureElements.add(
 						testResult.getGitHubElement(getTestrayLogsURL()));
 

@@ -347,6 +347,7 @@
 		<exec executable="git">
 			<arg value="fetch" />
 			<arg value="--force" />
+			<arg value="--no-tags" />
 			<arg value="upstream" />
 			<arg value="${public.branch.name}" />
 		</exec>
@@ -356,6 +357,7 @@
 		<exec executable="git">
 			<arg value="fetch" />
 			<arg value="--force" />
+			<arg value="--no-tags" />
 			<arg value="upstream" />
 			<arg value="${private.branch.name}" />
 		</exec>

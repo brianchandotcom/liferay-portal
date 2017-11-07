@@ -10029,6 +10029,13 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 							<available file="${liferay.home}/logs" type="dir" />
 						</waitfor>
 
+						<if>
+							<equals arg1="${app.server.type}" arg2="jboss" />
+							<then>
+								<antcall target="wait-for-jboss-war-deploy" />
+							</then>
+						</if>
+
 						<antcall target="wait-for-plugins-deployment" />
 					</then>
 				</if>
@@ -10383,6 +10390,52 @@ jdbc.default.password=${database.password}</echo>
 		</trycatch>
 
 		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.configuration.IndexStatusManagerConfiguration.cfg">indexReadOnly=false</echo>
+	</target>
+
+	<target name="wait-for-jboss-war-deploy">
+		<first id="first">
+			<fileset dir="${liferay.home}/logs" includes="*.log" />
+		</first>
+
+		<var name="log.file.path" value="${toString:first}" />
+
+		<beanshell>
+			<![CDATA[
+				import org.apache.commons.io.FileUtils;
+
+				String logFilePath = project.getProperty("log.file.path");
+
+				logFilePath = logFilePath.replaceAll("\\\\", "/");
+
+				int second = 0;
+
+				while (true) {
+					try {
+						File file = new File(logFilePath);
+
+						String content = FileUtils.readFileToString(file);
+
+						if (content.contains("Deployed \"ROOT.war\"")) {
+
+							break;
+						}
+					}
+					catch (Exception e) {
+						e.printStackTrace();
+					}
+
+					if (second >= 600) {
+						break;
+					}
+
+					second++;
+
+					Thread.sleep(1000);
+				}
+			]]>
+		</beanshell>
+
+
 	</target>
 
 	<target name="wait-for-plugins-deployment">

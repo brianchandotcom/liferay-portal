@@ -60,7 +60,7 @@ public class JavaMultiPlusConcatCheck extends BaseJavaTermCheck {
 
 	@Override
 	protected String[] getCheckableJavaTermNames() {
-		return new String[] {JAVA_CONSTRUCTOR, JAVA_METHOD};
+		return new String[] {JAVA_CONSTRUCTOR, JAVA_METHOD, JAVA_VARIABLE};
 	}
 
 	private void _checkConcat(

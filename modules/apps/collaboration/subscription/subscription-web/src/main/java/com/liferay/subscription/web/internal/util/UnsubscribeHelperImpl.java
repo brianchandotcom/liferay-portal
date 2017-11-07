@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.subscription.util.UnsubscribeHelper;
-import com.liferay.subscription.web.configuration.SubscriptionConfiguration;
+import com.liferay.subscription.web.internal.configuration.SubscriptionConfiguration;
 
 import java.util.Map;
 
@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	configurationPid = "com.liferay.subscription.web.configuration.SubscriptionConfiguration",
+	configurationPid = "com.liferay.subscription.web.internal.configuration.SubscriptionConfiguration",
 	immediate = true, service = UnsubscribeHelper.class
 )
 public class UnsubscribeHelperImpl implements UnsubscribeHelper {

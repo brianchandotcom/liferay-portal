@@ -771,9 +771,11 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoEditCP">
+		<execute macro="WebContentNavigator#gotoPreviewEntryCP">
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
+
+		<execute macro="Navigator#gotoBack" />
 	</command>
 
 	<command name="StagingSiteVariationIncompletePage" priority="5">

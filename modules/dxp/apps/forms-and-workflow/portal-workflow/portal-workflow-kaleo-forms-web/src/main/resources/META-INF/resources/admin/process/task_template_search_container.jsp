@@ -123,10 +123,10 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 					navigationStartsOn: '<%= DDMNavigationHelper.SELECT_TEMPLATE %>',
 					portletResourceNamespace: '<%= renderResponse.getNamespace() %>',
 					refererPortletName: '<%= portletDisplay.getId() %>',
+					resourceClassNameId: <%= scopeClassNameId %>,
 					showBackURL: false,
 					showHeader: false,
 					structureAvailableFields: '<%= renderResponse.getNamespace() + "getAvailableFields" %>',
-					resourceClassNameId: <%= scopeClassNameId %>,
 					title: '<liferay-ui:message key="form" />'
 				},
 				function(event) {
@@ -174,7 +174,8 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 		['liferay-util']
 	);
 
-	Liferay.on(
+	Liferay.provide(
+		window,
 		'<portlet:namespace />unassignForm',
 		function(event) {
 			var A = AUI();

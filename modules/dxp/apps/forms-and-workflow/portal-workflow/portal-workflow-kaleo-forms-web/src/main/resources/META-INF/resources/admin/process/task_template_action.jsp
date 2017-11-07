@@ -65,7 +65,7 @@ String backURL = (String)row.getParameter("backURL");
 
 		<liferay-ui:icon
 			message="unassign-form"
-			onClick='<%= "Liferay.fire('" + renderResponse.getNamespace() + "unassignForm', {taskFormPairsParamName: '" + paramName + "', node: this});" %>'
+			onClick='<%= "javascript:" + renderResponse.getNamespace() + "unassignForm({taskFormPairsParamName: '" + paramName + "', node: this});" %>'
 			url="javascript:;"
 		/>
 

@@ -19,8 +19,10 @@ import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
+import com.liferay.exportimport.kernel.exception.RemoteExportException;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -44,6 +46,8 @@ import com.liferay.product.navigation.site.administration.internal.application.l
 import com.liferay.product.navigation.site.administration.internal.constants.SiteAdministrationWebKeys;
 import com.liferay.site.util.GroupURLProvider;
 import com.liferay.site.util.RecentGroupManager;
+
+import java.net.ConnectException;
 
 import java.util.List;
 import java.util.Objects;
@@ -164,7 +168,7 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 		return "live";
 	}
 
-	public String getLiveGroupURL() {
+	public String getLiveGroupURL() throws RemoteExportException {
 		if (_liveGroupURL != null) {
 			return _liveGroupURL;
 		}
@@ -186,6 +190,22 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 				}
 
 				_log.error("Unable to get live group URL: " + pe.getMessage());
+			}
+			catch (SystemException se) {
+				Throwable cause = se.getCause();
+
+				if (!(cause instanceof ConnectException)) {
+					throw se;
+				}
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to connect to remote live: " +
+							cause.getMessage());
+				}
+
+				throw new RemoteExportException(
+					RemoteExportException.BAD_CONNECTION);
 			}
 		}
 		else if (group.isStagingGroup()) {

@@ -110,6 +110,8 @@ public interface TrashEntryLocalService extends BaseLocalService,
 
 	public void deleteEntries(long groupId);
 
+	public void deleteEntries(long groupId, boolean deleteTrashedModels);
+
 	/**
 	* Deletes the trash entry with the primary key.
 	*

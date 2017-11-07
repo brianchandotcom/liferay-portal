@@ -196,10 +196,30 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 	@Override
 	public void deleteEntries(long groupId) {
+		deleteEntries(groupId, false);
+	}
+
+	@Override
+	public void deleteEntries(long groupId, boolean deleteTrashedModels) {
 		List<TrashEntry> entries = getEntries(groupId);
 
 		for (TrashEntry entry : entries) {
 			deleteEntry(entry);
+
+			if (deleteTrashedModels) {
+				TrashHandler trashHandler =
+					TrashHandlerRegistryUtil.getTrashHandler(
+						entry.getClassName());
+
+				if (trashHandler != null) {
+					try {
+						trashHandler.deleteTrashEntry(entry.getClassPK());
+					}
+					catch (Exception e) {
+						_log.error(e, e);
+					}
+				}
+			}
 		}
 	}
 

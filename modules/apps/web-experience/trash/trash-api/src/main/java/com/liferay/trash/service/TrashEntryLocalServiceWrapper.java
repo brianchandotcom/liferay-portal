@@ -97,6 +97,11 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 		_trashEntryLocalService.deleteEntries(groupId);
 	}
 
+	@Override
+	public void deleteEntries(long groupId, boolean deleteTrashedModels) {
+		_trashEntryLocalService.deleteEntries(groupId, deleteTrashedModels);
+	}
+
 	/**
 	* Deletes the trash entry with the primary key.
 	*

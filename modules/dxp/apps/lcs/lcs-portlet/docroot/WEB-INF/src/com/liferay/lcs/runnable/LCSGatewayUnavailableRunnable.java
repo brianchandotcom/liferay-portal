@@ -217,9 +217,9 @@ public class LCSGatewayUnavailableRunnable implements Runnable {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LCSGatewayUnavailableRunnable.class);
 
-	private final int _statusCode;
 	private final LCSConnectionManager _lcsConnectionManager;
 	private final LCSGatewayService _lcsGatewayService;
 	private final float[] _multipliers = {0.5F, 1, 2, 5};
+	private final int _statusCode;
 
 }

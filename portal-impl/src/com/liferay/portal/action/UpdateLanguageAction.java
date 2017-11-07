@@ -122,13 +122,8 @@ public class UpdateLanguageAction extends Action {
 		}
 		else {
 			if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 0) {
-				if (themeDisplay.isI18n()) {
-					redirect = layout.getFriendlyURL(locale);
-				}
-				else {
-					redirect = PortalUtil.getLayoutURL(
-						layout, themeDisplay, locale);
-				}
+				redirect = PortalUtil.getLayoutURL(
+					layout, themeDisplay, locale);
 			}
 			else {
 				redirect = PortalUtil.getLayoutFriendlyURL(

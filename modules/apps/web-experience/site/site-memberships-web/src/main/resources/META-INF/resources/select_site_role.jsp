@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long groupId = ParamUtil.getLong(request, "groupId");
+long groupId = themeDisplay.getSiteGroupId();
 int roleType = ParamUtil.getInteger(request, "roleType", RoleConstants.TYPE_SITE);
 
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");

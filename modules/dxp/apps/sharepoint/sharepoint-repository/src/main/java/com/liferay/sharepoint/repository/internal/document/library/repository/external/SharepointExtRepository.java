@@ -158,6 +158,16 @@ public class SharepointExtRepository implements ExtRepository {
 
 			_post(url);
 		}
+		catch (PrincipalException pe) {
+
+			// See LPS-75604
+
+			String message = pe.getMessage();
+
+			if ((message == null) || !message.endsWith("423 Locked")) {
+				throw pe;
+			}
+		}
 		catch (UnirestException ue) {
 			throw new PortalException(ue);
 		}
@@ -176,6 +186,19 @@ public class SharepointExtRepository implements ExtRepository {
 
 			return getExtRepositoryObject(
 				ExtRepositoryObjectType.FILE, extRepositoryFileEntryKey);
+		}
+		catch (PrincipalException pe) {
+
+			// See LPS-75604
+
+			String message = pe.getMessage();
+
+			if ((message != null) && message.endsWith("423 Locked")) {
+				return getExtRepositoryObject(
+					ExtRepositoryObjectType.FILE, extRepositoryFileEntryKey);
+			}
+
+			throw pe;
 		}
 		catch (UnirestException ue) {
 			throw new PortalException(ue);

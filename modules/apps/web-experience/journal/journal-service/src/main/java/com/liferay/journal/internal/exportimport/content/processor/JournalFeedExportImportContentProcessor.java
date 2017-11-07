@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
@@ -117,17 +118,31 @@ public class JournalFeedExportImportContentProcessor
 
 		newGroupFriendlyURL = newGroupFriendlyURL.substring(1);
 
-		String[] friendlyURLParts = StringUtil.split(
-			feed.getTargetLayoutFriendlyUrl(), '/');
+		String newTargetLayoutFriendlyURL = StringUtil.replace(
+			feed.getTargetLayoutFriendlyUrl(), DATA_HANDLER_GROUP_FRIENDLY_URL,
+			newGroupFriendlyURL);
 
-		String oldGroupFriendlyURL = friendlyURLParts[2];
+		long plid = _portal.getPlidFromFriendlyURL(
+			portletDataContext.getCompanyId(), newTargetLayoutFriendlyURL);
 
-		if (oldGroupFriendlyURL.equals(DATA_HANDLER_GROUP_FRIENDLY_URL)) {
-			feed.setTargetLayoutFriendlyUrl(
-				StringUtil.replace(
-					feed.getTargetLayoutFriendlyUrl(),
-					DATA_HANDLER_GROUP_FRIENDLY_URL, newGroupFriendlyURL));
+		if (plid <= 0) {
+			Group oldGroup = _groupLocalService.fetchGroup(
+				portletDataContext.getSourceGroupId());
+
+			if (oldGroup == null) {
+				return content;
+			}
+
+			String oldGroupFriendlyURL = oldGroup.getFriendlyURL();
+
+			oldGroupFriendlyURL = oldGroupFriendlyURL.substring(1);
+
+			newTargetLayoutFriendlyURL = StringUtil.replace(
+				feed.getTargetLayoutFriendlyUrl(),
+				DATA_HANDLER_GROUP_FRIENDLY_URL, oldGroupFriendlyURL);
 		}
+
+		feed.setTargetLayoutFriendlyUrl(newTargetLayoutFriendlyURL);
 
 		return content;
 	}
@@ -146,5 +161,8 @@ public class JournalFeedExportImportContentProcessor
 
 	private GroupLocalService _groupLocalService;
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

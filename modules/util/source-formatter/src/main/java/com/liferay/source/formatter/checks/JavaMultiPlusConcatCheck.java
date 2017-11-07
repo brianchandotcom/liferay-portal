@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.parser.JavaTerm;
+import com.liferay.source.formatter.util.FileUtil;
+
+import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +40,9 @@ public class JavaMultiPlusConcatCheck extends BaseJavaTermCheck {
 
 	@Override
 	protected String doProcess(
-		String fileName, String absolutePath, JavaTerm javaTerm,
-		String fileContent) {
+			String fileName, String absolutePath, JavaTerm javaTerm,
+			String fileContent)
+		throws Exception {
 
 		if (isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath) ||
 			absolutePath.contains("/test/") ||
@@ -47,7 +51,8 @@ public class JavaMultiPlusConcatCheck extends BaseJavaTermCheck {
 			return javaTerm.getContent();
 		}
 
-		_checkConcat(fileName, javaTerm.getContent(), fileContent);
+		_checkConcat(
+			fileName, absolutePath, javaTerm.getContent(), fileContent);
 
 		return javaTerm.getContent();
 	}
@@ -58,7 +63,9 @@ public class JavaMultiPlusConcatCheck extends BaseJavaTermCheck {
 	}
 
 	private void _checkConcat(
-		String fileName, String javaTermContent, String fileContent) {
+			String fileName, String absolutePath, String javaTermContent,
+			String fileContent)
+		throws Exception {
 
 		int x = -1;
 
@@ -108,6 +115,13 @@ public class JavaMultiPlusConcatCheck extends BaseJavaTermCheck {
 
 			if ((parts.size() > 3) &&
 				_containsStringVariable(fileContent, parts)) {
+
+				if (absolutePath.contains("/modules/") &&
+					!absolutePath.contains("/modules/apps/") &&
+					!_hasKernelOrPetraStringDependency(fileName)) {
+
+					return;
+				}
 
 				int pos = fileContent.indexOf(plusStatement);
 
@@ -219,6 +233,39 @@ public class JavaMultiPlusConcatCheck extends BaseJavaTermCheck {
 					return i + 1;
 				}
 			}
+		}
+	}
+
+	private boolean _hasKernelOrPetraStringDependency(String fileName)
+		throws Exception {
+
+		int x = fileName.length();
+
+		while (true) {
+			x = fileName.lastIndexOf("/", x - 1);
+
+			if (x == -1) {
+				return false;
+			}
+
+			String buildGradleFileName =
+				fileName.substring(0, x + 1) + "build.gradle";
+
+			File file = new File(buildGradleFileName);
+
+			if (!file.exists()) {
+				continue;
+			}
+
+			String content = FileUtil.read(file);
+
+			if (content.contains("name: \"com.liferay.petra.string\"") ||
+				content.contains("name: \"com.liferay.portal.kernel\"")) {
+
+				return true;
+			}
+
+			return false;
 		}
 	}
 

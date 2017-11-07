@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.reading.time.message.ReadingTimeMessageProvider;
 import com.liferay.reading.time.model.ReadingTimeEntry;
@@ -45,7 +44,7 @@ public class ReadingTimeTag extends AttributesTagSupport {
 	@Override
 	public int doEndTag() throws JspException {
 		try {
-			JspWriter out = pageContext.getOut();
+			JspWriter jspWriter = pageContext.getOut();
 
 			if (_model != null) {
 				long classNameId = ClassNameLocalServiceUtil.getClassNameId(
@@ -60,26 +59,23 @@ public class ReadingTimeTag extends AttributesTagSupport {
 						readingTimeEntry);
 
 					if (Validator.isNotNull(readingTimeMessage)) {
-						StringBundler sb = new StringBundler(10);
-
-						sb.append("<time class=\"reading-time\" datetime=\"");
-						sb.append(
+						jspWriter.write(
+							"<time class=\"reading-time\" datetime=\"");
+						jspWriter.write(
 							String.valueOf(
 								readingTimeEntry.getReadingTime() / 1000));
-						sb.append("\"");
+						jspWriter.write("\"");
 
 						if (Validator.isNotNull(_id)) {
-							sb.append(" id=\"");
-							sb.append(_getNamespace());
-							sb.append(_id);
-							sb.append("\"");
+							jspWriter.write(" id=\"");
+							jspWriter.write(_getNamespace());
+							jspWriter.write(_id);
+							jspWriter.write("\"");
 						}
 
-						sb.append(">");
-						sb.append(readingTimeMessage);
-						sb.append("</time>");
-
-						out.print(sb);
+						jspWriter.write(">");
+						jspWriter.write(readingTimeMessage);
+						jspWriter.write("</time>");
 					}
 				}
 			}

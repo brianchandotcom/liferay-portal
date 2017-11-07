@@ -26,7 +26,7 @@
 	</tear-down>
 
 	<command name="ViewNoDisplayPortletConfigurationPermission" priority="4">
-		<property name="test.name.skip.portal.instance" value="PermissionsUsecase#ViewNoDisplayPortletConfigurationPermission" />
+		<property name="custom.properties" value="virtual.hosts.default.site.name=Guest" />
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
@@ -40,9 +40,11 @@
 		<execute macro="User#logoutPG" />
 
 		<execute function="Open" locator1="${url1}" />
+
 		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
 
 		<execute function="Open" locator1="${url2}" />
+
 		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the roles required to access this portlet." />
 	</command>
 </definition>

@@ -168,17 +168,25 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 				_log.debug(se.getMessage(), se);
 			}
 
-			Throwable cause = se.getCause();
+			Throwable throwable = se.getCause();
 
-			if (cause instanceof JSONWebServiceInvocationException) {
+			if (throwable instanceof JSONWebServiceInvocationException) {
+				JSONWebServiceInvocationException
+					jsonWebServiceInvocationException =
+						(JSONWebServiceInvocationException)throwable;
+
 				handleLCSGatewayUnavailable(
-					((JSONWebServiceInvocationException)cause).getStatus());
+					jsonWebServiceInvocationException.getStatus());
 
 				return Collections.emptyList();
 			}
-			else if (cause instanceof JSONWebServiceTransportException) {
+			else if (throwable instanceof JSONWebServiceTransportException) {
+				JSONWebServiceTransportException
+					jsonWebServiceTransportException =
+						(JSONWebServiceTransportException)throwable;
+
 				handleLCSGatewayUnavailable(
-					((JSONWebServiceTransportException)cause).getStatus());
+					jsonWebServiceTransportException.getStatus());
 
 				return Collections.emptyList();
 			}
@@ -273,10 +281,10 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 				_log.debug(se.getMessage(), se);
 			}
 
-			Throwable cause = se.getCause();
+			Throwable throwable = se.getCause();
 
-			if (cause instanceof JSONWebServiceInvocationException ||
-				cause instanceof JSONWebServiceTransportException) {
+			if (throwable instanceof JSONWebServiceInvocationException ||
+				throwable instanceof JSONWebServiceTransportException) {
 
 				if (_shutdownRequested) {
 					if (_log.isTraceEnabled()) {
@@ -289,13 +297,19 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 
 				int statusCode;
 
-				if (cause instanceof JSONWebServiceInvocationException) {
-					statusCode =
-						((JSONWebServiceInvocationException)cause).getStatus();
+				if (throwable instanceof JSONWebServiceInvocationException) {
+					JSONWebServiceInvocationException
+						jsonWebServiceInvocationException =
+							(JSONWebServiceInvocationException)throwable;
+
+					statusCode = jsonWebServiceInvocationException.getStatus();
 				}
 				else {
-					statusCode =
-						((JSONWebServiceTransportException)cause).getStatus();
+					JSONWebServiceTransportException
+						jsonWebServiceTransportException =
+							(JSONWebServiceTransportException)throwable;
+
+					statusCode = jsonWebServiceTransportException.getStatus();
 				}
 
 				if (_log.isWarnEnabled()) {

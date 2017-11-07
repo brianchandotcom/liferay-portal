@@ -135,11 +135,6 @@
 
 		<echo message="Checking out ${app.name} public releng info from commit ID: ${git.commit.portal.public}" />
 
-		<exec dir="${project.dir}" executable="git">
-			<arg value="fetch" />
-			<arg value="upstream" />
-		</exec>
-
 		<exec dir="${project.dir}/modules" executable="git">
 			<arg value="checkout" />
 			<arg value="${git.commit.portal.public}" />

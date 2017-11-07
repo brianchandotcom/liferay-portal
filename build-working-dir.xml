@@ -344,21 +344,37 @@
 	</target>
 
 	<target name="fetch-portal" unless="${portal.git.commit.available}">
+		<local name="public.repository" />
+
+		<condition else="git@github.com:liferay/liferay-portal.git" property="public.repository" value="git@github-dev.liferay.com:liferay/liferay-portal.git">
+			<isset property="env.JENKINS_HOME" />
+		</condition>
+
+		<echo>git fetch --force --no-tags ${public.repository} ${public.branch.name}</echo>
+
 		<exec executable="git">
 			<arg value="fetch" />
 			<arg value="--force" />
 			<arg value="--no-tags" />
-			<arg value="upstream" />
+			<arg value="${public.repository}" />
 			<arg value="${public.branch.name}" />
 		</exec>
 	</target>
 
 	<target name="fetch-portal-private" unless="${portal.private.git.commit.available}">
+		<local name="private.repository" />
+
+		<condition else="git@github.com:liferay/liferay-portal-ee.git" property="private.repository" value="git@github-dev.liferay.com:liferay/liferay-portal-ee.git">
+			<isset property="env.JENKINS_HOME" />
+		</condition>
+
+		<echo>git fetch --force --no-tags ${private.repository} ${private.branch.name}</echo>
+
 		<exec executable="git">
 			<arg value="fetch" />
 			<arg value="--force" />
 			<arg value="--no-tags" />
-			<arg value="upstream" />
+			<arg value="${private.repository}" />
 			<arg value="${private.branch.name}" />
 		</exec>
 	</target>

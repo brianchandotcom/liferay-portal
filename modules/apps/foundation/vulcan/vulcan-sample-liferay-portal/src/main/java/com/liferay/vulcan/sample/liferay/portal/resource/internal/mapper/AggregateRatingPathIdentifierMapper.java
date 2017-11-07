@@ -30,8 +30,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Converts a {@link Path} to an {@link AggregateRatingIdentifier}, and vice
- * versa.
+ * Converts a {@link Path} to a {@link
+ * AggregateRatingIdentifier},
+ * and vice versa.
  *
  * <p>
  * The {@code AggregateRatingPathIdentifierMapper} can then be provided as a
@@ -39,12 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * com.liferay.vulcan.resource.builder.RoutesBuilder}.
  * </p>
  *
- * <p>
- * The {@code className} and {@code classPK} are extracted from the ID.
- * </p>
- *
  * @author Alejandro Hernández
- * @review
  */
 @Component(immediate = true)
 public class AggregateRatingPathIdentifierMapper

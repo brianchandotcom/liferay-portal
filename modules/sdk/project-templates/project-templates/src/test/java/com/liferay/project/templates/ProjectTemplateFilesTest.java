@@ -296,7 +296,7 @@ public class ProjectTemplateFilesTest {
 		}
 
 		Assert.assertFalse(
-			buildGradlePath + " contains latest.release. Should use a " +
+			buildGradlePath + " contains \"latest.release\". Please use a " +
 				"tokenized version from /modules/build.gradle",
 			buildGradle.contains("latest.release"));
 	}

@@ -52,8 +52,18 @@ public class TextEngine extends BaseWikiEngine {
 	}
 
 	@Override
+	public String getEditorName() {
+		return null;
+	}
+
+	@Override
 	public String getFormat() {
 		return "plain_text";
+	}
+
+	@Override
+	public String getHelpURL() {
+		return null;
 	}
 
 	@Override
@@ -64,6 +74,11 @@ public class TextEngine extends BaseWikiEngine {
 	@Override
 	protected ServletContext getEditPageServletContext() {
 		return _servletContext;
+	}
+
+	@Override
+	protected ServletContext getHelpPageServletContext() {
+		return null;
 	}
 
 	@Override

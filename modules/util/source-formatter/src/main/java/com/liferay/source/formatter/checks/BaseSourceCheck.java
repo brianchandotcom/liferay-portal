@@ -336,8 +336,8 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		try {
 			URL url = new URL(
 				StringBundler.concat(
-					_GIT_HUB_LIFERAY_PORTAL_URL, portalBranchName,
-					StringPool.SLASH, fileName));
+					_GIT_LIFERAY_PORTAL_URL, portalBranchName, StringPool.SLASH,
+					fileName));
 
 			return StringUtil.read(url.openStream());
 		}
@@ -556,7 +556,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			Properties properties = entry.getValue();
 
 			String portalBranchName = properties.getProperty(
-				_GIT_HUB_LIFERAY_PORTAL_BRANCH);
+				_GIT_LIFERAY_PORTAL_BRANCH);
 
 			if (portalBranchName != null) {
 				return portalBranchName;
@@ -566,10 +566,10 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return null;
 	}
 
-	private static final String _GIT_HUB_LIFERAY_PORTAL_BRANCH =
-		"git.hub.liferay.portal.branch";
+	private static final String _GIT_LIFERAY_PORTAL_BRANCH =
+		"git.liferay.portal.branch";
 
-	private static final String _GIT_HUB_LIFERAY_PORTAL_URL =
+	private static final String _GIT_LIFERAY_PORTAL_URL =
 		"https://raw.githubusercontent.com/liferay/liferay-portal/";
 
 	private String _baseDirName;

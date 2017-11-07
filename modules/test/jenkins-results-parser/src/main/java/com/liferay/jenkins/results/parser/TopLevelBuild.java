@@ -592,11 +592,11 @@ public class TopLevelBuild extends BaseBuild {
 		try {
 			resourceFileContent =
 				JenkinsResultsParserUtil.getResourceFileContent(
-					"dependencies/chart-template.js");
+					"dependencies/chart_template.js");
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(
-				"Unable to load resource chart-template.js", ioe);
+				"Unable to load resource chart_template.js", ioe);
 		}
 
 		resourceFileContent = resourceFileContent.replace("'xData'", xData);
@@ -660,11 +660,11 @@ public class TopLevelBuild extends BaseBuild {
 		try {
 			resourceFileContent =
 				JenkinsResultsParserUtil.getResourceFileContent(
-					"dependencies/jenkins-report.css");
+					"dependencies/jenkins_report.css");
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(
-				"Unable to load resource jenkins-report.css", ioe);
+				"Unable to load resource jenkins_report.css", ioe);
 		}
 
 		Dom4JUtil.addToElement(

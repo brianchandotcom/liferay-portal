@@ -55,26 +55,32 @@ public class WikiNodeServiceImpl extends WikiNodeServiceBaseImpl {
 
 	@Override
 	public void deleteNode(long nodeId) throws PortalException {
-		WikiNodePermissionChecker.check(
-			getPermissionChecker(), nodeId, ActionKeys.DELETE);
+		WikiNode node = wikiNodeLocalService.getNode(nodeId);
 
-		wikiNodeLocalService.deleteNode(nodeId);
+		WikiNodePermissionChecker.check(
+			getPermissionChecker(), node, ActionKeys.DELETE);
+
+		wikiNodeLocalService.deleteNode(node);
 	}
 
 	@Override
 	public WikiNode getNode(long nodeId) throws PortalException {
-		WikiNodePermissionChecker.check(
-			getPermissionChecker(), nodeId, ActionKeys.VIEW);
+		WikiNode node = wikiNodeLocalService.getNode(nodeId);
 
-		return wikiNodeLocalService.getNode(nodeId);
+		WikiNodePermissionChecker.check(
+			getPermissionChecker(), node, ActionKeys.VIEW);
+
+		return node;
 	}
 
 	@Override
 	public WikiNode getNode(long groupId, String name) throws PortalException {
-		WikiNodePermissionChecker.check(
-			getPermissionChecker(), groupId, name, ActionKeys.VIEW);
+		WikiNode node = wikiNodeLocalService.getNode(groupId, name);
 
-		return wikiNodeLocalService.getNode(groupId, name);
+		WikiNodePermissionChecker.check(
+			getPermissionChecker(), node, ActionKeys.VIEW);
+
+		return node;
 	}
 
 	@Override

@@ -54,6 +54,10 @@ public class WikiPagePermissionChecker implements BaseModelPermissionChecker {
 		check(permissionChecker, page, actionId);
 	}
 
+	/**
+	 * @deprecated As of 1.7.0, with no direct replacement
+	 */
+	@Deprecated
 	public static void check(
 			PermissionChecker permissionChecker, long nodeId, String title,
 			double version, String actionId)
@@ -65,6 +69,10 @@ public class WikiPagePermissionChecker implements BaseModelPermissionChecker {
 		}
 	}
 
+	/**
+	 * @deprecated As of 1.7.0, with no direct replacement
+	 */
+	@Deprecated
 	public static void check(
 			PermissionChecker permissionChecker, long nodeId, String title,
 			String actionId)
@@ -100,6 +108,10 @@ public class WikiPagePermissionChecker implements BaseModelPermissionChecker {
 		return contains(permissionChecker, page, actionId);
 	}
 
+	/**
+	 * @deprecated As of 1.7.0, with no direct replacement
+	 */
+	@Deprecated
 	public static boolean contains(
 			PermissionChecker permissionChecker, long nodeId, String title,
 			double version, String actionId)
@@ -117,6 +129,10 @@ public class WikiPagePermissionChecker implements BaseModelPermissionChecker {
 		}
 	}
 
+	/**
+	 * @deprecated As of 1.7.0, with no direct replacement
+	 */
+	@Deprecated
 	public static boolean contains(
 			PermissionChecker permissionChecker, long nodeId, String title,
 			String actionId)

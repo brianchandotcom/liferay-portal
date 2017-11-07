@@ -319,8 +319,7 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 
 			if (page != null) {
 				WikiPagePermissionChecker.check(
-					permissionChecker, page.getNodeId(), page.getTitle(),
-					ActionKeys.DELETE);
+					permissionChecker, page, ActionKeys.DELETE);
 
 				classPK = page.getNodeId();
 			}

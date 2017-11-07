@@ -90,9 +90,12 @@ public class AddressCommerceShippingOriginLocator
 
 		AddressCommerceShippingOriginLocatorGroupServiceConfiguration
 			addressCommerceShippingOriginLocatorGroupServiceConfiguration =
-				_configurationProvider.getGroupConfiguration(
+				_configurationProvider.getConfiguration(
 					AddressCommerceShippingOriginLocatorGroupServiceConfiguration.class,
-					commerceCart.getGroupId());
+					new GroupServiceSettingsLocator(
+						commerceCart.getGroupId(),
+						AddressCommerceShippingOriginLocatorConstants.
+							SERVICE_NAME));
 
 		commerceAddress.setName(
 			addressCommerceShippingOriginLocatorGroupServiceConfiguration.

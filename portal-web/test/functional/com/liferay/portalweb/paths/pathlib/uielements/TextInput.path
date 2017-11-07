@@ -405,7 +405,7 @@
 </tr>
 <tr>
 	<td>SEARCH</td>
-	<td>//input[@title='Search'] | //*[@data-qa-id='searchInput']</td>
+	<td>//input[contains(@title,'S') or contains(@title,'s')][contains(@title,'earch')]</td>
 	<td></td>
 </tr>
 <tr>

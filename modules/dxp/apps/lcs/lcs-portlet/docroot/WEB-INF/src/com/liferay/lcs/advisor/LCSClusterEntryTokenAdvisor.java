@@ -251,45 +251,6 @@ public class LCSClusterEntryTokenAdvisor {
 		return lcsClusterEntryToken;
 	}
 
-	public long processLCSClusterEntryTokenPreferences() {
-		PortletPreferences portletPreferences =
-			LCSPortletPreferencesUtil.fetchReadOnlyJxPortletPreferences();
-
-		if (portletPreferences == null) {
-			return 0;
-		}
-
-		long lcsClusterEntryTokenId = GetterUtil.getLong(
-			portletPreferences.getValue("lcsClusterEntryTokenId", null));
-
-		LCSClusterEntryToken lcsClusterEntryToken =
-			processLCSCLusterEntryTokenFile();
-
-		if (lcsClusterEntryToken == null) {
-			_lcsAlertAdvisor.add(LCSAlert.WARNING_MISSING_TOKEN);
-
-			if (_log.isWarnEnabled()) {
-				_log.warn("The LCS activation token file is missing");
-			}
-
-			return lcsClusterEntryTokenId;
-		}
-
-		if (lcsClusterEntryTokenId !=
-				lcsClusterEntryToken.getLcsClusterEntryTokenId()) {
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"The cached LCS activation token ID does not match the " +
-						"file value");
-			}
-
-			_lcsAlertAdvisor.add(LCSAlert.WARNING_TOKEN_MISMATCH);
-		}
-
-		return lcsClusterEntryTokenId;
-	}
-
 	public void setLCSAlertAdvisor(LCSAlertAdvisor lcsAlertAdvisor) {
 		_lcsAlertAdvisor = lcsAlertAdvisor;
 	}

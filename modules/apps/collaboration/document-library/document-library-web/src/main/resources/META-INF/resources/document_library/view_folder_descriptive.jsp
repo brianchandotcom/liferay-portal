@@ -35,7 +35,14 @@ rowURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
 %>
 
 <h5 class="text-default">
-	<liferay-ui:message arguments="<%= new String[] {folder.getUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
+	<c:choose>
+		<c:when test="<%= Validator.isNull(folder.getUserName()) %>">
+			<liferay-ui:message arguments="<%= new String[] {modifiedDateDescription} %>" key="modified-x-ago" />
+		</c:when>
+		<c:otherwise>
+			<liferay-ui:message arguments="<%= new String[] {folder.getUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
+		</c:otherwise>
+	</c:choose>
 </h5>
 
 <h4>

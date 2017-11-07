@@ -798,7 +798,7 @@ AUI.add(
 										label: strings.autoCreate,
 										name: 'autoCreate',
 										type: 'checkbox',
-										value: 'true'
+										checked: false
 									}
 								),
 
@@ -2459,7 +2459,7 @@ AUI.add(
 										label: strings.blocking,
 										name: 'blocking',
 										type: 'checkbox',
-										value: 'false'
+										checked: false
 									}
 								),
 
@@ -2498,7 +2498,11 @@ AUI.add(
 
 						taskTimerInputs.each(
 							function(item, index, collection) {
-								value[item.get('name')].push(item.val());
+								if(item.get('type') && item.get('type') == 'checkbox') {
+									value[item.get('name')].push(item.get('checked'));
+								} else {
+									value[item.get('name')].push(item.val());
+								}
 							}
 						);
 

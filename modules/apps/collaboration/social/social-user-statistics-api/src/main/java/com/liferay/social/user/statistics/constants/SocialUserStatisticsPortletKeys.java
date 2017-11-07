@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.user.statistics.web.constants;
+package com.liferay.social.user.statistics.constants;
 
 /**
  * @author Iván Zaera

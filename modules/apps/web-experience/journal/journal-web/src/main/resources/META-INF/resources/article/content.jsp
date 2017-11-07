@@ -167,33 +167,49 @@ if (!searchRestriction) {
 </liferay-portlet:renderURL>
 
 <aui:script use="liferay-journal-content">
-	var journalContent = new Liferay.Portlet.JournalContent(
-		{
-			'ddm.basePortletURL': '<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.VIEW), PortletRequest.RENDER_PHASE) %>',
-			'ddm.classNameId': '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
-			'ddm.classPK': <%= ddmStructure.getPrimaryKey() %>,
-			'ddm.groupId': <%= groupId %>,
-			'ddm.refererPortletName': '<%= JournalPortletKeys.JOURNAL + ".selectStructure" %>',
-			'ddm.resourceClassNameId': '<%= ddmStructure.getClassNameId() %>',
-			'ddm.templateId': <%= (ddmTemplate != null) ? ddmTemplate.getTemplateId() : 0 %>,
-			'ddm.searchRestriction': <%= searchRestriction %>,
-			'ddm.searchRestrictionClassNameId': <%= ClassNameLocalServiceUtil.getClassNameId(JournalFolder.class) %>,
-			'ddm.searchRestrictionClassPK': <%= folderId %>,
-			descriptionInputLocalized: Liferay.component('<portlet:namespace />descriptionMapAsXML'),
-			editStructure: '#<portlet:namespace />editDDMStructure',
-			editTemplate: '#<portlet:namespace />editDDMTemplate',
-			namespace: '<portlet:namespace />',
-			selectStructure: '#<portlet:namespace />selectStructure',
-			selectTemplate: '#<portlet:namespace />selectTemplate',
-			'strings.draft': '<liferay-ui:message key="draft" />',
-			'strings.editStructure': '<liferay-ui:message key="editing-the-current-structure-deletes-all-unsaved-content" />',
-			'strings.editTemplate': '<liferay-ui:message key="editing-the-current-template-deletes-all-unsaved-content" />',
-			titleInputLocalized: Liferay.component('<portlet:namespace />titleMapAsXML'),
-			translationManager: Liferay.component('<portlet:namespace />translationManager'),
-			'urls.editStructure': '<%= editStructureURL %>',
-			'urls.editTemplate': '<%= editTemplateURL %>'
-		}
-	);
+	var translationManager = Liferay.component('<portlet:namespace />translationManager');
+
+	if (translationManager) {
+		initJournalContent(translationManager);
+	}
+	else {
+		Liferay.on(
+			'<portlet:namespace />translationManager:registered',
+			function() {
+				initJournalContent(Liferay.component('<portlet:namespace />translationManager'));
+			}
+		);
+	}
+
+	function initJournalContent(translationManager) {
+		new Liferay.Portlet.JournalContent(
+			{
+				'ddm.basePortletURL': '<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.VIEW), PortletRequest.RENDER_PHASE) %>',
+				'ddm.classNameId': '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
+				'ddm.classPK': <%= ddmStructure.getPrimaryKey() %>,
+				'ddm.groupId': <%= groupId %>,
+				'ddm.refererPortletName': '<%= JournalPortletKeys.JOURNAL + ".selectStructure" %>',
+				'ddm.resourceClassNameId': '<%= ddmStructure.getClassNameId() %>',
+				'ddm.searchRestriction': <%= searchRestriction %>,
+				'ddm.searchRestrictionClassNameId': <%= ClassNameLocalServiceUtil.getClassNameId(JournalFolder.class) %>,
+				'ddm.searchRestrictionClassPK': <%= folderId %>,
+				'ddm.templateId': <%= (ddmTemplate != null) ? ddmTemplate.getTemplateId() : 0 %>,
+				descriptionInputLocalized: Liferay.component('<portlet:namespace />descriptionMapAsXML'),
+				editStructure: '#<portlet:namespace />editDDMStructure',
+				editTemplate: '#<portlet:namespace />editDDMTemplate',
+				namespace: '<portlet:namespace />',
+				selectStructure: '#<portlet:namespace />selectStructure',
+				selectTemplate: '#<portlet:namespace />selectTemplate',
+				'strings.draft': '<liferay-ui:message key="draft" />',
+				'strings.editStructure': '<liferay-ui:message key="editing-the-current-structure-deletes-all-unsaved-content" />',
+				'strings.editTemplate': '<liferay-ui:message key="editing-the-current-template-deletes-all-unsaved-content" />',
+				titleInputLocalized: Liferay.component('<portlet:namespace />titleMapAsXML'),
+				translationManager: translationManager,
+				'urls.editStructure': '<%= editStructureURL %>',
+				'urls.editTemplate': '<%= editTemplateURL %>'
+			}
+		);
+	}
 
 	Liferay.Util.disableToggleBoxes('<portlet:namespace />autoArticleId', '<portlet:namespace />newArticleId', true);
 </aui:script>

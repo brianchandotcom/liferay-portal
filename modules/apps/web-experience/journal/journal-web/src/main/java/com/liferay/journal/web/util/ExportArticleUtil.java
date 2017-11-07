@@ -22,6 +22,7 @@ import com.liferay.journal.util.JournalContent;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -153,12 +154,19 @@ public class ExportArticleUtil {
 
 		String contentType = ContentTypes.TEXT_HTML;
 
-		String id = DLUtil.getTempFileId(
+		StringBundler id = new StringBundler(3);
+
+		id.append(PrincipalThreadLocal.getUserId());
+		id.append(StringPool.UNDERLINE);
+
+		String tempFileId = DLUtil.getTempFileId(
 			articleDisplay.getId(), String.valueOf(articleDisplay.getVersion()),
 			languageId);
 
+		id.append(tempFileId);
+
 		File convertedFile = DocumentConversionUtil.convert(
-			id, is, sourceExtension, targetExtension);
+			id.toString(), is, sourceExtension, targetExtension);
 
 		if (convertedFile != null) {
 			targetExtension = StringUtil.toLowerCase(targetExtension);

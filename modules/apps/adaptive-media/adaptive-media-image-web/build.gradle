@@ -30,6 +30,7 @@ classes {
 dependencies {
 	picturefill group: "org.webjars.bower", name: "picturefill", transitive: false, version: pictureFillVersion
 
+	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"

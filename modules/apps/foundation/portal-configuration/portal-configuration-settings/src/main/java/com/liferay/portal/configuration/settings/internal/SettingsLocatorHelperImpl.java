@@ -19,10 +19,14 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.resource.manager.ClassLoaderResourceManager;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.settings.ConfigurationBeanSettings;
@@ -156,6 +160,15 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 		long companyId, long ownerId, int ownerType, long plid,
 		String portletId) {
 
+		if (plid != LayoutConstants.DEFAULT_PLID) {
+			Layout layout = _layoutLocalService.fetchLayout(plid);
+
+			if (layout != null) {
+				return _portletPreferencesFactory.getStrictPortletSetup(
+					layout, portletId);
+			}
+		}
+
 		if (PortletIdCodec.hasUserId(portletId)) {
 			ownerId = PortletIdCodec.decodeUserId(portletId);
 			ownerType = PortletKeys.PREFS_OWNER_TYPE_USER;
@@ -229,12 +242,26 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	}
 
 	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setPortal(Portal portal) {
 	}
 
 	@Reference(unbind = "-")
 	protected void setPortletLocalService(
 		PortletLocalService portletLocalService) {
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortletPreferencesFactory(
+		PortletPreferencesFactory portletPreferencesFactory) {
+
+		_portletPreferencesFactory = portletPreferencesFactory;
 	}
 
 	@Reference(unbind = "-")
@@ -272,7 +299,9 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	private final Map<Class<?>, Settings> _configurationBeanSettings =
 		new ConcurrentHashMap<>();
 	private GroupLocalService _groupLocalService;
+	private LayoutLocalService _layoutLocalService;
 	private Settings _portalPropertiesSettings;
+	private PortletPreferencesFactory _portletPreferencesFactory;
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 	private class ConfigurationBeanDeclarationServiceTracker

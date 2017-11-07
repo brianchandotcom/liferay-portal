@@ -383,13 +383,13 @@ public interface PageMessageMapper<T> {
 	}
 
 	/**
-	 * Returns {@code true} if the mapper can map all things
-	 * related to the current request.
+	 * Returns {@code true} if the mapper can map all things related to the
+	 * current request.
 	 *
 	 * @param  page the page
 	 * @param  httpHeaders the current request's HTTP headers
-	 * @return {@code true} if the mapper can map the request;
-	 *         {@code false} otherwise
+	 * @return {@code true} if the mapper can map the request; {@code false}
+	 *         otherwise
 	 */
 	public default boolean supports(Page<T> page, HttpHeaders httpHeaders) {
 		return true;

@@ -66,7 +66,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -952,21 +951,21 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 			<#if stringUtil.equals(entity.PKClassName, "String")>
 				for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
-					query.append(StringPool.QUESTION);
+					query.append("?");
 
-					query.append(StringPool.COMMA);
+					query.append(",");
 				}
 			<#else>
 				for (Serializable primaryKey : uncachedPrimaryKeys) {
 					query.append((${entity.PKClassName})primaryKey);
 
-					query.append(StringPool.COMMA);
+					query.append(",");
 				}
 			</#if>
 
 			query.setIndex(query.index() - 1);
 
-			query.append(StringPool.CLOSE_PARENTHESIS);
+			query.append(")");
 
 			String sql = query.toString();
 

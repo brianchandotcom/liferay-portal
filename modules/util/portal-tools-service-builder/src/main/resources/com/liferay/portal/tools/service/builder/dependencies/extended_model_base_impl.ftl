@@ -8,7 +8,6 @@ import ${apiPackagePath}.model.${entity.name};
 	import com.liferay.portal.kernel.exception.PortalException;
 	import com.liferay.portal.kernel.model.TreeModel;
 	import com.liferay.portal.kernel.util.StringBundler;
-	import com.liferay.portal.kernel.util.StringPool;
 
 	import java.util.ArrayList;
 	import java.util.List;
@@ -75,13 +74,13 @@ public abstract class ${entity.name}BaseImpl extends ${entity.name}ModelImpl imp
 
 					StringBundler sb = new StringBundler(${entity.varNames}.size() * 2 + 1);
 
-					sb.append(StringPool.SLASH);
+					sb.append("/");
 
 					for (int i = ${entity.varNames}.size() - 1; i >= 0; i--) {
 						${entity.varName} = ${entity.varNames}.get(i);
 
 						sb.append(${entity.varName}.get${entity.PKList[0].methodName}());
-						sb.append(StringPool.SLASH);
+						sb.append("/");
 					}
 
 					return sb.toString();

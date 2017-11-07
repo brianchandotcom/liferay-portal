@@ -1,11 +1,11 @@
-Liferay-Releng-App-Description: The Liferay Google Docs App lets your users create Google Docs in their Liferay Documents and Media repositories. Once deployed, you can configure this app from the Control Panel.
-Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Google Docs
+Liferay-Releng-App-Description: The Liferay Plugin for Google Drive&trade; lets users create shortcuts to Google Drive&trade; files in their Documents and Media repositories. These documents can be viewed and managed from Documents and Media. Once deployed, you can configure this app from the Control Panel.
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Plugin for Google Drive&trade;
 Liferay-Releng-Bundle: false
-Liferay-Releng-Category: Communication
+Liferay-Releng-Category: Productivity
 Liferay-Releng-Demo-Url:
 Liferay-Releng-Deprecated: false
 Liferay-Releng-Labs: true
-Liferay-Releng-Marketplace: false
+Liferay-Releng-Marketplace: true
 Liferay-Releng-Portal-Required: false
 Liferay-Releng-Public: ${liferay.releng.public}
 Liferay-Releng-Restart-Required: true

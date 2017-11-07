@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
+import com.liferay.wiki.engine.BaseWikiEngine;
 import com.liferay.wiki.engine.WikiEngine;
 import com.liferay.wiki.engine.creole.internal.antlrwiki.translator.XhtmlTranslator;
 import com.liferay.wiki.engine.creole.internal.parser.ast.ASTNode;
@@ -30,7 +31,6 @@ import com.liferay.wiki.engine.creole.internal.parser.ast.link.LinkNode;
 import com.liferay.wiki.engine.creole.internal.parser.parser.Creole10Lexer;
 import com.liferay.wiki.engine.creole.internal.parser.parser.Creole10Parser;
 import com.liferay.wiki.engine.creole.internal.parser.visitor.LinkNodeCollectorVisitor;
-import com.liferay.wiki.engine.input.editor.common.BaseInputEditorWikiEngine;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalService;
@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Miguel Pastor
  */
 @Component(service = WikiEngine.class)
-public class CreoleWikiEngine extends BaseInputEditorWikiEngine {
+public class CreoleWikiEngine extends BaseWikiEngine {
 
 	@Override
 	public String convert(
@@ -135,6 +135,11 @@ public class CreoleWikiEngine extends BaseInputEditorWikiEngine {
 	}
 
 	@Override
+	protected ServletContext getEditPageServletContext() {
+		return _wikiEngineInputEditorServletContext;
+	}
+
+	@Override
 	protected ServletContext getHelpPageServletContext() {
 		return _servletContext;
 	}
@@ -207,6 +212,12 @@ public class CreoleWikiEngine extends BaseInputEditorWikiEngine {
 
 	private ResourceBundleLoader _resourceBundleLoader;
 	private ServletContext _servletContext;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.wiki.engine.input.editor.common)"
+	)
+	private ServletContext _wikiEngineInputEditorServletContext;
+
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 	private WikiPageLocalService _wikiPageLocalService;
 

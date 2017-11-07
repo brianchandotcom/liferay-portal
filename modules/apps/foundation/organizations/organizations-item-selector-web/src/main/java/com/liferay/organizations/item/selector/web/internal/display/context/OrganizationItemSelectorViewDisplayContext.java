@@ -36,8 +36,6 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Alessio Antonio Rendina
  */
@@ -136,10 +134,7 @@ public class OrganizationItemSelectorViewDisplayContext {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final String _itemSelectedEventName;
-
-	@Reference
-	private OrganizationLocalService _organizationLocalService;
-
+	private final OrganizationLocalService _organizationLocalService;
 	private final PortletURL _portletURL;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

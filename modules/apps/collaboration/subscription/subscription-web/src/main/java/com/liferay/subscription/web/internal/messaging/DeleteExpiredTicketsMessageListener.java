@@ -31,8 +31,8 @@ import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.subscription.model.Subscription;
-import com.liferay.subscription.web.constants.SubscriptionConstants;
 import com.liferay.subscription.web.internal.configuration.SubscriptionConfiguration;
+import com.liferay.subscription.web.internal.constants.SubscriptionConstants;
 
 import java.util.Map;
 

@@ -35,8 +35,8 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.subscription.exception.NoSuchSubscriptionException;
 import com.liferay.subscription.model.Subscription;
 import com.liferay.subscription.service.SubscriptionLocalService;
-import com.liferay.subscription.web.constants.SubscriptionConstants;
-import com.liferay.subscription.web.constants.SubscriptionPortletKeys;
+import com.liferay.subscription.web.internal.constants.SubscriptionConstants;
+import com.liferay.subscription.web.internal.constants.SubscriptionPortletKeys;
 
 import java.util.Locale;
 import java.util.ResourceBundle;

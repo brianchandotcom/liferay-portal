@@ -36,7 +36,7 @@
 		<div class="container-fluid-1280">
 			<div class="row mr-0">
 				<div class="col-lg-9 col-md-8 fragment-panel-target">
-					{if $fragments}
+					{if $fragments and length($fragments) > 0}
 						{foreach $fragment in $fragments}
 							<div class="fragment-panel-item-instance" data-position="{index($fragment)}">
 								{call LayoutPageTemplateFragment.render}
@@ -47,6 +47,8 @@
 								{/call}
 							</div>
 						{/foreach}
+					{else}
+						{call .noFragmentsMessage /}
 					{/if}
 				</div>
 				<div class="col-lg-3 col-md-4 sidebar sidebar-light sidebar-light-bg fragment-panel-sidebar">
@@ -67,6 +69,21 @@
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>
+{/template}
+
+/**
+ * No fragments message
+ */
+{template .noFragmentsMessage}
+	<div class="taglib-empty-result-message">
+		<div class="taglib-empty-result-message-header"></div>
+		<div class="text-center text-muted">
+			{msg desc=""}this-layout-page-template-is-empty{/msg}.
+		</div>
+		<div class="text-center text-muted">
+			{msg desc=""}please-add-some-fragments{/msg}.
 		</div>
 	</div>
 {/template}

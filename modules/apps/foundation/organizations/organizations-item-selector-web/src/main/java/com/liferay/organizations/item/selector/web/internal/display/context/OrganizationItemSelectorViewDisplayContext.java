@@ -86,7 +86,7 @@ public class OrganizationItemSelectorViewDisplayContext {
 		_searchContainer = new OrganizationSearch(
 			_renderRequest, getPortletURL());
 
-		_searchContainer.setEmptyResultsMessage("there-are-no-organizations");
+		_searchContainer.setEmptyResultsMessage("no-organizations-were-found");
 
 		OrderByComparator<Organization> orderByComparator =
 			_usersAdmin.getOrganizationOrderByComparator(

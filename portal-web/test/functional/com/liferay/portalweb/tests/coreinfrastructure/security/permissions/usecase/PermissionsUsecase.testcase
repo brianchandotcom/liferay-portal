@@ -26,7 +26,6 @@
 	</tear-down>
 
 	<command name="ViewNoDisplayPortletConfigurationPermission" priority="4">
-		<property name="test.name.skip.portal.instance" value="PermissionsUsecase#ViewNoDisplayPortletConfigurationPermission" />
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 

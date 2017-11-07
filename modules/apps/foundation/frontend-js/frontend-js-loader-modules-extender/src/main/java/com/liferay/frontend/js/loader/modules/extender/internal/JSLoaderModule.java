@@ -18,6 +18,7 @@ import aQute.bnd.osgi.Constants;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -217,10 +218,19 @@ public class JSLoaderModule {
 				continue;
 			}
 
-			String submoduleName = submodulePath.substring(0, y);
+			final String submoduleName = submodulePath.substring(0, y);
+
+			PredicateFilter<String> wildcardPredicateFilter =
+				new PredicateFilter<String>() {
+
+					public boolean filter(String item) {
+						return _matchesWildcard(submoduleName, item);
+					}
+
+				};
 
 			if (exportAll ||
-				ArrayUtil.contains(exportJSSubmodules, submoduleName)) {
+				ArrayUtil.exists(exportJSSubmodules, wildcardPredicateFilter)) {
 
 				mapsConfigurationJSONObject.put(
 					submoduleName, moduleRootPath.concat(submoduleName));
@@ -296,6 +306,10 @@ public class JSLoaderModule {
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
 		}
+	}
+
+	private boolean _matchesWildcard(String text, String pattern) {
+		return text.matches(pattern.replace("?", ".?").replace("*", ".*?"));
 	}
 
 	private final boolean _applyVersioning;

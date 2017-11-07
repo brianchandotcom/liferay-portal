@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Petra Concurrent
 Bundle-SymbolicName: com.liferay.petra.concurrent
-Bundle-Version: 1.1.3
+Bundle-Version: 1.2.0
 Export-Package: com.liferay.petra.concurrent
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

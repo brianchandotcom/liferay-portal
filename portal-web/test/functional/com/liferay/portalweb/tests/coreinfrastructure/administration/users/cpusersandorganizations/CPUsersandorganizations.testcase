@@ -1176,57 +1176,6 @@
 		</execute>
 	</command>
 
-	<command name="DeactivateUserActions" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#deactivateCP">
-			<var name="deactivateType" value="Actions" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserInvalidPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-	</command>
-
 	<command name="DeactivateUserDeactivateButton" priority="4">
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
@@ -2017,6 +1966,53 @@
 		<execute function="AssertElementPresent" locator1="Icon#BACK" />
 
 		<take-screenshot />
+	</command>
+
+	<command name="ViewInvalidLoginForDeactivatedUserViaActionsMenu" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#deactivateCP">
+			<var name="deactivateType" value="Actions" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserInvalidPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="User#loginUserPG" />
 	</command>
 
 	<command name="ViewLoginForActivatedUser" priority="5">

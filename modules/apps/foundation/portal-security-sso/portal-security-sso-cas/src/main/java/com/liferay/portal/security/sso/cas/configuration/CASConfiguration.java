@@ -38,39 +38,55 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface CASConfiguration {
 
-	@Meta.AD(deflt = "false", description = "enabled-help", required = false)
+	@Meta.AD(
+		deflt = "false", description = "enabled-help", name = "enabled",
+		required = false
+	)
 	public boolean enabled();
 
 	@Meta.AD(
-		deflt = "false", description = "import-from-ldap-help", required = false
+		deflt = "false", description = "import-from-ldap-help",
+		name = "import-from-ldap", required = false
 	)
 	public boolean importFromLDAP();
 
-	@Meta.AD(deflt = "https://localhost:8443/cas-web/login", required = false)
+	@Meta.AD(
+		deflt = "https://localhost:8443/cas-web/login", name = "login-url",
+		required = false
+	)
 	public String loginURL();
 
 	@Meta.AD(
 		deflt = "false", description = "logout-on-session-expiration-help",
-		required = false
+		name = "logout-on-session-expiration", required = false
 	)
 	public boolean logoutOnSessionExpiration();
 
-	@Meta.AD(deflt = "https://localhost:8443/cas-web/logout", required = false)
+	@Meta.AD(
+		deflt = "https://localhost:8443/cas-web/logout", name = "logout-url",
+		required = false
+	)
 	public String logoutURL();
 
 	@Meta.AD(
 		deflt = "http://localhost:8080", description = "server-name-help",
-		required = false
+		name = "server-name", required = false
 	)
 	public String serverName();
 
-	@Meta.AD(deflt = "https://localhost:8443/cas-web", required = false)
+	@Meta.AD(
+		deflt = "https://localhost:8443/cas-web", name = "server-url",
+		required = false
+	)
 	public String serverURL();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "service-url", required = false)
 	public String serviceURL();
 
-	@Meta.AD(deflt = "http://localhost:8080", required = false)
+	@Meta.AD(
+		deflt = "http://localhost:8080", name = "no-such-user-redirect-url",
+		required = false
+	)
 	public String noSuchUserRedirectURL();
 
 }

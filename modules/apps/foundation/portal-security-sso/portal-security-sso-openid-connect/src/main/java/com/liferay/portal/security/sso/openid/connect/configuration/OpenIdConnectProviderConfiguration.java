@@ -33,52 +33,74 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface OpenIdConnectProviderConfiguration {
 
-	@Meta.AD(deflt = "", description = "provider-name-help")
+	@Meta.AD(
+		deflt = "", description = "provider-name-help", name = "provider-name"
+	)
 	public String providerName();
 
-	@Meta.AD(deflt = "", description = "open-id-connect-client-id-help")
+	@Meta.AD(
+		deflt = "", description = "open-id-connect-client-id-help",
+		name = "open-id-connect-client-id"
+	)
 	public String openIdConnectClientId();
 
-	@Meta.AD(deflt = "", description = "open-id-connect-client-secret-help")
+	@Meta.AD(
+		deflt = "", description = "open-id-connect-client-secret-help",
+		name = "open-id-connect-client-secret"
+	)
 	public String openIdConnectClientSecret();
 
 	@Meta.AD(
 		deflt = "openid email profile", description = "scopes-help",
-		required = true
+		name = "scopes", required = true
 	)
 	public String scopes();
 
 	@Meta.AD(
-		deflt = "", description = "discovery-endpoint-help", required = false
+		deflt = "", description = "discovery-endpoint-help",
+		name = "discovery-endpoint", required = false
 	)
 	public String discoveryEndPoint();
 
 	@Meta.AD(
 		deflt = "360000", description = "discovery-endpoint-cache-help",
-		required = false
+		name = "discovery-endpoint-cache-in-millis", required = false
 	)
 	public long discoveryEndPointCacheInMillis();
 
 	@Meta.AD(
 		deflt = "", description = "authorization-endpoint-help",
-		required = false
+		name = "authorization-endpoint", required = false
 	)
 	public String authorizationEndPoint();
 
-	@Meta.AD(deflt = "", description = "issuer-url-help", required = false)
+	@Meta.AD(
+		deflt = "", description = "issuer-url-help", name = "issuer-url",
+		required = false
+	)
 	public String issuerURL();
 
-	@Meta.AD(deflt = "", description = "jwks-uri-help", required = false)
+	@Meta.AD(
+		deflt = "", description = "jwks-uri-help", name = "jwks-uri",
+		required = false
+	)
 	public String jwksURI();
 
-	@Meta.AD(deflt = "", description = "subject-types-help", required = false)
+	@Meta.AD(
+		deflt = "", description = "subject-types-help", name = "subject-types",
+		required = false
+	)
 	public String[] subjectTypes();
 
-	@Meta.AD(deflt = "", description = "token-endpoint-help", required = false)
+	@Meta.AD(
+		deflt = "", description = "token-endpoint-help",
+		name = "token-endpoint", required = false
+	)
 	public String tokenEndPoint();
 
 	@Meta.AD(
-		deflt = "", description = "user-info-endpoint-help", required = false
+		deflt = "", description = "user-info-endpoint-help",
+		name = "user-info-endpoint", required = false
 	)
 	public String userInfoEndPoint();
 

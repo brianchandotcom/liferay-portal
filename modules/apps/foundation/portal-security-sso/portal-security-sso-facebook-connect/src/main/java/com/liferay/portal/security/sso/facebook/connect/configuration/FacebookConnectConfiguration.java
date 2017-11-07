@@ -29,7 +29,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface FacebookConnectConfiguration {
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(deflt = "false", name = "enabled", required = false)
 	public boolean enabled();
 
 	@Meta.AD(
@@ -43,7 +43,10 @@ public interface FacebookConnectConfiguration {
 	@Meta.AD(name = "application-secret", required = false)
 	public String appSecret();
 
-	@Meta.AD(deflt = "https://graph.facebook.com", required = false)
+	@Meta.AD(
+		deflt = "https://graph.facebook.com", name = "graph-url",
+		required = false
+	)
 	public String graphURL();
 
 	@Meta.AD(

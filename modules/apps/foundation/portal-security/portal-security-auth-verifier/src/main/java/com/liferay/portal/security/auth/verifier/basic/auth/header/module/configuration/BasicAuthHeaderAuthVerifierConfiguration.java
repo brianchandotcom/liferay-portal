@@ -34,7 +34,7 @@ import com.liferay.portal.security.auth.verifier.module.configuration.BaseAuthVe
 public interface BasicAuthHeaderAuthVerifierConfiguration
 	extends BaseAuthVerifierConfiguration {
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "force-basic-auth", required = false)
 	public boolean forceBasicAuth();
 
 }

@@ -36,50 +36,50 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface OpenSSOConfiguration {
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(deflt = "false", name = "enabled", required = false)
 	public boolean enabled();
 
 	@Meta.AD(
-		deflt = "false",
-		description = "Set this to true if you want to import the users from LDAP after successful login through OpenSSO. The LDAP settings need to be configured properly in the LDAP section. If this is set to false, the users will be created from OpenSSO provided data.",
-		required = false
+		deflt = "false", description = "import-from-ldap-description",
+		name = "import-from-ldap", required = false
 	)
 	public boolean importFromLDAP();
 
 	@Meta.AD(
 		deflt = "http://openssohost.example.com:8080/opensso/UI/Login?goto=http://portalhost.example.com:8080/c/portal/login",
-		required = false
+		name = "login-url", required = false
 	)
 	public String loginURL();
 
 	@Meta.AD(
 		deflt = "false",
-		description = "Set this to true to log a user out of OpenSSO when the portal session expires.",
-		required = false
+		description = "logout-on-session-expiration-description",
+		name = "logout-on-session-expiration", required = false
 	)
 	public boolean logoutOnSessionExpiration();
 
 	@Meta.AD(
 		deflt = "http://openssohost.example.com:8080/opensso/UI/Logout?goto=http://portalhost.example.com:8080/web/guest/home",
-		required = false
+		name = "logout-url", required = false
 	)
 	public String logoutURL();
 
 	@Meta.AD(
-		deflt = "http://openssohost.example.com:8080/opensso", required = false
+		deflt = "http://openssohost.example.com:8080/opensso",
+		name = "service-url", required = false
 	)
 	public String serviceURL();
 
-	@Meta.AD(deflt = "uid", required = false)
+	@Meta.AD(deflt = "uid", name = "screen-name-attr", required = false)
 	public String screenNameAttr();
 
-	@Meta.AD(deflt = "mail", required = false)
+	@Meta.AD(deflt = "mail", name = "email-address-attr", required = false)
 	public String emailAddressAttr();
 
-	@Meta.AD(deflt = "givenname", required = false)
+	@Meta.AD(deflt = "givenname", name = "first-name-attr", required = false)
 	public String firstNameAttr();
 
-	@Meta.AD(deflt = "sn", required = false)
+	@Meta.AD(deflt = "sn", name = "last-name-attr", required = false)
 	public String lastNameAttr();
 
 }

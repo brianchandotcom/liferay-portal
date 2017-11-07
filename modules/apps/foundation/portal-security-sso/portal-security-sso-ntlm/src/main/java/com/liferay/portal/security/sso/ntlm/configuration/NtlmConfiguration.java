@@ -39,29 +39,34 @@ public interface NtlmConfiguration {
 	@Meta.AD(
 		deflt = "false",
 		description = "Set this to true to enable NTLM single sign on. NTLM will work only if LDAP authentication is also enabled and the authentication is made by screen name.",
-		required = false
+		name = "enabled", required = false
 	)
 	public boolean enabled();
 
-	@Meta.AD(deflt = "127.0.0.1", required = false)
+	@Meta.AD(deflt = "127.0.0.1", name = "domain-controller", required = false)
 	public String domainController();
 
-	@Meta.AD(deflt = "EXAMPLE", required = false)
+	@Meta.AD(
+		deflt = "EXAMPLE", name = "domain-controller-name", required = false
+	)
 	public String domainControllerName();
 
-	@Meta.AD(deflt = "EXAMPLE", required = false)
+	@Meta.AD(deflt = "EXAMPLE", name = "domain", required = false)
 	public String domain();
 
-	@Meta.AD(deflt = "LIFERAY$@EXAMPLE.COM", required = false)
+	@Meta.AD(
+		deflt = "LIFERAY$@EXAMPLE.COM", name = "service-account",
+		required = false
+	)
 	public String serviceAccount();
 
-	@Meta.AD(deflt = "test", required = false)
+	@Meta.AD(deflt = "test", name = "service-password", required = false)
 	public String servicePassword();
 
 	@Meta.AD(
 		deflt = "0x600FFFFF",
 		description = "Negotiate flags are set according to the client's requested capabilities and the server's ServerCapabilities. See the following link: http://msdn.microsoft.com/en-us/library/cc717152%28v=PROT.10%29.aspx",
-		required = false
+		name = "negotiate-flags", required = false
 	)
 	public String negotiateFlags();
 

@@ -2716,7 +2716,7 @@ to version 2.3.11.
 ## 3.5.20 - 2017-10-24
 
 ### Added
-- [LPS-75427]: Log destination directory of the `deploy` task after execution.
+- [LPS-75427]: Log the `deploy` task's destination directory after execution.
 
 ### Changed
 - [LPS-75430]: Update the [Liferay Gradle Plugins Source Formatter] dependency

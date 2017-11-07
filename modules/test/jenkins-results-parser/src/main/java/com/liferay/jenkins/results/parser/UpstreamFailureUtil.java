@@ -151,13 +151,13 @@ public class UpstreamFailureUtil {
 		}
 	}
 
-	protected void loadUpstreamJobFailuresJSONObject(Build build) {
+	protected static void loadUpstreamJobFailuresJSONObject(Build build) {
 		String jobName = build.getJobName();
 
 		loadUpstreamJobFailuresJSONObject(jobName);
 	}
 
-	protected void loadUpstreamJobFailuresJSONObject(String jobName) {
+	protected static void loadUpstreamJobFailuresJSONObject(String jobName) {
 		try {
 			if (jobName.contains("pullrequest")) {
 				String upstreamJobName = jobName.replace(

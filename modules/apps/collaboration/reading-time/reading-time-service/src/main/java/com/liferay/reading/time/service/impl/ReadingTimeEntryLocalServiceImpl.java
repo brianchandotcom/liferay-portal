@@ -19,8 +19,6 @@ import com.liferay.reading.time.service.base.ReadingTimeEntryLocalServiceBaseImp
 
 /**
  * @author Alejandro Tardín
- * @see ReadingTimeEntryLocalServiceBaseImpl
- * @see com.liferay.reading.time.service.ReadingTimeEntryLocalServiceUtil
  */
 public class ReadingTimeEntryLocalServiceImpl
 	extends ReadingTimeEntryLocalServiceBaseImpl {

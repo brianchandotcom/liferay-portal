@@ -14,5 +14,7 @@ else {
 }
 
 dependencies {
+	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
+
 	testCompile group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 }

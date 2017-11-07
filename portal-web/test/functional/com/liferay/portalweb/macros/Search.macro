@@ -79,12 +79,12 @@
 	</command>
 
 	<command name="searchCP">
-		<execute function="AssertElementPresent" locator1="NavBar#BASIC_SEARCH_FIELD" />
-		<execute function="AssertElementPresent" locator1="NavBar#SEARCH_BUTTON" />
+		<execute function="AssertElementPresent" locator1="TextInput#SEARCH" />
+		<execute function="AssertElementPresent" locator1="Icon#BASIC_SEARCH" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${searchTerm}" />
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${searchTerm}" />
 
-		<execute function="KeyPress" locator1="NavBar#BASIC_SEARCH_FIELD" value1="\RETURN" />
+		<execute function="KeyPress" locator1="TextInput#SEARCH" value1="\RETURN" />
 	</command>
 
 	<command name="searchPG">

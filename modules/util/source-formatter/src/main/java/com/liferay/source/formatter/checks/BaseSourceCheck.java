@@ -29,7 +29,6 @@ import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
-import java.io.FileInputStream;
 
 import java.net.URL;
 

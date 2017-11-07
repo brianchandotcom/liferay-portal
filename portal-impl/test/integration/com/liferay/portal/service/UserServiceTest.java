@@ -25,7 +25,9 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
+import com.liferay.portal.kernel.security.auth.DefaultScreenNameValidator;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.auth.ScreenNameValidator;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -35,6 +37,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserServiceUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -50,6 +53,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.security.auth.ScreenNameValidatorFactory;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
@@ -212,6 +216,88 @@ public class UserServiceTest {
 
 		@DeleteAfterTestRun
 		private User _user;
+
+	}
+
+	public static class WhenAddingUserWithSpecialCharactersScreenName {
+
+		@ClassRule
+		@Rule
+		public static final AggregateTestRule aggregateTestRule =
+			new LiferayIntegrationTestRule();
+
+		@Before
+		public void setUp() throws Exception {
+			_screenNameValidator = ScreenNameValidatorFactory.getInstance();
+
+			if (_screenNameValidator instanceof DefaultScreenNameValidator) {
+				_originalSpecialCharacters = ReflectionTestUtil.getFieldValue(
+					_screenNameValidator, _FIELD_KEY);
+
+				ReflectionTestUtil.setFieldValue(
+					_screenNameValidator, _FIELD_KEY, _SPECIAL_CHARACTERS);
+			}
+		}
+
+		@Test
+		public void shouldNormalizeTheFriendlyURL() throws Exception {
+			User user1 = UserTestUtil.addUser("contains-hyphens");
+
+			_users.add(user1);
+
+			Assert.assertEquals("/contains-hyphens", _getFriendlyURL(user1));
+
+			User user2 = UserTestUtil.addUser("contains.periods");
+
+			_users.add(user2);
+
+			Assert.assertEquals("/contains.periods", _getFriendlyURL(user2));
+
+			User user3 = UserTestUtil.addUser("contains_underscores");
+
+			_users.add(user3);
+
+			Assert.assertEquals(
+				"/contains_underscores", _getFriendlyURL(user3));
+
+			User user4 = UserTestUtil.addUser("contains'apostrophes");
+
+			_users.add(user4);
+
+			Assert.assertEquals(
+				"/contains-apostrophes", _getFriendlyURL(user4));
+
+			User user5 = UserTestUtil.addUser("contains#pounds");
+
+			_users.add(user5);
+
+			Assert.assertEquals("/contains-pounds", _getFriendlyURL(user5));
+		}
+
+		@After
+		public void tearDown() throws Exception {
+			if (_screenNameValidator instanceof DefaultScreenNameValidator) {
+				ReflectionTestUtil.setFieldValue(
+					_screenNameValidator, _FIELD_KEY,
+					_originalSpecialCharacters);
+			}
+		}
+
+		private String _getFriendlyURL(User user) {
+			Group group = user.getGroup();
+
+			return group.getFriendlyURL();
+		}
+
+		private static final String _FIELD_KEY = "_specialChars";
+
+		private static final String _SPECIAL_CHARACTERS = "-._\\'#";
+
+		private String _originalSpecialCharacters;
+		private ScreenNameValidator _screenNameValidator;
+
+		@DeleteAfterTestRun
+		private final List<User> _users = new ArrayList();
 
 	}
 

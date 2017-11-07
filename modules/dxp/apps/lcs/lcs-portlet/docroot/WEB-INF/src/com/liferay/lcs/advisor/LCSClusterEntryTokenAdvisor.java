@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.lcs.activation.LCSClusterEntryTokenContentAdvisor;
 import com.liferay.lcs.exception.InvalidLCSClusterEntryTokenException;
+import com.liferay.lcs.exception.LCSClusterEntryTokenDecryptException;
 import com.liferay.lcs.exception.MissingLCSClusterEntryTokenException;
 import com.liferay.lcs.exception.MultipleLCSClusterEntryTokenException;
 import com.liferay.lcs.rest.LCSClusterEntryToken;
@@ -32,6 +33,7 @@ import com.liferay.lcs.util.LCSConstants;
 import com.liferay.lcs.util.LCSPortletPreferencesUtil;
 import com.liferay.lcs.util.LCSUtil;
 import com.liferay.lcs.util.PortletPropsValues;
+import com.liferay.portal.kernel.exception.NoSuchPortletPreferencesException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -46,6 +48,7 @@ import com.liferay.util.EncryptorException;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 
 import java.security.Key;
 import java.security.KeyStore;
@@ -56,6 +59,7 @@ import java.util.Set;
 import javax.crypto.spec.SecretKeySpec;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.ReadOnlyException;
 
 /**
  * @author Igor Beslic
@@ -63,7 +67,7 @@ import javax.portlet.PortletPreferences;
 public class LCSClusterEntryTokenAdvisor {
 
 	public void checkLCSClusterEntry(LCSClusterEntryToken lcsClusterEntryToken)
-		throws Exception {
+		throws InvalidLCSClusterEntryTokenException {
 
 		LCSClusterNode lcsClusterNode =
 			LCSClusterNodeServiceUtil.fetchLCSClusterNode();
@@ -175,78 +179,61 @@ public class LCSClusterEntryTokenAdvisor {
 		return _lcsAlertAdvisor.getLCSAlerts();
 	}
 
-	public LCSClusterEntryToken processLCSClusterEntryToken() throws Exception {
+	public LCSClusterEntryToken processLCSClusterEntryToken()
+		throws IOException, LCSClusterEntryTokenDecryptException,
+			MissingLCSClusterEntryTokenException,
+			MultipleLCSClusterEntryTokenException,
+			NoSuchPortletPreferencesException, ReadOnlyException {
+
 		LCSClusterEntryToken lcsClusterEntryToken =
 			processLCSCLusterEntryTokenFile();
-
-		if (lcsClusterEntryToken == null) {
-			_lcsAlertAdvisor.add(LCSAlert.WARNING_MISSING_TOKEN);
-
-			throw new MissingLCSClusterEntryTokenException(
-				"Unable to find LCS activation token");
-		}
 
 		LCSClusterEntryTokenContentAdvisor lcsClusterEntryTokenContentAdvisor =
 			new LCSClusterEntryTokenContentAdvisor(
 				lcsClusterEntryToken.getContent());
 
-		if (!storeLCSPortletCredentials(
-				lcsClusterEntryTokenContentAdvisor.getAccessSecret(),
-				lcsClusterEntryTokenContentAdvisor.getAccessToken(),
-				lcsClusterEntryToken.getLcsClusterEntryId(),
-				lcsClusterEntryToken.getLcsClusterEntryTokenId())) {
-
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to process LCS activation token");
-			}
-
-			_lcsAlertAdvisor.add(LCSAlert.ERROR_INVALID_TOKEN);
-
-			throw new MissingLCSClusterEntryTokenException(
-				"Unable to find LCS activation token");
-		}
+		storeLCSPortletCredentials(
+			lcsClusterEntryTokenContentAdvisor.getAccessSecret(),
+			lcsClusterEntryTokenContentAdvisor.getAccessToken(),
+			lcsClusterEntryToken.getLcsClusterEntryId(),
+			lcsClusterEntryToken.getLcsClusterEntryTokenId());
 
 		storeLCSConfiguration(lcsClusterEntryTokenContentAdvisor);
 
 		return lcsClusterEntryToken;
 	}
 
-	public LCSClusterEntryToken processLCSCLusterEntryTokenFile() {
+	public LCSClusterEntryToken processLCSCLusterEntryTokenFile()
+		throws IOException, LCSClusterEntryTokenDecryptException,
+			MissingLCSClusterEntryTokenException,
+			MultipleLCSClusterEntryTokenException {
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Detecting LCS activation code");
 		}
 
 		LCSClusterEntryToken lcsClusterEntryToken = null;
 
+		String lcsClusterEntryTokenFileName = getLCSClusterEntryTokenFileName();
+
+		File lcsClusterEntryTokenFile = new File(lcsClusterEntryTokenFileName);
+
+		byte[] bytes = FileUtil.getBytes(lcsClusterEntryTokenFile);
+
+		String lcsClusterEntryTokenJSON = null;
+
 		try {
-			String lcsClusterEntryTokenFileName =
-				getLCSClusterEntryTokenFileName();
-
-			File lcsClusterEntryTokenFile = new File(
-				lcsClusterEntryTokenFileName);
-
-			byte[] bytes = FileUtil.getBytes(lcsClusterEntryTokenFile);
-
-			String lcsClusterEntryTokenJSON = decrypt(bytes);
-
-			ObjectMapper objectMapper = new ObjectMapper();
-
-			lcsClusterEntryToken = objectMapper.readValue(
-				lcsClusterEntryTokenJSON, LCSClusterEntryTokenImpl.class);
+			lcsClusterEntryTokenJSON = decrypt(bytes);
 		}
 		catch (Exception e) {
-			if ((e instanceof MissingLCSClusterEntryTokenException) ||
-				(e instanceof MultipleLCSClusterEntryTokenException)) {
-
-				_log.error(e.getMessage());
-			}
-			else {
-				_log.error(
-					"Unable to process the LCS activation token file", e);
-			}
-
-			return null;
+			throw new LCSClusterEntryTokenDecryptException(
+				"Unable to decrypt LCS activation token file", e);
 		}
+
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		lcsClusterEntryToken = objectMapper.readValue(
+			lcsClusterEntryTokenJSON, LCSClusterEntryTokenImpl.class);
 
 		return lcsClusterEntryToken;
 	}
@@ -372,7 +359,7 @@ public class LCSClusterEntryTokenAdvisor {
 	protected void storeLCSConfiguration(
 			LCSClusterEntryTokenContentAdvisor
 				lcsClusterEntryTokenContentAdvisor)
-		throws Exception {
+		throws ReadOnlyException {
 
 		Map<String, String> lcsServicesConfiguration =
 			lcsClusterEntryTokenContentAdvisor.getLCSServicesConfiguration();
@@ -404,16 +391,16 @@ public class LCSClusterEntryTokenAdvisor {
 		}
 	}
 
-	protected boolean storeLCSPortletCredentials(
+	protected void storeLCSPortletCredentials(
 			String lcsAccessSecret, String lcsAccessToken,
 			long lcsClusterEntryId, long lcsClusterEntryTokenId)
-		throws Exception {
+		throws NoSuchPortletPreferencesException, ReadOnlyException {
 
 		PortletPreferences jxPortletPreferences =
 			LCSPortletPreferencesUtil.fetchReadOnlyJxPortletPreferences();
 
 		if (jxPortletPreferences == null) {
-			return false;
+			throw new NoSuchPortletPreferencesException();
 		}
 
 		LCSPortletPreferencesUtil.store("lcsAccessSecret", lcsAccessSecret);
@@ -426,8 +413,6 @@ public class LCSClusterEntryTokenAdvisor {
 				"lcsClusterEntryTokenId",
 				String.valueOf(lcsClusterEntryTokenId));
 		}
-
-		return true;
 	}
 
 	private void _verifyLCSServiceConfiguration(

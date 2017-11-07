@@ -16,7 +16,6 @@ package com.liferay.lcs.runnable;
 
 import com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor;
 import com.liferay.lcs.exception.InvalidLCSClusterEntryTokenException;
-import com.liferay.lcs.exception.MissingLCSClusterEntryTokenException;
 import com.liferay.lcs.oauth.OAuthUtil;
 import com.liferay.lcs.rest.LCSClusterEntryToken;
 import com.liferay.lcs.rest.NoSuchLCSSubscriptionEntryException;
@@ -156,21 +155,7 @@ public class LCSConnectorRunnable implements Runnable {
 		_checkDefaultPortletPreferences();
 
 		LCSClusterEntryToken lcsClusterEntryToken =
-			_lcsClusterEntryTokenAdvisor.processLCSCLusterEntryTokenFile();
-
-		if (lcsClusterEntryToken == null) {
-			LCSPortletPreferencesUtil.removeCredentials();
-
-			throw new MissingLCSClusterEntryTokenException(
-				"Unable to get LCS cluster entry token");
-		}
-
-		if (LCSPortletPreferencesUtil.isCredentialsSet()) {
-			_lcsClusterEntryTokenAdvisor.checkLCSClusterEntryTokenPreferences(
-				lcsClusterEntryToken);
-		}
-
-		_lcsClusterEntryTokenAdvisor.processLCSClusterEntryToken();
+			_lcsClusterEntryTokenAdvisor.processLCSClusterEntryToken();
 
 		LCSUtil.setUpJSONWebServiceClientCredentials();
 

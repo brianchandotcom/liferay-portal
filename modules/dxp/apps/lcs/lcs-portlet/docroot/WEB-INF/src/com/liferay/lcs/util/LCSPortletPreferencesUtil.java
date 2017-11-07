@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.ReadOnlyException;
 
 /**
  * @author Mladen Cikara
@@ -221,7 +222,7 @@ public class LCSPortletPreferencesUtil {
 	}
 
 	public static synchronized void store(String key, String value)
-		throws Exception {
+		throws ReadOnlyException {
 
 		PortletPreferences portletPreferences = _fetchPortletPreferences(null);
 

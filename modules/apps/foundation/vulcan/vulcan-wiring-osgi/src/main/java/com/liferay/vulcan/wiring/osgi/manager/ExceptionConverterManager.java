@@ -37,25 +37,20 @@ import org.osgi.service.component.annotations.Reference;
 public class ExceptionConverterManager extends BaseManager<ExceptionConverter> {
 
 	/**
-	 * Converts an exception to its generic {@code APIError} representation, if
-	 * a valid {@link ExceptionConverter} exists. Returns {@code
+	 * Converts an exception to its generic {@link
+	 * APIError} representation, if a valid {@link
+	 * ExceptionConverter} exists. Returns {@code
 	 * Optional#empty()} otherwise.
 	 *
 	 * <p>
-	 * If no {@link ExceptionConverter} can be found for the exception class,
+	 * If no {@code ExceptionConverter} can be found for the exception class,
 	 * this method tries to use the superclass of {@code ExceptionConverter}.
-	 * </p>
-	 *
-	 * <p>
-	 * If no {@link ExceptionConverter} can be found a generic converter ({@code
-	 * ExceptionConverter<Exception>} will be used.
 	 * </p>
 	 *
 	 * @param  exception the exception to convert
 	 * @return the exception's {@code APIError} representation, if a valid
 	 *         {@code ExceptionConverter} is present; {@code Optional#empty()}
 	 *         otherwise
-	 * @review
 	 */
 	public <T extends Exception> Optional<APIError> convert(T exception) {
 		return _convert(exception, (Class<T>)exception.getClass());

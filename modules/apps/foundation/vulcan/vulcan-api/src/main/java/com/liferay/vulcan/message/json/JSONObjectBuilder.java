@@ -38,9 +38,7 @@ import java.util.function.Function;
  * 	.nestedField("object", "inner", "other")
  * 	.value(42);
  * }
- * </pre>
- *
- * <pre>
+ * </pre><pre>
  * {@code {
  *      "object": {
  *          "inner": {
@@ -48,8 +46,7 @@ import java.util.function.Function;
  *          }
  *      }
  *   }}
- * </pre>
- * </p>
+ * </pre></p>
  *
  * <p>
  * {@code JSONObjectBuilder} is incremental, so additional calls add paths to
@@ -64,9 +61,7 @@ import java.util.function.Function;
  *      .nestedField("object", "inner","another")
  *      .value("Hello World!");
  * }
- * </pre>
- *
- * <pre>
+ * </pre><pre>
  * {@code {
  *      "object": {
  *          "inner": {
@@ -75,8 +70,7 @@ import java.util.function.Function;
  *          }
  *      }
  *   }}
- * </pre>
- * </p>
+ * </pre></p>
  *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
@@ -142,9 +136,7 @@ public interface JSONObjectBuilder {
 	 * 	.nestedPrefixedField("prefix", "first", "second")
 	 * 	.value(42);
 	 * }
-	 * </pre>
-	 *
-	 * <pre>
+	 * </pre><pre>
 	 * {@code {
 	 * 	"prefix": {
 	 * 	    "first": {
@@ -154,8 +146,7 @@ public interface JSONObjectBuilder {
 	 * 	    }
 	 *       }
 	 *   }}
-	 * </pre>
-	 * </p>
+	 * </pre></p>
 	 *
 	 * @param  prefix each field's prefix
 	 * @param  parentName the parent field's name
@@ -180,9 +171,7 @@ public interface JSONObjectBuilder {
 	 * 	.nestedSuffixedField("suffix", "first", "second")
 	 * 	.value(42);
 	 * }
-	 * </pre>
-	 *
-	 * <pre>
+	 * </pre><pre>
 	 * {@code {
 	 * 	"first": {
 	 * 	    "suffix": {
@@ -192,8 +181,7 @@ public interface JSONObjectBuilder {
 	 * 	    }
 	 *       }
 	 *   }}
-	 * </pre>
-	 * </p>
+	 * </pre></p>
 	 *
 	 * @param  suffix each field's suffix
 	 * @param  parentName the parent field's name

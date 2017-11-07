@@ -12,13 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.service.persistence.test;
+package com.liferay.message.boards.service.persistence.test;
 
-import com.liferay.message.boards.kernel.exception.NoSuchThreadFlagException;
-import com.liferay.message.boards.kernel.model.MBThreadFlag;
-import com.liferay.message.boards.kernel.service.MBThreadFlagLocalServiceUtil;
-import com.liferay.message.boards.kernel.service.persistence.MBThreadFlagPersistence;
-import com.liferay.message.boards.kernel.service.persistence.MBThreadFlagUtil;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
+import com.liferay.message.boards.exception.NoSuchThreadFlagException;
+import com.liferay.message.boards.model.MBThreadFlag;
+import com.liferay.message.boards.service.MBThreadFlagLocalServiceUtil;
+import com.liferay.message.boards.service.persistence.MBThreadFlagPersistence;
+import com.liferay.message.boards.service.persistence.MBThreadFlagUtil;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -46,6 +48,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -59,12 +63,14 @@ import java.util.Set;
 /**
  * @generated
  */
+@RunWith(Arquillian.class)
 public class MBThreadFlagPersistenceTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(Propagation.REQUIRED));
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.message.boards.service"));
 
 	@Before
 	public void setUp() {

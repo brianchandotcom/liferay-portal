@@ -26,14 +26,14 @@ import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBThread;
-import com.liferay.message.boards.kernel.model.MBThreadFlag;
 import com.liferay.message.boards.kernel.service.MBCategoryLocalService;
 import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.message.boards.kernel.service.MBStatsUserLocalService;
-import com.liferay.message.boards.kernel.service.MBThreadFlagLocalService;
 import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.message.boards.model.MBBan;
+import com.liferay.message.boards.model.MBThreadFlag;
 import com.liferay.message.boards.service.MBBanLocalService;
+import com.liferay.message.boards.service.MBThreadFlagLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
@@ -346,7 +346,7 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 	@Deprecated
 	@Reference(unbind = "-")
 	protected void setMBBanLocalService(
-		com.liferay.message.boards.kernel.service.MBBanLocalService
+		MBBanLocalService
 			mbBanLocalService) {
 	}
 

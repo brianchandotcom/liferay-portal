@@ -48,10 +48,8 @@ public abstract class BaseManager<T> {
 	 * otherwise.
 	 *
 	 * @param  serviceReference the service reference
-	 * @return the generic inner class of the service reference service, if a
-	 *         valid service can be obtained; {@code Optional#empty()}
-	 *         otherwise.
-	 * @review
+	 * @return the generic inner class of the service reference's service, if a
+	 *         valid service can be obtained; {@code Optional#empty()} otherwise
 	 */
 	protected <U> Optional<Class<U>> addService(
 		ServiceReference<T> serviceReference) {
@@ -118,10 +116,8 @@ public abstract class BaseManager<T> {
 	 * if the service exists. Returns {@code Optional#empty()} otherwise.
 	 *
 	 * @param  serviceReference the service reference
-	 * @return the generic inner class of the service reference service, if a
-	 *         valid service can be obtained; {@code Optional#empty()}
-	 *         otherwise.
-	 * @review
+	 * @return the generic inner class of the service reference's service, if a
+	 *         valid service can be obtained; {@code Optional#empty()} otherwise
 	 */
 	protected <U> Optional<Class<U>> removeService(
 		ServiceReference<T> serviceReference) {
@@ -140,10 +136,8 @@ public abstract class BaseManager<T> {
 	 * @param  serviceReference the service reference
 	 * @param  beforeRemovingConsumer the consumer called prior to removing the
 	 *         service
-	 * @return the generic inner class of the service reference service, if a
-	 *         valid service can be obtained; {@code Optional#empty()}
-	 *         otherwise.
-	 * @review
+	 * @return the generic inner class of the service reference's service, if a
+	 *         valid service can be obtained; {@code Optional#empty()} otherwise
 	 */
 	protected <U> Optional<Class<U>> removeService(
 		ServiceReference<T> serviceReference,

@@ -25,8 +25,6 @@ import java.lang.reflect.Method;
 public class ConfigurationPidUtil {
 
 	public static String getConfigurationPid(Class<?> configurationBeanClass) {
-		String configurationPid = null;
-
 		for (Annotation annotation : configurationBeanClass.getAnnotations()) {
 			Class<? extends Annotation> annotationType =
 				annotation.annotationType();
@@ -39,14 +37,18 @@ public class ConfigurationPidUtil {
 
 					method.setAccessible(true);
 
-					configurationPid = (String)method.invoke(annotation);
+					return (String)method.invoke(annotation);
 				}
 				catch (ReflectiveOperationException roe) {
+					throw new IllegalArgumentException(
+						"Unable to obtain configuration PID", roe);
 				}
 			}
 		}
 
-		return configurationPid;
+		throw new IllegalArgumentException(
+			"Invalid configuration bean class: " +
+				configurationBeanClass.getName());
 	}
 
 }

@@ -1043,11 +1043,16 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 					ExtRepositoryAdapterCache.getInstance();
 
 				extRepositoryAdapterCache.clear();
+
+				repositoryEntryLocalService.updateRepositoryEntry(
+					fileEntryId,
+					extRepositoryFileEntry.getExtRepositoryModelKey());
 			}
 
 			if (needsCheckIn) {
 				_extRepository.checkInExtRepositoryFileEntry(
-					extRepositoryFileEntryKey, majorVersion, changeLog);
+					extRepositoryFileEntry.getExtRepositoryModelKey(),
+					majorVersion, changeLog);
 
 				needsCheckIn = false;
 			}

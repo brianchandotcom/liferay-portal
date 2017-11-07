@@ -156,7 +156,7 @@ Liferay bundles by setting the `liferay.workspace.bundle.cache.dir` property in
 - [LPS-75323]: Update the [Liferay Gradle Plugins] dependency to version 3.5.23.
 - [LPS-75479]: Update the [Liferay Portal Tools Bundle Support] dependency to
 version 3.2.1.
-- [LPS-75479]: Use Liferay 7.0.4 GA5 by default.
+- [LPS-75479]: Use Liferay 7.0.4 GA5 as the default bundle in a workspace.
 
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins

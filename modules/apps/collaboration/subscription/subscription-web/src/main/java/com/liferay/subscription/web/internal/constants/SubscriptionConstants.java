@@ -12,14 +12,13 @@
  * details.
  */
 
-package com.liferay.subscription.web.constants;
+package com.liferay.subscription.web.internal.constants;
 
 /**
- * @author Sergio González
+ * @author Alejandro Tardín
  */
-public class SubscriptionPortletKeys {
+public class SubscriptionConstants {
 
-	public static final String UNSUBSCRIBE =
-		"com_liferay_subscription_web_internal_portlet_UnsubscribePortlet";
+	public static final int TICKET_TYPE = 0;
 
 }

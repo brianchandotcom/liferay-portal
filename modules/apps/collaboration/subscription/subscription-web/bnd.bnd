@@ -1,9 +1,6 @@
 Bundle-Name: Liferay Subscription Web
 Bundle-SymbolicName: com.liferay.subscription.web
 Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.subscription.web.configuration,\
-	com.liferay.subscription.web.constants
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /subscription-web

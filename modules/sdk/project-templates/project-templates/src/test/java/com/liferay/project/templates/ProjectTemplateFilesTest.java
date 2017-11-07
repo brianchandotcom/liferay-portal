@@ -243,7 +243,7 @@ public class ProjectTemplateFilesTest {
 		for (String name : archetypeResourcePropertyNames) {
 			Assert.assertTrue(
 				"Undeclared \"" + name + "\" property. Please add it to " +
-					archetypeMetadataXmlPath.toString(),
+					archetypeMetadataXmlPath,
 				requiredPropertyNames.contains(name));
 		}
 	}

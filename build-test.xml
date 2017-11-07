@@ -8503,6 +8503,14 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 						<touch file="${app.server.portal.dir}.dodeploy" />
 					</then>
 				</if>
+<<<<<<< HEAD
+=======
+
+				<fileset id="deploy.dir.files" dir="${app.server.portal.dir}/.." includes="*" />
+				<local name="fddc" />
+				<property name="fddc" refid="deploy.dir.files" />
+				<echo>${fddc}</echo>
+>>>>>>> ce068b5... LRQA-35073: Moving .dodeploy to original location.
 
 				<delete dir="dist" />
 
@@ -10021,22 +10029,6 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 							<available file="${liferay.home}/logs" type="dir" />
 						</waitfor>
 
-						<if>
-							<and>
-								<available file="${app.server.portal.dir}.dodeploy" />
-								<equals arg1="${app.server.type}" arg2="jboss" />
-							</and>
-							<then>
-								<delete file="${app.server.portal.dir}.dodeploy" />
-							</then>
-						</if>
-
-						<if>
-							<equals arg1="${app.server.type}" arg2="jboss" />
-							<then>
-								<touch file="${app.server.portal.dir}.dodeploy" />
-							</then>
-						</if>
 						<antcall target="wait-for-plugins-deployment" />
 					</then>
 				</if>

@@ -28,7 +28,9 @@ import javax.portlet.PortletURL;
 
 /**
  * @author Preston Crary
+ * @deprecated As of 1.2.0
  */
+@Deprecated
 public class AssetPublisherAddItemHolder
 	implements Comparable<AssetPublisherAddItemHolder> {
 

@@ -49,6 +49,10 @@ public class JavaBooleanUsageCheck extends BaseFileCheck {
 
 			String match = matcher.group();
 
+			if (match.contains("\t//")) {
+				continue;
+			}
+
 			List<String> parametersList = JavaSourceUtil.getParameterList(
 				match);
 

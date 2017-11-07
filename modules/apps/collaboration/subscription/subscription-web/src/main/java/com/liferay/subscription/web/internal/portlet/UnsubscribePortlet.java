@@ -15,7 +15,7 @@
 package com.liferay.subscription.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.subscription.web.constants.SubscriptionPortletKeys;
+import com.liferay.subscription.web.internal.constants.SubscriptionPortletKeys;
 
 import javax.portlet.Portlet;
 

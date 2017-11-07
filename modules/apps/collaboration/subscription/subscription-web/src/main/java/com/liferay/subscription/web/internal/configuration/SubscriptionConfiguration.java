@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.subscription.web.configuration;
+package com.liferay.subscription.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "collaboration")
 @Meta.OCD(
-	id = "com.liferay.subscription.web.configuration.SubscriptionConfiguration",
+	id = "com.liferay.subscription.web.internal.configuration.SubscriptionConfiguration",
 	localization = "content/Language", name = "subscription-configuration-name"
 )
 public interface SubscriptionConfiguration {

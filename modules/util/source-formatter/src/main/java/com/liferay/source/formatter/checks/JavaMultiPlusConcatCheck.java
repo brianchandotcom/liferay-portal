@@ -44,16 +44,7 @@ public class JavaMultiPlusConcatCheck extends BaseJavaTermCheck {
 			return javaTerm.getContent();
 		}
 
-		if (absolutePath.contains("/portal-impl/") ||
-			absolutePath.contains("/portal-kernel/") ||
-			absolutePath.contains("/portal-test/") ||
-			absolutePath.contains("/portal-test-integration/") ||
-			absolutePath.contains("/util-bridges/") ||
-			absolutePath.contains("/util-java/") ||
-			absolutePath.contains("/util-taglib/")) {
-
-			_checkConcat(fileName, javaTerm.getContent(), fileContent);
-		}
+		_checkConcat(fileName, javaTerm.getContent(), fileContent);
 
 		return javaTerm.getContent();
 	}

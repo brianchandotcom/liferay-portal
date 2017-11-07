@@ -44,6 +44,12 @@ CommerceCart commerceCart = orderSummaryCheckoutStepDisplayContext.getCommerceCa
 			<div class="card-row card-row-valign-top">
 				<div class="card-col-content card-col-gutters">
 					<h3><liferay-ui:message key="shipping-address" /></h3>
+
+					<%
+					request.setAttribute("address.jsp-commerceAddress", commerceCart.getShippingAddress());
+					%>
+
+					<liferay-util:include page="/address.jsp" servletContext="<%= application %>" />
 				</div>
 			</div>
 		</div>

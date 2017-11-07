@@ -114,7 +114,7 @@ behavior can be enabled by setting the `liferay.workspace.bundle.token.download`
 property to `true` in `gradle.properties`.
 
 ### Changed
-- [LPS-73248]: Use Liferay 7.0.3 GA4 by default.
+- [LPS-73248]: Use Liferay 7.0.3 GA4 as the default bundle in a workspace.
 - [LPS-73383]: Update the [Liferay Gradle Plugins] dependency to version 3.3.35.
 
 ## 1.5.1 - 2017-07-21

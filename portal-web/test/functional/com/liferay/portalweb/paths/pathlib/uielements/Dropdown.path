@@ -13,6 +13,26 @@
 	<td>//a[contains(@class,'dropdown') and contains(.,'Entries')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>RESULT</td>
+	<td>//div[@class='drop-chosen']//ul/li[//text()='${key_option}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[@class='drop-chosen-search']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECTED_VALUE</td>
+	<td>//div[@class='option-selected']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRIGGER</td>
+	<td>//*[name()='svg'][contains(@class,'icon-caret-double')]</td>
+	<td></td>
+</tr>
 <!--FILTER-->
 <tr>
 	<td>FILTER</td>

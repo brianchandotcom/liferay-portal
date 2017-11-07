@@ -55,6 +55,10 @@ public class DDLRecordSetPermission {
 		}
 	}
 
+	/**
+	 * @deprecated As of 1.2.0, with no direct replacement
+	 */
+	@Deprecated
 	public static void check(
 			PermissionChecker permissionChecker, long groupId,
 			String recordSetKey, String actionId)
@@ -110,6 +114,10 @@ public class DDLRecordSetPermission {
 		return contains(permissionChecker, recordSet, actionId);
 	}
 
+	/**
+	 * @deprecated As of 1.2.0, with no direct replacement
+	 */
+	@Deprecated
 	public static boolean contains(
 			PermissionChecker permissionChecker, long groupId,
 			String recordSetKey, String actionId)

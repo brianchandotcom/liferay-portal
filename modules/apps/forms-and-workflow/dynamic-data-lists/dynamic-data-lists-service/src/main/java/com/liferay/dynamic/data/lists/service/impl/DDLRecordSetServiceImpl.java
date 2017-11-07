@@ -84,10 +84,13 @@ public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 	 */
 	@Override
 	public void deleteRecordSet(long recordSetId) throws PortalException {
-		DDLRecordSetPermission.check(
-			getPermissionChecker(), recordSetId, ActionKeys.DELETE);
+		DDLRecordSet recordSet = ddlRecordSetPersistence.findByPrimaryKey(
+			recordSetId);
 
-		ddlRecordSetLocalService.deleteRecordSet(recordSetId);
+		DDLRecordSetPermission.check(
+			getPermissionChecker(), recordSet, ActionKeys.DELETE);
+
+		ddlRecordSetLocalService.deleteRecordSet(recordSet);
 	}
 
 	/**
@@ -394,8 +397,11 @@ public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 			int minDisplayRows, ServiceContext serviceContext)
 		throws PortalException {
 
+		DDLRecordSet recordSet = ddlRecordSetPersistence.findByG_R(
+			groupId, recordSetKey);
+
 		DDLRecordSetPermission.check(
-			getPermissionChecker(), groupId, recordSetKey, ActionKeys.UPDATE);
+			getPermissionChecker(), recordSet, ActionKeys.UPDATE);
 
 		return ddlRecordSetLocalService.updateRecordSet(
 			groupId, ddmStructureId, recordSetKey, nameMap, descriptionMap,

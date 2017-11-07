@@ -168,12 +168,12 @@ public class SharepointURLHelper {
 		if (extRepositoryObjectType == ExtRepositoryObjectType.FOLDER) {
 			return String.format(
 				"%s/_api/web/GetFolderByServerRelativeUrl('%s')/Folders" +
-					"/ItemCount",
+					"?$select=ItemCount",
 				_siteAbsoluteURL, extRepositoryFolderKey);
 		}
 
 		return String.format(
-			"%s/_api/web/GetFolderByServerRelativeUrl('%s')/Files/ItemCount",
+			"%s/_api/web/GetFolderByServerRelativeUrl('%s')/Files?$select=Level",
 			_siteAbsoluteURL, extRepositoryFolderKey);
 	}
 

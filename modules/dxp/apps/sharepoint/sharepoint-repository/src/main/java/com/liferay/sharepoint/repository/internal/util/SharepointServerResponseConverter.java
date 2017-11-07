@@ -134,7 +134,15 @@ public class SharepointServerResponseConverter {
 	}
 
 	public int getExtRepositoryObjectsCount(JSONObject jsonObject) {
-		return jsonObject.getInt("value");
+		if (jsonObject.has("value")) {
+			return jsonObject.getInt("value");
+		}
+
+		JSONObject dJSONObject = jsonObject.getJSONObject("d");
+
+		JSONArray resultsJSONArray = dJSONObject.getJSONArray("results");
+
+		return resultsJSONArray.length();
 	}
 
 	public <T extends ExtRepositoryObject> List<ExtRepositorySearchResult<T>>

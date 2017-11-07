@@ -284,9 +284,9 @@ public class ProjectTemplateFilesTest {
 		Assert.assertTrue(
 			"Missing " + buildGradlePath, Files.exists(buildGradlePath));
 
-		if (!projectTemplateDirName.equals("project-templates-workspace")) {
-			String buildGradle = FileUtil.read(buildGradlePath);
+		String buildGradle = FileUtil.read(buildGradlePath);
 
+		if (!projectTemplateDirName.equals("project-templates-workspace")) {
 			Matcher matcher = _buildGradleWorkspaceVariantPattern.matcher(
 				buildGradle);
 
@@ -295,12 +295,10 @@ public class ProjectTemplateFilesTest {
 				matcher.matches());
 		}
 
-		String buildGradleContent = FileUtil.read(buildGradlePath);
-
 		Assert.assertFalse(
 			buildGradlePath + " contains latest.release. Should use a " +
 				"tokenized version from /modules/build.gradle",
-			buildGradleContent.contains("latest.release"));
+			buildGradle.contains("latest.release"));
 	}
 
 	private void _testGitIgnore(

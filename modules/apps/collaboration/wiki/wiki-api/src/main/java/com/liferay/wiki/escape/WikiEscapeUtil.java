@@ -14,7 +14,7 @@
 
 package com.liferay.wiki.escape;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**

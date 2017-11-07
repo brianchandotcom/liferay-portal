@@ -14,9 +14,9 @@
 
 package com.liferay.wiki.engine.html.processor;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.wiki.processor.BaseWikiPageRenameContentProcessor;
 import com.liferay.wiki.processor.WikiPageRenameContentProcessor;
 

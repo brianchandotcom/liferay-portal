@@ -19,6 +19,7 @@ import com.liferay.blogs.exception.NoSuchEntryException;
 import com.liferay.blogs.exception.TrackbackValidationException;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.web.internal.trackback.Trackback;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 

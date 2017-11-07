@@ -18,13 +18,13 @@ import com.liferay.mail.kernel.model.Account;
 import com.liferay.mail.kernel.model.SMTPAccount;
 import com.liferay.message.boards.kernel.model.MBMailingList;
 import com.liferay.message.boards.kernel.service.MBMailingListLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupSubscriptionCheckSubscriptionSender;
-import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Brian Wing Shun Chan

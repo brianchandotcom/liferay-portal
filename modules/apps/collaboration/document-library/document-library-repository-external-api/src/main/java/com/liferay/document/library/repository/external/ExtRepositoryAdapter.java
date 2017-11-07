@@ -25,6 +25,7 @@ import com.liferay.document.library.repository.external.model.ExtRepositoryFileV
 import com.liferay.document.library.repository.external.model.ExtRepositoryFolderAdapter;
 import com.liferay.document.library.repository.external.model.ExtRepositoryObjectAdapter;
 import com.liferay.document.library.repository.external.model.ExtRepositoryObjectAdapterType;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -60,7 +61,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;

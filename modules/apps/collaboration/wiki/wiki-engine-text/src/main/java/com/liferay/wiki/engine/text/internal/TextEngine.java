@@ -14,9 +14,9 @@
 
 package com.liferay.wiki.engine.text.internal;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.wiki.engine.BaseWikiEngine;
 import com.liferay.wiki.engine.WikiEngine;

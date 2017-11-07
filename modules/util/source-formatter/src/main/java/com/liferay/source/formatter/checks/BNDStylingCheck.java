@@ -121,6 +121,6 @@ public class BNDStylingCheck extends BaseFileCheck {
 	private final Pattern _singleValueOnMultipleLinesPattern = Pattern.compile(
 		"\n.*:(\\\\\n\t).*(\n[^\t]|\\Z)");
 	private final Pattern _trailingSemiColonPattern = Pattern.compile(
-		";(\n|\\Z)");
+		"(?<!&\\w{2,6});(\n|\\Z)");
 
 }

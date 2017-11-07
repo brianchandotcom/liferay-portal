@@ -20,15 +20,13 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.BNDSettings;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-
-import java.net.URL;
+import java.io.StringReader;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,8 +44,6 @@ public class LanguageKeysCheck extends BaseFileCheck {
 
 	@Override
 	public void init() throws Exception {
-		_gitHubPortalLanguagePropertiesMap =
-			_getGitHubPortalLanguagePropertiesMap();
 		_portalLanguageProperties = _getPortalLanguageProperties();
 	}
 
@@ -61,22 +57,10 @@ public class LanguageKeysCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		Properties gitHubPortalLanguageProperties =
-			_getGitHubPortalLanguageProperties(
-				absolutePath, _gitHubPortalLanguagePropertiesMap);
-
-		if (gitHubPortalLanguageProperties != null) {
-			_checkLanguageKeys(
-				fileName, absolutePath, content, getPatterns(),
-				gitHubPortalLanguageProperties);
-		}
-
 		if (!isSubrepository() &&
 			!absolutePath.contains("/modules/private/apps/")) {
 
-			_checkLanguageKeys(
-				fileName, absolutePath, content, getPatterns(),
-				_portalLanguageProperties);
+			_checkLanguageKeys(fileName, absolutePath, content, getPatterns());
 		}
 
 		return content;
@@ -91,7 +75,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 
 	private void _checkLanguageKeys(
 			String fileName, String absolutePath, String content,
-			List<Pattern> patterns, Properties properties)
+			List<Pattern> patterns)
 		throws Exception {
 
 		if (fileName.endsWith(".vm")) {
@@ -99,14 +83,13 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		}
 
 		for (Pattern pattern : patterns) {
-			_checkLanguageKeys(
-				fileName, absolutePath, content, pattern, properties);
+			_checkLanguageKeys(fileName, absolutePath, content, pattern);
 		}
 	}
 
 	private void _checkLanguageKeys(
 			String fileName, String absolutePath, String content,
-			Pattern pattern, Properties properties)
+			Pattern pattern)
 		throws Exception {
 
 		Matcher matcher = pattern.matcher(content);
@@ -127,7 +110,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 					languageKey.startsWith(StringPool.OPEN_CURLY_BRACE) ||
 					languageKey.startsWith(StringPool.PERIOD) ||
 					languageKey.startsWith(StringPool.UNDERLINE) ||
-					properties.containsKey(languageKey)) {
+					_portalLanguageProperties.containsKey(languageKey)) {
 
 					continue;
 				}
@@ -172,64 +155,6 @@ public class LanguageKeysCheck extends BaseFileCheck {
 				putBNDSettings(bndSettings);
 			}
 		}
-	}
-
-	private Properties _getGitHubPortalLanguageProperties(
-			String absolutePath,
-			Map<String, Properties> gitHubPortalLanguagePropertiesMap)
-		throws Exception {
-
-		String propertiesFileLocation = null;
-
-		for (Map.Entry<String, Properties> entry :
-				gitHubPortalLanguagePropertiesMap.entrySet()) {
-
-			String curPropertiesFileLocation = entry.getKey();
-
-			if (!absolutePath.startsWith(curPropertiesFileLocation)) {
-				continue;
-			}
-
-			if ((propertiesFileLocation == null) ||
-				propertiesFileLocation.startsWith(curPropertiesFileLocation)) {
-
-				propertiesFileLocation = curPropertiesFileLocation;
-			}
-		}
-
-		return gitHubPortalLanguagePropertiesMap.get(propertiesFileLocation);
-	}
-
-	private Map<String, Properties> _getGitHubPortalLanguagePropertiesMap()
-		throws Exception {
-
-		Map<String, Properties> gitHubPortalLanguagePropertiesMap =
-			new HashMap<>();
-
-		Map<String, Properties> propertiesMap = getPropertiesMap();
-
-		for (Map.Entry<String, Properties> entry : propertiesMap.entrySet()) {
-			Properties properties = entry.getValue();
-
-			String s = properties.getProperty(_GIT_HUB_LIFERAY_PORTAL_BRANCH);
-
-			if (Validator.isNull(s)) {
-				continue;
-			}
-
-			Properties gitHubPortalLanguageProperties = new Properties();
-
-			URL url = new URL(
-				_GIT_HUB_LIFERAY_PORTAL_URL + s +
-					"/portal-impl/src/content/Language.properties");
-
-			gitHubPortalLanguageProperties.load(url.openStream());
-
-			gitHubPortalLanguagePropertiesMap.put(
-				entry.getKey(), gitHubPortalLanguageProperties);
-		}
-
-		return gitHubPortalLanguagePropertiesMap;
 	}
 
 	private String[] _getLanguageKeys(Matcher matcher) {
@@ -470,30 +395,20 @@ public class LanguageKeysCheck extends BaseFileCheck {
 	private Properties _getPortalLanguageProperties() throws Exception {
 		Properties portalLanguageProperties = new Properties();
 
-		File portalLanguagePropertiesFile = getFile(
-			"portal-impl/src/content/Language.properties",
-			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+		String portalLanguagePropertiesContent = getPortalContent(
+			"portal-impl/src/content/Language.properties");
 
-		if (portalLanguagePropertiesFile != null) {
-			InputStream inputStream = new FileInputStream(
-				portalLanguagePropertiesFile);
-
-			portalLanguageProperties.load(inputStream);
+		if (portalLanguagePropertiesContent != null) {
+			portalLanguageProperties.load(
+				new StringReader(portalLanguagePropertiesContent));
 		}
 
 		return portalLanguageProperties;
 	}
 
-	private static final String _GIT_HUB_LIFERAY_PORTAL_BRANCH =
-		"git.hub.liferay.portal.branch";
-
-	private static final String _GIT_HUB_LIFERAY_PORTAL_URL =
-		"https://raw.githubusercontent.com/liferay/liferay-portal/";
-
 	private final Pattern _applyLangMergerPluginPattern = Pattern.compile(
 		"^apply[ \t]+plugin[ \t]*:[ \t]+\"com.liferay.lang.merger\"$",
 		Pattern.MULTILINE);
-	private Map<String, Properties> _gitHubPortalLanguagePropertiesMap;
 	private final Pattern _mergeLangPattern = Pattern.compile(
 		"mergeLang \\{\\s*sourceDirs = \\[(.*?)\\]", Pattern.DOTALL);
 	private final Map<String, Properties> _moduleLangLanguagePropertiesMap =

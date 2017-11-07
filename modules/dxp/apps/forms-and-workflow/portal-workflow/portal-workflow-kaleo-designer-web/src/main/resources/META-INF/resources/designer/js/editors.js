@@ -794,11 +794,11 @@ AUI.add(
 									{
 										auiCssClass: 'assignments-cell-editor-input',
 										auiLabelCssClass: 'celleditor-label-checkbox',
+										checked: false,
 										id: A.guid(),
 										label: strings.autoCreate,
 										name: 'autoCreate',
-										type: 'checkbox',
-										checked: false
+										type: 'checkbox'
 									}
 								),
 
@@ -2455,11 +2455,11 @@ AUI.add(
 									{
 										auiCssClass: 'task-timers-cell-editor-input',
 										auiLabelCssClass: 'celleditor-label-checkbox',
+										checked: false,
 										id: A.guid(),
 										label: strings.blocking,
 										name: 'blocking',
-										type: 'checkbox',
-										checked: false
+										type: 'checkbox'
 									}
 								),
 
@@ -2498,9 +2498,10 @@ AUI.add(
 
 						taskTimerInputs.each(
 							function(item, index, collection) {
-								if(item.get('type') && item.get('type') == 'checkbox') {
+								if (item.get('type') && item.get('type') == 'checkbox') {
 									value[item.get('name')].push(item.get('checked'));
-								} else {
+								}
+								else {
 									value[item.get('name')].push(item.val());
 								}
 							}

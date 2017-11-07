@@ -85,7 +85,7 @@ public class UserItemSelectorViewDisplayContext {
 
 		_searchContainer = new UserSearch(_portletRequest, getPortletURL());
 
-		_searchContainer.setEmptyResultsMessage("there-are-no-users");
+		_searchContainer.setEmptyResultsMessage("no-users-were-found");
 
 		OrderByComparator<User> orderByComparator =
 			_usersAdmin.getUserOrderByComparator(

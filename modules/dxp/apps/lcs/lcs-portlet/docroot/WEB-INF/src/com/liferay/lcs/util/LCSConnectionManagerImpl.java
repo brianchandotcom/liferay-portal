@@ -67,15 +67,23 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 				_log.debug(se.getMessage(), se);
 			}
 
-			Throwable cause = se.getCause();
+			Throwable throwable = se.getCause();
 
-			if (cause instanceof JSONWebServiceInvocationException) {
+			if (throwable instanceof JSONWebServiceInvocationException) {
+				JSONWebServiceInvocationException
+					jsonWebServiceInvocationException =
+						(JSONWebServiceInvocationException)throwable;
+
 				handleLCSGatewayUnavailable(
-					((JSONWebServiceInvocationException)cause).getStatus());
+					jsonWebServiceInvocationException.getStatus());
 			}
-			else if (cause instanceof JSONWebServiceTransportException) {
+			else if (throwable instanceof JSONWebServiceTransportException) {
+				JSONWebServiceTransportException
+					jsonWebServiceTransportException =
+						(JSONWebServiceTransportException)throwable;
+
 				handleLCSGatewayUnavailable(
-					((JSONWebServiceTransportException)cause).getStatus());
+					jsonWebServiceTransportException.getStatus());
 			}
 			else {
 				throw se;

@@ -69,7 +69,9 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 					previousLine);
 				String trimmedLine = StringUtil.trimLeading(line);
 
-				if (!trimmedLine.startsWith(StringPool.DOUBLE_SLASH) &&
+				int pos = line.indexOf(StringPool.DOUBLE_SLASH);
+
+				if (((pos == -1) || ToolsUtil.isInsideQuotes(line, pos)) &&
 					!trimmedLine.startsWith(StringPool.STAR)) {
 
 					String strippedQuotesLine = stripQuotes(trimmedLine);

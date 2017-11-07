@@ -17,4 +17,4 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.wiki.engine.input.editor.common.BaseInputEditorWikiEngine" %>
+<%@ page import="com.liferay.wiki.engine.BaseWikiEngine" %>

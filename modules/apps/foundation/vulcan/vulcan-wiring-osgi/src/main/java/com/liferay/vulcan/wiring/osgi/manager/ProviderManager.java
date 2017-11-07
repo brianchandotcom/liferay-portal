@@ -29,26 +29,23 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Provides methods to provide instances of classes with a valid {@link
- * Provider}.
+ * Manages services that have a {@link Provider}.
  *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
- * @review
  */
 @Component(immediate = true, service = ProviderManager.class)
 public class ProviderManager extends BaseManager<Provider> {
 
 	/**
-	 * Returns an instance of type {@code T} if a valid {@link Provider} can be
+	 * Returns the instance of type {@code T} if a valid {@code Provider} can be
 	 * found. Returns {@code Optional#empty()} otherwise.
 	 *
-	 * @param  clazz the type class to be provided.
-	 * @param  httpServletRequest the current request.
-	 * @return the instance of T, if a valid {@link Provider} is present; {@code
-	 *         Optional#empty()} otherwise.
-	 * @review
+	 * @param  clazz the class type {@code T}
+	 * @param  httpServletRequest the current request
+	 * @return the instance of {@code T}, if a valid {@code Provider} is
+	 *         present; {@code Optional#empty()} otherwise
 	 */
 	public <T> Optional<T> provide(
 		Class<T> clazz, HttpServletRequest httpServletRequest) {

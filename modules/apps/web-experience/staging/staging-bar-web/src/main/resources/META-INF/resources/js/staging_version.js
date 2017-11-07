@@ -156,6 +156,11 @@ AUI.add(
 					Liferay.Util.openWindow(
 						{
 							dialog: {
+								after: {
+									destroy: function(event) {
+										window.location.reload();
+									}
+								},
 								destroyOnHide: true
 							},
 							title: Liferay.Language.get('history'),

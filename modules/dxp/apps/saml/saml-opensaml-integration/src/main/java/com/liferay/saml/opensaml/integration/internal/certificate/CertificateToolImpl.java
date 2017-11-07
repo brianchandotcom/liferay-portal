@@ -14,7 +14,7 @@
 
 package com.liferay.saml.opensaml.integration.internal.certificate;
 
-import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.runtime.certificate.CertificateEntityId;

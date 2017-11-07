@@ -14,10 +14,10 @@
 
 package com.liferay.portal.plugin.deployment.extension;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.deploy.DeployUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.PropsKeys;

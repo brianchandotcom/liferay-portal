@@ -56,7 +56,6 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/microblogs/microblogs-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/social/social-activities-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/social/social-user-statistics-web" />
-			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/subscription/subscription-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/wiki/wiki-engine-input-editor-common" />
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/wiki/wiki-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/wiki/wiki-web" />

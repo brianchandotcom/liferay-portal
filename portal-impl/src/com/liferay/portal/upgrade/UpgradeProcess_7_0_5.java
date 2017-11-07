@@ -22,7 +22,6 @@ import com.liferay.portal.upgrade.v7_0_5.UpgradeEmailAddress;
 import com.liferay.portal.upgrade.v7_0_5.UpgradeExpando;
 import com.liferay.portal.upgrade.v7_0_5.UpgradeGroup;
 import com.liferay.portal.upgrade.v7_0_5.UpgradeMBMailingList;
-import com.liferay.portal.upgrade.v7_0_5.UpgradeModules;
 import com.liferay.portal.upgrade.v7_0_5.UpgradePortalPreferences;
 import com.liferay.portal.upgrade.v7_0_5.UpgradeUser;
 import com.liferay.portal.upgrade.v7_0_5.UpgradeVirtualHost;
@@ -46,7 +45,6 @@ public class UpgradeProcess_7_0_5 extends UpgradeProcess {
 		upgrade(UpgradeEmailAddress.class);
 		upgrade(UpgradeExpando.class);
 		upgrade(UpgradeMBMailingList.class);
-		upgrade(UpgradeModules.class);
 		upgrade(UpgradePortalPreferences.class);
 		upgrade(UpgradeUser.class);
 		upgrade(UpgradeVirtualHost.class);

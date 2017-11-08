@@ -57,9 +57,6 @@ public class MBMailingListLocalServiceImpl
 
 	@Override
 	public void deleteMailingList(long mailingListId) throws PortalException {
-		MBMailingList mailingList = mbMailingListPersistence.findByPrimaryKey(
-			mailingListId);
-
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
 				"com.liferay.message.boards.service.impl." +

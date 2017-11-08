@@ -547,36 +547,22 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateNpmAngularPortlet() throws Exception {
-		File projectDir = _buildTemplateWithGradle(
-			"npm-angular-portlet", "foo");
-
-		_testContains(
-			projectDir, "src/main/resources/META-INF/resources/view.jsp",
-			"<aui:script require=\"<%= bootstrapRequire %>\">",
-			"bootstrapRequire.default();");
+		_testBuildTemplateNpm(
+			"npm-angular-portlet", "foo", "bootstrapRequire.default();");
 	}
 
 	@Test
 	public void testBuildTemplateNpmAngularPortletWithDashes()
 		throws Exception {
 
-		File projectDir = _buildTemplateWithGradle(
-			"npm-angular-portlet", "foo-bar");
-
-		_testContains(
-			projectDir, "src/main/resources/META-INF/resources/view.jsp",
-			"<aui:script require=\"<%= bootstrapRequire %>\">",
-			"bootstrapRequire.default();");
+		_testBuildTemplateNpm(
+			"npm-angular-portlet", "foo-bar", "bootstrapRequire.default();");
 	}
 
 	@Test
 	public void testBuildTemplateNpmBillboardjsPortlet() throws Exception {
-		File projectDir = _buildTemplateWithGradle(
-			"npm-billboardjs-portlet", "foo");
-
-		_testContains(
-			projectDir, "src/main/resources/META-INF/resources/view.jsp",
-			"<aui:script require=\"<%= bootstrapRequire %>\">",
+		_testBuildTemplateNpm(
+			"npm-billboardjs-portlet", "foo",
 			"bootstrapRequire.default('<portlet:namespace />');");
 	}
 
@@ -584,68 +570,43 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateNpmBillboardjsPortletWithDashes()
 		throws Exception {
 
-		File projectDir = _buildTemplateWithGradle(
-			"npm-billboardjs-portlet", "foo-bar");
-
-		_testContains(
-			projectDir, "src/main/resources/META-INF/resources/view.jsp",
-			"<aui:script require=\"<%= bootstrapRequire %>\">",
+		_testBuildTemplateNpm(
+			"npm-billboardjs-portlet", "foo-bar",
 			"bootstrapRequire.default('<portlet:namespace />');");
 	}
 
 	@Test
 	public void testBuildTemplateNpmIsomorphicPortlet() throws Exception {
-		File projectDir = _buildTemplateWithGradle(
-			"npm-isomorphic-portlet", "foo");
-
-		_testContains(
-			projectDir, "src/main/resources/META-INF/resources/view.jsp",
-			"<aui:script require=\"<%= bootstrapRequire %>\">",
-			"bootstrapRequire.default(");
+		_testBuildTemplateNpm(
+			"npm-isomorphic-portlet", "foo", "bootstrapRequire.default(");
 	}
 
 	@Test
 	public void testBuildTemplateNpmIsomorphicPortletWithDashes()
 		throws Exception {
 
-		File projectDir = _buildTemplateWithGradle(
-			"npm-isomorphic-portlet", "foo-bar");
-
-		_testContains(
-			projectDir, "src/main/resources/META-INF/resources/view.jsp",
-			"<aui:script require=\"<%= bootstrapRequire %>\">",
-			"bootstrapRequire.default(");
+		_testBuildTemplateNpm(
+			"npm-isomorphic-portlet", "foo-bar", "bootstrapRequire.default(");
 	}
 
 	@Test
 	public void testBuildTemplateNpmJQueryPortlet() throws Exception {
-		File projectDir = _buildTemplateWithGradle("npm-jquery-portlet", "foo");
-
-		_testContains(
-			projectDir, "src/main/resources/META-INF/resources/view.jsp",
-			"<aui:script require=\"<%= bootstrapRequire %>\">",
+		_testBuildTemplateNpm(
+			"npm-jquery-portlet", "foo",
 			"bootstrapRequire.default('<portlet:namespace />');");
 	}
 
 	@Test
 	public void testBuildTemplateNpmJQueryPortletWithDashes() throws Exception {
-		File projectDir = _buildTemplateWithGradle(
-			"npm-jquery-portlet", "foo-bar");
-
-		_testContains(
-			projectDir, "src/main/resources/META-INF/resources/view.jsp",
-			"<aui:script require=\"<%= bootstrapRequire %>\">",
+		_testBuildTemplateNpm(
+			"npm-jquery-portlet", "foo-bar",
 			"bootstrapRequire.default('<portlet:namespace />');");
 	}
 
 	@Test
 	public void testBuildTemplateNpmMetaljsPortlet() throws Exception {
-		File projectDir = _buildTemplateWithGradle(
-			"npm-metaljs-portlet", "foo");
-
-		_testContains(
-			projectDir, "src/main/resources/META-INF/resources/view.jsp",
-			"<aui:script require=\"<%= bootstrapRequire %>\">",
+		_testBuildTemplateNpm(
+			"npm-metaljs-portlet", "foo",
 			"bootstrapRequire.default('<portlet:namespace />');");
 	}
 
@@ -653,74 +614,50 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateNpmMetaljsPortletWithDashes()
 		throws Exception {
 
-		File projectDir = _buildTemplateWithGradle(
-			"npm-metaljs-portlet", "foo-bar");
-
-		_testContains(
-			projectDir, "src/main/resources/META-INF/resources/view.jsp",
-			"<aui:script require=\"<%= bootstrapRequire %>\">",
+		_testBuildTemplateNpm(
+			"npm-metaljs-portlet", "foo-bar",
 			"bootstrapRequire.default('<portlet:namespace />');");
 	}
 
 	@Test
 	public void testBuildTemplateNpmPortlet() throws Exception {
-		File projectDir = _buildTemplateWithGradle("npm-portlet", "foo");
-
-		_testContains(
-			projectDir, "src/main/resources/META-INF/resources/view.jsp",
-			"<aui:script require=\"<%= bootstrapRequire %>\">",
+		_testBuildTemplateNpm(
+			"npm-portlet", "foo",
 			"bootstrapRequire.default('<portlet:namespace />');");
 	}
 
 	@Test
 	public void testBuildTemplateNpmPortletWithDashes() throws Exception {
-		File projectDir = _buildTemplateWithGradle("npm-portlet", "foo-bar");
-
-		_testContains(
-			projectDir, "src/main/resources/META-INF/resources/view.jsp",
-			"<aui:script require=\"<%= bootstrapRequire %>\">",
+		_testBuildTemplateNpm(
+			"npm-portlet", "foo-bar",
 			"bootstrapRequire.default('<portlet:namespace />');");
 	}
 
 	@Test
 	public void testBuildTemplateNpmReactPortlet() throws Exception {
-		File projectDir = _buildTemplateWithGradle("npm-react-portlet", "foo");
-
-		_testContains(
-			projectDir, "src/main/resources/META-INF/resources/view.jsp",
-			"<aui:script require=\"<%= bootstrapRequire %>\">",
+		_testBuildTemplateNpm(
+			"npm-react-portlet", "foo",
 			"bootstrapRequire.default('<portlet:namespace />');");
 	}
 
 	@Test
 	public void testBuildTemplateNpmReactPortletWithDashes() throws Exception {
-		File projectDir = _buildTemplateWithGradle(
-			"npm-react-portlet", "foo-bar");
-
-		_testContains(
-			projectDir, "src/main/resources/META-INF/resources/view.jsp",
-			"<aui:script require=\"<%= bootstrapRequire %>\">",
+		_testBuildTemplateNpm(
+			"npm-react-portlet", "foo-bar",
 			"bootstrapRequire.default('<portlet:namespace />');");
 	}
 
 	@Test
 	public void testBuildTemplateNpmVuejsPortlet() throws Exception {
-		File projectDir = _buildTemplateWithGradle("npm-vuejs-portlet", "foo");
-
-		_testContains(
-			projectDir, "src/main/resources/META-INF/resources/view.jsp",
-			"<aui:script require=\"<%= bootstrapRequire %>\">",
+		_testBuildTemplateNpm(
+			"npm-vuejs-portlet", "foo",
 			"bootstrapRequire.default('<portlet:namespace />');");
 	}
 
 	@Test
 	public void testBuildTemplateNpmVuejsPortletWithDashes() throws Exception {
-		File projectDir = _buildTemplateWithGradle(
-			"npm-vuejs-portlet", "foo-bar");
-
-		_testContains(
-			projectDir, "src/main/resources/META-INF/resources/view.jsp",
-			"<aui:script require=\"<%= bootstrapRequire %>\">",
+		_testBuildTemplateNpm(
+			"npm-vuejs-portlet", "foo-bar",
 			"bootstrapRequire.default('<portlet:namespace />');");
 	}
 
@@ -2592,6 +2529,18 @@ public class ProjectTemplatesTest {
 
 		return _buildTemplateWithGradle(
 			destinationDir, WorkspaceUtil.WORKSPACE, "test-workspace");
+	}
+
+	private void _testBuildTemplateNpm(
+			String template, String name, String bootstrapRequire)
+		throws Exception {
+
+		File projectDir = _buildTemplateWithGradle(template, name);
+
+		_testContains(
+			projectDir, "src/main/resources/META-INF/resources/view.jsp",
+			"<aui:script require=\"<%= bootstrapRequire %>\">",
+			bootstrapRequire);
 	}
 
 	private File _testBuildTemplatePortlet(

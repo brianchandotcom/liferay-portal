@@ -158,7 +158,8 @@
 			WHERE
 				(Group_.companyId = ?) AND
 				(Group_.parentGroupId = ?) AND
-				(Group_.site = ?)
+				(Group_.site = ?) AND
+				(Group_.active_ = [$TRUE$])
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findByLiveGroups">

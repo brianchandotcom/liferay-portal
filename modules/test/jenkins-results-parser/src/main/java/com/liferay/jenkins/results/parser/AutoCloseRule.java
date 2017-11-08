@@ -117,7 +117,11 @@ public class AutoCloseRule {
 				getBatchName(downstreamBuild));
 
 			if (matcher.matches()) {
-				filteredDownstreamBuilds.add(downstreamBuild);
+				if (!UpstreamFailureUtil.isBuildFailingInUpstreamJob(
+						downstreamBuild)) {
+
+					filteredDownstreamBuilds.add(downstreamBuild);
+				}
 			}
 		}
 

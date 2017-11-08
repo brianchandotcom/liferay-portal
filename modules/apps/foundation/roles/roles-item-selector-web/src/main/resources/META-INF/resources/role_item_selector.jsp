@@ -45,7 +45,7 @@ PortletURL portletURL = roleItemSelectorViewDisplayContext.getPortletURL();
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= roleItemSelectorViewDisplayContext.getOrderByCol() %>"
 			orderByType="<%= roleItemSelectorViewDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"name"} %>'
+			orderColumns='<%= new String[] {"title", "description"} %>'
 			portletURL="<%= portletURL %>"
 		/>
 	</liferay-frontend:management-bar-filters>

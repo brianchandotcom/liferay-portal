@@ -49,7 +49,7 @@ class PortletBase extends Component {
 	/**
 	 * Appends the portlet's namespace to the given string or object properties.
 	 *
-	 * @param {!Object|string} The object or string to be namespaced
+	 * @param {!Object|string} obj The object or string to be namespaced
 	 * @return {Object|string} An object with its properties namespaced using
 	 * the portlet namespace or a namespaced string
 	 */

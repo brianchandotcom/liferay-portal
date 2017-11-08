@@ -22,10 +22,10 @@ import java.io.Serializable;
 /**
  * @author Shuyang Zhou
  */
-public class ResponseProcessCallable<T extends Serializable>
+class ResponseProcessCallable<T extends Serializable>
 	implements ProcessCallable<Boolean> {
 
-	public ResponseProcessCallable(long id, T result, Throwable throwable) {
+	ResponseProcessCallable(long id, T result, Throwable throwable) {
 		_id = id;
 		_result = result;
 		_throwable = throwable;

@@ -24,10 +24,10 @@ import java.io.Serializable;
 /**
  * @author Shuyang Zhou
  */
-public class RequestProcessCallable<T extends Serializable>
+class RequestProcessCallable<T extends Serializable>
 	implements ProcessCallable<T> {
 
-	public RequestProcessCallable(long id, ProcessCallable<T> processCallable) {
+	RequestProcessCallable(long id, ProcessCallable<T> processCallable) {
 		_id = id;
 		_processCallable = processCallable;
 	}

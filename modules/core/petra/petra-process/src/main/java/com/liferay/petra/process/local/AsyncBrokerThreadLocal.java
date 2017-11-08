@@ -22,7 +22,7 @@ import java.io.Serializable;
 /**
  * @author Shuyang Zhou
  */
-public class AsyncBrokerThreadLocal {
+class AsyncBrokerThreadLocal {
 
 	public static AsyncBroker<Long, Serializable> getAsyncBroker() {
 		AsyncBroker<Long, Serializable> asyncBroker =

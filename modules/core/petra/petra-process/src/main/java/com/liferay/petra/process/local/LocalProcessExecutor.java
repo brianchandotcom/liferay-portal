@@ -162,17 +162,6 @@ public class LocalProcessExecutor implements ProcessExecutor {
 	private class SubprocessReactor<T extends Serializable>
 		implements Callable<T> {
 
-		public SubprocessReactor(
-			Process process, Consumer<ProcessLog> processLogConsumer,
-			ClassLoader reactClassLoader,
-			AsyncBroker<Long, Serializable> asyncBroker) {
-
-			_process = process;
-			_processLogConsumer = processLogConsumer;
-			_reactClassLoader = reactClassLoader;
-			_asyncBroker = asyncBroker;
-		}
-
 		@Override
 		public T call() throws Exception {
 			ProcessCallable<T> resultProcessCallable = null;
@@ -336,6 +325,17 @@ public class LocalProcessExecutor implements ProcessExecutor {
 					return resultProcessCallable.call();
 				}
 			}
+		}
+
+		private SubprocessReactor(
+			Process process, Consumer<ProcessLog> processLogConsumer,
+			ClassLoader reactClassLoader,
+			AsyncBroker<Long, Serializable> asyncBroker) {
+
+			_process = process;
+			_processLogConsumer = processLogConsumer;
+			_reactClassLoader = reactClassLoader;
+			_asyncBroker = asyncBroker;
 		}
 
 		private final AsyncBroker<Long, Serializable> _asyncBroker;

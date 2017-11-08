@@ -101,8 +101,8 @@ public class LocalProcessLauncher {
 
 			byte[] logPrefix = logPrefixString.getBytes(StringPool.UTF8);
 
-			outProcessOutputStream.setLogPrefix(logPrefix);
-			errProcessOutputStream.setLogPrefix(logPrefix);
+			outProcessOutputStream._setLogPrefix(logPrefix);
+			errProcessOutputStream._setLogPrefix(logPrefix);
 
 			String classPath = (String)bootstrapObjectInputStream.readObject();
 
@@ -130,7 +130,7 @@ public class LocalProcessLauncher {
 
 			System.out.flush();
 
-			outProcessOutputStream.writeProcessCallable(
+			outProcessOutputStream._writeProcessCallable(
 				new ResultProcessCallable<>(result, null));
 
 			outProcessOutputStream.flush();
@@ -147,7 +147,7 @@ public class LocalProcessLauncher {
 				processException = new ProcessException(t);
 			}
 
-			errProcessOutputStream.writeProcessCallable(
+			errProcessOutputStream._writeProcessCallable(
 				new ResultProcessCallable<>(null, processException));
 
 			errProcessOutputStream.flush();
@@ -180,7 +180,7 @@ public class LocalProcessLauncher {
 				_heartbeatThreadAtomicReference.getAndSet(null);
 
 			if (heartbeatThread != null) {
-				heartbeatThread.detach();
+				heartbeatThread._detach();
 				heartbeatThread.join();
 			}
 		}
@@ -205,7 +205,7 @@ public class LocalProcessLauncher {
 				ProcessCallable<?> processCallable)
 			throws IOException {
 
-			_processOutputStream.writeProcessCallable(processCallable);
+			_processOutputStream._writeProcessCallable(processCallable);
 		}
 
 		private static void _setProcessOutputStream(
@@ -258,28 +258,6 @@ public class LocalProcessLauncher {
 
 	private static class HeartbeatThread extends Thread {
 
-		public HeartbeatThread(
-			String message, long interval, ShutdownHook shutdownHook) {
-
-			if (shutdownHook == null) {
-				throw new IllegalArgumentException("Shutdown hook is null");
-			}
-
-			_interval = interval;
-			_shutdownHook = shutdownHook;
-
-			_pringBackProcessCallable = new PingbackProcessCallable(message);
-
-			setDaemon(true);
-			setName(HeartbeatThread.class.getSimpleName());
-		}
-
-		public void detach() {
-			_detach = true;
-
-			interrupt();
-		}
-
 		@Override
 		public void run() {
 			int shutdownCode = 0;
@@ -325,6 +303,28 @@ public class LocalProcessLauncher {
 			heartBeatThreadReference.compareAndSet(this, null);
 		}
 
+		private HeartbeatThread(
+			String message, long interval, ShutdownHook shutdownHook) {
+
+			if (shutdownHook == null) {
+				throw new IllegalArgumentException("Shutdown hook is null");
+			}
+
+			_interval = interval;
+			_shutdownHook = shutdownHook;
+
+			_pringBackProcessCallable = new PingbackProcessCallable(message);
+
+			setDaemon(true);
+			setName(HeartbeatThread.class.getSimpleName());
+		}
+
+		private void _detach() {
+			_detach = true;
+
+			interrupt();
+		}
+
 		private volatile boolean _detach;
 		private final long _interval;
 		private final ProcessCallable<String> _pringBackProcessCallable;
@@ -362,13 +362,13 @@ public class LocalProcessLauncher {
 	private static class PingbackProcessCallable
 		implements ProcessCallable<String> {
 
-		public PingbackProcessCallable(String message) {
-			_message = message;
-		}
-
 		@Override
 		public String call() {
 			return _message;
+		}
+
+		private PingbackProcessCallable(String message) {
+			_message = message;
 		}
 
 		private static final long serialVersionUID = 1L;
@@ -378,10 +378,6 @@ public class LocalProcessLauncher {
 	}
 
 	private static class ProcessCallableRunner implements Runnable {
-
-		public ProcessCallableRunner(ObjectInputStream objectInputStream) {
-			_objectInputStream = objectInputStream;
-		}
 
 		@Override
 		public void run() {
@@ -413,6 +409,10 @@ public class LocalProcessLauncher {
 					System.err.flush();
 				}
 			}
+		}
+
+		private ProcessCallableRunner(ObjectInputStream objectInputStream) {
+			_objectInputStream = objectInputStream;
 		}
 
 		private final ObjectInputStream _objectInputStream;
@@ -454,11 +454,18 @@ public class LocalProcessLauncher {
 			}
 		}
 
-		public void setLogPrefix(byte[] logPrefix) {
+		private ProcessOutputStream(
+			ObjectOutputStream objectOutputStream, boolean error) {
+
+			_objectOutputStream = objectOutputStream;
+			_error = error;
+		}
+
+		private void _setLogPrefix(byte[] logPrefix) {
 			_logPrefix = logPrefix;
 		}
 
-		public void writeProcessCallable(ProcessCallable<?> processCallable)
+		private void _writeProcessCallable(ProcessCallable<?> processCallable)
 			throws IOException {
 
 			synchronized (System.out) {
@@ -474,13 +481,6 @@ public class LocalProcessLauncher {
 					_objectOutputStream.flush();
 				}
 			}
-		}
-
-		private ProcessOutputStream(
-			ObjectOutputStream objectOutputStream, boolean error) {
-
-			_objectOutputStream = objectOutputStream;
-			_error = error;
 		}
 
 		private final boolean _error;

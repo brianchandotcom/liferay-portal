@@ -31,10 +31,10 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * @author Shuyang Zhou
  */
-public class LocalProcessChannel<T extends Serializable>
+class LocalProcessChannel<T extends Serializable>
 	implements ProcessChannel<T> {
 
-	public LocalProcessChannel(
+	LocalProcessChannel(
 		NoticeableFuture<T> noticeableFuture,
 		ObjectOutputStream objectOutputStream,
 		AsyncBroker<Long, Serializable> asyncBroker) {

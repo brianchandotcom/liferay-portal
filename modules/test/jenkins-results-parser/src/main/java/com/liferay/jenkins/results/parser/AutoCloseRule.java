@@ -46,6 +46,19 @@ public class AutoCloseRule {
 	public List<Build> evaluate(List<Build> downstreamBuilds) {
 		downstreamBuilds = getMatchingBuilds(downstreamBuilds);
 
+		List<Build> downstreamBuildsFailingInUpstreamJob = new ArrayList<>(
+			downstreamBuilds.size());
+
+		for (Build downstreamBuild : downstreamBuilds) {
+			if (UpstreamFailureUtil.isBuildFailingInUpstreamJob(
+					downstreamBuild)) {
+
+				downstreamBuildsFailingInUpstreamJob.add(downstreamBuild);
+			}
+		}
+
+		downstreamBuilds.removeAll(downstreamBuildsFailingInUpstreamJob);
+
 		if (downstreamBuilds.isEmpty()) {
 			return Collections.emptyList();
 		}
@@ -117,11 +130,7 @@ public class AutoCloseRule {
 				getBatchName(downstreamBuild));
 
 			if (matcher.matches()) {
-				if (!UpstreamFailureUtil.isBuildFailingInUpstreamJob(
-						downstreamBuild)) {
-
-					filteredDownstreamBuilds.add(downstreamBuild);
-				}
+				filteredDownstreamBuilds.add(downstreamBuild);
 			}
 		}
 

@@ -96,7 +96,7 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 			addMessage(fileName, "Macrodefs go before targets");
 		}
 
-		if (!absolutePath.contains("/modules/private/apps/")) {
+		if (!isModulesApp(absolutePath, true)) {
 			_checkImportFiles(fileName, content);
 		}
 

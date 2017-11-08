@@ -15,7 +15,6 @@
 package com.liferay.portal.jmx.internal;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
-import com.liferay.portal.jmx.MBeanRegistry;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;

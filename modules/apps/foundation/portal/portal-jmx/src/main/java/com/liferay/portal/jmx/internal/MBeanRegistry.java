@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.jmx;
+package com.liferay.portal.jmx.internal;
 
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;

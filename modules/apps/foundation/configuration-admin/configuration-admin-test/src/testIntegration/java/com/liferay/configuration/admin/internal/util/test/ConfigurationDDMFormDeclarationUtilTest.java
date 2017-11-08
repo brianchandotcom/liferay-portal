@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.configuration.admin.definition.ConfigurationDDMFormDeclaration;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationDDMFormDeclarationUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.osgi.util.test.OSGiServiceUtil;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -30,7 +31,6 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -48,14 +48,10 @@ public class ConfigurationDDMFormDeclarationUtilTest {
 
 		_bundleContext = _bundle.getBundleContext();
 
-		ServiceReference<ConfigurationAdmin> serviceReference =
-			_bundleContext.getServiceReference(ConfigurationAdmin.class);
-
-		ConfigurationAdmin configurationAdmin = _bundleContext.getService(
-			serviceReference);
-
-		_configuration = configurationAdmin.createFactoryConfiguration(
-			"test.pid", StringPool.QUESTION);
+		_configuration = OSGiServiceUtil.callService(
+			_bundleContext, ConfigurationAdmin.class,
+			configurationAdmin -> configurationAdmin.createFactoryConfiguration(
+				"test.pid", StringPool.QUESTION));
 
 		ConfigurationDDMFormDeclaration configurationDDMFormDeclaration =
 			() -> TestConfigurationForm.class;

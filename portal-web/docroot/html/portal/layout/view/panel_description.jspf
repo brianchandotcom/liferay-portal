@@ -32,7 +32,7 @@ if (themeDisplay.isStatePopUp() || layoutTypePortlet.hasStateMax()) {
 
 		templateId = theme.getThemeId() + LayoutTemplateConstants.STANDARD_SEPARATOR + "max";
 		templateContent = LayoutTemplateLocalServiceUtil.getContent("max", true, theme.getThemeId());
-		langType = LayoutTemplateLocalServiceUtil.getContent("max", true, theme.getThemeId());
+		langType = LayoutTemplateLocalServiceUtil.getLangType("max", true, theme.getThemeId());
 	}
 
 	if (Validator.isNotNull(templateContent)) {

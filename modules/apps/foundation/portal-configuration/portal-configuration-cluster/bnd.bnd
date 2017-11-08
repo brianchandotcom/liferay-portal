@@ -1,6 +1,5 @@
 Bundle-Name: Liferay Portal Configuration Cluster
 Bundle-SymbolicName: com.liferay.portal.configuration.cluster
-Bundle-Version: 2.1.5
-Export-Package: com.liferay.portal.configuration.cluster.constants
+Bundle-Version: 3.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Configuration Framework

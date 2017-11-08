@@ -12,13 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.service.persistence.test;
+package com.liferay.message.boards.service.persistence.test;
 
-import com.liferay.message.boards.kernel.exception.NoSuchMailingListException;
-import com.liferay.message.boards.kernel.model.MBMailingList;
-import com.liferay.message.boards.kernel.service.MBMailingListLocalServiceUtil;
-import com.liferay.message.boards.kernel.service.persistence.MBMailingListPersistence;
-import com.liferay.message.boards.kernel.service.persistence.MBMailingListUtil;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
+import com.liferay.message.boards.exception.NoSuchMailingListException;
+import com.liferay.message.boards.model.MBMailingList;
+import com.liferay.message.boards.service.MBMailingListLocalServiceUtil;
+import com.liferay.message.boards.service.persistence.MBMailingListPersistence;
+import com.liferay.message.boards.service.persistence.MBMailingListUtil;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -46,6 +48,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -59,12 +63,14 @@ import java.util.Set;
 /**
  * @generated
  */
+@RunWith(Arquillian.class)
 public class MBMailingListPersistenceTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(Propagation.REQUIRED));
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.message.boards.service"));
 
 	@Before
 	public void setUp() {

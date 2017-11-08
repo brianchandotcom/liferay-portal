@@ -12,16 +12,17 @@
  * details.
  */
 
-package com.liferay.message.boards.kernel.service;
+package com.liferay.message.boards.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for MBMailingList. This utility wraps
- * {@link com.liferay.portlet.messageboards.service.impl.MBMailingListLocalServiceImpl} and is the
+ * {@link com.liferay.message.boards.service.impl.MBMailingListLocalServiceImpl} and is the
  * primary access point for service operations in application layer code running
  * on the local server. Methods of this service will not have security checks
  * based on the propagated JAAS credentials because this service can only be
@@ -29,21 +30,18 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  *
  * @author Brian Wing Shun Chan
  * @see MBMailingListLocalService
- * @see com.liferay.portlet.messageboards.service.base.MBMailingListLocalServiceBaseImpl
- * @see com.liferay.portlet.messageboards.service.impl.MBMailingListLocalServiceImpl
- * @deprecated As of 7.0.0, replaced by {@link
-com.liferay.message.boards.service.impl.MBMailingListLocalServiceImpl}
+ * @see com.liferay.message.boards.service.base.MBMailingListLocalServiceBaseImpl
+ * @see com.liferay.message.boards.service.impl.MBMailingListLocalServiceImpl
  * @generated
  */
-@Deprecated
 @ProviderType
 public class MBMailingListLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.messageboards.service.impl.MBMailingListLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.message.boards.service.impl.MBMailingListLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.message.boards.kernel.model.MBMailingList addMailingList(
+	public static com.liferay.message.boards.model.MBMailingList addMailingList(
 		long userId, long groupId, long categoryId,
 		java.lang.String emailAddress, java.lang.String inProtocol,
 		java.lang.String inServerName, int inServerPort, boolean inUseSSL,
@@ -68,8 +66,8 @@ public class MBMailingListLocalServiceUtil {
 	* @param mbMailingList the message boards mailing list
 	* @return the message boards mailing list that was added
 	*/
-	public static com.liferay.message.boards.kernel.model.MBMailingList addMBMailingList(
-		com.liferay.message.boards.kernel.model.MBMailingList mbMailingList) {
+	public static com.liferay.message.boards.model.MBMailingList addMBMailingList(
+		com.liferay.message.boards.model.MBMailingList mbMailingList) {
 		return getService().addMBMailingList(mbMailingList);
 	}
 
@@ -79,7 +77,7 @@ public class MBMailingListLocalServiceUtil {
 	* @param mailingListId the primary key for the new message boards mailing list
 	* @return the new message boards mailing list
 	*/
-	public static com.liferay.message.boards.kernel.model.MBMailingList createMBMailingList(
+	public static com.liferay.message.boards.model.MBMailingList createMBMailingList(
 		long mailingListId) {
 		return getService().createMBMailingList(mailingListId);
 	}
@@ -95,7 +93,7 @@ public class MBMailingListLocalServiceUtil {
 	}
 
 	public static void deleteMailingList(
-		com.liferay.message.boards.kernel.model.MBMailingList mailingList)
+		com.liferay.message.boards.model.MBMailingList mailingList)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteMailingList(mailingList);
 	}
@@ -107,7 +105,7 @@ public class MBMailingListLocalServiceUtil {
 	* @return the message boards mailing list that was removed
 	* @throws PortalException if a message boards mailing list with the primary key could not be found
 	*/
-	public static com.liferay.message.boards.kernel.model.MBMailingList deleteMBMailingList(
+	public static com.liferay.message.boards.model.MBMailingList deleteMBMailingList(
 		long mailingListId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteMBMailingList(mailingListId);
@@ -119,8 +117,8 @@ public class MBMailingListLocalServiceUtil {
 	* @param mbMailingList the message boards mailing list
 	* @return the message boards mailing list that was removed
 	*/
-	public static com.liferay.message.boards.kernel.model.MBMailingList deleteMBMailingList(
-		com.liferay.message.boards.kernel.model.MBMailingList mbMailingList) {
+	public static com.liferay.message.boards.model.MBMailingList deleteMBMailingList(
+		com.liferay.message.boards.model.MBMailingList mbMailingList) {
 		return getService().deleteMBMailingList(mbMailingList);
 	}
 
@@ -152,7 +150,7 @@ public class MBMailingListLocalServiceUtil {
 	* Performs a dynamic query on the database and returns a range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBMailingListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.message.boards.model.impl.MBMailingListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -170,7 +168,7 @@ public class MBMailingListLocalServiceUtil {
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBMailingListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.message.boards.model.impl.MBMailingListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -211,12 +209,12 @@ public class MBMailingListLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBMailingList fetchCategoryMailingList(
+	public static com.liferay.message.boards.model.MBMailingList fetchCategoryMailingList(
 		long groupId, long categoryId) {
 		return getService().fetchCategoryMailingList(groupId, categoryId);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBMailingList fetchMBMailingList(
+	public static com.liferay.message.boards.model.MBMailingList fetchMBMailingList(
 		long mailingListId) {
 		return getService().fetchMBMailingList(mailingListId);
 	}
@@ -228,7 +226,7 @@ public class MBMailingListLocalServiceUtil {
 	* @param groupId the primary key of the group
 	* @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	*/
-	public static com.liferay.message.boards.kernel.model.MBMailingList fetchMBMailingListByUuidAndGroupId(
+	public static com.liferay.message.boards.model.MBMailingList fetchMBMailingListByUuidAndGroupId(
 		java.lang.String uuid, long groupId) {
 		return getService().fetchMBMailingListByUuidAndGroupId(uuid, groupId);
 	}
@@ -237,7 +235,7 @@ public class MBMailingListLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBMailingList getCategoryMailingList(
+	public static com.liferay.message.boards.model.MBMailingList getCategoryMailingList(
 		long groupId, long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCategoryMailingList(groupId, categoryId);
@@ -259,7 +257,7 @@ public class MBMailingListLocalServiceUtil {
 	* @return the message boards mailing list
 	* @throws PortalException if a message boards mailing list with the primary key could not be found
 	*/
-	public static com.liferay.message.boards.kernel.model.MBMailingList getMBMailingList(
+	public static com.liferay.message.boards.model.MBMailingList getMBMailingList(
 		long mailingListId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMBMailingList(mailingListId);
@@ -273,7 +271,7 @@ public class MBMailingListLocalServiceUtil {
 	* @return the matching message boards mailing list
 	* @throws PortalException if a matching message boards mailing list could not be found
 	*/
-	public static com.liferay.message.boards.kernel.model.MBMailingList getMBMailingListByUuidAndGroupId(
+	public static com.liferay.message.boards.model.MBMailingList getMBMailingListByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMBMailingListByUuidAndGroupId(uuid, groupId);
@@ -283,14 +281,14 @@ public class MBMailingListLocalServiceUtil {
 	* Returns a range of all the message boards mailing lists.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBMailingListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.message.boards.model.impl.MBMailingListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of message boards mailing lists
 	* @param end the upper bound of the range of message boards mailing lists (not inclusive)
 	* @return the range of message boards mailing lists
 	*/
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBMailingList> getMBMailingLists(
+	public static java.util.List<com.liferay.message.boards.model.MBMailingList> getMBMailingLists(
 		int start, int end) {
 		return getService().getMBMailingLists(start, end);
 	}
@@ -302,7 +300,7 @@ public class MBMailingListLocalServiceUtil {
 	* @param companyId the primary key of the company
 	* @return the matching message boards mailing lists, or an empty list if no matches were found
 	*/
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBMailingList> getMBMailingListsByUuidAndCompanyId(
+	public static java.util.List<com.liferay.message.boards.model.MBMailingList> getMBMailingListsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId) {
 		return getService().getMBMailingListsByUuidAndCompanyId(uuid, companyId);
 	}
@@ -317,9 +315,9 @@ public class MBMailingListLocalServiceUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the range of matching message boards mailing lists, or an empty list if no matches were found
 	*/
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBMailingList> getMBMailingListsByUuidAndCompanyId(
+	public static java.util.List<com.liferay.message.boards.model.MBMailingList> getMBMailingListsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.message.boards.kernel.model.MBMailingList> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.message.boards.model.MBMailingList> orderByComparator) {
 		return getService()
 				   .getMBMailingListsByUuidAndCompanyId(uuid, companyId, start,
 			end, orderByComparator);
@@ -349,7 +347,7 @@ public class MBMailingListLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBMailingList updateMailingList(
+	public static com.liferay.message.boards.model.MBMailingList updateMailingList(
 		long mailingListId, java.lang.String emailAddress,
 		java.lang.String inProtocol, java.lang.String inServerName,
 		int inServerPort, boolean inUseSSL, java.lang.String inUserName,
@@ -374,21 +372,15 @@ public class MBMailingListLocalServiceUtil {
 	* @param mbMailingList the message boards mailing list
 	* @return the message boards mailing list that was updated
 	*/
-	public static com.liferay.message.boards.kernel.model.MBMailingList updateMBMailingList(
-		com.liferay.message.boards.kernel.model.MBMailingList mbMailingList) {
+	public static com.liferay.message.boards.model.MBMailingList updateMBMailingList(
+		com.liferay.message.boards.model.MBMailingList mbMailingList) {
 		return getService().updateMBMailingList(mbMailingList);
 	}
 
 	public static MBMailingListLocalService getService() {
-		if (_service == null) {
-			_service = (MBMailingListLocalService)PortalBeanLocatorUtil.locate(MBMailingListLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(MBMailingListLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
-	private static MBMailingListLocalService _service;
+	private static ServiceTracker<MBMailingListLocalService, MBMailingListLocalService> _serviceTracker =
+		ServiceTrackerFactory.open(MBMailingListLocalService.class);
 }

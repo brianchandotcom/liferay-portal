@@ -46,13 +46,9 @@ String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName
 	</c:if>
 
 	<%
-	Portlet portlet = PortletLocalServiceUtil.getPortletById(
-		portletDisplay.getId());
+	Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
 
-	PortletURL viewMetadataSetsURL = PortletURLFactoryUtil.create(
-		liferayPortletRequest,
-		PortletProviderUtil.getPortletId(com.liferay.dynamic.data.mapping.model.DDMStructure.class.getName(), PortletProvider.Action.VIEW),
-		PortletRequest.RENDER_PHASE);
+	PortletURL viewMetadataSetsURL = PortletURLFactoryUtil.create(liferayPortletRequest, PortletProviderUtil.getPortletId(com.liferay.dynamic.data.mapping.model.DDMStructure.class.getName(), PortletProvider.Action.VIEW), PortletRequest.RENDER_PHASE);
 
 	viewMetadataSetsURL.setParameter("mvcPath", "/view.jsp");
 	viewMetadataSetsURL.setParameter("backURL", themeDisplay.getURLCurrent());

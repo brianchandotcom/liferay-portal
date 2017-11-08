@@ -2624,6 +2624,8 @@ public class StagingImpl implements Staging {
 
 		taskContextMap.put("httpPrincipal", httpPrincipal);
 
+		taskContextMap.put("privateLayout", remotePrivateLayout);
+
 		BackgroundTask backgroundTask =
 			_backgroundTaskManager.addBackgroundTask(
 				user.getUserId(), exportImportConfiguration.getGroupId(),

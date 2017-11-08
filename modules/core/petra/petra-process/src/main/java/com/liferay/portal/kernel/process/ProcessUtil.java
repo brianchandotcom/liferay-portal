@@ -34,37 +34,6 @@ import java.util.concurrent.atomic.AtomicMarkableReference;
  */
 public class ProcessUtil {
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             CollectorOutputProcessor#INSTANCE}
-	 */
-	@Deprecated
-	public static final CollectorOutputProcessor COLLECTOR_OUTPUT_PROCESSOR =
-		new CollectorOutputProcessor();
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             ConsumerOutputProcessor#INSTANCE}
-	 */
-	@Deprecated
-	public static final ConsumerOutputProcessor CONSUMER_OUTPUT_PROCESSOR =
-		new ConsumerOutputProcessor();
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link EchoOutputProcessor#INSTANCE}
-	 */
-	@Deprecated
-	public static final EchoOutputProcessor ECHO_OUTPUT_PROCESSOR =
-		new EchoOutputProcessor();
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             LoggingOutputProcessor#INSTANCE}
-	 */
-	@Deprecated
-	public static final LoggingOutputProcessor LOGGING_OUTPUT_PROCESSOR =
-		new LoggingOutputProcessor();
-
 	public static <O, E> NoticeableFuture<ObjectValuePair<O, E>> execute(
 			OutputProcessor<O, E> outputProcessor, List<String> arguments)
 		throws ProcessException {
@@ -105,13 +74,6 @@ public class ProcessUtil {
 		throws ProcessException {
 
 		return execute(outputProcessor, Arrays.asList(arguments));
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
-	public void destroy() {
 	}
 
 	private static String _buildThreadNamePrefix(List<String> arguments) {

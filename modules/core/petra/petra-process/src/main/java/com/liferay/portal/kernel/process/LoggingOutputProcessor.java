@@ -15,8 +15,6 @@
 package com.liferay.portal.kernel.process;
 
 import com.liferay.petra.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,32 +28,6 @@ import java.util.function.BiConsumer;
  * @author Shuyang Zhou
  */
 public class LoggingOutputProcessor implements OutputProcessor<Void, Void> {
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             CollectorOutputProcessor#INSTANCE}
-	 */
-	@Deprecated
-	public static final OutputProcessor<Void, Void> INSTANCE =
-		new LoggingOutputProcessor();
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             CollectorOutputProcessor#INSTANCE}
-	 */
-	@Deprecated
-	public LoggingOutputProcessor() {
-		this(
-			Charset.defaultCharset(),
-			(stdErr, line) -> {
-				if (stdErr) {
-					_log.error(line);
-				}
-				else if (_log.isInfoEnabled()) {
-					_log.info(line);
-				}
-			});
-	}
 
 	public LoggingOutputProcessor(BiConsumer<Boolean, String> logLineConsumer) {
 		this(Charset.defaultCharset(), logLineConsumer);
@@ -111,9 +83,6 @@ public class LoggingOutputProcessor implements OutputProcessor<Void, Void> {
 			}
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LoggingOutputProcessor.class);
 
 	private final Charset _charset;
 	private final BiConsumer<Boolean, String> _logLineConsumer;

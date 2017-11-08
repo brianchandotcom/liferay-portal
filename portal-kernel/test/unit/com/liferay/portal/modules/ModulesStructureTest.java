@@ -661,7 +661,6 @@ public class ModulesStructureTest {
 		return false;
 	}
 
-	@SuppressWarnings("unused")
 	private boolean _isInGitRepoReadOnly(Path dirPath) throws IOException {
 		Path gitRepoPath = _getGitRepoPath(dirPath);
 
@@ -954,6 +953,10 @@ public class ModulesStructureTest {
 		throws IOException {
 
 		if (_isEmptyGitRepo(dirPath)) {
+			return;
+		}
+
+		if (_isInGitRepoReadOnly(dirPath)) {
 			return;
 		}
 

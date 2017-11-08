@@ -27,7 +27,7 @@
 		</if>
 	</tear-down>
 
-	<command name="AssertConfigFileValuesPropogateToModule" priority="4">
+	<command name="AssertConfigFileValuesPropogateToModule" priority="5">
 		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration.config" />
 		<property name="osgi.module.configurations" value="operationMode=&quot;EMBEDDED&quot;
 clientTransportIgnoreClusterName=&quot;false&quot;
@@ -62,7 +62,7 @@ discoveryZenPingUnicastHostsPort=&quot;9300-9400&quot;" />
 		</execute>
 	</command>
 
-	<command name="AssertIndexOnStartupViaRemote" priority="5">
+	<command name="AssertIndexOnStartupViaRemote" priority="4">
 		<description message="This test asserts that index on startup works consistently on remote Elasticsearch." />
 
 		<property name="remote.elasticsearch.enabled" value="true" />
@@ -81,7 +81,7 @@ discoveryZenPingUnicastHostsPort=&quot;9300-9400&quot;" />
 		</execute>
 	</command>
 
-	<command name="AssertSystemSettingsPropogateToModule" priority="4">
+	<command name="AssertSystemSettingsPropogateToModule" priority="5">
 		<property name="test.name.skip.portal.instance" value="Elasticsearch#AssertSystemSettingsPropogateToModule" />
 
 		<execute macro="ProductMenu#gotoPortlet">

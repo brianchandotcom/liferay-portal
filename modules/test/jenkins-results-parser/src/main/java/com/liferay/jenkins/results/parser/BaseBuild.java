@@ -44,7 +44,6 @@ import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 /**

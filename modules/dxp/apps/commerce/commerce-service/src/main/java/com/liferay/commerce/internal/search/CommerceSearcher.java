@@ -16,6 +16,7 @@ package com.liferay.commerce.internal.search;
 
 import com.liferay.commerce.model.CommercePriceEntry;
 import com.liferay.commerce.model.CommercePriceList;
+import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceTierPriceEntry;
 import com.liferay.portal.kernel.search.BaseSearcher;
 import com.liferay.portal.kernel.search.Field;
@@ -28,7 +29,7 @@ public class CommerceSearcher extends BaseSearcher {
 
 	public static final String[] CLASS_NAMES = {
 		CommercePriceEntry.class.getName(), CommercePriceList.class.getName(),
-		CommerceTierPriceEntry.class.getName()
+		CommerceShipment.class.getName(), CommerceTierPriceEntry.class.getName()
 	};
 
 	public static Indexer<?> getInstance() {

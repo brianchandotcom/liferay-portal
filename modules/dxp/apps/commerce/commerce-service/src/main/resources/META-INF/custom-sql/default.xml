@@ -30,6 +30,21 @@
 				CommerceCountry.priority
 		]]>
 	</sql>
+	<sql id="com.liferay.commerce.service.persistence.CommerceOrderItemFinder.findByG_C">
+		<![CDATA[
+			SELECT
+				{CommerceOrderItem.*}
+			FROM
+				CommerceOrderItem
+			INNER JOIN
+				CommerceOrder ON
+					(CommerceOrder.commerceOrderId = CommerceOrderItem.commerceOrderId)
+			WHERE
+				(CommerceOrderItem.groupId = ?) AND
+				(CommerceOrder.shippingAddressId = ?) AND
+				(CommerceOrderItem.quantity > CommerceOrderItem.shippedQuantity)
+		]]>
+	</sql>
 	<sql id="com.liferay.commerce.service.persistence.CommercePriceListFinder.findByExpirationDate">
 		<![CDATA[
 			SELECT

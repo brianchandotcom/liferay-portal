@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.DefaultLayoutSetPrototypesUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.rss.web.constants.RSSPortletKeys;
 import com.liferay.site.navigation.language.web.constants.SiteNavigationLanguagePortletKeys;
-import com.liferay.social.activities.web.constants.SocialActivitiesPortletKeys;
+import com.liferay.social.activities.constants.SocialActivitiesPortletKeys;
 
 import java.util.HashMap;
 import java.util.List;

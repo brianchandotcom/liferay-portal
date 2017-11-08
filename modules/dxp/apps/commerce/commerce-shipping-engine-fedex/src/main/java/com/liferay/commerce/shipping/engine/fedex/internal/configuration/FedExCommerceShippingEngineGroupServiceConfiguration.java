@@ -20,7 +20,6 @@ import com.fedex.ws.rate.v22.DropoffType;
 
 import com.liferay.commerce.shipping.engine.fedex.internal.constants.FedExCommerceShippingEngineConstants;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 
 /**
  * @author Andrea Di Giorgi
@@ -55,9 +54,6 @@ public interface FedExCommerceShippingEngineGroupServiceConfiguration {
 
 	@Meta.AD(required = false)
 	public String key();
-
-	@Meta.AD(required = false)
-	public LocalizedValuesMap message();
 
 	@Meta.AD(required = false)
 	public String meterNumber();

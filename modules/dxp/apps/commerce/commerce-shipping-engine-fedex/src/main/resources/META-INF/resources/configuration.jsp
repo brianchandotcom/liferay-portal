@@ -19,29 +19,10 @@
 <%
 FedExCommerceShippingEngineGroupServiceConfiguration fedExCommerceShippingEngineGroupServiceConfiguration = (FedExCommerceShippingEngineGroupServiceConfiguration)request.getAttribute(FedExCommerceShippingEngineGroupServiceConfiguration.class.getName());
 
-String messageXml = null;
-
-LocalizedValuesMap messageLocalizedValuesMap = fedExCommerceShippingEngineGroupServiceConfiguration.message();
-
-if (messageLocalizedValuesMap != null) {
-	messageXml = LocalizationUtil.getXml(messageLocalizedValuesMap, "message");
-}
-
 String[] serviceTypes = StringUtil.split(fedExCommerceShippingEngineGroupServiceConfiguration.serviceTypes());
 %>
 
 <aui:fieldset>
-	<aui:field-wrapper label="message">
-		<liferay-ui:input-localized
-			editorName="alloyeditor"
-			fieldPrefix="settings"
-			fieldPrefixSeparator="--"
-			name="message"
-			type="editor"
-			xml="<%= messageXml %>"
-		/>
-	</aui:field-wrapper>
-
 	<aui:input name="settings--url--" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.url() %>" />
 
 	<aui:input name="settings--key--" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.key() %>" />

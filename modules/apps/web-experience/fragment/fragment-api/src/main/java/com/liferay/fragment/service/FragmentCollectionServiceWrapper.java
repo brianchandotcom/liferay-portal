@@ -66,6 +66,13 @@ public class FragmentCollectionServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.fragment.model.FragmentCollection> getFragmentCollections(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _fragmentCollectionService.getFragmentCollections(groupId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.fragment.model.FragmentCollection> getFragmentCollections(
 		long groupId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentCollectionService.getFragmentCollections(groupId,

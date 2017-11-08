@@ -243,6 +243,8 @@ public class LayoutPageTemplateFragmentModelImpl extends BaseModelImpl<LayoutPag
 	@Override
 	public void setLayoutPageTemplateFragmentId(
 		long layoutPageTemplateFragmentId) {
+		_columnBitmask = -1L;
+
 		_layoutPageTemplateFragmentId = layoutPageTemplateFragmentId;
 	}
 
@@ -448,17 +450,23 @@ public class LayoutPageTemplateFragmentModelImpl extends BaseModelImpl<LayoutPag
 
 	@Override
 	public int compareTo(LayoutPageTemplateFragment layoutPageTemplateFragment) {
-		long primaryKey = layoutPageTemplateFragment.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		if (getLayoutPageTemplateFragmentId() < layoutPageTemplateFragment.getLayoutPageTemplateFragmentId()) {
+			value = -1;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
+		else if (getLayoutPageTemplateFragmentId() > layoutPageTemplateFragment.getLayoutPageTemplateFragmentId()) {
+			value = 1;
 		}
 		else {
-			return 0;
+			value = 0;
 		}
+
+		if (value != 0) {
+			return value;
+		}
+
+		return 0;
 	}
 
 	@Override

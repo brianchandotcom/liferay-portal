@@ -57,7 +57,9 @@ public class LanguageKeysCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		_checkLanguageKeys(fileName, absolutePath, content, getPatterns());
+		if (_portalLanguageProperties != null) {
+			_checkLanguageKeys(fileName, absolutePath, content, getPatterns());
+		}
 
 		return content;
 	}
@@ -389,15 +391,17 @@ public class LanguageKeysCheck extends BaseFileCheck {
 	}
 
 	private Properties _getPortalLanguageProperties() throws Exception {
-		Properties portalLanguageProperties = new Properties();
-
 		String portalLanguagePropertiesContent = getPortalContent(
 			"portal-impl/src/content/Language.properties");
 
-		if (portalLanguagePropertiesContent != null) {
-			portalLanguageProperties.load(
-				new StringReader(portalLanguagePropertiesContent));
+		if (portalLanguagePropertiesContent == null) {
+			return null;
 		}
+
+		Properties portalLanguageProperties = new Properties();
+
+		portalLanguageProperties.load(
+			new StringReader(portalLanguagePropertiesContent));
 
 		return portalLanguageProperties;
 	}

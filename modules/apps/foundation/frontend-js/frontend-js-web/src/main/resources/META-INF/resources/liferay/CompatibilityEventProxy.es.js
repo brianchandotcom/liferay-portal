@@ -13,12 +13,12 @@ class CompatibilityEventProxy extends State {
 	/**
 	 * @inheritDoc
 	 */
-	constructor(opt_config, opt_element) {
-		super(opt_config, opt_element);
+	constructor(config, element) {
+		super(config, element);
 
 		this.eventTargets_ = [];
-		this.host = opt_config.host;
-		this.namespace = opt_config.namespace;
+		this.host = config.host;
+		this.namespace = config.namespace;
 
 		this.startCompatibility_();
 	}
@@ -39,6 +39,7 @@ class CompatibilityEventProxy extends State {
 	 *
 	 * @param  {!String} eventName
 	 * @private
+	 * @return {String} Adapted event name
 	 */
 	checkAttributeEvent_(eventName) {
 		return eventName.replace(

@@ -4,6 +4,12 @@ import EventEmitter from 'metal-events/src/EventEmitter';
 import CompatibilityEventProxy from '../../src/main/resources/META-INF/resources/liferay/CompatibilityEventProxy.es';
 
 describe('CompatibilityEventProxy', () => {
+	/**
+	 * Mocks a target so it can be used for testing
+	 * @param {string} event The event to configure for the target
+	 * @param {boolean} emitFacade Whether the configured event should use a Facade or not
+	 * @return {Object} The mocked target object
+	 */
 	function createMockedTarget(event, emitFacade) {
 		const mockedTarget = {
 			fire: function() {},
@@ -75,7 +81,8 @@ describe('CompatibilityEventProxy', () => {
 		component.addTarget(mockedTarget);
 
 		expect(() => {
-			host.emit(eventNameToEmit, eventObjectToEmit, eventFacadeObjectToEmit);
+			host.emit(
+				eventNameToEmit, eventObjectToEmit, eventFacadeObjectToEmit);
 		}).not.toThrow();
 
 		spy.mockReset();

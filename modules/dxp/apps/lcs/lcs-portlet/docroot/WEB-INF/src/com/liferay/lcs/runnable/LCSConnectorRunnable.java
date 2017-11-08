@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.license.messaging.LCSPortletState;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ResourceBundle;
@@ -164,8 +165,14 @@ public class LCSConnectorRunnable implements Runnable {
 
 			LCSPortletPreferencesUtil.removeCredentials();
 
-			throw new InvalidLCSClusterEntryTokenException(
-				"Invalid LCS activation token file credentials");
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("LCS activation token file contains revoked or invalid ");
+			sb.append("oAuth credentials and will be deleted. Please make ");
+			sb.append("sure to regenerate the file using LCS platform ");
+			sb.append("dashboard, download and deploy it");
+
+			throw new InvalidLCSClusterEntryTokenException(sb.toString());
 		}
 
 		_lcsClusterEntryTokenAdvisor.checkLCSClusterEntryTokenId(

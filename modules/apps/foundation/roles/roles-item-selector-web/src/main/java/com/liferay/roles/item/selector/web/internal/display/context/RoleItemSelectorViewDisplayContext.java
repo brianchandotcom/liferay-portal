@@ -26,11 +26,13 @@ import com.liferay.portlet.rolesadmin.search.RoleSearch;
 import com.liferay.roles.item.selector.web.internal.search.RoleItemSelectorChecker;
 import com.liferay.roles.item.selector.web.internal.util.RolesItemSelectorViewUtil;
 
+import java.util.List;
+
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina

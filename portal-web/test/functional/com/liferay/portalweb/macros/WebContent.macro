@@ -10,7 +10,7 @@
 	</command>
 
 	<command name="addAbstractSummary">
-		<execute function="Type" locator1="TextArea#SUMMARY" value1="${abstractSummary}" />
+		<execute function="Type" locator1="AlloyEditor#DESCRIPTION_FIELD" value1="${abstractSummary}" />
 	</command>
 
 	<command name="addArticleCP">

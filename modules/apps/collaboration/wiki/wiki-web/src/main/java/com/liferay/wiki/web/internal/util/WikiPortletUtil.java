@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.web.util;
+package com.liferay.wiki.web.internal.util;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.wiki.model.WikiNode;

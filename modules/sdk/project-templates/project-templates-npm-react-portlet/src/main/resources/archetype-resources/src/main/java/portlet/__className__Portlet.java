@@ -1,6 +1,7 @@
 package ${package}.portlet;
 
 import ${package}.constants.${className}PortletKeys;
+import ${package}.constants.${className}WebKeys;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
@@ -43,7 +44,7 @@ public class ${className}Portlet extends MVCPortlet {
 		JSPackage jsPackage = _npmResolver.getJSPackage();
 
 		renderRequest.setAttribute(
-			"bootstrapRequire",
+			${className}WebKeys.BOOTSTRAP_REQUIRE,
 			jsPackage.getResolvedId() + " as bootstrapRequire");
 
 		super.doView(renderRequest, renderResponse);

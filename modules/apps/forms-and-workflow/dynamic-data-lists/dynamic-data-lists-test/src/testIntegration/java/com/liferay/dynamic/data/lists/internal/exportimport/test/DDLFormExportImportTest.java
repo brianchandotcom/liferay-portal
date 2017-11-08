@@ -15,7 +15,6 @@
 package com.liferay.dynamic.data.lists.internal.exportimport.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.helper.DDLRecordSetTestHelper;
 import com.liferay.dynamic.data.lists.helper.DDLRecordTestHelper;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
@@ -69,7 +68,7 @@ public class DDLFormExportImportTest extends BasePortletExportImportTestCase {
 
 	@Override
 	public String getPortletId() {
-		return DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM;
+		return _PORTLET_ID;
 	}
 
 	@Before
@@ -175,6 +174,9 @@ public class DDLFormExportImportTest extends BasePortletExportImportTestCase {
 
 		return settingsDDMFormValues;
 	}
+
+	private static final String _PORTLET_ID =
+		"com_liferay_dynamic_data_lists_form_web_portlet_DDLFormPortlet";
 
 	private DDLRecordSetTestHelper _ddlRecordSetTestHelper;
 	private DDLRecordTestHelper _ddlRecordTestHelper;

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.saml.runtime.configuration.SamlConfiguration;
 import com.liferay.saml.runtime.credential.KeyStoreManager;
 
 import java.io.File;
@@ -78,11 +79,12 @@ public class FileSystemKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 
 		File samlKeyStoreFile = new File(samlKeyStorePath);
 
+		samlKeyStoreFile = samlKeyStoreFile.getAbsoluteFile();
+
 		if (!samlKeyStoreFile.exists()) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Creating a new SAML keystore at " +
-						samlKeyStoreFile.getAbsolutePath());
+					"Creating a new SAML keystore at " + samlKeyStoreFile);
 			}
 
 			File parentDir = samlKeyStoreFile.getParentFile();
@@ -138,15 +140,17 @@ public class FileSystemKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 		else {
 			File samlKeyStoreFile = new File(samlKeyStorePath);
 
+			samlKeyStoreFile = samlKeyStoreFile.getAbsoluteFile();
+
 			if (!samlKeyStoreFile.exists()) {
 				_keyStore.load(null, samlKeyStorePassword.toCharArray());
 
 				if (Validator.isNotNull(samlConfiguration.keyStorePath()) &&
+					!SamlConfiguration.KEYSTORE_PATH_DEFAULT.equals(
+						samlConfiguration.keyStorePath()) &&
 					_log.isWarnEnabled()) {
 
-					_log.warn(
-						"No SAML keystore exists at " +
-							samlKeyStoreFile.getAbsolutePath());
+					_log.warn("No SAML keystore exists at " + samlKeyStoreFile);
 				}
 
 				return;

@@ -26,8 +26,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.monitoring.MonitorNames;
 import com.liferay.portal.monitoring.internal.BaseDataSample;
+import com.liferay.portal.monitoring.internal.MonitorNames;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;

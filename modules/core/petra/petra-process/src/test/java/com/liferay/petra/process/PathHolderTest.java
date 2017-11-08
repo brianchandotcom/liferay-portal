@@ -98,11 +98,19 @@ public class PathHolderTest {
 		ReflectionTestUtil.setFieldValue(
 			pathHolder, "_pathString",
 			"testFolder" + foreignSeparatorChar + "testFile");
-		ReflectionTestUtil.setFieldValue(
+
+		char originalSeparatorChar = ReflectionTestUtil.getAndSetFieldValue(
 			pathHolder, "_separatorChar", foreignSeparatorChar);
 
-		Assert.assertEquals(
-			"testFolder" + separatorChar + "testFile", pathHolder.toString());
+		try {
+			Assert.assertEquals(
+				"testFolder" + separatorChar + "testFile",
+				pathHolder.toString());
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				pathHolder, "_separatorChar", originalSeparatorChar);
+		}
 	}
 
 }

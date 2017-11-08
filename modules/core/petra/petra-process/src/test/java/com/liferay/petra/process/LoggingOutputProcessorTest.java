@@ -64,7 +64,7 @@ public class LoggingOutputProcessorTest extends BaseOutputProcessorTestCase {
 
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
-					LoggingOutputProcessor.class.getName(), Level.OFF)) {
+					LoggingOutputProcessorTest.class.getName(), Level.OFF)) {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 

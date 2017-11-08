@@ -47,6 +47,11 @@ public class CommerceWebKeys {
 
 	public static final String COMMERCE_PRICE_LISTS = "COMMERCE_PRICE_LISTS";
 
+	public static final String COMMERCE_SHIPMENT = "COMMERCE_SHIPMENT";
+
+	public static final String COMMERCE_SHIPMENT_ITEM =
+		"COMMERCE_SHIPMENT_ITEM";
+
 	public static final String COMMERCE_TIER_PRICE_ENTRIES =
 		"COMMERCE_TIER_PRICE_ENTRIES";
 

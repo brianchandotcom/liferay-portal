@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.SyncThrowableThread;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ThreadUtil;
 
 import java.io.IOException;
@@ -34,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
@@ -72,18 +72,17 @@ public class ProcessUtilTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Future<ObjectValuePair<Void, Void>> loggingFuture =
-				ProcessUtil.execute(
-					new LoggingOutputProcessor(
-						(stdErr, line) -> {
-							if (stdErr) {
-								_log.error(line);
-							}
-							else if (_log.isInfoEnabled()) {
-								_log.info(line);
-							}
-						}),
-					_buildArguments(Echo.class, "2"));
+			Future<Entry<Void, Void>> loggingFuture = ProcessUtil.execute(
+				new LoggingOutputProcessor(
+					(stdErr, line) -> {
+						if (stdErr) {
+							_log.error(line);
+						}
+						else if (_log.isInfoEnabled()) {
+							_log.info(line);
+						}
+					}),
+				_buildArguments(Echo.class, "2"));
 
 			loggingFuture.get();
 
@@ -107,12 +106,11 @@ public class ProcessUtilTest {
 
 		// Collector
 
-		Future<ObjectValuePair<byte[], byte[]>> collectorFuture =
-			ProcessUtil.execute(
-				CollectorOutputProcessor.INSTANCE,
-				_buildArguments(Echo.class, "2"));
+		Future<Entry<byte[], byte[]>> collectorFuture = ProcessUtil.execute(
+			CollectorOutputProcessor.INSTANCE,
+			_buildArguments(Echo.class, "2"));
 
-		ObjectValuePair<byte[], byte[]> objectValuePair = collectorFuture.get();
+		Entry<byte[], byte[]> objectValuePair = collectorFuture.get();
 
 		collectorFuture.cancel(true);
 

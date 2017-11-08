@@ -19,12 +19,13 @@ import com.liferay.petra.concurrent.DefaultNoticeableFuture;
 import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.io.IOException;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicMarkableReference;
@@ -34,7 +35,7 @@ import java.util.concurrent.atomic.AtomicMarkableReference;
  */
 public class ProcessUtil {
 
-	public static <O, E> NoticeableFuture<ObjectValuePair<O, E>> execute(
+	public static <O, E> NoticeableFuture<Entry<O, E>> execute(
 			OutputProcessor<O, E> outputProcessor, List<String> arguments)
 		throws ProcessException {
 
@@ -69,7 +70,7 @@ public class ProcessUtil {
 		}
 	}
 
-	public static <O, E> NoticeableFuture<ObjectValuePair<O, E>> execute(
+	public static <O, E> NoticeableFuture<Entry<O, E>> execute(
 			OutputProcessor<O, E> outputProcessor, String... arguments)
 		throws ProcessException {
 
@@ -108,12 +109,11 @@ public class ProcessUtil {
 		return defaultNoticeableFuture;
 	}
 
-	private static <O, E> NoticeableFuture<ObjectValuePair<O, E>>
-		_wrapNoticeableFuture(
-			NoticeableFuture<O> stdOutNoticeableFuture,
-			NoticeableFuture<E> stdErrNoticeableFuture, Process process) {
+	private static <O, E> NoticeableFuture<Entry<O, E>> _wrapNoticeableFuture(
+		NoticeableFuture<O> stdOutNoticeableFuture,
+		NoticeableFuture<E> stdErrNoticeableFuture, Process process) {
 
-		DefaultNoticeableFuture<ObjectValuePair<O, E>> defaultNoticeableFuture =
+		DefaultNoticeableFuture<Entry<O, E>> defaultNoticeableFuture =
 			new DefaultNoticeableFuture<>();
 
 		defaultNoticeableFuture.addFutureListener(
@@ -160,7 +160,7 @@ public class ProcessUtil {
 
 					if (markHolder[0]) {
 						defaultNoticeableFuture.set(
-							new ObjectValuePair<>(stdOut, stdErr));
+							new SimpleEntry<>(stdOut, stdErr));
 					}
 				}
 
@@ -191,7 +191,7 @@ public class ProcessUtil {
 
 					if (markHolder[0]) {
 						defaultNoticeableFuture.set(
-							new ObjectValuePair<>(stdOut, stdErr));
+							new SimpleEntry<>(stdOut, stdErr));
 					}
 				}
 

@@ -128,55 +128,6 @@ public class LCSClusterEntryTokenAdvisor {
 		throw new InvalidLCSClusterEntryTokenException(sb.toString());
 	}
 
-	public void checkLCSClusterEntryTokenPreferences(
-			LCSClusterEntryToken lcsClusterEntryToken)
-		throws Exception {
-
-		PortletPreferences jxPortletPreferences =
-			LCSPortletPreferencesUtil.fetchReadOnlyJxPortletPreferences();
-
-		if (jxPortletPreferences == null) {
-			return;
-		}
-
-		LCSClusterEntryTokenContentAdvisor lcsClusterEntryTokenContentAdvisor =
-			new LCSClusterEntryTokenContentAdvisor(
-				lcsClusterEntryToken.getContent());
-
-		String lcsAccessSecret =
-			lcsClusterEntryTokenContentAdvisor.getAccessSecret();
-		String lcsAccessToken =
-			lcsClusterEntryTokenContentAdvisor.getAccessToken();
-
-		long lcsClusterEntryId = lcsClusterEntryToken.getLcsClusterEntryId();
-		long lcsClusterEntryTokenId =
-			lcsClusterEntryToken.getLcsClusterEntryTokenId();
-
-		if (lcsAccessSecret.equals(
-				jxPortletPreferences.getValue("lcsAccessSecret", null)) &&
-			lcsAccessToken.equals(
-				jxPortletPreferences.getValue("lcsAccessToken", null)) &&
-			(lcsClusterEntryId ==
-				GetterUtil.getLong(
-					jxPortletPreferences.getValue(
-						"lcsClusterEntryId", null))) &&
-			(lcsClusterEntryTokenId ==
-				GetterUtil.getLong(
-					jxPortletPreferences.getValue(
-						"lcsClusterEntryTokenId", null)))) {
-
-			return;
-		}
-
-		if (_log.isWarnEnabled()) {
-			_log.warn(
-				"LCS portlet will update credentials in portlet preferences " +
-					"to match the LCS activation token");
-		}
-
-		LCSPortletPreferencesUtil.removeCredentials();
-	}
-
 	public void deleteLCSCLusterEntryTokenFile() {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Deleting LCS activation token file");

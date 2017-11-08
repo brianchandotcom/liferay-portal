@@ -607,10 +607,10 @@ public class SharepointExtRepository implements ExtRepository {
 			String url = _sharepointURLHelper.getUpdateFileURL(
 				extRepositoryFileEntryKey);
 
-			JSONObject jsonObject = _post(url, inputStream);
+			_put(url, inputStream);
 
-			return _sharepointServerResponseConverter.getExtRepositoryFileEntry(
-				jsonObject);
+			return getExtRepositoryObject(
+				ExtRepositoryObjectType.FILE, extRepositoryFileEntryKey);
 		}
 		catch (IOException | UnirestException e) {
 			throw new PortalException(e);
@@ -838,6 +838,26 @@ public class SharepointExtRepository implements ExtRepository {
 		}
 
 		return JSONFactoryUtil.createJSONObject(httpResponse.getBody());
+	}
+
+	private void _put(String url, InputStream inputStream)
+		throws IOException, PortalException, UnirestException {
+
+		HttpRequestWithBody httpRequestWithBody = Unirest.put(url);
+
+		httpRequestWithBody.header("accept", "application/json; odata=verbose");
+		httpRequestWithBody.header(
+			"Authorization", "Bearer " + _getAccessToken());
+		httpRequestWithBody.body(FileUtil.getBytes(inputStream));
+
+		HttpResponse<String> httpResponse = httpRequestWithBody.asString();
+
+		if (httpResponse.getStatus() >= 300) {
+			throw new PrincipalException(
+				String.format(
+					"Unable to post to %s: %d %s", url,
+					httpResponse.getStatus(), httpResponse.getStatusText()));
+		}
 	}
 
 	private String _strip(String s) {

@@ -1,0 +1,4 @@
+Bundle-SymbolicName: com.fedex.ws
+Bundle-Version: 1.0.0
+Export-Package: com.fedex.ws.rate.v22
+-includeresource: @lib/RateService_v22-ws.jar

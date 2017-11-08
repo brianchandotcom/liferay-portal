@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.process.local;
+package com.liferay.petra.process.local;
 
 import com.liferay.petra.concurrent.AsyncBroker;
 import com.liferay.petra.lang.CentralizedThreadLocal;

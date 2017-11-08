@@ -12,25 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.kernel.process;
+package com.liferay.petra.process;
+
+import java.io.Serializable;
 
 /**
  * @author Shuyang Zhou
  */
-public interface ProcessLog {
+public interface ProcessExecutor {
 
-	public Level getLevel();
-
-	public String getMessage();
-
-	public Throwable getThrowable();
-
-	public static enum Level {
-
-		// Don't sort, order matters.
-
-		DEBUG, INFO, WARN, ERROR
-
-	}
+	public <T extends Serializable> ProcessChannel<T> execute(
+			ProcessConfig processConfig, ProcessCallable<T> processCallable)
+		throws ProcessException;
 
 }

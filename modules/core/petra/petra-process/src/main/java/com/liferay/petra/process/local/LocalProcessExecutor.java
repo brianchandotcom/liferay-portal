@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.process.local;
+package com.liferay.petra.process.local;
 
 import com.liferay.petra.concurrent.AsyncBroker;
 import com.liferay.petra.concurrent.DefaultNoticeableFuture;
@@ -20,16 +20,16 @@ import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.petra.io.ClassLoaderObjectInputStream;
 import com.liferay.petra.io.unsync.UnsyncBufferedInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.petra.process.ProcessCallable;
+import com.liferay.petra.process.ProcessChannel;
+import com.liferay.petra.process.ProcessConfig;
+import com.liferay.petra.process.ProcessException;
+import com.liferay.petra.process.ProcessExecutor;
+import com.liferay.petra.process.ProcessLog;
+import com.liferay.petra.process.ProcessLog.Level;
+import com.liferay.petra.process.TerminationProcessException;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.process.ProcessCallable;
-import com.liferay.portal.kernel.process.ProcessChannel;
-import com.liferay.portal.kernel.process.ProcessConfig;
-import com.liferay.portal.kernel.process.ProcessException;
-import com.liferay.portal.kernel.process.ProcessExecutor;
-import com.liferay.portal.kernel.process.ProcessLog;
-import com.liferay.portal.kernel.process.ProcessLog.Level;
-import com.liferay.portal.kernel.process.TerminationProcessException;
 
 import java.io.EOFException;
 import java.io.IOException;

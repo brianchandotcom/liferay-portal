@@ -12,19 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.kernel.process;
-
-import java.io.InputStream;
+package com.liferay.petra.process;
 
 /**
  * @author Shuyang Zhou
  */
-public interface OutputProcessor<O, E> {
+public class ProcessException extends Exception {
 
-	public E processStdErr(InputStream stdErrInputStream)
-		throws ProcessException;
+	public ProcessException(String message) {
+		super(message);
+	}
 
-	public O processStdOut(InputStream stdOutInputStream)
-		throws ProcessException;
+	public ProcessException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public ProcessException(Throwable cause) {
+		super(cause);
+	}
+
+	private static final long serialVersionUID = 1L;
 
 }

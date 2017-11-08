@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.kernel.process.local;
+package com.liferay.petra.process.local;
 
-import com.liferay.portal.kernel.process.ProcessCallable;
-import com.liferay.portal.kernel.process.ProcessException;
-import com.liferay.portal.kernel.process.local.LocalProcessLauncher.ProcessContext;
+import com.liferay.petra.process.ProcessCallable;
+import com.liferay.petra.process.ProcessException;
+import com.liferay.petra.process.local.LocalProcessLauncher.ProcessContext;
 
 import java.io.IOException;
 import java.io.Serializable;

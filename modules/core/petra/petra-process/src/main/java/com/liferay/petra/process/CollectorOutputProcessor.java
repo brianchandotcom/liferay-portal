@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.kernel.process;
+package com.liferay.petra.process;
 
-import com.liferay.petra.io.DummyOutputStream;
 import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,36 +23,38 @@ import java.io.InputStream;
 /**
  * @author Shuyang Zhou
  */
-public class ConsumerOutputProcessor implements OutputProcessor<Void, Void> {
+public class CollectorOutputProcessor
+	implements OutputProcessor<byte[], byte[]> {
 
-	public static final OutputProcessor<Void, Void> INSTANCE =
-		new ConsumerOutputProcessor();
+	public static final OutputProcessor<byte[], byte[]> INSTANCE =
+		new CollectorOutputProcessor();
 
 	@Override
-	public Void processStdErr(InputStream stdErrInputStream)
+	public byte[] processStdErr(InputStream stdErrInputStream)
 		throws ProcessException {
 
-		_consume(stdErrInputStream);
-
-		return null;
+		return _collect(stdErrInputStream);
 	}
 
 	@Override
-	public Void processStdOut(InputStream stdOutInputStream)
+	public byte[] processStdOut(InputStream stdOutInputStream)
 		throws ProcessException {
 
-		_consume(stdOutInputStream);
-
-		return null;
+		return _collect(stdOutInputStream);
 	}
 
-	private void _consume(InputStream inputStream) throws ProcessException {
+	private byte[] _collect(InputStream inputStream) throws ProcessException {
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
+
 		try {
-			StreamUtil.transfer(inputStream, new DummyOutputStream());
+			StreamUtil.transfer(inputStream, unsyncByteArrayOutputStream);
 		}
 		catch (IOException ioe) {
 			throw new ProcessException(ioe);
 		}
+
+		return unsyncByteArrayOutputStream.toByteArray();
 	}
 
 }

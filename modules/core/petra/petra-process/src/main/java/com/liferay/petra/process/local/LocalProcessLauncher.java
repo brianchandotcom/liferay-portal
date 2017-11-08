@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.kernel.process.local;
+package com.liferay.petra.process.local;
 
 import com.liferay.petra.io.ClassLoaderObjectInputStream;
 import com.liferay.petra.io.unsync.UnsyncBufferedOutputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.io.unsync.UnsyncPrintWriter;
+import com.liferay.petra.process.ProcessCallable;
+import com.liferay.petra.process.ProcessException;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.kernel.process.ProcessCallable;
-import com.liferay.portal.kernel.process.ProcessException;
 
 import java.io.File;
 import java.io.FileDescriptor;

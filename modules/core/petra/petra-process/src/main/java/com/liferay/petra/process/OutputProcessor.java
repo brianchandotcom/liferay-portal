@@ -12,27 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.kernel.process;
+package com.liferay.petra.process;
+
+import java.io.InputStream;
 
 /**
  * @author Shuyang Zhou
  */
-public class TerminationProcessException extends ProcessException {
+public interface OutputProcessor<O, E> {
 
-	public TerminationProcessException(int exitCode) {
-		this("Subprocess terminated with exit code " + exitCode, exitCode);
-	}
+	public E processStdErr(InputStream stdErrInputStream)
+		throws ProcessException;
 
-	public TerminationProcessException(String message, int exitCode) {
-		super(message);
-
-		_exitCode = exitCode;
-	}
-
-	public int getExitCode() {
-		return _exitCode;
-	}
-
-	private final int _exitCode;
+	public O processStdOut(InputStream stdOutInputStream)
+		throws ProcessException;
 
 }

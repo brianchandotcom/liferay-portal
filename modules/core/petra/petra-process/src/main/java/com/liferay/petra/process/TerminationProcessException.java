@@ -12,17 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.kernel.process;
-
-import java.io.Serializable;
+package com.liferay.petra.process;
 
 /**
  * @author Shuyang Zhou
  */
-public interface ProcessExecutor {
+public class TerminationProcessException extends ProcessException {
 
-	public <T extends Serializable> ProcessChannel<T> execute(
-			ProcessConfig processConfig, ProcessCallable<T> processCallable)
-		throws ProcessException;
+	public TerminationProcessException(int exitCode) {
+		this("Subprocess terminated with exit code " + exitCode, exitCode);
+	}
+
+	public TerminationProcessException(String message, int exitCode) {
+		super(message);
+
+		_exitCode = exitCode;
+	}
+
+	public int getExitCode() {
+		return _exitCode;
+	}
+
+	private final int _exitCode;
 
 }

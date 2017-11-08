@@ -12,25 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.kernel.process;
+package com.liferay.petra.process;
 
 /**
  * @author Shuyang Zhou
  */
-public class ProcessException extends Exception {
+public interface ProcessLog {
 
-	public ProcessException(String message) {
-		super(message);
+	public Level getLevel();
+
+	public String getMessage();
+
+	public Throwable getThrowable();
+
+	public static enum Level {
+
+		// Don't sort, order matters.
+
+		DEBUG, INFO, WARN, ERROR
+
 	}
-
-	public ProcessException(String message, Throwable cause) {
-		super(message, cause);
-	}
-
-	public ProcessException(Throwable cause) {
-		super(cause);
-	}
-
-	private static final long serialVersionUID = 1L;
 
 }

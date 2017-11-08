@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.monitoring.constants;
+package com.liferay.portal.monitoring.internal.constants;
 
 /**
  * @author Michael C. Han

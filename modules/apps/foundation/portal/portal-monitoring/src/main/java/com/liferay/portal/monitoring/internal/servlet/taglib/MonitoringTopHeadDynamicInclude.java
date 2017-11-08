@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.monitoring.constants.MonitoringWebKeys;
 import com.liferay.portal.monitoring.internal.configuration.MonitoringConfiguration;
+import com.liferay.portal.monitoring.internal.constants.MonitoringWebKeys;
 
 import java.util.Map;
 

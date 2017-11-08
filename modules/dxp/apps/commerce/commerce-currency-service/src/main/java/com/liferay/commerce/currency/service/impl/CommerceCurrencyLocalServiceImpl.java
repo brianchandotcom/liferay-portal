@@ -109,6 +109,13 @@ public class CommerceCurrencyLocalServiceImpl
 
 	@Override
 	public List<CommerceCurrency> getCommerceCurrencies(
+		long groupId, boolean active) {
+
+		return commerceCurrencyPersistence.findByG_A(groupId, active);
+	}
+
+	@Override
+	public List<CommerceCurrency> getCommerceCurrencies(
 		long groupId, boolean active, int start, int end,
 		OrderByComparator<CommerceCurrency> orderByComparator) {
 

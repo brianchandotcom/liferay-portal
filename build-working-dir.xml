@@ -13,6 +13,46 @@
 		</not>
 	</condition>
 
+	<macrodef name="fetch-portal">
+		<sequential>
+			<local name="public.repository" />
+
+			<condition else="git@github.com:liferay/liferay-portal.git" property="public.repository" value="git@github-dev.liferay.com:liferay/liferay-portal.git">
+				<isset property="env.JENKINS_HOME" />
+			</condition>
+
+			<echo>git fetch --force --no-tags ${public.repository} ${public.branch.name}</echo>
+
+			<exec executable="git">
+				<arg value="fetch" />
+				<arg value="--force" />
+				<arg value="--no-tags" />
+				<arg value="${public.repository}" />
+				<arg value="${public.branch.name}" />
+			</exec>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="fetch-portal-private">
+		<sequential>
+			<local name="private.repository" />
+
+			<condition else="git@github.com:liferay/liferay-portal-ee.git" property="private.repository" value="git@github-dev.liferay.com:liferay/liferay-portal-ee.git">
+				<isset property="env.JENKINS_HOME" />
+			</condition>
+
+			<echo>git fetch --force --no-tags ${private.repository} ${private.branch.name}</echo>
+
+			<exec executable="git">
+				<arg value="fetch" />
+				<arg value="--force" />
+				<arg value="--no-tags" />
+				<arg value="${private.repository}" />
+				<arg value="${private.branch.name}" />
+			</exec>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-working-dir">
 		<attribute name="from.branch.name" />
 		<attribute name="to.branch.name" />
@@ -221,7 +261,9 @@
 			<equals arg1="${return.code}" arg2="0" />
 		</condition>
 
-		<antcall target="fetch-portal" />
+		<fetch-portal
+			unless:set="portal.git.commit.available"
+		/>
 
 		<local name="return.code" />
 
@@ -301,7 +343,9 @@
 			<equals arg1="${return.code}" arg2="0" />
 		</condition>
 
-		<antcall target="fetch-portal-private" />
+		<fetch-portal-private
+			unless:set="portal.private.git.commit.available"
+		/>
 
 		<local name="return.code" />
 
@@ -340,42 +384,6 @@
 			<arg value="tag" />
 			<arg value="--delete" />
 			<arg value="git-commit-portal-private" />
-		</exec>
-	</target>
-
-	<target name="fetch-portal" unless="${portal.git.commit.available}">
-		<local name="public.repository" />
-
-		<condition else="git@github.com:liferay/liferay-portal.git" property="public.repository" value="git@github-dev.liferay.com:liferay/liferay-portal.git">
-			<isset property="env.JENKINS_HOME" />
-		</condition>
-
-		<echo>git fetch --force --no-tags ${public.repository} ${public.branch.name}</echo>
-
-		<exec executable="git">
-			<arg value="fetch" />
-			<arg value="--force" />
-			<arg value="--no-tags" />
-			<arg value="${public.repository}" />
-			<arg value="${public.branch.name}" />
-		</exec>
-	</target>
-
-	<target name="fetch-portal-private" unless="${portal.private.git.commit.available}">
-		<local name="private.repository" />
-
-		<condition else="git@github.com:liferay/liferay-portal-ee.git" property="private.repository" value="git@github-dev.liferay.com:liferay/liferay-portal-ee.git">
-			<isset property="env.JENKINS_HOME" />
-		</condition>
-
-		<echo>git fetch --force --no-tags ${private.repository} ${private.branch.name}</echo>
-
-		<exec executable="git">
-			<arg value="fetch" />
-			<arg value="--force" />
-			<arg value="--no-tags" />
-			<arg value="${private.repository}" />
-			<arg value="${private.branch.name}" />
 		</exec>
 	</target>
 

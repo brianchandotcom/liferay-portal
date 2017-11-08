@@ -373,10 +373,14 @@ public class GitWorkingDirectory {
 		}
 	}
 
-	public void fetch(Branch localBranch, Branch remoteBranch) {
+	public void fetch(Branch localBranch, boolean noTags, Branch remoteBranch) {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("git fetch --progress -v -f ");
+
+		if (noTags) {
+			sb.append(" --no-tags ");
+		}
 
 		Remote remote = remoteBranch.getRemote();
 
@@ -410,6 +414,10 @@ public class GitWorkingDirectory {
 			"Fetch completed in " +
 				JenkinsResultsParserUtil.toDurationString(
 					System.currentTimeMillis() - start));
+	}
+
+	public void fetch(Branch localBranch, Branch remoteBranch) {
+		fetch(localBranch, true, remoteBranch);
 	}
 
 	public void fetch(Remote remote) {

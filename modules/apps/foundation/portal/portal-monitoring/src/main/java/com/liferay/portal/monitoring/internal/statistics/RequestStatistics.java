@@ -14,8 +14,6 @@
 
 package com.liferay.portal.monitoring.internal.statistics;
 
-import com.liferay.portal.monitoring.statistics.Statistics;
-
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan

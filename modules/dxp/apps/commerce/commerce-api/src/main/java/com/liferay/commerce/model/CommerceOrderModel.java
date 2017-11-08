@@ -221,6 +221,34 @@ public interface CommerceOrderModel extends BaseModel<CommerceOrder>,
 	public void setOrderUserUuid(String orderUserUuid);
 
 	/**
+	 * Returns the billing address ID of this commerce order.
+	 *
+	 * @return the billing address ID of this commerce order
+	 */
+	public long getBillingAddressId();
+
+	/**
+	 * Sets the billing address ID of this commerce order.
+	 *
+	 * @param billingAddressId the billing address ID of this commerce order
+	 */
+	public void setBillingAddressId(long billingAddressId);
+
+	/**
+	 * Returns the shipping address ID of this commerce order.
+	 *
+	 * @return the shipping address ID of this commerce order
+	 */
+	public long getShippingAddressId();
+
+	/**
+	 * Sets the shipping address ID of this commerce order.
+	 *
+	 * @param shippingAddressId the shipping address ID of this commerce order
+	 */
+	public void setShippingAddressId(long shippingAddressId);
+
+	/**
 	 * Returns the total of this commerce order.
 	 *
 	 * @return the total of this commerce order

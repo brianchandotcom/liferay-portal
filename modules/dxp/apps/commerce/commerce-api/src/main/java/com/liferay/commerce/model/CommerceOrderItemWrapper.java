@@ -69,6 +69,7 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 		attributes.put("CPDefinitionId", getCPDefinitionId());
 		attributes.put("CPInstanceId", getCPInstanceId());
 		attributes.put("quantity", getQuantity());
+		attributes.put("shippedQuantity", getShippedQuantity());
 		attributes.put("json", getJson());
 		attributes.put("title", getTitle());
 		attributes.put("sku", getSku());
@@ -143,6 +144,12 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 
 		if (quantity != null) {
 			setQuantity(quantity);
+		}
+
+		Integer shippedQuantity = (Integer)attributes.get("shippedQuantity");
+
+		if (shippedQuantity != null) {
+			setShippedQuantity(shippedQuantity);
 		}
 
 		String json = (String)attributes.get("json");
@@ -330,6 +337,16 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	@Override
 	public int getQuantity() {
 		return _commerceOrderItem.getQuantity();
+	}
+
+	/**
+	* Returns the shipped quantity of this commerce order item.
+	*
+	* @return the shipped quantity of this commerce order item
+	*/
+	@Override
+	public int getShippedQuantity() {
+		return _commerceOrderItem.getShippedQuantity();
 	}
 
 	/**
@@ -636,6 +653,16 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	@Override
 	public void setQuantity(int quantity) {
 		_commerceOrderItem.setQuantity(quantity);
+	}
+
+	/**
+	* Sets the shipped quantity of this commerce order item.
+	*
+	* @param shippedQuantity the shipped quantity of this commerce order item
+	*/
+	@Override
+	public void setShippedQuantity(int shippedQuantity) {
+		_commerceOrderItem.setShippedQuantity(shippedQuantity);
 	}
 
 	/**

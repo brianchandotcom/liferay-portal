@@ -253,6 +253,20 @@ public interface CommerceOrderItemModel extends BaseModel<CommerceOrderItem>,
 	public void setQuantity(int quantity);
 
 	/**
+	 * Returns the shipped quantity of this commerce order item.
+	 *
+	 * @return the shipped quantity of this commerce order item
+	 */
+	public int getShippedQuantity();
+
+	/**
+	 * Sets the shipped quantity of this commerce order item.
+	 *
+	 * @param shippedQuantity the shipped quantity of this commerce order item
+	 */
+	public void setShippedQuantity(int shippedQuantity);
+
+	/**
 	 * Returns the json of this commerce order item.
 	 *
 	 * @return the json of this commerce order item

@@ -137,6 +137,10 @@ public class CommerceOrderPersistenceTest {
 
 		newCommerceOrder.setOrderUserId(RandomTestUtil.nextLong());
 
+		newCommerceOrder.setBillingAddressId(RandomTestUtil.nextLong());
+
+		newCommerceOrder.setShippingAddressId(RandomTestUtil.nextLong());
+
 		newCommerceOrder.setTotal(RandomTestUtil.nextDouble());
 
 		newCommerceOrder.setStatus(RandomTestUtil.nextInt());
@@ -163,6 +167,10 @@ public class CommerceOrderPersistenceTest {
 			Time.getShortTimestamp(newCommerceOrder.getModifiedDate()));
 		Assert.assertEquals(existingCommerceOrder.getOrderUserId(),
 			newCommerceOrder.getOrderUserId());
+		Assert.assertEquals(existingCommerceOrder.getBillingAddressId(),
+			newCommerceOrder.getBillingAddressId());
+		Assert.assertEquals(existingCommerceOrder.getShippingAddressId(),
+			newCommerceOrder.getShippingAddressId());
 		AssertUtils.assertEquals(existingCommerceOrder.getTotal(),
 			newCommerceOrder.getTotal());
 		Assert.assertEquals(existingCommerceOrder.getStatus(),
@@ -202,8 +210,8 @@ public class CommerceOrderPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CommerceOrder",
 			"commerceOrderId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "orderUserId", true, "total", true, "status",
-			true);
+			"modifiedDate", true, "orderUserId", true, "billingAddressId",
+			true, "shippingAddressId", true, "total", true, "status", true);
 	}
 
 	@Test
@@ -418,6 +426,10 @@ public class CommerceOrderPersistenceTest {
 		commerceOrder.setModifiedDate(RandomTestUtil.nextDate());
 
 		commerceOrder.setOrderUserId(RandomTestUtil.nextLong());
+
+		commerceOrder.setBillingAddressId(RandomTestUtil.nextLong());
+
+		commerceOrder.setShippingAddressId(RandomTestUtil.nextLong());
 
 		commerceOrder.setTotal(RandomTestUtil.nextDouble());
 

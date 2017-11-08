@@ -66,6 +66,8 @@ public class CommerceOrderWrapper implements CommerceOrder,
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("orderUserId", getOrderUserId());
+		attributes.put("billingAddressId", getBillingAddressId());
+		attributes.put("shippingAddressId", getShippingAddressId());
 		attributes.put("total", getTotal());
 		attributes.put("status", getStatus());
 
@@ -122,6 +124,18 @@ public class CommerceOrderWrapper implements CommerceOrder,
 			setOrderUserId(orderUserId);
 		}
 
+		Long billingAddressId = (Long)attributes.get("billingAddressId");
+
+		if (billingAddressId != null) {
+			setBillingAddressId(billingAddressId);
+		}
+
+		Long shippingAddressId = (Long)attributes.get("shippingAddressId");
+
+		if (shippingAddressId != null) {
+			setShippingAddressId(shippingAddressId);
+		}
+
 		Double total = (Double)attributes.get("total");
 
 		if (total != null) {
@@ -143,6 +157,16 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public int compareTo(CommerceOrder commerceOrder) {
 		return _commerceOrder.compareTo(commerceOrder);
+	}
+
+	/**
+	* Returns the billing address ID of this commerce order.
+	*
+	* @return the billing address ID of this commerce order
+	*/
+	@Override
+	public long getBillingAddressId() {
+		return _commerceOrder.getBillingAddressId();
 	}
 
 	/**
@@ -241,6 +265,16 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	}
 
 	/**
+	* Returns the shipping address ID of this commerce order.
+	*
+	* @return the shipping address ID of this commerce order
+	*/
+	@Override
+	public long getShippingAddressId() {
+		return _commerceOrder.getShippingAddressId();
+	}
+
+	/**
 	* Returns the status of this commerce order.
 	*
 	* @return the status of this commerce order
@@ -313,6 +347,16 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public void persist() {
 		_commerceOrder.persist();
+	}
+
+	/**
+	* Sets the billing address ID of this commerce order.
+	*
+	* @param billingAddressId the billing address ID of this commerce order
+	*/
+	@Override
+	public void setBillingAddressId(long billingAddressId) {
+		_commerceOrder.setBillingAddressId(billingAddressId);
 	}
 
 	@Override
@@ -424,6 +468,16 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_commerceOrder.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the shipping address ID of this commerce order.
+	*
+	* @param shippingAddressId the shipping address ID of this commerce order
+	*/
+	@Override
+	public void setShippingAddressId(long shippingAddressId) {
+		_commerceOrder.setShippingAddressId(shippingAddressId);
 	}
 
 	/**

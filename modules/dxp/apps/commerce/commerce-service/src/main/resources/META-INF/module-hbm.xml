@@ -14,6 +14,8 @@
 	<import class="com.liferay.commerce.model.CommercePriceList" />
 	<import class="com.liferay.commerce.model.CommercePriceListQualificationTypeRel" />
 	<import class="com.liferay.commerce.model.CommerceRegion" />
+	<import class="com.liferay.commerce.model.CommerceShipment" />
+	<import class="com.liferay.commerce.model.CommerceShipmentItem" />
 	<import class="com.liferay.commerce.model.CommerceShippingMethod" />
 	<import class="com.liferay.commerce.model.CommerceTierPriceEntry" />
 	<import class="com.liferay.commerce.model.CommerceWarehouse" />
@@ -129,6 +131,8 @@
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="orderUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="billingAddressId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="shippingAddressId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="total" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
@@ -146,6 +150,7 @@
 		<property name="CPDefinitionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="CPInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="quantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="shippedQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="json" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="sku" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -239,6 +244,40 @@
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property column="active_" name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="com.liferay.commerce.model.impl.CommerceShipmentImpl" table="CommerceShipment">
+		<id name="commerceShipmentId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="shipmentUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="commerceAddressId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="commerceShippingMethodId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="carrier" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="trackingNumber" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="expectedDuration" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="shippingDate" type="org.hibernate.type.TimestampType" />
+		<property name="expectedDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="com.liferay.commerce.model.impl.CommerceShipmentItemImpl" table="CommerceShipmentItem">
+		<id name="commerceShipmentItemId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="commerceShipmentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="commerceOrderItemId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="quantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.commerce.model.impl.CommerceShippingMethodImpl" table="CommerceShippingMethod">
 		<id name="commerceShippingMethodId" type="long">

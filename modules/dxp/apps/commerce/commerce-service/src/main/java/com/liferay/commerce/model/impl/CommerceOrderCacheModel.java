@@ -65,7 +65,7 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{commerceOrderId=");
 		sb.append(commerceOrderId);
@@ -83,6 +83,10 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		sb.append(modifiedDate);
 		sb.append(", orderUserId=");
 		sb.append(orderUserId);
+		sb.append(", billingAddressId=");
+		sb.append(billingAddressId);
+		sb.append(", shippingAddressId=");
+		sb.append(shippingAddressId);
 		sb.append(", total=");
 		sb.append(total);
 		sb.append(", status=");
@@ -123,6 +127,8 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		}
 
 		commerceOrderImpl.setOrderUserId(orderUserId);
+		commerceOrderImpl.setBillingAddressId(billingAddressId);
+		commerceOrderImpl.setShippingAddressId(shippingAddressId);
 		commerceOrderImpl.setTotal(total);
 		commerceOrderImpl.setStatus(status);
 
@@ -145,6 +151,10 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		modifiedDate = objectInput.readLong();
 
 		orderUserId = objectInput.readLong();
+
+		billingAddressId = objectInput.readLong();
+
+		shippingAddressId = objectInput.readLong();
 
 		total = objectInput.readDouble();
 
@@ -174,6 +184,10 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 
 		objectOutput.writeLong(orderUserId);
 
+		objectOutput.writeLong(billingAddressId);
+
+		objectOutput.writeLong(shippingAddressId);
+
 		objectOutput.writeDouble(total);
 
 		objectOutput.writeInt(status);
@@ -187,6 +201,8 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 	public long createDate;
 	public long modifiedDate;
 	public long orderUserId;
+	public long billingAddressId;
+	public long shippingAddressId;
 	public double total;
 	public int status;
 }

@@ -65,7 +65,7 @@ public class CommerceOrderItemCacheModel implements CacheModel<CommerceOrderItem
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{commerceOrderItemId=");
 		sb.append(commerceOrderItemId);
@@ -89,6 +89,8 @@ public class CommerceOrderItemCacheModel implements CacheModel<CommerceOrderItem
 		sb.append(CPInstanceId);
 		sb.append(", quantity=");
 		sb.append(quantity);
+		sb.append(", shippedQuantity=");
+		sb.append(shippedQuantity);
 		sb.append(", json=");
 		sb.append(json);
 		sb.append(", title=");
@@ -136,6 +138,7 @@ public class CommerceOrderItemCacheModel implements CacheModel<CommerceOrderItem
 		commerceOrderItemImpl.setCPDefinitionId(CPDefinitionId);
 		commerceOrderItemImpl.setCPInstanceId(CPInstanceId);
 		commerceOrderItemImpl.setQuantity(quantity);
+		commerceOrderItemImpl.setShippedQuantity(shippedQuantity);
 
 		if (json == null) {
 			commerceOrderItemImpl.setJson("");
@@ -185,6 +188,8 @@ public class CommerceOrderItemCacheModel implements CacheModel<CommerceOrderItem
 		CPInstanceId = objectInput.readLong();
 
 		quantity = objectInput.readInt();
+
+		shippedQuantity = objectInput.readInt();
 		json = objectInput.readUTF();
 		title = objectInput.readUTF();
 		sku = objectInput.readUTF();
@@ -221,6 +226,8 @@ public class CommerceOrderItemCacheModel implements CacheModel<CommerceOrderItem
 
 		objectOutput.writeInt(quantity);
 
+		objectOutput.writeInt(shippedQuantity);
+
 		if (json == null) {
 			objectOutput.writeUTF("");
 		}
@@ -256,6 +263,7 @@ public class CommerceOrderItemCacheModel implements CacheModel<CommerceOrderItem
 	public long CPDefinitionId;
 	public long CPInstanceId;
 	public int quantity;
+	public int shippedQuantity;
 	public String json;
 	public String title;
 	public String sku;

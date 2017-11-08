@@ -25,6 +25,7 @@ import com.liferay.commerce.service.persistence.CommerceCartItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceCartPersistence;
 import com.liferay.commerce.service.persistence.CommerceCountryFinder;
 import com.liferay.commerce.service.persistence.CommerceCountryPersistence;
+import com.liferay.commerce.service.persistence.CommerceOrderItemFinder;
 import com.liferay.commerce.service.persistence.CommerceOrderItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceOrderPersistence;
 import com.liferay.commerce.service.persistence.CommercePaymentMethodPersistence;
@@ -33,6 +34,8 @@ import com.liferay.commerce.service.persistence.CommercePriceListFinder;
 import com.liferay.commerce.service.persistence.CommercePriceListPersistence;
 import com.liferay.commerce.service.persistence.CommercePriceListQualificationTypeRelPersistence;
 import com.liferay.commerce.service.persistence.CommerceRegionPersistence;
+import com.liferay.commerce.service.persistence.CommerceShipmentItemPersistence;
+import com.liferay.commerce.service.persistence.CommerceShipmentPersistence;
 import com.liferay.commerce.service.persistence.CommerceShippingMethodPersistence;
 import com.liferay.commerce.service.persistence.CommerceTierPriceEntryPersistence;
 import com.liferay.commerce.service.persistence.CommerceWarehouseFinder;
@@ -513,6 +516,25 @@ public abstract class CommerceRegionServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the commerce order item finder.
+	 *
+	 * @return the commerce order item finder
+	 */
+	public CommerceOrderItemFinder getCommerceOrderItemFinder() {
+		return commerceOrderItemFinder;
+	}
+
+	/**
+	 * Sets the commerce order item finder.
+	 *
+	 * @param commerceOrderItemFinder the commerce order item finder
+	 */
+	public void setCommerceOrderItemFinder(
+		CommerceOrderItemFinder commerceOrderItemFinder) {
+		this.commerceOrderItemFinder = commerceOrderItemFinder;
+	}
+
+	/**
 	 * Returns the commerce payment method local service.
 	 *
 	 * @return the commerce payment method local service
@@ -814,6 +836,120 @@ public abstract class CommerceRegionServiceBaseImpl extends BaseServiceImpl
 	public void setCommerceRegionPersistence(
 		CommerceRegionPersistence commerceRegionPersistence) {
 		this.commerceRegionPersistence = commerceRegionPersistence;
+	}
+
+	/**
+	 * Returns the commerce shipment local service.
+	 *
+	 * @return the commerce shipment local service
+	 */
+	public com.liferay.commerce.service.CommerceShipmentLocalService getCommerceShipmentLocalService() {
+		return commerceShipmentLocalService;
+	}
+
+	/**
+	 * Sets the commerce shipment local service.
+	 *
+	 * @param commerceShipmentLocalService the commerce shipment local service
+	 */
+	public void setCommerceShipmentLocalService(
+		com.liferay.commerce.service.CommerceShipmentLocalService commerceShipmentLocalService) {
+		this.commerceShipmentLocalService = commerceShipmentLocalService;
+	}
+
+	/**
+	 * Returns the commerce shipment remote service.
+	 *
+	 * @return the commerce shipment remote service
+	 */
+	public com.liferay.commerce.service.CommerceShipmentService getCommerceShipmentService() {
+		return commerceShipmentService;
+	}
+
+	/**
+	 * Sets the commerce shipment remote service.
+	 *
+	 * @param commerceShipmentService the commerce shipment remote service
+	 */
+	public void setCommerceShipmentService(
+		com.liferay.commerce.service.CommerceShipmentService commerceShipmentService) {
+		this.commerceShipmentService = commerceShipmentService;
+	}
+
+	/**
+	 * Returns the commerce shipment persistence.
+	 *
+	 * @return the commerce shipment persistence
+	 */
+	public CommerceShipmentPersistence getCommerceShipmentPersistence() {
+		return commerceShipmentPersistence;
+	}
+
+	/**
+	 * Sets the commerce shipment persistence.
+	 *
+	 * @param commerceShipmentPersistence the commerce shipment persistence
+	 */
+	public void setCommerceShipmentPersistence(
+		CommerceShipmentPersistence commerceShipmentPersistence) {
+		this.commerceShipmentPersistence = commerceShipmentPersistence;
+	}
+
+	/**
+	 * Returns the commerce shipment item local service.
+	 *
+	 * @return the commerce shipment item local service
+	 */
+	public com.liferay.commerce.service.CommerceShipmentItemLocalService getCommerceShipmentItemLocalService() {
+		return commerceShipmentItemLocalService;
+	}
+
+	/**
+	 * Sets the commerce shipment item local service.
+	 *
+	 * @param commerceShipmentItemLocalService the commerce shipment item local service
+	 */
+	public void setCommerceShipmentItemLocalService(
+		com.liferay.commerce.service.CommerceShipmentItemLocalService commerceShipmentItemLocalService) {
+		this.commerceShipmentItemLocalService = commerceShipmentItemLocalService;
+	}
+
+	/**
+	 * Returns the commerce shipment item remote service.
+	 *
+	 * @return the commerce shipment item remote service
+	 */
+	public com.liferay.commerce.service.CommerceShipmentItemService getCommerceShipmentItemService() {
+		return commerceShipmentItemService;
+	}
+
+	/**
+	 * Sets the commerce shipment item remote service.
+	 *
+	 * @param commerceShipmentItemService the commerce shipment item remote service
+	 */
+	public void setCommerceShipmentItemService(
+		com.liferay.commerce.service.CommerceShipmentItemService commerceShipmentItemService) {
+		this.commerceShipmentItemService = commerceShipmentItemService;
+	}
+
+	/**
+	 * Returns the commerce shipment item persistence.
+	 *
+	 * @return the commerce shipment item persistence
+	 */
+	public CommerceShipmentItemPersistence getCommerceShipmentItemPersistence() {
+		return commerceShipmentItemPersistence;
+	}
+
+	/**
+	 * Sets the commerce shipment item persistence.
+	 *
+	 * @param commerceShipmentItemPersistence the commerce shipment item persistence
+	 */
+	public void setCommerceShipmentItemPersistence(
+		CommerceShipmentItemPersistence commerceShipmentItemPersistence) {
+		this.commerceShipmentItemPersistence = commerceShipmentItemPersistence;
 	}
 
 	/**
@@ -1441,6 +1577,8 @@ public abstract class CommerceRegionServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.commerce.service.CommerceOrderItemService commerceOrderItemService;
 	@BeanReference(type = CommerceOrderItemPersistence.class)
 	protected CommerceOrderItemPersistence commerceOrderItemPersistence;
+	@BeanReference(type = CommerceOrderItemFinder.class)
+	protected CommerceOrderItemFinder commerceOrderItemFinder;
 	@BeanReference(type = com.liferay.commerce.service.CommercePaymentMethodLocalService.class)
 	protected com.liferay.commerce.service.CommercePaymentMethodLocalService commercePaymentMethodLocalService;
 	@BeanReference(type = com.liferay.commerce.service.CommercePaymentMethodService.class)
@@ -1473,6 +1611,18 @@ public abstract class CommerceRegionServiceBaseImpl extends BaseServiceImpl
 	protected CommerceRegionService commerceRegionService;
 	@BeanReference(type = CommerceRegionPersistence.class)
 	protected CommerceRegionPersistence commerceRegionPersistence;
+	@BeanReference(type = com.liferay.commerce.service.CommerceShipmentLocalService.class)
+	protected com.liferay.commerce.service.CommerceShipmentLocalService commerceShipmentLocalService;
+	@BeanReference(type = com.liferay.commerce.service.CommerceShipmentService.class)
+	protected com.liferay.commerce.service.CommerceShipmentService commerceShipmentService;
+	@BeanReference(type = CommerceShipmentPersistence.class)
+	protected CommerceShipmentPersistence commerceShipmentPersistence;
+	@BeanReference(type = com.liferay.commerce.service.CommerceShipmentItemLocalService.class)
+	protected com.liferay.commerce.service.CommerceShipmentItemLocalService commerceShipmentItemLocalService;
+	@BeanReference(type = com.liferay.commerce.service.CommerceShipmentItemService.class)
+	protected com.liferay.commerce.service.CommerceShipmentItemService commerceShipmentItemService;
+	@BeanReference(type = CommerceShipmentItemPersistence.class)
+	protected CommerceShipmentItemPersistence commerceShipmentItemPersistence;
 	@BeanReference(type = com.liferay.commerce.service.CommerceShippingMethodLocalService.class)
 	protected com.liferay.commerce.service.CommerceShippingMethodLocalService commerceShippingMethodLocalService;
 	@BeanReference(type = com.liferay.commerce.service.CommerceShippingMethodService.class)

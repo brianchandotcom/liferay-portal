@@ -118,6 +118,8 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="orderUserId" type="long" />
+		<field name="billingAddressId" type="long" />
+		<field name="shippingAddressId" type="long" />
 		<field name="total" type="double" />
 		<field name="status" type="int" />
 	</model>
@@ -133,6 +135,7 @@
 		<field name="CPDefinitionId" type="long" />
 		<field name="CPInstanceId" type="long" />
 		<field name="quantity" type="int" />
+		<field name="shippedQuantity" type="int" />
 		<field name="json" type="String">
 			<hint-collection name="CLOB" />
 		</field>
@@ -232,6 +235,36 @@
 		</field>
 		<field name="active" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.model.CommerceShipment">
+		<field name="commerceShipmentId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="shipmentUserId" type="long" />
+		<field name="commerceAddressId" type="long" />
+		<field name="commerceShippingMethodId" type="long" />
+		<field name="carrier" type="String" />
+		<field name="trackingNumber" type="String" />
+		<field name="expectedDuration" type="int" />
+		<field name="status" type="int" />
+		<field name="shippingDate" type="Date" />
+		<field name="expectedDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.model.CommerceShipmentItem">
+		<field name="commerceShipmentItemId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commerceShipmentId" type="long" />
+		<field name="commerceOrderItemId" type="long" />
+		<field name="quantity" type="int" />
 	</model>
 	<model name="com.liferay.commerce.model.CommerceShippingMethod">
 		<field name="commerceShippingMethodId" type="long" />

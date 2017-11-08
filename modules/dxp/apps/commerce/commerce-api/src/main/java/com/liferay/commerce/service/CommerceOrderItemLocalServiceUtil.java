@@ -55,6 +55,16 @@ public class CommerceOrderItemLocalServiceUtil {
 
 	public static com.liferay.commerce.model.CommerceOrderItem addCommerceOrderItem(
 		long commerceOrderId, long cpDefinitionId, long cpInstanceId,
+		int quantity, int shippedQuantity, java.lang.String json, double price,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceOrderItem(commerceOrderId, cpDefinitionId,
+			cpInstanceId, quantity, shippedQuantity, json, price, serviceContext);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderItem addCommerceOrderItem(
+		long commerceOrderId, long cpDefinitionId, long cpInstanceId,
 		int quantity, java.lang.String json, double price,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -254,6 +264,12 @@ public class CommerceOrderItemLocalServiceUtil {
 			orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.commerce.model.CommerceOrderItem> getCommerceOrderItems(
+		long groupId, long commerceAddressId, int start, int end) {
+		return getService()
+				   .getCommerceOrderItems(groupId, commerceAddressId, start, end);
+	}
+
 	/**
 	* Returns the number of commerce order items.
 	*
@@ -304,6 +320,14 @@ public class CommerceOrderItemLocalServiceUtil {
 		return getService()
 				   .updateCommerceOrderItem(commerceOrderItemId, quantity,
 			json, price);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderItem updateCommerceOrderItemShippedQuantity(
+		long commerceOrderItemId, int shippedQuantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceOrderItemShippedQuantity(commerceOrderItemId,
+			shippedQuantity);
 	}
 
 	public static void validate(long cpDefinitionId, long cpInstanceId)

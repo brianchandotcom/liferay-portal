@@ -78,6 +78,8 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "orderUserId", Types.BIGINT },
+			{ "billingAddressId", Types.BIGINT },
+			{ "shippingAddressId", Types.BIGINT },
 			{ "total", Types.DOUBLE },
 			{ "status", Types.INTEGER }
 		};
@@ -92,11 +94,13 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("orderUserId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("billingAddressId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("shippingAddressId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("total", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceOrder (commerceOrderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,orderUserId LONG,total DOUBLE,status INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceOrder (commerceOrderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,orderUserId LONG,billingAddressId LONG,shippingAddressId LONG,total DOUBLE,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrder";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceOrder.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceOrder.createDate ASC";
@@ -136,6 +140,8 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setOrderUserId(soapModel.getOrderUserId());
+		model.setBillingAddressId(soapModel.getBillingAddressId());
+		model.setShippingAddressId(soapModel.getShippingAddressId());
 		model.setTotal(soapModel.getTotal());
 		model.setStatus(soapModel.getStatus());
 
@@ -210,6 +216,8 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("orderUserId", getOrderUserId());
+		attributes.put("billingAddressId", getBillingAddressId());
+		attributes.put("shippingAddressId", getShippingAddressId());
 		attributes.put("total", getTotal());
 		attributes.put("status", getStatus());
 
@@ -267,6 +275,18 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 		if (orderUserId != null) {
 			setOrderUserId(orderUserId);
+		}
+
+		Long billingAddressId = (Long)attributes.get("billingAddressId");
+
+		if (billingAddressId != null) {
+			setBillingAddressId(billingAddressId);
+		}
+
+		Long shippingAddressId = (Long)attributes.get("shippingAddressId");
+
+		if (shippingAddressId != null) {
+			setShippingAddressId(shippingAddressId);
 		}
 
 		Double total = (Double)attributes.get("total");
@@ -429,6 +449,28 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@JSON
 	@Override
+	public long getBillingAddressId() {
+		return _billingAddressId;
+	}
+
+	@Override
+	public void setBillingAddressId(long billingAddressId) {
+		_billingAddressId = billingAddressId;
+	}
+
+	@JSON
+	@Override
+	public long getShippingAddressId() {
+		return _shippingAddressId;
+	}
+
+	@Override
+	public void setShippingAddressId(long shippingAddressId) {
+		_shippingAddressId = shippingAddressId;
+	}
+
+	@JSON
+	@Override
 	public double getTotal() {
 		return _total;
 	}
@@ -488,6 +530,8 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		commerceOrderImpl.setCreateDate(getCreateDate());
 		commerceOrderImpl.setModifiedDate(getModifiedDate());
 		commerceOrderImpl.setOrderUserId(getOrderUserId());
+		commerceOrderImpl.setBillingAddressId(getBillingAddressId());
+		commerceOrderImpl.setShippingAddressId(getShippingAddressId());
 		commerceOrderImpl.setTotal(getTotal());
 		commerceOrderImpl.setStatus(getStatus());
 
@@ -600,6 +644,10 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 		commerceOrderCacheModel.orderUserId = getOrderUserId();
 
+		commerceOrderCacheModel.billingAddressId = getBillingAddressId();
+
+		commerceOrderCacheModel.shippingAddressId = getShippingAddressId();
+
 		commerceOrderCacheModel.total = getTotal();
 
 		commerceOrderCacheModel.status = getStatus();
@@ -609,7 +657,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{commerceOrderId=");
 		sb.append(getCommerceOrderId());
@@ -627,6 +675,10 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		sb.append(getModifiedDate());
 		sb.append(", orderUserId=");
 		sb.append(getOrderUserId());
+		sb.append(", billingAddressId=");
+		sb.append(getBillingAddressId());
+		sb.append(", shippingAddressId=");
+		sb.append(getShippingAddressId());
 		sb.append(", total=");
 		sb.append(getTotal());
 		sb.append(", status=");
@@ -638,7 +690,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.model.CommerceOrder");
@@ -677,6 +729,14 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		sb.append(getOrderUserId());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>billingAddressId</column-name><column-value><![CDATA[");
+		sb.append(getBillingAddressId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>shippingAddressId</column-name><column-value><![CDATA[");
+		sb.append(getShippingAddressId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>total</column-name><column-value><![CDATA[");
 		sb.append(getTotal());
 		sb.append("]]></column-value></column>");
@@ -705,6 +765,8 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _orderUserId;
+	private long _billingAddressId;
+	private long _shippingAddressId;
 	private double _total;
 	private int _status;
 	private long _columnBitmask;

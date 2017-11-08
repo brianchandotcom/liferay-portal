@@ -136,6 +136,8 @@ create table CommerceOrder (
 	createDate DATE null,
 	modifiedDate DATE null,
 	orderUserId LONG,
+	billingAddressId LONG,
+	shippingAddressId LONG,
 	total DOUBLE,
 	status INTEGER
 );
@@ -152,6 +154,7 @@ create table CommerceOrderItem (
 	CPDefinitionId LONG,
 	CPInstanceId LONG,
 	quantity INTEGER,
+	shippedQuantity INTEGER,
 	json TEXT null,
 	title STRING null,
 	sku VARCHAR(75) null,
@@ -240,6 +243,38 @@ create table CommerceRegion (
 	priority DOUBLE,
 	active_ BOOLEAN,
 	lastPublishDate DATE null
+);
+
+create table CommerceShipment (
+	commerceShipmentId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	shipmentUserId LONG,
+	commerceAddressId LONG,
+	commerceShippingMethodId LONG,
+	carrier VARCHAR(75) null,
+	trackingNumber VARCHAR(75) null,
+	expectedDuration INTEGER,
+	status INTEGER,
+	shippingDate DATE null,
+	expectedDate DATE null
+);
+
+create table CommerceShipmentItem (
+	commerceShipmentItemId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	commerceShipmentId LONG,
+	commerceOrderItemId LONG,
+	quantity INTEGER
 );
 
 create table CommerceShippingMethod (

@@ -88,6 +88,7 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 			{ "CPDefinitionId", Types.BIGINT },
 			{ "CPInstanceId", Types.BIGINT },
 			{ "quantity", Types.INTEGER },
+			{ "shippedQuantity", Types.INTEGER },
 			{ "json", Types.CLOB },
 			{ "title", Types.VARCHAR },
 			{ "sku", Types.VARCHAR },
@@ -107,13 +108,14 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 		TABLE_COLUMNS_MAP.put("CPDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CPInstanceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("quantity", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("shippedQuantity", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("json", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("sku", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("price", Types.DOUBLE);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceOrderItem (commerceOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderId LONG,CPDefinitionId LONG,CPInstanceId LONG,quantity INTEGER,json TEXT null,title STRING null,sku VARCHAR(75) null,price DOUBLE)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceOrderItem (commerceOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderId LONG,CPDefinitionId LONG,CPInstanceId LONG,quantity INTEGER,shippedQuantity INTEGER,json TEXT null,title STRING null,sku VARCHAR(75) null,price DOUBLE)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrderItem";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceOrderItem.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceOrderItem.createDate ASC";
@@ -158,6 +160,7 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 		model.setCPDefinitionId(soapModel.getCPDefinitionId());
 		model.setCPInstanceId(soapModel.getCPInstanceId());
 		model.setQuantity(soapModel.getQuantity());
+		model.setShippedQuantity(soapModel.getShippedQuantity());
 		model.setJson(soapModel.getJson());
 		model.setTitle(soapModel.getTitle());
 		model.setSku(soapModel.getSku());
@@ -238,6 +241,7 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 		attributes.put("CPDefinitionId", getCPDefinitionId());
 		attributes.put("CPInstanceId", getCPInstanceId());
 		attributes.put("quantity", getQuantity());
+		attributes.put("shippedQuantity", getShippedQuantity());
 		attributes.put("json", getJson());
 		attributes.put("title", getTitle());
 		attributes.put("sku", getSku());
@@ -315,6 +319,12 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 
 		if (quantity != null) {
 			setQuantity(quantity);
+		}
+
+		Integer shippedQuantity = (Integer)attributes.get("shippedQuantity");
+
+		if (shippedQuantity != null) {
+			setShippedQuantity(shippedQuantity);
 		}
 
 		String json = (String)attributes.get("json");
@@ -526,6 +536,17 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 	@Override
 	public void setQuantity(int quantity) {
 		_quantity = quantity;
+	}
+
+	@JSON
+	@Override
+	public int getShippedQuantity() {
+		return _shippedQuantity;
+	}
+
+	@Override
+	public void setShippedQuantity(int shippedQuantity) {
+		_shippedQuantity = shippedQuantity;
 	}
 
 	@JSON
@@ -773,6 +794,7 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 		commerceOrderItemImpl.setCPDefinitionId(getCPDefinitionId());
 		commerceOrderItemImpl.setCPInstanceId(getCPInstanceId());
 		commerceOrderItemImpl.setQuantity(getQuantity());
+		commerceOrderItemImpl.setShippedQuantity(getShippedQuantity());
 		commerceOrderItemImpl.setJson(getJson());
 		commerceOrderItemImpl.setTitle(getTitle());
 		commerceOrderItemImpl.setSku(getSku());
@@ -901,6 +923,8 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 
 		commerceOrderItemCacheModel.quantity = getQuantity();
 
+		commerceOrderItemCacheModel.shippedQuantity = getShippedQuantity();
+
 		commerceOrderItemCacheModel.json = getJson();
 
 		String json = commerceOrderItemCacheModel.json;
@@ -932,7 +956,7 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{commerceOrderItemId=");
 		sb.append(getCommerceOrderItemId());
@@ -956,6 +980,8 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 		sb.append(getCPInstanceId());
 		sb.append(", quantity=");
 		sb.append(getQuantity());
+		sb.append(", shippedQuantity=");
+		sb.append(getShippedQuantity());
 		sb.append(", json=");
 		sb.append(getJson());
 		sb.append(", title=");
@@ -971,7 +997,7 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.model.CommerceOrderItem");
@@ -1022,6 +1048,10 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 		sb.append(getQuantity());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>shippedQuantity</column-name><column-value><![CDATA[");
+		sb.append(getShippedQuantity());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>json</column-name><column-value><![CDATA[");
 		sb.append(getJson());
 		sb.append("]]></column-value></column>");
@@ -1065,6 +1095,7 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 	private long _originalCPInstanceId;
 	private boolean _setOriginalCPInstanceId;
 	private int _quantity;
+	private int _shippedQuantity;
 	private String _json;
 	private String _title;
 	private String _titleCurrentLanguageId;

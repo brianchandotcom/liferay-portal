@@ -74,6 +74,11 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 
 	public CommerceOrderItem addCommerceOrderItem(long commerceOrderId,
 		long cpDefinitionId, long cpInstanceId, int quantity,
+		int shippedQuantity, java.lang.String json, double price,
+		ServiceContext serviceContext) throws PortalException;
+
+	public CommerceOrderItem addCommerceOrderItem(long commerceOrderId,
+		long cpDefinitionId, long cpInstanceId, int quantity,
 		java.lang.String json, double price, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -222,6 +227,10 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 		int start, int end,
 		OrderByComparator<CommerceOrderItem> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderItem> getCommerceOrderItems(long groupId,
+		long commerceAddressId, int start, int end);
+
 	/**
 	* Returns the number of commerce order items.
 	*
@@ -260,6 +269,10 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 
 	public CommerceOrderItem updateCommerceOrderItem(long commerceOrderItemId,
 		int quantity, java.lang.String json, double price)
+		throws PortalException;
+
+	public CommerceOrderItem updateCommerceOrderItemShippedQuantity(
+		long commerceOrderItemId, int shippedQuantity)
 		throws PortalException;
 
 	public void validate(long cpDefinitionId, long cpInstanceId)

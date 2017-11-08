@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.reading.time.message.ReadingTimeMessageProvider;
 import com.liferay.reading.time.model.ReadingTimeEntry;
@@ -25,6 +26,10 @@ import com.liferay.reading.time.service.ReadingTimeEntryLocalServiceUtil;
 import com.liferay.taglib.util.AttributesTagSupport;
 
 import java.io.IOException;
+
+import java.time.Duration;
+
+import java.util.Optional;
 
 import javax.portlet.RenderResponse;
 
@@ -46,39 +51,13 @@ public class ReadingTimeTag extends AttributesTagSupport {
 		try {
 			JspWriter jspWriter = pageContext.getOut();
 
-			if (_model != null) {
-				long classNameId = ClassNameLocalServiceUtil.getClassNameId(
-					_model.getModelClass());
+			Optional<Duration> readingTimeOptional = _getReadingTime();
 
-				ReadingTimeEntry readingTimeEntry =
-					ReadingTimeEntryLocalServiceUtil.fetchReadingTimeEntry(
-						_model.getGroupId(), classNameId,
-						(Long)_model.getPrimaryKeyObj());
+			Optional<String> tagOptional = readingTimeOptional.flatMap(
+				this::_buildTag);
 
-				if (readingTimeEntry != null) {
-					String readingTimeMessage = _getReadingTimeMessage(
-						readingTimeEntry);
-
-					if (Validator.isNotNull(readingTimeMessage)) {
-						jspWriter.write(
-							"<time class=\"reading-time\" datetime=\"");
-						jspWriter.write(
-							String.valueOf(
-								readingTimeEntry.getReadingTime() / 1000));
-						jspWriter.write("\"");
-
-						if (Validator.isNotNull(_id)) {
-							jspWriter.write(" id=\"");
-							jspWriter.write(_getNamespace());
-							jspWriter.write(_id);
-							jspWriter.write("\"");
-						}
-
-						jspWriter.write(">");
-						jspWriter.write(readingTimeMessage);
-						jspWriter.write("</time>");
-					}
-				}
+			if (tagOptional.isPresent()) {
+				jspWriter.write(tagOptional.get());
 			}
 
 			return EVAL_PAGE;
@@ -96,6 +75,34 @@ public class ReadingTimeTag extends AttributesTagSupport {
 		_model = model;
 	}
 
+	private Optional<String> _buildTag(Duration readingTime) {
+		String readingTimeMessage = _getReadingTimeMessage(readingTime);
+
+		if (Validator.isNotNull(readingTimeMessage)) {
+			StringBundler sb = new StringBundler(10);
+
+			sb.append("<time class=\"reading-time\" datetime=\"");
+			sb.append(String.valueOf(readingTime.getSeconds()));
+			sb.append("s");
+			sb.append("\"");
+
+			if (Validator.isNotNull(_id)) {
+				sb.append(" id=\"");
+				sb.append(_getNamespace());
+				sb.append(_id);
+				sb.append("\"");
+			}
+
+			sb.append(">");
+			sb.append(readingTimeMessage);
+			sb.append("</time>");
+
+			return Optional.of(sb.toString());
+		}
+
+		return Optional.empty();
+	}
+
 	private String _getNamespace() {
 		RenderResponse renderResponse = (RenderResponse)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE);
@@ -103,9 +110,28 @@ public class ReadingTimeTag extends AttributesTagSupport {
 		return renderResponse.getNamespace();
 	}
 
-	private String _getReadingTimeMessage(ReadingTimeEntry readingTimeEntry)
-		throws IOException {
+	private Optional<Duration> _getReadingTime() {
+		if (_model == null) {
+			return Optional.of(Duration.ZERO);
+		}
 
+		long classNameId = ClassNameLocalServiceUtil.getClassNameId(
+			_model.getModelClass());
+
+		ReadingTimeEntry readingTimeEntry =
+			ReadingTimeEntryLocalServiceUtil.fetchReadingTimeEntry(
+				_model.getGroupId(), classNameId,
+				(Long)_model.getPrimaryKeyObj());
+
+		if (readingTimeEntry != null) {
+			return Optional.of(
+				Duration.ofMillis(readingTimeEntry.getReadingTime()));
+		}
+
+		return Optional.empty();
+	}
+
+	private String _getReadingTimeMessage(Duration readingTime) {
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
 		BundleContext bundleContext = bundle.getBundleContext();
@@ -118,7 +144,7 @@ public class ReadingTimeTag extends AttributesTagSupport {
 				bundleContext.getService(serviceReference);
 
 			return readingTimeMessageProvider.provide(
-				readingTimeEntry, PortalUtil.getLocale(request));
+				readingTime, PortalUtil.getLocale(request));
 		}
 
 		return null;

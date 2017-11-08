@@ -14,6 +14,8 @@
 
 package com.liferay.asset.publisher.web.util;
 
+import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -33,7 +35,15 @@ public class DefaultAssetPublisherCustomizerRegistry
 	public AssetPublisherCustomizer getAssetPublisherCustomizer(
 		String portletId) {
 
-		return _assetPublisherCustomizers.get(portletId);
+		AssetPublisherCustomizer assetPublisherCustomizer =
+			_assetPublisherCustomizers.get(portletId);
+
+		if (assetPublisherCustomizer == null) {
+			assetPublisherCustomizer = _assetPublisherCustomizers.get(
+				AssetPublisherPortletKeys.ASSET_PUBLISHER);
+		}
+
+		return assetPublisherCustomizer;
 	}
 
 	@Reference(

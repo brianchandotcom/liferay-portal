@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-RoleItemSelectorViewDisplayContext roleItemSelectorViewDisplayContext = (RoleItemSelectorViewDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+RoleItemSelectorViewDisplayContext roleItemSelectorViewDisplayContext = (RoleItemSelectorViewDisplayContext)request.getAttribute(RoleItemSelectorViewConstants.ROLE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
 
 String itemSelectedEventName = roleItemSelectorViewDisplayContext.getItemSelectedEventName();
 

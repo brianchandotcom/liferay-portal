@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.roles.item.selector.criterion.RoleItemSelectorCriterion;
+import com.liferay.roles.item.selector.web.internal.constants.RoleItemSelectorViewConstants;
 import com.liferay.roles.item.selector.web.internal.display.context.RoleItemSelectorViewDisplayContext;
 
 import java.io.IOException;
@@ -98,7 +98,8 @@ public class RoleItemSelectorView
 				itemSelectedEventName);
 
 		request.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			RoleItemSelectorViewConstants.
+				ROLE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
 			roleItemSelectorViewDisplayContext);
 
 		ServletContext servletContext = getServletContext();

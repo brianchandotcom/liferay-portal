@@ -29,8 +29,8 @@ import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
+
+import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -319,25 +319,38 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return _pluginsInsideModulesDirectoryNames;
 	}
 
-	protected Properties getPortalLanguageProperties() throws Exception {
-		Properties portalLanguageProperties = new Properties();
+	protected String getPortalContent(String fileName) throws Exception {
+		String content = getContent(fileName, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
 
-		File portalLanguagePropertiesFile = getFile(
-			"portal-impl/src/content/Language.properties",
-			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
-
-		if (portalLanguagePropertiesFile != null) {
-			InputStream inputStream = new FileInputStream(
-				portalLanguagePropertiesFile);
-
-			portalLanguageProperties.load(inputStream);
+		if (Validator.isNotNull(content)) {
+			return content;
 		}
 
-		return portalLanguageProperties;
+		String portalBranchName = _getPortalBranchName();
+
+		if (portalBranchName == null) {
+			return null;
+		}
+
+		try {
+			URL url = new URL(
+				StringBundler.concat(
+					_GIT_LIFERAY_PORTAL_URL, portalBranchName, StringPool.SLASH,
+					fileName));
+
+			return StringUtil.read(url.openStream());
+		}
+		catch (Exception e) {
+			return null;
+		}
 	}
 
 	protected String getProjectPathPrefix() {
 		return _projectPathPrefix;
+	}
+
+	protected Map<String, Properties> getPropertiesMap() {
+		return _propertiesMap;
 	}
 
 	protected SourceFormatterExcludes getSourceFormatterExcludes() {
@@ -536,6 +549,27 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	protected static final String RUN_OUTSIDE_PORTAL_EXCLUDES =
 		"run.outside.portal.excludes";
+
+	private String _getPortalBranchName() {
+		for (Map.Entry<String, Properties> entry : _propertiesMap.entrySet()) {
+			Properties properties = entry.getValue();
+
+			String portalBranchName = properties.getProperty(
+				_GIT_LIFERAY_PORTAL_BRANCH);
+
+			if (portalBranchName != null) {
+				return portalBranchName;
+			}
+		}
+
+		return null;
+	}
+
+	private static final String _GIT_LIFERAY_PORTAL_BRANCH =
+		"git.liferay.portal.branch";
+
+	private static final String _GIT_LIFERAY_PORTAL_URL =
+		"https://raw.githubusercontent.com/liferay/liferay-portal/";
 
 	private String _baseDirName;
 	private int _maxLineLength;

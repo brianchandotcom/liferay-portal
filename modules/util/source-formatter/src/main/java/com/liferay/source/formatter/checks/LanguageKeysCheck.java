@@ -26,6 +26,7 @@ import com.liferay.source.formatter.util.FileUtil;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.io.StringReader;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,7 +44,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 
 	@Override
 	public void init() throws Exception {
-		_portalLanguageProperties = getPortalLanguageProperties();
+		_portalLanguageProperties = _getPortalLanguageProperties();
 	}
 
 	@Override
@@ -56,9 +57,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (!isSubrepository() &&
-			!absolutePath.contains("/modules/private/apps/")) {
-
+		if (_portalLanguageProperties != null) {
 			_checkLanguageKeys(fileName, absolutePath, content, getPatterns());
 		}
 
@@ -389,6 +388,22 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		}
 
 		return null;
+	}
+
+	private Properties _getPortalLanguageProperties() throws Exception {
+		String portalLanguagePropertiesContent = getPortalContent(
+			"portal-impl/src/content/Language.properties");
+
+		if (portalLanguagePropertiesContent == null) {
+			return null;
+		}
+
+		Properties portalLanguageProperties = new Properties();
+
+		portalLanguageProperties.load(
+			new StringReader(portalLanguagePropertiesContent));
+
+		return portalLanguageProperties;
 	}
 
 	private final Pattern _applyLangMergerPluginPattern = Pattern.compile(

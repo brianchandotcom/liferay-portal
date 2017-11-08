@@ -14,7 +14,6 @@
 
 package com.liferay.portal.configuration.extender.internal;
 
-import com.liferay.portal.configuration.extender.PropertiesFileNamedConfigurationContent;
 import com.liferay.portal.configuration.extender.internal.api.BundleStorage;
 import com.liferay.portal.configuration.extender.internal.api.NamedConfigurationContent;
 import com.liferay.portal.configuration.extender.internal.api.NamedConfigurationContentFactory;

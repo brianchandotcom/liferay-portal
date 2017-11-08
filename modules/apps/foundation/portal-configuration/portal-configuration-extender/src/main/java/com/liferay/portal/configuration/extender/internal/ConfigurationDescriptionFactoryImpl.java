@@ -14,9 +14,6 @@
 
 package com.liferay.portal.configuration.extender.internal;
 
-import com.liferay.portal.configuration.extender.FactoryConfigurationDescription;
-import com.liferay.portal.configuration.extender.PropertiesFileNamedConfigurationContent;
-import com.liferay.portal.configuration.extender.SingleConfigurationDescription;
 import com.liferay.portal.configuration.extender.internal.api.ConfigurationDescription;
 import com.liferay.portal.configuration.extender.internal.api.ConfigurationDescriptionFactory;
 import com.liferay.portal.configuration.extender.internal.api.NamedConfigurationContent;

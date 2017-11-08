@@ -45,7 +45,7 @@ renderResponse.setTitle(assetTagsDisplayContext.getAssetTitle());
 		%>
 
 		<c:if test="<%= ate.getType() == AssetTagException.INVALID_CHARACTER %>">
-			<liferay-ui:message arguments='<%= new String[] {"tag-name", StringUtil.merge(AssetUtil.INVALID_CHARACTERS, StringPool.SPACE)} %>' key="the-x-cannot-contain-the-following-invalid-characters-x" />
+			<liferay-ui:message arguments='<%= new String[] {"tag-name", StringUtil.merge(AssetHelper.INVALID_CHARACTERS, StringPool.SPACE)} %>' key="the-x-cannot-contain-the-following-invalid-characters-x" />
 		</c:if>
 	</liferay-ui:error>
 

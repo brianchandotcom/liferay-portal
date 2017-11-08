@@ -88,6 +88,10 @@ public class OAuthUtil {
 	}
 
 	public static boolean hasOAuthTokenRejectedException(Exception e) {
+		if (e.getMessage() == null) {
+			return false;
+		}
+
 		String message = e.getMessage();
 		String tokenRejectedPattern = StringUtil.toLowerCase(
 			OAuthExceptionType.TOKEN_REJECTED.name());

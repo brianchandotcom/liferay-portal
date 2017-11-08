@@ -16,6 +16,7 @@ package com.liferay.calendar.web.internal.portlet;
 
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
+import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.exception.CalendarBookingDurationException;
 import com.liferay.calendar.exception.CalendarBookingRecurrenceException;
@@ -612,18 +613,35 @@ public class CalendarPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CalendarBooking.class.getName(), actionRequest);
 
-		calendarBooking = updateCalendarBooking(
-			calendarBookingId, calendar, childCalendarIds, new long[0],
-			titleMap, descriptionMap, location,
-			startTimeJCalendar.getTimeInMillis(),
-			endTimeJCalendar.getTimeInMillis(), allDay, recurrence, reminders,
-			remindersType, instanceIndex, updateInstance, allFollowing,
-			serviceContext);
+		JSONObject jsonObject = null;
+
+		try {
+			calendarBooking = updateCalendarBooking(
+				calendarBookingId, calendar, childCalendarIds, new long[0],
+				titleMap, descriptionMap, location,
+				startTimeJCalendar.getTimeInMillis(),
+				endTimeJCalendar.getTimeInMillis(), allDay, recurrence,
+				reminders, remindersType, instanceIndex, updateInstance,
+				allFollowing, serviceContext);
+
+			jsonObject = CalendarUtil.toCalendarBookingJSONObject(
+				themeDisplay, calendarBooking, timeZone);
+		}
+		catch (PortalException pe) {
+			jsonObject = JSONFactoryUtil.createJSONObject();
+
+			String errorMessage = "";
+
+			if (pe instanceof AssetCategoryException) {
+				AssetCategoryException ace = (AssetCategoryException)pe;
+
+				errorMessage = getErrorMessageForException(ace, themeDisplay);
+			}
+
+			jsonObject.put("exception", errorMessage);
+		}
 
 		hideDefaultSuccessMessage(actionRequest);
-
-		JSONObject jsonObject = CalendarUtil.toCalendarBookingJSONObject(
-			themeDisplay, calendarBooking, timeZone);
 
 		writeJSON(actionRequest, actionResponse, jsonObject);
 	}
@@ -802,6 +820,39 @@ public class CalendarPortlet extends MVCPortlet {
 			calendar.getCalendarId());
 
 		return editCalendarURL;
+	}
+
+	protected String getErrorMessageForException(
+		AssetCategoryException assetCategoryException,
+		ThemeDisplay themeDisplay) {
+
+		String errorMessage = "";
+
+		AssetVocabulary assetVocabulary =
+			assetCategoryException.getVocabulary();
+
+		String vocabularyTitle = StringPool.BLANK;
+
+		if (assetVocabulary != null) {
+			vocabularyTitle = assetVocabulary.getTitle(
+				themeDisplay.getLocale());
+		}
+
+		if (assetCategoryException.getType() ==
+				AssetCategoryException.AT_LEAST_ONE_CATEGORY) {
+
+			errorMessage = themeDisplay.translate(
+				"please-select-at-least-one-category-for-x", vocabularyTitle);
+		}
+		else if (assetCategoryException.getType() ==
+					AssetCategoryException.TOO_MANY_CATEGORIES) {
+
+			errorMessage = themeDisplay.translate(
+				"you-cannot-select-more-than-one-category-for-x",
+				vocabularyTitle);
+		}
+
+		return errorMessage;
 	}
 
 	protected CalendarBooking getFirstCalendarBookingInstance(

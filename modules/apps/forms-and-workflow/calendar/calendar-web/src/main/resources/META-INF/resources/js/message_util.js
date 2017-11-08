@@ -126,6 +126,37 @@ AUI.add(
 				).render(container);
 			},
 
+			showErrorMessage: function(container, errorMessage) {
+				var instance = this;
+
+				var alert = instance._alert;
+
+				if (alert) {
+					alert.destroy();
+				}
+
+				alert = new Liferay.Alert(
+					{
+						closeable: true,
+						delay: {
+							hide: 3000,
+							show: 0
+						},
+						icon: 'exclamation-full',
+						message: errorMessage,
+						type: 'danger'
+					}
+				);
+
+				if (!alert.get('rendered')) {
+					alert.render(container);
+				}
+
+				alert.show();
+
+				instance._alert = alert;
+			},
+
 			showSuccessMessage: function(container, message) {
 				var instance = this;
 

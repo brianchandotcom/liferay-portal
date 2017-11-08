@@ -297,6 +297,7 @@ AUI.add(
 								if (data) {
 									if (data.exception) {
 										CalendarUtil.destroyEvent(schedulerEvent);
+										MessageUtil.showErrorMessage(instance.get('rootNode'), data.exception);
 									}
 									else {
 										CalendarUtil.setEventAttrs(schedulerEvent, data);

@@ -71,8 +71,8 @@ import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
 import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
 import com.liferay.wiki.util.comparator.PageVersionComparator;
 import com.liferay.wiki.web.internal.display.context.util.WikiRequestHelper;
-import com.liferay.wiki.web.util.WikiPortletUtil;
-import com.liferay.wiki.web.util.WikiWebComponentProvider;
+import com.liferay.wiki.web.internal.util.WikiPortletUtil;
+import com.liferay.wiki.web.internal.util.WikiWebComponentProvider;
 
 import java.util.ArrayList;
 import java.util.List;

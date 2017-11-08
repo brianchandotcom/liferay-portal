@@ -33,7 +33,7 @@ import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeService;
 import com.liferay.wiki.service.WikiPageService;
-import com.liferay.wiki.web.util.WikiWebComponentProvider;
+import com.liferay.wiki.web.internal.util.WikiWebComponentProvider;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;

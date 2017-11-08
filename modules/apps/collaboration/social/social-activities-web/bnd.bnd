@@ -1,7 +1,6 @@
 Bundle-Name: Liferay Social Activities Web
 Bundle-SymbolicName: com.liferay.social.activities.web
-Bundle-Version: 1.1.7
-Export-Package: com.liferay.social.activities.web.constants
+Bundle-Version: 2.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Social
 Web-ContextPath: /social-activities-web

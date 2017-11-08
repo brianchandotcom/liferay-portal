@@ -12,15 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.configuration.extender;
+package com.liferay.portal.configuration.extender.internal.api;
 
-import java.util.List;
+import com.liferay.portal.kernel.util.Supplier;
+
+import java.util.Dictionary;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public interface NamedConfigurationContentFactory {
+public interface ConfigurationDescription {
 
-	public List<NamedConfigurationContent> create(BundleStorage bundleStorage);
+	public String getFactoryPid();
+
+	public String getPid();
+
+	public Supplier<Dictionary<String, Object>> getPropertiesSupplier();
 
 }

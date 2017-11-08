@@ -14,6 +14,7 @@
 
 package com.liferay.portal.configuration.extender;
 
+import com.liferay.portal.configuration.extender.internal.api.ConfigurationDescription;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Supplier;
 

@@ -1,6 +1,7 @@
 'use strict';
 
 import EventEmitter from 'metal-events/src/EventEmitter';
+
 import CompatibilityEventProxy from '../../src/main/resources/META-INF/resources/liferay/CompatibilityEventProxy.es';
 
 describe('CompatibilityEventProxy', () => {

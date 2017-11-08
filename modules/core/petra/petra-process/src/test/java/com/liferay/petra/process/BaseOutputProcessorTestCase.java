@@ -12,11 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.kernel.process;
+package com.liferay.petra.process;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncFilterInputStream;
 
+import com.liferay.portal.kernel.process.OutputProcessor;
+import com.liferay.portal.kernel.process.ProcessException;
 import java.io.IOException;
 import java.io.InputStream;
 

@@ -12,10 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.kernel.process;
+package com.liferay.petra.process;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.process.CollectorOutputProcessor;
+import com.liferay.portal.kernel.process.ConsumerOutputProcessor;
+import com.liferay.portal.kernel.process.LoggingOutputProcessor;
+import com.liferay.portal.kernel.process.OutputProcessor;
+import com.liferay.portal.kernel.process.ProcessException;
+import com.liferay.portal.kernel.process.ProcessUtil;
+import com.liferay.portal.kernel.process.TerminationProcessException;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;

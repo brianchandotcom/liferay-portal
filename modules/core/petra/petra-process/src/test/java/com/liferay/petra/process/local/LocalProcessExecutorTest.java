@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.process.local;
+package com.liferay.petra.process.local;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.process.ProcessLog;
 import com.liferay.portal.kernel.process.ProcessLog.Level;
 import com.liferay.portal.kernel.process.TerminationProcessException;
+import com.liferay.portal.kernel.process.local.LocalProcessExecutor;
+import com.liferay.portal.kernel.process.local.LocalProcessLauncher;
 import com.liferay.portal.kernel.process.local.LocalProcessLauncher.ProcessContext;
 import com.liferay.portal.kernel.process.local.LocalProcessLauncher.ShutdownHook;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;

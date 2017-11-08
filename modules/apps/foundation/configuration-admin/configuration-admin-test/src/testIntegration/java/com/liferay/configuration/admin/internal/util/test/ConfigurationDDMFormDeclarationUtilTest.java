@@ -23,6 +23,7 @@ import com.liferay.portal.osgi.util.test.OSGiServiceUtil;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -56,8 +57,15 @@ public class ConfigurationDDMFormDeclarationUtilTest {
 		ConfigurationDDMFormDeclaration configurationDDMFormDeclaration =
 			() -> TestConfigurationForm.class;
 
-		registerConfigurationDDMFormDeclaration(
+		_serviceRegistration = registerConfigurationDDMFormDeclaration(
 			configurationDDMFormDeclaration, _configuration.getPid());
+	}
+
+	@After
+	public void tearDown() {
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
 	}
 
 	@Test
@@ -85,6 +93,7 @@ public class ConfigurationDDMFormDeclarationUtilTest {
 	private Bundle _bundle;
 	private BundleContext _bundleContext;
 	private Configuration _configuration;
+	private ServiceRegistration _serviceRegistration;
 
 	private class TestConfigurationForm {
 	}

@@ -548,7 +548,8 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateNpmAngularPortlet() throws Exception {
 		_testBuildTemplateNpm(
-			"npm-angular-portlet", "foo", "bootstrapRequire.default();");
+			"npm-angular-portlet", "foo", "foo", "Foo",
+			"bootstrapRequire.default();");
 	}
 
 	@Test
@@ -556,13 +557,14 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_testBuildTemplateNpm(
-			"npm-angular-portlet", "foo-bar", "bootstrapRequire.default();");
+			"npm-angular-portlet", "foo-bar", "foo.bar", "FooBar",
+			"bootstrapRequire.default();");
 	}
 
 	@Test
 	public void testBuildTemplateNpmBillboardjsPortlet() throws Exception {
 		_testBuildTemplateNpm(
-			"npm-billboardjs-portlet", "foo",
+			"npm-billboardjs-portlet", "foo", "foo", "Foo",
 			"bootstrapRequire.default('<portlet:namespace />');");
 	}
 
@@ -571,14 +573,15 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_testBuildTemplateNpm(
-			"npm-billboardjs-portlet", "foo-bar",
+			"npm-billboardjs-portlet", "foo-bar", "foo.bar", "FooBar",
 			"bootstrapRequire.default('<portlet:namespace />');");
 	}
 
 	@Test
 	public void testBuildTemplateNpmIsomorphicPortlet() throws Exception {
 		_testBuildTemplateNpm(
-			"npm-isomorphic-portlet", "foo", "bootstrapRequire.default(");
+			"npm-isomorphic-portlet", "foo", "foo", "Foo",
+			"bootstrapRequire.default(");
 	}
 
 	@Test
@@ -586,27 +589,28 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_testBuildTemplateNpm(
-			"npm-isomorphic-portlet", "foo-bar", "bootstrapRequire.default(");
+			"npm-isomorphic-portlet", "foo-bar", "foo.bar", "FooBar",
+			"bootstrapRequire.default(");
 	}
 
 	@Test
 	public void testBuildTemplateNpmJQueryPortlet() throws Exception {
 		_testBuildTemplateNpm(
-			"npm-jquery-portlet", "foo",
+			"npm-jquery-portlet", "foo", "foo", "Foo",
 			"bootstrapRequire.default('<portlet:namespace />');");
 	}
 
 	@Test
 	public void testBuildTemplateNpmJQueryPortletWithDashes() throws Exception {
 		_testBuildTemplateNpm(
-			"npm-jquery-portlet", "foo-bar",
+			"npm-jquery-portlet", "foo-bar", "foo.bar", "FooBar",
 			"bootstrapRequire.default('<portlet:namespace />');");
 	}
 
 	@Test
 	public void testBuildTemplateNpmMetaljsPortlet() throws Exception {
 		_testBuildTemplateNpm(
-			"npm-metaljs-portlet", "foo",
+			"npm-metaljs-portlet", "foo", "foo", "Foo",
 			"bootstrapRequire.default('<portlet:namespace />');");
 	}
 
@@ -615,49 +619,49 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_testBuildTemplateNpm(
-			"npm-metaljs-portlet", "foo-bar",
+			"npm-metaljs-portlet", "foo-bar", "foo.bar", "FooBar",
 			"bootstrapRequire.default('<portlet:namespace />');");
 	}
 
 	@Test
 	public void testBuildTemplateNpmPortlet() throws Exception {
 		_testBuildTemplateNpm(
-			"npm-portlet", "foo",
+			"npm-portlet", "foo", "foo", "Foo",
 			"bootstrapRequire.default('<portlet:namespace />');");
 	}
 
 	@Test
 	public void testBuildTemplateNpmPortletWithDashes() throws Exception {
 		_testBuildTemplateNpm(
-			"npm-portlet", "foo-bar",
+			"npm-portlet", "foo-bar", "foo.bar", "FooBar",
 			"bootstrapRequire.default('<portlet:namespace />');");
 	}
 
 	@Test
 	public void testBuildTemplateNpmReactPortlet() throws Exception {
 		_testBuildTemplateNpm(
-			"npm-react-portlet", "foo",
+			"npm-react-portlet", "foo", "foo", "Foo",
 			"bootstrapRequire.default('<portlet:namespace />');");
 	}
 
 	@Test
 	public void testBuildTemplateNpmReactPortletWithDashes() throws Exception {
 		_testBuildTemplateNpm(
-			"npm-react-portlet", "foo-bar",
+			"npm-react-portlet", "foo-bar", "foo.bar", "FooBar",
 			"bootstrapRequire.default('<portlet:namespace />');");
 	}
 
 	@Test
 	public void testBuildTemplateNpmVuejsPortlet() throws Exception {
 		_testBuildTemplateNpm(
-			"npm-vuejs-portlet", "foo",
+			"npm-vuejs-portlet", "foo", "foo", "Foo",
 			"bootstrapRequire.default('<portlet:namespace />');");
 	}
 
 	@Test
 	public void testBuildTemplateNpmVuejsPortletWithDashes() throws Exception {
 		_testBuildTemplateNpm(
-			"npm-vuejs-portlet", "foo-bar",
+			"npm-vuejs-portlet", "foo-bar", "foo.bar", "FooBar",
 			"bootstrapRequire.default('<portlet:namespace />');");
 	}
 
@@ -2532,11 +2536,16 @@ public class ProjectTemplatesTest {
 	}
 
 	private void _testBuildTemplateNpm(
-			String template, String name, String bootstrapRequire)
+			String template, String name, String packageName, String className,
+			String bootstrapRequire)
 		throws Exception {
 
 		File projectDir = _buildTemplateWithGradle(template, name);
 
+		_testContains(
+			projectDir, "src/main/resources/META-INF/resources/init.jsp",
+			"<%@ page import=\"" + packageName + ".constants." + className +
+				"WebKeys\" %>");
 		_testContains(
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
 			"<aui:script require=\"<%= bootstrapRequire %>\">",

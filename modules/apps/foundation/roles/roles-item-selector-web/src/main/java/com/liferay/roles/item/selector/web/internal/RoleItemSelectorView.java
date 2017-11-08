@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.roles.item.selector.criterion.RoleItemSelectorCriterion;
 import com.liferay.roles.item.selector.web.internal.constants.RoleItemSelectorViewConstants;
 import com.liferay.roles.item.selector.web.internal.display.context.RoleItemSelectorViewDisplayContext;
+import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.io.IOException;
 
@@ -94,7 +95,7 @@ public class RoleItemSelectorView
 
 		RoleItemSelectorViewDisplayContext roleItemSelectorViewDisplayContext =
 			new RoleItemSelectorViewDisplayContext(
-				_roleLocalService, httpServletRequest, portletURL,
+				_roleLocalService, _usersAdmin, httpServletRequest, portletURL,
 				itemSelectedEventName);
 
 		request.setAttribute(
@@ -127,5 +128,8 @@ public class RoleItemSelectorView
 		target = "(osgi.web.symbolicname=com.liferay.roles.item.selector.web)"
 	)
 	private ServletContext _servletContext;
+
+	@Reference
+	private UsersAdmin _usersAdmin;
 
 }

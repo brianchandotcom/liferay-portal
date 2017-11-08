@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portlet.rolesadmin.search.RoleSearch;
 import com.liferay.roles.item.selector.web.internal.search.RoleItemSelectorChecker;
-import com.liferay.roles.item.selector.web.internal.util.RolesItemSelectorViewUtil;
+import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.util.List;
 
@@ -40,11 +40,12 @@ import javax.servlet.http.HttpServletRequest;
 public class RoleItemSelectorViewDisplayContext {
 
 	public RoleItemSelectorViewDisplayContext(
-		RoleLocalService roleLocalService,
+		RoleLocalService roleLocalService, UsersAdmin usersAdmin,
 		HttpServletRequest httpServletRequest, PortletURL portletURL,
 		String itemSelectedEventName) {
 
 		_roleLocalService = roleLocalService;
+		_usersAdmin = usersAdmin;
 		_httpServletRequest = httpServletRequest;
 		_portletURL = portletURL;
 		_itemSelectedEventName = itemSelectedEventName;
@@ -83,7 +84,7 @@ public class RoleItemSelectorViewDisplayContext {
 		_searchContainer.setEmptyResultsMessage("there-are-no-roles");
 
 		OrderByComparator<Role> orderByComparator =
-			RolesItemSelectorViewUtil.getRoleOrderByComparator(
+			_usersAdmin.getRoleOrderByComparator(
 				getOrderByCol(), getOrderByType());
 
 		RowChecker rowChecker = new RoleItemSelectorChecker(
@@ -117,5 +118,6 @@ public class RoleItemSelectorViewDisplayContext {
 	private final RenderResponse _renderResponse;
 	private final RoleLocalService _roleLocalService;
 	private SearchContainer<Role> _searchContainer;
+	private final UsersAdmin _usersAdmin;
 
 }

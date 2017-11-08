@@ -66,6 +66,10 @@ String[] serviceTypes = StringUtil.split(fedExCommerceShippingEngineGroupService
 
 	</aui:select>
 
+	<aui:input checked="<%= fedExCommerceShippingEngineGroupServiceConfiguration.useResidentialRates() %>" label="use-residential-rates" name="settings--useResidentialRates--" type="checkbox" />
+
+	<aui:input checked="<%= fedExCommerceShippingEngineGroupServiceConfiguration.useDiscountedRates() %>" label="use-discounted-rates" name="settings--useDiscountedRates--" type="checkbox" />
+
 	<aui:field-wrapper label="service-types">
 
 		<%

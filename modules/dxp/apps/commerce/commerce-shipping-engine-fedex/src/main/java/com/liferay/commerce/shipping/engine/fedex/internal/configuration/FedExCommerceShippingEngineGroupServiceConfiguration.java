@@ -48,6 +48,12 @@ public interface FedExCommerceShippingEngineGroupServiceConfiguration {
 	public String accountNumber();
 
 	@Meta.AD(required = false)
+	public boolean useResidentialRates();
+
+	@Meta.AD(required = false)
+	public boolean useDiscountedRates();
+
+	@Meta.AD(required = false)
 	public String key();
 
 	@Meta.AD(required = false)

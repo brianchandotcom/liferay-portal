@@ -14,8 +14,19 @@
 
 package com.liferay.portal.configuration.extender;
 
+import com.liferay.portal.kernel.util.Supplier;
+
+import java.util.Dictionary;
+
 /**
  * @author Carlos Sierra Andrés
  */
-public abstract class ConfigurationDescription {
+public interface ConfigurationDescription {
+
+	public String getFactoryPid();
+
+	public String getPid();
+
+	public Supplier<Dictionary<String, Object>> getPropertiesSupplier();
+
 }

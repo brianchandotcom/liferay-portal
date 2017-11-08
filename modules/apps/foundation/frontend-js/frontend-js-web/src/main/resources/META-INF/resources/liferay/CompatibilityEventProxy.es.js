@@ -1,5 +1,5 @@
 import State from 'metal-state';
-import { core } from 'metal';
+import {core} from 'metal';
 
 /**
  * CompatibilityEventProxy
@@ -41,7 +41,10 @@ class CompatibilityEventProxy extends State {
 	 * @private
 	 */
 	checkAttributeEvent_(eventName) {
-		return eventName.replace(this.adaptedEvents.match, this.adaptedEvents.replace);
+		return eventName.replace(
+			this.adaptedEvents.match,
+			this.adaptedEvents.replace
+		);
 	}
 
 	/**
@@ -52,15 +55,17 @@ class CompatibilityEventProxy extends State {
 	 * @private
 	 */
 	emitCompatibleEvents_(eventName, event) {
-		this.eventTargets_.forEach((target) => {
+		this.eventTargets_.forEach(target => {
 			if (target.fire) {
-				let prefixedEventName = this.namespace ? this.namespace + ':' + eventName : eventName;
+				let prefixedEventName = this.namespace
+					? this.namespace + ':' + eventName
+					: eventName;
 				let yuiEvent = target._yuievt.events[prefixedEventName];
 
 				if (core.isObject(event)) {
 					try {
 						event.target = this.host;
-					} catch(err) {}
+					} catch (err) {}
 				}
 
 				let emitFacadeReference;
@@ -86,24 +91,20 @@ class CompatibilityEventProxy extends State {
 	 * @private
 	 */
 	startCompatibility_() {
-		this.host.on(
-			'*',
-			(event, eventFacade) => {
-				if (!eventFacade) {
-					eventFacade = event;
-				}
-
-				let compatibleEvent = this.checkAttributeEvent_(eventFacade.type);
-
-				if (compatibleEvent !== eventFacade.type) {
-					eventFacade.type = compatibleEvent;
-					this.host.emit(compatibleEvent, event, eventFacade);
-				}
-				else if (this.eventTargets_.length > 0) {
-					this.emitCompatibleEvents_(compatibleEvent, event);
-				}
+		this.host.on('*', (event, eventFacade) => {
+			if (!eventFacade) {
+				eventFacade = event;
 			}
-		);
+
+			let compatibleEvent = this.checkAttributeEvent_(eventFacade.type);
+
+			if (compatibleEvent !== eventFacade.type) {
+				eventFacade.type = compatibleEvent;
+				this.host.emit(compatibleEvent, event, eventFacade);
+			} else if (this.eventTargets_.length > 0) {
+				this.emitCompatibleEvents_(compatibleEvent, event);
+			}
+		});
 	}
 }
 
@@ -121,8 +122,8 @@ CompatibilityEventProxy.STATE = {
 	adaptedEvents: {
 		value: {
 			match: /(.*)(Changed)$/,
-			replace: '$1Change'
-		}
+			replace: '$1Change',
+		},
 	},
 
 	/**
@@ -130,8 +131,8 @@ CompatibilityEventProxy.STATE = {
 	 * @type {String}
 	 */
 	emitFacade: {
-		value: false
-	}
+		value: false,
+	},
 };
 
 export default CompatibilityEventProxy;

@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portlet.rolesadmin.search.RoleSearch;
 import com.liferay.roles.item.selector.web.internal.search.RoleItemSelectorChecker;
 import com.liferay.roles.item.selector.web.internal.util.RolesItemSelectorViewUtil;
-import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -114,10 +113,7 @@ public class RoleItemSelectorViewDisplayContext {
 	private final PortletURL _portletURL;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-
-	@Reference
-	private RoleLocalService _roleLocalService;
-
+	private final RoleLocalService _roleLocalService;
 	private SearchContainer<Role> _searchContainer;
 
 }

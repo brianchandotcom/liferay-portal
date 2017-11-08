@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.configuration.cluster.constants;
+package com.liferay.portal.configuration.cluster.internal.constants;
 
 /**
  * @author Michael C. Han

@@ -296,6 +296,8 @@
 		<!-- Other fields -->
 
 		<column name="orderUserId" type="long" />
+		<column name="billingAddressId" type="long" />
+		<column name="shippingAddressId" type="long" />
 		<column name="total" type="double" />
 		<column name="status" type="int" />
 
@@ -339,6 +341,7 @@
 		<column name="CPDefinitionId" type="long" />
 		<column name="CPInstanceId" type="long" />
 		<column name="quantity" type="int" />
+		<column name="shippedQuantity" type="int" />
 		<column name="json" type="String" />
 		<column localized="true" name="title" type="String" />
 		<column name="sku" type="String" />
@@ -619,6 +622,88 @@
 			<finder-column name="active" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="CommerceShipment" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceShipmentId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="shipmentUserId" type="long" />
+		<column name="commerceAddressId" type="long" />
+		<column name="commerceShippingMethodId" type="long" />
+		<column name="carrier" type="String" />
+		<column name="trackingNumber" type="String" />
+		<column name="expectedDuration" type="int" />
+		<column name="status" type="int" />
+		<column name="shippingDate" type="Date" />
+		<column name="expectedDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CommerceShipmentItem" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceShipmentItemId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceShipmentId" type="long" />
+		<column name="commerceOrderItemId" type="long" />
+		<column name="quantity" type="int" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="G_C" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="commerceShipmentId" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="CommerceShippingMethod" remote-service="true">
 
 		<!-- PK fields -->
@@ -886,6 +971,9 @@
 		<exception>CommercePriceListDisplayDate</exception>
 		<exception>CommercePriceListExpirationDate</exception>
 		<exception>CommerceRegionName</exception>
+		<exception>CommerceShipmentExpectedDate</exception>
+		<exception>CommerceShipmentItemQuantity</exception>
+		<exception>CommerceShipmentShippingDate</exception>
 		<exception>CommerceShippingEngine</exception>
 		<exception>CommerceShippingMethodEngineKey</exception>
 		<exception>CommerceShippingMethodName</exception>

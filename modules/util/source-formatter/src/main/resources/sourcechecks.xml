@@ -86,7 +86,6 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal/portal-custom-jsp-bag" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal/portal-dao-orm-custom-sql" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal/portal-instance-lifecycle" />
-			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal/portal-jmx" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal/portal-messaging" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal/portal-monitoring" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal/portal-output-stream-container" />

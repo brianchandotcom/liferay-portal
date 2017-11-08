@@ -62,16 +62,6 @@ public class ProcessUtilTest {
 	}
 
 	@Test
-	public void testDestroy() throws Exception {
-
-		// Clean destroy
-
-		ProcessUtil processUtil = new ProcessUtil();
-
-		processUtil.destroy();
-	}
-
-	@Test
 	public void testEcho() throws Exception {
 
 		// Logging

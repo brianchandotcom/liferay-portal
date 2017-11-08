@@ -30,7 +30,6 @@ import com.liferay.petra.process.local.LocalProcessLauncher.ShutdownHook;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.InetAddressUtil;
@@ -103,27 +102,6 @@ public class LocalProcessExecutorTest {
 			}
 
 		};
-
-	@Test
-	public void testDeprecatedMethods() {
-		ProcessConfig processConfig = _createJPDAProcessConfig(_JPDA_OPTIONS1);
-
-		Assert.assertArrayEquals(
-			StringUtil.split(
-				processConfig.getBootstrapClassPath(), File.pathSeparatorChar),
-			processConfig.getBootstrapClassPathElements());
-		Assert.assertArrayEquals(
-			StringUtil.split(
-				processConfig.getRuntimeClassPath(), File.pathSeparatorChar),
-			processConfig.getRuntimeClassPathElements());
-
-		Assert.assertNull(ProcessContext.getProcessOutputStream());
-	}
-
-	@Test
-	public void testDestroy() throws Exception {
-		_localProcessExecutor.destroy();
-	}
 
 	@Test
 	public void testHeartBeatThreadDetachOnBrokenPipe() throws Exception {

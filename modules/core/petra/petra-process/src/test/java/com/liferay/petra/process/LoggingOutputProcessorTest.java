@@ -48,7 +48,15 @@ public class LoggingOutputProcessorTest extends BaseOutputProcessorTestCase {
 	@Test
 	public void testLoggingSuccess() throws Exception {
 		LoggingOutputProcessor loggingOutputProcessor =
-			(LoggingOutputProcessor)LoggingOutputProcessor.INSTANCE;
+			new LoggingOutputProcessor(
+				(stdErr, line) -> {
+					if (stdErr) {
+						_log.error(line);
+					}
+					else if (_log.isInfoEnabled()) {
+						_log.info(line);
+					}
+				});
 
 		String stdErrString = "This is standard error message.";
 

@@ -14,41 +14,24 @@
 	</condition>
 
 	<macrodef name="fetch-portal">
-		<sequential>
-			<local name="public.repository" />
+		<attribute name="fetch.portal.branch.name" />
+		<attribute name="fetch.portal.repository.name" />
 
-			<condition else="git@github.com:liferay/liferay-portal.git" property="public.repository" value="git@github-dev.liferay.com:liferay/liferay-portal.git">
+		<sequential>
+			<local name="fetch.portal.repository.url" />
+
+			<condition else="git@github.com:liferay/@{fetch.portal.repository.name}.git" property="fetch.portal.repository.url" value="git@github-dev.liferay.com:liferay/@{fetch.portal.repository.name}.git">
 				<isset property="env.JENKINS_HOME" />
 			</condition>
 
-			<echo>git fetch --force --no-tags ${public.repository} ${public.branch.name}</echo>
+			<echo>git fetch --force --no-tags ${fetch.portal.repository.url} @{fetch.portal.branch.name}</echo>
 
 			<exec executable="git">
 				<arg value="fetch" />
 				<arg value="--force" />
 				<arg value="--no-tags" />
-				<arg value="${public.repository}" />
-				<arg value="${public.branch.name}" />
-			</exec>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="fetch-portal-private">
-		<sequential>
-			<local name="private.repository" />
-
-			<condition else="git@github.com:liferay/liferay-portal-ee.git" property="private.repository" value="git@github-dev.liferay.com:liferay/liferay-portal-ee.git">
-				<isset property="env.JENKINS_HOME" />
-			</condition>
-
-			<echo>git fetch --force --no-tags ${private.repository} ${private.branch.name}</echo>
-
-			<exec executable="git">
-				<arg value="fetch" />
-				<arg value="--force" />
-				<arg value="--no-tags" />
-				<arg value="${private.repository}" />
-				<arg value="${private.branch.name}" />
+				<arg value="${fetch.portal.repository.url}" />
+				<arg value="@{fetch.portal.branch.name}" />
 			</exec>
 		</sequential>
 	</macrodef>
@@ -262,6 +245,8 @@
 		</condition>
 
 		<fetch-portal
+			fetch.portal.branch.name="${public.branch.name}"
+			fetch.portal.repository.name="liferay-portal"
 			unless:set="portal.git.commit.available"
 		/>
 
@@ -343,7 +328,9 @@
 			<equals arg1="${return.code}" arg2="0" />
 		</condition>
 
-		<fetch-portal-private
+		<fetch-portal
+			fetch.portal.branch.name="${private.branch.name}"
+			fetch.portal.repository.name="liferay-portal-ee"
 			unless:set="portal.private.git.commit.available"
 		/>
 

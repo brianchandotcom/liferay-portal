@@ -271,6 +271,8 @@ private void _cherryPickPrepNext(Commit commit) {
 
 	if (!moduleDir.exists()) {
 		println "Commit ${commit.id} NOT cherry-picked: ${relativePath(moduleDir)} does not exist"
+
+		return
 	}
 
 	boolean moduleOSGi = true

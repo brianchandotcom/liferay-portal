@@ -482,9 +482,11 @@ public class DLFileEntryLocalServiceImpl
 		boolean manualCheckinRequired = GetterUtil.getBoolean(
 			serviceContext.getAttribute(DL.MANUAL_CHECK_IN_REQUIRED));
 
-		dlFileEntry.setManualCheckInRequired(manualCheckinRequired);
+		if (dlFileEntry.getManualCheckInRequired() ^ manualCheckinRequired) {
+			dlFileEntry.setManualCheckInRequired(manualCheckinRequired);
 
-		dlFileEntryPersistence.update(dlFileEntry);
+			dlFileEntryPersistence.update(dlFileEntry);
+		}
 
 		String version = dlFileVersion.getVersion();
 

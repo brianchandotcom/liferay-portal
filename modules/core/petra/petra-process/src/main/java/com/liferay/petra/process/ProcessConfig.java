@@ -16,7 +16,6 @@ package com.liferay.petra.process;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.kernel.io.PathHolder;
 
 import java.io.File;
 import java.io.Serializable;

@@ -15,9 +15,8 @@
 package com.liferay.petra.process.local;
 
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.process.ProcessLog.Level;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.process.ProcessLog.Level;
-import com.liferay.portal.kernel.process.local.LocalProcessLog;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.lang.reflect.Constructor;

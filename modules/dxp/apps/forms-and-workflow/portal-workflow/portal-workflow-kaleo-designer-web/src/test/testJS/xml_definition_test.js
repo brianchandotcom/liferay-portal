@@ -23,7 +23,7 @@ describe(
 						it(
 							'should have name',
 							function(done) {
-								Liferay.Test.loadResource('metadata-only.xml')
+								Liferay.Test.loadResource('metadata-only-definition.xml')
 								.then(
 									function(definition) {
 										var xmlDefinition = new Liferay.KaleoDesignerXMLDefinition(
@@ -57,7 +57,7 @@ describe(
 						it(
 							'should retrieve "receptionType" attribute value',
 							function(done) {
-								Liferay.Test.loadResource('recipients-with-reception-type-bcc.xml')
+								Liferay.Test.loadResource('recipients-with-reception-type-bcc-definition.xml')
 								.then(
 									function(definition) {
 										var xmlDefinition = new Liferay.KaleoDesignerXMLDefinition(
@@ -87,7 +87,7 @@ describe(
 						it(
 							'should have "users" as recipient.',
 							function(done) {
-								Liferay.Test.loadResource('recipients-with-user.xml')
+								Liferay.Test.loadResource('recipients-with-user-definition.xml')
 								.then(
 									function(definition) {
 										var xmlDefinition = new Liferay.KaleoDesignerXMLDefinition(

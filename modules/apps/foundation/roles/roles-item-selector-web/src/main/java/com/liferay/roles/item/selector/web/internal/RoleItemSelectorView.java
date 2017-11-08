@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.roles.item.selector.criterion.RoleItemSelectorCriterion;
 import com.liferay.roles.item.selector.web.internal.display.context.RoleItemSelectorViewDisplayContext;
@@ -68,8 +68,7 @@ public class RoleItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+		ResourceBundle resourceBundle = _portal.getResourceBundle(locale);
 
 		return LanguageUtil.get(resourceBundle, "roles");
 	}
@@ -116,6 +115,9 @@ public class RoleItemSelectorView
 				new ItemSelectorReturnType[] {
 					new UUIDItemSelectorReturnType()
 				}));
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

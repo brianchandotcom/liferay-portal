@@ -38,8 +38,8 @@ public class CommerceOrderLocalServiceImpl
 
 	@Override
 	public CommerceOrder addCommerceOrder(
-			long orderUserId, double total, int status,
-			ServiceContext serviceContext)
+			long orderUserId, long billingAddressId, long shippingAddressId,
+			double total, int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -55,6 +55,8 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setUserId(user.getUserId());
 		commerceOrder.setUserName(user.getFullName());
 		commerceOrder.setOrderUserId(orderUserId);
+		commerceOrder.setBillingAddressId(billingAddressId);
+		commerceOrder.setShippingAddressId(shippingAddressId);
 		commerceOrder.setTotal(total);
 		commerceOrder.setStatus(status);
 		commerceOrder.setExpandoBridgeAttributes(serviceContext);
@@ -76,7 +78,8 @@ public class CommerceOrderLocalServiceImpl
 
 		CommerceOrder commerceOrder =
 			commerceOrderLocalService.addCommerceOrder(
-				commerceCart.getUserId(),
+				commerceCart.getUserId(), commerceCart.getBillingAddressId(),
+				commerceCart.getShippingAddressId(),
 				_commercePriceCalculator.getTotal(commerceCart),
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
@@ -89,7 +92,7 @@ public class CommerceOrderLocalServiceImpl
 
 		for (CommerceCartItem commerceCartItem : commerceCartItems) {
 			double price = _commercePriceCalculator.getPrice(
-				commerceCartItem.fetchCPInstance(),
+				commerceCartItem.getCPInstance(),
 				commerceCartItem.getQuantity());
 
 			commerceOrderItemLocalService.addCommerceOrderItem(

@@ -40,7 +40,7 @@ public class CommerceOrderItemLocalServiceImpl
 	@Override
 	public CommerceOrderItem addCommerceOrderItem(
 			long commerceOrderId, long cpDefinitionId, long cpInstanceId,
-			int quantity, String json, double price,
+			int quantity, int shippedQuantity, String json, double price,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -65,6 +65,7 @@ public class CommerceOrderItemLocalServiceImpl
 		commerceOrderItem.setCPDefinitionId(cpDefinitionId);
 		commerceOrderItem.setCPInstanceId(cpInstanceId);
 		commerceOrderItem.setQuantity(quantity);
+		commerceOrderItem.setShippedQuantity(shippedQuantity);
 		commerceOrderItem.setJson(json);
 		commerceOrderItem.setPrice(price);
 
@@ -78,6 +79,18 @@ public class CommerceOrderItemLocalServiceImpl
 		commerceOrderItemPersistence.update(commerceOrderItem);
 
 		return commerceOrderItem;
+	}
+
+	@Override
+	public CommerceOrderItem addCommerceOrderItem(
+			long commerceOrderId, long cpDefinitionId, long cpInstanceId,
+			int quantity, String json, double price,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addCommerceOrderItem(
+			commerceOrderId, cpDefinitionId, cpInstanceId, quantity, 0, json,
+			price, serviceContext);
 	}
 
 	@Override
@@ -163,6 +176,14 @@ public class CommerceOrderItemLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceOrderItem> getCommerceOrderItems(
+		long groupId, long commerceAddressId, int start, int end) {
+
+		return commerceOrderItemFinder.findByG_C(
+			groupId, commerceAddressId, start, end);
+	}
+
+	@Override
 	public int getCommerceOrderItemsCount(long commerceOrderId) {
 		return commerceOrderItemPersistence.countByCommerceOrderId(
 			commerceOrderId);
@@ -183,6 +204,22 @@ public class CommerceOrderItemLocalServiceImpl
 		commerceOrderItemPersistence.update(commerceOrderItem);
 
 		return commerceOrderItem;
+	}
+
+	@Override
+	public CommerceOrderItem updateCommerceOrderItemShippedQuantity(
+			long commerceOrderItemId, int shippedQuantity)
+		throws PortalException {
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
+
+		shippedQuantity =
+			commerceOrderItem.getShippedQuantity() + shippedQuantity;
+
+		commerceOrderItem.setShippedQuantity(shippedQuantity);
+
+		return commerceOrderItemPersistence.update(commerceOrderItem);
 	}
 
 	@Override

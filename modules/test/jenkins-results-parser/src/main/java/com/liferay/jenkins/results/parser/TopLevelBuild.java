@@ -994,7 +994,7 @@ public class TopLevelBuild extends BaseBuild {
 
 		if (!result.equals("SUCCESS")) {
 			if (isCompareToUpstream()) {
-				loadUpstreamJobFailuresJSONObject();
+				UpstreamFailureUtil.loadUpstreamJobFailuresJSONObject(this);
 			}
 
 			Dom4JUtil.addToElement(
@@ -1016,7 +1016,9 @@ public class TopLevelBuild extends BaseBuild {
 					downstreamBuild.getGitHubMessageElement();
 
 				if (failureElement != null) {
-					if (isBuildFailingInUpstreamJob(downstreamBuild)) {
+					if (UpstreamFailureUtil.isBuildFailingInUpstreamJob(
+							downstreamBuild)) {
+
 						upstreamJobFailureElements.add(failureElement);
 
 						continue;
@@ -1063,7 +1065,8 @@ public class TopLevelBuild extends BaseBuild {
 						Dom4JUtil.getNewElement(
 							"strong", null, "Failures in common with ",
 							acceptanceUpstreamJobLinkElement, " at ",
-							getUpstreamJobFailuresSHA(), ":")));
+							UpstreamFailureUtil.getUpstreamJobFailuresSHA(),
+							":")));
 
 				int remainingFailureCount =
 					maxFailureCount - failureElements.size();

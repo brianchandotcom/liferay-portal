@@ -381,7 +381,9 @@ public class BatchBuild extends BaseBuild {
 						continue;
 					}
 
-					if (isTestFailingInUpstreamJob(testResult)) {
+					if (UpstreamFailureUtil.isTestFailingInUpstreamJob(
+							testResult)) {
+
 						upstreamFailCount++;
 					}
 				}

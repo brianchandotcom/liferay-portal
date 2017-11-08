@@ -43,7 +43,7 @@ import org.w3c.dom.Element;
  * @author Shuyang Zhou
  */
 @Component(
-	configurationPid = "com.liferay.portal.monitoring.configuration.MonitoringConfiguration",
+	configurationPid = "com.liferay.portal.monitoring.internal.configuration.MonitoringConfiguration",
 	immediate = true
 )
 public class MonitoringGateKeeper {

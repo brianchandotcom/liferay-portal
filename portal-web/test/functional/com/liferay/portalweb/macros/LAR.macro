@@ -331,7 +331,9 @@
 	</command>
 
 	<command name="_mirrorWithOverwriting">
-		<execute function="ScrollWebElementIntoView" locator1="//div[contains(@class,'panel') and contains(@role,'tablist')]//a[normalize-space(text())='Update Data']" />
+		<execute function="ScrollWebElementIntoView" locator1="Panel#PANEL_HEADING">
+			<var name="key_panelHeading" value="Update Data" />
+		</execute>
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Update Data" />

@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PANEL_HEADING</td>
+	<td>//div[contains(@class,'panel') and contains(@role,'tablist')]//a[normalize-space(text())='${key_panelHeading}']"</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PANEL_HEADING_COLLAPSED</td>
 	<td>//div[contains(@class,'panel') and contains(@class,'collapsed')]/span[normalize-space(text())='${key_panelHeading}'] | //div[contains(@class,'panel') and contains(@role,'tablist')]//a[contains(@class,'collapsed') and normalize-space(text())='${key_panelHeading}'] | //div[contains(@class,'panel-heading') and @role='tab']//a[contains(@class,'collapsed') and normalize-space(text())='${key_panelHeading}']</td>
 	<td></td>

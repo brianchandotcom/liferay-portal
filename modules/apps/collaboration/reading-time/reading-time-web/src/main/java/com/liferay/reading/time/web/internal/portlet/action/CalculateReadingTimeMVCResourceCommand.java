@@ -17,8 +17,8 @@ package com.liferay.reading.time.web.internal.portlet.action;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.reading.time.calculator.ReadingTimeCalculator;
 import com.liferay.reading.time.message.ReadingTimeMessageProvider;
@@ -29,8 +29,8 @@ import java.time.Duration;
 import java.util.Locale;
 import java.util.Optional;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,20 +44,22 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + ReadingTimePortletKeys.READING_TIME,
 		"mvc.command.name=/reading_time/calculate"
 	},
-	service = MVCActionCommand.class
+	service = MVCResourceCommand.class
 )
-public class CalculateReadingTimeMVCActionCommand extends BaseMVCActionCommand {
+public class CalculateReadingTimeMVCResourceCommand
+	extends BaseMVCResourceCommand {
 
 	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	protected void doServeResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		String content = ParamUtil.getString(actionRequest, "content");
-		String contentType = ParamUtil.getString(actionRequest, "contentType");
-		Locale locale = actionRequest.getLocale();
+		String content = ParamUtil.getString(resourceRequest, "content");
+		String contentType = ParamUtil.getString(
+			resourceRequest, "contentType");
+		Locale locale = resourceRequest.getLocale();
 
 		Optional<Duration> readingTimeOptional =
 			_readingTimeCalculator.calculate(content, contentType, locale);
@@ -73,7 +75,7 @@ public class CalculateReadingTimeMVCActionCommand extends BaseMVCActionCommand {
 			});
 
 		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
+			resourceRequest, resourceResponse, jsonObject);
 	}
 
 	@Reference

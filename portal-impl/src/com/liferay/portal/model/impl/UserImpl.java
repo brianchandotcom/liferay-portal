@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.service.WebsiteLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -988,11 +989,15 @@ public class UserImpl extends UserBaseImpl {
 			return null;
 		}
 
+		String normalizedScreenName = FriendlyURLNormalizerUtil.normalize(
+			getScreenName());
+
 		return StringUtil.replace(
 			PropsValues.USERS_PROFILE_FRIENDLY_URL,
 			new String[] {"${liferay:screenName}", "${liferay:userId}"},
 			new String[] {
-				HtmlUtil.escapeURL(getScreenName()), String.valueOf(getUserId())
+				HtmlUtil.escapeURL(normalizedScreenName),
+				String.valueOf(getUserId())
 			});
 	}
 

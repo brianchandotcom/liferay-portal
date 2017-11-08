@@ -106,9 +106,9 @@ if (fileEntryId != 0) {
 	</div>
 
 	<div class="change-image-controls <%= (fileEntryId != 0) ? StringPool.BLANK : "hide" %>">
-		<aui:button cssClass="browse-image icon-monospaced" icon="icon-refresh" />
+		<aui:button cssClass="browse-image btn-monospaced btn-sm" icon="icon-refresh" />
 
-		<aui:button cssClass="icon-monospaced" icon="icon-trash" id='<%= randomNamespace + "removeImage" %>' useNamespace="<%= false %>" />
+		<aui:button cssClass="btn-monospaced btn-sm" icon="icon-trash" id='<%= randomNamespace + "removeImage" %>' useNamespace="<%= false %>" />
 	</div>
 </div>
 

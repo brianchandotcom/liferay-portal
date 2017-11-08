@@ -81,7 +81,7 @@ public class RoleItemSelectorViewDisplayContext {
 
 		_searchContainer = new RoleSearch(_renderRequest, getPortletURL());
 
-		_searchContainer.setEmptyResultsMessage("there-are-no-roles");
+		_searchContainer.setEmptyResultsMessage("no-roles-were-found");
 
 		OrderByComparator<Role> orderByComparator =
 			_usersAdmin.getRoleOrderByComparator(

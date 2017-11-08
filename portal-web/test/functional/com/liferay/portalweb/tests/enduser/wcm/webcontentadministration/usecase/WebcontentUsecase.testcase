@@ -995,7 +995,10 @@
 			<var name="webContentContent" value="Space Program Academy of Continuing Education Dare to Dream out of this world" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
+		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
+			<var name="menuItem" value="Edit Web Content" />
+			<var name="webContentTitle" value="Basic S.P.A.C.E. Banner" />
+		</execute>
 
 		<execute macro="WebContent#addLocale">
 			<var name="language" value="Japanese (Japan)" />
@@ -1007,7 +1010,7 @@
 		</execute>
 
 		<execute macro="WebContent#addAbstractSummary">
-			<var name="localizedAbstractSummary" value="A Japanese translation of the basic front page banner" />
+			<var name="abstractSummary" value="A Japanese translation of the basic front page banner" />
 		</execute>
 
 		<execute macro="AlloyEditor#addSourceContent">

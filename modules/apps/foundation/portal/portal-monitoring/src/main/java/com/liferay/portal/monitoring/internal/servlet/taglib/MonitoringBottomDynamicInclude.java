@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.monitoring.configuration.MonitoringConfiguration;
 import com.liferay.portal.monitoring.constants.MonitoringWebKeys;
+import com.liferay.portal.monitoring.internal.configuration.MonitoringConfiguration;
 import com.liferay.portal.monitoring.internal.statistics.portal.PortalRequestDataSample;
 
 import java.io.IOException;

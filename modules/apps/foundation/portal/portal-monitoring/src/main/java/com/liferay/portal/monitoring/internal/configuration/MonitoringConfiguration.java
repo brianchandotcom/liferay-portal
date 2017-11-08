@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.monitoring.configuration;
+package com.liferay.portal.monitoring.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 

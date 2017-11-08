@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.monitoring.MonitoringControl;
 import com.liferay.portal.kernel.monitoring.PortalMonitoringControl;
 import com.liferay.portal.kernel.monitoring.PortletMonitoringControl;
 import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
-import com.liferay.portal.monitoring.configuration.MonitoringConfiguration;
+import com.liferay.portal.monitoring.internal.configuration.MonitoringConfiguration;
 
 import java.util.Map;
 import java.util.Set;

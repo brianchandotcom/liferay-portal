@@ -15,7 +15,7 @@
 package com.liferay.portal.monitoring.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.monitoring.configuration.MonitoringConfiguration;
+import com.liferay.portal.monitoring.internal.configuration.MonitoringConfiguration;
 
 import java.io.InputStream;
 

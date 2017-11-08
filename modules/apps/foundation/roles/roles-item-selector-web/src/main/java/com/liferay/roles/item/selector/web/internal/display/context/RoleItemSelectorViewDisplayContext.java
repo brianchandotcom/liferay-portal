@@ -14,15 +14,20 @@
 
 package com.liferay.roles.item.selector.web.internal.display.context;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.rolesadmin.search.RoleSearch;
 import com.liferay.portlet.rolesadmin.search.RoleSearchTerms;
 import com.liferay.roles.item.selector.web.internal.search.RoleItemSelectorChecker;
@@ -100,19 +105,28 @@ public class RoleItemSelectorViewDisplayContext {
 		RoleSearchTerms searchTerms =
 			(RoleSearchTerms)_searchContainer.getSearchTerms();
 
-		long companyId = CompanyThreadLocal.getCompanyId();
-		String keywords = searchTerms.getKeywords();
-		Integer[] types = searchTerms.getTypesObj();
-
-		int total = _roleLocalService.searchCount(companyId, keywords, types);
-
-		_searchContainer.setTotal(total);
-
 		List<Role> results = _roleLocalService.search(
-			companyId, keywords, types, _searchContainer.getStart(),
-			_searchContainer.getEnd(), _searchContainer.getOrderByComparator());
+			CompanyThreadLocal.getCompanyId(), searchTerms.getKeywords(),
+			searchTerms.getTypesObj(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			_searchContainer.getOrderByComparator());
 
-		_searchContainer.setResults(results);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		if (!permissionChecker.isOmniadmin()) {
+			results = _usersAdmin.filterRoles(permissionChecker, results);
+		}
+
+		_searchContainer.setTotal(results.size());
+
+		_searchContainer.setResults(
+			ListUtil.subList(
+				results, _searchContainer.getStart(),
+				_searchContainer.getEnd()));
 
 		return _searchContainer;
 	}

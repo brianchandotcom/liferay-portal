@@ -25,7 +25,9 @@ class PortletBase extends Component {
 	all(selectors, root) {
 		root = dom.toElement(root) || this.rootNode || document;
 
-		return root.querySelectorAll(this.namespaceSelectors_(this.namespace, selectors));
+		return root.querySelectorAll(
+			this.namespaceSelectors_(this.namespace, selectors)
+		);
 	}
 
 	/**
@@ -38,7 +40,10 @@ class PortletBase extends Component {
 	 * @return {string} Namespaced id selectors
 	 */
 	namespaceSelectors_(namespace, selectors) {
-		return selectors.replace(new RegExp('(#|\\[id=(\\\"|\\\'))(?!' + namespace + ')', 'g'), '$1' + namespace);
+		return selectors.replace(
+			new RegExp('(#|\\[id=(\\"|\\\'))(?!' + namespace + ')', 'g'),
+			'$1' + namespace
+		);
 	}
 
 	/**
@@ -65,7 +70,9 @@ class PortletBase extends Component {
 	one(selectors, root) {
 		root = dom.toElement(root) || this.rootNode || document;
 
-		return root.querySelector(this.namespaceSelectors_(this.namespace, selectors));
+		return root.querySelector(
+			this.namespaceSelectors_(this.namespace, selectors)
+		);
 	}
 
 	/**
@@ -94,7 +101,7 @@ PortletBase.STATE = {
 	 * @type {string}
 	 */
 	namespace: {
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -105,8 +112,8 @@ PortletBase.STATE = {
 	 */
 	rootNode: {
 		setter: dom.toElement,
-		valueFn: 'rootNodeValueFn_'
-	}
+		valueFn: 'rootNodeValueFn_',
+	},
 };
 
 export default PortletBase;

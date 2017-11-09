@@ -1003,18 +1003,19 @@
 				(
 					(Role_.classNameId = ?) AND
 					(Role_.roleId != ?) AND
-					(Role_.classPK IN (
-						SELECT
-							Team.teamId
-						FROM
-							Team
-						WHERE
-							(groupId = ?) AND
-							(
-								(lower(Team.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-								(lower(Team.description) LIKE ? [$AND_OR_NULL_CHECK$])
+					(
+						Role_.classPK IN (
+							SELECT
+								Team.teamId
+							FROM
+								Team
+							WHERE
+								(groupId = ?) AND
+								(
+									(lower(Team.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+									(lower(Team.description) LIKE ? [$AND_OR_NULL_CHECK$])
+								)
 							)
-						)
 					)
 				)
 		]]>
@@ -1184,18 +1185,19 @@
 				(
 					(Role_.classNameId = ?) AND
 					(Role_.roleId != ?) AND
-					(Role_.classPK IN (
-						SELECT
-							Team.teamId
-						FROM
-							Team
-						WHERE
-							(groupId = ?) AND
-							(
-								(lower(Team.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-								(lower(Team.description) LIKE ? [$AND_OR_NULL_CHECK$])
+					(
+						Role_.classPK IN (
+							SELECT
+								Team.teamId
+							FROM
+								Team
+							WHERE
+								(groupId = ?) AND
+								(
+									(lower(Team.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+									(lower(Team.description) LIKE ? [$AND_OR_NULL_CHECK$])
+								)
 							)
-						)
 					)
 				)
 			ORDER BY
@@ -1988,15 +1990,16 @@
 					UserGroupGroupRole
 				WHERE
 					(UserGroupGroupRole.groupId = ?) AND
-					(UserGroupGroupRole.roleId IN
-						(
-							SELECT
-								Role_.roleId
-							FROM
-								Role_
-							WHERE
-								(Role_.type_ = ?)
-						)
+					(
+						UserGroupGroupRole.roleId IN
+							(
+								SELECT
+									Role_.roleId
+								FROM
+									Role_
+								WHERE
+									(Role_.type_ = ?)
+							)
 					)
 			)
 		]]>
@@ -2026,15 +2029,16 @@
 					UserGroupRole
 				WHERE
 					(UserGroupRole.groupId = ?) AND
-					(UserGroupRole.roleId IN
-						(
-							SELECT
-								Role_.roleId
-							FROM
-								Role_
-							WHERE
-								(Role_.type_ = ?)
-						)
+					(
+						UserGroupRole.roleId IN
+							(
+								SELECT
+									Role_.roleId
+								FROM
+									Role_
+								WHERE
+									(Role_.type_ = ?)
+							)
 					)
 			)
 		]]>

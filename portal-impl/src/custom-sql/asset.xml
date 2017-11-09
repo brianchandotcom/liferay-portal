@@ -11,15 +11,16 @@
 				AssetEntries_AssetCategories ON
 					(AssetEntries_AssetCategories.categoryId = AssetCategory.categoryId)
 			WHERE
-				(AssetEntries_AssetCategories.entryId IN (
-					SELECT
-						entryId
-					FROM
-						AssetEntry
-					WHERE
-						(AssetEntry.groupId = ?) AND
-						(AssetEntry.classNameId = ?) AND
-						(AssetEntry.visible = [$TRUE$])
+				(
+					AssetEntries_AssetCategories.entryId IN (
+						SELECT
+							entryId
+						FROM
+							AssetEntry
+						WHERE
+							(AssetEntry.groupId = ?) AND
+							(AssetEntry.classNameId = ?) AND
+							(AssetEntry.visible = [$TRUE$])
 				)) AND
 				(AssetCategory.name LIKE ? OR ? IS NULL)
 		]]>
@@ -107,14 +108,15 @@
 				AssetEntries_AssetTags ON
 					(AssetEntries_AssetTags.tagId = AssetTag.tagId)
 			WHERE
-				(AssetEntries_AssetTags.entryId IN (
-					SELECT
-						entryId
-					FROM
-						AssetEntry
-					WHERE
-						(AssetEntry.groupId = ?) AND
-						(AssetEntry.visible = [$TRUE$])
+				(
+					AssetEntries_AssetTags.entryId IN (
+						SELECT
+							entryId
+						FROM
+							AssetEntry
+						WHERE
+							(AssetEntry.groupId = ?) AND
+							(AssetEntry.visible = [$TRUE$])
 				)) AND
 				(AssetTag.name LIKE ?)
 		]]>
@@ -129,15 +131,16 @@
 				AssetEntries_AssetTags ON
 					(AssetEntries_AssetTags.tagId = AssetTag.tagId)
 			WHERE
-				(AssetEntries_AssetTags.entryId IN (
-					SELECT
-						entryId
-					FROM
-						AssetEntry
-					WHERE
-						(AssetEntry.groupId = ?) AND
-						(AssetEntry.classNameId = ?) AND
-						(AssetEntry.visible = [$TRUE$])
+				(
+					AssetEntries_AssetTags.entryId IN (
+						SELECT
+							entryId
+						FROM
+							AssetEntry
+						WHERE
+							(AssetEntry.groupId = ?) AND
+							(AssetEntry.classNameId = ?) AND
+							(AssetEntry.visible = [$TRUE$])
 				)) AND
 				(AssetTag.name LIKE ? OR ? IS NULL)
 		]]>
@@ -152,15 +155,16 @@
 				AssetEntries_AssetTags ON
 					(AssetEntries_AssetTags.tagId = AssetTag.tagId)
 			WHERE
-				(AssetEntries_AssetTags.entryId IN (
-					SELECT
-						entryId
-					FROM
-						AssetEntry
-					WHERE
-						(AssetEntry.groupId = ?) AND
-						(AssetEntry.classNameId = ?) AND
-						(AssetEntry.visible = [$TRUE$])
+				(
+					AssetEntries_AssetTags.entryId IN (
+						SELECT
+							entryId
+						FROM
+							AssetEntry
+						WHERE
+							(AssetEntry.groupId = ?) AND
+							(AssetEntry.classNameId = ?) AND
+							(AssetEntry.visible = [$TRUE$])
 				)) AND
 				(AssetTag.name LIKE ? OR ? IS NULL)
 			ORDER BY

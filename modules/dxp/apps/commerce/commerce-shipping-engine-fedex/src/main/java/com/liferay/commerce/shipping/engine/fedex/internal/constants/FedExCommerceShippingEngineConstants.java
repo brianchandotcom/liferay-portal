@@ -17,7 +17,7 @@ package com.liferay.commerce.shipping.engine.fedex.internal.constants;
 import com.fedex.ws.rate.v22.DropoffType;
 import com.fedex.ws.rate.v22.ServiceType;
 
-import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**

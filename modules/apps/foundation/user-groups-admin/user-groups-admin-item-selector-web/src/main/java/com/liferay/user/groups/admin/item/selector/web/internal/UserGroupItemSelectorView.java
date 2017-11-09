@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.groups.admin.item.selector.criterion.UserGroupItemSelectorCriterion;
 import com.liferay.user.groups.admin.item.selector.web.internal.constants.UserGroupItemSelectorWebKeys;
 import com.liferay.user.groups.admin.item.selector.web.internal.display.context.UserGroupItemSelectorViewDisplayContext;
@@ -70,8 +70,7 @@ public class UserGroupItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+		ResourceBundle resourceBundle = _portal.getResourceBundle(locale);
 
 		return LanguageUtil.get(resourceBundle, "user-groups");
 	}
@@ -121,6 +120,9 @@ public class UserGroupItemSelectorView
 				new ItemSelectorReturnType[] {
 					new UUIDItemSelectorReturnType()
 				}));
+
+	@Reference
+	private Portal _portal;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.user.groups.admin.item.selector.web)"

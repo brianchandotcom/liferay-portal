@@ -118,14 +118,15 @@
 			WHERE
 				(DLFileEntry.groupId = ?) AND
 				(
-					DLFileEntry.fileEntryTypeId IN (
-						SELECT
-							DDMStructureLink.classPK
-						FROM
-							DDMStructureLink
-						WHERE
-							[$DDM_STRUCTURE_ID$]
-				))
+					DLFileEntry.fileEntryTypeId IN
+						(
+							SELECT
+								DDMStructureLink.classPK
+							FROM
+								DDMStructureLink
+							WHERE
+								[$DDM_STRUCTURE_ID$]
+					))
 		]]>
 	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.findByMisversioned">

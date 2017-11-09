@@ -192,36 +192,39 @@
 				SocialActivity
 			WHERE
 				(
-					groupId IN (
-						SELECT
-							groupId
-						FROM
-							Groups_Orgs
-						INNER JOIN
-							Users_Orgs ON
-								Users_Orgs.organizationId = Groups_Orgs.organizationId
-						WHERE
-							Users_Orgs.userId = ?
-					) OR
-					groupId IN (
-						SELECT
-							groupId
-						FROM
-							Groups_UserGroups
-						INNER JOIN
-							Users_UserGroups ON
-								Users_UserGroups.userGroupId = Groups_UserGroups.userGroupId
-						WHERE
-							Users_UserGroups.userId = ?
-					) OR
-					groupId IN (
-						SELECT
-							groupId
-						FROM
-							Users_Groups
-						WHERE
-							userId = ?
-					)
+					groupId IN
+						(
+							SELECT
+								groupId
+							FROM
+								Groups_Orgs
+							INNER JOIN
+								Users_Orgs ON
+									Users_Orgs.organizationId = Groups_Orgs.organizationId
+							WHERE
+								Users_Orgs.userId = ?
+						) OR
+					groupId IN
+						(
+							SELECT
+								groupId
+							FROM
+								Groups_UserGroups
+							INNER JOIN
+								Users_UserGroups ON
+									Users_UserGroups.userGroupId = Groups_UserGroups.userGroupId
+							WHERE
+								Users_UserGroups.userId = ?
+						) OR
+					groupId IN
+						(
+							SELECT
+								groupId
+							FROM
+								Users_Groups
+							WHERE
+								userId = ?
+						)
 				) AND
 				(mirrorActivityId = 0)
 		]]>
@@ -235,14 +238,15 @@
 					SocialActivity
 				WHERE
 					(
-						groupId IN (
-							SELECT
-								groupId
-							FROM
-								Users_Groups
-							WHERE
-								userId = ?
-						)
+						groupId IN
+							(
+								SELECT
+									groupId
+								FROM
+									Users_Groups
+								WHERE
+									userId = ?
+							)
 					) AND
 					(mirrorActivityId = 0)
 			)
@@ -261,14 +265,15 @@
 				WHERE
 					(SocialActivity.mirrorActivityId = 0) AND
 					(
-						Organization_.organizationId IN (
-							SELECT
-								organizationId
-							FROM
-								Users_Orgs
-							WHERE
-								Users_Orgs.userId = ?
-						)
+						Organization_.organizationId IN
+							(
+								SELECT
+									organizationId
+								FROM
+									Users_Orgs
+								WHERE
+									Users_Orgs.userId = ?
+							)
 					)
 			)
 		]]>
@@ -288,14 +293,15 @@
 			WHERE
 				(SocialActivity.mirrorActivityId = 0) AND
 				(
-					Organization_.organizationId IN (
-						SELECT
-							organizationId
-						FROM
-							Users_Orgs
-						WHERE
-							Users_Orgs.userId = ?
-					)
+					Organization_.organizationId IN
+						(
+							SELECT
+								organizationId
+							FROM
+								Users_Orgs
+							WHERE
+								Users_Orgs.userId = ?
+						)
 				)
 		]]>
 	</sql>
@@ -403,36 +409,39 @@
 				SocialActivity
 			WHERE
 				(
-					groupId IN (
-						SELECT
-							groupId
-						FROM
-							Groups_Orgs
-						INNER JOIN
-							Users_Orgs ON
-								Users_Orgs.organizationId = Groups_Orgs.organizationId
-						WHERE
-							Users_Orgs.userId = ?
-					) OR
-					groupId IN (
-						SELECT
-							groupId
-						FROM
-							Groups_UserGroups
-						INNER JOIN
-							Users_UserGroups ON
-								Users_UserGroups.userGroupId = Groups_UserGroups.userGroupId
-						WHERE
-							Users_UserGroups.userId = ?
-					) OR
-					groupId IN (
-						SELECT
-							groupId
-						FROM
-							Users_Groups
-						WHERE
-							userId = ?
-					)
+					groupId IN
+						(
+							SELECT
+								groupId
+							FROM
+								Groups_Orgs
+							INNER JOIN
+								Users_Orgs ON
+									Users_Orgs.organizationId = Groups_Orgs.organizationId
+							WHERE
+								Users_Orgs.userId = ?
+						) OR
+					groupId IN
+						(
+							SELECT
+								groupId
+							FROM
+								Groups_UserGroups
+							INNER JOIN
+								Users_UserGroups ON
+									Users_UserGroups.userGroupId = Groups_UserGroups.userGroupId
+							WHERE
+								Users_UserGroups.userId = ?
+						) OR
+					groupId IN
+						(
+							SELECT
+								groupId
+							FROM
+								Users_Groups
+							WHERE
+								userId = ?
+						)
 				) AND
 				(mirrorActivityId = 0)
 			ORDER BY
@@ -451,14 +460,15 @@
 						SocialActivity
 					WHERE
 						(
-							groupId IN (
-								SELECT
-									groupId
-								FROM
-									Users_Groups
-								WHERE
-									userId = ?
-							)
+							groupId IN
+								(
+									SELECT
+										groupId
+									FROM
+										Users_Groups
+									WHERE
+										userId = ?
+								)
 						) AND
 						(mirrorActivityId = 0)
 
@@ -477,14 +487,15 @@
 					WHERE
 						(SocialActivity.mirrorActivityId = 0) AND
 						(
-							Organization_.organizationId IN (
-								SELECT
-									organizationId
-								FROM
-									Users_Orgs
-								WHERE
-									Users_Orgs.userId = ?
-							)
+							Organization_.organizationId IN
+								(
+									SELECT
+										organizationId
+									FROM
+										Users_Orgs
+									WHERE
+										Users_Orgs.userId = ?
+								)
 						)
 				) TEMP_TABLE
 			ORDER BY
@@ -506,14 +517,15 @@
 			WHERE
 				(SocialActivity.mirrorActivityId = 0) AND
 				(
-					Organization_.organizationId IN (
-						SELECT
-							organizationId
-						FROM
-							Users_Orgs
-						WHERE
-							Users_Orgs.userId = ?
-					)
+					Organization_.organizationId IN
+						(
+							SELECT
+								organizationId
+							FROM
+								Users_Orgs
+							WHERE
+								Users_Orgs.userId = ?
+						)
 				)
 			ORDER BY
 				SocialActivity.createDate DESC
@@ -570,49 +582,54 @@
 				SocialActivitySet
 			WHERE
 				(
-					groupId IN (
-						SELECT
-							groupId
-						FROM
-							Groups_Orgs
-						INNER JOIN
-							Users_Orgs ON
-								Users_Orgs.organizationId = Groups_Orgs.organizationId
-						WHERE
-							Users_Orgs.userId = ?
-					) OR
-					groupId IN (
-						SELECT
-							groupId
-						FROM
-							Groups_UserGroups
-						INNER JOIN
-							Users_UserGroups ON
-								Users_UserGroups.userGroupId = Groups_UserGroups.userGroupId
-						WHERE
-							Users_UserGroups.userId = ?
-					) OR
-					groupId IN (
-						SELECT
-							groupId
-						FROM
-							Users_Groups
-						WHERE
+					groupId IN
+						(
+							SELECT
+								groupId
+							FROM
+								Groups_Orgs
+							INNER JOIN
+								Users_Orgs ON
+									Users_Orgs.organizationId = Groups_Orgs.organizationId
+							WHERE
+								Users_Orgs.userId = ?
+						) OR
+					groupId IN
+						(
+							SELECT
+								groupId
+							FROM
+								Groups_UserGroups
+							INNER JOIN
+								Users_UserGroups ON
+									Users_UserGroups.userGroupId = Groups_UserGroups.userGroupId
+							WHERE
+								Users_UserGroups.userId = ?
+						) OR
+					groupId IN
+						(
+							SELECT
+								groupId
+							FROM
+								Users_Groups
+							WHERE
+								userId = ?
+						) OR
+					activitySetId IN
+						(
+							SELECT
+								activitySetId
+							FROM
+								SocialActivitySet
+							INNER JOIN
+								SocialRelation ON
+									(SocialRelation.userId2 = SocialActivitySet.userId)
+							WHERE
+								(SocialRelation.userId1 = ?)
+						) OR
+							(
 							userId = ?
-					) OR
-					activitySetId IN (
-						SELECT
-							activitySetId
-						FROM
-							SocialActivitySet
-						INNER JOIN
-							SocialRelation ON
-								(SocialRelation.userId2 = SocialActivitySet.userId)
-						WHERE
-							(SocialRelation.userId1 = ?)
-					) OR (
-						userId = ?
-					)
+						)
 				)
 		]]>
 	</sql>
@@ -624,36 +641,39 @@
 				SocialActivitySet
 			WHERE
 				(
-					groupId IN (
-						SELECT
-							groupId
-						FROM
-							Groups_Orgs
-						INNER JOIN
-							Users_Orgs ON
-								Users_Orgs.organizationId = Groups_Orgs.organizationId
-						WHERE
-							Users_Orgs.userId = ?
-					) OR
-					groupId IN (
-						SELECT
-							groupId
-						FROM
-							Groups_UserGroups
-						INNER JOIN
-							Users_UserGroups ON
-								Users_UserGroups.userGroupId = Groups_UserGroups.userGroupId
-						WHERE
-							Users_UserGroups.userId = ?
-					) OR
-					groupId IN (
-						SELECT
-							groupId
-						FROM
-							Users_Groups
-						WHERE
-							userId = ?
-					)
+					groupId IN
+						(
+							SELECT
+								groupId
+							FROM
+								Groups_Orgs
+							INNER JOIN
+								Users_Orgs ON
+									Users_Orgs.organizationId = Groups_Orgs.organizationId
+							WHERE
+								Users_Orgs.userId = ?
+						) OR
+					groupId IN
+						(
+							SELECT
+								groupId
+							FROM
+								Groups_UserGroups
+							INNER JOIN
+								Users_UserGroups ON
+									Users_UserGroups.userGroupId = Groups_UserGroups.userGroupId
+							WHERE
+								Users_UserGroups.userId = ?
+						) OR
+					groupId IN
+						(
+							SELECT
+								groupId
+							FROM
+								Users_Groups
+							WHERE
+								userId = ?
+						)
 				)
 		]]>
 	</sql>
@@ -714,49 +734,54 @@
 				SocialActivitySet
 			WHERE
 				(
-					groupId IN (
-						SELECT
-							groupId
-						FROM
-							Groups_Orgs
-						INNER JOIN
-							Users_Orgs ON
-								Users_Orgs.organizationId = Groups_Orgs.organizationId
-						WHERE
-							Users_Orgs.userId = ?
-					) OR
-					groupId IN (
-						SELECT
-							groupId
-						FROM
-							Groups_UserGroups
-						INNER JOIN
-							Users_UserGroups ON
-								Users_UserGroups.userGroupId = Groups_UserGroups.userGroupId
-						WHERE
-							Users_UserGroups.userId = ?
-					) OR
-					groupId IN (
-						SELECT
-							groupId
-						FROM
-							Users_Groups
-						WHERE
+					groupId IN
+						(
+							SELECT
+								groupId
+							FROM
+								Groups_Orgs
+							INNER JOIN
+								Users_Orgs ON
+									Users_Orgs.organizationId = Groups_Orgs.organizationId
+							WHERE
+								Users_Orgs.userId = ?
+						) OR
+					groupId IN
+						(
+							SELECT
+								groupId
+							FROM
+								Groups_UserGroups
+							INNER JOIN
+								Users_UserGroups ON
+									Users_UserGroups.userGroupId = Groups_UserGroups.userGroupId
+							WHERE
+								Users_UserGroups.userId = ?
+						) OR
+					groupId IN
+						(
+							SELECT
+								groupId
+							FROM
+								Users_Groups
+							WHERE
+								userId = ?
+						) OR
+					activitySetId IN
+						(
+							SELECT
+								activitySetId
+							FROM
+								SocialActivitySet
+							INNER JOIN
+								SocialRelation ON
+									(SocialRelation.userId2 = SocialActivitySet.userId)
+							WHERE
+								(SocialRelation.userId1 = ?)
+						) OR
+							(
 							userId = ?
-					) OR
-					activitySetId IN (
-						SELECT
-							activitySetId
-						FROM
-							SocialActivitySet
-						INNER JOIN
-							SocialRelation ON
-								(SocialRelation.userId2 = SocialActivitySet.userId)
-						WHERE
-							(SocialRelation.userId1 = ?)
-					) OR (
-						userId = ?
-					)
+						)
 				)
 			ORDER BY
 				modifiedDate DESC
@@ -770,36 +795,39 @@
 				SocialActivitySet
 			WHERE
 				(
-					groupId IN (
-						SELECT
-							groupId
-						FROM
-							Groups_Orgs
-						INNER JOIN
-							Users_Orgs ON
-								Users_Orgs.organizationId = Groups_Orgs.organizationId
-						WHERE
-							Users_Orgs.userId = ?
-					) OR
-					groupId IN (
-						SELECT
-							groupId
-						FROM
-							Groups_UserGroups
-						INNER JOIN
-							Users_UserGroups ON
-								Users_UserGroups.userGroupId = Groups_UserGroups.userGroupId
-						WHERE
-							Users_UserGroups.userId = ?
-					) OR
-					groupId IN (
-						SELECT
-							groupId
-						FROM
-							Users_Groups
-						WHERE
-							userId = ?
-					)
+					groupId IN
+						(
+							SELECT
+								groupId
+							FROM
+								Groups_Orgs
+							INNER JOIN
+								Users_Orgs ON
+									Users_Orgs.organizationId = Groups_Orgs.organizationId
+							WHERE
+								Users_Orgs.userId = ?
+						) OR
+					groupId IN
+						(
+							SELECT
+								groupId
+							FROM
+								Groups_UserGroups
+							INNER JOIN
+								Users_UserGroups ON
+									Users_UserGroups.userGroupId = Groups_UserGroups.userGroupId
+							WHERE
+								Users_UserGroups.userId = ?
+						) OR
+					groupId IN
+						(
+							SELECT
+								groupId
+							FROM
+								Users_Groups
+							WHERE
+								userId = ?
+						)
 				)
 			ORDER BY
 				modifiedDate DESC

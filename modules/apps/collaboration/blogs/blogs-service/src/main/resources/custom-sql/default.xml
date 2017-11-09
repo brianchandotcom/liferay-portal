@@ -34,27 +34,29 @@
 					(
 						(Group_.liveGroupId = 0) AND
 						(
-							Group_.groupId NOT IN (
-								SELECT
-									liveGroupId
-								FROM
-									Group_
-								WHERE
-									groupId = ?
-							)
+							Group_.groupId NOT IN
+								(
+									SELECT
+										liveGroupId
+									FROM
+										Group_
+									WHERE
+										groupId = ?
+								)
 						) AND
 						(
 							(Group_.classNameId != [$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.LAYOUT$]) OR
 							(
-								Group_.parentGroupId NOT IN (
-									SELECT
-										groupId
-									FROM
-										Group_
-									WHERE
-										(groupId != ?) AND
-										(liveGroupId != 0)
-								)
+								Group_.parentGroupId NOT IN
+									(
+										SELECT
+											groupId
+										FROM
+											Group_
+										WHERE
+											(groupId != ?) AND
+											(liveGroupId != 0)
+									)
 							)
 						)
 					)
@@ -135,27 +137,29 @@
 								(
 									(Group_.liveGroupId = 0) AND
 									(
-										Group_.groupId NOT IN (
-											SELECT
-												liveGroupId
-											FROM
-												Group_
-											WHERE
-												groupId = ?
-										)
+										Group_.groupId NOT IN
+											(
+												SELECT
+													liveGroupId
+												FROM
+													Group_
+												WHERE
+													groupId = ?
+											)
 									) AND
 									(
 										(Group_.classNameId != [$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.LAYOUT$]) OR
 										(
-											Group_.parentGroupId NOT IN (
-												SELECT
-													groupId
-												FROM
-													Group_
-												WHERE
-													(groupId != ?) AND
-													(liveGroupId != 0)
-											)
+											Group_.parentGroupId NOT IN
+												(
+													SELECT
+														groupId
+													FROM
+														Group_
+													WHERE
+														(groupId != ?) AND
+														(liveGroupId != 0)
+												)
 										)
 									)
 								)

@@ -30,9 +30,11 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.RolePermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
+import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -54,6 +56,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -148,6 +152,30 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 		}
 	}
 
+	@Override
+	protected void addSuccessMessage(
+		ActionRequest actionRequest, ActionResponse actionResponse) {
+
+		if (!addProcessActionSuccessMessage) {
+			return;
+		}
+
+		String redirect = actionRequest.getParameter("redirect");
+
+		String portletId = _http.getParameter(redirect, "p_p_id", false);
+
+		if (isRedirectToAnotherPortlet(portletId)) {
+			String successMessage = ParamUtil.getString(
+				actionRequest, "successMessage");
+
+			MultiSessionMessages.add(
+				actionRequest, portletId + "requestProcessed", successMessage);
+		}
+		else {
+			super.addSuccessMessage(actionRequest, actionResponse);
+		}
+	}
+
 	protected Integer[] getRoleTypesObj(int type) {
 		if ((type == RoleConstants.TYPE_ORGANIZATION) ||
 			(type == RoleConstants.TYPE_REGULAR) ||
@@ -162,6 +190,18 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 
 	@Override
 	protected boolean isAlwaysSendRedirect() {
+		return true;
+	}
+
+	protected boolean isRedirectToAnotherPortlet(String portletId) {
+		if (Validator.isNull(portletId)) {
+			return false;
+		}
+
+		if (portletId.contains(KaleoDesignerPortletKeys.KALEO_DESIGNER)) {
+			return false;
+		}
+
 		return true;
 	}
 
@@ -370,6 +410,9 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoDesignerPortlet.class);
+
+	@Reference
+	private Http _http;
 
 	@Reference
 	private KaleoDefinitionVersionLocalService

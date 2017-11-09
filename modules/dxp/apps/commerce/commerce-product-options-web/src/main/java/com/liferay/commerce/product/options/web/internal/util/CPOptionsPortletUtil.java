@@ -14,13 +14,11 @@
 
 package com.liferay.commerce.product.options.web.internal.util;
 
-import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.util.comparator.CPOptionCategoryPriorityComparator;
 import com.liferay.commerce.product.util.comparator.CPOptionCategoryTitleComparator;
-import com.liferay.commerce.product.util.comparator.CPOptionTitleComparator;
 import com.liferay.commerce.product.util.comparator.CPOptionValuePriorityComparator;
 import com.liferay.commerce.product.util.comparator.CPOptionValueTitleComparator;
 import com.liferay.commerce.product.util.comparator.CPSpecificationOptionTitleComparator;
@@ -57,41 +55,6 @@ public class CPOptionsPortletUtil {
 		}
 
 		return orderByComparator;
-	}
-
-	public static OrderByComparator<CPOption> getCPOptionOrderByComparator(
-		String orderByCol, String orderByType) {
-
-		boolean orderByAsc = false;
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
-		OrderByComparator<CPOption> orderByComparator = null;
-
-		if (orderByCol.equals("title")) {
-			orderByComparator = new CPOptionTitleComparator(orderByAsc);
-		}
-
-		return orderByComparator;
-	}
-
-	public static Sort getCPOptionSort(String orderByCol, String orderByType) {
-		boolean orderByAsc = false;
-
-		if (Objects.equals(orderByType, "asc")) {
-			orderByAsc = true;
-		}
-
-		Sort sort = null;
-
-		if (Objects.equals(orderByCol, "title")) {
-			sort = SortFactoryUtil.create(
-				"title", Sort.STRING_TYPE, orderByAsc);
-		}
-
-		return sort;
 	}
 
 	public static OrderByComparator<CPOptionValue>

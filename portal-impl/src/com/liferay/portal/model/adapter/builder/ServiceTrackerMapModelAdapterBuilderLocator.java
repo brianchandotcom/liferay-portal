@@ -17,7 +17,6 @@ package com.liferay.portal.model.adapter.builder;
 import com.liferay.portal.kernel.model.adapter.builder.ModelAdapterBuilder;
 import com.liferay.portal.kernel.model.adapter.builder.ModelAdapterBuilderLocator;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -49,6 +48,51 @@ public class ServiceTrackerMapModelAdapterBuilderLocator
 			_getKey(adapteeModelClass, adaptedModelClass));
 	}
 
+	private Type _getGenericInterface(Class<?> clazz, Class<?> interfaceClass) {
+		Type[] genericInterfaces = clazz.getGenericInterfaces();
+
+		for (Type genericInterface : genericInterfaces) {
+			if (!(genericInterface instanceof ParameterizedType)) {
+				continue;
+			}
+
+			ParameterizedType parameterizedType =
+				(ParameterizedType)genericInterface;
+
+			Type rawType = parameterizedType.getRawType();
+
+			if (rawType.equals(interfaceClass)) {
+				return parameterizedType;
+			}
+		}
+
+		return null;
+	}
+
+	private Type _getGenericInterface(Object object, Class<?> interfaceClass) {
+		Class<?> clazz = object.getClass();
+
+		Type genericInterface = _getGenericInterface(clazz, interfaceClass);
+
+		if (genericInterface != null) {
+			return genericInterface;
+		}
+
+		Class<?> superClass = clazz.getSuperclass();
+
+		while (superClass != null) {
+			genericInterface = _getGenericInterface(superClass, interfaceClass);
+
+			if (genericInterface != null) {
+				return genericInterface;
+			}
+
+			superClass = superClass.getSuperclass();
+		}
+
+		return null;
+	}
+
 	private <T, V> String _getKey(
 		Class<T> adapteeModelClass, Class<V> adaptedModelClass) {
 
@@ -71,7 +115,7 @@ public class ServiceTrackerMapModelAdapterBuilderLocator
 					ModelAdapterBuilder modelAdapterBuilder =
 						registry.getService(serviceReference);
 
-					Type genericInterface = ReflectionUtil.getGenericInterface(
+					Type genericInterface = _getGenericInterface(
 						modelAdapterBuilder, ModelAdapterBuilder.class);
 
 					if ((genericInterface == null) ||

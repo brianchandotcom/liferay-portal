@@ -88,6 +88,10 @@ public class ReflectionUtil {
 		return method;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static Type getGenericInterface(
 		Object object, Class<?> interfaceClass) {
 

@@ -37,7 +37,8 @@
 			},
 			"priority": {
 				"index": "not_analyzed",
-				"type": "float"
+				"store": "yes",
+				"type": "double"
 			},
 			"uid": {
 				"index": "not_analyzed",

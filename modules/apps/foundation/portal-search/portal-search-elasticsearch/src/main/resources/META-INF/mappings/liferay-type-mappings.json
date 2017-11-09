@@ -776,6 +776,11 @@
 				"store": "yes",
 				"type": "string"
 			},
+			"priority": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "double"
+			},
 			"properties": {
 				"index": "not_analyzed",
 				"store": "yes",

@@ -14,9 +14,9 @@
 
 package com.liferay.portal.lpkg.deployer.internal;
 
+import com.liferay.petra.process.ProcessCallable;
+import com.liferay.petra.process.ProcessException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.portal.kernel.process.ProcessCallable;
-import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.target.platform.indexer.TargetPlatformIndexerUtil;
 
 import java.io.File;

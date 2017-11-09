@@ -16,16 +16,13 @@ package com.liferay.portal.lpkg.deployer.internal;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
+import com.liferay.petra.process.ProcessChannel;
+import com.liferay.petra.process.ProcessConfig;
+import com.liferay.petra.process.local.LocalProcessExecutor;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.process.ClassPathUtil;
-import com.liferay.portal.kernel.process.ProcessChannel;
-import com.liferay.portal.kernel.process.ProcessConfig;
-import com.liferay.portal.kernel.process.ProcessConfig.Builder;
-import com.liferay.portal.kernel.process.local.LocalProcessExecutor;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -37,6 +34,7 @@ import com.liferay.portal.target.platform.indexer.IndexValidator;
 import com.liferay.portal.target.platform.indexer.IndexValidatorFactory;
 import com.liferay.portal.target.platform.indexer.Indexer;
 import com.liferay.portal.target.platform.indexer.IndexerFactory;
+import com.liferay.portal.util.PortalClassPathUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -55,7 +53,6 @@ import java.nio.file.Paths;
 import java.security.MessageDigest;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashSet;
@@ -81,26 +78,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = LPKGIndexValidator.class)
 public class LPKGIndexValidator {
-
-	public LPKGIndexValidator() {
-		Builder builder = new Builder();
-
-		builder.setArguments(Arrays.asList("-Djava.awt.headless=true"));
-
-		String classpath = ClassPathUtil.buildClassPath(
-			IndexerFactory.class, Bundle.class,
-			TargetPlatformIndexerProcessCallable.class);
-
-		classpath = classpath.concat(File.pathSeparator).concat(
-			ClassPathUtil.getGlobalClassPath());
-
-		builder.setBootstrapClassPath(classpath);
-
-		builder.setReactClassLoader(PortalClassLoaderUtil.getClassLoader());
-		builder.setRuntimeClassPath(classpath);
-
-		_processConfig = builder.build();
-	}
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
@@ -322,8 +299,6 @@ public class LPKGIndexValidator {
 
 		List<URI> uris = _indexLPKGFiles(files);
 
-		byte[] bytes = null;
-
 		LocalProcessExecutor localProcessExecutor = new LocalProcessExecutor();
 
 		List<File> additionalJarFiles = new ArrayList<>(_jarFiles);
@@ -354,27 +329,19 @@ public class LPKGIndexValidator {
 			}
 		}
 
-		try {
-			ProcessChannel<byte[]> processChannel =
-				localProcessExecutor.execute(
-					_processConfig,
-					new TargetPlatformIndexerProcessCallable(
-						additionalJarFiles,
-						PropsValues.MODULE_FRAMEWORK_STOP_WAIT_TIMEOUT,
-						PropsValues.MODULE_FRAMEWORK_BASE_DIR + "/static",
-						PropsValues.MODULE_FRAMEWORK_MODULES_DIR,
-						PropsValues.MODULE_FRAMEWORK_PORTAL_DIR));
+		ProcessChannel<byte[]> processChannel = localProcessExecutor.execute(
+			_processConfig,
+			new TargetPlatformIndexerProcessCallable(
+				additionalJarFiles,
+				PropsValues.MODULE_FRAMEWORK_STOP_WAIT_TIMEOUT,
+				PropsValues.MODULE_FRAMEWORK_BASE_DIR + "/static",
+				PropsValues.MODULE_FRAMEWORK_MODULES_DIR,
+				PropsValues.MODULE_FRAMEWORK_PORTAL_DIR));
 
-			Future<byte[]> future = processChannel.getProcessNoticeableFuture();
-
-			bytes = future.get();
-		}
-		finally {
-			localProcessExecutor.destroy();
-		}
+		Future<byte[]> future = processChannel.getProcessNoticeableFuture();
 
 		URL url = _bytesURLProtocolSupport.putBytes(
-			"liferay-target-platform", bytes);
+			"liferay-target-platform", future.get());
 
 		uris.add(url.toURI());
 
@@ -478,6 +445,9 @@ public class LPKGIndexValidator {
 	private Set<String> _jarFileNames;
 	private List<File> _jarFiles;
 	private LPKGDeployer _lpkgDeployer;
-	private final ProcessConfig _processConfig;
+	private final ProcessConfig _processConfig =
+		PortalClassPathUtil.createProcessConfig(
+			IndexerFactory.class, Bundle.class,
+			TargetPlatformIndexerProcessCallable.class);
 
 }

@@ -322,7 +322,7 @@ public class DDMIndexerImplTest {
 
 		Map<String, String> map2 = entries.collect(
 			Collectors.toMap(
-				entry -> entry.getKey() + "_sortable",
+				entry -> entry.getKey() + "_String_sortable",
 				entry -> StringUtil.toLowerCase(entry.getValue())));
 
 		map2.putAll(map);

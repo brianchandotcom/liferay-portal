@@ -437,7 +437,7 @@
 	</command>
 
 	<command name="ViewWeekStartMonday" priority="5">
-		<description message="This is a use case for 51127." />
+		<description message="This is a use case for LPS-51127." />
 
 		<execute macro="CalendarNavigator#gotoConfiguration" />
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.messaging.async;
 
+import com.liferay.portal.internal.messaging.async.AsyncInvokeThreadLocal;
+import com.liferay.portal.internal.messaging.async.AsyncProcessCallable;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;

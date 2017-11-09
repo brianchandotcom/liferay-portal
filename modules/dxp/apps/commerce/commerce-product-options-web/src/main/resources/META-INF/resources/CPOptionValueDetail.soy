@@ -1,0 +1,30 @@
+{namespace CPOptionValueDetail}
+
+/**
+ * CP Option Detail
+ *
+ */
+{template .render}
+	{@param? cpOptionValueId: string}
+	{@param? id: string}
+	{@param? _handleCancel: any }
+	{@param? _handleDeleteOptionValue: any }
+	{@param? _handleSaveOptionValue: any }
+
+	<div id="{$id}">
+
+		<h4 class="section-header">Option Detail</h4>
+
+		<div class="option-value-detail"></div>
+
+		<div>
+			<button class="btn btn-primary" type="button" onclick="{$_handleSaveOptionValue}">Save</button>
+
+			{if $cpOptionValueId != '0'}
+				<button class="btn btn-secondary" type="button"  onclick="{$_handleDeleteOptionValue}">Delete</button>
+			{/if}
+
+			<button class="btn btn-link" type="button" onclick="{$_handleCancel}">cancel</button>
+		</div>
+	</div>
+{/template}

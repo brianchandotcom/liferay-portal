@@ -3,7 +3,7 @@ Bundle-SymbolicName: com.liferay.commerce.product.options.web
 Bundle-Version: 1.0.0
 Provide-Capability:\
 	soy;\
-		type="commerce-product-options-web";\
+		type="options-web";\
 		version:Version="${Bundle-Version}"
 Require-Capability:\
 	osgi.extender;\

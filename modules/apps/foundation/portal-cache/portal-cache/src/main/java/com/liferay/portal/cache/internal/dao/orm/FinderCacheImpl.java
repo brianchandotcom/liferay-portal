@@ -183,28 +183,48 @@ public class FinderCacheImpl
 			return;
 		}
 
-		String encodedArguments = finderPath.encodeArguments(args);
 		Serializable primaryKey = _resultToPrimaryKey(
 			args, (Serializable)result);
-
-		if (_localCacheAvailable) {
-			Map<Serializable, Serializable> localCache = _localCache.get();
-
-			localCache.put(
-				finderPath.encodeLocalCacheKey(encodedArguments), primaryKey);
-		}
 
 		PortalCache<Serializable, Serializable> portalCache = _getPortalCache(
 			finderPath.getCacheName());
 
+		String encodedArguments = finderPath.encodeArguments(args);
+
 		Serializable cacheKey = finderPath.encodeCacheKey(encodedArguments);
 
-		if (quiet) {
-			PortalCacheHelperUtil.putWithoutReplicator(
-				portalCache, cacheKey, primaryKey);
+		if (primaryKey == null) {
+			if (_localCacheAvailable) {
+				Map<Serializable, Serializable> localCache = _localCache.get();
+
+				localCache.remove(
+					finderPath.encodeLocalCacheKey(encodedArguments));
+			}
+
+			if (quiet) {
+				PortalCacheHelperUtil.removeWithoutReplicator(
+					portalCache, cacheKey);
+			}
+			else {
+				portalCache.remove(cacheKey);
+			}
 		}
 		else {
-			portalCache.put(cacheKey, primaryKey);
+			if (_localCacheAvailable) {
+				Map<Serializable, Serializable> localCache = _localCache.get();
+
+				localCache.put(
+					finderPath.encodeLocalCacheKey(encodedArguments),
+					primaryKey);
+			}
+
+			if (quiet) {
+				PortalCacheHelperUtil.putWithoutReplicator(
+					portalCache, cacheKey, primaryKey);
+			}
+			else {
+				portalCache.put(cacheKey, primaryKey);
+			}
 		}
 	}
 
@@ -247,6 +267,12 @@ public class FinderCacheImpl
 			_props.get(PropsKeys.VALUE_OBJECT_ENTITY_BLOCKING_CACHE));
 		_valueObjectFinderCacheEnabled = GetterUtil.getBoolean(
 			_props.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_ENABLED));
+		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
+			_props.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
+
+		if (_valueObjectFinderCacheListThreshold == 0) {
+			_valueObjectFinderCacheEnabled = false;
+		}
 
 		int localCacheMaxSize = GetterUtil.getInteger(
 			_props.get(
@@ -376,6 +402,12 @@ public class FinderCacheImpl
 				return new EmptyResult(args);
 			}
 
+			if ((list.size() > _valueObjectFinderCacheListThreshold) &&
+				(_valueObjectFinderCacheListThreshold > 0)) {
+
+				return null;
+			}
+
 			ArrayList<Serializable> cachedList = new ArrayList<>(list.size());
 
 			for (Serializable curResult : list) {
@@ -402,6 +434,7 @@ public class FinderCacheImpl
 	private Props _props;
 	private boolean _valueObjectEntityBlockingCacheEnabled;
 	private boolean _valueObjectFinderCacheEnabled;
+	private int _valueObjectFinderCacheListThreshold;
 
 	private static class EmptyResult implements Externalizable {
 

@@ -15,44 +15,60 @@
 package com.liferay.commerce.product.options.web.internal.display.context;
 
 import com.liferay.commerce.product.model.CPOption;
-import com.liferay.commerce.product.options.web.internal.portlet.action.ActionHelper;
-import com.liferay.commerce.product.options.web.internal.util.CPOptionsPortletUtil;
-import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Marco Leo
- * @author Alessio Antonio Rendina
  */
-public class CPOptionDisplayContext
-	extends BaseCPOptionsDisplayContext<CPOption> {
+public class CPOptionDisplayContext {
 
 	public CPOptionDisplayContext(
-			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
-			CPOptionService cpOptionService,
+			CPOption cpOption,
 			DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker)
 		throws PortalException {
 
-		super(actionHelper, httpServletRequest, CPOption.class.getSimpleName());
-
-		_cpOptionService = cpOptionService;
+		_cpOption = cpOption;
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
+	}
+
+	public List<Locale> getAvailableLocales() throws PortalException {
+		CPOption cpOption = getCPOption();
+
+		if (cpOption == null) {
+			return Collections.emptyList();
+		}
+
+		List<Locale> availableLocales = new ArrayList<>();
+
+		for (String languageId : cpOption.getAvailableLanguageIds()) {
+			availableLocales.add(LocaleUtil.fromLanguageId(languageId));
+		}
+
+		return availableLocales;
+	}
+
+	public CPOption getCPOption() {
+		return _cpOption;
+	}
+
+	public long getCPOptionId() {
+		if (_cpOption == null) {
+			return 0;
+		}
+
+		return _cpOption.getCPOptionId();
 	}
 
 	public List<DDMFormFieldType> getDDMFormFieldTypes() {
@@ -72,62 +88,7 @@ public class CPOptionDisplayContext
 		return stream.collect(Collectors.toList());
 	}
 
-	@Override
-	public SearchContainer<CPOption> getSearchContainer()
-		throws PortalException {
-
-		if (searchContainer != null) {
-			return searchContainer;
-		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		searchContainer = new SearchContainer<>(
-			liferayPortletRequest, getPortletURL(), null, null);
-
-		searchContainer.setEmptyResultsMessage("no-options-were-found");
-
-		OrderByComparator<CPOption> orderByComparator =
-			CPOptionsPortletUtil.getCPOptionOrderByComparator(
-				getOrderByCol(), getOrderByType());
-
-		searchContainer.setOrderByCol(getOrderByCol());
-		searchContainer.setOrderByComparator(orderByComparator);
-		searchContainer.setOrderByType(getOrderByType());
-		searchContainer.setRowChecker(getRowChecker());
-
-		if (isSearch()) {
-			Sort sort = CPOptionsPortletUtil.getCPOptionSort(
-				getOrderByCol(), getOrderByType());
-
-			BaseModelSearchResult<CPOption> cpOptionBaseModelSearchResult =
-				_cpOptionService.searchCPOptions(
-					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
-					getKeywords(), searchContainer.getStart(),
-					searchContainer.getEnd(), sort);
-
-			searchContainer.setTotal(cpOptionBaseModelSearchResult.getLength());
-			searchContainer.setResults(
-				cpOptionBaseModelSearchResult.getBaseModels());
-		}
-		else {
-			int total = _cpOptionService.getCPOptionsCount(getScopeGroupId());
-
-			searchContainer.setTotal(total);
-
-			List<CPOption> results = _cpOptionService.getCPOptions(
-				getScopeGroupId(), searchContainer.getStart(),
-				searchContainer.getEnd(), orderByComparator);
-
-			searchContainer.setResults(results);
-		}
-
-		return searchContainer;
-	}
-
-	private final CPOptionService _cpOptionService;
+	private CPOption _cpOption;
 	private final DDMFormFieldTypeServicesTracker
 		_ddmFormFieldTypeServicesTracker;
 

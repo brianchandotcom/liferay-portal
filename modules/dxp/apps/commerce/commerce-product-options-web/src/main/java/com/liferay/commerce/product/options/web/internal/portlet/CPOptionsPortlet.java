@@ -15,27 +15,11 @@
 package com.liferay.commerce.product.options.web.internal.portlet;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.options.web.internal.display.context.CPOptionDisplayContext;
-import com.liferay.commerce.product.options.web.internal.portlet.action.ActionHelper;
-import com.liferay.commerce.product.service.CPOptionService;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.io.IOException;
 
 import javax.portlet.Portlet;
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -65,41 +49,4 @@ import org.osgi.service.component.annotations.Reference;
 	service = {CPOptionsPortlet.class, Portlet.class}
 )
 public class CPOptionsPortlet extends MVCPortlet {
-
-	@Override
-	public void render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
-
-		try {
-			HttpServletRequest httpServletRequest =
-				_portal.getHttpServletRequest(renderRequest);
-
-			CPOptionDisplayContext cpOptionDisplayContext =
-				new CPOptionDisplayContext(
-					_actionHelper, httpServletRequest, _cpOptionService,
-					_ddmFormFieldTypeServicesTracker);
-
-			renderRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT, cpOptionDisplayContext);
-		}
-		catch (PortalException pe) {
-			SessionErrors.add(renderRequest, pe.getClass());
-		}
-
-		super.render(renderRequest, renderResponse);
-	}
-
-	@Reference
-	private ActionHelper _actionHelper;
-
-	@Reference
-	private CPOptionService _cpOptionService;
-
-	@Reference
-	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
-
-	@Reference
-	private Portal _portal;
-
 }

@@ -151,7 +151,19 @@ public class ReflectionUtil {
 		Class<?> superClass = object.getClass();
 
 		while (superClass != null) {
-			_getInterfaces(interfaceClasses, superClass, classLoader);
+			for (Class<?> interfaceClass : superClass.getInterfaces()) {
+				try {
+					if (classLoader == null) {
+						interfaceClasses.add(interfaceClass);
+					}
+					else {
+						interfaceClasses.add(
+							classLoader.loadClass(interfaceClass.getName()));
+					}
+				}
+				catch (ClassNotFoundException cnfe) {
+				}
+			}
 
 			superClass = superClass.getSuperclass();
 		}
@@ -268,25 +280,6 @@ public class ReflectionUtil {
 		}
 
 		return null;
-	}
-
-	private static void _getInterfaces(
-		Set<Class<?>> interfaceClasses, Class<?> clazz,
-		ClassLoader classLoader) {
-
-		for (Class<?> interfaceClass : clazz.getInterfaces()) {
-			try {
-				if (classLoader != null) {
-					interfaceClasses.add(
-						classLoader.loadClass(interfaceClass.getName()));
-				}
-				else {
-					interfaceClasses.add(interfaceClass);
-				}
-			}
-			catch (ClassNotFoundException cnfe) {
-			}
-		}
 	}
 
 	@SuppressWarnings("unchecked")

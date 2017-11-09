@@ -31,6 +31,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 		throws Exception {
 
 		if (fileName.contains("/custom-sql/")) {
+			_checkClosingParenthesis(fileName, content);
 			_checkScalability(fileName, absolutePath, content);
 
 			content = _fixMissingLineBreakAfterOpenParenthesis(content);
@@ -50,6 +51,34 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 		}
 
 		return content;
+	}
+
+	private void _checkClosingParenthesis(String fileName, String content) {
+		int startPos = -1;
+
+		while (true) {
+			startPos = content.indexOf("\t(\n", startPos + 1);
+
+			if (startPos == -1) {
+				return;
+			}
+
+			int endPos = _getCloseParenthesisPos(content, startPos);
+
+			int endLineCount = getLineCount(content, endPos);
+
+			char c = content.charAt(endPos - 1);
+
+			if (c != CharPool.TAB) {
+				int x = content.lastIndexOf("\n", endPos);
+
+				addMessage(
+					fileName,
+					"There should be a line break after '" +
+						StringUtil.trim(content.substring(x, endPos)),
+					endLineCount);
+			}
+		}
 	}
 
 	private void _checkScalability(

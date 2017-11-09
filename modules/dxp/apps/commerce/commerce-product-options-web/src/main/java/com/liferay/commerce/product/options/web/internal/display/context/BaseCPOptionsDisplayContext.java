@@ -15,7 +15,6 @@
 package com.liferay.commerce.product.options.web.internal.display.context;
 
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
-import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.options.web.internal.portlet.action.ActionHelper;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
@@ -26,15 +25,9 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
 
 import javax.portlet.PortletURL;
 
@@ -63,43 +56,6 @@ public abstract class BaseCPOptionsDisplayContext<T> {
 
 		_defaultOrderByCol = "title";
 		_defaultOrderByType = "asc";
-	}
-
-	public List<Locale> getAvailableLocales() throws PortalException {
-		CPOption cpOption = getCPOption();
-
-		if (cpOption == null) {
-			return Collections.emptyList();
-		}
-
-		List<Locale> availableLocales = new ArrayList<>();
-
-		for (String languageId : cpOption.getAvailableLanguageIds()) {
-			availableLocales.add(LocaleUtil.fromLanguageId(languageId));
-		}
-
-		return availableLocales;
-	}
-
-	public CPOption getCPOption() throws PortalException {
-		if (_cpOption != null) {
-			return _cpOption;
-		}
-
-		_cpOption = actionHelper.getCPOption(
-			cpRequestHelper.getRenderRequest());
-
-		return _cpOption;
-	}
-
-	public long getCPOptionId() throws PortalException {
-		CPOption cpOption = getCPOption();
-
-		if (cpOption == null) {
-			return 0;
-		}
-
-		return cpOption.getCPOptionId();
 	}
 
 	public String getDisplayStyle() {
@@ -207,13 +163,6 @@ public abstract class BaseCPOptionsDisplayContext<T> {
 			portletURL.setParameter("orderByType", orderByType);
 		}
 
-		CPOption cpOption = getCPOption();
-
-		if (cpOption != null) {
-			portletURL.setParameter(
-				"cpOptionId", String.valueOf(getCPOptionId()));
-		}
-
 		return portletURL;
 	}
 
@@ -298,7 +247,6 @@ public abstract class BaseCPOptionsDisplayContext<T> {
 	protected final PortalPreferences portalPreferences;
 	protected SearchContainer<T> searchContainer;
 
-	private CPOption _cpOption;
 	private String _defaultOrderByCol;
 	private String _defaultOrderByType;
 	private String _displayStyle;

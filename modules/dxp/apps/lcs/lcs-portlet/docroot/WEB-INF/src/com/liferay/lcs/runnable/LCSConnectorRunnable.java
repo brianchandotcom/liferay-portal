@@ -14,6 +14,7 @@
 
 package com.liferay.lcs.runnable;
 
+import com.liferay.lcs.advisor.LCSAlertAdvisor;
 import com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor;
 import com.liferay.lcs.exception.InvalidLCSClusterEntryTokenException;
 import com.liferay.lcs.oauth.OAuthUtil;
@@ -55,6 +56,8 @@ public class LCSConnectorRunnable implements Runnable {
 			LCSPortletState.valueOf(
 				LCSPortletPreferencesUtil.getValue(
 					"lcsPortletState", LCSPortletState.NOT_REGISTERED.name())));
+
+		_lcsAlertAdvisor.clear();
 
 		while (!_stop) {
 			try {
@@ -131,6 +134,10 @@ public class LCSConnectorRunnable implements Runnable {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Thread terminated");
 		}
+	}
+
+	public void setLCSAlertAdvisor(LCSAlertAdvisor lcsAlertAdvisor) {
+		_lcsAlertAdvisor = lcsAlertAdvisor;
 	}
 
 	public void setLCSClusterEntryTokenAdvisor(
@@ -225,6 +232,7 @@ public class LCSConnectorRunnable implements Runnable {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LCSConnectorRunnable.class);
 
+	private LCSAlertAdvisor _lcsAlertAdvisor;
 	private LCSClusterEntryTokenAdvisor _lcsClusterEntryTokenAdvisor;
 	private boolean _stop;
 

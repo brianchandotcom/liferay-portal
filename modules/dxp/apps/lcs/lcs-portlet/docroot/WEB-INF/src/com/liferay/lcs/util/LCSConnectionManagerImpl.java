@@ -14,6 +14,7 @@
 
 package com.liferay.lcs.util;
 
+import com.liferay.lcs.advisor.LCSAlertAdvisor;
 import com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor;
 import com.liferay.lcs.advisor.UptimeMonitoringAdvisor;
 import com.liferay.lcs.messaging.Message;
@@ -247,6 +248,10 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 		_scheduledFutures.add(
 			_scheduledExecutorService.scheduleAtFixedRate(
 				_licenseManagerTask, 0L, 2L, TimeUnit.MINUTES));
+
+		_lcsAlertAdvisor.clear();
+
+		_lcsAlertAdvisor.add(LCSAlert.SUCCESS_CONNECTION_TO_LCS_VALID);
 	}
 
 	@Override
@@ -352,6 +357,10 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 
 	public void setKeyGenerator(KeyGenerator keyGenerator) {
 		_keyGenerator = keyGenerator;
+	}
+
+	public void setLCSAlertAdvisor(LCSAlertAdvisor lcsAlertAdvisor) {
+		_lcsAlertAdvisor = lcsAlertAdvisor;
 	}
 
 	public void setLCSClusterEntryTokenAdvisor(
@@ -508,6 +517,7 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 	private void _executeLCSConnectorRunnable() {
 		LCSConnectorRunnable lcsConnectorRunnable = new LCSConnectorRunnable();
 
+		lcsConnectorRunnable.setLCSAlertAdvisor(_lcsAlertAdvisor);
 		lcsConnectorRunnable.setLCSClusterEntryTokenAdvisor(
 			_lcsClusterEntryTokenAdvisor);
 
@@ -550,6 +560,7 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 	private long _heartbeatInterval;
 	private HeartbeatTask _heartbeatTask;
 	private KeyGenerator _keyGenerator;
+	private LCSAlertAdvisor _lcsAlertAdvisor;
 	private LCSClusterEntryTokenAdvisor _lcsClusterEntryTokenAdvisor;
 	private final Map<String, String> _lcsConnectionMetadata = new HashMap<>();
 	private WeakReference<LCSConnectorRunnable>

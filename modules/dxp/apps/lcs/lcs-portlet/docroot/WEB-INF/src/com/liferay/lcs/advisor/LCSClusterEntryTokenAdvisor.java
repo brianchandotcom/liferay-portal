@@ -202,6 +202,8 @@ public class LCSClusterEntryTokenAdvisor {
 		catch (Exception e) {
 			deleteLCSCLusterEntryTokenFile();
 
+			_lcsAlertAdvisor.add(LCSAlert.ERROR_INVALID_TOKEN);
+
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("Unable to decrypt LCS activation token file ");
@@ -320,14 +322,14 @@ public class LCSClusterEntryTokenAdvisor {
 			});
 
 		if (lcsClusterEntryTokenFileNames.length == 0) {
-			_lcsAlertAdvisor.add(LCSAlert.ERROR_TOKEN_FILE_IS_MISSING);
+			_lcsAlertAdvisor.add(LCSAlert.ERROR_MISSING_TOKEN);
 
 			throw new MissingLCSClusterEntryTokenException(
 				"LCS activation token file misses at directory " +
 					sb.toString());
 		}
 		else if (lcsClusterEntryTokenFileNames.length > 1) {
-			_lcsAlertAdvisor.add(LCSAlert.WARNING_MULTIPLE_TOKENS);
+			_lcsAlertAdvisor.add(LCSAlert.ERROR_MULTIPLE_TOKENS);
 
 			throw new MultipleLCSClusterEntryTokenException(
 				"Only one LCS activation token file is allowed");

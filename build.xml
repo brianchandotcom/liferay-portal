@@ -943,37 +943,42 @@ message.
 				<local name="petra.use" />
 				<beanshell>
 					<![CDATA[
-						String portalUrl = project.getProperty("portal.war.url");
+					String portalUrl = project.getProperty("portal.war.url");
 
-						if (portalUrl != null) {
-							int startIndex = portalUrl.lastIndexOf("/") + 1;
-							int endIndex = portalUrl.lastIndexOf("-");
+					if (portalUrl != null) {
+						int startIndex = portalUrl.lastIndexOf("/") + 1;
+						int endIndex = portalUrl.lastIndexOf("-");
 
-							String versionString = portalUrl.substring(startIndex, endIndex);
+						String versionString = portalUrl.substring(startIndex, endIndex);
 
-							int periodIndex = versionString.indexOf(".");
+						int periodIndex = versionString.indexOf(".");
 
-							int majorVersion = Integer.parseInt(versionString.substring(versionString.indexOf("-", periodIndex - 2) + 1, periodIndex));
+						int majorVersion = Integer.parseInt(
+							versionString.substring(
+								versionString.indexOf("-", periodIndex - 2) + 1,
+								periodIndex));
 
-							if ((majorVersion < 7) || (versionString.indexOf("ce") != -1)) {
+						if ((majorVersion < 7) || (versionString.indexOf("ce") != -1)) {
+							project.setProperty("petra.use", "false");
+						}
+						else {
+							if (versionString.indexOf("sp") == -1) {
 								project.setProperty("petra.use", "false");
 							}
 							else {
-								if (versionString.indexOf("sp") == -1) {
+								int servicePackNumber = Integer.parseInt(
+									versionString.substring(
+										versionString.indexOf("sp") + 2, endIndex));
+
+								if (servicePackNumber < 5) {
 									project.setProperty("petra.use", "false");
 								}
 								else {
-									int servicePackNumber = Integer.parseInt(versionString.substring(versionString.indexOf("sp") + 2, endIndex));
-
-									if (servicePackNumber < 5) {
-										project.setProperty("petra.use", "false");
-									}
-									else {
-										project.setProperty("petra.use", "true");
-									}
+									project.setProperty("petra.use", "true");
 								}
 							}
 						}
+					}
 					]]>
 				</beanshell>
 				<if>
@@ -987,13 +992,15 @@ message.
 								import java.io.FileReader;
 								import java.io.FileWriter;
 
-								String fullFilename = project.getProperty("app.server.lib.global.dir") + "/module.xml";
+								String fullFilename =
+									project.getProperty("app.server.lib.global.dir") + "/module.xml";
 
-								File oldFile = new File(fullFilename);
 								File newFile = new File(fullFilename + ".new");
 
-								BufferedReader reader = new BufferedReader(new FileReader(oldFile));
+								File oldFile = new File(fullFilename);
 
+								BufferedReader reader =
+									new BufferedReader(new FileReader(oldFile));
 								BufferedWriter writer = new BufferedWriter(new FileWriter(newFile));
 
 								String cl;
@@ -1001,21 +1008,27 @@ message.
 
 								try {
 									while ((cl = reader.readLine()) != null) {
-										if(cl.indexOf(rml) == -1) {
+										if (cl.indexOf(rml) == -1) {
 											writer.write(cl + System.getProperty("line.separator"));
 										}
 									}
-									writer.close();
+
 									reader.close();
+									writer.close();
 
 									boolean success = newFile.renameTo(oldFile);
-									if(!success){
+
+									if (!success) {
 										return false;
+									}
+									else {
+										return true;
 									}
 								}
 								catch (Exception e) {
-									System.out.println("Failed to acquire file for reading and/or writing");
-									throw(e);
+									System.out.println(
+										"Failed to acquire file for reading and/or writing");
+									throw e;
 								}
 							]]>
 						</beanshell>

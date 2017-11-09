@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.item.selector.web;
+package com.liferay.layout.item.selector.web.internal;
 
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.portal.kernel.model.Group;
@@ -30,14 +30,12 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
- * @deprecated As of 1.2.0, replaced by {@link
- *             com.liferay.layout.item.selector.web.internal.PublicLayoutsItemSelectorView}
  */
 @Component(
-	service = {ItemSelectorView.class, PublicLayoutsItemSelectorView.class}
+	service = {ItemSelectorView.class, PrivateLayoutsItemSelectorView.class}
 )
-@Deprecated
-public class PublicLayoutsItemSelectorView extends BaseLayoutsItemSelectorView {
+public class PrivateLayoutsItemSelectorView
+	extends BaseLayoutsItemSelectorView {
 
 	@Override
 	public ServletContext getServletContext() {
@@ -48,19 +46,19 @@ public class PublicLayoutsItemSelectorView extends BaseLayoutsItemSelectorView {
 	public String getTitle(Locale locale) {
 		ResourceBundle resourceBundle = _portal.getResourceBundle(locale);
 
-		return ResourceBundleUtil.getString(resourceBundle, "public-pages");
+		return ResourceBundleUtil.getString(resourceBundle, "private-pages");
 	}
 
 	@Override
 	public boolean isPrivateLayout() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isVisible(ThemeDisplay themeDisplay) {
 		Group group = themeDisplay.getScopeGroup();
 
-		if (group.getPublicLayoutsPageCount() <= 0) {
+		if (group.getPrivateLayoutsPageCount() <= 0) {
 			return false;
 		}
 

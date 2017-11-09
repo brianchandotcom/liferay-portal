@@ -16,7 +16,6 @@ package com.liferay.asset.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
-import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.model.Group;
@@ -31,7 +30,6 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.persistence.UserGroupRolePK;
@@ -40,10 +38,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -54,10 +49,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.asset.util.AssetSearcher;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 import java.util.stream.Stream;
 
 import org.junit.Assert;
@@ -85,6 +77,13 @@ public class AssetSearcherStagingTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		_journalArticleFixture.setGroup(_group);
+
+		_journalArticleFixture.setJournalArticleLocalService(
+			_journalArticleLocalService);
+
+		_journalArticles = _journalArticleFixture.getJournalArticles();
 	}
 
 	@Test
@@ -137,32 +136,7 @@ public class AssetSearcherStagingTest {
 	}
 
 	protected JournalArticle addJournalArticle() throws Exception {
-		Map<Locale, String> titleMap = new HashMap<>();
-
-		titleMap.put(Locale.US, RandomTestUtil.randomString());
-
-		Map<Locale, String> descriptionMap = new HashMap<>();
-
-		descriptionMap.put(Locale.US, RandomTestUtil.randomString());
-
-		String ddmStructureKey = "BASIC-WEB-CONTENT";
-		String ddmTemplateKey = "BASIC-WEB-CONTENT";
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		serviceContext.setAddGuestPermissions(false);
-		serviceContext.setAddGroupPermissions(false);
-
-		JournalArticle journalArticle = _journalArticleLocalService.addArticle(
-			TestPropsValues.getUserId(), _group.getGroupId(), 0, titleMap,
-			descriptionMap, DDMStructureTestUtil.getSampleStructuredContent(),
-			ddmStructureKey, ddmTemplateKey, serviceContext);
-
-		_journalArticles.add(journalArticle);
-
-		return journalArticle;
+		return _journalArticleFixture.addJournalArticle();
 	}
 
 	protected Role addRole(int roleType) throws Exception {
@@ -246,8 +220,11 @@ public class AssetSearcherStagingTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	private final JournalArticleFixture _journalArticleFixture =
+		new JournalArticleFixture();
+
 	@DeleteAfterTestRun
-	private final List<JournalArticle> _journalArticles = new ArrayList<>();
+	private List<JournalArticle> _journalArticles;
 
 	@DeleteAfterTestRun
 	private final List<Role> _roles = new ArrayList<>();

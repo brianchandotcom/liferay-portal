@@ -61,7 +61,7 @@ Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLoca
 		<liferay-ui:error exception="<%= CPOptionValueKeyException.class %>" message="please-enter-a-unique-key" />
 
 		<aui:fieldset>
-			<aui:input id="optionValueTitle" name="title" />
+			<aui:input id="optionValueTitle" name="title" wrapperCssClass="commerce-product-option-value-title" />
 
 			<aui:input name="priority" />
 

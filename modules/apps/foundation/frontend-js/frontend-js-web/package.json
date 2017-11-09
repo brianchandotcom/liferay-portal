@@ -7,7 +7,7 @@
 	"devDependencies": {
 		"babel-preset-env": "^1.6.0",
 		"eslint": "^4.7.1",
-		"eslint-config-liferay": "^2.0.0",
+		"eslint-config-liferay": "^2.0.7",
 		"jest": "^20.0.4",
 		"liferay-jest-junit-reporter": "0.0.3",
 		"liferay-module-config-generator": "^1.2.1",
@@ -34,8 +34,8 @@
 	"scripts": {
 		"ci": "npm run prettier -- --list-different && npm run lint && npm run test",
 		"format": "npm run prettier -- --write",
-		"lint": "eslint src/**/*.es.js test/**/*.es.js --config ./node_modules/eslint-config-liferay/.eslintrc",
-		"prettier": "prettier-eslint src/**/*.es.js test/**/*.es.js --eslint-config-path ./node_modules/eslint-config-liferay/.eslintrc",
+		"lint": "eslint src/**/*.es.js test/**/*.es.js",
+		"prettier": "prettier-eslint src/**/*.es.js test/**/*.es.js",
 		"test": "jest"
 	},
 	"version": "1.0.67"

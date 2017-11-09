@@ -86,6 +86,12 @@
 					<encoding>UTF-8</encoding>
 				</source-folder>
 				<source-folder>
+					<label>modules\core\petra\petra-process\src\main\java</label>
+					<type>java</type>
+					<location>modules/core/petra/petra-process/src/main/java</location>
+					<encoding>UTF-8</encoding>
+				</source-folder>
+				<source-folder>
 					<label>modules\core\petra\petra-reflect\src\main\java</label>
 					<type>java</type>
 					<location>modules/core/petra/petra-reflect/src/main/java</location>
@@ -274,6 +280,10 @@
 						<location>modules/core/petra/petra-nio/src</location>
 					</source-folder>
 					<source-folder style="packages">
+						<label>modules\core\petra\petra-process\src</label>
+						<location>modules/core/petra/petra-process/src</location>
+					</source-folder>
+					<source-folder style="packages">
 						<label>modules\core\petra\petra-reflect\src</label>
 						<location>modules/core/petra/petra-reflect/src</location>
 					</source-folder>
@@ -375,6 +385,7 @@
 				<package-root>modules/core/petra/petra-lang/src/main/java</package-root>
 				<package-root>modules/core/petra/petra-memory/src/main/java</package-root>
 				<package-root>modules/core/petra/petra-nio/src/main/java</package-root>
+				<package-root>modules/core/petra/petra-process/src/main/java</package-root>
 				<package-root>modules/core/petra/petra-reflect/src/main/java</package-root>
 				<package-root>modules/core/petra/petra-string/src/main/java</package-root>
 				<package-root>modules/core/registry-api/src/main/java</package-root>

@@ -148,11 +148,7 @@ public class ReflectionUtil {
 
 		Set<Class<?>> interfaceClasses = new LinkedHashSet<>();
 
-		Class<?> clazz = object.getClass();
-
-		_getInterfaces(interfaceClasses, clazz, classLoader);
-
-		Class<?> superClass = clazz.getSuperclass();
+		Class<?> superClass = object.getClass();
 
 		while (superClass != null) {
 			_getInterfaces(interfaceClasses, superClass, classLoader);

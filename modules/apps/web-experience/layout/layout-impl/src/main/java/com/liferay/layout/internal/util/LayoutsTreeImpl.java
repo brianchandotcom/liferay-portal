@@ -586,6 +586,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				"deleteable",
 				_isDeleteable(layout, themeDisplay, layoutSetBranch));
 			jsonObject.put("friendlyURL", layout.getFriendlyURL());
+			jsonObject.put(
+				"fullURL", _portal.getLayoutURL(layout, themeDisplay));
 
 			if (layout instanceof VirtualLayout) {
 				VirtualLayout virtualLayout = (VirtualLayout)layout;

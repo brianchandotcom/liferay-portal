@@ -244,7 +244,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 	</c:if>
 
 	<liferay-util:buffer var="linkTemplate">
-		<a class="{cssClass}" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{regularURL}" id="{id}" title="{label}">{label}</a>
+		<a class="{cssClass}" data-fullURL="{fullURL}" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{regularURL}" id="{id}" title="{label}">{label}</a>
 
 		<div class="dropdown dropdown-menu-no-arrow layout-tree-options" data-deleteable="{deleteable}" data-parentable="{parentable}" data-updateable="{updateable}">
 			<a aria-expanded="false" class="dropdown-toggle icon-monospaced" data-qa-id="pageOptions" data-toggle="dropdown" href="javascript:;">
@@ -253,19 +253,19 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 
 			<ul class="dropdown-menu dropdown-menu-left-side">
 				<li>
-					<a class="layout-tree-add" data-parentable="{parentable}" data-plid="{plid}" data-qa-id="addChildPage" data-url="{url}" data-uuid="{uuid}" href="{addLayoutURL}" id="{id}Add">
+					<a class="layout-tree-add" data-fullURL="{fullURL}" data-parentable="{parentable}" data-plid="{plid}" data-qa-id="addChildPage" data-url="{url}" data-uuid="{uuid}" href="{addLayoutURL}" id="{id}Add">
 						<span aria-hidden="true"><liferay-ui:message key="add-child-page" /></span>
 						<span class="sr-only"><liferay-ui:message arguments="{label}" key="add-child-page-of-x" /></span>
 					</a>
 				</li>
 				<li>
-					<a class="layout-tree-edit" data-plid="{plid}" data-qa-id="editPage" data-updateable="{updateable}" data-url="{url}" data-uuid="{uuid}" href="{editLayoutURL}" id="{id}Edit">
+					<a class="layout-tree-edit" data-fullURL="{fullURL}" data-plid="{plid}" data-qa-id="editPage" data-updateable="{updateable}" data-url="{url}" data-uuid="{uuid}" href="{editLayoutURL}" id="{id}Edit">
 						<span aria-hidden="true"><liferay-ui:message key="configure-page" /></span>
 						<span class="sr-only"><liferay-ui:message arguments="{label}" key="configure-x" /></span>
 					</a>
 				</li>
 				<li>
-					<a class="layout-tree-delete" data-deleteable="{deleteable}" data-plid="{plid}" data-qa-id="deletePage" data-url="{url}" data-uuid="{uuid}" href="{deleteLayoutURL}" id="{id}Delete">
+					<a class="layout-tree-delete" data-deleteable="{deleteable}" data-fullURL="{fullURL}" data-plid="{plid}" data-qa-id="deletePage" data-url="{url}" data-uuid="{uuid}" href="{deleteLayoutURL}" id="{id}Delete">
 						<span aria-hidden="true"><liferay-ui:message key="delete" /></span>
 						<span class="sr-only"><liferay-ui:message arguments="{label}" key="delete-x" /></span>
 					</a>

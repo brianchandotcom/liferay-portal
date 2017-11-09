@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.regex.Matcher;
@@ -66,16 +67,34 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 			int endPos = _getCloseParenthesisPos(content, startPos);
 
 			int endLineCount = getLineCount(content, endPos);
+			int endLineStartPos = content.lastIndexOf("\n", endPos);
 
 			char c = content.charAt(endPos - 1);
 
 			if (c != CharPool.TAB) {
-				int x = content.lastIndexOf("\n", endPos);
-
 				addMessage(
 					fileName,
 					"There should be a line break after '" +
-						StringUtil.trim(content.substring(x, endPos)),
+						StringUtil.trim(
+							content.substring(endLineStartPos, endPos)),
+					endLineCount);
+
+				continue;
+			}
+
+			int endLineTabCount = endPos - endLineStartPos - 1;
+
+			int startLineStartPos = content.lastIndexOf("\n", startPos);
+
+			int startLineTabCount = startPos - startLineStartPos;
+
+			if (endLineTabCount != startLineTabCount) {
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"Line starts with '", String.valueOf(endLineTabCount),
+						"' tabs, but '", String.valueOf(startLineTabCount),
+						"' tabs are expected"),
 					endLineCount);
 			}
 		}

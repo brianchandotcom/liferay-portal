@@ -15,15 +15,13 @@
 package com.liferay.commerce.product.options.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.constants.CPWebKeys;
-import com.liferay.commerce.product.exception.NoSuchCPOptionException;
 import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.options.web.internal.display.context.CPOptionDisplayContext;
 import com.liferay.commerce.product.service.CPOptionService;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -33,13 +31,13 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  */
 @Component(
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.CP_OPTIONS,
-		"mvc.command.name=editProductOption"
+		"mvc.command.name=cpOption"
 	},
 	service = MVCRenderCommand.class
 )
@@ -50,40 +48,29 @@ public class EditCPOptionMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		long cpOptionId = ParamUtil.getLong(renderRequest, "cpOptionId");
+
 		try {
-			setCPOptionRequestAttribute(renderRequest);
+			CPOption cpOption = _cpOptionService.fetchCPOption(cpOptionId);
+
+			CPOptionDisplayContext cpOptionDisplayContext =
+				new CPOptionDisplayContext(
+					cpOption, _ddmFormFieldTypeServicesTracker);
+
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_DISPLAY_CONTEXT, cpOptionDisplayContext);
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchCPOptionException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return "/error.jsp";
-			}
-			else {
-				throw new PortletException(e);
-			}
+			throw new PortletException(e);
 		}
 
 		return "/edit_option.jsp";
 	}
 
-	protected void setCPOptionRequestAttribute(RenderRequest renderRequest)
-		throws PortalException {
-
-		long cpOptionId = ParamUtil.getLong(renderRequest, "cpOptionId");
-
-		CPOption cpOption = null;
-
-		if (cpOptionId > 0) {
-			cpOption = _cpOptionService.getCPOption(cpOptionId);
-		}
-
-		renderRequest.setAttribute(CPWebKeys.CP_OPTION, cpOption);
-	}
-
 	@Reference
 	private CPOptionService _cpOptionService;
+
+	@Reference
+	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 
 }

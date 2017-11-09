@@ -17,25 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-product-option-details");
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("toolbarItem", toolbarItem);
-portletURL.setParameter("mvcRenderCommandName", "editProductOption");
-
-request.setAttribute("view.jsp-portletURL", portletURL);
-
 CPOptionDisplayContext cpOptionDisplayContext = (CPOptionDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPOption cpOption = cpOptionDisplayContext.getCPOption();
 
 long cpOptionId = cpOptionDisplayContext.getCPOptionId();
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(optionsURL);
-
-renderResponse.setTitle((cpOption == null) ? LanguageUtil.get(request, "add-option") : cpOption.getTitle(locale));
 
 String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
 
@@ -46,8 +32,6 @@ availableLocalesSet.addAll(cpOptionDisplayContext.getAvailableLocales());
 
 Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
 %>
-
-<%@ include file="/option_navbar.jspf" %>
 
 <portlet:actionURL name="editProductOption" var="editProductOptionActionURL" />
 
@@ -65,11 +49,106 @@ Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLoca
 	/>
 
 	<div class="lfr-form-content">
-		<liferay-ui:form-navigator
-			backURL="<%= optionsURL %>"
-			formModelBean="<%= cpOption %>"
-			id="<%= CPOptionFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_OPTION %>"
-			markupView="lexicon"
-		/>
+
+		<%
+		List<DDMFormFieldType> ddmFormFieldTypes = cpOptionDisplayContext.getDDMFormFieldTypes();
+		%>
+
+		<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="product-option-details" />
+
+		<aui:model-context bean="<%= cpOption %>" model="<%= CPOption.class %>" />
+
+		<liferay-ui:error exception="<%= CPOptionKeyException.class %>" message="please-enter-a-unique-key" />
+
+		<aui:fieldset>
+			<aui:input autoFocus="<%= true %>" name="title" wrapperCssClass="commerce-product-option-title" />
+
+			<aui:input name="description" wrapperCssClass="commerce-product-option-description" />
+
+			<aui:select label="option-field-type" name="DDMFormFieldTypeName" showEmptyOption="<%= true %>">
+
+				<%
+				for (DDMFormFieldType ddmFormFieldType : ddmFormFieldTypes) {
+				%>
+
+					<aui:option
+						label="<%= ddmFormFieldType.getName() %>"
+						selected="<%= (cpOption != null) && cpOption.getDDMFormFieldTypeName().equals(ddmFormFieldType.getName()) %>"
+						value="<%= ddmFormFieldType.getName() %>"
+					/>
+
+				<%
+				}
+				%>
+
+			</aui:select>
+
+			<aui:input name="facetable" />
+
+			<aui:input name="required" />
+
+			<aui:input name="skuContributor" />
+
+			<aui:input helpMessage="key-help" name="key" />
+
+			<liferay-expando:custom-attribute-list
+				className="<%= CPOption.class.getName() %>"
+				classPK="<%= (cpOption != null) ? cpOption.getCPOptionId() : 0 %>"
+				editable="<%= true %>"
+				label="<%= true %>"
+			/>
+		</aui:fieldset>
+
+		<c:if test="<%= cpOption == null %>">
+			<aui:script sandbox="<%= true %>">
+				var form = $(document.<portlet:namespace />fm);
+
+				var keyInput = form.fm('key');
+				var titleInput = form.fm('title');
+
+				var onTitleInput = _.debounce(
+					function(event) {
+						keyInput.val(titleInput.val());
+					},
+					200
+				);
+
+				titleInput.on('input', onTitleInput);
+			</aui:script>
+		</c:if>
 	</div>
 </aui:form>
+
+<aui:script use="aui-base">
+	function afterDeletingAvailableLocale(event) {
+		var descriptionInputLocalized = Liferay.component('<portlet:namespace />description');
+		var titleInputLocalized = Liferay.component('<portlet:namespace />title');
+
+		var locale = event.locale;
+
+		descriptionInputLocalized.removeInputLanguage(locale);
+		titleInputLocalized.removeInputLanguage(locale);
+	}
+
+	function afterEditingLocaleChange(event) {
+		var descriptionInputLocalized = Liferay.component('<portlet:namespace />description');
+		var titleInputLocalized = Liferay.component('<portlet:namespace />title');
+
+		var editingLocale = event.newVal;
+		var items = descriptionInputLocalized.get('items');
+		var selectedIndex = items.indexOf(editingLocale);
+
+		descriptionInputLocalized.set('selected', selectedIndex);
+		descriptionInputLocalized.selectFlag(editingLocale);
+
+		titleInputLocalized.set('selected', selectedIndex);
+		titleInputLocalized.selectFlag(editingLocale);
+	}
+
+	var translationManager = Liferay.component('<portlet:namespace />translationManager');
+
+	if (translationManager) {
+		translationManager.on('deleteAvailableLocale', afterDeletingAvailableLocale);
+		translationManager.on('editingLocaleChange', afterEditingLocaleChange);
+	}
+</aui:script>

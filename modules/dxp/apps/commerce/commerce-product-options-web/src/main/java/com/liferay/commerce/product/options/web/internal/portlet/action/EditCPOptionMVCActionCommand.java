@@ -15,21 +15,25 @@
 package com.liferay.commerce.product.options.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.exception.CPOptionKeyException;
-import com.liferay.commerce.product.exception.NoSuchCPOptionException;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPOptionService;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+
+import java.io.IOException;
 
 import java.util.Locale;
 import java.util.Map;
@@ -37,13 +41,14 @@ import java.util.Map;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  */
 @Component(
 	immediate = true,
@@ -82,6 +87,11 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 
 		long cpOptionId = ParamUtil.getLong(actionRequest, "cpOptionId");
 
+		HttpServletResponse httpServletResponse =
+			_portal.getHttpServletResponse(actionResponse);
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
 		try {
 			if (cmd.equals(Constants.DELETE)) {
 				deleteCPOptions(cpOptionId, actionRequest);
@@ -91,71 +101,23 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 
 				CPOption cpOption = updateCPOption(cpOptionId, actionRequest);
 
-				String redirect = getSaveAndContinueRedirect(
-					actionRequest, cpOption);
-
-				sendRedirect(actionRequest, actionResponse, redirect);
+				jsonObject.put("cpOptionId", cpOption.getCPOptionId());
 			}
-			else if (cmd.equals("setFacetable")) {
-				boolean facetable = ParamUtil.getBoolean(
-					actionRequest, "facetable");
 
-				_cpOptionService.setFacetable(cpOptionId, facetable);
-			}
-			else if (cmd.equals("setRequired")) {
-				boolean required = ParamUtil.getBoolean(
-					actionRequest, "required");
-
-				_cpOptionService.setRequired(cpOptionId, required);
-			}
-			else if (cmd.equals("setSkuContributor")) {
-				boolean skuContributor = ParamUtil.getBoolean(
-					actionRequest, "skuContributor");
-
-				_cpOptionService.setSkuContributor(cpOptionId, skuContributor);
-			}
+			jsonObject.put("success", true);
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchCPOptionException ||
-				e instanceof PrincipalException) {
+			_log.error(e);
 
-				SessionErrors.add(actionRequest, e.getClass());
-
-				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
-			}
-			else if (e instanceof CPOptionKeyException) {
-				hideDefaultErrorMessage(actionRequest);
-				hideDefaultSuccessMessage(actionRequest);
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				actionResponse.setRenderParameter(
-					"mvcRenderCommandName", "editProductOption");
-
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else {
-				throw e;
-			}
-		}
-	}
-
-	protected String getSaveAndContinueRedirect(
-			ActionRequest actionRequest, CPOption cpOption)
-		throws Exception {
-
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			actionRequest, CPPortletKeys.CP_OPTIONS,
-			PortletRequest.RENDER_PHASE);
-
-		if (cpOption != null) {
-			portletURL.setParameter(
-				"mvcRenderCommandName", "editProductOption");
-			portletURL.setParameter(
-				"cpOptionId", String.valueOf(cpOption.getCPOptionId()));
+			jsonObject.put("message", e.getMessage());
+			jsonObject.put("success", false);
 		}
 
-		return portletURL.toString();
+		hideDefaultSuccessMessage(actionRequest);
+
+		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
+
+		writeJSON(actionRequest, actionResponse, jsonObject);
 	}
 
 	protected CPOption updateCPOption(
@@ -199,8 +161,29 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 		return cpOption;
 	}
 
+	protected void writeJSON(
+			PortletRequest portletRequest, ActionResponse actionResponse,
+			Object jsonObj)
+		throws IOException {
+
+		HttpServletResponse response = _portal.getHttpServletResponse(
+			actionResponse);
+
+		response.setContentType(ContentTypes.APPLICATION_JSON);
+
+		ServletResponseUtil.write(response, jsonObj.toString());
+
+		response.flushBuffer();
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditCPOptionMVCActionCommand.class);
+
 	@Reference
 	private CPOptionService _cpOptionService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

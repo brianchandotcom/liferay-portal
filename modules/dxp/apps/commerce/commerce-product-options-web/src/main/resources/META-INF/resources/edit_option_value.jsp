@@ -23,31 +23,102 @@ long cpOptionValueId = BeanParamUtil.getLong(cpOptionValue, request, "CPOptionVa
 
 long cpOptionId = ParamUtil.getLong(request, "cpOptionId");
 
-PortletURL optionValuesURL = renderResponse.createRenderURL();
+String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
 
-optionValuesURL.setParameter("mvcRenderCommandName", "viewProductOptionValues");
-optionValuesURL.setParameter("cpOptionId", String.valueOf(cpOptionId));
+Set<Locale> availableLocalesSet = new HashSet<>();
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(optionValuesURL.toString());
+availableLocalesSet.add(LocaleUtil.fromLanguageId(defaultLanguageId));
 
-renderResponse.setTitle((cpOptionValue == null) ? LanguageUtil.get(request, "add-option-value") : cpOptionValue.getTitle(locale));
+if (cpOptionValue != null) {
+	for (String languageId : cpOptionValue.getAvailableLanguageIds()) {
+		availableLocalesSet.add(LocaleUtil.fromLanguageId(languageId));
+	}
+}
+
+Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
 %>
 
 <portlet:actionURL name="editProductOptionValue" var="editProductOptionValueActionURL" />
 
-<aui:form action="<%= editProductOptionValueActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= editProductOptionValueActionURL %>" cssClass="container-fluid-1280" method="post" name="optionValueFm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpOptionValue == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= optionValuesURL %>" />
 	<aui:input name="cpOptionId" type="hidden" value="<%= cpOptionId %>" />
 	<aui:input name="cpOptionValueId" type="hidden" value="<%= cpOptionValueId %>" />
 
+	<liferay-frontend:translation-manager
+		availableLocales="<%= availableLocales %>"
+		changeableDefaultLanguage="<%= true %>"
+		componentId='<%= renderResponse.getNamespace() + "optionValuesTranslationManager" %>'
+		defaultLanguageId="<%= defaultLanguageId %>"
+		id="optionValuesTranslationManager"
+	/>
+
 	<div class="lfr-form-content">
-		<liferay-ui:form-navigator
-			backURL="<%= optionValuesURL.toString() %>"
-			formModelBean="<%= cpOptionValue %>"
-			id="<%= CPOptionValueFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_OPTION_VALUE %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="product-option-value-details" />
+
+		<aui:model-context bean="<%= cpOptionValue %>" model="<%= CPOptionValue.class %>" />
+
+		<liferay-ui:error exception="<%= CPOptionValueKeyException.class %>" message="please-enter-a-unique-key" />
+
+		<aui:fieldset>
+			<aui:input id="optionValueTitle" name="title" />
+
+			<aui:input name="priority" />
+
+			<aui:input helpMessage="key-help" name="key" />
+
+			<liferay-expando:custom-attribute-list
+				className="<%= CPOptionValue.class.getName() %>"
+				classPK="<%= (cpOptionValue != null) ? cpOptionValue.getCPOptionValueId() : 0 %>"
+				editable="<%= true %>"
+				label="<%= true %>"
+			/>
+		</aui:fieldset>
+
+		<c:if test="<%= cpOptionValue == null %>">
+			<aui:script sandbox="<%= true %>">
+				var form = $(document.<portlet:namespace />optionValueFm);
+
+				var keyInput = form.fm('key');
+				var titleInput = form.fm('optionValueTitle');
+
+				var onTitleInput = _.debounce(
+					function(event) {
+						keyInput.val(titleInput.val());
+					},
+					200
+				);
+
+				titleInput.on('input', onTitleInput);
+			</aui:script>
+		</c:if>
 	</div>
 </aui:form>
+
+<aui:script use="aui-base">
+	function afterDeletingAvailableLocale(event) {
+		var titleInputLocalized = Liferay.component('<portlet:namespace />optionValueTitle');
+
+		var locale = event.locale;
+
+		titleInputLocalized.removeInputLanguage(locale);
+	}
+
+	function afterEditingLocaleChange(event) {
+		var titleInputLocalized = Liferay.component('<portlet:namespace />optionValueTitle');
+
+		var editingLocale = event.newVal;
+		var items = titleInputLocalized.get('items');
+		var selectedIndex = items.indexOf(editingLocale);
+
+		titleInputLocalized.set('selected', selectedIndex);
+		titleInputLocalized.selectFlag(editingLocale);
+	}
+
+	var translationManager = Liferay.component('<portlet:namespace />optionValuesTranslationManager');
+
+	if (translationManager) {
+		translationManager.on('deleteAvailableLocale', afterDeletingAvailableLocale);
+		translationManager.on('editingLocaleChange', afterEditingLocaleChange);
+	}
+</aui:script>

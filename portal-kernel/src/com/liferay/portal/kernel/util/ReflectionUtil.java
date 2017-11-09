@@ -118,6 +118,10 @@ public class ReflectionUtil {
 		return null;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static Class<?> getGenericSuperType(Class<?> clazz) {
 		try {
 			ParameterizedType parameterizedType =

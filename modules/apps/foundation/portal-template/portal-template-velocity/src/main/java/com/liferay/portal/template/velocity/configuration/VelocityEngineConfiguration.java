@@ -58,7 +58,7 @@ public interface VelocityEngineConfiguration {
 
 	@Meta.AD(
 		deflt = "VM_global_library.vm|VM_liferay.vm",
-		name = "velocimacro-library", required = false
+		name = "velocity-macro-library", required = false
 	)
 	public String[] velocimacroLibrary();
 

@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.regex.Matcher;
@@ -35,6 +36,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 			_checkClosingParenthesis(fileName, content);
 			_checkScalability(fileName, absolutePath, content);
 
+			content = _fixIncorrectAndOr(content);
 			content = _fixMissingLineBreakAfterOpenParenthesis(content);
 			content = _fixMissingLineBreakBeforeOpenParenthesis(content);
 		}
@@ -131,6 +133,27 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 		}
 	}
 
+	private String _fixIncorrectAndOr(String content) {
+		Matcher matcher = _incorrectAndOrpattern.matcher(content);
+
+		if (matcher.find()) {
+			String whitespace = matcher.group(3);
+
+			if (whitespace.equals(StringPool.SPACE)) {
+				return StringUtil.replaceFirst(
+					content, matcher.group(),
+					StringPool.SPACE + matcher.group(2) + matcher.group(1),
+					matcher.start() - 1);
+			}
+
+			return StringUtil.replaceFirst(
+				content, matcher.group(1), StringPool.SPACE,
+				matcher.start() - 1);
+		}
+
+		return content;
+	}
+
 	private String _fixMissingLineBreakAfterOpenParenthesis(String content) {
 		Matcher matcher = _missingLineBreakAfterOpenParenthesisPattern.matcher(
 			content);
@@ -194,6 +217,8 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 	private static final String _CUSTOM_FINDER_SCALABILITY_EXCLUDES =
 		"custom.finder.scalability.excludes";
 
+	private final Pattern _incorrectAndOrpattern = Pattern.compile(
+		"(\n\t*)(AND|OR|\\[\\$AND_OR_CONNECTOR\\$\\])( |\n)");
 	private final Pattern _missingLineBreakAfterOpenParenthesisPattern =
 		Pattern.compile("(\t+)\\(.+\n");
 	private final Pattern _missingLineBreakBeforeOpenParenthesisPattern =

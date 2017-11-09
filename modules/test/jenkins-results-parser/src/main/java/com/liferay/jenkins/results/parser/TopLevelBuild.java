@@ -565,12 +565,16 @@ public class TopLevelBuild extends BaseBuild {
 
 		Element subheadingElement = null;
 
-		try {
-			subheadingElement = Dom4JUtil.getNewElement(
-				"h2", null, jobJSONObject.getString("description"));
-		}
-		catch (JSONException jsone) {
-			jsone.printStackTrace();
+		String description = jobJSONObject.optString("description");
+
+		if (!description.isEmpty()) {
+			try {
+				subheadingElement = Dom4JUtil.getNewElement(
+					"h2", null, description);
+			}
+			catch (JSONException jsone) {
+				jsone.printStackTrace();
+			}
 		}
 
 		return Dom4JUtil.getNewElement(

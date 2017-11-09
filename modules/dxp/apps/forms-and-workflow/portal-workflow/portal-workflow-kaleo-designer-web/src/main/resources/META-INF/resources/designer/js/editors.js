@@ -559,6 +559,10 @@ AUI.add(
 									value: 'groovy'
 								},
 								{
+									label: strings.java,
+									value: 'java'
+								},
+								{
 									label: strings.javascript,
 									value: 'javascript'
 								},
@@ -1721,6 +1725,10 @@ AUI.add(
 								{
 									label: strings.groovy,
 									value: 'groovy'
+								},
+								{
+									label: strings.java,
+									value: 'java'
 								},
 								{
 									label: strings.javascript,

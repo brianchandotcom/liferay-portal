@@ -175,6 +175,7 @@ AUI.add(
 			im: Liferay.Language.get('instant-messenger'),
 			initial: Liferay.Language.get('initial'),
 			inspectTaskMessage: Liferay.Language.get('inspect-the-task-nodes-to-assign-a-form-template'),
+			java: Liferay.Language.get('java'),
 			javascript: Liferay.Language.get('javascript'),
 			language: Liferay.Language.get('language'),
 			minute: Liferay.Language.get('minute'),

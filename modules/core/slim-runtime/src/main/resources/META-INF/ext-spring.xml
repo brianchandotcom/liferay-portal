@@ -263,6 +263,7 @@
 
 	<!-- Other beans -->
 
+	<bean class="com.liferay.portal.internal.messaging.async.AsyncMessageListener" id="messageListener.async_service" />
 	<bean class="com.liferay.portal.kernel.deploy.hot.HotDeployUtil" id="com.liferay.portal.kernel.deploy.hot.HotDeployUtil">
 		<property name="hotDeploy">
 			<bean class="com.liferay.slim.runtime.internal.util.SlimRuntimeStubFactory" factory-method="createStub">
@@ -291,7 +292,6 @@
 			<util:constant static-field="com.liferay.portal.kernel.cluster.Priority.LEVEL5" />
 		</property>
 	</bean>
-	<bean class="com.liferay.portal.messaging.async.AsyncMessageListener" id="messageListener.async_service" />
 
 	<!-- Configurator -->
 

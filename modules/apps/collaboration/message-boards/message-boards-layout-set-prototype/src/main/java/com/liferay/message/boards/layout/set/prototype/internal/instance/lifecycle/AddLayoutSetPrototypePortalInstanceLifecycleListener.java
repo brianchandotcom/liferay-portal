@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.layout.set.prototype.internal.instance.lifecycle;
 
-import com.liferay.asset.categories.navigation.web.constants.AssetCategoriesNavigationPortletKeys;
+import com.liferay.asset.categories.navigation.constants.AssetCategoriesNavigationPortletKeys;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.tags.navigation.web.constants.AssetTagsNavigationPortletKeys;
 import com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys;

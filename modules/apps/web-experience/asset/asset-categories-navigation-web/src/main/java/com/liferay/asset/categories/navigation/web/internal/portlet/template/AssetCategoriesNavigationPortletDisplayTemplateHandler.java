@@ -14,7 +14,7 @@
 
 package com.liferay.asset.categories.navigation.web.internal.portlet.template;
 
-import com.liferay.asset.categories.navigation.web.constants.AssetCategoriesNavigationPortletKeys;
+import com.liferay.asset.categories.navigation.constants.AssetCategoriesNavigationPortletKeys;
 import com.liferay.asset.categories.navigation.web.internal.display.context.AssetCategoriesNavigationDisplayContext;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;

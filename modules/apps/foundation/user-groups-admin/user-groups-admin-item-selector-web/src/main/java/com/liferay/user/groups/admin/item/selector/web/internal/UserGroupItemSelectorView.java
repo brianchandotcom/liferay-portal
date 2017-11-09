@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.user.groups.admin.item.selector.criterion.UserGroupItemSelectorCriterion;
+import com.liferay.user.groups.admin.item.selector.web.internal.constants.UserGroupItemSelectorWebKeys;
 import com.liferay.user.groups.admin.item.selector.web.internal.display.context.UserGroupItemSelectorViewDisplayContext;
 
 import java.io.IOException;
@@ -102,7 +102,8 @@ public class UserGroupItemSelectorView
 					itemSelectedEventName);
 
 		request.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			UserGroupItemSelectorWebKeys.
+				USER_GROUP_ITEM_SELECTOR_DISPLAY_CONTEXT,
 			userGroupItemSelectorViewDisplayContext);
 
 		ServletContext servletContext = getServletContext();

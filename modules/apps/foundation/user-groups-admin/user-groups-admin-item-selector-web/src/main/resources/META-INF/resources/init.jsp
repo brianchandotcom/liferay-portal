@@ -22,7 +22,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.user.groups.admin.item.selector.web.internal.constants.UserGroupItemSelectorWebKeys" %><%@
 page import="com.liferay.user.groups.admin.item.selector.web.internal.display.context.UserGroupItemSelectorViewDisplayContext" %>
 
 <%@ page import="javax.portlet.PortletURL" %>

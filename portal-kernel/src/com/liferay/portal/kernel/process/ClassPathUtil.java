@@ -16,9 +16,7 @@ package com.liferay.portal.kernel.process;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.process.ProcessConfig.Builder;
@@ -47,6 +45,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
+
+import javax.portlet.Portlet;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -150,8 +150,7 @@ public class ClassPathUtil {
 		sb.append(File.pathSeparator);
 
 		String portalGlobalClassPath = _buildClassPath(
-			classLoader, CentralizedThreadLocal.class.getName(),
-			PortalException.class.getName());
+			classLoader, Portlet.class.getName());
 
 		sb.append(portalGlobalClassPath);
 

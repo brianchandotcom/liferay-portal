@@ -450,7 +450,7 @@
 </tr>
 <tr>
 	<td>MESSAGE_ATTACHMENT_IMAGE</td>
-	<td>//div[contains(@class,'message-attachments')]//img[contains(@src,'${key_mbThreadAttachment}')]</td>
+	<td>//li[contains(@class,'message-attachment')]//a/span[contains(.,'${key_mbThreadAttachment}')]</td>
 	<td></td>
 </tr>
 <tr>

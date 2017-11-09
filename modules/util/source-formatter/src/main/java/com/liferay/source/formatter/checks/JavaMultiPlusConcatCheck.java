@@ -45,7 +45,7 @@ public class JavaMultiPlusConcatCheck extends BaseJavaTermCheck {
 		throws Exception {
 
 		if (isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath) ||
-			absolutePath.contains("/modules/private/apps/") ||
+			isModulesApp(absolutePath, true) ||
 			absolutePath.contains("/test/") ||
 			absolutePath.contains("/testIntegration/")) {
 

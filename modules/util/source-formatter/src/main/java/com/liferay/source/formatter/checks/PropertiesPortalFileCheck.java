@@ -19,11 +19,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.PropertiesSourceProcessor;
-import com.liferay.source.formatter.util.FileUtil;
-
-import java.io.File;
 
 import java.net.URL;
 
@@ -100,14 +96,15 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 	private String _getPortalPortalPropertiesContent() throws Exception {
 		String portalPortalPropertiesContent = null;
 
-		if (isPortalSource()) {
-			File file = getFile(
-				"portal-impl/src/portal.properties",
-				ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+		if (isPortalSource() || isSubrepository()) {
+			portalPortalPropertiesContent = getPortalContent(
+				"portal-impl/src/portal.properties");
 
-			if (file != null) {
-				return FileUtil.read(file);
+			if (portalPortalPropertiesContent == null) {
+				return StringPool.BLANK;
 			}
+
+			return portalPortalPropertiesContent;
 		}
 
 		ClassLoader classLoader =

@@ -15,7 +15,6 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaStaticBlock;
 import com.liferay.source.formatter.parser.JavaTerm;
@@ -74,25 +73,21 @@ public class JavaTermOrderCheck extends BaseJavaTermCheck {
 			return null;
 		}
 
-		File portalCustomSQLFile = getFile(
-			"portal-impl/src/custom-sql/default.xml",
-			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+		String portalCustomSQLContent = getPortalContent(
+			"portal-impl/src/custom-sql/default.xml");
 
-		if (portalCustomSQLFile == null) {
+		if (portalCustomSQLContent == null) {
 			return null;
 		}
-
-		String portalCustomSQLContent = FileUtil.read(portalCustomSQLFile);
 
 		Matcher matcher = _customSQLFilePattern.matcher(portalCustomSQLContent);
 
 		while (matcher.find()) {
-			File customSQLFile = getFile(
-				"portal-impl/src/" + matcher.group(1),
-				ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+			String customSQLFileContent = getPortalContent(
+				"portal-impl/src/" + matcher.group(1));
 
-			if (customSQLFile != null) {
-				portalCustomSQLContent += FileUtil.read(customSQLFile);
+			if (customSQLFileContent != null) {
+				portalCustomSQLContent += customSQLFileContent;
 			}
 		}
 

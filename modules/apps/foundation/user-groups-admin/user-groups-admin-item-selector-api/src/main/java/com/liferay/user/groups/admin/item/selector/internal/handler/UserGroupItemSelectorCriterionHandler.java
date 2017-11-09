@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Alessio Antonio Rendina
  */
 @Component(service = ItemSelectorCriterionHandler.class)
-public class UserGroupSelectorCriterionHandler
+public class UserGroupItemSelectorCriterionHandler
 	extends BaseItemSelectorCriterionHandler<UserGroupItemSelectorCriterion> {
 
 	@Override

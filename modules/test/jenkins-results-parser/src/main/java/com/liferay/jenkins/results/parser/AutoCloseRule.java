@@ -54,6 +54,32 @@ public class AutoCloseRule {
 					downstreamBuild)) {
 
 				failingInUpstreamJobDownstreamBuilds.add(downstreamBuild);
+
+				continue;
+			}
+
+			boolean containsUniqueTestFailure = false;
+
+			for (TestResult testResult : downstreamBuild.getTestResults(null)) {
+				String testStatus = testResult.getStatus();
+
+				if (testStatus.equals("PASSED") ||
+					testStatus.equals("SKIPPED")) {
+
+					continue;
+				}
+
+				if (!UpstreamFailureUtil.isTestFailingInUpstreamJob(
+						testResult)) {
+
+					containsUniqueTestFailure = true;
+
+					break;
+				}
+			}
+
+			if (!containsUniqueTestFailure) {
+				failingInUpstreamJobDownstreamBuilds.add(downstreamBuild);
 			}
 		}
 

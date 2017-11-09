@@ -1486,8 +1486,7 @@
 							FROM
 								Users_UserGroups, UserGroups_Teams
 							WHERE
-								Users_UserGroups.userId = ?
-							AND
+								Users_UserGroups.userId = ? AND
 								Users_UserGroups.userGroupId = UserGroups_Teams.userGroupId
 						) OR
 					Team.teamId IN
@@ -1497,8 +1496,7 @@
 							FROM
 								User_, Users_Teams
 							WHERE
-								User_.userId = ?
-							AND
+								User_.userId = ? AND
 								User_.userId = Users_Teams.userId
 						)
 				)

@@ -11,7 +11,8 @@
 		ON
 			(
 				KBArticle.kbFolderId = KBFolder.kbFolderId AND
-			KBArticle.groupId = KBFolder.groupId)
+				KBArticle.groupId = KBFolder.groupId
+			)
 		WHERE
 			KBArticle.groupId = ? AND
 			KBArticle.urlTitle = ? AND
@@ -28,7 +29,8 @@
 		ON
 			(
 				KBArticle.kbFolderId = KBFolder.kbFolderId AND
-			KBArticle.groupId = KBFolder.groupId)
+				KBArticle.groupId = KBFolder.groupId
+			)
 		WHERE
 			KBArticle.groupId = ? AND
 			KBArticle.urlTitle = ? AND

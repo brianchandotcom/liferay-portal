@@ -22,7 +22,8 @@
 								(AssetEntry.groupId = ?) AND
 								(AssetEntry.classNameId = ?) AND
 								(AssetEntry.visible = [$TRUE$])
-					)) AND
+					)
+				) AND
 				(AssetCategory.name LIKE ? OR ? IS NULL)
 		]]>
 	</sql>
@@ -119,7 +120,8 @@
 							WHERE
 								(AssetEntry.groupId = ?) AND
 								(AssetEntry.visible = [$TRUE$])
-					)) AND
+					)
+				) AND
 				(AssetTag.name LIKE ?)
 		]]>
 	</sql>
@@ -144,7 +146,8 @@
 								(AssetEntry.groupId = ?) AND
 								(AssetEntry.classNameId = ?) AND
 								(AssetEntry.visible = [$TRUE$])
-					)) AND
+					)
+				) AND
 				(AssetTag.name LIKE ? OR ? IS NULL)
 		]]>
 	</sql>
@@ -169,7 +172,8 @@
 								(AssetEntry.groupId = ?) AND
 								(AssetEntry.classNameId = ?) AND
 								(AssetEntry.visible = [$TRUE$])
-					)) AND
+					)
+				) AND
 				(AssetTag.name LIKE ? OR ? IS NULL)
 			ORDER BY
 				AssetTag.name ASC

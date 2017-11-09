@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,6 +32,20 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 
 		if (fileName.contains("/custom-sql/")) {
 			_checkScalability(fileName, absolutePath, content);
+
+			content = _fixMissingLineBreakAfterOpenParenthesis(content);
+		}
+
+		return content;
+	}
+
+	private String _addTabs(String content, int start, int end) {
+		for (int i = start; i <= end; i++) {
+			int lineStartPos = getLineStartPos(content, i);
+
+			content =
+				content.substring(0, lineStartPos) + "\t" +
+					content.substring(lineStartPos);
 		}
 
 		return content;
@@ -67,9 +82,49 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 		}
 	}
 
+	private String _fixMissingLineBreakAfterOpenParenthesis(String content) {
+		Matcher matcher = _missingLineBreakAfterOpenParenthesisPattern.matcher(
+			content);
+
+		while (matcher.find()) {
+			if (getLevel(matcher.group()) == 0) {
+				continue;
+			}
+
+			int startPos = matcher.end(1);
+
+			int startLineCount = getLineCount(content, startPos);
+
+			int endPos = _getCloseParenthesisPos(content, startPos);
+
+			int endLineCount = getLineCount(content, endPos);
+
+			content = _addTabs(content, startLineCount + 1, endLineCount - 1);
+
+			return StringUtil.replaceFirst(
+				content, "\t(", "\t(\n\t" + matcher.group(1), matcher.start());
+		}
+
+		return content;
+	}
+
+	private int _getCloseParenthesisPos(String content, int startPos) {
+		int endPos = startPos;
+
+		while (true) {
+			endPos = content.indexOf(")", endPos + 1);
+
+			if (getLevel(content.substring(startPos, endPos + 1)) == 0) {
+				return endPos;
+			}
+		}
+	}
+
 	private static final String _CUSTOM_FINDER_SCALABILITY_EXCLUDES =
 		"custom.finder.scalability.excludes";
 
+	private final Pattern _missingLineBreakAfterOpenParenthesisPattern =
+		Pattern.compile("(\t+)\\(.+\n");
 	private final Pattern _whereNotInSQLPattern = Pattern.compile(
 		"WHERE[ \t\n]+\\(*[a-zA-z0-9.]+ NOT IN");
 

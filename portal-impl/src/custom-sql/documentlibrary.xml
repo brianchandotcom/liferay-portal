@@ -126,7 +126,7 @@
 								DDMStructureLink
 							WHERE
 								[$DDM_STRUCTURE_ID$]
-					)
+						)
 				)
 		]]>
 	</sql>

@@ -627,9 +627,7 @@
 							WHERE
 								(SocialRelation.userId1 = ?)
 						) OR
-							(
-							userId = ?
-						)
+					(userId = ?)
 				)
 		]]>
 	</sql>
@@ -779,9 +777,7 @@
 							WHERE
 								(SocialRelation.userId1 = ?)
 						) OR
-							(
-							userId = ?
-						)
+					(userId = ?)
 				)
 			ORDER BY
 				modifiedDate DESC

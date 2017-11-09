@@ -1018,7 +1018,7 @@
 										(lower(Team.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 										(lower(Team.description) LIKE ? [$AND_OR_NULL_CHECK$])
 									)
-								)
+							)
 					)
 				)
 		]]>
@@ -1201,7 +1201,7 @@
 										(lower(Team.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 										(lower(Team.description) LIKE ? [$AND_OR_NULL_CHECK$])
 									)
-								)
+							)
 					)
 				)
 			ORDER BY

@@ -73,6 +73,10 @@ public class ClassPathUtil {
 		return sb.toString();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static Set<URL> getClassPathURLs(ClassLoader classLoader) {
 		Set<URL> urls = new LinkedHashSet<>();
 

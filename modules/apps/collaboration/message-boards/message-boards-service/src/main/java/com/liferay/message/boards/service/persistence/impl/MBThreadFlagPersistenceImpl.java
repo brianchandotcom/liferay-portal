@@ -12,19 +12,18 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.service.persistence.impl;
+package com.liferay.message.boards.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.message.boards.kernel.exception.NoSuchThreadFlagException;
-import com.liferay.message.boards.kernel.model.MBThreadFlag;
-import com.liferay.message.boards.kernel.service.persistence.MBThreadFlagPersistence;
+import com.liferay.message.boards.exception.NoSuchThreadFlagException;
+import com.liferay.message.boards.model.MBThreadFlag;
+import com.liferay.message.boards.model.impl.MBThreadFlagImpl;
+import com.liferay.message.boards.model.impl.MBThreadFlagModelImpl;
+import com.liferay.message.boards.service.persistence.MBThreadFlagPersistence;
 
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -44,9 +43,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-
-import com.liferay.portlet.messageboards.model.impl.MBThreadFlagImpl;
-import com.liferay.portlet.messageboards.model.impl.MBThreadFlagModelImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -71,12 +68,9 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see MBThreadFlagPersistence
- * @see com.liferay.message.boards.kernel.service.persistence.MBThreadFlagUtil
- * @deprecated As of 7.0.0, replaced by {@link
-            com.liferay.message.boards.model.impl.MBThreadFlagImpl}
+ * @see com.liferay.message.boards.service.persistence.MBThreadFlagUtil
  * @generated
  */
-@Deprecated
 @ProviderType
 public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFlag>
 	implements MBThreadFlagPersistence {
@@ -3603,10 +3597,12 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = CompanyProviderWrapper.class)
+	@ServiceReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
-	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
-	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_MBTHREADFLAG = "SELECT mbThreadFlag FROM MBThreadFlag mbThreadFlag";
 	private static final String _SQL_SELECT_MBTHREADFLAG_WHERE_PKS_IN = "SELECT mbThreadFlag FROM MBThreadFlag mbThreadFlag WHERE threadFlagId IN (";
 	private static final String _SQL_SELECT_MBTHREADFLAG_WHERE = "SELECT mbThreadFlag FROM MBThreadFlag mbThreadFlag WHERE ";

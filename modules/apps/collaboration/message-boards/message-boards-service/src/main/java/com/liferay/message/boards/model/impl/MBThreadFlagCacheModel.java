@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.model.impl;
+package com.liferay.message.boards.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.message.boards.kernel.model.MBThreadFlag;
+import com.liferay.message.boards.model.MBThreadFlag;
 
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
@@ -35,11 +35,8 @@ import java.util.Date;
  *
  * @author Brian Wing Shun Chan
  * @see MBThreadFlag
- * @deprecated As of 7.0.0, replaced by {@link
-            com.liferay.message.boards.model.impl.MBThreadFlagImpl}
  * @generated
  */
-@Deprecated
 @ProviderType
 public class MBThreadFlagCacheModel implements CacheModel<MBThreadFlag>,
 	Externalizable {

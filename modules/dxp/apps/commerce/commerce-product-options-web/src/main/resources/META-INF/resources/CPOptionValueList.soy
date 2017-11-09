@@ -1,0 +1,99 @@
+{namespace CPOptionValueList}
+
+/**
+ * CP Option Value List
+ *
+ */
+{template .render}
+	{@param? currentCPOptionValueId: string}
+	{@param? id: string}
+	{@param? optionValues: ?}
+	{@param? pathThemeImages: string}
+	{@param? newOptionValueTitle: string}
+	{@param? _handleAddOptionValueClick: any}
+	{@param? _handleSelectOptionValueClick: any}
+
+	<h4 class="section-header">
+
+		Options
+
+		<a onClick="{$_handleAddOptionValueClick}" class="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none" href="#">
+			<svg aria-hidden="true" class="lexicon-icon lexicon-icon-plus">
+				<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#plus"></use>
+			</svg>
+		</a>
+	</h4>
+	<div id="{$id}">
+		<table class="table table-autofit table-heading-nowrap table-responsive table-hover">
+			<thead>
+				<tr>
+					<th class="">
+						<span class="text-truncate" title="Id">Id</span>
+					</th>
+					<th class="table-cell-content">
+						<span class="text-truncate" title="Description">Title</span>
+					</th>
+					<th class="">
+						<span class="text-truncate" title="Priority">Priority</span>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+
+				{let $attributes kind="attributes"}
+					class="
+
+						{sp}table-active
+
+					{if $currentCPOptionValueId == '0'}
+						{sp}show
+					{else}
+						{sp}hide
+					{/if}
+					"
+				{/let}
+
+				<tr data-id="0"  {$attributes}>
+					<td class=""></td>
+					<td class="table-cell-content">
+						 {if $newOptionValueTitle == ''}
+							[ New Option ]
+						 {else}
+							{$newOptionValueTitle}
+						 {/if}
+					</td>
+					<td class=""></td>
+				</tr>
+
+				{if $optionValues}
+
+					{foreach $optionValue in $optionValues}
+
+						{let $classes kind="text"}
+
+							{if $optionValue.cpOptionValueId == $currentCPOptionValueId}
+								{sp}table-active
+							{/if}
+						{/let}
+
+						<tr data-id="{$optionValue.cpOptionValueId}" onclick="{$_handleSelectOptionValueClick}" class="{$classes}">
+							<td class="">
+								{$optionValue.cpOptionValueId}
+							</td>
+							<td class="table-cell-content">
+								{$optionValue.title}
+							</td>
+							<td class="">
+								{$optionValue.priority}
+							</td>
+						</tr>
+
+					{/foreach}
+
+				{/if}
+
+			</tbody>
+		</table>
+	</div>
+
+{/template}

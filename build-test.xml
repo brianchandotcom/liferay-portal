@@ -8503,14 +8503,6 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 						<touch file="${app.server.portal.dir}.dodeploy" />
 					</then>
 				</if>
-<<<<<<< HEAD
-=======
-
-				<fileset id="deploy.dir.files" dir="${app.server.portal.dir}/.." includes="*" />
-				<local name="fddc" />
-				<property name="fddc" refid="deploy.dir.files" />
-				<echo>${fddc}</echo>
->>>>>>> ce068b5... LRQA-35073: Moving .dodeploy to original location.
 
 				<delete dir="dist" />
 

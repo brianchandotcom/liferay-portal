@@ -32,7 +32,9 @@ import org.aopalliance.intercept.MethodInvocation;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, moved to {@link com.liferay.portal.internal.cluster.SPIClusterableAdvice}
  */
+@Deprecated
 public class SPIClusterableAdvice
 	extends AnnotationChainableMethodAdvice<Clusterable> {
 

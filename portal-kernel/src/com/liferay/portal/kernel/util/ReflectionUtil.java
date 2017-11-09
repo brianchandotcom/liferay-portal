@@ -25,6 +25,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * @author Brian Wing Shun Chan
@@ -146,6 +147,16 @@ public class ReflectionUtil {
 	public static Class<?>[] getInterfaces(
 		Object object, ClassLoader classLoader) {
 
+		return getInterfaces(
+			object, classLoader,
+			cnfe -> {
+			});
+	}
+
+	public static Class<?>[] getInterfaces(
+		Object object, ClassLoader classLoader,
+		Consumer<ClassNotFoundException> classNotFoundHandler) {
+
 		Set<Class<?>> interfaceClasses = new LinkedHashSet<>();
 
 		Class<?> superClass = object.getClass();
@@ -162,6 +173,7 @@ public class ReflectionUtil {
 					}
 				}
 				catch (ClassNotFoundException cnfe) {
+					classNotFoundHandler.accept(cnfe);
 				}
 			}
 

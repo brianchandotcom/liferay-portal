@@ -34,6 +34,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 			_checkScalability(fileName, absolutePath, content);
 
 			content = _fixMissingLineBreakAfterOpenParenthesis(content);
+			content = _fixMissingLineBreakBeforeOpenParenthesis(content);
 		}
 
 		return content;
@@ -108,6 +109,28 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private String _fixMissingLineBreakBeforeOpenParenthesis(String content) {
+		Matcher matcher = _missingLineBreakBeforeOpenParenthesisPattern.matcher(
+			content);
+
+		if (!matcher.find()) {
+			return content;
+		}
+
+		int startPos = matcher.end() - 2;
+
+		int startLineCount = getLineCount(content, startPos);
+
+		int endPos = _getCloseParenthesisPos(content, startPos);
+
+		int endLineCount = getLineCount(content, endPos);
+
+		content = _addTabs(content, startLineCount + 1, endLineCount);
+
+		return StringUtil.replaceFirst(
+			content, "(\n", "\n\t" + matcher.group(1) + "(\n", matcher.start());
+	}
+
 	private int _getCloseParenthesisPos(String content, int startPos) {
 		int endPos = startPos;
 
@@ -125,6 +148,8 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 
 	private final Pattern _missingLineBreakAfterOpenParenthesisPattern =
 		Pattern.compile("(\t+)\\(.+\n");
+	private final Pattern _missingLineBreakBeforeOpenParenthesisPattern =
+		Pattern.compile("\n(\t+).*[^\t\n]\\(\n");
 	private final Pattern _whereNotInSQLPattern = Pattern.compile(
 		"WHERE[ \t\n]+\\(*[a-zA-z0-9.]+ NOT IN");
 

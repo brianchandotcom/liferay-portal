@@ -1,6 +1,9 @@
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil
 import com.liferay.gradle.util.FileUtil
 
+import groovy.io.FileType
+import groovy.io.FileVisitResult
+
 import groovy.json.JsonSlurper
 
 import java.nio.file.Path
@@ -11,6 +14,7 @@ import org.ajoberstar.grgit.Commit
 import org.ajoberstar.grgit.CommitDiff
 import org.ajoberstar.grgit.Grgit
 import org.ajoberstar.grgit.Repository
+import org.ajoberstar.grgit.Status
 import org.ajoberstar.grgit.util.JGitUtil
 
 import org.eclipse.jgit.lib.ObjectId
@@ -59,7 +63,10 @@ cherryPickArtifacts {
 		commits.reverseEach {
 			Commit commit ->
 
-			if (commit.shortMessage.contains("prep next")) {
+			if (commit.shortMessage.endsWith(" apply")) {
+				_cherryPickApply(commit)
+			}
+			else if (commit.shortMessage.contains("prep next")) {
 				_cherryPickPrepNext(commit)
 			}
 		}
@@ -214,6 +221,60 @@ syncGitRepoReleases {
 				_setSystemProperty "org.gradle.project.syncRelease", syncRelease
 			}
 		}
+	}
+}
+
+private void _cherryPickApply(Commit commit) {
+	int start = commit.shortMessage.indexOf(' ')
+
+	if (start == -1) {
+		return
+	}
+
+	int end = commit.shortMessage.indexOf(' ', start + 1)
+
+	if (end == -1) {
+		return
+	}
+
+	String moduleName = commit.shortMessage[0 .. (start - 1)]
+	String moduleVersion = commit.shortMessage[(start + 1) .. (end - 1)]
+
+	File moduleDir = _getModuleDir(moduleName)
+
+	if (moduleDir == null) {
+		println "Commit ${commit.id} NOT cherry-picked: module '${moduleName}' does not exist"
+
+		return
+	}
+
+	_executeGradle(moduleDir, ["updateFileVersions"], ["forced.update.files.version": moduleVersion], true)
+
+	Status status = grgit.status()
+
+	boolean addedFiles = false
+
+	for (String fileName in status.unstaged.modified) {
+		if (!fileName.endsWith("/build.gradle")) {
+			continue
+		}
+
+		File updatedModuleDir = new File(projectDir.parentFile, fileName[0 .. -14])
+
+		if (_executeGradle(updatedModuleDir, ["classes", "testClasses", "testIntegrationClasses", "compileJSP", "formatSource"], [:], false)) {
+			grgit.add patterns: [fileName]
+
+			addedFiles = true
+		}
+		else {
+			println "Change to ${fileName} by ${commit.id} NOT cherry-picked: compilation failed"
+
+			grgit.reset mode: "hard", paths: [fileName]
+		}
+	}
+
+	if (addedFiles) {
+		grgit.commit author: commit.author, message: commit.fullMessage
 	}
 }
 
@@ -387,6 +448,56 @@ private boolean _contains(File dir, String fileName, String s) {
 	return false
 }
 
+private boolean _executeGradle(File moduleDir, List<String> taskNames, Map<String, String> projectProperties, boolean rethrowException) {
+	Map<String, String> oldSystemProperties = projectProperties.collectEntries {
+		String key, String value ->
+
+		key = "org.gradle.project." + key
+
+		[key: _setSystemProperty(key, value)]
+	}
+
+	StartParameter startParameter = gradle.startParameter.newBuild()
+
+	if (projectProperties) {
+		startParameter.projectProperties = projectProperties
+	}
+
+	String moduleTaskPrefix = _getModuleTaskPrefix(moduleDir)
+
+	startParameter.taskNames = taskNames.collect {
+		moduleTaskPrefix + it
+	}
+
+	NestedBuildFactory nestedBuildFactory = gradle.services.get(NestedBuildFactory)
+
+	GradleLauncher gradleLauncher = nestedBuildFactory.nestedInstance(startParameter)
+
+	try {
+		gradleLauncher.run()
+
+		return true
+	}
+	catch (Exception e) {
+		if (rethrowException) {
+			throw e
+		}
+
+		e.printStackTrace()
+
+		return false
+	}
+	finally {
+		gradleLauncher.stop()
+
+		oldSystemProperties.each {
+			String key, String value ->
+
+			_setSystemProperty(key, value)
+		}
+	}
+}
+
 private boolean _exists(File dir, String fileName) {
 	File file = new File(dir, fileName)
 
@@ -419,6 +530,35 @@ private InputStream _getCommitFileStream(String commitId, String fileName) {
 	finally {
 		treeWalk.close()
 	}
+}
+
+private File _getModuleDir(String name) {
+	File moduleDir = null
+
+	projectDir.traverse(
+		preDir: {
+			if (it.name in [".gradle", ".github", "build", "classes", "node_modules"]) {
+				return FileVisitResult.SKIP_SUBTREE
+			}
+
+			File bndBndFile = new File(it, "bnd.bnd")
+
+			if (!bndBndFile.exists()) {
+				return FileVisitResult.CONTINUE
+			}
+
+			if (it.name == name) {
+				moduleDir = it
+
+				return FileVisitResult.TERMINATE
+			}
+
+			return FileVisitResult.SKIP_SUBTREE
+		},
+		type: FileType.DIRECTORIES
+	)
+
+	moduleDir
 }
 
 private String _getModuleTaskPrefix(File moduleDir) {

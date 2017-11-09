@@ -10,6 +10,7 @@ dependencies {
 	testCompile group: "com.liferay", name: "com.liferay.petra.memory", version: "1.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.registry.api", version: "1.1.0"
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
+	testCompile group: "org.aspectj", name: "aspectjweaver", version: "1.8.9"
 }
 
 liferay {

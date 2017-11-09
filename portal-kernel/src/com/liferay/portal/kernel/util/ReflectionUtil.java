@@ -210,6 +210,10 @@ public class ReflectionUtil {
 		return parameterTypes;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static Set<Method> getVisibleMethods(Class<?> clazz) {
 		Set<Method> visibleMethods = new HashSet<>(
 			Arrays.asList(clazz.getMethods()));

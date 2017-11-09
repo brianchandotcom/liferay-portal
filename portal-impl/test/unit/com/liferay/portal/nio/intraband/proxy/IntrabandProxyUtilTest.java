@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -82,10 +81,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.atomic.AtomicReference;
@@ -1261,7 +1262,7 @@ public class IntrabandProxyUtilTest {
 	private String[] _buildProxyMethodSignatures(Class<?> clazz) {
 		List<Method> proxyMethods = new ArrayList<>();
 
-		for (Method method : ReflectionUtil.getVisibleMethods(clazz)) {
+		for (Method method : _getVisibleMethods(clazz)) {
 			if (method.getAnnotation(Proxy.class) != null) {
 				proxyMethods.add(method);
 			}
@@ -2378,7 +2379,7 @@ public class IntrabandProxyUtilTest {
 	private List<Method> _getCopiedMethods(Class<?> clazz) {
 		List<Method> emptyMethods = new ArrayList<>();
 
-		for (Method method : ReflectionUtil.getVisibleMethods(clazz)) {
+		for (Method method : _getVisibleMethods(clazz)) {
 			String name = method.getName();
 
 			if (!Modifier.isAbstract(method.getModifiers()) &&
@@ -2396,7 +2397,7 @@ public class IntrabandProxyUtilTest {
 	private List<Method> _getEmptyMethods(Class<?> clazz) {
 		List<Method> emptyMethods = new ArrayList<>();
 
-		for (Method method : ReflectionUtil.getVisibleMethods(clazz)) {
+		for (Method method : _getVisibleMethods(clazz)) {
 			if (Modifier.isAbstract(method.getModifiers()) &&
 				(method.getAnnotation(Id.class) == null) &&
 				(method.getAnnotation(Proxy.class) == null)) {
@@ -2411,7 +2412,7 @@ public class IntrabandProxyUtilTest {
 	private List<Method> _getIdMethods(Class<?> clazz) {
 		List<Method> idMethods = new ArrayList<>();
 
-		for (Method method : ReflectionUtil.getVisibleMethods(clazz)) {
+		for (Method method : _getVisibleMethods(clazz)) {
 			if (method.getAnnotation(Id.class) != null) {
 				idMethods.add(method);
 			}
@@ -2423,7 +2424,7 @@ public class IntrabandProxyUtilTest {
 	private List<Method> _getProxyMethods(Class<?> clazz) {
 		List<Method> proxyMethods = new ArrayList<>();
 
-		for (Method method : ReflectionUtil.getVisibleMethods(clazz)) {
+		for (Method method : _getVisibleMethods(clazz)) {
 			if (method.getAnnotation(Proxy.class) != null) {
 				proxyMethods.add(method);
 			}
@@ -2432,6 +2433,27 @@ public class IntrabandProxyUtilTest {
 		Collections.sort(proxyMethods, new MethodComparator());
 
 		return proxyMethods;
+	}
+
+	private Set<Method> _getVisibleMethods(Class<?> clazz) {
+		Set<Method> visibleMethods = new HashSet<>(
+			Arrays.asList(clazz.getMethods()));
+
+		Collections.addAll(visibleMethods, clazz.getDeclaredMethods());
+
+		while ((clazz = clazz.getSuperclass()) != null) {
+			for (Method method : clazz.getDeclaredMethods()) {
+				int modifiers = method.getModifiers();
+
+				if (!Modifier.isPrivate(modifiers) &
+					!Modifier.isPublic(modifiers)) {
+
+					visibleMethods.add(method);
+				}
+			}
+		}
+
+		return visibleMethods;
 	}
 
 	private ClassNode _loadClass(Class<?> clazz) {

@@ -304,7 +304,7 @@ public class IntrabandProxyUtil {
 		List<Method> proxyMethods = new ArrayList<>();
 		List<Method> emptyMethods = new ArrayList<>();
 
-		for (Method method : ReflectionUtil.getVisibleMethods(clazz)) {
+		for (Method method : _getVisibleMethods(clazz)) {
 			Id id = method.getAnnotation(Id.class);
 
 			if (id != null) {
@@ -994,6 +994,27 @@ public class IntrabandProxyUtil {
 		@SuppressWarnings("unused")
 		private TargetLocator _targetLocator;
 
+	}
+
+	private static Set<Method> _getVisibleMethods(Class<?> clazz) {
+		Set<Method> visibleMethods = new HashSet<>(
+			Arrays.asList(clazz.getMethods()));
+
+		Collections.addAll(visibleMethods, clazz.getDeclaredMethods());
+
+		while ((clazz = clazz.getSuperclass()) != null) {
+			for (Method method : clazz.getDeclaredMethods()) {
+				int modifiers = method.getModifiers();
+
+				if (!Modifier.isPrivate(modifiers) &
+					!Modifier.isPublic(modifiers)) {
+
+					visibleMethods.add(method);
+				}
+			}
+		}
+
+		return visibleMethods;
 	}
 
 	private static final Type _DATAGRAM_TYPE = Type.getType(Datagram.class);

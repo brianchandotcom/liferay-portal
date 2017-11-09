@@ -10493,8 +10493,6 @@ jdbc.default.password=${database.password}</echo>
 				}
 			]]>
 		</beanshell>
-
-
 	</target>
 
 	<target name="wait-for-plugins-deployment">

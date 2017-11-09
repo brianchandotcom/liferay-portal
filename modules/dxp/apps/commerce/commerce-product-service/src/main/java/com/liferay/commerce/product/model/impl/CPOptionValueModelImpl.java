@@ -114,8 +114,8 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 
 	public static final String TABLE_SQL_CREATE = "create table CPOptionValue (uuid_ VARCHAR(75) null,CPOptionValueId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPOptionId LONG,title STRING null,priority DOUBLE,key_ VARCHAR(75) null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CPOptionValue";
-	public static final String ORDER_BY_JPQL = " ORDER BY cpOptionValue.title ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY CPOptionValue.title ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY cpOptionValue.priority ASC, cpOptionValue.title ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY CPOptionValue.priority ASC, CPOptionValue.title ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -133,7 +133,8 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
 	public static final long KEY_COLUMN_BITMASK = 8L;
 	public static final long UUID_COLUMN_BITMASK = 16L;
-	public static final long TITLE_COLUMN_BITMASK = 32L;
+	public static final long PRIORITY_COLUMN_BITMASK = 32L;
+	public static final long TITLE_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -610,6 +611,8 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 
 	@Override
 	public void setPriority(double priority) {
+		_columnBitmask = -1L;
+
 		_priority = priority;
 	}
 
@@ -770,6 +773,20 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 	@Override
 	public int compareTo(CPOptionValue cpOptionValue) {
 		int value = 0;
+
+		if (getPriority() < cpOptionValue.getPriority()) {
+			value = -1;
+		}
+		else if (getPriority() > cpOptionValue.getPriority()) {
+			value = 1;
+		}
+		else {
+			value = 0;
+		}
+
+		if (value != 0) {
+			return value;
+		}
 
 		value = getTitle().compareTo(cpOptionValue.getTitle());
 

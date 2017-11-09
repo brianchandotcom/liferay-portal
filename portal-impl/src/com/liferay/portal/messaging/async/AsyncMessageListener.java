@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.process.ProcessCallable;
 /**
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, moved to {@link com.liferay.portal.internal.messaging.async.AsyncMessageListener}
  */
+@Deprecated
 public class AsyncMessageListener extends BaseMessageListener {
 
 	@Override

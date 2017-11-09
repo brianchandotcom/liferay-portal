@@ -14,14 +14,15 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
+import com.liferay.petra.concurrent.NoticeableFuture;
+import com.liferay.petra.process.CollectorOutputProcessor;
+import com.liferay.petra.process.ProcessUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.process.CollectorOutputProcessor;
-import com.liferay.portal.kernel.process.ProcessUtil;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * @author Tina Tian
@@ -76,15 +77,14 @@ public class ThreadUtil {
 		}
 
 		try {
-			NoticeableFuture<ObjectValuePair<byte[], byte[]>> noticeableFuture =
+			NoticeableFuture<Entry<byte[], byte[]>> noticeableFuture =
 				ProcessUtil.execute(
 					CollectorOutputProcessor.INSTANCE, "jstack", "-l",
 					String.valueOf(HeapUtil.getProcessId()));
 
-			ObjectValuePair<byte[], byte[]> objectValuePair =
-				noticeableFuture.get();
+			Entry<byte[], byte[]> entry = noticeableFuture.get();
 
-			return new String(objectValuePair.getKey());
+			return new String(entry.getKey());
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {

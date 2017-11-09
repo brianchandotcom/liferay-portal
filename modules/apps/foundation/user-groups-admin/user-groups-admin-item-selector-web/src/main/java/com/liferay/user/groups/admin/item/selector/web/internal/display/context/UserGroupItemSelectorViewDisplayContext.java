@@ -34,8 +34,6 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Alessio Antonio Rendina
  */
@@ -118,8 +116,6 @@ public class UserGroupItemSelectorViewDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private SearchContainer<UserGroup> _searchContainer;
-
-	@Reference
-	private UserGroupLocalService _userGroupLocalService;
+	private final UserGroupLocalService _userGroupLocalService;
 
 }

@@ -14,10 +14,10 @@
 
 package com.liferay.portal.test.rule;
 
+import com.liferay.petra.process.ClassPathUtil;
+import com.liferay.petra.process.ProcessCallable;
+import com.liferay.petra.process.ProcessException;
 import com.liferay.portal.aspectj.WeavingClassLoader;
-import com.liferay.portal.kernel.process.ClassPathUtil;
-import com.liferay.portal.kernel.process.ProcessCallable;
-import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 import com.liferay.portal.kernel.util.ArrayUtil;

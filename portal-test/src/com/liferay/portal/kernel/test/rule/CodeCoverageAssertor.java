@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.test.rule;
 
-import com.liferay.portal.kernel.process.ClassPathUtil;
+import com.liferay.petra.process.ClassPathUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 

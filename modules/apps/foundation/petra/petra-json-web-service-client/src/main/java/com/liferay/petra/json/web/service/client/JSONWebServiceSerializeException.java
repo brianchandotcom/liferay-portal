@@ -17,7 +17,7 @@ package com.liferay.petra.json.web.service.client;
 /**
  * @author Igor Beslic
  */
-public class JSONWebServiceSerializeException extends Exception {
+public class JSONWebServiceSerializeException extends JSONWebServiceException {
 
 	public JSONWebServiceSerializeException(String message) {
 		super(message);

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.groups.admin.item.selector.criterion.UserGroupItemSelectorCriterion;
 import com.liferay.user.groups.admin.item.selector.web.internal.constants.UserGroupItemSelectorWebKeys;
 import com.liferay.user.groups.admin.item.selector.web.internal.display.context.UserGroupItemSelectorViewDisplayContext;
+import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.io.IOException;
 
@@ -97,8 +98,8 @@ public class UserGroupItemSelectorView
 		UserGroupItemSelectorViewDisplayContext
 			userGroupItemSelectorViewDisplayContext =
 				new UserGroupItemSelectorViewDisplayContext(
-					_userGroupLocalService, httpServletRequest, portletURL,
-					itemSelectedEventName);
+					_userGroupLocalService, _usersAdmin, httpServletRequest,
+					portletURL, itemSelectedEventName);
 
 		request.setAttribute(
 			UserGroupItemSelectorWebKeys.
@@ -131,5 +132,8 @@ public class UserGroupItemSelectorView
 
 	@Reference
 	private UserGroupLocalService _userGroupLocalService;
+
+	@Reference
+	private UsersAdmin _usersAdmin;
 
 }

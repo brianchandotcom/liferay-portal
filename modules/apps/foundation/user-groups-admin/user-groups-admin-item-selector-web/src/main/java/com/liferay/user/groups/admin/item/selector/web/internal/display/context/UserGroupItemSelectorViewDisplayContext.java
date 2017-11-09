@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portlet.usergroupsadmin.search.UserGroupSearch;
 import com.liferay.user.groups.admin.item.selector.web.internal.search.UserGroupItemSelectorChecker;
-import com.liferay.user.groups.admin.item.selector.web.internal.util.UserGroupsAdminItemSelectorViewUtil;
+import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.util.List;
 
@@ -40,11 +40,12 @@ import javax.servlet.http.HttpServletRequest;
 public class UserGroupItemSelectorViewDisplayContext {
 
 	public UserGroupItemSelectorViewDisplayContext(
-		UserGroupLocalService userGroupLocalService,
+		UserGroupLocalService userGroupLocalService, UsersAdmin usersAdmin,
 		HttpServletRequest httpServletRequest, PortletURL portletURL,
 		String itemSelectedEventName) {
 
 		_userGroupLocalService = userGroupLocalService;
+		_usersAdmin = usersAdmin;
 		_httpServletRequest = httpServletRequest;
 		_portletURL = portletURL;
 		_itemSelectedEventName = itemSelectedEventName;
@@ -83,7 +84,7 @@ public class UserGroupItemSelectorViewDisplayContext {
 		_searchContainer = new UserGroupSearch(_renderRequest, getPortletURL());
 
 		OrderByComparator<UserGroup> orderByComparator =
-			UserGroupsAdminItemSelectorViewUtil.getUserGroupOrderByComparator(
+			_usersAdmin.getUserGroupOrderByComparator(
 				getOrderByCol(), getOrderByType());
 
 		RowChecker rowChecker = new UserGroupItemSelectorChecker(
@@ -117,5 +118,6 @@ public class UserGroupItemSelectorViewDisplayContext {
 	private final RenderResponse _renderResponse;
 	private SearchContainer<UserGroup> _searchContainer;
 	private final UserGroupLocalService _userGroupLocalService;
+	private final UsersAdmin _usersAdmin;
 
 }

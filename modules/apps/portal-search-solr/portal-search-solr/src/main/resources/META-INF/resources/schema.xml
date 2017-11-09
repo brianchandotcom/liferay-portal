@@ -541,6 +541,7 @@
 		<field indexed="true" multiValued="true" name="parentCategoryIds" stored="true" type="string" />
 		<field indexed="true" name="path" stored="true" type="string" />
 		<field indexed="true" name="portletId" stored="true" type="string" />
+		<field docValues="true" indexed="true" name="priority" stored="true" type="double" />
 		<field docValues="true" indexed="true" name="publishDate" stored="true" type="string" />
 		<field indexed="true" name="readCount" stored="true" type="string" />
 		<field indexed="true" name="recordSetId" stored="true" type="string" />

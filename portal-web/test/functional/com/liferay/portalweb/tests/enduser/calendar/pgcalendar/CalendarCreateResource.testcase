@@ -52,8 +52,6 @@
 	</tear-down>
 
 	<command name="AddAndViewOtherCalendars" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="CalendarResource#add">
 			<var name="calendarResourceName" value="Calendar Resource Name" />
 		</execute>

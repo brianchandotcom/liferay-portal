@@ -167,7 +167,6 @@
 
 	<command name="ViewPagesAfterJump" priority="5">
 		<description message="This is a use case for LPS-69372." />
-		<property name="portal.acceptance" value="pending" />
 
 		<execute macro="Form#publishForm" />
 

@@ -60,7 +60,6 @@
 	</tear-down>
 
 	<command name="DeleteRegular" priority="5">
-		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="Calendar#DeleteEventRegular" />
 
 		<execute macro="TestCase#getSiteName">

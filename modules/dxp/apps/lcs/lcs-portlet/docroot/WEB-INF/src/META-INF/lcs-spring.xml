@@ -246,6 +246,7 @@
 		<property name="heartbeatInterval" value="#{T(com.liferay.lcs.util.PortletPropsValues).COMMUNICATION_HEARTBEAT_INTERVAL}" />
 		<property name="heartbeatTask" ref="com.liferay.lcs.task.HeartbeatTask" />
 		<property name="keyGenerator" ref="com.liferay.lcs.util.KeyGenerator" />
+		<property name="LCSAlertAdvisor" ref="com.liferay.lcs.advisor.LCSAlertAdvisor" />
 		<property name="LCSClusterEntryTokenAdvisor" ref="com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor" />
 		<property name="LCSGatewayService" ref="com.liferay.lcs.service.LCSGatewayService" />
 		<property name="licenseManagerTask" ref="com.liferay.lcs.task.LicenseManagerTask" />

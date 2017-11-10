@@ -16,6 +16,7 @@ package com.liferay.reading.time.web.internal.editor.configuration;
 
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -56,8 +57,11 @@ public class ReadingTimeEditorConfigContributor
 
 		liferayPortletURL.setResourceID("/reading_time/calculate");
 
-		jsonObject.put(
-			"calculateReadingTimeURL", calculateReadingTimeURL.toString());
+		JSONObject readingTimeJSONObject = JSONFactoryUtil.createJSONObject();
+
+		readingTimeJSONObject.put("url", calculateReadingTimeURL.toString());
+
+		jsonObject.put("readingTime", readingTimeJSONObject);
 	}
 
 }

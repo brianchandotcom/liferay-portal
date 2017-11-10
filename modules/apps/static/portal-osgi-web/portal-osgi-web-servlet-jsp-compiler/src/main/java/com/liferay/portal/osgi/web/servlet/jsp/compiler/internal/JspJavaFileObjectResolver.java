@@ -235,8 +235,10 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 					continue;
 				}
 
-				try (FileSystem fileSystem = FileSystems.newFileSystem(
-						file.toPath(), null)) {
+				FileSystem fileSystem = null;
+
+				try {
+					fileSystem = FileSystems.newFileSystem(file.toPath(), null);
 
 					FileSystemProvider fileSystemProvider =
 						fileSystem.provider();
@@ -259,6 +261,11 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 									getClassName(entryPathString), file,
 									entryPathString));
 						}
+					}
+				}
+				finally {
+					if (fileSystem != null) {
+						fileSystem.close();
 					}
 				}
 			}

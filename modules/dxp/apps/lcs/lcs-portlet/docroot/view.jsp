@@ -19,29 +19,12 @@
 <%
 String lcsPage = ParamUtil.getString(request, "lcsPage", "connection");
 
-boolean lcsClusterNodeRegistered = false;
-boolean lcsPortletAuthorized = false;
-
-if (LCSUtil.isLCSPortletAuthorized(liferayPortletRequest)) {
-	lcsClusterNodeRegistered = LCSUtil.isLCSClusterNodeRegistered(liferayPortletRequest);
-
-	if (!SessionErrors.contains(liferayPortletRequest, "oAuthTokenRejected")) {
-		lcsPortletAuthorized = true;
-	}
-}
+Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts();
 %>
-
-<liferay-ui:error key="generalPluginAccess" message="an-error-occurred-while-accessing-liferay-connected-services" />
-<liferay-ui:error key="keyStoreAccess" message="unable-to-access-keystore" />
-<liferay-ui:error key="lcsInsufficientPrivileges" message="please-provide-user-credentials-with-the-appropriate-lcs-role" />
-<liferay-ui:error key="oAuthAuthorizationFailed" message="oauth-authorization-failed" />
-<liferay-ui:error key="oAuthTokenExpired" message="provided-oauth-token-expired" />
-<liferay-ui:error key="oAuthTokenRejected" message="provided-oauth-token-rejected" />
-<liferay-ui:error key="serverIdFileSystemAccess" message="unable-generate-server-id" />
 
 <section class="content">
 	<c:choose>
-		<c:when test="<%= !lcsPortletAuthorized || !lcsClusterNodeRegistered %>">
+		<c:when test="<%= !lcsClusterEntryTokenAlerts.contains(LCSAlert.SUCCESS_CONNECTION_TO_LCS_VALID) %>">
 			<div class="container-fluid-1280">
 				<%@ include file="/info.jspf" %>
 			</div>
@@ -76,14 +59,13 @@ if (LCSUtil.isLCSPortletAuthorized(liferayPortletRequest)) {
 		</c:otherwise>
 	</c:choose>
 
-	<%
-	Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts();
-	%>
-
 	<c:if test="<%= !lcsClusterEntryTokenAlerts.isEmpty() %>">
 
 		<%
 		for (LCSAlert lcsAlert : lcsClusterEntryTokenAlerts) {
+			if ("success".equals(lcsAlert.getType())) {
+				continue;
+			}
 		%>
 
 			<div class="<%= lcsAlert.getCSSClass() %>">

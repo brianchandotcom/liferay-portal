@@ -56,12 +56,4 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Wiki
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true
--includeresource:\
-	@../../../../../lib/portal/antlr2.jar,\
-	@../../../../../lib/portal/antlr3.jar,\
-	@../../../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*,\
-	@../../../../../lib/portal/ecs.jar,\
-	@../../../../../lib/portal/jericho-html.jar,\
-	@../../../../../lib/portal/jrcs-diff.jar,\
-	@../../../../../lib/portal/oro.jar,\
-	@../../../../../lib/portal/stringtemplate.jar
+-includeresource: @biz.aQute.bndlib-[0-9]*.jar!/aQute/bnd/annotation/metatype/*

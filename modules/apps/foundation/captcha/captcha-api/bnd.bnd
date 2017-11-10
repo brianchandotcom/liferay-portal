@@ -8,6 +8,3 @@ Export-Package:\
 	com.liferay.captcha.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
--includeresource:\
-	@../../../../../lib/portal/jhlabs-filters.jar,\
-	@nl.captcha.simplecaptcha-[0-9]*.jar

@@ -4,7 +4,3 @@ Bundle-Version: 2.0.13
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Wiki
 Web-ContextPath: /wiki-engine-creole
--includeresource:\
-	@../../../../../lib/portal/antlr2.jar,\
-	@../../../../../lib/portal/antlr3.jar,\
-	@../../../../../lib/portal/stringtemplate.jar

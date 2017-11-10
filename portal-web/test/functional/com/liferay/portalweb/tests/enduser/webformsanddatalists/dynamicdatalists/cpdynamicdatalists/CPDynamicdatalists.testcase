@@ -1296,8 +1296,6 @@
 	</command>
 
 	<command name="AddListRecordWithHTMLField" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -2896,8 +2894,6 @@
 	</command>
 
 	<command name="DeleteListRecord" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -2972,8 +2968,6 @@
 	</command>
 
 	<command name="EditBooleanFieldFieldLabel" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -4053,8 +4047,6 @@
 	</command>
 
 	<command name="EditSelectFieldOptions" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">

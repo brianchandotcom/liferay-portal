@@ -705,8 +705,6 @@
 	</command>
 
 	<command name="EditRule" priority="5">
-		<property name="portal.acceptance" value="pending" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">

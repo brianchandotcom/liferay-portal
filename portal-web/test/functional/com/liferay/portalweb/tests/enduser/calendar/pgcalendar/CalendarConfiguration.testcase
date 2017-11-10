@@ -353,7 +353,6 @@
 	</command>
 
 	<command name="ViewCalendarTimeZoneDefaults" priority="5">
-		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="CalendarConfiguration#ViewCalendarTimeZoneDefaults" />
 
 		<execute macro="UserBar#gotoMyAccount" />
@@ -438,9 +437,7 @@
 	</command>
 
 	<command name="ViewWeekStartMonday" priority="5">
-		<property name="portal.acceptance" value="true" />
-
-		<description message="This is a use case for 51127." />
+		<description message="This is a use case for LPS-51127." />
 
 		<execute macro="CalendarNavigator#gotoConfiguration" />
 

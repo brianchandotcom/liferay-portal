@@ -9,10 +9,6 @@
 		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
 	</command>
 
-	<command name="addAbstractSummary">
-		<execute function="Type" locator1="AlloyEditor#DESCRIPTION_FIELD" value1="${abstractSummary}" />
-	</command>
-
 	<command name="addArticleCP">
 		<execute macro="WebContentNavigator#gotoAddCP" />
 

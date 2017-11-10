@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.internal.render;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistry;
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +47,9 @@ public class DDMFormFieldRendererRegistryImpl
 
 		_serviceTracker = ServiceTrackerFactory.open(
 			_bundleContext,
-			"(&(objectClass=" + DDMFormFieldRenderer.class.getName() +
-				")(!(objectClass=" + clazz.getName() + ")))",
+			StringBundler.concat(
+				"(&(objectClass=", DDMFormFieldRenderer.class.getName(),
+				")(!(objectClass=", clazz.getName(), ")))"),
 			new DDMFormFieldRendererServiceTrackerCustomizer());
 	}
 

@@ -2948,9 +2948,13 @@ AUI.add(
 
 						var fieldContainer = field.get('container');
 
+						var parentField = field.get('parent');
+
 						var parentNode = fieldContainer.get('parentNode');
 
-						var repeatableInstance = instance.repeatableInstances[fieldName];
+						var treeName = fieldName + '_' + parentField.get('instanceId');
+
+						var repeatableInstance = instance.repeatableInstances[treeName];
 
 						if (!repeatableInstance) {
 							var ddPlugins = [];
@@ -2987,7 +2991,7 @@ AUI.add(
 									},
 									dropOn: '#' + parentNode.attr('id'),
 									helper: A.Node.create(TPL_REPEATABLE_HELPER),
-									nodes: '[data-fieldName=' + fieldName + ']',
+									nodes: '#' + parentNode.attr('id') + ' [data-fieldName=' + fieldName + ']',
 									placeholder: A.Node.create('<div class="form-builder-placeholder"></div>'),
 									sortCondition: function(event) {
 										var dropNode = event.drop.get('node');
@@ -2999,9 +3003,9 @@ AUI.add(
 
 							repeatableInstance.after('drag:align', A.bind(instance._afterRepeatableDragAlign, instance));
 
-							repeatableInstance.after('drag:end', A.rbind(instance._afterRepeatableDragEnd, instance, field.get('parent')));
+							repeatableInstance.after('drag:end', A.rbind(instance._afterRepeatableDragEnd, instance, parentField));
 
-							instance.repeatableInstances[fieldName] = repeatableInstance;
+							instance.repeatableInstances[treeName] = repeatableInstance;
 						}
 						else {
 							repeatableInstance.add(fieldContainer);

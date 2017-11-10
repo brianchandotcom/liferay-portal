@@ -11,8 +11,6 @@ copyLibs {
 }
 
 dependencies {
-	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.6.0"
 	provided group: "org.json", name: "json", version: "20090211"
 	provided group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 
@@ -20,6 +18,8 @@ dependencies {
 	testCompile group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.petra.memory", version: "1.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.portal.search.test.util", version: "1.1.0-20170427.050203-1"
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.6.0"
 	testCompile group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
 	testCompile group: "commons-collections", name: "commons-collections", version: "3.2.2"
 	testCompile group: "commons-lang", name: "commons-lang", version: "2.6"

@@ -471,8 +471,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 		if (structureModelResourceName == null) {
 			throw new UpgradeException(
-				"Model " + className + " does not support DDM structure " +
-					"permission checking");
+				StringBundler.concat(
+					"Model ", className, " does not support DDM structure ",
+					"permission checking"));
 		}
 
 		return structureModelResourceName;
@@ -488,8 +489,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 		if (templateModelResourceName == null) {
 			throw new UpgradeException(
-				"Model " + className + " does not support DDM template " +
-					"permission checking");
+				StringBundler.concat(
+					"Model ", className, " does not support DDM template ",
+					"permission checking"));
 		}
 
 		return templateModelResourceName;
@@ -852,9 +854,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		String newTemplateScript = StringPool.BLANK;
 
 		if (language.equals("ftl")) {
-			oldTemplateScript =
-				"<#if\\s*\\(?\\s*" + dateFieldName + "_Data\\s*>\\s*0\\s*\\)?" +
-					"\\s*>";
+			oldTemplateScript = StringBundler.concat(
+				"<#if\\s*\\(?\\s*", dateFieldName, "_Data\\s*>\\s*0\\s*\\)?",
+				"\\s*>");
 
 			newTemplateScript =
 				"<#if validator.isNotNull(" + dateFieldName + "_Data)>";

@@ -4,15 +4,15 @@
  * Prints the DDM sidebar.
  */
 {template .render}
-	{@param? bodyContent: html}
 	{@param closeButtonIcon: html}
+	{@param toolbarButtonIcon: html}
+	{@param? bodyContent: html}
 	{@param? description: string}
 	{@param? title: string}
-	{@param toolbarButtonIcon: html}
 	{@param? toolbarTemplateContext: [options: list<[buttonClass: string, handler: string, label: string]>]}
 	{@param? type: string}
 
-	<div>
+	<div class="sidebar">
 		{call .header data="all" /}
 		{if $type}
 			{delcall DDMSidebar.sidebar_body variant="$type" data="all" /}
@@ -46,30 +46,42 @@
  */
 {template .header}
 	{@param closeButtonIcon: html}
+	{@param toolbarButtonIcon: html}
 	{@param? description: string}
 	{@param? title: string}
-	{@param toolbarButtonIcon: html}
 	{@param? toolbarTemplateContext: [options: list<[buttonClass: string, handler: string, label: string]>]}
 
 	<div class="sidebar-header">
-		<ul class="sidebar-header-actions">
-			{if $toolbarTemplateContext}
-			<li>
-				{call .field_options_toolbar data="all" /}
-			</li>
-			{/if}
-
-			<li>
-				<a class="form-builder-sidebar-close" href="javascript:;">{$closeButtonIcon}</a>
-			</li>
-		</ul>
-
-		{if $title}
-			<h4 class="form-builder-sidebar-title truncate-text" title="{$title}">{$title}</h4>
-		{/if}
-
-		{if $description}
-			<h5 class="form-builder-sidebar-description" title="{$description}">{$description}</h5>
-		{/if}
+		<div class="sidebar-section-flex">
+			<div class="flex-col flex-col-expand">
+				{if $title}
+					<h4 class="form-builder-sidebar-title sidebar-title text-truncate"
+						title="{$title}">
+						{$title}
+					</h4>
+				{/if}
+			</div>
+			<div class="flex-col">
+				<ul class="nav nav-unstyled sidebar-actions">
+					{if $toolbarTemplateContext}
+						<li class="nav-item">
+							{call .field_options_toolbar data="all" /}
+						</li>
+					{/if}
+					<li class="nav-item">
+						<a class="form-builder-sidebar-close nav-link nav-link-monospaced sidebar-link"
+							href="javascript:;">
+							{$closeButtonIcon}
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="sidebar-section">
+			<h5 class="form-builder-sidebar-description sidebar-subtitle text-truncate"
+				title="{$description}">
+				{$description}
+			</h5>
+		</div>
 	</div>
 {/template}

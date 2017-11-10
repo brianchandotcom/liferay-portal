@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 
@@ -316,8 +317,9 @@ public class DDMFormValuesExportImportContentProcessor
 				catch (NoSuchFileEntryException nsfee) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to find file entry with uuid " + uuid +
-								" and groupId " + groupId,
+							StringBundler.concat(
+								"Unable to find file entry with uuid ", uuid,
+								" and groupId ", String.valueOf(groupId)),
 							nsfee);
 					}
 				}

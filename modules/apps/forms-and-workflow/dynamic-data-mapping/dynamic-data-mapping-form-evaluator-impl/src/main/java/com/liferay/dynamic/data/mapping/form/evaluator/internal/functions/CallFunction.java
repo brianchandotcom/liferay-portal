@@ -231,6 +231,8 @@ public class CallFunction extends BaseDDMFormRuleFunction {
 
 		if (ddmFormFieldEvaluationResult != null) {
 			ddmFormFieldEvaluationResult.setValue(value);
+
+			ddmFormFieldEvaluationResult.setProperty("valueChanged", true);
 		}
 	}
 

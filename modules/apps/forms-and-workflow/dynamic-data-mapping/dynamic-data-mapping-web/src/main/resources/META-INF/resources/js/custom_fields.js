@@ -1176,7 +1176,7 @@ AUI.add(
 
 						DDMDateField.superclass.renderUI.apply(instance, arguments);
 
-						instance.datePicker = new A.DatePicker(
+						instance.datePicker = new A.DatePickerDeprecated(
 							{
 								calendar: {
 									locale: Liferay.ThemeDisplay.getLanguageId()

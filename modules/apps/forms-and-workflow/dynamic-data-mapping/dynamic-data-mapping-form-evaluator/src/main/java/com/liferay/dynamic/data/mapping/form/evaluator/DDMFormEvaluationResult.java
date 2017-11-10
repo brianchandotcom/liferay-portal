@@ -28,7 +28,7 @@ import java.util.Set;
  */
 public class DDMFormEvaluationResult {
 
-	public DDMFormFieldEvaluationResult geDDMFormFieldEvaluationResult(
+	public DDMFormFieldEvaluationResult getDDMFormFieldEvaluationResult(
 		String fieldName, String instanceId) {
 
 		Map<String, DDMFormFieldEvaluationResult>

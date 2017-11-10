@@ -165,6 +165,8 @@ public class DDMFormFieldTemplateContextFactory {
 		setDDMFormFieldTemplateContextValue(
 			ddmFormField, ddmFormFieldEvaluationResult,
 			ddmFormFieldTemplateContext, ddmFormFieldValue.getValue());
+		setDDMFormFieldTemplateContextValueChanged(
+			ddmFormFieldEvaluationResult, ddmFormFieldTemplateContext);
 		setDDMFormFieldTemplateContextValueLocalizableValue(
 			ddmFormFieldTemplateContext, ddmFormFieldValue.getValue());
 		setDDMFormFieldTemplateContextValidation(
@@ -547,6 +549,16 @@ public class DDMFormFieldTemplateContextFactory {
 		}
 	}
 
+	protected void setDDMFormFieldTemplateContextValueChanged(
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult,
+		Map<String, Object> ddmFormFieldTemplateContext) {
+
+		ddmFormFieldTemplateContext.put(
+			"valueChanged",
+			GetterUtil.getBoolean((Boolean)
+				ddmFormFieldEvaluationResult.getProperty("valueChanged")));
+	}
+
 	protected void setDDMFormFieldTemplateContextValueLocalizableValue(
 		Map<String, Object> ddmFormFieldTemplateContext, Value value) {
 
@@ -590,7 +602,7 @@ public class DDMFormFieldTemplateContextFactory {
 	private DDMFormFieldEvaluationResult _getDDMFormFieldEvaluationResult(
 		DDMFormFieldValue ddmFormFieldValue) {
 
-		return _ddmFormEvaluationResult.geDDMFormFieldEvaluationResult(
+		return _ddmFormEvaluationResult.getDDMFormFieldEvaluationResult(
 			ddmFormFieldValue.getName(), ddmFormFieldValue.getInstanceId());
 	}
 

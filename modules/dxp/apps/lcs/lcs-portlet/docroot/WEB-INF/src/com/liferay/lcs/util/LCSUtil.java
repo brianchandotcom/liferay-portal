@@ -16,7 +16,6 @@ package com.liferay.lcs.util;
 
 import com.liferay.lcs.advisor.LCSAlertAdvisor;
 import com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor;
-import com.liferay.lcs.exception.InitializationException;
 import com.liferay.lcs.exception.InvalidLCSClusterEntryException;
 import com.liferay.lcs.exception.MissingLCSCredentialsException;
 import com.liferay.lcs.jsonwebserviceclient.OAuthJSONWebServiceClientImpl;
@@ -212,70 +211,6 @@ public class LCSUtil {
 		}
 
 		return true;
-	}
-
-	public static boolean isLCSClusterNodeRegistered(
-		PortletRequest portletRequest) {
-
-		try {
-			return isLCSClusterNodeRegistered();
-		}
-		catch (InitializationException ie) {
-			_log.error("Unable to initialize LCS cluster node", ie);
-
-			if (ie instanceof
-					InitializationException.FileSystemAccessException) {
-
-				addSessionErrors(portletRequest, "serverIdFileSystemAccess");
-			}
-			else if (ie instanceof InitializationException.KeyStoreException) {
-				addSessionErrors(portletRequest, "keyStoreAccess");
-			}
-			else {
-				addSessionErrors(portletRequest, "generalPluginAccess");
-			}
-		}
-		catch (JSONWebServiceTransportException jsonwste) {
-			_log.error(
-				"Unable to connect to the LCS JSON web service", jsonwste);
-
-			if (jsonwste instanceof
-					JSONWebServiceTransportException.AuthenticationFailure) {
-
-				if ((portletRequest != null) &&
-					OAuthUtil.hasOAuthException(jsonwste)) {
-
-					OAuthUtil.processOAuthException(portletRequest, jsonwste);
-				}
-				else {
-					addSessionErrors(portletRequest, "invalidCredential");
-				}
-			}
-			else if (jsonwste instanceof
-						JSONWebServiceTransportException.CommunicationFailure) {
-
-				addSessionErrors(portletRequest, "noConnection");
-			}
-		}
-		catch (Exception e) {
-			_log.error(
-				"Unable to verify if the LCS cluster node is registered", e);
-
-			Throwable cause = e.getCause();
-
-			if (cause instanceof JSONWebServiceInvocationException) {
-				String message = e.getMessage();
-
-				if (message.contains("PrincipalException")) {
-					addSessionErrors(
-						portletRequest, "lcsInsufficientPrivileges");
-				}
-			}
-
-			addSessionErrors(portletRequest, "generalPluginAccess");
-		}
-
-		return false;
 	}
 
 	public static synchronized boolean isLCSPortletAuthorized() {

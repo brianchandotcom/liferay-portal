@@ -18,10 +18,12 @@ import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms;
 import com.liferay.portlet.usergroupsadmin.search.UserGroupSearch;
 import com.liferay.user.groups.admin.item.selector.web.internal.search.UserGroupItemSelectorChecker;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
@@ -95,12 +97,21 @@ public class UserGroupItemSelectorViewDisplayContext {
 		_searchContainer.setOrderByType(getOrderByType());
 		_searchContainer.setRowChecker(rowChecker);
 
-		int total = _userGroupLocalService.getUserGroupsCount();
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		UserGroupDisplayTerms searchTerms =
+			(UserGroupDisplayTerms)_searchContainer.getSearchTerms();
+
+		String keywords = searchTerms.getKeywords();
+
+		int total = _userGroupLocalService.searchCount(
+			companyId, keywords, null);
 
 		_searchContainer.setTotal(total);
 
-		List<UserGroup> results = _userGroupLocalService.getUserGroups(
-			_searchContainer.getStart(), _searchContainer.getEnd());
+		List<UserGroup> results = _userGroupLocalService.search(
+			companyId, keywords, null, _searchContainer.getStart(),
+			_searchContainer.getEnd(), orderByComparator);
 
 		_searchContainer.setResults(results);
 

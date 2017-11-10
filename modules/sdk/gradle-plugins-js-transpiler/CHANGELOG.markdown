@@ -192,6 +192,12 @@ required.
 - [LPS-75175]: Update the [Liferay Gradle Plugins Node] dependency to version
 3.2.1.
 
+## 2.4.0 - 2017-11-13
+
+### Added
+- [LPS-75829]: Add new `com.liferay.js.transpiler.base` plugin to apply the
+`jsCompile` configuration expansion logic.
+
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
@@ -219,3 +225,4 @@ required.
 [LPS-74770]: https://issues.liferay.com/browse/LPS-74770
 [LPS-74933]: https://issues.liferay.com/browse/LPS-74933
 [LPS-75175]: https://issues.liferay.com/browse/LPS-75175
+[LPS-75829]: https://issues.liferay.com/browse/LPS-75829

@@ -2879,6 +2879,16 @@ to version 2.3.23.
 - [LPS-75798]: Update the [Liferay Source Formatter] dependency to version
 1.0.494.
 
+## 3.5.41 - 2017-11-13
+
+### Added
+- [LPS-75829]: Apply the `com.liferay.js.transpiler.base` plugin to an OSGi
+project if the `package.json` file declares a script named `"build"`.
+
+### Changed
+- [LPS-75829]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
+version 2.4.0.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -3138,4 +3148,5 @@ to version 2.3.23.
 [LPS-75633]: https://issues.liferay.com/browse/LPS-75633
 [LPS-75745]: https://issues.liferay.com/browse/LPS-75745
 [LPS-75798]: https://issues.liferay.com/browse/LPS-75798
+[LPS-75829]: https://issues.liferay.com/browse/LPS-75829
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

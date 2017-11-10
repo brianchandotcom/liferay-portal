@@ -2414,6 +2414,11 @@ dependencies into module dependencies in test projects.
 ### Changed
 - [LPS-75798]: Update the [Liferay Gradle Plugins] dependency to version 3.5.40.
 
+## 5.1.47 - 2017-11-13
+
+### Changed
+- [LPS-75829]: Update the [Liferay Gradle Plugins] dependency to version 3.5.41.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -2687,6 +2692,7 @@ dependencies into module dependencies in test projects.
 [LPS-75705]: https://issues.liferay.com/browse/LPS-75705
 [LPS-75745]: https://issues.liferay.com/browse/LPS-75745
 [LPS-75798]: https://issues.liferay.com/browse/LPS-75798
+[LPS-75829]: https://issues.liferay.com/browse/LPS-75829
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

@@ -22,7 +22,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
-import com.liferay.asset.util.impl.AssetUtil;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
@@ -1279,11 +1280,11 @@ public abstract class BaseAssetSearchTestCase {
 			AssetEntryQuery assetEntryQuery, SearchContext searchContext)
 		throws Exception {
 
-		Hits results = AssetUtil.search(
+		Hits results = _assetHelper.search(
 			searchContext, assetEntryQuery, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
-		return AssetUtil.getAssetEntries(results);
+		return _assetHelper.getAssetEntries(results);
 	}
 
 	protected int searchCount(
@@ -1291,7 +1292,7 @@ public abstract class BaseAssetSearchTestCase {
 			int start, int end)
 		throws Exception {
 
-		Hits results = AssetUtil.search(
+		Hits results = _assetHelper.search(
 			searchContext, assetEntryQuery, start, end);
 
 		return results.getLength();
@@ -1535,6 +1536,10 @@ public abstract class BaseAssetSearchTestCase {
 
 	private long[] _assetCategoryIds1;
 	private long[] _assetCategoryIds2;
+
+	@Inject
+	private AssetHelper _assetHelper;
+
 	private String[] _assetTagsNames1;
 	private String[] _assetTagsNames2;
 	private long _fashionCategoryId;

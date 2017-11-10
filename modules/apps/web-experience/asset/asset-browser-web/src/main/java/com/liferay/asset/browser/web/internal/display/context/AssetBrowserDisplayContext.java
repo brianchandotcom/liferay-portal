@@ -21,8 +21,9 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
-import com.liferay.asset.util.impl.AssetUtil;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
+import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -56,6 +57,10 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Eudaldo Alonso
@@ -106,18 +111,31 @@ public class AssetBrowserDisplayContext {
 
 		PortletURL addPortletURL = null;
 
+		Bundle bundle = FrameworkUtil.getBundle(
+			AssetBrowserDisplayContext.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		final long finalGroupId = groupId;
+
+		PortletURL portletURL = getPortletURL();
+
 		if (assetRendererFactory.isSupportsClassTypes() &&
 			(getSubtypeSelectionId() > 0)) {
 
-			addPortletURL = AssetUtil.getAddPortletURL(
-				liferayPortletRequest, liferayPortletResponse, groupId,
-				getTypeSelection(), getSubtypeSelectionId(), null, null,
-				getPortletURL().toString());
+			addPortletURL = OSGiServiceUtil.callService(
+				bundleContext, AssetHelper.class,
+				assetHelper -> assetHelper.getAddPortletURL(
+					liferayPortletRequest, liferayPortletResponse, finalGroupId,
+					getTypeSelection(), getSubtypeSelectionId(), null, null,
+					portletURL.toString()));
 		}
 		else {
-			addPortletURL = AssetUtil.getAddPortletURL(
-				liferayPortletRequest, liferayPortletResponse, groupId,
-				getTypeSelection(), 0, null, null, getPortletURL().toString());
+			addPortletURL = OSGiServiceUtil.callService(
+				bundleContext, AssetHelper.class,
+				assetHelper -> assetHelper.getAddPortletURL(
+					liferayPortletRequest, liferayPortletResponse, finalGroupId,
+					getTypeSelection(), 0, null, null, portletURL.toString()));
 		}
 
 		if (addPortletURL == null) {
@@ -192,7 +210,14 @@ public class AssetBrowserDisplayContext {
 				getStatuses(), assetBrowserSearch.getStart(),
 				assetBrowserSearch.getEnd(), sort);
 
-			List<AssetEntry> assetEntries = AssetUtil.getAssetEntries(hits);
+			Bundle bundle = FrameworkUtil.getBundle(
+				AssetBrowserDisplayContext.class);
+
+			BundleContext bundleContext = bundle.getBundleContext();
+
+			List<AssetEntry> assetEntries = OSGiServiceUtil.callService(
+				bundleContext, AssetHelper.class,
+				assetHelper -> assetHelper.getAssetEntries(hits));
 
 			assetBrowserSearch.setResults(assetEntries);
 		}

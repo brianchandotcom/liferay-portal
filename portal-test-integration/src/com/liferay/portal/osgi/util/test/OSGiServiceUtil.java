@@ -21,7 +21,10 @@ import org.osgi.framework.ServiceReference;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, moved to {@link
+ * 		   com.liferay.osgi.util.service.OSGiServiceUtil}
  */
+@Deprecated
 public class OSGiServiceUtil {
 
 	public static <S, R, E extends Throwable> R callService(

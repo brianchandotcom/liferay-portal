@@ -21,7 +21,7 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.test.util.AssetTestUtil;
-import com.liferay.asset.util.impl.AssetUtil;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.test.ServiceTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.Serializable;
@@ -122,7 +123,7 @@ public class AssetUtilTest {
 		throws Exception {
 
 		BaseModelSearchResult<AssetEntry> baseModelSearchResult =
-			AssetUtil.searchAssetEntries(
+			_assetHelper.searchAssetEntries(
 				assetEntryQuery, assetCategoryIds, assetTagNames, attributes,
 				companyId, keywords, layout, locale, scopeGroupId, timezone,
 				userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -133,6 +134,10 @@ public class AssetUtilTest {
 	}
 
 	private AssetCategory _assetCategory;
+
+	@Inject
+	private AssetHelper _assetHelper;
+
 	private AssetTag _assetTag;
 	private AssetVocabulary _assetVocabulary;
 

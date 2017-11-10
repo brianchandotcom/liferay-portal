@@ -32,6 +32,7 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.DirectoryStream.Filter;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.spi.FileSystemProvider;
 
@@ -239,13 +240,23 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 				DirectoryStream<Path> directoryStream = null;
 
 				try {
-					fileSystem = FileSystems.newFileSystem(file.toPath(), null);
+					Path filePath = file.toPath();
 
-					FileSystemProvider fileSystemProvider =
-						fileSystem.provider();
+					boolean defaultFileSystem = file.isDirectory();
 
-					directoryStream = fileSystemProvider.newDirectoryStream(
-						fileSystem.getPath(path), filter);
+					if (defaultFileSystem) {
+						directoryStream = Files.newDirectoryStream(
+							filePath, filter);
+					}
+					else {
+						fileSystem = FileSystems.newFileSystem(filePath, null);
+
+						FileSystemProvider fileSystemProvider =
+							fileSystem.provider();
+
+						directoryStream = fileSystemProvider.newDirectoryStream(
+							fileSystem.getPath(path), filter);
+					}
 
 					for (Path entryPath : directoryStream) {
 						if (javaFileObjects == null) {
@@ -256,10 +267,18 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 
 						entryPathString = entryPathString.substring(1);
 
-						javaFileObjects.add(
-							new JarJavaFileObject(
-								getClassName(entryPathString), file,
-								entryPathString));
+						String className = getClassName(entryPathString);
+
+						if (defaultFileSystem) {
+							javaFileObjects.add(
+								new RegularJavaFileObject(
+									className, entryPath));
+						}
+						else {
+							javaFileObjects.add(
+								new JarJavaFileObject(
+									className, file, entryPathString));
+						}
 					}
 				}
 				finally {

@@ -303,8 +303,8 @@ public class ClassPathUtil {
 			if (!classesDirName.endsWith("/WEB-INF/classes/")) {
 				_log.error(
 					StringBundler.concat(
-						"Class ", className, " is not loaded from a standard ",
-						"location (/WEB-INF/classes)"));
+						"Class ", className, " is loaded from ", classesDirName,
+						", not a standard location (/WEB-INF/classes)"));
 
 				return classPathElements;
 			}

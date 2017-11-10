@@ -83,6 +83,8 @@ public class RoleItemSelectorViewDisplayContext {
 		PortletURL portletURL = PortletURLUtil.clone(
 			_portletURL, _renderResponse);
 
+		portletURL.setParameter(
+			"keywords", ParamUtil.getString(_httpServletRequest, "keywords"));
 		portletURL.setParameter("type", String.valueOf(getType()));
 
 		return portletURL;

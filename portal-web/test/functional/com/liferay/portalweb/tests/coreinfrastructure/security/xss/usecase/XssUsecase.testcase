@@ -26,8 +26,6 @@
 	</tear-down>
 
 	<command name="ValidateXSSVulnerabilities" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
 		<var name="maliciousURL1">
@@ -109,7 +107,6 @@
 	</command>
 
 	<command name="ViewControlPanelNoXSS" priority="5">
-		<property name="portal.acceptance" value="true" />
 		<var name="siteName"><![CDATA[<script>document.write("XSS"); window.stop();</script>]]></var>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -146,8 +143,6 @@
 	</command>
 
 	<command name="ViewGoogleAnalyticsIDNoXSS" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -165,8 +160,6 @@
 	</command>
 
 	<command name="ViewJSONWSNoXSS" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute function="Open" locator1="${portalURL}/api/jsonws?contextPath=%22%3E%3Cimg%20src=x%20onerror=alert%28/contextPath/%29%3E" />
@@ -174,8 +167,6 @@
 	</command>
 
 	<command name="ViewLiferayPortletListNoXSS" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute macro="Page#add">
@@ -204,8 +195,6 @@
 	</command>
 
 	<command name="ViewLookAndFeelNoXSS" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="Page#add">
 			<var name="pageName"><![CDATA[<script>document.write("XSS"); window.stop();</script>]]></var>
 		</execute>
@@ -227,8 +216,6 @@
 	</command>
 
 	<command name="ViewRecycleBinNoXSS" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<var name="entryTitle"><![CDATA[<script>document.write("XSS"); window.stop();</script>]]></var>
 
 		<execute macro="Navigator#openURL" />
@@ -322,7 +309,6 @@
 	</command>
 
 	<command name="ViewURLValidateNoXSS" priority="5">
-		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="XSSUsecase#ViewURLValidateNoXSS" />
 
 		<var name="maliciousURL1">
@@ -376,8 +362,6 @@
 	</command>
 
 	<command name="ViewWikiNoXSS" priority="5">
-		<property name="portal.acceptance" value="quarantine" />
-
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="Account Settings" />
 		</execute>

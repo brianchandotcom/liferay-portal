@@ -153,7 +153,6 @@
 	</command>
 
 	<command name="AddOrganization" priority="5">
-		<property name="portal.acceptance" value="true" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -338,7 +337,6 @@
 	</command>
 
 	<command name="AddOrganizationSite" priority="5">
-		<property name="portal.acceptance" value="pending" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -631,7 +629,6 @@
 	</command>
 
 	<command name="AddUser" priority="5">
-		<property name="portal.acceptance" value="true" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoPortlet">

@@ -38,7 +38,7 @@
 	</tear-down>
 
 	<command name="AddDMDocumentRegRoleDefaultPermissions" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
 
 		<execute macro="Permissions#setUpRegRolePG">
 			<var name="pageName" value="Documents and Media Page" />
@@ -63,7 +63,7 @@
 	</command>
 
 	<command name="AddDMDocumentRegRoleDefinePermissions" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
 
 		<execute macro="Permissions#setUpRegRolePG">
 			<var name="pageName" value="Documents and Media Page" />
@@ -318,7 +318,7 @@
 	</command>
 
 	<command name="DeleteDMFolderRegRoleInline" priority="5">
-		<property name="portal.acceptance" value="pending" />
+		<property name="portal.acceptance" value="true" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="Permissions#setUpRegRoleLoginUserPG">

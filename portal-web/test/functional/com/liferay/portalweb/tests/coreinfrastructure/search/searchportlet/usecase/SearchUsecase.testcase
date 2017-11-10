@@ -551,8 +551,6 @@
 	</command>
 
 	<command name="SearchTwiceHideSitesFacet" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
 			<var name="panel" value="Control Panel" />
@@ -673,8 +671,6 @@
 	</command>
 
 	<command name="SearchTwiceScopeEverything" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
 			<var name="panel" value="Control Panel" />
@@ -804,8 +800,6 @@
 	</command>
 
 	<command name="SearchTwiceScopeLetUserChoose" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
 			<var name="panel" value="Control Panel" />
@@ -937,8 +931,6 @@
 	</command>
 
 	<command name="SearchTwiceScopeThisSite" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
 			<var name="panel" value="Control Panel" />

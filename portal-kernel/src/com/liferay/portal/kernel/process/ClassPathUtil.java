@@ -159,7 +159,7 @@ public class ClassPathUtil {
 		sb.append(File.pathSeparator);
 		sb.append(
 			_buildClassPath(
-				classLoader, "com.liferay.portal.servlet.MainServlet"));
+				classLoader, "org.apache.struts.action.ActionServlet"));
 
 		if (servletContext != null) {
 			sb.append(File.pathSeparator);

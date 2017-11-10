@@ -17,9 +17,9 @@
 <%
 String p_u_i_d = ParamUtil.getString(request, "p_u_i_d");
 int step = ParamUtil.getInteger(request, "step", 1);
-long siteGroupId = ParamUtil.getLong(request, "groupId", themeDisplay.getSiteGroupId());
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectSiteRole");
+long siteGroupId = ParamUtil.getLong(request, "groupId", themeDisplay.getSiteGroupId());
 String syncEntitiesEventName = ParamUtil.getString(request, "syncEntitiesEventName", liferayPortletResponse.getNamespace() + "syncSiteRoles");
 
 User selUser = PortalUtil.getSelectedUser(request);

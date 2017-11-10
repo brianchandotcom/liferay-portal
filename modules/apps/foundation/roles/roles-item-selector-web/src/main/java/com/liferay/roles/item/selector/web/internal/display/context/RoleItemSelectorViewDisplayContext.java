@@ -17,8 +17,8 @@ package com.liferay.roles.item.selector.web.internal.display.context;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -35,6 +35,7 @@ import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.util.List;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -49,13 +50,14 @@ public class RoleItemSelectorViewDisplayContext {
 	public RoleItemSelectorViewDisplayContext(
 		RoleLocalService roleLocalService, UsersAdmin usersAdmin,
 		HttpServletRequest httpServletRequest, PortletURL portletURL,
-		String itemSelectedEventName) {
+		String itemSelectedEventName, int type) {
 
 		_roleLocalService = roleLocalService;
 		_usersAdmin = usersAdmin;
 		_httpServletRequest = httpServletRequest;
 		_portletURL = portletURL;
 		_itemSelectedEventName = itemSelectedEventName;
+		_type = type;
 
 		_renderRequest = (RenderRequest)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
@@ -77,11 +79,16 @@ public class RoleItemSelectorViewDisplayContext {
 			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM, "asc");
 	}
 
-	public PortletURL getPortletURL() {
-		return _portletURL;
+	public PortletURL getPortletURL() throws PortletException {
+		PortletURL portletURL = PortletURLUtil.clone(
+			_portletURL, _renderResponse);
+
+		portletURL.setParameter("type", String.valueOf(getType()));
+
+		return portletURL;
 	}
 
-	public SearchContainer<Role> getSearchContainer() throws PortalException {
+	public SearchContainer<Role> getSearchContainer() throws Exception {
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
@@ -104,6 +111,8 @@ public class RoleItemSelectorViewDisplayContext {
 
 		RoleSearchTerms searchTerms =
 			(RoleSearchTerms)_searchContainer.getSearchTerms();
+
+		searchTerms.setType(getType());
 
 		List<Role> results = _roleLocalService.search(
 			CompanyThreadLocal.getCompanyId(), searchTerms.getKeywords(),
@@ -131,6 +140,10 @@ public class RoleItemSelectorViewDisplayContext {
 		return _searchContainer;
 	}
 
+	public int getType() {
+		return _type;
+	}
+
 	protected long[] getCheckedRoleIds() {
 		return ParamUtil.getLongValues(_renderRequest, "checkedRoleIds");
 	}
@@ -142,6 +155,7 @@ public class RoleItemSelectorViewDisplayContext {
 	private final RenderResponse _renderResponse;
 	private final RoleLocalService _roleLocalService;
 	private SearchContainer<Role> _searchContainer;
+	private final int _type;
 	private final UsersAdmin _usersAdmin;
 
 }

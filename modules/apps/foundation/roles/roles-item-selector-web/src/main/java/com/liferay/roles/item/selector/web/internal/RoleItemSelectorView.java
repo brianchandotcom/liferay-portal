@@ -96,7 +96,7 @@ public class RoleItemSelectorView
 		RoleItemSelectorViewDisplayContext roleItemSelectorViewDisplayContext =
 			new RoleItemSelectorViewDisplayContext(
 				_roleLocalService, _usersAdmin, httpServletRequest, portletURL,
-				itemSelectedEventName);
+				itemSelectedEventName, roleItemSelectorCriterion.getType());
 
 		request.setAttribute(
 			RoleItemSelectorViewConstants.

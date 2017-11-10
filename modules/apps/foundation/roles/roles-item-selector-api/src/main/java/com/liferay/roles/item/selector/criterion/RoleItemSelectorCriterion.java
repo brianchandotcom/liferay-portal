@@ -15,9 +15,42 @@
 package com.liferay.roles.item.selector.criterion;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
+import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 /**
  * @author Alessio Antonio Rendina
  */
 public class RoleItemSelectorCriterion extends BaseItemSelectorCriterion {
+
+	public RoleItemSelectorCriterion() {
+	}
+
+	public RoleItemSelectorCriterion(int type) {
+		_validateType(type);
+
+		_type = type;
+	}
+
+	public int getType() {
+		return _type;
+	}
+
+	public void setType(int type) {
+		_validateType(type);
+
+		_type = type;
+	}
+
+	private void _validateType(int type) {
+		if (!ArrayUtil.contains(
+				RoleConstants.TYPES_ORGANIZATION_AND_REGULAR_AND_SITE, type)) {
+
+			throw new IllegalArgumentException(
+				"Role type must have a value of 1, 2, or 3");
+		}
+	}
+
+	private int _type = RoleConstants.TYPE_REGULAR;
+
 }

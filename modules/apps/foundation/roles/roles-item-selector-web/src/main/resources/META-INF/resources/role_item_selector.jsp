@@ -73,7 +73,7 @@ PortletURL portletURL = roleItemSelectorViewDisplayContext.getPortletURL();
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" searchContainer="<%= roleItemSelectorViewDisplayContext.getSearchContainer() %>" />
+		<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" paginate="<%= false %>" searchContainer="<%= roleItemSelectorViewDisplayContext.getSearchContainer() %>" />
 
 		<liferay-ui:search-paginator searchContainer="<%= roleItemSelectorViewDisplayContext.getSearchContainer() %>" />
 	</liferay-ui:search-container>

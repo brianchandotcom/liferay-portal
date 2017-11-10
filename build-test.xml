@@ -10395,20 +10395,22 @@ jdbc.default.password=${database.password}</echo>
 			<![CDATA[
 				import org.apache.commons.io.FileUtils;
 
+				boolean found = false;
+
 				String logFilePath = project.getProperty("log.file.path");
 
 				logFilePath = logFilePath.replaceAll("\\\\", "/");
 
-				int second = 0;
+				long start = System.currentTimeMillis();
 
-				while (true) {
+				while (System.currentTimeMillis() - start < (1000 * 300)) {
 					try {
 						File file = new File(logFilePath);
 
 						String content = FileUtils.readFileToString(file);
 
-						if (content.contains("Deployed \"ROOT.war\"")) {
-
+						if (content.contains("Deployed \"ROOT.war\" ")) {
+							found = true;
 							break;
 						}
 					}
@@ -10416,16 +10418,24 @@ jdbc.default.password=${database.password}</echo>
 						e.printStackTrace();
 					}
 
-					if (second >= 600) {
-						break;
-					}
-
-					second++;
-
 					Thread.sleep(1000);
+				}
+
+				if (!found) {
+					project.setProperty("deployed.root.war", "false");
+				}
+				else {
+					project.setProperty("deployed.root.war", "true");
 				}
 			]]>
 		</beanshell>
+
+		<if>
+			<equals arg1="${deployed.root.war}" arg2="false" />
+			<then>
+				<fail message="Failed to ensure that the ROOT.war file deployed correctly" />
+			</then>
+		</if>
 	</target>
 
 	<target name="wait-for-plugins-deployment">

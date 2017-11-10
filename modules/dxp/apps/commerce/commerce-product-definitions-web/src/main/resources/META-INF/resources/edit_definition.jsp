@@ -21,9 +21,7 @@ CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayC
 
 CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcRenderCommandName", "editProductDefinition");
+PortletURL portletURL = cpDefinitionsDisplayContext.getEditProductDefinitionURL();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(catalogURL);
@@ -34,6 +32,16 @@ if (cpDefinition != null) {
 	title = cpDefinition.getTitle(languageId);
 }
 
+Map<String, Object> data = new HashMap<>();
+
+data.put("direction-right", Boolean.TRUE.toString());
+
+String selectedScreenNavigationEntryKey = cpDefinitionsDisplayContext.getSelectedScreenNavigationEntryKey();
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "products"), catalogURL, data);
+PortalUtil.addPortletBreadcrumbEntry(request, title, portletURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, selectedScreenNavigationEntryKey, StringPool.BLANK, data);
+
 renderResponse.setTitle(title);
 
 request.setAttribute("view.jsp-cpDefinition", cpDefinition);
@@ -42,9 +50,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 request.setAttribute("view.jsp-showSearch", false);
 %>
 
-<div class="container-fluid-1280">
-	<h1><%= title %></h1>
-</div>
+<%@ include file="/breadcrumb.jspf" %>
 
 <liferay-frontend:screen-navigation
 	key="<%= CPDefinitionScreenNavigationConstants.SCREEN_NAVIGATION_KEY_CP_DEFINITION_GENERAL %>"

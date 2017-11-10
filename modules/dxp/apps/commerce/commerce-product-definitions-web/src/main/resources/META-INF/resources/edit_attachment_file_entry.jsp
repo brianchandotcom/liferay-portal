@@ -44,11 +44,24 @@ productAttachmentsURL.setParameter("cpDefinitionId", String.valueOf(cpDefinition
 productAttachmentsURL.setParameter("screenNavigationCategoryKey", screenNavigationCategoryKey);
 productAttachmentsURL.setParameter("type", String.valueOf(type));
 
+String title = (cpAttachmentFileEntry == null) ? addMenuTitle : cpAttachmentFileEntry.getTitle(languageId);
+
+Map<String, Object> data = new HashMap<>();
+
+data.put("direction-right", Boolean.TRUE.toString());
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "products"), catalogURL, data);
+PortalUtil.addPortletBreadcrumbEntry(request, cpDefinition.getTitle(languageId), String.valueOf(cpAttachmentFileEntriesDisplayContext.getEditProductDefinitionURL()), data);
+PortalUtil.addPortletBreadcrumbEntry(request, screenNavigationCategoryKey, productAttachmentsURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(productAttachmentsURL.toString());
 
-renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, addMenuTitle) : cpDefinition.getTitle(languageId));
+renderResponse.setTitle((cpAttachmentFileEntry == null) ? LanguageUtil.get(request, addMenuTitle) : cpDefinition.getTitle(languageId) + " - " + cpAttachmentFileEntry.getTitle(languageId));
 %>
+
+<%@ include file="/breadcrumb.jspf" %>
 
 <portlet:actionURL name="editCPAttachmentFileEntry" var="editProductDefinitionOptionRelActionURL" />
 

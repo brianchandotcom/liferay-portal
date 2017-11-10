@@ -29,11 +29,24 @@ productSkusURL.setParameter("mvcRenderCommandName", "editProductDefinition");
 productSkusURL.setParameter("cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
 productSkusURL.setParameter("screenNavigationCategoryKey", cpInstanceDisplayContext.getScreenNavigationCategoryKey());
 
+String title = (cpInstance == null) ? LanguageUtil.get(request, "add-sku") : cpInstance.getSku();
+
+Map<String, Object> data = new HashMap<>();
+
+data.put("direction-right", Boolean.TRUE.toString());
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "products"), catalogURL, data);
+PortalUtil.addPortletBreadcrumbEntry(request, cpDefinition.getTitle(languageId), String.valueOf(cpInstanceDisplayContext.getEditProductDefinitionURL()), data);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "skus"), productSkusURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(productSkusURL.toString());
 
 renderResponse.setTitle((cpInstance == null) ? LanguageUtil.get(request, "add-sku") : cpDefinition.getTitle(languageId) + " - " + cpInstance.getSku());
 %>
+
+<%@ include file="/breadcrumb.jspf" %>
 
 <liferay-frontend:screen-navigation
 	key="<%= CPInstanceScreenNavigationConstants.SCREEN_NAVIGATION_KEY_CP_INSTANCE_GENERAL %>"

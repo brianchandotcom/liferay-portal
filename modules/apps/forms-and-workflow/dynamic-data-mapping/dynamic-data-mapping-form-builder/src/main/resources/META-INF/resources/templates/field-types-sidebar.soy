@@ -11,98 +11,143 @@
  * Prints the field types sidebar.
  */
 {template .render}
+	{@param fieldSets: list<[description: string, icon: html, id: string, name: string]>}
 	{@param fieldTypes: [
 			basic: list<[description: string, icon: html, label: string, name: string]>,
 			customized: list<[description: string, icon: html, label: string, name: string]>
-		]
-	}
-	{@param fieldSets: list<[description: string, icon: html, id: string, name: string]>}
+		]}
 	{@param strings: [basic: string, customized: string, field: string, fieldset: string]}
+	{@param? icons: [angleDown: html, angleRight: html]}
 
-	<aside class="lfr-ddm-form-builder-field-types-sidebar">
+	<div class="sidebar-body">
 		<nav class="navbar navbar-default navbar-no-collapse">
-			<ul class="nav navbar-nav nav-tabs" role="tablist">
-				<li class="tab yui3-widget active tab-selected" data-tab="field-types-content" role="presentation"><a href="javascript:;" class="tab-label tab-content" role="tab" tabindex="-1">{$strings.field}</a></li>
-				<li class="tab yui3-widget tab-focused" data-tab="field-types-fieldset" role="presentation"><a href="javascript:;" class="tab-label tab-content" role="tab" tabindex="0">{$strings.fieldset}</a></li>
+			<ul class="nav nav-tabs navbar-nav" role="tablist">
+				<li class="active yui3-widget tab tab-selected"
+					data-tab="field-types-content"
+					role="presentation">
+					<a href="javascript:;"
+						class="tab-content tab-label"
+						role="tab">
+						{$strings.field}
+					</a>
+				</li>
+				<li class="yui3-widget tab tab-selected"
+					data-tab="field-types-fieldset"
+					role="presentation">
+					<a href="javascript:;"
+						class="tab-content tab-label"
+						role="tab">
+						{$strings.fieldset}
+					</a>
+				</li>
 			</ul>
 		</nav>
 
-		<article class="field-types-content">
-			{if $fieldTypes.basic}
-				<ul class="list-group">
-					<li class="list-group-header toggler-header-expanded"><h5>{$strings.basic}</h5></li>
+		<div class="form-builder-sidebar-list">
 
-					<div class="list-group-body">
-						{foreach $fieldType in $fieldTypes.basic}
-							{call .render_field_type_group}
-								{param fieldType: $fieldType /}
-							{/call}
-						{/foreach}
-					</div>
-				</ul>
-			{/if}
+			<div class="field-types-content list-group">
+				{if $fieldTypes.basic}
+					{call .render_field_type_list_group}
+						{param fieldTypes: $fieldTypes.basic /}
+						{param iconClosed: $icons.angleRight /}
+						{param iconOpen: $icons.angleDown /}
+						{param title: $strings.basic /}
+					{/call}
+				{/if}
 
-			{if $fieldTypes.customized}
-				<ul class="list-group">
-					<li class="list-group-header toggler-header-expanded"><h5>{$strings.customized}</h5></li>
+				{if $fieldTypes.customized}
+					{call .render_field_type_list_group}
+						{param fieldTypes: $fieldTypes.customized /}
+						{param iconClosed: $icons.angleRight /}
+						{param iconOpen: $icons.angleDown /}
+						{param title: $strings.customized /}
+					{/call}
+				{/if}
+			</div>
 
-					<div class="list-group-body">
-						{foreach $fieldType in $fieldTypes.customized}
-							{call .render_field_type_group}
-								{param fieldType: $fieldType /}
-							{/call}
-						{/foreach}
-					</div>
-				</ul>
-			{/if}
-		</article>
+			<div class="field-types-fieldset hide list-group">
+				{if $fieldSets}
+					{call .render_field_set_list_group}
+						{param fieldSets: $fieldSets /}
+					{/call}
+				{/if}
+			</div>
 
-		<article class="field-types-fieldset hide">
-			{if $fieldSets}
-				<ul class="list-group">
-					<div class="list-group-body">
-						{foreach $fieldSet in $fieldSets}
-							{call .render_field_set_group}
-								{param fieldSet: $fieldSet /}
-							{/call}
-						{/foreach}
-					</div>
-				</ul>
-			{/if}
-		</article>
-	</aside>
+		</div>
+	</div>
 {/template}
 
 /**
- * Render a field type group
+ * Render a field type list group
  */
-{template .render_field_type_group}
-	{@param fieldType: [description: string, icon: html, label: string, name: string]}
+{template .render_field_type_list_group}
+	{@param fieldTypes: list<[description: string, icon: html, label: string, name: string]>}
+	{@param iconClosed: html}
+	{@param iconOpen: html}
+	{@param title: string}
 
-	<li class="lfr-ddm-form-builder-field-type-item list-group-item list-group-item-flex list-field-type-item" data-field-type-name="{$fieldType.name}">
-		<div class="flex-col">
-			<div class="sticker sticker-light">{$fieldType.icon}</div>
-		</div>
-		<div class="flex-col flex-col-expand">
-			<h4 class="list-group-title text-truncate">{$fieldType.label}</h4>
-			<p class="list-group-subtitle text-truncate">{$fieldType.description}</p>
-		</div>
-	</li>
+	<a class="list-group-header toggler-header-expanded list-group-item-action"
+		href="javascript:;">
+		<h3 class="list-group-header-title">{$title}</h3>
+
+		<span class="list-group-header-icon-open">{$iconOpen}</span>
+		<span class="list-group-header-icon-closed">{$iconClosed}</span>
+	</a>
+
+	<div class="list-group-body">
+		{foreach $fieldType in $fieldTypes}
+			<a class="list-group-item list-group-item-flex list-group-item-action lfr-ddm-form-builder-field-type-item"
+				data-field-type-name="{$fieldType.name}"
+				href="javascript:;">
+
+				{call .render_field_template}
+					{param description: $fieldType.description /}
+					{param icon: $fieldType.icon /}
+					{param name: $fieldType.label /}
+				{/call}
+			</a>
+		{/foreach}
+	</div>
 {/template}
 
 /**
- * Render a field set group
+ * Render a field set list group
  */
-{template .render_field_set_group}
-	{@param fieldSet: [description: string, icon: html, id: string, name: string]}
+{template .render_field_set_list_group}
+	{@param fieldSets: list<[description: string, icon: html, id: string, name: string]>}
 
-	<li class="lfr-ddm-form-builder-field-set-item list-group-item list-group-item-flex list-field-type-item" data-field-set-id="{$fieldSet.id}">
-		<div class="flex-col">
-			<div class="sticker sticker-light">{$fieldSet.icon}</div>
-		</div>
-		<div class="flex-col flex-col-expand">
-			<h4 class="list-group-title text-truncate">{$fieldSet.name}</h4>
-			<p class="list-group-subtitle text-truncate">{$fieldSet.description}</p>
-		</div>
-	</li>
+	<div class="list-group-body">
+		{foreach $fieldSet in $fieldSets}
+			<a class="list-group-item list-group-item-flex list-group-item-action lfr-ddm-form-builder-field-set-item"
+				data-field-set-id="{$fieldSet.id}"
+				href="javascript:;">
+
+				{call .render_field_template}
+					{param description: $fieldSet.description /}
+					{param icon: $fieldSet.icon /}
+					{param name: $fieldSet.name /}
+				{/call}
+			</a>
+		{/foreach}
+	</div>
+{/template}
+
+/**
+ * Render a field template
+ */
+{template .render_field_template}
+	{@param description: string}
+	{@param icon: html}
+	{@param name: string}
+
+	<div class="flex-col">
+		<div class="sticker sticker-light">{$icon}</div>
+	</div>
+	<div class="flex-col flex-col-expand">
+		<h4 class="list-group-title text-truncate">{$name}</h4>
+		<p class="list-group-subtitle text-truncate"
+			title="{$description}">
+			{$description}
+		</p>
+	</div>
 {/template}

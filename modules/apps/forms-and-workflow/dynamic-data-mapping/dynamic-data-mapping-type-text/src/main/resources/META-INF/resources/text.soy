@@ -11,25 +11,26 @@
  * Prints the DDM form text field.
  */
 {template .render}
+	{@param name: string}
+	{@param placeholder: string}
+	{@param value: ?}
+	{@param visible: bool}
 	{@param? dir: string}
 	{@param? displayStyle: string}
 	{@param? label: string}
-	{@param name: string}
-	{@param placeholder: string}
 	{@param? predefinedValue: string}
 	{@param? readOnly: bool}
 	{@param? required: bool}
 	{@param? showLabel: bool}
 	{@param? tip: string}
 	{@param? tooltip: string}
-	{@param value: ?}
-	{@param visible: bool}
 
 	{let $displayValue: $value ? $value : $predefinedValue ? $predefinedValue : '' /}
 
-	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-text {$tip ? 'liferay-ddm-form-field-has-tip' : ''}" data-fieldname="{$name}">
+	<div class="form-group {$visible ? '' : 'hide'} liferay-ddm-form-field-text"
+		data-fieldname="{$name}">
 		{if $showLabel}
-			<label class="control-label{$readOnly ? ' disabled' : ''}" for="{$name}">
+			<label for="{$name}">
 				{$label}
 
 				{if $required}
@@ -37,10 +38,13 @@
 				{/if}
 			</label>
 
-			<p class="liferay-ddm-form-field-tip">{$tip ? $tip: ''}</p>
+			{if $tip}
+				<span class="form-text">{$tip}</span>
+			{/if}
 		{/if}
 
-		<div class="input-group input-group-container {if $tooltip}input-group-transparent{/if}">
+		<div class="input-group">
+
 			{if $displayStyle == 'multiline'}
 				<textarea class="field form-control"
 					{if $dir}dir="{$dir}"{/if} id="{$name}"
@@ -62,9 +66,13 @@
 			{/if}
 
 			{if $tooltip}
-				<span class="input-group-addon">
-					<a class="help-icon help-icon-default icon-monospaced icon-question" data-original-title="{$tooltip}" data-toggle="popover" href="javascript:;" title="{$tooltip}"></a>
-				</span>
+				<a class="input-group-addon help-icon"
+					data-original-title="{$tooltip}"
+					data-toggle="popover"
+					href="javascript:;"
+					title="{$tooltip}">
+					<span class="icon-question"></span>
+				</a>
 			{/if}
 		</div>
 	</div>

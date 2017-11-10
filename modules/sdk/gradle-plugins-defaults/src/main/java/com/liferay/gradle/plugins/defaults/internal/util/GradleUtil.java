@@ -36,8 +36,10 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.ArtifactRepositoryContainer;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.DependencySubstitutions;
 import org.gradle.api.artifacts.DependencySubstitutions.Substitution;
+import org.gradle.api.artifacts.ModuleDependency;
 import org.gradle.api.artifacts.ModuleVersionSelector;
 import org.gradle.api.artifacts.ResolutionStrategy;
 import org.gradle.api.artifacts.component.ComponentSelector;
@@ -266,6 +268,22 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		Iterator<File> iterator = srcDirs.iterator();
 
 		return iterator.next();
+	}
+
+	public static boolean hasDependency(
+		DependencySet dependencySet, String group, String name) {
+
+		for (ModuleDependency moduleDependency :
+				dependencySet.withType(ModuleDependency.class)) {
+
+			if (group.equals(moduleDependency.getGroup()) &&
+				name.equals(moduleDependency.getName())) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public static boolean hasPlugin(

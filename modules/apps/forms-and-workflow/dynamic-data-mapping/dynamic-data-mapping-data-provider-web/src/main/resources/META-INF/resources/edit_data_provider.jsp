@@ -70,6 +70,14 @@ renderResponse.setTitle((ddmDataProviderInstance == null) ? LanguageUtil.get(req
 			<aui:fieldset>
 				<%= ddmDataProviderDisplayContext.getDataProviderInstanceDDMFormHTML() %>
 			</aui:fieldset>
+
+			<c:if test="<%= ddmDataProviderInstance == null %>">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+					<liferay-ui:input-permissions
+						modelName="<%= DDMDataProviderInstance.class.getName() %>"
+					/>
+				</aui:fieldset>
+			</c:if>
 		</aui:fieldset-group>
 	</div>
 

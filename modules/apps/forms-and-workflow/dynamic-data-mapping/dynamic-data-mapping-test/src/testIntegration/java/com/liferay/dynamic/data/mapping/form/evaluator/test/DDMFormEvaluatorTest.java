@@ -167,7 +167,7 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 			ddmFormEvaluator.evaluate(ddmFormEvaluatorContext);
 
 		DDMFormFieldEvaluationResult checkboxDDMFormFieldEvaluationResult =
-			ddmFormEvaluationResult.geDDMFormFieldEvaluationResult(
+			ddmFormEvaluationResult.getDDMFormFieldEvaluationResult(
 				"Confirmation", "hany");
 
 		Assert.assertFalse(checkboxDDMFormFieldEvaluationResult.isVisible());
@@ -202,7 +202,7 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 			ddmFormEvaluator.evaluate(ddmFormEvaluatorContext);
 
 		DDMFormFieldEvaluationResult checkboxDDMFormFieldEvaluationResult =
-			ddmFormEvaluationResult.geDDMFormFieldEvaluationResult(
+			ddmFormEvaluationResult.getDDMFormFieldEvaluationResult(
 				"Phone", "hany");
 
 		Assert.assertTrue(checkboxDDMFormFieldEvaluationResult.isVisible());
@@ -237,7 +237,7 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 			ddmFormEvaluator.evaluate(ddmFormEvaluatorContext);
 
 		DDMFormFieldEvaluationResult phoneDDMFormFieldEvaluationResult =
-			ddmFormEvaluationResult.geDDMFormFieldEvaluationResult(
+			ddmFormEvaluationResult.getDDMFormFieldEvaluationResult(
 				"Phone", "hany");
 
 		Assert.assertFalse(phoneDDMFormFieldEvaluationResult.isVisible());
@@ -272,7 +272,7 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 			ddmFormEvaluator.evaluate(ddmFormEvaluatorContext);
 
 		DDMFormFieldEvaluationResult phoneDDMFormFieldEvaluationResult =
-			ddmFormEvaluationResult.geDDMFormFieldEvaluationResult(
+			ddmFormEvaluationResult.getDDMFormFieldEvaluationResult(
 				"Phone", "hany");
 
 		Assert.assertTrue(phoneDDMFormFieldEvaluationResult.isVisible());

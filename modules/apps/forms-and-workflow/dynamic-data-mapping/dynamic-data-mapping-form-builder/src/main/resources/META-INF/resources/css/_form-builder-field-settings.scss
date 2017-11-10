@@ -31,8 +31,6 @@
 		&.advanced {
 			display: none;
 		}
-
-		margin-top: -56px;
 	}
 
 	.key-value-editor {
@@ -87,10 +85,6 @@
 		}
 	}
 
-	.form-group {
-		margin-bottom: 40px;
-	}
-
 	.has-error .key-value-editor {
 		display: none
 	}
@@ -106,8 +100,6 @@
 	}
 
 	.liferay-ddm-form-field-key-value {
-		margin-bottom: 20px;
-
 		.form-control {
 			padding-right: 30px;
 		}

@@ -133,6 +133,7 @@ import org.gradle.api.UncheckedIOException;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
+import org.gradle.api.artifacts.DependencyResolveDetails;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.DependencySubstitutions;
 import org.gradle.api.artifacts.DependencySubstitutions.Substitution;
@@ -140,6 +141,7 @@ import org.gradle.api.artifacts.ExcludeRule;
 import org.gradle.api.artifacts.ExternalDependency;
 import org.gradle.api.artifacts.ExternalModuleDependency;
 import org.gradle.api.artifacts.ModuleDependency;
+import org.gradle.api.artifacts.ModuleVersionSelector;
 import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.artifacts.ResolutionStrategy;
 import org.gradle.api.artifacts.ResolvableDependencies;
@@ -351,12 +353,28 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 			_addDependenciesPortalTest(project);
 			_addDependenciesTestCompile(project);
+			_configureConfigurationTestCompile(project);
 			_configureEclipse(project, portalTestConfiguration);
 			_configureIdea(project, portalTestConfiguration);
-			_configureSourceSetTest(
-				project, portalConfiguration, portalTestConfiguration);
+			_configureSourceSetTest(project, portalTestConfiguration);
 			_configureSourceSetTestIntegration(
 				project, portalConfiguration, portalTestConfiguration);
+
+			boolean forceDefaultVersions = false;
+
+			if (testProject || FileUtil.exists(project, ".lfrbuild-portal") ||
+				FileUtil.exists(project, ".lfrbuild-portal-private") ||
+				FileUtil.exists(project, ".lfrbuild-public")) {
+
+				forceDefaultVersions = true;
+			}
+
+			_configureConfigurationTest(
+				project, JavaPlugin.TEST_COMPILE_CLASSPATH_CONFIGURATION_NAME,
+				liferayExtension, forceDefaultVersions);
+			_configureConfigurationTest(
+				project, JavaPlugin.TEST_RUNTIME_CONFIGURATION_NAME,
+				liferayExtension, forceDefaultVersions);
 
 			if (GradleUtil.getProperty(
 					project, "junit.code.coverage",
@@ -1872,6 +1890,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						moduleDependency.exclude(
 							Collections.singletonMap("group", _GROUP_PORTAL));
 					}
+					else if (name.equals("easyconf")) {
+						moduleDependency.exclude(
+							Collections.singletonMap("group", "xdoclet"));
+						moduleDependency.exclude(
+							Collections.singletonMap("group", "xpp3"));
+					}
 				}
 
 			});
@@ -2138,6 +2162,85 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	private void _configureConfigurationTest(
+		Project project, String name, final LiferayExtension liferayExtension,
+		final boolean forceDefaultVersions) {
+
+		final Configuration configuration = GradleUtil.getConfiguration(
+			project, name);
+
+		ResolutionStrategy resolutionStrategy =
+			configuration.getResolutionStrategy();
+
+		resolutionStrategy.eachDependency(
+			new Action<DependencyResolveDetails>() {
+
+				@Override
+				public void execute(
+					DependencyResolveDetails dependencyResolveDetails) {
+
+					ModuleVersionSelector moduleVersionSelector =
+						dependencyResolveDetails.getRequested();
+
+					String group = moduleVersionSelector.getGroup();
+					String name = moduleVersionSelector.getName();
+
+					String target = _getEasyConfDependencyTarget(group, name);
+
+					if (Validator.isNotNull(target) &&
+						GradleUtil.hasDependency(
+							configuration.getAllDependencies(), "easyconf",
+							"easyconf")) {
+
+						dependencyResolveDetails.useTarget(target);
+					}
+					else if (forceDefaultVersions) {
+						String version = liferayExtension.getDefaultVersion(
+							group, name, null);
+
+						if (Validator.isNotNull(version)) {
+							dependencyResolveDetails.useVersion(version);
+						}
+					}
+				}
+
+				private String _getEasyConfDependencyTarget(
+					String group, String name) {
+
+					String target = null;
+
+					if (group.equals("commons-configuration") &&
+						name.equals("commons-configuration")) {
+
+						target =
+							"commons-configuration:commons-configuration:1.10";
+					}
+					else if (group.equals("xerces") && name.equals("xerces")) {
+						target = "xerces:xercesImpl:2.11.0";
+					}
+					else if (group.equals("xml-apis") &&
+							 name.equals("xml-apis")) {
+
+						target = "xml-apis:xml-apis:1.4.01";
+					}
+
+					return target;
+				}
+
+			});
+	}
+
+	private void _configureConfigurationTestCompile(Project project) {
+		Configuration testCompileConfiguration = GradleUtil.getConfiguration(
+			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME);
+
+		Configuration compileClasspathConfiguration =
+			GradleUtil.getConfiguration(
+				project, JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME);
+
+		testCompileConfiguration.extendsFrom(compileClasspathConfiguration);
 	}
 
 	private void _configureConfigurationTransitive(
@@ -2439,26 +2542,19 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureSourceSetTest(
-		Project project, Configuration portalConfiguration,
-		Configuration portalTestConfiguration) {
+		Project project, Configuration portalTestConfiguration) {
 
 		SourceSet sourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.TEST_SOURCE_SET_NAME);
 
 		_configureSourceSetClassesDir(project, sourceSet, "test-classes/unit");
 
-		Configuration compileClasspathConfiguration =
-			GradleUtil.getConfiguration(
-				project, JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME);
-
 		sourceSet.setCompileClasspath(
 			FileUtil.join(
-				compileClasspathConfiguration, portalConfiguration,
 				sourceSet.getCompileClasspath(), portalTestConfiguration));
 
 		sourceSet.setRuntimeClasspath(
 			FileUtil.join(
-				compileClasspathConfiguration, portalConfiguration,
 				sourceSet.getRuntimeClasspath(), portalTestConfiguration));
 	}
 

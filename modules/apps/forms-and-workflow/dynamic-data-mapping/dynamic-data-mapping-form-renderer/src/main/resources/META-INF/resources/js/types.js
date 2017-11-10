@@ -43,8 +43,8 @@ AUI.add(
 						},
 						description: config.description,
 						fieldClass: Liferay.DDM.Renderer.Field,
-						icon: config.icon,
 						group: config.group,
+						icon: config.icon,
 						label: config.label
 					}
 				);

@@ -31,7 +31,7 @@ AUI.add(
 					},
 
 					skin: {
-						value: 'sidebar-default'
+						value: 'sidebar-light'
 					},
 
 					title: {
@@ -123,10 +123,10 @@ AUI.add(
 
 						var context = {
 							bodyContent: instance.get('bodyContent'),
-							closeButtonIcon: Liferay.Util.getLexiconIconTpl('angle-right', 'icon-monospaced'),
+							closeButtonIcon: Liferay.Util.getLexiconIconTpl('times'),
 							description: instance.get('description'),
 							title: instance.get('title'),
-							toolbarButtonIcon: Liferay.Util.getLexiconIconTpl('ellipsis-v', 'icon-monospaced')
+							toolbarButtonIcon: Liferay.Util.getLexiconIconTpl('ellipsis-v')
 						};
 
 						if (toolbar) {

@@ -111,6 +111,9 @@ AUI.add(
 										condition.operands.forEach(
 											function(operand) {
 												operand.label = instance._getFieldLabel(operand.value);
+												if (!operand.label) {
+													operand.label = operand.value;
+												}
 											}
 										);
 									}

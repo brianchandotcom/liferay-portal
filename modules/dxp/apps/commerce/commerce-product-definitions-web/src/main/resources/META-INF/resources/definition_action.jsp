@@ -33,7 +33,7 @@ else {
 	<portlet:renderURL var="editURL">
 		<portlet:param name="mvcRenderCommandName" value="editProductDefinition" />
 		<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinition.getCPDefinitionId()) %>" />
-		<portlet:param name="toolbarItem" value="view-product-definition-details" />
+		<portlet:param name="screenNavigationCategoryKey" value="<%= CPDefinitionScreenNavigationConstants.CATEGORY_KEY_DETAILS %>" />
 	</portlet:renderURL>
 
 	<liferay-ui:icon

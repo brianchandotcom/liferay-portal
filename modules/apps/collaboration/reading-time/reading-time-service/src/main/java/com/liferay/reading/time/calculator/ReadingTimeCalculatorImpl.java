@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.reading.time.internal.calculator;
+package com.liferay.reading.time.calculator;
 
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.reading.time.calculator.ReadingTimeCalculator;
 
 import java.time.Duration;
 

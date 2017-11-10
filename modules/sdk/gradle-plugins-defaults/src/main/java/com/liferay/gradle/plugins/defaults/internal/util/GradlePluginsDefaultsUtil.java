@@ -175,10 +175,20 @@ public class GradlePluginsDefaultsUtil {
 		return snapshot;
 	}
 
+	public static boolean isTestProject(File dir) {
+		String dirName = dir.getName();
+
+		if (dirName.endsWith(_TEST_PROJECT_SUFFIX)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static boolean isTestProject(Project project) {
 		String projectName = project.getName();
 
-		if (projectName.endsWith("-test")) {
+		if (projectName.endsWith(_TEST_PROJECT_SUFFIX)) {
 			return true;
 		}
 
@@ -196,5 +206,7 @@ public class GradlePluginsDefaultsUtil {
 			project.setVersion(version + SNAPSHOT_VERSION_SUFFIX);
 		}
 	}
+
+	private static final String _TEST_PROJECT_SUFFIX = "-test";
 
 }

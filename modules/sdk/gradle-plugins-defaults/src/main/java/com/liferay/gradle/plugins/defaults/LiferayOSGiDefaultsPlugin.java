@@ -1242,7 +1242,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				public String doCall(String content, File file) {
 					String fileName = file.getName();
 
-					if (!fileName.equals("build.gradle")) {
+					if (!fileName.equals("build.gradle") ||
+						GradlePluginsDefaultsUtil.isTestProject(
+							file.getParentFile())) {
+
 						return content;
 					}
 

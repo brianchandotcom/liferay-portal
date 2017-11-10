@@ -3047,6 +3047,7 @@ to version 2.3.22.
 [LPS-73584]: https://issues.liferay.com/browse/LPS-73584
 [LPS-73600]: https://issues.liferay.com/browse/LPS-73600
 [LPS-73642]: https://issues.liferay.com/browse/LPS-73642
+[LPS-73725]: https://issues.liferay.com/browse/LPS-73725
 [LPS-73818]: https://issues.liferay.com/browse/LPS-73818
 [LPS-73855]: https://issues.liferay.com/browse/LPS-73855
 [LPS-73935]: https://issues.liferay.com/browse/LPS-73935
@@ -3106,7 +3107,6 @@ to version 2.3.22.
 [LPS-75238]: https://issues.liferay.com/browse/LPS-75238
 [LPS-75239]: https://issues.liferay.com/browse/LPS-75239
 [LPS-75247]: https://issues.liferay.com/browse/LPS-75247
-[LPS-73725]: https://issues.liferay.com/browse/LPS-73725
 [LPS-75254]: https://issues.liferay.com/browse/LPS-75254
 [LPS-75273]: https://issues.liferay.com/browse/LPS-75273
 [LPS-75323]: https://issues.liferay.com/browse/LPS-75323

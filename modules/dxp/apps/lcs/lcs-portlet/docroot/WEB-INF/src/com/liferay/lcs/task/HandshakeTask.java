@@ -30,7 +30,6 @@ import com.liferay.lcs.util.LCSPortletPreferencesUtil;
 import com.liferay.lcs.util.LCSUtil;
 import com.liferay.lcs.util.comparator.MessagePriorityComparator;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
-import com.liferay.portal.kernel.license.messaging.LCSPortletState;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
@@ -315,21 +314,9 @@ public class HandshakeTask implements Task {
 			}
 		}
 
-		if (_log.isTraceEnabled()) {
-			_log.trace("Handshake success");
-		}
-
-		_lcsConnectionManager.onHandshakeSuccess();
-
-		if (_log.isTraceEnabled()) {
-			_log.trace("Reset uptimes");
-		}
-
 		_uptimeMonitoringAdvisor.resetUptimes();
 
-		_lcsConnectionManager.setReady(true);
-
-		LCSUtil.processLCSPortletState(LCSPortletState.NO_SUBSCRIPTION);
+		_lcsConnectionManager.onHandshakeSuccess();
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Established connection");

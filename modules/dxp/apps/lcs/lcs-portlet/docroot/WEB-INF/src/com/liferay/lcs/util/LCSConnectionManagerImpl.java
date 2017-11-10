@@ -214,6 +214,14 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 
 	@Override
 	public void onHandshakeSuccess() {
+		if (_log.isTraceEnabled()) {
+			_log.trace("Handshake success");
+		}
+
+		setReady(true);
+
+		LCSUtil.processLCSPortletState(LCSPortletState.NO_SUBSCRIPTION);
+
 		_lcsConnectionMetadata.put(
 			"handshakeTime", String.valueOf(System.currentTimeMillis()));
 		_lcsConnectionMetadata.put(

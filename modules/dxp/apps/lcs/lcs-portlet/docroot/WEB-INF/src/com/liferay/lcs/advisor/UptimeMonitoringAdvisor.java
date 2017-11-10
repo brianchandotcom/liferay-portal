@@ -80,6 +80,10 @@ public class UptimeMonitoringAdvisor {
 			throw new UnsupportedOperationException("Bean is not initialized");
 		}
 
+		if (_log.isTraceEnabled()) {
+			_log.trace("Reset uptimes");
+		}
+
 		JSONArray jsonArray = _getUptimesJSONArray();
 
 		for (int i = 0; i < jsonArray.length(); i++) {

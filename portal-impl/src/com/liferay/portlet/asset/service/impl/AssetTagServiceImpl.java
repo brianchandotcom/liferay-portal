@@ -38,8 +38,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Provides the remote service for accessing, adding, checking, deleting,
@@ -99,8 +97,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 
 	@Override
 	public List<AssetTag> getGroupTags(long groupId) {
-		return stripUserInformation(
-			assetTagPersistence.filterFindByGroupId(groupId));
+		return stripUserInformation(assetTagPersistence.findByGroupId(groupId));
 	}
 
 	@Override
@@ -108,12 +105,12 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 		long groupId, int start, int end, OrderByComparator<AssetTag> obc) {
 
 		return stripUserInformation(
-			assetTagPersistence.filterFindByGroupId(groupId, start, end, obc));
+			assetTagPersistence.findByGroupId(groupId, start, end, obc));
 	}
 
 	@Override
 	public int getGroupTagsCount(long groupId) {
-		return assetTagPersistence.filterCountByGroupId(groupId);
+		return assetTagPersistence.countByGroupId(groupId);
 	}
 
 	@Override
@@ -139,21 +136,15 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 
 	@Override
 	public AssetTag getTag(long tagId) throws PortalException {
-		AssetTag assetTag = assetTagLocalService.getTag(tagId);
-
-		AssetTagPermission.check(
-			getPermissionChecker(), assetTag, ActionKeys.VIEW);
-
-		return stripUserInformation(assetTag);
+		return stripUserInformation(assetTagLocalService.getTag(tagId));
 	}
 
 	@Override
 	public List<AssetTag> getTags(long groupId, long classNameId, String name) {
 		return stripUserInformation(
-			filterTags(
-				assetTagFinder.findByG_C_N(
-					groupId, classNameId, name, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)));
+			assetTagFinder.findByG_C_N(
+				groupId, classNameId, name, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null));
 	}
 
 	@Override
@@ -162,9 +153,8 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 		OrderByComparator<AssetTag> obc) {
 
 		return stripUserInformation(
-			filterTags(
-				assetTagFinder.findByG_C_N(
-					groupId, classNameId, name, start, end, obc)));
+			assetTagFinder.findByG_C_N(
+				groupId, classNameId, name, start, end, obc));
 	}
 
 	@Override
@@ -197,28 +187,26 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 
 		if (Validator.isNull(name)) {
 			return stripUserInformation(
-				assetTagPersistence.filterFindByGroupId(
-					groupIds, start, end, obc));
+				assetTagPersistence.findByGroupId(groupIds, start, end, obc));
 		}
 
 		return stripUserInformation(
-			assetTagPersistence.filterFindByG_LikeN(
-				groupIds, name, start, end, obc));
+			assetTagPersistence.findByG_LikeN(groupIds, name, start, end, obc));
 	}
 
 	@Override
 	public List<AssetTag> getTags(String className, long classPK) {
 		return stripUserInformation(
-			filterTags(assetTagLocalService.getTags(className, classPK)));
+			assetTagLocalService.getTags(className, classPK));
 	}
 
 	@Override
 	public int getTagsCount(long groupId, String name) {
 		if (Validator.isNull(name)) {
-			return assetTagPersistence.filterCountByGroupId(groupId);
+			return assetTagPersistence.countByGroupId(groupId);
 		}
 
-		return assetTagPersistence.filterCountByG_LikeN(groupId, name);
+		return assetTagPersistence.countByG_LikeN(groupId, name);
 	}
 
 	@Override
@@ -272,28 +260,6 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 
 		return assetTagLocalService.updateTag(
 			getUserId(), tagId, name, serviceContext);
-	}
-
-	protected List<AssetTag> filterTags(List<AssetTag> tags) {
-		Stream<AssetTag> tagsStream = tags.stream();
-
-		return tagsStream.filter(
-			this::hasAssetTagViewPermission
-		).collect(
-			Collectors.toList()
-		);
-	}
-
-	protected boolean hasAssetTagViewPermission(AssetTag assetTag) {
-		try {
-			return AssetTagPermission.contains(
-				getPermissionChecker(), assetTag, ActionKeys.VIEW);
-		}
-		catch (PrincipalException pe) {
-			_log.error(pe);
-		}
-
-		return false;
 	}
 
 	protected AssetTag stripUserInformation(AssetTag assetTag) {

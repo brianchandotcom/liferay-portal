@@ -26,6 +26,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import javax.servlet.ServletContext;
 
 /**
@@ -71,8 +74,26 @@ public class ServletPaths {
 			return this;
 		}
 
-		return new ServletPaths(
-			_resourcePath.concat(normalizedPath), _servletContext);
+		int pos = normalizedPath.indexOf(CharPool.QUESTION);
+
+		if (pos != -1) {
+			normalizedPath = normalizedPath.substring(0, pos);
+		}
+
+		String downPathString = _resourcePath.concat(normalizedPath);
+
+		if (normalizedPath.indexOf("./") != -1) {
+			Path downPath = Paths.get(_resourcePath, normalizedPath);
+
+			downPath = downPath.normalize();
+
+			downPathString = downPath.toString();
+
+			downPathString = downPathString.replace(
+				CharPool.BACK_SLASH, CharPool.SLASH);
+		}
+
+		return new ServletPaths(downPathString, _servletContext);
 	}
 
 	public String getContent() {

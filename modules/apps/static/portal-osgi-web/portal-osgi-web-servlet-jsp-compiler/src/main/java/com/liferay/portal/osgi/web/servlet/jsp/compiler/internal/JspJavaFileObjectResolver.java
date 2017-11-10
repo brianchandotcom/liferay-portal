@@ -210,6 +210,17 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 			return Collections.emptyList();
 		}
 
+		Filter filter = new Filter<Path>() {
+
+			@Override
+			public boolean accept(Path entryPath) {
+				String entryPathString = entryPath.toString();
+
+				return entryPathString.endsWith(".class");
+			}
+
+		};
+
 		for (URL url : urls) {
 			try {
 				File file = ClassPathUtil.getFile(url);
@@ -232,19 +243,7 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 
 					try (DirectoryStream<Path> directoryStream =
 							fileSystemProvider.newDirectoryStream(
-								fileSystem.getPath(path),
-								new Filter<Path>() {
-
-									@Override
-									public boolean accept(Path entryPath) {
-										String entryPathString =
-											entryPath.toString();
-
-										return entryPathString.endsWith(
-											".class");
-									}
-
-								})) {
+								fileSystem.getPath(path), filter)) {
 
 						for (Path entryPath : directoryStream) {
 							if (javaFileObjects == null) {

@@ -46,7 +46,7 @@ public class ExplodedJarCommand extends BaseCommand {
 			Jar jar, OSGiBundleBuilderArgs osgiBundleBuilderArgs)
 		throws Exception {
 
-		final long lastModified = jar.lastModified();
+		long lastModified = jar.lastModified();
 
 		File outputDir = new File(
 			osgiBundleBuilderArgs.getOutputDir(), jar.getName());

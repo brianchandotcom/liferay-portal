@@ -10,12 +10,12 @@
 <tbody>
 <tr>
 	<td>ACTIVE_TAB_LINK</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li[contains(.,'${key_tab}') and contains(@class,'active')]/a</td>
+	<td>//ul[contains(@class,'nav-tabs')]//li[contains(@class,'active')]/a[normalize-space()='${key_tab}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TAB_LINK</td>
-	<td>//ul[contains(@class,'nav-tabs')]//li[contains(.,'${key_tab}')]/a</td>
+	<td>//ul[contains(@class,'nav-tabs')]//li/a[normalize-space()='${key_tab}']</td>
 	<td></td>
 </tr>
 <tr>

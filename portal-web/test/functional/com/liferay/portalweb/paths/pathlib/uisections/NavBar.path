@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>ACTIVE_NAV_ITEM_LINK</td>
-	<td>//div[contains(@class,'navbar-default')]//li[contains(@class,'active')]/a/span[contains(.,'${key_navItem}')]</td>
+	<td>//div[contains(@class,'navbar')]//li[contains(@class,'active')]//a[normalize-space()='${key_navItem}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -150,7 +150,7 @@
 </tr>
 <tr>
 	<td>NAV_ITEM_LINK</td>
-	<td>//div[contains(@class,'navbar-default')]//a/span[contains(.,'${key_navItem}')] | //*[@data-qa-id='navigation']//a[contains(.,'${key_navItem}')]</td>
+	<td>//div[contains(@class,'navbar')]//a[normalize-space()='${key_navItem}']</td>
 	<td></td>
 </tr>
 <tr>

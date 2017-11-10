@@ -2855,6 +2855,14 @@ version 2.1.3.
 version 2.1.4.
 - [LPS-73725]: Update the [Liferay Lang Builder] dependency to version 1.0.18.
 
+## 3.5.38 - 2017-11-09
+
+### Changed
+- [LPS-75610]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.22.
+- [LPS-75610]: Update the [Liferay Source Formatter] dependency to version
+1.0.493.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -3107,6 +3115,7 @@ version 2.1.4.
 [LPS-75430]: https://issues.liferay.com/browse/LPS-75430
 [LPS-75488]: https://issues.liferay.com/browse/LPS-75488
 [LPS-75589]: https://issues.liferay.com/browse/LPS-75589
+[LPS-75610]: https://issues.liferay.com/browse/LPS-75610
 [LPS-75613]: https://issues.liferay.com/browse/LPS-75613
 [LPS-75624]: https://issues.liferay.com/browse/LPS-75624
 [LPS-75633]: https://issues.liferay.com/browse/LPS-75633

@@ -21,11 +21,13 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.FieldConstants;
+import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -49,7 +51,11 @@ public class ConfigurationModelToDDMFormConverter {
 	}
 
 	public DDMForm getDDMForm() {
-		DDMForm ddmForm = new DDMForm();
+		DDMForm ddmForm = getConfigurationDDMForm();
+
+		if (ddmForm == null) {
+			ddmForm = new DDMForm();
+		}
 
 		ddmForm.addAvailableLocale(_locale);
 		ddmForm.setDefaultLocale(_locale);
@@ -68,11 +74,16 @@ public class ConfigurationModelToDDMFormConverter {
 			return;
 		}
 
-		for (AttributeDefinition attributeDefinition : attributeDefinitions) {
-			DDMFormField ddmFormField = getDDMFormField(
-				attributeDefinition, required);
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(false);
 
-			ddmForm.addDDMFormField(ddmFormField);
+		for (AttributeDefinition attributeDefinition : attributeDefinitions) {
+			if (!ddmFormFieldsMap.containsKey(attributeDefinition.getID())) {
+				DDMFormField ddmFormField = getDDMFormField(
+					attributeDefinition, required);
+
+				ddmForm.addDDMFormField(ddmFormField);
+			}
 		}
 	}
 
@@ -90,6 +101,22 @@ public class ConfigurationModelToDDMFormConverter {
 				ObjectClassDefinition.REQUIRED);
 
 		addDDMFormFields(requiredAttributeDefinitions, ddmForm, true);
+	}
+
+	protected DDMForm getConfigurationDDMForm() {
+		Class<?> formClass =
+			ConfigurationDDMFormDeclarationUtil.getConfigurationDDMFormClass(
+				_configurationModel);
+
+		if (formClass != null) {
+			try {
+				return DDMFormFactory.create(formClass);
+			}
+			catch (IllegalArgumentException iae) {
+			}
+		}
+
+		return null;
 	}
 
 	protected DDMFormFieldOptions getDDMFieldOptions(

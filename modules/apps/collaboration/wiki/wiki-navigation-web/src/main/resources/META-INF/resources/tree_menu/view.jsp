@@ -33,11 +33,29 @@ List<MenuItem> menuItems = MenuItem.fromWikiNode(selNodeId, depth, viewURL);
 		<%= _buildTreeMenuHTML(menuItems, title, true) %>
 
 		<aui:script use="aui-tree-view">
-			new A.TreeView(
+			var wikiPageList = A.one('.wiki-navigation-portlet-tree-menu .tree-menu');
+
+			var treeView = new A.TreeView(
 				{
-					contentBox: '.wiki-navigation-portlet-tree-menu .tree-menu'
+					contentBox: wikiPageList
 				}
 			).render();
+
+			var selected = wikiPageList.one('strong');
+
+			if (selected) {
+				var selectedChild = treeView.getNodeByChild(selected);
+
+				selectedChild.expand();
+
+				selectedChild.eachParent(
+					function(node) {
+						if (node instanceof A.TreeNode) {
+							node.expand();
+						}
+					}
+				);
+			}
 		</aui:script>
 	</c:when>
 	<c:otherwise>

@@ -2973,7 +2973,7 @@
 			<var name="templateLanguage" value="ftl" />
 		</execute>
 
-		<execute macro="PortletEntry#save" />
+		<execute macro="WebContentTemplates#save" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />

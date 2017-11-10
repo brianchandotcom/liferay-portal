@@ -17,6 +17,7 @@
 <%
 String p_u_i_d = ParamUtil.getString(request, "p_u_i_d");
 int step = ParamUtil.getInteger(request, "step", 1);
+long siteGroupId = ParamUtil.getLong(request, "groupId", themeDisplay.getSiteGroupId());
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectSiteRole");
 String syncEntitiesEventName = ParamUtil.getString(request, "syncEntitiesEventName", liferayPortletResponse.getNamespace() + "syncSiteRoles");
@@ -26,6 +27,7 @@ User selUser = PortalUtil.getSelectedUser(request);
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/select_role.jsp");
+portletURL.setParameter("groupId", String.valueOf(siteGroupId));
 portletURL.setParameter("roleType", String.valueOf(RoleConstants.TYPE_SITE));
 
 if (selUser != null) {

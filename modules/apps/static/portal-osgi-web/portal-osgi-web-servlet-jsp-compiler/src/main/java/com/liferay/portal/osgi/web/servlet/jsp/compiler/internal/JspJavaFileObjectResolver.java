@@ -236,6 +236,7 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 				}
 
 				FileSystem fileSystem = null;
+				DirectoryStream<Path> directoryStream = null;
 
 				try {
 					fileSystem = FileSystems.newFileSystem(file.toPath(), null);
@@ -243,29 +244,31 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 					FileSystemProvider fileSystemProvider =
 						fileSystem.provider();
 
-					try (DirectoryStream<Path> directoryStream =
-							fileSystemProvider.newDirectoryStream(
-								fileSystem.getPath(path), filter)) {
+					directoryStream = fileSystemProvider.newDirectoryStream(
+						fileSystem.getPath(path), filter);
 
-						for (Path entryPath : directoryStream) {
-							if (javaFileObjects == null) {
-								javaFileObjects = new ArrayList<>();
-							}
-
-							String entryPathString = entryPath.toString();
-
-							entryPathString = entryPathString.substring(1);
-
-							javaFileObjects.add(
-								new JarJavaFileObject(
-									getClassName(entryPathString), file,
-									entryPathString));
+					for (Path entryPath : directoryStream) {
+						if (javaFileObjects == null) {
+							javaFileObjects = new ArrayList<>();
 						}
+
+						String entryPathString = entryPath.toString();
+
+						entryPathString = entryPathString.substring(1);
+
+						javaFileObjects.add(
+							new JarJavaFileObject(
+								getClassName(entryPathString), file,
+								entryPathString));
 					}
 				}
 				finally {
 					if (fileSystem != null) {
 						fileSystem.close();
+					}
+
+					if (directoryStream != null) {
+						directoryStream.close();
 					}
 				}
 			}

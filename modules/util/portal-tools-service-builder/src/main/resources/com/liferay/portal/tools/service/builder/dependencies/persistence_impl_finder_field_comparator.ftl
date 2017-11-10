@@ -35,7 +35,7 @@
 		(${finderCol.name} < ${entity.varName}.get${finderCol.methodName}())
 	</#if>
 <#elseif stringUtil.equals(finderCol.comparator, "LIKE")>
-	!StringUtil.wildcardMatches(${entity.varName}.get${finderCol.methodName}(), ${finderCol.name}, CharPool.UNDERLINE, CharPool.PERCENT, CharPool.BACK_SLASH,
+	!StringUtil.wildcardMatches(${entity.varName}.get${finderCol.methodName}(), ${finderCol.name}, '_', '%', '\\',
 	<#if finderCol.isCaseSensitive()>
 		true
 	<#else>

@@ -61,13 +61,14 @@ public class LCSPortletStateAdvisor {
 				if (_log.isWarnEnabled()) {
 					StringBundler sb = new StringBundler();
 
-					sb.append("Access to remote service denied: {");
+					sb.append("OAuth credentials may be invalid. If ");
+					sb.append("credentials were revoked, the LCS portlet ");
+					sb.append("will not be able to communicate to the LCS ");
+					sb.append("platform after the server is rebooted or ");
+					sb.append("after the LCS portlet is redeployed. ");
+					sb.append("The LCS platform returned the following ");
+					sb.append("error message: ");
 					sb.append(message);
-					sb.append("}. Please make sure oAuth credentials are ");
-					sb.append("still valid. If credentials are revoked ");
-					sb.append("LCS portlet won't be able to communicate ");
-					sb.append("to LCS platform after next server reboot or ");
-					sb.append("LCS portlet redeploy");
 
 					_log.warn(sb.toString());
 				}

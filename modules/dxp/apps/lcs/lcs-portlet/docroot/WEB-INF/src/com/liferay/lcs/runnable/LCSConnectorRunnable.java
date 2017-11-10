@@ -172,12 +172,13 @@ public class LCSConnectorRunnable implements Runnable {
 
 			LCSPortletPreferencesUtil.removeCredentials();
 
-			StringBundler sb = new StringBundler(4);
+			StringBundler sb = new StringBundler(5);
 
-			sb.append("LCS activation token file contains revoked or invalid ");
-			sb.append("oAuth credentials and will be deleted. Please make ");
-			sb.append("sure to regenerate the file using LCS platform ");
-			sb.append("dashboard, download and deploy it");
+			sb.append("The LCS activation token file contains revoked or ");
+			sb.append("invalid OAuth credentials and will be deleted. ");
+			sb.append("Regenerate the token file using the LCS platform ");
+			sb.append("dashboard, and then download the token file and ");
+			sb.append("deploy it.");
 
 			throw new InvalidLCSClusterEntryTokenException(sb.toString());
 		}

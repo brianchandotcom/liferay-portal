@@ -84,17 +84,17 @@ public class LCSClusterEntryTokenAdvisor {
 
 		StringBundler sb = new StringBundler(11);
 
-		sb.append("Environment with ID ");
+		sb.append("Environment ID ");
 		sb.append(lcsClusterEntryToken.getLcsClusterEntryId());
-		sb.append(" defined in LCS activation token file mismatches ");
-		sb.append("environment with ID ");
+		sb.append(" defined in the LCS activation token file does not match ");
+		sb.append("the environment ID ");
 		sb.append(lcsClusterNode.getLcsClusterEntryId());
-		sb.append(" where server was registered. LCS activation token file ");
-		sb.append("will be deleted. Please make sure to deploy correct ");
-		sb.append("LCS activation token file. If you intent to change ");
-		sb.append("environment please unregister server with key ");
+		sb.append(" where the server was registered. The LCS activation ");
+		sb.append("token file will be deleted. Please redeploy the correct ");
+		sb.append("LCS activation token file. If you intend to change the ");
+		sb.append("environment, please unregister server ");
 		sb.append(lcsClusterNode.getKey());
-		sb.append(" from old environment using LCS platform dashboard");
+		sb.append(" from the old environment using the LCS platform dashboard");
 
 		throw new InvalidLCSClusterEntryTokenException(sb.toString());
 	}
@@ -116,14 +116,15 @@ public class LCSClusterEntryTokenAdvisor {
 
 		_lcsAlertAdvisor.add(LCSAlert.ERROR_INVALID_TOKEN);
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(7);
 
-		sb.append("LCS activation token file is invalid as it's ID ");
+		sb.append("The LCS activation token file is invalid since the ID ");
 		sb.append(lcsClusterEntryTokenId);
-		sb.append(" defined in file does not exist at LCS platform. LCS ");
-		sb.append("activation token file will be deleted. If the file was ");
-		sb.append("regenerated please make sure to download correct latest ");
-		sb.append("file using LCS platform dashboard and deploy it");
+		sb.append(" defined in file does not exist on the LCS platform. The ");
+		sb.append("LCS activation token file will be deleted. If the ");
+		sb.append("activation token file was regenerated, please make sure ");
+		sb.append("to download the latest activation token file using the ");
+		sb.append("LCS platform dashboard and deploy it.");
 
 		throw new InvalidLCSClusterEntryTokenException(sb.toString());
 	}
@@ -144,7 +145,7 @@ public class LCSClusterEntryTokenAdvisor {
 		catch (MultipleLCSClusterEntryTokenException mlcscete) {
 			_log.error(
 				"Multiple LCS activation token files detected. Please delete " +
-					"redundant files manually",
+					"the redundant files manually.",
 				mlcscete);
 		}
 	}
@@ -155,9 +156,9 @@ public class LCSClusterEntryTokenAdvisor {
 
 	public LCSClusterEntryToken processLCSClusterEntryToken()
 		throws IOException, LCSClusterEntryTokenDecryptException,
-			MissingLCSClusterEntryTokenException,
-			MultipleLCSClusterEntryTokenException,
-			NoSuchPortletPreferencesException, ReadOnlyException {
+			   MissingLCSClusterEntryTokenException,
+			   MultipleLCSClusterEntryTokenException,
+			   NoSuchPortletPreferencesException, ReadOnlyException {
 
 		LCSClusterEntryToken lcsClusterEntryToken =
 			processLCSCLusterEntryTokenFile();
@@ -179,8 +180,8 @@ public class LCSClusterEntryTokenAdvisor {
 
 	public LCSClusterEntryToken processLCSCLusterEntryTokenFile()
 		throws IOException, LCSClusterEntryTokenDecryptException,
-			MissingLCSClusterEntryTokenException,
-			MultipleLCSClusterEntryTokenException {
+			   MissingLCSClusterEntryTokenException,
+			   MultipleLCSClusterEntryTokenException {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Detecting LCS activation token file");
@@ -204,13 +205,14 @@ public class LCSClusterEntryTokenAdvisor {
 
 			_lcsAlertAdvisor.add(LCSAlert.ERROR_INVALID_TOKEN);
 
-			StringBundler sb = new StringBundler(5);
+			StringBundler sb = new StringBundler(6);
 
-			sb.append("Unable to decrypt LCS activation token file ");
+			sb.append("Unable to decrypt the LCS activation token file ");
 			sb.append(lcsClusterEntryTokenFileName);
-			sb.append(". LCS activation token file will be deleted. Please ");
-			sb.append("make sure that LCS portlet is compatible with LCS ");
-			sb.append("platform version where the file was generated.");
+			sb.append(". The LCS activation token file will be deleted. ");
+			sb.append("Please make sure that the LCS portlet is compatible ");
+			sb.append("with the LCS platform version where the file was ");
+			sb.append("generated.");
 
 			throw new LCSClusterEntryTokenDecryptException(sb.toString(), e);
 		}
@@ -280,7 +282,7 @@ public class LCSClusterEntryTokenAdvisor {
 
 	protected String getLCSClusterEntryTokenFileName()
 		throws MissingLCSClusterEntryTokenException,
-			MultipleLCSClusterEntryTokenException {
+			   MultipleLCSClusterEntryTokenException {
 
 		StringBundler sb = new StringBundler(4);
 
@@ -325,7 +327,7 @@ public class LCSClusterEntryTokenAdvisor {
 			_lcsAlertAdvisor.add(LCSAlert.ERROR_MISSING_TOKEN);
 
 			throw new MissingLCSClusterEntryTokenException(
-				"LCS activation token file misses at directory " +
+				"The LCS activation token file is missing from directory " +
 					sb.toString());
 		}
 		else if (lcsClusterEntryTokenFileNames.length > 1) {

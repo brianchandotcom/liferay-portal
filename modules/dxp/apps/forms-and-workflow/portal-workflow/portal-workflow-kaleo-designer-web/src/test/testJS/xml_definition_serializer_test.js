@@ -65,7 +65,7 @@ describe(
 						);
 
 						assert(
-							definition.includes('receptionType="bcc"'),
+							definition.indexOf('receptionType="bcc"') > 0,
 							'receptionType attribute not serialized.'
 						);
 
@@ -103,7 +103,7 @@ describe(
 						);
 
 						assert(
-							definition.includes('<user'),
+							definition.indexOf('<user') > 0,
 							'<users/> element not serialized.'
 						);
 

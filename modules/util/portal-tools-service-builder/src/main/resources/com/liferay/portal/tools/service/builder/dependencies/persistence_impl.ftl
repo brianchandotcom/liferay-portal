@@ -26,7 +26,6 @@ import ${apiPackagePath}.service.persistence.${entity.name}Persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;

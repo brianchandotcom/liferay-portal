@@ -22,8 +22,6 @@ import com.liferay.document.library.content.model.impl.DLContentImpl;
 import com.liferay.document.library.content.model.impl.DLContentModelImpl;
 import com.liferay.document.library.content.service.persistence.DLContentPersistence;
 
-import com.liferay.petra.string.CharPool;
-
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -1383,8 +1381,7 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 					if ((companyId != dlContent.getCompanyId()) ||
 							(repositoryId != dlContent.getRepositoryId()) ||
 							!StringUtil.wildcardMatches(dlContent.getPath(),
-								path, CharPool.UNDERLINE, CharPool.PERCENT,
-								CharPool.BACK_SLASH, true)) {
+								path, '_', '%', '\\', true)) {
 						list = null;
 
 						break;

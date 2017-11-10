@@ -16,8 +16,6 @@ package com.liferay.sync.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.petra.string.CharPool;
-
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -1832,9 +1830,8 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 				for (SyncDevice syncDevice : list) {
 					if ((companyId != syncDevice.getCompanyId()) ||
 							!StringUtil.wildcardMatches(
-								syncDevice.getUserName(), userName,
-								CharPool.UNDERLINE, CharPool.PERCENT,
-								CharPool.BACK_SLASH, false)) {
+								syncDevice.getUserName(), userName, '_', '%',
+								'\\', false)) {
 						list = null;
 
 						break;

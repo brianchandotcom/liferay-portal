@@ -22,8 +22,6 @@ import com.liferay.layout.page.template.model.impl.LayoutPageTemplateCollectionI
 import com.liferay.layout.page.template.model.impl.LayoutPageTemplateCollectionModelImpl;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateCollectionPersistence;
 
-import com.liferay.petra.string.CharPool;
-
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -1347,8 +1345,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 					if ((groupId != layoutPageTemplateCollection.getGroupId()) ||
 							!StringUtil.wildcardMatches(
 								layoutPageTemplateCollection.getName(), name,
-								CharPool.UNDERLINE, CharPool.PERCENT,
-								CharPool.BACK_SLASH, false)) {
+								'_', '%', '\\', false)) {
 						list = null;
 
 						break;

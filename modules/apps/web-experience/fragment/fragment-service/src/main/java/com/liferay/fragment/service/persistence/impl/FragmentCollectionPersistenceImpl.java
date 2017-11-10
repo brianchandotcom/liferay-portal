@@ -22,8 +22,6 @@ import com.liferay.fragment.model.impl.FragmentCollectionImpl;
 import com.liferay.fragment.model.impl.FragmentCollectionModelImpl;
 import com.liferay.fragment.service.persistence.FragmentCollectionPersistence;
 
-import com.liferay.petra.string.CharPool;
-
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -1325,9 +1323,8 @@ public class FragmentCollectionPersistenceImpl extends BasePersistenceImpl<Fragm
 				for (FragmentCollection fragmentCollection : list) {
 					if ((groupId != fragmentCollection.getGroupId()) ||
 							!StringUtil.wildcardMatches(
-								fragmentCollection.getName(), name,
-								CharPool.UNDERLINE, CharPool.PERCENT,
-								CharPool.BACK_SLASH, false)) {
+								fragmentCollection.getName(), name, '_', '%',
+								'\\', false)) {
 						list = null;
 
 						break;

@@ -16,8 +16,6 @@ package com.liferay.portal.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.petra.string.CharPool;
-
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -4327,8 +4325,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 							(ownerType != portletPreferences.getOwnerType()) ||
 							!StringUtil.wildcardMatches(
 								portletPreferences.getPortletId(), portletId,
-								CharPool.UNDERLINE, CharPool.PERCENT,
-								CharPool.BACK_SLASH, true)) {
+								'_', '%', '\\', true)) {
 						list = null;
 
 						break;

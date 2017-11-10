@@ -22,8 +22,6 @@ import com.liferay.asset.display.template.model.impl.AssetDisplayTemplateImpl;
 import com.liferay.asset.display.template.model.impl.AssetDisplayTemplateModelImpl;
 import com.liferay.asset.display.template.service.persistence.AssetDisplayTemplatePersistence;
 
-import com.liferay.petra.string.CharPool;
-
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -1070,9 +1068,8 @@ public class AssetDisplayTemplatePersistenceImpl extends BasePersistenceImpl<Ass
 				for (AssetDisplayTemplate assetDisplayTemplate : list) {
 					if ((groupId != assetDisplayTemplate.getGroupId()) ||
 							!StringUtil.wildcardMatches(
-								assetDisplayTemplate.getName(), name,
-								CharPool.UNDERLINE, CharPool.PERCENT,
-								CharPool.BACK_SLASH, false)) {
+								assetDisplayTemplate.getName(), name, '_', '%',
+								'\\', false)) {
 						list = null;
 
 						break;

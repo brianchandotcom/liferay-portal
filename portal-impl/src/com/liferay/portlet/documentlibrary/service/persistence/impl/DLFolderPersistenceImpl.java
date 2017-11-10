@@ -21,8 +21,6 @@ import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryTypePersistence;
 import com.liferay.document.library.kernel.service.persistence.DLFolderPersistence;
 
-import com.liferay.petra.string.CharPool;
-
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -9056,9 +9054,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 					if ((groupId != dlFolder.getGroupId()) ||
 							(mountPoint != dlFolder.getMountPoint()) ||
 							!StringUtil.wildcardMatches(
-								dlFolder.getTreePath(), treePath,
-								CharPool.UNDERLINE, CharPool.PERCENT,
-								CharPool.BACK_SLASH, true) ||
+								dlFolder.getTreePath(), treePath, '_', '%',
+								'\\', true) ||
 							(hidden != dlFolder.getHidden())) {
 						list = null;
 

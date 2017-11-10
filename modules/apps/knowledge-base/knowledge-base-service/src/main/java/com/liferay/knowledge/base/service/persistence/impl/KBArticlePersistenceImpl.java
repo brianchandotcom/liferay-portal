@@ -22,8 +22,6 @@ import com.liferay.knowledge.base.model.impl.KBArticleImpl;
 import com.liferay.knowledge.base.model.impl.KBArticleModelImpl;
 import com.liferay.knowledge.base.service.persistence.KBArticlePersistence;
 
-import com.liferay.petra.string.CharPool;
-
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -25159,9 +25157,8 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 				for (KBArticle kbArticle : list) {
 					if ((groupId != kbArticle.getGroupId()) ||
 							!StringUtil.wildcardMatches(
-								kbArticle.getSections(), sections,
-								CharPool.UNDERLINE, CharPool.PERCENT,
-								CharPool.BACK_SLASH, true) ||
+								kbArticle.getSections(), sections, '_', '%',
+								'\\', true) ||
 							(latest != kbArticle.getLatest())) {
 						list = null;
 
@@ -26831,10 +26828,8 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 				for (KBArticle kbArticle : list) {
 					if ((groupId != kbArticle.getGroupId()) ||
 							!StringUtil.wildcardMatches(
-								kbArticle.getSections(), sections,
-								CharPool.UNDERLINE, CharPool.PERCENT,
-								CharPool.BACK_SLASH, true) ||
-							(main != kbArticle.getMain())) {
+								kbArticle.getSections(), sections, '_', '%',
+								'\\', true) || (main != kbArticle.getMain())) {
 						list = null;
 
 						break;
@@ -28502,9 +28497,8 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 				for (KBArticle kbArticle : list) {
 					if ((groupId != kbArticle.getGroupId()) ||
 							!StringUtil.wildcardMatches(
-								kbArticle.getSections(), sections,
-								CharPool.UNDERLINE, CharPool.PERCENT,
-								CharPool.BACK_SLASH, true) ||
+								kbArticle.getSections(), sections, '_', '%',
+								'\\', true) ||
 							(status != kbArticle.getStatus())) {
 						list = null;
 

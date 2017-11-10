@@ -14,7 +14,7 @@
 
 package com.liferay.comment.web.internal.portlet.action;
 
-import com.liferay.comment.web.constants.CommentPortletKeys;
+import com.liferay.comment.web.internal.constants.CommentPortletKeys;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;

@@ -408,7 +408,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 				continue;
 			}
 
-			String sortFieldName = DocumentImpl.getSortFieldName(sort, "score");
+			String sortFieldName = getSortFieldName(sort, "score");
 
 			if (sortFieldNames.contains(sortFieldName)) {
 				continue;
@@ -538,6 +538,16 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		SolrClient solrClient = _solrClientManager.getSolrClient();
 
 		return solrClient.query(solrQuery, METHOD.POST);
+	}
+
+	protected String getSortFieldName(Sort sort, String scoreFieldName) {
+		String sortFieldName = sort.getFieldName();
+
+		if (sortFieldName.equals(Field.PRIORITY)) {
+			return sortFieldName;
+		}
+
+		return DocumentImpl.getSortFieldName(sort, scoreFieldName);
 	}
 
 	protected Hits processResponse(

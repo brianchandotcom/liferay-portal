@@ -14,63 +14,40 @@
 
 package com.liferay.portal.search.test.util.indexing;
 
-import com.liferay.portal.kernel.search.Document;
-
 /**
  * @author André de Oliveira
  */
 public class DocumentCreationHelpers {
 
 	public static DocumentCreationHelper singleGeoLocation(
-		final String fieldName, final double latitude, final double longitude) {
+		String fieldName, double latitude, double longitude) {
 
-		return new DocumentCreationHelper() {
-
-			@Override
-			public void populate(Document document) {
-				document.addGeoLocation(fieldName, latitude, longitude);
-			}
-
-		};
+		return document -> document.addGeoLocation(
+			fieldName, latitude, longitude);
 	}
 
 	public static DocumentCreationHelper singleKeyword(
-		final String field, final String value) {
+		String fieldName, String value) {
 
-		return new DocumentCreationHelper() {
+		return document -> document.addKeyword(fieldName, value);
+	}
 
-			@Override
-			public void populate(Document document) {
-				document.addKeyword(field, value);
-			}
+	public static DocumentCreationHelper singleNumber(
+		String fieldName, double value) {
 
-		};
+		return document -> document.addNumber(fieldName, value);
 	}
 
 	public static DocumentCreationHelper singleNumberSortable(
-		final String field, final int value) {
+		String fieldName, double value) {
 
-		return new DocumentCreationHelper() {
-
-			@Override
-			public void populate(Document document) {
-				document.addNumberSortable(field, value);
-			}
-
-		};
+		return document -> document.addNumberSortable(fieldName, value);
 	}
 
 	public static DocumentCreationHelper singleText(
-		final String field, final String... values) {
+		String fieldName, String... values) {
 
-		return new DocumentCreationHelper() {
-
-			@Override
-			public void populate(Document document) {
-				document.addText(field, values);
-			}
-
-		};
+		return document -> document.addText(fieldName, values);
 	}
 
 }

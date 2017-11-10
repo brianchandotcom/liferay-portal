@@ -30,7 +30,8 @@
 		</if>
 	</tear-down>
 
-	<command name="AddAndDeleteBlogEntriesOnSeparateNodes" priority="4">
+	<command name="AddAndDeleteBlogEntriesOnSeparateNodes" priority="5">
+		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="ClusteringCE#AddAndDeleteBlogEntriesOnSeparateNodes" />
 
 		<execute macro="Clustering#viewClusterStatusInConsole" />

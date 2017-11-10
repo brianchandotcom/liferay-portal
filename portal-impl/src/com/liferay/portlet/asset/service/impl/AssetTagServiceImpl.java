@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Autocomplete;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -262,36 +263,37 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 			getUserId(), tagId, name, serviceContext);
 	}
 
-	protected AssetTag stripUserInformation(AssetTag assetTag) {
-		if (assetTag == null) {
+	protected AssetTag stripUserInformation(AssetTag tag) {
+		if (tag == null) {
 			return null;
 		}
 
 		try {
-			if (getPermissionChecker().isCompanyAdmin(
-					assetTag.getCompanyId()) ||
-				(assetTag.getUserId() == getPermissionChecker().getUserId())) {
+			PermissionChecker permissionChecker = getPermissionChecker();
 
-				return assetTag;
+			if (permissionChecker.isCompanyAdmin(tag.getCompanyId()) ||
+				(tag.getUserId() == permissionChecker.getUserId())) {
+
+				return tag;
 			}
 		}
 		catch (PrincipalException pe) {
 			_log.error(pe);
 		}
 
-		assetTag.setUserId(0);
-		assetTag.setUserName(StringPool.BLANK);
-		assetTag.setUserUuid(StringPool.BLANK);
+		tag.setUserId(0);
+		tag.setUserName(StringPool.BLANK);
+		tag.setUserUuid(StringPool.BLANK);
 
-		return assetTag;
+		return tag;
 	}
 
-	protected List<AssetTag> stripUserInformation(List<AssetTag> assetTags) {
-		for (AssetTag assetTag : assetTags) {
-			stripUserInformation(assetTag);
+	protected List<AssetTag> stripUserInformation(List<AssetTag> tags) {
+		for (AssetTag tag : tags) {
+			stripUserInformation(tag);
 		}
 
-		return assetTags;
+		return tags;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

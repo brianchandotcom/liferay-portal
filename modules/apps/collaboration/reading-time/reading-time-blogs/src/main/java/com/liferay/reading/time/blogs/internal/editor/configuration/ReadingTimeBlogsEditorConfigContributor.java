@@ -63,7 +63,12 @@ public class ReadingTimeBlogsEditorConfigContributor
 			inputEditorTaglibAttributes.get(
 				"liferay-ui:input-editor:namespace"));
 
-		jsonObject.put("readingTimeElementId", namespace + "readingTime");
+		JSONObject readingTimeJSONObject = jsonObject.getJSONObject(
+			"readingTime");
+
+		if (readingTimeJSONObject != null) {
+			readingTimeJSONObject.put("elementId", namespace + "readingTime");
+		}
 	}
 
 }

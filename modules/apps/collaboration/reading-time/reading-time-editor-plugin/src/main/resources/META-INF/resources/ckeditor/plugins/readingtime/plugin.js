@@ -12,7 +12,7 @@
 							'change',
 							A.debounce(function() {
 								fetch(
-									editor.config.calculateReadingTimeURL,
+									editor.config.readingTime.url,
 									{
 										body: new URLSearchParams(Liferay.Util.ns(
 											NAMESPACE,
@@ -27,7 +27,7 @@
 								).then(function(response) {
 									return response.json();
 								}).then(function(message) {
-									var readingTimeElement = A.one('#' + editor.config.readingTimeElementId);
+									var readingTimeElement = A.one('#' + editor.config.readingTime.elementId);
 
 									if (readingTimeElement) {
 										readingTimeElement.html(message.readingTimeMessage);

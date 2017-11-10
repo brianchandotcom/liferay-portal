@@ -71,6 +71,10 @@ public class PortalCacheInvocationHandler implements InvocationHandler {
 			}
 		}
 
+		if (methodName.equals("remove")) {
+			return _map.remove(args[0]);
+		}
+
 		return null;
 	}
 

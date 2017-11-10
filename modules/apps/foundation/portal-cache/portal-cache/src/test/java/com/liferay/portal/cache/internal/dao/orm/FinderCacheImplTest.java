@@ -20,12 +20,25 @@ import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.RegistryUtil;
 
+import java.io.Serializable;
+
+import java.lang.reflect.Method;
+
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -85,6 +98,58 @@ public class FinderCacheImplTest {
 			_cacheKeyGenerator.getCacheKey(_key2));
 	}
 
+	@Test
+	public void testThreshold() {
+		_props = (Props)ProxyUtil.newProxyInstance(
+			_classLoader, new Class<?>[] {Props.class},
+			new PropsInvocationHandler() {
+
+				@Override
+				public Object invoke(
+					Object proxy, Method method, Object[] args) {
+
+					String methodName = method.getName();
+
+					if (methodName.equals("get")) {
+						String key = (String)args[0];
+
+						if (PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD.
+								equals(key)) {
+
+							return "2";
+						}
+					}
+
+					return super.invoke(proxy, method, args);
+				}
+
+			});
+
+		FinderCache finderCache = _activateFinderCache(
+			_notSerializedMultiVMPool);
+
+		List<Serializable> values = new ArrayList<>();
+
+		values.add("a");
+		values.add("b");
+
+		finderCache.putResult(_finderPath, _key1, values, true);
+
+		Object result = finderCache.getResult(
+			_finderPath, _key1, new TestBasePersistence(new HashSet<>(values)));
+
+		Assert.assertEquals(values, result);
+
+		values.add("c");
+
+		finderCache.putResult(_finderPath, _key1, values, true);
+
+		result = finderCache.getResult(
+			_finderPath, _key1, new TestBasePersistence(null));
+
+		Assert.assertNull(result);
+	}
+
 	private FinderCache _activateFinderCache(MultiVMPool multiVMPool) {
 		FinderCacheImpl finderCacheImpl = new FinderCacheImpl();
 
@@ -136,5 +201,33 @@ public class FinderCacheImplTest {
 	private static MultiVMPool _serializedMultiVMPool;
 
 	private FinderPath _finderPath;
+
+	private static class TestBasePersistence<T extends BaseModel<T>>
+		extends BasePersistenceImpl<T> {
+
+		@Override
+		public Map<Serializable, T> fetchByPrimaryKeys(
+			Set<Serializable> primaryKeys) {
+
+			Assert.assertNotNull(_keys);
+
+			Assert.assertEquals(_keys, primaryKeys);
+
+			Map map = new HashMap();
+
+			for (Object key : _keys) {
+				map.put(key, key);
+			}
+
+			return map;
+		}
+
+		private TestBasePersistence(Set<?> keys) {
+			_keys = keys;
+		}
+
+		private final Set<?> _keys;
+
+	}
 
 }

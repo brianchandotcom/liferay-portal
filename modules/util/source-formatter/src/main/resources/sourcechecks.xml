@@ -44,7 +44,6 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/blogs/blogs-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/blogs/blogs-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/bookmarks/bookmarks-service" />
-			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/comment/comment-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/document-library/document-library-document-conversion" />
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/document-library/document-library-repository-external" />
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/document-library/document-library-repository-search" />

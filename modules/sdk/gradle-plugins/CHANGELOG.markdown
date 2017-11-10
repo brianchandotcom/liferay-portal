@@ -2855,6 +2855,24 @@ version 2.1.3.
 version 2.1.4.
 - [LPS-73725]: Update the [Liferay Lang Builder] dependency to version 1.0.18.
 
+## 3.5.38 - 2017-11-09
+
+### Changed
+- [LPS-75610]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.22.
+- [LPS-75610]: Update the [Liferay Source Formatter] dependency to version
+1.0.493.
+
+## 3.5.39 - 2017-11-10
+
+### Added
+- [LPS-75829]: Apply the `com.liferay.js.transpiler.base` plugin to an OSGi
+project if the `package.json` file declares a script named `"build"`.
+
+### Changed
+- [LPS-75829]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
+version 2.4.0.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -3039,6 +3057,7 @@ version 2.1.4.
 [LPS-73584]: https://issues.liferay.com/browse/LPS-73584
 [LPS-73600]: https://issues.liferay.com/browse/LPS-73600
 [LPS-73642]: https://issues.liferay.com/browse/LPS-73642
+[LPS-73725]: https://issues.liferay.com/browse/LPS-73725
 [LPS-73818]: https://issues.liferay.com/browse/LPS-73818
 [LPS-73855]: https://issues.liferay.com/browse/LPS-73855
 [LPS-73935]: https://issues.liferay.com/browse/LPS-73935
@@ -3098,7 +3117,6 @@ version 2.1.4.
 [LPS-75238]: https://issues.liferay.com/browse/LPS-75238
 [LPS-75239]: https://issues.liferay.com/browse/LPS-75239
 [LPS-75247]: https://issues.liferay.com/browse/LPS-75247
-[LPS-73725]: https://issues.liferay.com/browse/LPS-73725
 [LPS-75254]: https://issues.liferay.com/browse/LPS-75254
 [LPS-75273]: https://issues.liferay.com/browse/LPS-75273
 [LPS-75323]: https://issues.liferay.com/browse/LPS-75323
@@ -3107,8 +3125,10 @@ version 2.1.4.
 [LPS-75430]: https://issues.liferay.com/browse/LPS-75430
 [LPS-75488]: https://issues.liferay.com/browse/LPS-75488
 [LPS-75589]: https://issues.liferay.com/browse/LPS-75589
+[LPS-75610]: https://issues.liferay.com/browse/LPS-75610
 [LPS-75613]: https://issues.liferay.com/browse/LPS-75613
 [LPS-75624]: https://issues.liferay.com/browse/LPS-75624
 [LPS-75633]: https://issues.liferay.com/browse/LPS-75633
 [LPS-75745]: https://issues.liferay.com/browse/LPS-75745
+[LPS-75829]: https://issues.liferay.com/browse/LPS-75829
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

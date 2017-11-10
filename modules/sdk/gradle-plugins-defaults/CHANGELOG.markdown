@@ -2398,6 +2398,12 @@ multi-project build.
 ### Changed
 - [LPS-75610]: Update the [Liferay Gradle Plugins] dependency to version 3.5.38.
 
+## 5.1.44 - 2017-11-10
+
+### Changed
+- [LPS-69999]: Prevent the `updateFileVersions` task from converting project
+dependencies into module dependencies in test projects.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -2497,6 +2503,7 @@ multi-project build.
 [LPS-69899]: https://issues.liferay.com/browse/LPS-69899
 [LPS-69920]: https://issues.liferay.com/browse/LPS-69920
 [LPS-69926]: https://issues.liferay.com/browse/LPS-69926
+[LPS-69999]: https://issues.liferay.com/browse/LPS-69999
 [LPS-70036]: https://issues.liferay.com/browse/LPS-70036
 [LPS-70084]: https://issues.liferay.com/browse/LPS-70084
 [LPS-70092]: https://issues.liferay.com/browse/LPS-70092

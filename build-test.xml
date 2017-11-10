@@ -10385,29 +10385,25 @@ jdbc.default.password=${database.password}</echo>
 	</target>
 
 	<target name="wait-for-jboss-war-deploy">
-		<first id="first">
-			<fileset dir="${liferay.home}/logs" includes="*.log" />
-		</first>
-
-		<var name="log.file.path" value="${toString:first}" />
-
 		<beanshell>
 			<![CDATA[
 				import org.apache.commons.io.FileUtils;
 
+				String fileName = project.getProperty("app.server.portal.dir");
+
+				fileName = fileName.substring(0, fileName.indexOf("deployments"));
+
+				fileName = fileName + "log/server.log";
+
 				boolean found = false;
-
-				String logFilePath = project.getProperty("log.file.path");
-
-				logFilePath = logFilePath.replaceAll("\\\\", "/");
 
 				long start = System.currentTimeMillis();
 
 				while (System.currentTimeMillis() - start < (1000 * 300)) {
 					try {
-						File file = new File(logFilePath);
+						File logFile = new File(fileName);
 
-						String content = FileUtils.readFileToString(file);
+						String content = FileUtils.readFileToString(logFile);
 
 						if (content.contains("Deployed \"ROOT.war\" ")) {
 							found = true;

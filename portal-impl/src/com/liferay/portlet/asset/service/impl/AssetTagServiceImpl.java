@@ -108,8 +108,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 		long groupId, int start, int end, OrderByComparator<AssetTag> obc) {
 
 		return stripUserInformation(
-			assetTagPersistence.filterFindByGroupId(
-				groupId, start, end, obc));
+			assetTagPersistence.filterFindByGroupId(groupId, start, end, obc));
 	}
 
 	@Override
@@ -304,7 +303,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 
 		try {
 			if (getPermissionChecker().isCompanyAdmin(
-				assetTag.getCompanyId()) ||
+					assetTag.getCompanyId()) ||
 				(assetTag.getUserId() == getPermissionChecker().getUserId())) {
 
 				return assetTag;

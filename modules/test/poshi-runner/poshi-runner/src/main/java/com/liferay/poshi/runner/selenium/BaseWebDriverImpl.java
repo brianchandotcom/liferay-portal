@@ -1489,28 +1489,11 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public boolean isHTMLSourceTextPresent(String value) throws Exception {
-		URL url = new URL(getLocation());
+		String pageSource = getPageSource();
 
-		InputStream inputStream = url.openStream();
-
-		BufferedReader bufferedReader = new BufferedReader(
-			new InputStreamReader(inputStream));
-
-		String line = null;
-
-		while ((line = bufferedReader.readLine()) != null) {
-			Pattern pattern = Pattern.compile(value);
-
-			Matcher matcher = pattern.matcher(line);
-
-			if (matcher.find()) {
-				return true;
-			}
+		if (pageSource.contains(value)) {
+			return true;
 		}
-
-		inputStream.close();
-
-		bufferedReader.close();
 
 		return false;
 	}

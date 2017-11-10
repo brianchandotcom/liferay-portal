@@ -116,6 +116,17 @@ public abstract class BaseCPDefinitionsDisplayContext {
 		return actionHelper.getCPTypes();
 	}
 
+	public PortletURL getEditProductDefinitionURL() throws PortalException {
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "editProductDefinition");
+		portletURL.setParameter(
+			"cpDefinitionId", String.valueOf(getCPDefinitionId()));
+
+		return portletURL;
+	}
+
 	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
@@ -145,6 +156,21 @@ public abstract class BaseCPDefinitionsDisplayContext {
 
 	public String getScreenNavigationCategoryKey() throws PortalException {
 		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_DETAILS;
+	}
+
+	public String getSelectedScreenNavigationEntryKey() {
+		String selectedScreenNavigationCategoryKey = ParamUtil.getString(
+			httpServletRequest, "screenNavigationCategoryKey");
+
+		String selectedScreenNavigationEntryKey = ParamUtil.getString(
+			httpServletRequest, "screenNavigationEntryKey");
+
+		if (Validator.isNull(selectedScreenNavigationEntryKey)) {
+			selectedScreenNavigationEntryKey =
+				selectedScreenNavigationCategoryKey;
+		}
+
+		return selectedScreenNavigationEntryKey;
 	}
 
 	protected final ActionHelper actionHelper;

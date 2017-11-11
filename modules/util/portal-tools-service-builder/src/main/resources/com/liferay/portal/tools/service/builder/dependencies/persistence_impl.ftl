@@ -64,7 +64,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -211,7 +210,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 		<#if entity.badNamedColumnsList?size != 0>
 			try {
-				Field field = ReflectionUtil.getDeclaredField(BasePersistenceImpl.class, "_dbColumnNames");
+				Field field = BasePersistenceImpl.class.getDeclaredField("_dbColumnNames");
+
+				field.setAccessible(true);
 
 				Map<String, String> dbColumnNames = new HashMap<String, String>();
 

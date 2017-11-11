@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -56,6 +55,8 @@ import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
+import java.io.ByteArrayInputStream;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -248,7 +249,7 @@ public class ${entity.name}PersistenceTest {
 
 					byte[] new${column.methodName}Bytes = new${column.methodName}String.getBytes(StringPool.UTF8);
 
-					Blob new${column.methodName}Blob = new OutputBlob(new UnsyncByteArrayInputStream(new${column.methodName}Bytes), new${column.methodName}Bytes.length);
+					Blob new${column.methodName}Blob = new OutputBlob(new ByteArrayInputStream(new${column.methodName}Bytes), new${column.methodName}Bytes.length);
 				</#if>
 
 				new${entity.name}.set${column.methodName}(
@@ -1066,7 +1067,7 @@ public class ${entity.name}PersistenceTest {
 
 					byte[] ${column.name}Bytes = ${column.name}String.getBytes(StringPool.UTF8);
 
-					Blob ${column.name}Blob = new OutputBlob(new UnsyncByteArrayInputStream(${column.name}Bytes), ${column.name}Bytes.length);
+					Blob ${column.name}Blob = new OutputBlob(new ByteArrayInputStream(${column.name}Bytes), ${column.name}Bytes.length);
 				</#if>
 
 				${entity.varName}.set${column.methodName}(
@@ -1331,7 +1332,7 @@ public class ${entity.name}PersistenceTest {
 
 							byte[] ${column.name}Bytes = ${column.name}String.getBytes(StringPool.UTF8);
 
-							Blob ${column.name}Blob = new OutputBlob(new UnsyncByteArrayInputStream(${column.name}Bytes), ${column.name}Bytes.length);
+							Blob ${column.name}Blob = new OutputBlob(new ByteArrayInputStream(${column.name}Bytes), ${column.name}Bytes.length);
 						</#if>
 
 						${entity.varName}.set${column.methodName}(

@@ -1,9 +1,5 @@
 Bundle-Name: Liferay Portal Scripting Executor
 Bundle-SymbolicName: com.liferay.portal.scripting.executor
-Bundle-Version: 2.1.3
-Export-Package:\
-	com.liferay.portal.scripting.executor.constants,\
-	com.liferay.portal.scripting.executor.groovy,\
-	com.liferay.portal.scripting.executor.provider
+Bundle-Version: 3.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Scripting Executor

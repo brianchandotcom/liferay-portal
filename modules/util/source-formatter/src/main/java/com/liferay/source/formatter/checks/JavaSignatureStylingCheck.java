@@ -108,7 +108,7 @@ public class JavaSignatureStylingCheck extends BaseJavaTermCheck {
 				javaTermContent, signature, signature + "\n");
 		}
 
-		boolean throwsException = signature.contains(indent + "throws ");
+		int throwsPos = signature.indexOf("\tthrows ");
 
 		String newSignature = signature;
 
@@ -129,7 +129,7 @@ public class JavaSignatureStylingCheck extends BaseJavaTermCheck {
 					expectedTabCount = Math.max(
 						getLeadingTabCount(line), indent.length()) + 1;
 
-					if (throwsException &&
+					if ((throwsPos != -1) &&
 						(expectedTabCount == (indent.length() + 1))) {
 
 						expectedTabCount += 1;
@@ -152,6 +152,16 @@ public class JavaSignatureStylingCheck extends BaseJavaTermCheck {
 						getLeadingTabCount(previousLine) + 1);
 				}
 			}
+		}
+
+		if (throwsPos != -1) {
+			String throwsExceptions = newSignature.substring(throwsPos + 1);
+
+			String newThrowsExceptions = throwsExceptions.replaceAll(
+				"\n\t* *(\\S)", "\n" + indent + "\t\t   $1");
+
+			newSignature = StringUtil.replace(
+				newSignature, throwsExceptions, newThrowsExceptions);
 		}
 
 		return StringUtil.replace(javaTermContent, signature, newSignature);

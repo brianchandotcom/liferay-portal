@@ -80,9 +80,6 @@ public class AddSiteNavigationMenuMVCActionCommand
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-		String selectedItemType = ParamUtil.getString(
-			actionRequest, "selectedItemType");
-
 		PortletURL redirectURL = PortletURLFactoryUtil.create(
 			actionRequest, SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
 			themeDisplay.getPlid(), ActionRequest.RENDER_PHASE);
@@ -91,7 +88,6 @@ public class AddSiteNavigationMenuMVCActionCommand
 		redirectURL.setParameter("redirect", redirect);
 		redirectURL.setParameter(
 			"siteNavigationMenuId", String.valueOf(siteNavigationMenuId));
-		redirectURL.setParameter("selectedItemType", selectedItemType);
 
 		return redirectURL.toString();
 	}

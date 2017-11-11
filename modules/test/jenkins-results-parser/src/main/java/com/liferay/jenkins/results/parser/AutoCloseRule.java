@@ -58,17 +58,14 @@ public class AutoCloseRule {
 				continue;
 			}
 
+			List<TestResult> testResults = new ArrayList<>();
+
+			testResults.addAll(downstreamBuild.getTestResults("FAILED"));
+			testResults.addAll(downstreamBuild.getTestResults("REGRESSION"));
+
 			boolean containsUniqueTestFailure = false;
 
-			for (TestResult testResult : downstreamBuild.getTestResults(null)) {
-				String testStatus = testResult.getStatus();
-
-				if (testStatus.equals("PASSED") ||
-					testStatus.equals("SKIPPED")) {
-
-					continue;
-				}
-
+			for (TestResult testResult : testResults) {
 				if (!UpstreamFailureUtil.isTestFailingInUpstreamJob(
 						testResult)) {
 
@@ -76,6 +73,10 @@ public class AutoCloseRule {
 
 					break;
 				}
+			}
+
+			if (testResults.isEmpty()) {
+				containsUniqueTestFailure = true;
 			}
 
 			if (!containsUniqueTestFailure) {

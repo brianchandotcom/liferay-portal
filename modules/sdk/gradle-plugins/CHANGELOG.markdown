@@ -2882,6 +2882,11 @@ to version 2.3.23.
 ## 3.5.41 - 2017-11-13
 
 ### Added
+- [LPS-74526]: Execute the `"checkFormat"` script declared in the `package.json`
+file of the project (if present) before running the task
+`checkSourceFormatting`.
+- [LPS-74526]: Execute the `"format"` script declared in the `package.json` file
+of the project (if present) before running the task `formatSource`.
 - [LPS-75829]: Apply the `com.liferay.js.transpiler.base` plugin to an OSGi
 project if the `package.json` file declares a script named `"build"`.
 
@@ -3109,6 +3114,7 @@ version 2.4.0.
 [LPS-74475]: https://issues.liferay.com/browse/LPS-74475
 [LPS-74490]: https://issues.liferay.com/browse/LPS-74490
 [LPS-74503]: https://issues.liferay.com/browse/LPS-74503
+[LPS-74526]: https://issues.liferay.com/browse/LPS-74526
 [LPS-74538]: https://issues.liferay.com/browse/LPS-74538
 [LPS-74544]: https://issues.liferay.com/browse/LPS-74544
 [LPS-74614]: https://issues.liferay.com/browse/LPS-74614

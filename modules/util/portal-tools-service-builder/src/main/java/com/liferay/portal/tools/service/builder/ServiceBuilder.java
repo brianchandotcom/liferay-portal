@@ -553,7 +553,6 @@ public class ServiceBuilder {
 		_tplJsonJsMethod = _getTplProperty("json_js_method", _tplJsonJsMethod);
 		_tplModel = _getTplProperty("model", _tplModel);
 		_tplModelCache = _getTplProperty("model_cache", _tplModelCache);
-		_tplModelClp = _getTplProperty("model", _tplModelClp);
 		_tplModelHintsXml = _getTplProperty(
 			"model_hints_xml", _tplModelHintsXml);
 		_tplModelImpl = _getTplProperty("model_impl", _tplModelImpl);
@@ -568,13 +567,6 @@ public class ServiceBuilder {
 		_tplService = _getTplProperty("service", _tplService);
 		_tplServiceBaseImpl = _getTplProperty(
 			"service_base_impl", _tplServiceBaseImpl);
-		_tplServiceClp = _getTplProperty("service_clp", _tplServiceClp);
-		_tplServiceClpInvoker = _getTplProperty(
-			"service_clp_invoker", _tplServiceClpInvoker);
-		_tplServiceClpMessageListener = _getTplProperty(
-			"service_clp_message_listener", _tplServiceClpMessageListener);
-		_tplServiceClpSerializer = _getTplProperty(
-			"service_clp_serializer", _tplServiceClpSerializer);
 		_tplServiceHttp = _getTplProperty("service_http", _tplServiceHttp);
 		_tplServiceImpl = _getTplProperty("service_impl", _tplServiceImpl);
 		_tplServicePropsUtil = _getTplProperty(
@@ -771,7 +763,6 @@ public class ServiceBuilder {
 							_createExtendedModel(entity);
 
 							_createModelCache(entity);
-							_createModelClp(entity);
 							_createModelWrapper(entity);
 
 							_createModelSoap(entity);
@@ -793,10 +784,6 @@ public class ServiceBuilder {
 							_createService(entity, _SESSION_TYPE_LOCAL);
 							_createServiceFactory(entity, _SESSION_TYPE_LOCAL);
 							_createServiceUtil(entity, _SESSION_TYPE_LOCAL);
-
-							_createServiceClp(entity, _SESSION_TYPE_LOCAL);
-							_createServiceClpInvoker(
-								entity, _SESSION_TYPE_LOCAL);
 							_createServiceWrapper(entity, _SESSION_TYPE_LOCAL);
 						}
 						else {
@@ -825,10 +812,6 @@ public class ServiceBuilder {
 							_createService(entity, _SESSION_TYPE_REMOTE);
 							_createServiceFactory(entity, _SESSION_TYPE_REMOTE);
 							_createServiceUtil(entity, _SESSION_TYPE_REMOTE);
-
-							_createServiceClp(entity, _SESSION_TYPE_REMOTE);
-							_createServiceClpInvoker(
-								entity, _SESSION_TYPE_REMOTE);
 							_createServiceWrapper(entity, _SESSION_TYPE_REMOTE);
 
 							_createServiceHttp(entity);
@@ -880,9 +863,8 @@ public class ServiceBuilder {
 
 				_createExceptions(exceptionList);
 
-				_createServiceClpMessageListener();
-				_createServiceClpSerializer(exceptionList);
 				_createServicePropsUtil();
+				_createServletContextUtil();
 
 				_createSQLIndexes();
 				_createSQLTables();
@@ -2648,70 +2630,6 @@ public class ServiceBuilder {
 			modelFile, content, _author, _jalopySettings, _modifiedFileNames);
 	}
 
-	private void _createModelClp(Entity entity) throws Exception {
-		if (Validator.isNull(_pluginName)) {
-			return;
-		}
-
-		JavaClass modelImplJavaClass = _getJavaClass(
-			StringBundler.concat(
-				_outputPath, "/model/impl/", entity.getName(), "Impl.java"));
-
-		Map<String, JavaMethod> methods = new LinkedHashMap<>();
-
-		for (JavaMethod method : modelImplJavaClass.getMethods()) {
-			methods.put(method.getDeclarationSignature(false), method);
-		}
-
-		JavaType superClass = modelImplJavaClass.getSuperClass();
-
-		String superClassValue = superClass.getValue();
-
-		while (!superClassValue.endsWith("BaseModelImpl")) {
-			int pos = superClassValue.lastIndexOf(StringPool.PERIOD);
-
-			if (pos > 0) {
-				superClassValue = superClassValue.substring(pos + 1);
-			}
-
-			JavaClass javaClass = _getJavaClass(
-				StringBundler.concat(
-					_outputPath, "/model/impl/", superClassValue, ".java"));
-
-			for (JavaMethod method : _getMethods(javaClass)) {
-				String methodName = method.getName();
-
-				if (methodName.equals("hasSetModifiedDate")) {
-					continue;
-				}
-
-				methods.remove(method.getDeclarationSignature(false));
-			}
-
-			superClass = javaClass.getSuperClass();
-
-			superClassValue = superClass.getValue();
-		}
-
-		Map<String, Object> context = _getContext();
-
-		context.put("entity", entity);
-		context.put("methods", methods.values());
-
-		// Content
-
-		String content = _processTemplate(_tplModelClp, context);
-
-		// Write file
-
-		File modelFile = new File(
-			StringBundler.concat(
-				_serviceOutputPath, "/model/", entity.getName(), "Clp.java"));
-
-		ToolsUtil.writeFile(
-			modelFile, content, _author, _jalopySettings, _modifiedFileNames);
-	}
-
 	private void _createModelHintsXml() throws Exception {
 		Map<String, Object> context = _getContext();
 
@@ -3169,142 +3087,6 @@ public class ServiceBuilder {
 			ejbFile, content, _author, _jalopySettings, _modifiedFileNames);
 	}
 
-	private void _createServiceClp(Entity entity, int sessionType)
-		throws Exception {
-
-		if (Validator.isNull(_pluginName)) {
-			return;
-		}
-
-		JavaClass javaClass = _getJavaClass(
-			StringBundler.concat(
-				_serviceOutputPath, "/service/", entity.getName(),
-				_getSessionTypeName(sessionType), "Service.java"));
-
-		Map<String, Object> context = _getContext();
-
-		context.put("entity", entity);
-		context.put("methods", _getMethods(javaClass));
-		context.put("sessionTypeName", _getSessionTypeName(sessionType));
-
-		context = _putDeprecatedKeys(context, javaClass);
-
-		// Content
-
-		String content = _processTemplate(_tplServiceClp, context);
-
-		// Write file
-
-		File ejbFile = new File(
-			StringBundler.concat(
-				_serviceOutputPath, "/service/", entity.getName(),
-				_getSessionTypeName(sessionType), "ServiceClp.java"));
-
-		ToolsUtil.writeFile(
-			ejbFile, content, _author, _jalopySettings, _modifiedFileNames);
-	}
-
-	private void _createServiceClpInvoker(Entity entity, int sessionType)
-		throws Exception {
-
-		if (Validator.isNull(_pluginName)) {
-			return;
-		}
-
-		JavaClass javaClass = _getJavaClass(
-			StringBundler.concat(
-				_outputPath, "/service/impl/", entity.getName(),
-				_getSessionTypeName(sessionType), "ServiceImpl.java"));
-
-		List<JavaMethod> methods = _getMethods(javaClass);
-
-		JavaType superClass = javaClass.getSuperClass();
-
-		String superClassValue = superClass.getValue();
-
-		if (superClassValue.endsWith(
-				entity.getName() + _getSessionTypeName(sessionType) +
-					"ServiceBaseImpl")) {
-
-			JavaClass parentJavaClass = _getJavaClass(
-				StringBundler.concat(
-					_outputPath, "/service/base/", entity.getName(),
-					_getSessionTypeName(sessionType), "ServiceBaseImpl.java"));
-
-			methods.addAll(0, parentJavaClass.getMethods());
-		}
-
-		Map<String, Object> context = _getContext();
-
-		context.put("entity", entity);
-		context.put("methods", methods);
-		context.put("sessionTypeName", _getSessionTypeName(sessionType));
-
-		context = _putDeprecatedKeys(context, javaClass);
-
-		// Content
-
-		String content = _processTemplate(_tplServiceClpInvoker, context);
-
-		// Write file
-
-		File ejbFile = new File(
-			StringBundler.concat(
-				_outputPath, "/service/base/", entity.getName(),
-				_getSessionTypeName(sessionType), "ServiceClpInvoker.java"));
-
-		ToolsUtil.writeFile(
-			ejbFile, content, _author, _jalopySettings, _modifiedFileNames);
-	}
-
-	private void _createServiceClpMessageListener() throws Exception {
-		if (Validator.isNull(_pluginName)) {
-			return;
-		}
-
-		Map<String, Object> context = _getContext();
-
-		context.put("entities", _ejbList);
-
-		// Content
-
-		String content = _processTemplate(
-			_tplServiceClpMessageListener, context);
-
-		// Write file
-
-		File ejbFile = new File(
-			_serviceOutputPath + "/service/messaging/ClpMessageListener.java");
-
-		ToolsUtil.writeFile(
-			ejbFile, content, _author, _jalopySettings, _modifiedFileNames);
-	}
-
-	private void _createServiceClpSerializer(List<String> exceptions)
-		throws Exception {
-
-		if (Validator.isNull(_pluginName)) {
-			return;
-		}
-
-		Map<String, Object> context = _getContext();
-
-		context.put("entities", _ejbList);
-		context.put("exceptions", exceptions);
-
-		// Content
-
-		String content = _processTemplate(_tplServiceClpSerializer, context);
-
-		// Write file
-
-		File ejbFile = new File(
-			_serviceOutputPath + "/service/ClpSerializer.java");
-
-		ToolsUtil.writeFile(
-			ejbFile, content, _author, _jalopySettings, _modifiedFileNames);
-	}
-
 	private void _createServiceFactory(Entity entity, int sessionType) {
 		File ejbFile = new File(
 			StringBundler.concat(
@@ -3493,6 +3275,26 @@ public class ServiceBuilder {
 			StringBundler.concat(
 				_serviceOutputPath, "/service/", entity.getName(),
 				_getSessionTypeName(sessionType), "ServiceWrapper.java"));
+
+		ToolsUtil.writeFile(
+			ejbFile, content, _author, _jalopySettings, _modifiedFileNames);
+	}
+
+	private void _createServletContextUtil() throws Exception {
+		if (Validator.isNull(_pluginName)) {
+			return;
+		}
+
+		Map<String, Object> context = _getContext();
+
+		// Content
+
+		String content = _processTemplate(_tplServletContextUtil, context);
+
+		// Write file
+
+		File ejbFile = new File(
+			_serviceOutputPath + "/service/ServletContextUtil.java");
 
 		ToolsUtil.writeFile(
 			ejbFile, content, _author, _jalopySettings, _modifiedFileNames);
@@ -6102,6 +5904,7 @@ public class ServiceBuilder {
 			entity, _SESSION_TYPE_LOCAL, _oldServiceOutputPath);
 		_removeServiceWrapper(
 			entity, _SESSION_TYPE_REMOTE, _oldServiceOutputPath);
+		_removeServletContextUtil(_serviceOutputPath);
 	}
 
 	private void _removePersistence(Entity entity, String outputPath) {
@@ -6223,6 +6026,10 @@ public class ServiceBuilder {
 				_getSessionTypeName(sessionType), "ServiceWrapper.java"));
 	}
 
+	private void _removeServletContextUtil(String outputPath) {
+		_deleteFile(outputPath + "/service/ServletContextUtil.java");
+	}
+
 	private void _resolveEntity(Entity entity) throws Exception {
 		if (entity.isResolved()) {
 			return;
@@ -6332,7 +6139,6 @@ public class ServiceBuilder {
 	private String _tplJsonJsMethod = _TPL_ROOT + "json_js_method.ftl";
 	private String _tplModel = _TPL_ROOT + "model.ftl";
 	private String _tplModelCache = _TPL_ROOT + "model_cache.ftl";
-	private String _tplModelClp = _TPL_ROOT + "model_clp.ftl";
 	private String _tplModelHintsXml = _TPL_ROOT + "model_hints_xml.ftl";
 	private String _tplModelImpl = _TPL_ROOT + "model_impl.ftl";
 	private String _tplModelSoap = _TPL_ROOT + "model_soap.ftl";
@@ -6344,19 +6150,14 @@ public class ServiceBuilder {
 	private String _tplProps = _TPL_ROOT + "props.ftl";
 	private String _tplService = _TPL_ROOT + "service.ftl";
 	private String _tplServiceBaseImpl = _TPL_ROOT + "service_base_impl.ftl";
-	private String _tplServiceClp = _TPL_ROOT + "service_clp.ftl";
-	private String _tplServiceClpInvoker =
-		_TPL_ROOT + "service_clp_invoker.ftl";
-	private String _tplServiceClpMessageListener =
-		_TPL_ROOT + "service_clp_message_listener.ftl";
-	private String _tplServiceClpSerializer =
-		_TPL_ROOT + "service_clp_serializer.ftl";
 	private String _tplServiceHttp = _TPL_ROOT + "service_http.ftl";
 	private String _tplServiceImpl = _TPL_ROOT + "service_impl.ftl";
 	private String _tplServicePropsUtil = _TPL_ROOT + "service_props_util.ftl";
 	private String _tplServiceSoap = _TPL_ROOT + "service_soap.ftl";
 	private String _tplServiceUtil = _TPL_ROOT + "service_util.ftl";
 	private String _tplServiceWrapper = _TPL_ROOT + "service_wrapper.ftl";
+	private String _tplServletContextUtil =
+		_TPL_ROOT + "servlet_context_util.ftl";
 	private String _tplSpringXml = _TPL_ROOT + "spring_xml.ftl";
 
 }

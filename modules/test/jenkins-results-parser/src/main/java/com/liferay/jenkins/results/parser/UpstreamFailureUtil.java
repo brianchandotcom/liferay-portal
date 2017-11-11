@@ -90,6 +90,10 @@ public class UpstreamFailureUtil {
 				String jobVariant = build.getJobVariant();
 				String result = build.getResult();
 
+				if (result == null) {
+					return false;
+				}
+
 				if (jobVariant.contains("/")) {
 					int index = jobVariant.lastIndexOf("/");
 

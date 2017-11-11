@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.source.formatter.FormatSourceTask;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import com.liferay.gradle.util.Validator;
@@ -22,6 +23,7 @@ import com.liferay.gradle.util.Validator;
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.tasks.TaskContainer;
 
 /**
@@ -36,11 +38,28 @@ public class SourceFormatterDefaultsPlugin
 
 	@Override
 	protected void configureDefaults(
-		Project project, SourceFormatterPlugin sourceFormatterPlugin) {
+		final Project project, SourceFormatterPlugin sourceFormatterPlugin) {
 
 		super.configureDefaults(project, sourceFormatterPlugin);
 
 		_configureTasksFormatSource(project);
+
+		GradleUtil.withPlugin(
+			project, NodePlugin.class,
+			new Action<NodePlugin>() {
+
+				@Override
+				public void execute(NodePlugin nodePlugin) {
+					_configureTaskForNodePlugin(
+						project,
+						SourceFormatterPlugin.CHECK_SOURCE_FORMATTING_TASK_NAME,
+						"npmRunCheckFormat");
+					_configureTaskForNodePlugin(
+						project, SourceFormatterPlugin.FORMAT_SOURCE_TASK_NAME,
+						"npmRunFormat");
+				}
+
+			});
 	}
 
 	@Override
@@ -56,6 +75,20 @@ public class SourceFormatterDefaultsPlugin
 	@Override
 	protected String getPortalToolName() {
 		return _PORTAL_TOOL_NAME;
+	}
+
+	private void _configureTaskForNodePlugin(
+		Project project, String taskName, String nodeTaskName) {
+
+		TaskContainer taskContainer = project.getTasks();
+
+		Task nodeTask = taskContainer.findByName(nodeTaskName);
+
+		if (nodeTask != null) {
+			Task task = GradleUtil.getTask(project, taskName);
+
+			task.dependsOn(nodeTask);
+		}
 	}
 
 	private void _configureTasksFormatSource(

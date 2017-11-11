@@ -50,6 +50,21 @@ import org.json.JSONObject;
 public class TopLevelBuild extends BaseBuild {
 
 	@Override
+	public void addDownstreamBuilds(String... urls) {
+		super.addDownstreamBuilds(urls);
+
+		if (result != null) {
+			result = null;
+		}
+
+		String status = getStatus();
+
+		if (status.equals("completed")) {
+			setStatus("running");
+		}
+	}
+
+	@Override
 	public void addTimelineData(BaseBuild.TimelineData timelineData) {
 		timelineData.addTimelineData(this);
 
@@ -215,6 +230,37 @@ public class TopLevelBuild extends BaseBuild {
 			"https://", jenkinsMaster.getName(), ".liferay.com/",
 			"userContent/jobs/", getJobName(), "/builds/",
 			Integer.toString(getBuildNumber()), "/jenkins-report.html");
+	}
+
+	@Override
+	public String getResult() {
+		super.getResult();
+
+		if (!downstreamBuilds.isEmpty() && (result == null)) {
+			for (Build downstreamBuild : downstreamBuilds) {
+				String downstreamBuildResult = downstreamBuild.getResult();
+
+				if (downstreamBuildResult == null) {
+					result = null;
+
+					return result;
+				}
+
+				if (!downstreamBuildResult.equals("SUCCESS")) {
+					result = "FAILURE";
+
+					break;
+				}
+			}
+
+			if (result == null) {
+				result = "SUCCESS";
+			}
+
+			setStatus("completed");
+		}
+
+		return result;
 	}
 
 	@Override

@@ -304,7 +304,7 @@ public class PanelAppRegistry {
 		protected void initPersonalControlPanelPortletPermission(
 				Portlet portlet)
 			throws IOException, PortalException, ReadOnlyException,
-				ValidatorException {
+				   ValidatorException {
 
 			String category = portlet.getControlPanelEntryCategory();
 

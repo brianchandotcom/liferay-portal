@@ -14,18 +14,23 @@
 
 package com.liferay.site.navigation.menu.item.url.internal.type;
 
+import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.site.navigation.menu.item.url.internal.constants.SiteNavigationMenuItemTypeURLConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 
+import java.io.IOException;
+
 import java.util.Locale;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -37,15 +42,6 @@ import org.osgi.service.component.annotations.Component;
 )
 public class URLSiteNavigationMenuItemType
 	implements SiteNavigationMenuItemType {
-
-	@Override
-	public JSONObject getEditContext(
-			HttpServletRequest request, HttpServletResponse response,
-			SiteNavigationMenuItem siteNavigationMenuItem)
-		throws Exception {
-
-		return null;
-	}
 
 	@Override
 	public String getIcon() {
@@ -70,5 +66,22 @@ public class URLSiteNavigationMenuItemType
 
 		return null;
 	}
+
+	@Override
+	public void renderAddPage(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		_jspRenderer.renderJSP(_servletContext, request, response, "/url.jsp");
+	}
+
+	@Reference
+	private JSPRenderer _jspRenderer;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.site.navigation.menu.item.url)",
+		unbind = "-"
+	)
+	private ServletContext _servletContext;
 
 }

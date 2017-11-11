@@ -53,6 +53,13 @@ public class ConfigurationCleaner {
 				continue;
 			}
 
+			String ignore = (String)dictionary.get(
+				"configuration.cleaner.ignore");
+
+			if (Boolean.valueOf(ignore)) {
+				continue;
+			}
+
 			try {
 				File file = new File(new URI(fileName));
 

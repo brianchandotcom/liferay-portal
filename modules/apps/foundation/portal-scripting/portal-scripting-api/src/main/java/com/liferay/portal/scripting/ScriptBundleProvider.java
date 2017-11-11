@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.scripting.executor.provider;
+package com.liferay.portal.scripting;
 
 import aQute.bnd.annotation.ProviderType;
 

@@ -105,7 +105,7 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 
 						<div class="col-md-3">
 							<liferay-frontend:horizontal-card
-								text="<%= siteNavigationMenuItem.getType() %>"
+								text="<%= siteNavigationMenuItemType.getTitle(siteNavigationMenuItem, locale) %>"
 							>
 								<liferay-frontend:horizontal-card-col>
 									<liferay-frontend:horizontal-card-icon

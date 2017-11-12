@@ -81,6 +81,9 @@ public interface SiteNavigationMenuItemType {
 		return Collections.emptyList();
 	}
 
+	public String getTitle(
+		SiteNavigationMenuItem siteNavigationMenuItem, Locale locale);
+
 	public default String getType() {
 		return StringPool.BLANK;
 	}

@@ -17,6 +17,7 @@ package com.liferay.site.navigation.menu.item.url.internal.type;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.site.navigation.menu.item.url.internal.constants.SiteNavigationMenuItemTypeURLConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
@@ -51,6 +52,18 @@ public class URLSiteNavigationMenuItemType
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "url");
+	}
+
+	@Override
+	public String getTitle(
+		SiteNavigationMenuItem siteNavigationMenuItem, Locale locale) {
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.fastLoad(
+			siteNavigationMenuItem.getTypeSettings());
+
+		return typeSettingsProperties.get("name");
 	}
 
 	@Override

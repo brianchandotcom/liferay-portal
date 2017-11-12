@@ -96,6 +96,30 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 
 					</div>
 				</c:when>
+				<c:otherwise>
+
+					<%
+					for (SiteNavigationMenuItem siteNavigationMenuItem : siteNavigationMenuItems) {
+						SiteNavigationMenuItemType siteNavigationMenuItemType = siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(siteNavigationMenuItem.getType());
+					%>
+
+						<div class="col-md-3">
+							<liferay-frontend:horizontal-card
+								text="<%= siteNavigationMenuItem.getType() %>"
+							>
+								<liferay-frontend:horizontal-card-col>
+									<liferay-frontend:horizontal-card-icon
+										icon="<%= siteNavigationMenuItemType.getIcon() %>"
+									/>
+								</liferay-frontend:horizontal-card-col>
+							</liferay-frontend:horizontal-card>
+						</div>
+
+					<%
+					}
+					%>
+
+				</c:otherwise>
 			</c:choose>
 		</aui:fieldset>
 	</aui:fieldset-group>

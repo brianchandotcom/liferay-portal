@@ -124,3 +124,25 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 		</aui:fieldset>
 	</aui:fieldset-group>
 </aui:form>
+
+<c:if test="<%= !siteNavigationMenuItems.isEmpty() %>">
+	<liferay-frontend:add-menu>
+
+		<%
+		for (SiteNavigationMenuItemType siteNavigationMenuItemType : siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemTypes()) {
+			PortletURL addSiteNavigationMenuItemTypeURL = renderResponse.createRenderURL();
+
+			addSiteNavigationMenuItemTypeURL.setParameter("mvcPath", "/add_site_navigation_menu_item.jsp");
+			addSiteNavigationMenuItemTypeURL.setParameter("redirect", currentURL);
+			addSiteNavigationMenuItemTypeURL.setParameter("siteNavigationMenuId", String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()));
+			addSiteNavigationMenuItemTypeURL.setParameter("type", siteNavigationMenuItemType.getType());
+		%>
+
+			<liferay-frontend:add-menu-item title="<%= siteNavigationMenuItemType.getLabel(locale) %>" url="<%= addSiteNavigationMenuItemTypeURL.toString() %>" />
+
+		<%
+		}
+		%>
+
+	</liferay-frontend:add-menu>
+</c:if>

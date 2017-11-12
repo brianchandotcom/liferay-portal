@@ -101,10 +101,14 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 					<%
 					for (SiteNavigationMenuItem siteNavigationMenuItem : siteNavigationMenuItems) {
 						SiteNavigationMenuItemType siteNavigationMenuItemType = siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(siteNavigationMenuItem.getType());
+
+						request.setAttribute("edit_site_navigation_menu.jsp-siteNavigationMenuItemId", siteNavigationMenuItem.getSiteNavigationMenuItemId());
 					%>
 
 						<div class="col-md-3">
 							<liferay-frontend:horizontal-card
+								actionJsp="/site_navigation_menu_item_action.jsp"
+								actionJspServletContext="<%= application %>"
 								text="<%= siteNavigationMenuItemType.getTitle(siteNavigationMenuItem, locale) %>"
 							>
 								<liferay-frontend:horizontal-card-col>

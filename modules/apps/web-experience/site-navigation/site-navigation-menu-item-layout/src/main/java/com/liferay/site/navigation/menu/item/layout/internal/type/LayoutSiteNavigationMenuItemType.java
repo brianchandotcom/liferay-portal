@@ -15,9 +15,11 @@
 package com.liferay.site.navigation.menu.item.layout.internal.type;
 
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.site.navigation.menu.item.layout.internal.constants.SiteNavigationMenuItemTypeLayoutConstants;
+import com.liferay.site.navigation.menu.item.layout.internal.constants.SiteNavigationMenuItemTypeLayoutWebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 
@@ -72,9 +74,16 @@ public class LayoutSiteNavigationMenuItemType
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
+		request.setAttribute(
+			SiteNavigationMenuItemTypeLayoutWebKeys.ITEM_SELECTOR,
+			_itemSelector);
+
 		_jspRenderer.renderJSP(
 			_servletContext, request, response, "/add_layout.jsp");
 	}
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

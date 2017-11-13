@@ -228,6 +228,9 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 
 				configuredProperties.put(
 					"felix.fileinstall.filename", sb.toString());
+
+				configuredProperties.put(
+					"configuration.cleaner.ignore", "true");
 			}
 
 			configuration.update(configuredProperties);

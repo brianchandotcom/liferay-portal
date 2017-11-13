@@ -14,11 +14,10 @@
 
 package com.liferay.reading.time.taglib.servlet.taglib;
 
-import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.reading.time.message.ReadingTimeMessageProvider;
 import com.liferay.reading.time.model.ReadingTimeEntry;
@@ -53,7 +52,8 @@ public class ReadingTimeTag extends AttributesTagSupport {
 
 				ReadingTimeEntry readingTimeEntry =
 					ReadingTimeEntryLocalServiceUtil.fetchReadingTimeEntry(
-						classNameId, (Long)_model.getPrimaryKeyObj());
+						_model.getGroupId(), classNameId,
+						(Long)_model.getPrimaryKeyObj());
 
 				if (readingTimeEntry != null) {
 					String readingTimeMessage = _getReadingTimeMessage(
@@ -63,7 +63,8 @@ public class ReadingTimeTag extends AttributesTagSupport {
 						jspWriter.write(
 							"<time class=\"reading-time\" datetime=\"");
 						jspWriter.write(
-							readingTimeEntry.getReadingTimeInSeconds());
+							String.valueOf(
+								readingTimeEntry.getReadingTime() / 1000));
 						jspWriter.write("\"");
 
 						if (Validator.isNotNull(_id)) {
@@ -91,7 +92,7 @@ public class ReadingTimeTag extends AttributesTagSupport {
 		_id = id;
 	}
 
-	public void setModel(BaseModel model) {
+	public void setModel(GroupedModel model) {
 		_model = model;
 	}
 
@@ -124,6 +125,6 @@ public class ReadingTimeTag extends AttributesTagSupport {
 	}
 
 	private String _id;
-	private BaseModel _model;
+	private GroupedModel _model;
 
 }

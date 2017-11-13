@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.test.util;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.test.randomizerbumpers.RandomizerBumper;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PwdGenerator;
@@ -24,12 +26,15 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 /**
  * @author Manuel de la Peña
@@ -158,6 +163,22 @@ public class RandomTestUtil {
 		else {
 			return -value;
 		}
+	}
+
+	public static Locale randomNonDefaultLocale(Company company)
+		throws Exception {
+
+		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
+
+		List<Locale> locales = new ArrayList();
+
+		for (Locale locale : availableLocales) {
+			if (!locale.equals(company.getLocale())) {
+				locales.add(locale);
+			}
+		}
+
+		return locales.get(new Random().nextInt(locales.size()));
 	}
 
 	@SafeVarargs

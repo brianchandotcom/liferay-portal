@@ -799,10 +799,10 @@ public class SharepointExtRepository implements ExtRepository {
 
 		HttpRequestWithBody httpRequestWithBody = Unirest.post(url);
 
+		httpRequestWithBody.body(FileUtil.getBytes(inputStream));
 		httpRequestWithBody.header("accept", "application/json; odata=verbose");
 		httpRequestWithBody.header(
 			"Authorization", "Bearer " + _getAccessToken());
-		httpRequestWithBody.body(FileUtil.getBytes(inputStream));
 
 		HttpResponse<String> httpResponse = httpRequestWithBody.asString();
 

@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.exception.CPDefinitionDisplayDateException;
 import com.liferay.commerce.product.exception.CPDefinitionExpirationDateException;
+import com.liferay.commerce.product.exception.CPDefinitionIgnoreSKUCombinationsException;
 import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -957,6 +958,8 @@ public class CPDefinitionLocalServiceImpl
 			long cpDefinitionId, boolean ignoreSKUCombinations)
 		throws PortalException {
 
+		checkCPInstances(cpDefinitionId, ignoreSKUCombinations);
+
 		CPDefinition cpDefinition = cpDefinitionPersistence.findByPrimaryKey(
 			cpDefinitionId);
 
@@ -1172,6 +1175,21 @@ public class CPDefinitionLocalServiceImpl
 					userId, cpDefinition.getCPDefinitionId(),
 					WorkflowConstants.STATUS_EXPIRED, serviceContext,
 					new HashMap<String, Serializable>());
+			}
+		}
+	}
+
+	protected void checkCPInstances(
+			long cpDefinitionId, boolean ignoreSKUCombinations)
+		throws PortalException {
+
+		if (ignoreSKUCombinations) {
+			int cpInstancesCount =
+				cpInstanceLocalService.getCPDefinitionInstancesCount(
+					cpDefinitionId, WorkflowConstants.STATUS_APPROVED);
+
+			if (cpInstancesCount > 1) {
+				throw new CPDefinitionIgnoreSKUCombinationsException();
 			}
 		}
 	}

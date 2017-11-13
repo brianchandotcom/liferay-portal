@@ -202,8 +202,6 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 			groupId = scopeLayout.getGroupId();
 		}
 
-		long plid = LayoutConstants.DEFAULT_PLID;
-
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 			groupId, privateLayout, LayoutConstants.TYPE_PORTLET);
 
@@ -211,16 +209,14 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 			LayoutTypePortlet layoutTypePortlet =
 				(LayoutTypePortlet)layout.getLayoutType();
 
-			if (layoutTypePortlet.hasPortletId(portletId, true)) {
-				if (_getScopeGroupId(layout, portletId) == scopeGroupId) {
-					plid = layout.getPlid();
+			portletId = getPortletId(layoutTypePortlet, portletId);
 
-					break;
-				}
+			if (_getScopeGroupId(layout, portletId) == scopeGroupId) {
+				return layout.getPlid();
 			}
 		}
 
-		return plid;
+		return LayoutConstants.DEFAULT_PLID;
 	}
 
 	private long _getPlidFromPortletId(long groupId, String portletId)

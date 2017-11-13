@@ -38,10 +38,8 @@
 					</div>
 
 					<#if has_navigation>
-						<button aria-controls="navigation" aria-expanded="false" class="navbar-toggler" data-target="#navigationCollapse" data-toggle="collapse" type="button">
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
+						<button class="navbar-toggler navbar-light" type="button" data-toggle="collapse" data-target="#navigationCollapse" aria-controls="navigationCollapse" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
 						</button>
 					</#if>
 

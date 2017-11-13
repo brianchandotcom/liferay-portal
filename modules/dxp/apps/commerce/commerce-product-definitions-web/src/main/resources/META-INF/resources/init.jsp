@@ -51,6 +51,7 @@ page import="com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDe
 page import="com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPInstanceScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.product.exception.CPAttachmentFileEntryExpirationDateException" %><%@
 page import="com.liferay.commerce.product.exception.CPAttachmentFileEntryFileEntryIdException" %><%@
+page import="com.liferay.commerce.product.exception.CPDefinitionIgnoreSKUCombinationsException" %><%@
 page import="com.liferay.commerce.product.exception.CPDefinitionOptionValueRelKeyException" %><%@
 page import="com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException" %><%@
 page import="com.liferay.commerce.product.exception.CPFriendlyURLEntryException" %><%@

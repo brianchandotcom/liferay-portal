@@ -61,6 +61,8 @@ renderResponse.setTitle((cpInstance == null) ? LanguageUtil.get(request, "add-sk
 
 		<aui:model-context bean="<%= cpInstance %>" model="<%= CPInstance.class %>" />
 
+		<liferay-ui:error exception="<%= CPDefinitionIgnoreSKUCombinationsException.class %>" message="only-one-sku-can-be-approved" />
+
 		<aui:fieldset>
 			<aui:input name="sku" />
 
@@ -69,41 +71,43 @@ renderResponse.setTitle((cpInstance == null) ? LanguageUtil.get(request, "add-sk
 			<aui:input name="manufacturerPartNumber" />
 		</aui:fieldset>
 
-		<aui:fieldset collapsible="<%= true %>" label="options">
-			<c:choose>
-				<c:when test="<%= cpInstance != null %>">
+		<c:if test="<%= !cpDefinition.getIgnoreSKUCombinations() %>">
+			<aui:fieldset collapsible="<%= true %>" label="options">
+				<c:choose>
+					<c:when test="<%= cpInstance != null %>">
 
-					<%
-					for (CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels) {
-						List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = cpDefinitionOptionRelListMap.get(cpDefinitionOptionRel);
+						<%
+						for (CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels) {
+							List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = cpDefinitionOptionRelListMap.get(cpDefinitionOptionRel);
 
-						StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
-					%>
+							StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
+						%>
 
-						<h6 class="text-default">
-							<strong><%= HtmlUtil.escape(cpDefinitionOptionRel.getTitle(languageId)) %></strong>
+							<h6 class="text-default">
+								<strong><%= HtmlUtil.escape(cpDefinitionOptionRel.getTitle(languageId)) %></strong>
 
-							<%
-							for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels) {
-								stringJoiner.add(cpDefinitionOptionValueRel.getTitle(languageId));
-							}
-							%>
+								<%
+								for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels) {
+									stringJoiner.add(cpDefinitionOptionValueRel.getTitle(languageId));
+								}
+								%>
 
-							<%= HtmlUtil.escape(stringJoiner.toString()) %>
-						</h6>
+								<%= HtmlUtil.escape(stringJoiner.toString()) %>
+							</h6>
 
-					<%
-					}
-					%>
+						<%
+						}
+						%>
 
-				</c:when>
-				<c:otherwise>
-					<%= cpInstanceDisplayContext.renderOptions(renderRequest, renderResponse) %>
+					</c:when>
+					<c:otherwise>
+						<%= cpInstanceDisplayContext.renderOptions(renderRequest, renderResponse) %>
 
-					<aui:input name="ddmFormValues" type="hidden" />
-				</c:otherwise>
-			</c:choose>
-		</aui:fieldset>
+						<aui:input name="ddmFormValues" type="hidden" />
+					</c:otherwise>
+				</c:choose>
+			</aui:fieldset>
+		</c:if>
 
 		<aui:fieldset collapsible="<%= true %>" label="schedule">
 			<aui:input name="published" type="checkbox" />

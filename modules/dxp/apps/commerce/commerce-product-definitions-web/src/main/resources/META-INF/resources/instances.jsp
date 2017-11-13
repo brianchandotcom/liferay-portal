@@ -105,6 +105,8 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinition.getCPDefinitionId() %>" />
 
+	<liferay-ui:error exception="<%= CPDefinitionIgnoreSKUCombinationsException.class %>" message="only-one-sku-can-be-approved" />
+
 	<aui:input checked="<%= isIgnoreSKUCombinations %>" helpMessage="ignore-sku-combinations-help" name="ignoreSKUCombinations" onChange='<%= renderResponse.getNamespace() + "updateCPDefinitionIgnoreSKUCombinations();" %>' type="toggle-switch" />
 </aui:form>
 

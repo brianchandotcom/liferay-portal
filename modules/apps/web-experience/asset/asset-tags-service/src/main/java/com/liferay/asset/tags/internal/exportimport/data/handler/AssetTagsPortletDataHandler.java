@@ -14,9 +14,9 @@
 
 package com.liferay.asset.tags.internal.exportimport.data.handler;
 
+import com.liferay.asset.constants.AssetTagsAdminPortletKeys;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.asset.constants.AssetTagsAdminPortletKeys;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;

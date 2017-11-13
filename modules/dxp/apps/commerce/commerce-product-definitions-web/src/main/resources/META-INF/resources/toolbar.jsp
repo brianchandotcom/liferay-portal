@@ -83,13 +83,13 @@ CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayC
 <aui:script require="commerce-product-definitions-web/DefinitionToolbarFilter.es">
 	var definitionToolbarFilter = new commerceProductDefinitionsWebDefinitionToolbarFilterEs.default(
 		{
+			categorySelectorURL: '<%= cpDefinitionsDisplayContext.getCategorySelectorURL(renderResponse.getNamespace() + "selectCategory") %>',
 			cpDefinitionsFacetsURL : '<%= cpDefinitionsFacetsURL.toString() %>',
+			groupIds: '<%= themeDisplay.getScopeGroupId() %>',
 			namespace : '<portlet:namespace />',
 			pathThemeImages: '<%= themeDisplay.getPathThemeImages() %>',
 			portletURL: '<%= cpDefinitionsDisplayContext.getPortletURL() %>',
-			groupIds: '<%= themeDisplay.getScopeGroupId() %>',
-			vocabularyIds: '<%= cpDefinitionsDisplayContext.getVocabularyIds() %>',
-			categorySelectorURL: '<%= cpDefinitionsDisplayContext.getCategorySelectorURL(renderResponse.getNamespace() + "selectCategory") %>'
+			vocabularyIds: '<%= cpDefinitionsDisplayContext.getVocabularyIds() %>'
 		},
 		'#<portlet:namespace />DefinitionToolbarFilter'
 	);

@@ -49,11 +49,11 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 <aui:script require="commerce-product-options-web/CPOptionsEditor.es">
 	var cpOptionsEditor = new commerceProductOptionsWebCPOptionsEditorEs.default(
 		{
+			namespace : '<portlet:namespace />',
 			optionURL : '<%= cpOptionURL %>',
-			optionsURL : '<%= cpOptionsURL %>',
 			optionValueURL : '<%= cpOptionValueURL %>',
 			optionValuesURL : '<%= cpOptionValuesURL %>',
-			namespace : '<portlet:namespace />',
+			optionsURL : '<%= cpOptionsURL %>',
 			pathThemeImages: '<%= themeDisplay.getPathThemeImages() %>'
 		},
 		'#<portlet:namespace />CPOptionsEditor'

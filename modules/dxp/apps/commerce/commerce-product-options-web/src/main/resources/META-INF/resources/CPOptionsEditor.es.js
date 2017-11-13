@@ -96,14 +96,14 @@ class CPOptionsEditor extends Component {
  * @static
  */
 CPOptionsEditor.STATE = {
-	optionsURL: Config.string().required(),
-	optionURL: Config.string().required(),
-	optionValuesURL: Config.string().required(),
-	optionValueURL: Config.string().required(),
-	_options: Config.array().value([]),
-	_newOptionTitle: Config.string().value(''),
 	namespace: Config.string().required(),
-	pathThemeImages: Config.string().required()
+	optionURL: Config.string().required(),
+	optionValueURL: Config.string().required(),
+	optionValuesURL: Config.string().required(),
+	optionsURL: Config.string().required(),
+	pathThemeImages: Config.string().required(),
+	_newOptionTitle: Config.string().value(''),
+	_options: Config.array().value([])
 };
 
 // Register component

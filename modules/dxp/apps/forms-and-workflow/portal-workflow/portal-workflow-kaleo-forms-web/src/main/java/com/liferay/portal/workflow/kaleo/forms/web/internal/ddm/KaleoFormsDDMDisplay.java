@@ -197,7 +197,6 @@ public class KaleoFormsDDMDisplay extends BaseDDMDisplay {
 
 		portletURL.setParameter(
 			"resourceClassNameId", String.valueOf(resourceClassNameId));
-
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return portletURL.toString();

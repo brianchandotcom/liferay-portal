@@ -34,6 +34,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 
 		if (fileName.contains("/custom-sql/")) {
 			_checkClosingParenthesis(fileName, content);
+			_checkMissingParentheses(fileName, content);
 			_checkScalability(fileName, absolutePath, content);
 
 			content = _fixIncorrectAndOr(content);
@@ -98,6 +99,29 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 						"' tabs, but '", String.valueOf(startLineTabCount),
 						"' tabs are expected"),
 					endLineCount);
+			}
+		}
+	}
+
+	private void _checkMissingParentheses(String fileName, String content) {
+		Matcher matcher = _missingParenthesesPattern1.matcher(content);
+
+		while (matcher.find()) {
+			addMessage(
+				fileName, "Missing parentheses",
+				getLineCount(content, matcher.start()));
+		}
+
+		matcher = _missingParenthesesPattern2.matcher(content);
+
+		while (matcher.find()) {
+			String nextLine = getLine(
+				content, getLineCount(content, matcher.end()));
+
+			if (!nextLine.endsWith(" IN") && !nextLine.endsWith("EXISTS")) {
+				addMessage(
+					fileName, "Missing parentheses",
+					getLineCount(content, matcher.end()));
 			}
 		}
 	}
@@ -223,6 +247,10 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 		Pattern.compile("(\t+)\\(.+\n");
 	private final Pattern _missingLineBreakBeforeOpenParenthesisPattern =
 		Pattern.compile("\n(\t+).*[^\t\n]\\(\n");
+	private final Pattern _missingParenthesesPattern1 = Pattern.compile(
+		"[^\\)\\]\\s]\\s+(AND|OR|\\[\\$AND_OR_CONNECTOR\\$\\])\\s");
+	private final Pattern _missingParenthesesPattern2 = Pattern.compile(
+		"\\s(AND|OR|\\[\\$AND_OR_CONNECTOR\\$\\])\\s+[^\\(\\[<\\s]");
 	private final Pattern _whereNotInSQLPattern = Pattern.compile(
 		"WHERE[ \t\n]+\\(*[a-zA-z0-9.]+ NOT IN");
 

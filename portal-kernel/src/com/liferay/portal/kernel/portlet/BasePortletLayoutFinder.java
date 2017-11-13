@@ -226,22 +226,11 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 		long plid = _doGetPlidFromPortletId(
 			groupId, scopeGroupId, false, portletId);
 
-		if (plid == LayoutConstants.DEFAULT_PLID) {
-			plid = _doGetPlidFromPortletId(
-				groupId, scopeGroupId, true, portletId);
+		if (plid != LayoutConstants.DEFAULT_PLID) {
+			return plid;
 		}
 
-		if (plid == LayoutConstants.DEFAULT_PLID) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Portlet ", portletId,
-						" does not exist on a page in group ",
-						String.valueOf(groupId)));
-			}
-		}
-
-		return plid;
+		return _doGetPlidFromPortletId(groupId, scopeGroupId, true, portletId);
 	}
 
 	private long _getScopeGroupId(Layout layout, String portletId) {

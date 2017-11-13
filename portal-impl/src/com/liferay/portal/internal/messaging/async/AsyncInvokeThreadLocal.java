@@ -12,15 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.messaging.async;
+package com.liferay.portal.internal.messaging.async;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 
 /**
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, moved to {@link com.liferay.portal.internal.messaging.async.AsyncInvokeThreadLocal}
  */
-@Deprecated
 public class AsyncInvokeThreadLocal {
 
 	public static boolean isEnabled() {

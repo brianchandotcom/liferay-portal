@@ -12,26 +12,36 @@
  * details.
  */
 
-package com.liferay.portal.messaging.async;
+package com.liferay.portal.internal.cluster;
 
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.process.ProcessException;
+import com.liferay.portal.kernel.util.MethodHandler;
+
+import java.io.Serializable;
 
 /**
  * @author Shuyang Zhou
- * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, moved to {@link com.liferay.portal.internal.messaging.async.AsyncMessageListener}
  */
-@Deprecated
-public class AsyncMessageListener extends BaseMessageListener {
+public class MethodHandlerProcessCallable<T extends Serializable>
+	implements ProcessCallable<T> {
+
+	public MethodHandlerProcessCallable(MethodHandler methodHandler) {
+		_methodHandler = methodHandler;
+	}
 
 	@Override
-	protected void doReceive(Message message) throws Exception {
-		ProcessCallable<?> processCallable =
-			(ProcessCallable<?>)message.getPayload();
-
-		processCallable.call();
+	public T call() throws ProcessException {
+		try {
+			return (T)_methodHandler.invoke();
+		}
+		catch (Exception e) {
+			throw new ProcessException(e);
+		}
 	}
+
+	private static final long serialVersionUID = 1L;
+
+	private final MethodHandler _methodHandler;
 
 }

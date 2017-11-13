@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.messaging.async;
+package com.liferay.portal.internal.messaging.async;
 
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServiceInvokerUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
@@ -28,9 +28,7 @@ import org.aopalliance.intercept.MethodInvocation;
 
 /**
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, moved to {@link com.liferay.portal.internal.messaging.async.AsyncProcessCallable}
  */
-@Deprecated
 public class AsyncProcessCallable
 	implements Externalizable, ProcessCallable<Serializable> {
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.cluster;
+package com.liferay.portal.internal.cluster;
 
 import com.liferay.portal.kernel.cluster.ClusterEvent;
 import com.liferay.portal.kernel.cluster.ClusterEventListener;
@@ -29,9 +29,7 @@ import java.util.List;
 
 /**
  * @author Amos Fong
- * @deprecated As of 7.0.0, moved to {@link com.liferay.portal.internal.cluster.LiveUsersClusterEventListenerImpl}
  */
-@Deprecated
 public class LiveUsersClusterEventListenerImpl implements ClusterEventListener {
 
 	@Override

@@ -12,27 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.messaging.async;
+package com.liferay.portal.internal.messaging.async;
 
-import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.process.ProcessCallable;
 
 /**
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, moved to {@link com.liferay.portal.internal.messaging.async.AsyncInvokeThreadLocal}
+ * @author Brian Wing Shun Chan
  */
-@Deprecated
-public class AsyncInvokeThreadLocal {
+public class AsyncMessageListener extends BaseMessageListener {
 
-	public static boolean isEnabled() {
-		return _enabled.get();
+	@Override
+	protected void doReceive(Message message) throws Exception {
+		ProcessCallable<?> processCallable =
+			(ProcessCallable<?>)message.getPayload();
+
+		processCallable.call();
 	}
-
-	public static void setEnabled(boolean enabled) {
-		_enabled.set(enabled);
-	}
-
-	private static final ThreadLocal<Boolean> _enabled =
-		new CentralizedThreadLocal<>(
-			AsyncInvokeThreadLocal.class + "._enabled", () -> Boolean.FALSE);
 
 }

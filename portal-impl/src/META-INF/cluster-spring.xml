@@ -13,7 +13,7 @@
 			<util:constant static-field="com.liferay.portal.util.PropsValues.CLUSTER_LINK_ENABLED" />
 		</property>
 		<property name="newChainableMethodAdvice">
-			<bean class="com.liferay.portal.cluster.ClusterableAdvice" />
+			<bean class="com.liferay.portal.internal.cluster.ClusterableAdvice" />
 		</property>
 		<property name="parentChainableMethodAdvice" ref="serviceAdvice" />
 	</bean>
@@ -22,7 +22,7 @@
 			<bean class="com.liferay.portal.kernel.resiliency.spi.SPIUtil" factory-method="isSPI" />
 		</property>
 		<property name="newChainableMethodAdvice">
-			<bean class="com.liferay.portal.cluster.SPIClusterableAdvice" />
+			<bean class="com.liferay.portal.internal.cluster.SPIClusterableAdvice" />
 		</property>
 		<property name="parentChainableMethodAdvice" ref="serviceAdvice" />
 	</bean>

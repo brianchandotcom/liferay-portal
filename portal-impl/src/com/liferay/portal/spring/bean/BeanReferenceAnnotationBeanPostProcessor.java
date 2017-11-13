@@ -14,7 +14,7 @@
 
 package com.liferay.portal.spring.bean;
 
-import com.liferay.portal.cluster.ClusterableAdvice;
+import com.liferay.portal.internal.cluster.ClusterableAdvice;
 import com.liferay.portal.kernel.bean.BeanLocatorException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;

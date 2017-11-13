@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.cluster;
+package com.liferay.portal.internal.cluster;
 
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.cluster.ClusterableInvokerUtil;
@@ -32,9 +32,7 @@ import org.aopalliance.intercept.MethodInvocation;
 
 /**
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, moved to {@link com.liferay.portal.internal.cluster.SPIClusterableAdvice}
  */
-@Deprecated
 public class SPIClusterableAdvice
 	extends AnnotationChainableMethodAdvice<Clusterable> {
 

@@ -25,7 +25,7 @@ if (cpDefinitions == null) {
 %>
 
 <c:choose>
-	<c:when test="<%= cpDefinitions.size() >= 1 %>">
+	<c:when test="<%= !cpDefinitions.isEmpty() %>">
 		<div class="carousel slide w100" data-interval="false" id="carousel-product-definitions">
 			<div class="carousel-inner" role="listbox">
 
@@ -64,12 +64,7 @@ if (cpDefinitions == null) {
 						</div>
 
 						<div class="carousel-label">
-
-							<%
-							Object[] arguments = {carouselItemsCount, cpDefinitions.size()};
-							%>
-
-							<p><liferay-ui:message arguments="<%= arguments %>" key="product-x-of-x" /></p>
+							<p><liferay-ui:message arguments="<%= new Object[] {carouselItemsCount, cpDefinitions.size()} %>" key="product-x-of-x" /></p>
 						</div>
 
 						<liferay-ui:tabs names="details,specs,skus" param="<%= String.valueOf(cpDefinition.getCPDefinitionId()) %>" refresh="<%= false %>" type="tabs nav-tabs-default">
@@ -165,7 +160,7 @@ if (cpDefinitions == null) {
 					</div>
 
 				<%
-					carouselItemsCount += 1;
+					carouselItemsCount++;
 				}
 				%>
 

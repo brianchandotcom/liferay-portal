@@ -25,7 +25,7 @@ public class ReadingTimeEntryLocalServiceImpl
 
 	@Override
 	public ReadingTimeEntry addReadingTimeEntry(
-		long classNameId, long classPK, long readingTimeInSeconds) {
+		long groupId, long classNameId, long classPK, long readingTime) {
 
 		long entryId = counterLocalService.increment();
 
@@ -33,16 +33,18 @@ public class ReadingTimeEntryLocalServiceImpl
 
 		entry.setClassNameId(classNameId);
 		entry.setClassPK(classPK);
-		entry.setReadingTimeInSeconds(readingTimeInSeconds);
+		entry.setGroupId(groupId);
+		entry.setReadingTime(readingTime);
 
 		return readingTimeEntryPersistence.update(entry);
 	}
 
 	@Override
 	public ReadingTimeEntry fetchReadingTimeEntry(
-		long classNameId, long classPK) {
+		long groupId, long classNameId, long classPK) {
 
-		return readingTimeEntryPersistence.fetchByC_C(classNameId, classPK);
+		return readingTimeEntryPersistence.fetchByG_C_C(
+			groupId, classNameId, classPK);
 	}
 
 }

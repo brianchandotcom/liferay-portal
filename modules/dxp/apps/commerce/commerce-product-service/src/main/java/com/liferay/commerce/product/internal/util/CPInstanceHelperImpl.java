@@ -174,6 +174,14 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 	}
 
 	@Override
+	public DDMForm getCPAttachmentFileEntryDDMForm(
+			long cpDefinitionId, Locale locale)
+		throws PortalException {
+
+		return _getDDMForm(cpDefinitionId, locale, false, true, true, false);
+	}
+
+	@Override
 	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRel(
 			long cpDefinitionId, String optionFieldName,
 			Map<String, String> optionMap)
@@ -328,92 +336,25 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 	}
 
 	@Override
-	public DDMForm getDDMForm(
-			long cpDefinitionId, Locale locale, boolean skuContributor,
-			boolean useDDMFormRule)
+	public DDMForm getCPInstanceDDMForm(
+			long cpDefinitionId, Locale locale, boolean ignoreSKUCombinations,
+			boolean skuContributor)
 		throws PortalException {
 
-		DDMForm ddmForm = new DDMForm();
+		return _getDDMForm(
+			cpDefinitionId, locale, ignoreSKUCombinations, skuContributor,
+			false, false);
+	}
 
-		List<CPDefinitionOptionRel> cpDefinitionOptionRels;
+	@Override
+	public DDMForm getPublicStoreDDMForm(
+			long cpDefinitionId, Locale locale, boolean ignoreSKUCombinations,
+			boolean skuContributor)
+		throws PortalException {
 
-		if (skuContributor) {
-			cpDefinitionOptionRels =
-				_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
-					cpDefinitionId, true);
-		}
-		else {
-			cpDefinitionOptionRels =
-				_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
-					cpDefinitionId);
-		}
-
-		if (cpDefinitionOptionRels.isEmpty()) {
-			return null;
-		}
-
-		for (CPDefinitionOptionRel cpDefinitionOptionRel :
-				cpDefinitionOptionRels) {
-
-			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
-				cpDefinitionOptionRel.getCPDefinitionOptionValueRels();
-
-			if (Validator.isNull(
-					cpDefinitionOptionRel.getDDMFormFieldTypeName())) {
-
-				continue;
-			}
-
-			DDMFormField ddmFormField = new DDMFormField(
-				String.valueOf(
-					cpDefinitionOptionRel.getCPDefinitionOptionRelId()),
-				cpDefinitionOptionRel.getDDMFormFieldTypeName());
-
-			if (!cpDefinitionOptionValueRels.isEmpty()) {
-				DDMFormFieldOptions ddmFormFieldOptions =
-					new DDMFormFieldOptions();
-
-				for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
-						cpDefinitionOptionValueRels) {
-
-					String optionLabel = String.valueOf(
-						cpDefinitionOptionValueRel.
-							getCPDefinitionOptionValueRelId());
-
-					ddmFormFieldOptions.addOptionLabel(
-						optionLabel, locale,
-						cpDefinitionOptionValueRel.getTitle(locale));
-				}
-
-				ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
-			}
-
-			LocalizedValue localizedValue = new LocalizedValue(locale);
-
-			localizedValue.addString(
-				locale, cpDefinitionOptionRel.getTitle(locale));
-
-			ddmFormField.setLabel(localizedValue);
-
-			boolean required = false;
-
-			if (skuContributor || cpDefinitionOptionRel.getRequired()) {
-				required = true;
-			}
-
-			ddmFormField.setRequired(required);
-
-			ddmForm.addDDMFormField(ddmFormField);
-		}
-
-		if (useDDMFormRule) {
-			ddmForm.addDDMFormRule(createDDMFormRule(ddmForm, cpDefinitionId));
-		}
-
-		ddmForm.addAvailableLocale(locale);
-		ddmForm.setDefaultLocale(locale);
-
-		return ddmForm;
+		return _getDDMForm(
+			cpDefinitionId, locale, ignoreSKUCombinations, skuContributor,
+			false, true);
 	}
 
 	@Override
@@ -532,76 +473,53 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 	}
 
 	@Override
-	public String render(
-			long cpDefinitionId, RenderRequest renderRequest,
+	public String renderCPAttachmentFileEntryOptions(
+			long cpDefinitionId, String json, RenderRequest renderRequest,
 			RenderResponse renderResponse)
 		throws PortalException {
 
-		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
-			cpDefinitionId);
+		Locale locale = _portal.getLocale(renderRequest);
 
-		return render(
-			cpDefinitionId, null, false, renderRequest, renderResponse,
-			!cpDefinition.isIgnoreSKUCombinations());
+		DDMForm ddmForm = getCPAttachmentFileEntryDDMForm(
+			cpDefinitionId, locale);
+
+		return _render(
+			cpDefinitionId, locale, ddmForm, json, renderRequest,
+			renderResponse);
 	}
 
 	@Override
-	public String render(
-			long cpDefinitionId, RenderRequest renderRequest,
-			RenderResponse renderResponse, boolean skuContributor)
+	public String renderCPInstanceOptions(
+			long cpDefinitionId, String json, boolean ignoreSKUCombinations,
+			boolean skuContributor, RenderRequest renderRequest,
+			RenderResponse renderResponse)
 		throws PortalException {
 
-		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
-			cpDefinitionId);
+		Locale locale = _portal.getLocale(renderRequest);
 
-		return render(
-			cpDefinitionId, null, skuContributor, renderRequest, renderResponse,
-			!cpDefinition.isIgnoreSKUCombinations());
+		DDMForm ddmForm = getCPInstanceDDMForm(
+			cpDefinitionId, locale, ignoreSKUCombinations, skuContributor);
+
+		return _render(
+			cpDefinitionId, locale, ddmForm, json, renderRequest,
+			renderResponse);
 	}
 
 	@Override
-	public String render(
-			long cpDefinitionId, String json, boolean skuContributor,
-			RenderRequest renderRequest, RenderResponse renderResponse,
-			boolean useDDMFormRule)
+	public String renderPublicStoreOptions(
+			long cpDefinitionId, String json, boolean ignoreSKUCombinations,
+			boolean skuContributor, RenderRequest renderRequest,
+			RenderResponse renderResponse)
 		throws PortalException {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			renderRequest);
+		Locale locale = _portal.getLocale(renderRequest);
 
-		HttpServletResponse httpServletResponse =
-			_portal.getHttpServletResponse(renderResponse);
+		DDMForm ddmForm = getPublicStoreDDMForm(
+			cpDefinitionId, locale, ignoreSKUCombinations, skuContributor);
 
-		Locale locale = _portal.getLocale(httpServletRequest);
-
-		DDMForm ddmForm = getDDMForm(
-			cpDefinitionId, locale, skuContributor, useDDMFormRule);
-
-		if (ddmForm == null) {
-			return StringPool.BLANK;
-		}
-
-		DDMFormRenderingContext ddmFormRenderingContext =
-			new DDMFormRenderingContext();
-
-		ddmFormRenderingContext.setContainerId(String.valueOf(cpDefinitionId));
-		ddmFormRenderingContext.setHttpServletRequest(httpServletRequest);
-		ddmFormRenderingContext.setHttpServletResponse(httpServletResponse);
-		ddmFormRenderingContext.setLocale(locale);
-		ddmFormRenderingContext.setPortletNamespace(
-			renderResponse.getNamespace());
-		ddmFormRenderingContext.setShowRequiredFieldsWarning(false);
-
-		if (Validator.isNotNull(json)) {
-			DDMFormValues ddmFormValues = _ddmFormValuesHelper.deserialize(
-				ddmForm, json, locale);
-
-			if (ddmFormValues != null) {
-				ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
-			}
-		}
-
-		return _ddmFormRenderer.render(ddmForm, ddmFormRenderingContext);
+		return _render(
+			cpDefinitionId, locale, ddmForm, json, renderRequest,
+			renderResponse);
 	}
 
 	protected DDMFormRule createDDMFormRule(
@@ -699,6 +617,156 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 		return outputMappingStatementStream.collect(
 			Collectors.joining(StringPool.SEMICOLON));
+	}
+
+	private DDMForm _getDDMForm(
+			long cpDefinitionId, Locale locale, boolean ignoreSKUCombinations,
+			boolean skuContributor, boolean optional, boolean publicStore)
+		throws PortalException {
+
+		DDMForm ddmForm = new DDMForm();
+
+		List<CPDefinitionOptionRel> cpDefinitionOptionRels;
+
+		if (skuContributor) {
+			cpDefinitionOptionRels =
+				_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
+					cpDefinitionId, true);
+		}
+		else {
+			cpDefinitionOptionRels =
+				_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
+					cpDefinitionId);
+		}
+
+		if (cpDefinitionOptionRels.isEmpty()) {
+			return null;
+		}
+
+		for (CPDefinitionOptionRel cpDefinitionOptionRel :
+				cpDefinitionOptionRels) {
+
+			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+				cpDefinitionOptionRel.getCPDefinitionOptionValueRels();
+
+			if (Validator.isNull(
+					cpDefinitionOptionRel.getDDMFormFieldTypeName())) {
+
+				continue;
+			}
+
+			DDMFormField ddmFormField = new DDMFormField(
+				String.valueOf(
+					cpDefinitionOptionRel.getCPDefinitionOptionRelId()),
+				cpDefinitionOptionRel.getDDMFormFieldTypeName());
+
+			if (!cpDefinitionOptionValueRels.isEmpty()) {
+				DDMFormFieldOptions ddmFormFieldOptions =
+					new DDMFormFieldOptions();
+
+				for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
+						cpDefinitionOptionValueRels) {
+
+					String optionLabel = String.valueOf(
+						cpDefinitionOptionValueRel.
+							getCPDefinitionOptionValueRelId());
+
+					ddmFormFieldOptions.addOptionLabel(
+						optionLabel, locale,
+						cpDefinitionOptionValueRel.getTitle(locale));
+				}
+
+				ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+			}
+
+			LocalizedValue localizedValue = new LocalizedValue(locale);
+
+			localizedValue.addString(
+				locale, cpDefinitionOptionRel.getTitle(locale));
+
+			ddmFormField.setLabel(localizedValue);
+
+			boolean required = _isDDMFormRequired(
+				cpDefinitionOptionRel, ignoreSKUCombinations, optional,
+				publicStore);
+
+			ddmFormField.setRequired(required);
+
+			ddmForm.addDDMFormField(ddmFormField);
+		}
+
+		if (!ignoreSKUCombinations) {
+			ddmForm.addDDMFormRule(createDDMFormRule(ddmForm, cpDefinitionId));
+		}
+
+		ddmForm.addAvailableLocale(locale);
+		ddmForm.setDefaultLocale(locale);
+
+		return ddmForm;
+	}
+
+	private boolean _isDDMFormRequired(
+		CPDefinitionOptionRel cpDefinitionOptionRel,
+		boolean ignoreSKUCombinations, boolean optional, boolean publicStore) {
+
+		if (optional) {
+			return false;
+		}
+
+		if (ignoreSKUCombinations) {
+			return cpDefinitionOptionRel.getRequired();
+		}
+
+		if (publicStore) {
+			if (cpDefinitionOptionRel.getRequired() ||
+				cpDefinitionOptionRel.getSkuContributor()) {
+
+				return true;
+			}
+		}
+		else {
+			return cpDefinitionOptionRel.getSkuContributor();
+		}
+
+		return false;
+	}
+
+	private String _render(
+			long cpDefinitionId, Locale locale, DDMForm ddmForm, String json,
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortalException {
+
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			renderRequest);
+
+		HttpServletResponse httpServletResponse =
+			_portal.getHttpServletResponse(renderResponse);
+
+		if (ddmForm == null) {
+			return StringPool.BLANK;
+		}
+
+		DDMFormRenderingContext ddmFormRenderingContext =
+			new DDMFormRenderingContext();
+
+		ddmFormRenderingContext.setContainerId(String.valueOf(cpDefinitionId));
+		ddmFormRenderingContext.setHttpServletRequest(httpServletRequest);
+		ddmFormRenderingContext.setHttpServletResponse(httpServletResponse);
+		ddmFormRenderingContext.setLocale(locale);
+		ddmFormRenderingContext.setPortletNamespace(
+			renderResponse.getNamespace());
+		ddmFormRenderingContext.setShowRequiredFieldsWarning(false);
+
+		if (Validator.isNotNull(json)) {
+			DDMFormValues ddmFormValues = _ddmFormValuesHelper.deserialize(
+				ddmForm, json, locale);
+
+			if (ddmFormValues != null) {
+				ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
+			}
+		}
+
+		return _ddmFormRenderer.render(ddmForm, ddmFormRenderingContext);
 	}
 
 	@Reference

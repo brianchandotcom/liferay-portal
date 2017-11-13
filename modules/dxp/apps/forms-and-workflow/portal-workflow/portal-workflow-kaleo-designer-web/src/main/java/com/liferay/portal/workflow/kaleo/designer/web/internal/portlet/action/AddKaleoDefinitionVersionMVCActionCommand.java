@@ -20,10 +20,12 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -68,6 +70,10 @@ public class AddKaleoDefinitionVersionMVCActionCommand
 
 		try {
 			doProcessAction(actionRequest, actionResponse);
+
+			addSuccessMessage(actionRequest, actionResponse);
+
+			setCloseRedirect(actionRequest);
 
 			return SessionErrors.isEmpty(actionRequest);
 		}
@@ -163,9 +169,27 @@ public class AddKaleoDefinitionVersionMVCActionCommand
 		return value;
 	}
 
+	protected void setCloseRedirect(ActionRequest actionRequest) {
+		String closeRedirect = ParamUtil.getString(
+			actionRequest, "closeRedirect");
+
+		if (Validator.isNull(closeRedirect)) {
+			return;
+		}
+
+		SessionMessages.add(
+			actionRequest,
+			portal.getPortletId(actionRequest) +
+				SessionMessages.KEY_SUFFIX_CLOSE_REDIRECT,
+			closeRedirect);
+	}
+
 	@Reference
 	protected KaleoDefinitionVersionLocalService
 		kaleoDefinitionVersionLocalService;
+
+	@Reference
+	protected Portal portal;
 
 	@Reference
 	protected WorkflowModelParser workflowModelParser;

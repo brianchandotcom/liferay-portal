@@ -237,20 +237,6 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 				PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
 					layout, portletId);
 
-			String scopeType = GetterUtil.getString(
-				portletSetup.getValue("lfrScopeType", null));
-
-			if (Validator.isNull(scopeType)) {
-				return layout.getGroupId();
-			}
-
-			if (scopeType.equals("company")) {
-				Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
-					layout.getCompanyId());
-
-				return companyGroup.getGroupId();
-			}
-
 			String scopeLayoutUuid = GetterUtil.getString(
 				portletSetup.getValue("lfrScopeLayoutUuid", null));
 

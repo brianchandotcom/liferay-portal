@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.sites.kernel.util.SitesUtil;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
@@ -187,21 +188,22 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 	}
 
 	private ObjectValuePair<Long, String> _doGetPlidPortletIdObjectValuePair(
-			long groupId, long scopeGroupId, boolean privateLayout,
-			String portletId)
+			long groupId, long scopeGroupId, String portletId)
 		throws PortalException {
 
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			groupId, privateLayout, LayoutConstants.TYPE_PORTLET);
+		for (boolean privateLayout : Arrays.asList(false, true)) {
+			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+				groupId, privateLayout, LayoutConstants.TYPE_PORTLET);
 
-		for (Layout layout : layouts) {
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
+			for (Layout layout : layouts) {
+				LayoutTypePortlet layoutTypePortlet =
+					(LayoutTypePortlet)layout.getLayoutType();
 
-			portletId = getPortletId(layoutTypePortlet, portletId);
+				portletId = getPortletId(layoutTypePortlet, portletId);
 
-			if (_getScopeGroupId(layout, portletId) == scopeGroupId) {
-				return new ObjectValuePair<>(layout.getPlid(), portletId);
+				if (_getScopeGroupId(layout, portletId) == scopeGroupId) {
+					return new ObjectValuePair<>(layout.getPlid(), portletId);
+				}
 			}
 		}
 
@@ -222,16 +224,8 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 
 		groupId = scopeLayout.getGroupId();
 
-		ObjectValuePair<Long, String> plidAndPortletId =
-			_doGetPlidPortletIdObjectValuePair(
-				groupId, scopeGroupId, false, portletId);
-
-		if (plidAndPortletId.getKey() != LayoutConstants.DEFAULT_PLID) {
-			return plidAndPortletId;
-		}
-
 		return _doGetPlidPortletIdObjectValuePair(
-			groupId, scopeGroupId, true, portletId);
+			groupId, scopeGroupId, portletId);
 	}
 
 	private long _getScopeGroupId(Layout layout, String portletId)

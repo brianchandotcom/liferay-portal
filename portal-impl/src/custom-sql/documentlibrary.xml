@@ -217,7 +217,7 @@
 				AssetEntry ON
 					(AssetEntry.classPK = DLFileEntry.fileEntryId)
 			WHERE
-				DLFileEntry.treePath LIKE ? AND
+				(DLFileEntry.treePath LIKE ?) AND
 				(AssetEntry.classNameId = ?)
 		]]>
 	</sql>
@@ -406,7 +406,7 @@
 				AssetEntry ON
 					(AssetEntry.classPK = DLFolder.folderId)
 			WHERE
-				DLFolder.treePath LIKE ? AND
+				(DLFolder.treePath LIKE ?) AND
 				(AssetEntry.classNameId = ?)
 		]]>
 	</sql>

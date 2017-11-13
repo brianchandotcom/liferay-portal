@@ -346,27 +346,21 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		String snippetFieldName = DocumentImpl.getLocalizedName(
 			locale, fieldName);
 
-		List<String> snippets = highlights.get(snippetFieldName);
+		List<String> list = highlights.get(snippetFieldName);
 
-		if (snippets == null) {
-			snippets = highlights.get(fieldName);
+		if (list == null) {
+			list = highlights.get(fieldName);
 
 			snippetFieldName = fieldName;
 		}
 
-		String snippet = StringPool.BLANK;
-
-		if (ListUtil.isNotEmpty(snippets)) {
-			snippet = StringUtil.merge(snippets, StringPool.TRIPLE_PERIOD);
-
-			if (Validator.isNotNull(snippet)) {
-				snippet = snippet.concat(StringPool.TRIPLE_PERIOD);
-			}
+		if (ListUtil.isEmpty(list)) {
+			return;
 		}
 
 		document.addText(
 			Field.SNIPPET.concat(StringPool.UNDERLINE).concat(snippetFieldName),
-			snippet);
+			StringUtil.merge(list, StringPool.TRIPLE_PERIOD));
 	}
 
 	protected void addSnippets(

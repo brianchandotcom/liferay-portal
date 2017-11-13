@@ -5062,7 +5062,10 @@ public class PortalImpl implements Portal {
 		}
 
 		if (LanguageUtil.isInheritLocales(liveGroup.getGroupId())) {
-			return LocaleUtil.getDefault();
+			Company company = CompanyLocalServiceUtil.getCompany(
+				liveGroup.getCompanyId());
+
+			return company.getLocale();
 		}
 
 		UnicodeProperties typeSettingsProperties =

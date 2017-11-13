@@ -4,8 +4,8 @@
 [subrepo]
 	autopull = false
 	cmdver = liferay
-	commit = 21ed99d29378aa548b0678314f56b0203596895d
+	commit = 0f236598a6a6fe25fa4e5be1bf0a3cdd2f0ec342
 	mergebuttonmergecommits = false
 	mode = push
-	parent = 63292b7e2c6b83e563f572652794b776dfc27c63
+	parent = 5994350d10b82206b4cb2b883beca4ad5d7e0d08
 	remote = git@github.com:liferay/com-liferay-application-list.git

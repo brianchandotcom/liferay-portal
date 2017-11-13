@@ -34,6 +34,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 
 		if (fileName.contains("/custom-sql/")) {
 			_checkClosingParenthesis(fileName, content);
+			_checkMissingLineBreakAfterKeyword(fileName, content);
 			_checkMissingParentheses(fileName, content);
 			_checkScalability(fileName, absolutePath, content);
 
@@ -104,6 +105,20 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 						"' tabs are expected"),
 					endLineCount);
 			}
+		}
+	}
+
+	private void _checkMissingLineBreakAfterKeyword(
+		String fileName, String content) {
+
+		Matcher matcher = _missingLineBreakAfterKeywordPattern.matcher(content);
+
+		while (matcher.find()) {
+			addMessage(
+				fileName,
+				"There should be a line break after '" +
+					StringUtil.trim(matcher.group(1)),
+				getLineCount(content, matcher.end()));
 		}
 	}
 
@@ -359,6 +374,8 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 
 	private final Pattern _incorrectAndOrpattern = Pattern.compile(
 		"(\n\t*)(AND|OR|\\[\\$AND_OR_CONNECTOR\\$\\])( |\n)");
+	private final Pattern _missingLineBreakAfterKeywordPattern =
+		Pattern.compile("\n\\s*(.*\\s(BY|FROM|HAVING|JOIN|ON|SELECT|WHERE)) ");
 	private final Pattern _missingLineBreakAfterOpenParenthesisPattern =
 		Pattern.compile("(\t+)\\(.+\n");
 	private final Pattern _missingLineBreakBeforeOpenParenthesisPattern =

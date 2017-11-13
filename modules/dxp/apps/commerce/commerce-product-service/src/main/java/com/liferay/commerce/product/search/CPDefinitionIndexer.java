@@ -73,6 +73,8 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 	public static final String FIELD_OPTION_NAMES = "optionsNames";
 
+	public static final String FIELD_PRODUCT_TYPE_NAME = "productTypeName";
+
 	public static final String FIELD_SKUS = "skus";
 
 	public CPDefinitionIndexer() {
@@ -93,6 +95,29 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 	public void postProcessContextBooleanFilter(
 			BooleanFilter contextBooleanFilter, SearchContext searchContext)
 		throws Exception {
+
+		String[] productTypeNames = GetterUtil.getStringValues(
+			searchContext.getAttribute(FIELD_PRODUCT_TYPE_NAME), null);
+
+		if (ArrayUtil.isEmpty(productTypeNames)) {
+			String productTypeName = GetterUtil.getString(
+				searchContext.getAttribute(FIELD_PRODUCT_TYPE_NAME));
+
+			if (Validator.isNotNull(productTypeName)) {
+				productTypeNames = new String[] {productTypeName};
+			}
+		}
+
+		if (ArrayUtil.isNotEmpty(productTypeNames)) {
+			TermsFilter productTypeNameFilter = new TermsFilter(
+				FIELD_PRODUCT_TYPE_NAME);
+
+			productTypeNameFilter.addValues(
+				ArrayUtil.toStringArray(productTypeNames));
+
+			contextBooleanFilter.add(
+				productTypeNameFilter, BooleanClauseOccur.MUST);
+		}
 
 		int[] statuses = GetterUtil.getIntegerValues(
 			searchContext.getAttribute(Field.STATUS), null);
@@ -117,6 +142,36 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			contextBooleanFilter.addTerm(
 				Field.STATUS, String.valueOf(WorkflowConstants.STATUS_IN_TRASH),
 				BooleanClauseOccur.MUST_NOT);
+		}
+
+		String[] fieldNames = (String[])searchContext.getAttribute("OPTIONS");
+
+		if (fieldNames == null) {
+			return;
+		}
+
+		for (String fieldName : fieldNames) {
+			String[] fieldValues = GetterUtil.getStringValues(
+				searchContext.getAttribute(fieldName), null);
+
+			if (ArrayUtil.isEmpty(fieldValues)) {
+				String fieldValue = GetterUtil.getString(
+					searchContext.getAttribute(fieldName));
+
+				if (Validator.isNotNull(fieldValue)) {
+					fieldValues = new String[] {fieldValue};
+				}
+			}
+
+			if (ArrayUtil.isNotEmpty(fieldValues)) {
+				TermsFilter fieldValuesFilter = new TermsFilter(fieldName);
+
+				fieldValuesFilter.addValues(
+					ArrayUtil.toStringArray(fieldValues));
+
+				contextBooleanFilter.add(
+					fieldValuesFilter, BooleanClauseOccur.MUST);
+			}
 		}
 	}
 
@@ -260,6 +315,9 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 					"_VALUES_IDS",
 				ArrayUtil.toLongArray(optionValueIds));
 		}
+
+		document.addKeyword(
+			FIELD_PRODUCT_TYPE_NAME, cpDefinition.getProductTypeName());
 
 		document.addText(
 			FIELD_OPTION_NAMES, ArrayUtil.toStringArray(optionNames));

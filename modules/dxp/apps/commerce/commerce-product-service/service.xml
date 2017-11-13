@@ -837,6 +837,7 @@
 		<exception>CPAttachmentFileEntrySize</exception>
 		<exception>CPDefinitionDisplayDate</exception>
 		<exception>CPDefinitionExpirationDate</exception>
+		<exception>CPDefinitionIgnoreSKUCombinations</exception>
 		<exception>CPDefinitionOptionValueRelKey</exception>
 		<exception>CPDefinitionProductTypeName</exception>
 		<exception>CPFriendlyURLEntry</exception>

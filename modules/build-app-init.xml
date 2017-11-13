@@ -1,0 +1,318 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project name="build-app-init">
+	<fail message="Please specify a value for &quot;app.name&quot; when running this command.">
+		<condition>
+			<not>
+				<or>
+					<isset property="app.name" />
+					<istrue value="${build.all}" />
+				</or>
+			</not>
+		</condition>
+	</fail>
+
+	<property file="${modules.dir}/../build.properties" />
+
+	<macrodef name="get-project-path">
+		<attribute name="build.profile" />
+		<attribute name="project.dir" />
+		<attribute name="property" />
+
+		<sequential>
+			<local name="get.project.path.message" />
+			<local name="print.project.path.error" />
+			<local name="print.project.path.output" />
+
+			<exec
+				dir="@{project.dir}"
+				errorproperty="print.project.path.error"
+				executable="${gradle.wrapper.path}"
+				outputproperty="print.project.path.output"
+			>
+				<arg value="printProjectPath" />
+				<arg value="-Dbuild.profile=@{build.profile}" />
+				<arg value="--quiet" />
+			</exec>
+
+			<condition
+				else="${print.project.path.error}"
+				property="get.project.path.message"
+				value="Modules in @{project.dir} with build profile &quot;@{build.profile}&quot;:${line.separator}${print.project.path.output}"
+			>
+				<equals arg1="${print.project.path.error}" arg2="" />
+			</condition>
+
+			<condition
+				property="@{property}"
+				value="${print.project.path.output}"
+			>
+				<equals arg1="${print.project.path.error}" arg2="" />
+			</condition>
+
+			<echo message="${get.project.path.message}" />
+		</sequential>
+	</macrodef>
+
+	<target name="get-app-dirs">
+		<property name="app.dir.private" location="${modules.dir}/private/apps/${app.name}" />
+
+		<condition property="app.dir.private.available">
+			<available file="${app.dir.private}" />
+		</condition>
+
+		<property name="app.dir.public" location="${modules.dir}/apps/${app.name}" />
+
+		<condition property="app.dir.public.available">
+			<available file="${app.dir.public}" />
+		</condition>
+	</target>
+
+	<target depends="get-app-releng-dir" name="get-app-first-version">
+		<condition property="app.first.version">
+			<not>
+				<available file="${releng.app.dir}/app.changelog" />
+			</not>
+		</condition>
+	</target>
+
+	<target
+		depends="
+			get-app-module-dirs-excludes-dxp,
+			get-app-module-dirs-excludes-lfrbuild-app-server-lib,
+			get-app-module-dirs-includes"
+		name="get-app-module-dirs"
+	>
+		<dirset
+			dir="${modules.dir}"
+			excludes="${app.dir.private}/**/*-test,${app.dir.public}/**/*-test,${app.module.dirs.excludes.dxp},${app.module.dirs.excludes.lfrbuild.app.server.lib}"
+			id="app.module.dirs"
+			includes="${app.module.dirs.includes}"
+		/>
+	</target>
+
+	<target depends="get-app-dirs" name="get-app-module-dirs-excludes-lfrbuild-app-server-lib">
+		<pathconvert pathsep="," property="app.module.dirs.excludes.lfrbuild.app.server.lib">
+			<dirset dir="${modules.dir}" includes="${app.dir.private}/**,${app.dir.public}/**">
+				<present targetdir="${modules.dir}">
+					<mapper from="*" to="*/.lfrbuild-app-server-lib" type="glob" />
+				</present>
+			</dirset>
+		</pathconvert>
+	</target>
+
+	<target
+		depends="get-current-branch-private,get-project-path"
+		if="current.branch.private"
+		name="get-app-module-dirs-excludes-dxp"
+	>
+		<loadfile property="app.module.dirs.excludes.dxp">
+			<filterchain>
+				<linecontains>
+					<contains value="-dxp" />
+				</linecontains>
+
+				<tokenfilter delimoutput=",">
+					<ignoreblank />
+
+					<replacestring from="-dxp" to="" />
+
+					<replacestring from="private:" to="" />
+
+					<replacestring from=":" to="/" />
+
+					<replaceregex pattern="^/" replace="" />
+				</tokenfilter>
+			</filterchain>
+			<propertyresource name="project.path" />
+		</loadfile>
+	</target>
+
+	<target depends="get-project-path" name="get-app-module-dirs-includes">
+		<loadfile property="app.module.dirs.includes">
+			<filterchain>
+				<tokenfilter delimoutput=",">
+					<ignoreblank />
+
+					<replacestring from=":" to="/" />
+
+					<replaceregex pattern="^/" replace="" />
+				</tokenfilter>
+			</filterchain>
+			<propertyresource name="project.path" />
+		</loadfile>
+	</target>
+
+	<target name="get-app-releng-dir">
+		<condition else="${modules.dir}/.releng/apps/${app.name}" property="releng.app.dir" value="${modules.dir}/.releng/private/apps/${app.name}">
+			<available file="${modules.dir}/.releng/private/apps/${app.name}" />
+		</condition>
+	</target>
+
+	<target depends="get-app-module-dirs" name="get-app-module-dirs-null">
+		<condition property="module.dirs.null">
+			<or>
+				<equals arg1="${app.module.dirs}" arg2="" />
+				<not>
+					<isreference refid="app.module.dirs" />
+				</not>
+			</or>
+		</condition>
+	</target>
+
+	<target depends="get-app-dirs,get-current-branch-private" name="get-app-release-sources">
+		<condition property="app.release.sources">
+			<or>
+				<available file="${modules.dir}/private/apps/${app.name}/.lfrbuild-release-src" />
+				<istrue value="${current.branch.public}" />
+			</or>
+		</condition>
+	</target>
+
+	<target name="get-current-branch-private">
+		<condition property="current.branch.private">
+			<or>
+				<istrue value="${ee.override}" />
+				<resourcecontains resource="${modules.dir}/../portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java" substring=" DXP " />
+			</or>
+		</condition>
+
+		<condition property="current.branch.public">
+			<not>
+				<istrue value="${current.branch.private}" />
+			</not>
+		</condition>
+
+		<condition else="Liferay CE" property="liferay.releng.app.title.prefix" value="Liferay">
+			<istrue value="${current.branch.private}" />
+		</condition>
+	</target>
+
+	<target depends="get-app-releng-dir" name="get-dist-dir">
+		<property name="dist.dir" value="${releng.app.dir}/dist" />
+	</target>
+
+	<target depends="get-app-dirs" name="get-liferay-releng-app-title">
+		<pathconvert property="app.bnd.file">
+			<fileset dir="${modules.dir}" includes="apps/${app.name}/app.bnd,private/apps/${app.name}/app.bnd" />
+		</pathconvert>
+
+		<loadproperties srcFile="${app.bnd.file}">
+			<filterchain>
+				<linecontains>
+					<contains value="Liferay-Releng-App-Title" />
+				</linecontains>
+			</filterchain>
+		</loadproperties>
+	</target>
+
+	<target
+		depends="
+			get-current-branch-private,
+			get-project-path-private-portal,
+			get-project-path-private-portal-private,
+			get-project-path-public-portal,
+			get-project-path-public-portal-private"
+		name="get-project-path"
+	>
+		<property name="project.path.private.portal" value="" />
+		<property name="project.path.private.portal.private" value="" />
+		<property name="project.path.public.portal" value="" />
+		<property name="project.path.public.portal.private" value="" />
+
+		<property
+			name="project.path"
+			value="${project.path.private.portal}${line.separator}${project.path.private.portal.private}${line.separator}${project.path.public.portal}${line.separator}${project.path.public.portal.private}"
+		/>
+	</target>
+
+	<target
+		depends="get-app-dirs"
+		if="app.dir.private.available"
+		name="get-project-path-private-portal"
+		unless="current.branch.public"
+	>
+		<get-project-path
+			build.profile="portal"
+			project.dir="${app.dir.private}"
+			property="project.path.private.portal"
+		/>
+	</target>
+
+	<target
+		depends="get-app-dirs"
+		if="app.dir.private.available"
+		name="get-project-path-private-portal-private"
+		unless="current.branch.public"
+	>
+		<get-project-path
+			build.profile="portal-private"
+			project.dir="${app.dir.private}"
+			property="project.path.private.portal.private"
+		/>
+	</target>
+
+	<target
+		depends="get-app-dirs"
+		if="app.dir.public.available"
+		name="get-project-path-public-portal"
+	>
+		<get-project-path
+			build.profile="portal"
+			project.dir="${app.dir.public}"
+			property="project.path.public.portal"
+		/>
+	</target>
+
+	<target
+		depends="get-app-dirs"
+		if="app.dir.public.available"
+		name="get-project-path-public-portal-private"
+		unless="current.branch.public"
+	>
+		<get-project-path
+			build.profile="portal-private"
+			project.dir="${app.dir.public}"
+			property="project.path.public.portal.private"
+		/>
+	</target>
+
+	<target
+		depends="
+			get-app-first-version,
+			get-app-module-dirs,
+			get-app-module-dirs-null,
+			get-app-release-sources,
+			get-liferay-releng-app-title,
+			get-app-releng-dir,
+			get-dist-dir,
+			init-releng"
+		name="init"
+	>
+		<condition property="osgi.static.dir.available">
+			<available file="${osgi.dir}/static" />
+		</condition>
+	</target>
+
+	<target depends="get-current-branch-private" if="${current.branch.private}" name="init-releng">
+		<loadfile property="git.commit.portal.public" srcfile="${project.dir}/git-commit-portal">
+			<filterchain>
+				<striplinebreaks />
+			</filterchain>
+		</loadfile>
+
+		<echo message="Checking out ${app.name} public releng info from commit ID: ${git.commit.portal.public}" />
+
+		<exec dir="${project.dir}" executable="git">
+			<arg value="fetch" />
+			<arg value="upstream" />
+		</exec>
+
+		<exec dir="${project.dir}/modules" executable="git">
+			<arg value="checkout" />
+			<arg value="${git.commit.portal.public}" />
+			<arg value=".releng/apps/${app.name}" />
+		</exec>
+	</target>
+</project>

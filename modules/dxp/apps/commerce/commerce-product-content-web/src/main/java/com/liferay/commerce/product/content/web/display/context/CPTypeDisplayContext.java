@@ -187,8 +187,10 @@ public class CPTypeDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		return cpInstanceHelper.render(
-			cpDefinition.getCPDefinitionId(), renderRequest, renderResponse);
+		return cpInstanceHelper.renderPublicStoreOptions(
+			cpDefinition.getCPDefinitionId(), null,
+			cpDefinition.getIgnoreSKUCombinations(), false, renderRequest,
+			renderResponse);
 	}
 
 	protected final CPAttachmentFileEntryService cpAttachmentFileEntryService;

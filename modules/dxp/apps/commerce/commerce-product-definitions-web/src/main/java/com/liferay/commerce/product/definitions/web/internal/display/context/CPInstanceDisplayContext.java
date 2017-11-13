@@ -261,9 +261,11 @@ public class CPInstanceDisplayContext
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
 
-		return _cpInstanceHelper.render(
-			getCPDefinitionId(), null, true, renderRequest, renderResponse,
-			false);
+		CPDefinition cpDefinition = getCPDefinition();
+
+		return _cpInstanceHelper.renderCPInstanceOptions(
+			getCPDefinitionId(), null, cpDefinition.getIgnoreSKUCombinations(),
+			true, renderRequest, renderResponse);
 	}
 
 	private final CPDefinitionOptionRelService _cpDefinitionOptionRelService;

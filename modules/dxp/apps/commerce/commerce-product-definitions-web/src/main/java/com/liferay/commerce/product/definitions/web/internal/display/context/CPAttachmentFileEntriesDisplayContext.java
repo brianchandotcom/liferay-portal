@@ -371,9 +371,8 @@ public class CPAttachmentFileEntriesDisplayContext extends
 			json = cpAttachmentFileEntry.getJson();
 		}
 
-		return _cpInstanceHelper.render(
-			getCPDefinitionId(), json, true, renderRequest, renderResponse,
-			false);
+		return _cpInstanceHelper.renderCPAttachmentFileEntryOptions(
+			getCPDefinitionId(), json, renderRequest, renderResponse);
 	}
 
 	private final AttachmentsConfiguration _attachmentsConfiguration;

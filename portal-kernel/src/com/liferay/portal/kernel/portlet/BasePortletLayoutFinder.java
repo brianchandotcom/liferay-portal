@@ -231,27 +231,22 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 		return _doGetPlidFromPortletId(groupId, scopeGroupId, true, portletId);
 	}
 
-	private long _getScopeGroupId(Layout layout, String portletId) {
-		try {
-			PortletPreferences portletSetup =
-				PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
-					layout, portletId);
+	private long _getScopeGroupId(Layout layout, String portletId)
+		throws PortalException {
 
-			String scopeLayoutUuid = GetterUtil.getString(
-				portletSetup.getValue("lfrScopeLayoutUuid", null));
+		PortletPreferences portletSetup =
+			PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
+				layout, portletId);
 
-			Layout scopeLayout =
-				LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-					scopeLayoutUuid, layout.getGroupId(),
-					layout.isPrivateLayout());
+		String scopeLayoutUuid = GetterUtil.getString(
+			portletSetup.getValue("lfrScopeLayoutUuid", null));
 
-			Group scopeGroup = scopeLayout.getScopeGroup();
+		Layout scopeLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+			scopeLayoutUuid, layout.getGroupId(), layout.isPrivateLayout());
 
-			return scopeGroup.getGroupId();
-		}
-		catch (Exception e) {
-			return layout.getGroupId();
-		}
+		Group scopeGroup = scopeLayout.getScopeGroup();
+
+		return scopeGroup.getGroupId();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

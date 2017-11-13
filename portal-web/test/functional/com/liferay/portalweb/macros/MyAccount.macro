@@ -49,6 +49,41 @@
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
+	<command name="editPasswordInvalidCP">
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Password" />
+		</execute>
+
+		<if>
+			<isset var="currentPassword" />
+			<then>
+				<execute function="Type" locator1="TextInput#CURRENT_PASSWORD" value1="${currentPassword}" />
+			</then>
+			<else>
+				<execute function="Type" locator1="TextInput#CURRENT_PASSWORD" value1="test" />
+			</else>
+		</if>
+
+		<execute function="Type" locator1="TextInput#NEW_PASSWORD" value1="${newPassword}" />
+		<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="${newPassword}" />
+
+		<execute macro="Button#clickSave" />
+
+		<if>
+			<equals arg1="${changeable}" arg2="false" />
+			<then>
+				<execute macro="Alert#viewRequestFailedToComplete" />
+
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Passwords may not be changed under the current password policy." />
+			</then>
+			<else>
+				<execute macro="Alert#viewRequestFailedToComplete" />
+
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="That password is invalid. Please enter in a different password." />
+			</else>
+		</if>
+	</command>
+
 	<command name="view">
 		<for list="Password,Organizations,Sites,User Groups,Roles,Categorization" param="key_panelHeading">
 			<execute function="AssertElementPresent" locator1="Panel#PANEL_HEADING_COLLAPSED" />

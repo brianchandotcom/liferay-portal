@@ -67,10 +67,18 @@ public class AssetTagsPortletDataHandler extends BasePortletDataHandler {
 				NAMESPACE, "tags", true, false, null, AssetTag.class.getName());
 
 		setExportControls(tagsPortletDataHandlerBoolean);
+
+		PortletDataHandlerBoolean mergeTagsByNamePortletDataHandlerBoolean =
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "merge-tags-by-name", false, false, null);
+
 		setImportControls(
 			tagsPortletDataHandlerBoolean,
-			new PortletDataHandlerBoolean(
-				NAMESPACE, "merge-tags-by-name", false, false, null));
+			mergeTagsByNamePortletDataHandlerBoolean);
+
+		setStagingControls(
+			tagsPortletDataHandlerBoolean,
+			mergeTagsByNamePortletDataHandlerBoolean);
 
 		setPublishToLiveByDefault(true);
 	}

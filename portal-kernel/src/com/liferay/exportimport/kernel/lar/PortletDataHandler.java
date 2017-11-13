@@ -160,18 +160,6 @@ public interface PortletDataHandler {
 		throws PortletDataException;
 
 	/**
-	 * Returns an array of the controls defined for this data handler. These
-	 * controls enable the developer to create fine grained controls over
-	 * staging publication behavior. The controls are rendered in the publish
-	 * UI.
-	 *
-	 * @return an array of the controls defined for this data handler
-	 */
-	public default PortletDataHandlerControl[] getStagingControls() {
-		return new PortletDataHandlerControl[0];
-	};
-
-	/**
 	 * Returns an array of the metadata controls defined for this data handler.
 	 * These controls enable the developer to create fine grained controls over
 	 * import behavior of metadata such as tags, categories, ratings or
@@ -194,6 +182,18 @@ public interface PortletDataHandler {
 	public String getSchemaVersion();
 
 	public String getServiceName();
+
+	/**
+	 * Returns an array of the controls defined for this data handler. These
+	 * controls enable the developer to create fine grained controls over
+	 * staging publication behavior. The controls are rendered in the publish
+	 * UI.
+	 *
+	 * @return an array of the controls defined for this data handler
+	 */
+	public default PortletDataHandlerControl[] getStagingControls() {
+		return new PortletDataHandlerControl[0];
+	};
 
 	/**
 	 * Handles any special processing of the data when the portlet is imported

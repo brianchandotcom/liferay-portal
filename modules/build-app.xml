@@ -91,24 +91,56 @@
 		<antcall target="index-modules-and-app-lpkgs" />
 	</target>
 
-	<target depends="get-app-version,init-build-app" name="check-stale-artifacts" unless="check.stale.artifacts.skip">
-		<exec dir="${app.dir}" executable="${gradle.wrapper.path}" outputproperty="stale.artifacts.output">
+	<target
+		depends="get-app-version,init"
+		if="app.dir.private.available"
+		name="check-stale-artifacts-private"
+		unless="check.stale.artifacts.skip"
+	>
+		<exec dir="${app.dir.private}" executable="${gradle.wrapper.path}" outputproperty="stale.artifacts.output.private">
 			<arg value="printStaleArtifact" />
 			<arg value="-q" />
 		</exec>
 
-		<loadfile property="module.stale.artifacts">
+		<loadfile property="module.stale.artifacts.private">
 			<filterchain>
 				<linecontains>
 					<contains value="${app.name}" />
 				</linecontains>
 			</filterchain>
-			<propertyresource name="stale.artifacts.output" />
+			<propertyresource name="stale.artifacts.output.private" />
 		</loadfile>
 
-		<fail message="Stale artifacts detected:${line.separator}${module.stale.artifacts}">
+		<fail message="Stale artifacts detected:${line.separator}${module.stale.artifacts.private}">
 			<condition>
-				<isset property="module.stale.artifacts" />
+				<isset property="module.stale.artifacts.private" />
+			</condition>
+		</fail>
+	</target>
+
+	<target
+		depends="get-app-version,init"
+		if="app.dir.public.available"
+		name="check-stale-artifacts-public"
+		unless="check.stale.artifacts.skip"
+	>
+		<exec dir="${app.dir.public}" executable="${gradle.wrapper.path}" outputproperty="stale.artifacts.output.public">
+			<arg value="printStaleArtifact" />
+			<arg value="-q" />
+		</exec>
+
+		<loadfile property="module.stale.artifacts.public">
+			<filterchain>
+				<linecontains>
+					<contains value="${app.name}" />
+				</linecontains>
+			</filterchain>
+			<propertyresource name="stale.artifacts.output.public" />
+		</loadfile>
+
+		<fail message="Stale artifacts detected:${line.separator}${module.stale.artifacts.public}">
+			<condition>
+				<isset property="module.stale.artifacts.public" />
 			</condition>
 		</fail>
 	</target>

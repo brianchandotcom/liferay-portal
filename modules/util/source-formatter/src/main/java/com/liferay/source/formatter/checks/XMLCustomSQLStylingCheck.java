@@ -33,9 +33,9 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 		throws Exception {
 
 		if (fileName.contains("/custom-sql/")) {
-			_checkMultiLineClause(fileName, content);
 			_checkMissingLineBreakAfterKeyword(fileName, content);
 			_checkMissingParentheses(fileName, content);
+			_checkMultiLineClause(fileName, content);
 			_checkScalability(fileName, absolutePath, content);
 
 			content = _fixIncorrectAndOr(content);
@@ -60,6 +60,43 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 		}
 
 		return content;
+	}
+
+	private void _checkMissingLineBreakAfterKeyword(
+		String fileName, String content) {
+
+		Matcher matcher = _missingLineBreakAfterKeywordPattern.matcher(content);
+
+		while (matcher.find()) {
+			addMessage(
+				fileName,
+				"There should be a line break after '" +
+					StringUtil.trim(matcher.group(1)),
+				getLineCount(content, matcher.end()));
+		}
+	}
+
+	private void _checkMissingParentheses(String fileName, String content) {
+		Matcher matcher = _missingParenthesesPattern1.matcher(content);
+
+		while (matcher.find()) {
+			addMessage(
+				fileName, "Missing parentheses",
+				getLineCount(content, matcher.start()));
+		}
+
+		matcher = _missingParenthesesPattern2.matcher(content);
+
+		while (matcher.find()) {
+			String nextLine = getLine(
+				content, getLineCount(content, matcher.end()));
+
+			if (!nextLine.endsWith(" IN") && !nextLine.endsWith("EXISTS")) {
+				addMessage(
+					fileName, "Missing parentheses",
+					getLineCount(content, matcher.end()));
+			}
+		}
 	}
 
 	private void _checkMultiLineClause(String fileName, String content) {
@@ -120,43 +157,6 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 						"' tabs, but '", String.valueOf(startLineTabCount),
 						"' tabs are expected"),
 					endLineCount);
-			}
-		}
-	}
-
-	private void _checkMissingLineBreakAfterKeyword(
-		String fileName, String content) {
-
-		Matcher matcher = _missingLineBreakAfterKeywordPattern.matcher(content);
-
-		while (matcher.find()) {
-			addMessage(
-				fileName,
-				"There should be a line break after '" +
-					StringUtil.trim(matcher.group(1)),
-				getLineCount(content, matcher.end()));
-		}
-	}
-
-	private void _checkMissingParentheses(String fileName, String content) {
-		Matcher matcher = _missingParenthesesPattern1.matcher(content);
-
-		while (matcher.find()) {
-			addMessage(
-				fileName, "Missing parentheses",
-				getLineCount(content, matcher.start()));
-		}
-
-		matcher = _missingParenthesesPattern2.matcher(content);
-
-		while (matcher.find()) {
-			String nextLine = getLine(
-				content, getLineCount(content, matcher.end()));
-
-			if (!nextLine.endsWith(" IN") && !nextLine.endsWith("EXISTS")) {
-				addMessage(
-					fileName, "Missing parentheses",
-					getLineCount(content, matcher.end()));
 			}
 		}
 	}

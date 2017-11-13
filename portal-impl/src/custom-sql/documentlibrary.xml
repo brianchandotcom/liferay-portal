@@ -294,13 +294,11 @@
 			FROM
 				DLFileEntryType
 			WHERE
+				(DLFileEntryType.companyId = ?) AND
+				[$GROUP_ID$]
 				(
-					(DLFileEntryType.companyId = ?) AND
-					[$GROUP_ID$]
-					(
-						(lower(DLFileEntryType.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-						(DLFileEntryType.description LIKE ? [$AND_OR_NULL_CHECK$])
-					)
+					(lower(DLFileEntryType.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(DLFileEntryType.description LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 		]]>
 	</sql>
@@ -312,13 +310,11 @@
 			FROM
 				DLFileEntryType
 			WHERE
+				(DLFileEntryType.companyId = ?) AND
+				[$GROUP_ID$]
 				(
-					(DLFileEntryType.companyId = ?) AND
-					[$GROUP_ID$]
-					(
-						(lower(DLFileEntryType.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-						(DLFileEntryType.description LIKE ? [$AND_OR_NULL_CHECK$])
-					)
+					(lower(DLFileEntryType.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(DLFileEntryType.description LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 		]]>
 	</sql>

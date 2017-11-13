@@ -10,12 +10,10 @@
 	<sql id="com.liferay.portal.kernel.security.permission.InlineSQLHelper.filterByResourceBlockIdOwner">
 		<![CDATA[
 			WHERE
+				resourceBlockId IN ([$USER_RESOURCE_BLOCK_ID$]) OR
 				(
-					resourceBlockId IN ([$USER_RESOURCE_BLOCK_ID$]) OR
-					(
-						([$USER_ID_FIELD$] = [$USER_ID$]) AND
-						(resourceBlockId IN ([$OWNER_RESOURCE_BLOCK_ID$]))
-					)
+					([$USER_ID_FIELD$] = [$USER_ID$]) AND
+					(resourceBlockId IN ([$OWNER_RESOURCE_BLOCK_ID$]))
 				)
 		]]>
 	</sql>
@@ -476,10 +474,8 @@
 			FROM
 				Layout
 			WHERE
-				(
-					(friendlyURL = '') OR
-					(friendlyURL IS NULL)
-				)
+				(friendlyURL = '') OR
+				(friendlyURL IS NULL)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.LayoutFinder.findByScopeGroup">

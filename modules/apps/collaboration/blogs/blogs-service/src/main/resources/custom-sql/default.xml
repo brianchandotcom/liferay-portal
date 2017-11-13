@@ -130,37 +130,35 @@
 						Group_ ON
 							Group_.groupId = BlogsStatsUser.groupId
 					WHERE
+						(Group_.companyId = ?) AND
 						(
-							(Group_.companyId = ?) AND
+							(Group_.groupId = ?) OR
 							(
-								(Group_.groupId = ?) OR
+								(Group_.liveGroupId = 0) AND
 								(
-									(Group_.liveGroupId = 0) AND
+									Group_.groupId NOT IN
+										(
+											SELECT
+												liveGroupId
+											FROM
+												Group_
+											WHERE
+												groupId = ?
+										)
+								) AND
+								(
+									(Group_.classNameId != [$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.LAYOUT$]) OR
 									(
-										Group_.groupId NOT IN
+										Group_.parentGroupId NOT IN
 											(
 												SELECT
-													liveGroupId
+													groupId
 												FROM
 													Group_
 												WHERE
-													groupId = ?
+													(groupId != ?) AND
+													(liveGroupId != 0)
 											)
-									) AND
-									(
-										(Group_.classNameId != [$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.LAYOUT$]) OR
-										(
-											Group_.parentGroupId NOT IN
-												(
-													SELECT
-														groupId
-													FROM
-														Group_
-													WHERE
-														(groupId != ?) AND
-														(liveGroupId != 0)
-												)
-										)
 									)
 								)
 							)

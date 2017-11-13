@@ -643,6 +643,261 @@ public class ReadingTimeEntryPersistenceImpl extends BasePersistenceImpl<Reading
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "readingTimeEntry.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "readingTimeEntry.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(readingTimeEntry.uuid IS NULL OR readingTimeEntry.uuid = '')";
+	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(ReadingTimeEntryModelImpl.ENTITY_CACHE_ENABLED,
+			ReadingTimeEntryModelImpl.FINDER_CACHE_ENABLED,
+			ReadingTimeEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByUUID_G",
+			new String[] { String.class.getName(), Long.class.getName() },
+			ReadingTimeEntryModelImpl.UUID_COLUMN_BITMASK |
+			ReadingTimeEntryModelImpl.GROUPID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_G = new FinderPath(ReadingTimeEntryModelImpl.ENTITY_CACHE_ENABLED,
+			ReadingTimeEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			new String[] { String.class.getName(), Long.class.getName() });
+
+	/**
+	 * Returns the reading time entry where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchReadingTimeEntryException} if it could not be found.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching reading time entry
+	 * @throws NoSuchReadingTimeEntryException if a matching reading time entry could not be found
+	 */
+	@Override
+	public ReadingTimeEntry findByUUID_G(String uuid, long groupId)
+		throws NoSuchReadingTimeEntryException {
+		ReadingTimeEntry readingTimeEntry = fetchByUUID_G(uuid, groupId);
+
+		if (readingTimeEntry == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("uuid=");
+			msg.append(uuid);
+
+			msg.append(", groupId=");
+			msg.append(groupId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchReadingTimeEntryException(msg.toString());
+		}
+
+		return readingTimeEntry;
+	}
+
+	/**
+	 * Returns the reading time entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
+	 */
+	@Override
+	public ReadingTimeEntry fetchByUUID_G(String uuid, long groupId) {
+		return fetchByUUID_G(uuid, groupId, true);
+	}
+
+	/**
+	 * Returns the reading time entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
+	 */
+	@Override
+	public ReadingTimeEntry fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { uuid, groupId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_UUID_G,
+					finderArgs, this);
+		}
+
+		if (result instanceof ReadingTimeEntry) {
+			ReadingTimeEntry readingTimeEntry = (ReadingTimeEntry)result;
+
+			if (!Objects.equals(uuid, readingTimeEntry.getUuid()) ||
+					(groupId != readingTimeEntry.getGroupId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_READINGTIMEENTRY_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid == null) {
+				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
+			}
+			else if (uuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				query.append(_FINDER_COLUMN_UUID_G_UUID_2);
+			}
+
+			query.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindUuid) {
+					qPos.add(uuid);
+				}
+
+				qPos.add(groupId);
+
+				List<ReadingTimeEntry> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+						finderArgs, list);
+				}
+				else {
+					ReadingTimeEntry readingTimeEntry = list.get(0);
+
+					result = readingTimeEntry;
+
+					cacheResult(readingTimeEntry);
+
+					if ((readingTimeEntry.getUuid() == null) ||
+							!readingTimeEntry.getUuid().equals(uuid) ||
+							(readingTimeEntry.getGroupId() != groupId)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+							finderArgs, readingTimeEntry);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (ReadingTimeEntry)result;
+		}
+	}
+
+	/**
+	 * Removes the reading time entry where uuid = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the reading time entry that was removed
+	 */
+	@Override
+	public ReadingTimeEntry removeByUUID_G(String uuid, long groupId)
+		throws NoSuchReadingTimeEntryException {
+		ReadingTimeEntry readingTimeEntry = findByUUID_G(uuid, groupId);
+
+		return remove(readingTimeEntry);
+	}
+
+	/**
+	 * Returns the number of reading time entries where uuid = &#63; and groupId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the number of matching reading time entries
+	 */
+	@Override
+	public int countByUUID_G(String uuid, long groupId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_G;
+
+		Object[] finderArgs = new Object[] { uuid, groupId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_READINGTIMEENTRY_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid == null) {
+				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
+			}
+			else if (uuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				query.append(_FINDER_COLUMN_UUID_G_UUID_2);
+			}
+
+			query.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindUuid) {
+					qPos.add(uuid);
+				}
+
+				qPos.add(groupId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "readingTimeEntry.uuid IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "readingTimeEntry.uuid = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(readingTimeEntry.uuid IS NULL OR readingTimeEntry.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "readingTimeEntry.groupId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(ReadingTimeEntryModelImpl.ENTITY_CACHE_ENABLED,
 			ReadingTimeEntryModelImpl.FINDER_CACHE_ENABLED,
 			ReadingTimeEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -1234,36 +1489,47 @@ public class ReadingTimeEntryPersistenceImpl extends BasePersistenceImpl<Reading
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "readingTimeEntry.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(readingTimeEntry.uuid IS NULL OR readingTimeEntry.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "readingTimeEntry.companyId = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_C_C = new FinderPath(ReadingTimeEntryModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_FETCH_BY_G_C_C = new FinderPath(ReadingTimeEntryModelImpl.ENTITY_CACHE_ENABLED,
 			ReadingTimeEntryModelImpl.FINDER_CACHE_ENABLED,
-			ReadingTimeEntryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
-			new String[] { Long.class.getName(), Long.class.getName() },
+			ReadingTimeEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByG_C_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			},
+			ReadingTimeEntryModelImpl.GROUPID_COLUMN_BITMASK |
 			ReadingTimeEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			ReadingTimeEntryModelImpl.CLASSPK_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_C = new FinderPath(ReadingTimeEntryModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_C = new FinderPath(ReadingTimeEntryModelImpl.ENTITY_CACHE_ENABLED,
 			ReadingTimeEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] { Long.class.getName(), Long.class.getName() });
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			});
 
 	/**
-	 * Returns the reading time entry where classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchReadingTimeEntryException} if it could not be found.
+	 * Returns the reading time entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchReadingTimeEntryException} if it could not be found.
 	 *
+	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @return the matching reading time entry
 	 * @throws NoSuchReadingTimeEntryException if a matching reading time entry could not be found
 	 */
 	@Override
-	public ReadingTimeEntry findByC_C(long classNameId, long classPK)
-		throws NoSuchReadingTimeEntryException {
-		ReadingTimeEntry readingTimeEntry = fetchByC_C(classNameId, classPK);
+	public ReadingTimeEntry findByG_C_C(long groupId, long classNameId,
+		long classPK) throws NoSuchReadingTimeEntryException {
+		ReadingTimeEntry readingTimeEntry = fetchByG_C_C(groupId, classNameId,
+				classPK);
 
 		if (readingTimeEntry == null) {
-			StringBundler msg = new StringBundler(6);
+			StringBundler msg = new StringBundler(8);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("classNameId=");
+			msg.append("groupId=");
+			msg.append(groupId);
+
+			msg.append(", classNameId=");
 			msg.append(classNameId);
 
 			msg.append(", classPK=");
@@ -1282,54 +1548,60 @@ public class ReadingTimeEntryPersistenceImpl extends BasePersistenceImpl<Reading
 	}
 
 	/**
-	 * Returns the reading time entry where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the reading time entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
+	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @return the matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
 	 */
 	@Override
-	public ReadingTimeEntry fetchByC_C(long classNameId, long classPK) {
-		return fetchByC_C(classNameId, classPK, true);
+	public ReadingTimeEntry fetchByG_C_C(long groupId, long classNameId,
+		long classPK) {
+		return fetchByG_C_C(groupId, classNameId, classPK, true);
 	}
 
 	/**
-	 * Returns the reading time entry where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the reading time entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
 	 */
 	@Override
-	public ReadingTimeEntry fetchByC_C(long classNameId, long classPK,
-		boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { classNameId, classPK };
+	public ReadingTimeEntry fetchByG_C_C(long groupId, long classNameId,
+		long classPK, boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { groupId, classNameId, classPK };
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_C,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_G_C_C,
 					finderArgs, this);
 		}
 
 		if (result instanceof ReadingTimeEntry) {
 			ReadingTimeEntry readingTimeEntry = (ReadingTimeEntry)result;
 
-			if ((classNameId != readingTimeEntry.getClassNameId()) ||
+			if ((groupId != readingTimeEntry.getGroupId()) ||
+					(classNameId != readingTimeEntry.getClassNameId()) ||
 					(classPK != readingTimeEntry.getClassPK())) {
 				result = null;
 			}
 		}
 
 		if (result == null) {
-			StringBundler query = new StringBundler(4);
+			StringBundler query = new StringBundler(5);
 
 			query.append(_SQL_SELECT_READINGTIMEENTRY_WHERE);
 
-			query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
+			query.append(_FINDER_COLUMN_G_C_C_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_C_C_CLASSPK_2);
+			query.append(_FINDER_COLUMN_G_C_C_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_CLASSPK_2);
 
 			String sql = query.toString();
 
@@ -1342,6 +1614,8 @@ public class ReadingTimeEntryPersistenceImpl extends BasePersistenceImpl<Reading
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
+				qPos.add(groupId);
+
 				qPos.add(classNameId);
 
 				qPos.add(classPK);
@@ -1349,8 +1623,8 @@ public class ReadingTimeEntryPersistenceImpl extends BasePersistenceImpl<Reading
 				List<ReadingTimeEntry> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_C_C, finderArgs,
-						list);
+					finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C,
+						finderArgs, list);
 				}
 				else {
 					ReadingTimeEntry readingTimeEntry = list.get(0);
@@ -1359,15 +1633,16 @@ public class ReadingTimeEntryPersistenceImpl extends BasePersistenceImpl<Reading
 
 					cacheResult(readingTimeEntry);
 
-					if ((readingTimeEntry.getClassNameId() != classNameId) ||
+					if ((readingTimeEntry.getGroupId() != groupId) ||
+							(readingTimeEntry.getClassNameId() != classNameId) ||
 							(readingTimeEntry.getClassPK() != classPK)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C,
 							finderArgs, readingTimeEntry);
 					}
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_C, finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_C, finderArgs);
 
 				throw processException(e);
 			}
@@ -1385,43 +1660,48 @@ public class ReadingTimeEntryPersistenceImpl extends BasePersistenceImpl<Reading
 	}
 
 	/**
-	 * Removes the reading time entry where classNameId = &#63; and classPK = &#63; from the database.
+	 * Removes the reading time entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
 	 *
+	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @return the reading time entry that was removed
 	 */
 	@Override
-	public ReadingTimeEntry removeByC_C(long classNameId, long classPK)
-		throws NoSuchReadingTimeEntryException {
-		ReadingTimeEntry readingTimeEntry = findByC_C(classNameId, classPK);
+	public ReadingTimeEntry removeByG_C_C(long groupId, long classNameId,
+		long classPK) throws NoSuchReadingTimeEntryException {
+		ReadingTimeEntry readingTimeEntry = findByG_C_C(groupId, classNameId,
+				classPK);
 
 		return remove(readingTimeEntry);
 	}
 
 	/**
-	 * Returns the number of reading time entries where classNameId = &#63; and classPK = &#63;.
+	 * Returns the number of reading time entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
+	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @return the number of matching reading time entries
 	 */
 	@Override
-	public int countByC_C(long classNameId, long classPK) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_C;
+	public int countByG_C_C(long groupId, long classNameId, long classPK) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_C;
 
-		Object[] finderArgs = new Object[] { classNameId, classPK };
+		Object[] finderArgs = new Object[] { groupId, classNameId, classPK };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(3);
+			StringBundler query = new StringBundler(4);
 
 			query.append(_SQL_COUNT_READINGTIMEENTRY_WHERE);
 
-			query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
+			query.append(_FINDER_COLUMN_G_C_C_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_C_C_CLASSPK_2);
+			query.append(_FINDER_COLUMN_G_C_C_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_CLASSPK_2);
 
 			String sql = query.toString();
 
@@ -1433,6 +1713,8 @@ public class ReadingTimeEntryPersistenceImpl extends BasePersistenceImpl<Reading
 				Query q = session.createQuery(sql);
 
 				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
 
 				qPos.add(classNameId);
 
@@ -1455,8 +1737,9 @@ public class ReadingTimeEntryPersistenceImpl extends BasePersistenceImpl<Reading
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 = "readingTimeEntry.classNameId = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_CLASSPK_2 = "readingTimeEntry.classPK = ?";
+	private static final String _FINDER_COLUMN_G_C_C_GROUPID_2 = "readingTimeEntry.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_CLASSNAMEID_2 = "readingTimeEntry.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_CLASSPK_2 = "readingTimeEntry.classPK = ?";
 
 	public ReadingTimeEntryPersistenceImpl() {
 		setModelClass(ReadingTimeEntry.class);
@@ -1489,9 +1772,15 @@ public class ReadingTimeEntryPersistenceImpl extends BasePersistenceImpl<Reading
 			ReadingTimeEntryImpl.class, readingTimeEntry.getPrimaryKey(),
 			readingTimeEntry);
 
-		finderCache.putResult(FINDER_PATH_FETCH_BY_C_C,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
-				readingTimeEntry.getClassNameId(), readingTimeEntry.getClassPK()
+				readingTimeEntry.getUuid(), readingTimeEntry.getGroupId()
+			}, readingTimeEntry);
+
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C,
+			new Object[] {
+				readingTimeEntry.getGroupId(), readingTimeEntry.getClassNameId(),
+				readingTimeEntry.getClassPK()
 			}, readingTimeEntry);
 
 		readingTimeEntry.resetOriginalValues();
@@ -1569,13 +1858,24 @@ public class ReadingTimeEntryPersistenceImpl extends BasePersistenceImpl<Reading
 	protected void cacheUniqueFindersCache(
 		ReadingTimeEntryModelImpl readingTimeEntryModelImpl) {
 		Object[] args = new Object[] {
+				readingTimeEntryModelImpl.getUuid(),
+				readingTimeEntryModelImpl.getGroupId()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+			readingTimeEntryModelImpl, false);
+
+		args = new Object[] {
+				readingTimeEntryModelImpl.getGroupId(),
 				readingTimeEntryModelImpl.getClassNameId(),
 				readingTimeEntryModelImpl.getClassPK()
 			};
 
-		finderCache.putResult(FINDER_PATH_COUNT_BY_C_C, args, Long.valueOf(1),
-			false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_C_C, args,
+		finderCache.putResult(FINDER_PATH_COUNT_BY_G_C_C, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C, args,
 			readingTimeEntryModelImpl, false);
 	}
 
@@ -1584,23 +1884,46 @@ public class ReadingTimeEntryPersistenceImpl extends BasePersistenceImpl<Reading
 		boolean clearCurrent) {
 		if (clearCurrent) {
 			Object[] args = new Object[] {
+					readingTimeEntryModelImpl.getUuid(),
+					readingTimeEntryModelImpl.getGroupId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
+
+		if ((readingTimeEntryModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					readingTimeEntryModelImpl.getOriginalUuid(),
+					readingTimeEntryModelImpl.getOriginalGroupId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					readingTimeEntryModelImpl.getGroupId(),
 					readingTimeEntryModelImpl.getClassNameId(),
 					readingTimeEntryModelImpl.getClassPK()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_C, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_C, args);
 		}
 
 		if ((readingTimeEntryModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_C_C.getColumnBitmask()) != 0) {
+				FINDER_PATH_FETCH_BY_G_C_C.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
+					readingTimeEntryModelImpl.getOriginalGroupId(),
 					readingTimeEntryModelImpl.getOriginalClassNameId(),
 					readingTimeEntryModelImpl.getOriginalClassPK()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_C, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_C, args);
 		}
 	}
 
@@ -1861,12 +2184,13 @@ public class ReadingTimeEntryPersistenceImpl extends BasePersistenceImpl<Reading
 
 		readingTimeEntryImpl.setUuid(readingTimeEntry.getUuid());
 		readingTimeEntryImpl.setReadingTimeEntryId(readingTimeEntry.getReadingTimeEntryId());
+		readingTimeEntryImpl.setGroupId(readingTimeEntry.getGroupId());
 		readingTimeEntryImpl.setCompanyId(readingTimeEntry.getCompanyId());
 		readingTimeEntryImpl.setCreateDate(readingTimeEntry.getCreateDate());
 		readingTimeEntryImpl.setModifiedDate(readingTimeEntry.getModifiedDate());
 		readingTimeEntryImpl.setClassNameId(readingTimeEntry.getClassNameId());
 		readingTimeEntryImpl.setClassPK(readingTimeEntry.getClassPK());
-		readingTimeEntryImpl.setReadingTimeInSeconds(readingTimeEntry.getReadingTimeInSeconds());
+		readingTimeEntryImpl.setReadingTime(readingTimeEntry.getReadingTime());
 
 		return readingTimeEntryImpl;
 	}

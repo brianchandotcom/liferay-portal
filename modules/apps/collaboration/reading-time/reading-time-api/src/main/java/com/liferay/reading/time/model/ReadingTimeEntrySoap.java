@@ -36,12 +36,13 @@ public class ReadingTimeEntrySoap implements Serializable {
 
 		soapModel.setUuid(model.getUuid());
 		soapModel.setReadingTimeEntryId(model.getReadingTimeEntryId());
+		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
-		soapModel.setReadingTimeInSeconds(model.getReadingTimeInSeconds());
+		soapModel.setReadingTime(model.getReadingTime());
 
 		return soapModel;
 	}
@@ -112,6 +113,14 @@ public class ReadingTimeEntrySoap implements Serializable {
 		_readingTimeEntryId = readingTimeEntryId;
 	}
 
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -152,20 +161,21 @@ public class ReadingTimeEntrySoap implements Serializable {
 		_classPK = classPK;
 	}
 
-	public long getReadingTimeInSeconds() {
-		return _readingTimeInSeconds;
+	public long getReadingTime() {
+		return _readingTime;
 	}
 
-	public void setReadingTimeInSeconds(long readingTimeInSeconds) {
-		_readingTimeInSeconds = readingTimeInSeconds;
+	public void setReadingTime(long readingTime) {
+		_readingTime = readingTime;
 	}
 
 	private String _uuid;
 	private long _readingTimeEntryId;
+	private long _groupId;
 	private long _companyId;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _classNameId;
 	private long _classPK;
-	private long _readingTimeInSeconds;
+	private long _readingTime;
 }

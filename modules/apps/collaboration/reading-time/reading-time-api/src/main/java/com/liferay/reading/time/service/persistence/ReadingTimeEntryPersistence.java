@@ -174,6 +174,56 @@ public interface ReadingTimeEntryPersistence extends BasePersistence<ReadingTime
 	public int countByUuid(java.lang.String uuid);
 
 	/**
+	* Returns the reading time entry where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchReadingTimeEntryException} if it could not be found.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the matching reading time entry
+	* @throws NoSuchReadingTimeEntryException if a matching reading time entry could not be found
+	*/
+	public ReadingTimeEntry findByUUID_G(java.lang.String uuid, long groupId)
+		throws NoSuchReadingTimeEntryException;
+
+	/**
+	* Returns the reading time entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
+	*/
+	public ReadingTimeEntry fetchByUUID_G(java.lang.String uuid, long groupId);
+
+	/**
+	* Returns the reading time entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
+	*/
+	public ReadingTimeEntry fetchByUUID_G(java.lang.String uuid, long groupId,
+		boolean retrieveFromCache);
+
+	/**
+	* Removes the reading time entry where uuid = &#63; and groupId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the reading time entry that was removed
+	*/
+	public ReadingTimeEntry removeByUUID_G(java.lang.String uuid, long groupId)
+		throws NoSuchReadingTimeEntryException;
+
+	/**
+	* Returns the number of reading time entries where uuid = &#63; and groupId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the number of matching reading time entries
+	*/
+	public int countByUUID_G(java.lang.String uuid, long groupId);
+
+	/**
 	* Returns all the reading time entries where uuid = &#63; and companyId = &#63;.
 	*
 	* @param uuid the uuid
@@ -322,54 +372,60 @@ public interface ReadingTimeEntryPersistence extends BasePersistence<ReadingTime
 	public int countByUuid_C(java.lang.String uuid, long companyId);
 
 	/**
-	* Returns the reading time entry where classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchReadingTimeEntryException} if it could not be found.
+	* Returns the reading time entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchReadingTimeEntryException} if it could not be found.
 	*
+	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @return the matching reading time entry
 	* @throws NoSuchReadingTimeEntryException if a matching reading time entry could not be found
 	*/
-	public ReadingTimeEntry findByC_C(long classNameId, long classPK)
-		throws NoSuchReadingTimeEntryException;
+	public ReadingTimeEntry findByG_C_C(long groupId, long classNameId,
+		long classPK) throws NoSuchReadingTimeEntryException;
 
 	/**
-	* Returns the reading time entry where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the reading time entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
+	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @return the matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
 	*/
-	public ReadingTimeEntry fetchByC_C(long classNameId, long classPK);
+	public ReadingTimeEntry fetchByG_C_C(long groupId, long classNameId,
+		long classPK);
 
 	/**
-	* Returns the reading time entry where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the reading time entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
+	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
 	*/
-	public ReadingTimeEntry fetchByC_C(long classNameId, long classPK,
-		boolean retrieveFromCache);
+	public ReadingTimeEntry fetchByG_C_C(long groupId, long classNameId,
+		long classPK, boolean retrieveFromCache);
 
 	/**
-	* Removes the reading time entry where classNameId = &#63; and classPK = &#63; from the database.
+	* Removes the reading time entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
 	*
+	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @return the reading time entry that was removed
 	*/
-	public ReadingTimeEntry removeByC_C(long classNameId, long classPK)
-		throws NoSuchReadingTimeEntryException;
+	public ReadingTimeEntry removeByG_C_C(long groupId, long classNameId,
+		long classPK) throws NoSuchReadingTimeEntryException;
 
 	/**
-	* Returns the number of reading time entries where classNameId = &#63; and classPK = &#63;.
+	* Returns the number of reading time entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
+	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @return the number of matching reading time entries
 	*/
-	public int countByC_C(long classNameId, long classPK);
+	public int countByG_C_C(long groupId, long classNameId, long classPK);
 
 	/**
 	* Caches the reading time entry in the entity cache if it is enabled.

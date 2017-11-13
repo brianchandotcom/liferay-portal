@@ -192,16 +192,15 @@ public class ReadingTimeEntryLocalServiceUtil {
 	}
 
 	/**
-	* Returns the reading time entry with the matching UUID and company.
+	* Returns the reading time entry matching the UUID and group.
 	*
 	* @param uuid the reading time entry's UUID
-	* @param companyId the primary key of the company
+	* @param groupId the primary key of the group
 	* @return the matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
 	*/
-	public static com.liferay.reading.time.model.ReadingTimeEntry fetchReadingTimeEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return getService()
-				   .fetchReadingTimeEntryByUuidAndCompanyId(uuid, companyId);
+	public static com.liferay.reading.time.model.ReadingTimeEntry fetchReadingTimeEntryByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService().fetchReadingTimeEntryByUuidAndGroupId(uuid, groupId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
@@ -249,6 +248,37 @@ public class ReadingTimeEntryLocalServiceUtil {
 	}
 
 	/**
+	* Returns all the reading time entries matching the UUID and company.
+	*
+	* @param uuid the UUID of the reading time entries
+	* @param companyId the primary key of the company
+	* @return the matching reading time entries, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.reading.time.model.ReadingTimeEntry> getReadingTimeEntriesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService()
+				   .getReadingTimeEntriesByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of reading time entries matching the UUID and company.
+	*
+	* @param uuid the UUID of the reading time entries
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of reading time entries
+	* @param end the upper bound of the range of reading time entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching reading time entries, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.reading.time.model.ReadingTimeEntry> getReadingTimeEntriesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.reading.time.model.ReadingTimeEntry> orderByComparator) {
+		return getService()
+				   .getReadingTimeEntriesByUuidAndCompanyId(uuid, companyId,
+			start, end, orderByComparator);
+	}
+
+	/**
 	* Returns the number of reading time entries.
 	*
 	* @return the number of reading time entries
@@ -271,18 +301,17 @@ public class ReadingTimeEntryLocalServiceUtil {
 	}
 
 	/**
-	* Returns the reading time entry with the matching UUID and company.
+	* Returns the reading time entry matching the UUID and group.
 	*
 	* @param uuid the reading time entry's UUID
-	* @param companyId the primary key of the company
+	* @param groupId the primary key of the group
 	* @return the matching reading time entry
 	* @throws PortalException if a matching reading time entry could not be found
 	*/
-	public static com.liferay.reading.time.model.ReadingTimeEntry getReadingTimeEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
+	public static com.liferay.reading.time.model.ReadingTimeEntry getReadingTimeEntryByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getReadingTimeEntryByUuidAndCompanyId(uuid, companyId);
+		return getService().getReadingTimeEntryByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**

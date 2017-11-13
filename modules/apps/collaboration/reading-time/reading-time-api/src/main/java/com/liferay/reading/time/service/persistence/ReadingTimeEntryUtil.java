@@ -270,6 +270,69 @@ public class ReadingTimeEntryUtil {
 	}
 
 	/**
+	* Returns the reading time entry where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchReadingTimeEntryException} if it could not be found.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the matching reading time entry
+	* @throws NoSuchReadingTimeEntryException if a matching reading time entry could not be found
+	*/
+	public static ReadingTimeEntry findByUUID_G(java.lang.String uuid,
+		long groupId)
+		throws com.liferay.reading.time.exception.NoSuchReadingTimeEntryException {
+		return getPersistence().findByUUID_G(uuid, groupId);
+	}
+
+	/**
+	* Returns the reading time entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
+	*/
+	public static ReadingTimeEntry fetchByUUID_G(java.lang.String uuid,
+		long groupId) {
+		return getPersistence().fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
+	* Returns the reading time entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
+	*/
+	public static ReadingTimeEntry fetchByUUID_G(java.lang.String uuid,
+		long groupId, boolean retrieveFromCache) {
+		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+	}
+
+	/**
+	* Removes the reading time entry where uuid = &#63; and groupId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the reading time entry that was removed
+	*/
+	public static ReadingTimeEntry removeByUUID_G(java.lang.String uuid,
+		long groupId)
+		throws com.liferay.reading.time.exception.NoSuchReadingTimeEntryException {
+		return getPersistence().removeByUUID_G(uuid, groupId);
+	}
+
+	/**
+	* Returns the number of reading time entries where uuid = &#63; and groupId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the number of matching reading time entries
+	*/
+	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	/**
 	* Returns all the reading time entries where uuid = &#63; and companyId = &#63;.
 	*
 	* @param uuid the uuid
@@ -445,64 +508,73 @@ public class ReadingTimeEntryUtil {
 	}
 
 	/**
-	* Returns the reading time entry where classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchReadingTimeEntryException} if it could not be found.
+	* Returns the reading time entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchReadingTimeEntryException} if it could not be found.
 	*
+	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @return the matching reading time entry
 	* @throws NoSuchReadingTimeEntryException if a matching reading time entry could not be found
 	*/
-	public static ReadingTimeEntry findByC_C(long classNameId, long classPK)
+	public static ReadingTimeEntry findByG_C_C(long groupId, long classNameId,
+		long classPK)
 		throws com.liferay.reading.time.exception.NoSuchReadingTimeEntryException {
-		return getPersistence().findByC_C(classNameId, classPK);
+		return getPersistence().findByG_C_C(groupId, classNameId, classPK);
 	}
 
 	/**
-	* Returns the reading time entry where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the reading time entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
+	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @return the matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
 	*/
-	public static ReadingTimeEntry fetchByC_C(long classNameId, long classPK) {
-		return getPersistence().fetchByC_C(classNameId, classPK);
+	public static ReadingTimeEntry fetchByG_C_C(long groupId, long classNameId,
+		long classPK) {
+		return getPersistence().fetchByG_C_C(groupId, classNameId, classPK);
 	}
 
 	/**
-	* Returns the reading time entry where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the reading time entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
+	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
 	*/
-	public static ReadingTimeEntry fetchByC_C(long classNameId, long classPK,
-		boolean retrieveFromCache) {
+	public static ReadingTimeEntry fetchByG_C_C(long groupId, long classNameId,
+		long classPK, boolean retrieveFromCache) {
 		return getPersistence()
-				   .fetchByC_C(classNameId, classPK, retrieveFromCache);
+				   .fetchByG_C_C(groupId, classNameId, classPK,
+			retrieveFromCache);
 	}
 
 	/**
-	* Removes the reading time entry where classNameId = &#63; and classPK = &#63; from the database.
+	* Removes the reading time entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
 	*
+	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @return the reading time entry that was removed
 	*/
-	public static ReadingTimeEntry removeByC_C(long classNameId, long classPK)
+	public static ReadingTimeEntry removeByG_C_C(long groupId,
+		long classNameId, long classPK)
 		throws com.liferay.reading.time.exception.NoSuchReadingTimeEntryException {
-		return getPersistence().removeByC_C(classNameId, classPK);
+		return getPersistence().removeByG_C_C(groupId, classNameId, classPK);
 	}
 
 	/**
-	* Returns the number of reading time entries where classNameId = &#63; and classPK = &#63;.
+	* Returns the number of reading time entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
+	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @return the number of matching reading time entries
 	*/
-	public static int countByC_C(long classNameId, long classPK) {
-		return getPersistence().countByC_C(classNameId, classPK);
+	public static int countByG_C_C(long groupId, long classNameId, long classPK) {
+		return getPersistence().countByG_C_C(groupId, classNameId, classPK);
 	}
 
 	/**

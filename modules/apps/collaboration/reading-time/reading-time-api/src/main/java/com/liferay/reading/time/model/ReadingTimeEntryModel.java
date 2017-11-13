@@ -100,6 +100,20 @@ public interface ReadingTimeEntryModel extends AttachedModel,
 	public void setReadingTimeEntryId(long readingTimeEntryId);
 
 	/**
+	 * Returns the group ID of this reading time entry.
+	 *
+	 * @return the group ID of this reading time entry
+	 */
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this reading time entry.
+	 *
+	 * @param groupId the group ID of this reading time entry
+	 */
+	public void setGroupId(long groupId);
+
+	/**
 	 * Returns the company ID of this reading time entry.
 	 *
 	 * @return the company ID of this reading time entry
@@ -190,18 +204,18 @@ public interface ReadingTimeEntryModel extends AttachedModel,
 	public void setClassPK(long classPK);
 
 	/**
-	 * Returns the reading time in seconds of this reading time entry.
+	 * Returns the reading time of this reading time entry.
 	 *
-	 * @return the reading time in seconds of this reading time entry
+	 * @return the reading time of this reading time entry
 	 */
-	public long getReadingTimeInSeconds();
+	public long getReadingTime();
 
 	/**
-	 * Sets the reading time in seconds of this reading time entry.
+	 * Sets the reading time of this reading time entry.
 	 *
-	 * @param readingTimeInSeconds the reading time in seconds of this reading time entry
+	 * @param readingTime the reading time of this reading time entry
 	 */
-	public void setReadingTimeInSeconds(long readingTimeInSeconds);
+	public void setReadingTime(long readingTime);
 
 	/**
 	 * Returns the status of this reading time entry.

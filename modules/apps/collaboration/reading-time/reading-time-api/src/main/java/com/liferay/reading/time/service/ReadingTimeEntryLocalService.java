@@ -178,15 +178,15 @@ public interface ReadingTimeEntryLocalService extends BaseLocalService,
 	public ReadingTimeEntry fetchReadingTimeEntry(long classNameId, long classPK);
 
 	/**
-	* Returns the reading time entry with the matching UUID and company.
+	* Returns the reading time entry matching the UUID and group.
 	*
 	* @param uuid the reading time entry's UUID
-	* @param companyId the primary key of the company
+	* @param groupId the primary key of the group
 	* @return the matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ReadingTimeEntry fetchReadingTimeEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public ReadingTimeEntry fetchReadingTimeEntryByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -225,6 +225,32 @@ public interface ReadingTimeEntryLocalService extends BaseLocalService,
 	public List<ReadingTimeEntry> getReadingTimeEntries(int start, int end);
 
 	/**
+	* Returns all the reading time entries matching the UUID and company.
+	*
+	* @param uuid the UUID of the reading time entries
+	* @param companyId the primary key of the company
+	* @return the matching reading time entries, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ReadingTimeEntry> getReadingTimeEntriesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns a range of reading time entries matching the UUID and company.
+	*
+	* @param uuid the UUID of the reading time entries
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of reading time entries
+	* @param end the upper bound of the range of reading time entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching reading time entries, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ReadingTimeEntry> getReadingTimeEntriesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		OrderByComparator<ReadingTimeEntry> orderByComparator);
+
+	/**
 	* Returns the number of reading time entries.
 	*
 	* @return the number of reading time entries
@@ -244,16 +270,16 @@ public interface ReadingTimeEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Returns the reading time entry with the matching UUID and company.
+	* Returns the reading time entry matching the UUID and group.
 	*
 	* @param uuid the reading time entry's UUID
-	* @param companyId the primary key of the company
+	* @param groupId the primary key of the group
 	* @return the matching reading time entry
 	* @throws PortalException if a matching reading time entry could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ReadingTimeEntry getReadingTimeEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) throws PortalException;
+	public ReadingTimeEntry getReadingTimeEntryByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Updates the reading time entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

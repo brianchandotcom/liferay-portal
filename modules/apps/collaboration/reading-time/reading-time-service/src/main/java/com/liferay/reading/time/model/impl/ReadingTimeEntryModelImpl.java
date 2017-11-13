@@ -79,27 +79,29 @@ public class ReadingTimeEntryModelImpl extends BaseModelImpl<ReadingTimeEntry>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "uuid_", Types.VARCHAR },
 			{ "readingTimeEntryId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
-			{ "readingTimeInSeconds", Types.BIGINT }
+			{ "readingTime", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("readingTimeEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("readingTimeInSeconds", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("readingTime", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ReadingTimeEntry (uuid_ VARCHAR(75) null,readingTimeEntryId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,readingTimeInSeconds LONG)";
+	public static final String TABLE_SQL_CREATE = "create table ReadingTimeEntry (uuid_ VARCHAR(75) null,readingTimeEntryId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,readingTime LONG)";
 	public static final String TABLE_SQL_DROP = "drop table ReadingTimeEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY readingTimeEntry.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY ReadingTimeEntry.createDate DESC";
@@ -118,8 +120,9 @@ public class ReadingTimeEntryModelImpl extends BaseModelImpl<ReadingTimeEntry>
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
-	public static final long UUID_COLUMN_BITMASK = 8L;
-	public static final long CREATEDATE_COLUMN_BITMASK = 16L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long UUID_COLUMN_BITMASK = 16L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -136,12 +139,13 @@ public class ReadingTimeEntryModelImpl extends BaseModelImpl<ReadingTimeEntry>
 
 		model.setUuid(soapModel.getUuid());
 		model.setReadingTimeEntryId(soapModel.getReadingTimeEntryId());
+		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setClassNameId(soapModel.getClassNameId());
 		model.setClassPK(soapModel.getClassPK());
-		model.setReadingTimeInSeconds(soapModel.getReadingTimeInSeconds());
+		model.setReadingTime(soapModel.getReadingTime());
 
 		return model;
 	}
@@ -209,12 +213,13 @@ public class ReadingTimeEntryModelImpl extends BaseModelImpl<ReadingTimeEntry>
 
 		attributes.put("uuid", getUuid());
 		attributes.put("readingTimeEntryId", getReadingTimeEntryId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
-		attributes.put("readingTimeInSeconds", getReadingTimeInSeconds());
+		attributes.put("readingTime", getReadingTime());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -234,6 +239,12 @@ public class ReadingTimeEntryModelImpl extends BaseModelImpl<ReadingTimeEntry>
 
 		if (readingTimeEntryId != null) {
 			setReadingTimeEntryId(readingTimeEntryId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -266,10 +277,10 @@ public class ReadingTimeEntryModelImpl extends BaseModelImpl<ReadingTimeEntry>
 			setClassPK(classPK);
 		}
 
-		Long readingTimeInSeconds = (Long)attributes.get("readingTimeInSeconds");
+		Long readingTime = (Long)attributes.get("readingTime");
 
-		if (readingTimeInSeconds != null) {
-			setReadingTimeInSeconds(readingTimeInSeconds);
+		if (readingTime != null) {
+			setReadingTime(readingTime);
 		}
 	}
 
@@ -306,6 +317,29 @@ public class ReadingTimeEntryModelImpl extends BaseModelImpl<ReadingTimeEntry>
 	@Override
 	public void setReadingTimeEntryId(long readingTimeEntryId) {
 		_readingTimeEntryId = readingTimeEntryId;
+	}
+
+	@JSON
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
+		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	@JSON
@@ -429,13 +463,13 @@ public class ReadingTimeEntryModelImpl extends BaseModelImpl<ReadingTimeEntry>
 
 	@JSON
 	@Override
-	public long getReadingTimeInSeconds() {
-		return _readingTimeInSeconds;
+	public long getReadingTime() {
+		return _readingTime;
 	}
 
 	@Override
-	public void setReadingTimeInSeconds(long readingTimeInSeconds) {
-		_readingTimeInSeconds = readingTimeInSeconds;
+	public void setReadingTime(long readingTime) {
+		_readingTime = readingTime;
 	}
 
 	@Override
@@ -613,12 +647,13 @@ public class ReadingTimeEntryModelImpl extends BaseModelImpl<ReadingTimeEntry>
 
 		readingTimeEntryImpl.setUuid(getUuid());
 		readingTimeEntryImpl.setReadingTimeEntryId(getReadingTimeEntryId());
+		readingTimeEntryImpl.setGroupId(getGroupId());
 		readingTimeEntryImpl.setCompanyId(getCompanyId());
 		readingTimeEntryImpl.setCreateDate(getCreateDate());
 		readingTimeEntryImpl.setModifiedDate(getModifiedDate());
 		readingTimeEntryImpl.setClassNameId(getClassNameId());
 		readingTimeEntryImpl.setClassPK(getClassPK());
-		readingTimeEntryImpl.setReadingTimeInSeconds(getReadingTimeInSeconds());
+		readingTimeEntryImpl.setReadingTime(getReadingTime());
 
 		readingTimeEntryImpl.resetOriginalValues();
 
@@ -684,6 +719,10 @@ public class ReadingTimeEntryModelImpl extends BaseModelImpl<ReadingTimeEntry>
 
 		readingTimeEntryModelImpl._originalUuid = readingTimeEntryModelImpl._uuid;
 
+		readingTimeEntryModelImpl._originalGroupId = readingTimeEntryModelImpl._groupId;
+
+		readingTimeEntryModelImpl._setOriginalGroupId = false;
+
 		readingTimeEntryModelImpl._originalCompanyId = readingTimeEntryModelImpl._companyId;
 
 		readingTimeEntryModelImpl._setOriginalCompanyId = false;
@@ -715,6 +754,8 @@ public class ReadingTimeEntryModelImpl extends BaseModelImpl<ReadingTimeEntry>
 
 		readingTimeEntryCacheModel.readingTimeEntryId = getReadingTimeEntryId();
 
+		readingTimeEntryCacheModel.groupId = getGroupId();
+
 		readingTimeEntryCacheModel.companyId = getCompanyId();
 
 		Date createDate = getCreateDate();
@@ -739,19 +780,21 @@ public class ReadingTimeEntryModelImpl extends BaseModelImpl<ReadingTimeEntry>
 
 		readingTimeEntryCacheModel.classPK = getClassPK();
 
-		readingTimeEntryCacheModel.readingTimeInSeconds = getReadingTimeInSeconds();
+		readingTimeEntryCacheModel.readingTime = getReadingTime();
 
 		return readingTimeEntryCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
 		sb.append(", readingTimeEntryId=");
 		sb.append(getReadingTimeEntryId());
+		sb.append(", groupId=");
+		sb.append(getGroupId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
 		sb.append(", createDate=");
@@ -762,8 +805,8 @@ public class ReadingTimeEntryModelImpl extends BaseModelImpl<ReadingTimeEntry>
 		sb.append(getClassNameId());
 		sb.append(", classPK=");
 		sb.append(getClassPK());
-		sb.append(", readingTimeInSeconds=");
-		sb.append(getReadingTimeInSeconds());
+		sb.append(", readingTime=");
+		sb.append(getReadingTime());
 		sb.append("}");
 
 		return sb.toString();
@@ -771,7 +814,7 @@ public class ReadingTimeEntryModelImpl extends BaseModelImpl<ReadingTimeEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.reading.time.model.ReadingTimeEntry");
@@ -784,6 +827,10 @@ public class ReadingTimeEntryModelImpl extends BaseModelImpl<ReadingTimeEntry>
 		sb.append(
 			"<column><column-name>readingTimeEntryId</column-name><column-value><![CDATA[");
 		sb.append(getReadingTimeEntryId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+		sb.append(getGroupId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
@@ -806,8 +853,8 @@ public class ReadingTimeEntryModelImpl extends BaseModelImpl<ReadingTimeEntry>
 		sb.append(getClassPK());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>readingTimeInSeconds</column-name><column-value><![CDATA[");
-		sb.append(getReadingTimeInSeconds());
+			"<column><column-name>readingTime</column-name><column-value><![CDATA[");
+		sb.append(getReadingTime());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -822,6 +869,9 @@ public class ReadingTimeEntryModelImpl extends BaseModelImpl<ReadingTimeEntry>
 	private String _uuid;
 	private String _originalUuid;
 	private long _readingTimeEntryId;
+	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
@@ -834,7 +884,7 @@ public class ReadingTimeEntryModelImpl extends BaseModelImpl<ReadingTimeEntry>
 	private long _classPK;
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;
-	private long _readingTimeInSeconds;
+	private long _readingTime;
 	private long _columnBitmask;
 	private ReadingTimeEntry _escapedModel;
 }

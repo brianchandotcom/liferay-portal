@@ -57,6 +57,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -126,6 +127,8 @@ public class ReadingTimeEntryPersistenceTest {
 
 		newReadingTimeEntry.setUuid(RandomTestUtil.randomString());
 
+		newReadingTimeEntry.setGroupId(RandomTestUtil.nextLong());
+
 		newReadingTimeEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		newReadingTimeEntry.setCreateDate(RandomTestUtil.nextDate());
@@ -136,7 +139,7 @@ public class ReadingTimeEntryPersistenceTest {
 
 		newReadingTimeEntry.setClassPK(RandomTestUtil.nextLong());
 
-		newReadingTimeEntry.setReadingTimeInSeconds(RandomTestUtil.nextLong());
+		newReadingTimeEntry.setReadingTime(RandomTestUtil.nextLong());
 
 		_readingTimeEntries.add(_persistence.update(newReadingTimeEntry));
 
@@ -146,6 +149,8 @@ public class ReadingTimeEntryPersistenceTest {
 			newReadingTimeEntry.getUuid());
 		Assert.assertEquals(existingReadingTimeEntry.getReadingTimeEntryId(),
 			newReadingTimeEntry.getReadingTimeEntryId());
+		Assert.assertEquals(existingReadingTimeEntry.getGroupId(),
+			newReadingTimeEntry.getGroupId());
 		Assert.assertEquals(existingReadingTimeEntry.getCompanyId(),
 			newReadingTimeEntry.getCompanyId());
 		Assert.assertEquals(Time.getShortTimestamp(
@@ -158,8 +163,8 @@ public class ReadingTimeEntryPersistenceTest {
 			newReadingTimeEntry.getClassNameId());
 		Assert.assertEquals(existingReadingTimeEntry.getClassPK(),
 			newReadingTimeEntry.getClassPK());
-		Assert.assertEquals(existingReadingTimeEntry.getReadingTimeInSeconds(),
-			newReadingTimeEntry.getReadingTimeInSeconds());
+		Assert.assertEquals(existingReadingTimeEntry.getReadingTime(),
+			newReadingTimeEntry.getReadingTime());
 	}
 
 	@Test
@@ -172,6 +177,15 @@ public class ReadingTimeEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByUUID_G() throws Exception {
+		_persistence.countByUUID_G(StringPool.BLANK, RandomTestUtil.nextLong());
+
+		_persistence.countByUUID_G(StringPool.NULL, 0L);
+
+		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
 	public void testCountByUuid_C() throws Exception {
 		_persistence.countByUuid_C(StringPool.BLANK, RandomTestUtil.nextLong());
 
@@ -181,11 +195,11 @@ public class ReadingTimeEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_C() throws Exception {
-		_persistence.countByC_C(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+	public void testCountByG_C_C() throws Exception {
+		_persistence.countByG_C_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByC_C(0L, 0L);
+		_persistence.countByG_C_C(0L, 0L, 0L);
 	}
 
 	@Test
@@ -212,9 +226,9 @@ public class ReadingTimeEntryPersistenceTest {
 
 	protected OrderByComparator<ReadingTimeEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ReadingTimeEntry", "uuid",
-			true, "readingTimeEntryId", true, "companyId", true, "createDate",
-			true, "modifiedDate", true, "classNameId", true, "classPK", true,
-			"readingTimeInSeconds", true);
+			true, "readingTimeEntryId", true, "groupId", true, "companyId",
+			true, "createDate", true, "modifiedDate", true, "classNameId",
+			true, "classPK", true, "readingTime", true);
 	}
 
 	@Test
@@ -419,6 +433,16 @@ public class ReadingTimeEntryPersistenceTest {
 
 		ReadingTimeEntry existingReadingTimeEntry = _persistence.findByPrimaryKey(newReadingTimeEntry.getPrimaryKey());
 
+		Assert.assertTrue(Objects.equals(existingReadingTimeEntry.getUuid(),
+				ReflectionTestUtil.invoke(existingReadingTimeEntry,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingReadingTimeEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingReadingTimeEntry,
+				"getOriginalGroupId", new Class<?>[0]));
+
+		Assert.assertEquals(Long.valueOf(existingReadingTimeEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingReadingTimeEntry,
+				"getOriginalGroupId", new Class<?>[0]));
 		Assert.assertEquals(Long.valueOf(
 				existingReadingTimeEntry.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(existingReadingTimeEntry,
@@ -435,6 +459,8 @@ public class ReadingTimeEntryPersistenceTest {
 
 		readingTimeEntry.setUuid(RandomTestUtil.randomString());
 
+		readingTimeEntry.setGroupId(RandomTestUtil.nextLong());
+
 		readingTimeEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		readingTimeEntry.setCreateDate(RandomTestUtil.nextDate());
@@ -445,7 +471,7 @@ public class ReadingTimeEntryPersistenceTest {
 
 		readingTimeEntry.setClassPK(RandomTestUtil.nextLong());
 
-		readingTimeEntry.setReadingTimeInSeconds(RandomTestUtil.nextLong());
+		readingTimeEntry.setReadingTime(RandomTestUtil.nextLong());
 
 		_readingTimeEntries.add(_persistence.update(readingTimeEntry));
 

@@ -66,12 +66,14 @@ public class ReadingTimeEntryCacheModel implements CacheModel<ReadingTimeEntry>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
 		sb.append(", readingTimeEntryId=");
 		sb.append(readingTimeEntryId);
+		sb.append(", groupId=");
+		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", createDate=");
@@ -82,8 +84,8 @@ public class ReadingTimeEntryCacheModel implements CacheModel<ReadingTimeEntry>,
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
-		sb.append(", readingTimeInSeconds=");
-		sb.append(readingTimeInSeconds);
+		sb.append(", readingTime=");
+		sb.append(readingTime);
 		sb.append("}");
 
 		return sb.toString();
@@ -101,6 +103,7 @@ public class ReadingTimeEntryCacheModel implements CacheModel<ReadingTimeEntry>,
 		}
 
 		readingTimeEntryImpl.setReadingTimeEntryId(readingTimeEntryId);
+		readingTimeEntryImpl.setGroupId(groupId);
 		readingTimeEntryImpl.setCompanyId(companyId);
 
 		if (createDate == Long.MIN_VALUE) {
@@ -119,7 +122,7 @@ public class ReadingTimeEntryCacheModel implements CacheModel<ReadingTimeEntry>,
 
 		readingTimeEntryImpl.setClassNameId(classNameId);
 		readingTimeEntryImpl.setClassPK(classPK);
-		readingTimeEntryImpl.setReadingTimeInSeconds(readingTimeInSeconds);
+		readingTimeEntryImpl.setReadingTime(readingTime);
 
 		readingTimeEntryImpl.resetOriginalValues();
 
@@ -132,6 +135,8 @@ public class ReadingTimeEntryCacheModel implements CacheModel<ReadingTimeEntry>,
 
 		readingTimeEntryId = objectInput.readLong();
 
+		groupId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
@@ -140,7 +145,7 @@ public class ReadingTimeEntryCacheModel implements CacheModel<ReadingTimeEntry>,
 
 		classPK = objectInput.readLong();
 
-		readingTimeInSeconds = objectInput.readLong();
+		readingTime = objectInput.readLong();
 	}
 
 	@Override
@@ -155,6 +160,8 @@ public class ReadingTimeEntryCacheModel implements CacheModel<ReadingTimeEntry>,
 
 		objectOutput.writeLong(readingTimeEntryId);
 
+		objectOutput.writeLong(groupId);
+
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
@@ -163,15 +170,16 @@ public class ReadingTimeEntryCacheModel implements CacheModel<ReadingTimeEntry>,
 
 		objectOutput.writeLong(classPK);
 
-		objectOutput.writeLong(readingTimeInSeconds);
+		objectOutput.writeLong(readingTime);
 	}
 
 	public String uuid;
 	public long readingTimeEntryId;
+	public long groupId;
 	public long companyId;
 	public long createDate;
 	public long modifiedDate;
 	public long classNameId;
 	public long classPK;
-	public long readingTimeInSeconds;
+	public long readingTime;
 }

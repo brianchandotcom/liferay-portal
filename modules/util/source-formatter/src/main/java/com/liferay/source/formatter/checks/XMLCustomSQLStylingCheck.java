@@ -33,7 +33,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 		throws Exception {
 
 		if (fileName.contains("/custom-sql/")) {
-			_checkClosingParenthesis(fileName, content);
+			_checkMultiLineClause(fileName, content);
 			_checkMissingLineBreakAfterKeyword(fileName, content);
 			_checkMissingParentheses(fileName, content);
 			_checkScalability(fileName, absolutePath, content);
@@ -62,7 +62,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private void _checkClosingParenthesis(String fileName, String content) {
+	private void _checkMultiLineClause(String fileName, String content) {
 		int startPos = -1;
 
 		while (true) {

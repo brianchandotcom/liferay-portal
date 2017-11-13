@@ -42,8 +42,8 @@
 	</sql>
 	<sql id="com.liferay.portal.kernel.security.permission.InlineSQLHelper.findByResourcePermission">
 		<![CDATA[
-			SELECT DISTINCT
-				ResourcePermission.primKeyId
+			SELECT
+				DISTINCT ResourcePermission.primKeyId
 			FROM
 				ResourcePermission
 			WHERE

@@ -216,12 +216,10 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		if (group.isLayout()) {
-			Layout scopeLayout = LayoutLocalServiceUtil.getLayout(
-				group.getClassPK());
+		Layout scopeLayout = LayoutLocalServiceUtil.getLayout(
+			group.getClassPK());
 
-			groupId = scopeLayout.getGroupId();
-		}
+		groupId = scopeLayout.getGroupId();
 
 		long plid = _doGetPlidFromPortletId(
 			groupId, scopeGroupId, false, portletId);

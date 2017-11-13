@@ -36,9 +36,9 @@ public class ReadingTimeEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.reading.time.model.ReadingTimeEntry addReadingTimeEntry(
-		long classNameId, long classPK, long readingTimeInSeconds) {
-		return _readingTimeEntryLocalService.addReadingTimeEntry(classNameId,
-			classPK, readingTimeInSeconds);
+		long groupId, long classNameId, long classPK, long readingTime) {
+		return _readingTimeEntryLocalService.addReadingTimeEntry(groupId,
+			classNameId, classPK, readingTime);
 	}
 
 	/**
@@ -195,9 +195,9 @@ public class ReadingTimeEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.reading.time.model.ReadingTimeEntry fetchReadingTimeEntry(
-		long classNameId, long classPK) {
-		return _readingTimeEntryLocalService.fetchReadingTimeEntry(classNameId,
-			classPK);
+		long groupId, long classNameId, long classPK) {
+		return _readingTimeEntryLocalService.fetchReadingTimeEntry(groupId,
+			classNameId, classPK);
 	}
 
 	/**

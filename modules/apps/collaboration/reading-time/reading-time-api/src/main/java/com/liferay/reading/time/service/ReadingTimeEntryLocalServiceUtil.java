@@ -42,10 +42,10 @@ public class ReadingTimeEntryLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.reading.time.service.impl.ReadingTimeEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.reading.time.model.ReadingTimeEntry addReadingTimeEntry(
-		long classNameId, long classPK, long readingTimeInSeconds) {
+		long groupId, long classNameId, long classPK, long readingTime) {
 		return getService()
-				   .addReadingTimeEntry(classNameId, classPK,
-			readingTimeInSeconds);
+				   .addReadingTimeEntry(groupId, classNameId, classPK,
+			readingTime);
 	}
 
 	/**
@@ -187,8 +187,8 @@ public class ReadingTimeEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.reading.time.model.ReadingTimeEntry fetchReadingTimeEntry(
-		long classNameId, long classPK) {
-		return getService().fetchReadingTimeEntry(classNameId, classPK);
+		long groupId, long classNameId, long classPK) {
+		return getService().fetchReadingTimeEntry(groupId, classNameId, classPK);
 	}
 
 	/**

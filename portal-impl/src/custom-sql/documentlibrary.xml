@@ -9,7 +9,7 @@
 				DLFileEntry
 			INNER JOIN
 				DLFileVersion ON
-					(DLFileVersion.fileEntryId = DLFileEntry.fileEntryId)
+					DLFileVersion.fileEntryId = DLFileEntry.fileEntryId
 			WHERE
 				(CAST_TEXT(DLFileEntry.extraSettings) != '') OR
 				(CAST_TEXT(DLFileVersion.extraSettings) != '')
@@ -55,7 +55,7 @@
 				DLFileEntry
 			INNER JOIN
 				DLFileVersion ON
-					(DLFileVersion.fileEntryId = DLFileEntry.fileEntryId)
+					DLFileVersion.fileEntryId = DLFileEntry.fileEntryId
 			WHERE
 				(DLFileVersion.groupId = ?) AND
 				(DLFileVersion.userId = ?) AND
@@ -100,7 +100,7 @@
 						DLFileEntry
 					INNER JOIN
 						DLFileVersion ON
-							(DLFileVersion.fileEntryId = DLFileEntry.fileEntryId)
+							DLFileVersion.fileEntryId = DLFileEntry.fileEntryId
 					WHERE
 						(DLFileVersion.companyId = ?) AND
 						([$STATUS$])
@@ -141,7 +141,7 @@
 					(DLFileVersion.fileEntryId = DLFileEntry.fileEntryId) AND
 					(DLFileVersion.version = DLFileEntry.version)
 			WHERE
-				(DLFileVersion.fileEntryId IS NULL)
+				DLFileVersion.fileEntryId IS NULL
 		]]>
 	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.findByNoAssets">
@@ -155,7 +155,7 @@
 					(AssetEntry.classNameId = ?) AND
 					(AssetEntry.classPK = DLFileEntry.fileEntryId)
 			WHERE
-				(AssetEntry.classPK IS NULL)
+				AssetEntry.classPK IS NULL
 		]]>
 	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.findByExtraSettings">
@@ -166,7 +166,7 @@
 				DLFileEntry
 			INNER JOIN
 				DLFileVersion ON
-					(DLFileVersion.fileEntryId = DLFileEntry.fileEntryId)
+					DLFileVersion.fileEntryId = DLFileEntry.fileEntryId
 			WHERE
 				(CAST_TEXT(DLFileEntry.extraSettings) != '') OR
 				(CAST_TEXT(DLFileVersion.extraSettings) != '')
@@ -182,9 +182,9 @@
 				DLFileEntry
 			LEFT JOIN
 				Group_ ON
-					(Group_.groupId = DLFileEntry.groupId)
+					Group_.groupId = DLFileEntry.groupId
 			WHERE
-				(Group_.groupId IS NULL)
+				Group_.groupId IS NULL
 		]]>
 	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.findByG_F">
@@ -215,7 +215,7 @@
 				DLFileEntry
 			INNER JOIN
 				AssetEntry ON
-					(AssetEntry.classPK = DLFileEntry.fileEntryId)
+					AssetEntry.classPK = DLFileEntry.fileEntryId
 			WHERE
 				(DLFileEntry.treePath LIKE ?) AND
 				(AssetEntry.classNameId = ?)
@@ -233,7 +233,7 @@
 						DLFileEntry
 					INNER JOIN
 						DLFileVersion ON
-							(DLFileVersion.fileEntryId = DLFileEntry.fileEntryId)
+							DLFileVersion.fileEntryId = DLFileEntry.fileEntryId
 					WHERE
 						(DLFileVersion.groupId = ?) AND
 						(DLFileVersion.userId = ?) AND
@@ -248,7 +248,7 @@
 		<![CDATA[
 			INNER JOIN
 				DLFileEntry ON
-					(DLFileEntry.fileEntryId = AssetEntry.classPK)
+					DLFileEntry.fileEntryId = AssetEntry.classPK
 		]]>
 	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryMetadataFinder.findByMismatchedCompanyId">
@@ -259,12 +259,12 @@
 				DLFileEntryMetadata
 			LEFT JOIN
 				DLFileEntry ON
-					(DLFileEntry.fileEntryId = DLFileEntryMetadata.fileEntryId)
+					DLFileEntry.fileEntryId = DLFileEntryMetadata.fileEntryId
 			LEFT JOIN
 				DDMStructure ON
-					(DDMStructure.structureId = DLFileEntryMetadata.DDMStructureId)
+					DDMStructure.structureId = DLFileEntryMetadata.DDMStructureId
 			WHERE
-				(DDMStructure.companyId != DLFileEntry.companyId)
+				DDMStructure.companyId != DLFileEntry.companyId
 		]]>
 	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryMetadataFinder.findByNoStructures">
@@ -275,12 +275,12 @@
 				DLFileEntryMetadata
 			LEFT JOIN
 				DLFileEntry ON
-					(DLFileEntry.fileEntryId = DLFileEntryMetadata.fileEntryId)
+					DLFileEntry.fileEntryId = DLFileEntryMetadata.fileEntryId
 			LEFT JOIN
 				DDMStructure ON
-					(DDMStructure.structureId = DLFileEntryMetadata.DDMStructureId)
+					DDMStructure.structureId = DLFileEntryMetadata.DDMStructureId
 			WHERE
-				(DDMStructure.structureId IS NULL)
+				DDMStructure.structureId IS NULL
 		]]>
 	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryTypeFinder.countByC_G_N_D_S">
@@ -338,9 +338,9 @@
 				DLFileRank
 			INNER JOIN
 				DLFileEntry ON
-					(DLFileEntry.fileEntryId = DLFileRank.fileEntryId)
+					DLFileEntry.fileEntryId = DLFileRank.fileEntryId
 			WHERE
-				(DLFileEntry.folderId = ?)
+				DLFileEntry.folderId = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.countF_ByG_M_F">
@@ -393,7 +393,7 @@
 					(AssetEntry.classNameId = ?) AND
 					(AssetEntry.classPK = DLFolder.folderId)
 			WHERE
-				(AssetEntry.classPK IS NULL)
+				AssetEntry.classPK IS NULL
 		]]>
 	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.findF_ByC_T">
@@ -404,7 +404,7 @@
 				DLFolder
 			INNER JOIN
 				AssetEntry ON
-					(AssetEntry.classPK = DLFolder.folderId)
+					AssetEntry.classPK = DLFolder.folderId
 			WHERE
 				(DLFolder.treePath LIKE ?) AND
 				(AssetEntry.classNameId = ?)
@@ -444,7 +444,7 @@
 				DLFileShortcut
 			INNER JOIN
 				DLFileEntry ON
-					(DLFileEntry.fileEntryId = DLFileShortcut.toFileEntryId)
+					DLFileEntry.fileEntryId = DLFileShortcut.toFileEntryId
 			WHERE
 				(DLFileShortcut.groupId = ?) AND
 				(DLFileShortcut.active_ = ?) AND
@@ -456,21 +456,21 @@
 		<![CDATA[
 			INNER JOIN
 				DLFolder ON
-					(DLFolder.folderId = AssetEntry.classPK)
+					DLFolder.folderId = AssetEntry.classPK
 		]]>
 	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.joinFE_ByDLFileVersion">
 		<![CDATA[
 			INNER JOIN
 				DLFileVersion ON
-					(DLFileEntry.fileEntryId = DLFileVersion.fileEntryId)
+					DLFileEntry.fileEntryId = DLFileVersion.fileEntryId
 		]]>
 	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.joinFS_ByDLFileEntry">
 		<![CDATA[
 			INNER JOIN
 				DLFileEntry ON
-					(DLFileEntry.fileEntryId = DLFileShortcut.toFileEntryId)
+					DLFileEntry.fileEntryId = DLFileShortcut.toFileEntryId
 		]]>
 	</sql>
 </custom-sql>

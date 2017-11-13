@@ -20,9 +20,9 @@
 				DLFileRank
 			INNER JOIN
 				DLFileEntry ON
-					(DLFileEntry.fileEntryId = DLFileRank.fileEntryId)
+					DLFileEntry.fileEntryId = DLFileRank.fileEntryId
 			WHERE
-				(DLFileEntry.folderId = ?)
+				DLFileEntry.folderId = ?
 		]]>
 	</sql>
 </custom-sql>

@@ -9,7 +9,7 @@
 				AssetCategory
 			INNER JOIN
 				AssetEntries_AssetCategories ON
-					(AssetEntries_AssetCategories.categoryId = AssetCategory.categoryId)
+					AssetEntries_AssetCategories.categoryId = AssetCategory.categoryId
 			WHERE
 				(
 					AssetEntries_AssetCategories.entryId IN
@@ -94,7 +94,7 @@
 			FROM
 				AssetEntries_AssetTags
 			WHERE
-				([$TAG_ID$])
+				[$TAG_ID$]
 		]]>
 	</sql>
 	<sql id="com.liferay.asset.kernel.service.persistence.AssetEntryFinder.findByClassNameId">
@@ -117,7 +117,7 @@
 				AssetTag
 			INNER JOIN
 				AssetEntries_AssetTags ON
-					(AssetEntries_AssetTags.tagId = AssetTag.tagId)
+					AssetEntries_AssetTags.tagId = AssetTag.tagId
 			WHERE
 				(
 					AssetEntries_AssetTags.entryId IN
@@ -142,7 +142,7 @@
 				AssetTag
 			INNER JOIN
 				AssetEntries_AssetTags ON
-					(AssetEntries_AssetTags.tagId = AssetTag.tagId)
+					AssetEntries_AssetTags.tagId = AssetTag.tagId
 			WHERE
 				(
 					AssetEntries_AssetTags.entryId IN
@@ -171,7 +171,7 @@
 				AssetTag
 			INNER JOIN
 				AssetEntries_AssetTags ON
-					(AssetEntries_AssetTags.tagId = AssetTag.tagId)
+					AssetEntries_AssetTags.tagId = AssetTag.tagId
 			WHERE
 				(
 					AssetEntries_AssetTags.entryId IN
@@ -202,10 +202,10 @@
 				AssetTag
 			INNER JOIN
 				AssetEntries_AssetTags ON
-					(AssetEntries_AssetTags.tagId = AssetTag.tagId)
+					AssetEntries_AssetTags.tagId = AssetTag.tagId
 			INNER JOIN
 				AssetEntry AssetEntry ON
-					(AssetEntry.entryId = AssetEntries_AssetTags.entryId)
+					AssetEntry.entryId = AssetEntries_AssetTags.entryId
 			INNER JOIN
 				SocialActivityCounter ON
 					(SocialActivityCounter.classNameId = AssetEntry.classNameId) AND

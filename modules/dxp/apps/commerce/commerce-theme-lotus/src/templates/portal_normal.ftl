@@ -41,9 +41,7 @@
 						<button class="navbar-toggler navbar-light" type="button" data-toggle="collapse" data-target="#navigationCollapse" aria-controls="navigationCollapse" aria-expanded="false" aria-label="Toggle navigation">
 							<span class="navbar-toggler-icon"></span>
 						</button>
-					</#if>
 
-					<#if has_navigation>
 						<#include "${full_templates_path}/navigation.ftl" />
 					</#if>
 				</div>

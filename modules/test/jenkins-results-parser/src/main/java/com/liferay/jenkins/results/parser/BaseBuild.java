@@ -53,6 +53,16 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public void addDownstreamBuilds(String... urls) {
+		ExecutorService executorService = getExecutorService();
+		final List<Build> newDownstreamBuilds = Collections.synchronizedList(
+			new ArrayList<Build>());
+		final Build thisBuild = this;
+
+		if (executorService != null) {
+			System.out.println(
+				"adding downstream builds using multiple threads");
+		}
+
 		for (String url : urls) {
 			try {
 				url = JenkinsResultsParserUtil.getLocalURL(
@@ -64,9 +74,37 @@ public abstract class BaseBuild implements Build {
 			}
 
 			if (!hasBuildURL(url)) {
-				downstreamBuilds.add(BuildFactory.newBuild(url, this));
+				final String buildURL = url;
+
+				if (executorService != null) {
+					Runnable runnable = new Runnable() {
+
+						@Override
+						public void run() {
+							newDownstreamBuilds.add(
+								BuildFactory.newBuild(buildURL, thisBuild));
+						}
+
+					};
+
+					executorService.execute(runnable);
+				}
+				else {
+					newDownstreamBuilds.add(
+						BuildFactory.newBuild(url, thisBuild));
+				}
 			}
 		}
+
+		if (executorService != null) {
+			executorService.shutdown();
+
+			while (!executorService.isTerminated()) {
+				JenkinsResultsParserUtil.sleep(100);
+			}
+		}
+
+		downstreamBuilds.addAll(newDownstreamBuilds);
 	}
 
 	public abstract void addTimelineData(BaseBuild.TimelineData timelineData);

@@ -73,6 +73,30 @@ CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayC
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
+<div class="container-fluid-1280" id="<portlet:namespace />DefinitionToolbarFilter">
+</div>
+
+<liferay-portlet:resourceURL id="cpDefinitionsFacets" var="cpDefinitionsFacetsURL">
+
+</liferay-portlet:resourceURL>
+
+<aui:script require="commerce-product-definitions-web/DefinitionToolbarFilter.es">
+
+	var definitionToolbarFilter = new commerceProductDefinitionsWebDefinitionToolbarFilterEs.default(
+		{
+			cpDefinitionsFacetsURL : '<%= cpDefinitionsFacetsURL.toString() %>',
+			namespace : '<portlet:namespace />',
+			pathThemeImages: '<%= themeDisplay.getPathThemeImages() %>',
+			portletURL: '<%= cpDefinitionsDisplayContext.getPortletURL() %>',
+			groupIds: '<%= themeDisplay.getScopeGroupId() %>',
+			vocabularyIds: '<%= cpDefinitionsDisplayContext.getVocabularyIds() %>',
+			categorySelectorURL: '<%= cpDefinitionsDisplayContext.getCategorySelectorURL(renderResponse.getNamespace() + "selectCategory") %>'
+		},
+		'#<portlet:namespace />DefinitionToolbarFilter'
+	);
+
+</aui:script>
+
 <aui:script>
 	function <portlet:namespace />deleteCPDefinitions() {
 		if (<%= TrashUtil.isTrashEnabled(scopeGroupId) %> || confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-products") %>')) {

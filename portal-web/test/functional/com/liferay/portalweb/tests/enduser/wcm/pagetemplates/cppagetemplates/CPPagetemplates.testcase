@@ -132,7 +132,7 @@
 			<var name="toggleValue" value="disable" />
 		</execute>
 
-		<execute macro="PortletEntry#save" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Navigator#openURL" />
 

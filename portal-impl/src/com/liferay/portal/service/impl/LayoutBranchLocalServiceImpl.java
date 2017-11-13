@@ -218,7 +218,7 @@ public class LayoutBranchLocalServiceImpl
 				LayoutBranchNameException.TOO_SHORT);
 		}
 
-		if (name.length() > 100) {
+		if (name.length() > 75) {
 			throw new LayoutBranchNameException(
 				LayoutBranchNameException.TOO_LONG);
 		}

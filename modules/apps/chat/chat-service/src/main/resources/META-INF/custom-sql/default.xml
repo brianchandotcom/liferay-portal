@@ -57,10 +57,8 @@
 					User_.userId = Chat_Status.userId
 			INNER JOIN
 				Group_ ON
-					(
-						(Group_.classPK = User_.userId) AND
-						(Group_.companyId = User_.companyId)
-					)
+					(Group_.classPK = User_.userId) AND
+					(Group_.companyId = User_.companyId)
 			WHERE
 				(Group_.classNameId = ?) AND
 				(User_.companyId = ?) AND
@@ -85,10 +83,8 @@
 					User_.userId = Chat_Status.userId
 			INNER JOIN
 				Group_ ON
-					(
-						(Group_.classPK = User_.userId) AND
-						(Group_.companyId = User_.companyId)
-					)
+					(Group_.classPK = User_.userId) AND
+					(Group_.companyId = User_.companyId)
 			INNER JOIN
 				SocialRelation ON
 					SocialRelation.userId2 = User_.userId
@@ -121,10 +117,8 @@
 					Users_Groups.userId = User_.userId
 			INNER JOIN
 				Group_ ON
-					(
-						(Group_.classPK = User_.userId) AND
-						(Group_.companyId = User_.companyId)
-					)
+					(Group_.classPK = User_.userId) AND
+					(Group_.companyId = User_.companyId)
 			WHERE
 				(Group_.classNameId = ?) AND
 				(User_.companyId = ?) AND

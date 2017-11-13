@@ -124,8 +124,15 @@
 
 	<command name="addPrivatePage">
 		<execute macro="SitePages#addPage">
+			<var name="columnName" value="${columnName}" />
+			<var name="componentName" value="${componentName}" />
 			<var name="pageName" value="${pageName}" />
+			<var name="pageTemplateName" value="${pageTemplateName}" />
+			<var name="pageTypeDescription" value="${pageTypeDescription}" />
+			<var name="pageTypeURL" value="${pageTypeURL}" />
+			<var name="portlet" value="${portlet}" />
 			<var name="privacy" value="Private" />
+			<var name="sitePageType" value="${sitePageType}" />
 		</execute>
 	</command>
 
@@ -142,8 +149,15 @@
 
 	<command name="addPublicPage">
 		<execute macro="SitePages#addPage">
+			<var name="columnName" value="${columnName}" />
+			<var name="componentName" value="${componentName}" />
 			<var name="pageName" value="${pageName}" />
+			<var name="pageTemplateName" value="${pageTemplateName}" />
+			<var name="pageTypeDescription" value="${pageTypeDescription}" />
+			<var name="pageTypeURL" value="${pageTypeURL}" />
+			<var name="portlet" value="${portlet}" />
 			<var name="privacy" value="Public" />
+			<var name="sitePageType" value="${sitePageType}" />
 		</execute>
 	</command>
 

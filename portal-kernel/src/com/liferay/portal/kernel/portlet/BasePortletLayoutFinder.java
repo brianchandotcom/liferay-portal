@@ -232,11 +232,6 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 	}
 
 	private long _getScopeGroupId(Layout layout, String portletId) {
-		return _getScopeGroupId(null, layout, portletId);
-	}
-
-	private long _getScopeGroupId(
-		ThemeDisplay themeDisplay, Layout layout, String portletId) {
 
 		if (layout == null) {
 			return 0;
@@ -249,13 +244,13 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 		try {
 			PortletPreferences portletSetup = null;
 
-			if (themeDisplay == null) {
+			if (null == null) {
 				portletSetup =
 					PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
 						layout, portletId);
 			}
 			else {
-				portletSetup = themeDisplay.getStrictLayoutPortletSetup(
+				portletSetup = ((ThemeDisplay) null).getStrictLayoutPortletSetup(
 					layout, portletId);
 			}
 

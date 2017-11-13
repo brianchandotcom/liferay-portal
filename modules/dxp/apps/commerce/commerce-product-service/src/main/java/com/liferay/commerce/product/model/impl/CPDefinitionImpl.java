@@ -74,12 +74,6 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	}
 
 	@Override
-	public List<CPInstance> getCPDefinitionInstances() {
-		return CPInstanceLocalServiceUtil.getCPDefinitionInstances(
-			getCPDefinitionId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-	}
-
-	@Override
 	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels() {
 		return CPDefinitionOptionRelLocalServiceUtil.getCPDefinitionOptionRels(
 			getCPDefinitionId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -91,6 +85,12 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 
 		return CPDefinitionSpecificationOptionValueLocalServiceUtil.
 			getCPDefinitionSpecificationOptionValues(getCPDefinitionId());
+	}
+
+	@Override
+	public List<CPInstance> getCPInstances() {
+		return CPInstanceLocalServiceUtil.getCPDefinitionInstances(
+			getCPDefinitionId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	@Override

@@ -146,7 +146,7 @@ if (cpDefinitions == null) {
 								<div class="sidebar-body">
 
 									<%
-									List<CPInstance> cpInstances = cpDefinition.getCPDefinitionInstances();
+									List<CPInstance> cpInstances = cpDefinition.getCPInstances();
 
 									for (CPInstance cpInstance : cpInstances) {
 									%>

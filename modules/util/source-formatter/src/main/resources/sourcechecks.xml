@@ -120,7 +120,6 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-security-sso/portal-security-sso-opensso" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-security-sso/portal-security-sso-token" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-settings/portal-settings-web" />
-			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-template/portal-template-freemarker" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-template/portal-template-soy" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/text-localizer/text-localizer-address" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/users-admin/users-admin-web" />

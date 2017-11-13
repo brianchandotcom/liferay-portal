@@ -232,7 +232,7 @@
 <!--SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE-->
 <tr>
 	<td>SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[contains(@name,'allRowIds')])[2]</td>
+	<td>xpath=(//h5[contains(.,'Site')]//following::input[contains(@name,'allRowIds')])[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -273,7 +273,7 @@
 <!--SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_PAGE-->
 <tr>
 	<td>SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_PAGE_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[contains(@name,'allRowIds')])[3]</td>
+	<td>xpath=(//h5[contains(.,'Page')]//following::input[contains(@name,'allRowIds')])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -294,7 +294,7 @@
 <!--SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_PAGE_VARIATION-->
 <tr>
 	<td>SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_PAGE_VARIATION_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[contains(@name,'allRowIds')])[4]</td>
+	<td>xpath=(//h5[contains(.,'Page Variation')]//following::input[contains(@name,'allRowIds')])[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -305,7 +305,7 @@
 <!--SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_PAGE_VARIATION-->
 <tr>
 	<td>SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_PAGES_VARIATION_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[contains(@name,'allRowIds')])[5]</td>
+	<td>xpath=(//h5[contains(.,'Site Pages Variation')]//following::input[contains(@name,'allRowIds')])</td>
 	<td></td>
 </tr>
 <tr>

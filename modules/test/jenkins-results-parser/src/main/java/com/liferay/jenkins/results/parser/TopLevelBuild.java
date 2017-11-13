@@ -54,14 +54,14 @@ public class TopLevelBuild extends BaseBuild {
 	public void addDownstreamBuilds(String... urls) {
 		super.addDownstreamBuilds(urls);
 
-		if (result != null) {
+		if ((result != null) && (urls.length > 0)) {
 			result = null;
-		}
 
-		String status = getStatus();
+			String status = getStatus();
 
-		if (status.equals("completed")) {
-			setStatus("running");
+			if (status.equals("completed")) {
+				setStatus("running");
+			}
 		}
 	}
 

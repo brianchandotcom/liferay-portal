@@ -64,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCResourceCommand.class
 )
-public class CPDefinitionsFacetesMVCResourceCommand
+public class CPDefinitionsFacetsMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
 	protected SearchContext buildSearchContext(

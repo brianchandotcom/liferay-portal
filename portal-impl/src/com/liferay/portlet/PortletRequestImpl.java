@@ -897,7 +897,8 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		}
 
 		_mergePublicRenderParameters(
-			dynamicRequest, publicRenderParametersMap, preferences);
+			dynamicRequest, publicRenderParametersMap, preferences,
+			getLifecycle());
 
 		_processCheckbox(dynamicRequest);
 
@@ -954,7 +955,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #_mergePublicRenderParameters(DynamicServletRequest, Map,
-	 *             PortletPreferences)}
+	 *             PortletPreferences, String)}
 	 */
 	@Deprecated
 	protected void mergePublicRenderParameters(
@@ -962,7 +963,8 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		long plid) {
 
 		_mergePublicRenderParameters(
-			dynamicRequest, Collections.emptyMap(), preferences);
+			dynamicRequest, Collections.emptyMap(), preferences,
+			getLifecycle());
 	}
 
 	protected String removePortletNamespace(
@@ -978,7 +980,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	private void _mergePublicRenderParameters(
 		DynamicServletRequest dynamicRequest,
 		Map<String, String[]> publicRenderParametersMap,
-		PortletPreferences preferences) {
+		PortletPreferences preferences, String lifecycle) {
 
 		Set<PublicRenderParameter> publicRenderParameters =
 			_portlet.getPublicRenderParameters();
@@ -986,6 +988,8 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		if (publicRenderParameters.isEmpty()) {
 			return;
 		}
+
+		boolean resourcePhase = lifecycle.equals(PortletRequest.RESOURCE_PHASE);
 
 		Enumeration<String> enumeration = preferences.getNames();
 
@@ -1007,7 +1011,14 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 				String name = publicRenderParameter.getIdentifier();
 
-				if (dynamicRequest.getParameter(name) == null) {
+				String[] requestValues = dynamicRequest.getParameterValues(
+					name);
+
+				if ((requestValues != null) && resourcePhase) {
+					dynamicRequest.setParameterValues(
+						name, ArrayUtil.append(requestValues, values));
+				}
+				else {
 					dynamicRequest.setParameterValues(name, values);
 				}
 			}

@@ -77,6 +77,14 @@ gradle.beforeProject {
 		task printProjectPath
 
 		afterEvaluate {
+			String forcedUpdateFilesVersion = GradleUtil.getProperty(project, "forced.update.files.version", (String)null)
+
+			if (forcedUpdateFilesVersion && tasks.findByName("updateFileVersions")) {
+				updateFileVersions {
+					replacement = forcedUpdateFilesVersion
+				}
+			}
+
 			String forcedUpdateVersion = GradleUtil.getProperty(project, "forced.update.version", (String)null)
 
 			if (forcedUpdateVersion && tasks.findByName("updateVersion")) {

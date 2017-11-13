@@ -40,6 +40,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 			content = _fixIncorrectAndOr(content);
 			content = _fixMissingLineBreakAfterOpenParenthesis(content);
 			content = _fixMissingLineBreakBeforeOpenParenthesis(content);
+			content = _fixRedundantParenthesesForSingleLineClause(content);
 			content = _fixSinglePredicateClause(content);
 			content = _formatSingleLineClauseWithMultiplePredicates(
 				fileName, content);
@@ -229,6 +230,26 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 			content, "(\n", "\n\t" + matcher.group(1) + "(\n", matcher.start());
 	}
 
+	private String _fixRedundantParenthesesForSingleLineClause(String content) {
+		Matcher matcher =
+			_redundantParenthesesForSingleLineClausePattern.matcher(content);
+
+		while (matcher.find()) {
+			String trimmedNextLine = StringUtil.trim(matcher.group(3));
+
+			if (!trimmedNextLine.startsWith("AND") &&
+				!trimmedNextLine.startsWith("OR") &&
+				!trimmedNextLine.startsWith("[$AND_OR_CONNECTOR$]")) {
+
+				return StringUtil.replaceFirst(
+					content, "(" + matcher.group(2) + ")", matcher.group(2),
+					matcher.start());
+			}
+		}
+
+		return content;
+	}
+
 	private String _fixSinglePredicateClause(String content) {
 		Matcher matcher = _multiLineSinglePredicatePattern.matcher(content);
 
@@ -348,6 +369,8 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 		"\\s(AND|OR|\\[\\$AND_OR_CONNECTOR\\$\\])\\s+[^\\(\\[<\\s]");
 	private final Pattern _multiLineSinglePredicatePattern = Pattern.compile(
 		"\t\\(\n(.*)\n\t*\\)");
+	private final Pattern _redundantParenthesesForSingleLineClausePattern =
+		Pattern.compile("\\s(ON|WHERE)\\s+\\((.*)\\)\n(.*)\n");
 	private final Pattern _singleLineClauseWitMultiplePredicatesPattern =
 		Pattern.compile(
 			"\n(\t*)((.*\\)) (AND|OR|\\[\\$AND_OR_CONNECTOR\\$\\]) (\\(.*))");

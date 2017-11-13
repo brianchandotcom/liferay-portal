@@ -1009,8 +1009,8 @@
 			<var name="webContentTitle" value="Basic S.P.A.C.E. Banner (Japanese Translation)" />
 		</execute>
 
-		<execute macro="WebContent#addAbstractSummary">
-			<var name="abstractSummary" value="A Japanese translation of the basic front page banner" />
+		<execute macro="AlloyEditor#addDescription">
+			<var name="description" value="A Japanese translation of the basic front page banner" />
 		</execute>
 
 		<execute macro="AlloyEditor#addSourceContent">

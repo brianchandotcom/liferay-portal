@@ -58,15 +58,18 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>3.0.0</version>
 				<configuration>
-					<packagingExcludes>**/*.scss,**/.sass-cache</packagingExcludes>
+					<packagingExcludes>**/*.scss,**/.sass-cache/</packagingExcludes>
 					<webResources>
 						<resource>
 							<directory>src/main/webapp</directory>
 							<excludes>
 								<exclude>**/*.scss</exclude>
-								<exclude>**/.sass-cache</exclude>
+								<exclude>**/.sass-cache/</exclude>
 							</excludes>
 						</resource>
+                        <resource>
+ +							<directory>${project.build.directory}/compiledCss</directory>
+ +						</resource>
 					</webResources>
 				</configuration>
 			</plugin>
@@ -76,7 +79,8 @@
 				<version>@com.liferay.css.builder.version@</version>
 				<executions>
 					<execution>
-						<phase>generate-sources</phase>
+                        <id>default-build-css</id>
+						<phase>generate-resources</phase>
 						<goals>
 							<goal>build</goal>
 						</goals>
@@ -84,6 +88,7 @@
 				</executions>
 				<configuration>
 					<docrootDirName>src/main/webapp</docrootDirName>
+                    <outputDirName>${project.build.directory}/compiledCss</outputDirName>
 				</configuration>
 			</plugin>
 		</plugins>

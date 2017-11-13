@@ -34,6 +34,7 @@
 							<directory>${com.liferay.portal.tools.theme.builder.outputDir}</directory>
 							<excludes>
 								<exclude>**/*.scss</exclude>
+								<exclude>**/*.sass-cache/</exclude>
 							</excludes>
 						</resource>
 					</webResources>
@@ -53,6 +54,7 @@
 				</executions>
 				<configuration>
 					<docrootDirName>${com.liferay.portal.tools.theme.builder.outputDir}</docrootDirName>
+                    <outputDirName>./</outputDirName>
 					<precision>9</precision>
 				</configuration>
 			</plugin>

@@ -206,7 +206,8 @@
 				<version>@com.liferay.css.builder.version@</version>
 				<executions>
 					<execution>
-						<phase>generate-sources</phase>
+                        <id>default-build-css</id>
+						<phase>generate-resources</phase>
 						<goals>
 							<goal>build</goal>
 						</goals>

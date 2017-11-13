@@ -57,6 +57,20 @@ public class OSGiBundleBuilderCommandTest {
 	}
 
 	@Test
+	public void testExplodedJarCommand() throws Exception {
+		ExplodedJarCommand explodedJarCommand = new ExplodedJarCommand();
+
+		explodedJarCommand.build(_getOSGiBundleBuilderArgs());
+
+		File actualDir = new File(
+			_projectDir, "build/com.liferay.blade.authenticator.shiro");
+
+		Assert.assertTrue(actualDir.isDirectory());
+
+		_compareJarDirs(_expectedDir, actualDir);
+	}
+
+	@Test
 	public void testJarCommand() throws Exception {
 		JarCommand jarCommand = new JarCommand();
 

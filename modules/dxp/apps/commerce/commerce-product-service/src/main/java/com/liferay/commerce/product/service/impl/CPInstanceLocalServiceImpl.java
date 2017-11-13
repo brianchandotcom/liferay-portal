@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.commerce.product.exception.CPDefinitionIgnoreSKUCombinationsException;
 import com.liferay.commerce.product.exception.CPInstanceDisplayDateException;
 import com.liferay.commerce.product.exception.CPInstanceExpirationDateException;
 import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException;
@@ -89,6 +90,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			int expirationDateMinute, boolean neverExpire,
 			ServiceContext serviceContext)
 		throws PortalException {
+
+		validate(cpDefinitionId, serviceContext);
 
 		// Commerce product instance
 
@@ -473,6 +476,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		CPInstance cpInstance = cpInstancePersistence.findByPrimaryKey(
 			cpInstanceId);
+
+		validate(cpInstance.getCPDefinitionId(), serviceContext);
 
 		Date displayDate = null;
 		Date expirationDate = null;
@@ -867,6 +872,27 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			cpInstance.getCompanyId(), cpInstance.getGroupId(), userId,
 			CPInstance.class.getName(), cpInstance.getCPInstanceId(),
 			cpInstance, serviceContext, workflowContext);
+	}
+
+	protected void validate(long cpDefinitionId, ServiceContext serviceContext)
+		throws PortalException {
+
+		int workflowAction = serviceContext.getWorkflowAction();
+
+		if (workflowAction == WorkflowConstants.ACTION_PUBLISH) {
+			CPDefinition cpDefinition =
+				cpDefinitionLocalService.getCPDefinition(cpDefinitionId);
+
+			if (cpDefinition.getIgnoreSKUCombinations()) {
+				int cpInstancesCount =
+					cpInstanceLocalService.getCPDefinitionInstancesCount(
+						cpDefinitionId, WorkflowConstants.STATUS_APPROVED);
+
+				if (cpInstancesCount > 0) {
+					throw new CPDefinitionIgnoreSKUCombinationsException();
+				}
+			}
+		}
 	}
 
 	private static final String[] _SELECTED_FIELD_NAMES =

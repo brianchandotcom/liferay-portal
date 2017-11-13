@@ -32,7 +32,7 @@ public interface UnsatisfiedComponentScannerConfiguration {
 	@Meta.AD(
 		deflt = "-1",
 		description = "unsatisfied-component-scanning-interval-help",
-		required = false
+		name = "unsatisfied-component-scanning-interval", required = false
 	)
 	public int unsatisfiedComponentScanningInterval();
 

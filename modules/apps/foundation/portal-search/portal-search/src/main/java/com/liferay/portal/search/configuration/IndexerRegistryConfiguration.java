@@ -31,16 +31,21 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ProviderType
 public interface IndexerRegistryConfiguration {
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "buffered", required = false)
 	public boolean buffered();
 
-	@Meta.AD(deflt = "DEFAULT", required = false)
+	@Meta.AD(
+		deflt = "DEFAULT", name = "buffered-execution-mode", required = false
+	)
 	public String bufferedExecutionMode();
 
-	@Meta.AD(deflt = "10000", required = false)
+	@Meta.AD(deflt = "10000", name = "max-buffer-size", required = false)
 	public int maxBufferSize();
 
-	@Meta.AD(deflt = "0.90", max = "0.99", min = "0.1", required = false)
+	@Meta.AD(
+		deflt = "0.90", max = "0.99", min = "0.1",
+		name = "minimum-buffer-availability-percentage", required = false
+	)
 	public float minimumBufferAvailabilityPercentage();
 
 }

@@ -31,7 +31,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface CXFEndpointPublisherConfiguration {
 
-	@Meta.AD(required = true)
+	@Meta.AD(name = "context-path", required = true)
 	public String contextPath();
 
 	@Meta.AD(

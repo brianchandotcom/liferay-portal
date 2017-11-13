@@ -218,6 +218,13 @@ public abstract class BaseCPDefinitionsSearchContainerDisplayContext<T>
 			return true;
 		}
 
+		String filterFields = ParamUtil.getString(
+			httpServletRequest, "filterFields");
+
+		if (Validator.isNotNull(filterFields)) {
+			return true;
+		}
+
 		return false;
 	}
 

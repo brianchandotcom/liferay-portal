@@ -20,6 +20,7 @@ import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefiniti
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
+import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
@@ -91,8 +92,9 @@ public class CPDefinitionShippingScreenNavigationEntry
 			CPDefinitionShippingInfoDisplayContext
 				cpDefinitionShippingInfoDisplayContext =
 					new CPDefinitionShippingInfoDisplayContext(
-						_actionHelper, httpServletRequest, _cpDefinitionService,
-						_itemSelector, _cpMeasurementUnitService);
+						_actionHelper, httpServletRequest, _cpDefinitionHelper,
+						_cpDefinitionService, _itemSelector,
+						_cpMeasurementUnitService);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -112,6 +114,9 @@ public class CPDefinitionShippingScreenNavigationEntry
 
 	@Reference
 	private ActionHelper _actionHelper;
+
+	@Reference
+	private CPDefinitionHelper _cpDefinitionHelper;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;

@@ -18,6 +18,7 @@ import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
+import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -34,13 +35,14 @@ public class CPDefinitionShippingInfoDisplayContext
 
 	public CPDefinitionShippingInfoDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
+			CPDefinitionHelper cpDefinitionHelper,
 			CPDefinitionService cpDefinitionService, ItemSelector itemSelector,
 			CPMeasurementUnitService cpMeasurementUnitService)
 		throws PortalException {
 
 		super(
-			actionHelper, httpServletRequest, cpDefinitionService,
-			itemSelector);
+			actionHelper, httpServletRequest, cpDefinitionHelper,
+			cpDefinitionService, itemSelector);
 
 		_cpMeasurementUnitService = cpMeasurementUnitService;
 	}

@@ -14,12 +14,16 @@
 
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
 import com.liferay.commerce.product.definitions.web.internal.util.CPDefinitionsPortletUtil;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.CPType;
+import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -29,6 +33,9 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -36,6 +43,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -64,6 +72,7 @@ public class CPDefinitionsDisplayContext
 
 	public CPDefinitionsDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
+			CPDefinitionHelper cpDefinitionHelper,
 			CPDefinitionService cpDefinitionService, ItemSelector itemSelector)
 		throws PortalException {
 
@@ -73,8 +82,35 @@ public class CPDefinitionsDisplayContext
 
 		setDefaultOrderByType("desc");
 
+		_cpDefinitionHelper = cpDefinitionHelper;
 		_cpDefinitionService = cpDefinitionService;
 		_itemSelector = itemSelector;
+	}
+
+	public String getCategorySelectorURL(String eventName) {
+		try {
+			PortletURL portletURL = PortletProviderUtil.getPortletURL(
+				httpServletRequest, AssetCategory.class.getName(),
+				PortletProvider.Action.BROWSE);
+
+			if (portletURL == null) {
+				return null;
+			}
+
+			portletURL.setParameter("eventName", eventName);
+			portletURL.setParameter(
+				"selectedCategories", "{selectedCategories}");
+			portletURL.setParameter("singleSelect", "{singleSelect}");
+			portletURL.setParameter("vocabularyIds", "{vocabularyIds}");
+
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+			return portletURL.toString();
+		}
+		catch (Exception e) {
+		}
+
+		return null;
 	}
 
 	public String getItemSelectorUrl() {
@@ -220,6 +256,27 @@ public class CPDefinitionsDisplayContext
 			portletURL.setParameter("status", String.valueOf(getStatus()));
 		}
 
+		String filterFields = ParamUtil.getString(
+			httpServletRequest, "filterFields");
+
+		if (Validator.isNotNull(filterFields)) {
+			portletURL.setParameter("filterFields", filterFields);
+		}
+
+		String filtersLabels = ParamUtil.getString(
+			httpServletRequest, "filtersLabels");
+
+		if (Validator.isNotNull(filtersLabels)) {
+			portletURL.setParameter("filtersLabels", filtersLabels);
+		}
+
+		String filtersValues = ParamUtil.getString(
+			httpServletRequest, "filtersValues");
+
+		if (Validator.isNotNull(filtersValues)) {
+			portletURL.setParameter("filtersValues", filtersValues);
+		}
+
 		return portletURL;
 	}
 
@@ -261,12 +318,18 @@ public class CPDefinitionsDisplayContext
 			Sort sort = CPDefinitionsPortletUtil.getCPDefinitionSort(
 				getOrderByCol(), getOrderByType());
 
+			String filterFields = ParamUtil.getString(
+				httpServletRequest, "filterFields");
+
+			String filtersValues = ParamUtil.getString(
+				httpServletRequest, "filtersValues");
+
 			BaseModelSearchResult<CPDefinition>
 				cpDefinitionBaseModelSearchResult =
-					_cpDefinitionService.searchCPDefinitions(
+					_cpDefinitionHelper.getCPDefinitions(
 						themeDisplay.getCompanyId(),
 						themeDisplay.getScopeGroupId(), getKeywords(),
-						getStatus(), searchContainer.getStart(),
+						filterFields, filtersValues, searchContainer.getStart(),
 						searchContainer.getEnd(), sort);
 
 			searchContainer.setTotal(
@@ -303,6 +366,19 @@ public class CPDefinitionsDisplayContext
 		return _cpDefinitionService.getUrlTitleMapAsXML(cpDefinitionId);
 	}
 
+	public String getVocabularyIds() throws Exception {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		List<AssetVocabulary> vocabularies =
+			AssetVocabularyServiceUtil.getGroupVocabularies(
+				themeDisplay.getScopeGroupId());
+
+		return ListUtil.toString(
+			vocabularies, AssetVocabulary.VOCABULARY_ID_ACCESSOR);
+	}
+
 	public boolean hasCustomAttributesAvailable() throws Exception {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -313,6 +389,7 @@ public class CPDefinitionsDisplayContext
 			getCPDefinitionId(), null);
 	}
 
+	private final CPDefinitionHelper _cpDefinitionHelper;
 	private final CPDefinitionService _cpDefinitionService;
 	private final ItemSelector _itemSelector;
 

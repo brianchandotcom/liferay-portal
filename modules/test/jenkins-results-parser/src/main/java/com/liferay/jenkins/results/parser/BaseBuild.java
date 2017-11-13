@@ -1413,10 +1413,8 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected void findDownstreamBuilds() {
-		String consoleText = getConsoleText();
-
 		List<String> foundDownstreamBuildURLs = new ArrayList<>(
-			findDownstreamBuildsInConsoleText(consoleText));
+			findDownstreamBuildsInConsoleText());
 
 		JSONObject buildJSONObject;
 
@@ -1445,68 +1443,10 @@ public abstract class BaseBuild implements Build {
 		addDownstreamBuilds(
 			foundDownstreamBuildURLs.toArray(
 				new String[foundDownstreamBuildURLs.size()]));
-
-		for (Build downstreamBuild : downstreamBuilds) {
-			BaseBuild downstreamBaseBuild = (BaseBuild)downstreamBuild;
-
-			downstreamBaseBuild.checkForReinvocation(consoleText);
-		}
 	}
 
-	protected List<String> findDownstreamBuildsInConsoleText(
-		String consoleText) {
-
-		List<String> foundDownstreamBuildURLs = new ArrayList<>();
-
-		if ((consoleText == null) || consoleText.isEmpty()) {
-			return foundDownstreamBuildURLs;
-		}
-
-		Set<String> downstreamBuildURLs = new HashSet<>();
-
-		for (Build downstreamBuild : getDownstreamBuilds(null)) {
-			String downstreamBuildURL = downstreamBuild.getBuildURL();
-
-			if (downstreamBuildURL != null) {
-				downstreamBuildURLs.add(downstreamBuildURL);
-			}
-		}
-
-		if (getBuildURL() != null) {
-			int i = consoleText.lastIndexOf("\nstop-current-job:");
-
-			if (i != -1) {
-				consoleText = consoleText.substring(0, i);
-			}
-
-			Matcher downstreamBuildURLMatcher =
-				downstreamBuildURLPattern.matcher(
-					consoleText.substring(_consoleReadCursor));
-
-			_consoleReadCursor = consoleText.length();
-
-			while (downstreamBuildURLMatcher.find()) {
-				String url = downstreamBuildURLMatcher.group("url");
-
-				Pattern reinvocationPattern = Pattern.compile(
-					Pattern.quote(url) + " restarted at (?<url>[^\\s]*)\\.");
-
-				Matcher reinvocationMatcher = reinvocationPattern.matcher(
-					consoleText);
-
-				while (reinvocationMatcher.find()) {
-					url = reinvocationMatcher.group("url");
-				}
-
-				if (!foundDownstreamBuildURLs.contains(url) &&
-					!downstreamBuildURLs.contains(url)) {
-
-					foundDownstreamBuildURLs.add(url);
-				}
-			}
-		}
-
-		return foundDownstreamBuildURLs;
+	protected List<String> findDownstreamBuildsInConsoleText() {
+		return Collections.emptyList();
 	}
 
 	protected String getBaseRepositoryType() {
@@ -2092,7 +2032,7 @@ public abstract class BaseBuild implements Build {
 		if (_buildNumber != buildNumber) {
 			_buildNumber = buildNumber;
 
-			_consoleReadCursor = 0;
+			consoleReadCursor = 0;
 			_consoleText = null;
 
 			if (_buildNumber == -1) {
@@ -2152,7 +2092,7 @@ public abstract class BaseBuild implements Build {
 
 		loadParametersFromBuildJSONObject();
 
-		_consoleReadCursor = 0;
+		consoleReadCursor = 0;
 
 		setStatus("running");
 	}
@@ -2258,6 +2198,7 @@ public abstract class BaseBuild implements Build {
 	protected String archiveName;
 	protected List<Integer> badBuildNumbers = new ArrayList<>();
 	protected String branchName;
+	protected int consoleReadCursor;
 	protected List<Build> downstreamBuilds = new ArrayList<>();
 	protected boolean fromArchive;
 	protected String jobName;
@@ -2379,7 +2320,6 @@ public abstract class BaseBuild implements Build {
 		{"compileJSP", "SourceFormatter.format", "Unable to compile JSPs"};
 
 	private int _buildNumber = -1;
-	private int _consoleReadCursor;
 	private String _consoleText;
 	private JenkinsMaster _jenkinsMaster;
 	private JenkinsSlave _jenkinsSlave;

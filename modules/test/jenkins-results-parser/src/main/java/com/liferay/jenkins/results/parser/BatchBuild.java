@@ -21,6 +21,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -339,6 +341,11 @@ public class BatchBuild extends BaseBuild {
 				"env.option." + environmentType + "." + name +
 					environmentMajorVersion.replace(".", ""));
 		}
+	}
+
+	@Override
+	protected ExecutorService getExecutorService() {
+		return Executors.newFixedThreadPool(5);
 	}
 
 	@Override

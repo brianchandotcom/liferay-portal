@@ -90,6 +90,22 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 				continue;
 			}
 
+			String afterCloseParenthesis = StringUtil.trim(
+				content.substring(endPos + 1));
+			String beforeOpenParenthesis = StringUtil.trim(
+				content.substring(0, startPos));
+
+			if ((beforeOpenParenthesis.endsWith(" ON") ||
+				 beforeOpenParenthesis.endsWith("\tWHERE")) &&
+				!afterCloseParenthesis.startsWith("AND") &&
+				!afterCloseParenthesis.startsWith("OR") &&
+				!afterCloseParenthesis.startsWith("[")) {
+
+				addMessage(
+					fileName, "redundant parentheses",
+					getLineCount(content, startPos));
+			}
+
 			int endLineTabCount = endPos - endLineStartPos - 1;
 
 			int startLineStartPos = content.lastIndexOf("\n", startPos);

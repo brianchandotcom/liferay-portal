@@ -40,6 +40,8 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 			content = _fixIncorrectAndOr(content);
 			content = _fixMissingLineBreakAfterOpenParenthesis(content);
 			content = _fixMissingLineBreakBeforeOpenParenthesis(content);
+			content = _formatSingleLineClauseWithMultiplePredicates(
+				fileName, content);
 		}
 
 		return content;
@@ -226,6 +228,83 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 			content, "(\n", "\n\t" + matcher.group(1) + "(\n", matcher.start());
 	}
 
+	private String _formatSingleLineClauseWithMultiplePredicates(
+		String fileName, String content) {
+
+		Matcher matcher = _singleLineClauseWitMultiplePredicatesPattern.matcher(
+			content);
+
+		while (matcher.find()) {
+			String afterOperator = matcher.group(5);
+			String beforeOperator = matcher.group(3);
+			String indent = matcher.group(1);
+			String match = matcher.group(2);
+			String operator = matcher.group(4);
+
+			StringBundler sb = new StringBundler(11);
+
+			if (beforeOperator.equals(")")) {
+				sb.append(") ");
+				sb.append(operator);
+				sb.append("\n");
+				sb.append(indent);
+				sb.append(afterOperator);
+
+				return StringUtil.replaceFirst(
+					content, match, sb.toString(), matcher.start());
+			}
+
+			int lineCount = getLineCount(content, matcher.start(3));
+
+			if ((getLevel(match) != 0) || !match.startsWith("(")) {
+				addMessage(fileName, "One SQL predicate per line", lineCount);
+
+				continue;
+			}
+
+			int beforeOperatorlevel = getLevel(beforeOperator);
+
+			if ((beforeOperatorlevel < 0) || (beforeOperatorlevel > 1)) {
+				addMessage(fileName, "One SQL predicate per line", lineCount);
+
+				continue;
+			}
+
+			if (beforeOperatorlevel == 0) {
+				sb.append(beforeOperator);
+				sb.append(StringPool.SPACE);
+				sb.append(operator);
+				sb.append("\n");
+				sb.append(indent);
+				sb.append(afterOperator);
+
+				return StringUtil.replaceFirst(
+					content, match, sb.toString(), matcher.start());
+			}
+
+			sb.append("(\n\t");
+			sb.append(indent);
+			sb.append(beforeOperator.substring(1));
+			sb.append(StringPool.SPACE);
+			sb.append(operator);
+			sb.append("\n\t");
+			sb.append(indent);
+
+			int pos = afterOperator.lastIndexOf(StringPool.CLOSE_PARENTHESIS);
+
+			sb.append(afterOperator.substring(0, pos));
+
+			sb.append("\n");
+			sb.append(indent);
+			sb.append(afterOperator.substring(pos));
+
+			return StringUtil.replaceFirst(
+				content, match, sb.toString(), matcher.start());
+		}
+
+		return content;
+	}
+
 	private int _getCloseParenthesisPos(String content, int startPos) {
 		int endPos = startPos;
 
@@ -251,6 +330,9 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 		"[^\\)\\]\\s]\\s+(AND|OR|\\[\\$AND_OR_CONNECTOR\\$\\])\\s");
 	private final Pattern _missingParenthesesPattern2 = Pattern.compile(
 		"\\s(AND|OR|\\[\\$AND_OR_CONNECTOR\\$\\])\\s+[^\\(\\[<\\s]");
+	private final Pattern _singleLineClauseWitMultiplePredicatesPattern =
+		Pattern.compile(
+			"\n(\t*)((.*\\)) (AND|OR|\\[\\$AND_OR_CONNECTOR\\$\\]) (\\(.*))");
 	private final Pattern _whereNotInSQLPattern = Pattern.compile(
 		"WHERE[ \t\n]+\\(*[a-zA-z0-9.]+ NOT IN");
 

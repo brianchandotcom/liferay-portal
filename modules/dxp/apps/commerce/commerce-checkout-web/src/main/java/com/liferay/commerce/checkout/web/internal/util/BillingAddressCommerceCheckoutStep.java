@@ -72,7 +72,9 @@ public class BillingAddressCommerceCheckoutStep
 
 		commerceCartService.updateCommerceCart(
 			commerceCart.getCommerceCartId(), commerceAddressId,
-			commerceCart.getShippingAddressId());
+			commerceCart.getShippingAddressId(),
+			commerceCart.getCommerceShippingMethodId(),
+			commerceCart.getCommerceShippingOptionName());
 	}
 
 	@Reference

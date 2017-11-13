@@ -173,7 +173,8 @@ public class SharepointURLHelper {
 		}
 
 		return String.format(
-			"%s/_api/web/GetFolderByServerRelativeUrl('%s')/Files?$select=Level",
+			"%s/_api/web/GetFolderByServerRelativeUrl('%s')" +
+				"/Files?$select=Level",
 			_siteAbsoluteURL, extRepositoryFolderKey);
 	}
 

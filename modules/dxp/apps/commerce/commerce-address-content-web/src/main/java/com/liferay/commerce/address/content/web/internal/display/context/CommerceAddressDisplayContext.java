@@ -191,7 +191,6 @@ public class CommerceAddressDisplayContext {
 	}
 
 	public String getEditCommerceAddressURL(long commerceAddressId) {
-
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("mvcRenderCommandName", "editCommerceAddress");

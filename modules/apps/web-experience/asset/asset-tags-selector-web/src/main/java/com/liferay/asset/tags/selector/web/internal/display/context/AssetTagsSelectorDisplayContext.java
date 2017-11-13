@@ -20,7 +20,9 @@ import com.liferay.asset.tags.selector.web.internal.search.EntriesChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
@@ -67,6 +69,24 @@ public class AssetTagsSelectorDisplayContext {
 			_renderResponse.getNamespace() + "selectTag");
 
 		return _eventName;
+	}
+
+	public long[] getGroupIds() {
+		if (ArrayUtil.isNotEmpty(_groupIds)) {
+			return _groupIds;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_groupIds = StringUtil.split(
+			ParamUtil.getString(_request, "groupIds"), 0L);
+
+		if (ArrayUtil.isEmpty(_groupIds)) {
+			_groupIds = new long[] {themeDisplay.getScopeGroupId()};
+		}
+
+		return _groupIds;
 	}
 
 	public String getKeywords() {
@@ -150,8 +170,8 @@ public class AssetTagsSelectorDisplayContext {
 		tagsSearchContainer.setTotal(tagsCount);
 
 		List<AssetTag> tags = AssetTagServiceUtil.getTags(
-			themeDisplay.getScopeGroupId(), keywords,
-			tagsSearchContainer.getStart(), tagsSearchContainer.getEnd(),
+			getGroupIds(), keywords, tagsSearchContainer.getStart(),
+			tagsSearchContainer.getEnd(),
 			tagsSearchContainer.getOrderByComparator());
 
 		tagsSearchContainer.setResults(tags);
@@ -187,6 +207,7 @@ public class AssetTagsSelectorDisplayContext {
 
 	private String _displayStyle;
 	private String _eventName;
+	private long[] _groupIds;
 	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;

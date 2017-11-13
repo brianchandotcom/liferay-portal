@@ -1,0 +1,176 @@
+{namespace DefinitionToolbarFilter}
+
+/**
+ * Definition Toolbar Filter
+ *
+ */
+{template .render}
+	{@param? id: string}
+	{@param? pathThemeImages: string}
+	{@param? _currentSelection: string}
+	{@param? _handleAddFilter: any}
+	{@param? _handleOptionChange: any}
+	{@param? _handlerRemoveFilter: any}
+	{@param? _filters: ?}
+	{@param? _terms: ?}
+	{@param? _optionValues: ?}
+
+	<div id="{$id}">
+		<div class="form-group form-inline">
+			<div class="form-inline-group">
+				<label for="regularSelectElement">{msg desc=""}show-all-products-where{/msg}</label>
+				<select class="form-control" id="regularSelectElement" onChange="_handleFilterChange">
+					<option value="">{msg desc=""}select-filter{/msg}</option>
+					<option value="productTypeName">{msg desc=""}product-type{/msg}</option>
+					<option value="optionsNames">{msg desc=""}option{/msg}</option>
+					<option value="status">{msg desc=""}status{/msg}</option>
+					<option value="assetCategoryIds">{msg desc=""}category{/msg}</option>
+				</select>
+			</div>
+
+			{switch $_currentSelection}
+			  {case 'status'}
+				{call .status}
+					{param terms: $_terms /}
+				{/call}
+				{case 'productTypeName'}
+				   {call .productTypeName}
+					   {param terms: $_terms /}
+				   {/call}
+				{case 'optionsNames'}
+				   {call .option}
+					   {param terms: $_terms /}
+					   {param handleOptionChange: $_handleOptionChange /}
+				   {/call}
+				   {case 'assetCategoryIds'}
+					  {call .category}
+					  {/call}
+			{/switch}
+
+			 {if $_currentSelection == 'optionsNames' and $_optionValues.length > 0 }
+				  {call .optionValues}
+					  {param optionValues: $_optionValues /}
+				  {/call}
+			{/if}
+
+			{if $_currentSelection != 'assetCategoryIds' }
+				<button class="btn btn-secondary" type="button"  onclick="{$_handleAddFilter}">{msg desc=""}add-filter{/msg}</button>
+			{/if}
+
+		</div>
+		<div>
+			{call .filters}
+				{param filters: $_filters /}
+				{param pathThemeImages: $pathThemeImages /}
+				{param _handlerRemoveFilter: $_handlerRemoveFilter /}
+			{/call}
+		</div>
+	</div>
+{/template}
+
+/**
+ * Prints options filters
+ */
+{template .option}
+	{@param? terms: ?}
+	{@param? handleOptionChange: any}
+
+	<div class="form-inline-group">
+		<label for="regularSelectElement"></label>
+		<select class="form-control" id="optionsNames"  onChange="{$handleOptionChange}">
+			<option value=""></option>
+			{if $terms}
+				{foreach $term in $terms}
+					<option data-label="{$term.label}" value="{$term.term}">{$term.label}  ({$term.frequency})</option>
+				{/foreach}
+			{/if}
+		</select>
+	</div>
+{/template}
+
+/**
+ * Prints option values filters
+ */
+{template .optionValues}
+	{@param? optionValues: ?}
+
+	<div class="form-inline-group">
+		<label for="regularSelectElement">{msg desc=""}is{/msg}</label>
+		<select class="form-control" id="optionValues">
+			{if $optionValues}
+				{foreach $optionValue in $optionValues}
+					<option data-label="{$optionValue.label}" value="{$optionValue.term}">{$optionValue.label}  ({$optionValue.frequency})</option>
+				{/foreach}
+			{/if}
+		</select>
+	</div>
+{/template}
+
+/**
+ * Prints status filters
+ */
+{template .status}
+	{@param? terms: ?}
+
+	<div class="form-inline-group">
+		<label for="regularSelectElement">{msg desc=""}is{/msg}</label>
+		<select class="form-control" id="status">
+			{if $terms}
+				{foreach $term in $terms}
+					<option data-label="{$term.label}" value="{$term.term}">{$term.label}  ({$term.frequency})</option>
+				{/foreach}
+			{/if}
+		</select>
+	</div>
+{/template}
+
+/**
+ * Prints productTypeName filters
+ */
+{template .productTypeName}
+	{@param? terms: ?}
+
+	<div class="form-inline-group">
+		<label for="regularSelectElement">{msg desc=""}is{/msg}</label>
+		<select class="form-control" id="productTypeName">
+			{if $terms}
+				{foreach $term in $terms}
+					<option data-label="{$term.label}" value="{$term.term}">{$term.label}  ({$term.frequency})</option>
+				{/foreach}
+			{/if}
+		</select>
+	</div>
+{/template}
+
+/**
+ * Prints category filters
+ */
+{template .category}
+	<div class="form-inline-group">
+		<div id="assetCategoriesSelector">
+		</div>
+		<input name="categoryIds" id="categoryIds" ref="hiddenInput" type="hidden" />
+	</div>
+{/template}
+
+/**
+ * Prints filters
+ */
+{template .filters}
+	{@param? filters: ?}
+	{@param? pathThemeImages: string}
+	{@param? _handlerRemoveFilter: any}
+
+	{if $filters}
+		{foreach $filter in $filters}
+			<span class="label label-dismissible label-lg label-secondary">
+				{$filter.field}:{$filter.label}
+				<button aria-label="Close" class="close" type="button" data-index="{index($filter)}" onClick="{$_handlerRemoveFilter}">
+					<svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
+						<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#times"></use>
+					</svg>
+				</button>
+			</span>
+		{/foreach}
+	{/if}
+{/template}

@@ -188,19 +188,9 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 	}
 
 	private long _doGetPlidFromPortletId(
-			long groupId, boolean privateLayout, String portletId)
+			long groupId, long scopeGroupId, boolean privateLayout,
+			String portletId)
 		throws PortalException {
-
-		long scopeGroupId = groupId;
-
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		if (group.isLayout()) {
-			Layout scopeLayout = LayoutLocalServiceUtil.getLayout(
-				group.getClassPK());
-
-			groupId = scopeLayout.getGroupId();
-		}
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 			groupId, privateLayout, LayoutConstants.TYPE_PORTLET);
@@ -222,10 +212,23 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 	private long _getPlidFromPortletId(long groupId, String portletId)
 		throws PortalException {
 
-		long plid = _doGetPlidFromPortletId(groupId, false, portletId);
+		long scopeGroupId = groupId;
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		if (group.isLayout()) {
+			Layout scopeLayout = LayoutLocalServiceUtil.getLayout(
+				group.getClassPK());
+
+			groupId = scopeLayout.getGroupId();
+		}
+
+		long plid = _doGetPlidFromPortletId(
+			groupId, scopeGroupId, false, portletId);
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
-			plid = _doGetPlidFromPortletId(groupId, true, portletId);
+			plid = _doGetPlidFromPortletId(
+				groupId, scopeGroupId, true, portletId);
 		}
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {

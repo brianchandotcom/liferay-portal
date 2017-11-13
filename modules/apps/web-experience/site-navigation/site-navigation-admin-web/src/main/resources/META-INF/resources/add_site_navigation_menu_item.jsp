@@ -19,30 +19,31 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+long siteNavigationMenuId = ParamUtil.getLong(request, "siteNavigationMenuId");
+
+String type = ParamUtil.getString(request, "type");
+
+SiteNavigationMenuItemType siteNavigationMenuItemType = siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(type);
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(LanguageUtil.get(request, "add-new-menu"));
+renderResponse.setTitle(LanguageUtil.format(request, "add-x", siteNavigationMenuItemType.getLabel(locale)));
 %>
 
-<portlet:actionURL name="/navigation_menu/add_site_navigation_menu" var="editSitaNavigationMenuURL">
-	<portlet:param name="mvcPath" value="/add_site_navigation_menu.jsp" />
-	<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-</portlet:actionURL>
+<portlet:actionURL name="/navigation_menu/add_site_navigation_menu_item" var="addSiteNavigationMenuItemURL" />
 
-<aui:form action="<%= editSitaNavigationMenuURL %>" cssClass="container-fluid-1280" name="fm">
+<aui:form action="<%= addSiteNavigationMenuItemURL %>" cssClass="container-fluid-1280">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="siteNavigationMenuId" type="hidden" value="<%= siteNavigationMenuId %>" />
+	<aui:input name="type" type="hidden" value="<%= type %>" />
 
-	<aui:model-context model="<%= SiteNavigationMenu.class %>" />
-
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
-			<aui:input autoFocus="<%= true %>" label="name" name="name" placeholder="name" />
-		</aui:fieldset>
-	</aui:fieldset-group>
+	<%
+	siteNavigationMenuItemType.renderAddPage(request, response);
+	%>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" />
+		<aui:button cssClass="btn-lg" type="submit" value="add" />
 
 		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>

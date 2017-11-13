@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 
+import java.io.IOException;
+
 import java.net.URL;
 
 import java.util.Collections;
@@ -38,11 +40,6 @@ import org.osgi.framework.FrameworkUtil;
  * @author Pavel Savinov
  */
 public interface SiteNavigationMenuItemType {
-
-	public JSONObject getEditContext(
-			HttpServletRequest request, HttpServletResponse response,
-			SiteNavigationMenuItem siteNavigationMenuItem)
-		throws Exception;
 
 	public default String getIcon() {
 		return "magic";
@@ -84,6 +81,9 @@ public interface SiteNavigationMenuItemType {
 		return Collections.emptyList();
 	}
 
+	public String getTitle(
+		SiteNavigationMenuItem siteNavigationMenuItem, Locale locale);
+
 	public default String getType() {
 		return StringPool.BLANK;
 	}
@@ -92,5 +92,9 @@ public interface SiteNavigationMenuItemType {
 			HttpServletRequest request, HttpServletResponse response,
 			SiteNavigationMenuItem siteNavigationMenuItem)
 		throws Exception;
+
+	public void renderAddPage(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException;
 
 }

@@ -21,6 +21,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSiteNavigationMenu();
 
+List<SiteNavigationMenuItem> siteNavigationMenuItems = SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(siteNavigationMenu.getSiteNavigationMenuId());
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
@@ -40,31 +42,111 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<aui:input autoFocus="<%= true %>" label="name" name="name" placeholder="name" />
-		</aui:fieldset>
+			<c:choose>
+				<c:when test="<%= siteNavigationMenuItems.isEmpty() %>">
+					<div class="text-center">
+						<div>
+							<liferay-ui:message key="this-menu-is-empty" />
+						</div>
 
-		<aui:fieldset>
+						<div>
+							<liferay-ui:message key="please-add-elements" />
+						</div>
+					</div>
 
-			<%
-			Map<String, Object> context = new HashMap<>();
+					<div class="row" id="<portlet:namespace/>siteNavigationMenuItemTypes">
 
-			context.put("availableItemTypes", siteNavigationAdminDisplayContext.getAvailableItemsJSONArray());
-			context.put("pathThemeImages", themeDisplay.getPathThemeImages());
-			context.put("selectedItemType", siteNavigationAdminDisplayContext.getSelectedItemTypeJSONObject());
-			%>
+						<%
+						for (SiteNavigationMenuItemType siteNavigationMenuItemType : siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemTypes()) {
+						%>
 
-			<soy:template-renderer
-				context="<%= context %>"
-				dependencies="<%= siteNavigationMenuItemTypeRegistry.getRequireModules() %>"
-				module="site-navigation-admin-web/js/NavigationMenuBuilder.es"
-				templateNamespace="NavigationMenuBuilder.render"
-			/>
+							<div class="col-md-2">
+								<div class="card card-type-asset">
+									<div class="aspect-ratio card-item-first">
+										<div class="aspect-ratio-item-center-middle aspect-ratio-item-fluid">
+											<liferay-ui:icon
+												icon="<%= siteNavigationMenuItemType.getIcon() %>"
+												markupView="lexicon"
+											/>
+										</div>
+									</div>
+
+									<div class="card-body">
+										<div class="card-row">
+											<div class="flex-col flex-col-expand">
+												<div class="card-title text-center text-truncate">
+													<liferay-portlet:renderURL var="addURL">
+														<portlet:param name="mvcPath" value="/add_site_navigation_menu_item.jsp" />
+														<portlet:param name="redirect" value="<%= currentURL %>" />
+														<portlet:param name="siteNavigationMenuId" value="<%= String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()) %>" />
+														<portlet:param name="type" value="<%= siteNavigationMenuItemType.getType() %>" />
+													</liferay-portlet:renderURL>
+
+													<aui:a href="<%= addURL %>" label="<%= siteNavigationMenuItemType.getLabel(locale) %>" />
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						<%
+						}
+						%>
+
+					</div>
+				</c:when>
+				<c:otherwise>
+
+					<%
+					for (SiteNavigationMenuItem siteNavigationMenuItem : siteNavigationMenuItems) {
+						SiteNavigationMenuItemType siteNavigationMenuItemType = siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(siteNavigationMenuItem.getType());
+
+						request.setAttribute("edit_site_navigation_menu.jsp-siteNavigationMenuItemId", siteNavigationMenuItem.getSiteNavigationMenuItemId());
+					%>
+
+						<div class="col-md-3">
+							<liferay-frontend:horizontal-card
+								actionJsp="/site_navigation_menu_item_action.jsp"
+								actionJspServletContext="<%= application %>"
+								text="<%= siteNavigationMenuItemType.getTitle(siteNavigationMenuItem, locale) %>"
+							>
+								<liferay-frontend:horizontal-card-col>
+									<liferay-frontend:horizontal-card-icon
+										icon="<%= siteNavigationMenuItemType.getIcon() %>"
+									/>
+								</liferay-frontend:horizontal-card-col>
+							</liferay-frontend:horizontal-card>
+						</div>
+
+					<%
+					}
+					%>
+
+				</c:otherwise>
+			</c:choose>
 		</aui:fieldset>
 	</aui:fieldset-group>
-
-	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" />
-
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
 </aui:form>
+
+<c:if test="<%= !siteNavigationMenuItems.isEmpty() %>">
+	<liferay-frontend:add-menu>
+
+		<%
+		for (SiteNavigationMenuItemType siteNavigationMenuItemType : siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemTypes()) {
+			PortletURL addSiteNavigationMenuItemTypeURL = renderResponse.createRenderURL();
+
+			addSiteNavigationMenuItemTypeURL.setParameter("mvcPath", "/add_site_navigation_menu_item.jsp");
+			addSiteNavigationMenuItemTypeURL.setParameter("redirect", currentURL);
+			addSiteNavigationMenuItemTypeURL.setParameter("siteNavigationMenuId", String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()));
+			addSiteNavigationMenuItemTypeURL.setParameter("type", siteNavigationMenuItemType.getType());
+		%>
+
+			<liferay-frontend:add-menu-item title="<%= siteNavigationMenuItemType.getLabel(locale) %>" url="<%= addSiteNavigationMenuItemTypeURL.toString() %>" />
+
+		<%
+		}
+		%>
+
+	</liferay-frontend:add-menu>
+</c:if>

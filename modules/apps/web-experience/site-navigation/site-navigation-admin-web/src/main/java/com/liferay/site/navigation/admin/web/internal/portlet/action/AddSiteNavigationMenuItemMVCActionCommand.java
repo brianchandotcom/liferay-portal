@@ -14,37 +14,36 @@
 
 package com.liferay.site.navigation.admin.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropertiesParamUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.web.internal.constants.SiteNavigationAdminPortletKeys;
-import com.liferay.site.navigation.model.SiteNavigationMenu;
-import com.liferay.site.navigation.service.SiteNavigationMenuService;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Pavel Savinov
+ * @author Eudaldo Alonso
  */
 @Component(
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
-		"mvc.command.name=/navigation_menu/add_site_navigation_menu"
+		"mvc.command.name=/navigation_menu/add_site_navigation_menu_item"
 	},
 	service = MVCActionCommand.class
 )
-public class AddSiteNavigationMenuMVCActionCommand
+public class AddSiteNavigationMenuItemMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override
@@ -55,44 +54,24 @@ public class AddSiteNavigationMenuMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String name = ParamUtil.getString(actionRequest, "name");
+		long siteNavigationMenuId = ParamUtil.getLong(
+			actionRequest, "siteNavigationMenuId");
+
+		String type = ParamUtil.getString(actionRequest, "type");
+
+		UnicodeProperties typeSettingsProperties =
+			PropertiesParamUtil.getProperties(
+				actionRequest, "TypeSettingsProperties--");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		SiteNavigationMenu siteNavigationMenu =
-			_siteNavigationMenuService.addSiteNavigationMenu(
-				themeDisplay.getScopeGroupId(), name, serviceContext);
-
-		hideDefaultSuccessMessage(actionRequest);
-
-		String redirect = _getRedirect(
-			actionRequest, siteNavigationMenu.getSiteNavigationMenuId());
-
-		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
-	}
-
-	private String _getRedirect(
-		ActionRequest actionRequest, long siteNavigationMenuId) {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		PortletURL redirectURL = PortletURLFactoryUtil.create(
-			actionRequest, SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
-			themeDisplay.getPlid(), ActionRequest.RENDER_PHASE);
-
-		redirectURL.setParameter("mvcPath", "/edit_site_navigation_menu.jsp");
-		redirectURL.setParameter("redirect", redirect);
-		redirectURL.setParameter(
-			"siteNavigationMenuId", String.valueOf(siteNavigationMenuId));
-
-		return redirectURL.toString();
+		_siteNavigationMenuItemService.addSiteNavigationMenuItem(
+			themeDisplay.getScopeGroupId(), siteNavigationMenuId, 0, type,
+			typeSettingsProperties.toString(), serviceContext);
 	}
 
 	@Reference
-	private SiteNavigationMenuService _siteNavigationMenuService;
+	private SiteNavigationMenuItemService _siteNavigationMenuItemService;
 
 }

@@ -310,8 +310,11 @@ public abstract class BaseBuild implements Build {
 		String buildURL = getBuildURL();
 
 		if (buildURL != null) {
+			String status = getStatus();
+
 			JenkinsConsoleTextLoader jenkinsConsoleTextLoader =
-				new JenkinsConsoleTextLoader(getBuildURL());
+				new JenkinsConsoleTextLoader(
+					getBuildURL(), status.equals("completed"));
 
 			String consoleText = jenkinsConsoleTextLoader.getConsoleText();
 
@@ -917,7 +920,7 @@ public abstract class BaseBuild implements Build {
 		long totalDuration = getDuration();
 
 		for (Build downstreamBuild : getDownstreamBuilds(null)) {
-			totalDuration += downstreamBuild.getDuration();
+			totalDuration += downstreamBuild.getTotalDuration();
 		}
 
 		return totalDuration;

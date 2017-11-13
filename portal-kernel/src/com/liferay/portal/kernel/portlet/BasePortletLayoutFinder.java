@@ -29,7 +29,10 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sites.kernel.util.SitesUtil;
 
@@ -123,7 +126,10 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 		throws PortalException {
 
 		for (String portletId : portletIds) {
-			long plid = _getPlidFromPortletId(groupId, portletId);
+			ObjectValuePair<Long, String> plidAndPortletId =
+				_getPlidFromPortletId(groupId, portletId);
+
+			long plid = plidAndPortletId.getKey();
 
 			if (plid == LayoutConstants.DEFAULT_PLID) {
 				continue;
@@ -137,12 +143,7 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 				continue;
 			}
 
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
-
-			portletId = getPortletId(layoutTypePortlet, portletId);
-
-			return new Object[] {plid, portletId};
+			return new Object[] {plid, plidAndPortletId.getValue()};
 		}
 
 		return null;
@@ -187,7 +188,7 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 
 	}
 
-	private long _doGetPlidFromPortletId(
+	private ObjectValuePair<Long, String> _doGetPlidFromPortletId(
 			long groupId, long scopeGroupId, boolean privateLayout,
 			String portletId)
 		throws PortalException {
@@ -202,14 +203,16 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 			portletId = getPortletId(layoutTypePortlet, portletId);
 
 			if (_getScopeGroupId(layout, portletId) == scopeGroupId) {
-				return layout.getPlid();
+				return new ObjectValuePair<>(layout.getPlid(), portletId);
 			}
 		}
 
-		return LayoutConstants.DEFAULT_PLID;
+		return new ObjectValuePair<>(
+			LayoutConstants.DEFAULT_PLID, StringPool.BLANK);
 	}
 
-	private long _getPlidFromPortletId(long groupId, String portletId)
+	private ObjectValuePair<Long, String> _getPlidFromPortletId(
+			long groupId, String portletId)
 		throws PortalException {
 
 		long scopeGroupId = groupId;
@@ -221,11 +224,11 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 
 		groupId = scopeLayout.getGroupId();
 
-		long plid = _doGetPlidFromPortletId(
-			groupId, scopeGroupId, false, portletId);
+		ObjectValuePair<Long, String> plidAndPortletId =
+			_doGetPlidFromPortletId(groupId, scopeGroupId, false, portletId);
 
-		if (plid != LayoutConstants.DEFAULT_PLID) {
-			return plid;
+		if (plidAndPortletId.getKey() != LayoutConstants.DEFAULT_PLID) {
+			return plidAndPortletId;
 		}
 
 		return _doGetPlidFromPortletId(groupId, scopeGroupId, true, portletId);

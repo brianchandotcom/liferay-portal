@@ -340,25 +340,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 	}
 
 	protected void addSnippets(
-		SolrDocument solrDocument, Document document, QueryConfig queryConfig,
-		Set<String> queryTerms, QueryResponse queryResponse) {
-
-		Map<String, Map<String, List<String>>> highlights =
-			queryResponse.getHighlighting();
-
-		if (!queryConfig.isHighlightEnabled()) {
-			return;
-		}
-
-		for (String highlightFieldName : queryConfig.getHighlightFieldNames()) {
-			addSnippets(
-				solrDocument, document, queryTerms, highlights,
-				highlightFieldName, queryConfig.getLocale());
-		}
-	}
-
-	protected void addSnippets(
-		SolrDocument solrDocument, Document document, Set<String> queryTerms,
+		SolrDocument solrDocument, Document document,
 		Map<String, Map<String, List<String>>> highlights, String fieldName,
 		Locale locale) {
 
@@ -394,6 +376,24 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		document.addText(
 			Field.SNIPPET.concat(StringPool.UNDERLINE).concat(snippetFieldName),
 			snippet);
+	}
+
+	protected void addSnippets(
+		SolrDocument solrDocument, Document document, QueryConfig queryConfig,
+		QueryResponse queryResponse) {
+
+		Map<String, Map<String, List<String>>> highlights =
+			queryResponse.getHighlighting();
+
+		if (!queryConfig.isHighlightEnabled()) {
+			return;
+		}
+
+		for (String highlightFieldName : queryConfig.getHighlightFieldNames()) {
+			addSnippets(
+				solrDocument, document, highlights, highlightFieldName,
+				queryConfig.getLocale());
+		}
 	}
 
 	protected void addSort(SolrQuery solrQuery, Sort[] sorts) {
@@ -573,15 +573,13 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		Query query, Hits hits) {
 
 		List<Document> documents = new ArrayList<>();
-		Set<String> queryTerms = new HashSet<>();
 		List<Float> scores = new ArrayList<>();
 
 		processSolrDocumentList(
-			queryResponse, solrDocumentList, query, hits, documents, queryTerms,
-			scores);
+			queryResponse, solrDocumentList, query, hits, documents, scores);
 
 		hits.setDocs(documents.toArray(new Document[documents.size()]));
-		hits.setQueryTerms(queryTerms.toArray(new String[queryTerms.size()]));
+		hits.setQueryTerms(new String[0]);
 		hits.setScores(ArrayUtil.toFloatArray(scores));
 	}
 
@@ -615,8 +613,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 
 	protected void processSolrDocumentList(
 		QueryResponse queryResponse, SolrDocumentList solrDocumentList,
-		Query query, Hits hits, List<Document> documents,
-		Set<String> queryTerms, List<Float> scores) {
+		Query query, Hits hits, List<Document> documents, List<Float> scores) {
 
 		if (solrDocumentList == null) {
 			return;
@@ -631,8 +628,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 
 			documents.add(document);
 
-			addSnippets(
-				solrDocument, document, queryConfig, queryTerms, queryResponse);
+			addSnippets(solrDocument, document, queryConfig, queryResponse);
 
 			float score = GetterUtil.getFloat(
 				String.valueOf(solrDocument.getFieldValue("score")));

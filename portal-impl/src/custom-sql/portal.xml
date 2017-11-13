@@ -204,8 +204,15 @@
 			FROM
 				Group_
 			WHERE
-				((Group_.type_ != 4) OR (Group_.type_ IS NULL)) AND
-				((friendlyURL = '') OR (friendlyURL IS NULL) OR (friendlyURL = '/null'))
+				(
+					(Group_.type_ != 4) OR
+					(Group_.type_ IS NULL)
+				) AND
+				(
+					(friendlyURL = '') OR
+					(friendlyURL IS NULL) OR
+					(friendlyURL = '/null')
+				)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findBySystem">
@@ -469,7 +476,10 @@
 			FROM
 				Layout
 			WHERE
-				((friendlyURL = '') OR (friendlyURL IS NULL))
+				(
+					(friendlyURL = '') OR
+					(friendlyURL IS NULL)
+				)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.LayoutFinder.findByScopeGroup">
@@ -565,8 +575,14 @@
 						(lower(Address.street2) LIKE ? [$AND_OR_NULL_CHECK$]) OR
 						(lower(Address.street3) LIKE ? [$AND_OR_NULL_CHECK$])
 					) [$AND_OR_CONNECTOR$]
-					((Organization_.regionId = ?) OR (Address.regionId = ?)) [$AND_OR_CONNECTOR$]
-					((Organization_.countryId = ?) OR (Address.countryId = ?)) [$AND_OR_CONNECTOR$]
+					(
+						(Organization_.regionId = ?) OR
+						(Address.regionId = ?)
+					) [$AND_OR_CONNECTOR$]
+					(
+						(Organization_.countryId = ?) OR
+						(Address.countryId = ?)
+					) [$AND_OR_CONNECTOR$]
 					(lower(Address.city) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(lower(Address.zip) LIKE ? [$AND_OR_NULL_CHECK$])
 				)
@@ -596,8 +612,14 @@
 						(lower(Address.street2) LIKE ? [$AND_OR_NULL_CHECK$]) OR
 						(lower(Address.street3) LIKE ? [$AND_OR_NULL_CHECK$])
 					) [$AND_OR_CONNECTOR$]
-					((Organization_.regionId = ?) OR (Address.regionId = ?)) [$AND_OR_CONNECTOR$]
-					((Organization_.countryId = ?) OR (Address.countryId = ?)) [$AND_OR_CONNECTOR$]
+					(
+						(Organization_.regionId = ?) OR
+						(Address.regionId = ?)
+					) [$AND_OR_CONNECTOR$]
+					(
+						(Organization_.countryId = ?) OR
+						(Address.countryId = ?)
+					) [$AND_OR_CONNECTOR$]
 					(lower(Address.city) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(lower(Address.zip) LIKE ? [$AND_OR_NULL_CHECK$])
 				)
@@ -693,8 +715,14 @@
 						(lower(Address.street2) LIKE ? [$AND_OR_NULL_CHECK$]) OR
 						(lower(Address.street3) LIKE ? [$AND_OR_NULL_CHECK$])
 					) [$AND_OR_CONNECTOR$]
-					((Organization_.regionId = ?) OR (Address.regionId = ?)) [$AND_OR_CONNECTOR$]
-					((Organization_.countryId = ?) OR (Address.countryId = ?)) [$AND_OR_CONNECTOR$]
+					(
+						(Organization_.regionId = ?) OR
+						(Address.regionId = ?)
+					) [$AND_OR_CONNECTOR$]
+					(
+						(Organization_.countryId = ?) OR
+						(Address.countryId = ?)
+					) [$AND_OR_CONNECTOR$]
 					(lower(Address.city) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(lower(Address.zip) LIKE ? [$AND_OR_NULL_CHECK$])
 				)
@@ -724,8 +752,14 @@
 						(lower(Address.street2) LIKE ? [$AND_OR_NULL_CHECK$]) OR
 						(lower(Address.street3) LIKE ? [$AND_OR_NULL_CHECK$])
 					) [$AND_OR_CONNECTOR$]
-					((Organization_.regionId = ?) OR (Address.regionId = ?)) [$AND_OR_CONNECTOR$]
-					((Organization_.countryId = ?) OR (Address.countryId = ?)) [$AND_OR_CONNECTOR$]
+					(
+						(Organization_.regionId = ?) OR
+						(Address.regionId = ?)
+					) [$AND_OR_CONNECTOR$]
+					(
+						(Organization_.countryId = ?) OR
+						(Address.countryId = ?)
+					) [$AND_OR_CONNECTOR$]
 					(lower(Address.city) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(lower(Address.zip) LIKE ? [$AND_OR_NULL_CHECK$])
 				)
@@ -804,7 +838,10 @@
 				PasswordPolicy
 			WHERE
 				(PasswordPolicy.companyId = ?) AND
-				((lower(PasswordPolicy.name) LIKE ?) OR (? IS NULL))
+				(
+					(lower(PasswordPolicy.name) LIKE ?) OR
+					(? IS NULL)
+				)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.PasswordPolicyFinder.findByC_N">
@@ -815,7 +852,10 @@
 				PasswordPolicy
 			WHERE
 				(PasswordPolicy.companyId = ?) AND
-				((lower(PasswordPolicy.name) LIKE ?) OR (? IS NULL))
+				(
+					(lower(PasswordPolicy.name) LIKE ?) OR
+					(? IS NULL)
+				)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.PortletPreferencesFinder.countByO_O_P">
@@ -1466,8 +1506,14 @@
 			WHERE
 				[$WHERE$]
 				(Team.groupId = ?) AND
-				((lower(Team.name) LIKE ?) OR (? IS NULL)) AND
-				((lower(Team.description) LIKE ?) OR (? IS NULL))
+				(
+					(lower(Team.name) LIKE ?) OR
+					(? IS NULL)
+				) AND
+				(
+					(lower(Team.description) LIKE ?) OR
+					(? IS NULL)
+				)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.TeamFinder.findByG_U">
@@ -1512,8 +1558,14 @@
 			WHERE
 				[$WHERE$]
 				(Team.groupId = ?) AND
-				((lower(Team.name) LIKE ?) OR (? IS NULL)) AND
-				((lower(Team.description) LIKE ?) OR (? IS NULL))
+				(
+					(lower(Team.name) LIKE ?) OR
+					(? IS NULL)
+				) AND
+				(
+					(lower(Team.description) LIKE ?) OR
+					(? IS NULL)
+				)
 			ORDER BY
 				Team.name ASC
 		]]>
@@ -1719,7 +1771,8 @@
 					(lower(User_.lastName) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(lower(User_.screenName) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(lower(User_.emailAddress) LIKE ? [$AND_OR_NULL_CHECK$])
-				) AND (User_.status = ?)
+				) AND
+				(User_.status = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.joinByContactTwitterSN">

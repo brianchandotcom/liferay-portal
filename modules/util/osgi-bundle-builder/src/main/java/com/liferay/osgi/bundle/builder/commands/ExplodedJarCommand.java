@@ -61,9 +61,9 @@ public class ExplodedJarCommand extends BaseCommand {
 			Resource resource = entry.getValue();
 
 			if (resource instanceof FileResource) {
-				FileResource fr = (FileResource)resource;
+				FileResource fileResource = (FileResource)resource;
 
-				if (outputFile.equals(fr.getFile())) {
+				if (outputFile.equals(fileResource.getFile())) {
 					continue;
 				}
 			}
@@ -71,12 +71,14 @@ public class ExplodedJarCommand extends BaseCommand {
 			if (!outputFile.exists() ||
 				(outputFile.lastModified() < lastModified)) {
 
-				File parentFile = outputFile.getParentFile();
+				File dir = outputFile.getParentFile();
 
-				Files.createDirectories(parentFile.toPath());
+				Files.createDirectories(dir.toPath());
 
-				try (OutputStream out = new FileOutputStream(outputFile)) {
-					IO.copy(resource.openInputStream(), out);
+				try (OutputStream outputStream = new FileOutputStream(
+						outputFile)) {
+
+					IO.copy(resource.openInputStream(), outputStream);
 				}
 			}
 		}

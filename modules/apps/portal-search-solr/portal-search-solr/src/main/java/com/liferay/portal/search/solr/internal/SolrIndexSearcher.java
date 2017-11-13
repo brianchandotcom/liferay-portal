@@ -340,25 +340,16 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 	}
 
 	protected void addSnippets(
-		SolrDocument solrDocument, Document document,
-		Map<String, Map<String, List<String>>> highlights, String fieldName,
-		Locale locale) {
-
-		if (MapUtil.isEmpty(highlights)) {
-			return;
-		}
-
-		String key = (String)solrDocument.getFieldValue(Field.UID);
-
-		Map<String, List<String>> uidHighlights = highlights.get(key);
+		Document document, Map<String, List<String>> highlights,
+		String fieldName, Locale locale) {
 
 		String snippetFieldName = DocumentImpl.getLocalizedName(
 			locale, fieldName);
 
-		List<String> snippets = uidHighlights.get(snippetFieldName);
+		List<String> snippets = highlights.get(snippetFieldName);
 
 		if (snippets == null) {
-			snippets = uidHighlights.get(fieldName);
+			snippets = highlights.get(fieldName);
 
 			snippetFieldName = fieldName;
 		}
@@ -389,9 +380,15 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 			return;
 		}
 
+		if (MapUtil.isEmpty(highlights)) {
+			return;
+		}
+
+		String uid = (String)solrDocument.getFieldValue(Field.UID);
+
 		for (String highlightFieldName : queryConfig.getHighlightFieldNames()) {
 			addSnippets(
-				solrDocument, document, highlights, highlightFieldName,
+				document, highlights.get(uid), highlightFieldName,
 				queryConfig.getLocale());
 		}
 	}

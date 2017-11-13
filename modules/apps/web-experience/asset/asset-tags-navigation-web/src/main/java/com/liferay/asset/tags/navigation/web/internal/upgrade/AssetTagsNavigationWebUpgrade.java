@@ -14,7 +14,7 @@
 
 package com.liferay.asset.tags.navigation.web.internal.upgrade;
 
-import com.liferay.asset.tags.navigation.web.constants.AssetTagsNavigationPortletKeys;
+import com.liferay.asset.tags.navigation.constants.AssetTagsNavigationPortletKeys;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;

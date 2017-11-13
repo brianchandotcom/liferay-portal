@@ -41,6 +41,10 @@ public interface CPInstanceHelper {
 			long cpDefinitionId, String serializedDDMFormValues, int type)
 		throws Exception;
 
+	public DDMForm getCPAttachmentFileEntryDDMForm(
+			long cpDefinitionId, Locale locale)
+		throws PortalException;
+
 	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRel(
 			long cpDefinitionId, String optionFieldName,
 			Map<String, String> optionMap)
@@ -50,9 +54,14 @@ public interface CPInstanceHelper {
 			long cpDefinitionId, String serializedDDMFormValues)
 		throws Exception;
 
-	public DDMForm getDDMForm(
-			long cpDefinitionId, Locale locale, boolean skuContributor,
-			boolean useDDMFormRule)
+	public DDMForm getCPInstanceDDMForm(
+			long cpDefinitionId, Locale locale, boolean ignoreSKUCombinations,
+			boolean skuContributor)
+		throws PortalException;
+
+	public DDMForm getPublicStoreDDMForm(
+			long cpDefinitionId, Locale locale, boolean ignoreSKUCombinations,
+			boolean skuContributor)
 		throws PortalException;
 
 	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
@@ -61,20 +70,21 @@ public interface CPInstanceHelper {
 	public List<KeyValuePair> parseJSONString(String json, Locale locale)
 		throws PortalException;
 
-	public String render(
-			long cpDefinitionId, RenderRequest renderRequest,
+	public String renderCPAttachmentFileEntryOptions(
+			long cpDefinitionId, String json, RenderRequest renderRequest,
 			RenderResponse renderResponse)
 		throws PortalException;
 
-	public String render(
-			long cpDefinitionId, RenderRequest renderRequest,
-			RenderResponse renderResponse, boolean skuContributor)
+	public String renderCPInstanceOptions(
+			long cpDefinitionId, String json, boolean ignoreSKUCombinations,
+			boolean skuContributor, RenderRequest renderRequest,
+			RenderResponse renderResponse)
 		throws PortalException;
 
-	public String render(
-			long cpDefinitionId, String json, boolean skuContributor,
-			RenderRequest renderRequest, RenderResponse renderResponse,
-			boolean useDDMFormRule)
+	public String renderPublicStoreOptions(
+			long cpDefinitionId, String json, boolean ignoreSKUCombinations,
+			boolean skuContributor, RenderRequest renderRequest,
+			RenderResponse renderResponse)
 		throws PortalException;
 
 }

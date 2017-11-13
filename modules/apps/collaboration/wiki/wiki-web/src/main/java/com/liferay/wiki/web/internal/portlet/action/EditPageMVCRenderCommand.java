@@ -34,7 +34,7 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiPageService;
 import com.liferay.wiki.validator.WikiPageTitleValidator;
-import com.liferay.wiki.web.util.WikiWebComponentProvider;
+import com.liferay.wiki.web.internal.util.WikiWebComponentProvider;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;

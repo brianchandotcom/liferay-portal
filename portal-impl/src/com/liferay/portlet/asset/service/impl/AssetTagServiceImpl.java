@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.service.base.AssetTagServiceBaseImpl;
-import com.liferay.portlet.asset.service.permission.AssetTagPermission;
 import com.liferay.portlet.asset.service.permission.AssetTagsPermission;
 import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
 import com.liferay.util.dao.orm.CustomSQLUtil;
@@ -67,18 +66,12 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 
 	@Override
 	public void deleteTag(long tagId) throws PortalException {
-		AssetTagPermission.check(
-			getPermissionChecker(), tagId, ActionKeys.DELETE);
-
-		assetTagLocalService.deleteTag(tagId);
+		deleteTags(new long[] {tagId});
 	}
 
 	@Override
 	public void deleteTags(long[] tagIds) throws PortalException {
 		for (long tagId : tagIds) {
-			AssetTagPermission.check(
-				getPermissionChecker(), tagId, ActionKeys.DELETE);
-
 			assetTagLocalService.deleteTag(tagId);
 		}
 	}
@@ -223,9 +216,6 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 
 	@Override
 	public void mergeTags(long fromTagId, long toTagId) throws PortalException {
-		AssetTagPermission.check(
-			getPermissionChecker(), toTagId, ActionKeys.UPDATE);
-
 		assetTagLocalService.mergeTags(fromTagId, toTagId);
 	}
 
@@ -254,9 +244,6 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 	public AssetTag updateTag(
 			long tagId, String name, ServiceContext serviceContext)
 		throws PortalException {
-
-		AssetTagPermission.check(
-			getPermissionChecker(), tagId, ActionKeys.UPDATE);
 
 		return assetTagLocalService.updateTag(
 			getUserId(), tagId, name, serviceContext);

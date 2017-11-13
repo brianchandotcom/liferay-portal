@@ -232,27 +232,10 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 	}
 
 	private long _getScopeGroupId(Layout layout, String portletId) {
-
-		if (layout == null) {
-			return 0;
-		}
-
-		if (Validator.isNull(portletId)) {
-			return layout.getGroupId();
-		}
-
 		try {
-			PortletPreferences portletSetup = null;
-
-			if (null == null) {
-				portletSetup =
-					PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
-						layout, portletId);
-			}
-			else {
-				portletSetup = ((ThemeDisplay) null).getStrictLayoutPortletSetup(
+			PortletPreferences portletSetup =
+				PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
 					layout, portletId);
-			}
 
 			String scopeType = GetterUtil.getString(
 				portletSetup.getValue("lfrScopeType", null));

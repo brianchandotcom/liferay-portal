@@ -29,11 +29,9 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.List;
@@ -127,7 +125,7 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 
 		for (String portletId : portletIds) {
 			ObjectValuePair<Long, String> plidAndPortletId =
-				_getPlidFromPortletId(groupId, portletId);
+				_getPlidPortletIdObjectValuePair(groupId, portletId);
 
 			long plid = plidAndPortletId.getKey();
 
@@ -188,7 +186,7 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 
 	}
 
-	private ObjectValuePair<Long, String> _doGetPlidFromPortletId(
+	private ObjectValuePair<Long, String> _doGetPlidPortletIdObjectValuePair(
 			long groupId, long scopeGroupId, boolean privateLayout,
 			String portletId)
 		throws PortalException {
@@ -211,7 +209,7 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 			LayoutConstants.DEFAULT_PLID, StringPool.BLANK);
 	}
 
-	private ObjectValuePair<Long, String> _getPlidFromPortletId(
+	private ObjectValuePair<Long, String> _getPlidPortletIdObjectValuePair(
 			long groupId, String portletId)
 		throws PortalException {
 
@@ -225,13 +223,15 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 		groupId = scopeLayout.getGroupId();
 
 		ObjectValuePair<Long, String> plidAndPortletId =
-			_doGetPlidFromPortletId(groupId, scopeGroupId, false, portletId);
+			_doGetPlidPortletIdObjectValuePair(
+				groupId, scopeGroupId, false, portletId);
 
 		if (plidAndPortletId.getKey() != LayoutConstants.DEFAULT_PLID) {
 			return plidAndPortletId;
 		}
 
-		return _doGetPlidFromPortletId(groupId, scopeGroupId, true, portletId);
+		return _doGetPlidPortletIdObjectValuePair(
+			groupId, scopeGroupId, true, portletId);
 	}
 
 	private long _getScopeGroupId(Layout layout, String portletId)

@@ -131,10 +131,10 @@ AUI.add(
 						var ddmForm = Liferay.component(cpDefinitionId + 'DDMForm');
 
 						if (!ddmForm) {
-                            callback.call(instance, false);
+							callback.call(instance, false);
 						}
 						else {
-                            ddmForm.validate(callback);
+							ddmForm.validate(callback);
 						}
 
 					},
@@ -145,13 +145,13 @@ AUI.add(
 
 						var cpDefinitionId = instance.get('cpDefinitionId');
 
-                        var form = Liferay.component(cpDefinitionId + 'DDMForm');
+						var form = Liferay.component(cpDefinitionId + 'DDMForm');
 
-                        if(form){
-                            form.after('*:valueChange', instance._ddmFormChange, instance);
+						if (form) {
+							form.after('*:valueChange', instance._ddmFormChange, instance);
 						}
 
-                        eventHandles.push(
+						eventHandles.push(
 							Liferay.on(cpDefinitionId + STR_DDM_FORM_EVENT, instance._ddmFormRender, instance)
 						);
 

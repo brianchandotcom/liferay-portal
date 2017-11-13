@@ -17,13 +17,14 @@
 	</sql>
 	<sql id="com.liferay.wiki.service.persistence.WikiPageFinder.countByG_N_H_S">
 		<![CDATA[
-			SELECT COUNT(DISTINCT WikiPage.pageId) AS COUNT_VALUE
+			SELECT
+				COUNT(DISTINCT WikiPage.pageId) AS COUNT_VALUE
 			FROM
 				WikiPage
 			WHERE
-				WikiPage.groupId = ? AND
-				WikiPage.nodeId = ? AND
-				WikiPage.head = ? AND
+				(WikiPage.groupId = ?) AND
+				(WikiPage.nodeId = ?) AND
+				(WikiPage.head = ?) AND
 				([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$STATUS$])
 		]]>
 	</sql>
@@ -65,7 +66,7 @@
 					(AssetEntry.classNameId = ?) AND
 					(AssetEntry.classPK = WikiPage.resourcePrimKey)
 			WHERE
-				(AssetEntry.classPK IS NULL)
+				AssetEntry.classPK IS NULL
 		]]>
 	</sql>
 	<sql id="com.liferay.wiki.service.persistence.WikiPageFinder.findByG_N_H_S">
@@ -74,19 +75,20 @@
 				{WikiPage.*}
 			FROM
 				(
-					SELECT DISTINCT
-						WikiPage.pageId
+					SELECT
+						DISTINCT WikiPage.pageId
 					FROM
 						WikiPage
 					WHERE
-						WikiPage.groupId = ? AND
-						WikiPage.nodeId = ? AND
-						WikiPage.head = ? AND
+						(WikiPage.groupId = ?) AND
+						(WikiPage.nodeId = ?) AND
+						(WikiPage.head = ?) AND
 						([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$STATUS$])
 				)
 				TEMP_TABLE
-					INNER JOIN WikiPage ON
-						TEMP_TABLE.pageId = WikiPage.pageId
+					INNER JOIN
+						WikiPage ON
+							TEMP_TABLE.pageId = WikiPage.pageId
 			ORDER BY
 				WikiPage.nodeId ASC
 		]]>

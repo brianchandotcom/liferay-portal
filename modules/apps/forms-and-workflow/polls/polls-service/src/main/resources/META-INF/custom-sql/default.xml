@@ -22,8 +22,8 @@
 				{PollsQuestion.*}
 			FROM
 				(
-					SELECT DISTINCT
-						PollsQuestion.questionId
+					SELECT
+						DISTINCT PollsQuestion.questionId
 					FROM
 						PollsQuestion
 					WHERE
@@ -35,8 +35,9 @@
 						)
 				)
 				TEMP_TABLE
-					INNER JOIN PollsQuestion ON
-						TEMP_TABLE.questionId = PollsQuestion.questionId
+			INNER JOIN
+				PollsQuestion ON
+					TEMP_TABLE.questionId = PollsQuestion.questionId
 			ORDER BY
 				PollsQuestion.questionId DESC
 		]]>

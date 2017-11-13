@@ -10,14 +10,14 @@
 			KBFolder
 		ON
 			(
-				KBArticle.kbFolderId = KBFolder.kbFolderId AND
-				KBArticle.groupId = KBFolder.groupId
+				(KBArticle.kbFolderId = KBFolder.kbFolderId) AND
+				(KBArticle.groupId = KBFolder.groupId)
 			)
 		WHERE
-			KBArticle.groupId = ? AND
-			KBArticle.urlTitle = ? AND
-			KBFolder.urlTitle = ? AND
-			KBArticle.status IN ([$WORKFLOW_STATUS$])
+			(KBArticle.groupId = ?) AND
+			(KBArticle.urlTitle = ?) AND
+			(KBFolder.urlTitle = ?) AND
+			(KBArticle.status IN ([$WORKFLOW_STATUS$]))
 	</sql>
 	<sql id="com.liferay.knowledge.base.service.persistence.KBArticleFinder.findByUrlTitle">
 		SELECT
@@ -28,14 +28,14 @@
 			KBFolder
 		ON
 			(
-				KBArticle.kbFolderId = KBFolder.kbFolderId AND
-				KBArticle.groupId = KBFolder.groupId
+				(KBArticle.kbFolderId = KBFolder.kbFolderId) AND
+				(KBArticle.groupId = KBFolder.groupId)
 			)
 		WHERE
-			KBArticle.groupId = ? AND
-			KBArticle.urlTitle = ? AND
-			KBFolder.urlTitle = ? AND
-			KBArticle.status IN ([$WORKFLOW_STATUS$])
+			(KBArticle.groupId = ?) AND
+			(KBArticle.urlTitle = ?) AND
+			(KBFolder.urlTitle = ?) AND
+			(KBArticle.status IN ([$WORKFLOW_STATUS$]))
 	</sql>
 	<sql id="com.liferay.knowledge.base.service.persistence.KBFolderFinder.countA_ByG_P">
 		SELECT

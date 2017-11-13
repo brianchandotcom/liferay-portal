@@ -9,7 +9,7 @@
 				DDLRecord
 			INNER JOIN
 				DDLRecordVersion ON
-					(DDLRecordVersion.recordId = DDLRecord.recordId)
+					DDLRecordVersion.recordId = DDLRecord.recordId
 			WHERE
 				(DDLRecordVersion.status = ?) AND
 				(DDLRecord.recordSetId = ?)
@@ -23,10 +23,10 @@
 				DDLRecord
 			INNER JOIN
 				DDLRecordVersion ON
-					(DDLRecordVersion.recordId = DDLRecord.recordId)
+					DDLRecordVersion.recordId = DDLRecord.recordId
 			INNER JOIN
 				DDLRecordSet ON
-					(DDLRecordSet.recordSetId = DDLRecord.recordSetId)
+					DDLRecordSet.recordSetId = DDLRecord.recordSetId
 			WHERE
 				(DDLRecordVersion.status = ?) AND
 				(DDLRecordSet.scope = ?) AND
@@ -41,7 +41,7 @@
 				DDLRecord
 			INNER JOIN
 				DDLRecordVersion ON
-					(DDLRecordVersion.recordId = DDLRecord.recordId)
+					DDLRecordVersion.recordId = DDLRecord.recordId
 			WHERE
 				(DDLRecordVersion.status = ?) AND
 				(DDLRecord.recordSetId = ?)
@@ -57,10 +57,10 @@
 				DDLRecord
 			INNER JOIN
 				DDLRecordVersion ON
-					(DDLRecordVersion.recordId = DDLRecord.recordId)
+					DDLRecordVersion.recordId = DDLRecord.recordId
 			INNER JOIN
 				DDLRecordSet ON
-					(DDLRecordSet.recordSetId = DDLRecord.recordSetId)
+					DDLRecordSet.recordSetId = DDLRecord.recordSetId
 			WHERE
 				(DDLRecordVersion.status = ?) AND
 				(DDLRecordSet.scope = ?) AND
@@ -105,8 +105,9 @@
 						)
 				)
 				TEMP_TABLE
-					INNER JOIN DDLRecordSet ON
-						TEMP_TABLE.recordSetId = DDLRecordSet.recordSetId
+					INNER JOIN
+						DDLRecordSet ON
+							TEMP_TABLE.recordSetId = DDLRecordSet.recordSetId
 			ORDER BY
 				DDLRecordSet.recordSetId DESC
 		]]>

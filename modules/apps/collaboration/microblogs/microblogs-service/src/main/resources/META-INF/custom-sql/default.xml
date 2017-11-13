@@ -9,7 +9,7 @@
 				MicroblogsEntry
 			LEFT OUTER JOIN
 				SocialRelation ON
-					(MicroblogsEntry.userId = SocialRelation.userId2)
+					MicroblogsEntry.userId = SocialRelation.userId2
 			WHERE
 				(
 					(
@@ -21,16 +21,10 @@
 						(MicroblogsEntry.socialRelationType = SocialRelation.type_) AND
 						(SocialRelation.userId1 = ?)
 					) OR
-					(
-						MicroblogsEntry.userId = ?
-					) OR
-					(
-						MicroblogsEntry.socialRelationType = 0
-					)
+					(MicroblogsEntry.userId = ?) OR
+					(MicroblogsEntry.socialRelationType = 0)
 				) AND
-				(
-					MicroblogsEntry.type_ <> ?
-				)
+				(MicroblogsEntry.type_ <> ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.microblogs.service.persistence.MicroblogsEntryFinder.countByC_U">
@@ -41,11 +35,9 @@
 				MicroblogsEntry
 			LEFT OUTER JOIN
 				SocialRelation ON
-					(MicroblogsEntry.userId = SocialRelation.userId2)
+					MicroblogsEntry.userId = SocialRelation.userId2
 			WHERE
-				(
-					MicroblogsEntry.companyId = ?
-				) AND
+				(MicroblogsEntry.companyId = ?) AND
 				(
 					(
 						(MicroblogsEntry.socialRelationType = ?) AND
@@ -56,16 +48,10 @@
 						(MicroblogsEntry.socialRelationType = SocialRelation.type_) AND
 						(SocialRelation.userId1 = ?)
 					) OR
-					(
-						MicroblogsEntry.userId = ?
-					) OR
-					(
-						MicroblogsEntry.socialRelationType = 0
-					)
+					(MicroblogsEntry.userId = ?) OR
+					(MicroblogsEntry.socialRelationType = 0)
 				) AND
-				(
-					MicroblogsEntry.type_ <> ?
-				)
+				(MicroblogsEntry.type_ <> ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.microblogs.service.persistence.MicroblogsEntryFinder.countByU_MU">
@@ -76,7 +62,7 @@
 				MicroblogsEntry
 			LEFT JOIN
 				MicroblogsEntry TEMP_TABLE ON
-					(MicroblogsEntry.parentMicroblogsEntryId = TEMP_TABLE.microblogsEntryId)
+					MicroblogsEntry.parentMicroblogsEntryId = TEMP_TABLE.microblogsEntryId
 			LEFT JOIN
 				SocialRelation ON
 					(TEMP_TABLE.userId = SocialRelation.userId2) AND
@@ -86,12 +72,8 @@
 					(MicroblogsEntry.socialRelationType = ?) OR
 					(SocialRelation.userId1 = ?)
 				) AND
-				(
-					MicroblogsEntry.userId = ?
-				) AND
-				(
-					MicroblogsEntry.type_ <> ?
-				)
+				(MicroblogsEntry.userId = ?) AND
+				(MicroblogsEntry.type_ <> ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.microblogs.service.persistence.MicroblogsEntryFinder.countByU_ATN">
@@ -102,29 +84,27 @@
 				MicroblogsEntry
 			LEFT JOIN
 				MicroblogsEntry TEMP_TABLE ON
-					(MicroblogsEntry.parentMicroblogsEntryId = TEMP_TABLE.microblogsEntryId)
+					MicroblogsEntry.parentMicroblogsEntryId = TEMP_TABLE.microblogsEntryId
 			LEFT JOIN
 				SocialRelation ON
 					(TEMP_TABLE.userId = SocialRelation.userId2) AND
 					(MicroblogsEntry.socialRelationType = SocialRelation.type_)
 			INNER JOIN
 				AssetEntry ON
-					(AssetEntry.classPK = MicroblogsEntry.microblogsEntryId)
+					AssetEntry.classPK = MicroblogsEntry.microblogsEntryId
 			INNER JOIN
 				AssetEntries_AssetTags ON
-					(AssetEntries_AssetTags.entryId = AssetEntry.entryId)
+					AssetEntries_AssetTags.entryId = AssetEntry.entryId
 			INNER JOIN
 				AssetTag ON
-					(AssetTag.tagId = AssetEntries_AssetTags.tagId)
+					AssetTag.tagId = AssetEntries_AssetTags.tagId
 			WHERE
 				(
 					(
 						(MicroblogsEntry.socialRelationType = ?) OR
 						(SocialRelation.userId1 = ?)
 					) AND
-					(
-						AssetTag.name = ?
-					)
+					(AssetTag.name = ?)
 				) OR
 				(
 					(MicroblogsEntry.userId = ?) AND
@@ -140,13 +120,13 @@
 				MicroblogsEntry
 			INNER JOIN
 				AssetEntry ON
-					(AssetEntry.classPK = MicroblogsEntry.microblogsEntryId)
+					AssetEntry.classPK = MicroblogsEntry.microblogsEntryId
 			INNER JOIN
 				AssetEntries_AssetTags ON
-					(AssetEntries_AssetTags.entryId = AssetEntry.entryId)
+					AssetEntries_AssetTags.entryId = AssetEntry.entryId
 			INNER JOIN
 				AssetTag ON
-					(AssetTag.tagId = AssetEntries_AssetTags.tagId)
+					AssetTag.tagId = AssetEntries_AssetTags.tagId
 			WHERE
 				(MicroblogsEntry.creatorClassNameId = ?) AND
 				(AssetTag.name = ?)
@@ -160,33 +140,29 @@
 				MicroblogsEntry
 			LEFT JOIN
 				MicroblogsEntry TEMP_TABLE ON
-					(MicroblogsEntry.parentMicroblogsEntryId = TEMP_TABLE.microblogsEntryId)
+					MicroblogsEntry.parentMicroblogsEntryId = TEMP_TABLE.microblogsEntryId
 			LEFT JOIN
 				SocialRelation ON
 					(TEMP_TABLE.userId = SocialRelation.userId2) AND
 					(MicroblogsEntry.socialRelationType = SocialRelation.type_)
 			INNER JOIN
 				AssetEntry ON
-					(AssetEntry.classPK = MicroblogsEntry.microblogsEntryId)
+					AssetEntry.classPK = MicroblogsEntry.microblogsEntryId
 			INNER JOIN
 				AssetEntries_AssetTags ON
-					(AssetEntries_AssetTags.entryId = AssetEntry.entryId)
+					AssetEntries_AssetTags.entryId = AssetEntry.entryId
 			INNER JOIN
 				AssetTag ON
-					(AssetTag.tagId = AssetEntries_AssetTags.tagId)
+					AssetTag.tagId = AssetEntries_AssetTags.tagId
 			WHERE
-				(
-					MicroblogsEntry.companyId = ?
-				) AND
+				(MicroblogsEntry.companyId = ?) AND
 				(
 					(
 						(
 							(MicroblogsEntry.socialRelationType = ?) OR
 							(SocialRelation.userId1 = ?)
 						) AND
-						(
-							AssetTag.name = ?
-						)
+						(AssetTag.name = ?)
 					) OR
 					(
 						(MicroblogsEntry.userId = ?) AND
@@ -203,13 +179,13 @@
 				MicroblogsEntry
 			INNER JOIN
 				AssetEntry ON
-					(AssetEntry.classPK = MicroblogsEntry.microblogsEntryId)
+					AssetEntry.classPK = MicroblogsEntry.microblogsEntryId
 			INNER JOIN
 				AssetEntries_AssetTags ON
-					(AssetEntries_AssetTags.entryId = AssetEntry.entryId)
+					AssetEntries_AssetTags.entryId = AssetEntry.entryId
 			INNER JOIN
 				AssetTag ON
-					(AssetTag.tagId = AssetEntries_AssetTags.tagId)
+					AssetTag.tagId = AssetEntries_AssetTags.tagId
 			WHERE
 				(MicroblogsEntry.companyId = ?) AND
 				(MicroblogsEntry.creatorClassNameId = ?) AND
@@ -224,7 +200,7 @@
 				MicroblogsEntry
 			LEFT JOIN
 				MicroblogsEntry TEMP_TABLE ON
-					(MicroblogsEntry.parentMicroblogsEntryId = TEMP_TABLE.microblogsEntryId)
+					MicroblogsEntry.parentMicroblogsEntryId = TEMP_TABLE.microblogsEntryId
 			LEFT JOIN
 				SocialRelation ON
 					(TEMP_TABLE.userId = SocialRelation.userId2) AND
@@ -234,12 +210,8 @@
 					(MicroblogsEntry.socialRelationType = ?) OR
 					(SocialRelation.userId1 = ?)
 				) AND
-				(
-					MicroblogsEntry.type_ = ?
-				) AND
-				(
-					MicroblogsEntry.userId = ?
-				)
+				(MicroblogsEntry.type_ = ?) AND
+				(MicroblogsEntry.userId = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.microblogs.service.persistence.MicroblogsEntryFinder.countByCCNI_CCPK_ATN">
@@ -250,13 +222,13 @@
 				MicroblogsEntry
 			INNER JOIN
 				AssetEntry ON
-					(AssetEntry.classPK = MicroblogsEntry.microblogsEntryId)
+					AssetEntry.classPK = MicroblogsEntry.microblogsEntryId
 			LEFT JOIN
 				AssetEntries_AssetTags ON
-					(AssetEntries_AssetTags.entryId = AssetEntry.entryId)
+					AssetEntries_AssetTags.entryId = AssetEntry.entryId
 			LEFT JOIN
 				AssetTag ON
-					(AssetTag.tagId = AssetEntries_AssetTags.tagId)
+					AssetTag.tagId = AssetEntries_AssetTags.tagId
 			WHERE
 				(
 					(MicroblogsEntry.creatorClassNameId = ?) AND
@@ -273,17 +245,15 @@
 				MicroblogsEntry
 			INNER JOIN
 				AssetEntry ON
-					(AssetEntry.classPK = MicroblogsEntry.microblogsEntryId)
+					AssetEntry.classPK = MicroblogsEntry.microblogsEntryId
 			LEFT JOIN
 				AssetEntries_AssetTags ON
-					(AssetEntries_AssetTags.entryId = AssetEntry.entryId)
+					AssetEntries_AssetTags.entryId = AssetEntry.entryId
 			LEFT JOIN
 				AssetTag ON
-					(AssetTag.tagId = AssetEntries_AssetTags.tagId)
+					AssetTag.tagId = AssetEntries_AssetTags.tagId
 			WHERE
-				(
-					MicroblogsEntry.companyId = ?
-				) AND
+				(MicroblogsEntry.companyId = ?) AND
 				(
 					(
 						(MicroblogsEntry.creatorClassNameId = ?) AND
@@ -301,7 +271,7 @@
 				MicroblogsEntry
 			LEFT OUTER JOIN
 				SocialRelation ON
-					(MicroblogsEntry.userId = SocialRelation.userId2)
+					MicroblogsEntry.userId = SocialRelation.userId2
 			WHERE
 				(
 					(
@@ -313,16 +283,10 @@
 						(MicroblogsEntry.socialRelationType = SocialRelation.type_) AND
 						(SocialRelation.userId1 = ?)
 					) OR
-					(
-						MicroblogsEntry.userId = ?
-					) OR
-					(
-						MicroblogsEntry.socialRelationType = 0
-					)
+					(MicroblogsEntry.userId = ?) OR
+					(MicroblogsEntry.socialRelationType = 0)
 				) AND
-				(
-					MicroblogsEntry.type_ <> ?
-				)
+				(MicroblogsEntry.type_ <> ?)
 			ORDER BY
 				MicroblogsEntry.createDate DESC
 		]]>
@@ -335,11 +299,9 @@
 				MicroblogsEntry
 			LEFT OUTER JOIN
 				SocialRelation ON
-					(MicroblogsEntry.userId = SocialRelation.userId2)
+					MicroblogsEntry.userId = SocialRelation.userId2
 			WHERE
-				(
-					MicroblogsEntry.companyId = ?
-				) AND
+				(MicroblogsEntry.companyId = ?) AND
 				(
 					(
 						(MicroblogsEntry.socialRelationType = ?) AND
@@ -350,16 +312,10 @@
 						(MicroblogsEntry.socialRelationType = SocialRelation.type_) AND
 						(SocialRelation.userId1 = ?)
 					) OR
-					(
-						MicroblogsEntry.userId = ?
-					) OR
-					(
-						MicroblogsEntry.socialRelationType = 0
-					)
+					(MicroblogsEntry.userId = ?) OR
+					(MicroblogsEntry.socialRelationType = 0)
 				) AND
-				(
-					MicroblogsEntry.type_ <> ?
-				)
+				(MicroblogsEntry.type_ <> ?)
 			ORDER BY
 				MicroblogsEntry.createDate DESC
 		]]>
@@ -372,7 +328,7 @@
 				MicroblogsEntry
 			LEFT JOIN
 				MicroblogsEntry TEMP_TABLE ON
-					(MicroblogsEntry.parentMicroblogsEntryId = TEMP_TABLE.microblogsEntryId)
+					MicroblogsEntry.parentMicroblogsEntryId = TEMP_TABLE.microblogsEntryId
 			LEFT JOIN
 				SocialRelation ON
 					(TEMP_TABLE.userId = SocialRelation.userId2) AND
@@ -382,12 +338,8 @@
 					(MicroblogsEntry.socialRelationType = ?) OR
 					(SocialRelation.userId1 = ?)
 				) AND
-				(
-					MicroblogsEntry.userId = ?
-				) AND
-				(
-					MicroblogsEntry.type_ <> ?
-				)
+				(MicroblogsEntry.userId = ?) AND
+				(MicroblogsEntry.type_ <> ?)
 			ORDER BY
 				MicroblogsEntry.createDate DESC
 		]]>
@@ -400,29 +352,27 @@
 				MicroblogsEntry
 			LEFT JOIN
 				MicroblogsEntry TEMP_TABLE ON
-					(MicroblogsEntry.parentMicroblogsEntryId = TEMP_TABLE.microblogsEntryId)
+					MicroblogsEntry.parentMicroblogsEntryId = TEMP_TABLE.microblogsEntryId
 			LEFT JOIN
 				SocialRelation ON
 					(TEMP_TABLE.userId = SocialRelation.userId2) AND
 					(MicroblogsEntry.socialRelationType = SocialRelation.type_)
 			INNER JOIN
 				AssetEntry ON
-					(AssetEntry.classPK = MicroblogsEntry.microblogsEntryId)
+					AssetEntry.classPK = MicroblogsEntry.microblogsEntryId
 			INNER JOIN
 				AssetEntries_AssetTags ON
-					(AssetEntries_AssetTags.entryId = AssetEntry.entryId)
+					AssetEntries_AssetTags.entryId = AssetEntry.entryId
 			INNER JOIN
 				AssetTag ON
-					(AssetTag.tagId = AssetEntries_AssetTags.tagId)
+					AssetTag.tagId = AssetEntries_AssetTags.tagId
 			WHERE
 				(
 					(
 						(MicroblogsEntry.socialRelationType = ?) OR
 						(SocialRelation.userId1 = ?)
 					) AND
-					(
-						AssetTag.name = ?
-					)
+					(AssetTag.name = ?)
 				) OR
 				(
 					(MicroblogsEntry.userId = ?) AND
@@ -440,13 +390,13 @@
 				MicroblogsEntry
 			INNER JOIN
 				AssetEntry ON
-					(AssetEntry.classPK = MicroblogsEntry.microblogsEntryId)
+					AssetEntry.classPK = MicroblogsEntry.microblogsEntryId
 			INNER JOIN
 				AssetEntries_AssetTags ON
-					(AssetEntries_AssetTags.entryId = AssetEntry.entryId)
+					AssetEntries_AssetTags.entryId = AssetEntry.entryId
 			INNER JOIN
 				AssetTag ON
-					(AssetTag.tagId = AssetEntries_AssetTags.tagId)
+					AssetTag.tagId = AssetEntries_AssetTags.tagId
 			WHERE
 				(MicroblogsEntry.creatorClassNameId = ?) AND
 				(AssetTag.name = ?)
@@ -462,33 +412,29 @@
 				MicroblogsEntry
 			LEFT JOIN
 				MicroblogsEntry TEMP_TABLE ON
-					(MicroblogsEntry.parentMicroblogsEntryId = TEMP_TABLE.microblogsEntryId)
+					MicroblogsEntry.parentMicroblogsEntryId = TEMP_TABLE.microblogsEntryId
 			LEFT JOIN
 				SocialRelation ON
 					(TEMP_TABLE.userId = SocialRelation.userId2) AND
 					(MicroblogsEntry.socialRelationType = SocialRelation.type_)
 			INNER JOIN
 				AssetEntry ON
-					(AssetEntry.classPK = MicroblogsEntry.microblogsEntryId)
+					AssetEntry.classPK = MicroblogsEntry.microblogsEntryId
 			INNER JOIN
 				AssetEntries_AssetTags ON
-					(AssetEntries_AssetTags.entryId = AssetEntry.entryId)
+					AssetEntries_AssetTags.entryId = AssetEntry.entryId
 			INNER JOIN
 				AssetTag ON
-					(AssetTag.tagId = AssetEntries_AssetTags.tagId)
+					AssetTag.tagId = AssetEntries_AssetTags.tagId
 			WHERE
-				(
-					MicroblogsEntry.companyId = ?
-				) AND
+				(MicroblogsEntry.companyId = ?) AND
 				(
 					(
 						(
 							(MicroblogsEntry.socialRelationType = ?) OR
 							(SocialRelation.userId1 = ?)
 						) AND
-						(
-							AssetTag.name = ?
-						)
+						(AssetTag.name = ?)
 					) OR
 					(
 						(MicroblogsEntry.userId = ?) AND
@@ -507,13 +453,13 @@
 				MicroblogsEntry
 			INNER JOIN
 				AssetEntry ON
-					(AssetEntry.classPK = MicroblogsEntry.microblogsEntryId)
+					AssetEntry.classPK = MicroblogsEntry.microblogsEntryId
 			INNER JOIN
 				AssetEntries_AssetTags ON
-					(AssetEntries_AssetTags.entryId = AssetEntry.entryId)
+					AssetEntries_AssetTags.entryId = AssetEntry.entryId
 			INNER JOIN
 				AssetTag ON
-					(AssetTag.tagId = AssetEntries_AssetTags.tagId)
+					AssetTag.tagId = AssetEntries_AssetTags.tagId
 			WHERE
 				(MicroblogsEntry.companyId = ?) AND
 				(MicroblogsEntry.creatorClassNameId = ?) AND
@@ -530,7 +476,7 @@
 				MicroblogsEntry
 			LEFT JOIN
 				MicroblogsEntry TEMP_TABLE ON
-					(MicroblogsEntry.parentMicroblogsEntryId = TEMP_TABLE.microblogsEntryId)
+					MicroblogsEntry.parentMicroblogsEntryId = TEMP_TABLE.microblogsEntryId
 			LEFT JOIN
 				SocialRelation ON
 					(TEMP_TABLE.userId = SocialRelation.userId2) AND
@@ -540,12 +486,8 @@
 					(MicroblogsEntry.socialRelationType = ?) OR
 					(SocialRelation.userId1 = ?)
 				) AND
-				(
-					MicroblogsEntry.type_ = ?
-				) AND
-				(
-					MicroblogsEntry.userId = ?
-				)
+				(MicroblogsEntry.type_ = ?) AND
+				(MicroblogsEntry.userId = ?)
 			ORDER BY
 				MicroblogsEntry.createDate DESC
 		]]>
@@ -558,13 +500,13 @@
 				MicroblogsEntry
 			INNER JOIN
 				AssetEntry ON
-					(AssetEntry.classPK = MicroblogsEntry.microblogsEntryId)
+					AssetEntry.classPK = MicroblogsEntry.microblogsEntryId
 			LEFT JOIN
 				AssetEntries_AssetTags ON
-					(AssetEntries_AssetTags.entryId = AssetEntry.entryId)
+					AssetEntries_AssetTags.entryId = AssetEntry.entryId
 			LEFT JOIN
 				AssetTag ON
-					(AssetTag.tagId = AssetEntries_AssetTags.tagId)
+					AssetTag.tagId = AssetEntries_AssetTags.tagId
 			WHERE
 				(
 					(MicroblogsEntry.creatorClassNameId = ?) AND
@@ -583,17 +525,15 @@
 				MicroblogsEntry
 			INNER JOIN
 				AssetEntry ON
-					(AssetEntry.classPK = MicroblogsEntry.microblogsEntryId)
+					AssetEntry.classPK = MicroblogsEntry.microblogsEntryId
 			LEFT JOIN
 				AssetEntries_AssetTags ON
-					(AssetEntries_AssetTags.entryId = AssetEntry.entryId)
+					AssetEntries_AssetTags.entryId = AssetEntry.entryId
 			LEFT JOIN
 				AssetTag ON
-					(AssetTag.tagId = AssetEntries_AssetTags.tagId)
+					AssetTag.tagId = AssetEntries_AssetTags.tagId
 			WHERE
-				(
-					MicroblogsEntry.companyId = ?
-				) AND
+				(MicroblogsEntry.companyId = ?) AND
 				(
 					(
 						(MicroblogsEntry.creatorClassNameId = ?) AND

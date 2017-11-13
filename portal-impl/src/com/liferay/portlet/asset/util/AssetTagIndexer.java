@@ -31,11 +31,8 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.asset.service.permission.AssetTagPermission;
 
 import java.util.Locale;
 
@@ -62,18 +59,6 @@ public class AssetTagIndexer extends BaseIndexer<AssetTag> {
 	@Override
 	public String getClassName() {
 		return CLASS_NAME;
-	}
-
-	@Override
-	public boolean hasPermission(
-			PermissionChecker permissionChecker, String entryClassName,
-			long entryClassPK, String actionId)
-		throws Exception {
-
-		AssetTag tag = AssetTagLocalServiceUtil.getTag(entryClassPK);
-
-		return AssetTagPermission.contains(
-			permissionChecker, tag, ActionKeys.VIEW);
 	}
 
 	@Override

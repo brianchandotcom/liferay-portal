@@ -10,7 +10,10 @@
 			WHERE
 				(fromUserId = ?) AND
 				(toUserId = ?) AND
-				((content = '') OR (content IS NULL))
+				(
+					(content = '') OR
+					(content IS NULL)
+				)
 			ORDER BY
 				createDate DESC
 		]]>
@@ -23,7 +26,8 @@
 				Chat_Entry
 			WHERE
 				(
-					(fromUserId = ?) OR (toUserId = ?)
+					(fromUserId = ?) OR
+					(toUserId = ?)
 				) AND
 				(flag = ?)
 			ORDER BY

@@ -21,7 +21,7 @@
 	</tear-down>
 
 	<command name="RightToLeftSmoke" priority="5">
-		<property name="portal.acceptance" value="quarantine" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="RTL Test Page" />
@@ -51,10 +51,20 @@
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
-		<execute macro="WebContent#addLocale">
+		<!-- LRQA-36070 -->
+
+		<!-- <execute macro="WebContent#addLocale">
 			<var name="language" value="Hebrew (Israel)" />
 			<var name="locale" value="iw-IL" />
+		</execute> -->
+
+		<execute function="Click" locator1="Translation#ADD" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Hebrew (Israel)">
+			<var name="key_menuItem" value="Hebrew (Israel)" />
 		</execute>
+
+		<execute function="Click" locator1="//ul[contains(@class,'nav-tabs')]//span[contains(@data-locale-id,'iw_IL')]" />
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentTitle" value="WC Title" />

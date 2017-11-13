@@ -34,9 +34,9 @@ else {
 }
 
 String deleteApplicationDataBeforeImportingLabel =
-	"<span style='font-weight: bold;'>" + deleteApplicationDataBeforeImportingLabelTitle + ":</span> <span style='font-weight: normal;'>" +
+	deleteApplicationDataBeforeImportingLabelTitle + ": <span style='font-weight: normal;'>" +
 		deleteApplicationDataBeforeImportingLabelWarning + " " + deleteApplicationDataBeforeImportingLabelSuggestion + "</span> ";
-String individualDeletionsLabel = "<span style='font-weight: bold;'>" + individualDeletionsTitle + ":</span> <span style='font-weight: normal;'>" + individualDeletionsDescription + "</span> ";
+String individualDeletionsLabel = individualDeletionsTitle + ": <span style='font-weight: normal;'>" + individualDeletionsDescription + "</span> ";
 %>
 
 <c:if test="<%= cmd.equals(Constants.EXPORT) || cmd.equals(Constants.IMPORT) || cmd.equals(Constants.PUBLISH) %>">

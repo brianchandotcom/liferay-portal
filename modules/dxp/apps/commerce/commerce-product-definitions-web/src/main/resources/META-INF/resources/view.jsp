@@ -48,12 +48,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			selected='<%= toolbarItem.equals("view-all-product-definitions") %>'
 		/>
 	</aui:nav>
-
-	<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-		<aui:nav-bar-search>
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:nav-bar-search>
-	</aui:form>
 </aui:nav-bar>
 
 <liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">

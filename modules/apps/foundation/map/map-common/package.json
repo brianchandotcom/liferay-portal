@@ -1,6 +1,5 @@
 {
 	"dependencies": {
-		"liferay-module-config-generator": "^1.1.10",
 		"metal": "^2.13.2",
 		"metal-dom": "^2.13.2",
 		"metal-state": "^2.13.2"
@@ -8,15 +7,16 @@
 	"devDependencies": {
 		"babel-plugin-transform-node-env-inline": "^0.1.1",
 		"babel-preset-es2015": "^6.24.1",
-		"eslint": "^3.17.1",
-		"eslint-config-liferay": "^1.0.2",
+		"eslint": "^4.11.0",
+		"eslint-config-liferay": "^2.0.7",
 		"jest": "^20.0.4",
-		"karma": "^1.3.0",
 		"liferay-jest-junit-reporter": "0.0.2",
 		"liferay-karma-config": "^0.0.4",
+		"liferay-module-config-generator": "^1.1.10",
 		"metal-cli": "^4.2.0",
 		"metal-jest-serializer": "^1.0.1",
-		"metal-tools-soy": "^4.2.1"
+		"metal-tools-soy": "^4.2.1",
+		"prettier-eslint-cli": "4.4.0"
 	},
 	"jest": {
 		"globals": {
@@ -32,6 +32,10 @@
 	},
 	"name": "map-common",
 	"scripts": {
+		"checkFormat": "npm run prettier -- --list-different",
+		"format": "npm run prettier -- --write",
+		"lint": "eslint src/**/*.es.js test/**/*.es.js",
+		"prettier": "prettier-eslint src/**/*.es.js test/**/*.es.js",
 		"test": "jest"
 	},
 	"version": "2.0.2"

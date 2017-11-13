@@ -9,7 +9,7 @@
 				AnnouncementsEntry
 			LEFT JOIN
 				AnnouncementsFlag ON
-					(AnnouncementsFlag.entryId = AnnouncementsEntry.entryId)
+					AnnouncementsFlag.entryId = AnnouncementsEntry.entryId
 			WHERE
 				([$CLASS_PKS$]) AND
 				(AnnouncementsEntry.displayDate <= ? [$AND_OR_NULL_CHECK$]) AND
@@ -64,7 +64,7 @@
 				AnnouncementsEntry
 			LEFT JOIN
 				AnnouncementsFlag ON
-					(AnnouncementsFlag.entryId = AnnouncementsEntry.entryId)
+					AnnouncementsFlag.entryId = AnnouncementsEntry.entryId
 			WHERE
 				([$CLASS_PKS$]) AND
 				(AnnouncementsEntry.displayDate <= ? [$AND_OR_NULL_CHECK$]) AND

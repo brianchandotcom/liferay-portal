@@ -9,10 +9,10 @@
 				BlogsEntry
 			INNER JOIN
 				User_ ON
-					(User_.userId = BlogsEntry.userId)
+					User_.userId = BlogsEntry.userId
 			INNER JOIN
 				Users_Orgs ON
-					(Users_Orgs.userId = User_.userId)
+					Users_Orgs.userId = User_.userId
 			WHERE
 				[$ORGANIZATION_ID$] AND
 				(BlogsEntry.displayDate < ?)
@@ -26,7 +26,7 @@
 				BlogsEntry
 			INNER JOIN
 				Group_ ON
-					(Group_.groupId = BlogsEntry.groupId)
+					Group_.groupId = BlogsEntry.groupId
 			WHERE
 				(Group_.companyId = ?) AND
 				(
@@ -74,10 +74,10 @@
 				BlogsEntry
 			INNER JOIN
 				User_ ON
-					(User_.userId = BlogsEntry.userId)
+					User_.userId = BlogsEntry.userId
 			INNER JOIN
 				Users_Orgs ON
-					(Users_Orgs.userId = User_.userId)
+					Users_Orgs.userId = User_.userId
 			WHERE
 				[$ORGANIZATION_ID$] AND
 				(BlogsEntry.displayDate < ?)
@@ -96,7 +96,7 @@
 					(AssetEntry.classNameId = ?) AND
 					(AssetEntry.classPK = BlogsEntry.entryId)
 			WHERE
-				(AssetEntry.classPK IS NULL)
+				AssetEntry.classPK IS NULL
 		]]>
 	</sql>
 	<sql id="com.liferay.blogs.service.persistence.BlogsStatsUserFinder.countByOrganizationIds">
@@ -107,10 +107,10 @@
 				BlogsStatsUser
 			INNER JOIN
 				User_ ON
-					(User_.userId = BlogsStatsUser.userId)
+					User_.userId = BlogsStatsUser.userId
 			INNER JOIN
 				Users_Orgs ON
-					(Users_Orgs.userId = User_.userId)
+					Users_Orgs.userId = User_.userId
 			WHERE
 				(BlogsStatsUser.entryCount != 0) AND
 				[$ORGANIZATION_ID$]
@@ -128,7 +128,7 @@
 						BlogsStatsUser
 					INNER JOIN
 						Group_ ON
-							(Group_.groupId = BlogsStatsUser.groupId)
+							Group_.groupId = BlogsStatsUser.groupId
 					WHERE
 						(
 							(Group_.companyId = ?) AND
@@ -180,10 +180,10 @@
 				BlogsStatsUser
 			INNER JOIN
 				User_ ON
-					(User_.userId = BlogsStatsUser.userId)
+					User_.userId = BlogsStatsUser.userId
 			INNER JOIN
 				Users_Orgs ON
-					(Users_Orgs.userId = User_.userId)
+					Users_Orgs.userId = User_.userId
 			WHERE
 				(BlogsStatsUser.entryCount != 0) AND
 				[$ORGANIZATION_ID$]

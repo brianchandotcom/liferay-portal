@@ -9,7 +9,7 @@
 				SocialActivityCounter
 			INNER JOIN
 				User_ ON
-					(SocialActivityCounter.classPK = User_.userId)
+					SocialActivityCounter.classPK = User_.userId
 			WHERE
 				(groupId = ?) AND
 				(classNameId = ?) AND
@@ -84,7 +84,7 @@
 				SocialActivityCounter
 			INNER JOIN
 				User_ ON
-					(SocialActivityCounter.classPK = User_.userId)
+					SocialActivityCounter.classPK = User_.userId
 			WHERE
 				(groupId = ?) AND
 				(classNameId = ?) AND
@@ -119,7 +119,7 @@
 				SocialActivity
 			INNER JOIN
 				Users_Groups ON
-					(Users_Groups.userId = SocialActivity.userId)
+					Users_Groups.userId = SocialActivity.userId
 			WHERE
 				(SocialActivity.mirrorActivityId = 0) AND
 				(Users_Groups.groupId = ?)
@@ -133,10 +133,10 @@
 				SocialActivity
 			INNER JOIN
 				Group_ ON
-					(Group_.groupId = SocialActivity.groupId)
+					Group_.groupId = SocialActivity.groupId
 			INNER JOIN
 				Organization_ ON
-					(Organization_.organizationId = Group_.classPK)
+					Organization_.organizationId = Group_.classPK
 			WHERE
 				(SocialActivity.mirrorActivityId = 0) AND
 				(Organization_.organizationId = ?)
@@ -150,7 +150,7 @@
 				SocialActivity
 			INNER JOIN
 				Users_Orgs ON
-					(Users_Orgs.userId = SocialActivity.userId)
+					Users_Orgs.userId = SocialActivity.userId
 			WHERE
 				(SocialActivity.mirrorActivityId = 0) AND
 				(Users_Orgs.organizationId = ?)
@@ -164,9 +164,9 @@
 				SocialActivity
 			INNER JOIN
 				SocialRelation ON
-					(SocialRelation.userId2 = SocialActivity.userId)
+					SocialRelation.userId2 = SocialActivity.userId
 			WHERE
-				(SocialRelation.userId1 = ?)
+				SocialRelation.userId1 = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.social.kernel.service.persistence.SocialActivityFinder.countByRelationType">
@@ -177,7 +177,7 @@
 				SocialActivity
 			INNER JOIN
 				SocialRelation ON
-					(SocialRelation.userId2 = SocialActivity.userId)
+					SocialRelation.userId2 = SocialActivity.userId
 			WHERE
 				(SocialActivity.mirrorActivityId = 0) AND
 				(SocialRelation.userId1 = ?) AND
@@ -258,10 +258,10 @@
 					SocialActivity
 				INNER JOIN
 					Group_ ON
-						(Group_.groupId = SocialActivity.groupId)
+						Group_.groupId = SocialActivity.groupId
 				INNER JOIN
 					Organization_ ON
-						(Organization_.organizationId = Group_.classPK)
+						Organization_.organizationId = Group_.classPK
 				WHERE
 					(SocialActivity.mirrorActivityId = 0) AND
 					(
@@ -286,10 +286,10 @@
 				SocialActivity
 			INNER JOIN
 				Group_ ON
-					(Group_.groupId = SocialActivity.groupId)
+					Group_.groupId = SocialActivity.groupId
 			INNER JOIN
 				Organization_ ON
-					(Organization_.organizationId = Group_.classPK)
+					Organization_.organizationId = Group_.classPK
 			WHERE
 				(SocialActivity.mirrorActivityId = 0) AND
 				(
@@ -326,7 +326,7 @@
 				SocialActivity
 			INNER JOIN
 				Users_Groups ON
-					(Users_Groups.userId = SocialActivity.userId)
+					Users_Groups.userId = SocialActivity.userId
 			WHERE
 				(SocialActivity.mirrorActivityId = 0) AND
 				(Users_Groups.groupId = ?)
@@ -342,10 +342,10 @@
 				SocialActivity
 			INNER JOIN
 				Group_ ON
-					(Group_.groupId = SocialActivity.groupId)
+					Group_.groupId = SocialActivity.groupId
 			INNER JOIN
 				Organization_ ON
-					(Organization_.organizationId = Group_.classPK)
+					Organization_.organizationId = Group_.classPK
 			WHERE
 				(SocialActivity.mirrorActivityId = 0) AND
 				(Organization_.organizationId = ?)
@@ -361,7 +361,7 @@
 				SocialActivity
 			INNER JOIN
 				Users_Orgs ON
-					(Users_Orgs.userId = SocialActivity.userId)
+					Users_Orgs.userId = SocialActivity.userId
 			WHERE
 				(SocialActivity.mirrorActivityId = 0) AND
 				(Users_Orgs.organizationId = ?)
@@ -377,7 +377,7 @@
 				SocialActivity
 			INNER JOIN
 				SocialRelation ON
-					(SocialRelation.userId2 = SocialActivity.userId)
+					SocialRelation.userId2 = SocialActivity.userId
 			WHERE
 				(SocialRelation.userId1 = ?)
 			ORDER BY
@@ -392,7 +392,7 @@
 				SocialActivity
 			INNER JOIN
 				SocialRelation ON
-					(SocialRelation.userId2 = SocialActivity.userId)
+					SocialRelation.userId2 = SocialActivity.userId
 			WHERE
 				(SocialActivity.mirrorActivityId = 0) AND
 				(SocialRelation.userId1 = ?) AND
@@ -480,10 +480,10 @@
 						SocialActivity
 					INNER JOIN
 						Group_ ON
-							(Group_.groupId = SocialActivity.groupId)
+							Group_.groupId = SocialActivity.groupId
 					INNER JOIN
 						Organization_ ON
-							(Organization_.organizationId = Group_.classPK)
+							Organization_.organizationId = Group_.classPK
 					WHERE
 						(SocialActivity.mirrorActivityId = 0) AND
 						(
@@ -510,10 +510,10 @@
 				SocialActivity
 			INNER JOIN
 				Group_ ON
-					(Group_.groupId = SocialActivity.groupId)
+					Group_.groupId = SocialActivity.groupId
 			INNER JOIN
 				Organization_ ON
-					(Organization_.organizationId = Group_.classPK)
+					Organization_.organizationId = Group_.classPK
 			WHERE
 				(SocialActivity.mirrorActivityId = 0) AND
 				(
@@ -539,12 +539,12 @@
 				SocialActivitySet
 			INNER JOIN
 				Group_ ON
-					(Group_.groupId = SocialActivitySet.groupId)
+					Group_.groupId = SocialActivitySet.groupId
 			INNER JOIN
 				Organization_ ON
-					(Organization_.organizationId = Group_.classPK)
+					Organization_.organizationId = Group_.classPK
 			WHERE
-				(Organization_.organizationId = ?)
+				Organization_.organizationId = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.social.kernel.service.persistence.SocialActivitySetFinder.countByRelation">
@@ -555,9 +555,9 @@
 				SocialActivitySet
 			INNER JOIN
 				SocialRelation ON
-					(SocialRelation.userId2 = SocialActivitySet.userId)
+					SocialRelation.userId2 = SocialActivitySet.userId
 			WHERE
-				(SocialRelation.userId1 = ?)
+				SocialRelation.userId1 = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.social.kernel.service.persistence.SocialActivitySetFinder.countByRelationType">
@@ -568,7 +568,7 @@
 				SocialActivitySet
 			INNER JOIN
 				SocialRelation ON
-					(SocialRelation.userId2 = SocialActivitySet.userId)
+					SocialRelation.userId2 = SocialActivitySet.userId
 			WHERE
 				(SocialRelation.userId1 = ?) AND
 				(SocialRelation.type_ = ?)
@@ -623,9 +623,9 @@
 								SocialActivitySet
 							INNER JOIN
 								SocialRelation ON
-									(SocialRelation.userId2 = SocialActivitySet.userId)
+									SocialRelation.userId2 = SocialActivitySet.userId
 							WHERE
-								(SocialRelation.userId1 = ?)
+								SocialRelation.userId1 = ?
 						) OR
 					(userId = ?)
 				)
@@ -683,10 +683,10 @@
 				SocialActivitySet
 			INNER JOIN
 				Group_ ON
-					(Group_.groupId = SocialActivitySet.groupId)
+					Group_.groupId = SocialActivitySet.groupId
 			INNER JOIN
 				Organization_ ON
-					(Organization_.organizationId = Group_.classPK)
+					Organization_.organizationId = Group_.classPK
 			WHERE
 				(Organization_.organizationId = ?)
 			ORDER BY
@@ -701,7 +701,7 @@
 				SocialActivitySet
 			INNER JOIN
 				SocialRelation ON
-					(SocialRelation.userId2 = SocialActivitySet.userId)
+					SocialRelation.userId2 = SocialActivitySet.userId
 			WHERE
 				(SocialRelation.userId1 = ?)
 			ORDER BY
@@ -716,7 +716,7 @@
 				SocialActivitySet
 			INNER JOIN
 				SocialRelation ON
-					(SocialRelation.userId2 = SocialActivitySet.userId)
+					SocialRelation.userId2 = SocialActivitySet.userId
 			WHERE
 				(SocialRelation.userId1 = ?) AND
 				(SocialRelation.type_ = ?)
@@ -773,9 +773,9 @@
 								SocialActivitySet
 							INNER JOIN
 								SocialRelation ON
-									(SocialRelation.userId2 = SocialActivitySet.userId)
+									SocialRelation.userId2 = SocialActivitySet.userId
 							WHERE
-								(SocialRelation.userId1 = ?)
+								SocialRelation.userId1 = ?
 						) OR
 					(userId = ?)
 				)

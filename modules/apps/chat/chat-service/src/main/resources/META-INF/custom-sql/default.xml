@@ -54,7 +54,7 @@
 				Chat_Status
 			INNER JOIN
 				User_ ON
-					(User_.userId = Chat_Status.userId)
+					User_.userId = Chat_Status.userId
 			INNER JOIN
 				Group_ ON
 					(
@@ -82,7 +82,7 @@
 				Chat_Status
 			INNER JOIN
 				User_ ON
-					(User_.userId = Chat_Status.userId)
+					User_.userId = Chat_Status.userId
 			INNER JOIN
 				Group_ ON
 					(
@@ -91,7 +91,7 @@
 					)
 			INNER JOIN
 				SocialRelation ON
-					(SocialRelation.userId2 = User_.userId)
+					SocialRelation.userId2 = User_.userId
 			WHERE
 				(Group_.classNameId = ?) AND
 				(SocialRelation.userId1 = ?) AND
@@ -115,10 +115,10 @@
 				Chat_Status
 			INNER JOIN
 				User_ ON
-					(User_.userId = Chat_Status.userId)
+					User_.userId = Chat_Status.userId
 			INNER JOIN
 				Users_Groups ON
-					(Users_Groups.userId = User_.userId)
+					Users_Groups.userId = User_.userId
 			INNER JOIN
 				Group_ ON
 					(

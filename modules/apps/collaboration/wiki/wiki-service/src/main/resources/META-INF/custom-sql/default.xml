@@ -65,7 +65,7 @@
 					(AssetEntry.classNameId = ?) AND
 					(AssetEntry.classPK = WikiPage.resourcePrimKey)
 			WHERE
-				(AssetEntry.classPK IS NULL)
+				AssetEntry.classPK IS NULL
 		]]>
 	</sql>
 	<sql id="com.liferay.wiki.service.persistence.WikiPageFinder.findByG_N_H_S">

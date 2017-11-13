@@ -12,7 +12,7 @@
 					(AssetEntry.classNameId = ?) AND
 					(AssetEntry.classPK = BookmarksEntry.entryId)
 			WHERE
-				(AssetEntry.classPK IS NULL)
+				AssetEntry.classPK IS NULL
 		]]>
 	</sql>
 	<sql id="com.liferay.bookmarks.service.persistence.BookmarksFolderFinder.countE_ByG_F">
@@ -72,7 +72,7 @@
 					(AssetEntry.classNameId = ?) AND
 					(AssetEntry.classPK = BookmarksFolder.folderId)
 			WHERE
-				(AssetEntry.classPK IS NULL)
+				AssetEntry.classPK IS NULL
 		]]>
 	</sql>
 	<sql id="com.liferay.bookmarks.service.persistence.BookmarksFolderFinder.findE_ByG_F">

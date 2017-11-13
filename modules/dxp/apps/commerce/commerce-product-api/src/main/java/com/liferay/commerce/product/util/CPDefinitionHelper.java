@@ -16,14 +16,29 @@ package com.liferay.commerce.product.util;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+
+import java.util.List;
 
 /**
  * @author Marco Leo
  */
 @ProviderType
 public interface CPDefinitionHelper {
+
+	public BaseModelSearchResult<CPDefinition> getCPDefinitions(
+			long companyId, long groupId, String keywords, String filterFields,
+			String filterValues, int start, int end, Sort sort)
+		throws PortalException;
+
+	public List<Facet> getFacets(
+		String filterFields, String filterValues, SearchContext searchContext);
 
 	public String getFriendlyURL(long cpDefinitionId, ThemeDisplay themeDisplay)
 		throws PortalException;

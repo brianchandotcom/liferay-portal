@@ -183,7 +183,9 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 			while (true) {
 				pos = content.lastIndexOf("\n" + tabs, pos - 1);
 
-				if (content.charAt(pos + tabCount + 1) == CharPool.TAB) {
+				char c = content.charAt(pos + tabCount + 1);
+
+				if ((c == CharPool.NEW_LINE) || (c == CharPool.TAB)) {
 					continue;
 				}
 

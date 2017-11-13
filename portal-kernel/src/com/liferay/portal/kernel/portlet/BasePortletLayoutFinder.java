@@ -188,21 +188,18 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 	}
 
 	private long _doGetPlidFromPortletId(
-		long groupId, boolean privateLayout, String portletId) {
+			long groupId, boolean privateLayout, String portletId)
+		throws PortalException {
 
 		long scopeGroupId = groupId;
 
-		try {
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-			if (group.isLayout()) {
-				Layout scopeLayout = LayoutLocalServiceUtil.getLayout(
-					group.getClassPK());
+		if (group.isLayout()) {
+			Layout scopeLayout = LayoutLocalServiceUtil.getLayout(
+				group.getClassPK());
 
-				groupId = scopeLayout.getGroupId();
-			}
-		}
-		catch (Exception e) {
+			groupId = scopeLayout.getGroupId();
 		}
 
 		long plid = LayoutConstants.DEFAULT_PLID;

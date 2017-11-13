@@ -14,8 +14,6 @@
 
 package com.liferay.portal.jmx.internal;
 
-import com.liferay.portal.jmx.MBeanRegistry;
-
 import java.io.ObjectInputStream;
 
 import java.util.Set;

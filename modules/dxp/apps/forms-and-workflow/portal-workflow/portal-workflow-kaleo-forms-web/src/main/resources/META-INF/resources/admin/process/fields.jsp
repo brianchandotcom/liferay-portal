@@ -91,6 +91,7 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 			<portlet:param name="mvcPath" value="/edit_structure.jsp" />
 			<portlet:param name="navigationStartsOn" value="<%= DDMNavigationHelper.EDIT_STRUCTURE %>" />
 			<portlet:param name="closeRedirect" value="<%= backURL %>" />
+			<portlet:param name="saveAndContinue" value="<%= Boolean.TRUE.toString() %>" />
 			<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
 			<portlet:param name="refererPortletName" value="<%= KaleoFormsPortletKeys.KALEO_FORMS_ADMIN %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />

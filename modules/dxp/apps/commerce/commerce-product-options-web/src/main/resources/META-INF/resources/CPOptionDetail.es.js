@@ -22,7 +22,6 @@ class CPOptionDetail extends Component {
 	}
 
 	loadOptionDetail(cpOptionId) {
-
 		var that = this;
 
 		let optionDetail = this.refs['option-detail'];
@@ -57,19 +56,15 @@ class CPOptionDetail extends Component {
 	}
 
 	_handleCPOptionChange(event) {
-
 		this.loadOptionDetail(event.newVal);
-
 	}
 
 	_handleSaveOption() {
-
 		var that = this;
 
 		AUI().use(
 			'aui-base', 'aui-form-validator', 'liferay-form',
 			function(A) {
-
 				var hasErrors = false;
 
 				let form = that.element.querySelector('.option-detail form');
@@ -98,7 +93,6 @@ class CPOptionDetail extends Component {
 	}
 
 	_handleCancel() {
-
 		this.emit('cancel');
 	}
 

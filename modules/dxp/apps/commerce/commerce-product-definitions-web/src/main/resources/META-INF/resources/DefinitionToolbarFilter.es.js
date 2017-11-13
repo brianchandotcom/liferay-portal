@@ -28,19 +28,17 @@ class DefinitionToolbarFilter extends Component {
 		AUI().use(
 			'liferay-asset-taglib-categories-selector',
 			function(A) {
-
 				var categoryBox = this.element.querySelector('#assetCategoriesSelector');
 
 				if (categoryBox) {
-
 					const config = {
 						categoryIds: '',
 						categoryTitles: [],
 						contentBox: categoryBox,
 						eventName: this.namespace + 'selectCategory',
 						groupIds: this.groupIds,
-						hiddenInput:  '#categoryIds',
-						singleSelect : true,
+						hiddenInput: '#categoryIds',
+						singleSelect: true,
 						portletURL: this.categorySelectorURL,
 						vocabularyIds: this.vocabularyIds,
 						title: 'Select Category'
@@ -63,7 +61,6 @@ class DefinitionToolbarFilter extends Component {
 	}
 
 	_handleFilterChange(event) {
-
 		var target = event.target;
 
 		this._currentSelection = target.value;
@@ -80,16 +77,14 @@ class DefinitionToolbarFilter extends Component {
 	}
 
 	_handleAddFilter() {
-
 		var filters = this._filters;
 
 		if (this._currentSelection == "optionsNames") {
-
 			var optionValueSelect = this.element.querySelector('#optionValues');
 
 			var optionValue = optionValueSelect.value;
 
-			var currentOptionValue =  optionValueSelect.options[optionValueSelect.selectedIndex];
+			var currentOptionValue = optionValueSelect.options[optionValueSelect.selectedIndex];
 
 			var label = currentOptionValue.getAttribute('data-label');
 
@@ -101,8 +96,7 @@ class DefinitionToolbarFilter extends Component {
 				}
 			);
 		}
-		else if(this._currentSelection == "assetCategoryIds") {
-
+		else if (this._currentSelection == "assetCategoryIds") {
 			var category = this.categoriesSelector_.entries.values[0];
 
 			filters.push(
@@ -115,12 +109,11 @@ class DefinitionToolbarFilter extends Component {
 
 		}
 		else {
-
 			var currentSelect = this.element.querySelector('#' + this._currentSelection);
 
 			var fieldValue = currentSelect.value;
 
-			var currentOption =  currentSelect.options[currentSelect.selectedIndex];
+			var currentOption = currentSelect.options[currentSelect.selectedIndex];
 
 			var label = currentOption.getAttribute('data-label');
 
@@ -139,10 +132,9 @@ class DefinitionToolbarFilter extends Component {
 	}
 
 	_handlerRemoveFilter(event) {
-
 		var target = event.target;
 
-		//Chrome Fix
+		// Chrome fix
 		if (target.nodeName != 'button') {
 			target = target.closest('button');
 		}
@@ -200,7 +192,6 @@ class DefinitionToolbarFilter extends Component {
 	}
 
 	_applyFilters() {
-
 		var url = new URL(this.portletURL);
 
 		var filterFields = [];
@@ -226,7 +217,6 @@ class DefinitionToolbarFilter extends Component {
 	}
 
 	_loadTerms() {
-
 		var url = new URL(this.cpDefinitionsFacetsURL);
 
 		url.searchParams.append(this.namespace + "fieldName", this._currentSelection);
@@ -243,7 +233,6 @@ class DefinitionToolbarFilter extends Component {
 	}
 
 	_loadOptionValues() {
-
 		var url = new URL(this.cpDefinitionsFacetsURL);
 
 		url.searchParams.append(this.namespace + "fieldName", "OPTION_" + this._currentOption);

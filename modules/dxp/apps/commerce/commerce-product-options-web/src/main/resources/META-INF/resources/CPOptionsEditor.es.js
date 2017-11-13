@@ -23,13 +23,11 @@ class CPOptionsEditor extends Component {
 	}
 
 	_handleAddOption() {
-
 		this._newOptionTitle = '';
 		this._currentOption = "0";
 	}
 
 	loadOptions() {
-
 		var promise = fetch(this.optionsURL, {
 				credentials: 'include',
 				method: 'GET',
@@ -39,13 +37,11 @@ class CPOptionsEditor extends Component {
 				this._options = jsonResponse;
 
 				if ((this._options && this._options.length > 0)) {
-
 					if (!this._currentOption || this._currentOption == null) {
 						this._currentOption = this._options[0].cpOptionId;
 					}
 				}
-				else if((this._options && this._options.length == 0)) {
-
+				else if ((this._options && this._options.length == 0)) {
 					this._newOptionTitle = '';
 					this._currentOption = '0';
 				}
@@ -53,33 +49,28 @@ class CPOptionsEditor extends Component {
 	}
 
 	_handleOptionSelected(cpOptionId) {
-
 		this._currentOption = cpOptionId;
 	}
 
 	_handleOptionSaved(event) {
-
 		this._currentOption = event.cpOptionId;
 
 		this.loadOptions();
 	}
 
 	_handleoptionDeleted(event) {
-
 		this._currentOption = null;
 
 		this.loadOptions();
 	}
 
 	_handleCancelEditing(event) {
-
 		this._currentOption = null;
 
 		this.loadOptions();
 	}
 
 	_handleTitleChange(newTitle) {
-
 		if (this._currentOption == '0') {
 			this._newOptionTitle = newTitle;
 		}
@@ -89,7 +80,6 @@ class CPOptionsEditor extends Component {
 	}
 
 	_handleEditValues(cpOptionId) {
-
 		this._currentOption = cpOptionId;
 
 		this._showValues = true;
@@ -123,7 +113,7 @@ CPOptionsEditor.STATE = {
 
 	optionValueURL: Config.string().required(),
 
-	_options : Config.array().value([]),
+	_options: Config.array().value([]),
 
 	_newOptionTitle: Config.string().value(''),
 

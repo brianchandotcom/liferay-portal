@@ -47,7 +47,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 </liferay-portlet:renderURL>
 
 <aui:script require="commerce-product-options-web/CPOptionsEditor.es">
-
 	var cpOptionsEditor = new commerceProductOptionsWebCPOptionsEditorEs.default(
 		{
 			optionURL : '<%= cpOptionURL %>',
@@ -56,9 +55,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			optionValuesURL : '<%= cpOptionValuesURL %>',
 			namespace : '<portlet:namespace />',
 			pathThemeImages: '<%= themeDisplay.getPathThemeImages() %>'
-
-	},
+		},
 		'#<portlet:namespace />CPOptionsEditor'
 	);
-
 </aui:script>

@@ -17,14 +17,13 @@ class CPOptionList extends Component {
 	_handleEditValues(event) {
 		var target = event.delegateTarget;
 
-		var cpOptionId =  target.getAttribute('data-id');
+		var cpOptionId = target.getAttribute('data-id');
 
 		this.emit('optionSelected', cpOptionId);
 		this.emit('editValues', cpOptionId);
 	}
 
 	_handleAddOptionClick(event) {
-
 		event.stopImmediatePropagation();
 		event.preventDefault();
 
@@ -34,7 +33,7 @@ class CPOptionList extends Component {
 	_handleSelectOptionClick(event) {
 		var target = event.delegateTarget;
 
-		var cpOptionId =  target.getAttribute('data-id');
+		var cpOptionId = target.getAttribute('data-id');
 
 		this.emit('optionSelected', cpOptionId);
 	}
@@ -47,9 +46,9 @@ class CPOptionList extends Component {
  */
 CPOptionList.STATE = {
 
-	options : Config.array().value([]),
+	options: Config.array().value([]),
 
-	currentCPOptionId  : Config.string()
+	currentCPOptionId: Config.string()
 
 };
 

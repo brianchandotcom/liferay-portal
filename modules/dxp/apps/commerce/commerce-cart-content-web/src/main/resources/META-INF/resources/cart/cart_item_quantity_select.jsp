@@ -37,7 +37,6 @@ CommerceCartItem commerceCartItem = (CommerceCartItem)row.getObject();
 </aui:form>
 
 <aui:script use="aui-base">
-
 	var form = A.one('#<portlet:namespace /><%= commerceCartItem.getCommerceCartItemId() + "fm" %>');
 
 	form.delegate(
@@ -51,5 +50,4 @@ CommerceCartItem commerceCartItem = (CommerceCartItem)row.getObject();
 		},
 		'select'
 	);
-
 </aui:script>

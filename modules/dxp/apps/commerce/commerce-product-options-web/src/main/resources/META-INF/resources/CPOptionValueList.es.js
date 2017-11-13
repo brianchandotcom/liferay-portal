@@ -15,7 +15,6 @@ import templates from './CPOptionValueList.soy';
 class CPOptionValueList extends Component {
 
 	_handleAddOptionValueClick(event) {
-
 		event.stopImmediatePropagation();
 		event.preventDefault();
 
@@ -27,7 +26,7 @@ class CPOptionValueList extends Component {
 
 		var row = dom.closest(target, 'tr');
 
-		var  cpOptionValueId =  row.getAttribute('data-id');
+		var cpOptionValueId = row.getAttribute('data-id');
 
 		this.emit('optionValueSelected', cpOptionValueId);
 	}
@@ -40,9 +39,9 @@ class CPOptionValueList extends Component {
  */
 CPOptionValueList.STATE = {
 
-	optionValues : Config.array().value([]),
+	optionValues: Config.array().value([]),
 
-	currentCPOptionValueId  : Config.string()
+	currentCPOptionValueId: Config.string()
 
 };
 

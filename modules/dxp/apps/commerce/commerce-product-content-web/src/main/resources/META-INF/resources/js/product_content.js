@@ -1,7 +1,6 @@
 AUI.add(
 	'liferay-commerce-product-content',
 	function(A) {
-
 		var STR_DDM_FORM_EVENT = 'DDMForm:render';
 
 		var CP_CONTENT_WEB_PORTLET_KEY = 'com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet';

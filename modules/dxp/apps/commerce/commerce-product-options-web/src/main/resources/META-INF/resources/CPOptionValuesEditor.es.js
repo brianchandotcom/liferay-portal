@@ -29,13 +29,11 @@ class CPOptionValuesEditor extends Component {
 	}
 
 	_handleAddOptionValue() {
-
 		this._newOptionValueTitle = '';
 		this._currentOptionValue = "0";
 	}
 
 	loadOptionValues() {
-
 		if (this.cpOptionId === undefined || this.cpOptionId == '0') {
 			this._newOptionValueTitle = '';
 			this._currentOptionValue = '0';
@@ -57,13 +55,11 @@ class CPOptionValuesEditor extends Component {
 			this._optionValues = jsonResponse;
 
 			if ((this._optionValues && this._optionValues.length > 0)) {
-
 				if (!this._currentOptionValue || this._currentOptionValue == null) {
 					this._currentOptionValue = this._optionValues[0].cpOptionValueId;
 				}
 			}
-			else if((this._optionValues && this._optionValues.length == 0)) {
-
+			else if ((this._optionValues && this._optionValues.length == 0)) {
 				this._newOptionValueTitle = '';
 				this._currentOptionValue = '0';
 			}
@@ -72,38 +68,32 @@ class CPOptionValuesEditor extends Component {
 	}
 
 	_handleShowChange(event) {
-
 		this.loadOptionValues();
 	}
 
 	_handleOptionValueSelected(cpOptionValueId) {
-
 		this._currentOptionValue = cpOptionValueId;
 	}
 
 	_handleOptionValueSaved(event) {
-
 		this._currentOptionValue = event.cpOptionValueId;
 
 		this.loadOptionValues();
 	}
 
 	_handleOptionValueDelated(event) {
-
 		this._currentOptionValue = null;
 
 		this.loadOptionValues();
 	}
 
 	_handleCancelEditing(event) {
-
 		this._currentOptionValue = null;
 
 		this.loadOptionValues();
 	}
 
 	_handleTitleChange(newTitle) {
-
 		if (this._currentOptionValue == '0') {
 			this._newOptionValueTitle = newTitle;
 		}
@@ -128,7 +118,7 @@ CPOptionValuesEditor.STATE = {
 
 	optionValueURL: Config.string().required(),
 
-	_optionValues : Config.array().value([]),
+	_optionValues: Config.array().value([]),
 
 	_newOptionValueTitle: Config.string().value(''),
 

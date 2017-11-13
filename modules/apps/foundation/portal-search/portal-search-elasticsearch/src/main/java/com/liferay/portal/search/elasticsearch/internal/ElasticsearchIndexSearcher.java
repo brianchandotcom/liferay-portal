@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.facet.FacetProcessor;
@@ -73,7 +74,6 @@ import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.geo.GeoDistance;
-import org.elasticsearch.common.text.Text;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -337,8 +337,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		Document document, Map<String, HighlightField> highlightFields,
 		String fieldName, Locale locale) {
 
-		String snippet = StringPool.BLANK;
-
 		String snippetFieldName = DocumentImpl.getLocalizedName(
 			locale, fieldName);
 
@@ -350,24 +348,15 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			snippetFieldName = fieldName;
 		}
 
-		if (highlightField != null) {
-			Text[] texts = highlightField.fragments();
-
-			StringBundler sb = new StringBundler(texts.length * 2);
-
-			for (Text text : texts) {
-				sb.append(text);
-				sb.append(StringPool.TRIPLE_PERIOD);
-			}
-
-			sb.setIndex(sb.index() - 1);
-
-			snippet = sb.toString();
+		if (highlightField == null) {
+			return;
 		}
+
+		Object[] array = highlightField.fragments();
 
 		document.addText(
 			Field.SNIPPET.concat(StringPool.UNDERLINE).concat(snippetFieldName),
-			snippet);
+			StringUtil.merge(array, StringPool.TRIPLE_PERIOD));
 	}
 
 	protected void addSnippets(

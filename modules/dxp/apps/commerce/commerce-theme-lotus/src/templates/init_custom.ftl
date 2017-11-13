@@ -12,7 +12,7 @@
 <#macro commerce_category_navigation_menu default_preferences = "">
 	<@liferay_portlet["runtime"]
 		defaultPreferences=default_preferences
-		portletName="com_liferay_commerce_product_asset_category_navigation_web_internal_portlet_CPAssetCategoryNavigationPortlet"
+		portletName="com_liferay_commerce_product_asset_categories_navigation_web_internal_portlet_CPAssetCategoriesNavigationPortlet"
 	/>
 </#macro>
 

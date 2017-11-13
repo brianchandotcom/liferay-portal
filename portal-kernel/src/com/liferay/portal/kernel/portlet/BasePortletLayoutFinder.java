@@ -18,17 +18,24 @@ import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sites.kernel.util.SitesUtil;
+
+import java.util.List;
+
+import javax.portlet.PortletPreferences;
 
 /**
  * @author Adolfo Pérez
@@ -116,7 +123,7 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 		throws PortalException {
 
 		for (String portletId : portletIds) {
-			long plid = PortalUtil.getPlidFromPortletId(groupId, portletId);
+			long plid = _getPlidFromPortletId(groupId, portletId);
 
 			if (plid == LayoutConstants.DEFAULT_PLID) {
 				continue;
@@ -178,6 +185,132 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 		private final long _plid;
 		private final String _portletId;
 
+	}
+
+	private long _doGetPlidFromPortletId(
+		long groupId, boolean privateLayout, String portletId) {
+
+		long scopeGroupId = groupId;
+
+		try {
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+			if (group.isLayout()) {
+				Layout scopeLayout = LayoutLocalServiceUtil.getLayout(
+					group.getClassPK());
+
+				groupId = scopeLayout.getGroupId();
+			}
+		}
+		catch (Exception e) {
+		}
+
+		long plid = LayoutConstants.DEFAULT_PLID;
+
+		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+			groupId, privateLayout, LayoutConstants.TYPE_PORTLET);
+
+		for (Layout layout : layouts) {
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)layout.getLayoutType();
+
+			if (layoutTypePortlet.hasPortletId(portletId, true)) {
+				if (_getScopeGroupId(layout, portletId) == scopeGroupId) {
+					plid = layout.getPlid();
+
+					break;
+				}
+			}
+		}
+
+		return plid;
+	}
+
+	private long _getPlidFromPortletId(
+		long groupId, boolean privateLayout, String portletId) {
+
+		return _doGetPlidFromPortletId(groupId, privateLayout, portletId);
+	}
+
+	private long _getPlidFromPortletId(long groupId, String portletId)
+		throws PortalException {
+
+		long plid = _getPlidFromPortletId(groupId, false, portletId);
+
+		if (plid == LayoutConstants.DEFAULT_PLID) {
+			plid = _getPlidFromPortletId(groupId, true, portletId);
+		}
+
+		if (plid == LayoutConstants.DEFAULT_PLID) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Portlet ", portletId,
+						" does not exist on a page in group ",
+						String.valueOf(groupId)));
+			}
+		}
+
+		return plid;
+	}
+
+	private long _getScopeGroupId(Layout layout, String portletId) {
+		return _getScopeGroupId(null, layout, portletId);
+	}
+
+	private long _getScopeGroupId(
+		ThemeDisplay themeDisplay, Layout layout, String portletId) {
+
+		if (layout == null) {
+			return 0;
+		}
+
+		if (Validator.isNull(portletId)) {
+			return layout.getGroupId();
+		}
+
+		try {
+			PortletPreferences portletSetup = null;
+
+			if (themeDisplay == null) {
+				portletSetup =
+					PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
+						layout, portletId);
+			}
+			else {
+				portletSetup = themeDisplay.getStrictLayoutPortletSetup(
+					layout, portletId);
+			}
+
+			String scopeType = GetterUtil.getString(
+				portletSetup.getValue("lfrScopeType", null));
+
+			if (Validator.isNull(scopeType)) {
+				return layout.getGroupId();
+			}
+
+			if (scopeType.equals("company")) {
+				Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
+					layout.getCompanyId());
+
+				return companyGroup.getGroupId();
+			}
+
+			String scopeLayoutUuid = GetterUtil.getString(
+				portletSetup.getValue("lfrScopeLayoutUuid", null));
+
+			Layout scopeLayout =
+				LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+					scopeLayoutUuid, layout.getGroupId(),
+					layout.isPrivateLayout());
+
+			Group scopeGroup = scopeLayout.getScopeGroup();
+
+			return scopeGroup.getGroupId();
+		}
+		catch (Exception e) {
+			return layout.getGroupId();
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -11,8 +11,6 @@
 	{@param? options: ?}
 	{@param? pathThemeImages: string}
 	{@param? _handleAddOptionClick: any}
-	{@param? _handleEditValues: any}
-	{@param? _handleSelectOptionClick: any}
 
 	<h4 class="section-header">
 
@@ -39,55 +37,25 @@
 			</thead>
 			<tbody>
 
-				{let $attributes kind="attributes"}
-					class="
-
-						{sp}table-active
-
-					{if $currentCPOptionId == '0'}
-						{sp}show
-					{else}
-						{sp}hide
-					{/if}
-					"
-				{/let}
-
-				<tr data-id="0"  {$attributes}>
-					<td class=""></td>
-					<td class="table-cell-content">
-						 {if $newOptionTitle == ''}
-							[ New Option ]
-						 {else}
-							{$newOptionTitle}
-						 {/if}
-					</td>
-					<td class=""></td>
-				</tr>
+				{if $currentCPOptionId == '0'}
+					{call .optionRow}
+						{param id: '0' /}
+						{param title: $newOptionTitle ? '[ New Option ]' : $newOptionTitle /}
+						{param selected: true /}
+						{param showButton: false /}
+					{/call}
+				{/if}
 
 				{if $options}
 
 					{foreach $option in $options}
 
-						{let $classes kind="text"}
-
-							{if $option.cpOptionId == $currentCPOptionId}
-								{sp}table-active
-							{/if}
-						{/let}
-
-						<tr data-id="{$option.cpOptionId}" onclick="{$_handleSelectOptionClick}" class="{$classes}">
-							<td class="">
-								{$option.cpOptionId}
-							</td>
-							<td class="table-cell-content">
-								{$option.title}
-							</td>
-							<td class="">
-								{if $option.hasValues}
-									<button class="btn btn-link" type="button" onclick="{$_handleEditValues}">edit values</button>
-								{/if}
-							</td>
-						</tr>
+						{call .optionRow}
+							{param id: $option.cpOptionId /}
+							{param title: $option.title /}
+							{param selected: $option.cpOptionId == $currentCPOptionId /}
+							{param showButton: $option.hasValues /}
+						{/call}
 
 					{/foreach}
 
@@ -96,5 +64,37 @@
 			</tbody>
 		</table>
 	</div>
+
+{/template}
+
+/**
+ * CP Option Row
+ *
+ */
+{template .optionRow}
+	{@param id: string}
+	{@param title: null|string }
+	{@param? selected: bool}
+	{@param? showButton: bool}
+
+	{let $classes kind="text"}
+		{if $selected}
+			table-active
+		{/if}
+	{/let}
+
+	<tr data-id="{$id}" onclick="_handleSelectOptionClick" class="{$classes}">
+		<td>
+			{$id}
+		</td>
+		<td class="table-cell-content">
+			{$title}
+		</td>
+		<td>
+			{if $showButton}
+				<button class="btn btn-link" type="button" onclick="_handleEditValues">edit values</button>
+			{/if}
+		</td>
+	</tr>
 
 {/template}

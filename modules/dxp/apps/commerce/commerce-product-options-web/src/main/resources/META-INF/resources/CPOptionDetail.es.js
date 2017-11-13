@@ -13,9 +13,7 @@ import templates from './CPOptionDetail.soy';
  */
 class CPOptionDetail extends Component {
 
-	constructor(opt_config, opt_parentElement) {
-		super(opt_config, opt_parentElement)
-
+	created() {
 		this.on('cpOptionIdChanged', this._handleCPOptionChange);
 	}
 
@@ -27,7 +25,7 @@ class CPOptionDetail extends Component {
 
 		var that = this;
 
-		let optionDetail = this.element.querySelector('.option-detail');
+		let optionDetail = this.refs['option-detail'];
 
 		var url = new URL(this.optionURL);
 
@@ -124,7 +122,7 @@ class CPOptionDetail extends Component {
 			})
 			.then(response => response.json())
 			.then((jsonResponse) => {
-					this.emit('optionDelated', jsonResponse);
+					this.emit('optionDeleted', jsonResponse);
 			});
 	}
 

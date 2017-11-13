@@ -18,12 +18,7 @@ import templates from './CPOptionsEditor.soy';
  */
 class CPOptionsEditor extends Component {
 
-	/**
-	 * @inheritDoc
-	 */
-	constructor(opt_config, opt_element) {
-		super(opt_config, opt_element);
-
+	created() {
 		this.loadOptions();
 	}
 
@@ -69,7 +64,7 @@ class CPOptionsEditor extends Component {
 		this.loadOptions();
 	}
 
-	_handleOptionDelated(event) {
+	_handleoptionDeleted(event) {
 
 		this._currentOption = null;
 

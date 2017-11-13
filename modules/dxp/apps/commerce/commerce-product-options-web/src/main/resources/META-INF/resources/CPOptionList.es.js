@@ -14,34 +14,10 @@ import templates from './CPOptionList.soy';
  */
 class CPOptionList extends Component {
 
-	/**
-	 * @inheritDoc
-	 */
-	constructor(opt_config, opt_element) {
-		super(opt_config, opt_element);
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	attached() {
-
-	}
-
-	rendered() {
-
-	}
-
-	created() {
-
-	}
-
 	_handleEditValues(event) {
-		var target = event.target;
+		var target = event.delegateTarget;
 
-		var row = dom.closest(target, 'tr');
-
-		var  cpOptionId =  row.getAttribute('data-id');
+		var cpOptionId =  target.getAttribute('data-id');
 
 		this.emit('optionSelected', cpOptionId);
 		this.emit('editValues', cpOptionId);
@@ -56,11 +32,9 @@ class CPOptionList extends Component {
 	}
 
 	_handleSelectOptionClick(event) {
-		var target = event.target;
+		var target = event.delegateTarget;
 
-		var row = dom.closest(target, 'tr');
-
-		var  cpOptionId =  row.getAttribute('data-id');
+		var cpOptionId =  target.getAttribute('data-id');
 
 		this.emit('optionSelected', cpOptionId);
 	}

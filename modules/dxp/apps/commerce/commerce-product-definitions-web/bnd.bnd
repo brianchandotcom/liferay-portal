@@ -6,5 +6,12 @@ Export-Package:\
 	com.liferay.commerce.product.definitions.web.display.context,\
 	com.liferay.commerce.product.definitions.web.portlet.action,\
 	com.liferay.commerce.product.definitions.web.servlet.taglib.ui
+Provide-Capability:\
+	soy;\
+		type="commerce-product-definitions-web";\
+		version:Version="${Bundle-Version}"
+Require-Capability:\
+	osgi.extender;\
+		filter:="(&(osgi.extender=liferay.js)(version>=1.0)(!(version>=2.0)))"
 Web-ContextPath: /commerce-product-definitions-web
 -dsannotations-options: inherit

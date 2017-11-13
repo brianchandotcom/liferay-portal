@@ -159,7 +159,14 @@
 		</exec>
 	</target>
 
-	<target depends="check-stale-artifacts,get-artifact-versions-previous-release" name="dist-module-artifacts">
+	<target
+		depends="
+			check-stale-artifacts-private,
+			check-stale-artifacts-public,
+			get-artifact-versions-previous-release"
+		name="dist-module-artifacts"
+	>
+
 		<mkdir dir="${dist.dir}" />
 
 		<subant genericantfile="${modules.dir}/build-app-module.xml" target="dist-module-artifact">

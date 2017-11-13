@@ -21,9 +21,9 @@
 			FROM
 				WikiPage
 			WHERE
-				WikiPage.groupId = ? AND
-				WikiPage.nodeId = ? AND
-				WikiPage.head = ? AND
+				(WikiPage.groupId = ?) AND
+				(WikiPage.nodeId = ?) AND
+				(WikiPage.head = ?) AND
 				([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$STATUS$])
 		]]>
 	</sql>
@@ -79,9 +79,9 @@
 					FROM
 						WikiPage
 					WHERE
-						WikiPage.groupId = ? AND
-						WikiPage.nodeId = ? AND
-						WikiPage.head = ? AND
+						(WikiPage.groupId = ?) AND
+						(WikiPage.nodeId = ?) AND
+						(WikiPage.head = ?) AND
 						([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$STATUS$])
 				)
 				TEMP_TABLE

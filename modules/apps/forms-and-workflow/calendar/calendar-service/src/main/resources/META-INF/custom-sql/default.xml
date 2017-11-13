@@ -19,10 +19,10 @@
 					(lower(location) LIKE ? [$AND_OR_NULL_CHECK$])
 				) AND
 				(
-					(startTime >= ? AND endTime <= ?) OR
-					(startTime <= ? AND endTime >= ?) OR
-					(startTime >= ? AND startTime <= ? AND endTime >= ?) OR
-					(startTime <= ? AND endTime >= ? AND endTime <= ?)
+					((startTime >= ?) AND (endTime <= ?)) OR
+					((startTime <= ?) AND (endTime >= ?)) OR
+					((startTime >= ?) AND (startTime <= ?) AND (endTime >= ?)) OR
+					((startTime <= ?) AND (endTime >= ?) AND (endTime <= ?))
 				)
 				[$STATUS$]
 		]]>
@@ -61,10 +61,10 @@
 				) AND
 				(
 					(
-						(startTime >= ? AND endTime <= ?) OR
-						(startTime <= ? AND endTime >= ?) OR
-						(startTime >= ? AND startTime <= ? AND endTime >= ?) OR
-						(startTime <= ? AND endTime >= ? AND endTime <= ?)
+						((startTime >= ?) AND (endTime <= ?)) OR
+						((startTime <= ?) AND (endTime >= ?)) OR
+						((startTime >= ?) AND (startTime <= ?) AND (endTime >= ?)) OR
+						((startTime <= ?) AND (endTime >= ?) AND (endTime <= ?))
 					)
 					[$RECURRENCE$]
 				)

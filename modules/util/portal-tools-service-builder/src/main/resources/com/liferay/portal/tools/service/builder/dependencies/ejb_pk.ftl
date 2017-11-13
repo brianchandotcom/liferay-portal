@@ -150,18 +150,18 @@ public class ${entity.PKClassName} implements Comparable<${entity.PKClassName}>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(${entity.PKList?size * 5});
+		StringBundler sb = new StringBundler(${entity.PKList?size * 2 + 2});
 
 		sb.append("{");
 
 		<#list entity.PKList as column>
-			sb.append("${column.name}");
-			sb.append("=");
-			sb.append(${column.name});
-
-			<#if column_has_next>
-				sb.append(", ");
+			<#if column?is_first>
+				sb.append("${column.name}=");
+			<#else>
+				sb.append(", ${column.name}=");
 			</#if>
+
+			sb.append(${column.name});
 		</#list>
 
 		sb.append("}");

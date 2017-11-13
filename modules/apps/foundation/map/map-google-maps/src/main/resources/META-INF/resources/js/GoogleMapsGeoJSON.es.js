@@ -24,7 +24,7 @@ class GoogleMapsGeoJSON extends GeoJSONBase {
 	 * Removes the listeners that have been added to the map object.
 	 */
 	destructor() {
-		this._eventHandlers.forEach((item) => {
+		this._eventHandlers.forEach(item => {
 			google.maps.event.removeListener(item);
 		});
 	}
@@ -69,15 +69,13 @@ class GoogleMapsGeoJSON extends GeoJSONBase {
 
 		feature.getMarker = () => {
 			if (!feature._marker) {
-				const marker = new google.maps.Marker(
-					{
-						icon: feature.getProperty('icon'),
-						map: this.map,
-						opacity: 0,
-						position: feature.getGeometry().get('location'),
-						zIndex: -1,
-					}
-				);
+				const marker = new google.maps.Marker({
+					icon: feature.getProperty('icon'),
+					map: this.map,
+					opacity: 0,
+					position: feature.getGeometry().get('location'),
+					zIndex: -1,
+				});
 
 				feature._marker = marker;
 			}

@@ -19,29 +19,17 @@ class OpenStreetMapMarker extends MarkerBase {
 	/** @inheritdoc */
 	_getNativeMarker(location, map) {
 		if (!this._nativeMarker) {
-			this._nativeMarker = L.marker(
-				location,
-				{
-					draggable: true,
-				}
-			).addTo(map);
+			this._nativeMarker = L.marker(location, {
+				draggable: true,
+			}).addTo(map);
 
-			this._nativeMarker.on(
-				'click',
-				this._getNativeEventFunction('click')
-			);
+			this._nativeMarker.on('click', this._getNativeEventFunction('click'));
 			this._nativeMarker.on(
 				'dblclick',
 				this._getNativeEventFunction('dblclick')
 			);
-			this._nativeMarker.on(
-				'drag',
-				this._getNativeEventFunction('drag')
-			);
-			this._nativeMarker.on(
-				'dragend',
-				this._getNativeEventFunction('dragend')
-			);
+			this._nativeMarker.on('drag', this._getNativeEventFunction('drag'));
+			this._nativeMarker.on('dragend', this._getNativeEventFunction('dragend'));
 			this._nativeMarker.on(
 				'dragstart',
 				this._getNativeEventFunction('dragstart')

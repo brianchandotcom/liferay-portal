@@ -19,15 +19,12 @@ class OpenStreetMapGeoJSONBase extends GeoJSONBase {
 	_getNativeFeatures(geoJSONData) {
 		const features = [];
 
-		L.geoJson(
-			geoJSONData,
-			{
-				onEachFeature: (feature, layer) => {
-					layer.on('click', this._handleFeatureClicked);
-					features.push(feature);
-				},
-			}
-		).addTo(this.map);
+		L.geoJson(geoJSONData, {
+			onEachFeature: (feature, layer) => {
+				layer.on('click', this._handleFeatureClicked);
+				features.push(feature);
+			},
+		}).addTo(this.map);
 
 		return features;
 	}
@@ -43,10 +40,7 @@ class OpenStreetMapGeoJSONBase extends GeoJSONBase {
 			getGeometry() {
 				return {
 					get() {
-						return L.latLng(
-							geometry.coordinates[1],
-							geometry.coordinates[0]
-						);
+						return L.latLng(geometry.coordinates[1], geometry.coordinates[0]);
 					},
 				};
 			},

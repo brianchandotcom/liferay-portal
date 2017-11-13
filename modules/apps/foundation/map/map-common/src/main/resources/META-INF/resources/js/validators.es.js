@@ -19,7 +19,7 @@ function isInputNode(node) {
  * @return {boolean}
  */
 function isSubsetOf(superset) {
-	return (subset) => {
+	return subset => {
 		for (let element of subset) {
 			if (superset.indexOf(element) === -1) {
 				return false;
@@ -29,7 +29,4 @@ function isSubsetOf(superset) {
 	};
 }
 
-export {
-	isInputNode,
-	isSubsetOf,
-};
+export {isInputNode, isSubsetOf};

@@ -37,7 +37,9 @@ describe('GeoJSONBase', () => {
 		it('should apply _getNativeFeatures() to the given parameter', () => {
 			geoJSONChild.addData('some data to be parsed');
 			expect(geoJSONChild._getNativeFeatures).toHaveBeenCalledTimes(1);
-			expect(geoJSONChild._getNativeFeatures).toHaveBeenCalledWith('some data to be parsed');
+			expect(geoJSONChild._getNativeFeatures).toHaveBeenCalledWith(
+				'some data to be parsed'
+			);
 		});
 
 		it('should emit a featuresAdded event after adding data', () => {

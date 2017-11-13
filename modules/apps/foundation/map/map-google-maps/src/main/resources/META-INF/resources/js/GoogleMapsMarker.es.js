@@ -19,13 +19,11 @@ class GoogleMapsMarker extends MarkerBase {
 	/** @inheritdoc */
 	_getNativeMarker(location, map) {
 		if (!this._nativeMarker) {
-			this._nativeMarker = new google.maps.Marker(
-				{
-					draggable: true,
-					map: map,
-					position: location,
-				}
-			);
+			this._nativeMarker = new google.maps.Marker({
+				draggable: true,
+				map: map,
+				position: location,
+			});
 
 			google.maps.event.addListener(
 				this._nativeMarker,

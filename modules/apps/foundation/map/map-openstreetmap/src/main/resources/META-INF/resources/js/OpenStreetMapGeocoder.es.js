@@ -13,20 +13,18 @@ class OpenStreetMapGeocoder extends State {
 	 */
 	forward(query, callback) {
 		// eslint-disable-next-line new-cap
-		AUI().use('jsonp', (A) => {
-			const forwardUrl = OpenStreetMapGeocoder
-				.TPL_FORWARD_GEOCODING_URL
-				.replace('{query}', query);
-
-			A.jsonp(
-				forwardUrl,
-				{
-					context: this,
-					on: {
-						success: A.rbind('_handleForwardJSONP', this, callback),
-					},
-				}
+		AUI().use('jsonp', A => {
+			const forwardUrl = OpenStreetMapGeocoder.TPL_FORWARD_GEOCODING_URL.replace(
+				'{query}',
+				query
 			);
+
+			A.jsonp(forwardUrl, {
+				context: this,
+				on: {
+					success: A.rbind('_handleForwardJSONP', this, callback),
+				},
+			});
 		});
 	}
 
@@ -37,20 +35,18 @@ class OpenStreetMapGeocoder extends State {
 	 */
 	reverse(location, callback) {
 		// eslint-disable-next-line new-cap
-		AUI().use('jsonp', (A) => {
-			const reverseUrl = OpenStreetMapGeocoder.TPL_REVERSE_GEOCODING_URL
-				.replace('{lat}', location.lat)
-				.replace('{lng}', location.lng);
+		AUI().use('jsonp', A => {
+			const reverseUrl = OpenStreetMapGeocoder.TPL_REVERSE_GEOCODING_URL.replace(
+				'{lat}',
+				location.lat
+			).replace('{lng}', location.lng);
 
-			A.jsonp(
-				reverseUrl,
-				{
-					context: this,
-					on: {
-						success: A.rbind('_handleReverseJSONP', this, callback),
-					},
-				}
-			);
+			A.jsonp(reverseUrl, {
+				context: this,
+				on: {
+					success: A.rbind('_handleReverseJSONP', this, callback),
+				},
+			});
 		});
 	}
 
@@ -94,7 +90,8 @@ class OpenStreetMapGeocoder extends State {
  * @see OpenStreetMapGeocoder.forward()
  */
 // eslint-disable-next-line max-len
-OpenStreetMapGeocoder.TPL_FORWARD_GEOCODING_URL = '//nominatim.openstreetmap.org/search?format=json&json_callback={callback}&q={query}';
+OpenStreetMapGeocoder.TPL_FORWARD_GEOCODING_URL =
+	'//nominatim.openstreetmap.org/search?format=json&json_callback={callback}&q={query}';
 
 /**
  * Url template used for OpenStreetMapGeocoder.reverse() method
@@ -102,6 +99,7 @@ OpenStreetMapGeocoder.TPL_FORWARD_GEOCODING_URL = '//nominatim.openstreetmap.org
  * @see OpenStreetMapGeocoder.reverse()
  */
 // eslint-disable-next-line max-len
-OpenStreetMapGeocoder.TPL_REVERSE_GEOCODING_URL = '//nominatim.openstreetmap.org/reverse?format=json&json_callback={callback}&lat={lat}&lon={lng}';
+OpenStreetMapGeocoder.TPL_REVERSE_GEOCODING_URL =
+	'//nominatim.openstreetmap.org/reverse?format=json&json_callback={callback}&lat={lat}&lon={lng}';
 
 export default OpenStreetMapGeocoder;

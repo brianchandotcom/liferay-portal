@@ -64,28 +64,29 @@ class MapBase extends State {
 		this._map = null;
 		this._originalPosition = null;
 
-		this._handleGeoJSONLayerFeaturesAdded =
-			this._handleGeoJSONLayerFeaturesAdded.bind(this);
-		this._handleGeoJSONLayerFeatureClicked =
-			this._handleGeoJSONLayerFeatureClicked.bind(this);
-		this._handleGeoLocationMarkerDragended =
-			this._handleGeoLocationMarkerDragended.bind(this);
-		this._handleHomeButtonClicked =
-			this._handleHomeButtonClicked.bind(this);
-		this._handlePositionChanged =
-			this._handlePositionChanged.bind(this);
-		this._handleSearchButtonClicked =
-			this._handleSearchButtonClicked.bind(this);
+		this._handleGeoJSONLayerFeaturesAdded = this._handleGeoJSONLayerFeaturesAdded.bind(
+			this
+		);
+		this._handleGeoJSONLayerFeatureClicked = this._handleGeoJSONLayerFeatureClicked.bind(
+			this
+		);
+		this._handleGeoLocationMarkerDragended = this._handleGeoLocationMarkerDragended.bind(
+			this
+		);
+		this._handleHomeButtonClicked = this._handleHomeButtonClicked.bind(this);
+		this._handlePositionChanged = this._handlePositionChanged.bind(this);
+		this._handleSearchButtonClicked = this._handleSearchButtonClicked.bind(
+			this
+		);
 
 		this.on('positionChange', this._handlePositionChanged);
 
-		const location = this.position && this.position.location
-			? this.position.location :
-			{};
+		const location =
+			this.position && this.position.location ? this.position.location : {};
 
 		if (!location.lat || !location.lng) {
-			Liferay.Util.getGeolocation(
-				(lat, lng) => this._initializeLocation({lat, lng})
+			Liferay.Util.getGeolocation((lat, lng) =>
+				this._initializeLocation({lat, lng})
 			);
 		} else {
 			this._initializeLocation(location);
@@ -224,23 +225,17 @@ class MapBase extends State {
 		}
 
 		if (this._customControls) {
-			const homeControl =
-				this._customControls[this.constructor.CONTROLS.HOME];
-			const searchControl =
-				this._customControls[this.constructor.CONTROLS.SEARCH];
+			const homeControl = this._customControls[this.constructor.CONTROLS.HOME];
+			const searchControl = this._customControls[
+				this.constructor.CONTROLS.SEARCH
+			];
 
 			if (homeControl) {
-				homeControl.addEventListener(
-					'click',
-					this._handleHomeButtonClicked
-				);
+				homeControl.addEventListener('click', this._handleHomeButtonClicked);
 			}
 
 			if (searchControl) {
-				searchControl.on(
-					'search',
-					this._handleSearchButtonClicked
-				);
+				searchControl.on('search', this._handleSearchButtonClicked);
 			}
 		}
 	}
@@ -265,10 +260,11 @@ class MapBase extends State {
 			this.constructor.SearchImpl
 		) {
 			const searchControl = buildFragment(TPL_SEARCH_BOX).firstElementChild;
-			customControls[this.constructor.CONTROLS.SEARCH] =
-				new this.constructor.SearchImpl(
-					{inputNode: searchControl.querySelector('input')}
-				);
+			customControls[
+				this.constructor.CONTROLS.SEARCH
+			] = new this.constructor.SearchImpl({
+				inputNode: searchControl.querySelector('input'),
+			});
 			this.addControl(searchControl, this.constructor.POSITION.TOP_LEFT);
 		}
 
@@ -287,10 +283,10 @@ class MapBase extends State {
 	_getControlsConfig() {
 		const config = {};
 		const availableControls = this.controls.map(
-			(item) => (typeof item === 'string') ? item : item.name
+			item => (typeof item === 'string' ? item : item.name)
 		);
 
-		Object.keys(this.constructor.CONTROLS_MAP).forEach((key) => {
+		Object.keys(this.constructor.CONTROLS_MAP).forEach(key => {
 			const value = this.constructor.CONTROLS_MAP[key];
 			const controlIndex = availableControls.indexOf(key);
 
@@ -655,13 +651,9 @@ MapBase.STATE = {
 	 * The full control list is kept inside MapBase.CONTROLS.
 	 * @type {Array<string>}
 	 */
-	controls: Config
-		.validator(isSubsetOf(Object.values(MapBase.CONTROLS)))
-		.value([
-			MapBase.CONTROLS.PAN,
-			MapBase.CONTROLS.TYPE,
-			MapBase.CONTROLS.ZOOM,
-		]),
+	controls: Config.validator(isSubsetOf(Object.values(MapBase.CONTROLS))).value(
+		[MapBase.CONTROLS.PAN, MapBase.CONTROLS.TYPE, MapBase.CONTROLS.ZOOM]
+	),
 
 	/**
 	 * Data that will be parsed as GeoJSONData
@@ -680,13 +672,12 @@ MapBase.STATE = {
 	 * if the position is changed internally.
 	 * @type {{ lat: number, lng: number }}
 	 */
-	position: Config
-		.shapeOf({
-			location: Config.shapeOf({
-				lat: Config.number().value(0),
-				lng: Config.number().value(0),
-			}),
-		})
+	position: Config.shapeOf({
+		location: Config.shapeOf({
+			lat: Config.number().value(0),
+			lng: Config.number().value(0),
+		}),
+	})
 		.value({
 			location: {lat: 0, lng: 0},
 		})

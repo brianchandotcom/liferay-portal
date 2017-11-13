@@ -19,12 +19,9 @@ class GeoJSONBase extends State {
 		const nativeFeatures = this._getNativeFeatures(nativeFeaturesData);
 
 		if (nativeFeatures.length > 0) {
-			this.emit(
-				'featuresAdded',
-				{
-					features: nativeFeatures.map(this._wrapNativeFeature),
-				}
-			);
+			this.emit('featuresAdded', {
+				features: nativeFeatures.map(this._wrapNativeFeature),
+			});
 		}
 	}
 
@@ -36,12 +33,9 @@ class GeoJSONBase extends State {
 	 * @private
 	 */
 	_handleFeatureClicked(nativeFeature) {
-		this.emit(
-			'featureClick',
-			{
-				feature: this._wrapNativeFeature(nativeFeature),
-			}
-		);
+		this.emit('featureClick', {
+			feature: this._wrapNativeFeature(nativeFeature),
+		});
 	}
 
 	/**

@@ -64,13 +64,13 @@ describe('MarkerBase', () => {
 			expect(markerChild._handleNativeEvent).toHaveBeenCalledTimes(1);
 		});
 
-				// eslint-disable-next-line max-len
+		// eslint-disable-next-line max-len
 		it('returns a function that calls _handleNativeEvent with the given event object when executed', () => {
 			const fn = markerChild._getNativeEventFunction('nativeEvent');
 			fn({name: 'AwesomeNativeEvent'});
 			expect(markerChild._handleNativeEvent).toHaveBeenCalledTimes(1);
 			expect(markerChild._handleNativeEvent.mock.calls[0][0]).toEqual({
-				name: 'AwesomeNativeEvent'
+				name: 'AwesomeNativeEvent',
 			});
 		});
 
@@ -79,7 +79,9 @@ describe('MarkerBase', () => {
 			const fn = markerChild._getNativeEventFunction('nativeEvent');
 			fn();
 			expect(markerChild._handleNativeEvent).toHaveBeenCalledTimes(1);
-			expect(markerChild._handleNativeEvent.mock.calls[0][1]).toBe('nativeEvent');
+			expect(markerChild._handleNativeEvent.mock.calls[0][1]).toBe(
+				'nativeEvent'
+			);
 		});
 	});
 

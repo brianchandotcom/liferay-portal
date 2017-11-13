@@ -26,7 +26,7 @@ class GoogleMapsSearch extends State {
 	 * Removes the listeners that have been added to the search input.
 	 */
 	destructor() {
-		this._eventHandlers.forEach((item) => {
+		this._eventHandlers.forEach(item => {
 			google.maps.event.removeListener(item);
 		});
 	}
@@ -56,18 +56,15 @@ class GoogleMapsSearch extends State {
 		if (place && typeof place === 'object' && place.geometry) {
 			const location = place.geometry.location;
 
-			this.emit(
-				'search',
-				{
-					position: {
-						address: place.formatted_address,
-						location: {
-							lat: location.lat(),
-							lng: location.lng(),
-						},
+			this.emit('search', {
+				position: {
+					address: place.formatted_address,
+					location: {
+						lat: location.lat(),
+						lng: location.lng(),
 					},
-				}
-			);
+				},
+			});
 		}
 	}
 }

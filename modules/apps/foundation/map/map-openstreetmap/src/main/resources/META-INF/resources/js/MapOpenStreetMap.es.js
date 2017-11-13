@@ -85,8 +85,8 @@ MapBase.SearchImpl = null;
 
 /** @inheritdoc */
 MapOpenStreetMap.CONTROLS_MAP = {
-		[MapBase.CONTROLS.ATTRIBUTION]: 'attributionControl',
-		[MapBase.CONTROLS.ZOOM]: 'zoomControl',
+	[MapBase.CONTROLS.ATTRIBUTION]: 'attributionControl',
+	[MapBase.CONTROLS.ZOOM]: 'zoomControl',
 };
 
 /** @inheritdoc */
@@ -115,9 +115,7 @@ MapOpenStreetMap.STATE = Object.assign({}, MapBase.STATE, {
 	 * Url used for fetching map tile information
 	 * @type {string}
 	 */
-	tileURI: Config
-		.string()
-		.value('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'),
+	tileURI: Config.string().value('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'),
 });
 
 export default MapOpenStreetMap;

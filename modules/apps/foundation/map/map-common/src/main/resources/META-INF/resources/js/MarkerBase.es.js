@@ -40,9 +40,11 @@ class MarkerBase extends State {
 	_getNativeEventFunction(externalEventType) {
 		const functionName = `_nativeEventHandler_${externalEventType}`;
 
-		this[functionName] = this[functionName] || ((nativeEvent) => {
-			this._handleNativeEvent(nativeEvent, externalEventType);
-		});
+		this[functionName] =
+			this[functionName] ||
+			(nativeEvent => {
+				this._handleNativeEvent(nativeEvent, externalEventType);
+			});
 
 		return this[functionName];
 	}
@@ -88,12 +90,10 @@ MarkerBase.STATE = {
 	 * Location to be used
 	 * @type {Object}
 	 */
-	location: Config
-		.shapeOf({
-			lat: Config.number().required(),
-			lng: Config.number().required(),
-		})
-		.value({lat: 0, lng: 0}),
+	location: Config.shapeOf({
+		lat: Config.number().required(),
+		lng: Config.number().required(),
+	}).value({lat: 0, lng: 0}),
 };
 
 Liferay.MapMarkerBase = MarkerBase;

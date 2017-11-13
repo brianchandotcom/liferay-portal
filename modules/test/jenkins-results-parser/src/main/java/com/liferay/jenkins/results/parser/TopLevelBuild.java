@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -410,17 +411,75 @@ public class TopLevelBuild extends BaseBuild {
 		}
 
 		super.findDownstreamBuilds();
+
+		String consoleText = getConsoleText();
+
+		for (Build downstreamBuild : downstreamBuilds) {
+			BaseBuild downstreamBaseBuild = (BaseBuild)downstreamBuild;
+
+			downstreamBaseBuild.checkForReinvocation(consoleText);
+		}
 	}
 
 	@Override
-	protected List<String> findDownstreamBuildsInConsoleText(
-		String consoleText) {
-
+	protected List<String> findDownstreamBuildsInConsoleText() {
 		if (getParentBuild() != null) {
 			return Collections.emptyList();
 		}
 
-		return super.findDownstreamBuildsInConsoleText(consoleText);
+		String consoleText = getConsoleText();
+
+		List<String> foundDownstreamBuildURLs = new ArrayList<>();
+
+		if ((consoleText == null) || consoleText.isEmpty()) {
+			return foundDownstreamBuildURLs;
+		}
+
+		Set<String> downstreamBuildURLs = new HashSet<>();
+
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			String downstreamBuildURL = downstreamBuild.getBuildURL();
+
+			if (downstreamBuildURL != null) {
+				downstreamBuildURLs.add(downstreamBuildURL);
+			}
+		}
+
+		if (getBuildURL() != null) {
+			int i = consoleText.lastIndexOf("\nstop-current-job:");
+
+			if (i != -1) {
+				consoleText = consoleText.substring(0, i);
+			}
+
+			Matcher downstreamBuildURLMatcher =
+				downstreamBuildURLPattern.matcher(
+					consoleText.substring(consoleReadCursor));
+
+			consoleReadCursor = consoleText.length();
+
+			while (downstreamBuildURLMatcher.find()) {
+				String url = downstreamBuildURLMatcher.group("url");
+
+				Pattern reinvocationPattern = Pattern.compile(
+					Pattern.quote(url) + " restarted at (?<url>[^\\s]*)\\.");
+
+				Matcher reinvocationMatcher = reinvocationPattern.matcher(
+					consoleText);
+
+				while (reinvocationMatcher.find()) {
+					url = reinvocationMatcher.group("url");
+				}
+
+				if (!foundDownstreamBuildURLs.contains(url) &&
+					!downstreamBuildURLs.contains(url)) {
+
+					foundDownstreamBuildURLs.add(url);
+				}
+			}
+		}
+
+		return foundDownstreamBuildURLs;
 	}
 
 	protected Element getBaseBranchDetailsElement() {

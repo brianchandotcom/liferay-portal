@@ -257,13 +257,6 @@ public class BatchBuild extends BaseBuild {
 		super(url, topLevelBuild);
 	}
 
-	@Override
-	protected List<String> findDownstreamBuildsInConsoleText(
-		String consoleText) {
-
-		return Collections.emptyList();
-	}
-
 	protected AxisBuild getAxisBuild(String axisVariable) {
 		for (Build downstreamBuild : getDownstreamBuilds(null)) {
 			AxisBuild downstreamAxisBuild = (AxisBuild)downstreamBuild;

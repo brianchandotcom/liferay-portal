@@ -109,21 +109,13 @@ class CPOptionValuesEditor extends Component {
  * @static
  */
 CPOptionValuesEditor.STATE = {
-
 	cpOptionId: Config.string().required(),
-
 	show: Config.bool().value(false),
-
 	optionValuesURL: Config.string().required(),
-
 	optionValueURL: Config.string().required(),
-
 	_optionValues: Config.array().value([]),
-
 	_newOptionValueTitle: Config.string().value(''),
-
 	namespace: Config.string().required(),
-
 	pathThemeImages: Config.string().required()
 };
 

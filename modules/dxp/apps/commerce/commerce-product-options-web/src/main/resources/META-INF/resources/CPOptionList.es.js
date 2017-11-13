@@ -45,11 +45,8 @@ class CPOptionList extends Component {
  * @static
  */
 CPOptionList.STATE = {
-
 	options: Config.array().value([]),
-
 	currentCPOptionId: Config.string()
-
 };
 
 // Register component

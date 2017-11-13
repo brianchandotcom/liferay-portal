@@ -96,29 +96,13 @@ class CPOptionsEditor extends Component {
  * @static
  */
 CPOptionsEditor.STATE = {
-
-	/**
-	 * Url to get the options list
-	 * @type {String}
-	 */
 	optionsURL: Config.string().required(),
-
-	/**
-	 * Url to get the option detail
-	 * @type {String}
-	 */
 	optionURL: Config.string().required(),
-
 	optionValuesURL: Config.string().required(),
-
 	optionValueURL: Config.string().required(),
-
 	_options: Config.array().value([]),
-
 	_newOptionTitle: Config.string().value(''),
-
 	namespace: Config.string().required(),
-
 	pathThemeImages: Config.string().required()
 };
 

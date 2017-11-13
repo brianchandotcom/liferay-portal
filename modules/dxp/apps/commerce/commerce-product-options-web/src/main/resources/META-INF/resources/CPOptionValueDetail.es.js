@@ -149,15 +149,10 @@ class CPOptionValueDetail extends Component {
  * @static
  */
 CPOptionValueDetail.STATE = {
-
 	cpOptionId: Config.string().required(),
-
 	cpOptionValueId: Config.string().required(),
-
 	namespace: Config.string().required(),
-
 	optionValueURL: Config.string().required(),
-
 	pathThemeImages: Config.string().required()
 };
 

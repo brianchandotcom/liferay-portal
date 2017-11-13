@@ -255,29 +255,17 @@ class DefinitionToolbarFilter extends Component {
  * @static
  */
 DefinitionToolbarFilter.STATE = {
-
 	categorySelectorURL: Config.string().required(),
-
 	cpDefinitionsFacetsURL: Config.string().required(),
-
 	groupIds: Config.string().value(''),
-
 	namespace: Config.string().required(),
-
 	pathThemeImages: Config.string().required(),
-
 	portletURL: Config.string().required(),
-
 	vocabularyIds: Config.string().required(),
-
 	_currentSelection: Config.string().value(''),
-
 	_filters: Config.array().value([]),
-
 	_optionValues: Config.array().value([]),
-
 	_terms: Config.array().value([])
-
 };
 
 // Register component

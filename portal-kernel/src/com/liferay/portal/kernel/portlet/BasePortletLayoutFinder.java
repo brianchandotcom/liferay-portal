@@ -226,19 +226,13 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 		return plid;
 	}
 
-	private long _getPlidFromPortletId(
-		long groupId, boolean privateLayout, String portletId) {
-
-		return _doGetPlidFromPortletId(groupId, privateLayout, portletId);
-	}
-
 	private long _getPlidFromPortletId(long groupId, String portletId)
 		throws PortalException {
 
-		long plid = _getPlidFromPortletId(groupId, false, portletId);
+		long plid = _doGetPlidFromPortletId(groupId, false, portletId);
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
-			plid = _getPlidFromPortletId(groupId, true, portletId);
+			plid = _doGetPlidFromPortletId(groupId, true, portletId);
 		}
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {

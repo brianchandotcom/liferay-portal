@@ -16,19 +16,17 @@ package com.liferay.commerce.util;
 
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.commerce.product.model.CPInstance;
 
 /**
  * @author Alessio Antonio Rendina
  */
 public interface CommercePriceCalculator {
 
-	public double getPrice(CommerceCartItem commerceCartItem)
-		throws PortalException;
+	public double getPrice(CommerceCartItem commerceCartItem);
 
-	public double getPrice(long cpInstanceId, int quantity)
-		throws PortalException;
+	public double getPrice(CPInstance cpInstance, int quantity);
 
-	public double getTotal(CommerceCart commerceCart) throws PortalException;
+	public double getTotal(CommerceCart commerceCart);
 
 }

@@ -544,8 +544,7 @@ public class FedExCommerceShippingOptionHelper {
 
 			BigDecimal weight = _getFedExWeight(cpInstance.getWeight());
 
-			double price = _commercePriceCalculator.getPrice(
-				cpInstance.getCPInstanceId(), 1);
+			double price = _commercePriceCalculator.getPrice(cpInstance, 1);
 
 			for (int j = 0; j < commerceCartItem.getQuantity(); j++) {
 				RequestedPackageLineItem requestedPackageLineItem =

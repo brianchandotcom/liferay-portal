@@ -17,15 +17,11 @@ package com.liferay.commerce.internal.util;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.service.CPDefinitionService;
-import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.util.CommercePriceCalculator;
-import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -34,33 +30,22 @@ import org.osgi.service.component.annotations.Reference;
 public class CommercePriceCalculatorImpl implements CommercePriceCalculator {
 
 	@Override
-	public double getPrice(CommerceCartItem commerceCartItem)
-		throws PortalException {
-
+	public double getPrice(CommerceCartItem commerceCartItem) {
 		return getPrice(
-			commerceCartItem.getCPInstanceId(), commerceCartItem.getQuantity());
+			commerceCartItem.fetchCPInstance(), commerceCartItem.getQuantity());
 	}
 
 	@Override
-	public double getPrice(long cpInstanceId, int quantity)
-		throws PortalException {
-
-		double price = 0;
-
-		if (cpInstanceId > 0) {
-			CPInstance cpInstance = _cpInstanceService.fetchCPInstance(
-				cpInstanceId);
-
-			if (cpInstance != null) {
-				price = cpInstance.getPrice();
-			}
+	public double getPrice(CPInstance cpInstance, int quantity) {
+		if (cpInstance == null) {
+			return 0;
 		}
 
-		return price * quantity;
+		return cpInstance.getPrice() * quantity;
 	}
 
 	@Override
-	public double getTotal(CommerceCart commerceCart) throws PortalException {
+	public double getTotal(CommerceCart commerceCart) {
 		double total = 0;
 
 		if (commerceCart == null) {
@@ -78,11 +63,5 @@ public class CommercePriceCalculatorImpl implements CommercePriceCalculator {
 
 		return total;
 	}
-
-	@Reference
-	private CPDefinitionService _cpDefinitionService;
-
-	@Reference
-	private CPInstanceService _cpInstanceService;
 
 }

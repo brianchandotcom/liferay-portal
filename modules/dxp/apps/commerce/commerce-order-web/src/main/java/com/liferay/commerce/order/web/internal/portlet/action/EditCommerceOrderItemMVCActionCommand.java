@@ -121,7 +121,7 @@ public class EditCommerceOrderItemMVCActionCommand
 				commerceOrderItemId);
 
 		double price = _commercePriceCalculator.getPrice(
-			commerceOrderItem.getCPInstanceId(), quantity);
+			commerceOrderItem.getCPInstance(), quantity);
 
 		_commerceOrderItemLocalService.updateCommerceOrderItem(
 			commerceOrderItemId, quantity, commerceOrderItem.getJson(), price);

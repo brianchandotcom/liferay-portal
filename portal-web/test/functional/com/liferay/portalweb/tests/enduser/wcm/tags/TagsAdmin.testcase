@@ -70,8 +70,6 @@
 	</command>
 
 	<command name="DeleteTagFromMenu" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="Tag#viewCP">
 			<var name="tagName" value="tagname1" />
 		</execute>

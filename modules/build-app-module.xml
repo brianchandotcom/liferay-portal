@@ -104,7 +104,7 @@
 		</if>
 	</target>
 
-	<target if="artifact.deploy.dependencies" name="download-artifact-dependencies">
+	<target if="artifact.deploy.dependencies" name="download-artifact-dependencies" unless="artifact.exclude">
 		<exec dir="${modules.dir}" executable="${modules.dir}/../gradlew${gradlew.suffix}">
 			<arg value="${gradle.project.path}:deployDependencies" />
 			<arg value="-Ddeploy.dependencies.keep.versions=true" />
@@ -210,6 +210,7 @@
 		description="Get an aggregated list of tickets from the change logs of all versions of the current module since the version present in the previous release of this app."
 		if="${app.has.artifact.previous.release}"
 		name="get-artifact-change-log-ticket-list-since-previous-release"
+		unless="artifact.exclude"
 	>
 		<loadfile failonerror="false" property="artifact.change.log.ticket.list" srcfile="${releng.module.dir}/liferay-releng.changelog">
 			<filterchain>
@@ -252,7 +253,7 @@
 		name="get-artifact-properties"
 	/>
 
-	<target if="artifact.bnd" name="get-artifact-properties-bnd">
+	<target if="artifact.bnd" name="get-artifact-properties-bnd" unless="artifact.exclude">
 		<property file="bnd.bnd" />
 
 		<property name="artifact.location.dest" value="${osgi.dir}/marketplace/${Bundle-SymbolicName}-${Bundle-Version}.jar" />
@@ -274,7 +275,7 @@
 		<basename file="${artifact.location.src}" property="artifact.file.name" />
 	</target>
 
-	<target if="artifact.json" name="get-artifact-properties-json">
+	<target if="artifact.json" name="get-artifact-properties-json" unless="artifact.exclude">
 		<basename file="${basedir}" property="app.dir.name" />
 
 		<loadfile property="artifact.name" srcfile="package.json">
@@ -330,7 +331,7 @@
 		<property name="artifact.location.src" value="${osgi.dir}/../deploy/${artifact.name}.war" />
 	</target>
 
-	<target if="artifact.legacy" name="get-artifact-properties-legacy">
+	<target if="artifact.legacy" name="get-artifact-properties-legacy" unless="artifact.exclude">
 		<basename file="${basedir}" property="artifact.name" />
 
 		<property file="${ant.file}/../../release.properties" />

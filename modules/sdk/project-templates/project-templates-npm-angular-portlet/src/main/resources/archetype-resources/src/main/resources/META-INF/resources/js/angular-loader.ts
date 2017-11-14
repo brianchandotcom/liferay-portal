@@ -6,8 +6,8 @@ import 'zone.js';
 declare var Liferay: any;
 
 // Launch application
-export default function() {
+export default function(rootId: any) {
 	Liferay.Loader.require('${artifactId}@${packageJsonVersion}/js/main', (main: any) => {
-		main.default();
+		main.default(rootId);
 	});
 }

@@ -14,14 +14,15 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
 
-<aui:input label="name" name="TypeSettingsProperties--name--" placeholder="name">
-	<aui:validator name="required" />
-</aui:input>
+<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.model.Portlet" %><%@
+page import="com.liferay.site.navigation.menu.item.full.page.application.internal.constants.SiteNavigationMenuItemTypeFullPageApplicationWebKeys" %>
 
-<aui:input label="url" name="TypeSettingsProperties--url--" placeholder="http://">
-	<aui:validator name="required" />
+<%@ page import="java.util.List" %>
 
-	<aui:validator name="url" />
-</aui:input>
+<liferay-frontend:defineObjects />
+
+<%@ include file="/init-ext.jsp" %>

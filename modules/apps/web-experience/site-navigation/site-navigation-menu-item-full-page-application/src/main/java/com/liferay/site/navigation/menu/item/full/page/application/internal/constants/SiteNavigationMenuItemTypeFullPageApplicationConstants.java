@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,16 +11,14 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.site.navigation.menu.item.full.page.application.internal.constants;
 
-<aui:input label="name" name="TypeSettingsProperties--name--" placeholder="name">
-	<aui:validator name="required" />
-</aui:input>
+/**
+ * @author Pavel Savinov
+ */
+public class SiteNavigationMenuItemTypeFullPageApplicationConstants {
 
-<aui:input label="url" name="TypeSettingsProperties--url--" placeholder="http://">
-	<aui:validator name="required" />
+	public static final String FULL_PAGE_APPLICATION = "full_page_application";
 
-	<aui:validator name="url" />
-</aui:input>
+}

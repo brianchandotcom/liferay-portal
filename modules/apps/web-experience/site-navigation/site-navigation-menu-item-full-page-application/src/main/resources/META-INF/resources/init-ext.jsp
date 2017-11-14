@@ -13,15 +13,3 @@
  * details.
  */
 --%>
-
-<%@ include file="/init.jsp" %>
-
-<aui:input label="name" name="TypeSettingsProperties--name--" placeholder="name">
-	<aui:validator name="required" />
-</aui:input>
-
-<aui:input label="url" name="TypeSettingsProperties--url--" placeholder="http://">
-	<aui:validator name="required" />
-
-	<aui:validator name="url" />
-</aui:input>

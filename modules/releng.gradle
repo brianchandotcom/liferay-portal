@@ -122,13 +122,15 @@ lockDependencyVersion {
 
 			buildGradleFile.text = newBuildGradle
 
+			String buildGradleRelativePath = String.valueOf(repositoryRootDirPath.relativize(buildGradleFile.toPath()))
+
 			if (!_executeGradle(moduleDir, ["classes", "testClasses", "testIntegrationClasses", "compileJSP", "formatSource"], [:], false)) {
 				println "Unable to lock dependency '${dependencyName}' version to ${dependencyVersion} in ${relativePath(moduleDir)}"
 
+				grgit.reset mode: "hard", paths: [buildGradleRelativePath]
+
 				return
 			}
-
-			String buildGradleRelativePath = String.valueOf(repositoryRootDirPath.relativize(buildGradleFile.toPath()))
 
 			buildGradleRelativePath = buildGradleRelativePath.replace(File.separatorChar, '/' as char)
 

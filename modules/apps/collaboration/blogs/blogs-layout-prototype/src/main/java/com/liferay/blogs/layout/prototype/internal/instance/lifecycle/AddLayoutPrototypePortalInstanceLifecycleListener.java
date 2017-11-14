@@ -14,7 +14,7 @@
 
 package com.liferay.blogs.layout.prototype.internal.instance.lifecycle;
 
-import com.liferay.asset.tags.navigation.web.constants.AssetTagsNavigationPortletKeys;
+import com.liferay.asset.tags.navigation.constants.AssetTagsNavigationPortletKeys;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.recent.bloggers.web.constants.RecentBloggersPortletKeys;

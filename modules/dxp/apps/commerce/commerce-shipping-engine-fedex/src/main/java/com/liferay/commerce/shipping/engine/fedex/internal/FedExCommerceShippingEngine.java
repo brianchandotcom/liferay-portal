@@ -24,7 +24,7 @@ import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.shipping.engine.fedex.internal.configuration.FedExCommerceShippingEngineGroupServiceConfiguration;
 import com.liferay.commerce.shipping.engine.fedex.internal.constants.FedExCommerceShippingEngineConstants;
 import com.liferay.commerce.shipping.engine.fedex.internal.util.FedExCommerceShippingOptionHelper;
-import com.liferay.commerce.util.CommercePriceCalculationHelper;
+import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommerceShippingOriginLocatorRegistry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -74,7 +74,7 @@ public class FedExCommerceShippingEngine implements CommerceShippingEngine {
 				fedExCommerceShippingOptionsHelper =
 					new FedExCommerceShippingOptionHelper(
 						commerceCart, _commerceCurrencyLocalService,
-						_commercePriceCalculationHelper,
+						_commercePriceCalculator,
 						_commerceShippingOriginLocatorRegistry,
 						_cpInstanceLocalService, _cpMeasurementUnitLocalService,
 						_configurationProvider, _getResourceBundle(locale));
@@ -167,7 +167,7 @@ public class FedExCommerceShippingEngine implements CommerceShippingEngine {
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Reference
-	private CommercePriceCalculationHelper _commercePriceCalculationHelper;
+	private CommercePriceCalculator _commercePriceCalculator;
 
 	@Reference
 	private CommerceShippingOriginLocatorRegistry

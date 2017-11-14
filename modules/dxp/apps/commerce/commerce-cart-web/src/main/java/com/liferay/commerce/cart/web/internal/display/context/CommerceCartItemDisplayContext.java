@@ -19,7 +19,7 @@ import com.liferay.commerce.cart.web.internal.util.CommerceCartPortletUtil;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.product.item.selector.criterion.CPInstanceItemSelectorCriterion;
 import com.liferay.commerce.service.CommerceCartItemService;
-import com.liferay.commerce.util.CommercePriceCalculationHelper;
+import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -50,7 +50,7 @@ public class CommerceCartItemDisplayContext
 	public CommerceCartItemDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
 			CommerceCartItemService commerceCartItemService,
-			CommercePriceCalculationHelper commercePriceCalculationHelper,
+			CommercePriceCalculator commercePriceCalculator,
 			CommercePriceFormatter commercePriceFormatter,
 			ItemSelector itemSelector)
 		throws PortalException {
@@ -60,7 +60,7 @@ public class CommerceCartItemDisplayContext
 			CommerceCartItem.class.getSimpleName());
 
 		_commerceCartItemService = commerceCartItemService;
-		_commercePriceCalculationHelper = commercePriceCalculationHelper;
+		_commercePriceCalculator = commercePriceCalculator;
 		_commercePriceFormatter = commercePriceFormatter;
 		_itemSelector = itemSelector;
 	}
@@ -89,8 +89,7 @@ public class CommerceCartItemDisplayContext
 	public String getFormattedPrice(CommerceCartItem commerceCartItem)
 		throws PortalException {
 
-		double price = _commercePriceCalculationHelper.getPrice(
-			commerceCartItem);
+		double price = _commercePriceCalculator.getPrice(commerceCartItem);
 
 		return _commercePriceFormatter.format(httpServletRequest, price);
 	}
@@ -202,8 +201,7 @@ public class CommerceCartItemDisplayContext
 
 	private CommerceCartItem _commerceCartItem;
 	private final CommerceCartItemService _commerceCartItemService;
-	private final CommercePriceCalculationHelper
-		_commercePriceCalculationHelper;
+	private final CommercePriceCalculator _commercePriceCalculator;
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private final ItemSelector _itemSelector;
 

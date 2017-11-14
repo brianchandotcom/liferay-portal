@@ -22,7 +22,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceCartService;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.commerce.util.CommercePriceCalculationHelper;
+import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -135,7 +135,7 @@ public class OrderSummaryCommerceCheckoutStep implements CommerceCheckoutStep {
 		OrderSummaryCheckoutStepDisplayContext
 			orderSummaryCheckoutStepDisplayContext =
 				new OrderSummaryCheckoutStepDisplayContext(
-					_commerceCartService, _commercePriceCalculationHelper,
+					_commerceCartService, _commercePriceCalculator,
 					_commercePriceFormatter, _cpInstanceHelper,
 					httpServletRequest);
 
@@ -163,7 +163,7 @@ public class OrderSummaryCommerceCheckoutStep implements CommerceCheckoutStep {
 	private CommerceOrderService _commerceOrderService;
 
 	@Reference
-	private CommercePriceCalculationHelper _commercePriceCalculationHelper;
+	private CommercePriceCalculator _commercePriceCalculator;
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;

@@ -21,7 +21,7 @@ import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceCartService;
-import com.liferay.commerce.util.CommercePriceCalculationHelper;
+import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -42,14 +42,14 @@ public class OrderSummaryCheckoutStepDisplayContext {
 
 	public OrderSummaryCheckoutStepDisplayContext(
 			CommerceCartService commerceCartService,
-			CommercePriceCalculationHelper commercePriceCalculationHelper,
+			CommercePriceCalculator commercePriceCalculator,
 			CommercePriceFormatter commercePriceFormatter,
 			CPInstanceHelper cpInstanceHelper,
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		_commerceCartService = commerceCartService;
-		_commercePriceCalculationHelper = commercePriceCalculationHelper;
+		_commercePriceCalculator = commercePriceCalculator;
 		_commercePriceFormatter = commercePriceFormatter;
 		_cpInstanceHelper = cpInstanceHelper;
 		_httpServletRequest = httpServletRequest;
@@ -95,7 +95,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 	public String getCommerceCartTotal() throws PortalException {
 		CommerceCart commerceCart = getCommerceCart();
 
-		double total = _commercePriceCalculationHelper.getTotal(commerceCart);
+		double total = _commercePriceCalculator.getTotal(commerceCart);
 
 		return _commercePriceFormatter.format(_httpServletRequest, total);
 	}
@@ -103,8 +103,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 	public String getFormattedPrice(CommerceCartItem commerceCartItem)
 		throws PortalException {
 
-		double price = _commercePriceCalculationHelper.getPrice(
-			commerceCartItem);
+		double price = _commercePriceCalculator.getPrice(commerceCartItem);
 
 		return _commercePriceFormatter.format(_httpServletRequest, price);
 	}
@@ -117,8 +116,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 
 	private final CommerceCart _commerceCart;
 	private final CommerceCartService _commerceCartService;
-	private final CommercePriceCalculationHelper
-		_commercePriceCalculationHelper;
+	private final CommercePriceCalculator _commercePriceCalculator;
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private final CPInstanceHelper _cpInstanceHelper;
 	private final HttpServletRequest _httpServletRequest;

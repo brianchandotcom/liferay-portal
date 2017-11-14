@@ -21,7 +21,7 @@ import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.commerce.util.CommerceCartHelper;
-import com.liferay.commerce.util.CommercePriceCalculationHelper;
+import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -40,14 +40,14 @@ public class CommerceWishListContentDisplayContext
 		HttpServletResponse httpServletResponse,
 		CommerceCartHelper commerceCartHelper,
 		CommerceCartItemService commerceCartItemService,
-		CommercePriceCalculationHelper commercePriceCalculationHelper,
+		CommercePriceCalculator commercePriceCalculator,
 		CommercePriceFormatter commercePriceFormatter,
 		CPDefinitionHelper cpDefinitionHelper,
 		CPInstanceHelper cpInstanceHelper) {
 
 		super(
 			httpServletRequest, httpServletResponse, commerceCartHelper,
-			commerceCartItemService, commercePriceCalculationHelper,
+			commerceCartItemService, commercePriceCalculator,
 			commercePriceFormatter, cpDefinitionHelper, cpInstanceHelper);
 	}
 

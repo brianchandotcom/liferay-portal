@@ -25,7 +25,7 @@ import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.commerce.util.CommerceCartHelper;
-import com.liferay.commerce.util.CommercePriceCalculationHelper;
+import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -57,7 +57,7 @@ public class CommerceCartContentDisplayContext {
 		HttpServletResponse httpServletResponse,
 		CommerceCartHelper commerceCartHelper,
 		CommerceCartItemService commerceCartItemService,
-		CommercePriceCalculationHelper commercePriceCalculationHelper,
+		CommercePriceCalculator commercePriceCalculator,
 		CommercePriceFormatter commercePriceFormatter,
 		CPDefinitionHelper cpDefinitionHelper,
 		CPInstanceHelper cpInstanceHelper) {
@@ -66,7 +66,7 @@ public class CommerceCartContentDisplayContext {
 		this.httpServletResponse = httpServletResponse;
 		_commerceCartHelper = commerceCartHelper;
 		_commerceCartItemService = commerceCartItemService;
-		_commercePriceCalculationHelper = commercePriceCalculationHelper;
+		_commercePriceCalculator = commercePriceCalculator;
 		_commercePriceFormatter = commercePriceFormatter;
 		this.cpDefinitionHelper = cpDefinitionHelper;
 		this.cpInstanceHelper = cpInstanceHelper;
@@ -130,7 +130,7 @@ public class CommerceCartContentDisplayContext {
 	public String getCommerceCartTotal() throws PortalException {
 		CommerceCart commerceCart = getCommerceCart();
 
-		double total = _commercePriceCalculationHelper.getTotal(commerceCart);
+		double total = _commercePriceCalculator.getTotal(commerceCart);
 
 		return _commercePriceFormatter.format(httpServletRequest, total);
 	}
@@ -151,8 +151,7 @@ public class CommerceCartContentDisplayContext {
 	public String getFormattedPrice(CommerceCartItem commerceCartItem)
 		throws PortalException {
 
-		double price = _commercePriceCalculationHelper.getPrice(
-			commerceCartItem);
+		double price = _commercePriceCalculator.getPrice(commerceCartItem);
 
 		return _commercePriceFormatter.format(httpServletRequest, price);
 	}
@@ -219,8 +218,7 @@ public class CommerceCartContentDisplayContext {
 	private CommerceCart _commerceCart;
 	private final CommerceCartHelper _commerceCartHelper;
 	private final CommerceCartItemService _commerceCartItemService;
-	private final CommercePriceCalculationHelper
-		_commercePriceCalculationHelper;
+	private final CommercePriceCalculator _commercePriceCalculator;
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private SearchContainer<CommerceCartItem> _searchContainer;
 

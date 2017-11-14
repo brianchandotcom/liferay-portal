@@ -17,7 +17,7 @@ package com.liferay.commerce.cart.web.internal.portlet.action;
 import com.liferay.commerce.cart.web.internal.display.context.CommerceCartItemDisplayContext;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.service.CommerceCartItemService;
-import com.liferay.commerce.util.CommercePriceCalculationHelper;
+import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -60,7 +60,7 @@ public class ViewCommerceCartItemsMVCRenderCommand implements MVCRenderCommand {
 			CommerceCartItemDisplayContext commerceCartItemDisplayContext =
 				new CommerceCartItemDisplayContext(
 					_actionHelper, httpServletRequest, _commerceCartItemService,
-					_commercePriceCalculationHelper, _commercePriceFormatter,
+					_commercePriceCalculator, _commercePriceFormatter,
 					_itemSelector);
 
 			renderRequest.setAttribute(
@@ -81,7 +81,7 @@ public class ViewCommerceCartItemsMVCRenderCommand implements MVCRenderCommand {
 	private CommerceCartItemService _commerceCartItemService;
 
 	@Reference
-	private CommercePriceCalculationHelper _commercePriceCalculationHelper;
+	private CommercePriceCalculator _commercePriceCalculator;
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;

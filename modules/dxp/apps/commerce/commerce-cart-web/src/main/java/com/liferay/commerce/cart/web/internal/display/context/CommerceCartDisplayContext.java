@@ -19,7 +19,7 @@ import com.liferay.commerce.cart.web.internal.util.CommerceCartPortletUtil;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.service.CommerceCartService;
-import com.liferay.commerce.util.CommercePriceCalculationHelper;
+import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -43,7 +43,7 @@ public class CommerceCartDisplayContext
 	public CommerceCartDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
 			CommerceCartService commerceCartService,
-			CommercePriceCalculationHelper commercePriceCalculationHelper,
+			CommercePriceCalculator commercePriceCalculator,
 			CommercePriceFormatter commercePriceFormatter)
 		throws PortalException {
 
@@ -54,14 +54,14 @@ public class CommerceCartDisplayContext
 		setDefaultOrderByCol("name");
 
 		_commerceCartService = commerceCartService;
-		_commercePriceCalculationHelper = commercePriceCalculationHelper;
+		_commercePriceCalculator = commercePriceCalculator;
 		_commercePriceFormatter = commercePriceFormatter;
 	}
 
 	public String getCommerceCartTotal(CommerceCart commerceCart)
 		throws PortalException {
 
-		double total = _commercePriceCalculationHelper.getTotal(commerceCart);
+		double total = _commercePriceCalculator.getTotal(commerceCart);
 
 		return _commercePriceFormatter.format(httpServletRequest, total);
 	}
@@ -134,8 +134,7 @@ public class CommerceCartDisplayContext
 	}
 
 	private final CommerceCartService _commerceCartService;
-	private final CommercePriceCalculationHelper
-		_commercePriceCalculationHelper;
+	private final CommercePriceCalculator _commercePriceCalculator;
 	private final CommercePriceFormatter _commercePriceFormatter;
 
 }

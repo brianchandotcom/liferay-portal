@@ -20,7 +20,7 @@ import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.commerce.util.CommerceCartHelper;
-import com.liferay.commerce.util.CommercePriceCalculationHelper;
+import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -66,8 +66,7 @@ public class CommerceCartContentMiniConfigurationAction
 				commerceCartContentDisplayContext =
 					new CommerceCartContentMiniDisplayContext(
 						request, response, _commerceCartHelper,
-						_commerceCartItemService,
-						_commercePriceCalculationHelper,
+						_commerceCartItemService, _commercePriceCalculator,
 						_commercePriceFormatter, _cpDefinitionHelper,
 						_cpInstanceHelper);
 
@@ -101,7 +100,7 @@ public class CommerceCartContentMiniConfigurationAction
 	private CommerceCartItemService _commerceCartItemService;
 
 	@Reference
-	private CommercePriceCalculationHelper _commercePriceCalculationHelper;
+	private CommercePriceCalculator _commercePriceCalculator;
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;

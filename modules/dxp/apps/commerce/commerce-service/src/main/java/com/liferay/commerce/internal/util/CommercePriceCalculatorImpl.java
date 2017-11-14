@@ -19,7 +19,7 @@ import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPInstanceService;
-import com.liferay.commerce.util.CommercePriceCalculationHelper;
+import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
@@ -30,9 +30,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(immediate = true, service = CommercePriceCalculationHelper.class)
-public class CommercePriceCalculationHelperImpl
-	implements CommercePriceCalculationHelper {
+@Component(immediate = true, service = CommercePriceCalculator.class)
+public class CommercePriceCalculatorImpl implements CommercePriceCalculator {
 
 	@Override
 	public double getPrice(CommerceCartItem commerceCartItem)

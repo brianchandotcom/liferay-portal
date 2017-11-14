@@ -65,7 +65,7 @@ import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.shipping.engine.fedex.internal.configuration.FedExCommerceShippingEngineGroupServiceConfiguration;
 import com.liferay.commerce.shipping.engine.fedex.internal.constants.FedExCommerceShippingEngineConstants;
-import com.liferay.commerce.util.CommercePriceCalculationHelper;
+import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommerceShippingOriginLocatorRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -103,7 +103,7 @@ public class FedExCommerceShippingOptionHelper {
 	public FedExCommerceShippingOptionHelper(
 			CommerceCart commerceCart,
 			CommerceCurrencyLocalService commerceCurrencyLocalService,
-			CommercePriceCalculationHelper commercePriceCalculationHelper,
+			CommercePriceCalculator commercePriceCalculator,
 			CommerceShippingOriginLocatorRegistry
 				commerceShippingOriginLocatorRegistry,
 			CPInstanceLocalService cpInstanceLocalService,
@@ -114,7 +114,7 @@ public class FedExCommerceShippingOptionHelper {
 
 		_commerceCart = commerceCart;
 		_commerceCurrencyLocalService = commerceCurrencyLocalService;
-		_commercePriceCalculationHelper = commercePriceCalculationHelper;
+		_commercePriceCalculator = commercePriceCalculator;
 		_cpInstanceLocalService = cpInstanceLocalService;
 		_cpMeasurementUnitLocalService = cpMeasurementUnitLocalService;
 		_resourceBundle = resourceBundle;
@@ -353,8 +353,7 @@ public class FedExCommerceShippingOptionHelper {
 		double amount = 0;
 
 		for (CommerceCartItem commerceCartItem : commerceCartItems) {
-			amount += _commercePriceCalculationHelper.getPrice(
-				commerceCartItem);
+			amount += _commercePriceCalculator.getPrice(commerceCartItem);
 		}
 
 		return amount;
@@ -545,7 +544,7 @@ public class FedExCommerceShippingOptionHelper {
 
 			BigDecimal weight = _getFedExWeight(cpInstance.getWeight());
 
-			double price = _commercePriceCalculationHelper.getPrice(
+			double price = _commercePriceCalculator.getPrice(
 				cpInstance.getCPInstanceId(), 1);
 
 			for (int j = 0; j < commerceCartItem.getQuantity(); j++) {
@@ -678,8 +677,7 @@ public class FedExCommerceShippingOptionHelper {
 	private final CommerceCart _commerceCart;
 	private final CommerceCurrency _commerceCurrency;
 	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;
-	private final CommercePriceCalculationHelper
-		_commercePriceCalculationHelper;
+	private final CommercePriceCalculator _commercePriceCalculator;
 	private final CommerceShippingOriginLocator _commerceShippingOriginLocator;
 	private final CPInstanceLocalService _cpInstanceLocalService;
 	private final CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;

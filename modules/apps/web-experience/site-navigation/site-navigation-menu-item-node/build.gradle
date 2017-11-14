@@ -1,0 +1,3 @@
+dependencies {
+	provided project(":apps:web-experience:site-navigation:site-navigation-api")
+}

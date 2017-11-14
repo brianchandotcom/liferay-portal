@@ -15,7 +15,7 @@
 package com.liferay.site.navigation.menu.item.full.page.application.internal.constants;
 
 /**
- * @author Eudaldo Alonso
+ * @author Pavel Savinov
  */
 public class SiteNavigationMenuItemTypeFullPageApplicationConstants {
 

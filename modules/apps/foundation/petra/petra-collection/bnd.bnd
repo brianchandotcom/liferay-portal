@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Petra Collection
-Bundle-SymbolicName: com.liferay.petra.collection
-Bundle-Version: 1.0.3
-Export-Package: com.liferay.petra.collection.stack
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:

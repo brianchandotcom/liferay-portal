@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.user.groups.admin.item.selector.internal.handler;
+package com.liferay.user.groups.admin.item.selector.internal;
 
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
-import com.liferay.user.groups.admin.item.selector.criterion.UserGroupItemSelectorCriterion;
+import com.liferay.user.groups.admin.item.selector.UserGroupItemSelectorCriterion;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;

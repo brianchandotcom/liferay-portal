@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.user.groups.admin.item.selector.criterion;
+package com.liferay.user.groups.admin.item.selector;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
 

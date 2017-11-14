@@ -105,7 +105,7 @@ lockDependencyVersion {
 
 		boolean commitChanges = false
 
-		FileTree buildGradleFileTree = fileTree(dir: projectDir, includes: ["apps/**/build.gradle", "core/**/build.gradle"])
+		FileTree buildGradleFileTree = fileTree(dir: projectDir, excludes: ["**/build/", "**/classes/", "**/node_modules/"], includes: ["apps/**/build.gradle", "core/**/build.gradle"])
 
 		buildGradleFileTree.each {
 			File buildGradleFile ->

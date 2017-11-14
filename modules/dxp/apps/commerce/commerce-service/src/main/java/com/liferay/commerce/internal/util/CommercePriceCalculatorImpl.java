@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(immediate = true, service = CommercePriceCalculator.class)
+@Component(immediate = true)
 public class CommercePriceCalculatorImpl implements CommercePriceCalculator {
 
 	@Override

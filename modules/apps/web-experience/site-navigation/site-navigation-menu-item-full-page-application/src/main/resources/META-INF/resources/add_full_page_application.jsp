@@ -28,7 +28,7 @@ String selectedPortletId = GetterUtil.getString(request.getAttribute(SiteNavigat
 	for (Portlet portlet : portlets) {
 	%>
 
-		<aui:option label="<%= portlet.getDisplayName() %>" selected="<%= (Objects.equals(selectedPortletId, portlet.getPortletId())) %>" value="<%= portlet.getPortletId() %>" />
+		<aui:option label="<%= portlet.getDisplayName() %>" selected="<%= Objects.equals(selectedPortletId, portlet.getPortletId()) %>" value="<%= portlet.getPortletId() %>" />
 
 	<%
 	}

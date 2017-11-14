@@ -76,13 +76,13 @@ public class FullPageApplicationSiteNavigationMenuItemType
 		typeSettingsProperties.fastLoad(
 			siteNavigationMenuItem.getTypeSettings());
 
-		String selectedPortletId = typeSettingsProperties.get(
-			"selectedPortletId");
+		String fullPageApplicationPortletId = typeSettingsProperties.get(
+			"fullPageApplicationPortlet");
 
-		Portlet selectedPortlet = _portletLocalService.getPortletById(
-			selectedPortletId);
+		Portlet fullPageApplicationPortlet =
+			_portletLocalService.getPortletById(fullPageApplicationPortletId);
 
-		return selectedPortlet.getDisplayName();
+		return fullPageApplicationPortlet.getDisplayName();
 	}
 
 	@Override

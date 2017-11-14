@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:select label='<%= LanguageUtil.get(resourceBundle, "full-page-application") %>' name="TypeSettingsProperties--selectedPortletId--">
+<aui:select label='<%= LanguageUtil.get(resourceBundle, "full-page-application") %>' name="TypeSettingsProperties--fullPageApplicationPortlet--">
 
 	<%
 	List<Portlet> portlets = (List<Portlet>)request.getAttribute(SiteNavigationMenuItemTypeFullPageApplicationWebKeys.FULL_PAGE_APPLICATION_PORTLETS);

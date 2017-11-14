@@ -1,6 +1,10 @@
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
+dependencies {
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+}
+
 liferay {
 	deployDir = appServerLibGlobalDir
 }

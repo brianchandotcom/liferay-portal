@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.users.admin.item.selector.criterion.UserItemSelectorCriterion;
+import com.liferay.users.admin.item.selector.UserItemSelectorCriterion;
 import com.liferay.users.admin.item.selector.web.internal.constants.UserItemSelectorViewConstants;
 import com.liferay.users.admin.item.selector.web.internal.display.context.UserItemSelectorViewDisplayContext;
 import com.liferay.users.admin.kernel.util.UsersAdmin;

@@ -1,8 +1,8 @@
 <definition component-name="portal-staging">
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
-	<property name="testray.component.names" value="Site and Page Templates" />
-	<property name="testray.main.component.name" value="Site and Page Templates" />
+	<property name="testray.component.names" value="Site Templates" />
+	<property name="testray.main.component.name" value="Site Templates" />
 
 	<set-up>
 		<execute macro="TestCase#setUpPortalInstance" />

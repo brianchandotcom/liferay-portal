@@ -1,8 +1,8 @@
-<definition component-name="portal-staging">
+<definition component-name="portal-wcm">
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
-	<property name="testray.component.names" value="Site and Page Templates" />
-	<property name="testray.main.component.name" value="Site and Page Templates" />
+	<property name="testray.component.names" value="Page Templates" />
+	<property name="testray.main.component.name" value="Page Templates" />
 
 	<set-up>
 		<execute macro="TestCase#setUpPortalInstance" />
@@ -486,7 +486,7 @@
 	</command>
 
 	<command name="ViewEditedPageTemplatePageName" priority="4">
-		<property name="testray.component.names" value="Site and Page Templates" />
+		<property name="testray.component.names" value="Page Templates" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Sites" />

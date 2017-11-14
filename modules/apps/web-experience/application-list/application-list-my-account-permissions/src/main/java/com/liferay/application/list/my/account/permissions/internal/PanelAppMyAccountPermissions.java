@@ -17,8 +17,10 @@ package com.liferay.application.list.my.account.permissions.internal;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletConstants;
@@ -28,6 +30,7 @@ import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -56,7 +59,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 @Component(immediate = true, service = PanelAppMyAccountPermissions.class)
 public class PanelAppMyAccountPermissions {
 
-	public void initPermissions(Portlet portlet) {
+	public void initPermissions(List<Company> companies, Portlet portlet) {
 		String category = portlet.getControlPanelEntryCategory();
 
 		if ((category == null) ||
@@ -65,16 +68,42 @@ public class PanelAppMyAccountPermissions {
 			return;
 		}
 
-		try {
-			_initPermissions(portlet);
+		_initPermissions(companies, portlet);
+	}
+
+	public void initPermissions(long companyId, List<Portlet> portlets) {
+		Role userRole = _getUserRole(companyId);
+
+		if (userRole == null) {
+			return;
 		}
-		catch (Exception e) {
-			_log.error(
-				StringBundler.concat(
-					"Unable to initialize my account permissions for portlet ",
-					portlet.getPortletId(), " in company ",
-					String.valueOf(portlet.getCompanyId())),
-				e);
+
+		for (Portlet portlet : portlets) {
+			String category = portlet.getControlPanelEntryCategory();
+
+			if ((category == null) ||
+				!category.equals(PortletCategoryKeys.USER_MY_ACCOUNT)) {
+
+				continue;
+			}
+
+			try {
+				List<String> actionIds =
+					ResourceActionsUtil.getPortletResourceActions(
+						portlet.getRootPortletId());
+
+				_initPermissions(
+					companyId, portlet.getPortletId(),
+					portlet.getRootPortletId(), userRole, actionIds);
+			}
+			catch (Exception e) {
+				_log.error(
+					StringBundler.concat(
+						"Unable to initialize My Account panel permissions ",
+						"for portlet ", portlet.getPortletId(), " in company ",
+						String.valueOf(companyId)),
+					e);
+			}
 		}
 	}
 
@@ -95,9 +124,52 @@ public class PanelAppMyAccountPermissions {
 		_serviceTracker.close();
 	}
 
-	private void _initPermissions(Portlet portlet) throws Exception {
-		long companyId = portlet.getCompanyId();
+	private Role _getUserRole(long companyId) {
+		try {
+			return _roleLocalService.getRole(companyId, RoleConstants.USER);
+		}
+		catch (PortalException pe) {
+			_log.error("Unable to get user role in company " + companyId, pe);
+		}
+
+		return null;
+	}
+
+	private void _initPermissions(List<Company> companies, Portlet portlet) {
 		String portletId = portlet.getPortletId();
+		String rootPortletId = portlet.getRootPortletId();
+
+		List<String> actionIds = ResourceActionsUtil.getPortletResourceActions(
+			portlet.getRootPortletId());
+
+		for (Company company : companies) {
+			long companyId = company.getCompanyId();
+
+			try {
+				Role userRole = _getUserRole(companyId);
+
+				if (userRole == null) {
+					continue;
+				}
+
+				_initPermissions(
+					companyId, portletId, rootPortletId, userRole, actionIds);
+			}
+			catch (Exception e) {
+				_log.error(
+					StringBundler.concat(
+						"Unable to initialize My Account panel permissions ",
+						"for portlet ", portletId, " in company ",
+						String.valueOf(companyId)),
+					e);
+			}
+		}
+	}
+
+	private void _initPermissions(
+			long companyId, String portletId, String rootPortletId,
+			Role userRole, List<String> actionIds)
+		throws Exception {
 
 		PortletPreferences portletPreferences =
 			_portletPreferencesFactory.getLayoutPortletSetup(
@@ -112,19 +184,11 @@ public class PanelAppMyAccountPermissions {
 			return;
 		}
 
-		Role userRole = _roleLocalService.getRole(
-			companyId, RoleConstants.USER);
-
-		List<String> actionIds = ResourceActionsUtil.getPortletResourceActions(
-			portlet.getRootPortletId());
-
-		String actionId = ActionKeys.ACCESS_IN_CONTROL_PANEL;
-
-		if (actionIds.contains(actionId)) {
+		if (actionIds.contains(ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
 			_resourcePermissionLocalService.addResourcePermission(
-				companyId, portlet.getRootPortletId(),
-				ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
-				userRole.getRoleId(), actionId);
+				companyId, rootPortletId, ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(companyId), userRole.getRoleId(),
+				ActionKeys.ACCESS_IN_CONTROL_PANEL);
 		}
 
 		portletPreferences.setValue(
@@ -138,6 +202,9 @@ public class PanelAppMyAccountPermissions {
 		PanelAppMyAccountPermissions.class);
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private PortletLocalService _portletLocalService;
@@ -182,17 +249,15 @@ public class PanelAppMyAccountPermissions {
 					return panelApp;
 				}
 
-				_initPermissions(portlet);
+				_initPermissions(_companyLocalService.getCompanies(), portlet);
+
+				return panelApp;
 			}
 			catch (Throwable t) {
 				_bundleContext.ungetService(reference);
 
-				if (_log.isDebugEnabled()) {
-					_log.debug(t.getMessage());
-				}
+				throw t;
 			}
-
-			return panelApp;
 		}
 
 		@Override

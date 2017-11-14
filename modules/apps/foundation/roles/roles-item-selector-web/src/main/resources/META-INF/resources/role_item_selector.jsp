@@ -78,7 +78,7 @@ PortletURL portletURL = roleItemSelectorViewDisplayContext.getPortletURL();
 </div>
 
 <aui:script use="liferay-search-container">
-	var roleSelectorWrapper = A.one("#<portlet:namespace />roleSelectorWrapper");
+	var roleSelectorWrapper = A.one('#<portlet:namespace />roleSelectorWrapper');
 
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />roles');
 

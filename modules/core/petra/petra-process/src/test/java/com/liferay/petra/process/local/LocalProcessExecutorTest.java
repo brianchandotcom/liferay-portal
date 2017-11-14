@@ -1198,10 +1198,11 @@ public class LocalProcessExecutorTest {
 			}
 		}
 
-		Assert.fail(
+		Assert.assertFalse(
 			StringBundler.concat(
 				"After waited ", String.valueOf(time), " ",
-				String.valueOf(timeUnit), ". ", message));
+				String.valueOf(timeUnit), ". ", message),
+			supplier.get());
 	}
 
 	private static final String _JPDA_OPTIONS1 =

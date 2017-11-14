@@ -345,7 +345,7 @@ public class BatchBuild extends BaseBuild {
 
 	@Override
 	protected ExecutorService getExecutorService() {
-		return Executors.newFixedThreadPool(5);
+		return _executorService;
 	}
 
 	@Override
@@ -435,5 +435,8 @@ public class BatchBuild extends BaseBuild {
 
 	protected final Pattern majorVersionPattern = Pattern.compile(
 		"((\\d+)\\.?(\\d+?)).*");
+
+	private static ExecutorService _executorService =
+		Executors.newFixedThreadPool(20);
 
 }

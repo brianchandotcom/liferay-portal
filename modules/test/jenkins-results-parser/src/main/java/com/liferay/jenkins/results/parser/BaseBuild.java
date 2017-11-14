@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
@@ -53,15 +54,9 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public void addDownstreamBuilds(String... urls) {
-		ExecutorService executorService = getExecutorService();
-		final List<Build> newDownstreamBuilds = Collections.synchronizedList(
-			new ArrayList<Build>());
 		final Build thisBuild = this;
 
-		if (executorService != null) {
-			System.out.println(
-				"adding downstream builds using multiple threads");
-		}
+		List<Callable<Build>> callables = new ArrayList<>(urls.length);
 
 		for (String url : urls) {
 			try {
@@ -76,35 +71,23 @@ public abstract class BaseBuild implements Build {
 			if (!hasBuildURL(url)) {
 				final String buildURL = url;
 
-				if (executorService != null) {
-					Runnable runnable = new Runnable() {
+				Callable<Build> callable = new Callable<Build>() {
 
-						@Override
-						public void run() {
-							newDownstreamBuilds.add(
-								BuildFactory.newBuild(buildURL, thisBuild));
-						}
+					@Override
+					public Build call() {
+						return BuildFactory.newBuild(buildURL, thisBuild);
+					}
 
-					};
+				};
 
-					executorService.execute(runnable);
-				}
-				else {
-					newDownstreamBuilds.add(
-						BuildFactory.newBuild(url, thisBuild));
-				}
+				callables.add(callable);
 			}
 		}
 
-		if (executorService != null) {
-			executorService.shutdown();
+		ParallelExecutor<Build> parallelExecutor = new ParallelExecutor<>(
+			callables, getExecutorService());
 
-			while (!executorService.isTerminated()) {
-				JenkinsResultsParserUtil.sleep(100);
-			}
-		}
-
-		downstreamBuilds.addAll(newDownstreamBuilds);
+		downstreamBuilds.addAll(parallelExecutor.execute());
 	}
 
 	public abstract void addTimelineData(BaseBuild.TimelineData timelineData);
@@ -124,33 +107,28 @@ public abstract class BaseBuild implements Build {
 		}
 
 		if (downstreamBuilds != null) {
-			ExecutorService executorService = getExecutorService();
+			List<Callable<Object>> callables = new ArrayList<>(
+				downstreamBuilds.size());
 
 			for (final Build downstreamBuild : downstreamBuilds) {
-				if (executorService != null) {
-					Runnable runnable = new Runnable() {
+				Callable<Object> callable = new Callable<Object>() {
 
-						@Override
-						public void run() {
-							downstreamBuild.archive(archiveName);
-						}
+					@Override
+					public Object call() {
+						downstreamBuild.archive(archiveName);
 
-					};
+						return null;
+					}
 
-					executorService.execute(runnable);
-				}
-				else {
-					downstreamBuild.archive(archiveName);
-				}
+				};
+
+				callables.add(callable);
 			}
 
-			if (executorService != null) {
-				executorService.shutdown();
+			ParallelExecutor<Object> parallelExecutor = new ParallelExecutor<>(
+				callables, getExecutorService());
 
-				while (!executorService.isTerminated()) {
-					JenkinsResultsParserUtil.sleep(100);
-				}
-			}
+			parallelExecutor.execute();
 		}
 
 		try {
@@ -1208,33 +1186,27 @@ public abstract class BaseBuild implements Build {
 				status = getStatus();
 
 				if (downstreamBuilds != null) {
-					ExecutorService executorService = getExecutorService();
+					List<Callable<Object>> callables = new ArrayList<>();
 
 					for (final Build downstreamBuild : downstreamBuilds) {
-						if (executorService != null) {
-							Runnable runnable = new Runnable() {
+						Callable<Object> callable = new Callable<Object>() {
 
-								@Override
-								public void run() {
-									downstreamBuild.update();
-								}
+							@Override
+							public Object call() {
+								downstreamBuild.update();
 
-							};
+								return null;
+							}
 
-							executorService.execute(runnable);
-						}
-						else {
-							downstreamBuild.update();
-						}
+						};
+
+						callables.add(callable);
 					}
 
-					if (executorService != null) {
-						executorService.shutdown();
+					ParallelExecutor<Object> parallelExecutor =
+						new ParallelExecutor<>(callables, getExecutorService());
 
-						while (!executorService.isTerminated()) {
-							JenkinsResultsParserUtil.sleep(100);
-						}
-					}
+					parallelExecutor.execute();
 
 					String result = getResult();
 

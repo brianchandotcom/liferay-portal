@@ -57,9 +57,9 @@
 								<exclude>**/.sass-cache/</exclude>
 							</excludes>
 						</resource>
-                        <resource>
-                            <directory>${project.build.directory}/compiledCss/</directory>
-                        </resource>
+						<resource>
+							<directory>${project.build.directory}/compiledCss/</directory>
+						</resource>
 					</webResources>
 				</configuration>
 			</plugin>

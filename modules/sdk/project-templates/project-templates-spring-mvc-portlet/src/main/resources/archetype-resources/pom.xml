@@ -67,9 +67,9 @@
 								<exclude>**/.sass-cache/</exclude>
 							</excludes>
 						</resource>
-                        <resource>
- +							<directory>${project.build.directory}/compiledCss</directory>
- +						</resource>
+						<resource>
+							<directory>${project.build.directory}/compiledCss</directory>
+						</resource>
 					</webResources>
 				</configuration>
 			</plugin>
@@ -87,7 +87,7 @@
 				</executions>
 				<configuration>
 					<docrootDirName>src/main/webapp</docrootDirName>
-                    <outputDirName>${project.build.directory}/compiledCss</outputDirName>
+					<outputDirName>${project.build.directory}/compiledCss</outputDirName>
 				</configuration>
 			</plugin>
 		</plugins>

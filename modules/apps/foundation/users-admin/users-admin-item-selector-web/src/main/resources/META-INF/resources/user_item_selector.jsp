@@ -76,8 +76,6 @@ PortletURL portletURL = userItemSelectorViewDisplayContext.getPortletURL();
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" searchContainer="<%= userItemSelectorViewDisplayContext.getSearchContainer() %>" />
-
-		<liferay-ui:search-paginator searchContainer="<%= userItemSelectorViewDisplayContext.getSearchContainer() %>" />
 	</liferay-ui:search-container>
 </div>
 

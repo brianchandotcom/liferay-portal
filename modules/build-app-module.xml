@@ -34,8 +34,6 @@
 	<condition property="artifact.exclude">
 		<or>
 			<available file="hotfix" />
-			<available file=".lfrbuild-app-server-lib" />
-			<available file=".lfrbuild-portal-pre" />
 			<contains string="${basedir}" substring="required-dependencies" />
 		</or>
 	</condition>

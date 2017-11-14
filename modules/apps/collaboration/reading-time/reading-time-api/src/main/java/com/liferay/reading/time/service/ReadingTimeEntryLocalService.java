@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -38,6 +39,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.reading.time.model.ReadingTimeEntry;
 
 import java.io.Serializable;
+
+import java.time.Duration;
 
 import java.util.List;
 
@@ -63,8 +66,11 @@ public interface ReadingTimeEntryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ReadingTimeEntryLocalServiceUtil} to access the reading time entry local service. Add custom service methods to {@link com.liferay.reading.time.service.impl.ReadingTimeEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public ReadingTimeEntry addReadingTimeEntry(GroupedModel groupedModel,
+		Duration readingTime);
+
 	public ReadingTimeEntry addReadingTimeEntry(long groupId, long classNameId,
-		long classPK, long readingTime);
+		long classPK, Duration readingTime);
 
 	/**
 	* Adds the reading time entry to the database. Also notifies the appropriate model listeners.
@@ -91,6 +97,8 @@ public interface ReadingTimeEntryLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
+	public ReadingTimeEntry deleteReadingTimeEntry(GroupedModel groupedModel);
+
 	/**
 	* Deletes the reading time entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
@@ -101,6 +109,9 @@ public interface ReadingTimeEntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public ReadingTimeEntry deleteReadingTimeEntry(long readingTimeEntryId)
 		throws PortalException;
+
+	public ReadingTimeEntry deleteReadingTimeEntry(long groupId,
+		long classNameId, long classPK);
 
 	/**
 	* Deletes the reading time entry from the database. Also notifies the appropriate model listeners.
@@ -170,6 +181,13 @@ public interface ReadingTimeEntryLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ReadingTimeEntry fetchOrAddReadingTimeEntry(
+		GroupedModel groupedModel);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ReadingTimeEntry fetchReadingTimeEntry(GroupedModel groupedModel);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ReadingTimeEntry fetchReadingTimeEntry(long readingTimeEntryId);
@@ -281,6 +299,11 @@ public interface ReadingTimeEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ReadingTimeEntry getReadingTimeEntryByUuidAndGroupId(
 		java.lang.String uuid, long groupId) throws PortalException;
+
+	public ReadingTimeEntry updateReadingTimeEntry(GroupedModel groupedModel);
+
+	public ReadingTimeEntry updateReadingTimeEntry(long groupId,
+		long classNameId, long classPK, Duration readingTime);
 
 	/**
 	* Updates the reading time entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

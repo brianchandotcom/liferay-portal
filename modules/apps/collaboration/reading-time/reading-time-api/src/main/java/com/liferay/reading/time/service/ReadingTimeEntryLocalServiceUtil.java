@@ -42,7 +42,14 @@ public class ReadingTimeEntryLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.reading.time.service.impl.ReadingTimeEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.reading.time.model.ReadingTimeEntry addReadingTimeEntry(
-		long groupId, long classNameId, long classPK, long readingTime) {
+		com.liferay.portal.kernel.model.GroupedModel groupedModel,
+		java.time.Duration readingTime) {
+		return getService().addReadingTimeEntry(groupedModel, readingTime);
+	}
+
+	public static com.liferay.reading.time.model.ReadingTimeEntry addReadingTimeEntry(
+		long groupId, long classNameId, long classPK,
+		java.time.Duration readingTime) {
 		return getService()
 				   .addReadingTimeEntry(groupId, classNameId, classPK,
 			readingTime);
@@ -79,6 +86,11 @@ public class ReadingTimeEntryLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
+	public static com.liferay.reading.time.model.ReadingTimeEntry deleteReadingTimeEntry(
+		com.liferay.portal.kernel.model.GroupedModel groupedModel) {
+		return getService().deleteReadingTimeEntry(groupedModel);
+	}
+
 	/**
 	* Deletes the reading time entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
@@ -90,6 +102,11 @@ public class ReadingTimeEntryLocalServiceUtil {
 		long readingTimeEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteReadingTimeEntry(readingTimeEntryId);
+	}
+
+	public static com.liferay.reading.time.model.ReadingTimeEntry deleteReadingTimeEntry(
+		long groupId, long classNameId, long classPK) {
+		return getService().deleteReadingTimeEntry(groupId, classNameId, classPK);
 	}
 
 	/**
@@ -179,6 +196,16 @@ public class ReadingTimeEntryLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static com.liferay.reading.time.model.ReadingTimeEntry fetchOrAddReadingTimeEntry(
+		com.liferay.portal.kernel.model.GroupedModel groupedModel) {
+		return getService().fetchOrAddReadingTimeEntry(groupedModel);
+	}
+
+	public static com.liferay.reading.time.model.ReadingTimeEntry fetchReadingTimeEntry(
+		com.liferay.portal.kernel.model.GroupedModel groupedModel) {
+		return getService().fetchReadingTimeEntry(groupedModel);
 	}
 
 	public static com.liferay.reading.time.model.ReadingTimeEntry fetchReadingTimeEntry(
@@ -312,6 +339,19 @@ public class ReadingTimeEntryLocalServiceUtil {
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getReadingTimeEntryByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.reading.time.model.ReadingTimeEntry updateReadingTimeEntry(
+		com.liferay.portal.kernel.model.GroupedModel groupedModel) {
+		return getService().updateReadingTimeEntry(groupedModel);
+	}
+
+	public static com.liferay.reading.time.model.ReadingTimeEntry updateReadingTimeEntry(
+		long groupId, long classNameId, long classPK,
+		java.time.Duration readingTime) {
+		return getService()
+				   .updateReadingTimeEntry(groupId, classNameId, classPK,
+			readingTime);
 	}
 
 	/**

@@ -36,7 +36,16 @@ public class ReadingTimeEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.reading.time.model.ReadingTimeEntry addReadingTimeEntry(
-		long groupId, long classNameId, long classPK, long readingTime) {
+		com.liferay.portal.kernel.model.GroupedModel groupedModel,
+		java.time.Duration readingTime) {
+		return _readingTimeEntryLocalService.addReadingTimeEntry(groupedModel,
+			readingTime);
+	}
+
+	@Override
+	public com.liferay.reading.time.model.ReadingTimeEntry addReadingTimeEntry(
+		long groupId, long classNameId, long classPK,
+		java.time.Duration readingTime) {
 		return _readingTimeEntryLocalService.addReadingTimeEntry(groupId,
 			classNameId, classPK, readingTime);
 	}
@@ -75,6 +84,12 @@ public class ReadingTimeEntryLocalServiceWrapper
 		return _readingTimeEntryLocalService.deletePersistedModel(persistedModel);
 	}
 
+	@Override
+	public com.liferay.reading.time.model.ReadingTimeEntry deleteReadingTimeEntry(
+		com.liferay.portal.kernel.model.GroupedModel groupedModel) {
+		return _readingTimeEntryLocalService.deleteReadingTimeEntry(groupedModel);
+	}
+
 	/**
 	* Deletes the reading time entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
@@ -87,6 +102,13 @@ public class ReadingTimeEntryLocalServiceWrapper
 		long readingTimeEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _readingTimeEntryLocalService.deleteReadingTimeEntry(readingTimeEntryId);
+	}
+
+	@Override
+	public com.liferay.reading.time.model.ReadingTimeEntry deleteReadingTimeEntry(
+		long groupId, long classNameId, long classPK) {
+		return _readingTimeEntryLocalService.deleteReadingTimeEntry(groupId,
+			classNameId, classPK);
 	}
 
 	/**
@@ -185,6 +207,18 @@ public class ReadingTimeEntryLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _readingTimeEntryLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
+	}
+
+	@Override
+	public com.liferay.reading.time.model.ReadingTimeEntry fetchOrAddReadingTimeEntry(
+		com.liferay.portal.kernel.model.GroupedModel groupedModel) {
+		return _readingTimeEntryLocalService.fetchOrAddReadingTimeEntry(groupedModel);
+	}
+
+	@Override
+	public com.liferay.reading.time.model.ReadingTimeEntry fetchReadingTimeEntry(
+		com.liferay.portal.kernel.model.GroupedModel groupedModel) {
+		return _readingTimeEntryLocalService.fetchReadingTimeEntry(groupedModel);
 	}
 
 	@Override
@@ -334,6 +368,20 @@ public class ReadingTimeEntryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _readingTimeEntryLocalService.getReadingTimeEntryByUuidAndGroupId(uuid,
 			groupId);
+	}
+
+	@Override
+	public com.liferay.reading.time.model.ReadingTimeEntry updateReadingTimeEntry(
+		com.liferay.portal.kernel.model.GroupedModel groupedModel) {
+		return _readingTimeEntryLocalService.updateReadingTimeEntry(groupedModel);
+	}
+
+	@Override
+	public com.liferay.reading.time.model.ReadingTimeEntry updateReadingTimeEntry(
+		long groupId, long classNameId, long classPK,
+		java.time.Duration readingTime) {
+		return _readingTimeEntryLocalService.updateReadingTimeEntry(groupId,
+			classNameId, classPK, readingTime);
 	}
 
 	/**

@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.roles.item.selector.internal.handler;
+package com.liferay.users.admin.item.selector.internal;
 
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
-import com.liferay.roles.item.selector.criterion.RoleItemSelectorCriterion;
+import com.liferay.users.admin.item.selector.UserItemSelectorCriterion;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -27,12 +27,12 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Alessio Antonio Rendina
  */
 @Component(service = ItemSelectorCriterionHandler.class)
-public class RoleSelectorCriterionHandler
-	extends BaseItemSelectorCriterionHandler <RoleItemSelectorCriterion> {
+public class UserItemSelectorCriterionHandler
+	extends BaseItemSelectorCriterionHandler<UserItemSelectorCriterion> {
 
 	@Override
-	public Class<RoleItemSelectorCriterion> getItemSelectorCriterionClass() {
-		return RoleItemSelectorCriterion.class;
+	public Class<UserItemSelectorCriterion> getItemSelectorCriterionClass() {
+		return UserItemSelectorCriterion.class;
 	}
 
 	@Activate

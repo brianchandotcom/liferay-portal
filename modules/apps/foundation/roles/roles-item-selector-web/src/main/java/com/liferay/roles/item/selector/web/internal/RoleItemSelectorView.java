@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.roles.item.selector.criterion.RoleItemSelectorCriterion;
+import com.liferay.roles.item.selector.RoleItemSelectorCriterion;
 import com.liferay.roles.item.selector.web.internal.constants.RoleItemSelectorViewConstants;
 import com.liferay.roles.item.selector.web.internal.display.context.RoleItemSelectorViewDisplayContext;
 import com.liferay.users.admin.kernel.util.UsersAdmin;

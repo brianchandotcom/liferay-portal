@@ -660,6 +660,28 @@ Please run the following command from ${source.formatter.modules.dir.absolute.pa
 		</java>
 
 		<delete file="ServiceBuilder.temp" />
+
+		<if>
+			<not>
+				<or>
+					<istrue value="${format.current.branch}" />
+					<istrue value="${format.latest.author}" />
+					<istrue value="${format.local.changes}" />
+					<isset property="source.file.extensions" />
+					<isset property="source.files" />
+				</or>
+			</not>
+			<then>
+				<condition else="npmRunFormat" property="source.formatter.npm.task" value="npmRunCheckFormat">
+					<and>
+						<isset property="source.auto.fix" />
+						<isfalse value="${source.auto.fix}" />
+					</and>
+				</condition>
+
+				<gradle-execute checktask="true" dir="${project.dir}/modules" task="${source.formatter.npm.task}" />
+			</then>
+		</if>
 	</target>
 
 	<target name="format-source-bnd">

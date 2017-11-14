@@ -128,7 +128,7 @@ lockDependencyVersion {
 
 			StartParameter startParameter = gradle.startParameter.newBuild()
 
-			startParameter.taskNames = [moduleTaskPrefix + "compileJava", moduleTaskPrefix + "compileJSP", moduleTaskPrefix + "formatSource"]
+			startParameter.taskNames = [moduleTaskPrefix + "classes", moduleTaskPrefix + "testClasses", moduleTaskPrefix + "testIntegrationClasses", moduleTaskPrefix + "compileJSP", moduleTaskPrefix + "formatSource"]
 
 			GradleLauncher gradleLauncher = nestedBuildFactory.nestedInstance(startParameter)
 

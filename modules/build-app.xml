@@ -31,7 +31,14 @@
 		</sequential>
 	</macrodef>
 
-	<target depends="dist-module-artifacts,update-app-marketplace-verson,write-app-change-log" name="build-app">
+	<target
+		depends="
+			dist-module-artifacts,
+			update-app-marketplace-verson,
+			write-app-change-log,
+			zip-module-artifacts-sources"
+		name="build-app"
+	>
 		<delete file="${dist.dir}/ticket.list.tmp" />
 
 		<antcall target="git-clean-up" />
@@ -166,8 +173,9 @@
 			get-artifact-versions-previous-release"
 		name="dist-module-artifacts"
 	>
-
 		<mkdir dir="${dist.dir}" />
+
+		<mkdir dir="${dist.dir}/sources" />
 
 		<subant genericantfile="${modules.dir}/build-app-module.xml" target="dist-module-artifact">
 			<dirset refid="app.module.dirs" />
@@ -175,6 +183,7 @@
 			<property name="artifact.versions.previous.release" value="${artifact.versions.previous.release}" />
 			<property name="build.repository.private.password" value="${build.repository.private.password}" />
 			<property name="build.repository.private.username" value="${build.repository.private.username}" />
+			<property name="current.branch.private" value="${current.branch.private}" />
 			<property name="dist.dir" value="${dist.dir}" />
 		</subant>
 	</target>
@@ -438,5 +447,13 @@
 		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="${line.separator}" />
 
 		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="icon-url=https://www.liferay.com/web/guest/marketplace/-/mp/asset/icon/71985553" />
+	</target>
+
+	<target depends="dist-module-artifacts" if="app.release.sources" name="zip-module-artifacts-sources">
+		<zip destfile="${dist.dir}/${app.name}-${app.version}-sources.zip">
+			<fileset dir="${dist.dir}/sources" excludes="missing.artifact.sources.txt" />
+		</zip>
+
+		<delete dir="${dist.dir}/sources" />
 	</target>
 </project>

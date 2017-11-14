@@ -58,9 +58,20 @@
 		</copy>
 	</target>
 
-	<target depends="copy-hotfix-artifact,download-artifact,download-artifact-dependencies,record-artifact-change-log" name="dist-module-artifact" />
+	<target
+		depends="
+			copy-hotfix-artifact,
+			dist-module-artifact-sources,
+			download-artifact,
+			download-artifact-dependencies,
+			record-artifact-change-log,
+			replace-artifact-license-header"
+		name="dist-module-artifact"
+	/>
 
 	<target depends="move-artifact,move-artifact-dependencies" name="dist-module-artifact-lpkg" />
+
+	<target depends="download-artifact-sources,download-artifact-sources-commercial" name="dist-module-artifact-sources" />
 
 	<target name="download-artifact" unless="artifact.exclude">
 		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
@@ -97,6 +108,61 @@
 			<arg value="-Dforced.cache.enabled=true" />
 			<arg value="-Pforced.deploy.dir=${dist.dir}" />
 		</exec>
+	</target>
+
+	<target name="download-artifact-sources" unless="${current.branch.private}">
+		<loadproperties srcFile="${releng.module.dir}/artifact.properties">
+			<filterchain>
+				<linecontains>
+					<contains value="artifact.sources.url=" />
+				</linecontains>
+			</filterchain>
+		</loadproperties>
+
+		<trycatch>
+			<try>
+				<get dest="${dist.dir}/sources" src="${artifact.sources.url}" />
+			</try>
+			<catch>
+				<echo
+					append="true"
+					file="${dist.dir}/missing.artifact.sources.txt"
+					message="${basedir}${line.separator}"
+				/>
+			</catch>
+		</trycatch>
+	</target>
+
+	<target if="${current.branch.private}" name="download-artifact-sources-commercial">
+		<loadproperties srcFile="${releng.module.dir}/artifact.properties">
+			<filterchain>
+				<linecontains>
+					<contains value="artifact.sources.url=" />
+				</linecontains>
+
+				<tokenfilter>
+					<replacestring from="sources.jar" to="sources-commercial.jar" />
+				</tokenfilter>
+			</filterchain>
+		</loadproperties>
+
+		<trycatch>
+			<try>
+				<get
+					dest="${dist.dir}/sources"
+					password="${build.repository.private.password}"
+					src="${artifact.sources.url}"
+					username="${build.repository.private.username}"
+				/>
+			</try>
+			<catch>
+				<echo
+					append="true"
+					file="${dist.dir}/sources/missing.artifact.sources.txt"
+					message="${basedir}${line.separator}"
+				/>
+			</catch>
+		</trycatch>
 	</target>
 
 	<target

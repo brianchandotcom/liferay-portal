@@ -73,14 +73,12 @@ PortletURL portletURL = roleItemSelectorViewDisplayContext.getPortletURL();
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" paginate="<%= false %>" searchContainer="<%= roleItemSelectorViewDisplayContext.getSearchContainer() %>" />
-
-		<liferay-ui:search-paginator searchContainer="<%= roleItemSelectorViewDisplayContext.getSearchContainer() %>" />
+		<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" searchContainer="<%= roleItemSelectorViewDisplayContext.getSearchContainer() %>" />
 	</liferay-ui:search-container>
 </div>
 
 <aui:script use="liferay-search-container">
-	var roleSelectorWrapper = A.one("#<portlet:namespace />roleSelectorWrapper");
+	var roleSelectorWrapper = A.one('#<portlet:namespace />roleSelectorWrapper');
 
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />roles');
 

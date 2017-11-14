@@ -76,13 +76,11 @@ PortletURL portletURL = userItemSelectorViewDisplayContext.getPortletURL();
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" searchContainer="<%= userItemSelectorViewDisplayContext.getSearchContainer() %>" />
-
-		<liferay-ui:search-paginator searchContainer="<%= userItemSelectorViewDisplayContext.getSearchContainer() %>" />
 	</liferay-ui:search-container>
 </div>
 
 <aui:script use="liferay-search-container">
-	var userSelectorWrapper = A.one("#<portlet:namespace />userSelectorWrapper");
+	var userSelectorWrapper = A.one('#<portlet:namespace />userSelectorWrapper');
 
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />users');
 

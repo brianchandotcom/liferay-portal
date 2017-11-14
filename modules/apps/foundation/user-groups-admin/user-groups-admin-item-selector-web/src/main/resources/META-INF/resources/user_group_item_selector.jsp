@@ -78,7 +78,7 @@ PortletURL portletURL = userGroupItemSelectorViewDisplayContext.getPortletURL();
 </div>
 
 <aui:script use="liferay-search-container">
-	var userGroupSelectorWrapper = A.one("#<portlet:namespace />userGroupSelectorWrapper");
+	var userGroupSelectorWrapper = A.one('#<portlet:namespace />userGroupSelectorWrapper');
 
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />userGroups');
 

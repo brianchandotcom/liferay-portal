@@ -74,13 +74,11 @@ PortletURL portletURL = organizationItemSelectorViewDisplayContext.getPortletURL
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" searchContainer="<%= organizationItemSelectorViewDisplayContext.getSearchContainer() %>" />
-
-		<liferay-ui:search-paginator searchContainer="<%= organizationItemSelectorViewDisplayContext.getSearchContainer() %>" />
 	</liferay-ui:search-container>
 </div>
 
 <aui:script use="liferay-search-container">
-	var organizationSelectorWrapper = A.one("#<portlet:namespace />organizationSelectorWrapper");
+	var organizationSelectorWrapper = A.one('#<portlet:namespace />organizationSelectorWrapper');
 
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />organizations');
 

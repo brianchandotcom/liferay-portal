@@ -16,16 +16,12 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:fieldset-group markupView="lexicon">
-	<aui:fieldset>
-		<aui:input label="name" name="TypeSettingsProperties--name--" placeholder="name">
-			<aui:validator name="required" />
-		</aui:input>
+<aui:input label="name" name="TypeSettingsProperties--name--" placeholder="name">
+	<aui:validator name="required" />
+</aui:input>
 
-		<aui:input label="url" name="TypeSettingsProperties--url--" placeholder="http://">
-			<aui:validator name="required" />
+<aui:input label="url" name="TypeSettingsProperties--url--" placeholder="http://">
+	<aui:validator name="required" />
 
-			<aui:validator name="url" />
-		</aui:input>
-	</aui:fieldset>
-</aui:fieldset-group>
+	<aui:validator name="url" />
+</aui:input>

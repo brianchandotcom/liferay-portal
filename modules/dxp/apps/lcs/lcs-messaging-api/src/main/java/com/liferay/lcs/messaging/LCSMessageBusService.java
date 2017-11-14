@@ -28,6 +28,8 @@ public interface LCSMessageBusService {
 		String destinationName, Map<String, String> metadata, String payload,
 		String responseDestinationName);
 
+	public void sendMessage(String destinationName, String payload);
+
 	public boolean unregisterLCSMessageListener(
 		String destinationName, LCSMessageListener lcsMessageListener);
 

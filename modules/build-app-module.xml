@@ -232,6 +232,10 @@
 		</condition>
 	</target>
 
+	<target name="get-artifact-file-name">
+		<basename file="${artifact.url}" property="artifact.file.name" />
+	</target>
+
 	<target depends="get-artifact-properties-bnd,get-artifact-properties-json,get-artifact-properties-legacy" name="get-artifact-properties" />
 
 	<target if="artifact.bnd" name="get-artifact-properties-bnd">

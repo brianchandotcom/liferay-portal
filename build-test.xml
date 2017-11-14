@@ -1676,8 +1676,6 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 	<macrodef name="prepare-custom-properties">
 		<attribute name="custom.properties" />
 		<sequential>
-			<property name="propertyName" value="" />
-
 			<for delimiter="${line.separator}" list="@{custom.properties}" param="property">
 				<sequential>
 					<propertyregex
@@ -1689,21 +1687,13 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 						replace=""
 					/>
 
-					<if>
-						<resourcecontains resource="portal-impl/src/portal-ext.properties" substring="${propertyName}" />
-						<then>
-							<replaceregexp file="portal-impl/src/portal-ext.properties"
-								match="${propertyName}=.*"
-								replace="@{property}"
-								byline="true"
-							/>
-						</then>
-						<else>
-							<echo append="true" file="portal-impl/src/portal-ext.properties">
+					<replaceregexp file="portal-impl/src/portal-ext.properties"
+						flags="g"
+						match="${propertyName}=.*"
+						replace=""
+					/>
 
-@{property}</echo>
-						</else>
-					</if>
+					<echo append="true" file="portal-impl/src/portal-ext.properties">
 				</sequential>
 			</for>
 		</sequential>

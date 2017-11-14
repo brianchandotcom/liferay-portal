@@ -72,7 +72,7 @@ iteratorURL.setParameter("mvcPath", "/designer/view.jsp");
 					/>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" searchContainer="<%= searchContainer %>" />
+				<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" resultRowSplitter="<%= new KaleoDefinitionVersionResultRowSplitter() %>" searchContainer="<%= searchContainer %>" />
 			</liferay-ui:search-container>
 		</div>
 

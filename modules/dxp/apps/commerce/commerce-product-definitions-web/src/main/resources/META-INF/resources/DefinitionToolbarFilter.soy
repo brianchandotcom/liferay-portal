@@ -78,7 +78,7 @@
 	<div class="form-inline-group">
 		<label for="regularSelectElement"></label>
 		<select class="form-control" id="optionsNames"  onChange="{$handleOptionChange}">
-			<option value=""></option>
+			<option value="">{msg desc=""}select-option{/msg}</option>
 			{if $terms}
 				{foreach $term in $terms}
 					<option data-label="{$term.label}" value="{$term.term}">{$term.label}  ({$term.frequency})</option>

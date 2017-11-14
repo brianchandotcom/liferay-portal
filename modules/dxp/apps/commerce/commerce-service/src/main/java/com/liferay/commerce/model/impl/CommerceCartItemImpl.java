@@ -32,7 +32,7 @@ public class CommerceCartItemImpl extends CommerceCartItemBaseImpl {
 	}
 
 	@Override
-	public CPInstance fetchCPInstance() throws PortalException {
+	public CPInstance fetchCPInstance() {
 		return CPInstanceLocalServiceUtil.fetchCPInstance(getCPInstanceId());
 	}
 

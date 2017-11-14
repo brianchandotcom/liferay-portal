@@ -29,10 +29,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface VerifyProcessTrackerConfiguration {
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "auto-verify", required = false)
 	public boolean autoVerify();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "index-read-only", required = false)
 	public boolean indexReadOnly();
 
 }

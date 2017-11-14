@@ -30,13 +30,13 @@ import com.liferay.portal.kernel.scheduler.TimeUnit;
 )
 public interface PluginRepositoriesConfiguration {
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "enabled", required = false)
 	public boolean enabled();
 
-	@Meta.AD(deflt = "1", required = false)
+	@Meta.AD(deflt = "1", name = "interval", required = false)
 	public int interval();
 
-	@Meta.AD(deflt = "DAY", required = false)
+	@Meta.AD(deflt = "DAY", name = "time-unit", required = false)
 	public TimeUnit timeUnit();
 
 }

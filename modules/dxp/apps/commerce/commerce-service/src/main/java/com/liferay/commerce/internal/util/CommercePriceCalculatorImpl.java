@@ -19,8 +19,6 @@ import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.util.CommercePriceCalculator;
 
-import java.util.List;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -52,13 +50,10 @@ public class CommercePriceCalculatorImpl implements CommercePriceCalculator {
 			return total;
 		}
 
-		List<CommerceCartItem> commerceCartItems =
-			commerceCart.getCommerceCartItems();
+		for (CommerceCartItem commerceCartItem :
+				commerceCart.getCommerceCartItems()) {
 
-		for (CommerceCartItem commerceCartItem : commerceCartItems) {
-			double price = getPrice(commerceCartItem);
-
-			total += price;
+			total += getPrice(commerceCartItem);
 		}
 
 		return total;

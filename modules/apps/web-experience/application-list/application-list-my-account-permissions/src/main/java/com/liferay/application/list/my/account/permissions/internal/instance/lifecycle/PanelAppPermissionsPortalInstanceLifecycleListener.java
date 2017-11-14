@@ -16,6 +16,9 @@ package com.liferay.application.list.my.account.permissions.internal.instance.li
 
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelAppRegistry;
+import com.liferay.application.list.PanelCategoryRegistry;
+import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.application.list.my.account.permissions.internal.PanelAppMyAccountPermissions;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -24,8 +27,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.PortletLocalService;
-import com.liferay.portal.kernel.util.PortletCategoryKeys;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -40,20 +43,23 @@ public class PanelAppPermissionsPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
-			PortletCategoryKeys.USER_MY_ACCOUNT);
+		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
+			_panelAppRegistry, _panelCategoryRegistry);
+
+		List<PanelApp> panelApps = panelCategoryHelper.getAllPanelApps(
+			PanelCategoryKeys.USER_MY_ACCOUNT);
+
+		List<Portlet> portlets = new ArrayList<>(panelApps.size());
 
 		for (PanelApp panelApp : panelApps) {
 			Portlet portlet = _portletLocalService.getPortletById(
-				company.getCompanyId(), panelApp.getPortletId());
+				panelApp.getPortletId());
 
-			if (portlet != null) {
-				_panelAppMyAccountPermissions.initPermissions(portlet);
-			}
-			else if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get portlet " + panelApp.getPortletId());
-			}
+			portlets.add(portlet);
 		}
+
+		_panelAppMyAccountPermissions.initPermissions(
+			company.getCompanyId(), portlets);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -64,6 +70,9 @@ public class PanelAppPermissionsPortalInstanceLifecycleListener
 
 	@Reference
 	private PanelAppRegistry _panelAppRegistry;
+
+	@Reference
+	private PanelCategoryRegistry _panelCategoryRegistry;
 
 	@Reference
 	private PortletLocalService _portletLocalService;

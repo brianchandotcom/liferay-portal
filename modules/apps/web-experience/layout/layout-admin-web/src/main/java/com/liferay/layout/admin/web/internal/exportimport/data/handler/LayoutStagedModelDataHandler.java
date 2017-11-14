@@ -1238,6 +1238,15 @@ public class LayoutStagedModelDataHandler
 
 		Element portletsElement = layoutElement.element("portlets");
 
+		if (portletsElement == null) {
+
+			// This null check should make the code more robust in case older
+			// LARs, normally we are always adding the portlets element to the
+			// XML
+
+			return;
+		}
+
 		for (Element portletElement : portletsElement.elements()) {
 			String portletPath = portletElement.attributeValue("path");
 			String portletId = portletElement.attributeValue("portlet-id");

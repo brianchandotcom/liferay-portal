@@ -91,7 +91,12 @@
 		<if>
 			<contains string="${basedir}" substring="private${file.separator}" />
 			<then>
-				<get dest="${dist.dir}" password="${build.repository.private.password}" src="${artifact.url}" username="${build.repository.private.username}" />
+				<get
+					dest="${dist.dir}"
+					password="${build.repository.private.password}"
+					src="${artifact.url}"
+					username="${build.repository.private.username}"
+				/>
 			</then>
 			<else>
 				<get dest="${dist.dir}" src="${artifact.url}" />
@@ -164,7 +169,10 @@
 	</target>
 
 	<target
-		depends="get-artifact-version-previous-release,get-artifact-change-log-ticket-list-since-previous-release,get-artifact-change-log-ticket-list-full"
+		depends="
+			get-artifact-change-log-ticket-list-full,
+			get-artifact-change-log-ticket-list-since-previous-release,
+			get-artifact-version-previous-release"
 		description="Get an aggregated list of tickets from the change logs of all versions of the current module since the version present in the previous release of this app."
 		if="${app.has.artifact.previous.release}"
 		name="get-artifact-change-log-ticket-list"
@@ -236,7 +244,13 @@
 		<basename file="${artifact.url}" property="artifact.file.name" />
 	</target>
 
-	<target depends="get-artifact-properties-bnd,get-artifact-properties-json,get-artifact-properties-legacy" name="get-artifact-properties" />
+	<target
+		depends="
+			get-artifact-properties-bnd,
+			get-artifact-properties-json,
+			get-artifact-properties-legacy"
+		name="get-artifact-properties"
+	/>
 
 	<target if="artifact.bnd" name="get-artifact-properties-bnd">
 		<property file="bnd.bnd" />
@@ -398,7 +412,11 @@
 		if="${artifact.has.change.log.ticket.list}"
 		name="record-artifact-change-log"
 	>
-		<echo append="true" file="${dist.dir}/ticket.list.tmp">${artifact.change.log.ticket.list} </echo>
+		<echo
+			append="true"
+			file="${dist.dir}/ticket.list.tmp"
+			message="${artifact.change.log.ticket.list} "
+		/>
 	</target>
 
 	<target

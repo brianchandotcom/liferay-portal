@@ -22,6 +22,4 @@ public class SiteNavigationMenuItemTypeFullPageApplicationWebKeys {
 	public static final String FULL_PAGE_APPLICATION_PORTLETS =
 		"FULL_PAGE_APPLICATION_PORTLETS";
 
-	public static final String SELECTED_PORTLET_ID = "SELECTED_PORTLET_ID";
-
 }

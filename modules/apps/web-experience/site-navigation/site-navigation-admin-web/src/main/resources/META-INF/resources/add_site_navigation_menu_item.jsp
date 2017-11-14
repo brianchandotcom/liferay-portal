@@ -38,9 +38,15 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-x", siteNavigationMenu
 	<aui:input name="siteNavigationMenuId" type="hidden" value="<%= siteNavigationMenuId %>" />
 	<aui:input name="type" type="hidden" value="<%= type %>" />
 
-	<%
-	siteNavigationMenuItemType.renderAddPage(request, response);
-	%>
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+
+			<%
+			siteNavigationMenuItemType.renderAddPage(request, response);
+			%>
+
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" value="add" />

@@ -1,8 +1,8 @@
-<definition component-name="portal-wcm">
+<definition component-name="portal-staging">
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
-	<property name="testray.component.names" value="Site and Page Templates" />
-	<property name="testray.main.component.name" value="Site and Page Templates" />
+	<property name="testray.component.names" value="Site Templates" />
+	<property name="testray.main.component.name" value="Site Templates" />
 
 	<var name="siteTemplateName" value="Site Template Name" />
 
@@ -581,26 +581,5 @@
 			<var name="permissionFlagged" value="true" />
 			<var name="roleTitle" value="Guest" />
 		</execute>
-	</command>
-
-	<command name="ViewNoAddPageTabViaPageTemplatesCP" priority="3">
-		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Page Templates" />
-		</execute>
-
-		<execute macro="PageTemplate#gotoPageTemplateViaEdit">
-			<var name="pageTemplateName" value="Wiki" />
-		</execute>
-
-		<execute function="SelectWindow" locator1="title=Wiki - ${siteName}" />
-
-		<execute macro="Dockbar#viewAddTabsWithNoAddPagePermission" />
 	</command>
 </definition>

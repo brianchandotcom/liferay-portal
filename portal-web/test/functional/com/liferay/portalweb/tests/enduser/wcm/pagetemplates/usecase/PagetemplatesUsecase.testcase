@@ -1,0 +1,47 @@
+<definition component-name="portal-wcm">
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="testray.component.names" value="Page Templates" />
+	<property name="testray.main.component.name" value="Page Templates" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="PageTemplate#tearDownCP" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="ViewNoAddPageTabViaPageTemplatesCP" priority="3">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Page Templates" />
+		</execute>
+
+		<execute macro="PageTemplate#gotoPageTemplateViaEdit">
+			<var name="pageTemplateName" value="Wiki" />
+		</execute>
+
+		<execute function="SelectWindow" locator1="title=Wiki - ${siteName}" />
+
+		<execute macro="Dockbar#viewAddTabsWithNoAddPagePermission" />
+	</command>
+</definition>

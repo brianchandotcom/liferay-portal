@@ -16,12 +16,18 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:input label="name" name="TypeSettingsProperties--name--" placeholder="name">
-	<aui:validator name="required" />
-</aui:input>
+<aui:select label='<%= LanguageUtil.get(resourceBundle, "full-page-application") %>' name="TypeSettingsProperties--fullPageApplicationPortlet--">
 
-<aui:input label="url" name="TypeSettingsProperties--url--" placeholder="http://">
-	<aui:validator name="required" />
+	<%
+	List<Portlet> portlets = (List<Portlet>)request.getAttribute(SiteNavigationMenuItemTypeFullPageApplicationWebKeys.FULL_PAGE_APPLICATION_PORTLETS);
 
-	<aui:validator name="url" />
-</aui:input>
+	for (Portlet portlet : portlets) {
+	%>
+
+		<aui:option label="<%= portlet.getDisplayName() %>" value="<%= portlet.getPortletId() %>" />
+
+	<%
+	}
+	%>
+
+</aui:select>

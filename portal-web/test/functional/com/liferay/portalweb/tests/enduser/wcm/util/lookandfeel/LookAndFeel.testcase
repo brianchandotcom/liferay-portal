@@ -22,7 +22,6 @@
 	</tear-down>
 
 	<command name="ConfigureCustomStylesViaLookAndFeelPG" priority="5">
-		<property name="portal.acceptance" value="true" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="Portlet#addPG">

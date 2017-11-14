@@ -988,8 +988,6 @@
 	</command>
 
 	<command name="DeleteCategory" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -1169,8 +1167,6 @@
 	</command>
 
 	<command name="DeleteSubcategoryViaMenu" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">

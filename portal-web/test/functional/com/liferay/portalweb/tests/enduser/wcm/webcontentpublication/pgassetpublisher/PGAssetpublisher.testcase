@@ -98,7 +98,6 @@
 	</command>
 
 	<command name="AddAPMultiplePortlet" priority="5">
-		<property name="portal.acceptance" value="pending" />
 		<property name="testray.component.names" value="Asset Publisher,Training" />
 
 		<execute macro="Navigator#gotoPage">
@@ -551,7 +550,6 @@
 	</command>
 
 	<command name="ConfigureAPPortletScopeMultipleSites" priority="5">
-		<property name="portal.acceptance" value="pending" />
 		<property name="testray.component.names" value="Asset Publisher,Training" />
 
 		<execute macro="TestCase#getSiteName">
@@ -1194,7 +1192,6 @@
 	</command>
 
 	<command name="RestoreAPArchivedSetup" priority="5">
-		<property name="portal.acceptance" value="pending" />
 		<property name="testray.component.names" value="Asset Publisher,Training" />
 
 		<execute macro="Navigator#openURL" />

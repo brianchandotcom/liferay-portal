@@ -100,7 +100,7 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 		boolean hasViewPermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.VIEW);
 		%>
 
-		<c:if test="<%= hasViewPermission %>">
+		<c:if test="<%= hasViewPermission && ((folder == null) || !folder.isMountPoint()) %>">
 			<portlet:resourceURL id="/document_library/download_folder" var="downloadURL">
 				<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 				<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />

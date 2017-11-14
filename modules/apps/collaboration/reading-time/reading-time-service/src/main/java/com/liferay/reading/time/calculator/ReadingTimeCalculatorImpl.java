@@ -14,6 +14,9 @@
 
 package com.liferay.reading.time.calculator;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -28,13 +31,31 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Alejandro Tardín
  */
 @Component(immediate = true, service = ReadingTimeCalculator.class)
 public class ReadingTimeCalculatorImpl implements ReadingTimeCalculator {
+
+	@Override
+	public Optional<Duration> calculate(GroupedModel groupedModel) {
+		ReadingTimeModelInfo readingTimeModelInfo =
+			_serviceTrackerMap.getService(groupedModel.getModelClassName());
+
+		if (readingTimeModelInfo == null) {
+			return Optional.empty();
+		}
+
+		return calculate(
+			readingTimeModelInfo.getContent(groupedModel),
+			readingTimeModelInfo.getContentType(groupedModel),
+			readingTimeModelInfo.getLocale(groupedModel));
+	}
 
 	@Override
 	public Optional<Duration> calculate(
@@ -63,6 +84,17 @@ public class ReadingTimeCalculatorImpl implements ReadingTimeCalculator {
 		return Optional.of(readingTime);
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, ReadingTimeModelInfo.class, "model.class.name");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
+
 	private boolean _accepts(String contentType, Locale locale) {
 		if (_supportedContentTypes.contains(contentType) &&
 			_supportedLanguages.contains(locale.getLanguage())) {
@@ -78,5 +110,7 @@ public class ReadingTimeCalculatorImpl implements ReadingTimeCalculator {
 		ContentTypes.TEXT_PLAIN, ContentTypes.TEXT_PLAIN_UTF8);
 	private static final List<String> _supportedLanguages = Arrays.asList(
 		"en", "fr", "de", "it", "es");
+
+	private ServiceTrackerMap<String, ReadingTimeModelInfo> _serviceTrackerMap;
 
 }

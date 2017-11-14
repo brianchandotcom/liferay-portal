@@ -38,17 +38,6 @@
 		</or>
 	</condition>
 
-	<fail message="Missing artifact.properties file in ${releng.module.dir}.">
-		<condition>
-			<not>
-				<or>
-					<available file="${releng.module.dir}/artifact.properties" />
-					<istrue value="${artifact.exclude}" />
-				</or>
-			</not>
-		</condition>
-	</fail>
-
 	<condition property="artifact.hotfix">
 		<available file="hotfix" />
 	</condition>
@@ -60,6 +49,19 @@
 	<condition property="artifact.legacy">
 		<available file="build.xml" />
 	</condition>
+
+	<target name="check-artifact-properties-available">
+		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
+			<condition>
+				<not>
+					<or>
+						<available file="${releng.module.dir}/artifact.properties" />
+						<istrue value="${artifact.exclude}" />
+					</or>
+				</not>
+			</condition>
+		</fail>
+	</target>
 
 	<target if="artifact.hotfix" name="copy-hotfix-artifact">
 		<copy todir="${dist.dir}">
@@ -82,7 +84,7 @@
 
 	<target depends="download-artifact-sources,download-artifact-sources-commercial" name="dist-module-artifact-sources" />
 
-	<target name="download-artifact" unless="artifact.exclude">
+	<target depends="check-artifact-properties-available" name="download-artifact" unless="artifact.exclude">
 		<loadproperties srcFile="${releng.module.dir}/artifact.properties">
 			<filterchain>
 				<linecontains>
@@ -116,7 +118,7 @@
 		</exec>
 	</target>
 
-	<target name="download-artifact-sources" unless="${current.branch.private}">
+	<target depends="check-artifact-properties-available" name="download-artifact-sources" unless="${current.branch.private}">
 		<loadproperties srcFile="${releng.module.dir}/artifact.properties">
 			<filterchain>
 				<linecontains>
@@ -139,7 +141,7 @@
 		</trycatch>
 	</target>
 
-	<target if="${current.branch.private}" name="download-artifact-sources-commercial">
+	<target depends="check-artifact-properties-available" if="${current.branch.private}" name="download-artifact-sources-commercial">
 		<loadproperties srcFile="${releng.module.dir}/artifact.properties">
 			<filterchain>
 				<linecontains>

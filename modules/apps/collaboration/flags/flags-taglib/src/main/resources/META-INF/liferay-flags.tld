@@ -33,7 +33,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>CSS classes to be applied to the element.</description>
+			<description>The CSS classes to be applied to the element.</description>
 			<name>elementClasses</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -51,7 +51,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>Text to display next to the flag icon. The default text is <![CDATA[<code>Flag</code>]]>.</description>
+			<description>The text to display next to the flag icon. The default text is <![CDATA[<code>Flag</code>]]>.</description>
 			<name>message</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -144,12 +144,6 @@
 		</loadfile>
 	</target>
 
-	<target name="get-app-releng-dir">
-		<condition else="${modules.dir}/.releng/apps/${app.name}" property="releng.app.dir" value="${modules.dir}/.releng/private/apps/${app.name}">
-			<available file="${modules.dir}/.releng/private/apps/${app.name}" />
-		</condition>
-	</target>
-
 	<target depends="get-app-module-dirs" name="get-app-module-dirs-null">
 		<condition property="module.dirs.null">
 			<or>
@@ -167,6 +161,12 @@
 				<available file="${modules.dir}/private/apps/${app.name}/.lfrbuild-release-src" />
 				<istrue value="${current.branch.public}" />
 			</or>
+		</condition>
+	</target>
+
+	<target name="get-app-releng-dir">
+		<condition else="${modules.dir}/.releng/apps/${app.name}" property="releng.app.dir" value="${modules.dir}/.releng/private/apps/${app.name}">
+			<available file="${modules.dir}/.releng/private/apps/${app.name}" />
 		</condition>
 	</target>
 

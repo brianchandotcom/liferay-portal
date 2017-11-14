@@ -160,8 +160,7 @@ public class CommerceCartItemWrapper implements CommerceCartItem,
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPInstance fetchCPInstance()
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public com.liferay.commerce.product.model.CPInstance fetchCPInstance() {
 		return _commerceCartItem.fetchCPInstance();
 	}
 

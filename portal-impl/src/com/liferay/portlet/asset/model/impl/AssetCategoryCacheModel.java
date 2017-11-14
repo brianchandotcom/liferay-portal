@@ -21,7 +21,6 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -110,7 +109,7 @@ public class AssetCategoryCacheModel implements CacheModel<AssetCategory>,
 		AssetCategoryImpl assetCategoryImpl = new AssetCategoryImpl();
 
 		if (uuid == null) {
-			assetCategoryImpl.setUuid(StringPool.BLANK);
+			assetCategoryImpl.setUuid("");
 		}
 		else {
 			assetCategoryImpl.setUuid(uuid);
@@ -122,7 +121,7 @@ public class AssetCategoryCacheModel implements CacheModel<AssetCategory>,
 		assetCategoryImpl.setUserId(userId);
 
 		if (userName == null) {
-			assetCategoryImpl.setUserName(StringPool.BLANK);
+			assetCategoryImpl.setUserName("");
 		}
 		else {
 			assetCategoryImpl.setUserName(userName);
@@ -147,21 +146,21 @@ public class AssetCategoryCacheModel implements CacheModel<AssetCategory>,
 		assetCategoryImpl.setRightCategoryId(rightCategoryId);
 
 		if (name == null) {
-			assetCategoryImpl.setName(StringPool.BLANK);
+			assetCategoryImpl.setName("");
 		}
 		else {
 			assetCategoryImpl.setName(name);
 		}
 
 		if (title == null) {
-			assetCategoryImpl.setTitle(StringPool.BLANK);
+			assetCategoryImpl.setTitle("");
 		}
 		else {
 			assetCategoryImpl.setTitle(title);
 		}
 
 		if (description == null) {
-			assetCategoryImpl.setDescription(StringPool.BLANK);
+			assetCategoryImpl.setDescription("");
 		}
 		else {
 			assetCategoryImpl.setDescription(description);
@@ -213,7 +212,7 @@ public class AssetCategoryCacheModel implements CacheModel<AssetCategory>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -228,7 +227,7 @@ public class AssetCategoryCacheModel implements CacheModel<AssetCategory>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -244,21 +243,21 @@ public class AssetCategoryCacheModel implements CacheModel<AssetCategory>,
 		objectOutput.writeLong(rightCategoryId);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (title == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(title);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);

@@ -21,7 +21,6 @@ import com.liferay.chat.model.Entry;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -92,7 +91,7 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
 		entryImpl.setToUserId(toUserId);
 
 		if (content == null) {
-			entryImpl.setContent(StringPool.BLANK);
+			entryImpl.setContent("");
 		}
 		else {
 			entryImpl.setContent(content);
@@ -131,7 +130,7 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
 		objectOutput.writeLong(toUserId);
 
 		if (content == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(content);

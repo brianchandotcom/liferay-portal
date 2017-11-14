@@ -21,7 +21,6 @@ import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -118,7 +117,7 @@ public class MBCategoryCacheModel implements CacheModel<MBCategory>,
 		MBCategoryImpl mbCategoryImpl = new MBCategoryImpl();
 
 		if (uuid == null) {
-			mbCategoryImpl.setUuid(StringPool.BLANK);
+			mbCategoryImpl.setUuid("");
 		}
 		else {
 			mbCategoryImpl.setUuid(uuid);
@@ -130,7 +129,7 @@ public class MBCategoryCacheModel implements CacheModel<MBCategory>,
 		mbCategoryImpl.setUserId(userId);
 
 		if (userName == null) {
-			mbCategoryImpl.setUserName(StringPool.BLANK);
+			mbCategoryImpl.setUserName("");
 		}
 		else {
 			mbCategoryImpl.setUserName(userName);
@@ -153,21 +152,21 @@ public class MBCategoryCacheModel implements CacheModel<MBCategory>,
 		mbCategoryImpl.setParentCategoryId(parentCategoryId);
 
 		if (name == null) {
-			mbCategoryImpl.setName(StringPool.BLANK);
+			mbCategoryImpl.setName("");
 		}
 		else {
 			mbCategoryImpl.setName(name);
 		}
 
 		if (description == null) {
-			mbCategoryImpl.setDescription(StringPool.BLANK);
+			mbCategoryImpl.setDescription("");
 		}
 		else {
 			mbCategoryImpl.setDescription(description);
 		}
 
 		if (displayStyle == null) {
-			mbCategoryImpl.setDisplayStyle(StringPool.BLANK);
+			mbCategoryImpl.setDisplayStyle("");
 		}
 		else {
 			mbCategoryImpl.setDisplayStyle(displayStyle);
@@ -194,7 +193,7 @@ public class MBCategoryCacheModel implements CacheModel<MBCategory>,
 		mbCategoryImpl.setStatusByUserId(statusByUserId);
 
 		if (statusByUserName == null) {
-			mbCategoryImpl.setStatusByUserName(StringPool.BLANK);
+			mbCategoryImpl.setStatusByUserName("");
 		}
 		else {
 			mbCategoryImpl.setStatusByUserName(statusByUserName);
@@ -249,7 +248,7 @@ public class MBCategoryCacheModel implements CacheModel<MBCategory>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -264,7 +263,7 @@ public class MBCategoryCacheModel implements CacheModel<MBCategory>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -276,21 +275,21 @@ public class MBCategoryCacheModel implements CacheModel<MBCategory>,
 		objectOutput.writeLong(parentCategoryId);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);
 		}
 
 		if (displayStyle == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(displayStyle);
@@ -307,7 +306,7 @@ public class MBCategoryCacheModel implements CacheModel<MBCategory>,
 		objectOutput.writeLong(statusByUserId);
 
 		if (statusByUserName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(statusByUserName);

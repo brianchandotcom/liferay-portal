@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.social.kernel.model.SocialRequest;
 
@@ -102,7 +101,7 @@ public class SocialRequestCacheModel implements CacheModel<SocialRequest>,
 		SocialRequestImpl socialRequestImpl = new SocialRequestImpl();
 
 		if (uuid == null) {
-			socialRequestImpl.setUuid(StringPool.BLANK);
+			socialRequestImpl.setUuid("");
 		}
 		else {
 			socialRequestImpl.setUuid(uuid);
@@ -119,7 +118,7 @@ public class SocialRequestCacheModel implements CacheModel<SocialRequest>,
 		socialRequestImpl.setType(type);
 
 		if (extraData == null) {
-			socialRequestImpl.setExtraData(StringPool.BLANK);
+			socialRequestImpl.setExtraData("");
 		}
 		else {
 			socialRequestImpl.setExtraData(extraData);
@@ -165,7 +164,7 @@ public class SocialRequestCacheModel implements CacheModel<SocialRequest>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -190,7 +189,7 @@ public class SocialRequestCacheModel implements CacheModel<SocialRequest>,
 		objectOutput.writeInt(type);
 
 		if (extraData == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(extraData);

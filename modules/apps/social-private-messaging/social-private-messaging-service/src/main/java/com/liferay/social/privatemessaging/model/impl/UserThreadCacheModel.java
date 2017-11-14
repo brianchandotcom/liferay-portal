@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.social.privatemessaging.model.UserThread;
 
@@ -102,7 +101,7 @@ public class UserThreadCacheModel implements CacheModel<UserThread>,
 		userThreadImpl.setUserId(userId);
 
 		if (userName == null) {
-			userThreadImpl.setUserName(StringPool.BLANK);
+			userThreadImpl.setUserName("");
 		}
 		else {
 			userThreadImpl.setUserName(userName);
@@ -162,7 +161,7 @@ public class UserThreadCacheModel implements CacheModel<UserThread>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);

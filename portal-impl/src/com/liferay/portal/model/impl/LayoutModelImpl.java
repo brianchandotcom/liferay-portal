@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -521,7 +520,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _uuid;
@@ -617,7 +616,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -629,7 +628,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -748,7 +747,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -847,7 +846,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	@Override
 	public String getTitle() {
 		if (_title == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _title;
@@ -946,7 +945,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	@Override
 	public String getDescription() {
 		if (_description == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _description;
@@ -1049,7 +1048,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	@Override
 	public String getKeywords() {
 		if (_keywords == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _keywords;
@@ -1150,7 +1149,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	@Override
 	public String getRobots() {
 		if (_robots == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _robots;
@@ -1249,7 +1248,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	@Override
 	public String getType() {
 		if (_type == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _type;
@@ -1275,7 +1274,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	@Override
 	public String getTypeSettings() {
 		if (_typeSettings == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _typeSettings;
@@ -1308,7 +1307,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	@Override
 	public String getFriendlyURL() {
 		if (_friendlyURL == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _friendlyURL;
@@ -1357,7 +1356,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	@Override
 	public String getThemeId() {
 		if (_themeId == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _themeId;
@@ -1373,7 +1372,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	@Override
 	public String getColorSchemeId() {
 		if (_colorSchemeId == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _colorSchemeId;
@@ -1389,7 +1388,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	@Override
 	public String getCss() {
 		if (_css == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _css;
@@ -1428,7 +1427,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	@Override
 	public String getLayoutPrototypeUuid() {
 		if (_layoutPrototypeUuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _layoutPrototypeUuid;
@@ -1472,7 +1471,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	@Override
 	public String getSourcePrototypeLayoutUuid() {
 		if (_sourcePrototypeLayoutUuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _sourcePrototypeLayoutUuid;
@@ -1595,7 +1594,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		String xml = getName();
 
 		if (xml == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 
 		Locale defaultLocale = LocaleUtil.getSiteDefault();

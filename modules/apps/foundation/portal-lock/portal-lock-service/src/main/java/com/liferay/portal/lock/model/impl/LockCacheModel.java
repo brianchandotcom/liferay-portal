@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.lock.model.Lock;
 
 import java.io.Externalizable;
@@ -117,7 +116,7 @@ public class LockCacheModel implements CacheModel<Lock>, Externalizable,
 		lockImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
-			lockImpl.setUuid(StringPool.BLANK);
+			lockImpl.setUuid("");
 		}
 		else {
 			lockImpl.setUuid(uuid);
@@ -128,7 +127,7 @@ public class LockCacheModel implements CacheModel<Lock>, Externalizable,
 		lockImpl.setUserId(userId);
 
 		if (userName == null) {
-			lockImpl.setUserName(StringPool.BLANK);
+			lockImpl.setUserName("");
 		}
 		else {
 			lockImpl.setUserName(userName);
@@ -142,21 +141,21 @@ public class LockCacheModel implements CacheModel<Lock>, Externalizable,
 		}
 
 		if (className == null) {
-			lockImpl.setClassName(StringPool.BLANK);
+			lockImpl.setClassName("");
 		}
 		else {
 			lockImpl.setClassName(className);
 		}
 
 		if (key == null) {
-			lockImpl.setKey(StringPool.BLANK);
+			lockImpl.setKey("");
 		}
 		else {
 			lockImpl.setKey(key);
 		}
 
 		if (owner == null) {
-			lockImpl.setOwner(StringPool.BLANK);
+			lockImpl.setOwner("");
 		}
 		else {
 			lockImpl.setOwner(owner);
@@ -202,7 +201,7 @@ public class LockCacheModel implements CacheModel<Lock>, Externalizable,
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -215,7 +214,7 @@ public class LockCacheModel implements CacheModel<Lock>, Externalizable,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -224,21 +223,21 @@ public class LockCacheModel implements CacheModel<Lock>, Externalizable,
 		objectOutput.writeLong(createDate);
 
 		if (className == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(className);
 		}
 
 		if (key == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(key);
 		}
 
 		if (owner == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(owner);

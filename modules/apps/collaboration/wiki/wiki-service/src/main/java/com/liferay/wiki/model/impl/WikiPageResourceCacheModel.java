@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.wiki.model.WikiPageResource;
 
@@ -88,7 +87,7 @@ public class WikiPageResourceCacheModel implements CacheModel<WikiPageResource>,
 		WikiPageResourceImpl wikiPageResourceImpl = new WikiPageResourceImpl();
 
 		if (uuid == null) {
-			wikiPageResourceImpl.setUuid(StringPool.BLANK);
+			wikiPageResourceImpl.setUuid("");
 		}
 		else {
 			wikiPageResourceImpl.setUuid(uuid);
@@ -100,7 +99,7 @@ public class WikiPageResourceCacheModel implements CacheModel<WikiPageResource>,
 		wikiPageResourceImpl.setNodeId(nodeId);
 
 		if (title == null) {
-			wikiPageResourceImpl.setTitle(StringPool.BLANK);
+			wikiPageResourceImpl.setTitle("");
 		}
 		else {
 			wikiPageResourceImpl.setTitle(title);
@@ -129,7 +128,7 @@ public class WikiPageResourceCacheModel implements CacheModel<WikiPageResource>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -144,7 +143,7 @@ public class WikiPageResourceCacheModel implements CacheModel<WikiPageResource>,
 		objectOutput.writeLong(nodeId);
 
 		if (title == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(title);

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.model.SiteNavigationMenuItemModel;
@@ -350,7 +349,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -362,7 +361,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -453,7 +452,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 	@Override
 	public String getType() {
 		if (_type == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _type;
@@ -469,7 +468,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 	@Override
 	public String getTypeSettings() {
 		if (_typeSettings == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _typeSettings;

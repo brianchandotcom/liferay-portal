@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -98,7 +97,7 @@ public class ClassNameCacheModel implements CacheModel<ClassName>,
 		classNameImpl.setClassNameId(classNameId);
 
 		if (value == null) {
-			classNameImpl.setValue(StringPool.BLANK);
+			classNameImpl.setValue("");
 		}
 		else {
 			classNameImpl.setValue(value);
@@ -125,7 +124,7 @@ public class ClassNameCacheModel implements CacheModel<ClassName>,
 		objectOutput.writeLong(classNameId);
 
 		if (value == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(value);

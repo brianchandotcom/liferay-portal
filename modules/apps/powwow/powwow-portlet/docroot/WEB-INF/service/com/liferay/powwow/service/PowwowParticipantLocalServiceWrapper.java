@@ -305,14 +305,6 @@ public class PowwowParticipantLocalServiceWrapper
 	}
 
 	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _powwowParticipantLocalService.invokeMethod(name,
-			parameterTypes, arguments);
-	}
-
-	@Override
 	public com.liferay.powwow.model.PowwowParticipant updatePowwowParticipant(
 		long powwowParticipantId, long powwowMeetingId, java.lang.String name,
 		long participantUserId, java.lang.String emailAddress, int type,

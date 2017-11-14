@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -315,7 +314,7 @@ public class OAuthTokenModelImpl extends BaseModelImpl<OAuthToken>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -330,7 +329,7 @@ public class OAuthTokenModelImpl extends BaseModelImpl<OAuthToken>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -371,7 +370,7 @@ public class OAuthTokenModelImpl extends BaseModelImpl<OAuthToken>
 	@Override
 	public String getGadgetKey() {
 		if (_gadgetKey == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _gadgetKey;
@@ -396,7 +395,7 @@ public class OAuthTokenModelImpl extends BaseModelImpl<OAuthToken>
 	@Override
 	public String getServiceName() {
 		if (_serviceName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _serviceName;
@@ -443,7 +442,7 @@ public class OAuthTokenModelImpl extends BaseModelImpl<OAuthToken>
 	@Override
 	public String getAccessToken() {
 		if (_accessToken == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _accessToken;
@@ -458,7 +457,7 @@ public class OAuthTokenModelImpl extends BaseModelImpl<OAuthToken>
 	@Override
 	public String getTokenName() {
 		if (_tokenName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _tokenName;
@@ -483,7 +482,7 @@ public class OAuthTokenModelImpl extends BaseModelImpl<OAuthToken>
 	@Override
 	public String getTokenSecret() {
 		if (_tokenSecret == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _tokenSecret;
@@ -498,7 +497,7 @@ public class OAuthTokenModelImpl extends BaseModelImpl<OAuthToken>
 	@Override
 	public String getSessionHandle() {
 		if (_sessionHandle == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _sessionHandle;

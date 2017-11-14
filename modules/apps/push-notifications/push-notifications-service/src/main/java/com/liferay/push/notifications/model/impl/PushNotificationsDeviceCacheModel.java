@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.push.notifications.model.PushNotificationsDevice;
 
@@ -101,14 +100,14 @@ public class PushNotificationsDeviceCacheModel implements CacheModel<PushNotific
 		}
 
 		if (platform == null) {
-			pushNotificationsDeviceImpl.setPlatform(StringPool.BLANK);
+			pushNotificationsDeviceImpl.setPlatform("");
 		}
 		else {
 			pushNotificationsDeviceImpl.setPlatform(platform);
 		}
 
 		if (token == null) {
-			pushNotificationsDeviceImpl.setToken(StringPool.BLANK);
+			pushNotificationsDeviceImpl.setToken("");
 		}
 		else {
 			pushNotificationsDeviceImpl.setToken(token);
@@ -142,14 +141,14 @@ public class PushNotificationsDeviceCacheModel implements CacheModel<PushNotific
 		objectOutput.writeLong(createDate);
 
 		if (platform == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(platform);
 		}
 
 		if (token == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(token);

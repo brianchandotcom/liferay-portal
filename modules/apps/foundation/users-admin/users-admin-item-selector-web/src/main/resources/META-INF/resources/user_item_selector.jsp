@@ -80,7 +80,7 @@ PortletURL portletURL = userItemSelectorViewDisplayContext.getPortletURL();
 </div>
 
 <aui:script use="liferay-search-container">
-	var userSelectorWrapper = A.one("#<portlet:namespace />userSelectorWrapper");
+	var userSelectorWrapper = A.one('#<portlet:namespace />userSelectorWrapper');
 
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />users');
 

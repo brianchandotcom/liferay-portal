@@ -6,6 +6,8 @@
 		<condition>
 			<not>
 				<or>
+					<contains string="${ant.project.invoked-targets}" substring="build-app-all" />
+					<contains string="${ant.project.invoked-targets}" substring="build-app-lpkg-all" />
 					<isset property="app.name" />
 					<istrue value="${build.all}" />
 				</or>

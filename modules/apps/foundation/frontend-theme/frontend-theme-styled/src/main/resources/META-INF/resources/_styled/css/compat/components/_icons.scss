@@ -10,6 +10,10 @@ span[class^="icon-monospaced"], .icon-monospaced {
 	padding: 8px;
 }
 
+.btn-monospaced > .icon-monospaced {
+	padding: 0;
+}
+
 .help-icon {
 	border-radius: 100px;
 	display: inline-block;

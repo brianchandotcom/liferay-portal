@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.organizations.item.selector.criterion;
+package com.liferay.organizations.item.selector;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
 

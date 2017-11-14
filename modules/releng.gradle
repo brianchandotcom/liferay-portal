@@ -103,11 +103,9 @@ lockDependencyVersion {
 
 		String dependencyReplacement = "provided group: \"${dependencyGroup}\", name: \"${dependencyName}\", version: \"${dependencyVersion}\""
 
-		NestedBuildFactory nestedBuildFactory = gradle.services.get(NestedBuildFactory)
-
 		boolean commitChanges = false
 
-		FileTree buildGradleFileTree = fileTree(dir: projectDir, includes: ["apps/**/build.gradle", "core/**/build.gradle"])
+		FileTree buildGradleFileTree = fileTree(dir: projectDir, excludes: ["**/build/", "**/classes/", "**/node_modules/"], includes: ["apps/**/build.gradle", "core/**/build.gradle"])
 
 		buildGradleFileTree.each {
 			File buildGradleFile ->
@@ -124,31 +122,15 @@ lockDependencyVersion {
 
 			buildGradleFile.text = newBuildGradle
 
-			String moduleTaskPrefix = _getModuleTaskPrefix(moduleDir)
+			String buildGradleRelativePath = String.valueOf(repositoryRootDirPath.relativize(buildGradleFile.toPath()))
 
-			StartParameter startParameter = gradle.startParameter.newBuild()
-
-			startParameter.taskNames = [moduleTaskPrefix + "compileJava", moduleTaskPrefix + "compileJSP", moduleTaskPrefix + "formatSource"]
-
-			GradleLauncher gradleLauncher = nestedBuildFactory.nestedInstance(startParameter)
-
-			try {
-				gradleLauncher.run()
-			}
-			catch (Exception e) {
+			if (!_executeGradle(moduleDir, ["classes", "testClasses", "testIntegrationClasses", "compileJSP", "formatSource"], [:], false)) {
 				println "Unable to lock dependency '${dependencyName}' version to ${dependencyVersion} in ${relativePath(moduleDir)}"
 
-				e.printStackTrace()
-
-				buildGradleFile.text = buildGradle
+				grgit.reset mode: "hard", paths: [buildGradleRelativePath]
 
 				return
 			}
-			finally {
-				gradleLauncher.stop()
-			}
-
-			String buildGradleRelativePath = String.valueOf(repositoryRootDirPath.relativize(buildGradleFile.toPath()))
 
 			buildGradleRelativePath = buildGradleRelativePath.replace(File.separatorChar, '/' as char)
 

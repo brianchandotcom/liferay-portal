@@ -598,7 +598,7 @@ public class TopLevelBuild extends BaseBuild {
 
 	@Override
 	protected ExecutorService getExecutorService() {
-		return Executors.newFixedThreadPool(20);
+		return _executorService;
 	}
 
 	protected Element getFailedJobSummaryElement() {
@@ -1244,6 +1244,9 @@ public class TopLevelBuild extends BaseBuild {
 
 	private static final String _URL_CHART_JS =
 		"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js";
+
+	private static ExecutorService _executorService =
+		Executors.newFixedThreadPool(20);
 
 	private boolean _compareToUpstream = true;
 	private long _lastDownstreamBuildsListingTimestamp = -1L;

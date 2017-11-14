@@ -38,6 +38,17 @@
 		</or>
 	</condition>
 
+	<fail message="Missing artifact.properties file in ${releng.module.dir}.">
+		<condition>
+			<not>
+				<or>
+					<available file="${releng.module.dir}/artifact.properties" />
+					<istrue value="${artifact.exclude}" />
+				</or>
+			</not>
+		</condition>
+	</fail>
+
 	<condition property="artifact.hotfix">
 		<available file="hotfix" />
 	</condition>
@@ -72,14 +83,6 @@
 	<target depends="download-artifact-sources,download-artifact-sources-commercial" name="dist-module-artifact-sources" />
 
 	<target name="download-artifact" unless="artifact.exclude">
-		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
-			<condition>
-				<not>
-					<available file="${releng.module.dir}/artifact.properties" />
-				</not>
-			</condition>
-		</fail>
-
 		<loadproperties srcFile="${releng.module.dir}/artifact.properties">
 			<filterchain>
 				<linecontains>

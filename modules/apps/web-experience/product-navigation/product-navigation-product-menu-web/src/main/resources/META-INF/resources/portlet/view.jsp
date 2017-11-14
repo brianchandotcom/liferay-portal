@@ -32,7 +32,7 @@ String productMenuState = SessionClicks.get(request, ProductNavigationProductMen
 				</a>
 			</div>
 			<div class="flex-col">
-				<aui:icon cssClass="icon-monospaced sidenav-close visible-xs-block" image="times" markupView="lexicon" url="javascript:;" />
+				<aui:icon cssClass="d-inline-block d-md-none icon-monospaced sidenav-close" image="times" markupView="lexicon" url="javascript:;" />
 			</div>
 		</div>
 	</div>

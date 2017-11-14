@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String selectedPortletId = GetterUtil.getString(request.getAttribute(SiteNavigationMenuItemTypeFullPageApplicationWebKeys.SELECTED_PORTLET_ID));
-%>
-
 <aui:select label='<%= LanguageUtil.get(resourceBundle, "full-page-application") %>' name="TypeSettingsProperties--selectedPortletId--">
 
 	<%
@@ -28,7 +24,7 @@ String selectedPortletId = GetterUtil.getString(request.getAttribute(SiteNavigat
 	for (Portlet portlet : portlets) {
 	%>
 
-		<aui:option label="<%= portlet.getDisplayName() %>" selected="<%= Objects.equals(selectedPortletId, portlet.getPortletId()) %>" value="<%= portlet.getPortletId() %>" />
+		<aui:option label="<%= portlet.getDisplayName() %>" value="<%= portlet.getPortletId() %>" />
 
 	<%
 	}

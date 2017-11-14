@@ -1,6 +1,7 @@
 import core from 'metal';
 import dom from 'metal-dom';
-import { EventHandler } from 'metal-events';
+import {EventHandler} from 'metal-events';
+
 import PortletBase from './PortletBase.es';
 
 /**
@@ -25,7 +26,14 @@ class DynamicInlineScroll extends PortletBase {
 
 		rootNode = rootNode || document;
 
-		this.eventHandler_.add(dom.delegate(rootNode, 'scroll', 'ul.pagination ul.inline-scroller', this.onScroll_.bind(this)));
+		this.eventHandler_.add(
+			dom.delegate(
+				rootNode,
+				'scroll',
+				'ul.pagination ul.inline-scroller',
+				this.onScroll_.bind(this)
+			)
+		);
 	}
 
 	/**
@@ -47,14 +55,19 @@ class DynamicInlineScroll extends PortletBase {
 	addListItem_(listElement, pageIndex) {
 		const listItem = document.createElement('li');
 
-		dom.append(listItem, `<a href="${this.getHREF_(pageIndex)}">${pageIndex}</a>`);
+		dom.append(
+			listItem,
+			`<a href="${this.getHREF_(pageIndex)}">${pageIndex}</a>`
+		);
 
 		pageIndex++;
 
 		listElement.appendChild(listItem);
 		listElement.setAttribute('data-page-index', pageIndex);
 
-		this.eventHandler_.add(dom.on(listItem, 'click', this.handleListItemClick_.bind(this)));
+		this.eventHandler_.add(
+			dom.on(listItem, 'click', this.handleListItemClick_.bind(this))
+		);
 	}
 
 	/**
@@ -71,7 +84,9 @@ class DynamicInlineScroll extends PortletBase {
 			return `${url}${namespace}${curParam}=${pageIndex}${urlAnchor}`;
 		}
 
-		return `javascript:document.${formName}.${namespace}${curParam}.value = "${pageIndex}; ${jsCall}`;
+		return `javascript:document.${formName}.${namespace}${curParam}.value = "${
+			pageIndex
+		}; ${jsCall}`;
 	}
 
 	/**
@@ -98,9 +113,12 @@ class DynamicInlineScroll extends PortletBase {
 
 			const {curParam, namespace, randomNamespace} = this;
 
-			const form = document.getElementById(randomNamespace + namespace + 'pageIteratorFm');
+			const form = document.getElementById(
+				randomNamespace + namespace + 'pageIteratorFm'
+			);
 
-			form.elements[namespace + curParam].value = event.currentTarget.textContent;
+			form.elements[namespace + curParam].value =
+				event.currentTarget.textContent;
 
 			form.submit();
 		}
@@ -122,12 +140,13 @@ class DynamicInlineScroll extends PortletBase {
 		let pageIndexMax = this.getNumber_(target.getAttribute('data-max-index'));
 
 		if (pageIndex === 0) {
-			let pageIndexCurrent = this.getNumber_(target.getAttribute('data-current-index'));
+			let pageIndexCurrent = this.getNumber_(
+				target.getAttribute('data-current-index')
+			);
 
 			if (pageIndexCurrent === 0) {
 				pageIndex = initialPages;
-			}
-			else {
+			} else {
 				pageIndex = pageIndexCurrent + initialPages;
 			}
 		}
@@ -136,7 +155,12 @@ class DynamicInlineScroll extends PortletBase {
 			pageIndexMax = pages;
 		}
 
-		if ((cur <= pages) && (pageIndex < pageIndexMax) && (target.getAttribute('scrollTop') >= (target.getAttribute('scrollHeight') - 300))) {
+		if (
+			cur <= pages &&
+			pageIndex < pageIndexMax &&
+			target.getAttribute('scrollTop') >=
+				target.getAttribute('scrollHeight') - 300
+		) {
 			this.addListItem_(target, pageIndex);
 		}
 	}
@@ -157,7 +181,7 @@ DynamicInlineScroll.STATE = {
 	 */
 	cur: {
 		setter: 'getNumber_',
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -167,7 +191,7 @@ DynamicInlineScroll.STATE = {
 	 * @type {string}
 	 */
 	curParam: {
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -177,7 +201,7 @@ DynamicInlineScroll.STATE = {
 	 * @type {boolean}
 	 */
 	forcePost: {
-		validator: core.isBoolean
+		validator: core.isBoolean,
 	},
 
 	/**
@@ -187,7 +211,7 @@ DynamicInlineScroll.STATE = {
 	 * @type {string}
 	 */
 	formName: {
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -199,7 +223,7 @@ DynamicInlineScroll.STATE = {
 	 */
 	initialPages: {
 		setter: 'getNumber_',
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -209,7 +233,7 @@ DynamicInlineScroll.STATE = {
 	 * @type {string}
 	 */
 	jsCall: {
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -219,7 +243,7 @@ DynamicInlineScroll.STATE = {
 	 * @type {string}
 	 */
 	namespace: {
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -230,7 +254,7 @@ DynamicInlineScroll.STATE = {
 	 */
 	pages: {
 		setter: 'getNumber_',
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -240,7 +264,7 @@ DynamicInlineScroll.STATE = {
 	 * @type {string}
 	 */
 	randomNamespace: {
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -250,7 +274,7 @@ DynamicInlineScroll.STATE = {
 	 * @type {string}
 	 */
 	url: {
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -260,8 +284,8 @@ DynamicInlineScroll.STATE = {
 	 * @type {string}
 	 */
 	urlAnchor: {
-		validator: core.isString
-	}
+		validator: core.isString,
+	},
 };
 
 export default DynamicInlineScroll;

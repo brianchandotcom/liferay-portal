@@ -519,6 +519,7 @@
 		<field indexed="true" name="fileEntryTypeId" stored="true" type="string" />
 		<field indexed="true" name="firstName" stored="true" type="text_lowercase" />
 		<field docValues="true" indexed="true" name="folderId" stored="true" type="string" />
+		<field indexed="true" name="fullName" stored="true" termPositions="true" termVectors="true" type="text" />
 		<field indexed="true" name="geoLocation" stored="true" type="location" />
 		<field docValues="true" indexed="true" multiValued="true" name="groupId" stored="true" type="string" />
 		<field indexed="true" multiValued="true" name="groupIds" stored="true" type="string" />

@@ -15,7 +15,6 @@
 package com.liferay.reading.time.taglib.servlet.taglib;
 
 import com.liferay.portal.kernel.model.GroupedModel;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -115,13 +114,8 @@ public class ReadingTimeTag extends AttributesTagSupport {
 			return Optional.of(Duration.ZERO);
 		}
 
-		long classNameId = ClassNameLocalServiceUtil.getClassNameId(
-			_model.getModelClass());
-
 		ReadingTimeEntry readingTimeEntry =
-			ReadingTimeEntryLocalServiceUtil.fetchReadingTimeEntry(
-				_model.getGroupId(), classNameId,
-				(Long)_model.getPrimaryKeyObj());
+			ReadingTimeEntryLocalServiceUtil.fetchReadingTimeEntry(_model);
 
 		if (readingTimeEntry != null) {
 			return Optional.of(

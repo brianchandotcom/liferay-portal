@@ -76,6 +76,7 @@ import javax.portlet.PortletPreferences;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -134,6 +135,7 @@ public class LayoutSetPrototypePropagationTest
 		doTestIsLayoutUpdateable();
 	}
 
+	@Ignore
 	@Test
 	public void testLayoutPermissionPropagationWithLinkEnabled()
 		throws Exception {
@@ -234,6 +236,7 @@ public class LayoutSetPrototypePropagationTest
 		doTestLayoutPropagation(false);
 	}
 
+	@Ignore
 	@Test
 	public void testLayoutPropagationWithLinkEnabled() throws Exception {
 		doTestLayoutPropagation(true);
@@ -256,6 +259,7 @@ public class LayoutSetPrototypePropagationTest
 		doTestPortletPreferencesPropagation(false, true);
 	}
 
+	@Ignore
 	@Test
 	public void testPortletPreferencesPropagationWithGlobalScopeLinkEnabled()
 		throws Exception {

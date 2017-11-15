@@ -80,10 +80,10 @@ public interface SAMLCommands {
 							}
 
 							Stream<SubjectConfirmation>
-								subjectConfirmationStream =
+								subjectConfirmationsStream =
 									subjectConfirmations.stream();
 
-							long count = subjectConfirmationStream.filter(
+							long count = subjectConfirmationsStream.filter(
 								subjectConfirmation ->
 									SubjectConfirmation.METHOD_BEARER.equals(
 										subjectConfirmation.getMethod())

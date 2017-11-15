@@ -95,6 +95,8 @@ public class VarPoshiElement extends BasePoshiElement {
 			return;
 		}
 
+		value = value.replace("&quot;", "\"");
+
 		addAttribute("value", value);
 	}
 
@@ -130,9 +132,14 @@ public class VarPoshiElement extends BasePoshiElement {
 					value = value.replace("Util#", "Util.");
 				}
 			}
-		}
+			else {
+				value = value.replaceAll("\"", "&quot;");
 
-		if (!value.startsWith("escapeText(")) {
+				if (parentElement instanceof ExecutePoshiElement) {
+					value = value.replace("\\", "\\\\");
+				}
+			}
+
 			value = quoteContent(value);
 		}
 

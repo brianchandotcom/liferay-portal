@@ -818,14 +818,14 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			_attributeResolverRegistry.getAttributeResolver(
 				samlMessageContext.getPeerEntityId());
 
-		AttributePublisherImpl attributePublisher =
+		AttributePublisherImpl attributePublisherImpl =
 			new AttributePublisherImpl();
 
 		attributeResolver.resolve(
 			user, new AttributeResolverSAMLContextImpl(samlMessageContext),
-			attributePublisher);
+			attributePublisherImpl);
 
-		List<Attribute> attributes = attributePublisher.getAttributes();
+		List<Attribute> attributes = attributePublisherImpl.getAttributes();
 
 		if (attributes.isEmpty()) {
 			return assertion;

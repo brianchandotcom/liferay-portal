@@ -31,7 +31,7 @@ public interface AttributeResolver extends Resolver {
 
 	public void resolve(
 		User user, AttributeResolverSAMLContext attributeResolverSAMLContext,
-		AttributePublisher publisher);
+		AttributePublisher assetPublisher);
 
 	public interface AttributePublisher {
 

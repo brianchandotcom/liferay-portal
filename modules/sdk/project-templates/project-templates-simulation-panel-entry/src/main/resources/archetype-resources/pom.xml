@@ -70,7 +70,7 @@
 				<version>@com.liferay.css.builder.version@</version>
 				<executions>
 					<execution>
-						<phase>generate-sources</phase>
+						<phase>generate-resources</phase>
 						<goals>
 							<goal>build</goal>
 						</goals>

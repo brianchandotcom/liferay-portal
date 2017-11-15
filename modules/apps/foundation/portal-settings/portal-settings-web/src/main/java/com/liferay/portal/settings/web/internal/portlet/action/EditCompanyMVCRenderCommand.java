@@ -15,7 +15,7 @@
 package com.liferay.portal.settings.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
+import com.liferay.portal.settings.constants.PortalSettingsPortletKeys;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;

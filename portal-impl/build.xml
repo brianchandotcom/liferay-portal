@@ -661,12 +661,19 @@ Please run the following command from ${source.formatter.modules.dir.absolute.pa
 
 		<delete file="ServiceBuilder.temp" />
 
-		<condition else="npmRunFormat" property="source.formatter.npm.task" value="npmRunCheckFormat">
+		<var name="source.formatter.npm.script" value="format" />
+		<var name="source.formatter.npm.task" value="npmRunFormat" />
+
+		<if>
 			<and>
 				<isset property="source.auto.fix" />
 				<isfalse value="${source.auto.fix}" />
 			</and>
-		</condition>
+			<then>
+				<var name="source.formatter.npm.script" value="checkFormat" />
+				<var name="source.formatter.npm.task" value="npmRunCheckFormat" />
+			</then>
+		</if>
 
 		<if>
 			<or>
@@ -682,14 +689,21 @@ This target does not format .es.js files. Please run the following command from 
 				</echo>
 			</then>
 			<elseif>
-				<not>
-					<or>
-						<isset property="source.file.extensions" />
-						<isset property="source.files" />
-					</or>
-				</not>
+				<and>
+					<not>
+						<or>
+							<isset property="source.file.extensions" />
+							<isset property="source.files" />
+						</or>
+					</not>
+					<resourcecount count="0" when="greater">
+						<fileset dir="${project.dir}/modules" excludes="**/.gradle/,**/bin/,**/build/,**/classes/,**/node_modules/,**/tmp/" includes="**/package.json">
+							<contains text="&quot;${source.formatter.npm.script}&quot;:" />
+						</fileset>
+					</resourcecount>
+				</and>
 				<then>
-					<gradle-execute checktask="true" dir="${project.dir}/modules" task="${source.formatter.npm.task}" />
+					<gradle-execute dir="${project.dir}/modules" task="${source.formatter.npm.task}" />
 				</then>
 			</elseif>
 		</if>

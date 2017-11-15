@@ -1,0 +1,47 @@
+<definition>
+	<command name="addComment">
+		<execute function="Click" locator1="AlloyEditor#EDITOR">
+			<var name="key_editor" value="postReply" />
+		</execute>
+
+		<execute macro="AlloyEditor#typeEditor">
+			<var name="content" value="${entryComment}" />
+			<var name="editor" value="postReply" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
+	<command name="deleteComment">
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Comments#COMMENT_ACTIONS">
+			<var name="key_entryComment" value="${entryComment}" />
+		</execute>
+
+		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
+			<var name="key_menuItem" value="Delete" />
+		</execute>
+
+		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
+	<command name="editComment">
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Comments#COMMENT_ACTIONS">
+			<var name="key_entryComment" value="${entryComment}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
+
+		<execute macro="AlloyEditor#typeEditor">
+			<var name="content" value="${entryCommentEdit}" />
+			<var name="editor" value="editReply" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+	</command>
+</definition>

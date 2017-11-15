@@ -98,18 +98,16 @@ public class AttributePublisherImpl implements AttributePublisher {
 
 		List<XMLObject> attributeXmlObjects = attribute.getAttributeValues();
 
-		Stream<AttributeValue> attributeValuesStream = Arrays.stream(
-			attributeValues);
+		Stream<AttributeValue> stream = Arrays.stream(attributeValues);
 
 		attributeXmlObjects.addAll(
-			attributeValuesStream.map(
+			stream.map(
 				AttributeValueWrapper.class::cast
 			).map(
 				AttributeValueWrapper::getXmlObject
 			).collect(
 				Collectors.toList()
-			)
-		);
+			));
 
 		_attributes.add(attribute);
 	}

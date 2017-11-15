@@ -434,15 +434,16 @@ public class LayoutPageTemplateDisplayContext {
 		return layoutPageTemplateEntry.getName();
 	}
 
-	public JSONArray getLayoutPageTemplateFragments() throws PortalException {
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			getLayoutPageTemplateEntry();
+	public JSONArray getLayoutPageTemplateFragmentsJSONArray()
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		JSONArray layoutPageTemplateFragmentsJSONArray =
-			JSONFactoryUtil.createJSONArray();
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			getLayoutPageTemplateEntry();
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		List<LayoutPageTemplateFragment> layoutPageTemplateFragments =
 			LayoutPageTemplateFragmentLocalServiceUtil.
@@ -457,17 +458,16 @@ public class LayoutPageTemplateDisplayContext {
 				FragmentEntryServiceUtil.fetchFragmentEntry(
 					layoutPageTemplateFragment.getFragmentEntryId());
 
-			JSONObject fragmentEntryJSONObject =
-				JSONFactoryUtil.createJSONObject();
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			fragmentEntryJSONObject.put(
-				"id", fragmentEntry.getFragmentEntryId());
-			fragmentEntryJSONObject.put("name", fragmentEntry.getName());
+			jsonObject.put(
+				"fragmentEntryId", fragmentEntry.getFragmentEntryId());
+			jsonObject.put("name", fragmentEntry.getName());
 
-			layoutPageTemplateFragmentsJSONArray.put(fragmentEntryJSONObject);
+			jsonArray.put(jsonObject);
 		}
 
-		return layoutPageTemplateFragmentsJSONArray;
+		return jsonArray;
 	}
 
 	public String getOrderByCol() {

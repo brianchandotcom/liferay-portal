@@ -89,7 +89,11 @@ public interface SAMLCommands {
 										subjectConfirmation.getMethod())
 							).count();
 
-							return count > 0;
+							if (count > 0) {
+								return true;
+							}
+
+							return false;
 						}
 					).map(
 						Assertion::getAttributeStatements

@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.lists.form.web.internal.portlet.action;
 
 import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
+import com.liferay.dynamic.data.lists.form.web.constants.DDLFormWebKeys;
 import com.liferay.dynamic.data.lists.form.web.internal.notification.DDLFormEmailNotificationSender;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordConstants;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -44,6 +46,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -66,8 +69,20 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		PortletSession portletSession = actionRequest.getPortletSession();
+
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		long recordSetId = ParamUtil.getLong(actionRequest, "recordSetId");
+
+		if (groupId == 0) {
+			groupId = GetterUtil.getLong(
+				portletSession.getAttribute(DDLFormWebKeys.GROUP_ID));
+		}
+
+		if (recordSetId == 0) {
+			recordSetId = GetterUtil.getLong(
+				portletSession.getAttribute(DDLFormWebKeys.RECORD_SET_ID));
+		}
 
 		DDLRecordSet recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
 
@@ -103,6 +118,10 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 			String redirectURL = recordSetSettings.redirectURL();
 
 			if (Validator.isNotNull(redirectURL)) {
+				portletSession.setAttribute(DDLFormWebKeys.GROUP_ID, groupId);
+				portletSession.setAttribute(
+					DDLFormWebKeys.RECORD_SET_ID, recordSetId);
+
 				sendRedirect(actionRequest, actionResponse, redirectURL);
 			}
 			else {

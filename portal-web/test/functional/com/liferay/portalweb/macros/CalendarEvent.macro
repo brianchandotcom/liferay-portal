@@ -333,31 +333,15 @@
 			<isset var="eventCommentList" />
 			<then>
 				<for list="${eventCommentList}" param="eventComment">
-					<if>
-						<condition function="IsElementPresent" locator1="Comments#ADD_COMMENT_LINK" />
-						<then>
-							<execute function="AssertClick" locator1="Comments#ADD_COMMENT_LINK" value1="Add Comment" />
-
-							<execute function="MakeVisible" locator1="Comments#COMMENT_FIELD" />
-
-							<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${eventComment}" />
-						</then>
-						<else>
-							<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${eventComment}" />
-						</else>
-					</if>
-
-					<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
-
-					<execute macro="Alert#viewSuccessMessage" />
+					<execute macro="Comments#addComment">
+						<var name="entryComment" value="${eventComment}" />
+					</execute>
 				</for>
 			</then>
 			<else>
-				<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${eventComment}" />
-
-				<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
-
-				<execute macro="Alert#viewSuccessMessage" />
+				<execute macro="Comments#addComment">
+					<var name="entryComment" value="${eventComment}" />
+				</execute>
 			</else>
 		</if>
 
@@ -887,13 +871,9 @@
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 
-		<var name="key_eventComment" value="${eventComment}" />
-
-		<execute function="AssertClickNoError" locator1="CalendarViewEventDetails#COMMENTS_COMMENT_DELETE" value1="Delete" />
-
-		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-
-		<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#COMMENTS_SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Comments#deleteComment">
+			<var name="entryComment" value="${eventCommtent}" />
+		</execute>
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -1218,17 +1198,10 @@
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 
-		<var name="key_eventComment" value="${eventComment}" />
-
-		<execute function="AssertClick" locator1="CalendarViewEventDetails#COMMENTS_COMMENT_EDIT" value1="Edit" />
-
-		<execute function="Type" locator1="CalendarViewEventDetails#COMMENTS_COMMENT_EDIT_BODY_FIELD" value1="${eventCommentEdit}" />
-
-		<execute function="AssertClick" locator1="CalendarViewEventDetails#COMMENTS_COMMENT_EDIT_PUBLISH_BUTTON" value1="Publish" />
-
-		<var name="key_eventComment" value="${eventCommentEdit}" />
-
-		<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#COMMENTS_BODY" value1="${eventCommentEdit}" />
+		<execute macro="Comments#editComment">
+			<var name="entryComment" value="${eventComment}" />
+			<var name="entryCommentEdit" value="${eventCommentEdit}" />
+		</execute>
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>

@@ -32,7 +32,7 @@ long commerceRegionId = BeanParamUtil.getLong(commerceWarehouse, request, "comme
 <aui:model-context bean="<%= commerceWarehouse %>" model="<%= CommerceWarehouse.class %>" />
 
 <aui:fieldset>
-	<aui:col width="<%= 50 %>">
+	<div class="col-md-6">
 		<aui:input name="street1" />
 
 		<aui:input name="street2" />
@@ -42,13 +42,13 @@ long commerceRegionId = BeanParamUtil.getLong(commerceWarehouse, request, "comme
 		<aui:select label="country" name="commerceCountryId" />
 
 		<aui:select label="region" name="commerceRegionId" />
-	</aui:col>
+	</div>
 
-	<aui:col width="<%= 50 %>">
+	<div class="col-md-6">
 		<aui:input label="postal-code" name="zip" />
 
 		<aui:input name="city" />
-	</aui:col>
+	</div>
 </aui:fieldset>
 
 <aui:script use="liferay-dynamic-select">

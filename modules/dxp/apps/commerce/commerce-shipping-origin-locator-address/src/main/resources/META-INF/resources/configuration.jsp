@@ -20,7 +20,7 @@
 AddressCommerceShippingOriginLocatorGroupServiceConfiguration addressCommerceShippingOriginLocatorGroupServiceConfiguration = (AddressCommerceShippingOriginLocatorGroupServiceConfiguration)request.getAttribute(AddressCommerceShippingOriginLocatorGroupServiceConfiguration.class.getName());
 %>
 
-<aui:col width="<%= 50 %>">
+<div class="col-md-6">
 	<aui:input
 		id='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--name--" %>'
 		name='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--name--" %>'
@@ -44,9 +44,9 @@ AddressCommerceShippingOriginLocatorGroupServiceConfiguration addressCommerceShi
 		name='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--street3--" %>'
 		value="<%= addressCommerceShippingOriginLocatorGroupServiceConfiguration.street3() %>"
 	/>
-</aui:col>
+</div>
 
-<aui:col width="<%= 50 %>">
+<div class="col-md-6">
 	<aui:input
 		id='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--city--" %>'
 		name='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--city--" %>'
@@ -77,7 +77,7 @@ AddressCommerceShippingOriginLocatorGroupServiceConfiguration addressCommerceShi
 		name='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--phoneNumber--" %>'
 		value="<%= addressCommerceShippingOriginLocatorGroupServiceConfiguration.phoneNumber() %>"
 	/>
-</aui:col>
+</div>
 
 <aui:script use="liferay-dynamic-select">
 	new Liferay.DynamicSelect(

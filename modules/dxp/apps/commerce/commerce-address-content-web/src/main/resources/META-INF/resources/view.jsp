@@ -96,7 +96,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		</aui:form>
 
 		<aui:button-row>
-			<aui:button cssClass="btn-lg btn-primary" href="<%= commerceAddressDisplayContext.getAddCommerceAddressURL() %>" name="addAddressButton" value='<%= LanguageUtil.get(request, "add-address") %>' />
+			<aui:button cssClass="btn-lg" href="<%= commerceAddressDisplayContext.getAddCommerceAddressURL() %>" name="addAddressButton" value='<%= LanguageUtil.get(request, "add-address") %>' />
 		</aui:button-row>
 	</div>
 </liferay-ddm:template-renderer>

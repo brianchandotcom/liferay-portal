@@ -98,27 +98,29 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 
 		<aui:model-context model="<%= CommerceAddress.class %>" />
 
-		<aui:col width="<%= 50 %>">
-			<aui:input label="full-name" name="name" />
+		<div class="row">
+			<div class="col-md-6">
+				<aui:input label="full-name" name="name" />
 
-			<aui:input name="street1" />
+				<aui:input name="street1" />
 
-			<aui:input name="street2" />
+				<aui:input name="street2" />
 
-			<aui:input name="street3" />
+				<aui:input name="street3" />
 
-			<aui:select label="country" name="commerceCountryId" />
+				<aui:select label="country" name="commerceCountryId" />
 
-			<aui:select label="region" name="commerceRegionId" />
-		</aui:col>
+				<aui:select label="region" name="commerceRegionId" />
+			</div>
 
-		<aui:col width="<%= 50 %>">
-			<aui:input label="postal-code" name="zip" />
+			<div class="col-md-6">
+				<aui:input label="postal-code" name="zip" />
 
-			<aui:input name="city" />
+				<aui:input name="city" />
 
-			<aui:input name="phoneNumber" />
-		</aui:col>
+				<aui:input name="phoneNumber" />
+			</div>
+		</div>
 	</aui:fieldset>
 </aui:fieldset>
 

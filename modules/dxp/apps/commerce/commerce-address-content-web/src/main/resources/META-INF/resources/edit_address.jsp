@@ -49,7 +49,7 @@ long commerceRegionId = commerceAddressDisplayContext.getCommerceRegionId();
 
 	<div class="lfr-form-content">
 		<aui:fieldset cssClass="addresses">
-			<aui:col width="<%= 50 %>">
+			<div class="col-md-6">
 				<aui:input name="name" />
 
 				<aui:input name="description" />
@@ -59,9 +59,9 @@ long commerceRegionId = commerceAddressDisplayContext.getCommerceRegionId();
 				<aui:input name="street2" />
 
 				<aui:input name="street3" />
-			</aui:col>
+			</div>
 
-			<aui:col width="<%= 50 %>">
+			<div class="col-md-6">
 				<aui:input name="city" />
 
 				<aui:input label="postal-code" name="zip" />
@@ -111,7 +111,7 @@ long commerceRegionId = commerceAddressDisplayContext.getCommerceRegionId();
 				<aui:input name="defaultBilling" />
 
 				<aui:input name="defaultShipping" />
-			</aui:col>
+			</div>
 		</aui:fieldset>
 
 		<aui:button-row>

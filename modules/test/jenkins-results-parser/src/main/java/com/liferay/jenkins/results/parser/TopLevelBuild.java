@@ -1111,22 +1111,23 @@ public class TopLevelBuild extends BaseBuild {
 				Dom4JUtil.getNewElement(
 					"h4", null, "Failures unique to this pull:"));
 
+			Map<Build, Element> downstreamBuildFailureMessages =
+				getDownstreamBuildMessages("ABORTED", "FAILURE", "UNSTABLE");
+
 			List<Element> failureElements = new ArrayList<>();
 			List<Element> upstreamJobFailureElements = new ArrayList<>();
 
-			for (Build downstreamBuild : getDownstreamBuilds(null)) {
-				String downstreamBuildResult = downstreamBuild.getResult();
+			int maxFailureCount = 5;
 
-				if (downstreamBuildResult.equals("SUCCESS")) {
-					continue;
-				}
+			for (Build failedDownstreamBuild :
+					downstreamBuildFailureMessages.keySet()) {
 
-				Element failureElement =
-					downstreamBuild.getGitHubMessageElement();
+				Element failureElement = downstreamBuildFailureMessages.get(
+					failedDownstreamBuild);
 
 				if (failureElement != null) {
 					if (UpstreamFailureUtil.isBuildFailingInUpstreamJob(
-							downstreamBuild)) {
+							failedDownstreamBuild)) {
 
 						upstreamJobFailureElements.add(failureElement);
 
@@ -1143,7 +1144,8 @@ public class TopLevelBuild extends BaseBuild {
 				}
 
 				Element upstreamJobFailureElement =
-					downstreamBuild.getGitHubMessageUpstreamJobFailureElement();
+					failedDownstreamBuild.
+						getGitHubMessageUpstreamJobFailureElement();
 
 				if (upstreamJobFailureElement != null) {
 					upstreamJobFailureElements.add(upstreamJobFailureElement);
@@ -1151,8 +1153,6 @@ public class TopLevelBuild extends BaseBuild {
 			}
 
 			failureElements.add(0, super.getGitHubMessageElement());
-
-			int maxFailureCount = 5;
 
 			Dom4JUtil.getOrderedListElement(
 				failureElements, rootElement, maxFailureCount);

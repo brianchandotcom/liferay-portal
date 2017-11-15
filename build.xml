@@ -935,6 +935,103 @@ message.
 		</if>
 
 		<if>
+			<and>
+				<equals arg1="${app.server.type}" arg2="jboss" />
+				<isset property="portal.war.url" />
+			</and>
+			<then>
+				<local name="petra.use" />
+				<beanshell>
+					<![CDATA[
+					String portalUrl = project.getProperty("portal.war.url");
+
+					if (portalUrl != null) {
+						int startIndex = portalUrl.lastIndexOf("/") + 1;
+						int endIndex = portalUrl.lastIndexOf("-");
+
+						String versionString = portalUrl.substring(startIndex, endIndex);
+
+						int periodIndex = versionString.indexOf(".");
+
+ 						int majorVersion = Integer.parseInt(versionString.substring(versionString.indexOf("-", periodIndex - 2) + 1, periodIndex));
+						if ((majorVersion < 7) || versionString.contains("ce")) {
+							project.setProperty("petra.use", "false");
+						}
+						else {
+							if (!versionString.contains("sp")) {
+								project.setProperty("petra.use", "false");
+							}
+							else {
+							int servicePackNumber = Integer.parseInt(versionString.substring(versionString.indexOf("sp") + 2, endIndex));
+
+								if (servicePackNumber < 5) {
+									project.setProperty("petra.use", "false");
+								}
+								else {
+									project.setProperty("petra.use", "true");
+								}
+							}
+						}
+					}
+					]]>
+				</beanshell>
+				<if>
+					<equals arg1="${petra.use}" arg2="false" />
+					<then>
+						<beanshell>
+							<![CDATA[
+								import java.io.BufferedReader;
+								import java.io.BufferedWriter;
+								import java.io.File;
+								import java.io.FileReader;
+								import java.io.FileWriter;
+
+								String fullFilename =
+									project.getProperty("app.server.lib.global.dir") + "/module.xml";
+
+								File newFile = new File(fullFilename + ".new");
+
+								File oldFile = new File(fullFilename);
+
+								BufferedReader reader =
+									new BufferedReader(new FileReader(oldFile));
+								BufferedWriter writer = new BufferedWriter(new FileWriter(newFile));
+
+								String cl;
+								String rml = "com.liferay.petra";
+
+								try {
+									while ((cl = reader.readLine()) != null) {
+										if (cl.indexOf(rml) == -1) {
+											writer.write(cl + System.getProperty("line.separator"));
+										}
+									}
+
+									reader.close();
+									writer.close();
+
+									boolean success = newFile.renameTo(oldFile);
+
+									if (!success) {
+										return false;
+									}
+									else {
+										return true;
+									}
+								}
+								catch (Exception e) {
+									System.out.println(
+										"Failed to acquire file for reading and/or writing");
+									throw e;
+								}
+							]]>
+						</beanshell>
+					</then>
+				</if>
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${app.server.type}" arg2="jetty" />
 			<then>
 				<if>

@@ -8453,11 +8453,11 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 			<else>
 				<if>
 					<and>
-						<equals arg1="${app.server.jboss.version}" arg2="6.1.0" />
 						<equals arg1="${app.server.type}" arg2="jboss" />
 					</and>
 					<then>
 						<ant antfile="build-dist.xml" inheritAll="false" target="unzip-jboss" />
+						<ant antfile="build.xml" inheritAll="false" target="deploy-additional-jars" />
 					</then>
 					<elseif>
 						<equals arg1="${app.server.type}" arg2="tcserver" />
@@ -8497,9 +8497,18 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					src="dist/liferay-portal-${lp.version}.war"
 				/>
 
+				<if>
+					<equals arg1="${app.server.type}" arg2="jboss" />
+					<then>
+						<touch file="${app.server.portal.dir}.dodeploy" />
+					</then>
+				</if>
+
 				<delete dir="dist" />
 
-				<ant antfile="build.xml" inheritAll="false" target="update-app-server-scripts" />
+				<ant antfile="build.xml" inheritAll="false" target="update-app-server-scripts">
+					<property name="portal.war.url" value="${test.build.portal.war.url}" />
+				</ant>
 
 				<mirrors-get
 					dest="liferay-portal-dependencies.zip"
@@ -10012,6 +10021,13 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 							<available file="${liferay.home}/logs" type="dir" />
 						</waitfor>
 
+						<if>
+							<equals arg1="${app.server.type}" arg2="jboss" />
+							<then>
+								<antcall target="wait-for-jboss-war-deploy" />
+							</then>
+						</if>
+
 						<antcall target="wait-for-plugins-deployment" />
 					</then>
 				</if>
@@ -10366,6 +10382,56 @@ jdbc.default.password=${database.password}</echo>
 		</trycatch>
 
 		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.configuration.IndexStatusManagerConfiguration.cfg">indexReadOnly=false</echo>
+	</target>
+
+	<target name="wait-for-jboss-war-deploy">
+		<beanshell>
+			<![CDATA[
+				import org.apache.commons.io.FileUtils;
+
+				String fileName = project.getProperty("app.server.portal.dir");
+
+				fileName = fileName.substring(0, fileName.indexOf("deployments"));
+
+				fileName = fileName + "log/server.log";
+
+				boolean found = false;
+
+				long start = System.currentTimeMillis();
+
+				while (System.currentTimeMillis() - start < (1000 * 300)) {
+					try {
+						File logFile = new File(fileName);
+
+						String content = FileUtils.readFileToString(logFile);
+
+						if (content.contains("Deployed \"ROOT.war\" ")) {
+							found = true;
+							break;
+						}
+					}
+					catch (Exception e) {
+						e.printStackTrace();
+					}
+
+					Thread.sleep(1000);
+				}
+
+				if (!found) {
+					project.setProperty("deployed.root.war", "false");
+				}
+				else {
+					project.setProperty("deployed.root.war", "true");
+				}
+			]]>
+		</beanshell>
+
+		<if>
+			<equals arg1="${deployed.root.war}" arg2="false" />
+			<then>
+				<fail message="Unable to deploy ROOT.war" />
+			</then>
+		</if>
 	</target>
 
 	<target name="wait-for-plugins-deployment">

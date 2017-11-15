@@ -16,7 +16,7 @@ package com.liferay.login.web.internal.portlet.action;
 
 import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.captcha.util.CaptchaUtil;
-import com.liferay.login.web.constants.LoginPortletKeys;
+import com.liferay.login.web.internal.constants.LoginPortletKeys;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.exception.CompanyMaxUsersException;

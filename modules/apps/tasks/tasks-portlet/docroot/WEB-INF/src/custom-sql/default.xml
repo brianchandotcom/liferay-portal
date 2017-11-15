@@ -32,10 +32,10 @@
 	<sql id="com.liferay.tasks.service.persistence.TasksEntryFinder.joinByAssetTags">
 		INNER JOIN
 			AssetEntry ON
-				(TMS_TasksEntry.tasksEntryId = AssetEntry.classPK)
+				TMS_TasksEntry.tasksEntryId = AssetEntry.classPK
 		INNER JOIN
 			AssetEntries_AssetTags ON
-				(AssetEntry.entryId = AssetEntries_AssetTags.entryId)
+				AssetEntry.entryId = AssetEntries_AssetTags.entryId
 		WHERE
 			(AssetEntry.classNameId = ?) AND
 			[$ASSET_TAG_TAG_IDS$] AND
@@ -43,15 +43,15 @@
 	<sql id="com.liferay.tasks.service.persistence.TasksEntryFinder.joinByNotAssetTags">
 		LEFT JOIN
 			AssetEntry ON
-				(TMS_TasksEntry.tasksEntryId = AssetEntry.classPK)
+				TMS_TasksEntry.tasksEntryId = AssetEntry.classPK
 		LEFT JOIN
 			AssetEntries_AssetTags ON
-				(AssetEntry.entryId = AssetEntries_AssetTags.entryId)
+				AssetEntry.entryId = AssetEntries_AssetTags.entryId
 		WHERE
 			(AssetEntry.classNameId = ?) AND
 			(
 				[$ASSET_TAG_TAG_IDS$] OR
-				AssetEntries_AssetTags.tagId IS NULL
+				(AssetEntries_AssetTags.tagId IS NULL)
 			) AND
 	</sql>
 </custom-sql>

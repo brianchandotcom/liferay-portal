@@ -9,7 +9,7 @@
 				AssetCategory
 			INNER JOIN
 				AssetEntries_AssetCategories ON
-					(AssetEntries_AssetCategories.categoryId = AssetCategory.categoryId)
+					AssetEntries_AssetCategories.categoryId = AssetCategory.categoryId
 			WHERE
 				(
 					AssetEntries_AssetCategories.entryId IN
@@ -24,7 +24,10 @@
 								(AssetEntry.visible = [$TRUE$])
 						)
 				) AND
-				(AssetCategory.name LIKE ? OR ? IS NULL)
+				(
+					(AssetCategory.name LIKE ?) OR
+					(? IS NULL)
+				)
 		]]>
 	</sql>
 	<sql id="com.liferay.asset.kernel.service.persistence.AssetCategoryFinder.countByG_N_P">
@@ -36,7 +39,10 @@
 			[$JOIN$]
 			WHERE
 				(AssetCategory.groupId = ?) AND
-				(AssetCategory.name LIKE ? OR ? IS NULL)
+				(
+					(AssetCategory.name LIKE ?) OR
+					(? IS NULL)
+				)
 		]]>
 	</sql>
 	<sql id="com.liferay.asset.kernel.service.persistence.AssetCategoryFinder.findByG_N">
@@ -59,7 +65,10 @@
 			[$JOIN$]
 			WHERE
 				(AssetCategory.groupId = ?) AND
-				(AssetCategory.name LIKE ? OR ? IS NULL)
+				(
+					(AssetCategory.name LIKE ?) OR
+					(? IS NULL)
+				)
 			ORDER BY
 				AssetCategory.name ASC
 		]]>
@@ -85,7 +94,7 @@
 			FROM
 				AssetEntries_AssetTags
 			WHERE
-				([$TAG_ID$])
+				[$TAG_ID$]
 		]]>
 	</sql>
 	<sql id="com.liferay.asset.kernel.service.persistence.AssetEntryFinder.findByClassNameId">
@@ -108,7 +117,7 @@
 				AssetTag
 			INNER JOIN
 				AssetEntries_AssetTags ON
-					(AssetEntries_AssetTags.tagId = AssetTag.tagId)
+					AssetEntries_AssetTags.tagId = AssetTag.tagId
 			WHERE
 				(
 					AssetEntries_AssetTags.entryId IN
@@ -133,7 +142,7 @@
 				AssetTag
 			INNER JOIN
 				AssetEntries_AssetTags ON
-					(AssetEntries_AssetTags.tagId = AssetTag.tagId)
+					AssetEntries_AssetTags.tagId = AssetTag.tagId
 			WHERE
 				(
 					AssetEntries_AssetTags.entryId IN
@@ -148,7 +157,10 @@
 								(AssetEntry.visible = [$TRUE$])
 						)
 				) AND
-				(AssetTag.name LIKE ? OR ? IS NULL)
+				(
+					(AssetTag.name LIKE ?) OR
+					(? IS NULL)
+				)
 		]]>
 	</sql>
 	<sql id="com.liferay.asset.kernel.service.persistence.AssetTagFinder.findByG_C_N">
@@ -159,7 +171,7 @@
 				AssetTag
 			INNER JOIN
 				AssetEntries_AssetTags ON
-					(AssetEntries_AssetTags.tagId = AssetTag.tagId)
+					AssetEntries_AssetTags.tagId = AssetTag.tagId
 			WHERE
 				(
 					AssetEntries_AssetTags.entryId IN
@@ -174,7 +186,10 @@
 								(AssetEntry.visible = [$TRUE$])
 						)
 				) AND
-				(AssetTag.name LIKE ? OR ? IS NULL)
+				(
+					(AssetTag.name LIKE ?) OR
+					(? IS NULL)
+				)
 			ORDER BY
 				AssetTag.name ASC
 		]]>
@@ -187,10 +202,10 @@
 				AssetTag
 			INNER JOIN
 				AssetEntries_AssetTags ON
-					(AssetEntries_AssetTags.tagId = AssetTag.tagId)
+					AssetEntries_AssetTags.tagId = AssetTag.tagId
 			INNER JOIN
 				AssetEntry AssetEntry ON
-					(AssetEntry.entryId = AssetEntries_AssetTags.entryId)
+					AssetEntry.entryId = AssetEntries_AssetTags.entryId
 			INNER JOIN
 				SocialActivityCounter ON
 					(SocialActivityCounter.classNameId = AssetEntry.classNameId) AND
@@ -213,7 +228,10 @@
 				AssetVocabulary
 			WHERE
 				(AssetVocabulary.groupId = ?) AND
-				(AssetVocabulary.name LIKE ? OR ? IS NULL)
+				(
+					(AssetVocabulary.name LIKE ?) OR
+					(? IS NULL)
+				)
 		]]>
 	</sql>
 	<sql id="com.liferay.asset.kernel.service.persistence.AssetVocabularyFinder.findByG_N">
@@ -224,7 +242,10 @@
 				AssetVocabulary
 			WHERE
 				(AssetVocabulary.groupId = ?) AND
-				(lower(AssetVocabulary.name) LIKE ? OR ? IS NULL)
+				(
+					(lower(AssetVocabulary.name) LIKE ?) OR
+					(? IS NULL)
+				)
 			ORDER BY
 				AssetVocabulary.name ASC
 		]]>

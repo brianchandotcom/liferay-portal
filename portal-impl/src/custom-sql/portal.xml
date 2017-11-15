@@ -4,18 +4,16 @@
 	<sql id="com.liferay.portal.kernel.security.permission.InlineSQLHelper.filterByResourceBlockId">
 		<![CDATA[
 			WHERE
-				(resourceBlockId IN ([$USER_RESOURCE_BLOCK_ID$]))
+				resourceBlockId IN ([$USER_RESOURCE_BLOCK_ID$])
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.security.permission.InlineSQLHelper.filterByResourceBlockIdOwner">
 		<![CDATA[
 			WHERE
+				resourceBlockId IN ([$USER_RESOURCE_BLOCK_ID$]) OR
 				(
-					resourceBlockId IN ([$USER_RESOURCE_BLOCK_ID$]) OR
-					(
-						([$USER_ID_FIELD$] = [$USER_ID$]) AND
-						(resourceBlockId IN ([$OWNER_RESOURCE_BLOCK_ID$]))
-					)
+					([$USER_ID_FIELD$] = [$USER_ID$]) AND
+					(resourceBlockId IN ([$OWNER_RESOURCE_BLOCK_ID$]))
 				)
 		]]>
 	</sql>
@@ -33,7 +31,7 @@
 						FROM
 							ResourceBlockPermission resourceBlockPermission
 						WHERE
-							(resourceBlockPermission.roleId IN ([$ROLE_ID$]))
+							resourceBlockPermission.roleId IN ([$ROLE_ID$])
 					) AND
 				(resourceBlock.companyId = [$COMPANY_ID$]) AND
 				(resourceBlock.groupId = [$GROUP_ID$]) AND
@@ -42,8 +40,8 @@
 	</sql>
 	<sql id="com.liferay.portal.kernel.security.permission.InlineSQLHelper.findByResourcePermission">
 		<![CDATA[
-			SELECT DISTINCT
-				ResourcePermission.primKeyId
+			SELECT
+				DISTINCT ResourcePermission.primKeyId
 			FROM
 				ResourcePermission
 			WHERE
@@ -120,7 +118,7 @@
 				Group_
 			INNER JOIN
 				Users_Groups ON
-					(Users_Groups.groupId = Group_.groupId)
+					Users_Groups.groupId = Group_.groupId
 			WHERE
 				(Users_Groups.userId = ?) AND
 				(Group_.active_ = [$TRUE$])
@@ -204,8 +202,15 @@
 			FROM
 				Group_
 			WHERE
-				(Group_.type_ != 4 OR Group_.type_ IS NULL) AND
-				(friendlyURL = '' OR friendlyURL IS NULL OR friendlyURL = '/null')
+				(
+					(Group_.type_ != 4) OR
+					(Group_.type_ IS NULL)
+				) AND
+				(
+					(friendlyURL = '') OR
+					(friendlyURL IS NULL) OR
+					(friendlyURL = '/null')
+				)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findBySystem">
@@ -301,19 +306,19 @@
 		<![CDATA[
 			INNER JOIN
 				Users_Orgs ON
-					(Users_Orgs.organizationId = Group_.classPK)
+					Users_Orgs.organizationId = Group_.classPK
 			WHERE
-				(Users_Orgs.userId = ?)
+				Users_Orgs.userId = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.joinByGroupsOrgs">
 		<![CDATA[
 			INNER JOIN
 				Groups_Orgs ON
-					(Groups_Orgs.groupId = Group_.groupId)
+					Groups_Orgs.groupId = Group_.groupId
 			INNER JOIN
 				Users_Orgs ON
-					(Users_Orgs.organizationId = Groups_Orgs.organizationId)
+					Users_Orgs.organizationId = Groups_Orgs.organizationId
 			WHERE
 				(Group_.liveGroupId = 0) AND
 				(Users_Orgs.userId = ?)
@@ -323,7 +328,7 @@
 		<![CDATA[
 			INNER JOIN
 				Groups_Roles ON
-					(Groups_Roles.groupId = Group_.groupId)
+					Groups_Roles.groupId = Group_.groupId
 			WHERE
 				(Group_.liveGroupId = 0) AND
 				(Groups_Roles.roleId = ?)
@@ -333,10 +338,10 @@
 		<![CDATA[
 			INNER JOIN
 				Groups_UserGroups ON
-					(Groups_UserGroups.groupId = Group_.groupId)
+					Groups_UserGroups.groupId = Group_.groupId
 			INNER JOIN
 				Users_UserGroups ON
-					(Users_UserGroups.userGroupId = Groups_UserGroups.userGroupId)
+					Users_UserGroups.userGroupId = Groups_UserGroups.userGroupId
 			WHERE
 				(Group_.liveGroupId = 0) AND
 				(Users_UserGroups.userId = ?)
@@ -346,7 +351,7 @@
 		<![CDATA[
 			INNER JOIN
 				LayoutSet ON
-					(LayoutSet.groupId = Group_.groupId)
+					LayoutSet.groupId = Group_.groupId
 			WHERE
 				(Group_.liveGroupId = 0) AND
 				(LayoutSet.privateLayout = ?) AND
@@ -356,20 +361,20 @@
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.joinByManualMembership">
 		<![CDATA[
 			WHERE
-				(Group_.manualMembership = ?)
+				Group_.manualMembership = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.joinByMembershipRestriction">
 		<![CDATA[
 			WHERE
-				(Group_.membershipRestriction = ?)
+				Group_.membershipRestriction = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.joinByPageCount">
 		<![CDATA[
 			INNER JOIN
 				LayoutSet ON
-					(LayoutSet.groupId = Group_.groupId)
+					LayoutSet.groupId = Group_.groupId
 			WHERE
 				(Group_.liveGroupId = 0) AND
 				(LayoutSet.pageCount != 0)
@@ -379,7 +384,7 @@
 		<![CDATA[
 			INNER JOIN
 				ResourcePermission ON
-					(ResourcePermission.primKeyId = Group_.groupId)
+					ResourcePermission.primKeyId = Group_.groupId
 			WHERE
 				(Group_.liveGroupId = 0) AND
 				(ResourcePermission.name = ?) AND
@@ -392,7 +397,7 @@
 		<![CDATA[
 			INNER JOIN
 				ResourceTypePermission ON
-					(ResourceTypePermission.groupId = Group_.groupId)
+					ResourceTypePermission.groupId = Group_.groupId
 			WHERE
 				(Group_.liveGroupId = 0) AND
 				(ResourceTypePermission.name = ?) AND
@@ -403,20 +408,20 @@
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.joinBySite">
 		<![CDATA[
 			WHERE
-				(Group_.site = ?)
+				Group_.site = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.joinByType">
 		<![CDATA[
 			WHERE
-				(Group_.type_ = ?)
+				Group_.type_ = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.joinByUserGroup">
 		<![CDATA[
 			INNER JOIN
 				UserGroupRole ON
-					(UserGroupRole.userId = ?)
+					UserGroupRole.userId = ?
 			WHERE
 				(Group_.liveGroupId = 0) AND
 				(UserGroupRole.groupId = Group_.groupId) AND
@@ -427,7 +432,7 @@
 		<![CDATA[
 			INNER JOIN
 				UserGroupRole ON
-					(UserGroupRole.userId = ?)
+					UserGroupRole.userId = ?
 			WHERE
 				(Group_.liveGroupId = 0) AND
 				(UserGroupRole.groupId = Group_.groupId) AND
@@ -438,7 +443,7 @@
 		<![CDATA[
 			INNER JOIN
 				Users_Groups ON
-					(Users_Groups.groupId = Group_.groupId)
+					Users_Groups.groupId = Group_.groupId
 			WHERE
 				(Group_.liveGroupId = 0) AND
 				(Users_Groups.userId = ?)
@@ -469,7 +474,8 @@
 			FROM
 				Layout
 			WHERE
-				(friendlyURL = '' OR friendlyURL IS NULL)
+				(friendlyURL = '') OR
+				(friendlyURL IS NULL)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.LayoutFinder.findByScopeGroup">
@@ -496,7 +502,7 @@
 				Layout
 			INNER JOIN
 				PortletPreferences ON
-					(PortletPreferences.plid = Layout.plid)
+					PortletPreferences.plid = Layout.plid
 			WHERE
 				(Layout.companyId = ?) AND
 				(
@@ -514,9 +520,9 @@
 				Organization_
 			INNER JOIN
 				Group_ ON
-					(Group_.classPK = Organization_.organizationId)
+					Group_.classPK = Organization_.organizationId
 			WHERE
-				(Group_.groupId = ?)
+				Group_.groupId = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.OrganizationFinder.countO_ByOrganizationId">
@@ -565,8 +571,14 @@
 						(lower(Address.street2) LIKE ? [$AND_OR_NULL_CHECK$]) OR
 						(lower(Address.street3) LIKE ? [$AND_OR_NULL_CHECK$])
 					) [$AND_OR_CONNECTOR$]
-					((Organization_.regionId = ?) OR (Address.regionId = ?)) [$AND_OR_CONNECTOR$]
-					((Organization_.countryId = ?) OR (Address.countryId = ?)) [$AND_OR_CONNECTOR$]
+					(
+						(Organization_.regionId = ?) OR
+						(Address.regionId = ?)
+					) [$AND_OR_CONNECTOR$]
+					(
+						(Organization_.countryId = ?) OR
+						(Address.countryId = ?)
+					) [$AND_OR_CONNECTOR$]
 					(lower(Address.city) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(lower(Address.zip) LIKE ? [$AND_OR_NULL_CHECK$])
 				)
@@ -596,8 +608,14 @@
 						(lower(Address.street2) LIKE ? [$AND_OR_NULL_CHECK$]) OR
 						(lower(Address.street3) LIKE ? [$AND_OR_NULL_CHECK$])
 					) [$AND_OR_CONNECTOR$]
-					((Organization_.regionId = ?) OR (Address.regionId = ?)) [$AND_OR_CONNECTOR$]
-					((Organization_.countryId = ?) OR (Address.countryId = ?)) [$AND_OR_CONNECTOR$]
+					(
+						(Organization_.regionId = ?) OR
+						(Address.regionId = ?)
+					) [$AND_OR_CONNECTOR$]
+					(
+						(Organization_.countryId = ?) OR
+						(Address.countryId = ?)
+					) [$AND_OR_CONNECTOR$]
 					(lower(Address.city) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(lower(Address.zip) LIKE ? [$AND_OR_NULL_CHECK$])
 				)
@@ -611,7 +629,7 @@
 				User_
 			INNER JOIN
 				Users_Orgs ON
-					(Users_Orgs.userId = User_.userId)
+					Users_Orgs.userId = User_.userId
 			WHERE
 				(User_.companyId = ?) AND
 				(User_.status = ?) AND
@@ -629,7 +647,7 @@
 					(AssetEntry.classNameId = ?) AND
 					(AssetEntry.classPK = Organization_.organizationId)
 			WHERE
-				(AssetEntry.classPK IS NULL)
+				AssetEntry.classPK IS NULL
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.OrganizationFinder.findO_ByGroupId">
@@ -640,9 +658,9 @@
 				Organization_
 			INNER JOIN
 				Group_ ON
-					(Group_.classPK = Organization_.organizationId)
+					Group_.classPK = Organization_.organizationId
 			WHERE
-				(Group_.groupId = ?)
+				Group_.groupId = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.OrganizationFinder.findO_ByC_P">
@@ -693,8 +711,14 @@
 						(lower(Address.street2) LIKE ? [$AND_OR_NULL_CHECK$]) OR
 						(lower(Address.street3) LIKE ? [$AND_OR_NULL_CHECK$])
 					) [$AND_OR_CONNECTOR$]
-					((Organization_.regionId = ?) OR (Address.regionId = ?)) [$AND_OR_CONNECTOR$]
-					((Organization_.countryId = ?) OR (Address.countryId = ?)) [$AND_OR_CONNECTOR$]
+					(
+						(Organization_.regionId = ?) OR
+						(Address.regionId = ?)
+					) [$AND_OR_CONNECTOR$]
+					(
+						(Organization_.countryId = ?) OR
+						(Address.countryId = ?)
+					) [$AND_OR_CONNECTOR$]
 					(lower(Address.city) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(lower(Address.zip) LIKE ? [$AND_OR_NULL_CHECK$])
 				)
@@ -724,8 +748,14 @@
 						(lower(Address.street2) LIKE ? [$AND_OR_NULL_CHECK$]) OR
 						(lower(Address.street3) LIKE ? [$AND_OR_NULL_CHECK$])
 					) [$AND_OR_CONNECTOR$]
-					((Organization_.regionId = ?) OR (Address.regionId = ?)) [$AND_OR_CONNECTOR$]
-					((Organization_.countryId = ?) OR (Address.countryId = ?)) [$AND_OR_CONNECTOR$]
+					(
+						(Organization_.regionId = ?) OR
+						(Address.regionId = ?)
+					) [$AND_OR_CONNECTOR$]
+					(
+						(Organization_.countryId = ?) OR
+						(Address.countryId = ?)
+					) [$AND_OR_CONNECTOR$]
 					(lower(Address.city) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(lower(Address.zip) LIKE ? [$AND_OR_NULL_CHECK$])
 				)
@@ -739,7 +769,7 @@
 				User_
 			INNER JOIN
 				Users_Orgs ON
-					(Users_Orgs.userId = User_.userId)
+					Users_Orgs.userId = User_.userId
 			WHERE
 				(User_.companyId = ?) AND
 				(User_.status = ?) AND
@@ -750,16 +780,16 @@
 		<![CDATA[
 			INNER JOIN
 				Groups_Orgs ON
-					(Groups_Orgs.organizationId = Organization_.organizationId)
+					Groups_Orgs.organizationId = Organization_.organizationId
 			WHERE
-				(Groups_Orgs.groupId = ?)
+				Groups_Orgs.groupId = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.OrganizationFinder.joinO_ByOrganizationsPasswordPolicies">
 		<![CDATA[
 			INNER JOIN
 				PasswordPolicyRel ON
-					(PasswordPolicyRel.classPK = Organization_.organizationId)
+					PasswordPolicyRel.classPK = Organization_.organizationId
 			WHERE
 				(PasswordPolicyRel.passwordPolicyId = ?) AND
 				(PasswordPolicyRel.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.ORGANIZATION$])
@@ -769,10 +799,10 @@
 		<![CDATA[
 			INNER JOIN
 				Group_ ON
-					(Group_.classPK = Organization_.organizationId)
+					Group_.classPK = Organization_.organizationId
 			INNER JOIN
 				Groups_Roles ON
-					(Groups_Roles.groupId = Group_.groupId)
+					Groups_Roles.groupId = Group_.groupId
 			WHERE
 				(Group_.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.ORGANIZATION$]) AND
 				(Groups_Roles.roleId = ?)
@@ -782,18 +812,18 @@
 		<![CDATA[
 			INNER JOIN
 				Users_Orgs ON
-					(Users_Orgs.organizationId = Organization_.organizationId)
+					Users_Orgs.organizationId = Organization_.organizationId
 			WHERE
-				(Users_Orgs.userId = ?)
+				Users_Orgs.userId = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.OrganizationFinder.joinO_ByUsersOrgs">
 		<![CDATA[
 			INNER JOIN
 				Users_Orgs ON
-					(Users_Orgs.userId = ?)
+					Users_Orgs.userId = ?
 			WHERE
-				(Users_Orgs.organizationId = Organization_.organizationId)
+				Users_Orgs.organizationId = Organization_.organizationId
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.PasswordPolicyFinder.countByC_N">
@@ -804,7 +834,10 @@
 				PasswordPolicy
 			WHERE
 				(PasswordPolicy.companyId = ?) AND
-				(lower(PasswordPolicy.name) LIKE ? OR ? IS NULL)
+				(
+					(lower(PasswordPolicy.name) LIKE ?) OR
+					(? IS NULL)
+				)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.PasswordPolicyFinder.findByC_N">
@@ -815,7 +848,10 @@
 				PasswordPolicy
 			WHERE
 				(PasswordPolicy.companyId = ?) AND
-				(lower(PasswordPolicy.name) LIKE ? OR ? IS NULL)
+				(
+					(lower(PasswordPolicy.name) LIKE ?) OR
+					(? IS NULL)
+				)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.PortletPreferencesFinder.countByO_O_P">
@@ -869,7 +905,7 @@
 				PortletPreferences
 			INNER JOIN
 				Layout ON
-					(Layout.plid = PortletPreferences.plid)
+					Layout.plid = PortletPreferences.plid
 			WHERE
 				(Layout.companyId = ?) AND
 				(Layout.groupId = ?) AND
@@ -1031,10 +1067,10 @@
 				Groups_Roles
 			INNER JOIN
 				Group_ ON
-					(Group_.groupId = Groups_Roles.groupId)
+					Group_.groupId = Groups_Roles.groupId
 			INNER JOIN
 				Users_Orgs ON
-					(Users_Orgs.organizationId = Group_.classPK)
+					Users_Orgs.organizationId = Group_.classPK
 			WHERE
 				(Groups_Roles.roleId = ?) AND
 				(Users_Orgs.userId = ?)
@@ -1048,10 +1084,10 @@
 				Groups_Roles
 			INNER JOIN
 				Groups_Orgs ON
-					(Groups_Orgs.groupId = Groups_Roles.groupId)
+					Groups_Orgs.groupId = Groups_Roles.groupId
 			INNER JOIN
 				Users_Orgs ON
-					(Users_Orgs.organizationId = Groups_Orgs.organizationId)
+					Users_Orgs.organizationId = Groups_Orgs.organizationId
 			WHERE
 				(Groups_Roles.roleId = ?) AND
 				(Users_Orgs.userId = ?)
@@ -1065,7 +1101,7 @@
 				Groups_Roles
 			INNER JOIN
 				Users_Groups ON
-					(Users_Groups.groupId = Groups_Roles.groupId)
+					Users_Groups.groupId = Groups_Roles.groupId
 			WHERE
 				(Groups_Roles.roleId = ?) AND
 				(Users_Groups.userId = ?)
@@ -1090,10 +1126,10 @@
 				Groups_Roles
 			INNER JOIN
 				Group_ ON
-					(Group_.groupId = Groups_Roles.groupId)
+					Group_.groupId = Groups_Roles.groupId
 			INNER JOIN
 				Users_UserGroups ON
-					(Users_UserGroups.userGroupId = Group_.classPK)
+					Users_UserGroups.userGroupId = Group_.classPK
 			WHERE
 				(Groups_Roles.roleId = ?) AND
 				(Users_UserGroups.userId = ?)
@@ -1107,10 +1143,10 @@
 				Role_
 			INNER JOIN
 				UserGroupGroupRole ON
-					(UserGroupGroupRole.roleId = Role_.roleId)
+					UserGroupGroupRole.roleId = Role_.roleId
 			INNER JOIN
 				Users_UserGroups ON
-					(Users_UserGroups.userGroupId = UserGroupGroupRole.userGroupId)
+					Users_UserGroups.userGroupId = UserGroupGroupRole.userGroupId
 			WHERE
 				(Users_UserGroups.userId = ?) AND
 				(UserGroupGroupRole.groupId = ?)
@@ -1124,10 +1160,10 @@
 				Groups_Roles
 			INNER JOIN
 				Groups_UserGroups ON
-					(Groups_UserGroups.groupId = Groups_Roles.groupId)
+					Groups_UserGroups.groupId = Groups_Roles.groupId
 			INNER JOIN
 				Users_UserGroups ON
-					(Users_UserGroups.userGroupId = Groups_UserGroups.userGroupId)
+					Users_UserGroups.userGroupId = Groups_UserGroups.userGroupId
 			WHERE
 				(Groups_Roles.roleId = ?) AND
 				(Users_UserGroups.userId = ?)
@@ -1141,10 +1177,10 @@
 				Role_
 			INNER JOIN
 				UserGroupGroupRole ON
-					(UserGroupGroupRole.roleId = Role_.roleId)
+					UserGroupGroupRole.roleId = Role_.roleId
 			INNER JOIN
 				Users_UserGroups ON
-					(Users_UserGroups.userGroupId = UserGroupGroupRole.userGroupId)
+					Users_UserGroups.userGroupId = UserGroupGroupRole.userGroupId
 			WHERE
 				(Role_.roleId = ?) AND
 				(UserGroupGroupRole.groupId = ?) AND
@@ -1246,7 +1282,7 @@
 						(Team.teamId = Role_.classPK)
 				INNER JOIN
 					Users_Teams ON
-						(Users_Teams.teamId = Team.teamId)
+						Users_Teams.teamId = Team.teamId
 				WHERE
 					(Role_.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.TEAM$]) AND
 					(Team.groupId = ?) AND
@@ -1264,10 +1300,10 @@
 						(Team.teamId = Role_.classPK)
 				INNER JOIN
 					UserGroups_Teams ON
-						(UserGroups_Teams.teamId = Team.teamId)
+						UserGroups_Teams.teamId = Team.teamId
 				INNER JOIN
 					Users_UserGroups ON
-						(Users_UserGroups.userGroupId = UserGroups_Teams.userGroupId)
+						Users_UserGroups.userGroupId = UserGroups_Teams.userGroupId
 				WHERE
 					(Role_.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.TEAM$]) AND
 					(Team.groupId = ?) AND
@@ -1284,10 +1320,10 @@
 					Role_
 				INNER JOIN
 					UserGroupGroupRole ON
-						(UserGroupGroupRole.roleId = Role_.roleId)
+						UserGroupGroupRole.roleId = Role_.roleId
 				INNER JOIN
 					Users_UserGroups ON
-						(Users_UserGroups.userGroupId = UserGroupGroupRole.userGroupId)
+						Users_UserGroups.userGroupId = UserGroupGroupRole.userGroupId
 				WHERE
 					(Users_UserGroups.userId = ?) AND
 					(UserGroupGroupRole.groupId = ?)
@@ -1303,7 +1339,7 @@
 					Role_
 				INNER JOIN
 					UserGroupRole ON
-						(UserGroupRole.roleId = Role_.roleId)
+						UserGroupRole.roleId = Role_.roleId
 				WHERE
 					(UserGroupRole.userId = ?) AND
 					(UserGroupRole.groupId = ?)
@@ -1330,9 +1366,9 @@
 					Role_
 				INNER JOIN
 					Users_Roles ON
-						(Users_Roles.roleId = Role_.roleId)
+						Users_Roles.roleId = Role_.roleId
 				WHERE
-					(Users_Roles.userId = ?)
+					Users_Roles.userId = ?
 			)
 			UNION
 			(
@@ -1342,9 +1378,9 @@
 					Role_
 				INNER JOIN
 					Groups_Roles ON
-						(Groups_Roles.roleId = Role_.roleId)
+						Groups_Roles.roleId = Role_.roleId
 				WHERE
-					([$GROUP_ID$])
+					[$GROUP_ID$]
 			)
 		]]>
 	</sql>
@@ -1356,10 +1392,10 @@
 				ResourceBlockPermission
 			INNER JOIN
 				ResourceBlock ON
-					(ResourceBlock.resourceBlockId = ResourceBlockPermission.resourceBlockId)
+					ResourceBlock.resourceBlockId = ResourceBlockPermission.resourceBlockId
 			INNER JOIN
 				Role_ ON
-					(Role_.roleId = ResourceBlockPermission.roleId)
+					Role_.roleId = ResourceBlockPermission.roleId
 			WHERE
 				(ResourceBlock.resourceBlockId = ?) AND
 				(ResourceBlock.name = ?) AND
@@ -1396,7 +1432,7 @@
 				ResourcePermission
 			INNER JOIN
 				Role_ ON
-					(Role_.roleId = ResourcePermission.roleId)
+					Role_.roleId = ResourcePermission.roleId
 			INNER JOIN
 				ResourceAction ON
 					(ResourcePermission.name = ResourceAction.name) AND
@@ -1416,7 +1452,7 @@
 				ResourcePermission
 			INNER JOIN
 				Role_ ON
-					(Role_.roleId = ResourcePermission.roleId)
+					Role_.roleId = ResourcePermission.roleId
 			WHERE
 				(ResourcePermission.companyId = ?) AND
 				(ResourcePermission.name = ?) AND
@@ -1431,9 +1467,9 @@
 		<![CDATA[
 			INNER JOIN
 				Users_Roles ON
-					(Users_Roles.roleId = Role_.roleId)
+					Users_Roles.roleId = Role_.roleId
 			WHERE
-				(Users_Roles.userId = ?)
+				Users_Roles.userId = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.ServiceComponentFinder.findByMaxBuildNumber">
@@ -1466,8 +1502,14 @@
 			WHERE
 				[$WHERE$]
 				(Team.groupId = ?) AND
-				(lower(Team.name) LIKE ? OR ? IS NULL) AND
-				(lower(Team.description) LIKE ? OR ? IS NULL)
+				(
+					(lower(Team.name) LIKE ?) OR
+					(? IS NULL)
+				) AND
+				(
+					(lower(Team.description) LIKE ?) OR
+					(? IS NULL)
+				)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.TeamFinder.findByG_U">
@@ -1477,7 +1519,7 @@
 			FROM
 				Team
 			WHERE
-				Team.groupId = ? AND
+				(Team.groupId = ?) AND
 				(
 					Team.teamId IN
 						(
@@ -1486,8 +1528,8 @@
 							FROM
 								Users_UserGroups, UserGroups_Teams
 							WHERE
-								Users_UserGroups.userId = ? AND
-								Users_UserGroups.userGroupId = UserGroups_Teams.userGroupId
+								(Users_UserGroups.userId = ?) AND
+								(Users_UserGroups.userGroupId = UserGroups_Teams.userGroupId)
 						) OR
 					Team.teamId IN
 						(
@@ -1496,8 +1538,8 @@
 							FROM
 								User_, Users_Teams
 							WHERE
-								User_.userId = ? AND
-								User_.userId = Users_Teams.userId
+								(User_.userId = ?) AND
+								(User_.userId = Users_Teams.userId)
 						)
 				)
 		]]>
@@ -1512,8 +1554,14 @@
 			WHERE
 				[$WHERE$]
 				(Team.groupId = ?) AND
-				(lower(Team.name) LIKE ? OR ? IS NULL) AND
-				(lower(Team.description) LIKE ? OR ? IS NULL)
+				(
+					(lower(Team.name) LIKE ?) OR
+					(? IS NULL)
+				) AND
+				(
+					(lower(Team.description) LIKE ?) OR
+					(? IS NULL)
+				)
 			ORDER BY
 				Team.name ASC
 		]]>
@@ -1522,21 +1570,21 @@
 		<![CDATA[
 			INNER JOIN
 				UserGroups_Teams ON
-					(UserGroups_Teams.teamId = Team.teamId)
+					UserGroups_Teams.teamId = Team.teamId
 			INNER JOIN
 				Users_UserGroups ON
-					(Users_UserGroups.userGroupId = UserGroups_Teams.userGroupId)
+					Users_UserGroups.userGroupId = UserGroups_Teams.userGroupId
 			WHERE
-				(Users_UserGroups.userId = ?)
+				Users_UserGroups.userId = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.TeamFinder.joinByUsersTeams">
 		<![CDATA[
 			INNER JOIN
 				Users_Teams ON
-					(Users_Teams.teamId = Team.teamId)
+					Users_Teams.teamId = Team.teamId
 			WHERE
-				(Users_Teams.userId = ?)
+				Users_Teams.userId = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.countBySocialUsers">
@@ -1547,7 +1595,7 @@
 				User_
 			INNER JOIN
 				SocialRelation ON
-					(SocialRelation.userId2 = User_.userId)
+					SocialRelation.userId2 = User_.userId
 			WHERE
 				(SocialRelation.userId1 = ?) AND
 				(SocialRelation.type_ [$SOCIAL_RELATION_TYPE_COMPARATOR$] ?) AND
@@ -1580,7 +1628,7 @@
 					(AnnouncementsDelivery.type_ = ?) AND
 					(User_.defaultUser = [$FALSE$])
 			WHERE
-				(AnnouncementsDelivery.userId IS NULL)
+				AnnouncementsDelivery.userId IS NULL
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.findByNoContacts">
@@ -1591,7 +1639,7 @@
 				User_
 			LEFT JOIN
 				Contact_ ON
-					(Contact_.contactId = User_.contactId)
+					Contact_.contactId = User_.contactId
 			WHERE
 				Contact_.contactId IS NULL
 		]]>
@@ -1620,7 +1668,7 @@
 				User_
 			INNER JOIN
 				SocialRelation ON
-					(SocialRelation.userId2 = User_.userId)
+					SocialRelation.userId2 = User_.userId
 			WHERE
 				(SocialRelation.userId1 = ?) AND
 				(SocialRelation.type_ [$SOCIAL_RELATION_TYPE_COMPARATOR$] ?) AND
@@ -1637,7 +1685,7 @@
 				User_
 			INNER JOIN
 				Users_Groups ON
-					(Users_Groups.userId = User_.userId)
+					Users_Groups.userId = User_.userId
 			WHERE
 				(Users_Groups.groupId IN [$GROUP_ID$]) AND
 				(User_.companyId = ?) AND
@@ -1653,10 +1701,10 @@
 				User_
 			INNER JOIN
 				Users_Orgs ON
-					(Users_Orgs.userId = User_.userId)
+					Users_Orgs.userId = User_.userId
 			INNER JOIN
 				Groups_Orgs ON
-					(Groups_Orgs.organizationId = Users_Orgs.organizationId)
+					Groups_Orgs.organizationId = Users_Orgs.organizationId
 			WHERE
 				Groups_Orgs.groupId IN [$GROUP_ID$] AND
 				(User_.companyId = ?) AND
@@ -1672,10 +1720,10 @@
 				User_
 			INNER JOIN
 				Users_Orgs ON
-					(Users_Orgs.userId = User_.userId)
+					Users_Orgs.userId = User_.userId
 			INNER JOIN
 				Group_ ON
-					(Group_.classPK = Users_Orgs.organizationId)
+					Group_.classPK = Users_Orgs.organizationId
 			WHERE
 				Group_.groupId IN [$GROUP_ID$] AND
 				(User_.companyId = ?) AND
@@ -1691,10 +1739,10 @@
 				User_
 			INNER JOIN
 				Users_UserGroups ON
-					(Users_UserGroups.userId = User_.userId)
+					Users_UserGroups.userId = User_.userId
 			INNER JOIN
 				Groups_UserGroups ON
-					(Groups_UserGroups.userGroupId = Users_UserGroups.userGroupId)
+					Groups_UserGroups.userGroupId = Users_UserGroups.userGroupId
 			WHERE
 				Groups_UserGroups.groupId IN [$GROUP_ID$] AND
 				(User_.companyId = ?) AND
@@ -1719,26 +1767,27 @@
 					(lower(User_.lastName) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(lower(User_.screenName) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(lower(User_.emailAddress) LIKE ? [$AND_OR_NULL_CHECK$])
-				) AND (User_.status = ?)
+				) AND
+				(User_.status = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.joinByContactTwitterSN">
 		<![CDATA[
 			INNER JOIN
 				Contact_ ON
-					(Contact_.contactId = User_.contactId)
+					Contact_.contactId = User_.contactId
 			WHERE
-				(Contact_.twitterSn != '')
+				Contact_.twitterSn != ''
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.joinByGroupsOrgs">
 		<![CDATA[
 			INNER JOIN
 				Users_Orgs ON
-					(Users_Orgs.userId = User_.userId)
+					Users_Orgs.userId = User_.userId
 			INNER JOIN
 				Groups_Orgs ON
-					(Groups_Orgs.organizationId = Users_Orgs.organizationId)
+					Groups_Orgs.organizationId = Users_Orgs.organizationId
 			WHERE
 				Groups_Orgs.groupId = ?
 		]]>
@@ -1747,10 +1796,10 @@
 		<![CDATA[
 			INNER JOIN
 				Users_UserGroups ON
-					(Users_UserGroups.userId = User_.userId)
+					Users_UserGroups.userId = User_.userId
 			INNER JOIN
 				Groups_UserGroups ON
-					(Groups_UserGroups.userGroupId = Users_UserGroups.userGroupId)
+					Groups_UserGroups.userGroupId = Users_UserGroups.userGroupId
 			WHERE
 				Groups_UserGroups.groupId = ?
 		]]>
@@ -1759,16 +1808,16 @@
 		<![CDATA[
 			LEFT JOIN
 				Users_Orgs ON
-					(User_.userId = Users_Orgs.userId)
+					User_.userId = Users_Orgs.userId
 			WHERE
-				(Users_Orgs.organizationId IS NULL)
+				Users_Orgs.organizationId IS NULL
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.joinByUserGroupRole">
 		<![CDATA[
 			INNER JOIN
 				UserGroupRole ON
-					(UserGroupRole.userId = User_.userId)
+					UserGroupRole.userId = User_.userId
 			WHERE
 				(UserGroupRole.groupId = ?) AND
 				(UserGroupRole.roleId = ?)
@@ -1778,35 +1827,35 @@
 		<![CDATA[
 			INNER JOIN
 				Users_Groups ON
-					(Users_Groups.userId = User_.userId)
+					Users_Groups.userId = User_.userId
 			WHERE
-				(Users_Groups.groupId = ?)
+				Users_Groups.groupId = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.joinByUsersOrgs">
 		<![CDATA[
 			INNER JOIN
 				Users_Orgs ON
-					(Users_Orgs.userId = User_.userId)
+					Users_Orgs.userId = User_.userId
 			WHERE
-				(Users_Orgs.organizationId = ?)
+				Users_Orgs.organizationId = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.joinByUsersOrgsTree">
 		<![CDATA[
 			INNER JOIN
 				Users_Orgs ON
-					(Users_Orgs.userId = User_.userId)
+					Users_Orgs.userId = User_.userId
 			INNER JOIN
 				Organization_ ON
-					(Organization_.organizationId = Users_Orgs.organizationId)
+					Organization_.organizationId = Users_Orgs.organizationId
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.joinByUsersPasswordPolicies">
 		<![CDATA[
 			INNER JOIN
 				PasswordPolicyRel ON
-					(PasswordPolicyRel.classPK = User_.userId)
+					PasswordPolicyRel.classPK = User_.userId
 			WHERE
 				(PasswordPolicyRel.passwordPolicyId = ?) AND
 				(PasswordPolicyRel.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.USER$])
@@ -1816,34 +1865,34 @@
 		<![CDATA[
 			INNER JOIN
 				Users_Roles ON
-					(Users_Roles.userId = User_.userId)
+					Users_Roles.userId = User_.userId
 			WHERE
-				(Users_Roles.roleId = ?)
+				Users_Roles.roleId = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.joinByUsersTeams">
 		<![CDATA[
 			INNER JOIN
 				Users_Teams ON
-					(Users_Teams.userId = User_.userId)
+					Users_Teams.userId = User_.userId
 			WHERE
-				(Users_Teams.teamId = ?)
+				Users_Teams.teamId = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.joinByUsersUserGroups">
 		<![CDATA[
 			INNER JOIN
 				Users_UserGroups ON
-					(Users_UserGroups.userId = User_.userId)
+					Users_UserGroups.userId = User_.userId
 			WHERE
-				(Users_UserGroups.userGroupId = ?)
+				Users_UserGroups.userGroupId = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.joinByAnnouncementsDeliveryEmailOrSms">
 		<![CDATA[
 			INNER JOIN
 				AnnouncementsDelivery ON
-					(AnnouncementsDelivery.userId = User_.userId)
+					AnnouncementsDelivery.userId = User_.userId
 			WHERE
 				(AnnouncementsDelivery.type_ = ?) AND
 				(
@@ -1856,10 +1905,10 @@
 		<![CDATA[
 			INNER JOIN
 				SocialRelation socialRelation1 ON
-					(socialRelation1.userId2 = User_.userId)
+					socialRelation1.userId2 = User_.userId
 			INNER JOIN
 				SocialRelation socialRelation2 ON
-					(socialRelation2.userId2 = User_.userId)
+					socialRelation2.userId2 = User_.userId
 			WHERE
 				(socialRelation1.userId1 = ?) AND
 				(socialRelation2.userId1 = ?)
@@ -1869,10 +1918,10 @@
 		<![CDATA[
 			INNER JOIN
 				SocialRelation socialRelation1 ON
-					(socialRelation1.userId2 = User_.userId)
+					socialRelation1.userId2 = User_.userId
 			INNER JOIN
 				SocialRelation socialRelation2 ON
-					(socialRelation2.userId2 = User_.userId)
+					socialRelation2.userId2 = User_.userId
 			WHERE
 				(socialRelation1.userId1 = ?) AND
 				(socialRelation1.type_ = ?) AND
@@ -1884,7 +1933,7 @@
 		<![CDATA[
 			INNER JOIN
 				SocialRelation ON
-					(SocialRelation.userId2 = User_.userId)
+					SocialRelation.userId2 = User_.userId
 			WHERE
 				(SocialRelation.userId1 = ?) AND
 				(SocialRelation.type_ != [$SOCIAL_RELATION_TYPE_UNI_ENEMY$])
@@ -1894,7 +1943,7 @@
 		<![CDATA[
 			INNER JOIN
 				SocialRelation ON
-					(SocialRelation.userId2 = User_.userId)
+					SocialRelation.userId2 = User_.userId
 			WHERE
 				(SocialRelation.userId1 = ?) AND
 				(SocialRelation.type_ = ?)
@@ -1947,19 +1996,19 @@
 		<![CDATA[
 			INNER JOIN
 				Groups_UserGroups ON
-					(Groups_UserGroups.userGroupId = UserGroup.userGroupId)
+					Groups_UserGroups.userGroupId = UserGroup.userGroupId
 			WHERE
-				(Groups_UserGroups.groupId = ?)
+				Groups_UserGroups.groupId = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.UserGroupFinder.joinByUserGroupsRoles">
 		<![CDATA[
 			INNER JOIN
 				Group_ ON
-					(Group_.classPK = UserGroup.userGroupId)
+					Group_.classPK = UserGroup.userGroupId
 			INNER JOIN
 				Groups_Roles ON
-					(Groups_Roles.groupId = Group_.groupId)
+					Groups_Roles.groupId = Group_.groupId
 			WHERE
 				(Group_.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.USERGROUP$]) AND
 				(Groups_Roles.roleId = ?)
@@ -1969,18 +2018,18 @@
 		<![CDATA[
 			INNER JOIN
 				UserGroups_Teams ON
-					(UserGroups_Teams.userGroupId = UserGroup.userGroupId)
+					UserGroups_Teams.userGroupId = UserGroup.userGroupId
 			WHERE
-				(UserGroups_Teams.teamId = ?)
+				UserGroups_Teams.teamId = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.UserGroupFinder.joinByUserGroupsUsers">
 		<![CDATA[
 			INNER JOIN
 				Users_UserGroups ON
-					(Users_UserGroups.userGroupId = UserGroup.userGroupId)
+					Users_UserGroups.userGroupId = UserGroup.userGroupId
 			WHERE
-				(Users_UserGroups.userId = ?)
+				Users_UserGroups.userId = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.UserGroupGroupRoleFinder.findByGroupRoleType">
@@ -2000,7 +2049,7 @@
 								FROM
 									Role_
 								WHERE
-									(Role_.type_ = ?)
+									Role_.type_ = ?
 							)
 					)
 			)
@@ -2015,7 +2064,7 @@
 					UserGroupGroupRole
 				INNER JOIN
 					Users_UserGroups ON
-						(Users_UserGroups.userGroupId = UserGroupGroupRole.userGroupId)
+						Users_UserGroups.userGroupId = UserGroupGroupRole.userGroupId
 				WHERE
 					[$WHERE$]
 					(Users_UserGroups.userId = ?)
@@ -2039,7 +2088,7 @@
 								FROM
 									Role_
 								WHERE
-									(Role_.type_ = ?)
+									Role_.type_ = ?
 							)
 					)
 			)
@@ -2058,7 +2107,7 @@
 						(UserGroupGroupRole.roleId = UserGroupRole.roleId)
 				INNER JOIN
 					Users_UserGroups ON
-						(Users_UserGroups.userGroupId = UserGroupGroupRole.userGroupId)
+						Users_UserGroups.userGroupId = UserGroupGroupRole.userGroupId
 				WHERE
 					(Users_UserGroups.userId = ?) AND
 					(UserGroupGroupRole.groupId = ?)
@@ -2081,7 +2130,7 @@
 			SET
 				referenceCount = (referenceCount - 1)
 			WHERE
-				(resourceBlockId = ?)
+				resourceBlockId = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.impl.ResourceBlockLocalServiceImpl.retainResourceBlock">

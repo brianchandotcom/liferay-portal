@@ -28,17 +28,32 @@ import java.util.regex.Pattern;
 public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 
 	@Override
+	public boolean isPortalCheck() {
+		return true;
+	}
+
+	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
+		if (isSubrepository() || isReadOnly(absolutePath)) {
+			return content;
+		}
+
 		if (fileName.contains("/custom-sql/")) {
-			_checkClosingParenthesis(fileName, content);
+			_checkMissingLineBreakAfterKeyword(fileName, content);
+			_checkMissingParentheses(fileName, content);
+			_checkMultiLineClause(fileName, content);
 			_checkScalability(fileName, absolutePath, content);
 
 			content = _fixIncorrectAndOr(content);
 			content = _fixMissingLineBreakAfterOpenParenthesis(content);
 			content = _fixMissingLineBreakBeforeOpenParenthesis(content);
+			content = _fixRedundantParenthesesForSingleLineClause(content);
+			content = _fixSinglePredicateClause(content);
+			content = _formatSingleLineClauseWithMultiplePredicates(
+				fileName, content);
 		}
 
 		return content;
@@ -56,7 +71,44 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private void _checkClosingParenthesis(String fileName, String content) {
+	private void _checkMissingLineBreakAfterKeyword(
+		String fileName, String content) {
+
+		Matcher matcher = _missingLineBreakAfterKeywordPattern.matcher(content);
+
+		while (matcher.find()) {
+			addMessage(
+				fileName,
+				"There should be a line break after '" +
+					StringUtil.trim(matcher.group(1)),
+				getLineCount(content, matcher.end()));
+		}
+	}
+
+	private void _checkMissingParentheses(String fileName, String content) {
+		Matcher matcher = _missingParenthesesPattern1.matcher(content);
+
+		while (matcher.find()) {
+			addMessage(
+				fileName, "Missing parentheses",
+				getLineCount(content, matcher.start()));
+		}
+
+		matcher = _missingParenthesesPattern2.matcher(content);
+
+		while (matcher.find()) {
+			String nextLine = getLine(
+				content, getLineCount(content, matcher.end()));
+
+			if (!nextLine.endsWith(" IN") && !nextLine.endsWith("EXISTS")) {
+				addMessage(
+					fileName, "Missing parentheses",
+					getLineCount(content, matcher.end()));
+			}
+		}
+	}
+
+	private void _checkMultiLineClause(String fileName, String content) {
 		int startPos = -1;
 
 		while (true) {
@@ -82,6 +134,22 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 					endLineCount);
 
 				continue;
+			}
+
+			String afterCloseParenthesis = StringUtil.trim(
+				content.substring(endPos + 1));
+			String beforeOpenParenthesis = StringUtil.trim(
+				content.substring(0, startPos));
+
+			if ((beforeOpenParenthesis.endsWith(" ON") ||
+				 beforeOpenParenthesis.endsWith("\tWHERE")) &&
+				!afterCloseParenthesis.startsWith("AND") &&
+				!afterCloseParenthesis.startsWith("OR") &&
+				!afterCloseParenthesis.startsWith("[")) {
+
+				addMessage(
+					fileName, "redundant parentheses",
+					getLineCount(content, startPos));
 			}
 
 			int endLineTabCount = endPos - endLineStartPos - 1;
@@ -202,6 +270,118 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 			content, "(\n", "\n\t" + matcher.group(1) + "(\n", matcher.start());
 	}
 
+	private String _fixRedundantParenthesesForSingleLineClause(String content) {
+		Matcher matcher =
+			_redundantParenthesesForSingleLineClausePattern.matcher(content);
+
+		while (matcher.find()) {
+			String trimmedNextLine = StringUtil.trim(matcher.group(3));
+
+			if (!trimmedNextLine.startsWith("AND") &&
+				!trimmedNextLine.startsWith("OR") &&
+				!trimmedNextLine.startsWith("[$AND_OR_CONNECTOR$]")) {
+
+				return StringUtil.replaceFirst(
+					content, "(" + matcher.group(2) + ")", matcher.group(2),
+					matcher.start());
+			}
+		}
+
+		return content;
+	}
+
+	private String _fixSinglePredicateClause(String content) {
+		Matcher matcher = _multiLineSinglePredicatePattern.matcher(content);
+
+		while (matcher.find()) {
+			String line = StringUtil.trim(matcher.group(1));
+
+			if (!line.startsWith("[") || !line.endsWith("]")) {
+				return StringUtil.replace(
+					content, matcher.group(), "\t(" + line + ")");
+			}
+		}
+
+		return content;
+	}
+
+	private String _formatSingleLineClauseWithMultiplePredicates(
+		String fileName, String content) {
+
+		Matcher matcher = _singleLineClauseWitMultiplePredicatesPattern.matcher(
+			content);
+
+		while (matcher.find()) {
+			String afterOperator = matcher.group(5);
+			String beforeOperator = matcher.group(3);
+			String indent = matcher.group(1);
+			String match = matcher.group(2);
+			String operator = matcher.group(4);
+
+			StringBundler sb = new StringBundler(11);
+
+			if (beforeOperator.equals(")")) {
+				sb.append(") ");
+				sb.append(operator);
+				sb.append("\n");
+				sb.append(indent);
+				sb.append(afterOperator);
+
+				return StringUtil.replaceFirst(
+					content, match, sb.toString(), matcher.start());
+			}
+
+			int lineCount = getLineCount(content, matcher.start(3));
+
+			if ((getLevel(match) != 0) || !match.startsWith("(")) {
+				addMessage(fileName, "One SQL predicate per line", lineCount);
+
+				continue;
+			}
+
+			int beforeOperatorlevel = getLevel(beforeOperator);
+
+			if ((beforeOperatorlevel < 0) || (beforeOperatorlevel > 1)) {
+				addMessage(fileName, "One SQL predicate per line", lineCount);
+
+				continue;
+			}
+
+			if (beforeOperatorlevel == 0) {
+				sb.append(beforeOperator);
+				sb.append(StringPool.SPACE);
+				sb.append(operator);
+				sb.append("\n");
+				sb.append(indent);
+				sb.append(afterOperator);
+
+				return StringUtil.replaceFirst(
+					content, match, sb.toString(), matcher.start());
+			}
+
+			sb.append("(\n\t");
+			sb.append(indent);
+			sb.append(beforeOperator.substring(1));
+			sb.append(StringPool.SPACE);
+			sb.append(operator);
+			sb.append("\n\t");
+			sb.append(indent);
+
+			int pos = afterOperator.lastIndexOf(StringPool.CLOSE_PARENTHESIS);
+
+			sb.append(afterOperator.substring(0, pos));
+
+			sb.append("\n");
+			sb.append(indent);
+			sb.append(afterOperator.substring(pos));
+
+			return StringUtil.replaceFirst(
+				content, match, sb.toString(), matcher.start());
+		}
+
+		return content;
+	}
+
 	private int _getCloseParenthesisPos(String content, int startPos) {
 		int endPos = startPos;
 
@@ -219,10 +399,23 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 
 	private final Pattern _incorrectAndOrpattern = Pattern.compile(
 		"(\n\t*)(AND|OR|\\[\\$AND_OR_CONNECTOR\\$\\])( |\n)");
+	private final Pattern _missingLineBreakAfterKeywordPattern =
+		Pattern.compile("\n\\s*(.*\\s(BY|FROM|HAVING|JOIN|ON|SELECT|WHERE)) ");
 	private final Pattern _missingLineBreakAfterOpenParenthesisPattern =
 		Pattern.compile("(\t+)\\(.+\n");
 	private final Pattern _missingLineBreakBeforeOpenParenthesisPattern =
 		Pattern.compile("\n(\t+).*[^\t\n]\\(\n");
+	private final Pattern _missingParenthesesPattern1 = Pattern.compile(
+		"[^\\)\\]\\s]\\s+(AND|OR|\\[\\$AND_OR_CONNECTOR\\$\\])\\s");
+	private final Pattern _missingParenthesesPattern2 = Pattern.compile(
+		"\\s(AND|OR|\\[\\$AND_OR_CONNECTOR\\$\\])\\s+[^\\(\\[<\\s]");
+	private final Pattern _multiLineSinglePredicatePattern = Pattern.compile(
+		"\t\\(\n(.*)\n\t*\\)");
+	private final Pattern _redundantParenthesesForSingleLineClausePattern =
+		Pattern.compile("\\s(ON|WHERE)\\s+\\((.*)\\)\n(.*)\n");
+	private final Pattern _singleLineClauseWitMultiplePredicatesPattern =
+		Pattern.compile(
+			"\n(\t*)((.*\\)) (AND|OR|\\[\\$AND_OR_CONNECTOR\\$\\]) (\\(.*))");
 	private final Pattern _whereNotInSQLPattern = Pattern.compile(
 		"WHERE[ \t\n]+\\(*[a-zA-z0-9.]+ NOT IN");
 

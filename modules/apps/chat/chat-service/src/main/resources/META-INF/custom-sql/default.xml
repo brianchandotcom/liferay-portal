@@ -10,7 +10,10 @@
 			WHERE
 				(fromUserId = ?) AND
 				(toUserId = ?) AND
-				(content = '' OR content IS NULL)
+				(
+					(content = '') OR
+					(content IS NULL)
+				)
 			ORDER BY
 				createDate DESC
 		]]>
@@ -23,7 +26,8 @@
 				Chat_Entry
 			WHERE
 				(
-					(fromUserId = ?) OR (toUserId = ?)
+					(fromUserId = ?) OR
+					(toUserId = ?)
 				) AND
 				(flag = ?)
 			ORDER BY
@@ -50,13 +54,11 @@
 				Chat_Status
 			INNER JOIN
 				User_ ON
-					(User_.userId = Chat_Status.userId)
+					User_.userId = Chat_Status.userId
 			INNER JOIN
 				Group_ ON
-					(
-						(Group_.classPK = User_.userId) AND
-						(Group_.companyId = User_.companyId)
-					)
+					(Group_.classPK = User_.userId) AND
+					(Group_.companyId = User_.companyId)
 			WHERE
 				(Group_.classNameId = ?) AND
 				(User_.companyId = ?) AND
@@ -72,22 +74,20 @@
 	</sql>
 	<sql id="com.liferay.chat.service.persistence.StatusFinder.findBySocialRelationTypes">
 		<![CDATA[
-			SELECT DISTINCT
-				Chat_Status.awake AS awake, User_.firstName AS firstName, Group_.groupId as groupId, User_.lastName AS lastName, User_.middleName AS middleName, User_.portraitId AS portraitId, User_.screenName AS screenName, User_.userId AS userId, User_.uuid_ AS userUuid
+			SELECT
+				DISTINCT Chat_Status.awake AS awake, User_.firstName AS firstName, Group_.groupId as groupId, User_.lastName AS lastName, User_.middleName AS middleName, User_.portraitId AS portraitId, User_.screenName AS screenName, User_.userId AS userId, User_.uuid_ AS userUuid
 			FROM
 				Chat_Status
 			INNER JOIN
 				User_ ON
-					(User_.userId = Chat_Status.userId)
+					User_.userId = Chat_Status.userId
 			INNER JOIN
 				Group_ ON
-					(
-						(Group_.classPK = User_.userId) AND
-						(Group_.companyId = User_.companyId)
-					)
+					(Group_.classPK = User_.userId) AND
+					(Group_.companyId = User_.companyId)
 			INNER JOIN
 				SocialRelation ON
-					(SocialRelation.userId2 = User_.userId)
+					SocialRelation.userId2 = User_.userId
 			WHERE
 				(Group_.classNameId = ?) AND
 				(SocialRelation.userId1 = ?) AND
@@ -105,22 +105,20 @@
 	</sql>
 	<sql id="com.liferay.chat.service.persistence.StatusFinder.findByUsersGroups">
 		<![CDATA[
-			SELECT DISTINCT
-				Chat_Status.awake AS awake, User_.firstName AS firstName, Group_.groupId as groupId, User_.lastName AS lastName, User_.middleName AS middleName, User_.portraitId AS portraitId, User_.screenName AS screenName, User_.userId AS userId, User_.uuid_ AS userUuid
+			SELECT
+				DISTINCT Chat_Status.awake AS awake, User_.firstName AS firstName, Group_.groupId as groupId, User_.lastName AS lastName, User_.middleName AS middleName, User_.portraitId AS portraitId, User_.screenName AS screenName, User_.userId AS userId, User_.uuid_ AS userUuid
 			FROM
 				Chat_Status
 			INNER JOIN
 				User_ ON
-					(User_.userId = Chat_Status.userId)
+					User_.userId = Chat_Status.userId
 			INNER JOIN
 				Users_Groups ON
-					(Users_Groups.userId = User_.userId)
+					Users_Groups.userId = User_.userId
 			INNER JOIN
 				Group_ ON
-					(
-						(Group_.classPK = User_.userId) AND
-						(Group_.companyId = User_.companyId)
-					)
+					(Group_.classPK = User_.userId) AND
+					(Group_.companyId = User_.companyId)
 			WHERE
 				(Group_.classNameId = ?) AND
 				(User_.companyId = ?) AND

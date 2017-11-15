@@ -181,7 +181,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return addEntry(
+		return blogsEntryLocalService.addEntry(
 			userId, title, StringPool.BLANK, StringPool.BLANK, content,
 			displayDate, true, true, new String[0], StringPool.BLANK, null,
 			null, serviceContext);
@@ -193,7 +193,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return addEntry(
+		return blogsEntryLocalService.addEntry(
 			userId, title, StringPool.BLANK, StringPool.BLANK, content,
 			new Date(), true, true, new String[0], StringPool.BLANK, null, null,
 			serviceContext);
@@ -239,7 +239,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			}
 		}
 
-		return addEntry(
+		return blogsEntryLocalService.addEntry(
 			userId, title, StringPool.BLANK, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
@@ -258,7 +258,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return addEntry(
+		return blogsEntryLocalService.addEntry(
 			userId, title, subtitle, StringPool.BLANK, description, content,
 			displayDate, allowPingbacks, allowTrackbacks, trackbacks,
 			coverImageCaption, coverImageImageSelector, smallImageImageSelector,
@@ -277,7 +277,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return addEntry(
+		return blogsEntryLocalService.addEntry(
 			userId, title, subtitle, StringPool.BLANK, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
@@ -447,7 +447,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			displayDateMinute, user.getTimeZone(),
 			EntryDisplayDateException.class);
 
-		return addEntry(
+		return blogsEntryLocalService.addEntry(
 			userId, title, subtitle, urlTitle, description, content,
 			displayDate, allowPingbacks, allowTrackbacks, trackbacks,
 			coverImageCaption, coverImageImageSelector, smallImageImageSelector,
@@ -1128,7 +1128,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
 
-		return updateEntry(
+		return blogsEntryLocalService.updateEntry(
 			userId, entryId, title, entry.getSubtitle(), entry.getDescription(),
 			content, entry.getDisplayDate(), entry.getAllowPingbacks(),
 			entry.getAllowTrackbacks(), StringUtil.split(entry.getTrackbacks()),
@@ -1179,7 +1179,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			smallImageImageSelector = new ImageSelector();
 		}
 
-		return updateEntry(
+		return blogsEntryLocalService.updateEntry(
 			userId, entryId, title, StringPool.BLANK, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
@@ -1199,7 +1199,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return updateEntry(
+		return blogsEntryLocalService.updateEntry(
 			userId, entryId, title, subtitle, _getURLTitle(entryId),
 			description, content, displayDate, allowPingbacks, allowTrackbacks,
 			trackbacks, coverImageCaption, coverImageImageSelector,
@@ -1218,7 +1218,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return updateEntry(
+		return blogsEntryLocalService.updateEntry(
 			userId, entryId, title, subtitle, _getURLTitle(entryId),
 			description, content, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute, allowPingbacks,
@@ -1409,7 +1409,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			displayDateMinute, user.getTimeZone(),
 			EntryDisplayDateException.class);
 
-		return updateEntry(
+		return blogsEntryLocalService.updateEntry(
 			userId, entryId, title, subtitle, urlTitle, description, content,
 			displayDate, allowPingbacks, allowTrackbacks, trackbacks,
 			coverImageCaption, coverImageImageSelector, smallImageImageSelector,

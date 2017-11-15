@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -179,8 +180,10 @@ public class UpgradeDocumentLibraryTypeContent extends UpgradeProcess {
 		}
 		catch (PortalException pe) {
 			_log.error(
-				"Unable to get file entry with group ID " + groupId +
-					", folder ID " + folderId + ", and title " + title,
+				StringBundler.concat(
+					"Unable to get file entry with group ID ",
+					String.valueOf(groupId), ", folder ID ",
+					String.valueOf(folderId), ", and title ", title),
 				pe);
 
 			throw pe;

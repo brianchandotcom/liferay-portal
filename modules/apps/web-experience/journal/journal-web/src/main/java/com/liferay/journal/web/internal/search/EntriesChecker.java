@@ -152,8 +152,9 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 
 		return getRowCheckBox(
 			request, checked, disabled,
-			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS + name +
-				StringPool.BLANK,
+			StringBundler.concat(
+				_liferayPortletResponse.getNamespace(), RowChecker.ROW_IDS,
+				name, StringPool.BLANK),
 			primaryKey, checkBoxRowIds, "'#" + getAllRowIds() + "'",
 			StringPool.BLANK);
 	}

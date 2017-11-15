@@ -16,6 +16,7 @@ package com.liferay.journal.transformer;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
 
@@ -52,8 +53,9 @@ public class RegexTransformerUtil {
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Pattern " + regex + " will be replaced with " +
-						replacement);
+					StringBundler.concat(
+						"Pattern ", regex, " will be replaced with ",
+						replacement));
 			}
 
 			_patterns.add(Pattern.compile(regex));

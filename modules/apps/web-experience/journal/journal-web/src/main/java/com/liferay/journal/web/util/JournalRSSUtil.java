@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -644,9 +645,9 @@ public class JournalRSSUtil {
 
 				url = processURL(feed, url, themeDisplay, syndEntry);
 
-				content =
-					content + "<br /><br /><img alt='' src='" +
-						themeDisplay.getURLPortal() + url + "' />";
+				content = StringBundler.concat(
+					content, "<br /><br /><img alt='' src='",
+					themeDisplay.getURLPortal(), url, "' />");
 			}
 			else if (elType.equals("text_box")) {
 				syndContent.setType("text");

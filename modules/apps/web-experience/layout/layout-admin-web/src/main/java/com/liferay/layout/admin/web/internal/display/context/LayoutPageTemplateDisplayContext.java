@@ -97,7 +97,7 @@ public class LayoutPageTemplateDisplayContext {
 		return portletURL.toString();
 	}
 
-	public JSONArray getFragmentCollections() throws PortalException {
+	public JSONArray getFragmentCollectionsJSONArray() throws PortalException {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

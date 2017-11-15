@@ -67,4 +67,16 @@ public interface FedExCommerceShippingEngineGroupServiceConfiguration {
 	@Meta.AD(required = false)
 	public String url();
 
+	@Meta.AD(deflt = "150", required = false)
+	public int maxWeightPounds();
+
+	@Meta.AD(deflt = "68", required = false)
+	public int maxWeightKilograms();
+
+	@Meta.AD(deflt = "165", required = false)
+	public int maxSizeInches();
+
+	@Meta.AD(deflt = "419", required = false)
+	public int maxSizeCentimeters();
+
 }

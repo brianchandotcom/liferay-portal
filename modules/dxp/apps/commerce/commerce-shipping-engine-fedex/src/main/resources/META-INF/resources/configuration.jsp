@@ -80,4 +80,16 @@ String[] serviceTypes = StringUtil.split(fedExCommerceShippingEngineGroupService
 		%>
 
 	</aui:select>
+
+	<aui:field-wrapper label="max-weight">
+		<aui:input label="" name="settings--maxWeightPounds--" suffix="lb" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.maxWeightPounds() %>" />
+
+		<aui:input label="" name="settings--maxWeightKilograms--" suffix="kg" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.maxWeightKilograms() %>" />
+	</aui:field-wrapper>
+
+	<aui:field-wrapper label="max-size">
+		<aui:input label="" name="settings--maxmaxSizeInches--" suffix="in" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.maxSizeInches() %>" />
+
+		<aui:input label="" name="settings--maxSizeCentimeters--" suffix="cm" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.maxSizeCentimeters() %>" />
+	</aui:field-wrapper>
 </aui:fieldset>

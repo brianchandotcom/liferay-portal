@@ -19,12 +19,11 @@ import com.liferay.commerce.exception.CommerceShippingEngineException;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingOption;
-import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.shipping.engine.fedex.internal.configuration.FedExCommerceShippingEngineGroupServiceConfiguration;
 import com.liferay.commerce.shipping.engine.fedex.internal.constants.FedExCommerceShippingEngineConstants;
 import com.liferay.commerce.shipping.engine.fedex.internal.util.FedExCommerceShippingOptionHelper;
-import com.liferay.commerce.util.CommercePriceCalculator;
+import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.commerce.util.CommerceShippingOriginLocatorRegistry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -74,10 +73,10 @@ public class FedExCommerceShippingEngine implements CommerceShippingEngine {
 				fedExCommerceShippingOptionsHelper =
 					new FedExCommerceShippingOptionHelper(
 						commerceCart, _commerceCurrencyLocalService,
-						_commercePriceCalculator,
+						_commerceShippingHelper,
 						_commerceShippingOriginLocatorRegistry,
-						_cpInstanceLocalService, _cpMeasurementUnitLocalService,
-						_configurationProvider, _getResourceBundle(locale));
+						_cpMeasurementUnitLocalService, _configurationProvider,
+						_getResourceBundle(locale));
 
 			return
 				fedExCommerceShippingOptionsHelper.getCommerceShippingOptions();
@@ -167,7 +166,7 @@ public class FedExCommerceShippingEngine implements CommerceShippingEngine {
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Reference
-	private CommercePriceCalculator _commercePriceCalculator;
+	private CommerceShippingHelper _commerceShippingHelper;
 
 	@Reference
 	private CommerceShippingOriginLocatorRegistry
@@ -175,9 +174,6 @@ public class FedExCommerceShippingEngine implements CommerceShippingEngine {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Reference
 	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;

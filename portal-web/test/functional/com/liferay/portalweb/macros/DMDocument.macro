@@ -13,26 +13,6 @@
 		</execute>
 	</command>
 
-	<command name="addCommentPG">
-		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
-
-		<execute function="Click" locator1="Comments#COMMENT_FIELD" />
-
-		<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${entryComment}" />
-
-		<if>
-			<condition function="IsElementPresent" locator1="Button#SUBMIT" value1="Submit" />
-			<then>
-				<execute function="Click" locator1="Button#SUBMIT" />
-			</then>
-			<else>
-				<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
-			</else>
-		</if>
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
 	<command name="addContractCP">
 		<execute macro="DMNavigator#gotoAddDocumentType">
 			<var name="dmDocumentTypeName" value="Contract" />
@@ -970,20 +950,6 @@
 		<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 	</command>
 
-	<command name="deleteCommentPG">
-		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
-
-		<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
-
-		<execute function="MakeVisible" locator1="Comments#DELETE_LINK_GENERIC" value1="Delete" />
-
-		<execute function="AssertClickNoError" locator1="Comments#DELETE_LINK" value1="Delete" />
-
-		<execute function="Confirm" value1="Are you sure you want to delete the selected comment?" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
 	<command name="deleteCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
@@ -1197,24 +1163,6 @@
 				<execute function="Type" locator1="TextArea#CHANGE_LOG" value1="${changeLog}" />
 			</then>
 		</if>
-	</command>
-
-	<command name="editCommentPG">
-		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
-
-		<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
-
-		<execute function="MakeVisible" locator1="Comments#EDIT_LINK" value1="Edit" />
-
-		<execute function="AssertClick" locator1="Comments#EDIT_LINK" value1="Edit" />
-
-		<execute macro="AlloyEditor#addContent">
-			<var name="content" value="${commentBodyEdit}" />
-		</execute>
-
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
-
-		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="editCP">

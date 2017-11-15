@@ -94,12 +94,7 @@
 	<command name="gotoPublishCopyURLLink">
 		<var name="key_alertMessage" value="The form was published successfully! Access it with this URL" />
 
-		<if>
-			<condition function="IsElementPresent" locator1="Form#PUBLISH_UNPUBLISH_ICON_CLOSE" />
-			<then>
-				<execute function="Click" locator1="Form#PUBLISH_UNPUBLISH_ICON_CLOSE" />
-			</then>
-		</if>
+		<execute function="AssertNotVisible" locator1="Form#PUBLISH_UNPUBLISH_ICON_CLOSE" />
 
 		<execute function="Click" locator1="Form#PUBLISH_ICON" />
 	</command>

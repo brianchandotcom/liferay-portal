@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.settings.web.portlet.action;
+package com.liferay.portal.settings.portlet.action;
 
 import aQute.bnd.annotation.ProviderType;
 

@@ -2894,6 +2894,14 @@ project if the `package.json` file declares a script named `"build"`.
 - [LPS-75829]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
 version 2.4.0.
 
+## 3.5.42 - 2017-11-14
+
+### Changed
+- [LPS-74526]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.24.
+- [LPS-74526]: Update the [Liferay Source Formatter] dependency to version
+1.0.495.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

@@ -12,13 +12,15 @@
  * details.
  */
 
-package com.liferay.reading.time.calculator;
+package com.liferay.reading.time.calculator.impl;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.reading.time.calculator.ReadingTimeCalculator;
+import com.liferay.reading.time.calculator.ReadingTimeModelInfo;
 
 import java.time.Duration;
 

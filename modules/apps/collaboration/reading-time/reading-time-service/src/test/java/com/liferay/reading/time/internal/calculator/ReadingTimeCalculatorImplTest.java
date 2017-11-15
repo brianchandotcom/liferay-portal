@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.reading.time.calculator.ReadingTimeCalculator;
-import com.liferay.reading.time.calculator.ReadingTimeCalculatorImpl;
+import com.liferay.reading.time.calculator.impl.ReadingTimeCalculatorImpl;
 
 import java.time.Duration;
 

@@ -31,8 +31,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -65,8 +64,6 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 
 		String name = ParamUtil.getString(actionRequest, "name");
 
-		List<FragmentEntry> layoutPageTemplateFragments = new ArrayList<>();
-
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				actionRequest);
@@ -75,7 +72,7 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 				_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 					serviceContext.getScopeGroupId(),
 					layoutPageTemplateCollectionId, name,
-					layoutPageTemplateFragments, serviceContext);
+					Collections.<FragmentEntry>emptyList(), serviceContext);
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 

@@ -54,12 +54,12 @@ public class EditLayoutPageTemplateFragmentsMVCActionCommand
 			actionRequest);
 
 		long layoutPageTemplateId = ParamUtil.getLong(
-			actionRequest, "pageTemplateId");
-		long[] fragments = ParamUtil.getLongValues(
-			actionRequest, "fragments[]");
+			actionRequest, "layoutPageTemplateId");
+		long[] fragmentIds = ParamUtil.getLongValues(
+			actionRequest, "fragmentIds");
 
 		_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
-			layoutPageTemplateId, fragments, serviceContext);
+			layoutPageTemplateId, fragmentIds, serviceContext);
 
 		hideDefaultSuccessMessage(actionRequest);
 

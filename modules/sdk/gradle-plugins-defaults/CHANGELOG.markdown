@@ -2630,6 +2630,7 @@ the `testCompileClasspath` and `testRuntime` configurations:
 [LPS-73642]: https://issues.liferay.com/browse/LPS-73642
 [LPS-73652]: https://issues.liferay.com/browse/LPS-73652
 [LPS-73655]: https://issues.liferay.com/browse/LPS-73655
+[LPS-73725]: https://issues.liferay.com/browse/LPS-73725
 [LPS-73807]: https://issues.liferay.com/browse/LPS-73807
 [LPS-73818]: https://issues.liferay.com/browse/LPS-73818
 [LPS-73855]: https://issues.liferay.com/browse/LPS-73855
@@ -2687,7 +2688,6 @@ the `testCompileClasspath` and `testRuntime` configurations:
 [LPS-75047]: https://issues.liferay.com/browse/LPS-75047
 [LPS-75096]: https://issues.liferay.com/browse/LPS-75096
 [LPS-75100]: https://issues.liferay.com/browse/LPS-75100
-[LPS-73725]: https://issues.liferay.com/browse/LPS-73725
 [LPS-75175]: https://issues.liferay.com/browse/LPS-75175
 [LPS-75239]: https://issues.liferay.com/browse/LPS-75239
 [LPS-75247]: https://issues.liferay.com/browse/LPS-75247

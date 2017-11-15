@@ -549,7 +549,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateNpmAngularPortlet() throws Exception {
 		_testBuildTemplateNpm(
 			"npm-angular-portlet", "foo", "foo", "Foo",
-			"bootstrapRequire.default();");
+			"bootstrapRequire.default('#<portlet:namespace />');");
 	}
 
 	@Test
@@ -558,7 +558,7 @@ public class ProjectTemplatesTest {
 
 		_testBuildTemplateNpm(
 			"npm-angular-portlet", "foo-bar", "foo.bar", "FooBar",
-			"bootstrapRequire.default();");
+			"bootstrapRequire.default('#<portlet:namespace />');");
 	}
 
 	@Test

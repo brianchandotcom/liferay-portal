@@ -18,5 +18,5 @@
 		<os family="windows" />
 	</condition>
 
-	<property name="gradle.wrapper.path" relative="yes" value="${modules.dir}/../gradlew${gradlew.suffix}" />
+	<property location="${modules.dir}/../gradlew${gradlew.suffix}" name="gradle.wrapper.path" />
 </project>

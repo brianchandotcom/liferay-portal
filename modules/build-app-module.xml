@@ -34,8 +34,6 @@
 	<condition property="artifact.exclude">
 		<or>
 			<available file="hotfix" />
-			<available file=".lfrbuild-app-server-lib" />
-			<available file=".lfrbuild-portal-pre" />
 			<contains string="${basedir}" substring="required-dependencies" />
 		</or>
 	</condition>
@@ -52,25 +50,41 @@
 		<available file="build.xml" />
 	</condition>
 
+	<target name="check-artifact-properties-available">
+		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
+			<condition>
+				<not>
+					<or>
+						<available file="${releng.module.dir}/artifact.properties" />
+						<istrue value="${artifact.exclude}" />
+					</or>
+				</not>
+			</condition>
+		</fail>
+	</target>
+
 	<target if="artifact.hotfix" name="copy-hotfix-artifact">
 		<copy todir="${dist.dir}">
 			<fileset dir="hotfix" includes="*.jar" />
 		</copy>
 	</target>
 
-	<target depends="copy-hotfix-artifact,download-artifact,download-artifact-dependencies,record-artifact-change-log" name="dist-module-artifact" />
+	<target
+		depends="
+			copy-hotfix-artifact,
+			dist-module-artifact-sources,
+			download-artifact,
+			download-artifact-dependencies,
+			record-artifact-change-log,
+			replace-artifact-license-header"
+		name="dist-module-artifact"
+	/>
 
 	<target depends="move-artifact,move-artifact-dependencies" name="dist-module-artifact-lpkg" />
 
-	<target name="download-artifact" unless="artifact.exclude">
-		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
-			<condition>
-				<not>
-					<available file="${releng.module.dir}/artifact.properties" />
-				</not>
-			</condition>
-		</fail>
+	<target depends="download-artifact-sources,download-artifact-sources-commercial" name="dist-module-artifact-sources" />
 
+	<target depends="check-artifact-properties-available" name="download-artifact" unless="artifact.exclude">
 		<loadproperties srcFile="${releng.module.dir}/artifact.properties">
 			<filterchain>
 				<linecontains>
@@ -82,7 +96,12 @@
 		<if>
 			<contains string="${basedir}" substring="private${file.separator}" />
 			<then>
-				<get dest="${dist.dir}" password="${build.repository.private.password}" src="${artifact.url}" username="${build.repository.private.username}" />
+				<get
+					dest="${dist.dir}"
+					password="${build.repository.private.password}"
+					src="${artifact.url}"
+					username="${build.repository.private.username}"
+				/>
 			</then>
 			<else>
 				<get dest="${dist.dir}" src="${artifact.url}" />
@@ -90,7 +109,7 @@
 		</if>
 	</target>
 
-	<target if="artifact.deploy.dependencies" name="download-artifact-dependencies">
+	<target if="artifact.deploy.dependencies" name="download-artifact-dependencies" unless="artifact.exclude">
 		<exec dir="${modules.dir}" executable="${modules.dir}/../gradlew${gradlew.suffix}">
 			<arg value="${gradle.project.path}:deployDependencies" />
 			<arg value="-Ddeploy.dependencies.keep.versions=true" />
@@ -99,8 +118,66 @@
 		</exec>
 	</target>
 
+	<target depends="check-artifact-properties-available" name="download-artifact-sources" unless="${current.branch.private}">
+		<loadproperties srcFile="${releng.module.dir}/artifact.properties">
+			<filterchain>
+				<linecontains>
+					<contains value="artifact.sources.url=" />
+				</linecontains>
+			</filterchain>
+		</loadproperties>
+
+		<trycatch>
+			<try>
+				<get dest="${dist.dir}/sources" src="${artifact.sources.url}" />
+			</try>
+			<catch>
+				<echo
+					append="true"
+					file="${dist.dir}/missing.artifact.sources.txt"
+					message="${basedir}${line.separator}"
+				/>
+			</catch>
+		</trycatch>
+	</target>
+
+	<target depends="check-artifact-properties-available" if="${current.branch.private}" name="download-artifact-sources-commercial">
+		<loadproperties srcFile="${releng.module.dir}/artifact.properties">
+			<filterchain>
+				<linecontains>
+					<contains value="artifact.sources.url=" />
+				</linecontains>
+
+				<tokenfilter>
+					<replacestring from="sources.jar" to="sources-commercial.jar" />
+				</tokenfilter>
+			</filterchain>
+		</loadproperties>
+
+		<trycatch>
+			<try>
+				<get
+					dest="${dist.dir}/sources"
+					password="${build.repository.private.password}"
+					src="${artifact.sources.url}"
+					username="${build.repository.private.username}"
+				/>
+			</try>
+			<catch>
+				<echo
+					append="true"
+					file="${dist.dir}/sources/missing.artifact.sources.txt"
+					message="${basedir}${line.separator}"
+				/>
+			</catch>
+		</trycatch>
+	</target>
+
 	<target
-		depends="get-artifact-version-previous-release,get-artifact-change-log-ticket-list-since-previous-release,get-artifact-change-log-ticket-list-full"
+		depends="
+			get-artifact-change-log-ticket-list-full,
+			get-artifact-change-log-ticket-list-since-previous-release,
+			get-artifact-version-previous-release"
 		description="Get an aggregated list of tickets from the change logs of all versions of the current module since the version present in the previous release of this app."
 		if="${app.has.artifact.previous.release}"
 		name="get-artifact-change-log-ticket-list"
@@ -138,6 +215,7 @@
 		description="Get an aggregated list of tickets from the change logs of all versions of the current module since the version present in the previous release of this app."
 		if="${app.has.artifact.previous.release}"
 		name="get-artifact-change-log-ticket-list-since-previous-release"
+		unless="artifact.exclude"
 	>
 		<loadfile failonerror="false" property="artifact.change.log.ticket.list" srcfile="${releng.module.dir}/liferay-releng.changelog">
 			<filterchain>
@@ -168,9 +246,19 @@
 		</condition>
 	</target>
 
-	<target depends="get-artifact-properties-bnd,get-artifact-properties-json,get-artifact-properties-legacy" name="get-artifact-properties" />
+	<target name="get-artifact-file-name">
+		<basename file="${artifact.url}" property="artifact.file.name" />
+	</target>
 
-	<target if="artifact.bnd" name="get-artifact-properties-bnd">
+	<target
+		depends="
+			get-artifact-properties-bnd,
+			get-artifact-properties-json,
+			get-artifact-properties-legacy"
+		name="get-artifact-properties"
+	/>
+
+	<target if="artifact.bnd" name="get-artifact-properties-bnd" unless="artifact.exclude">
 		<property file="bnd.bnd" />
 
 		<property name="artifact.location.dest" value="${osgi.dir}/marketplace/${Bundle-SymbolicName}-${Bundle-Version}.jar" />
@@ -192,7 +280,7 @@
 		<basename file="${artifact.location.src}" property="artifact.file.name" />
 	</target>
 
-	<target if="artifact.json" name="get-artifact-properties-json">
+	<target if="artifact.json" name="get-artifact-properties-json" unless="artifact.exclude">
 		<basename file="${basedir}" property="app.dir.name" />
 
 		<loadfile property="artifact.name" srcfile="package.json">
@@ -248,7 +336,7 @@
 		<property name="artifact.location.src" value="${osgi.dir}/../deploy/${artifact.name}.war" />
 	</target>
 
-	<target if="artifact.legacy" name="get-artifact-properties-legacy">
+	<target if="artifact.legacy" name="get-artifact-properties-legacy" unless="artifact.exclude">
 		<basename file="${basedir}" property="artifact.name" />
 
 		<property file="${ant.file}/../../release.properties" />
@@ -330,7 +418,40 @@
 		if="${artifact.has.change.log.ticket.list}"
 		name="record-artifact-change-log"
 	>
-		<echo append="true" file="${dist.dir}/ticket.list.tmp">${artifact.change.log.ticket.list} </echo>
+		<echo
+			append="true"
+			file="${dist.dir}/ticket.list.tmp"
+			message="${artifact.change.log.ticket.list} "
+		/>
+	</target>
+
+	<target
+		depends="download-artifact,get-artifact-file-name"
+		if="${current.branch.private}"
+		name="replace-artifact-license-header"
+		unless="artifact.exclude"
+	>
+		<property name="tmp.dir" value="${dist.dir}/tmp" />
+
+		<delete dir="${tmp.dir}" />
+
+		<mkdir dir="${tmp.dir}" />
+
+		<unzip dest="${tmp.dir}" src="${dist.dir}/${artifact.file.name}" />
+
+		<delete file="${dist.dir}/${artifact.file.name}" />
+
+		<replaceregexp flags="g">
+			<fileset dir="${tmp.dir}" includes="**/*" />
+			<regexp pattern="/\*\*${line.separator} \* Copyright \(c\) 2000-(?:20\d\d|present) Liferay, Inc\. All rights reserved.${line.separator} \*${line.separator} \* This library is free software; you can redistribute it and\/or modify it under${line.separator} \* the terms of the GNU Lesser General Public License as published by the Free${line.separator} \* Software Foundation; either version 2\.1 of the License, or \(at your option\)${line.separator} \* any later version\.${line.separator} \*${line.separator} \* This library is distributed in the hope that it will be useful, but WITHOUT${line.separator} \* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS${line.separator} \* FOR A PARTICULAR PURPOSE\. See the GNU Lesser General Public License for more${line.separator} \* details\.${line.separator} \*/" />
+			<substitution expression="/**${line.separator} * Copyright (c) 2000-present Liferay, Inc. All rights reserved.${line.separator} *${line.separator} * The contents of this file are subject to the terms of the Liferay Enterprise${line.separator} * Subscription License (&quot;License&quot;). You may not use this file except in${line.separator} * compliance with the License. You can obtain a copy of the License by${line.separator} * contacting Liferay, Inc. See the License for the specific language governing${line.separator} * permissions and limitations under the License, including but not limited to${line.separator} * distribution rights of the Software.${line.separator} *${line.separator} *${line.separator} *${line.separator} */" />
+		</replaceregexp>
+
+		<zip destfile="${dist.dir}/${artifact.file.name}">
+			<fileset dir="${tmp.dir}" includes="**/*" />
+		</zip>
+
+		<delete dir="${tmp.dir}" />
 	</target>
 
 	<target depends="reset-artifact-dependencies" name="reset-artifact">

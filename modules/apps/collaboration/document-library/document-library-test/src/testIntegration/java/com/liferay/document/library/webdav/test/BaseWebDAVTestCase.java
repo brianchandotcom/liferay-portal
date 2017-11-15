@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.webdav.test;
 
-import com.liferay.document.library.web.webdav.DLWebDAVStorageImpl;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -27,6 +26,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
 import com.liferay.portal.kernel.webdav.methods.Method;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.webdav.WebDAVServlet;
 
 import java.util.HashMap;
@@ -58,12 +58,6 @@ public class BaseWebDAVTestCase {
 
 	public Tuple service(
 		String method, String path, Map<String, String> headers, byte[] data) {
-
-		WebDAVStorage webDAVStorage = new DLWebDAVStorageImpl();
-
-		webDAVStorage.setToken("document_library");
-
-		WebDAVUtil.addStorage(webDAVStorage);
 
 		WebDAVServlet webDAVServlet = new WebDAVServlet();
 
@@ -345,6 +339,9 @@ public class BaseWebDAVTestCase {
 	private static final String _PROPFIND_XML;
 
 	private static final String _SERVLET_PATH = "";
+
+	@Inject
+	private static WebDAVStorage _webDAVStorage;
 
 	static {
 		StringBundler sb = new StringBundler(8);

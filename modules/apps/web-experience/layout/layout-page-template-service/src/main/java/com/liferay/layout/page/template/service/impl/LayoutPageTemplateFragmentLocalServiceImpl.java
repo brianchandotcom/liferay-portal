@@ -113,18 +113,6 @@ public class LayoutPageTemplateFragmentLocalServiceImpl
 	}
 
 	@Override
-	public LayoutPageTemplateFragment deleteLayoutPageTemplateFragment(
-			long groupId, long layoutPageTemplateEntryId, long fragmentId)
-		throws PortalException {
-
-		LayoutPageTemplateFragment layoutPageTemplateFragment =
-			layoutPageTemplateFragmentPersistence.fetchByG_L_F(
-				groupId, layoutPageTemplateEntryId, fragmentId);
-
-		return deleteLayoutPageTemplateFragment(layoutPageTemplateFragment);
-	}
-
-	@Override
 	public List<LayoutPageTemplateFragment>
 		getLayoutPageTemplateFragmentsByPageTemplate(
 			long groupId, long layoutPageTemplateEntryId) {

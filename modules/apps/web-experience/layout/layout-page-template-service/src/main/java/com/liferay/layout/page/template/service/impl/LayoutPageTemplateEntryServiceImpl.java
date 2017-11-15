@@ -15,6 +15,7 @@
 package com.liferay.layout.page.template.service.impl;
 
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryServiceBaseImpl;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -183,6 +185,31 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Override
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
+			long layoutPageTemplateEntryId, long[] fragmentEntriesIds,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
+
+		List<FragmentEntry> fragmentEntries = new ArrayList<>();
+
+		for (long fragmentEntryId : fragmentEntriesIds) {
+			FragmentEntry fragmentEntry =
+				_fragmentEntryService.fetchFragmentEntry(fragmentEntryId);
+
+			fragmentEntries.add(fragmentEntry);
+		}
+
+		return layoutPageTemplateEntryLocalService.
+			updateLayoutPageTemplateEntry(
+				getUserId(), layoutPageTemplateEntryId,
+				layoutPageTemplateEntry.getName(), fragmentEntries,
+				serviceContext);
+	}
+
+	@Override
+	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long layoutPageTemplateEntryId, String name,
 			List<FragmentEntry> fragmentEntries, ServiceContext serviceContext)
 		throws PortalException {
@@ -199,5 +226,8 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutPageTemplateEntryServiceImpl.class);
+
+	@ServiceReference(type = FragmentEntryService.class)
+	private FragmentEntryService _fragmentEntryService;
 
 }

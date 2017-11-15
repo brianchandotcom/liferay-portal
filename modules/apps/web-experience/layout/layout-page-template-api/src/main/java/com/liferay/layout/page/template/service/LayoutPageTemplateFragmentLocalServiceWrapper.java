@@ -105,14 +105,6 @@ public class LayoutPageTemplateFragmentLocalServiceWrapper
 		return _layoutPageTemplateFragmentLocalService.deleteLayoutPageTemplateFragment(layoutPageTemplateFragmentId);
 	}
 
-	@Override
-	public com.liferay.layout.page.template.model.LayoutPageTemplateFragment deleteLayoutPageTemplateFragment(
-		long groupId, long layoutPageTemplateEntryId, long fragmentId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutPageTemplateFragmentLocalService.deleteLayoutPageTemplateFragment(groupId,
-			layoutPageTemplateEntryId, fragmentId);
-	}
-
 	/**
 	* @throws PortalException
 	*/

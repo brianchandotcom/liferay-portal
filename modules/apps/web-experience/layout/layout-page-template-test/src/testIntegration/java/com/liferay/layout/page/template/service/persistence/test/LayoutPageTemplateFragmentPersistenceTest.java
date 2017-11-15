@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -442,31 +441,6 @@ public class LayoutPageTemplateFragmentPersistenceTest {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
-	}
-
-	@Test
-	public void testResetOriginalValues() throws Exception {
-		LayoutPageTemplateFragment newLayoutPageTemplateFragment = addLayoutPageTemplateFragment();
-
-		_persistence.clearCache();
-
-		LayoutPageTemplateFragment existingLayoutPageTemplateFragment = _persistence.findByPrimaryKey(newLayoutPageTemplateFragment.getPrimaryKey());
-
-		Assert.assertEquals(Long.valueOf(
-				existingLayoutPageTemplateFragment.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingLayoutPageTemplateFragment, "getOriginalGroupId",
-				new Class<?>[0]));
-		Assert.assertEquals(Long.valueOf(
-				existingLayoutPageTemplateFragment.getLayoutPageTemplateEntryId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingLayoutPageTemplateFragment,
-				"getOriginalLayoutPageTemplateEntryId", new Class<?>[0]));
-		Assert.assertEquals(Long.valueOf(
-				existingLayoutPageTemplateFragment.getFragmentEntryId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingLayoutPageTemplateFragment,
-				"getOriginalFragmentEntryId", new Class<?>[0]));
 	}
 
 	protected LayoutPageTemplateFragment addLayoutPageTemplateFragment()

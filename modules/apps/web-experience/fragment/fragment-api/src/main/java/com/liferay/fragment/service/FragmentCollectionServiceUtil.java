@@ -69,6 +69,12 @@ public class FragmentCollectionServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.fragment.model.FragmentCollection> getFragmentCollections(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getFragmentCollections(groupId);
+	}
+
+	public static java.util.List<com.liferay.fragment.model.FragmentCollection> getFragmentCollections(
 		long groupId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getFragmentCollections(groupId, start, end);

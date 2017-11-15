@@ -111,6 +111,13 @@ public class FragmentCollectionServiceImpl
 	}
 
 	@Override
+	public List<FragmentCollection> getFragmentCollections(long groupId)
+		throws PortalException {
+
+		return fragmentCollectionPersistence.filterFindByGroupId(groupId);
+	}
+
+	@Override
 	public List<FragmentCollection> getFragmentCollections(
 			long groupId, int start, int end)
 		throws PortalException {

@@ -410,6 +410,42 @@ public class LayoutPageTemplateEntryServiceHttp {
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 		HttpPrincipal httpPrincipal, long layoutPageTemplateEntryId,
+		long[] fragmentEntriesIds,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
+					"updateLayoutPageTemplateEntry",
+					_updateLayoutPageTemplateEntryParameterTypes11);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					layoutPageTemplateEntryId, fragmentEntriesIds,
+					serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.layout.page.template.model.LayoutPageTemplateEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
+		HttpPrincipal httpPrincipal, long layoutPageTemplateEntryId,
 		java.lang.String name,
 		java.util.List<com.liferay.fragment.model.FragmentEntry> fragmentEntries,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -417,7 +453,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"updateLayoutPageTemplateEntry",
-					_updateLayoutPageTemplateEntryParameterTypes11);
+					_updateLayoutPageTemplateEntryParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					layoutPageTemplateEntryId, name, fragmentEntries,
@@ -477,6 +513,11 @@ public class LayoutPageTemplateEntryServiceHttp {
 	private static final Class<?>[] _getLayoutPageTemplateEntriesCountParameterTypes10 =
 		new Class[] { long.class, long.class, java.lang.String.class };
 	private static final Class<?>[] _updateLayoutPageTemplateEntryParameterTypes11 =
+		new Class[] {
+			long.class, long[].class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _updateLayoutPageTemplateEntryParameterTypes12 =
 		new Class[] {
 			long.class, java.lang.String.class, java.util.List.class,
 			com.liferay.portal.kernel.service.ServiceContext.class

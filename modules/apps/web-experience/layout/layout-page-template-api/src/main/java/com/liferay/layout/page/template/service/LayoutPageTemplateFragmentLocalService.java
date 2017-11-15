@@ -112,10 +112,6 @@ public interface LayoutPageTemplateFragmentLocalService extends BaseLocalService
 	public LayoutPageTemplateFragment deleteLayoutPageTemplateFragment(
 		long layoutPageTemplateFragmentId) throws PortalException;
 
-	public LayoutPageTemplateFragment deleteLayoutPageTemplateFragment(
-		long groupId, long layoutPageTemplateEntryId, long fragmentId)
-		throws PortalException;
-
 	/**
 	* @throws PortalException
 	*/

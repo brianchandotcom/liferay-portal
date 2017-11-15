@@ -112,14 +112,6 @@ public class LayoutPageTemplateFragmentLocalServiceUtil {
 				   .deleteLayoutPageTemplateFragment(layoutPageTemplateFragmentId);
 	}
 
-	public static com.liferay.layout.page.template.model.LayoutPageTemplateFragment deleteLayoutPageTemplateFragment(
-		long groupId, long layoutPageTemplateEntryId, long fragmentId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .deleteLayoutPageTemplateFragment(groupId,
-			layoutPageTemplateEntryId, fragmentId);
-	}
-
 	/**
 	* @throws PortalException
 	*/

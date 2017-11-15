@@ -129,10 +129,10 @@ public class GroupPagesPortlet extends MVCPortlet {
 			}
 
 			renderRequest.setAttribute(
-				ApplicationListWebKeys.GROUP_PROVIDER, groupProvider);
+				ApplicationListWebKeys.GROUP_PROVIDER, _groupProvider);
 
 			renderRequest.setAttribute(
-				LayoutAdminWebKeys.ITEM_SELECTOR, itemSelector);
+				LayoutAdminWebKeys.ITEM_SELECTOR, _itemSelector);
 
 			super.doDispatch(renderRequest, renderResponse);
 		}
@@ -180,13 +180,13 @@ public class GroupPagesPortlet extends MVCPortlet {
 		return false;
 	}
 
-	@Reference
-	protected GroupProvider groupProvider;
-
-	@Reference
-	protected ItemSelector itemSelector;
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroupPagesPortlet.class);
+
+	@Reference
+	private GroupProvider _groupProvider;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 }

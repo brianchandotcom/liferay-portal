@@ -180,11 +180,7 @@ public class GroupPagesPortlet extends MVCPortlet {
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupProvider(GroupProvider groupProvider) {
-		this.groupProvider = groupProvider;
-	}
-
+	@Reference
 	protected GroupProvider groupProvider;
 
 	@Reference

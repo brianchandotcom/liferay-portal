@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.exception.LayoutParentLayoutIdException;
 import com.liferay.portal.kernel.exception.LayoutSetVirtualHostException;
 import com.liferay.portal.kernel.exception.LayoutTypeException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
-import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.RequiredLayoutException;
 import com.liferay.portal.kernel.exception.SitemapChangeFrequencyException;
 import com.liferay.portal.kernel.exception.SitemapIncludeException;
@@ -38,19 +37,14 @@ import com.liferay.portal.kernel.exception.SitemapPagePriorityException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadException;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -58,7 +52,6 @@ import java.io.IOException;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -103,11 +96,9 @@ public class GroupPagesPortlet extends MVCPortlet {
 
 		try {
 			getGroup(renderRequest);
-			getLayout(renderRequest);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchGroupException ||
-				e instanceof NoSuchLayoutException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(renderRequest, e.getClass());
@@ -121,22 +112,6 @@ public class GroupPagesPortlet extends MVCPortlet {
 				renderRequest, NoSuchGroupException.class.getName()) ||
 			SessionErrors.contains(
 				renderRequest, PrincipalException.getNestedClasses())) {
-
-			include("/error.jsp", renderRequest, renderResponse);
-		}
-		else if (SessionErrors.contains(
-					renderRequest, NoSuchLayoutException.class.getName())) {
-
-			PortletURL redirectURL = portal.getControlPanelPortletURL(
-				renderRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-				PortletRequest.RENDER_PHASE);
-
-			redirectURL.setParameter("mvcPath", "/view.jsp");
-			redirectURL.setParameter(
-				"selPlid", String.valueOf(LayoutConstants.DEFAULT_PLID));
-
-			renderRequest.setAttribute(
-				WebKeys.REDIRECT, redirectURL.toString());
 
 			include("/error.jsp", renderRequest, renderResponse);
 		}
@@ -172,17 +147,6 @@ public class GroupPagesPortlet extends MVCPortlet {
 		portletRequest.setAttribute(WebKeys.GROUP, group);
 
 		return group;
-	}
-
-	protected Layout getLayout(PortletRequest portletRequest) throws Exception {
-		long selPlid = ParamUtil.getLong(
-			portletRequest, "selPlid", LayoutConstants.DEFAULT_PLID);
-
-		if (selPlid != LayoutConstants.DEFAULT_PLID) {
-			return layoutLocalService.getLayout(selPlid);
-		}
-
-		return null;
 	}
 
 	@Override
@@ -221,22 +185,10 @@ public class GroupPagesPortlet extends MVCPortlet {
 		this.groupProvider = groupProvider;
 	}
 
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		this.layoutLocalService = layoutLocalService;
-	}
-
 	protected GroupProvider groupProvider;
 
 	@Reference
 	protected ItemSelector itemSelector;
-
-	protected LayoutLocalService layoutLocalService;
-
-	@Reference
-	protected Portal portal;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroupPagesPortlet.class);

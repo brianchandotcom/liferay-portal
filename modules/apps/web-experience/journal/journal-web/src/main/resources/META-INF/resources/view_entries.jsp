@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
+
 SearchContainer articleSearchContainer = journalDisplayContext.getSearchContainer(false);
 
 String displayStyle = journalDisplayContext.getDisplayStyle();
@@ -64,17 +66,22 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 				row.setData(rowData);
 
 				row.setPrimaryKey(HtmlUtil.escape(curArticle.getArticleId()));
-				%>
 
-				<liferay-portlet:renderURL plid="<%= JournalUtil.getPreviewPlid(curArticle, themeDisplay) %>" var="previewArticleContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-					<portlet:param name="mvcPath" value="/preview_article_content.jsp" />
-					<portlet:param name="groupId" value="<%= String.valueOf(curArticle.getGroupId()) %>" />
-					<portlet:param name="articleId" value="<%= curArticle.getArticleId() %>" />
-					<portlet:param name="version" value="<%= String.valueOf(curArticle.getVersion()) %>" />
-				</liferay-portlet:renderURL>
+				String editURL = StringPool.BLANK;
 
-				<%
-				String taglibOnClick = "Liferay.fire('previewArticle', {title: '" + HtmlUtil.escapeJS(curArticle.getTitle(locale)) + "', uri: '" + HtmlUtil.escapeJS(previewArticleContentURL.toString()) + "'});";
+				if (JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.UPDATE)) {
+					PortletURL editArticleURL = liferayPortletResponse.createRenderURL();
+
+					editArticleURL.setParameter("mvcPath", "/edit_article.jsp");
+					editArticleURL.setParameter("redirect", currentURL);
+					editArticleURL.setParameter("referringPortletResource", referringPortletResource);
+					editArticleURL.setParameter("groupId", String.valueOf(curArticle.getGroupId()));
+					editArticleURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));
+					editArticleURL.setParameter("articleId", curArticle.getArticleId());
+					editArticleURL.setParameter("version", String.valueOf(curArticle.getVersion()));
+
+					editURL = editArticleURL.toString();
+				}
 				%>
 
 				<c:choose>
@@ -101,7 +108,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 							</h6>
 
 							<h5>
-								<aui:a href="javascript:;" onClick="<%= taglibOnClick %>">
+								<aui:a href="<%= editURL %>">
 									<%= HtmlUtil.escape(curArticle.getTitle(locale)) %>
 								</aui:a>
 							</h5>
@@ -135,11 +142,10 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 										actionJsp='<%= journalDisplayContext.isShowEditActions() ? "/article_action.jsp" : null %>'
 										actionJspServletContext="<%= application %>"
 										imageUrl="<%= HtmlUtil.escape(articleImageURL) %>"
-										onClick="<%= taglibOnClick %>"
 										resultRow="<%= row %>"
 										rowChecker="<%= articleSearchContainer.getRowChecker() %>"
 										title="<%= curArticle.getTitle(locale) %>"
-										url="javascript:;"
+										url="<%= editURL %>"
 									>
 										<%@ include file="/article_vertical_card.jspf" %>
 									</liferay-frontend:vertical-card>
@@ -149,11 +155,10 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 										actionJsp='<%= journalDisplayContext.isShowEditActions() ? "/article_action.jsp" : null %>'
 										actionJspServletContext="<%= application %>"
 										icon="web-content"
-										onClick="<%= taglibOnClick %>"
 										resultRow="<%= row %>"
 										rowChecker="<%= articleSearchContainer.getRowChecker() %>"
 										title="<%= curArticle.getTitle(locale) %>"
-										url="javascript:;"
+										url="<%= editURL %>"
 									>
 										<%@ include file="/article_vertical_card.jspf" %>
 									</liferay-frontend:icon-vertical-card>
@@ -171,7 +176,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 						<liferay-ui:search-container-column-jsp
 							cssClass="table-cell-content"
-							href="<%= previewArticleContentURL %>"
+							href="<%= editURL %>"
 							name="title"
 							path="/article_title.jsp"
 						/>

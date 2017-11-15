@@ -276,8 +276,9 @@ public class JournalArticleExportImportContentProcessor
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Replacing " + jsonData + " with " +
-							journalArticleReference);
+						StringBundler.concat(
+							"Replacing ", jsonData, " with ",
+							journalArticleReference));
 				}
 
 				dynamicContentElement.clearContent();
@@ -398,8 +399,10 @@ public class JournalArticleExportImportContentProcessor
 					if (journalArticle == null) {
 						NoSuchArticleException nsae =
 							new NoSuchArticleException(
-								"No JournalArticle exists with the key " +
-									"{resourcePrimKey=" + classPK + "}");
+								StringBundler.concat(
+									"No JournalArticle exists with the key ",
+									"{resourcePrimKey=",
+									String.valueOf(classPK), "}"));
 
 						if (throwable == null) {
 							throwable = nsae;

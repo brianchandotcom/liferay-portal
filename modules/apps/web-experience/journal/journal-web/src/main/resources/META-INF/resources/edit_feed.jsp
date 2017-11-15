@@ -390,6 +390,7 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 
 			if (selectedFeedItemOption.data('contentfield') === renderedWebContent) {
 				ddmRendererTemplateKeyValue = contentFieldValue;
+
 				contentFieldValue = renderedWebContent;
 			}
 

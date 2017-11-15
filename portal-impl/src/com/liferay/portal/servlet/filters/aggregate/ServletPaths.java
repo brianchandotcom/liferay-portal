@@ -82,7 +82,7 @@ public class ServletPaths {
 
 		String downPathString = _resourcePath.concat(normalizedPath);
 
-		if (normalizedPath.indexOf("./") != -1) {
+		if (normalizedPath.contains("./")) {
 			Path downPath = Paths.get(_resourcePath, normalizedPath);
 
 			downPath = downPath.normalize();

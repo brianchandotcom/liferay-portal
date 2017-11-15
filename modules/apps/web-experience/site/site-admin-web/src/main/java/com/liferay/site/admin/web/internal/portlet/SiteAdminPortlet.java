@@ -230,9 +230,8 @@ public class SiteAdminPortlet extends MVCPortlet {
 				SiteAdminPortletKeys.SITE_SETTINGS + "requestProcessed");
 		}
 
-		PortletURL siteAdministrationURL = portal.getControlPanelPortletURL(
-			actionRequest, group, SiteAdminPortletKeys.SITE_SETTINGS, 0, 0,
-			PortletRequest.RENDER_PHASE);
+		PortletURL siteAdministrationURL = getSiteAdministrationURL(
+			actionRequest, group);
 
 		siteAdministrationURL.setParameter(
 			"historyKey", getHistoryKey(actionRequest, actionResponse));
@@ -425,6 +424,22 @@ public class SiteAdminPortlet extends MVCPortlet {
 		}
 
 		return roles;
+	}
+
+	protected PortletURL getSiteAdministrationURL(
+		ActionRequest actionRequest, Group group) {
+
+		String portletKey = SiteAdminPortletKeys.SITE_ADMIN;
+
+		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
+
+		if (liveGroupId <= 0) {
+			portletKey = SiteAdminPortletKeys.SITE_SETTINGS;
+		}
+
+		return portal.getControlPanelPortletURL(
+			actionRequest, group, portletKey, 0, 0,
+			PortletRequest.RENDER_PHASE);
 	}
 
 	protected List<Team> getTeams(PortletRequest portletRequest)

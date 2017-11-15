@@ -133,6 +133,10 @@ public class ServletPathsTest {
 		ServletPaths servletPaths7 = servletPaths1.down("../test2");
 
 		Assert.assertEquals("/test2", servletPaths7.getResourcePath());
+
+		ServletPaths servletPaths8 = servletPaths1.down("./test2");
+
+		Assert.assertEquals("/test1/test2", servletPaths8.getResourcePath());
 	}
 
 	@Test

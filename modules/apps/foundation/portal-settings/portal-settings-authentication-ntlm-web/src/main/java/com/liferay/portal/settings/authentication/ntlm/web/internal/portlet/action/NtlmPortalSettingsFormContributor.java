@@ -16,7 +16,7 @@ package com.liferay.portal.settings.authentication.ntlm.web.internal.portlet.act
 
 import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
 import com.liferay.portal.settings.authentication.ntlm.web.internal.constants.PortalSettingsNtlmConstants;
-import com.liferay.portal.settings.web.portlet.action.PortalSettingsFormContributor;
+import com.liferay.portal.settings.portlet.action.PortalSettingsFormContributor;
 
 import java.util.Optional;
 

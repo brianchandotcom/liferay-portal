@@ -16,7 +16,7 @@ package com.liferay.portal.settings.authentication.openid.web.internal.portlet.a
 
 import com.liferay.portal.security.sso.openid.constants.OpenIdConstants;
 import com.liferay.portal.settings.authentication.openid.web.internal.constants.PortalSettingsOpenIdConstants;
-import com.liferay.portal.settings.web.portlet.action.PortalSettingsFormContributor;
+import com.liferay.portal.settings.portlet.action.PortalSettingsFormContributor;
 
 import java.util.Optional;
 

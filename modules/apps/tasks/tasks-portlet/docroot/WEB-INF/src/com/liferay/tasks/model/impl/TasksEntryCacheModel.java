@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.tasks.model.TasksEntry;
 
@@ -111,7 +110,7 @@ public class TasksEntryCacheModel implements CacheModel<TasksEntry>,
 		tasksEntryImpl.setUserId(userId);
 
 		if (userName == null) {
-			tasksEntryImpl.setUserName(StringPool.BLANK);
+			tasksEntryImpl.setUserName("");
 		}
 		else {
 			tasksEntryImpl.setUserName(userName);
@@ -132,7 +131,7 @@ public class TasksEntryCacheModel implements CacheModel<TasksEntry>,
 		}
 
 		if (title == null) {
-			tasksEntryImpl.setTitle(StringPool.BLANK);
+			tasksEntryImpl.setTitle("");
 		}
 		else {
 			tasksEntryImpl.setTitle(title);
@@ -200,7 +199,7 @@ public class TasksEntryCacheModel implements CacheModel<TasksEntry>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -210,7 +209,7 @@ public class TasksEntryCacheModel implements CacheModel<TasksEntry>,
 		objectOutput.writeLong(modifiedDate);
 
 		if (title == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(title);

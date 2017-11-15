@@ -32,10 +32,8 @@ import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.service.persistence.RegionPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.impl.RegionImpl;
 import com.liferay.portal.model.impl.RegionModelImpl;
 
@@ -297,7 +295,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		msg.append("countryId=");
 		msg.append(countryId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchRegionException(msg.toString());
 	}
@@ -346,7 +344,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		msg.append("countryId=");
 		msg.append(countryId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchRegionException(msg.toString());
 	}
@@ -797,7 +795,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		msg.append("active=");
 		msg.append(active);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchRegionException(msg.toString());
 	}
@@ -846,7 +844,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		msg.append("active=");
 		msg.append(active);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchRegionException(msg.toString());
 	}
@@ -1123,7 +1121,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 			msg.append(", regionCode=");
 			msg.append(regionCode);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -1188,7 +1186,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 			if (regionCode == null) {
 				query.append(_FINDER_COLUMN_C_R_REGIONCODE_1);
 			}
-			else if (regionCode.equals(StringPool.BLANK)) {
+			else if (regionCode.equals("")) {
 				query.append(_FINDER_COLUMN_C_R_REGIONCODE_3);
 			}
 			else {
@@ -1295,7 +1293,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 			if (regionCode == null) {
 				query.append(_FINDER_COLUMN_C_R_REGIONCODE_1);
 			}
-			else if (regionCode.equals(StringPool.BLANK)) {
+			else if (regionCode.equals("")) {
 				query.append(_FINDER_COLUMN_C_R_REGIONCODE_3);
 			}
 			else {
@@ -1571,7 +1569,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		msg.append(", active=");
 		msg.append(active);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchRegionException(msg.toString());
 	}
@@ -1625,7 +1623,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		msg.append(", active=");
 		msg.append(active);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchRegionException(msg.toString());
 	}
@@ -1885,8 +1883,10 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		setModelClass(Region.class);
 
 		try {
-			Field field = ReflectionUtil.getDeclaredField(BasePersistenceImpl.class,
+			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
+
+			field.setAccessible(true);
 
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -2412,12 +2412,12 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

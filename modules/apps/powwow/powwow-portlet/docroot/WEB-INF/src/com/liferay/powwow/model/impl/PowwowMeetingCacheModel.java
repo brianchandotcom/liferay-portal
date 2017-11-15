@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.powwow.model.PowwowMeeting;
 
@@ -113,7 +112,7 @@ public class PowwowMeetingCacheModel implements CacheModel<PowwowMeeting>,
 		powwowMeetingImpl.setUserId(userId);
 
 		if (userName == null) {
-			powwowMeetingImpl.setUserName(StringPool.BLANK);
+			powwowMeetingImpl.setUserName("");
 		}
 		else {
 			powwowMeetingImpl.setUserName(userName);
@@ -136,35 +135,35 @@ public class PowwowMeetingCacheModel implements CacheModel<PowwowMeeting>,
 		powwowMeetingImpl.setPowwowServerId(powwowServerId);
 
 		if (name == null) {
-			powwowMeetingImpl.setName(StringPool.BLANK);
+			powwowMeetingImpl.setName("");
 		}
 		else {
 			powwowMeetingImpl.setName(name);
 		}
 
 		if (description == null) {
-			powwowMeetingImpl.setDescription(StringPool.BLANK);
+			powwowMeetingImpl.setDescription("");
 		}
 		else {
 			powwowMeetingImpl.setDescription(description);
 		}
 
 		if (providerType == null) {
-			powwowMeetingImpl.setProviderType(StringPool.BLANK);
+			powwowMeetingImpl.setProviderType("");
 		}
 		else {
 			powwowMeetingImpl.setProviderType(providerType);
 		}
 
 		if (providerTypeMetadata == null) {
-			powwowMeetingImpl.setProviderTypeMetadata(StringPool.BLANK);
+			powwowMeetingImpl.setProviderTypeMetadata("");
 		}
 		else {
 			powwowMeetingImpl.setProviderTypeMetadata(providerTypeMetadata);
 		}
 
 		if (languageId == null) {
-			powwowMeetingImpl.setLanguageId(StringPool.BLANK);
+			powwowMeetingImpl.setLanguageId("");
 		}
 		else {
 			powwowMeetingImpl.setLanguageId(languageId);
@@ -215,7 +214,7 @@ public class PowwowMeetingCacheModel implements CacheModel<PowwowMeeting>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -227,35 +226,35 @@ public class PowwowMeetingCacheModel implements CacheModel<PowwowMeeting>,
 		objectOutput.writeLong(powwowServerId);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);
 		}
 
 		if (providerType == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(providerType);
 		}
 
 		if (providerTypeMetadata == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(providerTypeMetadata);
 		}
 
 		if (languageId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(languageId);

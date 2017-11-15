@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -135,7 +134,7 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable,
 		groupImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
-			groupImpl.setUuid(StringPool.BLANK);
+			groupImpl.setUuid("");
 		}
 		else {
 			groupImpl.setUuid(uuid);
@@ -150,28 +149,28 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable,
 		groupImpl.setLiveGroupId(liveGroupId);
 
 		if (treePath == null) {
-			groupImpl.setTreePath(StringPool.BLANK);
+			groupImpl.setTreePath("");
 		}
 		else {
 			groupImpl.setTreePath(treePath);
 		}
 
 		if (groupKey == null) {
-			groupImpl.setGroupKey(StringPool.BLANK);
+			groupImpl.setGroupKey("");
 		}
 		else {
 			groupImpl.setGroupKey(groupKey);
 		}
 
 		if (name == null) {
-			groupImpl.setName(StringPool.BLANK);
+			groupImpl.setName("");
 		}
 		else {
 			groupImpl.setName(name);
 		}
 
 		if (description == null) {
-			groupImpl.setDescription(StringPool.BLANK);
+			groupImpl.setDescription("");
 		}
 		else {
 			groupImpl.setDescription(description);
@@ -180,7 +179,7 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable,
 		groupImpl.setType(type);
 
 		if (typeSettings == null) {
-			groupImpl.setTypeSettings(StringPool.BLANK);
+			groupImpl.setTypeSettings("");
 		}
 		else {
 			groupImpl.setTypeSettings(typeSettings);
@@ -190,7 +189,7 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable,
 		groupImpl.setMembershipRestriction(membershipRestriction);
 
 		if (friendlyURL == null) {
-			groupImpl.setFriendlyURL(StringPool.BLANK);
+			groupImpl.setFriendlyURL("");
 		}
 		else {
 			groupImpl.setFriendlyURL(friendlyURL);
@@ -252,7 +251,7 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable,
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -273,28 +272,28 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable,
 		objectOutput.writeLong(liveGroupId);
 
 		if (treePath == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(treePath);
 		}
 
 		if (groupKey == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(groupKey);
 		}
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);
@@ -303,7 +302,7 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable,
 		objectOutput.writeInt(type);
 
 		if (typeSettings == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(typeSettings);
@@ -314,7 +313,7 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable,
 		objectOutput.writeInt(membershipRestriction);
 
 		if (friendlyURL == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(friendlyURL);

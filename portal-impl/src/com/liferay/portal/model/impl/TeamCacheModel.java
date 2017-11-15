@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -117,7 +116,7 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable,
 		teamImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
-			teamImpl.setUuid(StringPool.BLANK);
+			teamImpl.setUuid("");
 		}
 		else {
 			teamImpl.setUuid(uuid);
@@ -128,7 +127,7 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable,
 		teamImpl.setUserId(userId);
 
 		if (userName == null) {
-			teamImpl.setUserName(StringPool.BLANK);
+			teamImpl.setUserName("");
 		}
 		else {
 			teamImpl.setUserName(userName);
@@ -151,14 +150,14 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable,
 		teamImpl.setGroupId(groupId);
 
 		if (name == null) {
-			teamImpl.setName(StringPool.BLANK);
+			teamImpl.setName("");
 		}
 		else {
 			teamImpl.setName(name);
 		}
 
 		if (description == null) {
-			teamImpl.setDescription(StringPool.BLANK);
+			teamImpl.setDescription("");
 		}
 		else {
 			teamImpl.setDescription(description);
@@ -202,7 +201,7 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable,
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -215,7 +214,7 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -227,14 +226,14 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable,
 		objectOutput.writeLong(groupId);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);

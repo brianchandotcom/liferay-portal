@@ -21,7 +21,6 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -116,7 +115,7 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 		DDLRecordSetImpl ddlRecordSetImpl = new DDLRecordSetImpl();
 
 		if (uuid == null) {
-			ddlRecordSetImpl.setUuid(StringPool.BLANK);
+			ddlRecordSetImpl.setUuid("");
 		}
 		else {
 			ddlRecordSetImpl.setUuid(uuid);
@@ -128,7 +127,7 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 		ddlRecordSetImpl.setUserId(userId);
 
 		if (userName == null) {
-			ddlRecordSetImpl.setUserName(StringPool.BLANK);
+			ddlRecordSetImpl.setUserName("");
 		}
 		else {
 			ddlRecordSetImpl.setUserName(userName);
@@ -137,7 +136,7 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 		ddlRecordSetImpl.setVersionUserId(versionUserId);
 
 		if (versionUserName == null) {
-			ddlRecordSetImpl.setVersionUserName(StringPool.BLANK);
+			ddlRecordSetImpl.setVersionUserName("");
 		}
 		else {
 			ddlRecordSetImpl.setVersionUserName(versionUserName);
@@ -160,28 +159,28 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 		ddlRecordSetImpl.setDDMStructureId(DDMStructureId);
 
 		if (recordSetKey == null) {
-			ddlRecordSetImpl.setRecordSetKey(StringPool.BLANK);
+			ddlRecordSetImpl.setRecordSetKey("");
 		}
 		else {
 			ddlRecordSetImpl.setRecordSetKey(recordSetKey);
 		}
 
 		if (version == null) {
-			ddlRecordSetImpl.setVersion(StringPool.BLANK);
+			ddlRecordSetImpl.setVersion("");
 		}
 		else {
 			ddlRecordSetImpl.setVersion(version);
 		}
 
 		if (name == null) {
-			ddlRecordSetImpl.setName(StringPool.BLANK);
+			ddlRecordSetImpl.setName("");
 		}
 		else {
 			ddlRecordSetImpl.setName(name);
 		}
 
 		if (description == null) {
-			ddlRecordSetImpl.setDescription(StringPool.BLANK);
+			ddlRecordSetImpl.setDescription("");
 		}
 		else {
 			ddlRecordSetImpl.setDescription(description);
@@ -191,7 +190,7 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 		ddlRecordSetImpl.setScope(scope);
 
 		if (settings == null) {
-			ddlRecordSetImpl.setSettings(StringPool.BLANK);
+			ddlRecordSetImpl.setSettings("");
 		}
 		else {
 			ddlRecordSetImpl.setSettings(settings);
@@ -249,7 +248,7 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -264,7 +263,7 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -273,7 +272,7 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 		objectOutput.writeLong(versionUserId);
 
 		if (versionUserName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(versionUserName);
@@ -285,28 +284,28 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 		objectOutput.writeLong(DDMStructureId);
 
 		if (recordSetKey == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(recordSetKey);
 		}
 
 		if (version == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(version);
 		}
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);
@@ -317,7 +316,7 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 		objectOutput.writeInt(scope);
 
 		if (settings == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(settings);

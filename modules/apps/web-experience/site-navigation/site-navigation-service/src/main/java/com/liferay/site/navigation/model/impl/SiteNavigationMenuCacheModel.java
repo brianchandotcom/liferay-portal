@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 
@@ -99,7 +98,7 @@ public class SiteNavigationMenuCacheModel implements CacheModel<SiteNavigationMe
 		siteNavigationMenuImpl.setUserId(userId);
 
 		if (userName == null) {
-			siteNavigationMenuImpl.setUserName(StringPool.BLANK);
+			siteNavigationMenuImpl.setUserName("");
 		}
 		else {
 			siteNavigationMenuImpl.setUserName(userName);
@@ -120,7 +119,7 @@ public class SiteNavigationMenuCacheModel implements CacheModel<SiteNavigationMe
 		}
 
 		if (name == null) {
-			siteNavigationMenuImpl.setName(StringPool.BLANK);
+			siteNavigationMenuImpl.setName("");
 		}
 		else {
 			siteNavigationMenuImpl.setName(name);
@@ -158,7 +157,7 @@ public class SiteNavigationMenuCacheModel implements CacheModel<SiteNavigationMe
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -168,7 +167,7 @@ public class SiteNavigationMenuCacheModel implements CacheModel<SiteNavigationMe
 		objectOutput.writeLong(modifiedDate);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);

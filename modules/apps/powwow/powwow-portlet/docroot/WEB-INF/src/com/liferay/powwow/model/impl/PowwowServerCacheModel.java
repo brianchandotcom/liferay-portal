@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.powwow.model.PowwowServer;
 
@@ -106,7 +105,7 @@ public class PowwowServerCacheModel implements CacheModel<PowwowServer>,
 		powwowServerImpl.setUserId(userId);
 
 		if (userName == null) {
-			powwowServerImpl.setUserName(StringPool.BLANK);
+			powwowServerImpl.setUserName("");
 		}
 		else {
 			powwowServerImpl.setUserName(userName);
@@ -127,35 +126,35 @@ public class PowwowServerCacheModel implements CacheModel<PowwowServer>,
 		}
 
 		if (name == null) {
-			powwowServerImpl.setName(StringPool.BLANK);
+			powwowServerImpl.setName("");
 		}
 		else {
 			powwowServerImpl.setName(name);
 		}
 
 		if (providerType == null) {
-			powwowServerImpl.setProviderType(StringPool.BLANK);
+			powwowServerImpl.setProviderType("");
 		}
 		else {
 			powwowServerImpl.setProviderType(providerType);
 		}
 
 		if (url == null) {
-			powwowServerImpl.setUrl(StringPool.BLANK);
+			powwowServerImpl.setUrl("");
 		}
 		else {
 			powwowServerImpl.setUrl(url);
 		}
 
 		if (apiKey == null) {
-			powwowServerImpl.setApiKey(StringPool.BLANK);
+			powwowServerImpl.setApiKey("");
 		}
 		else {
 			powwowServerImpl.setApiKey(apiKey);
 		}
 
 		if (secret == null) {
-			powwowServerImpl.setSecret(StringPool.BLANK);
+			powwowServerImpl.setSecret("");
 		}
 		else {
 			powwowServerImpl.setSecret(secret);
@@ -197,7 +196,7 @@ public class PowwowServerCacheModel implements CacheModel<PowwowServer>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -207,35 +206,35 @@ public class PowwowServerCacheModel implements CacheModel<PowwowServer>,
 		objectOutput.writeLong(modifiedDate);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (providerType == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(providerType);
 		}
 
 		if (url == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(url);
 		}
 
 		if (apiKey == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(apiKey);
 		}
 
 		if (secret == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(secret);

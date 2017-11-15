@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.shopping.model.ShoppingCart;
 
@@ -105,7 +104,7 @@ public class ShoppingCartCacheModel implements CacheModel<ShoppingCart>,
 		shoppingCartImpl.setUserId(userId);
 
 		if (userName == null) {
-			shoppingCartImpl.setUserName(StringPool.BLANK);
+			shoppingCartImpl.setUserName("");
 		}
 		else {
 			shoppingCartImpl.setUserName(userName);
@@ -126,14 +125,14 @@ public class ShoppingCartCacheModel implements CacheModel<ShoppingCart>,
 		}
 
 		if (itemIds == null) {
-			shoppingCartImpl.setItemIds(StringPool.BLANK);
+			shoppingCartImpl.setItemIds("");
 		}
 		else {
 			shoppingCartImpl.setItemIds(itemIds);
 		}
 
 		if (couponCodes == null) {
-			shoppingCartImpl.setCouponCodes(StringPool.BLANK);
+			shoppingCartImpl.setCouponCodes("");
 		}
 		else {
 			shoppingCartImpl.setCouponCodes(couponCodes);
@@ -179,7 +178,7 @@ public class ShoppingCartCacheModel implements CacheModel<ShoppingCart>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -189,14 +188,14 @@ public class ShoppingCartCacheModel implements CacheModel<ShoppingCart>,
 		objectOutput.writeLong(modifiedDate);
 
 		if (itemIds == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(itemIds);
 		}
 
 		if (couponCodes == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(couponCodes);

@@ -21,7 +21,6 @@ import com.liferay.mail.reader.model.Attachment;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -101,14 +100,14 @@ public class AttachmentCacheModel implements CacheModel<Attachment>,
 		attachmentImpl.setMessageId(messageId);
 
 		if (contentPath == null) {
-			attachmentImpl.setContentPath(StringPool.BLANK);
+			attachmentImpl.setContentPath("");
 		}
 		else {
 			attachmentImpl.setContentPath(contentPath);
 		}
 
 		if (fileName == null) {
-			attachmentImpl.setFileName(StringPool.BLANK);
+			attachmentImpl.setFileName("");
 		}
 		else {
 			attachmentImpl.setFileName(fileName);
@@ -156,14 +155,14 @@ public class AttachmentCacheModel implements CacheModel<Attachment>,
 		objectOutput.writeLong(messageId);
 
 		if (contentPath == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(contentPath);
 		}
 
 		if (fileName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(fileName);

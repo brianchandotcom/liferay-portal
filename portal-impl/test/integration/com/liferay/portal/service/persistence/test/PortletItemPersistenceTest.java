@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -178,20 +177,20 @@ public class PortletItemPersistenceTest {
 
 	@Test
 	public void testCountByG_P_C() throws Exception {
-		_persistence.countByG_P_C(RandomTestUtil.nextLong(), StringPool.BLANK,
+		_persistence.countByG_P_C(RandomTestUtil.nextLong(), "",
 			RandomTestUtil.nextLong());
 
-		_persistence.countByG_P_C(0L, StringPool.NULL, 0L);
+		_persistence.countByG_P_C(0L, "null", 0L);
 
 		_persistence.countByG_P_C(0L, (String)null, 0L);
 	}
 
 	@Test
 	public void testCountByG_N_P_C() throws Exception {
-		_persistence.countByG_N_P_C(RandomTestUtil.nextLong(),
-			StringPool.BLANK, StringPool.BLANK, RandomTestUtil.nextLong());
+		_persistence.countByG_N_P_C(RandomTestUtil.nextLong(), "", "",
+			RandomTestUtil.nextLong());
 
-		_persistence.countByG_N_P_C(0L, StringPool.NULL, StringPool.NULL, 0L);
+		_persistence.countByG_N_P_C(0L, "null", "null", 0L);
 
 		_persistence.countByG_N_P_C(0L, (String)null, (String)null, 0L);
 	}

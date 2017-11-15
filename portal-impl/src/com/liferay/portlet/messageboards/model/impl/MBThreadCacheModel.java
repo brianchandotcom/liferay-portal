@@ -21,7 +21,6 @@ import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -121,7 +120,7 @@ public class MBThreadCacheModel implements CacheModel<MBThread>, Externalizable 
 		MBThreadImpl mbThreadImpl = new MBThreadImpl();
 
 		if (uuid == null) {
-			mbThreadImpl.setUuid(StringPool.BLANK);
+			mbThreadImpl.setUuid("");
 		}
 		else {
 			mbThreadImpl.setUuid(uuid);
@@ -133,7 +132,7 @@ public class MBThreadCacheModel implements CacheModel<MBThread>, Externalizable 
 		mbThreadImpl.setUserId(userId);
 
 		if (userName == null) {
-			mbThreadImpl.setUserName(StringPool.BLANK);
+			mbThreadImpl.setUserName("");
 		}
 		else {
 			mbThreadImpl.setUserName(userName);
@@ -181,7 +180,7 @@ public class MBThreadCacheModel implements CacheModel<MBThread>, Externalizable 
 		mbThreadImpl.setStatusByUserId(statusByUserId);
 
 		if (statusByUserName == null) {
-			mbThreadImpl.setStatusByUserName(StringPool.BLANK);
+			mbThreadImpl.setStatusByUserName("");
 		}
 		else {
 			mbThreadImpl.setStatusByUserName(statusByUserName);
@@ -243,7 +242,7 @@ public class MBThreadCacheModel implements CacheModel<MBThread>, Externalizable 
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -258,7 +257,7 @@ public class MBThreadCacheModel implements CacheModel<MBThread>, Externalizable 
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -290,7 +289,7 @@ public class MBThreadCacheModel implements CacheModel<MBThread>, Externalizable 
 		objectOutput.writeLong(statusByUserId);
 
 		if (statusByUserName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(statusByUserName);

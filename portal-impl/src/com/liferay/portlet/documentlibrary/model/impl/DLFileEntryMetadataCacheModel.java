@@ -21,7 +21,6 @@ import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -90,7 +89,7 @@ public class DLFileEntryMetadataCacheModel implements CacheModel<DLFileEntryMeta
 		DLFileEntryMetadataImpl dlFileEntryMetadataImpl = new DLFileEntryMetadataImpl();
 
 		if (uuid == null) {
-			dlFileEntryMetadataImpl.setUuid(StringPool.BLANK);
+			dlFileEntryMetadataImpl.setUuid("");
 		}
 		else {
 			dlFileEntryMetadataImpl.setUuid(uuid);
@@ -129,7 +128,7 @@ public class DLFileEntryMetadataCacheModel implements CacheModel<DLFileEntryMeta
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);

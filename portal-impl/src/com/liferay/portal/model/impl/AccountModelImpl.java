@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -399,7 +398,7 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -411,7 +410,7 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -466,7 +465,7 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -482,7 +481,7 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	@Override
 	public String getLegalName() {
 		if (_legalName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _legalName;
@@ -498,7 +497,7 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	@Override
 	public String getLegalId() {
 		if (_legalId == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _legalId;
@@ -514,7 +513,7 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	@Override
 	public String getLegalType() {
 		if (_legalType == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _legalType;
@@ -530,7 +529,7 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	@Override
 	public String getSicCode() {
 		if (_sicCode == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _sicCode;
@@ -546,7 +545,7 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	@Override
 	public String getTickerSymbol() {
 		if (_tickerSymbol == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _tickerSymbol;
@@ -562,7 +561,7 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	@Override
 	public String getIndustry() {
 		if (_industry == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _industry;
@@ -578,7 +577,7 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	@Override
 	public String getType() {
 		if (_type == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _type;
@@ -594,7 +593,7 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	@Override
 	public String getSize() {
 		if (_size == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _size;

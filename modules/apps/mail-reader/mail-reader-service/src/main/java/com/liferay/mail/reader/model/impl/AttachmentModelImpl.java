@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -257,7 +256,7 @@ public class AttachmentModelImpl extends BaseModelImpl<Attachment>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -310,7 +309,7 @@ public class AttachmentModelImpl extends BaseModelImpl<Attachment>
 	@Override
 	public String getContentPath() {
 		if (_contentPath == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _contentPath;
@@ -325,7 +324,7 @@ public class AttachmentModelImpl extends BaseModelImpl<Attachment>
 	@Override
 	public String getFileName() {
 		if (_fileName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _fileName;

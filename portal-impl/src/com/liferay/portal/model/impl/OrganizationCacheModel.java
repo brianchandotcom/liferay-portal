@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -129,7 +128,7 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 		organizationImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
-			organizationImpl.setUuid(StringPool.BLANK);
+			organizationImpl.setUuid("");
 		}
 		else {
 			organizationImpl.setUuid(uuid);
@@ -140,7 +139,7 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 		organizationImpl.setUserId(userId);
 
 		if (userName == null) {
-			organizationImpl.setUserName(StringPool.BLANK);
+			organizationImpl.setUserName("");
 		}
 		else {
 			organizationImpl.setUserName(userName);
@@ -163,21 +162,21 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 		organizationImpl.setParentOrganizationId(parentOrganizationId);
 
 		if (treePath == null) {
-			organizationImpl.setTreePath(StringPool.BLANK);
+			organizationImpl.setTreePath("");
 		}
 		else {
 			organizationImpl.setTreePath(treePath);
 		}
 
 		if (name == null) {
-			organizationImpl.setName(StringPool.BLANK);
+			organizationImpl.setName("");
 		}
 		else {
 			organizationImpl.setName(name);
 		}
 
 		if (type == null) {
-			organizationImpl.setType(StringPool.BLANK);
+			organizationImpl.setType("");
 		}
 		else {
 			organizationImpl.setType(type);
@@ -189,7 +188,7 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 		organizationImpl.setStatusId(statusId);
 
 		if (comments == null) {
-			organizationImpl.setComments(StringPool.BLANK);
+			organizationImpl.setComments("");
 		}
 		else {
 			organizationImpl.setComments(comments);
@@ -239,7 +238,7 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -252,7 +251,7 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -264,21 +263,21 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 		objectOutput.writeLong(parentOrganizationId);
 
 		if (treePath == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(treePath);
 		}
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (type == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(type);
@@ -293,7 +292,7 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 		objectOutput.writeLong(statusId);
 
 		if (comments == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(comments);

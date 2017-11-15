@@ -21,7 +21,6 @@ import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -100,7 +99,7 @@ public class MDRRuleGroupCacheModel implements CacheModel<MDRRuleGroup>,
 		MDRRuleGroupImpl mdrRuleGroupImpl = new MDRRuleGroupImpl();
 
 		if (uuid == null) {
-			mdrRuleGroupImpl.setUuid(StringPool.BLANK);
+			mdrRuleGroupImpl.setUuid("");
 		}
 		else {
 			mdrRuleGroupImpl.setUuid(uuid);
@@ -112,7 +111,7 @@ public class MDRRuleGroupCacheModel implements CacheModel<MDRRuleGroup>,
 		mdrRuleGroupImpl.setUserId(userId);
 
 		if (userName == null) {
-			mdrRuleGroupImpl.setUserName(StringPool.BLANK);
+			mdrRuleGroupImpl.setUserName("");
 		}
 		else {
 			mdrRuleGroupImpl.setUserName(userName);
@@ -133,14 +132,14 @@ public class MDRRuleGroupCacheModel implements CacheModel<MDRRuleGroup>,
 		}
 
 		if (name == null) {
-			mdrRuleGroupImpl.setName(StringPool.BLANK);
+			mdrRuleGroupImpl.setName("");
 		}
 		else {
 			mdrRuleGroupImpl.setName(name);
 		}
 
 		if (description == null) {
-			mdrRuleGroupImpl.setDescription(StringPool.BLANK);
+			mdrRuleGroupImpl.setDescription("");
 		}
 		else {
 			mdrRuleGroupImpl.setDescription(description);
@@ -181,7 +180,7 @@ public class MDRRuleGroupCacheModel implements CacheModel<MDRRuleGroup>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -196,7 +195,7 @@ public class MDRRuleGroupCacheModel implements CacheModel<MDRRuleGroup>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -206,14 +205,14 @@ public class MDRRuleGroupCacheModel implements CacheModel<MDRRuleGroup>,
 		objectOutput.writeLong(modifiedDate);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);

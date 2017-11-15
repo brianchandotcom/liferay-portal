@@ -17,7 +17,6 @@ package com.liferay.tasks.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.service.InvokableLocalService;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -342,12 +341,6 @@ public class TasksEntryLocalServiceUtil {
 		return getService().getUserTasksEntriesCount(userId);
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	public static void updateAsset(long userId,
 		com.liferay.tasks.model.TasksEntry tasksEntry, long[] assetCategoryIds,
 		java.lang.String[] assetTagNames)
@@ -396,15 +389,8 @@ public class TasksEntryLocalServiceUtil {
 
 	public static TasksEntryLocalService getService() {
 		if (_service == null) {
-			InvokableLocalService invokableLocalService = (InvokableLocalService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
+			_service = (TasksEntryLocalService)PortletBeanLocatorUtil.locate(ServletContextUtil.getServletContextName(),
 					TasksEntryLocalService.class.getName());
-
-			if (invokableLocalService instanceof TasksEntryLocalService) {
-				_service = (TasksEntryLocalService)invokableLocalService;
-			}
-			else {
-				_service = new TasksEntryLocalServiceClp(invokableLocalService);
-			}
 
 			ReferenceRegistry.registerReference(TasksEntryLocalServiceUtil.class,
 				"_service");

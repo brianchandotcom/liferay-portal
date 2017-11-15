@@ -123,14 +123,15 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 			new String[] {"expando:customerId"}
 		);
 
-		AttributePublisherImpl attributePublisher =
+		AttributePublisherImpl attributePublisherImpl =
 			new AttributePublisherImpl();
 
 		_defaultAttributeResolver.resolve(
 			_user, new AttributeResolverSAMLContextImpl(_samlMessageContext),
-			attributePublisher);
+			attributePublisherImpl);
 
-		assertEquals(attributePublisher.getAttributes(), "customerId", "12345");
+		assertEquals(
+			attributePublisherImpl.getAttributes(), "customerId", "12345");
 	}
 
 	@Test
@@ -169,14 +170,14 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 			groups
 		);
 
-		AttributePublisherImpl attributePublisher =
+		AttributePublisherImpl attributePublisherImpl =
 			new AttributePublisherImpl();
 
 		_defaultAttributeResolver.resolve(
 			_user, new AttributeResolverSAMLContextImpl(_samlMessageContext),
-			attributePublisher);
+			attributePublisherImpl);
 
-		List<Attribute> attributes = attributePublisher.getAttributes();
+		List<Attribute> attributes = attributePublisherImpl.getAttributes();
 
 		assertEquals(attributes, "groups", new String[] {"Test 1", "Test 2"});
 	}
@@ -265,14 +266,14 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 			userGroupRoles
 		);
 
-		AttributePublisherImpl attributePublisher =
+		AttributePublisherImpl attributePublisherImpl =
 			new AttributePublisherImpl();
 
 		_defaultAttributeResolver.resolve(
 			_user, new AttributeResolverSAMLContextImpl(_samlMessageContext),
-			attributePublisher);
+			attributePublisherImpl);
 
-		List<Attribute> attributes = attributePublisher.getAttributes();
+		List<Attribute> attributes = attributePublisherImpl.getAttributes();
 
 		assertEquals(
 			attributes, "organizationRole:Group Test 1",
@@ -315,14 +316,14 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 			organizations
 		);
 
-		AttributePublisherImpl attributePublisher =
+		AttributePublisherImpl attributePublisherImpl =
 			new AttributePublisherImpl();
 
 		_defaultAttributeResolver.resolve(
 			_user, new AttributeResolverSAMLContextImpl(_samlMessageContext),
-			attributePublisher);
+			attributePublisherImpl);
 
-		List<Attribute> attributes = attributePublisher.getAttributes();
+		List<Attribute> attributes = attributePublisherImpl.getAttributes();
 
 		assertEquals(
 			attributes, "organizations", new String[] {"Test 1", "Test 2"});
@@ -406,14 +407,14 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 			groupRoles
 		);
 
-		AttributePublisherImpl attributePublisher =
+		AttributePublisherImpl attributePublisherImpl =
 			new AttributePublisherImpl();
 
 		_defaultAttributeResolver.resolve(
 			_user, new AttributeResolverSAMLContextImpl(_samlMessageContext),
-			attributePublisher);
+			attributePublisherImpl);
 
-		List<Attribute> attributes = attributePublisher.getAttributes();
+		List<Attribute> attributes = attributePublisherImpl.getAttributes();
 
 		assertEquals(
 			attributes, "roles",
@@ -555,14 +556,14 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 			userGroupGroupRoles
 		);
 
-		AttributePublisherImpl attributePublisher =
+		AttributePublisherImpl attributePublisherImpl =
 			new AttributePublisherImpl();
 
 		_defaultAttributeResolver.resolve(
 			_user, new AttributeResolverSAMLContextImpl(_samlMessageContext),
-			attributePublisher);
+			attributePublisherImpl);
 
-		List<Attribute> attributes = attributePublisher.getAttributes();
+		List<Attribute> attributes = attributePublisherImpl.getAttributes();
 
 		assertEquals(
 			attributes, "siteRole:Group Test 1",
@@ -580,14 +581,14 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 			}
 		);
 
-		AttributePublisherImpl attributePublisher =
+		AttributePublisherImpl attributePublisherImpl =
 			new AttributePublisherImpl();
 
 		_defaultAttributeResolver.resolve(
 			_user, new AttributeResolverSAMLContextImpl(_samlMessageContext),
-			attributePublisher);
+			attributePublisherImpl);
 
-		List<Attribute> attributes = attributePublisher.getAttributes();
+		List<Attribute> attributes = attributePublisherImpl.getAttributes();
 
 		assertEquals(attributes, "emailAddress", "test@liferay.com");
 		assertEquals(attributes, "screenName", "test=test2");
@@ -638,14 +639,14 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 			}
 		);
 
-		AttributePublisherImpl attributePublisher =
+		AttributePublisherImpl attributePublisherImpl =
 			new AttributePublisherImpl();
 
 		_defaultAttributeResolver.resolve(
 			_user, new AttributeResolverSAMLContextImpl(_samlMessageContext),
-			attributePublisher);
+			attributePublisherImpl);
 
-		List<Attribute> attributes = attributePublisher.getAttributes();
+		List<Attribute> attributes = attributePublisherImpl.getAttributes();
 
 		assertEquals(attributes, "emailAddress", "test@liferay.com");
 		assertEquals(attributes, "firstName", "Test");
@@ -756,14 +757,14 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 			userGroupRoles
 		);
 
-		AttributePublisherImpl attributePublisher =
+		AttributePublisherImpl attributePublisherImpl =
 			new AttributePublisherImpl();
 
 		_defaultAttributeResolver.resolve(
 			_user, new AttributeResolverSAMLContextImpl(_samlMessageContext),
-			attributePublisher);
+			attributePublisherImpl);
 
-		List<Attribute> attributes = attributePublisher.getAttributes();
+		List<Attribute> attributes = attributePublisherImpl.getAttributes();
 
 		assertEquals(
 			attributes, "userGroupRole:Group Test 1",
@@ -806,14 +807,14 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 			userGroups
 		);
 
-		AttributePublisherImpl attributePublisher =
+		AttributePublisherImpl attributePublisherImpl =
 			new AttributePublisherImpl();
 
 		_defaultAttributeResolver.resolve(
 			_user, new AttributeResolverSAMLContextImpl(_samlMessageContext),
-			attributePublisher);
+			attributePublisherImpl);
 
-		List<Attribute> attributes = attributePublisher.getAttributes();
+		List<Attribute> attributes = attributePublisherImpl.getAttributes();
 
 		assertEquals(
 			attributes, "userGroups", new String[] {"Test 1", "Test 2"});

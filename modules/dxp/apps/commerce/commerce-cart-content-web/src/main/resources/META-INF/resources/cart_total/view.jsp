@@ -33,14 +33,14 @@ SearchContainer<CommerceCartItem> commerceCartItemSearchContainer = commerceCart
 	displayStyleGroupId="<%= commerceCartContentTotalDisplayContext.getDisplayStyleGroupId() %>"
 	entries="<%= commerceCartItemSearchContainer.getResults() %>"
 >
-	<div class="order-total">
+	<div class="order-total text-dark">
 		<div class="row">
-			<div class="col-md-6">
-				<h3><liferay-ui:message key="total" /></h3>
+			<div class="col-auto">
+				<h3 class="h4"><liferay-ui:message key="total" /></h3>
 			</div>
 
-			<div class="col-md-6">
-				<h3><%= HtmlUtil.escape(commerceCartContentTotalDisplayContext.getCommerceCartTotal()) %></h3>
+			<div class="col text-right">
+				<h3 class="h4"><%= HtmlUtil.escape(commerceCartContentTotalDisplayContext.getCommerceCartTotal()) %></h3>
 			</div>
 		</div>
 	</div>
@@ -51,6 +51,6 @@ SearchContainer<CommerceCartItem> commerceCartItemSearchContainer = commerceCart
 		PortletURL checkoutPortletURL = commerceCartContentTotalDisplayContext.getCheckoutPortletURL();
 		%>
 
-		<aui:button cssClass="btn-lg btn-primary" href="<%= checkoutPortletURL.toString() %>" value="checkout" />
+		<aui:button cssClass="btn-lg" href="<%= checkoutPortletURL.toString() %>" value="checkout" />
 	</aui:button-row>
 </liferay-ddm:template-renderer>

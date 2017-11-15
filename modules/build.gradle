@@ -204,6 +204,26 @@ gradle.beforeProject {
 				}
 			}
 		}
+
+		pluginManager.withPlugin("org.ysb33r.gradletest") {
+			task prepareGradleTestInputs
+
+			gradleTest {
+				dependsOn prepareGradleTestInputs
+			}
+
+			prepareGradleTestInputs {
+				doLast {
+					File dir = file("build/classes/test")
+
+					dir.mkdirs()
+
+					File tmpFile = new File(dir, "tmp")
+
+					tmpFile.createNewFile()
+				}
+			}
+		}
 	}
 }
 

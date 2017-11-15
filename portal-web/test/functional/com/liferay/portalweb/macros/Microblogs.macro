@@ -3,7 +3,7 @@
 		<var name="key_actionType" value="Delete" />
 		<var name="key_entryContent" value="${entryContent}" />
 
-		<execute function="MakeVisible" locator1="Microblogs#FOOTER" />
+		<execute function="MouseOver" locator1="Microblogs#FOOTER" />
 
 		<execute function="AssertClickNoError" locator1="Microblogs#TIMELINE_ENTRY_ACTION" value1="Delete" />
 
@@ -16,7 +16,7 @@
 		<var name="key_actionType" value="Edit" />
 		<var name="key_entryContent" value="${entryContent}" />
 
-		<execute function="MakeVisible" locator1="Microblogs#FOOTER" />
+		<execute function="MouseOver" locator1="Microblogs#FOOTER" />
 
 		<execute function="AssertClick" locator1="Microblogs#TIMELINE_ENTRY_ACTION" value1="Edit" />
 

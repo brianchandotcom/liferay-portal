@@ -195,7 +195,7 @@ required.
 ## 2.4.0 - 2017-11-13
 
 ### Added
-- [LPS-75829]: Add new `com.liferay.js.transpiler.base` plugin to apply the
+- [LPS-75829]: Add the new `com.liferay.js.transpiler.base` plugin to apply the
 `jsCompile` configuration expansion logic.
 
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node

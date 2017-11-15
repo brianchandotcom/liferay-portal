@@ -26,15 +26,15 @@ buildscript {
 
 There are two JS Transpiler Gradle plugins you can apply to your project:
 
-- Apply the [*JS Transpiler Plugin*](#js-transpiler-plugin) to build Metal.js
-code, compile Soy files, and transpile ES6 to ES5:
+- [*JS Transpiler Plugin*](#js-transpiler-plugin): builds Metal.js code,
+compiles Soy files, and transpiles ES6 to ES5:
 
 	```gradle
 	apply plugin: "com.liferay.js.transpiler"
 	```
 
-- Apply the [*JS Transpiler Base Plugin*](#js-transpiler-base-plugin) to use
-Gradle dependencies (such as [external module](https://docs.gradle.org/current/userguide/dependency_management.html#sub:module_dependencies)
+- [*JS Transpiler Base Plugin*](#js-transpiler-base-plugin): provides a way to
+use Gradle dependencies (such as [external modules](https://docs.gradle.org/current/userguide/dependency_management.html#sub:module_dependencies)
 or [project dependencies](https://docs.gradle.org/current/userguide/dependency_management.html#sub:project_dependencies))
 in Node.js scripts:
 
@@ -93,7 +93,7 @@ The plugin also adds one task to your project:
 
 Name | Depends On | Type | Description
 ---- | ---------- | ---- | -----------
-`expandJSCompileDependencies` | \- | [`DefaultTask`](https://docs.gradle.org/current/javadoc/org/gradle/api/DefaultTask.html) | Expands the configured additional Javascript dependencies. The task itself does not do any work, but depends on a series of [Copy](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.Copy.html) tasks called `expandJSCompileDependency${file}` which expand each dependency declared in the `jsCompile` configuration into the `node_modules` directory.
+`expandJSCompileDependencies` | \- | [`DefaultTask`](https://docs.gradle.org/current/javadoc/org/gradle/api/DefaultTask.html) | Expands the additional configured JavaScript dependencies. The task itself does not do any work, but depends on a series of [Copy](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.Copy.html) tasks called `expandJSCompileDependency${file}`, which expand each dependency declared in the `jsCompile` configuration into the `node_modules` directory.
 
 All the tasks of type `ExecuteNpmTask` whose name starts with `"npmRun"` are
 configured to depend on `expandJSCompileDependencies`. This means that, before

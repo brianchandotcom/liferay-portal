@@ -195,20 +195,28 @@ public class MaxAgeDependencyCheckerImpl extends BaseDependencyCheckerImpl {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("https://search.maven.org/solrsearch/select?q=g:\"");
+		sb.append("https://search.maven.org/solrsearch/select?q=g:");
+		sb.append(_ENCODED_DOUBLE_QUOTE);
 		sb.append(group);
-		sb.append("\"+AND+a:\"");
+		sb.append(_ENCODED_DOUBLE_QUOTE);
+		sb.append("+AND+a:");
+		sb.append(_ENCODED_DOUBLE_QUOTE);
 		sb.append(name);
+		sb.append(_ENCODED_DOUBLE_QUOTE);
 
 		if (Validator.isNotNull(version)) {
-			sb.append("\"+AND+v:\"");
+			sb.append("+AND+v:");
+			sb.append(_ENCODED_DOUBLE_QUOTE);
 			sb.append(version);
+			sb.append(_ENCODED_DOUBLE_QUOTE);
 		}
 
-		sb.append("\"&wt=json");
+		sb.append("&wt=json");
 
 		return new URL(sb.toString());
 	}
+
+	private static final String _ENCODED_DOUBLE_QUOTE = "%22";
 
 	private static final ExpiringMap<URL, VersionInfo> _versionInfos =
 		ExpiringMap.create();

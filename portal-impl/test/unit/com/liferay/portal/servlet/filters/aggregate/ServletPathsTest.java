@@ -124,6 +124,15 @@ public class ServletPathsTest {
 		ServletPaths servletPaths5 = servletPaths4.down("test2");
 
 		Assert.assertEquals("test1/test2", servletPaths5.getResourcePath());
+
+		ServletPaths servletPaths6 = servletPaths1.down(
+			"/test2?extraparameters");
+
+		Assert.assertEquals("/test1/test2", servletPaths6.getResourcePath());
+
+		ServletPaths servletPaths7 = servletPaths1.down("../test2");
+
+		Assert.assertEquals("/test2", servletPaths7.getResourcePath());
 	}
 
 	@Test

@@ -132,6 +132,11 @@ public class FedExCommerceShippingOptionHelper {
 			CPConstants.MEASUREMENT_UNIT_TYPE_WEIGHT, WeightUnits._KG,
 			WeightUnits._LB);
 
+		_linearUnits = LinearUnits.fromValue(
+			StringUtil.toUpperCase(_dimensionCPMeasurementUnit.getKey()));
+		_weightUnits = WeightUnits.fromValue(
+			StringUtil.toUpperCase(_weightCPMeasurementUnit.getKey()));
+
 		_shippingAddress = _commerceCart.getShippingAddress();
 
 		if (_shippingAddress == null) {
@@ -440,14 +445,14 @@ public class FedExCommerceShippingOptionHelper {
 		return fedExDimension;
 	}
 
-	private BigDecimal _getFedExWeight(double weight) {
+	private double _getFedExWeight(double weight) {
 		double fedExWeight = weight * _weightCPMeasurementUnit.getRate();
 
 		if (fedExWeight < 1) {
 			fedExWeight = 1;
 		}
 
-		return BigDecimal.valueOf(fedExWeight);
+		return fedExWeight;
 	}
 
 	private Money _getMoney(double amount) {
@@ -458,6 +463,14 @@ public class FedExCommerceShippingOptionHelper {
 
 	private NonNegativeInteger _getNonNegativeInteger(int d) {
 		return new NonNegativeInteger(String.valueOf(d));
+	}
+
+	private int _getPackageSize(
+		int fedExWidth, int fedExHeight, int fedExDepth) {
+
+		int girth = fedExHeight * 2 + fedExDepth * 2;
+
+		return girth + fedExWidth;
 	}
 
 	private Party _getParty(CommerceAddress commerceAddress)
@@ -504,6 +517,114 @@ public class FedExCommerceShippingOptionHelper {
 		return rateRequest;
 	}
 
+	private RequestedPackageLineItem _getRequestedPackageLineItem(
+		int fedExWidth, int fedExHeight, int fedExDepth, double fedExWeight,
+		double price, int groupPackageCount, int sequenceNumber) {
+
+		RequestedPackageLineItem requestedPackageLineItem =
+			new RequestedPackageLineItem();
+
+		requestedPackageLineItem.setDimensions(
+			new com.fedex.ws.rate.v22.Dimensions(
+				_getNonNegativeInteger(fedExDepth),
+				_getNonNegativeInteger(fedExWidth),
+				_getNonNegativeInteger(fedExHeight), _linearUnits));
+		requestedPackageLineItem.setGroupPackageCount(
+			_getNonNegativeInteger(groupPackageCount));
+		requestedPackageLineItem.setInsuredValue(_getMoney(price));
+		requestedPackageLineItem.setSequenceNumber(
+			_getPositiveInteger(sequenceNumber));
+		requestedPackageLineItem.setWeight(
+			new Weight(_weightUnits, BigDecimal.valueOf(fedExWeight)));
+
+		return requestedPackageLineItem;
+	}
+
+	private RequestedPackageLineItem[]
+		_getRequestedPackageLineItemsByDimensions(
+			List<CommerceCartItem> commerceCartItems) {
+
+		int maxSize =
+			_fedExCommerceShippingEngineGroupServiceConfiguration.
+				maxSizeCentimeters();
+
+		if (_linearUnits.equals(LinearUnits.IN)) {
+			maxSize =
+				_fedExCommerceShippingEngineGroupServiceConfiguration.
+					maxSizeInches();
+		}
+
+		int maxWeight =
+			_fedExCommerceShippingEngineGroupServiceConfiguration.
+				maxWeightKilograms();
+
+		if (_weightUnits.equals(WeightUnits.LB)) {
+			maxWeight =
+				_fedExCommerceShippingEngineGroupServiceConfiguration.
+					maxWeightPounds();
+		}
+
+		Dimensions dimensions = _commerceShippingHelper.getDimensions(
+			commerceCartItems);
+
+		int fedExWidth = _getFedExDimension(dimensions.getWidth());
+		int fedExHeight = _getFedExDimension(dimensions.getHeight());
+		int fedExDepth = _getFedExDimension(dimensions.getDepth());
+
+		double size = _getPackageSize(fedExWidth, fedExHeight, fedExDepth);
+
+		boolean tooLarge = false;
+
+		if (size > maxSize) {
+			tooLarge = true;
+		}
+
+		double fedExWeight = _getFedExWeight(
+			_commerceShippingHelper.getWeight(commerceCartItems));
+
+		boolean tooHeavy = false;
+
+		if (fedExWeight > maxWeight) {
+			tooHeavy = true;
+		}
+
+		double price = _commerceShippingHelper.getPrice(commerceCartItems);
+
+		if (!tooHeavy && !tooLarge) {
+			RequestedPackageLineItem requestedPackageLineItem =
+				_getRequestedPackageLineItem(
+					fedExWidth, fedExHeight, fedExDepth, fedExWeight, price, 1,
+					1);
+
+			return new RequestedPackageLineItem[] {requestedPackageLineItem};
+		}
+
+		int packagesCount = Math.max(
+			(int)Math.ceil((double)fedExWeight / (double)maxWeight),
+			(int)Math.ceil(size / (double)maxSize));
+
+		if (packagesCount == 0) {
+			packagesCount = 1;
+		}
+
+		int packageFedExWidth = Math.max(fedExWidth / packagesCount, 1);
+		int packageFedExHeight = Math.max(fedExHeight / packagesCount, 1);
+		int packageFedExDepth = Math.max(fedExDepth / packagesCount, 1);
+		double packageFedExWeight = Math.max(fedExWeight / packagesCount, 1);
+		double packagePrice = price / packagesCount;
+
+		RequestedPackageLineItem[] requestedPackageLineItems =
+			new RequestedPackageLineItem[packagesCount];
+
+		for (int i = 0; i < packagesCount; i++) {
+			requestedPackageLineItems[i] = _getRequestedPackageLineItem(
+				packageFedExWidth, packageFedExHeight, packageFedExDepth,
+				packageFedExWeight, packagePrice, 1, i + 1);
+		}
+
+		return requestedPackageLineItems;
+	}
+
 	private RequestedPackageLineItem[]
 			_getRequestedPackageLineItemsOneItemPerPackage(
 				List<CommerceCartItem> commerceCartItems)
@@ -511,11 +632,6 @@ public class FedExCommerceShippingOptionHelper {
 
 		List<RequestedPackageLineItem> requestedPackageLineItems =
 			new ArrayList<>(commerceCartItems.size());
-
-		LinearUnits linearUnits = LinearUnits.fromValue(
-			StringUtil.toUpperCase(_dimensionCPMeasurementUnit.getKey()));
-		WeightUnits weightUnits = WeightUnits.fromValue(
-			StringUtil.toUpperCase(_weightCPMeasurementUnit.getKey()));
 
 		for (int i = 0; i < commerceCartItems.size(); i++) {
 			CommerceCartItem commerceCartItem = commerceCartItems.get(i);
@@ -529,27 +645,16 @@ public class FedExCommerceShippingOptionHelper {
 			int fedExHeight = _getFedExDimension(dimensions.getHeight());
 			int fedExDepth = _getFedExDimension(dimensions.getDepth());
 
-			BigDecimal fedExWeight = _getFedExWeight(
+			double fedExWeight = _getFedExWeight(
 				_commerceShippingHelper.getWeight(cpInstance));
 
 			double price = _commerceShippingHelper.getPrice(cpInstance);
 
 			for (int j = 0; j < commerceCartItem.getQuantity(); j++) {
 				RequestedPackageLineItem requestedPackageLineItem =
-					new RequestedPackageLineItem();
-
-				requestedPackageLineItem.setDimensions(
-					new com.fedex.ws.rate.v22.Dimensions(
-						_getNonNegativeInteger(fedExDepth),
-						_getNonNegativeInteger(fedExWidth),
-						_getNonNegativeInteger(fedExHeight), linearUnits));
-				requestedPackageLineItem.setGroupPackageCount(
-					_getNonNegativeInteger(1));
-				requestedPackageLineItem.setInsuredValue(_getMoney(price));
-				requestedPackageLineItem.setSequenceNumber(
-					_getPositiveInteger(i + 1));
-				requestedPackageLineItem.setWeight(
-					new Weight(weightUnits, fedExWeight));
+					_getRequestedPackageLineItem(
+						fedExWidth, fedExHeight, fedExDepth, fedExWeight, price,
+						1, i + 1);
 
 				requestedPackageLineItems.add(requestedPackageLineItem);
 			}
@@ -574,6 +679,9 @@ public class FedExCommerceShippingOptionHelper {
 		if (packingType.equals(
 				FedExCommerceShippingEngineConstants.
 					PACKING_TYPE_BY_DIMENSIONS)) {
+
+			requestedPackageLineItems =
+				_getRequestedPackageLineItemsByDimensions(commerceCartItems);
 		}
 		else if (packingType.equals(
 					FedExCommerceShippingEngineConstants.
@@ -670,9 +778,11 @@ public class FedExCommerceShippingOptionHelper {
 	private final CPMeasurementUnit _dimensionCPMeasurementUnit;
 	private final FedExCommerceShippingEngineGroupServiceConfiguration
 		_fedExCommerceShippingEngineGroupServiceConfiguration;
+	private final LinearUnits _linearUnits;
 	private final ResourceBundle _resourceBundle;
 	private final Set<String> _serviceTypes;
 	private final CommerceAddress _shippingAddress;
 	private final CPMeasurementUnit _weightCPMeasurementUnit;
+	private final WeightUnits _weightUnits;
 
 }

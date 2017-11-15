@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -89,7 +89,8 @@ public class BatchBuild extends BaseBuild {
 				failedDownstreamBuild);
 
 			Element upstreamJobFailureElement =
-				failedDownstreamBuild.getGitHubMessageUpstreamJobFailureElement();
+				failedDownstreamBuild.
+					getGitHubMessageUpstreamJobFailureElement();
 
 			if (upstreamJobFailureElement != null) {
 				upstreamJobFailureElements.add(upstreamJobFailureElement);
@@ -437,7 +438,7 @@ public class BatchBuild extends BaseBuild {
 	protected final Pattern majorVersionPattern = Pattern.compile(
 		"((\\d+)\\.?(\\d+?)).*");
 
-	private static ExecutorService _executorService =
-		Executors.newFixedThreadPool(20);
+	private static ThreadPoolExecutor _executorService =
+		getNewThreadPoolExecutor(20);
 
 }

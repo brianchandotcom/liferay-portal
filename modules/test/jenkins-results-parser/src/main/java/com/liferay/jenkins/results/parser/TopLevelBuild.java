@@ -34,7 +34,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -1245,8 +1245,8 @@ public class TopLevelBuild extends BaseBuild {
 	private static final String _URL_CHART_JS =
 		"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js";
 
-	private static ExecutorService _executorService =
-		Executors.newFixedThreadPool(20);
+	private static ThreadPoolExecutor _executorService =
+		getNewThreadPoolExecutor(20);
 
 	private boolean _compareToUpstream = true;
 	private long _lastDownstreamBuildsListingTimestamp = -1L;

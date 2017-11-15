@@ -15,7 +15,7 @@
 package com.liferay.portal.settings.authentication.ldap.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
+import com.liferay.portal.settings.constants.PortalSettingsPortletKeys;
 
 import javax.servlet.ServletContext;
 

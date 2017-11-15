@@ -113,6 +113,10 @@ lockDependencyVersion {
 
 			File moduleDir = buildGradleFile.parentFile
 
+			if (_isGitRepoReadOnly(moduleDir)) {
+				return
+			}
+
 			String buildGradle = buildGradleFile.text
 
 			String newBuildGradle = buildGradle.replaceFirst(dependencyPattern, dependencyReplacement)

@@ -457,20 +457,6 @@
 				<execute function="AssertClick" locator1="Button#OK" value1="OK" />
 			</then>
 		</if>
-
-		<if>
-			<and>
-				<not>
-					<isset var="checkContentNameList" />
-				</not>
-				<not>
-					<isset var="uncheckContentNameList" />
-				</not>
-			</and>
-			<then>
-				<execute function="Check" locator1="Select#CONTENT_ALL_CONTENT" />
-			</then>
-		</if>
 	</command>
 
 	<command name="copyFromLive">

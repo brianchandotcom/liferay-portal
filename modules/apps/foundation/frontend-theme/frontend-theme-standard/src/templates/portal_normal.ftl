@@ -22,7 +22,7 @@
 
 <div class="pt-0" id="wrapper">
 	<header id="banner">
-		<div class="navbar navbar-secondary navbar-top">
+		<div class="navbar navbar-top navigation-bar-secondary">
 			<div class="container user-personal-bar">
 				<#assign preferences = freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") />
 
@@ -64,7 +64,7 @@
 		</#if>
 	</section>
 
-	<footer class="mt-3 navbar-dark" id="footer" role="contentinfo">
+	<footer class="mt-3 navigation-bar-secondary" id="footer" role="contentinfo">
 		<div class="container py-5">
 			<div class="row">
 				<div class="col-md-6 text-center text-md-left">

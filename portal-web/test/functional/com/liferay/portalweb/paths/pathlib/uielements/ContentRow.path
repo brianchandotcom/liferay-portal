@@ -70,6 +70,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_CONTENT_ENTRY_NAME</td>
+	<td>//*[@data-qa-id='row']//*[normalize-space(.)='${key_rowEntry}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_CONTENT_ENTRY_NAME_LINK</td>
 	<td>//*[@data-qa-id='row']//a[normalize-space(.)='${key_rowEntry}']</td>
 	<td></td>

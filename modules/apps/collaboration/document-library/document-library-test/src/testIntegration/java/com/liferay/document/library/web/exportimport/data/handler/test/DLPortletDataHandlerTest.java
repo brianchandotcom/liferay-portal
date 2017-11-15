@@ -30,7 +30,6 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUt
 import com.liferay.document.library.kernel.service.DLFileShortcutLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLTrashServiceUtil;
-import com.liferay.document.library.web.lar.DLPortletDataHandler;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -178,7 +177,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 	@Override
 	protected void addParameters(Map<String, String[]> parameterMap) {
 		addBooleanParameter(
-			parameterMap, DLPortletDataHandler.NAMESPACE, "repositories", true);
+			parameterMap, "document_library", "repositories", true);
 	}
 
 	protected void addRepositoryEntries() throws Exception {

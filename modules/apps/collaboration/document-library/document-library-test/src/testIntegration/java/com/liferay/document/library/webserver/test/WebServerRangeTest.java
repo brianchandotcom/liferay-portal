@@ -15,7 +15,7 @@
 package com.liferay.document.library.webserver.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webdav.methods.Method;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.webserver.WebServerServlet;
 import com.liferay.portal.webserver.test.BaseWebServerTestCase;
@@ -190,7 +191,7 @@ public class WebServerRangeTest extends BaseWebServerTestCase {
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
-		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			TestPropsValues.getUserId(), group.getGroupId(),
 			parentFolder.getFolderId(), fileName, ContentTypes.TEXT_PLAIN,
 			_SAMPLE_DATA.getBytes(), serviceContext);
@@ -242,5 +243,8 @@ public class WebServerRangeTest extends BaseWebServerTestCase {
 			"E123456789F123456789G123456789" + WebServerRangeTest._UNICODE_DATA;
 
 	private static final String _UNICODE_DATA = "H\u4e2d\u00e9\u00fc\u00f1";
+
+	@Inject
+	private static DLAppLocalService _dlAppLocalService;
 
 }

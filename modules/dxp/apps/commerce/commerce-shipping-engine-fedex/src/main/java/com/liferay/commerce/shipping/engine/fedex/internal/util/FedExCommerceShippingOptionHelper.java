@@ -430,24 +430,24 @@ public class FedExCommerceShippingOptionHelper {
 	}
 
 	private int _getFedExDimension(double dimension) {
-		int convertedDimension = (int)Math.ceil(
+		int fedExDimension = (int)Math.ceil(
 			dimension * _dimensionCPMeasurementUnit.getRate());
 
-		if (convertedDimension < 1) {
-			convertedDimension = 1;
+		if (fedExDimension < 1) {
+			fedExDimension = 1;
 		}
 
-		return convertedDimension;
+		return fedExDimension;
 	}
 
 	private BigDecimal _getFedExWeight(double weight) {
-		double convertedweight = weight * _weightCPMeasurementUnit.getRate();
+		double fedExWeight = weight * _weightCPMeasurementUnit.getRate();
 
-		if (convertedweight < 1) {
-			convertedweight = 1;
+		if (fedExWeight < 1) {
+			fedExWeight = 1;
 		}
 
-		return BigDecimal.valueOf(convertedweight);
+		return BigDecimal.valueOf(fedExWeight);
 	}
 
 	private Money _getMoney(double amount) {
@@ -525,11 +525,11 @@ public class FedExCommerceShippingOptionHelper {
 			Dimensions dimensions = _commerceShippingHelper.getDimensions(
 				cpInstance);
 
-			int width = _getFedExDimension(dimensions.getWidth());
-			int height = _getFedExDimension(dimensions.getHeight());
-			int depth = _getFedExDimension(dimensions.getDepth());
+			int fedExWidth = _getFedExDimension(dimensions.getWidth());
+			int fedExHeight = _getFedExDimension(dimensions.getHeight());
+			int fedExDepth = _getFedExDimension(dimensions.getDepth());
 
-			BigDecimal weight = _getFedExWeight(
+			BigDecimal fedExWeight = _getFedExWeight(
 				_commerceShippingHelper.getWeight(cpInstance));
 
 			double price = _commerceShippingHelper.getPrice(cpInstance);
@@ -540,16 +540,16 @@ public class FedExCommerceShippingOptionHelper {
 
 				requestedPackageLineItem.setDimensions(
 					new com.fedex.ws.rate.v22.Dimensions(
-						_getNonNegativeInteger(depth),
-						_getNonNegativeInteger(width),
-						_getNonNegativeInteger(height), linearUnits));
+						_getNonNegativeInteger(fedExDepth),
+						_getNonNegativeInteger(fedExWidth),
+						_getNonNegativeInteger(fedExHeight), linearUnits));
 				requestedPackageLineItem.setGroupPackageCount(
 					_getNonNegativeInteger(1));
 				requestedPackageLineItem.setInsuredValue(_getMoney(price));
 				requestedPackageLineItem.setSequenceNumber(
 					_getPositiveInteger(i + 1));
 				requestedPackageLineItem.setWeight(
-					new Weight(weightUnits, weight));
+					new Weight(weightUnits, fedExWeight));
 
 				requestedPackageLineItems.add(requestedPackageLineItem);
 			}

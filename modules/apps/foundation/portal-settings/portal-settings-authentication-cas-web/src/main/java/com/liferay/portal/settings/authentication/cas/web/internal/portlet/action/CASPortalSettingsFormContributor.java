@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.cas.constants.CASConstants;
 import com.liferay.portal.settings.authentication.cas.web.internal.constants.PortalSettingsCASConstants;
-import com.liferay.portal.settings.web.portlet.action.PortalSettingsFormContributor;
-import com.liferay.portal.settings.web.portlet.action.PortalSettingsParameterUtil;
+import com.liferay.portal.settings.portlet.action.PortalSettingsFormContributor;
+import com.liferay.portal.settings.portlet.action.PortalSettingsParameterUtil;
 
 import java.util.Optional;
 

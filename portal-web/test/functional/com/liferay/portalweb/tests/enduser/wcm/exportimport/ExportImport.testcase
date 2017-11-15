@@ -613,7 +613,7 @@
 
 		<execute macro="Page#changeCurrentTheme">
 			<var name="page" value="Public Pages" />
-			<var name="themeName" value="1975 London" />
+			<var name="themeName" value="Standard" />
 		</execute>
 
 		<execute macro="LAR#configureExportSiteCP">
@@ -658,7 +658,7 @@
 
 		<execute macro="Page#viewCurrentTheme">
 			<var name="page" value="Public Pages" />
-			<var name="themeName" value="1975 London" />
+			<var name="themeName" value="Standard" />
 		</execute>
 	</command>
 

@@ -98,6 +98,46 @@
 		<reference entity="MBMessage" package-path="com.liferay.portlet.messageboards" />
 		<reference entity="MBThread" package-path="com.liferay.portlet.messageboards" />
 	</entity>
+	<entity human-name="message boards thread flag" local-service="true" name="MBThreadFlag" remote-service="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="threadFlagId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="threadId" type="long" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Finder methods -->
+
+		<finder name="UserId" return-type="Collection">
+			<finder-column name="userId" />
+		</finder>
+		<finder name="ThreadId" return-type="Collection">
+			<finder-column name="threadId" />
+		</finder>
+		<finder name="U_T" return-type="MBThreadFlag" unique="true">
+			<finder-column name="userId" />
+			<finder-column name="threadId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="User" package-path="com.liferay.portal" />
+	</entity>
 	<exceptions>
 		<exception>BannedUser</exception>
 	</exceptions>

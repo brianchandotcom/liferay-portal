@@ -19,3 +19,16 @@ create table MBStatsUser (
 	messageCount INTEGER,
 	lastPostDate DATE null
 );
+
+create table MBThreadFlag (
+	uuid_ VARCHAR(75) null,
+	threadFlagId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	threadId LONG,
+	lastPublishDate DATE null
+);

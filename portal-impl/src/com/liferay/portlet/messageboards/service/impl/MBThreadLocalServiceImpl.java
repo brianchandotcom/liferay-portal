@@ -160,11 +160,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			PortletFileRepositoryUtil.deletePortletFolder(folderId);
 		}
 
-		// Thread flags
-
-		mbThreadFlagLocalService.deleteThreadFlagsByThreadId(
-			thread.getThreadId());
-
 		// Messages
 
 		List<MBMessage> messages = mbMessagePersistence.findByThreadId(

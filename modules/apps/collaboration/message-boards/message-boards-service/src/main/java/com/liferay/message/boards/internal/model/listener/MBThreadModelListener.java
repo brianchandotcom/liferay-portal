@@ -14,34 +14,28 @@
 
 package com.liferay.message.boards.internal.model.listener;
 
-import com.liferay.message.boards.service.MBBanLocalService;
-import com.liferay.message.boards.service.MBStatsUserLocalService;
+import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.service.MBThreadFlagLocalService;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.model.User;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Sergio González
+ * @author Adolfo Pérez
  */
 @Component(immediate = true, service = ModelListener.class)
-public class UserModelListener extends BaseModelListener<User> {
+public class MBThreadModelListener extends BaseModelListener<MBThread> {
 
 	@Override
-	public void onBeforeRemove(User user) {
-		_mbBanLocalService.deleteBansByBanUserId(user.getUserId());
-		_mbStatsUserLocalService.deleteStatsUsersByUserId(user.getUserId());
-		_mbThreadFlagLocalService.deleteThreadFlagsByUserId(user.getUserId());
+	public void onBeforeRemove(MBThread mbThread)
+		throws ModelListenerException {
+
+		_mbThreadFlagLocalService.deleteThreadFlagsByThreadId(
+			mbThread.getThreadId());
 	}
-
-	@Reference
-	private MBBanLocalService _mbBanLocalService;
-
-	@Reference
-	private MBStatsUserLocalService _mbStatsUserLocalService;
 
 	@Reference
 	private MBThreadFlagLocalService _mbThreadFlagLocalService;

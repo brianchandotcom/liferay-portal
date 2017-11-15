@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.model.impl;
+package com.liferay.message.boards.model.impl;
+
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.model.impl.MBThreadFlagImpl}
  */
-@Deprecated
+@ProviderType
 public class MBThreadFlagImpl extends MBThreadFlagBaseImpl {
 }

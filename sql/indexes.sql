@@ -276,11 +276,6 @@ create index IX_CC993ECB on MBThread (rootMessageId);
 create index IX_F8CA2AB9 on MBThread (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_3A200B7B on MBThread (uuid_[$COLUMN_LENGTH:75$], groupId);
 
-create index IX_8CB0A24A on MBThreadFlag (threadId);
-create unique index IX_33781904 on MBThreadFlag (userId, threadId);
-create index IX_DCE308C5 on MBThreadFlag (uuid_[$COLUMN_LENGTH:75$], companyId);
-create unique index IX_FEB0FC87 on MBThreadFlag (uuid_[$COLUMN_LENGTH:75$], groupId);
-
 create index IX_C28C72EC on MembershipRequest (groupId, statusId);
 create index IX_35AA8FA6 on MembershipRequest (groupId, userId, statusId);
 create index IX_66D70879 on MembershipRequest (userId);

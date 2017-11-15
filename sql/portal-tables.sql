@@ -855,19 +855,6 @@ create table MBThread (
 	statusDate DATE null
 );
 
-create table MBThreadFlag (
-	uuid_ VARCHAR(75) null,
-	threadFlagId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	threadId LONG,
-	lastPublishDate DATE null
-);
-
 create table MembershipRequest (
 	mvccVersion LONG default 0 not null,
 	membershipRequestId LONG not null primary key,

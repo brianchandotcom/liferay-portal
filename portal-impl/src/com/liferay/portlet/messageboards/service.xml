@@ -475,50 +475,9 @@
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
 		<reference entity="MBCategory" package-path="com.liferay.portlet.messageboards" />
 		<reference entity="MBMessage" package-path="com.liferay.portlet.messageboards" />
-		<reference entity="MBThreadFlag" package-path="com.liferay.portlet.messageboards" />
 		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
 		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
 		<reference entity="TrashVersion" package-path="com.liferay.portlet.trash" />
-	</entity>
-	<entity human-name="message boards thread flag" local-service="true" name="MBThreadFlag" remote-service="false" uuid="true">
-
-		<!-- PK fields -->
-
-		<column name="threadFlagId" primary="true" type="long" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column name="threadId" type="long" />
-		<column name="lastPublishDate" type="Date" />
-
-		<!-- Finder methods -->
-
-		<finder name="UserId" return-type="Collection">
-			<finder-column name="userId" />
-		</finder>
-		<finder name="ThreadId" return-type="Collection">
-			<finder-column name="threadId" />
-		</finder>
-		<finder name="U_T" return-type="MBThreadFlag" unique="true">
-			<finder-column name="userId" />
-			<finder-column name="threadId" />
-		</finder>
-
-		<!-- References -->
-
-		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>
 		<exception>CategoryName</exception>

@@ -16,6 +16,7 @@ package com.liferay.message.boards.internal.verify;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.message.boards.internal.verify.model.MBBanVerifiableModel;
+import com.liferay.message.boards.internal.verify.model.MBThreadFlagVerifiableModel;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.service.MBMessageLocalService;
@@ -204,7 +205,8 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 
 	protected void verifyUUIDModels() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			VerifyUUID.verify(new MBBanVerifiableModel());
+			VerifyUUID.verify(
+				new MBBanVerifiableModel(), new MBThreadFlagVerifiableModel());
 		}
 	}
 

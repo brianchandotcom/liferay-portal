@@ -12,13 +12,31 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.model.impl;
+package com.liferay.message.boards.exception;
+
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.model.impl.MBThreadFlagImpl}
  */
-@Deprecated
-public class MBThreadFlagImpl extends MBThreadFlagBaseImpl {
+@ProviderType
+public class NoSuchThreadFlagException extends NoSuchModelException {
+
+	public NoSuchThreadFlagException() {
+	}
+
+	public NoSuchThreadFlagException(String msg) {
+		super(msg);
+	}
+
+	public NoSuchThreadFlagException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public NoSuchThreadFlagException(Throwable cause) {
+		super(cause);
+	}
+
 }

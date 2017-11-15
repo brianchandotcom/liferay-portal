@@ -108,7 +108,7 @@ public abstract class BaseUpgradePrototype extends UpgradeProcess {
 
 		sb.append("update ");
 		sb.append(tableName);
-		sb.append(" set name = ?,description = ? where name = ? and ");
+		sb.append(" set name = ?, description = ? where name = ? and ");
 		sb.append("description = ?");
 
 		try (PreparedStatement ps = connection.prepareStatement(

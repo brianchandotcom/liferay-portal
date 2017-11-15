@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.web.internal.portlet.action;
 
-import com.liferay.message.boards.web.constants.MBPortletKeys;
+import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;

@@ -15,7 +15,7 @@
 package com.liferay.message.boards.web.internal.portlet.action;
 
 import com.liferay.captcha.util.CaptchaUtil;
-import com.liferay.message.boards.web.constants.MBPortletKeys;
+import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;

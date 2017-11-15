@@ -14,12 +14,12 @@
 
 package com.liferay.message.boards.web.internal.portlet.action;
 
+import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.kernel.exception.LockedThreadException;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.service.MBCategoryService;
 import com.liferay.message.boards.kernel.service.MBThreadService;
-import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;

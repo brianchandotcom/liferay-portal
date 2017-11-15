@@ -14,8 +14,8 @@
 
 package com.liferay.message.boards.web.internal.upgrade.v1_0_0;
 
+import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.kernel.constants.MBConstants;
-import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portlet.messageboards.MBGroupServiceSettings;

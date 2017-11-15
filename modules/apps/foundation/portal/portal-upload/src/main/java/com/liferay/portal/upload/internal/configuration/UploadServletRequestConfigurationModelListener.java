@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upload.configuration;
+package com.liferay.portal.upload.internal.configuration;
 
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;

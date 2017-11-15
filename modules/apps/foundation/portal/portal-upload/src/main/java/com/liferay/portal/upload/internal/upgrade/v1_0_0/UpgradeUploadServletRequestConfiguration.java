@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.upload.configuration.UploadServletRequestConfiguration;
 import com.liferay.portal.upload.constants.LegacyUploadServletRequestPropsKeys;
+import com.liferay.portal.upload.internal.configuration.UploadServletRequestConfiguration;
 
 import java.util.Dictionary;
 

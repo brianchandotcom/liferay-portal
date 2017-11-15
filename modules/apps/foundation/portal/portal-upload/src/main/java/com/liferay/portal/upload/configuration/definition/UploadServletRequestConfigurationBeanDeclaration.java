@@ -15,7 +15,7 @@
 package com.liferay.portal.upload.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.portal.upload.configuration.UploadServletRequestConfiguration;
+import com.liferay.portal.upload.internal.configuration.UploadServletRequestConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 

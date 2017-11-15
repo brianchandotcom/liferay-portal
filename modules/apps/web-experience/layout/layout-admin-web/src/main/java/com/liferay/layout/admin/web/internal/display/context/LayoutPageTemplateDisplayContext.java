@@ -113,34 +113,37 @@ public class LayoutPageTemplateDisplayContext {
 				FragmentEntryServiceUtil.fetchFragmentEntries(
 					fragmentCollection.getFragmentCollectionId());
 
-			if (ListUtil.isNotEmpty(fragmentEntries)) {
-				JSONObject fragmentCollectionJSONObject =
+			if (ListUtil.isEmpty(fragmentEntries)) {
+				continue;
+			}
+
+			JSONObject fragmentCollectionJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			JSONArray fragmentEntriesJSONArray =
+				JSONFactoryUtil.createJSONArray();
+
+			for (FragmentEntry fragmentEntry : fragmentEntries) {
+				JSONObject jsonFragmentEntry =
 					JSONFactoryUtil.createJSONObject();
 
-				fragmentCollectionJSONObject.put(
-					"id", fragmentCollection.getFragmentCollectionId());
-				fragmentCollectionJSONObject.put(
-					"name", fragmentCollection.getName());
+				jsonFragmentEntry.put(
+					"fragmentEntryId", fragmentEntry.getFragmentEntryId());
+				jsonFragmentEntry.put("name", fragmentEntry.getName());
 
-				JSONArray fragmentEntriesJSONArray =
-					JSONFactoryUtil.createJSONArray();
-
-				for (FragmentEntry fragmentEntry : fragmentEntries) {
-					JSONObject jsonFragmentEntry =
-						JSONFactoryUtil.createJSONObject();
-
-					jsonFragmentEntry.put(
-						"id", fragmentEntry.getFragmentEntryId());
-					jsonFragmentEntry.put("name", fragmentEntry.getName());
-
-					fragmentEntriesJSONArray.put(jsonFragmentEntry);
-				}
-
-				fragmentCollectionJSONObject.put(
-					"entries", fragmentEntriesJSONArray);
-
-				fragmentCollectionsJSONArray.put(fragmentCollectionJSONObject);
+				fragmentEntriesJSONArray.put(jsonFragmentEntry);
 			}
+
+			fragmentCollectionJSONObject.put(
+				"entries", fragmentEntriesJSONArray);
+
+			fragmentCollectionJSONObject.put(
+				"fragmentCollectionId",
+				fragmentCollection.getFragmentCollectionId());
+			fragmentCollectionJSONObject.put(
+				"name", fragmentCollection.getName());
+
+			fragmentCollectionsJSONArray.put(fragmentCollectionJSONObject);
 		}
 
 		return fragmentCollectionsJSONArray;

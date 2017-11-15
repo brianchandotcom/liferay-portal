@@ -14,9 +14,9 @@
 
 package com.liferay.portal.configuration.extender.internal;
 
-import com.liferay.portal.configuration.extender.BundleStorage;
-import com.liferay.portal.configuration.extender.NamedConfigurationContent;
-import com.liferay.portal.configuration.extender.NamedConfigurationContentFactory;
+import com.liferay.portal.configuration.extender.internal.api.BundleStorage;
+import com.liferay.portal.configuration.extender.internal.api.NamedConfigurationContent;
+import com.liferay.portal.configuration.extender.internal.api.NamedConfigurationContentFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;

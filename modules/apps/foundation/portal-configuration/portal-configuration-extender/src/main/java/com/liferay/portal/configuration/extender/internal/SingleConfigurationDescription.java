@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.configuration.extender;
+package com.liferay.portal.configuration.extender.internal;
 
+import com.liferay.portal.configuration.extender.internal.api.ConfigurationDescription;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Supplier;
 
@@ -23,7 +24,7 @@ import java.util.Dictionary;
  * @author Carlos Sierra Andrés
  */
 public final class SingleConfigurationDescription
-	extends ConfigurationDescription {
+	implements ConfigurationDescription {
 
 	public SingleConfigurationDescription(
 		String pid, Supplier<Dictionary<String, Object>> propertiesSupplier) {
@@ -32,10 +33,17 @@ public final class SingleConfigurationDescription
 		_propertiesSupplier = propertiesSupplier;
 	}
 
+	@Override
+	public String getFactoryPid() {
+		return null;
+	}
+
+	@Override
 	public String getPid() {
 		return _pid;
 	}
 
+	@Override
 	public Supplier<Dictionary<String, Object>> getPropertiesSupplier() {
 		return _propertiesSupplier;
 	}

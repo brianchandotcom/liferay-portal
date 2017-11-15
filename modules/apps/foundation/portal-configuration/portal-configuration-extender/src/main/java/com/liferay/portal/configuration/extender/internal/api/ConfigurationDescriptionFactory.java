@@ -12,10 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.configuration.extender;
+package com.liferay.portal.configuration.extender.internal.api;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public abstract class ConfigurationDescription {
+public interface ConfigurationDescriptionFactory {
+
+	public ConfigurationDescription create(
+		NamedConfigurationContent namedConfigurationContent);
+
 }

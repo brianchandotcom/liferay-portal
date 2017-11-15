@@ -12,17 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.configuration.extender;
+package com.liferay.portal.configuration.extender.internal.api;
 
-import java.io.InputStream;
+import java.util.List;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public interface NamedConfigurationContent {
+public interface NamedConfigurationContentFactory {
 
-	public InputStream getInputStream();
-
-	public String getName();
+	public List<NamedConfigurationContent> create(BundleStorage bundleStorage);
 
 }

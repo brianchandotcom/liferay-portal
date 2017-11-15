@@ -30,7 +30,10 @@ import com.liferay.portal.kernel.util.StringPool;
  * @author Brian Wing Shun Chan
  * @author Thiago Moreira
  * @author Roberto Díaz
+ * @deprecated As of 7.0.0, replaced by {@link
+ *            com.liferay.message.boards.internal.util.MBSubscriptionSender}
  */
+@Deprecated
 public class MBSubscriptionSender
 	extends GroupSubscriptionCheckSubscriptionSender {
 

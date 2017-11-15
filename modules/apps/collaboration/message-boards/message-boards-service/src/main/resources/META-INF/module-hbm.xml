@@ -3,6 +3,7 @@
 
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.message.boards.model.MBBan" />
+	<import class="com.liferay.message.boards.model.MBMailingList" />
 	<import class="com.liferay.message.boards.model.MBStatsUser" />
 	<class name="com.liferay.message.boards.model.impl.MBBanImpl" table="MBBan">
 		<id name="banId" type="long">
@@ -17,6 +18,36 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="banUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="com.liferay.message.boards.model.impl.MBMailingListImpl" table="MBMailingList">
+		<id name="mailingListId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="categoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="emailAddress" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="inProtocol" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="inServerName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="inServerPort" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="inUseSSL" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="inUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="inPassword" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="inReadInterval" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="outEmailAddress" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="outCustom" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="outServerName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="outServerPort" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="outUseSSL" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="outUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="outPassword" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="allowAnonymous" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property column="active_" name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.message.boards.model.impl.MBStatsUserImpl" table="MBStatsUser">
 		<id name="statsUserId" type="long">

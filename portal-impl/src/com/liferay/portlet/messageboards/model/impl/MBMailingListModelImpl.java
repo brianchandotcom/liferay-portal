@@ -56,8 +56,11 @@ import java.util.Map;
  * @see MBMailingListImpl
  * @see MBMailingList
  * @see MBMailingListModel
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.service.impl.MBMailingListImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 	implements MBMailingListModel {

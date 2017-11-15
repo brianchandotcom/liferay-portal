@@ -10429,7 +10429,7 @@ jdbc.default.password=${database.password}</echo>
 		<if>
 			<equals arg1="${deployed.root.war}" arg2="false" />
 			<then>
-				<fail message="Failed to ensure that the ROOT.war file deployed correctly" />
+				<fail message="Unable to deploy ROOT.war" />
 			</then>
 		</if>
 	</target>

@@ -25,6 +25,10 @@
 					<template-path>/layoutttpl/custom/commerce_2_columns_width_limited_70_30.tpl</template-path>
 					<thumbnail-path>/layoutttpl/custom/commerce_2_columns_width_limited_70_30.png</thumbnail-path>
 				</layout-template>
+				<layout-template id="commerce_2_columns_width_limited_30_70" name="Commerce 2 column (30/70) width limited">
+					<template-path>/layoutttpl/custom/commerce_2_columns_width_limited_30_70.tpl</template-path>
+					<thumbnail-path>/layoutttpl/custom/commerce_2_columns_width_limited_30_70.png</thumbnail-path>
+				</layout-template>
 				<layout-template id="commerce_1_column_width_limited" name="Commerce 1 column (100%) width limited">
 					<template-path>/layoutttpl/custom/commerce_1_column_width_limited.tpl</template-path>
 					<thumbnail-path>/layoutttpl/custom/commerce_1_column_width_limited.png</thumbnail-path>

@@ -79,6 +79,8 @@
 		</execute>
 
 		<execute macro="CalendarScheduler#saveEvent" />
+
+		<execute macro="Alert#waitForSuccessMessageHide" />
 	</command>
 
 	<command name="addLocalizedEvent">
@@ -94,6 +96,8 @@
 		<var name="key_saveButton" value="${saveButton}" />
 
 		<execute function="AssertClick" locator1="Button#SAVE_LOCALIZED" value1="${saveButton}" />
+
+		<execute macro="Alert#waitForSuccessMessageHide" />
 	</command>
 
 	<command name="changeCalendar">
@@ -212,9 +216,7 @@
 
 		<execute function="AssertClick" locator1="CalendarEditEvent#${saveOptionPath}_BUTTON" value1="${saveOption}" />
 
-		<execute function="Refresh" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Alert#waitForSuccessMessageHide" />
 	</command>
 
 	<command name="selectCalendar">

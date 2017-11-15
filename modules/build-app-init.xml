@@ -2,19 +2,6 @@
 <!DOCTYPE project>
 
 <project name="build-app-init">
-	<fail message="Please specify a value for &quot;app.name&quot; when running this command.">
-		<condition>
-			<not>
-				<or>
-					<contains string="${ant.project.invoked-targets}" substring="build-app-all" />
-					<contains string="${ant.project.invoked-targets}" substring="build-app-lpkg-all" />
-					<isset property="app.name" />
-					<istrue value="${build.all}" />
-				</or>
-			</not>
-		</condition>
-	</fail>
-
 	<property file="${modules.dir}/../build.properties" />
 
 	<macrodef name="get-project-path">
@@ -57,7 +44,22 @@
 		</sequential>
 	</macrodef>
 
-	<target name="get-app-dirs">
+	<target name="check-app-name">
+		<fail message="Please specify a value for &quot;app.name&quot; when running this command.">
+			<condition>
+				<not>
+					<or>
+						<contains string="${ant.project.invoked-targets}" substring="build-app-all" />
+						<contains string="${ant.project.invoked-targets}" substring="build-app-lpkg-all" />
+						<isset property="app.name" />
+						<istrue value="${build.all}" />
+					</or>
+				</not>
+			</condition>
+		</fail>
+	</target>
+
+	<target depends="check-app-name" name="get-app-dirs">
 		<property location="${modules.dir}/private/apps/${app.name}" name="app.dir.private" />
 
 		<condition property="app.dir.private.available">
@@ -166,7 +168,7 @@
 		</condition>
 	</target>
 
-	<target name="get-app-releng-dir">
+	<target depends="check-app-name" name="get-app-releng-dir">
 		<condition else="${modules.dir}/.releng/apps/${app.name}" property="releng.app.dir" value="${modules.dir}/.releng/private/apps/${app.name}">
 			<available file="${modules.dir}/.releng/private/apps/${app.name}" />
 		</condition>

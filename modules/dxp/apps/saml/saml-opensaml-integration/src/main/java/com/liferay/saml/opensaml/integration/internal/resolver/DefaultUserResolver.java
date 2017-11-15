@@ -195,9 +195,9 @@ public class DefaultUserResolver implements UserResolver {
 	}
 
 	protected Map<String, List<Serializable>> getAttributesMap(
-		UserResolverSAMLContext samlContext) {
+		UserResolverSAMLContext userResolverSAMLContext) {
 
-		String peerEntityId = samlContext.resolvePeerEntityId();
+		String peerEntityId = userResolverSAMLContext.resolvePeerEntityId();
 
 		try {
 			String userAttributeMappings =
@@ -216,8 +216,9 @@ public class DefaultUserResolver implements UserResolver {
 					userAttributeMappings);
 			}
 
-			return samlContext.resolveBearerAssertionAttributesWithMapping(
-				userAttributeMappingsProperties);
+			return userResolverSAMLContext.
+				resolveBearerAssertionAttributesWithMapping(
+					userAttributeMappingsProperties);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -229,17 +230,15 @@ public class DefaultUserResolver implements UserResolver {
 	}
 
 	protected String getSubjectNameIdentifier(
-		UserResolverSAMLContext samlContext) {
+		UserResolverSAMLContext userResolverSAMLContext) {
 
-		String nameId = samlContext.resolveSubjectNameIdentifier();
-
-		return nameId;
+		return userResolverSAMLContext.resolveSubjectNameIdentifier();
 	}
 
 	protected String getSubjectNameIdentifierType(
-		UserResolverSAMLContext samlContext) {
+		UserResolverSAMLContext userResolverSAMLContext) {
 
-		String format = samlContext.resolveSubjectNameFormat();
+		String format = userResolverSAMLContext.resolveSubjectNameFormat();
 
 		if (format.equals(NameIDType.EMAIL)) {
 			return _SUBJECT_NAME_TYPE_EMAIL_ADDRESS;

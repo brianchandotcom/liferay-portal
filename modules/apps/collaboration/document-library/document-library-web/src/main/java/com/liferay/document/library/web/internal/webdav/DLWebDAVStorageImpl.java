@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.web.webdav;
+package com.liferay.document.library.web.internal.webdav;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLink;

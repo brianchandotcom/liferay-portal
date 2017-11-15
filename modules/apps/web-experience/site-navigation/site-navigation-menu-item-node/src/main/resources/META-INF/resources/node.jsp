@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:fieldset-group markupView="lexicon">
-	<aui:fieldset>
-		<aui:input label="name" name="TypeSettingsProperties--name--" placeholder="name">
-			<aui:validator name="required" />
-		</aui:input>
-	</aui:fieldset>
-</aui:fieldset-group>
+<aui:input label="name" name="TypeSettingsProperties--name--" placeholder="name">
+	<aui:validator name="required" />
+</aui:input>

@@ -58,13 +58,13 @@
 	</macrodef>
 
 	<target name="get-app-dirs">
-		<property name="app.dir.private" location="${modules.dir}/private/apps/${app.name}" />
+		<property location="${modules.dir}/private/apps/${app.name}" name="app.dir.private" />
 
 		<condition property="app.dir.private.available">
 			<available file="${app.dir.private}" />
 		</condition>
 
-		<property name="app.dir.public" location="${modules.dir}/apps/${app.name}" />
+		<property location="${modules.dir}/apps/${app.name}" name="app.dir.public" />
 
 		<condition property="app.dir.public.available">
 			<available file="${app.dir.public}" />

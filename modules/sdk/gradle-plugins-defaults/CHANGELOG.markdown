@@ -2440,6 +2440,12 @@ the `testCompileClasspath` and `testRuntime` configurations:
 ### Changed
 - [LPS-75798]: Update the [Liferay Gradle Plugins] dependency to version 3.5.43.
 
+## 5.1.51 - 2017-11-14
+
+### Changed
+- [LPS-75910]: Update the [Liferay Gradle Plugins Dependency Checker] dependency
+to version 1.0.1.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -2716,6 +2722,7 @@ the `testCompileClasspath` and `testRuntime` configurations:
 [LPS-75745]: https://issues.liferay.com/browse/LPS-75745
 [LPS-75798]: https://issues.liferay.com/browse/LPS-75798
 [LPS-75829]: https://issues.liferay.com/browse/LPS-75829
+[LPS-75910]: https://issues.liferay.com/browse/LPS-75910
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

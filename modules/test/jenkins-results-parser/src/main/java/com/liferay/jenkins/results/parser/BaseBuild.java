@@ -25,11 +25,13 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -1602,6 +1604,45 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return count;
+	}
+
+	protected Map<Build, Element> getDownstreamBuildMessages(
+		String... results) {
+
+		List<String> resultList = Arrays.asList(results);
+		List<Build> matchingBuilds = new ArrayList<>();
+		List<Callable<Element>> callables = new ArrayList<>();
+
+		for (final Build downstreamBuild : getDownstreamBuilds(null)) {
+			String downstreamBuildResult = downstreamBuild.getResult();
+
+			if (resultList.contains(downstreamBuildResult)) {
+				matchingBuilds.add(downstreamBuild);
+
+				Callable<Element> callable = new Callable<Element>() {
+
+					public Element call() {
+						return downstreamBuild.getGitHubMessageElement();
+					}
+
+				};
+
+				callables.add(callable);
+			}
+		}
+
+		ParallelExecutor<Element> parallelExecutor = new ParallelExecutor<>(
+			callables, getExecutorService());
+
+		List<Element> elements = parallelExecutor.execute();
+
+		Map<Build, Element> elementsMap = new LinkedHashMap<>(elements.size());
+
+		for (int i = 0; i < elements.size(); i++) {
+			elementsMap.put(matchingBuilds.get(i), elements.get(i));
+		}
+
+		return elementsMap;
 	}
 
 	protected ExecutorService getExecutorService() {

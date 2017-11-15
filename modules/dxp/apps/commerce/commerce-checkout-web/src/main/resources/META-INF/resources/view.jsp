@@ -25,7 +25,7 @@ boolean complete = true;
 int step = 1;
 %>
 
-<ul class="multi-step-progress-bar multi-step-progress-bar-collapse">
+<ul class="multi-step-progress-bar multi-step-progress-bar-collapse my-4">
 
 	<%
 	for (CommerceCheckoutStep commerceCheckoutStep : commerceCheckoutSteps) {

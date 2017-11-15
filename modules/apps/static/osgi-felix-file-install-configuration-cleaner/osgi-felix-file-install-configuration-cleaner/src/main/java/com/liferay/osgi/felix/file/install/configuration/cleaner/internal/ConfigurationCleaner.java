@@ -42,6 +42,10 @@ public class ConfigurationCleaner {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
 
+		if (configurations == null) {
+			return;
+		}
+
 		for (Configuration configuration : configurations) {
 			Dictionary<String, Object> dictionary =
 				configuration.getProperties();

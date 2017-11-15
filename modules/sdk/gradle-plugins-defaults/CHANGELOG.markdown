@@ -2430,6 +2430,16 @@ the `testCompileClasspath` and `testRuntime` configurations:
 	- `xerces:xercesImpl:2.11.0`
 	- `xml-apis:xml-apis:1.4.01`
 
+## 5.1.49 - 2017-11-14
+
+### Changed
+- [LPS-74526]: Update the [Liferay Gradle Plugins] dependency to version 3.5.42.
+
+## 5.1.50 - 2017-11-14
+
+### Changed
+- [LPS-75798]: Update the [Liferay Gradle Plugins] dependency to version 3.5.43.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -2630,6 +2640,7 @@ the `testCompileClasspath` and `testRuntime` configurations:
 [LPS-73642]: https://issues.liferay.com/browse/LPS-73642
 [LPS-73652]: https://issues.liferay.com/browse/LPS-73652
 [LPS-73655]: https://issues.liferay.com/browse/LPS-73655
+[LPS-73725]: https://issues.liferay.com/browse/LPS-73725
 [LPS-73807]: https://issues.liferay.com/browse/LPS-73807
 [LPS-73818]: https://issues.liferay.com/browse/LPS-73818
 [LPS-73855]: https://issues.liferay.com/browse/LPS-73855
@@ -2665,6 +2676,7 @@ the `testCompileClasspath` and `testRuntime` configurations:
 [LPS-74457]: https://issues.liferay.com/browse/LPS-74457
 [LPS-74469]: https://issues.liferay.com/browse/LPS-74469
 [LPS-74490]: https://issues.liferay.com/browse/LPS-74490
+[LPS-74526]: https://issues.liferay.com/browse/LPS-74526
 [LPS-74538]: https://issues.liferay.com/browse/LPS-74538
 [LPS-74544]: https://issues.liferay.com/browse/LPS-74544
 [LPS-74614]: https://issues.liferay.com/browse/LPS-74614
@@ -2687,7 +2699,6 @@ the `testCompileClasspath` and `testRuntime` configurations:
 [LPS-75047]: https://issues.liferay.com/browse/LPS-75047
 [LPS-75096]: https://issues.liferay.com/browse/LPS-75096
 [LPS-75100]: https://issues.liferay.com/browse/LPS-75100
-[LPS-73725]: https://issues.liferay.com/browse/LPS-73725
 [LPS-75175]: https://issues.liferay.com/browse/LPS-75175
 [LPS-75239]: https://issues.liferay.com/browse/LPS-75239
 [LPS-75247]: https://issues.liferay.com/browse/LPS-75247

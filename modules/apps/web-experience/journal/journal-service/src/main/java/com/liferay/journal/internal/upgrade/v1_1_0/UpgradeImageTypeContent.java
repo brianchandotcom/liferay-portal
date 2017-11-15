@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -91,8 +92,10 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 				}
 				catch (PortalException pe) {
 					_log.error(
-						"Unable to get file entry with group ID " + groupId +
-							", folder ID " + folderId + ", and file name " + id,
+						StringBundler.concat(
+							"Unable to get file entry with group ID ",
+							String.valueOf(groupId), ", folder ID ",
+							String.valueOf(folderId), ", and file name ", id),
 						pe);
 				}
 

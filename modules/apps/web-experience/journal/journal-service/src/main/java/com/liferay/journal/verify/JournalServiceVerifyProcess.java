@@ -402,8 +402,10 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 				catch (Exception e) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to update asset for article " +
-								journalArticle.getId() + ": " + e.getMessage());
+							StringBundler.concat(
+								"Unable to update asset for article ",
+								String.valueOf(journalArticle.getId()), ": ",
+								e.getMessage()));
 					}
 				}
 			}
@@ -576,8 +578,10 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 				long count = actionableDynamicQuery.performCount();
 
 				_log.debug(
-					"Processing " + count + " articles for invalid " +
-						"structures and dynamic elements");
+					StringBundler.concat(
+						"Processing ", String.valueOf(count),
+						" articles for invalid structures and dynamic ",
+						"elements"));
 			}
 
 			actionableDynamicQuery.setPerformActionMethod(
@@ -653,8 +657,10 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 				catch (Exception e) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to update asset for folder " +
-								folder.getFolderId() + ": " + e.getMessage());
+							StringBundler.concat(
+								"Unable to update asset for folder ",
+								String.valueOf(folder.getFolderId()), ": ",
+								e.getMessage()));
 					}
 				}
 			}

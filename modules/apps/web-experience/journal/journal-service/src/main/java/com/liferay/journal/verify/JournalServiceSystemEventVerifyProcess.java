@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.verify.VerifyProcess;
 
 import java.util.List;
@@ -109,8 +110,9 @@ public class JournalServiceSystemEventVerifyProcess extends VerifyProcess {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Processing " + systemEvents.size() + " delete system " +
-						"events for journal articles");
+					StringBundler.concat(
+						"Processing ", String.valueOf(systemEvents.size()),
+						" delete system events for journal articles"));
 			}
 
 			for (SystemEvent systemEvent : systemEvents) {

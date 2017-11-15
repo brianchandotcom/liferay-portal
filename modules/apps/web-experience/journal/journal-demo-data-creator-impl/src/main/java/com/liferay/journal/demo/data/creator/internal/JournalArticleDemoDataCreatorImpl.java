@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -123,9 +124,9 @@ public class JournalArticleDemoDataCreatorImpl
 	private String _getContent(int index) throws IOException {
 		Class<?> clazz = getClass();
 
-		String contentPath =
-			"com/liferay/journal/demo/data/creator/internal/dependencies" +
-				"/article" + index + "/content.txt";
+		String contentPath = StringBundler.concat(
+			"com/liferay/journal/demo/data/creator/internal/dependencies",
+			"/article", String.valueOf(index), "/content.txt");
 
 		String content = StringUtil.read(
 			clazz.getClassLoader(), contentPath, false);
@@ -138,9 +139,9 @@ public class JournalArticleDemoDataCreatorImpl
 
 		Class<?> clazz = getClass();
 
-		String descriptionPath =
-			"com/liferay/journal/demo/data/creator/internal/dependencies" +
-				"/article" + index + "/description.txt";
+		String descriptionPath = StringBundler.concat(
+			"com/liferay/journal/demo/data/creator/internal/dependencies",
+			"/article", String.valueOf(index), "/description.txt");
 
 		String description = StringUtil.read(
 			clazz.getClassLoader(), descriptionPath, false);
@@ -187,9 +188,9 @@ public class JournalArticleDemoDataCreatorImpl
 	private Map<Locale, String> _getTitleMap(int index) throws IOException {
 		Class<?> clazz = getClass();
 
-		String titlePath =
-			"com/liferay/journal/demo/data/creator/internal/dependencies" +
-				"/article" + index + "/title.txt";
+		String titlePath = StringBundler.concat(
+			"com/liferay/journal/demo/data/creator/internal/dependencies",
+			"/article", String.valueOf(index), "/title.txt");
 
 		String title = StringUtil.read(
 			clazz.getClassLoader(), titlePath, false);

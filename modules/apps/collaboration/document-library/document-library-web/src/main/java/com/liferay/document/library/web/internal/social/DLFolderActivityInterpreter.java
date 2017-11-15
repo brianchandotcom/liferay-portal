@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.web.social;
+package com.liferay.document.library.web.internal.social;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolder;

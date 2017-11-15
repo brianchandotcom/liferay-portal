@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.web.social;
+package com.liferay.document.library.web.internal.social;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;

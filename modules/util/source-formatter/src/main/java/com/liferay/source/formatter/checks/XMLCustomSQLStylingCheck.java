@@ -37,6 +37,10 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
+		if (isSubrepository() || isReadOnly(absolutePath)) {
+			return content;
+		}
+
 		if (fileName.contains("/custom-sql/")) {
 			_checkMissingLineBreakAfterKeyword(fileName, content);
 			_checkMissingParentheses(fileName, content);

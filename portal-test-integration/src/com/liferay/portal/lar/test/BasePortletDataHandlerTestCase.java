@@ -14,6 +14,7 @@
 
 package com.liferay.portal.lar.test;
 
+import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
@@ -56,6 +57,30 @@ public abstract class BasePortletDataHandlerTestCase {
 		portletId = getPortletId();
 
 		portletDataHandler = getPortletDataHandler(portletId);
+	}
+
+	@Test
+	public void testDataLevel() throws Exception {
+		Assert.assertEquals(portletDataHandler.getDataLevel(), getDataLevel());
+	}
+
+	@Test
+	public void testIsDataPortalLevel() {
+		Assert.assertEquals(
+			portletDataHandler.isDataPortalLevel(), isDataPortalLevel());
+	}
+
+	@Test
+	public void testIsDataPortletInstanceLevel() {
+		Assert.assertEquals(
+			portletDataHandler.isDataPortletInstanceLevel(),
+			isDataPortletInstanceLevel());
+	}
+
+	@Test
+	public void testIsDataSiteLevel() {
+		Assert.assertEquals(
+			portletDataHandler.isDataSiteLevel(), isDataSiteLevel());
 	}
 
 	@Test
@@ -145,6 +170,10 @@ public abstract class BasePortletDataHandlerTestCase {
 		}
 	}
 
+	protected DataLevel getDataLevel() {
+		return DataLevel.SITE;
+	}
+
 	protected Date getEndDate() {
 		return new Date();
 	}
@@ -195,6 +224,18 @@ public abstract class BasePortletDataHandlerTestCase {
 
 		portletDataContext.setMissingReferencesElement(
 			missingReferencesElement);
+	}
+
+	protected boolean isDataPortalLevel() {
+		return false;
+	}
+
+	protected boolean isDataPortletInstanceLevel() {
+		return false;
+	}
+
+	protected boolean isDataSiteLevel() {
+		return true;
 	}
 
 	protected Element missingReferencesElement;

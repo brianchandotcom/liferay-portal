@@ -94,16 +94,6 @@
 		/>
 	</target>
 
-	<target depends="get-app-dirs" name="get-app-module-dirs-excludes-lfrbuild-app-server-lib">
-		<pathconvert pathsep="," property="app.module.dirs.excludes.lfrbuild.app.server.lib">
-			<dirset dir="${modules.dir}" includes="${app.dir.private}/**,${app.dir.public}/**">
-				<present targetdir="${modules.dir}">
-					<mapper from="*" to="*/.lfrbuild-app-server-lib" type="glob" />
-				</present>
-			</dirset>
-		</pathconvert>
-	</target>
-
 	<target
 		depends="get-current-branch-private,get-project-path"
 		if="current.branch.private"
@@ -129,6 +119,16 @@
 			</filterchain>
 			<propertyresource name="project.path" />
 		</loadfile>
+	</target>
+
+	<target depends="get-app-dirs" name="get-app-module-dirs-excludes-lfrbuild-app-server-lib">
+		<pathconvert pathsep="," property="app.module.dirs.excludes.lfrbuild.app.server.lib">
+			<dirset dir="${modules.dir}" includes="${app.dir.private}/**,${app.dir.public}/**">
+				<present targetdir="${modules.dir}">
+					<mapper from="*" to="*/.lfrbuild-app-server-lib" type="glob" />
+				</present>
+			</dirset>
+		</pathconvert>
 	</target>
 
 	<target depends="get-project-path" name="get-app-module-dirs-includes">

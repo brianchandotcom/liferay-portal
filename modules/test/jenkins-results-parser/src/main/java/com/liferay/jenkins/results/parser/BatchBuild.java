@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -75,20 +76,20 @@ public class BatchBuild extends BaseBuild {
 			return messageElement;
 		}
 
+		Map<Build, Element> downstreamBuildFailureMessages =
+			getDownstreamBuildMessages("ABORTED", "FAILURE", "UNSTABLE");
+
 		List<Element> failureElements = new ArrayList<>();
 		List<Element> upstreamJobFailureElements = new ArrayList<>();
 
-		for (Build downstreamBuild : getDownstreamBuilds(null)) {
-			String downstreamBuildResult = downstreamBuild.getResult();
+		for (Build failedDownstreamBuild :
+				downstreamBuildFailureMessages.keySet()) {
 
-			if (downstreamBuildResult.equals("SUCCESS")) {
-				continue;
-			}
-
-			Element failureElement = downstreamBuild.getGitHubMessageElement();
+			Element failureElement = downstreamBuildFailureMessages.get(
+				failedDownstreamBuild);
 
 			Element upstreamJobFailureElement =
-				downstreamBuild.getGitHubMessageUpstreamJobFailureElement();
+				failedDownstreamBuild.getGitHubMessageUpstreamJobFailureElement();
 
 			if (upstreamJobFailureElement != null) {
 				upstreamJobFailureElements.add(upstreamJobFailureElement);

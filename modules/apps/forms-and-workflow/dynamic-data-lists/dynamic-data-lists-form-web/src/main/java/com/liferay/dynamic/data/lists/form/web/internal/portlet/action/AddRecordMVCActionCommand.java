@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.lists.form.web.internal.portlet.action;
 
 import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
+import com.liferay.dynamic.data.lists.form.web.constants.DDLFormWebKeys;
 import com.liferay.dynamic.data.lists.form.web.internal.notification.DDLFormEmailNotificationSender;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordConstants;
@@ -75,12 +76,12 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 
 		if (groupId == 0) {
 			groupId = GetterUtil.getLong(
-				portletSession.getAttribute("groupId"));
+				portletSession.getAttribute(DDLFormWebKeys.GROUP_ID));
 		}
 
 		if (recordSetId == 0) {
 			recordSetId = GetterUtil.getLong(
-				portletSession.getAttribute("recordSetId"));
+				portletSession.getAttribute(DDLFormWebKeys.RECORD_SET_ID));
 		}
 
 		DDLRecordSet recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
@@ -117,8 +118,9 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 			String redirectURL = recordSetSettings.redirectURL();
 
 			if (Validator.isNotNull(redirectURL)) {
-				portletSession.setAttribute("groupId", groupId);
-				portletSession.setAttribute("recordSetId", recordSetId);
+				portletSession.setAttribute(DDLFormWebKeys.GROUP_ID, groupId);
+				portletSession.setAttribute(
+					DDLFormWebKeys.RECORD_SET_ID, recordSetId);
 
 				sendRedirect(actionRequest, actionResponse, redirectURL);
 			}

@@ -34,15 +34,11 @@ public class FedExCommerceShippingEngineConstants {
 	public static final String PACKING_TYPE_BY_DIMENSIONS =
 		"pack-by-dimensions";
 
-	public static final String PACKING_TYPE_BY_VOLUME = "pack-by-volume";
-
 	public static final String PACKING_TYPE_ONE_ITEM_PER_PACKAGE =
 		"pack-one-item-per-package";
 
-	public static final String[] PACKING_TYPES = {
-		PACKING_TYPE_BY_DIMENSIONS, PACKING_TYPE_BY_VOLUME,
-		PACKING_TYPE_ONE_ITEM_PER_PACKAGE
-	};
+	public static final String[] PACKING_TYPES =
+		{PACKING_TYPE_BY_DIMENSIONS, PACKING_TYPE_ONE_ITEM_PER_PACKAGE};
 
 	public static final String SERVICE_NAME =
 		"com.liferay.commerce.shipping.engine.fedex";

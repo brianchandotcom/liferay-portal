@@ -685,10 +685,6 @@ public class FedExCommerceShippingOptionHelper {
 		}
 		else if (packingType.equals(
 					FedExCommerceShippingEngineConstants.
-						PACKING_TYPE_BY_VOLUME)) {
-		}
-		else if (packingType.equals(
-					FedExCommerceShippingEngineConstants.
 						PACKING_TYPE_ONE_ITEM_PER_PACKAGE)) {
 
 			requestedPackageLineItems =

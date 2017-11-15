@@ -134,7 +134,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSimpleDraftCatalogEntry" priority="5">
+	<command ignore="true" name="AddSimpleDraftCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="ProductMenu#gotoSitesCommerce">
@@ -295,7 +295,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteAllSimpleCatalogEntriesViaCheckbox" priority="5">
+	<command ignore="true" name="DeleteAllSimpleCatalogEntriesViaCheckbox" priority="5">
 		<property name="portal.acceptance" value="true" />
 
 		<for list="1,2,3" param="entryNumber">
@@ -411,7 +411,7 @@
 		</execute>
 	</command>
 
-	<command name="SetSimpleCatalogEntryExpirationDate" priority="5">
+	<command ignore="true" name="SetSimpleCatalogEntryExpirationDate" priority="5">
 		<property name="portal.acceptance" value="true" />
 
 		<execute test-case="CPCommerceCatalog#AddSimpleCatalogEntry" />

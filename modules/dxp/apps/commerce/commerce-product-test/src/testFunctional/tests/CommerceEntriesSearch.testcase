@@ -49,7 +49,7 @@
 		</if>
 	</tear-down>
 
-	<command name="AssertCatalogEntriesSearchResultsNotInTrashBin" priority="5">
+	<command ignore="true" name="AssertCatalogEntriesSearchResultsNotInTrashBin" priority="5">
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="ProductMenu#gotoSitesCommerce">

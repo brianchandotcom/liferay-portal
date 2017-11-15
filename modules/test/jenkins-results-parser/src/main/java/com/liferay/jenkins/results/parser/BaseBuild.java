@@ -1751,14 +1751,24 @@ public abstract class BaseBuild implements Build {
 
 		List<Element> tableRowElements = new ArrayList<>();
 
-		if ((getParentBuild() != null) &&
-			((result == null) || result.equals(getResult())) &&
-			((status == null) || status.equals(getStatus()))) {
+		if (this instanceof AxisBuild) {
+			tableRowElements.add(getJenkinsReportTableRowElement());
+		}
+		else if ((getParentBuild() != null) &&
+				 ((result == null) || result.equals(getResult())) &&
+				 ((status == null) || status.equals(getStatus()))) {
 
 			tableRowElements.add(getJenkinsReportTableRowElement());
 		}
 
-		List<Build> downstreamBuilds = getDownstreamBuilds(result, status);
+		List<Build> downstreamBuilds;
+
+		if (this instanceof BatchBuild) {
+			downstreamBuilds = getDownstreamBuilds(null);
+		}
+		else {
+			downstreamBuilds = getDownstreamBuilds(result, status);
+		}
 
 		Collections.sort(
 			downstreamBuilds, new BaseBuild.BuildDisplayNameComparator());

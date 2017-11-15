@@ -2440,7 +2440,7 @@ the `testCompileClasspath` and `testRuntime` configurations:
 ### Changed
 - [LPS-75798]: Update the [Liferay Gradle Plugins] dependency to version 3.5.43.
 
-## 5.1.51 - 2017-11-14
+## 5.1.51 - 2017-11-15
 
 ### Changed
 - [LPS-75910]: Update the [Liferay Gradle Plugins Dependency Checker] dependency

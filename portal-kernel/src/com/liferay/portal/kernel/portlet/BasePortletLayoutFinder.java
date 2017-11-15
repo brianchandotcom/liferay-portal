@@ -215,17 +215,13 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 			long groupId, String portletId)
 		throws PortalException {
 
-		long scopeGroupId = groupId;
-
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 		Layout scopeLayout = LayoutLocalServiceUtil.getLayout(
 			group.getClassPK());
 
-		groupId = scopeLayout.getGroupId();
-
 		return _doGetPlidPortletIdObjectValuePair(
-			groupId, scopeGroupId, portletId);
+			scopeLayout.getGroupId(), groupId, portletId);
 	}
 
 	private long _getScopeGroupId(Layout layout, String portletId)

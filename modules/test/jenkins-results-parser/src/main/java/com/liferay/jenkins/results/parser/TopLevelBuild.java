@@ -28,12 +28,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,14 +54,14 @@ public class TopLevelBuild extends BaseBuild {
 	public void addDownstreamBuilds(String... urls) {
 		super.addDownstreamBuilds(urls);
 
-		if (result != null) {
+		if ((result != null) && (urls.length > 0)) {
 			result = null;
-		}
 
-		String status = getStatus();
+			String status = getStatus();
 
-		if (status.equals("completed")) {
-			setStatus("running");
+			if (status.equals("completed")) {
+				setStatus("running");
+			}
 		}
 	}
 
@@ -410,17 +411,75 @@ public class TopLevelBuild extends BaseBuild {
 		}
 
 		super.findDownstreamBuilds();
+
+		String consoleText = getConsoleText();
+
+		for (Build downstreamBuild : downstreamBuilds) {
+			BaseBuild downstreamBaseBuild = (BaseBuild)downstreamBuild;
+
+			downstreamBaseBuild.checkForReinvocation(consoleText);
+		}
 	}
 
 	@Override
-	protected List<String> findDownstreamBuildsInConsoleText(
-		String consoleText) {
-
+	protected List<String> findDownstreamBuildsInConsoleText() {
 		if (getParentBuild() != null) {
 			return Collections.emptyList();
 		}
 
-		return super.findDownstreamBuildsInConsoleText(consoleText);
+		String consoleText = getConsoleText();
+
+		List<String> foundDownstreamBuildURLs = new ArrayList<>();
+
+		if ((consoleText == null) || consoleText.isEmpty()) {
+			return foundDownstreamBuildURLs;
+		}
+
+		Set<String> downstreamBuildURLs = new HashSet<>();
+
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			String downstreamBuildURL = downstreamBuild.getBuildURL();
+
+			if (downstreamBuildURL != null) {
+				downstreamBuildURLs.add(downstreamBuildURL);
+			}
+		}
+
+		if (getBuildURL() != null) {
+			int i = consoleText.lastIndexOf("\nstop-current-job:");
+
+			if (i != -1) {
+				consoleText = consoleText.substring(0, i);
+			}
+
+			Matcher downstreamBuildURLMatcher =
+				downstreamBuildURLPattern.matcher(
+					consoleText.substring(consoleReadCursor));
+
+			consoleReadCursor = consoleText.length();
+
+			while (downstreamBuildURLMatcher.find()) {
+				String url = downstreamBuildURLMatcher.group("url");
+
+				Pattern reinvocationPattern = Pattern.compile(
+					Pattern.quote(url) + " restarted at (?<url>[^\\s]*)\\.");
+
+				Matcher reinvocationMatcher = reinvocationPattern.matcher(
+					consoleText);
+
+				while (reinvocationMatcher.find()) {
+					url = reinvocationMatcher.group("url");
+				}
+
+				if (!foundDownstreamBuildURLs.contains(url) &&
+					!downstreamBuildURLs.contains(url)) {
+
+					foundDownstreamBuildURLs.add(url);
+				}
+			}
+		}
+
+		return foundDownstreamBuildURLs;
 	}
 
 	protected Element getBaseBranchDetailsElement() {
@@ -539,7 +598,7 @@ public class TopLevelBuild extends BaseBuild {
 
 	@Override
 	protected ExecutorService getExecutorService() {
-		return Executors.newFixedThreadPool(20);
+		return _executorService;
 	}
 
 	protected Element getFailedJobSummaryElement() {
@@ -1052,22 +1111,23 @@ public class TopLevelBuild extends BaseBuild {
 				Dom4JUtil.getNewElement(
 					"h4", null, "Failures unique to this pull:"));
 
+			Map<Build, Element> downstreamBuildFailureMessages =
+				getDownstreamBuildMessages("ABORTED", "FAILURE", "UNSTABLE");
+
 			List<Element> failureElements = new ArrayList<>();
 			List<Element> upstreamJobFailureElements = new ArrayList<>();
 
-			for (Build downstreamBuild : getDownstreamBuilds(null)) {
-				String downstreamBuildResult = downstreamBuild.getResult();
+			int maxFailureCount = 5;
 
-				if (downstreamBuildResult.equals("SUCCESS")) {
-					continue;
-				}
+			for (Build failedDownstreamBuild :
+					downstreamBuildFailureMessages.keySet()) {
 
-				Element failureElement =
-					downstreamBuild.getGitHubMessageElement();
+				Element failureElement = downstreamBuildFailureMessages.get(
+					failedDownstreamBuild);
 
 				if (failureElement != null) {
 					if (UpstreamFailureUtil.isBuildFailingInUpstreamJob(
-							downstreamBuild)) {
+							failedDownstreamBuild)) {
 
 						upstreamJobFailureElements.add(failureElement);
 
@@ -1084,7 +1144,8 @@ public class TopLevelBuild extends BaseBuild {
 				}
 
 				Element upstreamJobFailureElement =
-					downstreamBuild.getGitHubMessageUpstreamJobFailureElement();
+					failedDownstreamBuild.
+						getGitHubMessageUpstreamJobFailureElement();
 
 				if (upstreamJobFailureElement != null) {
 					upstreamJobFailureElements.add(upstreamJobFailureElement);
@@ -1092,8 +1153,6 @@ public class TopLevelBuild extends BaseBuild {
 			}
 
 			failureElements.add(0, super.getGitHubMessageElement());
-
-			int maxFailureCount = 5;
 
 			Dom4JUtil.getOrderedListElement(
 				failureElements, rootElement, maxFailureCount);
@@ -1185,6 +1244,9 @@ public class TopLevelBuild extends BaseBuild {
 
 	private static final String _URL_CHART_JS =
 		"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js";
+
+	private static ThreadPoolExecutor _executorService =
+		getNewThreadPoolExecutor(20);
 
 	private boolean _compareToUpstream = true;
 	private long _lastDownstreamBuildsListingTimestamp = -1L;

@@ -25,16 +25,22 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -53,6 +59,10 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public void addDownstreamBuilds(String... urls) {
+		final Build thisBuild = this;
+
+		List<Callable<Build>> callables = new ArrayList<>(urls.length);
+
 		for (String url : urls) {
 			try {
 				url = JenkinsResultsParserUtil.getLocalURL(
@@ -64,9 +74,25 @@ public abstract class BaseBuild implements Build {
 			}
 
 			if (!hasBuildURL(url)) {
-				downstreamBuilds.add(BuildFactory.newBuild(url, this));
+				final String buildURL = url;
+
+				Callable<Build> callable = new Callable<Build>() {
+
+					@Override
+					public Build call() {
+						return BuildFactory.newBuild(buildURL, thisBuild);
+					}
+
+				};
+
+				callables.add(callable);
 			}
 		}
+
+		ParallelExecutor<Build> parallelExecutor = new ParallelExecutor<>(
+			callables, getExecutorService());
+
+		downstreamBuilds.addAll(parallelExecutor.execute());
 	}
 
 	public abstract void addTimelineData(BaseBuild.TimelineData timelineData);
@@ -86,33 +112,28 @@ public abstract class BaseBuild implements Build {
 		}
 
 		if (downstreamBuilds != null) {
-			ExecutorService executorService = getExecutorService();
+			List<Callable<Object>> callables = new ArrayList<>(
+				downstreamBuilds.size());
 
 			for (final Build downstreamBuild : downstreamBuilds) {
-				if (executorService != null) {
-					Runnable runnable = new Runnable() {
+				Callable<Object> callable = new Callable<Object>() {
 
-						@Override
-						public void run() {
-							downstreamBuild.archive(archiveName);
-						}
+					@Override
+					public Object call() {
+						downstreamBuild.archive(archiveName);
 
-					};
+						return null;
+					}
 
-					executorService.execute(runnable);
-				}
-				else {
-					downstreamBuild.archive(archiveName);
-				}
+				};
+
+				callables.add(callable);
 			}
 
-			if (executorService != null) {
-				executorService.shutdown();
+			ParallelExecutor<Object> parallelExecutor = new ParallelExecutor<>(
+				callables, getExecutorService());
 
-				while (!executorService.isTerminated()) {
-					JenkinsResultsParserUtil.sleep(100);
-				}
-			}
+			parallelExecutor.execute();
 		}
 
 		try {
@@ -1170,33 +1191,27 @@ public abstract class BaseBuild implements Build {
 				status = getStatus();
 
 				if (downstreamBuilds != null) {
-					ExecutorService executorService = getExecutorService();
+					List<Callable<Object>> callables = new ArrayList<>();
 
 					for (final Build downstreamBuild : downstreamBuilds) {
-						if (executorService != null) {
-							Runnable runnable = new Runnable() {
+						Callable<Object> callable = new Callable<Object>() {
 
-								@Override
-								public void run() {
-									downstreamBuild.update();
-								}
+							@Override
+							public Object call() {
+								downstreamBuild.update();
 
-							};
+								return null;
+							}
 
-							executorService.execute(runnable);
-						}
-						else {
-							downstreamBuild.update();
-						}
+						};
+
+						callables.add(callable);
 					}
 
-					if (executorService != null) {
-						executorService.shutdown();
+					ParallelExecutor<Object> parallelExecutor =
+						new ParallelExecutor<>(callables, getExecutorService());
 
-						while (!executorService.isTerminated()) {
-							JenkinsResultsParserUtil.sleep(100);
-						}
-					}
+					parallelExecutor.execute();
 
 					String result = getResult();
 
@@ -1263,6 +1278,21 @@ public abstract class BaseBuild implements Build {
 			return displayName1.compareTo(displayName2);
 		}
 
+	}
+
+	protected static ThreadPoolExecutor getNewThreadPoolExecutor(
+		int maximumPoolSize) {
+
+		ThreadPoolExecutor threadPoolExecutor =
+			(ThreadPoolExecutor)Executors.newFixedThreadPool(maximumPoolSize);
+
+		threadPoolExecutor.setKeepAliveTime(5, TimeUnit.SECONDS);
+
+		threadPoolExecutor.allowCoreThreadTimeOut(true);
+		threadPoolExecutor.setCorePoolSize(maximumPoolSize);
+		threadPoolExecutor.setMaximumPoolSize(maximumPoolSize);
+
+		return threadPoolExecutor;
 	}
 
 	protected static boolean isHighPriorityBuildFailureElement(
@@ -1413,10 +1443,8 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected void findDownstreamBuilds() {
-		String consoleText = getConsoleText();
-
 		List<String> foundDownstreamBuildURLs = new ArrayList<>(
-			findDownstreamBuildsInConsoleText(consoleText));
+			findDownstreamBuildsInConsoleText());
 
 		JSONObject buildJSONObject;
 
@@ -1445,68 +1473,10 @@ public abstract class BaseBuild implements Build {
 		addDownstreamBuilds(
 			foundDownstreamBuildURLs.toArray(
 				new String[foundDownstreamBuildURLs.size()]));
-
-		for (Build downstreamBuild : downstreamBuilds) {
-			BaseBuild downstreamBaseBuild = (BaseBuild)downstreamBuild;
-
-			downstreamBaseBuild.checkForReinvocation(consoleText);
-		}
 	}
 
-	protected List<String> findDownstreamBuildsInConsoleText(
-		String consoleText) {
-
-		List<String> foundDownstreamBuildURLs = new ArrayList<>();
-
-		if ((consoleText == null) || consoleText.isEmpty()) {
-			return foundDownstreamBuildURLs;
-		}
-
-		Set<String> downstreamBuildURLs = new HashSet<>();
-
-		for (Build downstreamBuild : getDownstreamBuilds(null)) {
-			String downstreamBuildURL = downstreamBuild.getBuildURL();
-
-			if (downstreamBuildURL != null) {
-				downstreamBuildURLs.add(downstreamBuildURL);
-			}
-		}
-
-		if (getBuildURL() != null) {
-			int i = consoleText.lastIndexOf("\nstop-current-job:");
-
-			if (i != -1) {
-				consoleText = consoleText.substring(0, i);
-			}
-
-			Matcher downstreamBuildURLMatcher =
-				downstreamBuildURLPattern.matcher(
-					consoleText.substring(_consoleReadCursor));
-
-			_consoleReadCursor = consoleText.length();
-
-			while (downstreamBuildURLMatcher.find()) {
-				String url = downstreamBuildURLMatcher.group("url");
-
-				Pattern reinvocationPattern = Pattern.compile(
-					Pattern.quote(url) + " restarted at (?<url>[^\\s]*)\\.");
-
-				Matcher reinvocationMatcher = reinvocationPattern.matcher(
-					consoleText);
-
-				while (reinvocationMatcher.find()) {
-					url = reinvocationMatcher.group("url");
-				}
-
-				if (!foundDownstreamBuildURLs.contains(url) &&
-					!downstreamBuildURLs.contains(url)) {
-
-					foundDownstreamBuildURLs.add(url);
-				}
-			}
-		}
-
-		return foundDownstreamBuildURLs;
+	protected List<String> findDownstreamBuildsInConsoleText() {
+		return Collections.emptyList();
 	}
 
 	protected String getBaseRepositoryType() {
@@ -1652,6 +1622,45 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return count;
+	}
+
+	protected Map<Build, Element> getDownstreamBuildMessages(
+		String... results) {
+
+		List<String> resultList = Arrays.asList(results);
+		List<Build> matchingBuilds = new ArrayList<>();
+		List<Callable<Element>> callables = new ArrayList<>();
+
+		for (final Build downstreamBuild : getDownstreamBuilds(null)) {
+			String downstreamBuildResult = downstreamBuild.getResult();
+
+			if (resultList.contains(downstreamBuildResult)) {
+				matchingBuilds.add(downstreamBuild);
+
+				Callable<Element> callable = new Callable<Element>() {
+
+					public Element call() {
+						return downstreamBuild.getGitHubMessageElement();
+					}
+
+				};
+
+				callables.add(callable);
+			}
+		}
+
+		ParallelExecutor<Element> parallelExecutor = new ParallelExecutor<>(
+			callables, getExecutorService());
+
+		List<Element> elements = parallelExecutor.execute();
+
+		Map<Build, Element> elementsMap = new LinkedHashMap<>(elements.size());
+
+		for (int i = 0; i < elements.size(); i++) {
+			elementsMap.put(matchingBuilds.get(i), elements.get(i));
+		}
+
+		return elementsMap;
 	}
 
 	protected ExecutorService getExecutorService() {
@@ -2092,7 +2101,7 @@ public abstract class BaseBuild implements Build {
 		if (_buildNumber != buildNumber) {
 			_buildNumber = buildNumber;
 
-			_consoleReadCursor = 0;
+			consoleReadCursor = 0;
 			_consoleText = null;
 
 			if (_buildNumber == -1) {
@@ -2152,7 +2161,7 @@ public abstract class BaseBuild implements Build {
 
 		loadParametersFromBuildJSONObject();
 
-		_consoleReadCursor = 0;
+		consoleReadCursor = 0;
 
 		setStatus("running");
 	}
@@ -2258,6 +2267,7 @@ public abstract class BaseBuild implements Build {
 	protected String archiveName;
 	protected List<Integer> badBuildNumbers = new ArrayList<>();
 	protected String branchName;
+	protected int consoleReadCursor;
 	protected List<Build> downstreamBuilds = new ArrayList<>();
 	protected boolean fromArchive;
 	protected String jobName;
@@ -2379,7 +2389,6 @@ public abstract class BaseBuild implements Build {
 		{"compileJSP", "SourceFormatter.format", "Unable to compile JSPs"};
 
 	private int _buildNumber = -1;
-	private int _consoleReadCursor;
 	private String _consoleText;
 	private JenkinsMaster _jenkinsMaster;
 	private JenkinsSlave _jenkinsSlave;

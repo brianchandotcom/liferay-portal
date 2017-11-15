@@ -39,7 +39,7 @@ dataMap.put("cp-instance-id", String.valueOf(cpInstanceId));
 
 <liferay-commerce:quantity-input CPDefinitionId="<%= cpDefinition.getCPDefinitionId() %>" useSelect="<%= true %>" />
 
-<aui:button cssClass="btn-lg btn-primary" data="<%= dataMap %>" disabled="<%= disabled %>" name="<%= buttonId %>" value="add-to-cart" />
+<aui:button cssClass="btn-lg" data="<%= dataMap %>" disabled="<%= disabled %>" name="<%= buttonId %>" value="add-to-cart" />
 
 <aui:script use="aui-io-request,aui-parse-content,liferay-notification">
 

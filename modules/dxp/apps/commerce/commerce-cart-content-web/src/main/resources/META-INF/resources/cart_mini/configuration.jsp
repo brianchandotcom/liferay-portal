@@ -47,6 +47,6 @@ CommerceCartContentMiniDisplayContext commerceCartContentMiniDisplayContext = (C
 	</div>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg btn-primary" name="submitButton" type="submit" value="save" />
+		<aui:button cssClass="btn-lg" name="submitButton" type="submit" value="save" />
 	</aui:button-row>
 </aui:form>

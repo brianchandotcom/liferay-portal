@@ -52,6 +52,8 @@ if (ddlDisplayContext.isAdminPortlet()) {
 
 	renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-list") : recordSet.getName(locale));
 }
+
+Group scopeGroup = GroupLocalServiceUtil.getGroup(scopeGroupId);
 %>
 
 <portlet:actionURL name="addRecordSet" var="addRecordSetURL">
@@ -103,7 +105,7 @@ if (ddlDisplayContext.isAdminPortlet()) {
 				/>
 			</div>
 
-			<c:if test="<%= WorkflowEngineManagerUtil.isDeployed() && (WorkflowHandlerRegistryUtil.getWorkflowHandler(DDLRecord.class.getName()) != null) %>">
+			<c:if test="<%= WorkflowEngineManagerUtil.isDeployed() && (WorkflowHandlerRegistryUtil.getWorkflowHandler(DDLRecord.class.getName()) != null) && !scopeGroup.isLayoutSetPrototype() %>">
 				<aui:select label="workflow" name="workflowDefinition">
 
 					<%

@@ -63,6 +63,9 @@ public class GroupFinderImpl
 	public static final String COUNT_BY_LAYOUTS =
 		GroupFinder.class.getName() + ".countByLayouts";
 
+	public static final String COUNT_BY_LAYOUTS_AND_ACTIVE_GROUP =
+		GroupFinder.class.getName() + ".countByLayoutsAndActiveGroup";
+
 	public static final String COUNT_BY_GROUP_ID =
 		GroupFinder.class.getName() + ".countByGroupId";
 
@@ -77,6 +80,9 @@ public class GroupFinderImpl
 
 	public static final String FIND_BY_LAYOUTS =
 		GroupFinder.class.getName() + ".findByLayouts";
+
+	public static final String FIND_BY_LAYOUTS_AND_ACTIVE_GROUP =
+		GroupFinder.class.getName() + ".findByLayoutsAndActiveGroup";
 
 	public static final String FIND_BY_LIVE_GROUPS =
 		GroupFinder.class.getName() + ".findByLiveGroups";
@@ -174,6 +180,48 @@ public class GroupFinderImpl
 			qPos.add(companyId);
 			qPos.add(parentGroupId);
 			qPos.add(site);
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public int countByLayouts(
+		long companyId, long parentGroupId, boolean site, boolean active) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(COUNT_BY_LAYOUTS_AND_ACTIVE_GROUP);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+			qPos.add(parentGroupId);
+			qPos.add(site);
+			qPos.add(active);
 
 			Iterator<Long> itr = q.iterate();
 
@@ -475,6 +523,41 @@ public class GroupFinderImpl
 			}
 
 			return groups;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public List<Group> findByLayouts(
+		long companyId, long parentGroupId, boolean site, boolean active,
+		int start, int end, OrderByComparator<Group> obc) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_LAYOUTS_AND_ACTIVE_GROUP);
+
+			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("Group_", GroupImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+			qPos.add(parentGroupId);
+			qPos.add(site);
+			qPos.add(active);
+
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

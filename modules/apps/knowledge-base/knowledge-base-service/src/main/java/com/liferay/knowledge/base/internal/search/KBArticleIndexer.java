@@ -112,12 +112,9 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 	public Hits search(SearchContext searchContext) throws SearchException {
 		Hits hits = super.search(searchContext);
 
-		String[] queryTerms = hits.getQueryTerms();
-
-		String keywords = searchContext.getKeywords();
-
-		queryTerms = ArrayUtil.append(
-			queryTerms, KnowledgeBaseUtil.splitKeywords(keywords));
+		String[] queryTerms = ArrayUtil.append(
+			GetterUtil.getStringValues(hits.getQueryTerms()),
+			KnowledgeBaseUtil.splitKeywords(searchContext.getKeywords()));
 
 		hits.setQueryTerms(queryTerms);
 

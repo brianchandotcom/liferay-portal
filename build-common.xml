@@ -965,6 +965,48 @@ information.
 
 			<delete file="pom.xml" />
 
+			<if>
+				<not>
+					<istrue value="@{snapshot}" />
+				</not>
+				<then>
+					<antelope:stringutil property="artifact.version.micro.beginindex" string="${artifact.version}">
+						<antelope:lastindexof string="." />
+					</antelope:stringutil>
+
+					<antelope:stringutil property="artifact.version.major.minor" string="${artifact.version}">
+						<antelope:substring endindex="${artifact.version.micro.beginindex}" />
+					</antelope:stringutil>
+
+					<antelope:math
+						datatype="int"
+						operand1="${artifact.version.micro.beginindex}"
+						operand2="1"
+						operation="+"
+						result="artifact.version.micro.beginindex"
+					/>
+
+					<antelope:stringutil property="artifact.version.micro" string="${artifact.version}">
+						<antelope:substring beginindex="${artifact.version.micro.beginindex}" />
+					</antelope:stringutil>
+
+					<antelope:math
+						datatype="int"
+						operand1="${artifact.version.micro}"
+						operand2="1"
+						operation="add"
+						result="artifact.version.micro"
+					/>
+
+					<replace
+						failOnNoReplacements="true"
+						file="bnd.bnd"
+						token="Bundle-Version: ${artifact.version}"
+						value="Bundle-Version: ${artifact.version.major.minor}.${artifact.version.micro}"
+					/>
+				</then>
+			</if>
+
 			<propertyfile file="../.gradle/gradle.properties">
 				<entry key="com.liferay.${processed.artifact.name}.version" value="${artifact.version}${snapshot.version.suffix}" />
 			</propertyfile>

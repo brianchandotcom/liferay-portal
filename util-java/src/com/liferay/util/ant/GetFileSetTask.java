@@ -57,17 +57,16 @@ public class GetFileSetTask extends Task {
 		List<Path> classResultList = new ArrayList();
 		List<Path> srcResultList = new ArrayList();
 
-		findFiles(baseDir, classNames, classResultList, srcResultList);
+		Set<String> notFoundClassNames = findFiles(
+			baseDir, classNames, classResultList, srcResultList);
 
-		if (srcResultList.isEmpty()) {
+		if (!notFoundClassNames.isEmpty()) {
 			_LOGGER.log(
-				Level.WARNING, "{0}.java was not found!",
-				classNames.toString());
+				Level.WARNING, "Class files for {0} were not found!",
+				notFoundClassNames.toString());
 
 			return;
 		}
-
-		Set<String> srcFileNames = new HashSet<>();
 
 		DirSet srcDirSet = new DirSet();
 
@@ -77,29 +76,15 @@ public class GetFileSetTask extends Task {
 		for (Path srcFilePath : srcResultList) {
 			String srcResult = String.valueOf(srcFilePath);
 
-			int startIndex = srcResult.lastIndexOf(File.separator);
-			int endIndex = srcResult.lastIndexOf(".");
-
-			srcFileNames.add(srcResult.substring(startIndex + 1, endIndex));
-
-			endIndex = srcResult.indexOf("src") + 3;
+			int srcDirIndex = srcResult.indexOf("src") + 3;
 
 			if (srcResult.contains(_MODULE_SRC_PARAMETER)) {
-				endIndex = srcResult.indexOf(_MODULE_SRC_PARAMETER) + 13;
+				srcDirIndex = srcResult.indexOf(_MODULE_SRC_PARAMETER) + 13;
 			}
 
-			srcResult = srcResult.substring(_rootDir.length() + 1, endIndex);
+			srcResult = srcResult.substring(_rootDir.length() + 1, srcDirIndex);
 
 			srcDirSet.setIncludes(srcResult);
-		}
-
-		if (srcFileNames.size() < classNames.size()) {
-			classNames.removeAll(srcFileNames);
-
-			for (String className : classNames) {
-				_LOGGER.log(
-					Level.WARNING, "{0}.java was not found!", className);
-			}
 		}
 
 		project.addReference("srcSet", srcDirSet);
@@ -120,13 +105,17 @@ public class GetFileSetTask extends Task {
 		project.addReference("classSet", classFileSet);
 	}
 
-	public void findFiles(
+	public Set<String> findFiles(
 		File baseDir, List<String> classNames, List<Path> classFileList,
 		List<Path> srcFileList) {
 
 		if (!baseDir.exists() || !baseDir.isDirectory()) {
-			return;
+			throw new BuildException();
 		}
+
+		Set<String> notFoundClassNames = new HashSet<>();
+
+		notFoundClassNames.addAll(classNames);
 
 		try {
 			Files.walkFileTree(
@@ -165,6 +154,8 @@ public class GetFileSetTask extends Task {
 
 							if (_matchClassName(className, fileName)) {
 								classFileList.add(file);
+
+								notFoundClassNames.remove(className);
 							}
 							else if (fileName.equals(targetSrcName)) {
 								srcFileList.add(file);
@@ -179,6 +170,8 @@ public class GetFileSetTask extends Task {
 		catch (IOException ioe) {
 			throw new BuildException(ioe);
 		}
+
+		return notFoundClassNames;
 	}
 
 	public void setClassNames(String classNames) {

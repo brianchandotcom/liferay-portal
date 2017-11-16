@@ -1,25 +1,27 @@
-.label {
-	&.approved {
-		@extend .label-success;
-	}
+@if $compat-labels {
+	.label {
+		&.approved {
+			@extend .label-success;
+		}
 
-	&.denied {
-		@extend .label-danger;
-	}
+		&.denied {
+			@extend .label-danger;
+		}
 
-	&.draft {
-		@extend .label-secondary;
-	}
+		&.draft {
+			@extend .label-secondary;
+		}
 
-	&.expired {
-		@extend .label-warning;
-	}
+		&.expired {
+			@extend .label-warning;
+		}
 
-	&.pending {
-		@extend .label-info;
-	}
+		&.pending {
+			@extend .label-info;
+		}
 
-	&.scheduled {
-		@extend .label-primary;
+		&.scheduled {
+			@extend .label-primary;
+		}
 	}
 }

@@ -1,41 +1,43 @@
-span[class^="icon-monospaced"], .icon-monospaced {
-	display: inline-block;
-	height: $icon-monospaced-size;
-	line-height: 34px;
-	text-align: center;
-	width: $icon-monospaced-size;
-}
-
-.icon-monospaced.lexicon-icon {
-	padding: 8px;
-}
-
-.btn-monospaced > .icon-monospaced {
-	padding: 0;
-}
-
-.help-icon {
-	border-radius: 100px;
-	display: inline-block;
-
-	@include monospace($icon-monospaced-size);
-
-	text-align: center;
-
-	&:hover, &:focus {
-		text-decoration: none;
+@if $compat-icons {
+	span[class^="icon-monospaced"], .icon-monospaced {
+		display: inline-block;
+		height: $icon-monospaced-size;
+		line-height: 34px;
+		text-align: center;
+		width: $icon-monospaced-size;
 	}
 
-	&.icon-monospaced {
-		vertical-align: baseline;
+	.icon-monospaced.lexicon-icon {
+		padding: 8px;
 	}
-}
 
-.help-icon-default {
-	background-color: $help-icon-default-bg;
-	color: $help-icon-default-color;
+	.btn-monospaced > .icon-monospaced {
+		padding: 0;
+	}
 
-	&:focus, &:hover {
-		color: $help-icon-default-hover-color;
+	.help-icon {
+		border-radius: 100px;
+		display: inline-block;
+
+		@include monospace($icon-monospaced-size);
+
+		text-align: center;
+
+		&:hover, &:focus {
+			text-decoration: none;
+		}
+
+		&.icon-monospaced {
+			vertical-align: baseline;
+		}
+	}
+
+	.help-icon-default {
+		background-color: $help-icon-default-bg;
+		color: $help-icon-default-color;
+
+		&:focus, &:hover {
+			color: $help-icon-default-hover-color;
+		}
 	}
 }

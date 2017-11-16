@@ -8,11 +8,13 @@ module.exports = function(config) {
 
 	liferayKarmaAlloyConfig(config);
 
+	config.autowatch = false;
 	config.browserConsoleLogOptions = {
 		format: '%b %T: %m',
 		level: 'log',
-		terminal: true
+		terminal: false
 	};
+	config.singleRun = true;
 
 	var resourcesPath = 'src/main/resources/META-INF/resources/';
 	var resourcesTestPath = 'src/test/resources/';

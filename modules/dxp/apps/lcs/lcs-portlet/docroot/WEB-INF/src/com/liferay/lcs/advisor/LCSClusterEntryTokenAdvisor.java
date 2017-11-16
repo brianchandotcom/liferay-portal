@@ -298,14 +298,14 @@ public class LCSClusterEntryTokenAdvisor {
 				public boolean accept(File dir, String name) {
 					if (name.startsWith("lcs-cluster-entry-token")) {
 						if (_log.isWarnEnabled()) {
-							StringBundler sb = new StringBundler();
+							StringBundler sb = new StringBundler(7);
 
 							sb.append("LCS activation token file name ");
 							sb.append(name);
 							sb.append(" is deprecated and will not be ");
 							sb.append("supported in the next version. Please ");
-							sb.append("download the LCS activation token");
-							sb.append("file again and replace the old file");
+							sb.append("download the LCS activation token ");
+							sb.append("file again and replace the old file ");
 							sb.append("with the new one.");
 
 							_log.warn(sb.toString());

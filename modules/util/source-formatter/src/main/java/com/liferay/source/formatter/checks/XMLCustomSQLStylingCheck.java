@@ -55,6 +55,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 			content = _fixSinglePredicateClause(content);
 			content = _formatSingleLineClauseWithMultiplePredicates(
 				fileName, content);
+			content = _formatUnionStatement(fileName, content);
 		}
 
 		return content;
@@ -417,6 +418,55 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private String _formatUnionStatement(String fileName, String content) {
+		Matcher matcher = _unionPattern.matcher(content);
+
+		while (matcher.find()) {
+			String beforeUnionChar = matcher.group(1);
+
+			if (!beforeUnionChar.equals(StringPool.CLOSE_PARENTHESIS)) {
+				addMessage(
+					fileName, "Missing parentheses around SELECT statement",
+					getLineCount(content, matcher.start()));
+
+				continue;
+			}
+
+			int openParenthesisPos = _getOpenParenthesisPos(
+				content, matcher.start(1));
+
+			String s = StringUtil.trim(
+				content.substring(openParenthesisPos + 1, matcher.start()));
+
+			if (!s.startsWith("SELECT")) {
+				addMessage(
+					fileName, "Missing parentheses around SELECT statement",
+					getLineCount(content, matcher.start()));
+
+				continue;
+			}
+
+			String afterUnionChar = matcher.group(4);
+
+			if (!afterUnionChar.equals(StringPool.OPEN_PARENTHESIS)) {
+				addMessage(
+					fileName, "Missing parentheses around SELECT statement",
+					getLineCount(content, matcher.start(3)));
+
+				continue;
+			}
+
+			String whitespace = matcher.group(2);
+
+			if (whitespace.contains(StringPool.NEW_LINE)) {
+				return StringUtil.replaceFirst(
+					content, whitespace, StringPool.SPACE, matcher.start());
+			}
+		}
+
+		return content;
+	}
+
 	private int _getCloseParenthesisPos(String content, int startPos) {
 		int endPos = startPos;
 
@@ -425,6 +475,18 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 
 			if (getLevel(content.substring(startPos, endPos + 1)) == 0) {
 				return endPos;
+			}
+		}
+	}
+
+	private int _getOpenParenthesisPos(String content, int endPos) {
+		int startPos = endPos;
+
+		while (true) {
+			startPos = content.lastIndexOf("(", startPos - 1);
+
+			if (getLevel(content.substring(startPos, endPos + 1)) == 0) {
+				return startPos;
 			}
 		}
 	}
@@ -453,6 +515,8 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 	private final Pattern _singleLineClauseWitMultiplePredicatesPattern =
 		Pattern.compile(
 			"\n(\t*)((.*\\)) (AND|OR|\\[\\$AND_OR_CONNECTOR\\$\\]) (\\(.*))");
+	private final Pattern _unionPattern = Pattern.compile(
+		"(\\S)(\\s+)UNION( ALL)?\\s+(\\S)");
 	private final Pattern _whereNotInSQLPattern = Pattern.compile(
 		"WHERE[ \t\n]+\\(*[a-zA-z0-9.]+ NOT IN");
 

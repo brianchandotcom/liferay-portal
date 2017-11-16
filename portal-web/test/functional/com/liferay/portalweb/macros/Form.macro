@@ -39,6 +39,8 @@
 		<execute function="Click" locator1="Form#SIDEBAR_CLOSE" />
 
 		<execute function="Pause" locator1="1000" />
+
+		<execute function="AssertNotVisible" locator1="Form#SIDEBAR_CLOSE" />
 	</command>
 
 	<command name="configureEmailNotifications">

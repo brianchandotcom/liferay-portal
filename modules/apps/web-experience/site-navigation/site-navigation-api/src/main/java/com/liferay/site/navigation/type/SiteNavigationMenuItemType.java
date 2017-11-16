@@ -42,13 +42,15 @@ public interface SiteNavigationMenuItemType {
 		return StringPool.BLANK;
 	}
 
-	public void renderAddPage(
+	public default void renderAddPage(
 			HttpServletRequest request, HttpServletResponse response)
-		throws IOException;
+		throws IOException {
+	}
 
-	public void renderEditPage(
+	public default void renderEditPage(
 			HttpServletRequest request, HttpServletResponse response,
 			SiteNavigationMenuItem siteNavigationMenuItem)
-		throws IOException;
+		throws IOException {
+	}
 
 }

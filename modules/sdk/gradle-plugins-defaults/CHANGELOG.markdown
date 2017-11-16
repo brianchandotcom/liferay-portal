@@ -2454,6 +2454,10 @@ to version 1.0.1.
 
 ## 5.1.53 - 2017-11-20
 
+### Added
+- [LPS-73070]: Prevent npm from creating a `package-lock.json` file when running
+the `npmInstall` task.
+
 ### Changed
 - [LPS-75965]: Update the [Liferay Gradle Plugins] dependency to version 3.5.46.
 

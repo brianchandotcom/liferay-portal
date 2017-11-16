@@ -1010,6 +1010,23 @@ information.
 				</then>
 			</if>
 
+			<if>
+				<not>
+					<istrue value="@{snapshot}" />
+				</not>
+				<then>
+					<exec executable="git" failonerror="true" outputproperty="artifact.git.id">
+						<arg value="rev-list" />
+						<arg value="-1" />
+						<arg value="HEAD" />
+						<arg value="." />
+					</exec>
+
+					<echo file="${project.dir}/modules/.releng/${artifact.name}.properties">artifact.git.id=${artifact.git.id}
+artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed.artifact.name}/${artifact.version}/com.liferay.${processed.artifact.name}-${artifact.version}.@{packaging}</echo>
+				</then>
+			</if>
+
 			<propertyfile file="../.gradle/gradle.properties">
 				<entry key="com.liferay.${processed.artifact.name}.version" value="${artifact.version}${snapshot.version.suffix}" />
 			</propertyfile>

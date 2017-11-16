@@ -12,5 +12,12 @@
 }
 
 #content .portlet-commerce-cart-content-total {
+	border-bottom: 1px solid $brand-color;
+	border-top: 1px solid $brand-color;
 	margin-top: 40px;
+	padding-top: 18px;
+
+	.button-holder {
+		text-align: center;
+	}
 }

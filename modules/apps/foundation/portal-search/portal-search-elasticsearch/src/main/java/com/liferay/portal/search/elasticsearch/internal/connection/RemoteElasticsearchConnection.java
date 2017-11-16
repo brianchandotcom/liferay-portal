@@ -185,6 +185,9 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 			"path.logs", props.get(PropsKeys.LIFERAY_HOME) + "/logs");
 		settingsBuilder.put(
 			"path.work", SystemProperties.get(SystemProperties.TMP_DIR));
+		settingsBuilder.put(
+			"request.headers.X-Found-Cluster",
+			elasticsearchConfiguration.clusterName());
 	}
 
 	@Modified

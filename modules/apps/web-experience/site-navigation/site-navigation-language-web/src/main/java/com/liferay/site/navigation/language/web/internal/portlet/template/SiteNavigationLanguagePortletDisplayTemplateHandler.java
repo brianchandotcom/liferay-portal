@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
 import com.liferay.site.navigation.language.web.configuration.SiteNavigationLanguageWebTemplateConfiguration;
-import com.liferay.site.navigation.language.web.constants.SiteNavigationLanguagePortletKeys;
+import com.liferay.site.navigation.language.constants.SiteNavigationLanguagePortletKeys;
 
 import java.util.List;
 import java.util.Locale;

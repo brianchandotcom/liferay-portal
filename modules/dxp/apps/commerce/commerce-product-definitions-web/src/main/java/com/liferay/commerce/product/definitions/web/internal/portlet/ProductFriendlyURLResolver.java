@@ -17,6 +17,7 @@ package com.liferay.commerce.product.definitions.web.internal.portlet;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.commerce.product.constants.CPConstants;
+import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -28,12 +29,13 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
-import com.liferay.portal.kernel.service.LayoutService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.InheritableMap;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Locale;
@@ -180,8 +182,15 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 
 		String layoutUuid = _cpDefinitionService.getLayoutUuid(cpDefinitionId);
 
-		return _layoutService.getLayoutByUuidAndGroupId(
-			layoutUuid, groupId, privateLayout);
+		if (Validator.isNotNull(layoutUuid)) {
+			return _layoutLocalService.getLayoutByUuidAndGroupId(
+				layoutUuid, groupId, privateLayout);
+		}
+
+		long plid = _portal.getPlidFromPortletId(
+			groupId, privateLayout, CPPortletKeys.CP_CONTENT_WEB);
+
+		return _layoutLocalService.getLayout(plid);
 	}
 
 	@Reference
@@ -197,7 +206,7 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 	private Http _http;
 
 	@Reference
-	private LayoutService _layoutService;
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

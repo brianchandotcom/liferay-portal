@@ -101,6 +101,9 @@ public class ReadingTimeBlogsEntryLocalServiceWrapper
 	}
 
 	@Reference
+	private BlogsEntryLocalService _blogsEntryLocalService;
+
+	@Reference
 	private ReadingTimeEntryLocalService _readingTimeEntryLocalService;
 
 }

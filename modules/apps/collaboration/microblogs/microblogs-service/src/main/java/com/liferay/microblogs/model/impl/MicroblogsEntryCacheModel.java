@@ -21,7 +21,6 @@ import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -106,7 +105,7 @@ public class MicroblogsEntryCacheModel implements CacheModel<MicroblogsEntry>,
 		microblogsEntryImpl.setUserId(userId);
 
 		if (userName == null) {
-			microblogsEntryImpl.setUserName(StringPool.BLANK);
+			microblogsEntryImpl.setUserName("");
 		}
 		else {
 			microblogsEntryImpl.setUserName(userName);
@@ -130,7 +129,7 @@ public class MicroblogsEntryCacheModel implements CacheModel<MicroblogsEntry>,
 		microblogsEntryImpl.setCreatorClassPK(creatorClassPK);
 
 		if (content == null) {
-			microblogsEntryImpl.setContent(StringPool.BLANK);
+			microblogsEntryImpl.setContent("");
 		}
 		else {
 			microblogsEntryImpl.setContent(content);
@@ -178,7 +177,7 @@ public class MicroblogsEntryCacheModel implements CacheModel<MicroblogsEntry>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -192,7 +191,7 @@ public class MicroblogsEntryCacheModel implements CacheModel<MicroblogsEntry>,
 		objectOutput.writeLong(creatorClassPK);
 
 		if (content == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(content);

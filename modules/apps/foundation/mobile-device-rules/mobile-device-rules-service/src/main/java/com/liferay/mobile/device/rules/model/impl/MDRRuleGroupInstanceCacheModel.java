@@ -21,7 +21,6 @@ import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -104,7 +103,7 @@ public class MDRRuleGroupInstanceCacheModel implements CacheModel<MDRRuleGroupIn
 		MDRRuleGroupInstanceImpl mdrRuleGroupInstanceImpl = new MDRRuleGroupInstanceImpl();
 
 		if (uuid == null) {
-			mdrRuleGroupInstanceImpl.setUuid(StringPool.BLANK);
+			mdrRuleGroupInstanceImpl.setUuid("");
 		}
 		else {
 			mdrRuleGroupInstanceImpl.setUuid(uuid);
@@ -116,7 +115,7 @@ public class MDRRuleGroupInstanceCacheModel implements CacheModel<MDRRuleGroupIn
 		mdrRuleGroupInstanceImpl.setUserId(userId);
 
 		if (userName == null) {
-			mdrRuleGroupInstanceImpl.setUserName(StringPool.BLANK);
+			mdrRuleGroupInstanceImpl.setUserName("");
 		}
 		else {
 			mdrRuleGroupInstanceImpl.setUserName(userName);
@@ -183,7 +182,7 @@ public class MDRRuleGroupInstanceCacheModel implements CacheModel<MDRRuleGroupIn
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -198,7 +197,7 @@ public class MDRRuleGroupInstanceCacheModel implements CacheModel<MDRRuleGroupIn
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);

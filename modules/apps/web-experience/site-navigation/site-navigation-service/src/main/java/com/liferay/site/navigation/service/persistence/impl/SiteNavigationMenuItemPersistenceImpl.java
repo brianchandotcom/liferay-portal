@@ -31,10 +31,8 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import com.liferay.site.navigation.exception.NoSuchMenuItemException;
@@ -318,7 +316,7 @@ public class SiteNavigationMenuItemPersistenceImpl extends BasePersistenceImpl<S
 		msg.append("siteNavigationMenuId=");
 		msg.append(siteNavigationMenuId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchMenuItemException(msg.toString());
 	}
@@ -371,7 +369,7 @@ public class SiteNavigationMenuItemPersistenceImpl extends BasePersistenceImpl<S
 		msg.append("siteNavigationMenuId=");
 		msg.append(siteNavigationMenuId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchMenuItemException(msg.toString());
 	}
@@ -849,7 +847,7 @@ public class SiteNavigationMenuItemPersistenceImpl extends BasePersistenceImpl<S
 		msg.append("parentSiteNavigationMenuItemId=");
 		msg.append(parentSiteNavigationMenuItemId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchMenuItemException(msg.toString());
 	}
@@ -902,7 +900,7 @@ public class SiteNavigationMenuItemPersistenceImpl extends BasePersistenceImpl<S
 		msg.append("parentSiteNavigationMenuItemId=");
 		msg.append(parentSiteNavigationMenuItemId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchMenuItemException(msg.toString());
 	}
@@ -1159,8 +1157,10 @@ public class SiteNavigationMenuItemPersistenceImpl extends BasePersistenceImpl<S
 		setModelClass(SiteNavigationMenuItem.class);
 
 		try {
-			Field field = ReflectionUtil.getDeclaredField(BasePersistenceImpl.class,
+			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
+
+			field.setAccessible(true);
 
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -1675,12 +1675,12 @@ public class SiteNavigationMenuItemPersistenceImpl extends BasePersistenceImpl<S
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

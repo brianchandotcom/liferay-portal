@@ -21,7 +21,6 @@ import com.liferay.calendar.model.CalendarResource;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -110,7 +109,7 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 		CalendarResourceImpl calendarResourceImpl = new CalendarResourceImpl();
 
 		if (uuid == null) {
-			calendarResourceImpl.setUuid(StringPool.BLANK);
+			calendarResourceImpl.setUuid("");
 		}
 		else {
 			calendarResourceImpl.setUuid(uuid);
@@ -122,7 +121,7 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 		calendarResourceImpl.setUserId(userId);
 
 		if (userName == null) {
-			calendarResourceImpl.setUserName(StringPool.BLANK);
+			calendarResourceImpl.setUserName("");
 		}
 		else {
 			calendarResourceImpl.setUserName(userName);
@@ -146,28 +145,28 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 		calendarResourceImpl.setClassPK(classPK);
 
 		if (classUuid == null) {
-			calendarResourceImpl.setClassUuid(StringPool.BLANK);
+			calendarResourceImpl.setClassUuid("");
 		}
 		else {
 			calendarResourceImpl.setClassUuid(classUuid);
 		}
 
 		if (code == null) {
-			calendarResourceImpl.setCode(StringPool.BLANK);
+			calendarResourceImpl.setCode("");
 		}
 		else {
 			calendarResourceImpl.setCode(code);
 		}
 
 		if (name == null) {
-			calendarResourceImpl.setName(StringPool.BLANK);
+			calendarResourceImpl.setName("");
 		}
 		else {
 			calendarResourceImpl.setName(name);
 		}
 
 		if (description == null) {
-			calendarResourceImpl.setDescription(StringPool.BLANK);
+			calendarResourceImpl.setDescription("");
 		}
 		else {
 			calendarResourceImpl.setDescription(description);
@@ -218,7 +217,7 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -233,7 +232,7 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -247,28 +246,28 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 		objectOutput.writeLong(classPK);
 
 		if (classUuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(classUuid);
 		}
 
 		if (code == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(code);
 		}
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);

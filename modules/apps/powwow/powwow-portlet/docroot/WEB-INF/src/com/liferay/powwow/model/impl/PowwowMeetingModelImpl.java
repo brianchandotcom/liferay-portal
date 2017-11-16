@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.powwow.model.PowwowMeeting;
 import com.liferay.powwow.model.PowwowMeetingModel;
@@ -409,7 +408,7 @@ public class PowwowMeetingModelImpl extends BaseModelImpl<PowwowMeeting>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -425,7 +424,7 @@ public class PowwowMeetingModelImpl extends BaseModelImpl<PowwowMeeting>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -494,7 +493,7 @@ public class PowwowMeetingModelImpl extends BaseModelImpl<PowwowMeeting>
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -510,7 +509,7 @@ public class PowwowMeetingModelImpl extends BaseModelImpl<PowwowMeeting>
 	@Override
 	public String getDescription() {
 		if (_description == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _description;
@@ -526,7 +525,7 @@ public class PowwowMeetingModelImpl extends BaseModelImpl<PowwowMeeting>
 	@Override
 	public String getProviderType() {
 		if (_providerType == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _providerType;
@@ -542,7 +541,7 @@ public class PowwowMeetingModelImpl extends BaseModelImpl<PowwowMeeting>
 	@Override
 	public String getProviderTypeMetadata() {
 		if (_providerTypeMetadata == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _providerTypeMetadata;
@@ -558,7 +557,7 @@ public class PowwowMeetingModelImpl extends BaseModelImpl<PowwowMeeting>
 	@Override
 	public String getLanguageId() {
 		if (_languageId == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _languageId;

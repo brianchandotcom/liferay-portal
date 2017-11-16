@@ -21,7 +21,6 @@ import com.liferay.asset.display.template.model.AssetDisplayTemplate;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -105,7 +104,7 @@ public class AssetDisplayTemplateCacheModel implements CacheModel<AssetDisplayTe
 		assetDisplayTemplateImpl.setUserId(userId);
 
 		if (userName == null) {
-			assetDisplayTemplateImpl.setUserName(StringPool.BLANK);
+			assetDisplayTemplateImpl.setUserName("");
 		}
 		else {
 			assetDisplayTemplateImpl.setUserName(userName);
@@ -126,7 +125,7 @@ public class AssetDisplayTemplateCacheModel implements CacheModel<AssetDisplayTe
 		}
 
 		if (name == null) {
-			assetDisplayTemplateImpl.setName(StringPool.BLANK);
+			assetDisplayTemplateImpl.setName("");
 		}
 		else {
 			assetDisplayTemplateImpl.setName(name);
@@ -174,7 +173,7 @@ public class AssetDisplayTemplateCacheModel implements CacheModel<AssetDisplayTe
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -184,7 +183,7 @@ public class AssetDisplayTemplateCacheModel implements CacheModel<AssetDisplayTe
 		objectOutput.writeLong(modifiedDate);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);

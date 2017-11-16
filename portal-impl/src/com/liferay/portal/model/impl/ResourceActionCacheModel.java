@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -102,14 +101,14 @@ public class ResourceActionCacheModel implements CacheModel<ResourceAction>,
 		resourceActionImpl.setResourceActionId(resourceActionId);
 
 		if (name == null) {
-			resourceActionImpl.setName(StringPool.BLANK);
+			resourceActionImpl.setName("");
 		}
 		else {
 			resourceActionImpl.setName(name);
 		}
 
 		if (actionId == null) {
-			resourceActionImpl.setActionId(StringPool.BLANK);
+			resourceActionImpl.setActionId("");
 		}
 		else {
 			resourceActionImpl.setActionId(actionId);
@@ -141,14 +140,14 @@ public class ResourceActionCacheModel implements CacheModel<ResourceAction>,
 		objectOutput.writeLong(resourceActionId);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (actionId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(actionId);

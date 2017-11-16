@@ -38,10 +38,8 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -314,7 +312,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		msg.append("companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -365,7 +363,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		msg.append("companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -821,7 +819,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		msg.append("userId=");
 		msg.append(userId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -872,7 +870,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		msg.append("userId=");
 		msg.append(userId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -1346,7 +1344,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		msg.append(", type=");
 		msg.append(type);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -1402,7 +1400,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		msg.append(", type=");
 		msg.append(type);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -1903,7 +1901,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		msg.append(", creatorClassPK=");
 		msg.append(creatorClassPK);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -1961,7 +1959,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		msg.append(", creatorClassPK=");
 		msg.append(creatorClassPK);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -2286,15 +2284,15 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 			query.append(_FINDER_COLUMN_CCNI_CCPK_CREATORCLASSNAMEID_2);
 
 			if (creatorClassPKs.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
+				query.append("(");
 
 				query.append(_FINDER_COLUMN_CCNI_CCPK_CREATORCLASSPK_7);
 
 				query.append(StringUtil.merge(creatorClassPKs));
 
-				query.append(StringPool.CLOSE_PARENTHESIS);
+				query.append(")");
 
-				query.append(StringPool.CLOSE_PARENTHESIS);
+				query.append(")");
 			}
 
 			query.setStringAt(removeConjunction(query.stringAt(query.index() -
@@ -2458,15 +2456,15 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 			query.append(_FINDER_COLUMN_CCNI_CCPK_CREATORCLASSNAMEID_2);
 
 			if (creatorClassPKs.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
+				query.append("(");
 
 				query.append(_FINDER_COLUMN_CCNI_CCPK_CREATORCLASSPK_7);
 
 				query.append(StringUtil.merge(creatorClassPKs));
 
-				query.append(StringPool.CLOSE_PARENTHESIS);
+				query.append(")");
 
-				query.append(StringPool.CLOSE_PARENTHESIS);
+				query.append(")");
 			}
 
 			query.setStringAt(removeConjunction(query.stringAt(query.index() -
@@ -2743,7 +2741,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		msg.append(", type=");
 		msg.append(type);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -2799,7 +2797,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		msg.append(", type=");
 		msg.append(type);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -3293,7 +3291,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		msg.append(", parentMicroblogsEntryId=");
 		msg.append(parentMicroblogsEntryId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -3351,7 +3349,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		msg.append(", parentMicroblogsEntryId=");
 		msg.append(parentMicroblogsEntryId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -3877,7 +3875,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		msg.append(", creatorClassPK=");
 		msg.append(creatorClassPK);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -3940,7 +3938,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		msg.append(", creatorClassPK=");
 		msg.append(creatorClassPK);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -4285,15 +4283,15 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 			query.append(_FINDER_COLUMN_C_CCNI_CCPK_CREATORCLASSNAMEID_2);
 
 			if (creatorClassPKs.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
+				query.append("(");
 
 				query.append(_FINDER_COLUMN_C_CCNI_CCPK_CREATORCLASSPK_7);
 
 				query.append(StringUtil.merge(creatorClassPKs));
 
-				query.append(StringPool.CLOSE_PARENTHESIS);
+				query.append(")");
 
-				query.append(StringPool.CLOSE_PARENTHESIS);
+				query.append(")");
 			}
 
 			query.setStringAt(removeConjunction(query.stringAt(query.index() -
@@ -4473,15 +4471,15 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 			query.append(_FINDER_COLUMN_C_CCNI_CCPK_CREATORCLASSNAMEID_2);
 
 			if (creatorClassPKs.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
+				query.append("(");
 
 				query.append(_FINDER_COLUMN_C_CCNI_CCPK_CREATORCLASSPK_7);
 
 				query.append(StringUtil.merge(creatorClassPKs));
 
-				query.append(StringPool.CLOSE_PARENTHESIS);
+				query.append(")");
 
-				query.append(StringPool.CLOSE_PARENTHESIS);
+				query.append(")");
 			}
 
 			query.setStringAt(removeConjunction(query.stringAt(query.index() -
@@ -4785,7 +4783,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		msg.append(", type=");
 		msg.append(type);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -4848,7 +4846,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		msg.append(", type=");
 		msg.append(type);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -5391,7 +5389,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		msg.append(", type=");
 		msg.append(type);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -5454,7 +5452,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		msg.append(", type=");
 		msg.append(type);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -5792,15 +5790,15 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 			query.append(_FINDER_COLUMN_CCNI_CCPK_T_CREATORCLASSNAMEID_2);
 
 			if (creatorClassPKs.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
+				query.append("(");
 
 				query.append(_FINDER_COLUMN_CCNI_CCPK_T_CREATORCLASSPK_7);
 
 				query.append(StringUtil.merge(creatorClassPKs));
 
-				query.append(StringPool.CLOSE_PARENTHESIS);
+				query.append(")");
 
-				query.append(StringPool.CLOSE_PARENTHESIS);
+				query.append(")");
 
 				query.append(WHERE_AND);
 			}
@@ -5982,15 +5980,15 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 			query.append(_FINDER_COLUMN_CCNI_CCPK_T_CREATORCLASSNAMEID_2);
 
 			if (creatorClassPKs.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
+				query.append("(");
 
 				query.append(_FINDER_COLUMN_CCNI_CCPK_T_CREATORCLASSPK_7);
 
 				query.append(StringUtil.merge(creatorClassPKs));
 
-				query.append(StringPool.CLOSE_PARENTHESIS);
+				query.append(")");
 
-				query.append(StringPool.CLOSE_PARENTHESIS);
+				query.append(")");
 
 				query.append(WHERE_AND);
 			}
@@ -6324,7 +6322,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		msg.append(", type=");
 		msg.append(type);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -6393,7 +6391,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		msg.append(", type=");
 		msg.append(type);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -6750,15 +6748,15 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 			query.append(_FINDER_COLUMN_C_CCNI_CCPK_T_CREATORCLASSNAMEID_2);
 
 			if (creatorClassPKs.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
+				query.append("(");
 
 				query.append(_FINDER_COLUMN_C_CCNI_CCPK_T_CREATORCLASSPK_7);
 
 				query.append(StringUtil.merge(creatorClassPKs));
 
-				query.append(StringPool.CLOSE_PARENTHESIS);
+				query.append(")");
 
-				query.append(StringPool.CLOSE_PARENTHESIS);
+				query.append(")");
 
 				query.append(WHERE_AND);
 			}
@@ -6952,15 +6950,15 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 			query.append(_FINDER_COLUMN_C_CCNI_CCPK_T_CREATORCLASSNAMEID_2);
 
 			if (creatorClassPKs.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
+				query.append("(");
 
 				query.append(_FINDER_COLUMN_C_CCNI_CCPK_T_CREATORCLASSPK_7);
 
 				query.append(StringUtil.merge(creatorClassPKs));
 
-				query.append(StringPool.CLOSE_PARENTHESIS);
+				query.append(")");
 
-				query.append(StringPool.CLOSE_PARENTHESIS);
+				query.append(")");
 
 				query.append(WHERE_AND);
 			}
@@ -7299,7 +7297,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		msg.append(", socialRelationType=");
 		msg.append(socialRelationType);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -7367,7 +7365,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		msg.append(", socialRelationType=");
 		msg.append(socialRelationType);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -7686,8 +7684,10 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		setModelClass(MicroblogsEntry.class);
 
 		try {
-			Field field = ReflectionUtil.getDeclaredField(BasePersistenceImpl.class,
+			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
+
+			field.setAccessible(true);
 
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -8473,12 +8473,12 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

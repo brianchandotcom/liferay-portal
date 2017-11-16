@@ -287,14 +287,6 @@ public class PowwowServerLocalServiceWrapper implements PowwowServerLocalService
 	}
 
 	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _powwowServerLocalService.invokeMethod(name, parameterTypes,
-			arguments);
-	}
-
-	@Override
 	public com.liferay.powwow.model.PowwowServer updatePowwowServer(
 		long powwowServerId, java.lang.String name,
 		java.lang.String providerType, java.lang.String url,

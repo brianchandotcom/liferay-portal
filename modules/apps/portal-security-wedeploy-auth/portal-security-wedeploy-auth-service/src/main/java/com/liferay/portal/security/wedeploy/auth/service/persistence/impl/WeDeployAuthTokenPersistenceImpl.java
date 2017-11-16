@@ -31,10 +31,8 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.wedeploy.auth.exception.NoSuchTokenException;
 import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken;
@@ -129,7 +127,7 @@ public class WeDeployAuthTokenPersistenceImpl extends BasePersistenceImpl<WeDepl
 			msg.append(", type=");
 			msg.append(type);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -192,7 +190,7 @@ public class WeDeployAuthTokenPersistenceImpl extends BasePersistenceImpl<WeDepl
 			if (token == null) {
 				query.append(_FINDER_COLUMN_T_T_TOKEN_1);
 			}
-			else if (token.equals(StringPool.BLANK)) {
+			else if (token.equals("")) {
 				query.append(_FINDER_COLUMN_T_T_TOKEN_3);
 			}
 			else {
@@ -310,7 +308,7 @@ public class WeDeployAuthTokenPersistenceImpl extends BasePersistenceImpl<WeDepl
 			if (token == null) {
 				query.append(_FINDER_COLUMN_T_T_TOKEN_1);
 			}
-			else if (token.equals(StringPool.BLANK)) {
+			else if (token.equals("")) {
 				query.append(_FINDER_COLUMN_T_T_TOKEN_3);
 			}
 			else {
@@ -407,7 +405,7 @@ public class WeDeployAuthTokenPersistenceImpl extends BasePersistenceImpl<WeDepl
 			msg.append(", type=");
 			msg.append(type);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -474,7 +472,7 @@ public class WeDeployAuthTokenPersistenceImpl extends BasePersistenceImpl<WeDepl
 			if (clientId == null) {
 				query.append(_FINDER_COLUMN_CI_T_T_CLIENTID_1);
 			}
-			else if (clientId.equals(StringPool.BLANK)) {
+			else if (clientId.equals("")) {
 				query.append(_FINDER_COLUMN_CI_T_T_CLIENTID_3);
 			}
 			else {
@@ -488,7 +486,7 @@ public class WeDeployAuthTokenPersistenceImpl extends BasePersistenceImpl<WeDepl
 			if (token == null) {
 				query.append(_FINDER_COLUMN_CI_T_T_TOKEN_1);
 			}
-			else if (token.equals(StringPool.BLANK)) {
+			else if (token.equals("")) {
 				query.append(_FINDER_COLUMN_CI_T_T_TOKEN_3);
 			}
 			else {
@@ -614,7 +612,7 @@ public class WeDeployAuthTokenPersistenceImpl extends BasePersistenceImpl<WeDepl
 			if (clientId == null) {
 				query.append(_FINDER_COLUMN_CI_T_T_CLIENTID_1);
 			}
-			else if (clientId.equals(StringPool.BLANK)) {
+			else if (clientId.equals("")) {
 				query.append(_FINDER_COLUMN_CI_T_T_CLIENTID_3);
 			}
 			else {
@@ -628,7 +626,7 @@ public class WeDeployAuthTokenPersistenceImpl extends BasePersistenceImpl<WeDepl
 			if (token == null) {
 				query.append(_FINDER_COLUMN_CI_T_T_TOKEN_1);
 			}
-			else if (token.equals(StringPool.BLANK)) {
+			else if (token.equals("")) {
 				query.append(_FINDER_COLUMN_CI_T_T_TOKEN_3);
 			}
 			else {
@@ -689,8 +687,10 @@ public class WeDeployAuthTokenPersistenceImpl extends BasePersistenceImpl<WeDepl
 		setModelClass(WeDeployAuthToken.class);
 
 		try {
-			Field field = ReflectionUtil.getDeclaredField(BasePersistenceImpl.class,
+			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
+
+			field.setAccessible(true);
 
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -1226,12 +1226,12 @@ public class WeDeployAuthTokenPersistenceImpl extends BasePersistenceImpl<WeDepl
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

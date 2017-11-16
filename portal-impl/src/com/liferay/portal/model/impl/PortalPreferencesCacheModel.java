@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.PortalPreferences;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -104,7 +103,7 @@ public class PortalPreferencesCacheModel implements CacheModel<PortalPreferences
 		portalPreferencesImpl.setOwnerType(ownerType);
 
 		if (preferences == null) {
-			portalPreferencesImpl.setPreferences(StringPool.BLANK);
+			portalPreferencesImpl.setPreferences("");
 		}
 		else {
 			portalPreferencesImpl.setPreferences(preferences);
@@ -139,7 +138,7 @@ public class PortalPreferencesCacheModel implements CacheModel<PortalPreferences
 		objectOutput.writeInt(ownerType);
 
 		if (preferences == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(preferences);

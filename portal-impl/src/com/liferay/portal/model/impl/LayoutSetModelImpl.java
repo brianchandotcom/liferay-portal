@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -474,7 +473,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 	@Override
 	public String getThemeId() {
 		if (_themeId == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _themeId;
@@ -490,7 +489,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 	@Override
 	public String getColorSchemeId() {
 		if (_colorSchemeId == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _colorSchemeId;
@@ -506,7 +505,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 	@Override
 	public String getCss() {
 		if (_css == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _css;
@@ -533,7 +532,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 	@Override
 	public String getSettings() {
 		if (_settings == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _settings;
@@ -549,7 +548,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 	@Override
 	public String getLayoutSetPrototypeUuid() {
 		if (_layoutSetPrototypeUuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _layoutSetPrototypeUuid;

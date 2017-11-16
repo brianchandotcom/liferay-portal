@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.service.persistence.ResourceActionPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.impl.ResourceActionImpl;
 import com.liferay.portal.model.impl.ResourceActionModelImpl;
 
@@ -221,7 +220,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 			if (name == null) {
 				query.append(_FINDER_COLUMN_NAME_NAME_1);
 			}
-			else if (name.equals(StringPool.BLANK)) {
+			else if (name.equals("")) {
 				query.append(_FINDER_COLUMN_NAME_NAME_3);
 			}
 			else {
@@ -310,7 +309,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		msg.append("name=");
 		msg.append(name);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchResourceActionException(msg.toString());
 	}
@@ -359,7 +358,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		msg.append("name=");
 		msg.append(name);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchResourceActionException(msg.toString());
 	}
@@ -451,7 +450,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		if (name == null) {
 			query.append(_FINDER_COLUMN_NAME_NAME_1);
 		}
-		else if (name.equals(StringPool.BLANK)) {
+		else if (name.equals("")) {
 			query.append(_FINDER_COLUMN_NAME_NAME_3);
 		}
 		else {
@@ -587,7 +586,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 			if (name == null) {
 				query.append(_FINDER_COLUMN_NAME_NAME_1);
 			}
-			else if (name.equals(StringPool.BLANK)) {
+			else if (name.equals("")) {
 				query.append(_FINDER_COLUMN_NAME_NAME_3);
 			}
 			else {
@@ -666,7 +665,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 			msg.append(", actionId=");
 			msg.append(actionId);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -729,7 +728,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 			if (name == null) {
 				query.append(_FINDER_COLUMN_N_A_NAME_1);
 			}
-			else if (name.equals(StringPool.BLANK)) {
+			else if (name.equals("")) {
 				query.append(_FINDER_COLUMN_N_A_NAME_3);
 			}
 			else {
@@ -743,7 +742,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 			if (actionId == null) {
 				query.append(_FINDER_COLUMN_N_A_ACTIONID_1);
 			}
-			else if (actionId.equals(StringPool.BLANK)) {
+			else if (actionId.equals("")) {
 				query.append(_FINDER_COLUMN_N_A_ACTIONID_3);
 			}
 			else {
@@ -851,7 +850,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 			if (name == null) {
 				query.append(_FINDER_COLUMN_N_A_NAME_1);
 			}
-			else if (name.equals(StringPool.BLANK)) {
+			else if (name.equals("")) {
 				query.append(_FINDER_COLUMN_N_A_NAME_3);
 			}
 			else {
@@ -865,7 +864,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 			if (actionId == null) {
 				query.append(_FINDER_COLUMN_N_A_ACTIONID_1);
 			}
-			else if (actionId.equals(StringPool.BLANK)) {
+			else if (actionId.equals("")) {
 				query.append(_FINDER_COLUMN_N_A_ACTIONID_3);
 			}
 			else {
@@ -1392,12 +1391,12 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

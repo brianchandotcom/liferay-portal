@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -401,7 +400,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _uuid;
@@ -486,7 +485,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -498,7 +497,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -565,7 +564,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	@Override
 	public String getTreePath() {
 		if (_treePath == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _treePath;
@@ -591,7 +590,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -617,7 +616,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	@Override
 	public String getType() {
 		if (_type == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _type;
@@ -683,7 +682,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	@Override
 	public String getComments() {
 		if (_comments == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _comments;

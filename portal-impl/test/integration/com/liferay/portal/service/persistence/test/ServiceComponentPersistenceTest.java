@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -147,18 +146,18 @@ public class ServiceComponentPersistenceTest {
 
 	@Test
 	public void testCountByBuildNamespace() throws Exception {
-		_persistence.countByBuildNamespace(StringPool.BLANK);
+		_persistence.countByBuildNamespace("");
 
-		_persistence.countByBuildNamespace(StringPool.NULL);
+		_persistence.countByBuildNamespace("null");
 
 		_persistence.countByBuildNamespace((String)null);
 	}
 
 	@Test
 	public void testCountByBNS_BNU() throws Exception {
-		_persistence.countByBNS_BNU(StringPool.BLANK, RandomTestUtil.nextLong());
+		_persistence.countByBNS_BNU("", RandomTestUtil.nextLong());
 
-		_persistence.countByBNS_BNU(StringPool.NULL, 0L);
+		_persistence.countByBNS_BNU("null", 0L);
 
 		_persistence.countByBNS_BNU((String)null, 0L);
 	}

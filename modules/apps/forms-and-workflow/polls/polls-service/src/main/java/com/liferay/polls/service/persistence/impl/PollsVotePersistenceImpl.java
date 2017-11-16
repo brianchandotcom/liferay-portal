@@ -37,10 +37,8 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -227,7 +225,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -315,7 +313,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchVoteException(msg.toString());
 	}
@@ -364,7 +362,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchVoteException(msg.toString());
 	}
@@ -456,7 +454,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3);
 		}
 		else {
@@ -592,7 +590,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -671,7 +669,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 			msg.append(", groupId=");
 			msg.append(groupId);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -734,7 +732,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -841,7 +839,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -1037,7 +1035,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1134,7 +1132,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchVoteException(msg.toString());
 	}
@@ -1190,7 +1188,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchVoteException(msg.toString());
 	}
@@ -1284,7 +1282,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 		}
 		else {
@@ -1426,7 +1424,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1687,7 +1685,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		msg.append("questionId=");
 		msg.append(questionId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchVoteException(msg.toString());
 	}
@@ -1738,7 +1736,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		msg.append("questionId=");
 		msg.append(questionId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchVoteException(msg.toString());
 	}
@@ -2190,7 +2188,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		msg.append("choiceId=");
 		msg.append(choiceId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchVoteException(msg.toString());
 	}
@@ -2239,7 +2237,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		msg.append("choiceId=");
 		msg.append(choiceId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchVoteException(msg.toString());
 	}
@@ -2710,7 +2708,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		msg.append(", userId=");
 		msg.append(userId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchVoteException(msg.toString());
 	}
@@ -2766,7 +2764,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		msg.append(", userId=");
 		msg.append(userId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchVoteException(msg.toString());
 	}
@@ -3026,8 +3024,10 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		setModelClass(PollsVote.class);
 
 		try {
-			Field field = ReflectionUtil.getDeclaredField(BasePersistenceImpl.class,
+			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
+
+			field.setAccessible(true);
 
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -3652,12 +3652,12 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

@@ -43,10 +43,8 @@ import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -234,7 +232,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -321,7 +319,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -369,7 +367,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -459,7 +457,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3);
 		}
 		else {
@@ -595,7 +593,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -674,7 +672,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			msg.append(", groupId=");
 			msg.append(groupId);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -737,7 +735,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -844,7 +842,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -1041,7 +1039,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1136,7 +1134,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -1189,7 +1187,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -1283,7 +1281,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 		}
 		else {
@@ -1425,7 +1423,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1684,7 +1682,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append("companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -1732,7 +1730,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append("companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -2003,7 +2001,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			msg.append("liveGroupId=");
 			msg.append(liveGroupId);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -2416,7 +2414,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append(", classNameId=");
 		msg.append(classNameId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -2470,7 +2468,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append(", classNameId=");
 		msg.append(classNameId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -2955,7 +2953,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append(", parentGroupId=");
 		msg.append(parentGroupId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -3010,7 +3008,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append(", parentGroupId=");
 		msg.append(parentGroupId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -3300,7 +3298,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			msg.append(", groupKey=");
 			msg.append(groupKey);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -3365,7 +3363,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			if (groupKey == null) {
 				query.append(_FINDER_COLUMN_C_GK_GROUPKEY_1);
 			}
-			else if (groupKey.equals(StringPool.BLANK)) {
+			else if (groupKey.equals("")) {
 				query.append(_FINDER_COLUMN_C_GK_GROUPKEY_3);
 			}
 			else {
@@ -3472,7 +3470,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			if (groupKey == null) {
 				query.append(_FINDER_COLUMN_C_GK_GROUPKEY_1);
 			}
-			else if (groupKey.equals(StringPool.BLANK)) {
+			else if (groupKey.equals("")) {
 				query.append(_FINDER_COLUMN_C_GK_GROUPKEY_3);
 			}
 			else {
@@ -3554,7 +3552,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			msg.append(", friendlyURL=");
 			msg.append(friendlyURL);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -3619,7 +3617,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			if (friendlyURL == null) {
 				query.append(_FINDER_COLUMN_C_F_FRIENDLYURL_1);
 			}
-			else if (friendlyURL.equals(StringPool.BLANK)) {
+			else if (friendlyURL.equals("")) {
 				query.append(_FINDER_COLUMN_C_F_FRIENDLYURL_3);
 			}
 			else {
@@ -3726,7 +3724,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			if (friendlyURL == null) {
 				query.append(_FINDER_COLUMN_C_F_FRIENDLYURL_1);
 			}
-			else if (friendlyURL.equals(StringPool.BLANK)) {
+			else if (friendlyURL.equals("")) {
 				query.append(_FINDER_COLUMN_C_F_FRIENDLYURL_3);
 			}
 			else {
@@ -4001,7 +3999,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append(", site=");
 		msg.append(site);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -4054,7 +4052,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append(", site=");
 		msg.append(site);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -4537,7 +4535,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append(", active=");
 		msg.append(active);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -4590,7 +4588,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append(", active=");
 		msg.append(active);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -5074,7 +5072,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append(", classPK=");
 		msg.append(classPK);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -5128,7 +5126,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append(", classPK=");
 		msg.append(classPK);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -5609,7 +5607,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append(", active=");
 		msg.append(active);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -5662,7 +5660,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append(", active=");
 		msg.append(active);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -6150,7 +6148,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append(", parentGroupId=");
 		msg.append(parentGroupId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -6211,7 +6209,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append(", parentGroupId=");
 		msg.append(parentGroupId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -6367,7 +6365,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			msg.append(", classPK=");
 			msg.append(classPK);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -6822,7 +6820,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append(", parentGroupId=");
 		msg.append(parentGroupId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -6883,7 +6881,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append(", parentGroupId=");
 		msg.append(parentGroupId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -7406,7 +7404,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append(", site=");
 		msg.append(site);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -7467,7 +7465,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append(", site=");
 		msg.append(site);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -7781,7 +7779,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			msg.append(", groupKey=");
 			msg.append(groupKey);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -7851,7 +7849,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			if (groupKey == null) {
 				query.append(_FINDER_COLUMN_C_L_GK_GROUPKEY_1);
 			}
-			else if (groupKey.equals(StringPool.BLANK)) {
+			else if (groupKey.equals("")) {
 				query.append(_FINDER_COLUMN_C_L_GK_GROUPKEY_3);
 			}
 			else {
@@ -7965,7 +7963,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			if (groupKey == null) {
 				query.append(_FINDER_COLUMN_C_L_GK_GROUPKEY_1);
 			}
-			else if (groupKey.equals(StringPool.BLANK)) {
+			else if (groupKey.equals("")) {
 				query.append(_FINDER_COLUMN_C_L_GK_GROUPKEY_3);
 			}
 			else {
@@ -8161,7 +8159,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			if (treePath == null) {
 				query.append(_FINDER_COLUMN_C_T_S_TREEPATH_1);
 			}
-			else if (treePath.equals(StringPool.BLANK)) {
+			else if (treePath.equals("")) {
 				query.append(_FINDER_COLUMN_C_T_S_TREEPATH_3);
 			}
 			else {
@@ -8264,7 +8262,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append(", site=");
 		msg.append(site);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -8325,7 +8323,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append(", site=");
 		msg.append(site);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -8423,7 +8421,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		if (treePath == null) {
 			query.append(_FINDER_COLUMN_C_T_S_TREEPATH_1);
 		}
-		else if (treePath.equals(StringPool.BLANK)) {
+		else if (treePath.equals("")) {
 			query.append(_FINDER_COLUMN_C_T_S_TREEPATH_3);
 		}
 		else {
@@ -8571,7 +8569,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			if (treePath == null) {
 				query.append(_FINDER_COLUMN_C_T_S_TREEPATH_1);
 			}
-			else if (treePath.equals(StringPool.BLANK)) {
+			else if (treePath.equals("")) {
 				query.append(_FINDER_COLUMN_C_T_S_TREEPATH_3);
 			}
 			else {
@@ -8872,7 +8870,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append(", parentGroupId=");
 		msg.append(parentGroupId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -8939,7 +8937,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append(", parentGroupId=");
 		msg.append(parentGroupId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -9117,7 +9115,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			msg.append(", groupKey=");
 			msg.append(groupKey);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -9196,7 +9194,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			if (groupKey == null) {
 				query.append(_FINDER_COLUMN_C_C_L_GK_GROUPKEY_1);
 			}
-			else if (groupKey.equals(StringPool.BLANK)) {
+			else if (groupKey.equals("")) {
 				query.append(_FINDER_COLUMN_C_C_L_GK_GROUPKEY_3);
 			}
 			else {
@@ -9322,7 +9320,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			if (groupKey == null) {
 				query.append(_FINDER_COLUMN_C_C_L_GK_GROUPKEY_1);
 			}
-			else if (groupKey.equals(StringPool.BLANK)) {
+			else if (groupKey.equals("")) {
 				query.append(_FINDER_COLUMN_C_C_L_GK_GROUPKEY_3);
 			}
 			else {
@@ -9647,7 +9645,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append(", inheritContent=");
 		msg.append(inheritContent);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -9714,7 +9712,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		msg.append(", inheritContent=");
 		msg.append(inheritContent);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchGroupException(msg.toString());
 	}
@@ -10008,8 +10006,10 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		setModelClass(Group.class);
 
 		try {
-			Field field = ReflectionUtil.getDeclaredField(BasePersistenceImpl.class,
+			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
+
+			field.setAccessible(true);
 
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -11051,12 +11051,12 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -161,18 +160,18 @@ public class CompanyPersistenceTest {
 
 	@Test
 	public void testCountByWebId() throws Exception {
-		_persistence.countByWebId(StringPool.BLANK);
+		_persistence.countByWebId("");
 
-		_persistence.countByWebId(StringPool.NULL);
+		_persistence.countByWebId("null");
 
 		_persistence.countByWebId((String)null);
 	}
 
 	@Test
 	public void testCountByMx() throws Exception {
-		_persistence.countByMx(StringPool.BLANK);
+		_persistence.countByMx("");
 
-		_persistence.countByMx(StringPool.NULL);
+		_persistence.countByMx("null");
 
 		_persistence.countByMx((String)null);
 	}

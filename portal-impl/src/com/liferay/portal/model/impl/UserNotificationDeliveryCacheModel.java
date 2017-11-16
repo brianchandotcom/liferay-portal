@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.UserNotificationDelivery;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -112,7 +111,7 @@ public class UserNotificationDeliveryCacheModel implements CacheModel<UserNotifi
 		userNotificationDeliveryImpl.setUserId(userId);
 
 		if (portletId == null) {
-			userNotificationDeliveryImpl.setPortletId(StringPool.BLANK);
+			userNotificationDeliveryImpl.setPortletId("");
 		}
 		else {
 			userNotificationDeliveryImpl.setPortletId(portletId);
@@ -160,7 +159,7 @@ public class UserNotificationDeliveryCacheModel implements CacheModel<UserNotifi
 		objectOutput.writeLong(userId);
 
 		if (portletId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(portletId);

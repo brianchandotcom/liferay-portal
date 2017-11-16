@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -143,21 +142,21 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 		layoutSetImpl.setLogoId(logoId);
 
 		if (themeId == null) {
-			layoutSetImpl.setThemeId(StringPool.BLANK);
+			layoutSetImpl.setThemeId("");
 		}
 		else {
 			layoutSetImpl.setThemeId(themeId);
 		}
 
 		if (colorSchemeId == null) {
-			layoutSetImpl.setColorSchemeId(StringPool.BLANK);
+			layoutSetImpl.setColorSchemeId("");
 		}
 		else {
 			layoutSetImpl.setColorSchemeId(colorSchemeId);
 		}
 
 		if (css == null) {
-			layoutSetImpl.setCss(StringPool.BLANK);
+			layoutSetImpl.setCss("");
 		}
 		else {
 			layoutSetImpl.setCss(css);
@@ -166,14 +165,14 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 		layoutSetImpl.setPageCount(pageCount);
 
 		if (settings == null) {
-			layoutSetImpl.setSettings(StringPool.BLANK);
+			layoutSetImpl.setSettings("");
 		}
 		else {
 			layoutSetImpl.setSettings(settings);
 		}
 
 		if (layoutSetPrototypeUuid == null) {
-			layoutSetImpl.setLayoutSetPrototypeUuid(StringPool.BLANK);
+			layoutSetImpl.setLayoutSetPrototypeUuid("");
 		}
 		else {
 			layoutSetImpl.setLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
@@ -238,21 +237,21 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 		objectOutput.writeLong(logoId);
 
 		if (themeId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(themeId);
 		}
 
 		if (colorSchemeId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(colorSchemeId);
 		}
 
 		if (css == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(css);
@@ -261,14 +260,14 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 		objectOutput.writeInt(pageCount);
 
 		if (settings == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(settings);
 		}
 
 		if (layoutSetPrototypeUuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(layoutSetPrototypeUuid);

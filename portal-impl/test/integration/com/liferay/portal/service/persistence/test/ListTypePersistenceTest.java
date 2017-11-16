@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -137,18 +136,18 @@ public class ListTypePersistenceTest {
 
 	@Test
 	public void testCountByType() throws Exception {
-		_persistence.countByType(StringPool.BLANK);
+		_persistence.countByType("");
 
-		_persistence.countByType(StringPool.NULL);
+		_persistence.countByType("null");
 
 		_persistence.countByType((String)null);
 	}
 
 	@Test
 	public void testCountByN_T() throws Exception {
-		_persistence.countByN_T(StringPool.BLANK, StringPool.BLANK);
+		_persistence.countByN_T("", "");
 
-		_persistence.countByN_T(StringPool.NULL, StringPool.NULL);
+		_persistence.countByN_T("null", "null");
 
 		_persistence.countByN_T((String)null, (String)null);
 	}

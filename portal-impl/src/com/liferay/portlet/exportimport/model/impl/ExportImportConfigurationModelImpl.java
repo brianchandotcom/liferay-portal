@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -442,7 +441,7 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -454,7 +453,7 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -500,7 +499,7 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -516,7 +515,7 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 	@Override
 	public String getDescription() {
 		if (_description == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _description;
@@ -555,7 +554,7 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 	@Override
 	public String getSettings() {
 		if (_settings == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _settings;
@@ -609,7 +608,7 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -621,7 +620,7 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 	@Override
 	public String getStatusByUserName() {
 		if (_statusByUserName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _statusByUserName;

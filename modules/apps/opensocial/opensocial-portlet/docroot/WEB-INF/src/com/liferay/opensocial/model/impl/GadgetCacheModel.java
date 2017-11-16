@@ -21,7 +21,6 @@ import com.liferay.opensocial.model.Gadget;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -95,7 +94,7 @@ public class GadgetCacheModel implements CacheModel<Gadget>, Externalizable {
 		GadgetImpl gadgetImpl = new GadgetImpl();
 
 		if (uuid == null) {
-			gadgetImpl.setUuid(StringPool.BLANK);
+			gadgetImpl.setUuid("");
 		}
 		else {
 			gadgetImpl.setUuid(uuid);
@@ -119,21 +118,21 @@ public class GadgetCacheModel implements CacheModel<Gadget>, Externalizable {
 		}
 
 		if (name == null) {
-			gadgetImpl.setName(StringPool.BLANK);
+			gadgetImpl.setName("");
 		}
 		else {
 			gadgetImpl.setName(name);
 		}
 
 		if (url == null) {
-			gadgetImpl.setUrl(StringPool.BLANK);
+			gadgetImpl.setUrl("");
 		}
 		else {
 			gadgetImpl.setUrl(url);
 		}
 
 		if (portletCategoryNames == null) {
-			gadgetImpl.setPortletCategoryNames(StringPool.BLANK);
+			gadgetImpl.setPortletCategoryNames("");
 		}
 		else {
 			gadgetImpl.setPortletCategoryNames(portletCategoryNames);
@@ -170,7 +169,7 @@ public class GadgetCacheModel implements CacheModel<Gadget>, Externalizable {
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -183,21 +182,21 @@ public class GadgetCacheModel implements CacheModel<Gadget>, Externalizable {
 		objectOutput.writeLong(modifiedDate);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (url == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(url);
 		}
 
 		if (portletCategoryNames == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(portletCategoryNames);

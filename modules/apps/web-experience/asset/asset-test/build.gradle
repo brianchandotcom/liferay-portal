@@ -22,6 +22,7 @@ dependencies {
 	testIntegrationCompile project(":apps:foundation:portal-search:portal-search-test-util")
 	testIntegrationCompile project(":apps:web-experience:asset:asset-categories-admin-web")
 	testIntegrationCompile project(":apps:web-experience:asset:asset-service")
+	testIntegrationCompile project(":apps:web-experience:asset:asset-tags-admin-web")
 	testIntegrationCompile project(":apps:web-experience:asset:asset-test-util")
 	testIntegrationCompile project(":apps:web-experience:export-import:export-import-test-util")
 }

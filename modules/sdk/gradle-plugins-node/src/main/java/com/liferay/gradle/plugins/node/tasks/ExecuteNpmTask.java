@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.node.tasks;
 
 import com.liferay.gradle.plugins.node.internal.util.FileUtil;
 import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.node.internal.util.NodePluginUtil;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
@@ -88,7 +89,7 @@ public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 					}
 
 					return new File(
-						getNodeDir(), "lib/node_modules/npm/bin/npm-cli.js");
+						NodePluginUtil.getNpmDir(nodeDir), "bin/npm-cli.js");
 				}
 
 			});

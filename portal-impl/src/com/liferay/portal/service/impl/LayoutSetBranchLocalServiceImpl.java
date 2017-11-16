@@ -515,7 +515,7 @@ public class LayoutSetBranchLocalServiceImpl
 				LayoutSetBranchNameException.TOO_SHORT);
 		}
 
-		if (name.length() > 100) {
+		if (name.length() > 75) {
 			throw new LayoutSetBranchNameException(
 				LayoutSetBranchNameException.TOO_LONG);
 		}

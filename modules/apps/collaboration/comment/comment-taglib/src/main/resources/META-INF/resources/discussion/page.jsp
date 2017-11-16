@@ -85,12 +85,14 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 						</c:if>
 
 						<%
+						Group siteGroup = themeDisplay.getSiteGroup();
+
 						boolean subscribed = SubscriptionLocalServiceUtil.isSubscribed(company.getCompanyId(), user.getUserId(), discussionTaglibHelper.getClassName(), discussionTaglibHelper.getClassPK());
 
 						String subscriptionURL = "javascript:" + randomNamespace + "subscribeToComments(" + !subscribed + ");";
 						%>
 
-						<c:if test="<%= themeDisplay.isSignedIn() %>">
+						<c:if test="<%= !siteGroup.isStagingGroup() && themeDisplay.isSignedIn() %>">
 							<c:choose>
 								<c:when test="<%= subscribed %>">
 									<liferay-ui:icon
@@ -140,12 +142,21 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 									</div>
 								</c:when>
 								<c:otherwise>
-									<liferay-ui:icon
-										iconCssClass="icon-reply"
-										label="<%= true %>"
-										message="please-sign-in-to-comment"
-										url="<%= themeDisplay.getURLSignIn() %>"
-									/>
+									<c:choose>
+										<c:when test="<%= siteGroup.isStagingGroup() %>">
+											<div class="alert alert-info">
+												<liferay-ui:message key="comments-are-read-only-in-staging" />
+											</div>
+										</c:when>
+										<c:otherwise>
+											<liferay-ui:icon
+												iconCssClass="icon-reply"
+												label="<%= true %>"
+												message="please-sign-in-to-comment"
+												url="<%= themeDisplay.getURLSignIn() %>"
+											/>
+										</c:otherwise>
+									</c:choose>
 								</c:otherwise>
 							</c:choose>
 						</c:if>

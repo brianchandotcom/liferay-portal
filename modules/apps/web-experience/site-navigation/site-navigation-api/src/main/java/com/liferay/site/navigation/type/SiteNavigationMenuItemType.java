@@ -46,4 +46,9 @@ public interface SiteNavigationMenuItemType {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException;
 
+	public void renderEditPage(
+			HttpServletRequest request, HttpServletResponse response,
+			SiteNavigationMenuItem siteNavigationMenuItem)
+		throws IOException;
+
 }

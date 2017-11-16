@@ -1,0 +1,6 @@
+Bundle-Name: Liferay RSS API
+Bundle-SymbolicName: com.liferay.rss.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.rss.constants
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Publication Tools

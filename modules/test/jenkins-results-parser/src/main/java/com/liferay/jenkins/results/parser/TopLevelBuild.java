@@ -755,7 +755,7 @@ public class TopLevelBuild extends BaseBuild {
 			"table", null,
 			Dom4JUtil.getNewElement(
 				"caption", null, captionText,
-				Integer.toString(tableRowElements.size())),
+				Integer.toString(getDownstreamBuildCount(result, status))),
 			getJenkinsReportTableColumnHeadersElement(),
 			tableRowElements.toArray(new Element[tableRowElements.size()]));
 	}

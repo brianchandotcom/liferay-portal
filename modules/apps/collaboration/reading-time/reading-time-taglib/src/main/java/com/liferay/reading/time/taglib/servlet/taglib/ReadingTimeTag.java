@@ -130,15 +130,18 @@ public class ReadingTimeTag extends AttributesTagSupport {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		ServiceReference<ReadingTimeMessageProvider> serviceReference =
-			bundleContext.getServiceReference(ReadingTimeMessageProvider.class);
+		if (bundleContext != null) {
+			ServiceReference<ReadingTimeMessageProvider> serviceReference =
+				bundleContext.getServiceReference(
+					ReadingTimeMessageProvider.class);
 
-		if (serviceReference != null) {
-			ReadingTimeMessageProvider readingTimeMessageProvider =
-				bundleContext.getService(serviceReference);
+			if (serviceReference != null) {
+				ReadingTimeMessageProvider readingTimeMessageProvider =
+					bundleContext.getService(serviceReference);
 
-			return readingTimeMessageProvider.provide(
-				readingTime, PortalUtil.getLocale(request));
+				return readingTimeMessageProvider.provide(
+					readingTime, PortalUtil.getLocale(request));
+			}
 		}
 
 		return null;

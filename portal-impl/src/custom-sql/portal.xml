@@ -1287,8 +1287,7 @@
 					(Role_.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.TEAM$]) AND
 					(Team.groupId = ?) AND
 					(Users_Teams.userId = ?)
-			)
-			UNION
+			) UNION
 			(
 				SELECT
 					{Role_.*}
@@ -1369,8 +1368,7 @@
 						Users_Roles.roleId = Role_.roleId
 				WHERE
 					Users_Roles.userId = ?
-			)
-			UNION
+			) UNION
 			(
 				SELECT
 					{Role_.*}

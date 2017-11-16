@@ -15,7 +15,6 @@
 package com.liferay.site.navigation.menu.item.url.internal.type;
 
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.site.navigation.menu.item.url.internal.constants.SiteNavigationMenuItemTypeURLConstants;
@@ -69,15 +68,6 @@ public class URLSiteNavigationMenuItemType
 	@Override
 	public String getType() {
 		return SiteNavigationMenuItemTypeURLConstants.URL;
-	}
-
-	@Override
-	public JSONObject getViewContext(
-			HttpServletRequest request, HttpServletResponse response,
-			SiteNavigationMenuItem siteNavigationMenuItem)
-		throws Exception {
-
-		return null;
 	}
 
 	@Override

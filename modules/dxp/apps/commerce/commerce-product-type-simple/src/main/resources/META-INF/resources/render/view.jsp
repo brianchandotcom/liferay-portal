@@ -133,8 +133,8 @@ request.setAttribute("cpDefinition", cpDefinition);
 						</c:if>
 
 						<c:if test="<%= !cpAttachmentFileEntries.isEmpty() %>">
-							<li role="presentation">
-								<a aria-controls="<portlet:namespace />attachments" aria-expanded="false" data-toggle="tab" href="#<portlet:namespace />attachments" role="tab">
+							<li class="nav-item" role="presentation">
+								<a aria-controls="<portlet:namespace />attachments" aria-expanded="false" class="nav-link" data-toggle="tab" href="#<portlet:namespace />attachments" role="tab">
 									<%= LanguageUtil.get(resourceBundle, "attachments") %>
 								</a>
 							</li>

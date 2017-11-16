@@ -378,7 +378,7 @@
 		</copy>
 	</target>
 
-	<target name="reset-lpkg">
+	<target depends="get-osgi-static-modules,init" name="reset-lpkg">
 		<subant genericantfile="${modules.dir}/build-app-module.xml" target="reset-artifact">
 			<dirset refid="app.module.dirs" />
 			<property name="osgi.dir" value="${osgi.dir}" />

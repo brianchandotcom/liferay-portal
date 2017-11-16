@@ -454,7 +454,7 @@
 		<delete dir="${tmp.dir}" />
 	</target>
 
-	<target depends="reset-artifact-dependencies" name="reset-artifact">
+	<target depends="get-artifact-properties,reset-artifact-dependencies" name="reset-artifact">
 		<move failonerror="false" file="${artifact.location.dest}" tofile="${artifact.location.src}" />
 	</target>
 

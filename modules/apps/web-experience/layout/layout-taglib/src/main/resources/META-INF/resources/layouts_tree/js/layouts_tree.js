@@ -9,7 +9,7 @@ AUI.add(
 
 		var NODE_ID_SELECTOR_TPL = '[id^="{treeId}_{layoutId}"]';
 
-		var NODE_LINK_TPL = '<a class="{cssClass}" data-url="{url}" data-uuid="{uuid}" href="{layoutURL}" id="{id}" title="{title}">{label}</a>';
+		var NODE_LINK_TPL = '<a class="{cssClass}" data-regular-url="{regularURL}" data-url="{url}" data-uuid="{uuid}" href="{layoutURL}" id="{id}" title="{title}">{label}</a>';
 
 		var STR_BOUNDING_BOX = 'boundingBox';
 

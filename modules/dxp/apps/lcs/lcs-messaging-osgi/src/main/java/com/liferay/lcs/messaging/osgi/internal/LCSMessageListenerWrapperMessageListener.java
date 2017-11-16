@@ -16,10 +16,14 @@ package com.liferay.lcs.messaging.osgi.internal;
 
 import com.liferay.lcs.messaging.LCSMessageListener;
 import com.liferay.lcs.messaging.LCSMessageListenerException;
-import com.liferay.lcs.messaging.MessageBusMessage;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Riccardo Ferrari
@@ -40,23 +44,50 @@ public class LCSMessageListenerWrapperMessageListener
 	@Override
 	public void receive(Message message) throws MessageListenerException {
 		try {
-			MessageBusMessage messageBusMessage = new MessageBusMessage();
+			String destinationName = message.getDestinationName();
 
-			messageBusMessage.setCreateTime(System.currentTimeMillis());
-			messageBusMessage.setDestinationName(message.getDestinationName());
-			messageBusMessage.setPayload(message.getPayload());
-			messageBusMessage.setResponse((String)message.getResponse());
-			messageBusMessage.setResponseDestinationName(
-				message.getResponseDestinationName());
-			messageBusMessage.setResponseId(message.getResponseId());
-			messageBusMessage.setValues(message.getValues());
+			String payload = getStringFromObject(message.getPayload());
 
-			_lcsMessageListener.receive(messageBusMessage);
+			Map<String, Object> values = message.getValues();
+
+			Map<String, String> metadata = new HashMap<>();
+
+			for (String key : values.keySet()) {
+				String stringValue = getStringFromObject(values.get(key));
+
+				metadata.put(key, stringValue);
+			}
+
+			String responseDestinationName =
+				message.getResponseDestinationName();
+
+			_lcsMessageListener.receive(
+				destinationName, metadata, payload, responseDestinationName);
 		}
 		catch (LCSMessageListenerException lcsmle) {
 			throw new MessageListenerException(lcsmle);
 		}
 	}
+
+	protected String getStringFromObject(Object obj) {
+		String string = null;
+
+		if (obj instanceof String) {
+			string = (String)obj;
+		}
+		else {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Object not instance of String.class");
+			}
+
+			string = String.valueOf(obj);
+		}
+
+		return string;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LCSMessageListenerWrapperMessageListener.class);
 
 	private final LCSMessageListener _lcsMessageListener;
 

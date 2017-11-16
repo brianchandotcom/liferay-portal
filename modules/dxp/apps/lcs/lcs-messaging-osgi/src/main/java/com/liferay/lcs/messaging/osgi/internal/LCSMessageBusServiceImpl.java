@@ -16,13 +16,13 @@ package com.liferay.lcs.messaging.osgi.internal;
 
 import com.liferay.lcs.messaging.LCSMessageBusService;
 import com.liferay.lcs.messaging.LCSMessageListener;
-import com.liferay.lcs.messaging.MessageBusMessage;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.MapUtil;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -85,21 +85,31 @@ public class LCSMessageBusServiceImpl implements LCSMessageBusService {
 
 	@Override
 	public void sendMessage(
-		String destinationName, MessageBusMessage messageBusMessage) {
+		String destinationName, Map<String, String> metadata, String payload,
+		String responseDestinationName) {
 
 		_destinationResolver.resolveRemoteDestination(destinationName);
 
 		Message message = new Message();
 
 		message.setDestinationName(destinationName);
-		message.setPayload(messageBusMessage.getPayload());
-		message.setResponse(messageBusMessage.getResponse());
-		message.setResponseDestinationName(
-			messageBusMessage.getResponseDestinationName());
-		message.setResponseId(messageBusMessage.getResponseId());
-		message.setValues(messageBusMessage.getValues());
+		message.setPayload(payload);
+		message.setResponseDestinationName(responseDestinationName);
+
+		if (metadata != null) {
+			Map<String, Object> values = new HashMap<>();
+
+			values.putAll(metadata);
+
+			message.setValues(values);
+		}
 
 		_messageBus.sendMessage(message.getDestinationName(), message);
+	}
+
+	@Override
+	public void sendMessage(String destinationName, String payload) {
+		sendMessage(destinationName, null, payload, null);
 	}
 
 	public synchronized void unregisterLCSMessageListener(

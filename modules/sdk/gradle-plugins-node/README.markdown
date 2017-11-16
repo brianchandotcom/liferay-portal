@@ -35,8 +35,7 @@ Property Name | Type | Default Value | Description
 <a name="download"></a>`download` | `boolean` | `true` | Whether to download and use a local and isolated Node.js distribution instead of the one installed in the system.
 `global` | `boolean` | `false` | Whether to use a single Node.js installation for the whole multi-project build. This reduces the time required to unpack the Node.js distribution and the time required to download NPM packages thanks to a shared packages cache. If `download` is `false`, this property has no effect.
 <a name="nodedir"></a>`nodeDir` | `File` | <p>**If `global` is `true`:** `"${rootProject.buildDir}/node"`</p><p>**Otherwise:** `"${project.buildDir}/node"`</p> | The directory where the Node.js distribution is unpacked. If `download` is `false`, this property has no effect.
-`nodeExeUrl` | `String` | `"http://nodejs.org/dist/v${node.nodeVersion}/${arch}/node.exe"` | The URL of `node.exe` to download when on Windows. If `download` is `false`, this property has no effect.
-`nodeUrl` | `String` | `"http://nodejs.org/dist/v${node.nodeVersion}/node-v${node.nodeVersion}-${platform}-x${bitMode}.tar.gz"` | The URL of the Node.js distribution to download. If `download` is `false`, this property has no effect.
+`nodeUrl` | `String` | `"http://nodejs.org/dist/v${node.nodeVersion}/node-v${node.nodeVersion}-${platform}-x${bitMode}.${extension}"` | The URL of the Node.js distribution to download. If `download` is `false`, this property has no effect.
 `nodeVersion` | `String` | `"5.5.0"` | The version of the Node.js distribution to use. If `download` is `false`, this property has no effect.
 `npmArgs` | `List<String>` | `[]` | The arguments added automatically to every task of type [`ExecuteNpmTask`](#executenpmtask).
 `npmUrl` | `String` | `"https://registry.npmjs.org/npm/-/npm-${node.npmVersion}.tgz"` | The URL of the NPM version to download. If `download` is `false`, this property has no effect.
@@ -96,7 +95,6 @@ The purpose of this task is to download and unpack a Node.js distribution.
 Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
 `nodeDir` | `File` | `null` | The directory where the Node.js distribution is unpacked.
-`nodeExeUrl` | `String` | `null` | The URL of `node.exe` to download when on Windows.
 `nodeUrl` | `String` | `null` | The URL of the Node.js distribution to download.
 `npmUrl` | `String` | `null` | The URL of the NPM version to download.
 
@@ -156,7 +154,7 @@ the following properties set by default:
 Property Name | Default Value
 ------------- | -------------
 `command` | <p>**If `nodeDir` is `null`:** `"npm"`</p><p>**Otherwise:** `"node"`
-`scriptFile` | <p>**If `nodeDir` is `null`:** `null`</p><p>**Otherwise:** `"${nodeDir}/lib/node_modules/npm/bin/npm-cli.js"`
+`scriptFile` | <p>**If `nodeDir` is `null`:** `null`</p><p>**Otherwise:** `"${nodeDir}/lib/node_modules/npm/bin/npm-cli.js"` or `"${nodeDir}/node_modules/npm/bin/npm-cli.js"` on Windows.</p>
 
 #### Task Properties
 

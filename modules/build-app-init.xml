@@ -90,7 +90,11 @@
 	>
 		<dirset
 			dir="${modules.dir}"
-			excludes="${app.dir.private}/**/*-test,${app.dir.public}/**/*-test,${app.module.dirs.excludes.dxp},${app.module.dirs.excludes.lfrbuild.app.server.lib}"
+			excludes="
+				apps/${app.name}/**/*-test*,
+				apps/${app.name}/private/**/*-test*,
+				${app.module.dirs.excludes.dxp},
+				${app.module.dirs.excludes.lfrbuild.app.server.lib}"
 			id="app.module.dirs"
 			includes="${app.module.dirs.includes}"
 		/>
@@ -123,9 +127,12 @@
 		</loadfile>
 	</target>
 
-	<target depends="get-app-dirs" name="get-app-module-dirs-excludes-lfrbuild-app-server-lib">
+	<target name="get-app-module-dirs-excludes-lfrbuild-app-server-lib">
 		<pathconvert pathsep="," property="app.module.dirs.excludes.lfrbuild.app.server.lib">
-			<dirset dir="${modules.dir}" includes="${app.dir.private}/**,${app.dir.public}/**">
+			<chainedmapper>
+				<globmapper from="${modules.dir}${file.separator}*" to="*" />
+			</chainedmapper>
+			<dirset dir="${modules.dir}" includes="apps/${app.name}/**,private/apps/${app.name}/**">
 				<present targetdir="${modules.dir}">
 					<mapper from="*" to="*/.lfrbuild-app-server-lib" type="glob" />
 				</present>

@@ -955,81 +955,130 @@ information.
 
 			<prepare-portal-artifact-pom snapshot.version.suffix="${snapshot.version.suffix}" />
 
-			<artifact:deploy file="${artifact.name}.@{packaging}">
-				<attach-files />
-				<pom file="pom.xml" />
-				<remoteRepository url="${remote.repository.url}">
-					<authentication password="${remote.repository.password}" username="${remote.repository.username}" />
-				</remoteRepository>
-			</artifact:deploy>
-
-			<delete file="pom.xml" />
-
 			<if>
 				<and>
 					<not>
 						<istrue value="@{snapshot}" />
 					</not>
-					<available file="bnd.bnd" />
+					<isfalse value="${publish.portal.release.force}" />
+					<available file="${project.dir}/modules/.releng/${artifact.name}.properties" />
 				</and>
 				<then>
-					<antelope:stringutil property="artifact.version.micro.beginindex" string="${artifact.version}">
-						<antelope:lastindexof string="." />
-					</antelope:stringutil>
+					<loadproperties prefix="latest" srcFile="${project.dir}/modules/.releng/${artifact.name}.properties">
+						<filterchain>
+							<linecontains>
+								<contains value="artifact.git.id" />
+							</linecontains>
+						</filterchain>
+					</loadproperties>
 
-					<antelope:stringutil property="artifact.version.major.minor" string="${artifact.version}">
-						<antelope:substring endindex="${artifact.version.micro.beginindex}" />
-					</antelope:stringutil>
+					<exec executable="git" failonerror="true" outputproperty="artifact.git.log">
+						<arg value="log" />
+						<arg value="--format=%s" />
+						<arg value="${latest.artifact.git.id}..HEAD" />
+						<arg value="." />
+					</exec>
 
-					<antelope:math
-						datatype="int"
-						operand1="${artifact.version.micro.beginindex}"
-						operand2="1"
-						operation="+"
-						result="artifact.version.micro.beginindex"
-					/>
+					<loadresource property="artifact.git.log.changes" quiet="true" unless:blank="${artifact.git.log}">
+						<propertyresource name="artifact.git.log" />
+						<filterchain>
+							<linecontains negate="true">
+								<contains value="artifact:ignore" />
+							</linecontains>
+						</filterchain>
+					</loadresource>
 
-					<antelope:stringutil property="artifact.version.micro" string="${artifact.version}">
-						<antelope:substring beginindex="${artifact.version.micro.beginindex}" />
-					</antelope:stringutil>
-
-					<antelope:math
-						datatype="int"
-						operand1="${artifact.version.micro}"
-						operand2="1"
-						operation="add"
-						result="artifact.version.micro"
-					/>
-
-					<replace
-						failOnNoReplacements="true"
-						file="bnd.bnd"
-						token="Bundle-Version: ${artifact.version}"
-						value="Bundle-Version: ${artifact.version.major.minor}.${artifact.version.micro}"
-					/>
+					<condition property="artifact.publish.skip">
+						<not>
+							<isset property="artifact.git.log.changes" />
+						</not>
+					</condition>
 				</then>
 			</if>
 
 			<if>
-				<not>
-					<istrue value="@{snapshot}" />
-				</not>
+				<istrue value="${artifact.publish.skip}" />
 				<then>
-					<exec executable="git" failonerror="true" outputproperty="artifact.git.id">
-						<arg value="rev-list" />
-						<arg value="-1" />
-						<arg value="HEAD" />
-						<arg value="." />
-					</exec>
-
-					<echo file="${project.dir}/modules/.releng/${artifact.name}.properties">artifact.git.id=${artifact.git.id}
-artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed.artifact.name}/${artifact.version}/com.liferay.${processed.artifact.name}-${artifact.version}.@{packaging}</echo>
+					<echo>${artifact.name} is not stale and does not need to be published.</echo>
 				</then>
+				<else>
+					<artifact:deploy file="${artifact.name}.@{packaging}">
+						<attach-files />
+						<pom file="pom.xml" />
+						<remoteRepository url="${remote.repository.url}">
+							<authentication password="${remote.repository.password}" username="${remote.repository.username}" />
+						</remoteRepository>
+					</artifact:deploy>
+
+					<if>
+						<and>
+							<not>
+								<istrue value="@{snapshot}" />
+							</not>
+							<available file="bnd.bnd" />
+						</and>
+						<then>
+							<antelope:stringutil property="artifact.version.micro.beginindex" string="${artifact.version}">
+								<antelope:lastindexof string="." />
+							</antelope:stringutil>
+
+							<antelope:stringutil property="artifact.version.major.minor" string="${artifact.version}">
+								<antelope:substring endindex="${artifact.version.micro.beginindex}" />
+							</antelope:stringutil>
+
+							<antelope:math
+								datatype="int"
+								operand1="${artifact.version.micro.beginindex}"
+								operand2="1"
+								operation="+"
+								result="artifact.version.micro.beginindex"
+							/>
+
+							<antelope:stringutil property="artifact.version.micro" string="${artifact.version}">
+								<antelope:substring beginindex="${artifact.version.micro.beginindex}" />
+							</antelope:stringutil>
+
+							<antelope:math
+								datatype="int"
+								operand1="${artifact.version.micro}"
+								operand2="1"
+								operation="add"
+								result="artifact.version.micro"
+							/>
+
+							<replace
+								failOnNoReplacements="true"
+								file="bnd.bnd"
+								token="Bundle-Version: ${artifact.version}"
+								value="Bundle-Version: ${artifact.version.major.minor}.${artifact.version.micro}"
+							/>
+						</then>
+					</if>
+
+					<if>
+						<not>
+							<istrue value="@{snapshot}" />
+						</not>
+						<then>
+							<exec executable="git" failonerror="true" outputproperty="artifact.git.id">
+								<arg value="rev-list" />
+								<arg value="-1" />
+								<arg value="HEAD" />
+								<arg value="." />
+							</exec>
+
+							<echo file="${project.dir}/modules/.releng/${artifact.name}.properties">artifact.git.id=${artifact.git.id}
+artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed.artifact.name}/${artifact.version}/com.liferay.${processed.artifact.name}-${artifact.version}.@{packaging}</echo>
+						</then>
+					</if>
+
+					<propertyfile file="../.gradle/gradle.properties">
+						<entry key="com.liferay.${processed.artifact.name}.version" value="${artifact.version}${snapshot.version.suffix}" />
+					</propertyfile>
+				</else>
 			</if>
 
-			<propertyfile file="../.gradle/gradle.properties">
-				<entry key="com.liferay.${processed.artifact.name}.version" value="${artifact.version}${snapshot.version.suffix}" />
-			</propertyfile>
+			<delete file="pom.xml" />
 		</sequential>
 	</macrodef>
 

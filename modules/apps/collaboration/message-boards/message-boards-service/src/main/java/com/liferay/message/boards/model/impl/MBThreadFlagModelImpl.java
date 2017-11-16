@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.model.impl;
+package com.liferay.message.boards.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -21,8 +21,8 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.message.boards.kernel.model.MBThreadFlag;
-import com.liferay.message.boards.kernel.model.MBThreadFlagModel;
+import com.liferay.message.boards.model.MBThreadFlag;
+import com.liferay.message.boards.model.MBThreadFlagModel;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -56,11 +56,8 @@ import java.util.Map;
  * @see MBThreadFlagImpl
  * @see MBThreadFlag
  * @see MBThreadFlagModel
- * @deprecated As of 7.0.0, replaced by {@link
-            com.liferay.message.boards.model.impl.MBThreadFlagImpl}
  * @generated
  */
-@Deprecated
 @ProviderType
 public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 	implements MBThreadFlagModel {
@@ -104,14 +101,14 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.message.boards.kernel.model.MBThreadFlag"),
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.message.boards.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.message.boards.model.MBThreadFlag"),
 			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.message.boards.kernel.model.MBThreadFlag"),
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.message.boards.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.message.boards.model.MBThreadFlag"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.message.boards.kernel.model.MBThreadFlag"),
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.message.boards.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.message.boards.model.MBThreadFlag"),
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
@@ -119,8 +116,8 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 	public static final long USERID_COLUMN_BITMASK = 8L;
 	public static final long UUID_COLUMN_BITMASK = 16L;
 	public static final long THREADFLAGID_COLUMN_BITMASK = 32L;
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.message.boards.kernel.model.MBThreadFlag"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.message.boards.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.message.boards.model.MBThreadFlag"));
 
 	public MBThreadFlagModelImpl() {
 	}
@@ -653,7 +650,7 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.message.boards.kernel.model.MBThreadFlag");
+		sb.append("com.liferay.message.boards.model.MBThreadFlag");
 		sb.append("</model-name>");
 
 		sb.append(

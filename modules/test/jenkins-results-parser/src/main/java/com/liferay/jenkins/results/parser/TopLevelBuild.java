@@ -53,14 +53,10 @@ public class TopLevelBuild extends BaseBuild {
 	public void addDownstreamBuilds(String... urls) {
 		super.addDownstreamBuilds(urls);
 
+		String result = getResult();
+
 		if ((result != null) && (urls.length > 0)) {
-			result = null;
-
-			String status = getStatus();
-
-			if (status.equals("completed")) {
-				setStatus("running");
-			}
+			setResult(null);
 		}
 	}
 
@@ -234,33 +230,34 @@ public class TopLevelBuild extends BaseBuild {
 
 	@Override
 	public String getResult() {
-		super.getResult();
+		String result = super.getResult();
 
 		if (!downstreamBuilds.isEmpty() && (result == null)) {
 			for (Build downstreamBuild : downstreamBuilds) {
 				String downstreamBuildResult = downstreamBuild.getResult();
 
 				if (downstreamBuildResult == null) {
-					result = null;
+					setResult(null);
 
-					return result;
+					return null;
 				}
+				else {
+					if (!downstreamBuildResult.equals("SUCCESS")) {
+						setResult("FAILURE");
 
-				if (!downstreamBuildResult.equals("SUCCESS")) {
-					result = "FAILURE";
-
-					break;
+						break;
+					}
 				}
 			}
+
+			result = super.getResult();
 
 			if (result == null) {
-				result = "SUCCESS";
+				setResult("SUCCESS");
 			}
-
-			setStatus("completed");
 		}
 
-		return result;
+		return super.getResult();
 	}
 
 	@Override
@@ -881,6 +878,8 @@ public class TopLevelBuild extends BaseBuild {
 
 	protected Element getJenkinsReportTopLevelTableElement() {
 		Element topLevelTableElement = Dom4JUtil.getNewElement("table");
+
+		String result = getResult();
 
 		if (result != null) {
 			Dom4JUtil.getNewElement(

@@ -47,6 +47,8 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 
 	@Override
 	public String getResult() {
+		String result = super.getResult();
+
 		if (_validResult) {
 			return result;
 		}
@@ -101,7 +103,9 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 					getActualCommentTokens(stopPropertiesTempMap),
 					getExpectedCommentTokens())) {
 
-				result = "SUCCESS";
+				setResult("SUCCESS");
+
+				result = super.getResult();
 			}
 
 			return result;

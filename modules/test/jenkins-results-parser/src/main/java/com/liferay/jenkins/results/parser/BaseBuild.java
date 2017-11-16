@@ -433,6 +433,8 @@ public abstract class BaseBuild implements Build {
 
 		int i = 0;
 
+		String result = getResult();
+
 		while (result == null) {
 			if (i == 20) {
 				throw new RuntimeException(
@@ -444,12 +446,12 @@ public abstract class BaseBuild implements Build {
 
 			JenkinsResultsParserUtil.sleep(1000 * 30);
 
-			getResult();
+			result = getResult();
 
 			i++;
 		}
 
-		if (result.equals("SUCCESS")) {
+		if (_result.equals("SUCCESS")) {
 			return Dom4JUtil.getNewAnchorElement(
 				getBuildURL(), getDisplayName());
 		}
@@ -743,17 +745,17 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getResult() {
-		if ((result == null) && (getBuildURL() != null)) {
+		if ((_result == null) && (getBuildURL() != null)) {
 			JSONObject resultJSONObject = getBuildJSONObject("result");
 
-			result = resultJSONObject.optString("result");
+			_result = resultJSONObject.optString("result");
 
-			if (result.equals("")) {
-				result = null;
+			if (_result.equals("")) {
+				_result = null;
 			}
 		}
 
-		return result;
+		return _result;
 	}
 
 	@Override
@@ -2088,7 +2090,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected void reset() {
-		result = null;
+		_result = null;
 
 		badBuildNumbers.add(getBuildNumber());
 
@@ -2211,6 +2213,21 @@ public abstract class BaseBuild implements Build {
 		branchName = "master";
 	}
 
+	protected void setResult(String result) {
+		if (((result == null) && (_result != null)) ||
+			!result.equals(_result)) {
+
+			_result = result;
+
+			if (_result == null) {
+				setStatus("running");
+			}
+			else {
+				setStatus("completed");
+			}
+		}
+	}
+
 	protected void setStatus(String status) {
 		if (((status == null) && (_status != null)) ||
 			!status.equals(_status)) {
@@ -2274,7 +2291,6 @@ public abstract class BaseBuild implements Build {
 	protected List<ReinvokeRule> reinvokeRules =
 		ReinvokeRule.getReinvokeRules();
 	protected String repositoryName;
-	protected String result;
 	protected List<SlaveOfflineRule> slaveOfflineRules =
 		SlaveOfflineRule.getSlaveOfflineRules();
 	protected long statusModifiedTime;
@@ -2394,6 +2410,7 @@ public abstract class BaseBuild implements Build {
 	private JenkinsSlave _jenkinsSlave;
 	private Map<String, String> _parameters = new HashMap<>();
 	private final Build _parentBuild;
+	private String _result;
 	private String _status;
 
 }

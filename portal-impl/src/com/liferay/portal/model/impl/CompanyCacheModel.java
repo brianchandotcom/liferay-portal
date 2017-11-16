@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -115,28 +114,28 @@ public class CompanyCacheModel implements CacheModel<Company>, Externalizable,
 		companyImpl.setAccountId(accountId);
 
 		if (webId == null) {
-			companyImpl.setWebId(StringPool.BLANK);
+			companyImpl.setWebId("");
 		}
 		else {
 			companyImpl.setWebId(webId);
 		}
 
 		if (key == null) {
-			companyImpl.setKey(StringPool.BLANK);
+			companyImpl.setKey("");
 		}
 		else {
 			companyImpl.setKey(key);
 		}
 
 		if (mx == null) {
-			companyImpl.setMx(StringPool.BLANK);
+			companyImpl.setMx("");
 		}
 		else {
 			companyImpl.setMx(mx);
 		}
 
 		if (homeURL == null) {
-			companyImpl.setHomeURL(StringPool.BLANK);
+			companyImpl.setHomeURL("");
 		}
 		else {
 			companyImpl.setHomeURL(homeURL);
@@ -194,28 +193,28 @@ public class CompanyCacheModel implements CacheModel<Company>, Externalizable,
 		objectOutput.writeLong(accountId);
 
 		if (webId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(webId);
 		}
 
 		if (key == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(key);
 		}
 
 		if (mx == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(mx);
 		}
 
 		if (homeURL == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(homeURL);

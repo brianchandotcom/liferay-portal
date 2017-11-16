@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -257,27 +256,27 @@ public class KBArticlePersistenceTest {
 
 	@Test
 	public void testCountByUuid() throws Exception {
-		_persistence.countByUuid(StringPool.BLANK);
+		_persistence.countByUuid("");
 
-		_persistence.countByUuid(StringPool.NULL);
+		_persistence.countByUuid("null");
 
 		_persistence.countByUuid((String)null);
 	}
 
 	@Test
 	public void testCountByUUID_G() throws Exception {
-		_persistence.countByUUID_G(StringPool.BLANK, RandomTestUtil.nextLong());
+		_persistence.countByUUID_G("", RandomTestUtil.nextLong());
 
-		_persistence.countByUUID_G(StringPool.NULL, 0L);
+		_persistence.countByUUID_G("null", 0L);
 
 		_persistence.countByUUID_G((String)null, 0L);
 	}
 
 	@Test
 	public void testCountByUuid_C() throws Exception {
-		_persistence.countByUuid_C(StringPool.BLANK, RandomTestUtil.nextLong());
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
 
-		_persistence.countByUuid_C(StringPool.NULL, 0L);
+		_persistence.countByUuid_C("null", 0L);
 
 		_persistence.countByUuid_C((String)null, 0L);
 	}
@@ -528,9 +527,9 @@ public class KBArticlePersistenceTest {
 	@Test
 	public void testCountByG_KBFI_UT() throws Exception {
 		_persistence.countByG_KBFI_UT(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), StringPool.BLANK);
+			RandomTestUtil.nextLong(), "");
 
-		_persistence.countByG_KBFI_UT(0L, 0L, StringPool.NULL);
+		_persistence.countByG_KBFI_UT(0L, 0L, "null");
 
 		_persistence.countByG_KBFI_UT(0L, 0L, (String)null);
 	}
@@ -553,11 +552,10 @@ public class KBArticlePersistenceTest {
 
 	@Test
 	public void testCountByG_S_L() throws Exception {
-		_persistence.countByG_S_L(RandomTestUtil.nextLong(), StringPool.BLANK,
+		_persistence.countByG_S_L(RandomTestUtil.nextLong(), "",
 			RandomTestUtil.randomBoolean());
 
-		_persistence.countByG_S_L(0L, StringPool.NULL,
-			RandomTestUtil.randomBoolean());
+		_persistence.countByG_S_L(0L, "null", RandomTestUtil.randomBoolean());
 
 		_persistence.countByG_S_L(0L, (String)null,
 			RandomTestUtil.randomBoolean());
@@ -566,19 +564,16 @@ public class KBArticlePersistenceTest {
 	@Test
 	public void testCountByG_S_LArrayable() throws Exception {
 		_persistence.countByG_S_L(RandomTestUtil.nextLong(),
-			new String[] {
-				RandomTestUtil.randomString(), StringPool.BLANK, StringPool.NULL,
-				null, null
-			}, RandomTestUtil.randomBoolean());
+			new String[] { RandomTestUtil.randomString(), "", "null", null, null },
+			RandomTestUtil.randomBoolean());
 	}
 
 	@Test
 	public void testCountByG_S_M() throws Exception {
-		_persistence.countByG_S_M(RandomTestUtil.nextLong(), StringPool.BLANK,
+		_persistence.countByG_S_M(RandomTestUtil.nextLong(), "",
 			RandomTestUtil.randomBoolean());
 
-		_persistence.countByG_S_M(0L, StringPool.NULL,
-			RandomTestUtil.randomBoolean());
+		_persistence.countByG_S_M(0L, "null", RandomTestUtil.randomBoolean());
 
 		_persistence.countByG_S_M(0L, (String)null,
 			RandomTestUtil.randomBoolean());
@@ -587,18 +582,16 @@ public class KBArticlePersistenceTest {
 	@Test
 	public void testCountByG_S_MArrayable() throws Exception {
 		_persistence.countByG_S_M(RandomTestUtil.nextLong(),
-			new String[] {
-				RandomTestUtil.randomString(), StringPool.BLANK, StringPool.NULL,
-				null, null
-			}, RandomTestUtil.randomBoolean());
+			new String[] { RandomTestUtil.randomString(), "", "null", null, null },
+			RandomTestUtil.randomBoolean());
 	}
 
 	@Test
 	public void testCountByG_S_S() throws Exception {
-		_persistence.countByG_S_S(RandomTestUtil.nextLong(), StringPool.BLANK,
+		_persistence.countByG_S_S(RandomTestUtil.nextLong(), "",
 			RandomTestUtil.nextInt());
 
-		_persistence.countByG_S_S(0L, StringPool.NULL, 0);
+		_persistence.countByG_S_S(0L, "null", 0);
 
 		_persistence.countByG_S_S(0L, (String)null, 0);
 	}
@@ -606,19 +599,16 @@ public class KBArticlePersistenceTest {
 	@Test
 	public void testCountByG_S_SArrayable() throws Exception {
 		_persistence.countByG_S_S(RandomTestUtil.nextLong(),
-			new String[] {
-				RandomTestUtil.randomString(), StringPool.BLANK, StringPool.NULL,
-				null, null
-			}, RandomTestUtil.nextInt());
+			new String[] { RandomTestUtil.randomString(), "", "null", null, null },
+			RandomTestUtil.nextInt());
 	}
 
 	@Test
 	public void testCountByG_KBFI_UT_ST() throws Exception {
 		_persistence.countByG_KBFI_UT_ST(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), StringPool.BLANK,
-			RandomTestUtil.nextInt());
+			RandomTestUtil.nextLong(), "", RandomTestUtil.nextInt());
 
-		_persistence.countByG_KBFI_UT_ST(0L, 0L, StringPool.NULL, 0);
+		_persistence.countByG_KBFI_UT_ST(0L, 0L, "null", 0);
 
 		_persistence.countByG_KBFI_UT_ST(0L, 0L, (String)null, 0);
 	}

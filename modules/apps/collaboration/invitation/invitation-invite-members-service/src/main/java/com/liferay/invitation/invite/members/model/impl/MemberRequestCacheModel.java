@@ -21,7 +21,6 @@ import com.liferay.invitation.invite.members.model.MemberRequest;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -107,7 +106,7 @@ public class MemberRequestCacheModel implements CacheModel<MemberRequest>,
 		memberRequestImpl.setUserId(userId);
 
 		if (userName == null) {
-			memberRequestImpl.setUserName(StringPool.BLANK);
+			memberRequestImpl.setUserName("");
 		}
 		else {
 			memberRequestImpl.setUserName(userName);
@@ -128,7 +127,7 @@ public class MemberRequestCacheModel implements CacheModel<MemberRequest>,
 		}
 
 		if (key == null) {
-			memberRequestImpl.setKey(StringPool.BLANK);
+			memberRequestImpl.setKey("");
 		}
 		else {
 			memberRequestImpl.setKey(key);
@@ -179,7 +178,7 @@ public class MemberRequestCacheModel implements CacheModel<MemberRequest>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -189,7 +188,7 @@ public class MemberRequestCacheModel implements CacheModel<MemberRequest>,
 		objectOutput.writeLong(modifiedDate);
 
 		if (key == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(key);

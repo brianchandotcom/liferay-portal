@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -378,7 +377,7 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -407,7 +406,7 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 	@Override
 	public String getComments() {
 		if (_comments == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _comments;
@@ -423,7 +422,7 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 	@Override
 	public String getReplyComments() {
 		if (_replyComments == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _replyComments;
@@ -465,7 +464,7 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 

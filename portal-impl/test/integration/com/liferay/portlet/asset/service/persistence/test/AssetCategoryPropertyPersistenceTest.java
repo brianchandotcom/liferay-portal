@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -178,18 +177,18 @@ public class AssetCategoryPropertyPersistenceTest {
 
 	@Test
 	public void testCountByC_K() throws Exception {
-		_persistence.countByC_K(RandomTestUtil.nextLong(), StringPool.BLANK);
+		_persistence.countByC_K(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByC_K(0L, StringPool.NULL);
+		_persistence.countByC_K(0L, "null");
 
 		_persistence.countByC_K(0L, (String)null);
 	}
 
 	@Test
 	public void testCountByCA_K() throws Exception {
-		_persistence.countByCA_K(RandomTestUtil.nextLong(), StringPool.BLANK);
+		_persistence.countByCA_K(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByCA_K(0L, StringPool.NULL);
+		_persistence.countByCA_K(0L, "null");
 
 		_persistence.countByCA_K(0L, (String)null);
 	}

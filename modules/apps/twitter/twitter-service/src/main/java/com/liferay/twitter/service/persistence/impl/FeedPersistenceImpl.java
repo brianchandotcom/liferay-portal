@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -123,7 +122,7 @@ public class FeedPersistenceImpl extends BasePersistenceImpl<Feed>
 			msg.append(", twitterScreenName=");
 			msg.append(twitterScreenName);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -189,7 +188,7 @@ public class FeedPersistenceImpl extends BasePersistenceImpl<Feed>
 			if (twitterScreenName == null) {
 				query.append(_FINDER_COLUMN_U_TSN_TWITTERSCREENNAME_1);
 			}
-			else if (twitterScreenName.equals(StringPool.BLANK)) {
+			else if (twitterScreenName.equals("")) {
 				query.append(_FINDER_COLUMN_U_TSN_TWITTERSCREENNAME_3);
 			}
 			else {
@@ -308,7 +307,7 @@ public class FeedPersistenceImpl extends BasePersistenceImpl<Feed>
 			if (twitterScreenName == null) {
 				query.append(_FINDER_COLUMN_U_TSN_TWITTERSCREENNAME_1);
 			}
-			else if (twitterScreenName.equals(StringPool.BLANK)) {
+			else if (twitterScreenName.equals("")) {
 				query.append(_FINDER_COLUMN_U_TSN_TWITTERSCREENNAME_3);
 			}
 			else {
@@ -821,12 +820,12 @@ public class FeedPersistenceImpl extends BasePersistenceImpl<Feed>
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -154,7 +153,7 @@ public class ContactCacheModel implements CacheModel<Contact>, Externalizable,
 		contactImpl.setUserId(userId);
 
 		if (userName == null) {
-			contactImpl.setUserName(StringPool.BLANK);
+			contactImpl.setUserName("");
 		}
 		else {
 			contactImpl.setUserName(userName);
@@ -180,28 +179,28 @@ public class ContactCacheModel implements CacheModel<Contact>, Externalizable,
 		contactImpl.setParentContactId(parentContactId);
 
 		if (emailAddress == null) {
-			contactImpl.setEmailAddress(StringPool.BLANK);
+			contactImpl.setEmailAddress("");
 		}
 		else {
 			contactImpl.setEmailAddress(emailAddress);
 		}
 
 		if (firstName == null) {
-			contactImpl.setFirstName(StringPool.BLANK);
+			contactImpl.setFirstName("");
 		}
 		else {
 			contactImpl.setFirstName(firstName);
 		}
 
 		if (middleName == null) {
-			contactImpl.setMiddleName(StringPool.BLANK);
+			contactImpl.setMiddleName("");
 		}
 		else {
 			contactImpl.setMiddleName(middleName);
 		}
 
 		if (lastName == null) {
-			contactImpl.setLastName(StringPool.BLANK);
+			contactImpl.setLastName("");
 		}
 		else {
 			contactImpl.setLastName(lastName);
@@ -219,70 +218,70 @@ public class ContactCacheModel implements CacheModel<Contact>, Externalizable,
 		}
 
 		if (smsSn == null) {
-			contactImpl.setSmsSn(StringPool.BLANK);
+			contactImpl.setSmsSn("");
 		}
 		else {
 			contactImpl.setSmsSn(smsSn);
 		}
 
 		if (facebookSn == null) {
-			contactImpl.setFacebookSn(StringPool.BLANK);
+			contactImpl.setFacebookSn("");
 		}
 		else {
 			contactImpl.setFacebookSn(facebookSn);
 		}
 
 		if (jabberSn == null) {
-			contactImpl.setJabberSn(StringPool.BLANK);
+			contactImpl.setJabberSn("");
 		}
 		else {
 			contactImpl.setJabberSn(jabberSn);
 		}
 
 		if (skypeSn == null) {
-			contactImpl.setSkypeSn(StringPool.BLANK);
+			contactImpl.setSkypeSn("");
 		}
 		else {
 			contactImpl.setSkypeSn(skypeSn);
 		}
 
 		if (twitterSn == null) {
-			contactImpl.setTwitterSn(StringPool.BLANK);
+			contactImpl.setTwitterSn("");
 		}
 		else {
 			contactImpl.setTwitterSn(twitterSn);
 		}
 
 		if (employeeStatusId == null) {
-			contactImpl.setEmployeeStatusId(StringPool.BLANK);
+			contactImpl.setEmployeeStatusId("");
 		}
 		else {
 			contactImpl.setEmployeeStatusId(employeeStatusId);
 		}
 
 		if (employeeNumber == null) {
-			contactImpl.setEmployeeNumber(StringPool.BLANK);
+			contactImpl.setEmployeeNumber("");
 		}
 		else {
 			contactImpl.setEmployeeNumber(employeeNumber);
 		}
 
 		if (jobTitle == null) {
-			contactImpl.setJobTitle(StringPool.BLANK);
+			contactImpl.setJobTitle("");
 		}
 		else {
 			contactImpl.setJobTitle(jobTitle);
 		}
 
 		if (jobClass == null) {
-			contactImpl.setJobClass(StringPool.BLANK);
+			contactImpl.setJobClass("");
 		}
 		else {
 			contactImpl.setJobClass(jobClass);
 		}
 
 		if (hoursOfOperation == null) {
-			contactImpl.setHoursOfOperation(StringPool.BLANK);
+			contactImpl.setHoursOfOperation("");
 		}
 		else {
 			contactImpl.setHoursOfOperation(hoursOfOperation);
@@ -348,7 +347,7 @@ public class ContactCacheModel implements CacheModel<Contact>, Externalizable,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -366,28 +365,28 @@ public class ContactCacheModel implements CacheModel<Contact>, Externalizable,
 		objectOutput.writeLong(parentContactId);
 
 		if (emailAddress == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(emailAddress);
 		}
 
 		if (firstName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(firstName);
 		}
 
 		if (middleName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(middleName);
 		}
 
 		if (lastName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(lastName);
@@ -401,70 +400,70 @@ public class ContactCacheModel implements CacheModel<Contact>, Externalizable,
 		objectOutput.writeLong(birthday);
 
 		if (smsSn == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(smsSn);
 		}
 
 		if (facebookSn == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(facebookSn);
 		}
 
 		if (jabberSn == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(jabberSn);
 		}
 
 		if (skypeSn == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(skypeSn);
 		}
 
 		if (twitterSn == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(twitterSn);
 		}
 
 		if (employeeStatusId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(employeeStatusId);
 		}
 
 		if (employeeNumber == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(employeeNumber);
 		}
 
 		if (jobTitle == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(jobTitle);
 		}
 
 		if (jobClass == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(jobClass);
 		}
 
 		if (hoursOfOperation == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(hoursOfOperation);

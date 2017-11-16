@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -119,7 +118,7 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 			msg.append("token=");
 			msg.append(token);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -179,7 +178,7 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 			if (token == null) {
 				query.append(_FINDER_COLUMN_TOKEN_TOKEN_1);
 			}
-			else if (token.equals(StringPool.BLANK)) {
+			else if (token.equals("")) {
 				query.append(_FINDER_COLUMN_TOKEN_TOKEN_3);
 			}
 			else {
@@ -279,7 +278,7 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 			if (token == null) {
 				query.append(_FINDER_COLUMN_TOKEN_TOKEN_1);
 			}
-			else if (token.equals(StringPool.BLANK)) {
+			else if (token.equals("")) {
 				query.append(_FINDER_COLUMN_TOKEN_TOKEN_3);
 			}
 			else {
@@ -480,7 +479,7 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 			if (platform == null) {
 				query.append(_FINDER_COLUMN_U_P_PLATFORM_1);
 			}
-			else if (platform.equals(StringPool.BLANK)) {
+			else if (platform.equals("")) {
 				query.append(_FINDER_COLUMN_U_P_PLATFORM_3);
 			}
 			else {
@@ -576,7 +575,7 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 		msg.append(", platform=");
 		msg.append(platform);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchDeviceException(msg.toString());
 	}
@@ -633,7 +632,7 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 		msg.append(", platform=");
 		msg.append(platform);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchDeviceException(msg.toString());
 	}
@@ -733,7 +732,7 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 		if (platform == null) {
 			query.append(_FINDER_COLUMN_U_P_PLATFORM_1);
 		}
-		else if (platform.equals(StringPool.BLANK)) {
+		else if (platform.equals("")) {
 			query.append(_FINDER_COLUMN_U_P_PLATFORM_3);
 		}
 		else {
@@ -967,15 +966,15 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 			query.append(_SQL_SELECT_PUSHNOTIFICATIONSDEVICE_WHERE);
 
 			if (userIds.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
+				query.append("(");
 
 				query.append(_FINDER_COLUMN_U_P_USERID_7);
 
 				query.append(StringUtil.merge(userIds));
 
-				query.append(StringPool.CLOSE_PARENTHESIS);
+				query.append(")");
 
-				query.append(StringPool.CLOSE_PARENTHESIS);
+				query.append(")");
 
 				query.append(WHERE_AND);
 			}
@@ -985,7 +984,7 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 			if (platform == null) {
 				query.append(_FINDER_COLUMN_U_P_PLATFORM_1);
 			}
-			else if (platform.equals(StringPool.BLANK)) {
+			else if (platform.equals("")) {
 				query.append(_FINDER_COLUMN_U_P_PLATFORM_3);
 			}
 			else {
@@ -1094,7 +1093,7 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 			if (platform == null) {
 				query.append(_FINDER_COLUMN_U_P_PLATFORM_1);
 			}
-			else if (platform.equals(StringPool.BLANK)) {
+			else if (platform.equals("")) {
 				query.append(_FINDER_COLUMN_U_P_PLATFORM_3);
 			}
 			else {
@@ -1166,15 +1165,15 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 			query.append(_SQL_COUNT_PUSHNOTIFICATIONSDEVICE_WHERE);
 
 			if (userIds.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
+				query.append("(");
 
 				query.append(_FINDER_COLUMN_U_P_USERID_7);
 
 				query.append(StringUtil.merge(userIds));
 
-				query.append(StringPool.CLOSE_PARENTHESIS);
+				query.append(")");
 
-				query.append(StringPool.CLOSE_PARENTHESIS);
+				query.append(")");
 
 				query.append(WHERE_AND);
 			}
@@ -1184,7 +1183,7 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 			if (platform == null) {
 				query.append(_FINDER_COLUMN_U_P_PLATFORM_1);
 			}
-			else if (platform.equals(StringPool.BLANK)) {
+			else if (platform.equals("")) {
 				query.append(_FINDER_COLUMN_U_P_PLATFORM_3);
 			}
 			else {
@@ -1728,12 +1727,12 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

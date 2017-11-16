@@ -21,7 +21,6 @@ import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -103,7 +102,7 @@ public class KBFolderCacheModel implements CacheModel<KBFolder>, Externalizable 
 		KBFolderImpl kbFolderImpl = new KBFolderImpl();
 
 		if (uuid == null) {
-			kbFolderImpl.setUuid(StringPool.BLANK);
+			kbFolderImpl.setUuid("");
 		}
 		else {
 			kbFolderImpl.setUuid(uuid);
@@ -115,7 +114,7 @@ public class KBFolderCacheModel implements CacheModel<KBFolder>, Externalizable 
 		kbFolderImpl.setUserId(userId);
 
 		if (userName == null) {
-			kbFolderImpl.setUserName(StringPool.BLANK);
+			kbFolderImpl.setUserName("");
 		}
 		else {
 			kbFolderImpl.setUserName(userName);
@@ -138,21 +137,21 @@ public class KBFolderCacheModel implements CacheModel<KBFolder>, Externalizable 
 		kbFolderImpl.setParentKBFolderId(parentKBFolderId);
 
 		if (name == null) {
-			kbFolderImpl.setName(StringPool.BLANK);
+			kbFolderImpl.setName("");
 		}
 		else {
 			kbFolderImpl.setName(name);
 		}
 
 		if (urlTitle == null) {
-			kbFolderImpl.setUrlTitle(StringPool.BLANK);
+			kbFolderImpl.setUrlTitle("");
 		}
 		else {
 			kbFolderImpl.setUrlTitle(urlTitle);
 		}
 
 		if (description == null) {
-			kbFolderImpl.setDescription(StringPool.BLANK);
+			kbFolderImpl.setDescription("");
 		}
 		else {
 			kbFolderImpl.setDescription(description);
@@ -196,7 +195,7 @@ public class KBFolderCacheModel implements CacheModel<KBFolder>, Externalizable 
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -211,7 +210,7 @@ public class KBFolderCacheModel implements CacheModel<KBFolder>, Externalizable 
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -223,21 +222,21 @@ public class KBFolderCacheModel implements CacheModel<KBFolder>, Externalizable 
 		objectOutput.writeLong(parentKBFolderId);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (urlTitle == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(urlTitle);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);

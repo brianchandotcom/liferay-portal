@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -275,7 +274,7 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _uuid;
@@ -353,7 +352,7 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -368,7 +367,7 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	@Override
 	public String getType() {
 		if (_type == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _type;
@@ -464,7 +463,7 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	@Override
 	public String getPayload() {
 		if (_payload == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _payload;

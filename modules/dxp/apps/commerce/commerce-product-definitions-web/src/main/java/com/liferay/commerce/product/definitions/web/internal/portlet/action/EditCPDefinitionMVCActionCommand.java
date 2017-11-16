@@ -17,6 +17,7 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.exception.CPFriendlyURLEntryException;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -188,6 +189,9 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			"mvcRenderCommandName", "editProductDefinition");
 		portletURL.setParameter(
 			"cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
+		portletURL.setParameter(
+			"screenNavigationCategoryKey",
+			CPDefinitionScreenNavigationConstants.CATEGORY_KEY_DETAILS);
 
 		return portletURL.toString();
 	}

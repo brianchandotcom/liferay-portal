@@ -75,7 +75,8 @@ public class URLSiteNavigationMenuItemType
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		_jspRenderer.renderJSP(_servletContext, request, response, "/url.jsp");
+		_jspRenderer.renderJSP(
+			_servletContext, request, response, "/add_url.jsp");
 	}
 
 	@Reference

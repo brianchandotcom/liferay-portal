@@ -36,7 +36,7 @@
 		</if>
 	</tear-down>
 
-	<command name="AddCheckboxOptionsEntry" priority="5">
+	<command ignore="true" name="AddCheckboxOptionsEntry" priority="5">
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="ProductMenu#gotoSitesCommerce">
@@ -63,7 +63,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCheckboxOptionsEntryValue" priority="5">
+	<command ignore="true" name="AddCheckboxOptionsEntryValue" priority="5">
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="ProductMenu#gotoSitesCommerce">
@@ -93,7 +93,7 @@
 		</execute>
 	</command>
 
-	<command name="AddContributorCheckboxOptionsEntryValue">
+	<command ignore="true" name="AddContributorCheckboxOptionsEntryValue">
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="ProductMenu#gotoSitesCommerce">
@@ -125,7 +125,7 @@
 		</execute>
 	</command>
 
-	<command name="AddContributorDateOptionsEntryValue">
+	<command ignore="true" name="AddContributorDateOptionsEntryValue">
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="ProductMenu#gotoSitesCommerce">
@@ -157,7 +157,7 @@
 		</execute>
 	</command>
 
-	<command name="AddContributorParagraphOptionsEntryValue">
+	<command ignore="true" name="AddContributorParagraphOptionsEntryValue">
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="ProductMenu#gotoSitesCommerce">
@@ -189,7 +189,7 @@
 		</execute>
 	</command>
 
-	<command name="AddContributorRadioOptionsEntryValue">
+	<command ignore="true" name="AddContributorRadioOptionsEntryValue">
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="ProductMenu#gotoSitesCommerce">
@@ -221,7 +221,7 @@
 		</execute>
 	</command>
 
-	<command name="AddContributorSelectOptionsEntryValue">
+	<command ignore="true" name="AddContributorSelectOptionsEntryValue">
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="ProductMenu#gotoSitesCommerce">
@@ -253,7 +253,7 @@
 		</execute>
 	</command>
 
-	<command name="AddContributorTextOptionsEntryValue">
+	<command ignore="true" name="AddContributorTextOptionsEntryValue">
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="ProductMenu#gotoSitesCommerce">
@@ -285,7 +285,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDateOptionsEntry" priority="5">
+	<command ignore="true" name="AddDateOptionsEntry" priority="5">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -310,7 +310,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDateOptionsEntryValue" priority="5">
+	<command ignore="true" name="AddDateOptionsEntryValue" priority="5">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -338,7 +338,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableCheckboxOptionsEntry">
+	<command ignore="true" name="AddFacetableCheckboxOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -366,7 +366,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableCheckboxOptionsEntryValue">
+	<command ignore="true" name="AddFacetableCheckboxOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -396,7 +396,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableContributorCheckboxOptionsEntry">
+	<command ignore="true" name="AddFacetableContributorCheckboxOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -429,7 +429,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableContributorCheckboxOptionsEntryValue">
+	<command ignore="true" name="AddFacetableContributorCheckboxOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -470,7 +470,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableContributorDateOptionsEntry">
+	<command ignore="true" name="AddFacetableContributorDateOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -503,7 +503,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableContributorDateOptionsEntryValue">
+	<command ignore="true" name="AddFacetableContributorDateOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -544,7 +544,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableContributorParagraphOptionsEntry">
+	<command ignore="true" name="AddFacetableContributorParagraphOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -577,7 +577,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableContributorParagraphOptionsEntryValue">
+	<command ignore="true" name="AddFacetableContributorParagraphOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -618,7 +618,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableContributorRadioOptionsEntry">
+	<command ignore="true" name="AddFacetableContributorRadioOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -651,7 +651,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableContributorRadioOptionsEntryValue">
+	<command ignore="true" name="AddFacetableContributorRadioOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -692,7 +692,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableContributorSelectOptionsEntry">
+	<command ignore="true" name="AddFacetableContributorSelectOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -725,7 +725,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableContributorSelectOptionsEntryValue">
+	<command ignore="true" name="AddFacetableContributorSelectOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -766,7 +766,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableContributorTextOptionsEntry">
+	<command ignore="true" name="AddFacetableContributorTextOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -799,7 +799,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableContributorTextOptionsEntryValue">
+	<command ignore="true" name="AddFacetableContributorTextOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -840,7 +840,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableDateOptionsEntry">
+	<command ignore="true" name="AddFacetableDateOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -868,7 +868,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableDateOptionsEntryValue">
+	<command ignore="true" name="AddFacetableDateOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -904,7 +904,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableParagraphOptionsEntry">
+	<command ignore="true" name="AddFacetableParagraphOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -932,7 +932,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableParagraphOptionsEntryValue">
+	<command ignore="true" name="AddFacetableParagraphOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -968,7 +968,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableRadioOptionsEntry">
+	<command ignore="true" name="AddFacetableRadioOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -996,7 +996,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableRadioOptionsEntryValue">
+	<command ignore="true" name="AddFacetableRadioOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1032,7 +1032,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableRequiredCheckboxOptionsEntry">
+	<command ignore="true" name="AddFacetableRequiredCheckboxOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1065,7 +1065,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableRequiredCheckboxOptionsEntryValue">
+	<command ignore="true" name="AddFacetableRequiredCheckboxOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1106,7 +1106,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableRequiredContributorCheckboxOptionsEntry">
+	<command ignore="true" name="AddFacetableRequiredContributorCheckboxOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1141,7 +1141,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableRequiredContributorDateOptionsEntry">
+	<command ignore="true" name="AddFacetableRequiredContributorDateOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1176,7 +1176,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableRequiredContributorParagraphOptionsEntry">
+	<command ignore="true" name="AddFacetableRequiredContributorParagraphOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1211,7 +1211,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableRequiredContributorRadioOptionsEntry">
+	<command ignore="true" name="AddFacetableRequiredContributorRadioOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1246,7 +1246,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableRequiredContributorSelectOptionsEntry">
+	<command ignore="true" name="AddFacetableRequiredContributorSelectOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1281,7 +1281,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableRequiredContributorTextOptionsEntry">
+	<command ignore="true" name="AddFacetableRequiredContributorTextOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1316,7 +1316,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableRequiredDateOptionsEntry">
+	<command ignore="true" name="AddFacetableRequiredDateOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1349,7 +1349,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableRequiredDateOptionsEntryValue">
+	<command ignore="true" name="AddFacetableRequiredDateOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1390,7 +1390,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableRequiredParagraphOptionsEntry">
+	<command ignore="true" name="AddFacetableRequiredParagraphOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1423,7 +1423,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableRequiredParagraphOptionsEntryValue">
+	<command ignore="true" name="AddFacetableRequiredParagraphOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1464,7 +1464,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableRequiredRadioOptionsEntry">
+	<command ignore="true" name="AddFacetableRequiredRadioOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1497,7 +1497,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableRequiredRadioOptionsEntryValue">
+	<command ignore="true" name="AddFacetableRequiredRadioOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1538,7 +1538,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableRequiredSelectOptionsEntry">
+	<command ignore="true" name="AddFacetableRequiredSelectOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1571,7 +1571,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableRequiredSelectOptionsEntryValue">
+	<command ignore="true" name="AddFacetableRequiredSelectOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1612,7 +1612,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableRequiredTextOptionsEntry">
+	<command ignore="true" name="AddFacetableRequiredTextOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1645,7 +1645,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableRequiredTextOptionsEntryValue">
+	<command ignore="true" name="AddFacetableRequiredTextOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1686,7 +1686,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableSelectOptionsEntry">
+	<command ignore="true" name="AddFacetableSelectOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1714,7 +1714,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableSelectOptionsEntryValue">
+	<command ignore="true" name="AddFacetableSelectOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1744,7 +1744,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableTextOptionsEntry">
+	<command ignore="true" name="AddFacetableTextOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1772,7 +1772,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFacetableTextOptionsEntryValue">
+	<command ignore="true" name="AddFacetableTextOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1802,7 +1802,7 @@
 		</execute>
 	</command>
 
-	<command name="AddParagraphOptionsEntry" priority="5">
+	<command ignore="true" name="AddParagraphOptionsEntry" priority="5">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1827,7 +1827,7 @@
 		</execute>
 	</command>
 
-	<command name="AddParagraphOptionsEntryValue" priority="5">
+	<command ignore="true" name="AddParagraphOptionsEntryValue" priority="5">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1851,7 +1851,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRadioOptionsEntry" priority="5">
+	<command ignore="true" name="AddRadioOptionsEntry" priority="5">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1876,7 +1876,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRadioOptionsEntryValue" priority="5">
+	<command ignore="true" name="AddRadioOptionsEntryValue" priority="5">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1904,7 +1904,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRequiredCheckboxOptionsEntry">
+	<command ignore="true" name="AddRequiredCheckboxOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1932,7 +1932,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRequiredCheckboxOptionsEntryValue">
+	<command ignore="true" name="AddRequiredCheckboxOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1962,7 +1962,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRequiredContributorCheckboxOptionsEntry">
+	<command ignore="true" name="AddRequiredContributorCheckboxOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -1995,7 +1995,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRequiredContributorCheckboxOptionsEntryValue">
+	<command ignore="true" name="AddRequiredContributorCheckboxOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2030,7 +2030,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRequiredContributorDateOptionsEntry">
+	<command ignore="true" name="AddRequiredContributorDateOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2063,7 +2063,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRequiredContributorDateOptionsEntryValue">
+	<command ignore="true" name="AddRequiredContributorDateOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2098,7 +2098,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRequiredContributorParagraphOptionsEntry">
+	<command ignore="true" name="AddRequiredContributorParagraphOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2131,7 +2131,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRequiredContributorParagraphOptionsEntryValue">
+	<command ignore="true" name="AddRequiredContributorParagraphOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2166,7 +2166,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRequiredContributorRadioOptionsEntry">
+	<command ignore="true" name="AddRequiredContributorRadioOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2199,7 +2199,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRequiredContributorRadioOptionsEntryValue">
+	<command ignore="true" name="AddRequiredContributorRadioOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2234,7 +2234,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRequiredContributorSelectOptionsEntry">
+	<command ignore="true" name="AddRequiredContributorSelectOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2267,7 +2267,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRequiredContributorSelectOptionsEntryValue">
+	<command ignore="true" name="AddRequiredContributorSelectOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2302,7 +2302,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRequiredContributorTextOptionsEntry">
+	<command ignore="true" name="AddRequiredContributorTextOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2335,7 +2335,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRequiredContributorTextOptionsEntryValue">
+	<command ignore="true" name="AddRequiredContributorTextOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2370,7 +2370,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRequiredDateOptionsEntry">
+	<command ignore="true" name="AddRequiredDateOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2398,7 +2398,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRequiredDateOptionsEntryValue">
+	<command ignore="true" name="AddRequiredDateOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2428,7 +2428,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRequiredParagraphOptionsEntry">
+	<command ignore="true" name="AddRequiredParagraphOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2456,7 +2456,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRequiredParagraphOptionsEntryValue">
+	<command ignore="true" name="AddRequiredParagraphOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2486,7 +2486,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRequiredRadioOptionsEntry">
+	<command ignore="true" name="AddRequiredRadioOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2514,7 +2514,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRequiredRadioOptionsEntryValue">
+	<command ignore="true" name="AddRequiredRadioOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2544,7 +2544,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRequiredSelectOptionsEntry">
+	<command ignore="true" name="AddRequiredSelectOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2572,7 +2572,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRequiredSelectOptionsEntryValue">
+	<command ignore="true" name="AddRequiredSelectOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2602,7 +2602,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRequiredTextOptionsEntry">
+	<command ignore="true" name="AddRequiredTextOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2630,7 +2630,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRequiredTextOptionsEntryValue">
+	<command ignore="true" name="AddRequiredTextOptionsEntryValue">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2660,7 +2660,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSelectOptionsEntry" priority="5">
+	<command ignore="true" name="AddSelectOptionsEntry" priority="5">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2685,7 +2685,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSelectOptionsEntryValue" priority="5">
+	<command ignore="true" name="AddSelectOptionsEntryValue" priority="5">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2713,7 +2713,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSKUContributorCheckboxOptionsEntry">
+	<command ignore="true" name="AddSKUContributorCheckboxOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2741,7 +2741,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSKUContributorDateOptionsEntry">
+	<command ignore="true" name="AddSKUContributorDateOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2769,7 +2769,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSKUContributorParagraphOptionsEntry">
+	<command ignore="true" name="AddSKUContributorParagraphOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2797,7 +2797,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSKUContributorRadioOptionsEntry">
+	<command ignore="true" name="AddSKUContributorRadioOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2825,7 +2825,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSKUContributorSelectOptionsEntry">
+	<command ignore="true" name="AddSKUContributorSelectOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2853,7 +2853,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSKUContributorTextOptionsEntry">
+	<command ignore="true" name="AddSKUContributorTextOptionsEntry">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2881,7 +2881,7 @@
 		</execute>
 	</command>
 
-	<command name="AddTextOptionsEntry" priority="5">
+	<command ignore="true" name="AddTextOptionsEntry" priority="5">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
@@ -2906,7 +2906,7 @@
 		</execute>
 	</command>
 
-	<command name="AddTextOptionsEntryValue" priority="5">
+	<command ignore="true" name="AddTextOptionsEntryValue" priority="5">
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>

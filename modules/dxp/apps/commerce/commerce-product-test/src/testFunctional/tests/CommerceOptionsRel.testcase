@@ -47,7 +47,7 @@
 		</if>
 	</tear-down>
 
-	<command name="AssignCheckboxAndRadioOptionToGroupedCatalogEntry" priority="5">
+	<command ignore="true" name="AssignCheckboxAndRadioOptionToGroupedCatalogEntry" priority="5">
 		<execute test-case="CPCommerceOptions#AddSKUContributorCheckboxOptionsEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
@@ -107,7 +107,7 @@
 		</for>
 	</command>
 
-	<command name="AssignCheckboxAndRadioOptionToSimpleCatalogEntry" priority="5">
+	<command ignore="true" name="AssignCheckboxAndRadioOptionToSimpleCatalogEntry" priority="5">
 		<execute test-case="CPCommerceOptions#AddSKUContributorCheckboxOptionsEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
@@ -167,7 +167,7 @@
 		</for>
 	</command>
 
-	<command name="AssignCheckboxAndRadioOptionToVirtualCatalogEntry" priority="5">
+	<command ignore="true" name="AssignCheckboxAndRadioOptionToVirtualCatalogEntry" priority="5">
 		<execute test-case="CPCommerceOptions#AddSKUContributorCheckboxOptionsEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
@@ -227,7 +227,7 @@
 		</for>
 	</command>
 
-	<command name="AssignCheckboxAndSelectOptionToGroupedCatalogEntry" priority="5">
+	<command ignore="true" name="AssignCheckboxAndSelectOptionToGroupedCatalogEntry" priority="5">
 		<execute test-case="CPCommerceOptions#AddSKUContributorCheckboxOptionsEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
@@ -287,7 +287,7 @@
 		</for>
 	</command>
 
-	<command name="AssignCheckboxAndSelectOptionToSimpleCatalogEntry" priority="5">
+	<command ignore="true" name="AssignCheckboxAndSelectOptionToSimpleCatalogEntry" priority="5">
 		<execute test-case="CPCommerceOptions#AddSKUContributorCheckboxOptionsEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
@@ -347,7 +347,7 @@
 		</for>
 	</command>
 
-	<command name="AssignCheckboxAndSelectOptionToVirtualCatalogEntry" priority="5">
+	<command ignore="true" name="AssignCheckboxAndSelectOptionToVirtualCatalogEntry" priority="5">
 		<execute test-case="CPCommerceOptions#AddSKUContributorCheckboxOptionsEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
@@ -404,7 +404,7 @@
 		</for>
 	</command>
 
-	<command name="AssignCheckboxOptionToGroupedCatalogEntry" priority="5">
+	<command ignore="true" name="AssignCheckboxOptionToGroupedCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorCheckboxOptionsEntry" />
@@ -446,7 +446,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignCheckboxOptionToSimpleCatalogEntry" priority="5">
+	<command ignore="true" name="AssignCheckboxOptionToSimpleCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorCheckboxOptionsEntry" />
@@ -488,7 +488,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignCheckboxOptionToVirtualCatalogEntry" priority="5">
+	<command ignore="true" name="AssignCheckboxOptionToVirtualCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorCheckboxOptionsEntry" />
@@ -530,7 +530,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignDateOptionToGroupedCatalogEntry" priority="5">
+	<command ignore="true" name="AssignDateOptionToGroupedCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorDateOptionsEntry" />
@@ -572,7 +572,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignDateOptionToSimpleCatalogEntry" priority="5">
+	<command ignore="true" name="AssignDateOptionToSimpleCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorDateOptionsEntry" />
@@ -614,7 +614,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignDateOptionToVirtualCatalogEntry" priority="5">
+	<command ignore="true" name="AssignDateOptionToVirtualCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorDateOptionsEntry" />
@@ -656,7 +656,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignParagraphOptionToGroupedCatalogEntry" priority="5">
+	<command ignore="true" name="AssignParagraphOptionToGroupedCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorParagraphOptionsEntry" />
@@ -698,7 +698,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignParagraphOptionToSimpleCatalogEntry" priority="5">
+	<command ignore="true" name="AssignParagraphOptionToSimpleCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorParagraphOptionsEntry" />
@@ -740,7 +740,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignParagraphOptionToVirtualCatalogEntry" priority="5">
+	<command ignore="true" name="AssignParagraphOptionToVirtualCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorParagraphOptionsEntry" />
@@ -782,7 +782,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignRadioAndSelectOptionToGroupedCatalogEntry" priority="5">
+	<command ignore="true" name="AssignRadioAndSelectOptionToGroupedCatalogEntry" priority="5">
 		<execute test-case="CPCommerceOptions#AddSKUContributorRadioOptionsEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
@@ -842,7 +842,7 @@
 		</for>
 	</command>
 
-	<command name="AssignRadioAndSelectOptionToSimpleCatalogEntry" priority="5">
+	<command ignore="true" name="AssignRadioAndSelectOptionToSimpleCatalogEntry" priority="5">
 		<execute test-case="CPCommerceOptions#AddSKUContributorRadioOptionsEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
@@ -902,7 +902,7 @@
 		</for>
 	</command>
 
-	<command name="AssignRadioAndSelectOptionToVirtualCatalogEntry" priority="5">
+	<command ignore="true" name="AssignRadioAndSelectOptionToVirtualCatalogEntry" priority="5">
 		<execute test-case="CPCommerceOptions#AddSKUContributorRadioOptionsEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
@@ -959,7 +959,7 @@
 		</for>
 	</command>
 
-	<command name="AssignRadioOptionToGroupedCatalogEntry" priority="5">
+	<command ignore="true" name="AssignRadioOptionToGroupedCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorRadioOptionsEntry" />
@@ -998,7 +998,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignRadioOptionToSimpleCatalogEntry" priority="5">
+	<command ignore="true" name="AssignRadioOptionToSimpleCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorRadioOptionsEntry" />
@@ -1037,7 +1037,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignRadioOptionToVirtualCatalogEntry" priority="5">
+	<command ignore="true" name="AssignRadioOptionToVirtualCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorRadioOptionsEntry" />
@@ -1079,7 +1079,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignSelectOptionToGroupedCatalogEntry" priority="5">
+	<command ignore="true" name="AssignSelectOptionToGroupedCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorSelectOptionsEntry" />
@@ -1118,7 +1118,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignSelectOptionToSimpleCatalogEntry" priority="5">
+	<command ignore="true" name="AssignSelectOptionToSimpleCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorSelectOptionsEntry" />
@@ -1157,7 +1157,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignSelectOptionToVirtualCatalogEntry" priority="5">
+	<command ignore="true" name="AssignSelectOptionToVirtualCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorSelectOptionsEntry" />
@@ -1199,7 +1199,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignTextOptionToGroupedCatalogEntry" priority="5">
+	<command ignore="true" name="AssignTextOptionToGroupedCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorTextOptionsEntry" />
@@ -1238,7 +1238,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignTextOptionToSimpleCatalogEntry" priority="5">
+	<command ignore="true" name="AssignTextOptionToSimpleCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorTextOptionsEntry" />
@@ -1277,7 +1277,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignTextOptionToVirtualCatalogEntry" priority="5">
+	<command ignore="true" name="AssignTextOptionToVirtualCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorTextOptionsEntry" />

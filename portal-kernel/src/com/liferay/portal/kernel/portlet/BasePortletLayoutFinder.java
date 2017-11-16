@@ -18,17 +18,26 @@ import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.sites.kernel.util.SitesUtil;
+
+import java.util.Arrays;
+import java.util.List;
+
+import javax.portlet.PortletPreferences;
 
 /**
  * @author Adolfo Pérez
@@ -116,7 +125,10 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 		throws PortalException {
 
 		for (String portletId : portletIds) {
-			long plid = PortalUtil.getPlidFromPortletId(groupId, portletId);
+			ObjectValuePair<Long, String> plidAndPortletId =
+				_getPlidPortletIdObjectValuePair(groupId, portletId);
+
+			long plid = plidAndPortletId.getKey();
 
 			if (plid == LayoutConstants.DEFAULT_PLID) {
 				continue;
@@ -130,12 +142,7 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 				continue;
 			}
 
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
-
-			portletId = getPortletId(layoutTypePortlet, portletId);
-
-			return new Object[] {plid, portletId};
+			return new Object[] {plid, plidAndPortletId.getValue()};
 		}
 
 		return null;
@@ -178,6 +185,61 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 		private final long _plid;
 		private final String _portletId;
 
+	}
+
+	private ObjectValuePair<Long, String> _doGetPlidPortletIdObjectValuePair(
+			long groupId, long scopeGroupId, String portletId)
+		throws PortalException {
+
+		for (boolean privateLayout : Arrays.asList(false, true)) {
+			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+				groupId, privateLayout, LayoutConstants.TYPE_PORTLET);
+
+			for (Layout layout : layouts) {
+				LayoutTypePortlet layoutTypePortlet =
+					(LayoutTypePortlet)layout.getLayoutType();
+
+				portletId = getPortletId(layoutTypePortlet, portletId);
+
+				if (_getScopeGroupId(layout, portletId) == scopeGroupId) {
+					return new ObjectValuePair<>(layout.getPlid(), portletId);
+				}
+			}
+		}
+
+		return new ObjectValuePair<>(
+			LayoutConstants.DEFAULT_PLID, StringPool.BLANK);
+	}
+
+	private ObjectValuePair<Long, String> _getPlidPortletIdObjectValuePair(
+			long groupId, String portletId)
+		throws PortalException {
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		Layout scopeLayout = LayoutLocalServiceUtil.getLayout(
+			group.getClassPK());
+
+		return _doGetPlidPortletIdObjectValuePair(
+			scopeLayout.getGroupId(), groupId, portletId);
+	}
+
+	private long _getScopeGroupId(Layout layout, String portletId)
+		throws PortalException {
+
+		PortletPreferences portletSetup =
+			PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
+				layout, portletId);
+
+		String scopeLayoutUuid = GetterUtil.getString(
+			portletSetup.getValue("lfrScopeLayoutUuid", null));
+
+		Layout scopeLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+			scopeLayoutUuid, layout.getGroupId(), layout.isPrivateLayout());
+
+		Group scopeGroup = scopeLayout.getScopeGroup();
+
+		return scopeGroup.getGroupId();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

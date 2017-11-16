@@ -15,11 +15,9 @@
 package com.liferay.layout.admin.web.internal.portlet.configuration.icon;
 
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.admin.web.internal.display.context.ViewLayoutsDisplayContext;
+import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -40,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + LayoutAdminPortletKeys.VIEW_LAYOUTS},
+	property = {"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES},
 	service = PortletConfigurationIcon.class
 )
 public class EditPublicPagesPortletConfigurationIcon
@@ -59,23 +57,19 @@ public class EditPublicPagesPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		LiferayPortletRequest liferayPortletRequest =
-			_portal.getLiferayPortletRequest(portletRequest);
+		PortletURL editLayoutSetURL = _portal.getControlPanelPortletURL(
+			portletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+			PortletRequest.RENDER_PHASE);
 
-		LiferayPortletResponse liferayPortletResponse =
-			_portal.getLiferayPortletResponse(portletResponse);
+		editLayoutSetURL.setParameter("mvcPath", "/edit_layout_set.jsp");
+		editLayoutSetURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		editLayoutSetURL.setParameter("backURL", themeDisplay.getURLCurrent());
+		editLayoutSetURL.setParameter(
+			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+		editLayoutSetURL.setParameter(
+			"privateLayout", Boolean.FALSE.toString());
 
-		ViewLayoutsDisplayContext viewLayoutsDisplayContext =
-			new ViewLayoutsDisplayContext(
-				liferayPortletRequest, liferayPortletResponse);
-
-		PortletURL editLayoutURL = viewLayoutsDisplayContext.getEditLayoutURL(
-			LayoutConstants.DEFAULT_PLID, false);
-
-		editLayoutURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		editLayoutURL.setParameter("backURL", themeDisplay.getURLCurrent());
-
-		return editLayoutURL.toString();
+		return editLayoutSetURL.toString();
 	}
 
 	@Override
@@ -91,21 +85,21 @@ public class EditPublicPagesPortletConfigurationIcon
 		LiferayPortletRequest liferayPortletRequest =
 			_portal.getLiferayPortletRequest(portletRequest);
 
-		ViewLayoutsDisplayContext viewLayoutsDisplayContext =
-			new ViewLayoutsDisplayContext(liferayPortletRequest, null);
+		LayoutsAdminDisplayContext layoutsAdminDisplayContext =
+			new LayoutsAdminDisplayContext(liferayPortletRequest, null);
 
-		if (viewLayoutsDisplayContext.isPrivatePages()) {
+		if (layoutsAdminDisplayContext.isPrivatePages()) {
 			return false;
 		}
 
-		if (!viewLayoutsDisplayContext.isShowPublicPages()) {
+		if (!layoutsAdminDisplayContext.isShowPublicPages()) {
 			return false;
 		}
 
 		try {
 			return GroupPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(),
-				viewLayoutsDisplayContext.getSelGroupId(),
+				layoutsAdminDisplayContext.getSelGroupId(),
 				ActionKeys.MANAGE_LAYOUTS);
 		}
 		catch (Exception e) {

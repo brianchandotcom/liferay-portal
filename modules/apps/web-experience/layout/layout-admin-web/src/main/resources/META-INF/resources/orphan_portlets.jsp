@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String backURL = ParamUtil.getString(request, "backURL");
+
 OrphanPortletsDisplayContext orphanPortletsDisplayContext = new OrphanPortletsDisplayContext(renderRequest);
 
 Layout selLayout = orphanPortletsDisplayContext.getSelLayout();
@@ -24,6 +26,12 @@ Layout selLayout = orphanPortletsDisplayContext.getSelLayout();
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/orphan_portlets.jsp");
+portletURL.setParameter("backURL", backURL);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURL);
+
+renderResponse.setTitle(LanguageUtil.get(request, "orphan-portlets"));
 %>
 
 <aui:nav-bar markupView="lexicon">
@@ -75,8 +83,9 @@ portletURL.setParameter("mvcPath", "/orphan_portlets.jsp");
 		</c:choose>
 	</div>
 
-	<portlet:actionURL name="deleteOrphanPortlets" var="deleteOrphanPortletsURL">
+	<portlet:actionURL name="/layout/delete_orphan_portlets" var="deleteOrphanPortletsURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="backURL" value="<%= backURL %>" />
 		<portlet:param name="selPlid" value="<%= String.valueOf(orphanPortletsDisplayContext.getSelPlid()) %>" />
 	</portlet:actionURL>
 

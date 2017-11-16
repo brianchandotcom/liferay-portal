@@ -22,16 +22,4 @@ public class LayoutAdminPortletKeys {
 	public static final String GROUP_PAGES =
 		"com_liferay_layout_admin_web_portlet_GroupPagesPortlet";
 
-	public static final String LAYOUT_ADMIN =
-		"com_liferay_layout_admin_web_portlet_LayoutAdminPortlet";
-
-	public static final String LAYOUT_PROTOTYPE_PAGE =
-		"com_liferay_layout_admin_web_portlet_LayoutPrototypePagePortlet";
-
-	public static final String MY_PAGES =
-		"com_liferay_layout_admin_web_portlet_MyPagesPortlet";
-
-	public static final String VIEW_LAYOUTS =
-		"com_liferay_layout_admin_web_portlet_ViewLayoutsPortlet";
-
 }

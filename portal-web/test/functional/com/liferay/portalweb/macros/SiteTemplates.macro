@@ -14,11 +14,15 @@
 			<var name="category" value="Navigation" />
 		</execute>
 
-		<execute macro="Page#addChild">
-			<var name="page" value="Private Pages" />
-			<var name="pageName" value="${pageName}" />
-			<var name="siteChildPageName" value="${siteChildPageName}" />
-			<var name="siteScopeSelected" value="true" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPrivateChildPage">
+			<var name="childPageName" value="${siteChildPageName}" />
+			<var name="parentPageName" value="${pageName}" />
 		</execute>
 	</command>
 

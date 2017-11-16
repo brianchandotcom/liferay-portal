@@ -42,6 +42,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 		}
 
 		if (fileName.contains("/custom-sql/")) {
+			_checkIncorrectLineBreakAfterComma(fileName, content);
 			_checkMissingLineBreakAfterKeyword(fileName, content);
 			_checkMissingParentheses(fileName, content);
 			_checkMultiLineClause(fileName, content);
@@ -69,6 +70,18 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 		}
 
 		return content;
+	}
+
+	private void _checkIncorrectLineBreakAfterComma(
+		String fileName, String content) {
+
+		Matcher matcher = _incorrectLineBreakAfterCommaPattern.matcher(content);
+
+		while (matcher.find()) {
+			addMessage(
+				fileName, "Incorrect line break after ','",
+				getLineCount(content, matcher.start()));
+		}
 	}
 
 	private void _checkMissingLineBreakAfterKeyword(
@@ -421,6 +434,8 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 
 	private final Pattern _incorrectAndOrpattern = Pattern.compile(
 		"(\n\t*)(AND|OR|\\[\\$AND_OR_CONNECTOR\\$\\])( |\n)");
+	private final Pattern _incorrectLineBreakAfterCommaPattern =
+		Pattern.compile(".(?<! (ASC|DESC)),\n");
 	private final Pattern _missingLineBreakAfterKeywordPattern =
 		Pattern.compile("\n\\s*(.*\\s(BY|FROM|HAVING|JOIN|ON|SELECT|WHERE)) ");
 	private final Pattern _missingLineBreakAfterOpenParenthesisPattern =

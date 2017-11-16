@@ -208,8 +208,6 @@
 	</command>
 
 	<command name="AddCustomFieldUserBoolean" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />

@@ -486,7 +486,6 @@
 	</command>
 
 	<command name="MultipleUsersandOrganizations" priority="5">
-		<property name="portal.acceptance" value="pending" />
 		<property name="test.name.skip.portal.instance" value="UsersandorganizationsUsecase#MultipleUsersandOrganizations" />
 		<property name="testray.component.names" value="Training" />
 
@@ -888,7 +887,6 @@
 	</command>
 
 	<command name="OrganizationAdministratorActivate" priority="5">
-		<property name="portal.acceptance" value="pending" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoPortlet">

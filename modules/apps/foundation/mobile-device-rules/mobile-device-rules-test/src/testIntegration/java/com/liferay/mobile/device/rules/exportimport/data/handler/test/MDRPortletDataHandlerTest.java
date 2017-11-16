@@ -15,6 +15,7 @@
 package com.liferay.mobile.device.rules.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.mobile.device.rules.exportimport.data.handler.MDRPortletDataHandler;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
@@ -79,8 +80,28 @@ public class MDRPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 	}
 
 	@Override
+	protected DataLevel getDataLevel() {
+		return DataLevel.SITE;
+	}
+
+	@Override
 	protected String getPortletId() {
 		return MDRPortletKeys.MOBILE_DEVICE_RULES;
+	}
+
+	@Override
+	protected boolean isDataPortalLevel() {
+		return false;
+	}
+
+	@Override
+	protected boolean isDataPortletInstanceLevel() {
+		return false;
+	}
+
+	@Override
+	protected boolean isDataSiteLevel() {
+		return true;
 	}
 
 }

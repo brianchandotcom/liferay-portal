@@ -10,7 +10,7 @@
 	<sql id="com.liferay.portal.kernel.security.permission.InlineSQLHelper.filterByResourceBlockIdOwner">
 		<![CDATA[
 			WHERE
-				resourceBlockId IN ([$USER_RESOURCE_BLOCK_ID$]) OR
+				(resourceBlockId IN ([$USER_RESOURCE_BLOCK_ID$])) OR
 				(
 					([$USER_ID_FIELD$] = [$USER_ID$]) AND
 					(resourceBlockId IN ([$OWNER_RESOURCE_BLOCK_ID$]))
@@ -1706,7 +1706,7 @@
 				Groups_Orgs ON
 					Groups_Orgs.organizationId = Users_Orgs.organizationId
 			WHERE
-				Groups_Orgs.groupId IN [$GROUP_ID$] AND
+				(Groups_Orgs.groupId IN [$GROUP_ID$]) AND
 				(User_.companyId = ?) AND
 				(User_.defaultUser = ?) AND
 				(User_.status = ?)
@@ -1725,7 +1725,7 @@
 				Group_ ON
 					Group_.classPK = Users_Orgs.organizationId
 			WHERE
-				Group_.groupId IN [$GROUP_ID$] AND
+				(Group_.groupId IN [$GROUP_ID$]) AND
 				(User_.companyId = ?) AND
 				(User_.defaultUser = ?) AND
 				(User_.status = ?)
@@ -1744,7 +1744,7 @@
 				Groups_UserGroups ON
 					Groups_UserGroups.userGroupId = Users_UserGroups.userGroupId
 			WHERE
-				Groups_UserGroups.groupId IN [$GROUP_ID$] AND
+				(Groups_UserGroups.groupId IN [$GROUP_ID$]) AND
 				(User_.companyId = ?) AND
 				(User_.defaultUser = ?) AND
 				(User_.status = ?)

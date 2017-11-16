@@ -89,6 +89,28 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 		Matcher matcher = _missingParenthesesPattern1.matcher(content);
 
 		while (matcher.find()) {
+			String charBeforeOperator = matcher.group(2);
+
+			if (charBeforeOperator.equals(StringPool.CLOSE_PARENTHESIS)) {
+				String s = matcher.group(1);
+
+				if (s.equals(StringPool.CLOSE_PARENTHESIS) ||
+					(s.startsWith(StringPool.OPEN_PARENTHESIS) &&
+					 (getLevel(s) == 0))) {
+
+					continue;
+				}
+			}
+			else if (charBeforeOperator.equals(StringPool.CLOSE_BRACKET)) {
+				String s = matcher.group(1);
+
+				if (s.startsWith(StringPool.OPEN_BRACKET) &&
+					(getLevel(s, "[", "]") == 0)) {
+
+					continue;
+				}
+			}
+
 			addMessage(
 				fileName, "Missing parentheses",
 				getLineCount(content, matcher.start()));
@@ -406,7 +428,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 	private final Pattern _missingLineBreakBeforeOpenParenthesisPattern =
 		Pattern.compile("\n(\t+).*[^\t\n]\\(\n");
 	private final Pattern _missingParenthesesPattern1 = Pattern.compile(
-		"[^\\)\\]\\s]\\s+(AND|OR|\\[\\$AND_OR_CONNECTOR\\$\\])\\s");
+		"\t([^\t]*(\\S))\\s+(AND|OR|\\[\\$AND_OR_CONNECTOR\\$\\])\\s");
 	private final Pattern _missingParenthesesPattern2 = Pattern.compile(
 		"\\s(AND|OR|\\[\\$AND_OR_CONNECTOR\\$\\])\\s+[^\\(\\[<\\s]");
 	private final Pattern _multiLineSinglePredicatePattern = Pattern.compile(

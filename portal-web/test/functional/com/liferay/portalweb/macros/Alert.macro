@@ -81,4 +81,8 @@
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="${sucessMessage}" />
 	</command>
+
+	<command name="waitForSuccessMessageHide">
+		<execute function="AssertNotVisible" locator1="Message#SUCCESS" />
+	</command>
 </definition>

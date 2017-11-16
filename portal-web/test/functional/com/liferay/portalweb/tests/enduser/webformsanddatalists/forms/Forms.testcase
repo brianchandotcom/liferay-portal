@@ -1305,7 +1305,7 @@
 		</execute>
 
 		<execute macro="FormFields#viewSelectLabel">
-			<var name="fieldLabel" value="Default display view" />
+			<var name="fieldLabel" value="Default Display View" />
 			<var name="fieldName" value="defaultDisplayView" />
 		</execute>
 

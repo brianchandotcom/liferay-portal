@@ -14,19 +14,27 @@
 
 package com.liferay.asset.lar.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.categories.navigation.constants.AssetCategoriesNavigationPortletKeys;
-
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
-public class AssetCategoriesNavigationPortletDataHandlerTest extends
-	BasePortletDataHandlerTestCase {
+/**
+ * @author Zoltan Csaszi
+ */
+@RunWith(Arquillian.class)
+@Sync
+public class AssetCategoriesNavigationPortletDataHandlerTest
+	extends BasePortletDataHandlerTestCase {
 
 	@ClassRule
 	@Rule
@@ -43,7 +51,6 @@ public class AssetCategoriesNavigationPortletDataHandlerTest extends
 
 	@Override
 	protected void addStagedModels() throws Exception {
-
 	}
 
 	@Override
@@ -70,4 +77,5 @@ public class AssetCategoriesNavigationPortletDataHandlerTest extends
 	protected boolean isDataSiteLevel() {
 		return false;
 	}
+
 }

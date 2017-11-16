@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
-import com.liferay.reading.time.calculator.ReadingTimeCalculator;
 import com.liferay.reading.time.service.ReadingTimeEntryLocalService;
 
 import java.util.Date;
@@ -63,9 +62,7 @@ public class ReadingTimeBlogsEntryLocalServiceWrapper
 			coverImageCaption, coverImageImageSelector, smallImageImageSelector,
 			serviceContext);
 
-		_readingTimeCalculator.calculate(blogsEntry).ifPresent(
-			readingTime -> _readingTimeEntryLocalService.addReadingTimeEntry(
-				blogsEntry, readingTime));
+		_readingTimeEntryLocalService.updateReadingTimeEntry(blogsEntry);
 
 		return blogsEntry;
 	}
@@ -98,15 +95,10 @@ public class ReadingTimeBlogsEntryLocalServiceWrapper
 			coverImageCaption, coverImageImageSelector, smallImageImageSelector,
 			serviceContext);
 
-		_readingTimeCalculator.calculate(blogsEntry).ifPresent(
-			readingTime -> _readingTimeEntryLocalService.updateReadingTimeEntry(
-				blogsEntry, readingTime));
+		_readingTimeEntryLocalService.updateReadingTimeEntry(blogsEntry);
 
 		return blogsEntry;
 	}
-
-	@Reference
-	private ReadingTimeCalculator _readingTimeCalculator;
 
 	@Reference
 	private ReadingTimeEntryLocalService _readingTimeEntryLocalService;

@@ -115,7 +115,7 @@ public class ReadingTimeTag extends AttributesTagSupport {
 		}
 
 		ReadingTimeEntry readingTimeEntry =
-			ReadingTimeEntryLocalServiceUtil.fetchReadingTimeEntry(_model);
+			ReadingTimeEntryLocalServiceUtil.updateReadingTimeEntry(_model);
 
 		if (readingTimeEntry != null) {
 			return Optional.of(

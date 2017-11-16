@@ -1,5 +1,4 @@
 @if $compat-grid {
-
 	// Renamed .col-xs-* to .col-*
 
 	@for $i from 1 through $grid-columns {

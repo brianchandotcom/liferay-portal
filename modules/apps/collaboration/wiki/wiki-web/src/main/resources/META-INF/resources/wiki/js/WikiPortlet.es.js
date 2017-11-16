@@ -1,5 +1,5 @@
 import core from 'metal';
-import { EventHandler } from 'metal-events';
+import {EventHandler} from 'metal-events';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 
 /**
@@ -23,28 +23,36 @@ class WikiPortlet extends PortletBase {
 		let formatSelect = this.one('#format');
 
 		if (formatSelect) {
-			this.currentFormatLabel = formatSelect.options[formatSelect.selectedIndex].text.trim();
+			this.currentFormatLabel = formatSelect.options[
+				formatSelect.selectedIndex
+			].text.trim();
 			this.currentFormatIndex = formatSelect.selectedIndex;
 
-			this.eventHandler_.add(formatSelect.addEventListener('change', (e) => {
-				this.changeWikiFormat_(e);
-			}));
+			this.eventHandler_.add(
+				formatSelect.addEventListener('change', e => {
+					this.changeWikiFormat_(e);
+				})
+			);
 		}
 
 		let publishButton = this.one('#publishButton');
 
 		if (publishButton) {
-			this.eventHandler_.add(publishButton.addEventListener('click', (e) => {
-				this.publishPage_(e);
-			}));
+			this.eventHandler_.add(
+				publishButton.addEventListener('click', e => {
+					this.publishPage_(e);
+				})
+			);
 		}
 
 		let saveButton = this.one('#saveButton');
 
 		if (saveButton) {
-			this.eventHandler_.add(saveButton.addEventListener('click', (e) => {
-				this.saveDraft_(e);
-			}));
+			this.eventHandler_.add(
+				saveButton.addEventListener('click', e => {
+					this.saveDraft_(e);
+				})
+			);
 		}
 	}
 
@@ -58,7 +66,9 @@ class WikiPortlet extends PortletBase {
 	changeWikiFormat_(event) {
 		let formatSelect = event.currentTarget;
 
-		let newFormat = formatSelect.options[formatSelect.selectedIndex].text.trim();
+		let newFormat = formatSelect.options[
+			formatSelect.selectedIndex
+		].text.trim();
 
 		let confirmMessage = _.sub(
 			this.strings.confirmLoseFormatting,
@@ -106,11 +116,9 @@ class WikiPortlet extends PortletBase {
 
 		if (tempImages.length > 0) {
 			if (confirm(this.strings.confirmDiscardImages)) {
-				tempImages.forEach(
-					node => {
-						node.parentElement.remove();
-					}
-				);
+				tempImages.forEach(node => {
+					node.parentElement.remove();
+				});
 			} else {
 				return false;
 			}
@@ -169,7 +177,7 @@ WikiPortlet.STATE = {
 	 * @type {!Object}
 	 */
 	constants: {
-		validator: core.isObject
+		validator: core.isObject,
 	},
 
 	/**
@@ -180,7 +188,7 @@ WikiPortlet.STATE = {
 	 * @type {String}
 	 */
 	currentAction: {
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -190,7 +198,7 @@ WikiPortlet.STATE = {
 	 * @type {String}
 	 */
 	renderUrl: {
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -202,10 +210,14 @@ WikiPortlet.STATE = {
 	strings: {
 		validator: core.isObject,
 		value: {
-			confirmDiscardImages: Liferay.Language.get('uploads-are-in-progress-confirmation'),
-			confirmLoseFormatting: Liferay.Language.get('you-may-lose-formatting-when-switching-from-x-to-x')
-		}
-	}
+			confirmDiscardImages: Liferay.Language.get(
+				'uploads-are-in-progress-confirmation'
+			),
+			confirmLoseFormatting: Liferay.Language.get(
+				'you-may-lose-formatting-when-switching-from-x-to-x'
+			),
+		},
+	},
 };
 
 export default WikiPortlet;

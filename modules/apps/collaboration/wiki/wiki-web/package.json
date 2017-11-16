@@ -4,9 +4,18 @@
 		"metal-events": "^2.5.0"
 	},
 	"devDependencies": {
+		"eslint": "^4.7.1",
+		"eslint-config-liferay": "^2.0.10",
 		"liferay-module-config-generator": "^1.2.1",
-		"metal-cli": "^4.2.0"
+		"metal-cli": "^4.2.0",
+		"prettier-eslint-cli": "4.4.0"
 	},
 	"name": "wiki-web",
+	"scripts": {
+		"checkFormat": "npm run prettier -- --list-different",
+		"format": "npm run prettier -- --write",
+		"lint": "eslint src/**/*.es.js test/**/*.es.js",
+		"prettier": "prettier-eslint src/**/*.es.js test/**/*.es.js"
+	},
 	"version": "2.1.41"
 }

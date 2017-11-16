@@ -209,6 +209,14 @@
 	}
 }
 
+.wrapped-lines-top {
+	border-top: 1px solid $brand-color;
+}
+
+.wrapped-lines-bottom {
+	border-bottom: 1px solid $brand-color;
+}
+
 .category-description {
 	color: $brand-color;
 }

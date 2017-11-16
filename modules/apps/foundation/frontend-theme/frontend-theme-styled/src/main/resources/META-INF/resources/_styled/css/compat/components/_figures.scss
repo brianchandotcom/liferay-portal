@@ -1,3 +1,5 @@
-.figure {
-	display: block;
+@if $compat-figures {
+	.figure {
+		display: block;
+	}
 }

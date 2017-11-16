@@ -100,7 +100,6 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-configuration/portal-configuration-upgrade-util" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-portlet-bridge/portal-portlet-bridge-soy" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-remote/portal-remote-soap-extender" />
-			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-scripting/portal-scripting-executor" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-search/portal-search" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-search/portal-search-elasticsearch" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-search/portal-search-web" />

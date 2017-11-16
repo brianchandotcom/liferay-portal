@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.scripting.executor.provider;
+package com.liferay.portal.scripting;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -20,10 +20,7 @@ import org.osgi.framework.Bundle;
 
 /**
  * @author Michael C. Han
- * @deprecated As of 3.0.0, replaced by {@link
- *             com.liferay.portal.scripting.ScriptBundleProvider}
  */
-@Deprecated
 @ProviderType
 public interface ScriptBundleProvider {
 

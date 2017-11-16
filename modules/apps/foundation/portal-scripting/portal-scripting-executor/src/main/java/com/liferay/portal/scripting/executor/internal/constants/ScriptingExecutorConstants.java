@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.scripting.executor.constants;
+package com.liferay.portal.scripting.executor.internal.constants;
 
 /**
  * @author Michael C. Han

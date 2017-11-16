@@ -121,7 +121,7 @@ public class GetFileSetTask extends Task {
 	}
 
 	public void findFiles(
-		File baseDir, List<String> targetNames, List<Path> classFileList,
+		File baseDir, List<String> classNames, List<Path> classFileList,
 		List<Path> srcFileList) {
 
 		if (!baseDir.exists() || !baseDir.isDirectory()) {
@@ -159,11 +159,11 @@ public class GetFileSetTask extends Task {
 
 						String fileName = fileNamePath.toString();
 
-						for (String targetFileName : targetNames) {
-							String targetSrcName = targetFileName.concat(
+						for (String className : classNames) {
+							String targetSrcName = className.concat(
 								".java");
 
-							if (_matchClassName(targetFileName, fileName)) {
+							if (_matchClassName(className, fileName)) {
 								classFileList.add(file);
 							}
 							else if (fileName.equals(targetSrcName)) {
@@ -189,12 +189,12 @@ public class GetFileSetTask extends Task {
 		_rootDir = rootDir;
 	}
 
-	private boolean _matchClassName(String targetName, String fileName) {
-		if (fileName.equals(targetName.concat(".class"))) {
+	private boolean _matchClassName(String className, String fileName) {
+		if (fileName.equals(className.concat(".class"))) {
 			return true;
 		}
 
-		if (fileName.startsWith(targetName.concat("$")) &&
+		if (fileName.startsWith(className.concat("$")) &&
 			fileName.endsWith(".class")) {
 
 			return true;

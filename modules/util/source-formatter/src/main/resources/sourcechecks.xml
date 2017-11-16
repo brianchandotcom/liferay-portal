@@ -418,6 +418,9 @@
 		<check name="TLDTypeCheck" />
 		<check name="WhitespaceCheck" />
 	</source-processor>
+	<source-processor name="TSSourceProcessor">
+		<check name="WhitespaceCheck" />
+	</source-processor>
 	<source-processor name="XMLSourceProcessor">
 		<check name="XMLBuildFileCheck" />
 		<check name="XMLCustomSQLOrderCheck" />

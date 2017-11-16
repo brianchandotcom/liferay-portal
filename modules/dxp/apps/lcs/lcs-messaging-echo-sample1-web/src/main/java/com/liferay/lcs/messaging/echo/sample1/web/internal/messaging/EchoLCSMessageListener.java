@@ -17,10 +17,11 @@ package com.liferay.lcs.messaging.echo.sample1.web.internal.messaging;
 import com.liferay.lcs.messaging.LCSMessageBusService;
 import com.liferay.lcs.messaging.LCSMessageListener;
 import com.liferay.lcs.messaging.LCSMessageListenerException;
-import com.liferay.lcs.messaging.MessageBusMessage;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Map;
 
 /**
  * @author Riccardo Ferrari
@@ -32,40 +33,29 @@ public class EchoLCSMessageListener implements LCSMessageListener {
 	}
 
 	@Override
-	public void receive(MessageBusMessage messageBusMessage)
+	public void receive(
+			String destinationName, Map<String, String> metadata,
+			String payload, String responseDestinationName)
 		throws LCSMessageListenerException {
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Received message:" + messageBusMessage);
+			_log.info("Received message for destination:" + destinationName);
 		}
-
-		String payload = (String)messageBusMessage.getPayload();
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Message payload: " + payload);
 		}
 
-		String responseDestinationName =
-			messageBusMessage.getResponseDestinationName();
-
 		if (Validator.isNull(responseDestinationName)) {
 			return;
 		}
-
-		MessageBusMessage responseMessageBusMessage = new MessageBusMessage();
-
-		responseMessageBusMessage.setDestinationName(responseDestinationName);
-		responseMessageBusMessage.setResponseId(
-			messageBusMessage.getResponseId());
 
 		StringBuilder sb = new StringBuilder(payload);
 
 		sb.reverse();
 
-		responseMessageBusMessage.setPayload(sb.toString());
-
 		_lcsMessageBusService.sendMessage(
-			responseDestinationName, responseMessageBusMessage);
+			responseDestinationName, sb.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

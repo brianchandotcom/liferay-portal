@@ -15,7 +15,6 @@
 package com.liferay.lcs.messaging.echo.sample1.web.internal.portlet;
 
 import com.liferay.lcs.messaging.LCSMessageBusService;
-import com.liferay.lcs.messaging.MessageBusMessage;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -57,13 +56,11 @@ public class EchoPortlet extends MVCPortlet {
 			_log.info("Sending message to OSB LCS Echo service");
 		}
 
-		MessageBusMessage message = new MessageBusMessage();
+		String payload = "LCS Echo Simple";
+		String responseDestinationName = "lcs_echo";
 
-		message.setPayload("LCS Echo Simple");
-		message.setResponseId("lcsEchoResponseId");
-		message.setResponseDestinationName("lcs_echo");
-
-		_lcsMessageBusService.sendMessage("osb_lcs_echo", message);
+		_lcsMessageBusService.sendMessage(
+			"osb_lcs_echo", null, payload, responseDestinationName);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(EchoPortlet.class);

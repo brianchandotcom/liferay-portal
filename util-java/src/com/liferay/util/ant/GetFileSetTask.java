@@ -50,10 +50,9 @@ public class GetFileSetTask extends Task {
 
 		Project project = getProject();
 
-		String[] names = _classNames.split(",");
 		List<String> classNames = new ArrayList<>();
 
-		Collections.addAll(classNames, names);
+		Collections.addAll(classNames, _classNames.split(","));
 
 		List<Path> classResultList = new ArrayList();
 		List<Path> srcResultList = new ArrayList();
@@ -61,10 +60,9 @@ public class GetFileSetTask extends Task {
 		findFiles(baseDir, classNames, classResultList, srcResultList);
 
 		if (srcResultList.isEmpty()) {
-			for (String className : classNames) {
-				_LOGGER.log(
-					Level.WARNING, "{0}.java was not found!", className);
-			}
+			_LOGGER.log(
+				Level.WARNING, "{0}.java was not found!",
+				classNames.toString());
 
 			return;
 		}
@@ -109,7 +107,6 @@ public class GetFileSetTask extends Task {
 		FileSet classFileSet = new FileSet();
 
 		classFileSet.setProject(getProject());
-
 		classFileSet.setDir(baseDir);
 
 		for (Path classFilePath : classResultList) {
@@ -141,7 +138,9 @@ public class GetFileSetTask extends Task {
 							Path file, BasicFileAttributes attrs)
 						throws IOException {
 
-						String fileName = file.getFileName().toString();
+						Path fileNamePath = file.getFileName();
+
+						String fileName = fileNamePath.toString();
 
 						if (_skipDirectory(fileName)) {
 							return FileVisitResult.SKIP_SUBTREE;
@@ -191,9 +190,7 @@ public class GetFileSetTask extends Task {
 	}
 
 	private boolean _matchClassName(String targetName, String fileName) {
-		String targetClassName = targetName.concat(".class");
-
-		if (fileName.equals(targetClassName)) {
+		if (fileName.equals(targetName.concat(".class"))) {
 			return true;
 		}
 

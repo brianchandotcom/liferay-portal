@@ -222,8 +222,8 @@
 
 		<execute function="Check" locator1="CalendarEditEvent#ALL_DAY_CHECKBOX" />
 
-		<execute function="AssertElementNotPresent#assertNotVisible" locator1="CalendarEditEvent#START_DATE_TIME" />
-		<execute function="AssertElementNotPresent#assertNotVisible" locator1="CalendarEditEvent#END_DATE_TIME" />
+		<execute function="AssertNotVisible" locator1="CalendarEditEvent#START_DATE_TIME" />
+		<execute function="AssertNotVisible" locator1="CalendarEditEvent#END_DATE_TIME" />
 
 		<var method="selenium#getElementValue(CalendarEditEvent#END_DATE)" name="endDate" />
 		<var method="selenium#getElementValue(CalendarEditEvent#START_DATE)" name="startDate" />
@@ -1058,8 +1058,8 @@
 				<var name="startDateTime" value="12:00 AM" />
 
 				<execute function="AssertChecked" locator1="CalendarEditEvent#ALL_DAY_CHECKBOX" />
-				<execute function="AssertElementNotPresent#assertNotVisible" locator1="CalendarEditEvent#START_DATE_TIME" />
-				<execute function="AssertElementNotPresent#assertNotVisible" locator1="CalendarEditEvent#END_DATE_TIME" />
+				<execute function="AssertNotVisible" locator1="CalendarEditEvent#START_DATE_TIME" />
+				<execute function="AssertNotVisible" locator1="CalendarEditEvent#END_DATE_TIME" />
 
 				<var method="selenium#getElementValue(CalendarEditEvent#END_DATE)" name="endDate" />
 				<var method="selenium#getElementValue(CalendarEditEvent#START_DATE)" name="startDate" />
@@ -1452,8 +1452,8 @@
 
 	<command name="setAllDay">
 		<execute function="Check" locator1="CalendarEditEvent#ALL_DAY_CHECKBOX" />
-		<execute function="AssertElementNotPresent#assertNotVisible" locator1="CalendarEditEvent#START_DATE_TIME" />
-		<execute function="AssertElementNotPresent#assertNotVisible" locator1="CalendarEditEvent#END_DATE_TIME" />
+		<execute function="AssertNotVisible" locator1="CalendarEditEvent#START_DATE_TIME" />
+		<execute function="AssertNotVisible" locator1="CalendarEditEvent#END_DATE_TIME" />
 	</command>
 
 	<command name="setDates">

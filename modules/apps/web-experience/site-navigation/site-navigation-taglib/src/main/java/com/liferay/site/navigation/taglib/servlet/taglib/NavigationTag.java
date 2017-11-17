@@ -226,15 +226,11 @@ public class NavigationTag extends IncludeTag {
 			}
 		}
 		else if (_rootLayoutType.equals("absolute")) {
-			int ancestorIndex = branchNavItems.size() - _rootLayoutLevel;
-
-			if ((ancestorIndex >= 0) &&
-				(ancestorIndex < branchNavItems.size())) {
-
-				rootNavItem = branchNavItems.get(ancestorIndex);
-			}
-			else if (ancestorIndex == branchNavItems.size()) {
+			if (_rootLayoutLevel == 0) {
 				navItems = NavItem.fromLayouts(request, themeDisplay, null);
+			}
+			else if (branchNavItems.size() >= _rootLayoutLevel) {
+				rootNavItem = branchNavItems.get(_rootLayoutLevel - 1);
 			}
 		}
 		else if (_rootLayoutType.equals("select")) {

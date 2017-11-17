@@ -507,7 +507,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 	private final Pattern _missingParenthesesPattern1 = Pattern.compile(
 		"\t([^\t]*(\\S))\\s+(AND|OR|\\[\\$AND_OR_CONNECTOR\\$\\])\\s");
 	private final Pattern _missingParenthesesPattern2 = Pattern.compile(
-		"\\s(AND|OR|\\[\\$AND_OR_CONNECTOR\\$\\])\\s+[^\\(\\[<\\s]");
+		"\\s(AND|OR|\\[\\$AND_OR_CONNECTOR\\$\\])\\s+[^\\(\\[\\]<\\s]");
 	private final Pattern _multiLineSinglePredicatePattern = Pattern.compile(
 		"\t\\(\n(.*)\n\t*\\)");
 	private final Pattern _redundantParenthesesForSingleLineClausePattern =

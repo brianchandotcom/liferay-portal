@@ -274,9 +274,7 @@
 
 		<execute function="Click" locator1="Button#PUBLISH" />
 
-		<var name="key_uniqueSuccess" value="The form was published successfully! Access it with this URL" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#UNIQUE_SUCCESS" value1="The form was published successfully! Access it with this URL" />
+		<execute macro="FormsAdminNavigator#viewPublishFormSuccessMessage" />
 	</command>
 
 	<command name="save">

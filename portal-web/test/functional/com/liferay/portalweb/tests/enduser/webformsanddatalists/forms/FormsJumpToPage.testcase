@@ -170,8 +170,6 @@
 
 		<execute macro="Form#publishForm" />
 
-		<execute macro="FormsAdminNavigator#viewPublishFormSuccessMessage" />
-
 		<execute macro="FormsAdminNavigator#openPublishURL">
 			<var name="publishFormURL" value="${publishedFormPublicURL}" />
 		</execute>

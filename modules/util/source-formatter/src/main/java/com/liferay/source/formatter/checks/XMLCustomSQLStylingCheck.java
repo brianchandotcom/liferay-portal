@@ -188,22 +188,6 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 					fileName, "redundant parentheses",
 					getLineCount(content, startPos));
 			}
-
-			int endLineTabCount = endPos - endLineStartPos - 1;
-
-			int startLineStartPos = content.lastIndexOf("\n", startPos);
-
-			int startLineTabCount = startPos - startLineStartPos;
-
-			if (endLineTabCount != startLineTabCount) {
-				addMessage(
-					fileName,
-					StringBundler.concat(
-						"Line starts with '", String.valueOf(endLineTabCount),
-						"' tabs, but '", String.valueOf(startLineTabCount),
-						"' tabs are expected"),
-					endLineCount);
-			}
 		}
 	}
 

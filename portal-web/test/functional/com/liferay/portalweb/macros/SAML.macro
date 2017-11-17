@@ -96,6 +96,7 @@
 			<var name="IdpEntityID" value="samlidp" />
 			<var name="IdpMetadataURL" value="http://localhost:8080/c/portal/saml/metadata" />
 			<var name="IdpNameID" value="samlidp" />
+			<var name="nameIdentifierFormat" value="${nameIdentifierFormat}" />
 		</execute>
 
 		<execute macro="SAMLNavigation#gotoGeneral" />

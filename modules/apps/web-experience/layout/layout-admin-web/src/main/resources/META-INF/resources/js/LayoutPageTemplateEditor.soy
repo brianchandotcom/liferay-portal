@@ -17,7 +17,6 @@
 	<div id="{$id}">
 		<div class="management-bar management-bar-light navbar navbar-expand-md">
 			<div class="container">
-				<ul class="navbar-nav"></ul>
 				<ul class="navbar-nav">
 					<li class="nav-item">
 						<span class="navbar-text">
@@ -33,14 +32,15 @@
 				</ul>
 			</div>
 		</div>
+
 		<div class="container-fluid-1280">
 			<div class="row mr-0">
 				<div class="col-lg-9 col-md-8 fragment-panel-target">
-					{if $fragments and length($fragments) > 0}
+					{if $fragments and (length($fragments) > 0)}
 						{foreach $fragment in $fragments}
 							<div class="fragment-panel-item-instance" data-position="{index($fragment)}">
 								{call LayoutPageTemplateFragment.render}
-									{param events: [ 'fragmentRemoveButtonClick': $_handleFragmentRemoveButtonClick ] /}
+									{param events: ['fragmentRemoveButtonClick': $_handleFragmentRemoveButtonClick] /}
 									{param index: index($fragment) /}
 									{param name: $fragment.name /}
 									{param spritemap: $spritemap /}
@@ -51,17 +51,19 @@
 						{call .noFragmentsMessage /}
 					{/if}
 				</div>
+
 				<div class="col-lg-3 col-md-4 sidebar sidebar-light sidebar-light-bg fragment-panel-sidebar">
 					<div class="px-0 sidebar-header">
 						<div class="sidebar-section">
-							<h4 class="sidebar-title">Fragments</h4>
+							<h4 class="sidebar-title">{msg desc=""}fragments{/msg}</h4>
 						</div>
 					</div>
+
 					<div class="px-0 sidebar-body">
 						{foreach $fragmentCollection in $fragmentCollections}
 							{call LayoutPageTemplateFragmentCollection.render}
-								{param collection: $fragmentCollection /}
-								{param events: [ 'collectionEntryClick': $_handleFragmentCollectionEntryClick ]/}
+								{param fragmentCollection: $fragmentCollection /}
+								{param events: ['collectionEntryClick': $_handleFragmentCollectionEntryClick] /}
 								{param portletNamespace: $portletNamespace /}
 								{param spritemap: $spritemap /}
 							{/call}
@@ -79,9 +81,11 @@
 {template .noFragmentsMessage}
 	<div class="taglib-empty-result-message">
 		<div class="taglib-empty-result-message-header"></div>
+
 		<div class="text-center text-muted">
 			{msg desc=""}this-layout-page-template-is-empty{/msg}.
 		</div>
+
 		<div class="text-center text-muted">
 			{msg desc=""}please-add-some-fragments{/msg}.
 		</div>

@@ -15,12 +15,15 @@
 package com.liferay.my.account.web.internal.portlet.action;
 
 import com.liferay.my.account.web.internal.constants.MyAccountPortletKeys;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -33,8 +36,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = MVCActionCommand.class
 )
-public class EditUserMVCActionCommand
-	extends com.liferay.users.admin.web.portlet.action.EditUserMVCActionCommand {
+public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -45,15 +47,12 @@ public class EditUserMVCActionCommand
 			return;
 		}
 
-		super.doProcessAction(actionRequest, actionResponse);
+		_mvcActionCommand.processAction(actionRequest, actionResponse);
 	}
 
-	@Override
-	protected Object[] updateUser(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		return super.updateUser(actionRequest, actionResponse);
-	}
+	@Reference(
+		target = "(&(mvc.command.name=/users_admin/edit_user)(javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN + "))"
+	)
+	private MVCActionCommand _mvcActionCommand;
 
 }

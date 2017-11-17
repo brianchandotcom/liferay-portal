@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.users.admin.web.custom.attributes;
+package com.liferay.users.admin.web.internal.custom.attributes;
 
 import com.liferay.expando.kernel.model.BaseCustomAttributesDisplay;
 import com.liferay.expando.kernel.model.CustomAttributesDisplay;
-import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -29,17 +29,11 @@ import org.osgi.service.component.annotations.Component;
 	property = {"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN},
 	service = CustomAttributesDisplay.class
 )
-public class OrganizationCustomAttributesDisplay
-	extends BaseCustomAttributesDisplay {
+public class UserCustomAttributesDisplay extends BaseCustomAttributesDisplay {
 
 	@Override
 	public String getClassName() {
-		return Organization.class.getName();
-	}
-
-	@Override
-	public String getIconCssClass() {
-		return "sites";
+		return User.class.getName();
 	}
 
 }

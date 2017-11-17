@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.users.admin.web.search;
+package com.liferay.users.admin.web.internal.search;
 
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitter;

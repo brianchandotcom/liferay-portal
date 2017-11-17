@@ -1701,6 +1701,8 @@
 		</if>
 
 		<execute macro="CalendarEvent#delete" />
+
+		<execute macro="Alert#waitForSuccessMessageHide" />
 	</command>
 
 	<command name="tearDownOnBusyDayInCurrentMonth">

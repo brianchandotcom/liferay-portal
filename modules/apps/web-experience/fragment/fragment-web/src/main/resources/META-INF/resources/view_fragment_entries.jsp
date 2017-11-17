@@ -128,68 +128,60 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 		<liferay-frontend:add-menu-item id="addFragmentEntryMenuItem" title='<%= LanguageUtil.get(request, "add-fragment") %>' url="<%= addFragmentEntryURL.toString() %>" />
 	</liferay-frontend:add-menu>
 
-	<aui:script require="fragment-web/js/FragmentNameEditor,metal-dom/src/all/dom">
-		var fragmentNameEditor;
+	<aui:script require="fragment-web/js/simple-input-modal/index.es,metal-dom/src/all/dom">
+		var dom = metalDomSrcAllDom.default;
+		var openSimpleInputModal = fragmentWebJsSimpleInputModalIndexEs.default;
 
-		var updateFragmentActionOptionQueryClickHandler = metalDomSrcAllDom.default.delegate(
+		var fieldName = '<%= LanguageUtil.get(request, "name") %>';
+		var namespace = '<%= renderResponse.getNamespace() %>';
+		var spritemap = '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg';
+
+		var addFragmentEntryMenuItemClickHandler = dom.delegate(
 			document.body,
 			'click',
-			'.<portlet:namespace />update-fragment-action-option > a',
-			function(event) {
-				var actionElement = event.delegateTarget;
+			'#<portlet:namespace />addFragmentEntryMenuItem',
+			function (event) {
+				event.preventDefault();
 
-				fragmentNameEditor = new fragmentWebJsFragmentNameEditor.default(
-					{
-						actionURL: actionElement.dataset.updateUrl,
-						editorTitle: '<liferay-ui:message key="rename-fragment" />',
-						events: {
-							hide: function() {
-								fragmentNameEditor.dispose();
-
-								fragmentNameEditor = null;
-							}
-						},
-						fragmentEntryId: actionElement.dataset.fragmentEntryId,
-						fragmentEntryName: actionElement.dataset.fragmentEntryName,
-						namespace: '<portlet:namespace />',
-						spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
-					}
-				);
+				openSimpleInputModal({
+					dialogTitle: '<%= LanguageUtil.get(request, "add-fragment") %>',
+					formSubmitURL: '<%= addFragmentEntryURL.toString() %>',
+					mainFieldLabel: fieldName,
+					mainFieldName: 'name',
+					mainFieldPlaceholder: fieldName,
+					namespace: namespace,
+					spritemap: spritemap
+				});
 			}
 		);
 
-		function handleAddFragmentEntryMenuItemClick(event) {
-			event.preventDefault();
+		var updateFragmentEntryMenuItemClickHandler = dom.delegate(
+			document.body,
+			'click',
+			'.<portlet:namespace />update-fragment-action-option > a',
+			function (event) {
+				var data = event.delegateTarget.dataset;
 
-			fragmentNameEditor = new fragmentWebJsFragmentNameEditor.default(
-				{
-					actionURL: '<%= addFragmentEntryURL.toString() %>',
-					editorTitle: '<liferay-ui:message key="add-fragment" />',
-					events: {
-						hide: function() {
-							fragmentNameEditor.dispose();
+				event.preventDefault();
 
-							fragmentNameEditor = null;
-						}
-					},
-					namespace: '<portlet:namespace />',
-					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
-				}
-			);
-		}
-
-		var addFragmentEntryMenuItem = document.getElementById('<portlet:namespace />addFragmentEntryMenuItem');
-
-		addFragmentEntryMenuItem.addEventListener('click', handleAddFragmentEntryMenuItemClick);
+				openSimpleInputModal({
+					dialogTitle: '<%= LanguageUtil.get(request, "rename-fragment") %>',
+					formSubmitURL: data.formSubmitUrl,
+					idFieldName: 'id',
+					idFieldValue: data.idFieldValue,
+					mainFieldLabel: fieldName,
+					mainFieldName: 'name',
+					mainFieldPlaceholder: fieldName,
+					mainFieldValue: data.mainFieldValue,
+					namespace: namespace,
+					spritemap: spritemap
+				});
+			}
+		);
 
 		function handleDestroyPortlet () {
-			addFragmentEntryMenuItem.removeEventListener('click', handleAddFragmentEntryMenuItemClick);
-
-			if (fragmentNameEditor) {
-				fragmentNameEditor.dispose();
-			}
-
-			updateFragmentActionOptionQueryClickHandler.removeListener();
+			addFragmentEntryMenuItemClickHandler.removeListener();
+			updateFragmentEntryMenuItemClickHandler.removeListener();
 
 			Liferay.detach('destroyPortlet', handleDestroyPortlet);
 		}

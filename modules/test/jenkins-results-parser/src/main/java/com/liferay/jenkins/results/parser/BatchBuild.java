@@ -418,6 +418,33 @@ public class BatchBuild extends BaseBuild {
 	}
 
 	@Override
+	protected List<Element> getJenkinsReportTableRowsElements(
+		String result, String status) {
+
+		List<Element> tableRowElements = new ArrayList<>();
+
+		tableRowElements.add(getJenkinsReportTableRowElement());
+
+		List<Build> downstreamBuilds = getDownstreamBuilds(null);
+
+		Collections.sort(
+			downstreamBuilds, new BaseBuild.BuildDisplayNameComparator());
+
+		for (Build downstreamBuild : downstreamBuilds) {
+			if (!(downstreamBuild instanceof AxisBuild)) {
+				continue;
+			}
+
+			AxisBuild downstreamAxisBuild = (AxisBuild)downstreamBuild;
+
+			tableRowElements.add(
+				downstreamAxisBuild.getJenkinsReportTableRowElement());
+		}
+
+		return tableRowElements;
+	}
+
+	@Override
 	protected int getTestCountByStatus(String status) {
 		JSONObject testReportJSONObject = getTestReportJSONObject();
 

@@ -39,9 +39,9 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 
+import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -669,12 +669,14 @@ public class TopLevelBuild extends BaseBuild {
 		String description = jobJSONObject.optString("description");
 
 		if (!description.isEmpty()) {
+			subheadingElement = Dom4JUtil.getNewElement("h2");
+
 			try {
-				subheadingElement = Dom4JUtil.getNewElement(
-					"h2", null, description);
+				Dom4JUtil.addRawXMLToElement(subheadingElement, description);
 			}
-			catch (JSONException jsone) {
-				jsone.printStackTrace();
+			catch (DocumentException de) {
+				throw new RuntimeException(
+					"Unable to parse description html " + description, de);
 			}
 		}
 
@@ -752,7 +754,7 @@ public class TopLevelBuild extends BaseBuild {
 			"table", null,
 			Dom4JUtil.getNewElement(
 				"caption", null, captionText,
-				Integer.toString(tableRowElements.size())),
+				Integer.toString(getDownstreamBuildCount(result, status))),
 			getJenkinsReportTableColumnHeadersElement(),
 			tableRowElements.toArray(new Element[tableRowElements.size()]));
 	}

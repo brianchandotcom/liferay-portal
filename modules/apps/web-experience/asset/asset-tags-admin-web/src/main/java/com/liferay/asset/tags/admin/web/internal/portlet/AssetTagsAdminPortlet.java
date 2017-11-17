@@ -14,7 +14,7 @@
 
 package com.liferay.asset.tags.admin.web.internal.portlet;
 
-import com.liferay.asset.constants.AssetTagsAdminPortletKeys;
+import com.liferay.asset.tags.constants.AssetTagsAdminPortletKeys;
 import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.asset.kernel.exception.DuplicateTagException;
 import com.liferay.asset.kernel.exception.NoSuchTagException;

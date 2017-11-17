@@ -1,0 +1,140 @@
+{namespace SimpleInputModal}
+
+/**
+ * SimpleInputModal
+ */
+{template .render}
+	{@param dialogTitle: string}
+	{@param formSubmitURL: string}
+	{@param mainFieldLabel: string}
+	{@param mainFieldName: string}
+	{@param namespace: string}
+	{@param spritemap: string}
+	{@param? _errorMessage: string}
+	{@param? _handleCancelButtonClick: any}
+	{@param? _handleFormSubmit: any}
+	{@param? _handleModalVisibleChanged: any}
+	{@param? _loadingResponse: bool}
+	{@param? checkboxFieldLabel: string}
+	{@param? checkboxFieldName: string}
+	{@param? checkboxFieldValue: bool}
+	{@param? id: string}
+	{@param? idFieldName: string}
+	{@param? idFieldValue: string}
+	{@param? mainFieldPlaceholder: string}
+	{@param? mainFieldValue: string}
+
+	<div id="{$id ?: ''}">
+		{call Modal.render}
+			{param body kind="html"}
+				<form action="{$formSubmitURL}" method="post" data-onsubmit="{$_handleFormSubmit}">
+					{if $idFieldName}
+						<input
+							name="{$namespace}{$idFieldName}"
+							type="hidden"
+							value="{$idFieldValue ?: ''}"
+						/>
+					{/if}
+
+					{let $mainFieldClasses kind="text"}
+						form-group
+						{if $_errorMessage}
+							{sp}has-error
+						{/if}
+					{/let}
+
+					<div class="{$mainFieldClasses}">
+						<label>
+							{$mainFieldLabel}
+							<span class="reference-mark">
+								<svg class="lexicon-icon">
+									<use xlink:href="{$spritemap}#asterisk"></use>
+								</svg>
+							</span>
+						</label>
+
+						{let $mainFieldAttributes kind="attributes"}
+							{if $_loadingResponse}disabled{/if}
+							class="form-control"
+							name="{$namespace}{$mainFieldName}"
+							placeholder="{$mainFieldPlaceholder ?: ''}"
+							type="text"
+							value="{$mainFieldValue ?: ''}"
+						{/let}
+
+						<input {$mainFieldAttributes} />
+					</div>
+
+					{if $_errorMessage}
+						<form class="form-feedback-item">
+							<span class="form-feedback-indicator">
+								<svg class="lexicon-icon">
+									<use xlink:href="{$spritemap}#exclamation-full"></use>
+								</svg>
+							</span>
+							{$_errorMessage}
+						</form>
+					{/if}
+
+					{if $checkboxFieldName and $checkboxFieldLabel}
+						<div class="form-check">
+							<label class="form-check-label">
+								{let $checkboxFieldAttributes kind="attributes"}
+									{if $checkboxFieldValue}checked{/if}
+									{if $_loadingResponse}disabled{/if}
+									class="form-check-input"
+									name="{$namespace}{$checkboxFieldName}"
+									type="checkbox"
+								{/let}
+
+								<input {$checkboxFieldAttributes} />
+
+								<span class="form-check-description">
+									{$checkboxFieldLabel}
+								</span>
+							</label>
+						</div>
+					{/if}
+
+					{let $cancelButtonAttributes kind="attributes"}
+						{if $_loadingResponse}disabled{/if}
+						class="btn"
+						data-onclick="{$_handleCancelButtonClick}"
+						type="button"
+					{/let}
+
+					<button {$cancelButtonAttributes}>
+						{msg desc=""}cancel{/msg}
+					</button>
+
+					{let $submitButtonCssClasses kind="text"}
+						btn btn-primary
+
+						{if $_loadingResponse}
+							{sp}loading
+						{/if}
+					{/let}
+
+					{let $submitButtonAttributes kind="attributes"}
+						{if $_loadingResponse}disabled{/if}
+						class="{$submitButtonCssClasses}"
+						type="submit"
+					{/let}
+
+					<button {$submitButtonAttributes}>
+						<span class="loading-icon linear"></span>
+						{msg desc=""}submit{/msg}
+					</button>
+				</form>
+			{/param}
+
+			{param events: [
+				'visibleChanged': $_handleModalVisibleChanged
+			] /}
+
+			{param header kind="html"}
+				{$dialogTitle}
+			{/param}
+		{/call}
+	</div>
+{/template}

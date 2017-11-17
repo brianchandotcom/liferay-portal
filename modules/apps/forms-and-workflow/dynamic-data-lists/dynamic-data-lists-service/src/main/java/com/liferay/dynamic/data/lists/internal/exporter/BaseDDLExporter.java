@@ -136,10 +136,12 @@ public abstract class BaseDDLExporter implements DDLExporter {
 
 		String valueString = StringPool.BLANK;
 
+		String fieldType = ddmForFieldValues.get(0).getType();
+
 		if (scope == DDLRecordSetConstants.SCOPE_FORMS) {
 			DDMFormFieldValueRenderer ddmFormFieldValueRenderer =
 				getDDMFormFieldTypeServicesTracker().
-					getDDMFormFieldValueRenderer(ddmFormField.getType());
+					getDDMFormFieldValueRenderer(fieldType);
 
 			valueString = ddmFormFieldValueRenderer.render(
 				ddmForFieldValues.get(0), getLocale());
@@ -152,7 +154,7 @@ public abstract class BaseDDLExporter implements DDLExporter {
 			com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRenderer
 				ddmFormFieldValueRenderer =
 					ddmFormFieldValueRendererRegistry.
-						getDDMFormFieldValueRenderer(ddmFormField.getType());
+						getDDMFormFieldValueRenderer(fieldType);
 
 			String ddmFormFieldType =
 				ddmFormFieldValueRenderer.getSupportedDDMFormFieldType();

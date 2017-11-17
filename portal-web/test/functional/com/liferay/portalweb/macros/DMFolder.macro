@@ -587,16 +587,17 @@
 			<then>
 				<execute function="AssertElementPresent" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_ICON" />
 				<execute function="AssertTextEquals" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE" value1="${dmFolderName}" />
-
-				<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE" value1="${dmFolderName}" />
 			</then>
 			<else>
 				<execute function="AssertElementPresent" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" />
 				<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" value1="${dmFolderName}" />
-
-				<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_FOLDER_TITLE" value1="${dmFolderName}" />
 			</else>
 		</if>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="displayStyle" value="${displayStyle}" />
+			<var name="rowEntry" value="${dmFolderName}" />
+		</execute>
 
 		<var method="StringUtil#upperCase('${dmFolderName}')" name="dmFolderNameUpperCase" />
 

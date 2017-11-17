@@ -24,6 +24,9 @@ import aQute.bnd.annotation.ProviderType;
 public interface GroupFinder {
 	public int countByLayouts(long companyId, long parentGroupId, boolean site);
 
+	public int countByLayouts(long companyId, long parentGroupId, boolean site,
+		boolean active);
+
 	public int countByG_U(long groupId, long userId, boolean inherit);
 
 	public int countByC_C_PG_N_D(long companyId, long[] classNameIds,
@@ -37,6 +40,11 @@ public interface GroupFinder {
 	public java.util.List<com.liferay.portal.kernel.model.Group> findByCompanyId(
 		long companyId,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Group> obc);
+
+	public java.util.List<com.liferay.portal.kernel.model.Group> findByLayouts(
+		long companyId, long parentGroupId, boolean site, boolean active,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Group> obc);
 

@@ -363,7 +363,6 @@
 	</command>
 
 	<command name="viewFormPublish">
-
 		<execute macro="FormsAdminNavigator#openPublishURL" />
 
 		<var name="key_formName" value="${formName}" />

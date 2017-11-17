@@ -201,7 +201,7 @@
 		</if>
 
 		<execute function="AssertElementPresent" locator1="Icon#DISPLAY_STYLE_ACTIVE">
-			<var name="key_displayStyle" value="${displayStyle}" />
+			<var method="StringUtil#toLowerCase('${displayStyle}')" name="key_displayStyle" />
 		</execute>
 	</command>
 

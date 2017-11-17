@@ -200,6 +200,51 @@
 		<execute macro="User#viewLoggedOutPG" />
 	</command>
 
+	<command name="SPInitiatedSSOWithScreenNameIdentifier" priority="4">
+		<property name="test.name.skip.portal.instance" value="SPInitiatedSSOWithScreenNameIdentifier" />
+
+		<execute macro="SAML#configureLiferaySAMLAsIdP">
+			<var name="samlEntityID" value="samlidp" />
+		</execute>
+
+		<execute macro="SAML#configureLiferaySAMLAsSP">
+			<var name="nameIdentifierAttributeName" value="screenName" />
+			<var name="nameIdentifierFormat" value="Unspecified" />
+			<var name="samlEntityID" value="samlsp" />
+			<var name="spURL" value="http://www.able.com:9080/" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#addCategoryLogLevels">
+			<var name="catagoryName" value="com.liferay.saml.opensaml.integration" />
+			<var name="categoryPriority" value="DEBUG" />
+		</execute>
+
+		<execute macro="User#logoutPG">
+			<var name="specificURL" value="http://www.able.com:9080" />
+		</execute>
+
+		<execute macro="User#viewLoggedOutPG" />
+
+		<execute macro="SAML#executeSPInitiatedSSO">
+			<var name="password" value="test" />
+			<var name="specificURL" value="http://www.able.com:9080" />
+			<var name="spURL" value="http://www.able.com:9080/" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="User#viewLoggedInPG">
+			<var name="userFirstName" value="Test" />
+			<var name="userLastName" value="Test" />
+		</execute>
+
+		<execute function="AssertConsoleTextPresent" value1="nameid-format:unspecified" />
+	</command>
 	<command name="ViewIdPInitiatedSSO" priority="4">
 		<description message="Sign into portal by executing a IdP initiated SSO login. After a successful login, the IdP will redirect to the SP. If the same users with the same email address are present on both instances, it will authenticate and show the SP. SAML can authenticate across major portal versions, that is, the IdP can be Portal 6.1 EE GA3 and the SP can be Portal 6.2. EE GA1. For testing purposes, it is obvious if the authentication succeeds or fails if the IdP and SP are different portal versions." />
 

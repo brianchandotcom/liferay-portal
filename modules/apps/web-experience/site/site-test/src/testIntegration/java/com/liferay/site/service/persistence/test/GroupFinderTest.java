@@ -256,6 +256,27 @@ public class GroupFinderTest {
 		groups = findByLayouts(childGroup1.getGroupId());
 
 		Assert.assertTrue(groups.isEmpty());
+	}
+
+	@Test
+	public void testFindByLayoutsAndActiveGroup() throws Exception {
+		int initialGroupCount = GroupFinderUtil.countByLayouts(
+			TestPropsValues.getCompanyId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, true, true);
+
+		GroupTestUtil.addGroup();
+
+		Group parentGroup = GroupTestUtil.addGroup();
+
+		LayoutTestUtil.addLayout(parentGroup, false);
+
+		Group childGroup1 = GroupTestUtil.addGroup(parentGroup.getGroupId());
+
+		LayoutTestUtil.addLayout(childGroup1, false);
+
+		Group childGroup2 = GroupTestUtil.addGroup(parentGroup.getGroupId());
+
+		LayoutTestUtil.addLayout(childGroup2, true);
 
 		GroupLocalServiceUtil.updateGroup(
 			parentGroup.getGroupId(), parentGroup.getParentGroupId(),
@@ -265,12 +286,19 @@ public class GroupFinderTest {
 			parentGroup.getFriendlyURL(), parentGroup.isInheritContent(), false,
 			ServiceContextTestUtil.getServiceContext());
 
-		groups = findByLayouts(GroupConstants.DEFAULT_PARENT_GROUP_ID);
+		List<Group> groups = GroupFinderUtil.findByLayouts(
+			TestPropsValues.getCompanyId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, true, true,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new GroupNameComparator(true));
 
 		Assert.assertEquals(
 			groups.toString(), initialGroupCount, groups.size());
 
-		groups = findByLayouts(parentGroup.getGroupId());
+		groups = GroupFinderUtil.findByLayouts(
+			TestPropsValues.getCompanyId(), parentGroup.getGroupId(), true,
+			true, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new GroupNameComparator(true));
 
 		Assert.assertEquals(groups.toString(), 2, groups.size());
 	}

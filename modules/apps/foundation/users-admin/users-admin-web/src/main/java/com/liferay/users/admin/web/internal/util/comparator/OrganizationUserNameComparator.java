@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.users.admin.web.util.comparator;
+package com.liferay.users.admin.web.internal.util.comparator;
 
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;

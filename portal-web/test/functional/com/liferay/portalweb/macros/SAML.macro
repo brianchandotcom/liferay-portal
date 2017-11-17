@@ -19,6 +19,23 @@
 			<var name="samlKeyPassword" value="${samlEntityID}" />
 		</execute>
 
+		<if>
+			<or>
+				<isset var="idpSessionIdleTimeout" />
+				<isset var="idpSessionMaximumAge" />
+			</or>
+			<then>
+				<execute macro="SAMLNavigation#gotoIdentityProvider" />
+
+				<execute macro="SAMLRole#configureIdentityProvider">
+					<var name="idpSessionIdleTimeout" value="${idpSessionIdleTimeout}" />
+					<var name="idpSessionMaximumAge" value="${idpSessionMaximumAge}" />
+				</execute>
+
+				<execute macro="SAMLNavigation#gotoGeneral" />
+			</then>
+		</if>
+
 		<execute macro="SAMLRole#enable">
 			<var name="samlEntityID" value="${samlEntityID}" />
 		</execute>

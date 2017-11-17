@@ -17,7 +17,7 @@ package com.liferay.asset.tags.admin.web.internal.application.list;
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.asset.tags.admin.web.internal.constants.AssetTagsAdminPortletKeys;
+import com.liferay.asset.tags.constants.AssetTagsAdminPortletKeys;
 import com.liferay.portal.kernel.model.Portlet;
 
 import org.osgi.service.component.annotations.Component;

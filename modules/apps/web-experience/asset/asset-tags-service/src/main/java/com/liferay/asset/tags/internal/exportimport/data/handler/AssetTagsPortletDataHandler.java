@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.asset.tags.admin.web.internal.lar;
+package com.liferay.asset.tags.internal.exportimport.data.handler;
 
+import com.liferay.asset.tags.constants.AssetTagsAdminPortletKeys;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.asset.tags.admin.web.internal.constants.AssetTagsAdminPortletKeys;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
@@ -61,10 +61,25 @@ public class AssetTagsPortletDataHandler extends BasePortletDataHandler {
 		setDataAlwaysStaged(true);
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(AssetTag.class));
-		setExportControls(
+
+		PortletDataHandlerBoolean tagsPortletDataHandlerBoolean =
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "tags", true, false, null,
-				AssetTag.class.getName()));
+				NAMESPACE, "tags", true, false, null, AssetTag.class.getName());
+
+		setExportControls(tagsPortletDataHandlerBoolean);
+
+		PortletDataHandlerBoolean mergeTagsByNamePortletDataHandlerBoolean =
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "merge-tags-by-name", false, false, null);
+
+		setImportControls(
+			tagsPortletDataHandlerBoolean,
+			mergeTagsByNamePortletDataHandlerBoolean);
+
+		setStagingControls(
+			tagsPortletDataHandlerBoolean,
+			mergeTagsByNamePortletDataHandlerBoolean);
+
 		setPublishToLiveByDefault(true);
 	}
 

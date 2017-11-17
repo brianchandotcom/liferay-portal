@@ -187,7 +187,7 @@ page import="com.liferay.users.admin.web.internal.search.AddUserOrganizationChec
 page import="com.liferay.users.admin.web.internal.search.OrganizationChecker" %><%@
 page import="com.liferay.users.admin.web.internal.search.OrganizationResultRowSplitter" %><%@
 page import="com.liferay.users.admin.web.internal.search.OrganizationUserChecker" %><%@
-page import="com.liferay.users.admin.web.util.comparator.OrganizationUserNameComparator" %>
+page import="com.liferay.users.admin.web.internal.util.comparator.OrganizationUserNameComparator" %>
 
 <%@ page import="java.text.Format" %>
 

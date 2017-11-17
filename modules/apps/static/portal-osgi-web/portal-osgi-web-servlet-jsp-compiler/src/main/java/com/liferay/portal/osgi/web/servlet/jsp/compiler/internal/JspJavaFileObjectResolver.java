@@ -211,7 +211,7 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 			return Collections.emptyList();
 		}
 
-		Filter filter = new Filter<Path>() {
+		Filter<Path> filter = new Filter<Path>() {
 
 			@Override
 			public boolean accept(Path entryPath) {
@@ -236,27 +236,8 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 					continue;
 				}
 
-				FileSystem fileSystem = null;
-				DirectoryStream<Path> directoryStream = null;
-
-				try {
-					Path filePath = file.toPath();
-
-					boolean defaultFileSystem = file.isDirectory();
-
-					if (defaultFileSystem) {
-						directoryStream = Files.newDirectoryStream(
-							filePath, filter);
-					}
-					else {
-						fileSystem = FileSystems.newFileSystem(filePath, null);
-
-						FileSystemProvider fileSystemProvider =
-							fileSystem.provider();
-
-						directoryStream = fileSystemProvider.newDirectoryStream(
-							fileSystem.getPath(path), filter);
-					}
+				try (DirectoryStream<Path> directoryStream =
+						_openDirectoryStream(file, path, filter)) {
 
 					for (Path entryPath : directoryStream) {
 						if (javaFileObjects == null) {
@@ -269,7 +250,7 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 
 						String className = getClassName(entryPathString);
 
-						if (defaultFileSystem) {
+						if (file.isDirectory()) {
 							javaFileObjects.add(
 								new RegularJavaFileObject(
 									className, entryPath));
@@ -279,15 +260,6 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 								new JarJavaFileObject(
 									className, file, entryPathString));
 						}
-					}
-				}
-				finally {
-					if (fileSystem != null) {
-						fileSystem.close();
-					}
-
-					if (directoryStream != null) {
-						directoryStream.close();
 					}
 				}
 			}
@@ -342,6 +314,26 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 		}
 
 		return javaFileObjects;
+	}
+
+	private DirectoryStream<Path> _openDirectoryStream(
+			File file, String path, Filter<Path> filter)
+		throws IOException {
+
+		Path filePath = file.toPath();
+
+		if (file.isDirectory()) {
+			return Files.newDirectoryStream(filePath, filter);
+		}
+
+		try (FileSystem fileSystem = FileSystems.newFileSystem(
+				filePath, null)) {
+
+			FileSystemProvider fileSystemProvider = fileSystem.provider();
+
+			return fileSystemProvider.newDirectoryStream(
+				fileSystem.getPath(path), filter);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

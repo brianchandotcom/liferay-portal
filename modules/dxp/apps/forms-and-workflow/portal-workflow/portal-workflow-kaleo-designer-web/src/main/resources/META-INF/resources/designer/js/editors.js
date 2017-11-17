@@ -2498,7 +2498,7 @@ AUI.add(
 
 						taskTimerInputs.each(
 							function(item, index, collection) {
-								if (item.get('type') && item.get('type') == 'checkbox') {
+								if (item.get('type') && (item.get('type') === 'checkbox')) {
 									value[item.get('name')].push(item.get('checked'));
 								}
 								else {

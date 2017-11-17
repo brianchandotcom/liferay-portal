@@ -21,7 +21,9 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSiteNavigationMenu();
 
-List<SiteNavigationMenuItem> siteNavigationMenuItems = SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(siteNavigationMenu.getSiteNavigationMenuId());
+List<SiteNavigationMenuItem> siteNavigationMenuItems = SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(siteNavigationMenu.getSiteNavigationMenuId(), 0);
+
+long selectedSiteNavigationMenuItemId = ParamUtil.getLong(request, "selectedSiteNavigationMenuItemId");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -88,72 +90,63 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 		</aui:fieldset-group>
 	</c:when>
 	<c:otherwise>
-		<div class="container-fluid-1280 row">
-			<div class="col-md-9" id="<portlet:namespace />menuItemsContainer">
+		<portlet:actionURL name="/navigation_menu/edit_site_navigation_menu" var="editSitaNavigationMenuURL">
+			<portlet:param name="mvcPath" value="/edit_site_navigation_menu.jsp" />
+			<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+		</portlet:actionURL>
 
-				<%
-				for (SiteNavigationMenuItem siteNavigationMenuItem : siteNavigationMenuItems) {
-					Map<String, Object> data = new HashMap<String, Object>();
+		<liferay-ui:error key="<%= InvalidSiteNavigationMenuItemOrderException.class.getName() %>" message="invalid-site-navigation-menu-items-order" />
 
-					data.put("siteNavigationMenuItemId", siteNavigationMenuItem.getSiteNavigationMenuItemId());
+		<aui:form action="<%= editSitaNavigationMenuURL %>" cssClass="container-fluid-1280" name="fm">
+			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+			<aui:input name="siteNavigationMenuId" type="hidden" value="<%= siteNavigationAdminDisplayContext.getSiteNavigationMenuId() %>" />
 
-					SiteNavigationMenuItemType siteNavigationMenuItemType = siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(siteNavigationMenuItem.getType());
+			<aui:model-context bean="<%= siteNavigationMenu %>" model="<%= SiteNavigationMenu.class %>" />
 
-					String title = siteNavigationMenuItemType.getTitle(siteNavigationMenuItem, locale);
+			<div class="row">
+				<div class="col-md-9 site-navigation-menu-container" id="<portlet:namespace />menuItemsContainer">
 
-					data.put("title", title);
+					<%
+					for (SiteNavigationMenuItem siteNavigationMenuItem : siteNavigationMenuItems) {
+					%>
 
-					request.setAttribute("edit_site_navigation_menu.jsp-siteNavigationMenuItemId", siteNavigationMenuItem.getSiteNavigationMenuItemId());
-				%>
+						<liferay-util:include page="/view_site_navigation_menu_item.jsp" servletContext="<%= application %>">
+							<liferay-util:param name="siteNavigationMenuItemId" value="<%= String.valueOf(siteNavigationMenuItem.getSiteNavigationMenuItemId()) %>" />
+							<liferay-util:param name="selectedSiteNavigationMenuItemId" value="<%= String.valueOf(selectedSiteNavigationMenuItemId) %>" />
+						</liferay-util:include>
 
-					<div class="col-md-4">
-						<liferay-frontend:horizontal-card
-							actionJsp="/site_navigation_menu_item_action.jsp"
-							actionJspServletContext="<%= application %>"
-							cssClass="menu-item"
-							data="<%= data %>"
-							text="<%= title %>"
-							url="javascript:;"
-						>
-							<liferay-frontend:horizontal-card-col>
-								<liferay-frontend:horizontal-card-icon
-									icon="<%= siteNavigationMenuItemType.getIcon() %>"
-								/>
-							</liferay-frontend:horizontal-card-col>
-						</liferay-frontend:horizontal-card>
-					</div>
+					<%
+					}
+					%>
 
-				<%
-				}
-				%>
+				</div>
 
-			</div>
+				<div class="col-md-3">
+					<div class="hide sidebar sidebar-light" id="<portlet:namespace />sidebar">
+						<div class="sidebar-header">
+							<div class="sidebar-section-flex">
+								<div class="flex-col flex-col-expand">
+									<h4 class="sidebar-title" id="<portlet:namespace />sidebarTitle"></h4>
+								</div>
 
-			<div class="col-md-3">
-				<div class="hide sidebar sidebar-light" id="<portlet:namespace />sidebar">
-					<div class="sidebar-header">
-						<div class="sidebar-section-flex">
-							<div class="flex-col flex-col-expand">
-								<h4 class="sidebar-title" id="<portlet:namespace />sidebarTitle"></h4>
-							</div>
-
-							<div class="flex-col">
-								<ul class="nav nav-unstyled sidebar-actions">
-									<li class="nav-item">
-										<a class="nav-link nav-link-monospaced sidebar-link" href="javascript:;" id="<portlet:namespace />sidebarClose" role="button">
-											<aui:icon image="angle-right" markupView="lexicon" />
-										</a>
-									</li>
-								</ul>
+								<div class="flex-col">
+									<ul class="nav nav-unstyled sidebar-actions">
+										<li class="nav-item">
+											<a class="nav-link nav-link-monospaced sidebar-link" href="javascript:;" id="<portlet:namespace />sidebarClose" role="button">
+												<aui:icon image="angle-right" markupView="lexicon" />
+											</a>
+										</li>
+									</ul>
+								</div>
 							</div>
 						</div>
-					</div>
 
-					<div class="sidebar-body" id="<portlet:namespace />sidebarBody">
+						<div class="sidebar-body" id="<portlet:namespace />sidebarBody">
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</aui:form>
 
 		<liferay-frontend:add-menu>
 
@@ -174,6 +167,19 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 			%>
 
 		</liferay-frontend:add-menu>
+
+		<aui:script require="site-navigation-menu-web/js/SiteNavigationMenuEditor.es as siteNavigationMenuEditorModule">
+			var siteNavigationMenuEditor = siteNavigationMenuEditorModule.default;
+
+			new siteNavigationMenuEditor(
+				{
+					editSiteNavigationMenuItemParentURL: '<portlet:actionURL name="/navigation_menu/edit_site_navigation_menu_item_parent"><portlet:param name="hideDefaultSuccessMessage" value="<%= Boolean.TRUE.toString() %>" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>',
+					menuContainerSelector: '.site-navigation-menu-container',
+					menuItemSelector: '.site-navigation-menu-item',
+					namespace: '<portlet:namespace />'
+				}
+			);
+		</aui:script>
 
 		<aui:script use="aui-base">
 			var sidebar = A.one('#<portlet:namespace />sidebar');

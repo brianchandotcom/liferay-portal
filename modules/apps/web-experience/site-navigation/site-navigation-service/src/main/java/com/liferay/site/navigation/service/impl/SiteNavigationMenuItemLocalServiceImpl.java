@@ -17,6 +17,7 @@ package com.liferay.site.navigation.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.site.navigation.exception.InvalidSiteNavigationMenuItemOrderException;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.base.SiteNavigationMenuItemLocalServiceBaseImpl;
 
@@ -97,9 +98,26 @@ public class SiteNavigationMenuItemLocalServiceImpl
 	@Override
 	public SiteNavigationMenuItem updateSiteNavigationMenuItem(
 			long userId, long siteNavigationMenuItemId,
+			long parentSiteNavigationMenuItemId, ServiceContext serviceContext)
+		throws PortalException {
+
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			siteNavigationMenuItemPersistence.fetchByPrimaryKey(
+				siteNavigationMenuItemId);
+
+		return updateSiteNavigationMenuItem(
+			userId, siteNavigationMenuItemId, parentSiteNavigationMenuItemId,
+			siteNavigationMenuItem.getTypeSettings(), serviceContext);
+	}
+
+	@Override
+	public SiteNavigationMenuItem updateSiteNavigationMenuItem(
+			long userId, long siteNavigationMenuItemId,
 			long parentSiteNavigationMenuItemId, String typeSettings,
 			ServiceContext serviceContext)
 		throws PortalException {
+
+		validate(siteNavigationMenuItemId, parentSiteNavigationMenuItemId);
 
 		User user = userLocalService.getUser(userId);
 
@@ -118,6 +136,27 @@ public class SiteNavigationMenuItemLocalServiceImpl
 		siteNavigationMenuItemPersistence.update(siteNavigationMenuItem);
 
 		return siteNavigationMenuItem;
+	}
+
+	protected void validate(
+			long siteNavigationMenuItemId, long parentSiteNavigationMenuItemId)
+		throws PortalException {
+
+		List<SiteNavigationMenuItem> siteNavigationMenuItems =
+			getChildSiteNavigationMenuItems(siteNavigationMenuItemId);
+
+		for (SiteNavigationMenuItem siteNavigationMenuItem :
+				siteNavigationMenuItems) {
+
+			siteNavigationMenuItemId =
+				siteNavigationMenuItem.getSiteNavigationMenuItemId();
+
+			if (siteNavigationMenuItemId == parentSiteNavigationMenuItemId) {
+				throw new InvalidSiteNavigationMenuItemOrderException();
+			}
+
+			validate(siteNavigationMenuItemId, parentSiteNavigationMenuItemId);
+		}
 	}
 
 }

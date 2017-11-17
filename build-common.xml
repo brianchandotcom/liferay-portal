@@ -966,9 +966,12 @@ information.
 			<delete file="pom.xml" />
 
 			<if>
-				<not>
-					<istrue value="@{snapshot}" />
-				</not>
+				<and>
+					<not>
+						<istrue value="@{snapshot}" />
+					</not>
+					<available file="bnd.bnd" />
+				</and>
 				<then>
 					<antelope:stringutil property="artifact.version.micro.beginindex" string="${artifact.version}">
 						<antelope:lastindexof string="." />

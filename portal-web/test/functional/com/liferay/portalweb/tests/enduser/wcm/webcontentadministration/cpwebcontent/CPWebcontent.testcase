@@ -1937,7 +1937,7 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContent#editWebContentViaClickingArticleTitle">
+		<execute macro="LexiconEntry#gotoEntry">
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 

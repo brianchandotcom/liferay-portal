@@ -423,6 +423,7 @@
 	</source-processor>
 	<source-processor name="XMLSourceProcessor">
 		<check name="XMLBuildFileCheck" />
+		<check name="XMLCustomSQLIndentationCheck" />
 		<check name="XMLCustomSQLOrderCheck" />
 		<check name="XMLCustomSQLStylingCheck" />
 		<check name="XMLDDLStructuresFileCheck" />

@@ -60,7 +60,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.metatype.annotations.Designate;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -71,7 +70,6 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 	configurationPid = "com.liferay.frontend.js.spa.web.configuration.SPAConfiguration",
 	service = SPAUtil.class
 )
-@Designate(ocd = SPAConfiguration.class)
 public class SPAUtil {
 
 	public long getCacheExpirationTime(long companyId) {

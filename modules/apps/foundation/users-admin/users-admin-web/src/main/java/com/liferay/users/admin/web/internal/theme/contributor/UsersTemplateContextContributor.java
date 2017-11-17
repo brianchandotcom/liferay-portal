@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.users.admin.web.theme.contributor;
+package com.liferay.users.admin.web.internal.theme.contributor;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;

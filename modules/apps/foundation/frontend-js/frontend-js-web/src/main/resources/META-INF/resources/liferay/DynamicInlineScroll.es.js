@@ -84,9 +84,9 @@ class DynamicInlineScroll extends PortletBase {
 			return `${url}${namespace}${curParam}=${pageIndex}${urlAnchor}`;
 		}
 
-		return `javascript:document.${formName}.${namespace}${curParam}.value = "${
-			pageIndex
-		}; ${jsCall}`;
+		return `javascript:document.${formName}.${namespace}${
+			curParam
+		}.value = "${pageIndex}; ${jsCall}`;
 	}
 
 	/**
@@ -137,7 +137,9 @@ class DynamicInlineScroll extends PortletBase {
 		const {target} = event;
 
 		let pageIndex = this.getNumber_(target.getAttribute('data-page-index'));
-		let pageIndexMax = this.getNumber_(target.getAttribute('data-max-index'));
+		let pageIndexMax = this.getNumber_(
+			target.getAttribute('data-max-index')
+		);
 
 		if (pageIndex === 0) {
 			let pageIndexCurrent = this.getNumber_(
@@ -146,7 +148,8 @@ class DynamicInlineScroll extends PortletBase {
 
 			if (pageIndexCurrent === 0) {
 				pageIndex = initialPages;
-			} else {
+			}
+			else {
 				pageIndex = pageIndexCurrent + initialPages;
 			}
 		}

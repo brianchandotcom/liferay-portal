@@ -42,4 +42,10 @@
 			<var name="key_rowEntry" value="${rowEntry}" />
 		</execute>
 	</command>
+
+	<command name="viewEntryName">
+		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME" value1="${rowEntry}">
+			<var name="key_rowEntry" value="${rowEntry}" />
+		</execute>
+	</command>
 </definition>

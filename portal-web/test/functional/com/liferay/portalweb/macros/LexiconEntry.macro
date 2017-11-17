@@ -13,7 +13,7 @@
 
 	<command name="gotoEntry">
 		<if>
-			<isset var="displayStyle" />
+			<condition function="IsElementPresent" locator1="Icon#DISPLAY_STYLE_ICON_ACTIVE" />
 			<then>
 				<execute function="AssertClick" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${rowEntry}">
 					<var name="key_cardText" value="${rowEntry}" />

@@ -83,7 +83,10 @@ describe('CompatibilityEventProxy', () => {
 
 		expect(() => {
 			host.emit(
-				eventNameToEmit, eventObjectToEmit, eventFacadeObjectToEmit);
+				eventNameToEmit,
+				eventObjectToEmit,
+				eventFacadeObjectToEmit
+			);
 		}).not.toThrow();
 
 		spy.mockReset();

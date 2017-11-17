@@ -15,6 +15,7 @@
 package com.liferay.users.admin.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -45,8 +46,28 @@ public class UsersAdminPortletDataHandlerTest
 	}
 
 	@Override
+	protected DataLevel getDataLevel() {
+		return DataLevel.PORTAL;
+	}
+
+	@Override
 	protected String getPortletId() {
 		return UsersAdminPortletKeys.USERS_ADMIN;
+	}
+
+	@Override
+	protected boolean isDataPortalLevel() {
+		return true;
+	}
+
+	@Override
+	protected boolean isDataPortletInstanceLevel() {
+		return false;
+	}
+
+	@Override
+	protected boolean isDataSiteLevel() {
+		return false;
 	}
 
 	@DeleteAfterTestRun

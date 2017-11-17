@@ -189,6 +189,14 @@ public class SiteNavigationMenuItemPersistenceTest {
 	}
 
 	@Test
+	public void testCountByS_P() throws Exception {
+		_persistence.countByS_P(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByS_P(0L, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SiteNavigationMenuItem newSiteNavigationMenuItem = addSiteNavigationMenuItem();
 

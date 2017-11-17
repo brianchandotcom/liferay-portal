@@ -91,7 +91,13 @@ AUI.add(
 				if (data && data.length) {
 					COL_TYPES_ASSIGNMENT.forEach(
 						function(item1, index1, collection1) {
-							var assignmentValue = AArray(data[0][item1]);
+							var value = data[0][item1];
+
+							if (typeof value === "undefined") {
+								return;
+							}
+
+							var assignmentValue = AArray(value);
 
 							assignmentValue.forEach(
 								function(item2, index2, collection2) {

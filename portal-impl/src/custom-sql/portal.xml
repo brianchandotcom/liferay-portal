@@ -202,8 +202,8 @@
 			FROM
 				Group_
 			WHERE
-				((Group_.type_ != 4) OR (Group_.type_ IS NULL)) AND
-				((friendlyURL = '') OR (friendlyURL IS NULL) OR (friendlyURL = '/null'))
+				(Group_.type_ != 4 OR Group_.type_ IS NULL) AND
+				(friendlyURL = '' OR friendlyURL IS NULL OR friendlyURL = '/null')
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findBySystem">
@@ -467,7 +467,7 @@
 			FROM
 				Layout
 			WHERE
-				((friendlyURL = '') OR (friendlyURL IS NULL))
+				(friendlyURL = '' OR friendlyURL IS NULL)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.LayoutFinder.findByScopeGroup">
@@ -802,7 +802,7 @@
 				PasswordPolicy
 			WHERE
 				(PasswordPolicy.companyId = ?) AND
-				((lower(PasswordPolicy.name) LIKE ?) OR (? IS NULL))
+				(lower(PasswordPolicy.name) LIKE ? OR ? IS NULL)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.PasswordPolicyFinder.findByC_N">
@@ -813,7 +813,7 @@
 				PasswordPolicy
 			WHERE
 				(PasswordPolicy.companyId = ?) AND
-				((lower(PasswordPolicy.name) LIKE ?) OR (? IS NULL))
+				(lower(PasswordPolicy.name) LIKE ? OR ? IS NULL)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.PortletPreferencesFinder.countByO_O_P">
@@ -1462,8 +1462,8 @@
 			WHERE
 				[$WHERE$]
 				(Team.groupId = ?) AND
-				((lower(Team.name) LIKE ?) OR (? IS NULL)) AND
-				((lower(Team.description) LIKE ?) OR (? IS NULL))
+				(lower(Team.name) LIKE ? OR ? IS NULL) AND
+				(lower(Team.description) LIKE ? OR ? IS NULL)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.TeamFinder.findByG_U">
@@ -1473,7 +1473,7 @@
 			FROM
 				Team
 			WHERE
-				(Team.groupId = ?) AND
+				Team.groupId = ? AND
 				(
 					Team.teamId IN
 						(
@@ -1482,8 +1482,8 @@
 							FROM
 								Users_UserGroups, UserGroups_Teams
 							WHERE
-								(Users_UserGroups.userId = ?) AND
-								(Users_UserGroups.userGroupId = UserGroups_Teams.userGroupId)
+								Users_UserGroups.userId = ? AND
+								Users_UserGroups.userGroupId = UserGroups_Teams.userGroupId
 						) OR
 					Team.teamId IN
 						(
@@ -1492,8 +1492,8 @@
 							FROM
 								User_, Users_Teams
 							WHERE
-								(User_.userId = ?) AND
-								(User_.userId = Users_Teams.userId)
+								User_.userId = ? AND
+								User_.userId = Users_Teams.userId
 						)
 				)
 		]]>
@@ -1508,8 +1508,8 @@
 			WHERE
 				[$WHERE$]
 				(Team.groupId = ?) AND
-				((lower(Team.name) LIKE ?) OR (? IS NULL)) AND
-				((lower(Team.description) LIKE ?) OR (? IS NULL))
+				(lower(Team.name) LIKE ? OR ? IS NULL) AND
+				(lower(Team.description) LIKE ? OR ? IS NULL)
 			ORDER BY
 				Team.name ASC
 		]]>

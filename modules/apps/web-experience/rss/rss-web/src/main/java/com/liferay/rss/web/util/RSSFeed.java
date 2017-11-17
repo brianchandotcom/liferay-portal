@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
-import com.liferay.rss.web.configuration.RSSWebCacheConfiguration;
+import com.liferay.rss.web.internal.configuration.RSSWebCacheConfiguration;
 import com.liferay.rss.web.internal.util.RSSWebCacheItem;
 
 import com.sun.syndication.feed.synd.SyndEntry;

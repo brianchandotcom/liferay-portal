@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.webcache.WebCacheException;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.rss.web.configuration.RSSWebCacheConfiguration;
+import com.liferay.rss.web.internal.configuration.RSSWebCacheConfiguration;
 
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.rss.web.configuration;
+package com.liferay.rss.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 

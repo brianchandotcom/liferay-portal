@@ -864,7 +864,9 @@
 
 		<execute function="Click" locator1="Button#SUBMIT" />
 
-		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="list" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="SiteMembershipsUserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 

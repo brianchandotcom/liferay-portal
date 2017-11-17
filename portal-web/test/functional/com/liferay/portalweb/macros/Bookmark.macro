@@ -546,7 +546,9 @@
 	</command>
 
 	<command name="viewEntry">
-		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="list" />
+		</execute>
 
 		<var name="key_bookmarkName" value="${bookmarkName}" />
 		<var name="key_bookmarkURL" value="${bookmarkURL}" />

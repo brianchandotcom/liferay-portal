@@ -978,8 +978,8 @@
 	</command>
 
 	<command name="viewProcessesInListView">
-		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
-
-		<execute function="AssertElementPresent" locator1="Icon#DISPLAY_STYLE_LIST_ACTIVE" />
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="list" />
+		</execute>
 	</command>
 </definition>

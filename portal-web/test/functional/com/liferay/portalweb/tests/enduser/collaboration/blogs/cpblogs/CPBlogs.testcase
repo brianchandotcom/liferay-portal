@@ -918,7 +918,9 @@
 
 		<execute function="Click" locator1="Icon#BACK" />
 
-		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="descriptive" />
+		</execute>
 
 		<var name="key_entryTitle" value="Blogs Entry Title" />
 

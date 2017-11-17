@@ -423,9 +423,6 @@
 	</source-processor>
 	<source-processor name="XMLSourceProcessor">
 		<check name="XMLBuildFileCheck" />
-		<check name="XMLCustomSQLIndentationCheck" />
-		<check name="XMLCustomSQLOrderCheck" />
-		<check name="XMLCustomSQLStylingCheck" />
 		<check name="XMLDDLStructuresFileCheck" />
 		<check name="XMLFriendlyURLRoutesFileCheck" />
 		<check name="XMLFSBExcludeFileCheck" />
@@ -448,6 +445,9 @@
 
 		<!-- Portal checks -->
 
+		<check name="XMLCustomSQLIndentationCheck" />
+		<check name="XMLCustomSQLOrderCheck" />
+		<check name="XMLCustomSQLStylingCheck" />
 		<check name="XMLEmptyLinesCheck" />
 		<check name="XMLStrutsConfigFileCheck" />
 		<check name="XMLTestIgnorableErrorLinesFileCheck" />

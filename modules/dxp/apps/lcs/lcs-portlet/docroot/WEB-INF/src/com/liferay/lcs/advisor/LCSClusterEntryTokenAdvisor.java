@@ -82,7 +82,7 @@ public class LCSClusterEntryTokenAdvisor {
 
 		deleteLCSCLusterEntryTokenFile();
 
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(12);
 
 		sb.append("Environment ID ");
 		sb.append(lcsClusterEntryToken.getLcsClusterEntryId());
@@ -94,7 +94,8 @@ public class LCSClusterEntryTokenAdvisor {
 		sb.append("LCS activation token file. If you intend to change the ");
 		sb.append("environment, please unregister server ");
 		sb.append(lcsClusterNode.getKey());
-		sb.append(" from the old environment using the LCS platform dashboard");
+		sb.append(" from the old environment using the LCS platform ");
+		sb.append("dashboard.");
 
 		throw new InvalidLCSClusterEntryTokenException(sb.toString());
 	}

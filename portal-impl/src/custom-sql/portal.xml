@@ -474,8 +474,10 @@
 			FROM
 				Layout
 			WHERE
-				(friendlyURL = '') OR
-				(friendlyURL IS NULL)
+				(
+					(friendlyURL = '') OR
+					(friendlyURL IS NULL)
+				)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.LayoutFinder.findByScopeGroup">

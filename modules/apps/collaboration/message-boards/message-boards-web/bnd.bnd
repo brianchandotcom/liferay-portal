@@ -6,6 +6,10 @@ Export-Package:\
 	com.liferay.message.boards.web.exportimport.data.handler,\
 	com.liferay.message.boards.web.social,\
 	com.liferay.message.boards.web.trash
+Import-Package:\
+	com.liferay.message.boards.util,\
+	\
+	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Message Boards
 Web-ContextPath: /message-boards-web

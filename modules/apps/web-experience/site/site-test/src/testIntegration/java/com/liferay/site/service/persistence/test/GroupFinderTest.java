@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ResourcePermissionTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -255,6 +256,23 @@ public class GroupFinderTest {
 		groups = findByLayouts(childGroup1.getGroupId());
 
 		Assert.assertTrue(groups.isEmpty());
+
+		GroupLocalServiceUtil.updateGroup(
+			parentGroup.getGroupId(), parentGroup.getParentGroupId(),
+			parentGroup.getNameMap(), parentGroup.getDescriptionMap(),
+			parentGroup.getType(), parentGroup.isManualMembership(),
+			parentGroup.getMembershipRestriction(),
+			parentGroup.getFriendlyURL(), parentGroup.isInheritContent(), false,
+			ServiceContextTestUtil.getServiceContext());
+
+		groups = findByLayouts(GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+		Assert.assertEquals(
+			groups.toString(), initialGroupCount, groups.size());
+
+		groups = findByLayouts(parentGroup.getGroupId());
+
+		Assert.assertEquals(groups.toString(), 2, groups.size());
 	}
 
 	protected static ResourceAction getModelResourceAction()

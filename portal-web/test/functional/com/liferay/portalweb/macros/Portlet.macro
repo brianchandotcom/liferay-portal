@@ -192,6 +192,7 @@
 			<condition function="IsElementNotPresent" locator1="Icon#DISPLAY_STYLE_ACTIVE">
 				<var method="StringUtil#toLowerCase('${displayStyle}')" name="key_displayStyle" />
 			</condition>
+
 			<then>
 				<execute function="Click" locator1="Icon#DISPLAY_STYLE">
 					<var method="StringUtil#toLowerCase('${displayStyle}')" name="key_displayStyle" />

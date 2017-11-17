@@ -214,8 +214,8 @@
 			<var name="dmFolderNameEdit" value="DM Folder Name Name" />
 		</execute>
 
-		<execute macro="DMFolder#viewEditCP">
-			<var name="dmFolderNameEdit" value="DM Folder Name Name" />
+		<execute macro="DMFolder#viewCP">
+			<var name="dmFolderName" value="DM Folder Name Name" />
 		</execute>
 	</command>
 

@@ -21,10 +21,16 @@
 						(MicroblogsEntry.socialRelationType = SocialRelation.type_) AND
 						(SocialRelation.userId1 = ?)
 					) OR
-					(MicroblogsEntry.userId = ?) OR
-					(MicroblogsEntry.socialRelationType = 0)
+					(
+						MicroblogsEntry.userId = ?
+					) OR
+					(
+						MicroblogsEntry.socialRelationType = 0
+					)
 				) AND
-				(MicroblogsEntry.type_ <> ?)
+				(
+					MicroblogsEntry.type_ <> ?
+				)
 		]]>
 	</sql>
 	<sql id="com.liferay.microblogs.service.persistence.MicroblogsEntryFinder.countByC_U">
@@ -37,7 +43,9 @@
 				SocialRelation ON
 					(MicroblogsEntry.userId = SocialRelation.userId2)
 			WHERE
-				(MicroblogsEntry.companyId = ?) AND
+				(
+					MicroblogsEntry.companyId = ?
+				) AND
 				(
 					(
 						(MicroblogsEntry.socialRelationType = ?) AND
@@ -48,10 +56,16 @@
 						(MicroblogsEntry.socialRelationType = SocialRelation.type_) AND
 						(SocialRelation.userId1 = ?)
 					) OR
-					(MicroblogsEntry.userId = ?) OR
-					(MicroblogsEntry.socialRelationType = 0)
+					(
+						MicroblogsEntry.userId = ?
+					) OR
+					(
+						MicroblogsEntry.socialRelationType = 0
+					)
 				) AND
-				(MicroblogsEntry.type_ <> ?)
+				(
+					MicroblogsEntry.type_ <> ?
+				)
 		]]>
 	</sql>
 	<sql id="com.liferay.microblogs.service.persistence.MicroblogsEntryFinder.countByU_MU">
@@ -72,8 +86,12 @@
 					(MicroblogsEntry.socialRelationType = ?) OR
 					(SocialRelation.userId1 = ?)
 				) AND
-				(MicroblogsEntry.userId = ?) AND
-				(MicroblogsEntry.type_ <> ?)
+				(
+					MicroblogsEntry.userId = ?
+				) AND
+				(
+					MicroblogsEntry.type_ <> ?
+				)
 		]]>
 	</sql>
 	<sql id="com.liferay.microblogs.service.persistence.MicroblogsEntryFinder.countByU_ATN">
@@ -104,7 +122,9 @@
 						(MicroblogsEntry.socialRelationType = ?) OR
 						(SocialRelation.userId1 = ?)
 					) AND
-					(AssetTag.name = ?)
+					(
+						AssetTag.name = ?
+					)
 				) OR
 				(
 					(MicroblogsEntry.userId = ?) AND
@@ -155,14 +175,18 @@
 				AssetTag ON
 					(AssetTag.tagId = AssetEntries_AssetTags.tagId)
 			WHERE
-				(MicroblogsEntry.companyId = ?) AND
+				(
+					MicroblogsEntry.companyId = ?
+				) AND
 				(
 					(
 						(
 							(MicroblogsEntry.socialRelationType = ?) OR
 							(SocialRelation.userId1 = ?)
 						) AND
-						(AssetTag.name = ?)
+						(
+							AssetTag.name = ?
+						)
 					) OR
 					(
 						(MicroblogsEntry.userId = ?) AND
@@ -210,8 +234,12 @@
 					(MicroblogsEntry.socialRelationType = ?) OR
 					(SocialRelation.userId1 = ?)
 				) AND
-				(MicroblogsEntry.type_ = ?) AND
-				(MicroblogsEntry.userId = ?)
+				(
+					MicroblogsEntry.type_ = ?
+				) AND
+				(
+					MicroblogsEntry.userId = ?
+				)
 		]]>
 	</sql>
 	<sql id="com.liferay.microblogs.service.persistence.MicroblogsEntryFinder.countByCCNI_CCPK_ATN">
@@ -253,7 +281,9 @@
 				AssetTag ON
 					(AssetTag.tagId = AssetEntries_AssetTags.tagId)
 			WHERE
-				(MicroblogsEntry.companyId = ?) AND
+				(
+					MicroblogsEntry.companyId = ?
+				) AND
 				(
 					(
 						(MicroblogsEntry.creatorClassNameId = ?) AND
@@ -283,10 +313,16 @@
 						(MicroblogsEntry.socialRelationType = SocialRelation.type_) AND
 						(SocialRelation.userId1 = ?)
 					) OR
-					(MicroblogsEntry.userId = ?) OR
-					(MicroblogsEntry.socialRelationType = 0)
+					(
+						MicroblogsEntry.userId = ?
+					) OR
+					(
+						MicroblogsEntry.socialRelationType = 0
+					)
 				) AND
-				(MicroblogsEntry.type_ <> ?)
+				(
+					MicroblogsEntry.type_ <> ?
+				)
 			ORDER BY
 				MicroblogsEntry.createDate DESC
 		]]>
@@ -301,7 +337,9 @@
 				SocialRelation ON
 					(MicroblogsEntry.userId = SocialRelation.userId2)
 			WHERE
-				(MicroblogsEntry.companyId = ?) AND
+				(
+					MicroblogsEntry.companyId = ?
+				) AND
 				(
 					(
 						(MicroblogsEntry.socialRelationType = ?) AND
@@ -312,10 +350,16 @@
 						(MicroblogsEntry.socialRelationType = SocialRelation.type_) AND
 						(SocialRelation.userId1 = ?)
 					) OR
-					(MicroblogsEntry.userId = ?) OR
-					(MicroblogsEntry.socialRelationType = 0)
+					(
+						MicroblogsEntry.userId = ?
+					) OR
+					(
+						MicroblogsEntry.socialRelationType = 0
+					)
 				) AND
-				(MicroblogsEntry.type_ <> ?)
+				(
+					MicroblogsEntry.type_ <> ?
+				)
 			ORDER BY
 				MicroblogsEntry.createDate DESC
 		]]>
@@ -338,8 +382,12 @@
 					(MicroblogsEntry.socialRelationType = ?) OR
 					(SocialRelation.userId1 = ?)
 				) AND
-				(MicroblogsEntry.userId = ?) AND
-				(MicroblogsEntry.type_ <> ?)
+				(
+					MicroblogsEntry.userId = ?
+				) AND
+				(
+					MicroblogsEntry.type_ <> ?
+				)
 			ORDER BY
 				MicroblogsEntry.createDate DESC
 		]]>
@@ -372,7 +420,9 @@
 						(MicroblogsEntry.socialRelationType = ?) OR
 						(SocialRelation.userId1 = ?)
 					) AND
-					(AssetTag.name = ?)
+					(
+						AssetTag.name = ?
+					)
 				) OR
 				(
 					(MicroblogsEntry.userId = ?) AND
@@ -427,14 +477,18 @@
 				AssetTag ON
 					(AssetTag.tagId = AssetEntries_AssetTags.tagId)
 			WHERE
-				(MicroblogsEntry.companyId = ?) AND
+				(
+					MicroblogsEntry.companyId = ?
+				) AND
 				(
 					(
 						(
 							(MicroblogsEntry.socialRelationType = ?) OR
 							(SocialRelation.userId1 = ?)
 						) AND
-						(AssetTag.name = ?)
+						(
+							AssetTag.name = ?
+						)
 					) OR
 					(
 						(MicroblogsEntry.userId = ?) AND
@@ -486,8 +540,12 @@
 					(MicroblogsEntry.socialRelationType = ?) OR
 					(SocialRelation.userId1 = ?)
 				) AND
-				(MicroblogsEntry.type_ = ?) AND
-				(MicroblogsEntry.userId = ?)
+				(
+					MicroblogsEntry.type_ = ?
+				) AND
+				(
+					MicroblogsEntry.userId = ?
+				)
 			ORDER BY
 				MicroblogsEntry.createDate DESC
 		]]>
@@ -533,7 +591,9 @@
 				AssetTag ON
 					(AssetTag.tagId = AssetEntries_AssetTags.tagId)
 			WHERE
-				(MicroblogsEntry.companyId = ?) AND
+				(
+					MicroblogsEntry.companyId = ?
+				) AND
 				(
 					(
 						(MicroblogsEntry.creatorClassNameId = ?) AND

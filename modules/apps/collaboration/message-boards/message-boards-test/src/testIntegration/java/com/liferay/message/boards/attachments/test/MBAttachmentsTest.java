@@ -51,6 +51,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -77,6 +78,7 @@ public class MBAttachmentsTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
+	@Ignore
 	@Test
 	public void testDeleteAttachmentsWhenDeletingMessage() throws Exception {
 		int initialFileEntriesCount =
@@ -211,6 +213,7 @@ public class MBAttachmentsTest {
 			initialFoldersCount, DLFolderLocalServiceUtil.getDLFoldersCount());
 	}
 
+	@Ignore
 	@Test
 	public void testFoldersCountWhenDeletingMessageWithAttachments()
 		throws Exception {

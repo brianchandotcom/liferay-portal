@@ -1585,7 +1585,7 @@
 		</execute>
 
 		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="List" />
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewEntryTable">

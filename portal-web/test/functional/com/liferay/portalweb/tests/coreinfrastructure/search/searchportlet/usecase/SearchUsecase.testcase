@@ -424,7 +424,7 @@
 		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="Descriptive" />
+			<var name="displayStyle" value="descriptive" />
 		</execute>
 
 		<execute macro="WebContent#viewTitle">

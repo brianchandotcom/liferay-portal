@@ -978,7 +978,7 @@
 		</execute>
 
 		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="List" />
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<execute macro="WikiPage#deleteCP">
@@ -1053,7 +1053,7 @@
 		</execute>
 
 		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="Descriptive" />
+			<var name="displayStyle" value="descriptive" />
 		</execute>
 
 		<execute macro="WikiNavigator#gotoCP">

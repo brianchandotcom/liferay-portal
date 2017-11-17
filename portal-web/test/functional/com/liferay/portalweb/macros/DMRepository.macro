@@ -43,7 +43,7 @@
 		<var name="key_dmRepositoryName" value="${dmRepositoryName}" />
 
 		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="Descriptive" />
+			<var name="displayStyle" value="descriptive" />
 		</execute>
 
 		<execute function="AssertClick" locator1="DocumentsAndMedia#REPOSITORY_FOLDER_NAME_DESCRIPTIVE_VIEW" value1="${dmRepositoryName}" />

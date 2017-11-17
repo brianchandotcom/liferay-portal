@@ -383,7 +383,7 @@
 		</execute>
 
 		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="Icon" />
+			<var name="displayStyle" value="icon" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoEntryCP">

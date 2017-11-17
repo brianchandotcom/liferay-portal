@@ -54,11 +54,6 @@
 	<td>//tr/td[8]//div/a</td>
 	<td></td>
 </tr>
-<tr>
-	<td>INSTANCE_TABLE_ACTIONS_GENERIC_2</td>
-	<td>xpath=(//tr/td[8]//div/a)[2]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

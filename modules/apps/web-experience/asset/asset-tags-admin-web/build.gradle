@@ -13,4 +13,5 @@ dependencies {
 	provided project(":apps:web-experience:asset:asset-api")
 	provided project(":apps:web-experience:asset:asset-service")
 	provided project(":apps:web-experience:asset:asset-taglib")
+	provided project(":apps:web-experience:asset:asset-tags-api")
 }

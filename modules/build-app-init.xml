@@ -239,7 +239,7 @@
 	</target>
 
 	<target
-		depends="get-app-dirs"
+		depends="get-app-dirs,remove-app-settings-gradle-private"
 		if="app.dir.private.available"
 		name="get-project-path-private-portal"
 		unless="current.branch.public"
@@ -252,7 +252,7 @@
 	</target>
 
 	<target
-		depends="get-app-dirs"
+		depends="get-app-dirs,remove-app-settings-gradle-private"
 		if="app.dir.private.available"
 		name="get-project-path-private-portal-private"
 		unless="current.branch.public"
@@ -265,7 +265,7 @@
 	</target>
 
 	<target
-		depends="get-app-dirs"
+		depends="get-app-dirs,remove-app-settings-gradle-public"
 		if="app.dir.public.available"
 		name="get-project-path-public-portal"
 	>
@@ -277,7 +277,7 @@
 	</target>
 
 	<target
-		depends="get-app-dirs"
+		depends="get-app-dirs,remove-app-settings-gradle-public"
 		if="app.dir.public.available"
 		name="get-project-path-public-portal-private"
 		unless="current.branch.public"
@@ -325,5 +325,13 @@
 			<arg value="${git.commit.portal.public}" />
 			<arg value=".releng/apps/${app.name}" />
 		</exec>
+	</target>
+
+	<target depends="get-app-dirs" name="remove-app-settings-gradle-private">
+		<delete file="${app.dir.private}/settings.gradle" />
+	</target>
+
+	<target depends="get-app-dirs" name="remove-app-settings-gradle-public">
+		<delete file="${app.dir.public}/settings.gradle" />
 	</target>
 </project>

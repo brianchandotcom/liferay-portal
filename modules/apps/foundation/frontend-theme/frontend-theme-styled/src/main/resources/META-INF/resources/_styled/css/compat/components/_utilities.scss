@@ -1,20 +1,22 @@
-.hide {
-	@extend .d-none;
-}
+@if $compat-utilities {
+	.hide {
+		@extend .d-none;
+	}
 
-.pull-left {
-	@extend .float-left;
-}
+	.pull-left {
+		@extend .float-left;
+	}
 
-.pull-right {
-	@extend .float-right;
-}
+	.pull-right {
+		@extend .float-right;
+	}
 
-.truncate-text {
-	display: block;
+	.truncate-text {
+		display: block;
 
-	@include text-truncate;
+		@include text-truncate;
 
-	word-break: normal \9; // IE 8, 9
-	word-wrap: normal;
+		word-break: normal \9; // IE 8, 9
+		word-wrap: normal;
+	}
 }

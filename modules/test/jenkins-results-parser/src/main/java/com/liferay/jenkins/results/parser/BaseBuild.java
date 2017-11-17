@@ -2214,9 +2214,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected void setResult(String result) {
-		if (((result == null) && (_result != null)) ||
-			!result.equals(_result)) {
-
+		if (_changed(result, _result)) {
 			_result = result;
 
 			if (_result == null) {
@@ -2229,9 +2227,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected void setStatus(String status) {
-		if (((status == null) && (_status != null)) ||
-			!status.equals(_status)) {
-
+		if (_changed(status, _status)) {
 			_status = status;
 
 			statusModifiedTime = System.currentTimeMillis();
@@ -2394,6 +2390,22 @@ public abstract class BaseBuild implements Build {
 
 		}
 
+	}
+
+	private boolean _changed(String newValue, String oldValue) {
+		if (oldValue == null) {
+			if (newValue != null) {
+				return true;
+			}
+
+			return false;
+		}
+
+		if (oldValue.equals(newValue)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =

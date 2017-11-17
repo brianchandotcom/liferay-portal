@@ -139,12 +139,12 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateCo
 <aui:script require="layout-admin-web/js/LayoutPageTemplateNameEditor.es">
 	var layoutPageTemplateNameEditor;
 
-	function handleAddLayoutPageTemplateEntryMenuItemClick (event) {
+	function handleAddLayoutPageTemplateEntryMenuItemClick(event) {
 		event.preventDefault();
 
 		layoutPageTemplateNameEditor = new layoutAdminWebJsLayoutPageTemplateNameEditorEs.default(
 			{
-				actionURL: '<%= addLayoutPageTemplateEntryURL.toString() %>',
+				actionURL: '<%= addLayoutPageTemplateEntryURL %>',
 				editorTitle: '<liferay-ui:message key="add-page-template" />',
 				events: {
 					hide: function() {
@@ -159,7 +159,7 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateCo
 		);
 	}
 
-	function handleDestroyPortlet () {
+	function handleDestroyPortlet() {
 		addLayoutPageTemplateEntryMenuItem.removeEventListener('click', handleAddLayoutPageTemplateEntryMenuItemClick);
 
 		if (layoutPageTemplateNameEditor) {

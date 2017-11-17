@@ -137,7 +137,7 @@ public class LayoutPageTemplateDisplayContext {
 			}
 
 			fragmentCollectionJSONObject.put(
-				"entries", fragmentEntriesJSONArray);
+				"fragmentEntries", fragmentEntriesJSONArray);
 
 			fragmentCollectionJSONObject.put(
 				"fragmentCollectionId",

@@ -96,6 +96,14 @@ public class SiteNavigationMenuItemLocalServiceImpl
 	}
 
 	@Override
+	public List<SiteNavigationMenuItem> getSiteNavigationMenuItems(
+		long siteNavigationMenuId, long parentSiteNavigationMenuItemId) {
+
+		return siteNavigationMenuItemPersistence.findByS_P(
+			siteNavigationMenuId, parentSiteNavigationMenuItemId);
+	}
+
+	@Override
 	public SiteNavigationMenuItem updateSiteNavigationMenuItem(
 			long userId, long siteNavigationMenuItemId,
 			long parentSiteNavigationMenuItemId, ServiceContext serviceContext)

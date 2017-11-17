@@ -74,10 +74,17 @@
 		<finder name="ParentSiteNavigationMenuItemId" return-type="Collection">
 			<finder-column name="parentSiteNavigationMenuItemId" />
 		</finder>
+		<finder name="S_P" return-type="Collection">
+			<finder-column name="siteNavigationMenuId" />
+			<finder-column name="parentSiteNavigationMenuItemId" />
+		</finder>
 
 		<!-- References -->
 
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
+	<exceptions>
+		<exception>InvalidSiteNavigationMenuItemOrder</exception>
+	</exceptions>
 </service-builder>

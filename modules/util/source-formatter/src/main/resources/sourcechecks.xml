@@ -143,7 +143,6 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/portlet-display-template/portlet-display-template" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/product-navigation/product-navigation-product-menu-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/product-navigation/product-navigation-simulation" />
-			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/product-navigation/product-navigation-simulation-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/rss/rss-util" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/rss/rss-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/site-navigation/site-navigation-breadcrumb-web" />

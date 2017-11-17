@@ -146,7 +146,7 @@
 		<var method="StringUtil#replace('${portalURL}', 'http://', '')" name="portalURL" />
 		<var method="StringUtil#replace('${portalURL}', ':8080', '')" name="portalURL" />
 
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="Type" locator1="TextInput#WEB_ID" value1="${portalURL}" />
 		<execute function="Type" locator1="TextInput#VIRTUAL_HOST" value1="${portalURL}" />

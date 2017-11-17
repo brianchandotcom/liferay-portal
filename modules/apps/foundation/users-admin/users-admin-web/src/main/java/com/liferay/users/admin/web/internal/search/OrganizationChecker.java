@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.users.admin.web.search;
+package com.liferay.users.admin.web.internal.search;
 
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.model.Organization;

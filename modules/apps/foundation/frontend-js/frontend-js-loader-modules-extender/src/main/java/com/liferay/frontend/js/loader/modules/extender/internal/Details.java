@@ -18,13 +18,11 @@ import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
-import org.osgi.service.metatype.annotations.ObjectClassDefinition;
-
 /**
  * @author Raymond Augé
  */
 @ExtendedObjectClassDefinition(category = "foundation")
-@ObjectClassDefinition(
+@Meta.OCD(
 	id = "com.liferay.frontend.js.loader.modules.extender.internal.Details",
 	localization = "content/Language", name = "details.configuration.name"
 )
@@ -38,10 +36,10 @@ public @interface Details {
 
 	public static final String OSGI_WEBRESOURCE = "osgi.webresource";
 
-	@Meta.AD(deflt = "true")
-	public boolean applyVersioning() default true;
+	@Meta.AD(deflt = "true", required = false)
+	public boolean applyVersioning();
 
-	@Meta.AD(deflt = "true")
-	public boolean exposeGlobal() default true;
+	@Meta.AD(deflt = "true", required = false)
+	public boolean exposeGlobal();
 
 }

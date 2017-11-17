@@ -25,8 +25,19 @@
 	</command>
 
 	<command name="configureIdentityProvider">
-		<execute function="Type" locator1="CPSAMLAdmin#IDENTITY_PROVIDER_SESSION_MAXIMUM_AGE" value1="${idpSessionMaximumAge}" />
-		<execute function="Type" locator1="CPSAMLAdmin#IDENTITY_PROVIDER_SESSION_IDLE_TIMEOUT" value1="${idpSessionIdleTimeout}" />
+		<if>
+			<isset var="idpSessionIdleTimeout" />
+			<then>
+				<execute function="Type" locator1="CPSAMLAdmin#IDENTITY_PROVIDER_SESSION_IDLE_TIMEOUT" value1="${idpSessionIdleTimeout}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="idpSessionMaximumAge" />
+			<then>
+				<execute function="Type" locator1="CPSAMLAdmin#IDENTITY_PROVIDER_SESSION_MAXIMUM_AGE" value1="${idpSessionMaximumAge}" />
+			</then>
+		</if>
 
 		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Save" />
 	</command>

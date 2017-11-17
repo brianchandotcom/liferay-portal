@@ -274,7 +274,7 @@
 
 		<execute function="Click" locator1="Button#PUBLISH" />
 
-		<execute macro="FormsAdminNavigator#viewPublishFormSuccessMessage" />
+		<execute macro="Form#viewPublishFormSuccessMessage" />
 	</command>
 
 	<command name="save">
@@ -374,6 +374,12 @@
 			<var name="fieldLabel" value="${fieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
+	</command>
+
+	<command name="viewPublishFormSuccessMessage">
+		<var name="key_alertMessage" value="The form was published successfully! Access it with this URL" />
+
+		<execute function="AssertNotVisible" locator1="Form#PUBLISH_UNPUBLISH_ICON_CLOSE" />
 	</command>
 
 	<command name="viewSaveNotification">

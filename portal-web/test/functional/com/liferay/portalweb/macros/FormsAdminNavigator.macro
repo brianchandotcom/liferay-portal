@@ -92,10 +92,6 @@
 	</command>
 
 	<command name="gotoPublishCopyURLLink">
-		<var name="key_alertMessage" value="The form was published successfully! Access it with this URL" />
-
-		<execute function="AssertNotVisible" locator1="Form#PUBLISH_UNPUBLISH_ICON_CLOSE" />
-
 		<execute function="Click" locator1="Form#PUBLISH_ICON" />
 	</command>
 
@@ -155,5 +151,11 @@
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="${publishFormURL}" />
 		</execute>
+	</command>
+
+	<command name="viewPublishFormSuccessMessage">
+		<var name="key_alertMessage" value="The form was published successfully! Access it with this URL" />
+
+		<execute function="AssertNotVisible" locator1="Form#PUBLISH_UNPUBLISH_ICON_CLOSE" />
 	</command>
 </definition>

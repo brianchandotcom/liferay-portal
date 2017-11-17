@@ -1010,6 +1010,22 @@
 		</if>
 	</command>
 
+	<command name="editWebContentViaClickingArticleTitle">
+		<if>
+			<equals arg1="${onLive}" arg2="true" />
+			<then>
+				<execute function="AssertClick" locator1="WC#ENTRY_DESCRIPTIVE_TITLE_ON_LIVE" value1="${webContentTitle}">
+					<var name="key_webContentTitle" value="${webContentTitle}" />
+				</execute>
+			</then>
+			<else>
+				<execute function="AssertClick" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}">
+					<var name="key_webContentTitle" value="${webContentTitle}" />
+				</execute>
+			</else>
+		</if>
+	</command>
+
 	<command name="expireCP">
 		<for list="${webContentTitleList}" param="webContentTitle">
 			<execute function="Check" locator1="WC#ENTRY_DESCRIPTIVE_CHECKBOX">

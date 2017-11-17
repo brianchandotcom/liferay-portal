@@ -32,6 +32,10 @@ public class XMLCustomSQLIndentationCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
+		if (isSubrepository() || isReadOnly(absolutePath)) {
+			return content;
+		}
+
 		if (fileName.contains("/custom-sql/")) {
 			_checkIndentation(fileName, StringUtil.splitLines(content));
 		}

@@ -188,16 +188,20 @@
 	</command>
 
 	<command name="changeDisplayStyle">
-		<var method="StringUtil#upperCase('${displayStyle}')" name="displayStyle" />
-
 		<if>
-			<condition function="IsElementNotPresent" locator1="Icon#DISPLAY_STYLE_${displayStyle}_ACTIVE" />
+			<condition function="IsElementNotPresent" locator1="Icon#DISPLAY_STYLE_ACTIVE">
+				<var method="StringUtil#toLowerCase('${displayStyle}')" name="key_displayStyle" />
+			</condition>
 			<then>
-				<execute function="Click" locator1="Icon#DISPLAY_STYLE_${displayStyle}" />
+				<execute function="Click" locator1="Icon#DISPLAY_STYLE">
+					<var method="StringUtil#toLowerCase('${displayStyle}')" name="key_displayStyle" />
+				</execute>
 			</then>
 		</if>
 
-		<execute function="AssertElementPresent" locator1="Icon#DISPLAY_STYLE_${displayStyle}_ACTIVE" />
+		<execute function="AssertElementPresent" locator1="Icon#DISPLAY_STYLE_ACTIVE">
+			<var name="key_displayStyle" value="${displayStyle}" />
+		</execute>
 	</command>
 
 	<command name="clickPortletPlusIconPG">
@@ -415,9 +419,9 @@
 	</command>
 
 	<command name="viewDefaultDisplayStyle">
-		<var method="StringUtil#upperCase('${displayStyle}')" name="displayStyleUppercase" />
-
-		<execute function="AssertElementPresent" locator1="Icon#DISPLAY_STYLE_${displayStyleUppercase}_ACTIVE" />
+		<execute function="AssertElementPresent" locator1="Icon#DISPLAY_STYLE_ACTIVE">
+			<var name="displayStyle" value="${displayStyle}" />
+		</execute>
 	</command>
 
 	<command name="viewDisplayStyles">

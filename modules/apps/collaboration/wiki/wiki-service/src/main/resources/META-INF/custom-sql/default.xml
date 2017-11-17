@@ -86,9 +86,9 @@
 						([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$STATUS$])
 				)
 				TEMP_TABLE
-					INNER JOIN
-						WikiPage ON
-							TEMP_TABLE.pageId = WikiPage.pageId
+			INNER JOIN
+				WikiPage ON
+					TEMP_TABLE.pageId = WikiPage.pageId
 			ORDER BY
 				WikiPage.nodeId ASC
 		]]>

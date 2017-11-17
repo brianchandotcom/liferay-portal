@@ -38,7 +38,6 @@
 				DLFileVersion ON
 					(DLFileVersion.fileEntryId = DLFileEntry.fileEntryId) AND
 					(DLFileVersion.version = DLFileEntry.version)
-
 			WHERE
 				(DLFileEntry.groupId = ?) AND
 				(DLFileEntry.modifiedDate >= ?) AND
@@ -105,9 +104,9 @@
 						(DLFileVersion.companyId = ?) AND
 						([$STATUS$])
 				) TEMP_TABLE
-				INNER JOIN
-					DLFileEntry ON
-						TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId
+			INNER JOIN
+				DLFileEntry ON
+					TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId
 		]]>
 	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.findByDDMStructureIds">
@@ -204,9 +203,9 @@
 						([$STATUS$])
 						[$FOLDER_ID$]
 				) TEMP_TABLE
-				INNER JOIN
-					DLFileEntry ON
-						TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId
+			INNER JOIN
+				DLFileEntry ON
+					TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId
 		]]>
 	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.findByC_T">
@@ -242,9 +241,9 @@
 						([$STATUS$])
 						[$FOLDER_ID$]
 				) TEMP_TABLE
-				INNER JOIN
-					DLFileEntry ON
-						TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId
+			INNER JOIN
+				DLFileEntry ON
+					TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId
 		]]>
 	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.joinAE_ByDLFileEntry">

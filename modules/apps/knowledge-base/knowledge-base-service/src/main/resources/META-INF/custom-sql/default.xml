@@ -62,7 +62,7 @@
 	<sql id="com.liferay.knowledge.base.service.persistence.KBFolderFinder.findA_ByG_P">
 		<![CDATA[
 			SELECT
-			DISTINCT kbArticleId as modelId, 0 as modelFolder, KBArticle.modifiedDate as modifiedDate, KBArticle.priority as priority, KBArticle.title as title, KBArticle.viewCount as viewCount
+				DISTINCT kbArticleId as modelId, 0 as modelFolder, KBArticle.modifiedDate as modifiedDate, KBArticle.priority as priority, KBArticle.title as title, KBArticle.viewCount as viewCount
 			FROM
 				KBArticle
 			WHERE
@@ -75,7 +75,7 @@
 	<sql id="com.liferay.knowledge.base.service.persistence.KBFolderFinder.findF_ByG_P">
 		<![CDATA[
 			SELECT
-			DISTINCT kbFolderId as modelId, 1 as modelFolder, KBFolder.modifiedDate as modifiedDate, 0.0 as priority, KBFolder.name as title, 0 as viewCount
+				DISTINCT kbFolderId as modelId, 1 as modelFolder, KBFolder.modifiedDate as modifiedDate, 0.0 as priority, KBFolder.name as title, 0 as viewCount
 			FROM
 				KBFolder
 			WHERE

@@ -106,8 +106,7 @@
 						([$STATUS$])
 				) TEMP_TABLE
 				INNER JOIN
-					DLFileEntry ON
-						TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId
+					DLFileEntry ON TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId
 		]]>
 	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.findByDDMStructureIds">
@@ -205,8 +204,7 @@
 						[$FOLDER_ID$]
 				) TEMP_TABLE
 				INNER JOIN
-					DLFileEntry ON
-						TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId
+					DLFileEntry ON TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId
 		]]>
 	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.findByC_T">
@@ -243,8 +241,7 @@
 						[$FOLDER_ID$]
 				) TEMP_TABLE
 				INNER JOIN
-					DLFileEntry ON
-						TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId
+					DLFileEntry ON TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId
 		]]>
 	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.joinAE_ByDLFileEntry">
@@ -330,8 +327,7 @@
 				DLFileRank
 			GROUP BY
 				groupId, userId
-			HAVING
-				COUNT(*) > ?
+			HAVING COUNT(*) > ?
 		]]>
 	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileRankFinder.findByFolderId">

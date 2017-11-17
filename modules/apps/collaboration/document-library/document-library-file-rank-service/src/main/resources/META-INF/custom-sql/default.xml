@@ -9,8 +9,7 @@
 				DLFileRank
 			GROUP BY
 				groupId, userId
-			HAVING
-				COUNT(*) > ?
+			HAVING COUNT(*) > ?
 		]]>
 	</sql>
 	<sql id="com.liferay.document.library.file.rank.service.persistence.DLFileRankFinder.findByFolderId">

@@ -105,9 +105,8 @@
 						)
 				)
 				TEMP_TABLE
-					INNER JOIN
-						DDLRecordSet ON
-							TEMP_TABLE.recordSetId = DDLRecordSet.recordSetId
+					INNER JOIN DDLRecordSet ON
+						TEMP_TABLE.recordSetId = DDLRecordSet.recordSetId
 			ORDER BY
 				DDLRecordSet.recordSetId DESC
 		]]>

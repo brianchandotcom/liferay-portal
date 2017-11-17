@@ -15,7 +15,7 @@ import templates from './CPOptionList.soy';
 class CPOptionList extends Component {
 
 	_handleEditValues(event) {
-		var target = event.delegateTarget;
+		var target = event.currentTarget;
 
 		var cpOptionId = target.getAttribute('data-id');
 
@@ -31,7 +31,7 @@ class CPOptionList extends Component {
 	}
 
 	_handleSelectOptionClick(event) {
-		var target = event.delegateTarget;
+		var target = event.currentTarget;
 
 		var cpOptionId = target.getAttribute('data-id');
 

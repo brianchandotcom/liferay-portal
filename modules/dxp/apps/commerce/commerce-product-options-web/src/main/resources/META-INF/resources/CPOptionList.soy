@@ -11,16 +11,19 @@
 	{@param? options: ?}
 	{@param? pathThemeImages: string}
 	{@param? _handleAddOptionClick: any}
+	{@param? _handleSelectOptionClick: any}
+	{@param? _handleEditValues: any}
+
 
 	<h4 class="section-header">
 
 		Options
 
-		<a onClick="{$_handleAddOptionClick}" class="btn nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none" href="#">
-			<svg aria-hidden="true" class="lexicon-icon lexicon-icon-plus">
-				<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#plus"></use>
-			</svg>
-		</a>
+        <button onClick="{$_handleAddOptionClick}" class="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none" type="button">
+            <svg aria-hidden="true" class="lexicon-icon lexicon-icon-plus">
+                <use xlink:href="{$pathThemeImages}/lexicon/icons.svg#plus"></use>
+            </svg>
+        </button>
 	</h4>
 	<div id="{$id}">
 		<table class="table table-autofit table-heading-nowrap table-responsive table-hover">
@@ -55,6 +58,8 @@
 							{param title: $option.title /}
 							{param selected: $option.cpOptionId == $currentCPOptionId /}
 							{param showButton: $option.hasValues /}
+							{param _handleSelectOptionClick: $_handleSelectOptionClick /}
+							{param _handleEditValues: $_handleEditValues /}
 						{/call}
 
 					{/foreach}
@@ -76,6 +81,8 @@
 	{@param title: null|string }
 	{@param? selected: bool}
 	{@param? showButton: bool}
+	{@param? _handleSelectOptionClick: any}
+	{@param? _handleEditValues: any}
 
 	{let $classes kind="text"}
 		{if $selected}
@@ -83,16 +90,18 @@
 		{/if}
 	{/let}
 
-	<tr data-id="{$id}" onclick="_handleSelectOptionClick" class="{$classes}">
+	<tr data-id="{$id}" onclick="{$_handleSelectOptionClick}" class="{$classes}">
 		<td>
-			{$id}
+			{if $id != 0}
+                {$id}
+            {/if}
 		</td>
 		<td class="table-cell-content">
 			{$title}
 		</td>
 		<td>
 			{if $showButton}
-				<button class="btn btn-link" type="button" onclick="_handleEditValues">edit values</button>
+				<button class="btn btn-link" type="button" onclick="{$_handleEditValues}">values</button>
 			{/if}
 		</td>
 	</tr>

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -119,7 +120,18 @@ public class CPMeasurementUnitLocalServiceImpl
 	public List<CPMeasurementUnit> getCPMeasurementUnits(
 		long groupId, String[] keys, int type) {
 
-		return cpMeasurementUnitPersistence.findByG_OrK_T(groupId, keys, type);
+		List<CPMeasurementUnit> cpMeasurementUnits = new ArrayList<>();
+
+		for(String key: keys) {
+			CPMeasurementUnit cpMeasurementUnit =
+				cpMeasurementUnitPersistence.fetchByG_K_T(groupId, key, type);
+
+			if(cpMeasurementUnit != null){
+				cpMeasurementUnits.add(cpMeasurementUnit);
+			}
+		}
+
+		return cpMeasurementUnits;
 	}
 
 	@Override

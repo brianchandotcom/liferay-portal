@@ -33,7 +33,7 @@ import com.liferay.product.navigation.control.menu.BaseProductNavigationControlM
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 import com.liferay.product.navigation.simulation.application.list.SimulationPanelCategory;
-import com.liferay.product.navigation.simulation.web.constants.ProductNavigationSimulationPortletKeys;
+import com.liferay.product.navigation.simulation.constants.ProductNavigationSimulationPortletKeys;
 import com.liferay.taglib.aui.IconTag;
 import com.liferay.taglib.aui.ScriptTag;
 import com.liferay.taglib.ui.MessageTag;

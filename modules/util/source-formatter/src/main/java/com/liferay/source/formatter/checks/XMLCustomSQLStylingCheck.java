@@ -46,6 +46,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 			_checkMissingLineBreakAfterKeyword(fileName, content);
 			_checkMissingParentheses(fileName, content);
 			_checkMultiLineClause(fileName, content);
+			_checkRedundantLineBreak(fileName, content);
 			_checkScalability(fileName, absolutePath, content);
 
 			content = _fixIncorrectAndOr(content);
@@ -203,6 +204,18 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 						"' tabs are expected"),
 					endLineCount);
 			}
+		}
+	}
+
+	private void _checkRedundantLineBreak(String fileName, String content) {
+		Matcher matcher = _redundantLineBreakPattern.matcher(content);
+
+		while (matcher.find()) {
+			addMessage(
+				fileName,
+				"There should not be a line break before '" + matcher.group(1) +
+					"'",
+				getLineCount(content, matcher.start(1)));
 		}
 	}
 
@@ -510,6 +523,8 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 		"\\s(AND|OR|\\[\\$AND_OR_CONNECTOR\\$\\])\\s+[^\\(\\[\\]<\\s]");
 	private final Pattern _multiLineSinglePredicatePattern = Pattern.compile(
 		"\t\\(\n(.*)\n\t*\\)");
+	private final Pattern _redundantLineBreakPattern = Pattern.compile(
+		"\t(IN|ON)\\s");
 	private final Pattern _redundantParenthesesForSingleLineClausePattern =
 		Pattern.compile("\\s(ON|WHERE)\\s+\\((.*)\\)\n(.*)\n");
 	private final Pattern _singleLineClauseWitMultiplePredicatesPattern =

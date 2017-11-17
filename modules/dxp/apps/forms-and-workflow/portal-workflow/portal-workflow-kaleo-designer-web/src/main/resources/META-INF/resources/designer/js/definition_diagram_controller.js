@@ -81,7 +81,7 @@ AUI.add(
 								}
 								else {
 									metadata = {
-										xy: instance.getRandomXY()
+										xy: instance._getRandomXY()
 									};
 								}
 

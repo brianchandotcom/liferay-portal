@@ -498,7 +498,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertElementNotPresent#assertNotVisible" locator1="SiteSettingsStaging#ENABLED_ON_PUBLIC_PAGES_CHECKBOX" />
+		<execute function="AssertNotVisible" locator1="SiteSettingsStaging#ENABLED_ON_PUBLIC_PAGES_CHECKBOX" />
 	</command>
 
 	<command name="deletePageVariationPG">

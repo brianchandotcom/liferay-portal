@@ -46,6 +46,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 			_checkMissingLineBreakAfterKeyword(fileName, content);
 			_checkMissingParentheses(fileName, content);
 			_checkMultiLineClause(fileName, content);
+			_checkRedundantLineBreak(fileName, content);
 			_checkScalability(fileName, absolutePath, content);
 
 			content = _fixIncorrectAndOr(content);
@@ -187,22 +188,18 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 					fileName, "redundant parentheses",
 					getLineCount(content, startPos));
 			}
+		}
+	}
 
-			int endLineTabCount = endPos - endLineStartPos - 1;
+	private void _checkRedundantLineBreak(String fileName, String content) {
+		Matcher matcher = _redundantLineBreakPattern.matcher(content);
 
-			int startLineStartPos = content.lastIndexOf("\n", startPos);
-
-			int startLineTabCount = startPos - startLineStartPos;
-
-			if (endLineTabCount != startLineTabCount) {
-				addMessage(
-					fileName,
-					StringBundler.concat(
-						"Line starts with '", String.valueOf(endLineTabCount),
-						"' tabs, but '", String.valueOf(startLineTabCount),
-						"' tabs are expected"),
-					endLineCount);
-			}
+		while (matcher.find()) {
+			addMessage(
+				fileName,
+				"There should not be a line break before '" + matcher.group(1) +
+					"'",
+				getLineCount(content, matcher.start(1)));
 		}
 	}
 
@@ -507,9 +504,11 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 	private final Pattern _missingParenthesesPattern1 = Pattern.compile(
 		"\t([^\t]*(\\S))\\s+(AND|OR|\\[\\$AND_OR_CONNECTOR\\$\\])\\s");
 	private final Pattern _missingParenthesesPattern2 = Pattern.compile(
-		"\\s(AND|OR|\\[\\$AND_OR_CONNECTOR\\$\\])\\s+[^\\(\\[<\\s]");
+		"\\s(AND|OR|\\[\\$AND_OR_CONNECTOR\\$\\])\\s+[^\\(\\[\\]<\\s]");
 	private final Pattern _multiLineSinglePredicatePattern = Pattern.compile(
 		"\t\\(\n(.*)\n\t*\\)");
+	private final Pattern _redundantLineBreakPattern = Pattern.compile(
+		"\t(IN|ON)\\s");
 	private final Pattern _redundantParenthesesForSingleLineClausePattern =
 		Pattern.compile("\\s(ON|WHERE)\\s+\\((.*)\\)\n(.*)\n");
 	private final Pattern _singleLineClauseWitMultiplePredicatesPattern =

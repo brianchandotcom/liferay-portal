@@ -2,79 +2,85 @@
 
 <custom-sql>
 	<sql id="com.liferay.knowledge.base.service.persistence.KBArticleFinder.countByUrlTitle">
-		SELECT
-			count(*)
-		FROM
-			KBArticle
-		INNER JOIN
-			KBFolder
-		ON
-			(
-				(KBArticle.kbFolderId = KBFolder.kbFolderId) AND
-				(KBArticle.groupId = KBFolder.groupId)
-			)
-		WHERE
-			(KBArticle.groupId = ?) AND
-			(KBArticle.urlTitle = ?) AND
-			(KBFolder.urlTitle = ?) AND
-			(KBArticle.status IN ([$WORKFLOW_STATUS$]))
+		<![CDATA[
+			SELECT
+				count(*)
+			FROM
+				KBArticle
+			INNER JOIN
+				KBFolder ON
+					(KBArticle.kbFolderId = KBFolder.kbFolderId) AND
+					(KBArticle.groupId = KBFolder.groupId)
+			WHERE
+				(KBArticle.groupId = ?) AND
+				(KBArticle.urlTitle = ?) AND
+				(KBFolder.urlTitle = ?) AND
+				(KBArticle.status IN ([$WORKFLOW_STATUS$]))
+		]]>
 	</sql>
 	<sql id="com.liferay.knowledge.base.service.persistence.KBArticleFinder.findByUrlTitle">
-		SELECT
-			KBArticle.*
-		FROM
-			KBArticle
-		INNER JOIN
-			KBFolder
-		ON
-			(
-				(KBArticle.kbFolderId = KBFolder.kbFolderId) AND
-				(KBArticle.groupId = KBFolder.groupId)
-			)
-		WHERE
-			(KBArticle.groupId = ?) AND
-			(KBArticle.urlTitle = ?) AND
-			(KBFolder.urlTitle = ?) AND
-			(KBArticle.status IN ([$WORKFLOW_STATUS$]))
+		<![CDATA[
+			SELECT
+				KBArticle.*
+			FROM
+				KBArticle
+			INNER JOIN
+				KBFolder ON
+					(KBArticle.kbFolderId = KBFolder.kbFolderId) AND
+					(KBArticle.groupId = KBFolder.groupId)
+			WHERE
+				(KBArticle.groupId = ?) AND
+				(KBArticle.urlTitle = ?) AND
+				(KBFolder.urlTitle = ?) AND
+				(KBArticle.status IN ([$WORKFLOW_STATUS$]))
+		]]>
 	</sql>
 	<sql id="com.liferay.knowledge.base.service.persistence.KBFolderFinder.countA_ByG_P">
-		SELECT
-			COUNT(DISTINCT kbArticleId) AS COUNT_VALUE
-		FROM
-			KBArticle
-		WHERE
-			(KBArticle.groupId = ?) AND
-			(KBArticle.parentResourcePrimKey = ?) AND
-			(KBArticle.latest = ?) AND
-			([$STATUS$])
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT kbArticleId) AS COUNT_VALUE
+			FROM
+				KBArticle
+			WHERE
+				(KBArticle.groupId = ?) AND
+				(KBArticle.parentResourcePrimKey = ?) AND
+				(KBArticle.latest = ?) AND
+				([$STATUS$])
+		]]>
 	</sql>
 	<sql id="com.liferay.knowledge.base.service.persistence.KBFolderFinder.countF_ByG_P">
-		SELECT
-			COUNT(DISTINCT kbFolderId) AS COUNT_VALUE
-		FROM
-			KBFolder
-		WHERE
-			(KBFolder.groupId = ?) AND
-			(KBFolder.parentKBFolderId = ?)
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT kbFolderId) AS COUNT_VALUE
+			FROM
+				KBFolder
+			WHERE
+				(KBFolder.groupId = ?) AND
+				(KBFolder.parentKBFolderId = ?)
+		]]>
 	</sql>
 	<sql id="com.liferay.knowledge.base.service.persistence.KBFolderFinder.findA_ByG_P">
-		SELECT
-		DISTINCT kbArticleId as modelId, 0 as modelFolder, KBArticle.modifiedDate as modifiedDate, KBArticle.priority as priority, KBArticle.title as title, KBArticle.viewCount as viewCount
-		FROM
-			KBArticle
-		WHERE
-			(KBArticle.groupId = ?) AND
-			(KBArticle.parentResourcePrimKey = ?) AND
-			(KBArticle.latest = ?) AND
-			([$STATUS$])
+		<![CDATA[
+			SELECT
+				DISTINCT kbArticleId as modelId, 0 as modelFolder, KBArticle.modifiedDate as modifiedDate, KBArticle.priority as priority, KBArticle.title as title, KBArticle.viewCount as viewCount
+			FROM
+				KBArticle
+			WHERE
+				(KBArticle.groupId = ?) AND
+				(KBArticle.parentResourcePrimKey = ?) AND
+				(KBArticle.latest = ?) AND
+				([$STATUS$])
+		]]>
 	</sql>
 	<sql id="com.liferay.knowledge.base.service.persistence.KBFolderFinder.findF_ByG_P">
-		SELECT
-		DISTINCT kbFolderId as modelId, 1 as modelFolder, KBFolder.modifiedDate as modifiedDate, 0.0 as priority, KBFolder.name as title, 0 as viewCount
-		FROM
-			KBFolder
-		WHERE
-			(KBFolder.groupId = ?) AND
-			(KBFolder.parentKBFolderId = ?)
+		<![CDATA[
+			SELECT
+				DISTINCT kbFolderId as modelId, 1 as modelFolder, KBFolder.modifiedDate as modifiedDate, 0.0 as priority, KBFolder.name as title, 0 as viewCount
+			FROM
+				KBFolder
+			WHERE
+				(KBFolder.groupId = ?) AND
+				(KBFolder.parentKBFolderId = ?)
+		]]>
 	</sql>
 </custom-sql>

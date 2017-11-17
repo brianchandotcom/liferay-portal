@@ -123,6 +123,8 @@
 		<execute macro="SAMLNavigation#gotoServiceProviderConnection" />
 
 		<execute macro="SAMLPortlet#addServiceProviderConnection">
+			<var name="nameIdentifierAttributeName" value="${nameIdentifierAttributeName}" />
+			<var name="nameIdentifierFormat" value="${nameIdentifierFormat}" />
 			<var name="SPEntityID" value="${samlEntityID}" />
 			<var name="SPMetadataURL" value="${spURL}/c/portal/saml/metadata" />
 			<var name="SPNameID" value="${samlEntityID}" />

@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Site Navigation Admin Web
 Bundle-SymbolicName: com.liferay.site.navigation.admin.web
 Bundle-Version: 1.0.0
+Liferay-JS-Config: /META-INF/resources/js/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Navigation
 Web-ContextPath: /site-navigation-admin-web

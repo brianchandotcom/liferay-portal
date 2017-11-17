@@ -1,0 +1,22 @@
+{
+	"dependencies": {
+		"metal-dom": "^2.0.0",
+		"metal-drag-drop": "^2.0.1",
+		"metal-state": "^2.13.2"
+	},
+	"devDependencies": {
+		"eslint": "^4.11.0",
+		"eslint-config-liferay": "^2.0.15",
+		"liferay-module-config-generator": "^1.2.1",
+		"metal-cli": "^4.0.1",
+		"prettier-eslint-cli": "^4.4.0"
+	},
+	"name": "site-navigation-menu-web",
+	"scripts": {
+		"checkFormat": "npm run prettier -- --list-different",
+		"format": "npm run prettier -- --write",
+		"lint": "eslint src/**/*.es.js",
+		"prettier": "prettier-eslint src/**/*.es.js"
+	},
+	"version": "1.0.0"
+}

@@ -100,22 +100,18 @@ AUI.add(
 											item2,
 											function(item3, index3, collection3) {
 												_put(assignments, index3, item3);
-
-												if (isValue(item3)) {
-													assignments.assignmentType = AArray(item1);
-												}
 											}
 										);
 									}
 									else {
-										if (isValue(item2)) {
-											assignments.assignmentType = AArray(item1);
-										}
-
 										_put(assignments, item1, item2);
 									}
 								}
 							);
+
+							if (isValue(item1)) {
+								assignments.assignmentType = AArray(item1);
+							}
 						}
 					);
 				}

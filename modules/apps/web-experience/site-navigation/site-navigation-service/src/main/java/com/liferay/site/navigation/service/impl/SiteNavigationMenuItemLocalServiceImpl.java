@@ -94,4 +94,30 @@ public class SiteNavigationMenuItemLocalServiceImpl
 			siteNavigationMenuId);
 	}
 
+	@Override
+	public SiteNavigationMenuItem updateSiteNavigationMenuItem(
+			long userId, long siteNavigationMenuItemId,
+			long parentSiteNavigationMenuItemId, String typeSettings,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			siteNavigationMenuItemPersistence.fetchByPrimaryKey(
+				siteNavigationMenuItemId);
+
+		User user = userLocalService.getUser(userId);
+
+		siteNavigationMenuItem.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
+		siteNavigationMenuItem.setUserId(userId);
+		siteNavigationMenuItem.setUserName(user.getFullName());
+		siteNavigationMenuItem.setParentSiteNavigationMenuItemId(
+			parentSiteNavigationMenuItemId);
+		siteNavigationMenuItem.setTypeSettings(typeSettings);
+
+		siteNavigationMenuItemPersistence.update(siteNavigationMenuItem);
+
+		return siteNavigationMenuItem;
+	}
+
 }

@@ -16,7 +16,6 @@ package com.liferay.site.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.GroupFriendlyURLException;
 import com.liferay.portal.kernel.exception.GroupParentException;
@@ -60,7 +59,6 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.impl.UserImpl;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -542,7 +540,7 @@ public class GroupServiceTest {
 
 	@Test
 	public void testGetGlobalSiteDefaultLocale() throws Exception {
-		Company company = CompanyLocalServiceUtil.fetchCompany(
+		Company company = CompanyLocalServiceUtil.getCompany(
 			_group.getCompanyId());
 
 		Assert.assertEquals(
@@ -554,25 +552,33 @@ public class GroupServiceTest {
 	public void testGetGlobalSiteDefaultLocaleWhenCompanyLocaleModified()
 		throws Exception {
 
-		Company company = CompanyLocalServiceUtil.fetchCompany(
+		Company company = CompanyLocalServiceUtil.getCompany(
 			_group.getCompanyId());
 
-		try {
-			Locale locale = RandomTestUtil.randomNonDefaultLocale(company);
+		User defaultUser = company.getDefaultUser();
 
-			setDefaultLocale(locale);
+		String languageId = defaultUser.getLanguageId();
+
+		try {
+			defaultUser.setLanguageId(
+				LanguageUtil.getLanguageId(LocaleUtil.BRAZIL));
+
+			defaultUser = UserLocalServiceUtil.updateUser(defaultUser);
 
 			Assert.assertEquals(
-				locale, PortalUtil.getSiteDefaultLocale(company.getGroupId()));
+				LocaleUtil.BRAZIL,
+				PortalUtil.getSiteDefaultLocale(company.getGroupId()));
 		}
 		finally {
-			EntityCacheUtil.clearCache(UserImpl.class);
+			defaultUser.setLanguageId(languageId);
+
+			UserLocalServiceUtil.updateUser(defaultUser);
 		}
 	}
 
 	@Test
 	public void testGetSiteDefaultInheritLocale() throws Exception {
-		Company company = CompanyLocalServiceUtil.fetchCompany(
+		Company company = CompanyLocalServiceUtil.getCompany(
 			_group.getCompanyId());
 
 		Assert.assertEquals(
@@ -584,30 +590,28 @@ public class GroupServiceTest {
 	public void testGetSiteDefaultInheritLocaleWhenCompanyLocaleModified()
 		throws Exception {
 
-		try {
-			Locale locale = RandomTestUtil.randomNonDefaultLocale(
-				CompanyLocalServiceUtil.fetchCompany(_group.getCompanyId()));
-
-			setDefaultLocale(locale);
-
-			Assert.assertEquals(
-				locale, PortalUtil.getSiteDefaultLocale(_group.getGroupId()));
-		}
-		finally {
-			EntityCacheUtil.clearCache(UserImpl.class);
-		}
-	}
-
-	@Test
-	public void testGetSiteDefaultLocaleWhenCompanyLocaleModified()
-		throws Exception {
-
-		Company company = CompanyLocalServiceUtil.fetchCompany(
+		Company company = CompanyLocalServiceUtil.getCompany(
 			_group.getCompanyId());
 
-		Assert.assertEquals(
-			company.getLocale(),
-			PortalUtil.getSiteDefaultLocale(_group.getGroupId()));
+		User defaultUser = company.getDefaultUser();
+
+		String languageId = defaultUser.getLanguageId();
+
+		try {
+			defaultUser.setLanguageId(
+				LanguageUtil.getLanguageId(LocaleUtil.CHINA));
+
+			defaultUser = UserLocalServiceUtil.updateUser(defaultUser);
+
+			Assert.assertEquals(
+				LocaleUtil.CHINA,
+				PortalUtil.getSiteDefaultLocale(_group.getGroupId()));
+		}
+		finally {
+			defaultUser.setLanguageId(languageId);
+
+			UserLocalServiceUtil.updateUser(defaultUser);
+		}
 	}
 
 	@Test
@@ -1174,15 +1178,6 @@ public class GroupServiceTest {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		return themeDisplay.getLocale();
-	}
-
-	protected void setDefaultLocale(Locale locale) throws Exception {
-		Company company = CompanyLocalServiceUtil.fetchCompany(
-			_group.getCompanyId());
-
-		User defaultUser = company.getDefaultUser();
-
-		defaultUser.setLanguageId(LocaleUtil.toLanguageId(locale));
 	}
 
 	protected void testSelectableParentSites(boolean staging) throws Exception {

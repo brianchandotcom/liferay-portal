@@ -15,9 +15,9 @@
 package com.liferay.site.navigation.menu.item.url.internal.type;
 
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.site.navigation.constants.SiteNavigationWebKeys;
 import com.liferay.site.navigation.menu.item.url.internal.constants.SiteNavigationMenuItemTypeURLConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
@@ -72,20 +72,26 @@ public class URLSiteNavigationMenuItemType
 	}
 
 	@Override
-	public JSONObject getViewContext(
-			HttpServletRequest request, HttpServletResponse response,
-			SiteNavigationMenuItem siteNavigationMenuItem)
-		throws Exception {
-
-		return null;
-	}
-
-	@Override
 	public void renderAddPage(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		_jspRenderer.renderJSP(_servletContext, request, response, "/url.jsp");
+		_jspRenderer.renderJSP(
+			_servletContext, request, response, "/add_url.jsp");
+	}
+
+	@Override
+	public void renderEditPage(
+			HttpServletRequest request, HttpServletResponse response,
+			SiteNavigationMenuItem siteNavigationMenuItem)
+		throws IOException {
+
+		request.setAttribute(
+			SiteNavigationWebKeys.SITE_NAVIGATION_MENU_ITEM,
+			siteNavigationMenuItem);
+
+		_jspRenderer.renderJSP(
+			_servletContext, request, response, "/edit_url.jsp");
 	}
 
 	@Reference

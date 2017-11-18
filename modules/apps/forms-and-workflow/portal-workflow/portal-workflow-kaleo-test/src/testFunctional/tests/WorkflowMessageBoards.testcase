@@ -25,7 +25,13 @@
 			<var name="workflowResourceValue" value="Message Boards Message" />
 		</execute>
 
-		<execute macro="Page#add">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
@@ -63,6 +69,8 @@
 	</tear-down>
 
 	<command name="ApproveMessageBoardsThreadPG" priority="4">
+		<property name="portal.subrepo" value="false" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Message Boards Page" />
 		</execute>

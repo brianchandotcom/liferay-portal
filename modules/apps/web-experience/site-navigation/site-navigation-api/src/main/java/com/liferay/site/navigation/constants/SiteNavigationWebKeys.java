@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,12 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
+package com.liferay.site.navigation.constants;
 
-<%@ page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
-page import="com.liferay.site.navigation.constants.SiteNavigationWebKeys" %><%@
-page import="com.liferay.site.navigation.model.SiteNavigationMenuItem" %>
+/**
+ * @author Eudaldo Alonso
+ */
+public class SiteNavigationWebKeys {
 
-<%@ include file="/init-ext.jsp" %>
+	public static final String SITE_NAVIGATION_MENU_ITEM =
+		"SITE_NAVIGATION_MENU_ITEM";
+
+}

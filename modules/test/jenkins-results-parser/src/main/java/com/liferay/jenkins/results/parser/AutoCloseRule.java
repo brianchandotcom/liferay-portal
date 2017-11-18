@@ -65,18 +65,19 @@ public class AutoCloseRule {
 
 			boolean containsUniqueTestFailure = false;
 
-			for (TestResult testResult : testResults) {
-				if (!UpstreamFailureUtil.isTestFailingInUpstreamJob(
-						testResult)) {
-
-					containsUniqueTestFailure = true;
-
-					break;
-				}
-			}
-
 			if (testResults.isEmpty()) {
 				containsUniqueTestFailure = true;
+			}
+			else {
+				for (TestResult testResult : testResults) {
+					if (!UpstreamFailureUtil.isTestFailingInUpstreamJob(
+							testResult)) {
+
+						containsUniqueTestFailure = true;
+
+						break;
+					}
+				}
 			}
 
 			if (!containsUniqueTestFailure) {

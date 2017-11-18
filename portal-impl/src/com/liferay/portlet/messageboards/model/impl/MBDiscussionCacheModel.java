@@ -21,7 +21,6 @@ import com.liferay.message.boards.kernel.model.MBDiscussion;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -102,7 +101,7 @@ public class MBDiscussionCacheModel implements CacheModel<MBDiscussion>,
 		MBDiscussionImpl mbDiscussionImpl = new MBDiscussionImpl();
 
 		if (uuid == null) {
-			mbDiscussionImpl.setUuid(StringPool.BLANK);
+			mbDiscussionImpl.setUuid("");
 		}
 		else {
 			mbDiscussionImpl.setUuid(uuid);
@@ -114,7 +113,7 @@ public class MBDiscussionCacheModel implements CacheModel<MBDiscussion>,
 		mbDiscussionImpl.setUserId(userId);
 
 		if (userName == null) {
-			mbDiscussionImpl.setUserName(StringPool.BLANK);
+			mbDiscussionImpl.setUserName("");
 		}
 		else {
 			mbDiscussionImpl.setUserName(userName);
@@ -177,7 +176,7 @@ public class MBDiscussionCacheModel implements CacheModel<MBDiscussion>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -192,7 +191,7 @@ public class MBDiscussionCacheModel implements CacheModel<MBDiscussion>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import com.liferay.social.kernel.model.SocialActivityLimit;
@@ -295,7 +294,7 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -310,7 +309,7 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 	@Override
 	public String getClassName() {
 		if (getClassNameId() <= 0) {
-			return StringPool.BLANK;
+			return "";
 		}
 
 		return PortalUtil.getClassName(getClassNameId());
@@ -396,7 +395,7 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 	@Override
 	public String getActivityCounterName() {
 		if (_activityCounterName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _activityCounterName;
@@ -421,7 +420,7 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 	@Override
 	public String getValue() {
 		if (_value == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _value;

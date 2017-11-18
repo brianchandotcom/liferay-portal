@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -143,9 +142,9 @@ public class VirtualHostPersistenceTest {
 
 	@Test
 	public void testCountByHostname() throws Exception {
-		_persistence.countByHostname(StringPool.BLANK);
+		_persistence.countByHostname("");
 
-		_persistence.countByHostname(StringPool.NULL);
+		_persistence.countByHostname("null");
 
 		_persistence.countByHostname((String)null);
 	}

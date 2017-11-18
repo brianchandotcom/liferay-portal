@@ -21,7 +21,7 @@ import com.liferay.opensocial.exception.NoSuchGadgetException;
 import com.liferay.opensocial.gadget.portlet.GadgetPortlet;
 import com.liferay.opensocial.model.Gadget;
 import com.liferay.opensocial.model.impl.GadgetConstants;
-import com.liferay.opensocial.service.ClpSerializer;
+import com.liferay.opensocial.service.ServletContextUtil;
 import com.liferay.opensocial.service.base.GadgetLocalServiceBaseImpl;
 import com.liferay.opensocial.shindig.util.ShindigUtil;
 import com.liferay.portal.kernel.cluster.Clusterable;
@@ -318,7 +318,7 @@ public class GadgetLocalServiceImpl extends GadgetLocalServiceBaseImpl {
 		portlet.setPortletId(portletId);
 
 		PortletApp portletApp = portletLocalService.getPortletApp(
-			ClpSerializer.getServletContextName());
+			ServletContextUtil.getServletContextName());
 
 		portlet.setPortletApp(portletApp);
 

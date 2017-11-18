@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 
@@ -105,7 +104,7 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 		siteNavigationMenuItemImpl.setUserId(userId);
 
 		if (userName == null) {
-			siteNavigationMenuItemImpl.setUserName(StringPool.BLANK);
+			siteNavigationMenuItemImpl.setUserName("");
 		}
 		else {
 			siteNavigationMenuItemImpl.setUserName(userName);
@@ -129,14 +128,14 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 		siteNavigationMenuItemImpl.setParentSiteNavigationMenuItemId(parentSiteNavigationMenuItemId);
 
 		if (type == null) {
-			siteNavigationMenuItemImpl.setType(StringPool.BLANK);
+			siteNavigationMenuItemImpl.setType("");
 		}
 		else {
 			siteNavigationMenuItemImpl.setType(type);
 		}
 
 		if (typeSettings == null) {
-			siteNavigationMenuItemImpl.setTypeSettings(StringPool.BLANK);
+			siteNavigationMenuItemImpl.setTypeSettings("");
 		}
 		else {
 			siteNavigationMenuItemImpl.setTypeSettings(typeSettings);
@@ -179,7 +178,7 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -193,14 +192,14 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 		objectOutput.writeLong(parentSiteNavigationMenuItemId);
 
 		if (type == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(type);
 		}
 
 		if (typeSettings == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(typeSettings);

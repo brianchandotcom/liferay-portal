@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.shopping.model.ShoppingCoupon;
 import com.liferay.shopping.model.ShoppingCouponModel;
@@ -428,7 +427,7 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -440,7 +439,7 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -486,7 +485,7 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 	@Override
 	public String getCode() {
 		if (_code == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _code;
@@ -512,7 +511,7 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -528,7 +527,7 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 	@Override
 	public String getDescription() {
 		if (_description == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _description;
@@ -583,7 +582,7 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 	@Override
 	public String getLimitCategories() {
 		if (_limitCategories == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _limitCategories;
@@ -599,7 +598,7 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 	@Override
 	public String getLimitSkus() {
 		if (_limitSkus == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _limitSkus;
@@ -637,7 +636,7 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 	@Override
 	public String getDiscountType() {
 		if (_discountType == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _discountType;

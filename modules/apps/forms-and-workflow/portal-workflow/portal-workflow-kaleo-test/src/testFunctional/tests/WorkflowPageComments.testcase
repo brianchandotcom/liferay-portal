@@ -24,7 +24,13 @@
 			<var name="workflowResourceValue" value="Comment" />
 		</execute>
 
-		<execute macro="Page#add">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Page Comments Page" />
 		</execute>
 
@@ -60,8 +66,6 @@
 	</tear-down>
 
 	<command name="ApprovePageCommentPG" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Page Comments Page" />
 		</execute>

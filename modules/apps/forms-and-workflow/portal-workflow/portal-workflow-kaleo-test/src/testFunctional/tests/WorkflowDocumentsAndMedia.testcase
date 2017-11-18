@@ -38,7 +38,7 @@
 	</tear-down>
 
 	<command name="ApproveInDMFolderCustomWorkflow" priority="5">
-		<property name="portal.acceptance" value="pending" />
+		<property name="portal.acceptance" value="true" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -334,7 +334,7 @@
 		<description message="This is a use case for LPS-60870." />
 
 		<property name="custom.properties" value="dl.file.entry.drafts.enabled=true" />
-		<property name="portal.acceptance" value="pending" />
+		<property name="portal.subrepo" value="false" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="Navigator#openURL" />

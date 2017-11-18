@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.UserTracker;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -121,28 +120,28 @@ public class UserTrackerCacheModel implements CacheModel<UserTracker>,
 		}
 
 		if (sessionId == null) {
-			userTrackerImpl.setSessionId(StringPool.BLANK);
+			userTrackerImpl.setSessionId("");
 		}
 		else {
 			userTrackerImpl.setSessionId(sessionId);
 		}
 
 		if (remoteAddr == null) {
-			userTrackerImpl.setRemoteAddr(StringPool.BLANK);
+			userTrackerImpl.setRemoteAddr("");
 		}
 		else {
 			userTrackerImpl.setRemoteAddr(remoteAddr);
 		}
 
 		if (remoteHost == null) {
-			userTrackerImpl.setRemoteHost(StringPool.BLANK);
+			userTrackerImpl.setRemoteHost("");
 		}
 		else {
 			userTrackerImpl.setRemoteHost(remoteHost);
 		}
 
 		if (userAgent == null) {
-			userTrackerImpl.setUserAgent(StringPool.BLANK);
+			userTrackerImpl.setUserAgent("");
 		}
 		else {
 			userTrackerImpl.setUserAgent(userAgent);
@@ -182,28 +181,28 @@ public class UserTrackerCacheModel implements CacheModel<UserTracker>,
 		objectOutput.writeLong(modifiedDate);
 
 		if (sessionId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(sessionId);
 		}
 
 		if (remoteAddr == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(remoteAddr);
 		}
 
 		if (remoteHost == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(remoteHost);
 		}
 
 		if (userAgent == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userAgent);

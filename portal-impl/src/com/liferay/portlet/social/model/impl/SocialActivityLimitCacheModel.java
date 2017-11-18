@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.social.kernel.model.SocialActivityLimit;
 
@@ -102,14 +101,14 @@ public class SocialActivityLimitCacheModel implements CacheModel<SocialActivityL
 		socialActivityLimitImpl.setActivityType(activityType);
 
 		if (activityCounterName == null) {
-			socialActivityLimitImpl.setActivityCounterName(StringPool.BLANK);
+			socialActivityLimitImpl.setActivityCounterName("");
 		}
 		else {
 			socialActivityLimitImpl.setActivityCounterName(activityCounterName);
 		}
 
 		if (value == null) {
-			socialActivityLimitImpl.setValue(StringPool.BLANK);
+			socialActivityLimitImpl.setValue("");
 		}
 		else {
 			socialActivityLimitImpl.setValue(value);
@@ -157,14 +156,14 @@ public class SocialActivityLimitCacheModel implements CacheModel<SocialActivityL
 		objectOutput.writeInt(activityType);
 
 		if (activityCounterName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(activityCounterName);
 		}
 
 		if (value == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(value);

@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -160,9 +159,9 @@ public class AnnouncementsDeliveryPersistenceTest {
 
 	@Test
 	public void testCountByU_T() throws Exception {
-		_persistence.countByU_T(RandomTestUtil.nextLong(), StringPool.BLANK);
+		_persistence.countByU_T(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByU_T(0L, StringPool.NULL);
+		_persistence.countByU_T(0L, "null");
 
 		_persistence.countByU_T(0L, (String)null);
 	}

@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -372,7 +371,7 @@ public class MessageModelImpl extends BaseModelImpl<Message>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -383,7 +382,7 @@ public class MessageModelImpl extends BaseModelImpl<Message>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -456,7 +455,7 @@ public class MessageModelImpl extends BaseModelImpl<Message>
 	@Override
 	public String getSender() {
 		if (_sender == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _sender;
@@ -471,7 +470,7 @@ public class MessageModelImpl extends BaseModelImpl<Message>
 	@Override
 	public String getTo() {
 		if (_to == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _to;
@@ -486,7 +485,7 @@ public class MessageModelImpl extends BaseModelImpl<Message>
 	@Override
 	public String getCc() {
 		if (_cc == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _cc;
@@ -501,7 +500,7 @@ public class MessageModelImpl extends BaseModelImpl<Message>
 	@Override
 	public String getBcc() {
 		if (_bcc == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _bcc;
@@ -528,7 +527,7 @@ public class MessageModelImpl extends BaseModelImpl<Message>
 	@Override
 	public String getSubject() {
 		if (_subject == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _subject;
@@ -543,7 +542,7 @@ public class MessageModelImpl extends BaseModelImpl<Message>
 	@Override
 	public String getPreview() {
 		if (_preview == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _preview;
@@ -558,7 +557,7 @@ public class MessageModelImpl extends BaseModelImpl<Message>
 	@Override
 	public String getBody() {
 		if (_body == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _body;
@@ -573,7 +572,7 @@ public class MessageModelImpl extends BaseModelImpl<Message>
 	@Override
 	public String getFlags() {
 		if (_flags == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _flags;
@@ -620,7 +619,7 @@ public class MessageModelImpl extends BaseModelImpl<Message>
 	@Override
 	public String getContentType() {
 		if (_contentType == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _contentType;

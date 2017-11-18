@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.shopping.model.ShoppingOrderItem;
 
@@ -104,35 +103,35 @@ public class ShoppingOrderItemCacheModel implements CacheModel<ShoppingOrderItem
 		shoppingOrderItemImpl.setOrderId(orderId);
 
 		if (itemId == null) {
-			shoppingOrderItemImpl.setItemId(StringPool.BLANK);
+			shoppingOrderItemImpl.setItemId("");
 		}
 		else {
 			shoppingOrderItemImpl.setItemId(itemId);
 		}
 
 		if (sku == null) {
-			shoppingOrderItemImpl.setSku(StringPool.BLANK);
+			shoppingOrderItemImpl.setSku("");
 		}
 		else {
 			shoppingOrderItemImpl.setSku(sku);
 		}
 
 		if (name == null) {
-			shoppingOrderItemImpl.setName(StringPool.BLANK);
+			shoppingOrderItemImpl.setName("");
 		}
 		else {
 			shoppingOrderItemImpl.setName(name);
 		}
 
 		if (description == null) {
-			shoppingOrderItemImpl.setDescription(StringPool.BLANK);
+			shoppingOrderItemImpl.setDescription("");
 		}
 		else {
 			shoppingOrderItemImpl.setDescription(description);
 		}
 
 		if (properties == null) {
-			shoppingOrderItemImpl.setProperties(StringPool.BLANK);
+			shoppingOrderItemImpl.setProperties("");
 		}
 		else {
 			shoppingOrderItemImpl.setProperties(properties);
@@ -182,35 +181,35 @@ public class ShoppingOrderItemCacheModel implements CacheModel<ShoppingOrderItem
 		objectOutput.writeLong(orderId);
 
 		if (itemId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(itemId);
 		}
 
 		if (sku == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(sku);
 		}
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);
 		}
 
 		if (properties == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(properties);

@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 
 import java.io.Externalizable;
@@ -100,7 +99,7 @@ public class SAPEntryCacheModel implements CacheModel<SAPEntry>, Externalizable 
 		SAPEntryImpl sapEntryImpl = new SAPEntryImpl();
 
 		if (uuid == null) {
-			sapEntryImpl.setUuid(StringPool.BLANK);
+			sapEntryImpl.setUuid("");
 		}
 		else {
 			sapEntryImpl.setUuid(uuid);
@@ -111,7 +110,7 @@ public class SAPEntryCacheModel implements CacheModel<SAPEntry>, Externalizable 
 		sapEntryImpl.setUserId(userId);
 
 		if (userName == null) {
-			sapEntryImpl.setUserName(StringPool.BLANK);
+			sapEntryImpl.setUserName("");
 		}
 		else {
 			sapEntryImpl.setUserName(userName);
@@ -132,7 +131,7 @@ public class SAPEntryCacheModel implements CacheModel<SAPEntry>, Externalizable 
 		}
 
 		if (allowedServiceSignatures == null) {
-			sapEntryImpl.setAllowedServiceSignatures(StringPool.BLANK);
+			sapEntryImpl.setAllowedServiceSignatures("");
 		}
 		else {
 			sapEntryImpl.setAllowedServiceSignatures(allowedServiceSignatures);
@@ -142,14 +141,14 @@ public class SAPEntryCacheModel implements CacheModel<SAPEntry>, Externalizable 
 		sapEntryImpl.setEnabled(enabled);
 
 		if (name == null) {
-			sapEntryImpl.setName(StringPool.BLANK);
+			sapEntryImpl.setName("");
 		}
 		else {
 			sapEntryImpl.setName(name);
 		}
 
 		if (title == null) {
-			sapEntryImpl.setTitle(StringPool.BLANK);
+			sapEntryImpl.setTitle("");
 		}
 		else {
 			sapEntryImpl.setTitle(title);
@@ -185,7 +184,7 @@ public class SAPEntryCacheModel implements CacheModel<SAPEntry>, Externalizable 
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -198,7 +197,7 @@ public class SAPEntryCacheModel implements CacheModel<SAPEntry>, Externalizable 
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -208,7 +207,7 @@ public class SAPEntryCacheModel implements CacheModel<SAPEntry>, Externalizable 
 		objectOutput.writeLong(modifiedDate);
 
 		if (allowedServiceSignatures == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(allowedServiceSignatures);
@@ -219,14 +218,14 @@ public class SAPEntryCacheModel implements CacheModel<SAPEntry>, Externalizable 
 		objectOutput.writeBoolean(enabled);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (title == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(title);

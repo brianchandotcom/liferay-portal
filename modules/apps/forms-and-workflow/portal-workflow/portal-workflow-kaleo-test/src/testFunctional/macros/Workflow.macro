@@ -112,7 +112,7 @@
 			</then>
 		</if>
 
-		<execute macro="Workflow#confirmAndViewSucessMessageViaActions" />
+		<execute macro="Workflow#confirmWorkflowAction" />
 
 		<execute function="Pause" locator1="1000" />
 
@@ -159,7 +159,7 @@
 			<var name="key_menuItem" value="Approve" />
 		</execute>
 
-		<execute macro="Workflow#confirmAndViewSucessMessageViaDetails" />
+		<execute macro="Workflow#confirmWorkflowAction" />
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
@@ -187,7 +187,7 @@
 
 		<execute macro="Button#clickDone" />
 
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Workflow#waitForSuccessMessageHide" />
 	</command>
 
 	<command name="assignToMeTaskByActions">
@@ -216,7 +216,7 @@
 			</then>
 		</if>
 
-		<execute macro="Workflow#confirmAndViewSucessMessageViaActions" />
+		<execute macro="Workflow#confirmWorkflowAction" />
 
 		<execute macro="Workflow#viewTaskAssignedToMe">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
@@ -251,7 +251,7 @@
 
 		<execute macro="Workflow#clickAssignToMeByDetails" />
 
-		<execute macro="Workflow#confirmAndViewSucessMessageViaDetails" />
+		<execute macro="Workflow#confirmWorkflowAction" />
 
 		<execute function="Click" locator1="Icon#ANGLE_LEFT_BACK" />
 
@@ -324,22 +324,14 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
-	<command name="confirmAndViewSucessMessageViaActions">
+	<command name="confirmWorkflowAction">
 		<execute macro="IFrame#selectConfigurationFrame" />
 
 		<execute function="AssertElementPresent" locator1="Button#DONE" />
 
 		<execute function="Click" locator1="Button#DONE" />
 
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
-	<command name="confirmAndViewSucessMessageViaDetails">
-		<execute macro="IFrame#selectConfigurationFrame" />
-
-		<execute function="AssertClick" locator1="Button#DONE" value1="Done" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Workflow#waitForSuccessMessageHide" />
 	</command>
 
 	<command name="deactivateAddedWorkflowDefinition">
@@ -369,7 +361,7 @@
 
 		<execute function="Confirm" value1="Are you sure you want to deactivate this?" />
 
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Workflow#waitForSuccessMessageHide" />
 	</command>
 
 	<command name="deleteSpecificWorkflowDefinition">
@@ -393,7 +385,7 @@
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Workflow#waitForSuccessMessageHide" />
 	</command>
 
 	<command name="gotoAssetViaTableTitle">
@@ -473,7 +465,7 @@
 			<var name="key_menuItem" value="Activate" />
 		</execute>
 
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Workflow#waitForSuccessMessageHide" />
 	</command>
 
 	<command name="rejectTaskByActions">
@@ -502,7 +494,7 @@
 			</then>
 		</if>
 
-		<execute macro="Workflow#confirmAndViewSucessMessageViaActions" />
+		<execute macro="Workflow#confirmWorkflowAction" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 
@@ -535,7 +527,7 @@
 			<var name="key_menuItem" value="Reject" />
 		</execute>
 
-		<execute macro="Workflow#confirmAndViewSucessMessageViaDetails" />
+		<execute macro="Workflow#confirmWorkflowAction" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 
@@ -564,7 +556,7 @@
 			<var name="key_menuItem" value="Resubmit" />
 		</execute>
 
-		<execute macro="Workflow#confirmAndViewSucessMessageViaActions" />
+		<execute macro="Workflow#confirmWorkflowAction" />
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
@@ -595,7 +587,7 @@
 			<var name="key_menuItem" value="Resubmit" />
 		</execute>
 
-		<execute macro="Workflow#confirmAndViewSucessMessageViaDetails" />
+		<execute macro="Workflow#confirmWorkflowAction" />
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
@@ -750,7 +742,7 @@
 			</then>
 		</if>
 
-		<execute macro="Workflow#confirmAndViewSucessMessageViaActions" />
+		<execute macro="Workflow#confirmWorkflowAction" />
 
 		<execute macro="Workflow#viewTaskAssignedToMe">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
@@ -794,7 +786,7 @@
 			</then>
 		</if>
 
-		<execute macro="Workflow#confirmAndViewSucessMessageViaActions" />
+		<execute macro="Workflow#confirmWorkflowAction" />
 
 		<execute macro="Workflow#viewTaskAssignedToMyRoles">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
@@ -823,6 +815,8 @@
 				<execute function="AssertTextEquals#assertPartialText" locator1="Portlet#HEADER" value1="${workflowDefinitionUploadTitle}" />
 			</then>
 		</if>
+
+		<execute macro="Navigator#gotoBack" />
 	</command>
 
 	<command name="viewAssignedToMyRolesTasksCP">
@@ -1172,6 +1166,10 @@
 		<execute function="AssertElementNotPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_TASK" value1="${workflowTask}" />
 	</command>
 
+	<command name="waitForSuccessMessageHide">
+		<execute function="AssertNotVisible" locator1="Message#SUCCESS" />
+	</command>
+
 	<command name="withdrawTaskByActions">
 		<execute macro="Workflow#viewMySubmissions">
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
@@ -1190,7 +1188,7 @@
 			<var name="key_menuItem" value="Withdraw Submission" />
 		</execute>
 
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Workflow#waitForSuccessMessageHide" />
 	</command>
 
 	<command name="withdrawTaskByDetails">
@@ -1220,7 +1218,7 @@
 			<var name="key_menuItem" value="Withdraw Submission" />
 		</execute>
 
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Workflow#waitForSuccessMessageHide" />
 	</command>
 
 	<command name="withdrawTaskCompletedNoByDetails">

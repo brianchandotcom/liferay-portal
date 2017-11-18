@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.UserTrackerPath;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -108,7 +107,7 @@ public class UserTrackerPathCacheModel implements CacheModel<UserTrackerPath>,
 		userTrackerPathImpl.setUserTrackerId(userTrackerId);
 
 		if (path == null) {
-			userTrackerPathImpl.setPath(StringPool.BLANK);
+			userTrackerPathImpl.setPath("");
 		}
 		else {
 			userTrackerPathImpl.setPath(path);
@@ -151,7 +150,7 @@ public class UserTrackerPathCacheModel implements CacheModel<UserTrackerPath>,
 		objectOutput.writeLong(userTrackerId);
 
 		if (path == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(path);

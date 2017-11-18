@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -174,18 +173,18 @@ public class UserNotificationEventPersistenceTest {
 
 	@Test
 	public void testCountByUuid() throws Exception {
-		_persistence.countByUuid(StringPool.BLANK);
+		_persistence.countByUuid("");
 
-		_persistence.countByUuid(StringPool.NULL);
+		_persistence.countByUuid("null");
 
 		_persistence.countByUuid((String)null);
 	}
 
 	@Test
 	public void testCountByUuid_C() throws Exception {
-		_persistence.countByUuid_C(StringPool.BLANK, RandomTestUtil.nextLong());
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
 
-		_persistence.countByUuid_C(StringPool.NULL, 0L);
+		_persistence.countByUuid_C("null", 0L);
 
 		_persistence.countByUuid_C((String)null, 0L);
 	}
@@ -199,9 +198,9 @@ public class UserNotificationEventPersistenceTest {
 
 	@Test
 	public void testCountByType() throws Exception {
-		_persistence.countByType(StringPool.BLANK);
+		_persistence.countByType("");
 
-		_persistence.countByType(StringPool.NULL);
+		_persistence.countByType("null");
 
 		_persistence.countByType((String)null);
 	}
@@ -266,11 +265,10 @@ public class UserNotificationEventPersistenceTest {
 
 	@Test
 	public void testCountByU_T_DT_D() throws Exception {
-		_persistence.countByU_T_DT_D(RandomTestUtil.nextLong(),
-			StringPool.BLANK, RandomTestUtil.nextInt(),
-			RandomTestUtil.randomBoolean());
+		_persistence.countByU_T_DT_D(RandomTestUtil.nextLong(), "",
+			RandomTestUtil.nextInt(), RandomTestUtil.randomBoolean());
 
-		_persistence.countByU_T_DT_D(0L, StringPool.NULL, 0,
+		_persistence.countByU_T_DT_D(0L, "null", 0,
 			RandomTestUtil.randomBoolean());
 
 		_persistence.countByU_T_DT_D(0L, (String)null, 0,

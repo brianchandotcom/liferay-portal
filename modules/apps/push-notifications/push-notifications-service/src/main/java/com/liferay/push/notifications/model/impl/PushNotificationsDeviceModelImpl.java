@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.push.notifications.model.PushNotificationsDevice;
 import com.liferay.push.notifications.model.PushNotificationsDeviceModel;
@@ -297,7 +296,7 @@ public class PushNotificationsDeviceModelImpl extends BaseModelImpl<PushNotifica
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -324,7 +323,7 @@ public class PushNotificationsDeviceModelImpl extends BaseModelImpl<PushNotifica
 	@Override
 	public String getPlatform() {
 		if (_platform == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _platform;
@@ -350,7 +349,7 @@ public class PushNotificationsDeviceModelImpl extends BaseModelImpl<PushNotifica
 	@Override
 	public String getToken() {
 		if (_token == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _token;

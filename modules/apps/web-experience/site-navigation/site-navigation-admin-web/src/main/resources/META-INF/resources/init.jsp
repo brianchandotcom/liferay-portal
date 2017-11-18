@@ -43,7 +43,9 @@ page import="com.liferay.site.navigation.type.SiteNavigationMenuItemType" %><%@
 page import="com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry" %>
 
 <%@ page import="java.util.Date" %><%@
-page import="java.util.List" %>
+page import="java.util.HashMap" %><%@
+page import="java.util.List" %><%@
+page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

@@ -9,15 +9,16 @@
 				KaleoTaskInstanceToken
 			INNER JOIN
 				KaleoTaskAssignmentInstance ON
-					(KaleoTaskAssignmentInstance.kaleoTaskInstanceTokenId = KaleoTaskInstanceToken.kaleoTaskInstanceTokenId)
+					KaleoTaskAssignmentInstance.kaleoTaskInstanceTokenId = KaleoTaskInstanceToken.kaleoTaskInstanceTokenId
 			LEFT JOIN
 				ClassName_ ON
-					(ClassName_.value = KaleoTaskInstanceToken.className)
+					ClassName_.value = KaleoTaskInstanceToken.className
 			LEFT JOIN
 				AssetEntry ON
-					(AssetEntry.classNameId = ClassName_.classNameId AND AssetEntry.classPK = KaleoTaskInstanceToken.classPK)
+					(AssetEntry.classNameId = ClassName_.classNameId) AND
+					(AssetEntry.classPK = KaleoTaskInstanceToken.classPK)
 			WHERE
-				(KaleoTaskInstanceToken.companyId = ?)
+				KaleoTaskInstanceToken.companyId = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskInstanceTokenFinder.findByC_KTAI">
@@ -28,15 +29,16 @@
 				KaleoTaskInstanceToken
 			INNER JOIN
 				KaleoTaskAssignmentInstance ON
-					(KaleoTaskAssignmentInstance.kaleoTaskInstanceTokenId = KaleoTaskInstanceToken.kaleoTaskInstanceTokenId)
+					KaleoTaskAssignmentInstance.kaleoTaskInstanceTokenId = KaleoTaskInstanceToken.kaleoTaskInstanceTokenId
 			LEFT JOIN
 				ClassName_ ON
-					(ClassName_.value = KaleoTaskInstanceToken.className)
+					ClassName_.value = KaleoTaskInstanceToken.className
 			LEFT JOIN
 				AssetEntry ON
-					(AssetEntry.classNameId = ClassName_.classNameId AND AssetEntry.classPK = KaleoTaskInstanceToken.classPK)
+					(AssetEntry.classNameId = ClassName_.classNameId) AND
+					(AssetEntry.classPK = KaleoTaskInstanceToken.classPK)
 			WHERE
-				(KaleoTaskInstanceToken.companyId = ?)
+				KaleoTaskInstanceToken.companyId = ?
 		]]>
 	</sql>
 </custom-sql>

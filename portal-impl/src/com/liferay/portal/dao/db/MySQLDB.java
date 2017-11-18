@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.db.Index;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
@@ -140,10 +139,6 @@ public class MySQLDB extends BaseDB {
 
 	@Override
 	protected String[] getTemplate() {
-		if (GetterUtil.getFloat(getVersionString()) >= 5.6F) {
-			_MYSQL[8] = " datetime(6)";
-		}
-
 		return _MYSQL;
 	}
 
@@ -205,7 +200,7 @@ public class MySQLDB extends BaseDB {
 
 	private static final String[] _MYSQL = {
 		"##", "1", "0", "'1970-01-01'", "now()", " longblob", " longblob",
-		" tinyint", " datetime", " double", " integer", " bigint", " longtext",
+		" tinyint", " datetime(6)", " double", " integer", " bigint", " longtext",
 		" longtext", " varchar", "  auto_increment", "commit"
 	};
 

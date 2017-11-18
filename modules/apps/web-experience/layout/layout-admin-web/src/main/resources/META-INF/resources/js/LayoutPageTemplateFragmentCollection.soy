@@ -1,0 +1,60 @@
+{namespace LayoutPageTemplateFragmentCollection}
+
+/**
+ * LayoutPageTemplateFragmentCollection
+ */
+{template .render}
+	{@param fragmentCollection: [
+		fragmentEntries: list<[
+			fragmentEntryId: string,
+			name: string
+		]>,
+		fragmentCollectionId: string,
+		name: string
+	]}
+	{@param portletNamespace: string}
+	{@param spritemap: string}
+	{@param? _handleEntryClick: any}
+
+	{let $panelId kind="text"}
+		{$portletNamespace}
+		FragmentCollection
+		{$fragmentCollection.fragmentCollectionId}
+	{/let}
+
+	<ul class="nav">
+		<a class="collapse-icon collapsed nav-link pl-0" data-toggle="collapse" href="#{$panelId}">
+			{$fragmentCollection.name}
+			<svg class="lexicon-icon collapse-icon-open">
+				<use xlink:href="{$spritemap}#angle-down"></use>
+			</svg>
+			<svg class="lexicon-icon collapse-icon-closed">
+				<use xlink:href="{$spritemap}#angle-right"></use>
+			</svg>
+		</a>
+
+		<div class="collapse" id="{$panelId}">
+			<ul class="nav">
+				{foreach $fragmentEntry in $fragmentCollection.fragmentEntries}
+					<li class="card card-horizontal nav-item">
+						<div class="card-body">
+							<div class="card-row">
+								<div class="flex-col flex-col-expand">
+									{$fragmentEntry.name}
+								</div>
+
+								<div class="flex-col">
+									<button class="btn btn-link" data-fragment-entry-id="{$fragmentEntry.fragmentEntryId}" data-onclick="{$_handleEntryClick}">
+										<svg class="lexicon-icon collapse-icon-open">
+											<use xlink:href="{$spritemap}#plus"></use>
+										</svg>
+									</button>
+								</div>
+							</div>
+						</div>
+					</li>
+				{/foreach}
+			</ul>
+		</div>
+	</ul>
+{/template}

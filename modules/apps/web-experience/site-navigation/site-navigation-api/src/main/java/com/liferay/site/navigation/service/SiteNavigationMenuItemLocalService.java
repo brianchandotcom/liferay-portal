@@ -240,6 +240,11 @@ public interface SiteNavigationMenuItemLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSiteNavigationMenuItemsCount();
 
+	public SiteNavigationMenuItem updateSiteNavigationMenuItem(long userId,
+		long siteNavigationMenuItemId, long parentSiteNavigationMenuItemId,
+		java.lang.String typeSettings, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Updates the site navigation menu item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

@@ -285,6 +285,17 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 		return _siteNavigationMenuItemLocalService.getSiteNavigationMenuItemsCount();
 	}
 
+	@Override
+	public com.liferay.site.navigation.model.SiteNavigationMenuItem updateSiteNavigationMenuItem(
+		long userId, long siteNavigationMenuItemId,
+		long parentSiteNavigationMenuItemId, java.lang.String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _siteNavigationMenuItemLocalService.updateSiteNavigationMenuItem(userId,
+			siteNavigationMenuItemId, parentSiteNavigationMenuItemId,
+			typeSettings, serviceContext);
+	}
+
 	/**
 	* Updates the site navigation menu item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

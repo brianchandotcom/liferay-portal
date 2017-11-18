@@ -17,7 +17,6 @@ package com.liferay.portal.workflow.kaleo.forms.web.internal.servlet.taglib.ui;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -58,8 +57,7 @@ public abstract class BaseKaleoProcessFormNavigatorEntry
 			ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
 
 		ResourceBundle portalResourceBundle =
-			portalResourceBundleLoader.loadResourceBundle(
-				LocaleUtil.toLanguageId(locale));
+			portalResourceBundleLoader.loadResourceBundle(locale);
 
 		return new AggregateResourceBundle(
 			moduleResourceBundle, portalResourceBundle);

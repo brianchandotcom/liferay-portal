@@ -17,7 +17,6 @@ package com.liferay.sharepoint.repository.internal.document.library.repository.e
 import com.liferay.document.library.repository.authorization.capability.AuthorizationCapability;
 import com.liferay.document.library.repository.authorization.oauth2.TokenStore;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.RepositoryConfiguration;
 import com.liferay.portal.kernel.repository.RepositoryConfigurationBuilder;
@@ -74,8 +73,7 @@ public class SharepointRepositoryDefiner implements RepositoryDefiner {
 	@Override
 	public String getRepositoryTypeLabel(Locale locale) {
 		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(
-				LanguageUtil.getLanguageId(locale));
+			_resourceBundleLoader.loadResourceBundle(locale);
 
 		String label = ResourceBundleUtil.getString(
 			resourceBundle, "sharepoint");

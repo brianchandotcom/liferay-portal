@@ -122,11 +122,11 @@ public class CPMeasurementUnitLocalServiceImpl
 
 		List<CPMeasurementUnit> cpMeasurementUnits = new ArrayList<>();
 
-		for(String key: keys) {
+		for (String key : keys) {
 			CPMeasurementUnit cpMeasurementUnit =
 				cpMeasurementUnitPersistence.fetchByG_K_T(groupId, key, type);
 
-			if(cpMeasurementUnit != null){
+			if (cpMeasurementUnit != null) {
 				cpMeasurementUnits.add(cpMeasurementUnit);
 			}
 		}

@@ -9,8 +9,7 @@
 				DLFileRank
 			GROUP BY
 				groupId, userId
-			HAVING
-				COUNT(*) > ?
+			HAVING COUNT(*) > ?
 		]]>
 	</sql>
 	<sql id="com.liferay.document.library.file.rank.service.persistence.DLFileRankFinder.findByFolderId">
@@ -21,9 +20,9 @@
 				DLFileRank
 			INNER JOIN
 				DLFileEntry ON
-					DLFileEntry.fileEntryId = DLFileRank.fileEntryId
+					(DLFileEntry.fileEntryId = DLFileRank.fileEntryId)
 			WHERE
-				DLFileEntry.folderId = ?
+				(DLFileEntry.folderId = ?)
 		]]>
 	</sql>
 </custom-sql>

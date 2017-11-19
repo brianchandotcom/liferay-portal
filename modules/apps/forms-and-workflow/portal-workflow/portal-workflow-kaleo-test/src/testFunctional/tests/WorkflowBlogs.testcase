@@ -47,8 +47,6 @@
 	</tear-down>
 
 	<command name="ApproveBlogsEntryCP" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">

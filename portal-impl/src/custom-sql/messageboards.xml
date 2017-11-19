@@ -220,7 +220,7 @@
 				MBThread
 			INNER JOIN
 				MBMessage ON
-					MBThread.threadId = MBMessage.threadId
+					(MBThread.threadId = MBMessage.threadId)
 			WHERE
 				(MBThread.groupId = ?) AND
 				(MBMessage.userId = ?) AND
@@ -246,7 +246,7 @@
 				MBThread
 			INNER JOIN
 				MBMessage ON
-					MBThread.threadId = MBMessage.threadId
+					(MBThread.threadId = MBMessage.threadId)
 			WHERE
 				(MBThread.groupId = ?) AND
 				(MBThread.categoryId = ?) AND
@@ -261,7 +261,7 @@
 				MBThread
 			INNER JOIN
 				MBMessage ON
-					MBThread.threadId = MBMessage.threadId
+					(MBThread.threadId = MBMessage.threadId)
 			WHERE
 				(MBThread.groupId = ?) AND
 				(MBThread.categoryId != -1) AND
@@ -277,7 +277,7 @@
 				MBThread
 			INNER JOIN
 				MBMessage ON
-					MBThread.threadId = MBMessage.threadId
+					(MBThread.threadId = MBMessage.threadId)
 			WHERE
 				(MBThread.groupId = ?) AND
 				(MBMessage.userId = ?) AND
@@ -309,7 +309,7 @@
 				MBThread
 			INNER JOIN
 				MBMessage ON
-					MBThread.threadId = MBMessage.threadId
+					(MBThread.threadId = MBMessage.threadId)
 			WHERE
 				(MBThread.groupId = ?) AND
 				(MBThread.categoryId = ?) AND
@@ -357,7 +357,7 @@
 				MBThread
 			INNER JOIN
 				MBMessage ON
-					MBThread.threadId = MBMessage.threadId
+					(MBThread.threadId = MBMessage.threadId)
 			WHERE
 				(MBThread.groupId = ?) AND
 				(MBMessage.userId = ?) AND
@@ -389,7 +389,7 @@
 				MBThread
 			INNER JOIN
 				MBMessage ON
-					MBThread.threadId = MBMessage.threadId
+					(MBThread.threadId = MBMessage.threadId)
 			WHERE
 				(MBThread.groupId = ?) AND
 				(MBThread.categoryId = ?) AND
@@ -407,7 +407,7 @@
 				MBThread
 			INNER JOIN
 				MBMessage ON
-					MBThread.threadId = MBMessage.threadId
+					(MBThread.threadId = MBMessage.threadId)
 			WHERE
 				(MBThread.groupId = ?) AND
 				(MBThread.categoryId != -1) AND
@@ -425,7 +425,7 @@
 				MBThread
 			INNER JOIN
 				MBMessage ON
-					MBThread.threadId = MBMessage.threadId
+					(MBThread.threadId = MBMessage.threadId)
 			WHERE
 				(MBThread.groupId = ?) AND
 				(MBMessage.userId = ?) AND
@@ -463,7 +463,7 @@
 				MBThread
 			INNER JOIN
 				MBMessage ON
-					MBThread.threadId = MBMessage.threadId
+					(MBThread.threadId = MBMessage.threadId)
 			WHERE
 				(MBThread.groupId = ?) AND
 				(MBThread.categoryId = ?) AND

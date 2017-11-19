@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portlet.messageboards.service.base.MBThreadFlagLocalServiceBaseImpl;
 
-import java.util.List;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
@@ -50,9 +48,6 @@ public class MBThreadFlagLocalServiceImpl
 
 	@Override
 	public void deleteThreadFlag(long threadFlagId) throws PortalException {
-		MBThreadFlag threadFlag = mbThreadFlagPersistence.findByPrimaryKey(
-			threadFlagId);
-
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
 				"com.liferay.message.boards.service.impl." +
@@ -70,9 +65,6 @@ public class MBThreadFlagLocalServiceImpl
 
 	@Override
 	public void deleteThreadFlagsByThreadId(long threadId) {
-		List<MBThreadFlag> threadFlags = mbThreadFlagPersistence.findByThreadId(
-			threadId);
-
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
 				"com.liferay.message.boards.service.impl." +
@@ -81,9 +73,6 @@ public class MBThreadFlagLocalServiceImpl
 
 	@Override
 	public void deleteThreadFlagsByUserId(long userId) {
-		List<MBThreadFlag> threadFlags = mbThreadFlagPersistence.findByUserId(
-			userId);
-
 		throw new UnsupportedOperationException(
 			"This class is deprecated and replaced by " +
 				"com.liferay.message.boards.service.impl." +

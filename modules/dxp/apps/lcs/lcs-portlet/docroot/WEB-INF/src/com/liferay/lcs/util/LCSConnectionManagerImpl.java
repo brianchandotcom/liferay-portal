@@ -432,9 +432,7 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 			return null;
 		}
 
-		Future<?> future = _scheduledExecutorService.submit(_handshakeTask);
-
-		return future;
+		return _scheduledExecutorService.submit(_handshakeTask);
 	}
 
 	@Override
@@ -450,7 +448,7 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 
 		setReady(false);
 
-		cancelSchedulers();
+		_cancelSchedulers();
 
 		LCSUtil.processLCSPortletState(LCSPortletState.NO_CONNECTION);
 
@@ -461,24 +459,6 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 		_signOffTask.setServerManuallyShutdown(serverManuallyShutdown);
 
 		return _scheduledExecutorService.submit(_signOffTask);
-	}
-
-	protected void cancelSchedulers() {
-		_messageListenerSchedulerService.unscheduleAllMessageListeners();
-
-		_taskSchedulerService.unscheduleAllTasks();
-
-		for (ScheduledFuture<?> scheduledFuture : _scheduledFutures) {
-			while (!scheduledFuture.isCancelled()) {
-				scheduledFuture.cancel(true);
-			}
-		}
-
-		_scheduledFutures.clear();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("All LCS schedulers canceled");
-		}
 	}
 
 	protected synchronized void handleLCSGatewayUnavailable(int statusCode) {
@@ -502,11 +482,29 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 
 		LCSUtil.processLCSPortletState(LCSPortletState.NO_CONNECTION);
 
-		cancelSchedulers();
+		_cancelSchedulers();
 
 		_lcsGatewayUnavailableFuture = _scheduledExecutorService.submit(
 			new LCSGatewayUnavailableRunnable(
 				statusCode, this, _lcsGatewayService));
+	}
+
+	private void _cancelSchedulers() {
+		_messageListenerSchedulerService.unscheduleAllMessageListeners();
+
+		_taskSchedulerService.unscheduleAllTasks();
+
+		for (ScheduledFuture<?> scheduledFuture : _scheduledFutures) {
+			while (!scheduledFuture.isCancelled()) {
+				scheduledFuture.cancel(true);
+			}
+		}
+
+		_scheduledFutures.clear();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("All LCS schedulers canceled");
+		}
 	}
 
 	private void _executeLCSConnectorRunnable() {

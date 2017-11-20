@@ -1039,6 +1039,10 @@
 			<var name="pageName" value="Test Page" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Test Page" />
+		</execute>
+
 		<execute macro="Content#addPG">
 			<var name="assetTitle" value="WC WebContent Title" />
 		</execute>

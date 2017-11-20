@@ -111,7 +111,7 @@
 			<var name="pageName" value="Site Page" />
 		</execute>
 
-		<execute macro="Navigator#gotoEditPageViaControlMenu" >
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Site Page" />
 		</execute>
 

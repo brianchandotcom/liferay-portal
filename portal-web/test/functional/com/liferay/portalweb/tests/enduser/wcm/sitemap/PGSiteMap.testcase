@@ -51,6 +51,11 @@
 	</tear-down>
 
 	<command name="DisplayPrivatePageWithChildPage" priority="4">
+		<execute macro="Navigator#gotoPrivateSitePage">
+			<var name="pageName" value="Child Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Site Map" />
 		</execute>

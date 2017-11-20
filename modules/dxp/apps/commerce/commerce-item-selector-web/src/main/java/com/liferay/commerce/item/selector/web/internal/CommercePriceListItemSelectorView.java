@@ -97,14 +97,14 @@ public class CommercePriceListItemSelectorView
 		HttpServletRequest httpServletRequest = (HttpServletRequest)request;
 
 		CommercePriceListItemSelectorViewDisplayContext
-			cpInstanceItemSelectorViewDisplayContext =
+			commercePriceListItemSelectorViewDisplayContext =
 				new CommercePriceListItemSelectorViewDisplayContext(
 					_commercePriceListService, httpServletRequest, portletURL,
 					itemSelectedEventName);
 
 		request.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			cpInstanceItemSelectorViewDisplayContext);
+			commercePriceListItemSelectorViewDisplayContext);
 
 		ServletContext servletContext = getServletContext();
 

@@ -16,6 +16,7 @@ package com.liferay.portal.tools.deploy;
 
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.xml.DocUtil;
+import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.deploy.DeployUtil;
 import com.liferay.portal.kernel.deploy.Deployer;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
@@ -65,7 +66,6 @@ import com.liferay.util.ant.DeleteTask;
 import com.liferay.util.ant.ExpandTask;
 import com.liferay.util.ant.UpToDateTask;
 import com.liferay.util.ant.WarTask;
-import com.liferay.util.xml.XMLUtil;
 
 import java.io.File;
 import java.io.FileInputStream;

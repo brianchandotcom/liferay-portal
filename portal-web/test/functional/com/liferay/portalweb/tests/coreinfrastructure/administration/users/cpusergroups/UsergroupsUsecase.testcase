@@ -370,7 +370,9 @@
 			<var name="portlet" value="Site Memberships" />
 		</execute>
 
-		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="list" />
+		</execute>
 
 		<var name="key_userScreenName" value="usersn3" />
 

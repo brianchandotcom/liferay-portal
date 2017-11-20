@@ -29,7 +29,7 @@
 		</execute>
 
 		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="List" />
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
@@ -55,7 +55,7 @@
 			</then>
 			<else>
 				<execute macro="Portlet#changeDisplayStyle">
-					<var name="displayStyle" value="Icon" />
+					<var name="displayStyle" value="icon" />
 				</execute>
 
 				<var name="key_cardText" value="${userScreenName}" />
@@ -87,7 +87,7 @@
 		</execute>
 
 		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="List" />
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
@@ -115,7 +115,7 @@
 			</then>
 			<else>
 				<execute macro="Portlet#changeDisplayStyle">
-					<var name="displayStyle" value="Icon" />
+					<var name="displayStyle" value="icon" />
 				</execute>
 
 				<execute function="AssertTextEquals" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${userGroupName}" />
@@ -147,7 +147,7 @@
 		<var name="key_teamName" value="${teamName}" />
 
 		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="List" />
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
@@ -163,7 +163,7 @@
 
 	<command name="editCP">
 		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="List" />
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
@@ -276,7 +276,7 @@
 		<var name="key_teamName" value="${teamName}" />
 
 		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="List" />
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />

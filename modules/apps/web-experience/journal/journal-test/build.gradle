@@ -31,6 +31,7 @@ dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.trash.api", version: "1.0.0-20170428.233956-1"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.trash.test.util", version: "1.0.0-20170327.173148-1"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
+	testIntegrationCompile project(":apps:web-experience:journal:journal-content-web")
 	testIntegrationCompile project(":apps:web-experience:journal:journal-service")
 	testIntegrationCompile project(":apps:web-experience:journal:journal-web")
 }

@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.commerce.service.impl;
+package com.liferay.commerce.item.selector.criterion;
 
-import com.liferay.commerce.service.base.CommercePriceListUserRelServiceBaseImpl;
+import com.liferay.item.selector.BaseItemSelectorCriterion;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommercePriceListUserRelServiceImpl
-	extends CommercePriceListUserRelServiceBaseImpl {
+public class CommercePriceListQualificationTypeItemSelectorCriterion
+	extends BaseItemSelectorCriterion {
 }

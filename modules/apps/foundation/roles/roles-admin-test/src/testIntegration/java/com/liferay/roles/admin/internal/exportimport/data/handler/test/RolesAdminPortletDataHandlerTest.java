@@ -23,7 +23,6 @@ import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.roles.admin.constants.RolesAdminPortletKeys;
 
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -42,12 +41,6 @@ public class RolesAdminPortletDataHandlerTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
-
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-	}
 
 	@Override
 	protected void addStagedModels() throws Exception {

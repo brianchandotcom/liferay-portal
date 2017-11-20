@@ -51,7 +51,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -108,7 +107,6 @@ public class PortletLayoutFinderTest {
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 	}
 
-	@Ignore
 	@Test
 	public void testGetPlidAndPortletIdViewInContext() throws Exception {
 		addLayouts(true, false);
@@ -124,19 +122,13 @@ public class PortletLayoutFinderTest {
 		Assert.assertEquals(portletId, result.getPortletId());
 	}
 
-	@Test
+	@Test(expected = NoSuchLayoutException.class)
 	public void testGetPlidAndPortletIdWhenPortletDoesNotExist()
 		throws Exception {
 
 		addLayouts(false, false);
 
-		try {
-			_portletLayoutFinder.find(getThemeDisplay(), _blogsEntryGroupId);
-
-			Assert.fail();
-		}
-		catch (NoSuchLayoutException nsle) {
-		}
+		_portletLayoutFinder.find(getThemeDisplay(), _blogsEntryGroupId);
 	}
 
 	@Test

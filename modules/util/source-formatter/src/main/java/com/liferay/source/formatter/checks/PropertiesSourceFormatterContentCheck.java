@@ -33,6 +33,7 @@ public class PropertiesSourceFormatterContentCheck extends BaseFileCheck {
 		if (fileName.endsWith("/source-formatter.properties")) {
 			content = _checkConvertedKeys(content);
 			content = _checkGitLiferayPortalBranch(content);
+			content = _checkPropertyKeys(content);
 		}
 
 		return content;
@@ -102,6 +103,28 @@ public class PropertiesSourceFormatterContentCheck extends BaseFileCheck {
 			exclusionsComments, "\n\n", StringUtil.trim(s), "\n\n", gitComments,
 			"\n\n", StringPool.FOUR_SPACES, "git.liferay.portal.branch=",
 			gitLiferayPortalBranch);
+	}
+
+	private String _checkPropertyKeys(String content) {
+		String[] lines = StringUtil.splitLines(content);
+
+		StringBundler sb = new StringBundler(lines.length * 3);
+
+		for (String line : lines) {
+			int pos = line.indexOf(CharPool.EQUAL);
+
+			if (pos != -1) {
+				sb.append(StringPool.FOUR_SPACES);
+				sb.append(StringUtil.trim(line));
+				sb.append("\n");
+			}
+			else {
+				sb.append(line);
+				sb.append("\n");
+			}
+		}
+
+		return StringUtil.trim(sb.toString());
 	}
 
 	private static final String[][] _CONVERTED_KEYS = {

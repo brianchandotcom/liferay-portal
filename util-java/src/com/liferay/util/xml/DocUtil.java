@@ -24,7 +24,9 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
  * @see    com.liferay.petra.xml.DocUtil
+ * @deprecated As of 7.0.0
  */
+@Deprecated
 public class DocUtil {
 
 	public static Element add(Element element, QName qName) {

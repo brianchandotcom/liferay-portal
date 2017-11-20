@@ -35,10 +35,12 @@ import java.util.Map;
 public abstract class BaseUpgradePrototype extends UpgradeProcess {
 
 	protected void upgradePrototype(
-			Class<?> clazz, ResourceBundleLoader resourceBundleLoader,
-			String tableName, String name, String description, String nameKey,
+			ResourceBundleLoader resourceBundleLoader, String tableName,
+			String name, String description, String nameKey,
 			String descriptionKey)
 		throws SQLException {
+
+		Class<?> clazz = getClass();
 
 		resourceBundleLoader = new AggregateResourceBundleLoader(
 			ResourceBundleUtil.getResourceBundleLoader(

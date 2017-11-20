@@ -25,9 +25,9 @@ public class UpgradeLayoutPrototype extends BaseUpgradePrototype {
 	@Override
 	protected void doUpgrade() throws Exception {
 		upgradePrototype(
-			getClass(), LanguageResources.RESOURCE_BUNDLE_LOADER,
-			"LayoutPrototype", _NAME, _DESCRIPTION,
-			"layout-prototype-blog-title", "layout-prototype-blog-description");
+			LanguageResources.RESOURCE_BUNDLE_LOADER, "LayoutPrototype", _NAME,
+			_DESCRIPTION, "layout-prototype-blog-title",
+			"layout-prototype-blog-description");
 	}
 
 	private static final String _DESCRIPTION =

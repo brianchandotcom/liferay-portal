@@ -25,9 +25,9 @@ public class UpgradeLayoutPrototype extends BaseUpgradePrototype {
 	@Override
 	protected void doUpgrade() throws Exception {
 		upgradePrototype(
-			getClass(), LanguageResources.RESOURCE_BUNDLE_LOADER,
-			"LayoutPrototype", _NAME, _DESCRIPTION,
-			"layout-prototype-wiki-title", "layout-prototype-wiki-description");
+			LanguageResources.RESOURCE_BUNDLE_LOADER, "LayoutPrototype", _NAME,
+			_DESCRIPTION, "layout-prototype-wiki-title",
+			"layout-prototype-wiki-description");
 	}
 
 	private static final String _DESCRIPTION =

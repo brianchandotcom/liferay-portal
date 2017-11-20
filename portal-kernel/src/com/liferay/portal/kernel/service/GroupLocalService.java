@@ -677,6 +677,37 @@ public interface GroupLocalService extends BaseLocalService,
 	* @param companyId the primary key of the company
 	* @param parentGroupId the primary key of the parent group
 	* @param site whether the group is to be associated with a main site
+	* @param active whether to return only active groups, or only inactive
+	groups
+	* @param start the lower bound of the range of groups to return
+	* @param end the upper bound of the range of groups to return (not
+	inclusive)
+	* @param obc the comparator to order the groups (optionally
+	<code>null</code>)
+	* @return the range of matching groups ordered by comparator
+	<code>obc</code>
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Group> getLayoutsGroups(long companyId, long parentGroupId,
+		boolean site, boolean active, int start, int end,
+		OrderByComparator<Group> obc);
+
+	/**
+	* Returns a range of all groups that are children of the parent group and
+	* that have at least one layout.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param companyId the primary key of the company
+	* @param parentGroupId the primary key of the parent group
+	* @param site whether the group is to be associated with a main site
 	* @param start the lower bound of the range of groups to return
 	* @param end the upper bound of the range of groups to return (not
 	inclusive)
@@ -701,6 +732,21 @@ public interface GroupLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutsGroupsCount(long companyId, long parentGroupId,
 		boolean site);
+
+	/**
+	* Returns the number of groups that are children or the parent group and
+	* that have at least one layout
+	*
+	* @param companyId the primary key of the company
+	* @param parentGroupId the primary key of the parent group
+	* @param site whether the group is to be associated with a main site
+	* @param active whether to return only active groups, or only inactive
+	groups
+	* @return the number of matching groups
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLayoutsGroupsCount(long companyId, long parentGroupId,
+		boolean site, boolean active);
 
 	/**
 	* Returns all live groups.

@@ -30,7 +30,6 @@
 			<guest-defaults />
 			<guest-unsupported>
 				<action-key>ADD_COMMERCE_PRODUCT_DEFINITION</action-key>
-				<action-key>ADD_COMMERCE_PRODUCT_MEDIA_TYPE</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_OPTION</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_OPTION_CATEGORY</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_SPECIFICATION_OPTION</action-key>

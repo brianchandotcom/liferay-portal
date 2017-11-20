@@ -22,9 +22,6 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.util.test.WikiTestUtil;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -47,12 +44,6 @@ public class WikiDisplayPortletDataHandlerTest
 
 	@Override
 	protected void addStagedModels() throws Exception {
-		WikiNode defaultWikiNode = WikiTestUtil.addDefaultNode(
-			stagingGroup.getGroupId());
-		WikiNode wikiNode = WikiTestUtil.addNode(stagingGroup.getGroupId());
-
-		WikiPage wikiPage = WikiTestUtil.addPage(
-			stagingGroup.getGroupId(), wikiNode.getNodeId(), true);
 	}
 
 	@Override

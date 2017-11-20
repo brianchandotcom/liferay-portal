@@ -65,7 +65,7 @@ public class CommercePriceListCacheModel implements CacheModel<CommercePriceList
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -87,6 +87,8 @@ public class CommercePriceListCacheModel implements CacheModel<CommercePriceList
 		sb.append(commerceCurrencyId);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", priority=");
+		sb.append(priority);
 		sb.append(", displayDate=");
 		sb.append(displayDate);
 		sb.append(", expirationDate=");
@@ -152,6 +154,8 @@ public class CommercePriceListCacheModel implements CacheModel<CommercePriceList
 			commercePriceListImpl.setName(name);
 		}
 
+		commercePriceListImpl.setPriority(priority);
+
 		if (displayDate == Long.MIN_VALUE) {
 			commercePriceListImpl.setDisplayDate(null);
 		}
@@ -212,6 +216,8 @@ public class CommercePriceListCacheModel implements CacheModel<CommercePriceList
 
 		commerceCurrencyId = objectInput.readLong();
 		name = objectInput.readUTF();
+
+		priority = objectInput.readDouble();
 		displayDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
@@ -260,6 +266,7 @@ public class CommercePriceListCacheModel implements CacheModel<CommercePriceList
 			objectOutput.writeUTF(name);
 		}
 
+		objectOutput.writeDouble(priority);
 		objectOutput.writeLong(displayDate);
 		objectOutput.writeLong(expirationDate);
 		objectOutput.writeLong(lastPublishDate);
@@ -288,6 +295,7 @@ public class CommercePriceListCacheModel implements CacheModel<CommercePriceList
 	public long modifiedDate;
 	public long commerceCurrencyId;
 	public String name;
+	public double priority;
 	public long displayDate;
 	public long expirationDate;
 	public long lastPublishDate;

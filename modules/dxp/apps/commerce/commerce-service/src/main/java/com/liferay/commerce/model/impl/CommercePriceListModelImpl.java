@@ -84,6 +84,7 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "commerceCurrencyId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
+			{ "priority", Types.DOUBLE },
 			{ "displayDate", Types.TIMESTAMP },
 			{ "expirationDate", Types.TIMESTAMP },
 			{ "lastPublishDate", Types.TIMESTAMP },
@@ -105,6 +106,7 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("commerceCurrencyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("displayDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
@@ -114,10 +116,10 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommercePriceList (uuid_ VARCHAR(75) null,commercePriceListId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceCurrencyId LONG,name VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CommercePriceList (uuid_ VARCHAR(75) null,commercePriceListId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceCurrencyId LONG,name VARCHAR(75) null,priority DOUBLE,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CommercePriceList";
-	public static final String ORDER_BY_JPQL = " ORDER BY commercePriceList.displayDate DESC, commercePriceList.createDate DESC";
-	public static final String ORDER_BY_SQL = " ORDER BY CommercePriceList.displayDate DESC, CommercePriceList.createDate DESC";
+	public static final String ORDER_BY_JPQL = " ORDER BY commercePriceList.displayDate DESC, commercePriceList.createDate DESC, commercePriceList.priority DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY CommercePriceList.displayDate DESC, CommercePriceList.createDate DESC, CommercePriceList.priority DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -137,6 +139,7 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 	public static final long STATUS_COLUMN_BITMASK = 16L;
 	public static final long UUID_COLUMN_BITMASK = 32L;
 	public static final long CREATEDATE_COLUMN_BITMASK = 64L;
+	public static final long PRIORITY_COLUMN_BITMASK = 128L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -161,6 +164,7 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setCommerceCurrencyId(soapModel.getCommerceCurrencyId());
 		model.setName(soapModel.getName());
+		model.setPriority(soapModel.getPriority());
 		model.setDisplayDate(soapModel.getDisplayDate());
 		model.setExpirationDate(soapModel.getExpirationDate());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
@@ -243,6 +247,7 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("commerceCurrencyId", getCommerceCurrencyId());
 		attributes.put("name", getName());
+		attributes.put("priority", getPriority());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -317,6 +322,12 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 
 		if (name != null) {
 			setName(name);
+		}
+
+		Double priority = (Double)attributes.get("priority");
+
+		if (priority != null) {
+			setPriority(priority);
 		}
 
 		Date displayDate = (Date)attributes.get("displayDate");
@@ -553,6 +564,19 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 	@Override
 	public void setName(String name) {
 		_name = name;
+	}
+
+	@JSON
+	@Override
+	public double getPriority() {
+		return _priority;
+	}
+
+	@Override
+	public void setPriority(double priority) {
+		_columnBitmask = -1L;
+
+		_priority = priority;
 	}
 
 	@JSON
@@ -802,6 +826,7 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 		commercePriceListImpl.setModifiedDate(getModifiedDate());
 		commercePriceListImpl.setCommerceCurrencyId(getCommerceCurrencyId());
 		commercePriceListImpl.setName(getName());
+		commercePriceListImpl.setPriority(getPriority());
 		commercePriceListImpl.setDisplayDate(getDisplayDate());
 		commercePriceListImpl.setExpirationDate(getExpirationDate());
 		commercePriceListImpl.setLastPublishDate(getLastPublishDate());
@@ -830,6 +855,22 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 
 		value = DateUtil.compareTo(getCreateDate(),
 				commercePriceList.getCreateDate());
+
+		value = value * -1;
+
+		if (value != 0) {
+			return value;
+		}
+
+		if (getPriority() < commercePriceList.getPriority()) {
+			value = -1;
+		}
+		else if (getPriority() > commercePriceList.getPriority()) {
+			value = 1;
+		}
+		else {
+			value = 0;
+		}
 
 		value = value * -1;
 
@@ -962,6 +1003,8 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 			commercePriceListCacheModel.name = null;
 		}
 
+		commercePriceListCacheModel.priority = getPriority();
+
 		Date displayDate = getDisplayDate();
 
 		if (displayDate != null) {
@@ -1015,7 +1058,7 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1037,6 +1080,8 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 		sb.append(getCommerceCurrencyId());
 		sb.append(", name=");
 		sb.append(getName());
+		sb.append(", priority=");
+		sb.append(getPriority());
 		sb.append(", displayDate=");
 		sb.append(getDisplayDate());
 		sb.append(", expirationDate=");
@@ -1058,7 +1103,7 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(58);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.model.CommercePriceList");
@@ -1103,6 +1148,10 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
 		sb.append(getName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>priority</column-name><column-value><![CDATA[");
+		sb.append(getPriority());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>displayDate</column-name><column-value><![CDATA[");
@@ -1160,6 +1209,7 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 	private long _originalCommerceCurrencyId;
 	private boolean _setOriginalCommerceCurrencyId;
 	private String _name;
+	private double _priority;
 	private Date _displayDate;
 	private Date _originalDisplayDate;
 	private Date _expirationDate;

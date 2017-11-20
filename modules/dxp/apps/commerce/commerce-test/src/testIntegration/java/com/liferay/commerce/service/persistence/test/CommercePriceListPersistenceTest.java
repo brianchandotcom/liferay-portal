@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -142,6 +143,8 @@ public class CommercePriceListPersistenceTest {
 
 		newCommercePriceList.setName(RandomTestUtil.randomString());
 
+		newCommercePriceList.setPriority(RandomTestUtil.nextDouble());
+
 		newCommercePriceList.setDisplayDate(RandomTestUtil.nextDate());
 
 		newCommercePriceList.setExpirationDate(RandomTestUtil.nextDate());
@@ -182,6 +185,8 @@ public class CommercePriceListPersistenceTest {
 			newCommercePriceList.getCommerceCurrencyId());
 		Assert.assertEquals(existingCommercePriceList.getName(),
 			newCommercePriceList.getName());
+		AssertUtils.assertEquals(existingCommercePriceList.getPriority(),
+			newCommercePriceList.getPriority());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCommercePriceList.getDisplayDate()),
 			Time.getShortTimestamp(newCommercePriceList.getDisplayDate()));
@@ -301,9 +306,9 @@ public class CommercePriceListPersistenceTest {
 			true, "commercePriceListId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "commerceCurrencyId", true, "name", true,
-			"displayDate", true, "expirationDate", true, "lastPublishDate",
-			true, "status", true, "statusByUserId", true, "statusByUserName",
-			true, "statusDate", true);
+			"priority", true, "displayDate", true, "expirationDate", true,
+			"lastPublishDate", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -539,6 +544,8 @@ public class CommercePriceListPersistenceTest {
 		commercePriceList.setCommerceCurrencyId(RandomTestUtil.nextLong());
 
 		commercePriceList.setName(RandomTestUtil.randomString());
+
+		commercePriceList.setPriority(RandomTestUtil.nextDouble());
 
 		commercePriceList.setDisplayDate(RandomTestUtil.nextDate());
 

@@ -70,6 +70,7 @@ public class CommercePriceListWrapper implements CommercePriceList,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("commerceCurrencyId", getCommerceCurrencyId());
 		attributes.put("name", getName());
+		attributes.put("priority", getPriority());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -143,6 +144,12 @@ public class CommercePriceListWrapper implements CommercePriceList,
 			setName(name);
 		}
 
+		Double priority = (Double)attributes.get("priority");
+
+		if (priority != null) {
+			setPriority(priority);
+		}
+
 		Date displayDate = (Date)attributes.get("displayDate");
 
 		if (displayDate != null) {
@@ -194,6 +201,12 @@ public class CommercePriceListWrapper implements CommercePriceList,
 	@Override
 	public int compareTo(CommercePriceList commercePriceList) {
 		return _commercePriceList.compareTo(commercePriceList);
+	}
+
+	@Override
+	public CommercePriceListQualificationTypeRel fetchCommercePriceListQualificationTypeRel(
+		java.lang.String key) {
+		return _commercePriceList.fetchCommercePriceListQualificationTypeRel(key);
 	}
 
 	/**
@@ -314,6 +327,16 @@ public class CommercePriceListWrapper implements CommercePriceList,
 	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _commercePriceList.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the priority of this commerce price list.
+	*
+	* @return the priority of this commerce price list
+	*/
+	@Override
+	public double getPriority() {
+		return _commercePriceList.getPriority();
 	}
 
 	/**
@@ -650,6 +673,16 @@ public class CommercePriceListWrapper implements CommercePriceList,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_commercePriceList.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the priority of this commerce price list.
+	*
+	* @param priority the priority of this commerce price list
+	*/
+	@Override
+	public void setPriority(double priority) {
+		_commercePriceList.setPriority(priority);
 	}
 
 	/**

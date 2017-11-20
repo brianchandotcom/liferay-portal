@@ -54,4 +54,7 @@ public interface CommercePriceList extends CommercePriceListModel, PersistedMode
 				return CommercePriceList.class;
 			}
 		};
+
+	public CommercePriceListQualificationTypeRel fetchCommercePriceListQualificationTypeRel(
+		java.lang.String key);
 }

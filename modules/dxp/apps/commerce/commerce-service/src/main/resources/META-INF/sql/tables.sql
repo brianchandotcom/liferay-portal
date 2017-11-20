@@ -200,6 +200,7 @@ create table CommercePriceList (
 	modifiedDate DATE null,
 	commerceCurrencyId LONG,
 	name VARCHAR(75) null,
+	priority DOUBLE,
 	displayDate DATE null,
 	expirationDate DATE null,
 	lastPublishDate DATE null,
@@ -209,9 +210,9 @@ create table CommercePriceList (
 	statusDate DATE null
 );
 
-create table CommercePriceListUserRel (
+create table CommercePriceListQualificationTypeRel (
 	uuid_ VARCHAR(75) null,
-	commercePriceListUserRelId LONG not null primary key,
+	CPLQualificationTypeRelId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -219,8 +220,8 @@ create table CommercePriceListUserRel (
 	createDate DATE null,
 	modifiedDate DATE null,
 	commercePriceListId LONG,
-	classNameId LONG,
-	classPK LONG,
+	CPriceListQualificationType VARCHAR(75) null,
+	order_ INTEGER,
 	lastPublishDate DATE null
 );
 

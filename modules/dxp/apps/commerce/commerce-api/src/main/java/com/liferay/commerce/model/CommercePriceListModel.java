@@ -240,6 +240,20 @@ public interface CommercePriceListModel extends BaseModel<CommercePriceList>,
 	public void setName(String name);
 
 	/**
+	 * Returns the priority of this commerce price list.
+	 *
+	 * @return the priority of this commerce price list
+	 */
+	public double getPriority();
+
+	/**
+	 * Sets the priority of this commerce price list.
+	 *
+	 * @param priority the priority of this commerce price list
+	 */
+	public void setPriority(double priority);
+
+	/**
 	 * Returns the display date of this commerce price list.
 	 *
 	 * @return the display date of this commerce price list

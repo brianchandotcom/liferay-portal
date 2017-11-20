@@ -57,10 +57,11 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CommercePriceListServiceHttp {
 	public static com.liferay.commerce.model.CommercePriceList addCommercePriceList(
 		HttpPrincipal httpPrincipal, long commerceCurrencyId,
-		java.lang.String name, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		java.lang.String name, double priority, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -68,11 +69,11 @@ public class CommercePriceListServiceHttp {
 					"addCommercePriceList", _addCommercePriceListParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commerceCurrencyId, name, displayDateMonth, displayDateDay,
-					displayDateYear, displayDateHour, displayDateMinute,
-					expirationDateMonth, expirationDateDay, expirationDateYear,
-					expirationDateHour, expirationDateMinute, neverExpire,
-					serviceContext);
+					commerceCurrencyId, name, priority, displayDateMonth,
+					displayDateDay, displayDateYear, displayDateHour,
+					displayDateMinute, expirationDateMonth, expirationDateDay,
+					expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, serviceContext);
 
 			Object returnObj = null;
 
@@ -304,10 +305,10 @@ public class CommercePriceListServiceHttp {
 
 	public static com.liferay.commerce.model.CommercePriceList updateCommercePriceList(
 		HttpPrincipal httpPrincipal, long commercePriceListId,
-		long commerceCurrencyId, java.lang.String name, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
+		long commerceCurrencyId, java.lang.String name, double priority,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -317,7 +318,7 @@ public class CommercePriceListServiceHttp {
 					_updateCommercePriceListParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commercePriceListId, commerceCurrencyId, name,
+					commercePriceListId, commerceCurrencyId, name, priority,
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, expirationDateMonth,
 					expirationDateDay, expirationDateYear, expirationDateHour,
@@ -347,9 +348,9 @@ public class CommercePriceListServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CommercePriceListServiceHttp.class);
 	private static final Class<?>[] _addCommercePriceListParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, int.class, int.class, int.class,
+			long.class, java.lang.String.class, double.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, boolean.class,
+			int.class, int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommercePriceListParameterTypes1 = new Class[] {
@@ -376,9 +377,9 @@ public class CommercePriceListServiceHttp {
 			int.class, com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[] _updateCommercePriceListParameterTypes8 = new Class[] {
-			long.class, long.class, java.lang.String.class, int.class, int.class,
+			long.class, long.class, java.lang.String.class, double.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, boolean.class,
+			int.class, int.class, int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

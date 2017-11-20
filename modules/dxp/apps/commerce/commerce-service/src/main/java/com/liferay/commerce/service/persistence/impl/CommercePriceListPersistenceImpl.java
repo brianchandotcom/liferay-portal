@@ -112,7 +112,8 @@ public class CommercePriceListPersistenceImpl extends BasePersistenceImpl<Commer
 			new String[] { String.class.getName() },
 			CommercePriceListModelImpl.UUID_COLUMN_BITMASK |
 			CommercePriceListModelImpl.DISPLAYDATE_COLUMN_BITMASK |
-			CommercePriceListModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommercePriceListModelImpl.CREATEDATE_COLUMN_BITMASK |
+			CommercePriceListModelImpl.PRIORITY_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(CommercePriceListModelImpl.ENTITY_CACHE_ENABLED,
 			CommercePriceListModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
@@ -919,7 +920,8 @@ public class CommercePriceListPersistenceImpl extends BasePersistenceImpl<Commer
 			CommercePriceListModelImpl.UUID_COLUMN_BITMASK |
 			CommercePriceListModelImpl.COMPANYID_COLUMN_BITMASK |
 			CommercePriceListModelImpl.DISPLAYDATE_COLUMN_BITMASK |
-			CommercePriceListModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommercePriceListModelImpl.CREATEDATE_COLUMN_BITMASK |
+			CommercePriceListModelImpl.PRIORITY_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_C = new FinderPath(CommercePriceListModelImpl.ENTITY_CACHE_ENABLED,
 			CommercePriceListModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
@@ -1510,7 +1512,8 @@ public class CommercePriceListPersistenceImpl extends BasePersistenceImpl<Commer
 			new String[] { Long.class.getName() },
 			CommercePriceListModelImpl.GROUPID_COLUMN_BITMASK |
 			CommercePriceListModelImpl.DISPLAYDATE_COLUMN_BITMASK |
-			CommercePriceListModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommercePriceListModelImpl.CREATEDATE_COLUMN_BITMASK |
+			CommercePriceListModelImpl.PRIORITY_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(CommercePriceListModelImpl.ENTITY_CACHE_ENABLED,
 			CommercePriceListModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
@@ -2020,7 +2023,8 @@ public class CommercePriceListPersistenceImpl extends BasePersistenceImpl<Commer
 			new String[] { Long.class.getName() },
 			CommercePriceListModelImpl.COMPANYID_COLUMN_BITMASK |
 			CommercePriceListModelImpl.DISPLAYDATE_COLUMN_BITMASK |
-			CommercePriceListModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommercePriceListModelImpl.CREATEDATE_COLUMN_BITMASK |
+			CommercePriceListModelImpl.PRIORITY_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(CommercePriceListModelImpl.ENTITY_CACHE_ENABLED,
 			CommercePriceListModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
@@ -2531,7 +2535,8 @@ public class CommercePriceListPersistenceImpl extends BasePersistenceImpl<Commer
 			"findByCommerceCurrencyId", new String[] { Long.class.getName() },
 			CommercePriceListModelImpl.COMMERCECURRENCYID_COLUMN_BITMASK |
 			CommercePriceListModelImpl.DISPLAYDATE_COLUMN_BITMASK |
-			CommercePriceListModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommercePriceListModelImpl.CREATEDATE_COLUMN_BITMASK |
+			CommercePriceListModelImpl.PRIORITY_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMMERCECURRENCYID = new FinderPath(CommercePriceListModelImpl.ENTITY_CACHE_ENABLED,
 			CommercePriceListModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3057,7 +3062,8 @@ public class CommercePriceListPersistenceImpl extends BasePersistenceImpl<Commer
 			CommercePriceListModelImpl.GROUPID_COLUMN_BITMASK |
 			CommercePriceListModelImpl.STATUS_COLUMN_BITMASK |
 			CommercePriceListModelImpl.DISPLAYDATE_COLUMN_BITMASK |
-			CommercePriceListModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommercePriceListModelImpl.CREATEDATE_COLUMN_BITMASK |
+			CommercePriceListModelImpl.PRIORITY_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_S = new FinderPath(CommercePriceListModelImpl.ENTITY_CACHE_ENABLED,
 			CommercePriceListModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
@@ -5199,6 +5205,7 @@ public class CommercePriceListPersistenceImpl extends BasePersistenceImpl<Commer
 		commercePriceListImpl.setModifiedDate(commercePriceList.getModifiedDate());
 		commercePriceListImpl.setCommerceCurrencyId(commercePriceList.getCommerceCurrencyId());
 		commercePriceListImpl.setName(commercePriceList.getName());
+		commercePriceListImpl.setPriority(commercePriceList.getPriority());
 		commercePriceListImpl.setDisplayDate(commercePriceList.getDisplayDate());
 		commercePriceListImpl.setExpirationDate(commercePriceList.getExpirationDate());
 		commercePriceListImpl.setLastPublishDate(commercePriceList.getLastPublishDate());

@@ -188,6 +188,7 @@
 		<field name="name" type="String">
 			<validator name="required" />
 		</field>
+		<field name="priority" type="double" />
 		<field name="displayDate" type="Date" />
 		<field name="expirationDate" type="Date" />
 		<field name="lastPublishDate" type="Date" />
@@ -196,9 +197,9 @@
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
-	<model name="com.liferay.commerce.model.CommercePriceListUserRel">
+	<model name="com.liferay.commerce.model.CommercePriceListQualificationTypeRel">
 		<field name="uuid" type="String" />
-		<field name="commercePriceListUserRelId" type="long" />
+		<field name="commercePriceListQualificationTypeRelId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -206,8 +207,8 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="commercePriceListId" type="long" />
-		<field name="classNameId" type="long" />
-		<field name="classPK" type="long" />
+		<field name="commercePriceListQualificationType" type="String" />
+		<field name="order" type="int" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.model.CommerceRegion">

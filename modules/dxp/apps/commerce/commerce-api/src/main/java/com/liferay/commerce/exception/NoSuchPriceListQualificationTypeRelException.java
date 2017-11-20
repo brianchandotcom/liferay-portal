@@ -12,13 +12,34 @@
  * details.
  */
 
-package com.liferay.commerce.service.impl;
+package com.liferay.commerce.exception;
 
-import com.liferay.commerce.service.base.CommercePriceListUserRelLocalServiceBaseImpl;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommercePriceListUserRelLocalServiceImpl
-	extends CommercePriceListUserRelLocalServiceBaseImpl {
+@ProviderType
+public class NoSuchPriceListQualificationTypeRelException
+	extends NoSuchModelException {
+
+	public NoSuchPriceListQualificationTypeRelException() {
+	}
+
+	public NoSuchPriceListQualificationTypeRelException(String msg) {
+		super(msg);
+	}
+
+	public NoSuchPriceListQualificationTypeRelException(
+		String msg, Throwable cause) {
+
+		super(msg, cause);
+	}
+
+	public NoSuchPriceListQualificationTypeRelException(Throwable cause) {
+		super(cause);
+	}
+
 }

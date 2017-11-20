@@ -44,6 +44,7 @@ public class CommercePriceListSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setCommerceCurrencyId(model.getCommerceCurrencyId());
 		soapModel.setName(model.getName());
+		soapModel.setPriority(model.getPriority());
 		soapModel.setDisplayDate(model.getDisplayDate());
 		soapModel.setExpirationDate(model.getExpirationDate());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
@@ -186,6 +187,14 @@ public class CommercePriceListSoap implements Serializable {
 		_name = name;
 	}
 
+	public double getPriority() {
+		return _priority;
+	}
+
+	public void setPriority(double priority) {
+		_priority = priority;
+	}
+
 	public Date getDisplayDate() {
 		return _displayDate;
 	}
@@ -252,6 +261,7 @@ public class CommercePriceListSoap implements Serializable {
 	private Date _modifiedDate;
 	private long _commerceCurrencyId;
 	private String _name;
+	private double _priority;
 	private Date _displayDate;
 	private Date _expirationDate;
 	private Date _lastPublishDate;

@@ -16,7 +16,6 @@ package com.liferay.site.navigation.menu.item.layout.internal.type;
 
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -87,15 +86,6 @@ public class LayoutSiteNavigationMenuItemType
 	@Override
 	public String getType() {
 		return SiteNavigationMenuItemTypeLayoutConstants.LAYOUT;
-	}
-
-	@Override
-	public JSONObject getViewContext(
-			HttpServletRequest request, HttpServletResponse response,
-			SiteNavigationMenuItem siteNavigationMenuItem)
-		throws Exception {
-
-		return null;
 	}
 
 	@Override

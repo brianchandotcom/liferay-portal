@@ -22,6 +22,7 @@ import com.liferay.commerce.model.CommerceWarehouseItem;
 import com.liferay.commerce.util.comparator.CommercePriceEntryCreateDateComparator;
 import com.liferay.commerce.util.comparator.CommercePriceListCreateDateComparator;
 import com.liferay.commerce.util.comparator.CommercePriceListDisplayDateComparator;
+import com.liferay.commerce.util.comparator.CommercePriceListPriorityComparator;
 import com.liferay.commerce.util.comparator.CommerceTierPriceEntryCreateDateComparator;
 import com.liferay.commerce.util.comparator.CommerceWarehouseCityComparator;
 import com.liferay.commerce.util.comparator.CommerceWarehouseItemQuantityComparator;
@@ -98,6 +99,10 @@ public class CommerceUtil {
 			orderByComparator = new CommercePriceListDisplayDateComparator(
 				orderByAsc);
 		}
+		else if (orderByCol.equals("priority")) {
+			orderByComparator = new CommercePriceListPriorityComparator(
+				orderByAsc);
+		}
 
 		return orderByComparator;
 	}
@@ -118,6 +123,9 @@ public class CommerceUtil {
 		}
 		else if (orderByCol.equals("display-date")) {
 			sort = SortFactoryUtil.create("display-date", orderByAsc);
+		}
+		else if (orderByCol.equals("priority")) {
+			sort = SortFactoryUtil.create(Field.PRIORITY, orderByAsc);
 		}
 
 		return sort;

@@ -15,6 +15,8 @@
 package com.liferay.commerce.internal.price;
 
 import com.liferay.commerce.price.CommercePriceListQualificationType;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,20 +24,35 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	immediate = true,
-	properties = {
-		"commerce.price.list.qualification.type.priority:Integer=-1",
-		"commerce.price.list.qualification.type.key=all"
-
+	property = {
+		"commerce.price.list.qualification.type.key=" + AllCommercePriceListQualificationTypeImpl.KEY,
+		"commerce.price.list.qualification.type.priority:Integer=-1"
 	},
-	service = CommercePriceListQualificationType.class)
+	service = CommercePriceListQualificationType.class
+)
 public class AllCommercePriceListQualificationTypeImpl
 	implements CommercePriceListQualificationType {
 
+	public static final String KEY = "all";
+
 	@Override
-	public boolean isQualified(HttpServletRequest httpServletRequest) {
+	public String getKey() {
+		return KEY;
+	}
+
+	@Override
+	public String getLabel(HttpServletRequest httpServletRequest) {
+		return LanguageUtil.get(httpServletRequest, KEY);
+	}
+
+	@Override
+	public boolean isQualified(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
 		return true;
 	}
 

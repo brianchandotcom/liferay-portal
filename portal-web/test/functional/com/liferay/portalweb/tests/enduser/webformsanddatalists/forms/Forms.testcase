@@ -4475,7 +4475,7 @@
 	</command>
 
 	<command name="ViewBlankLabelWhenAddingNewField" priority="3">
-		<description message="This is a use case for LPS-64379." />
+		<description message="This is a use case for LPS-68182." />
 
 		<execute macro="Navigator#openURL" />
 

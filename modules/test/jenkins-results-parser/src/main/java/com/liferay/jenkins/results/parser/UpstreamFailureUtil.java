@@ -28,7 +28,7 @@ import org.json.JSONObject;
  */
 public class UpstreamFailureUtil {
 
-	protected static List<String> getUpstreamJobFailures(String type) {
+	public static List<String> getUpstreamJobFailures(String type) {
 		List<String> upstreamFailures = new ArrayList<>();
 
 		JSONArray failedBatchesJSONArray =
@@ -65,7 +65,7 @@ public class UpstreamFailureUtil {
 		return upstreamFailures;
 	}
 
-	protected static String getUpstreamJobFailuresSHA() {
+	public static String getUpstreamJobFailuresSHA() {
 		try {
 			return upstreamFailuresJobJSONObject.getString("SHA");
 		}
@@ -79,7 +79,7 @@ public class UpstreamFailureUtil {
 		}
 	}
 
-	protected static boolean isBuildFailingInUpstreamJob(Build build) {
+	public static boolean isBuildFailingInUpstreamJob(Build build) {
 		try {
 			List<TestResult> testResults = new ArrayList<>();
 
@@ -89,6 +89,10 @@ public class UpstreamFailureUtil {
 			if (testResults.isEmpty()) {
 				String jobVariant = build.getJobVariant();
 				String result = build.getResult();
+
+				if (result == null) {
+					return false;
+				}
 
 				if (jobVariant.contains("/")) {
 					int index = jobVariant.lastIndexOf("/");
@@ -119,7 +123,7 @@ public class UpstreamFailureUtil {
 		}
 	}
 
-	protected static boolean isTestFailingInUpstreamJob(TestResult testResult) {
+	public static boolean isTestFailingInUpstreamJob(TestResult testResult) {
 		try {
 			for (String failure : getUpstreamJobFailures("test")) {
 				Build build = testResult.getBuild();
@@ -151,13 +155,13 @@ public class UpstreamFailureUtil {
 		}
 	}
 
-	protected static void loadUpstreamJobFailuresJSONObject(Build build) {
+	public static void loadUpstreamJobFailuresJSONObject(Build build) {
 		String jobName = build.getJobName();
 
 		loadUpstreamJobFailuresJSONObject(jobName);
 	}
 
-	protected static void loadUpstreamJobFailuresJSONObject(String jobName) {
+	public static void loadUpstreamJobFailuresJSONObject(String jobName) {
 		try {
 			if (jobName.contains("pullrequest")) {
 				String upstreamJobName = jobName.replace(

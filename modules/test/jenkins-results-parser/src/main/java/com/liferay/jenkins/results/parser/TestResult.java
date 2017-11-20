@@ -188,6 +188,10 @@ public class TestResult {
 		return sb.toString();
 	}
 
+	public String getPackageName() {
+		return packageName;
+	}
+
 	public String getPoshiReportURL(String testrayLogsURL) {
 		StringBuilder sb = new StringBuilder();
 

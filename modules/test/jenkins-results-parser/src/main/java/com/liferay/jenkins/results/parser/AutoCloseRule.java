@@ -54,6 +54,34 @@ public class AutoCloseRule {
 					downstreamBuild)) {
 
 				failingInUpstreamJobDownstreamBuilds.add(downstreamBuild);
+
+				continue;
+			}
+
+			List<TestResult> testResults = new ArrayList<>();
+
+			testResults.addAll(downstreamBuild.getTestResults("FAILED"));
+			testResults.addAll(downstreamBuild.getTestResults("REGRESSION"));
+
+			boolean containsUniqueTestFailure = false;
+
+			if (testResults.isEmpty()) {
+				containsUniqueTestFailure = true;
+			}
+			else {
+				for (TestResult testResult : testResults) {
+					if (!UpstreamFailureUtil.isTestFailingInUpstreamJob(
+							testResult)) {
+
+						containsUniqueTestFailure = true;
+
+						break;
+					}
+				}
+			}
+
+			if (!containsUniqueTestFailure) {
+				failingInUpstreamJobDownstreamBuilds.add(downstreamBuild);
 			}
 		}
 

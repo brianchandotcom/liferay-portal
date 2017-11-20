@@ -1,5 +1,5 @@
 <definition component-name="portal-commerce">
-	<property name="portal.upstream" value="true" />
+	<property name="portal.upstream" value="false" />
 	<property name="test.run.environment" value="EE" />
 	<property name="testray.main.component.name" value="Commerce" />
 
@@ -28,13 +28,13 @@
 						<execute macro="CommerceCatalog#moveCatalogEntriesToRecycleBin" />
 					</then>
 				</if>
-				
+
 				<execute macro="User#logoutPG" />
 			</else>
 		</if>
 	</tear-down>
 
-	<command name="AddSkuToGroupedCatalogEntryWithChecboxAndRadioOptionAssociated" priority="5">
+	<command ignore="true" name="AddSkuToGroupedCatalogEntryWithChecboxAndRadioOptionAssociated" priority="5">
 		<execute test-case="CommerceOptionsRel#AssignCheckboxAndRadioOptionToGroupedCatalogEntry" />
 
 		<execute macro="CommerceEntry#gotoEntryMenu">
@@ -63,7 +63,7 @@
 		</for>
 	</command>
 
-	<command name="AddSkuToGroupedCatalogEntryWithChecboxAndSelectOptionAssociated" priority="5">
+	<command ignore="true" name="AddSkuToGroupedCatalogEntryWithChecboxAndSelectOptionAssociated" priority="5">
 		<execute test-case="CommerceOptionsRel#AssignCheckboxAndSelectOptionToGroupedCatalogEntry" />
 
 		<execute macro="CommerceEntry#gotoEntryMenu">
@@ -93,7 +93,7 @@
 		</for>
 	</command>
 
-	<command name="AddSkuToGroupedCatalogEntryWithCheckboxOptionAssociated" priority="5">
+	<command ignore="true" name="AddSkuToGroupedCatalogEntryWithCheckboxOptionAssociated" priority="5">
 		<property name="portal.acceptance" value="true" />
 
 		<execute test-case="CommerceOptionsRel#AssignCheckboxOptionToGroupedCatalogEntry" />
@@ -122,7 +122,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSkuToGroupedCatalogEntryWithRadioAndSelectOptionAssociated" priority="5">
+	<command ignore="true" name="AddSkuToGroupedCatalogEntryWithRadioAndSelectOptionAssociated" priority="5">
 		<execute test-case="CommerceOptionsRel#AssignRadioAndSelectOptionToGroupedCatalogEntry" />
 
 		<execute macro="CommerceEntry#gotoEntryMenu">
@@ -152,7 +152,7 @@
 		</for>
 	</command>
 
-	<command name="AddSkuToGroupedCatalogEntryWithRadioOptionAssociated" priority="5">
+	<command ignore="true" name="AddSkuToGroupedCatalogEntryWithRadioOptionAssociated" priority="5">
 		<property name="portal.acceptance" value="true" />
 
 		<execute test-case="CommerceOptionsRel#AssignRadioOptionToGroupedCatalogEntry" />
@@ -181,7 +181,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSkuToGroupedCatalogEntryWithSelectOptionAssociated" priority="5">
+	<command ignore="true" name="AddSkuToGroupedCatalogEntryWithSelectOptionAssociated" priority="5">
 		<property name="portal.acceptance" value="true" />
 
 		<execute test-case="CommerceOptionsRel#AssignSelectOptionToGroupedCatalogEntry" />
@@ -210,7 +210,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSkuToSimpleCatalogEntryWithChecboxAndRadioOptionAssociated" priority="5">
+	<command ignore="true" name="AddSkuToSimpleCatalogEntryWithChecboxAndRadioOptionAssociated" priority="5">
 		<execute test-case="CommerceOptionsRel#AssignCheckboxAndRadioOptionToSimpleCatalogEntry" />
 
 		<execute macro="CommerceEntry#gotoEntryMenu">
@@ -239,7 +239,7 @@
 		</for>
 	</command>
 
-	<command name="AddSkuToSimpleCatalogEntryWithChecboxAndSelectOptionAssociated" priority="5">
+	<command ignore="true" name="AddSkuToSimpleCatalogEntryWithChecboxAndSelectOptionAssociated" priority="5">
 		<execute test-case="CommerceOptionsRel#AssignCheckboxAndSelectOptionToSimpleCatalogEntry" />
 
 		<execute macro="CommerceEntry#gotoEntryMenu">
@@ -269,7 +269,7 @@
 		</for>
 	</command>
 
-	<command name="AddSkuToSimpleCatalogEntryWithCheckboxOptionAssociated" priority="5">
+	<command ignore="true" name="AddSkuToSimpleCatalogEntryWithCheckboxOptionAssociated" priority="5">
 		<property name="portal.acceptance" value="true" />
 
 		<execute test-case="CommerceOptionsRel#AssignCheckboxOptionToSimpleCatalogEntry" />
@@ -298,7 +298,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSkuToSimpleCatalogEntryWithRadioAndSelectOptionAssociated" priority="5">
+	<command ignore="true" name="AddSkuToSimpleCatalogEntryWithRadioAndSelectOptionAssociated" priority="5">
 		<execute test-case="CommerceOptionsRel#AssignRadioAndSelectOptionToSimpleCatalogEntry" />
 
 		<execute macro="CommerceEntry#gotoEntryMenu">
@@ -328,7 +328,7 @@
 		</for>
 	</command>
 
-	<command name="AddSkuToSimpleCatalogEntryWithRadioOptionAssociated" priority="5">
+	<command ignore="true" name="AddSkuToSimpleCatalogEntryWithRadioOptionAssociated" priority="5">
 		<property name="portal.acceptance" value="true" />
 
 		<execute test-case="CommerceOptionsRel#AssignRadioOptionToSimpleCatalogEntry" />
@@ -357,7 +357,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSkuToSimpleCatalogEntryWithSelectOptionAssociated" priority="5">
+	<command ignore="true" name="AddSkuToSimpleCatalogEntryWithSelectOptionAssociated" priority="5">
 		<property name="portal.acceptance" value="true" />
 
 		<execute test-case="CommerceOptionsRel#AssignSelectOptionToSimpleCatalogEntry" />
@@ -386,7 +386,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSkuToVirtualCatalogEntryWithChecboxAndRadioOptionAssociated" priority="5">
+	<command ignore="true" name="AddSkuToVirtualCatalogEntryWithChecboxAndRadioOptionAssociated" priority="5">
 		<execute test-case="CommerceOptionsRel#AssignCheckboxAndRadioOptionToVirtualCatalogEntry" />
 
 		<execute macro="CommerceEntry#gotoEntryMenu">
@@ -415,7 +415,7 @@
 		</for>
 	</command>
 
-	<command name="AddSkuToVirtualCatalogEntryWithChecboxAndSelectOptionAssociated" priority="5">
+	<command ignore="true" name="AddSkuToVirtualCatalogEntryWithChecboxAndSelectOptionAssociated" priority="5">
 		<execute test-case="CommerceOptionsRel#AssignCheckboxAndSelectOptionToVirtualCatalogEntry" />
 
 		<execute macro="CommerceEntry#gotoEntryMenu">
@@ -445,7 +445,7 @@
 		</for>
 	</command>
 
-	<command name="AddSkuToVirtualCatalogEntryWithCheckboxOptionAssociated" priority="5">
+	<command ignore="true" name="AddSkuToVirtualCatalogEntryWithCheckboxOptionAssociated" priority="5">
 		<property name="portal.acceptance" value="true" />
 
 		<execute test-case="CommerceOptionsRel#AssignCheckboxOptionToVirtualCatalogEntry" />
@@ -474,7 +474,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSkuToVirtualCatalogEntryWithRadioAndSelectOptionAssociated" priority="5">
+	<command ignore="true" name="AddSkuToVirtualCatalogEntryWithRadioAndSelectOptionAssociated" priority="5">
 		<execute test-case="CommerceOptionsRel#AssignRadioAndSelectOptionToVirtualCatalogEntry" />
 
 		<execute macro="CommerceEntry#gotoEntryMenu">
@@ -504,7 +504,7 @@
 		</for>
 	</command>
 
-	<command name="AddSkuToVirtualCatalogEntryWithRadioOptionAssociated" priority="5">
+	<command ignore="true" name="AddSkuToVirtualCatalogEntryWithRadioOptionAssociated" priority="5">
 		<property name="portal.acceptance" value="true" />
 
 		<execute test-case="CommerceOptionsRel#AssignRadioOptionToVirtualCatalogEntry" />
@@ -533,7 +533,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSkuToVirtualCatalogEntryWithSelectOptionAssociated" priority="5">
+	<command ignore="true" name="AddSkuToVirtualCatalogEntryWithSelectOptionAssociated" priority="5">
 		<property name="portal.acceptance" value="true" />
 
 		<execute test-case="CommerceOptionsRel#AssignSelectOptionToVirtualCatalogEntry" />

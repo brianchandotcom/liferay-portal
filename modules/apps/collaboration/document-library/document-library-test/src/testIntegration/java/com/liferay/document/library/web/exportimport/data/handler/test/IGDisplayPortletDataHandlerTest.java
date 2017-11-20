@@ -31,11 +31,11 @@ import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
- * @author Zsolt Berentey
+ * @author Zoltan Csaszi
  */
 @RunWith(Arquillian.class)
 @Sync
-public class IGPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
+public class IGDisplayPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 	@ClassRule
 	@Rule

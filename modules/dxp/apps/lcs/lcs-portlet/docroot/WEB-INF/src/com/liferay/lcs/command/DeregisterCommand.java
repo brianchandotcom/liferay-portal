@@ -14,8 +14,11 @@
 
 package com.liferay.lcs.command;
 
+import com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor;
 import com.liferay.lcs.messaging.CommandMessage;
+import com.liferay.lcs.util.KeyGenerator;
 import com.liferay.lcs.util.LCSConnectionManager;
+import com.liferay.lcs.util.LCSPortletPreferencesUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -35,11 +38,31 @@ public class DeregisterCommand implements Command {
 		boolean invalidateToken = Boolean.valueOf(
 			(String)commandMessage.get("invalidateToken"));
 
-		_lcsConnectionManager.signOff(deregister, invalidateToken);
+		_lcsConnectionManager.stop(true, false);
+
+		if (deregister || invalidateToken) {
+			LCSPortletPreferencesUtil.removeCredentials();
+
+			_lcsClusterEntryTokenAdvisor.deleteLCSCLusterEntryTokenFile();
+
+			if (deregister) {
+				_keyGenerator.clearCache();
+			}
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Signed off server from LCS");
 		}
+	}
+
+	public void setKeyGenerator(KeyGenerator keyGenerator) {
+		_keyGenerator = keyGenerator;
+	}
+
+	public void setLCSClusterEntryTokenAdvisor(
+		LCSClusterEntryTokenAdvisor lcsClusterEntryTokenAdvisor) {
+
+		_lcsClusterEntryTokenAdvisor = lcsClusterEntryTokenAdvisor;
 	}
 
 	public void setLCSConnectionManager(
@@ -51,6 +74,8 @@ public class DeregisterCommand implements Command {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeregisterCommand.class);
 
+	private KeyGenerator _keyGenerator;
+	private LCSClusterEntryTokenAdvisor _lcsClusterEntryTokenAdvisor;
 	private LCSConnectionManager _lcsConnectionManager;
 
 }

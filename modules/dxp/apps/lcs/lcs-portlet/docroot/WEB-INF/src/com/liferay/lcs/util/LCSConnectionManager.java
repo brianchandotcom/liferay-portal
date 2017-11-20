@@ -53,12 +53,8 @@ public interface LCSConnectionManager {
 
 	public void setShutdownRequested(boolean shutdownRequested);
 
-	public void signOff(boolean deregister, boolean invalidateToken);
-
 	public Future<?> start();
 
-	public Future<?> stop();
-
-	public Future<?> stop(boolean deregister, boolean serverManuallyShutdown);
+	public Future<?> stop(boolean signedOff, boolean serverManuallyShutdown);
 
 }

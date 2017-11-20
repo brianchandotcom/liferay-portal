@@ -350,10 +350,6 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 		_heartbeatTask = heartbeatTask;
 	}
 
-	public void setKeyGenerator(KeyGenerator keyGenerator) {
-		_keyGenerator = keyGenerator;
-	}
-
 	public void setLCSAlertAdvisor(LCSAlertAdvisor lcsAlertAdvisor) {
 		_lcsAlertAdvisor = lcsAlertAdvisor;
 	}
@@ -410,23 +406,6 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 	}
 
 	@Override
-	public void signOff(boolean deregister, boolean invalidateToken) {
-		stop(deregister, false);
-
-		if (deregister || invalidateToken) {
-			LCSPortletPreferencesUtil.removeCredentials();
-
-			_lcsClusterEntryTokenAdvisor.deleteLCSCLusterEntryTokenFile();
-
-			if (deregister) {
-				_keyGenerator.clearCache();
-			}
-		}
-
-		_executeLCSConnectorRunnable();
-	}
-
-	@Override
 	public Future<?> start() {
 		if (isReady()) {
 			return null;
@@ -436,12 +415,7 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 	}
 
 	@Override
-	public Future<?> stop() {
-		return stop(false, true);
-	}
-
-	@Override
-	public Future<?> stop(boolean deregister, boolean serverManuallyShutdown) {
+	public Future<?> stop(boolean signedOff, boolean serverManuallyShutdown) {
 		if (!isReady()) {
 			return null;
 		}
@@ -452,7 +426,9 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 
 		LCSUtil.processLCSPortletState(LCSPortletState.NO_CONNECTION);
 
-		if (deregister) {
+		if (signedOff) {
+			_executeLCSConnectorRunnable();
+
 			return null;
 		}
 
@@ -552,7 +528,6 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 	private HandshakeTask _handshakeTask;
 	private long _heartbeatInterval;
 	private HeartbeatTask _heartbeatTask;
-	private KeyGenerator _keyGenerator;
 	private LCSAlertAdvisor _lcsAlertAdvisor;
 	private LCSClusterEntryTokenAdvisor _lcsClusterEntryTokenAdvisor;
 	private final Map<String, String> _lcsConnectionMetadata = new HashMap<>();

@@ -43,8 +43,10 @@ describe('PortletBase', () => {
 		it('should get all matching nodes within the root node tree', () => {
 			expect(portletBase.all('.foo').length).toEqual(2);
 			expect(
-				portletBase.all('.foo', '#_com_liferay_test_portlet_child_container')
-					.length
+				portletBase.all(
+					'.foo',
+					'#_com_liferay_test_portlet_child_container'
+				).length
 			).toEqual(1);
 		});
 
@@ -72,10 +74,15 @@ describe('PortletBase', () => {
 
 		it('should get the first matching node within the root node tree', () => {
 			expect(portletBase.one('.foo')).toEqual(
-				document.getElementById('_com_liferay_test_portlet_child_container')
+				document.getElementById(
+					'_com_liferay_test_portlet_child_container'
+				)
 			);
 			expect(
-				portletBase.one('.foo', '#_com_liferay_test_portlet_child_container')
+				portletBase.one(
+					'.foo',
+					'#_com_liferay_test_portlet_child_container'
+				)
 			).toEqual(
 				document.getElementById(
 					'_com_liferay_test_portlet_grand_child_container'

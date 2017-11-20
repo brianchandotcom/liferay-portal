@@ -14,7 +14,6 @@
 
 package com.liferay.invitation.web.internal.util;
 
-import com.liferay.petra.content.ContentUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -24,8 +23,11 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.IOException;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -79,12 +81,7 @@ public class InvitationUtil {
 		String value = map.get(LocaleUtil.getDefault());
 
 		if (Validator.isNull(value)) {
-			map.put(
-				LocaleUtil.getDefault(),
-				ContentUtil.get(
-					InvitationUtil.class.getClassLoader(),
-					"com/liferay/invitation/web/util/dependencies" +
-						"/email_message_body.tmpl"));
+			map.put(LocaleUtil.getDefault(), _EMAIL_MESSAGE_BODY);
 		}
 
 		return map;
@@ -96,10 +93,7 @@ public class InvitationUtil {
 
 		return LocalizationUtil.getLocalizationXmlFromPreferences(
 			preferences, portletRequest, "emailMessageBody", prefix,
-			ContentUtil.get(
-				InvitationUtil.class.getClassLoader(),
-				"com/liferay/invitation/web/util/dependencies" +
-					"/email_message_body.tmpl"));
+			_EMAIL_MESSAGE_BODY);
 	}
 
 	public static int getEmailMessageMaxRecipients(
@@ -119,12 +113,7 @@ public class InvitationUtil {
 		String value = map.get(LocaleUtil.getDefault());
 
 		if (Validator.isNull(value)) {
-			map.put(
-				LocaleUtil.getDefault(),
-				ContentUtil.get(
-					InvitationUtil.class.getClassLoader(),
-					"com/liferay/invitation/web/util/dependencies" +
-						"/email_message_subject.tmpl"));
+			map.put(LocaleUtil.getDefault(), _EMAIL_MESSAGE_SUBJECT);
 		}
 
 		return map;
@@ -136,10 +125,27 @@ public class InvitationUtil {
 
 		return LocalizationUtil.getLocalizationXmlFromPreferences(
 			preferences, portletRequest, "emailMessageSubject", prefix,
-			ContentUtil.get(
+			_EMAIL_MESSAGE_SUBJECT);
+	}
+
+	private static final String _EMAIL_MESSAGE_BODY;
+
+	private static final String _EMAIL_MESSAGE_SUBJECT;
+
+	static {
+		try {
+			_EMAIL_MESSAGE_BODY = StringUtil.read(
 				InvitationUtil.class.getClassLoader(),
 				"com/liferay/invitation/web/util/dependencies" +
-					"/email_message_subject.tmpl"));
+					"/email_message_body.tmpl");
+			_EMAIL_MESSAGE_SUBJECT = StringUtil.read(
+				InvitationUtil.class.getClassLoader(),
+				"com/liferay/invitation/web/util/dependencies" +
+					"/email_message_subject.tmpl");
+		}
+		catch (IOException ioe) {
+			throw new ExceptionInInitializerError(ioe);
+		}
 	}
 
 }

@@ -54,7 +54,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 					fieldPrefix="settings"
 					fieldPrefixSeparator="--"
 					name="adminEmailUserAddedSubject"
-					xml='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailUserAddedSubject", "settings", ContentUtil.get(ClassLoaderUtil.getPortalClassLoader(), PropsValues.ADMIN_EMAIL_USER_ADDED_SUBJECT)) %>'
+					xml='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailUserAddedSubject", "settings", _ADMIN_EMAIL_USER_ADDED_SUBJECT) %>'
 				/>
 			</aui:field-wrapper>
 
@@ -62,7 +62,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 
 			<liferay-frontend:email-notification-settings
 				bodyLabel="body-with-password"
-				emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailUserAddedBody", "settings", ContentUtil.get(ClassLoaderUtil.getPortalClassLoader(), PropsValues.ADMIN_EMAIL_USER_ADDED_BODY)) %>'
+				emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailUserAddedBody", "settings", _ADMIN_EMAIL_USER_ADDED_BODY) %>'
 				emailParam="adminEmailUserAdded"
 				fieldPrefix="settings"
 				helpMessage="account-created-notification-body-with-password-help"
@@ -74,7 +74,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 
 			<liferay-frontend:email-notification-settings
 				bodyLabel="body-without-password"
-				emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailUserAddedNoPasswordBody", "settings", ContentUtil.get(ClassLoaderUtil.getPortalClassLoader(), PropsValues.ADMIN_EMAIL_USER_ADDED_NO_PASSWORD_BODY)) %>'
+				emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailUserAddedNoPasswordBody", "settings", _ADMIN_EMAIL_USER_ADDED_NO_PASSWORD_BODY) %>'
 				emailParam="adminEmailUserAddedNoPassword"
 				fieldPrefix="settings"
 				helpMessage="account-created-notification-body-without-password-help"
@@ -93,9 +93,9 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 		<liferay-ui:error key="emailVerificationBody" message="please-enter-a-valid-body" />
 
 		<liferay-frontend:email-notification-settings
-			emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailVerificationBody", "settings", ContentUtil.get(ClassLoaderUtil.getPortalClassLoader(), PropsValues.ADMIN_EMAIL_VERIFICATION_BODY)) %>'
+			emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailVerificationBody", "settings", _ADMIN_EMAIL_VERIFICATION_BODY) %>'
 			emailParam="adminEmailVerification"
-			emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailVerificationSubject", "settings", ContentUtil.get(ClassLoaderUtil.getPortalClassLoader(), PropsValues.ADMIN_EMAIL_VERIFICATION_SUBJECT)) %>'
+			emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailVerificationSubject", "settings", _ADMIN_EMAIL_VERIFICATION_SUBJECT) %>'
 			fieldPrefix="settings"
 			showEmailEnabled="<%= false %>"
 		/>
@@ -110,9 +110,9 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 		<liferay-ui:error key="emailPasswordSentBody" message="please-enter-a-valid-body" />
 
 		<liferay-frontend:email-notification-settings
-			emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailPasswordSentBody", "settings", ContentUtil.get(ClassLoaderUtil.getPortalClassLoader(), PropsValues.ADMIN_EMAIL_PASSWORD_SENT_BODY)) %>'
+			emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailPasswordSentBody", "settings", _ADMIN_EMAIL_PASSWORD_SENT_BODY) %>'
 			emailParam="adminEmailPasswordSent"
-			emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailPasswordSentSubject", "settings", ContentUtil.get(ClassLoaderUtil.getPortalClassLoader(), PropsValues.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT)) %>'
+			emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailPasswordSentSubject", "settings", _ADMIN_EMAIL_PASSWORD_SENT_SUBJECT) %>'
 			fieldPrefix="settings"
 			showEmailEnabled="<%= false %>"
 		/>
@@ -127,9 +127,9 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 		<liferay-ui:error key="emailPasswordResetBody" message="please-enter-a-valid-body" />
 
 		<liferay-frontend:email-notification-settings
-			emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailPasswordResetBody", "settings", ContentUtil.get(ClassLoaderUtil.getPortalClassLoader(), PropsValues.ADMIN_EMAIL_PASSWORD_RESET_BODY)) %>'
+			emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailPasswordResetBody", "settings", _ADMIN_EMAIL_PASSWORD_RESET_BODY) %>'
 			emailParam="adminEmailPasswordReset"
-			emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailPasswordResetSubject", "settings", ContentUtil.get(ClassLoaderUtil.getPortalClassLoader(), PropsValues.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT)) %>'
+			emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailPasswordResetSubject", "settings", _ADMIN_EMAIL_PASSWORD_RESET_SUBJECT) %>'
 			fieldPrefix="settings"
 			showEmailEnabled="<%= false %>"
 		/>
@@ -139,3 +139,32 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 		</aui:fieldset>
 	</liferay-ui:section>
 </liferay-ui:tabs>
+
+<%!
+private static final String _ADMIN_EMAIL_PASSWORD_RESET_BODY;
+private static final String _ADMIN_EMAIL_PASSWORD_RESET_SUBJECT;
+private static final String _ADMIN_EMAIL_PASSWORD_SENT_BODY;
+private static final String _ADMIN_EMAIL_PASSWORD_SENT_SUBJECT;
+private static final String _ADMIN_EMAIL_USER_ADDED_BODY;
+private static final String _ADMIN_EMAIL_USER_ADDED_NO_PASSWORD_BODY;
+private static final String _ADMIN_EMAIL_USER_ADDED_SUBJECT;
+private static final String _ADMIN_EMAIL_VERIFICATION_BODY;
+private static final String _ADMIN_EMAIL_VERIFICATION_SUBJECT;
+
+static {
+	try {
+		_ADMIN_EMAIL_PASSWORD_RESET_BODY = StringUtil.read(ClassLoaderUtil.getPortalClassLoader(), PropsValues.ADMIN_EMAIL_PASSWORD_RESET_BODY);
+		_ADMIN_EMAIL_PASSWORD_RESET_SUBJECT = StringUtil.read(ClassLoaderUtil.getPortalClassLoader(), PropsValues.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT);
+		_ADMIN_EMAIL_PASSWORD_SENT_BODY = StringUtil.read(ClassLoaderUtil.getPortalClassLoader(), PropsValues.ADMIN_EMAIL_PASSWORD_SENT_BODY);
+		_ADMIN_EMAIL_PASSWORD_SENT_SUBJECT = StringUtil.read(ClassLoaderUtil.getPortalClassLoader(), PropsValues.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT);
+		_ADMIN_EMAIL_USER_ADDED_BODY = StringUtil.read(ClassLoaderUtil.getPortalClassLoader(), PropsValues.ADMIN_EMAIL_USER_ADDED_BODY);
+		_ADMIN_EMAIL_USER_ADDED_NO_PASSWORD_BODY = StringUtil.read(ClassLoaderUtil.getPortalClassLoader(), PropsValues.ADMIN_EMAIL_USER_ADDED_NO_PASSWORD_BODY);
+		_ADMIN_EMAIL_USER_ADDED_SUBJECT = StringUtil.read(ClassLoaderUtil.getPortalClassLoader(), PropsValues.ADMIN_EMAIL_USER_ADDED_SUBJECT);
+		_ADMIN_EMAIL_VERIFICATION_BODY = StringUtil.read(ClassLoaderUtil.getPortalClassLoader(), PropsValues.ADMIN_EMAIL_VERIFICATION_BODY);
+		_ADMIN_EMAIL_VERIFICATION_SUBJECT = StringUtil.read(ClassLoaderUtil.getPortalClassLoader(), PropsValues.ADMIN_EMAIL_VERIFICATION_SUBJECT);
+	}
+	catch (IOException ioe) {
+		throw new ExceptionInInitializerError(ioe);
+	}
+}
+%>

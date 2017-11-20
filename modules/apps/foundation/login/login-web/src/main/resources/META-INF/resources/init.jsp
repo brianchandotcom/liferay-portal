@@ -29,7 +29,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.captcha.configuration.CaptchaConfiguration" %><%@
 page import="com.liferay.login.web.internal.portlet.util.LoginUtil" %><%@
 page import="com.liferay.login.web.internal.servlet.taglib.include.NavigationPageIncludeUtil" %><%@
-page import="com.liferay.petra.content.ContentUtil" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.captcha.CaptchaConfigurationException" %><%@
 page import="com.liferay.portal.kernel.captcha.CaptchaTextException" %><%@
@@ -88,12 +87,15 @@ page import="com.liferay.portal.kernel.util.PortletKeys" %><%@
 page import="com.liferay.portal.kernel.util.PrefsPropsUtil" %><%@
 page import="com.liferay.portal.kernel.util.PropsKeys" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
+page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.TextFormatter" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.security.auth.ScreenNameValidatorFactory" %><%@
 page import="com.liferay.portal.util.PropsValues" %>
+
+<%@ page import="java.io.IOException" %>
 
 <%@ page import="java.util.Calendar" %><%@
 page import="java.util.Date" %>

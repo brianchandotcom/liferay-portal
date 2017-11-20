@@ -68,10 +68,10 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 
 					<aui:fieldset>
 						<liferay-frontend:email-notification-settings
-							emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailPasswordSentBody", "preferences", ContentUtil.get(ClassLoaderUtil.getPortalClassLoader(), PropsValues.ADMIN_EMAIL_PASSWORD_SENT_BODY)) %>'
+							emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailPasswordSentBody", "preferences", _ADMIN_EMAIL_PASSWORD_SENT_BODY) %>'
 							emailDefinitionTerms="<%= LoginUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName, false) %>"
 							emailParam="emailPasswordSent"
-							emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailPasswordSentSubject", "preferences", ContentUtil.get(ClassLoaderUtil.getPortalClassLoader(), PropsValues.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT)) %>'
+							emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailPasswordSentSubject", "preferences", _ADMIN_EMAIL_PASSWORD_SENT_SUBJECT) %>'
 							showEmailEnabled="<%= false %>"
 						/>
 					</aui:fieldset>
@@ -85,10 +85,10 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 
 				<aui:fieldset>
 					<liferay-frontend:email-notification-settings
-						emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailPasswordResetBody", "preferences", ContentUtil.get(ClassLoaderUtil.getPortalClassLoader(), PropsValues.ADMIN_EMAIL_PASSWORD_RESET_BODY)) %>'
+						emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailPasswordResetBody", "preferences", _ADMIN_EMAIL_PASSWORD_RESET_BODY) %>'
 						emailDefinitionTerms="<%= LoginUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName, true) %>"
 						emailParam="emailPasswordReset"
-						emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailPasswordResetSubject", "preferences", ContentUtil.get(ClassLoaderUtil.getPortalClassLoader(), PropsValues.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT)) %>'
+						emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailPasswordResetSubject", "preferences", _ADMIN_EMAIL_PASSWORD_RESET_SUBJECT) %>'
 						showEmailEnabled="<%= false %>"
 					/>
 				</aui:fieldset>
@@ -100,3 +100,22 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 		<aui:button cssClass="btn-lg" type="submit" />
 	</aui:button-row>
 </aui:form>
+
+<%!
+private static final String _ADMIN_EMAIL_PASSWORD_SENT_BODY;
+private static final String _ADMIN_EMAIL_PASSWORD_SENT_SUBJECT;
+private static final String _ADMIN_EMAIL_PASSWORD_RESET_BODY;
+private static final String _ADMIN_EMAIL_PASSWORD_RESET_SUBJECT;
+
+static {
+	try {
+		_ADMIN_EMAIL_PASSWORD_SENT_BODY = StringUtil.read(ClassLoaderUtil.getPortalClassLoader(), PropsValues.ADMIN_EMAIL_PASSWORD_SENT_BODY);
+		_ADMIN_EMAIL_PASSWORD_SENT_SUBJECT = StringUtil.read(ClassLoaderUtil.getPortalClassLoader(), PropsValues.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT);
+		_ADMIN_EMAIL_PASSWORD_RESET_BODY = StringUtil.read(ClassLoaderUtil.getPortalClassLoader(), PropsValues.ADMIN_EMAIL_PASSWORD_RESET_BODY);
+		_ADMIN_EMAIL_PASSWORD_RESET_SUBJECT = StringUtil.read(ClassLoaderUtil.getPortalClassLoader(), PropsValues.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT);
+	}
+	catch (IOException ioe) {
+		throw new ExceptionInInitializerError(ioe);
+	}
+}
+%>

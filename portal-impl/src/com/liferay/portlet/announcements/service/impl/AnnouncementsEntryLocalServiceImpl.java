@@ -27,7 +27,6 @@ import com.liferay.mail.kernel.template.MailTemplate;
 import com.liferay.mail.kernel.template.MailTemplateContext;
 import com.liferay.mail.kernel.template.MailTemplateContextBuilder;
 import com.liferay.mail.kernel.template.MailTemplateFactoryUtil;
-import com.liferay.petra.content.ContentUtil;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -49,6 +48,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -572,31 +572,26 @@ public class AnnouncementsEntryLocalServiceImpl
 			return;
 		}
 
-		Class<?> clazz = getClass();
-
-		String body = ContentUtil.get(
-			clazz.getClassLoader(), PropsValues.ANNOUNCEMENTS_EMAIL_BODY);
-
 		String fromAddress = PrefsPropsUtil.getStringFromNames(
 			entry.getCompanyId(), PropsKeys.ANNOUNCEMENTS_EMAIL_FROM_ADDRESS,
 			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
 		String fromName = PrefsPropsUtil.getStringFromNames(
 			entry.getCompanyId(), PropsKeys.ANNOUNCEMENTS_EMAIL_FROM_NAME,
 			PropsKeys.ADMIN_EMAIL_FROM_NAME);
-		String subject = ContentUtil.get(
-			clazz.getClassLoader(), PropsValues.ANNOUNCEMENTS_EMAIL_SUBJECT);
 
 		Company company = companyLocalService.getCompany(entry.getCompanyId());
 
 		_sendNotificationEmail(
-			fromAddress, fromName, toAddress, toName, subject, body, company,
+			fromAddress, fromName, toAddress, toName,
+			_ANNOUNCEMENTS_EMAIL_SUBJECT, _ANNOUNCEMENTS_EMAIL_BODY, company,
 			entry);
 
 		for (String curToAddress : notifyUsersFullNames.keySet()) {
 			String curToName = notifyUsersFullNames.get(toAddress);
 
 			_sendNotificationEmail(
-				fromAddress, fromName, curToAddress, curToName, subject, body,
+				fromAddress, fromName, curToAddress, curToName,
+				_ANNOUNCEMENTS_EMAIL_SUBJECT, _ANNOUNCEMENTS_EMAIL_BODY,
 				company, entry);
 		}
 	}
@@ -710,11 +705,29 @@ public class AnnouncementsEntryLocalServiceImpl
 		}
 	}
 
+	private static final String _ANNOUNCEMENTS_EMAIL_BODY;
+
+	private static final String _ANNOUNCEMENTS_EMAIL_SUBJECT;
+
 	private static final long _ANNOUNCEMENTS_ENTRY_CHECK_INTERVAL =
 		PropsValues.ANNOUNCEMENTS_ENTRY_CHECK_INTERVAL * Time.MINUTE;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnnouncementsEntryLocalServiceImpl.class);
+
+	static {
+		try {
+			_ANNOUNCEMENTS_EMAIL_BODY = StringUtil.read(
+				AnnouncementsEntryLocalServiceImpl.class.getClassLoader(),
+				PropsValues.ANNOUNCEMENTS_EMAIL_BODY);
+			_ANNOUNCEMENTS_EMAIL_SUBJECT = StringUtil.read(
+				AnnouncementsEntryLocalServiceImpl.class.getClassLoader(),
+				PropsValues.ANNOUNCEMENTS_EMAIL_SUBJECT);
+		}
+		catch (IOException ioe) {
+			throw new ExceptionInInitializerError(ioe);
+		}
+	}
 
 	private Date _previousCheckDate;
 

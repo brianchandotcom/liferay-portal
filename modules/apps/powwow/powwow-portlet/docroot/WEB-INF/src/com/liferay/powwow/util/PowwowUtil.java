@@ -16,7 +16,6 @@ package com.liferay.powwow.util;
 
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
-import com.liferay.petra.content.ContentUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -52,6 +51,7 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.powwow.model.PowwowMeeting;
@@ -60,6 +60,8 @@ import com.liferay.powwow.model.PowwowParticipantConstants;
 import com.liferay.powwow.provider.PowwowServiceProviderUtil;
 import com.liferay.powwow.service.PowwowMeetingLocalServiceUtil;
 import com.liferay.powwow.service.PowwowParticipantLocalServiceUtil;
+
+import java.io.IOException;
 
 import java.text.Format;
 
@@ -317,15 +319,11 @@ public class PowwowUtil {
 		powwowSubscriptionSender.setBody(
 			portletPreferences.getValue(
 				"emailBody_" + powwowMeeting.getLanguageId(),
-				ContentUtil.get(
-					PowwowUtil.class.getClassLoader(),
-					PortletPropsValues.POWWOW_INVITATION_EMAIL_BODY)));
+				_POWWOW_INVITATION_EMAIL_BODY));
 		powwowSubscriptionSender.setSubject(
 			portletPreferences.getValue(
 				"emailSubject_" + powwowMeeting.getLanguageId(),
-				ContentUtil.get(
-					PowwowUtil.class.getClassLoader(),
-					PortletPropsValues.POWWOW_INVITATION_EMAIL_SUBJECT)));
+				_POWWOW_INVITATION_EMAIL_SUBJECT));
 		powwowSubscriptionSender.setMailId(
 			"powwowMeeting", powwowMeeting.getPowwowMeetingId());
 		powwowSubscriptionSender.setPortletId(
@@ -436,6 +434,24 @@ public class PowwowUtil {
 
 		UserNotificationEventLocalServiceUtil.addUserNotificationEvent(
 			powwowParticipant.getParticipantUserId(), notificationEvent);
+	}
+
+	private static final String _POWWOW_INVITATION_EMAIL_BODY;
+
+	private static final String _POWWOW_INVITATION_EMAIL_SUBJECT;
+
+	static {
+		try {
+			_POWWOW_INVITATION_EMAIL_BODY = StringUtil.read(
+				PowwowUtil.class.getClassLoader(),
+				PortletPropsValues.POWWOW_INVITATION_EMAIL_BODY);
+			_POWWOW_INVITATION_EMAIL_SUBJECT = StringUtil.read(
+				PowwowUtil.class.getClassLoader(),
+				PortletPropsValues.POWWOW_INVITATION_EMAIL_SUBJECT);
+		}
+		catch (IOException ioe) {
+			throw new ExceptionInInitializerError(ioe);
+		}
 	}
 
 }

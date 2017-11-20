@@ -22,11 +22,8 @@ String currentLanguageId = LanguageUtil.getLanguageId(request);
 String emailSubjectParam = "emailSubject_" + currentLanguageId;
 String emailBodyParam = "emailBody_" + currentLanguageId;
 
-String defaultEmailSubject = ContentUtil.get(PowwowUtil.class.getClassLoader(), PortletPropsValues.POWWOW_INVITATION_EMAIL_SUBJECT);
-String defaultEmailBody = ContentUtil.get(PowwowUtil.class.getClassLoader(), PortletPropsValues.POWWOW_INVITATION_EMAIL_BODY);
-
-String emailSubject = PrefsParamUtil.getString(portletPreferences, request, emailSubjectParam, defaultEmailSubject);
-String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBodyParam, defaultEmailBody);
+String emailSubject = PrefsParamUtil.getString(portletPreferences, request, emailSubjectParam, _POWWOW_INVITATION_EMAIL_SUBJECT);
+String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBodyParam, _POWWOW_INVITATION_EMAIL_BODY);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
@@ -215,3 +212,18 @@ String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBo
 		['aui-base']
 	);
 </aui:script>
+
+<%!
+private static final String _POWWOW_INVITATION_EMAIL_BODY;
+private static final String _POWWOW_INVITATION_EMAIL_SUBJECT;
+
+static {
+	try {
+		_POWWOW_INVITATION_EMAIL_BODY = StringUtil.read(PowwowUtil.class.getClassLoader(), PortletPropsValues.POWWOW_INVITATION_EMAIL_BODY);
+		_POWWOW_INVITATION_EMAIL_SUBJECT = StringUtil.read(PowwowUtil.class.getClassLoader(), PortletPropsValues.POWWOW_INVITATION_EMAIL_SUBJECT);
+	}
+	catch (IOException ioe) {
+		throw new ExceptionInInitializerError(ioe);
+	}
+}
+%>

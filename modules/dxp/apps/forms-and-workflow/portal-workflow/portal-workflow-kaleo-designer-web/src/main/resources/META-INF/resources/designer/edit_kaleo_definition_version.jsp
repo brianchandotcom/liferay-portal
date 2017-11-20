@@ -39,6 +39,12 @@
 		WorkflowDefinition workflowDefinition = null;
 
 		if (kaleoDefinitionVersion != null) {
+			if (Validator.isNull(name)) {
+				name = kaleoDefinitionVersion.getName();
+			}
+
+			draftVersion = kaleoDefinitionVersion.getVersion();
+
 			latestKaleoDefinitionVersion = KaleoDefinitionVersionLocalServiceUtil.getLatestKaleoDefinitionVersion(themeDisplay.getCompanyId(), name);
 
 			latestDraftVersion = latestKaleoDefinitionVersion.getVersion();
@@ -53,7 +59,7 @@
 		portletDisplay.setShowBackIcon(true);
 		portletDisplay.setURLBack(redirect);
 
-		renderResponse.setTitle((kaleoDefinitionVersion == null) ? LanguageUtil.get(request, (kaleoDefinitionVersion == null) ? "new-definition" : name) : name);
+		renderResponse.setTitle((kaleoDefinitionVersion == null) ? LanguageUtil.get(request, "new-definition") : name);
 		%>
 
 		<aui:form cssClass="container-fluid-1280" method="post" name="fm" onSubmit="event.preventDefault();">
@@ -209,17 +215,15 @@
 									</aui:field-wrapper>
 								</c:if>
 
-								<c:if test="<%= kaleoDefinitionVersion != null %>">
-									<aui:field-wrapper label="draft-version">
-										<div id="<portlet:namespace />draftVersionLabel">
-											<%= draftVersion %>
-										</div>
-									</aui:field-wrapper>
+								<aui:field-wrapper label="draft-version">
+									<div id="<portlet:namespace />draftVersionLabel">
+										<%= draftVersion %>
+									</div>
+								</aui:field-wrapper>
 
-									<aui:field-wrapper label="draft-history">
-										<div class="lfr-portlet-workflowdesigner-toolbar" id="<portlet:namespace />kaleoDesignerToolbarContainer"></div>
-									</aui:field-wrapper>
-								</c:if>
+								<aui:field-wrapper label="draft-history">
+									<div class="lfr-portlet-workflowdesigner-toolbar" id="<portlet:namespace />kaleoDesignerToolbarContainer"></div>
+								</aui:field-wrapper>
 							</div>
 						</liferay-ui:panel>
 					</liferay-ui:panel-container>

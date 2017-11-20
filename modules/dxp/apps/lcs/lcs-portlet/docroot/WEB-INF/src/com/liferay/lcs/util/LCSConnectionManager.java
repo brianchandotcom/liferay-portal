@@ -29,8 +29,6 @@ public interface LCSConnectionManager {
 
 	public void deleteMessages(String key) throws PortalException;
 
-	public void deregister();
-
 	public Map<String, String> getLCSConnectionMetadata();
 
 	public List<Message> getMessages(String key) throws PortalException;

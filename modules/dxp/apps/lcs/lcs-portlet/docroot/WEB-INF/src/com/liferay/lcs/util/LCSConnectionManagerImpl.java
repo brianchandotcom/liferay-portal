@@ -92,19 +92,6 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 		}
 	}
 
-	@Override
-	public void deregister() {
-		stop(true, false);
-
-		LCSPortletPreferencesUtil.removeCredentials();
-
-		_lcsClusterEntryTokenAdvisor.deleteLCSCLusterEntryTokenFile();
-
-		_keyGenerator.clearCache();
-
-		_executeLCSConnectorRunnable();
-	}
-
 	public void destroy() {
 		_shutdownRequested = true;
 

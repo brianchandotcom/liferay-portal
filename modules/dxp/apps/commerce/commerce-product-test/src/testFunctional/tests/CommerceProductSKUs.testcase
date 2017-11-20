@@ -28,18 +28,7 @@
 						<execute macro="CommerceCatalog#moveCatalogEntriesToRecycleBin" />
 					</then>
 				</if>
-
-				<execute macro="CommerceNavigator#gotoSitesCommerce">
-					<var name="portlet" value="Options" />
-				</execute>
-
-				<if>
-					<condition function="IsElementNotPresent" locator1="CommerceNavigation#EMPTY_SEARCH_CONTAINER" />
-					<then>
-						<execute macro="CommerceOptions#deleteOptionsEntries" />
-					</then>
-				</if>
-
+				
 				<execute macro="User#logoutPG" />
 			</else>
 		</if>

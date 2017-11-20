@@ -14,13 +14,21 @@
 
 package com.liferay.commerce.price;
 
+import com.liferay.portal.kernel.exception.PortalException;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 public interface CommercePriceListQualificationType {
 
-	public boolean isQualified(HttpServletRequest httpServletRequest);
+	public String getKey();
+
+	public String getLabel(HttpServletRequest httpServletRequest);
+
+	public boolean isQualified(HttpServletRequest httpServletRequest)
+		throws PortalException;
 
 }

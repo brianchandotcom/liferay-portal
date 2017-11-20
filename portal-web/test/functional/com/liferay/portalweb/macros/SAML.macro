@@ -19,6 +19,23 @@
 			<var name="samlKeyPassword" value="${samlEntityID}" />
 		</execute>
 
+		<if>
+			<or>
+				<isset var="idpSessionIdleTimeout" />
+				<isset var="idpSessionMaximumAge" />
+			</or>
+			<then>
+				<execute macro="SAMLNavigation#gotoIdentityProvider" />
+
+				<execute macro="SAMLRole#configureIdentityProvider">
+					<var name="idpSessionIdleTimeout" value="${idpSessionIdleTimeout}" />
+					<var name="idpSessionMaximumAge" value="${idpSessionMaximumAge}" />
+				</execute>
+
+				<execute macro="SAMLNavigation#gotoGeneral" />
+			</then>
+		</if>
+
 		<execute macro="SAMLRole#enable">
 			<var name="samlEntityID" value="${samlEntityID}" />
 		</execute>
@@ -79,6 +96,7 @@
 			<var name="IdpEntityID" value="samlidp" />
 			<var name="IdpMetadataURL" value="http://localhost:8080/c/portal/saml/metadata" />
 			<var name="IdpNameID" value="samlidp" />
+			<var name="nameIdentifierFormat" value="${nameIdentifierFormat}" />
 		</execute>
 
 		<execute macro="SAMLNavigation#gotoGeneral" />
@@ -105,6 +123,8 @@
 		<execute macro="SAMLNavigation#gotoServiceProviderConnection" />
 
 		<execute macro="SAMLPortlet#addServiceProviderConnection">
+			<var name="nameIdentifierAttributeName" value="${nameIdentifierAttributeName}" />
+			<var name="nameIdentifierFormat" value="${nameIdentifierFormat}" />
 			<var name="SPEntityID" value="${samlEntityID}" />
 			<var name="SPMetadataURL" value="${spURL}/c/portal/saml/metadata" />
 			<var name="SPNameID" value="${samlEntityID}" />

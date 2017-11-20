@@ -38,7 +38,7 @@ public interface AssetPublisherWebConfiguration {
 	 */
 	@Meta.AD(
 		deflt = "24", description = "check-interval-key-description",
-		required = false
+		name = "check-interval", required = false
 	)
 	public int checkInterval();
 
@@ -50,7 +50,7 @@ public interface AssetPublisherWebConfiguration {
 	 */
 	@Meta.AD(
 		deflt = "true", description = "dynamic-export-enabled-key-description",
-		required = false
+		name = "dynamic-export-enabled", required = false
 	)
 	public boolean dynamicExportEnabled();
 
@@ -62,7 +62,7 @@ public interface AssetPublisherWebConfiguration {
 	 */
 	@Meta.AD(
 		deflt = "20", description = "dynamic-export-limit-key-description",
-		required = false
+		name = "dynamic-export-limit", required = false
 	)
 	public int dynamicExportLimit();
 
@@ -75,7 +75,7 @@ public interface AssetPublisherWebConfiguration {
 	@Meta.AD(
 		deflt = "20",
 		description = "dynamic-subscription-limit-key-description",
-		required = false
+		name = "dynamic-subscription-limit", required = false
 	)
 	public int dynamicSubscriptionLimit();
 
@@ -87,7 +87,7 @@ public interface AssetPublisherWebConfiguration {
 	 */
 	@Meta.AD(
 		deflt = "true", description = "manual-export-enabled-key-description",
-		required = false
+		name = "manual-export-enabled", required = false
 	)
 	public boolean manualExportEnabled();
 
@@ -100,7 +100,7 @@ public interface AssetPublisherWebConfiguration {
 	 */
 	@Meta.AD(
 		deflt = "true", description = "search-with-index-key-description",
-		required = false
+		name = "search-with-index", required = false
 	)
 	public boolean searchWithIndex();
 
@@ -116,7 +116,7 @@ public interface AssetPublisherWebConfiguration {
 	@Meta.AD(
 		deflt = "false",
 		description = "permission-checking-configurable-key-description",
-		required = false
+		name = "permission-checking-configurable", required = false
 	)
 	public boolean permissionCheckingConfigurable();
 

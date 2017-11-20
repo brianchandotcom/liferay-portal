@@ -29,7 +29,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface SiteNavigationMenuWebTemplateConfiguration {
 
-	@Meta.AD(deflt = "navbar-blank-ftl", required = false)
+	@Meta.AD(
+		deflt = "navbar-blank-ftl", name = "ddm-template-key-default",
+		required = false
+	)
 	public String ddmTemplateKeyDefault();
 
 }

@@ -33,13 +33,14 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface NestedPortletsPortletInstanceConfiguration {
 
 	@Meta.AD(
-		deflt = "2_columns_i", id = "layout.template.default", required = false
+		deflt = "2_columns_i", id = "layout.template.default",
+		name = "layout-template-id", required = false
 	)
 	public String layoutTemplateId();
 
 	@Meta.AD(
 		deflt = "freeform,1_column", id = "layout.template.unsupported",
-		required = false
+		name = "layout-templates-unsupported", required = false
 	)
 	public String[] layoutTemplatesUnsupported();
 

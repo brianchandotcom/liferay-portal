@@ -36,7 +36,7 @@ public interface ExportImportServiceConfiguration {
 
 	@Meta.AD(
 		deflt = "true", description = "validate-layout-references-help",
-		required = false
+		name = "validate-layout-references", required = false
 	)
 	public boolean validateLayoutReferences();
 

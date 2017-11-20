@@ -74,19 +74,20 @@ public abstract class BaseUpgradePrototype extends UpgradeProcess {
 
 		CompanyThreadLocal.setCompanyId(companyId);
 
-		Map<Locale, String> localizationMap =
-			ResourceBundleUtil.getLocalizationMap(
-				resourceBundleLoader, localizationMapKey);
+		try {
+			Map<Locale, String> localizationMap =
+				ResourceBundleUtil.getLocalizationMap(
+					resourceBundleLoader, localizationMapKey);
 
-		CompanyThreadLocal.setCompanyId(originalCompanyId);
+			String defaultLanguageId = UpgradeProcessUtil.getDefaultLanguageId(
+				companyId);
 
-		String defaultLanguageId = UpgradeProcessUtil.getDefaultLanguageId(
-			companyId);
-
-		String xml = LocalizationUtil.updateLocalization(
-			localizationMap, "", xmlKey, defaultLanguageId);
-
-		return xml;
+			return LocalizationUtil.updateLocalization(
+				localizationMap, "", xmlKey, defaultLanguageId);
+		}
+		finally {
+			CompanyThreadLocal.setCompanyId(originalCompanyId);
+		}
 	}
 
 	private void _upgrade(

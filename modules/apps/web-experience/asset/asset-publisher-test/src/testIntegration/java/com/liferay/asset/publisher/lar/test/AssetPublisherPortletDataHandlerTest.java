@@ -48,7 +48,7 @@ public class AssetPublisherPortletDataHandlerTest
 
 	@Override
 	protected DataLevel getDataLevel() {
-		return DataLevel.SITE;
+		return DataLevel.PORTLET_INSTANCE;
 	}
 
 	@Override

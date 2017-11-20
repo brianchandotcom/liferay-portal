@@ -169,9 +169,7 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 		</liferay-frontend:add-menu>
 
 		<aui:script require="site-navigation-menu-web/js/SiteNavigationMenuEditor.es as siteNavigationMenuEditorModule">
-			var siteNavigationMenuEditor = siteNavigationMenuEditorModule.default;
-
-			new siteNavigationMenuEditor(
+			var siteNavigationMenuEditor = newsiteNavigationMenuEditorModule.default(
 				{
 					editSiteNavigationMenuItemParentURL: '<portlet:actionURL name="/navigation_menu/edit_site_navigation_menu_item_parent"><portlet:param name="hideDefaultSuccessMessage" value="<%= Boolean.TRUE.toString() %>" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>',
 					menuContainerSelector: '.site-navigation-menu-container',
@@ -179,6 +177,17 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 					namespace: '<portlet:namespace />'
 				}
 			);
+
+			function handlePortletDestroy() {
+				if (siteNavigationMenuEditor) {
+					siteNavigationMenuEditor.dispose();
+					siteNavigationMenuEditor = null;
+				}
+
+				Liferay.detach('destroyPortlet', handlePortletDestroy);
+			}
+
+			Liferay.on('destroyPortlet', handlePortletDestroy);
 		</aui:script>
 
 		<aui:script use="aui-base">

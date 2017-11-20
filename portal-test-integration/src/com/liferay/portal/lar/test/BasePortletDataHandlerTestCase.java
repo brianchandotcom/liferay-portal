@@ -61,26 +61,26 @@ public abstract class BasePortletDataHandlerTestCase {
 
 	@Test
 	public void testDataLevel() throws Exception {
-		Assert.assertEquals(portletDataHandler.getDataLevel(), getDataLevel());
+		Assert.assertEquals(getDataLevel(), portletDataHandler.getDataLevel());
 	}
 
 	@Test
 	public void testIsDataPortalLevel() {
 		Assert.assertEquals(
-			portletDataHandler.isDataPortalLevel(), isDataPortalLevel());
+			isDataPortalLevel(), portletDataHandler.isDataPortalLevel());
 	}
 
 	@Test
 	public void testIsDataPortletInstanceLevel() {
 		Assert.assertEquals(
-			portletDataHandler.isDataPortletInstanceLevel(),
-			isDataPortletInstanceLevel());
+			isDataPortletInstanceLevel(),
+			portletDataHandler.isDataPortletInstanceLevel());
 	}
 
 	@Test
 	public void testIsDataSiteLevel() {
 		Assert.assertEquals(
-			portletDataHandler.isDataSiteLevel(), isDataSiteLevel());
+			isDataSiteLevel(), portletDataHandler.isDataSiteLevel());
 	}
 
 	@Test

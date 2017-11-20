@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.Arrays;
@@ -162,7 +163,7 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 			}
 		}
 
-		return portletId;
+		return null;
 	}
 
 	protected abstract String[] getPortletIds();
@@ -201,10 +202,15 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 				LayoutTypePortlet layoutTypePortlet =
 					(LayoutTypePortlet)layout.getLayoutType();
 
-				portletId = getPortletId(layoutTypePortlet, portletId);
+				String candidatePortletId = getPortletId(
+					layoutTypePortlet, portletId);
 
-				if (_getScopeGroupId(layout, portletId) == scopeGroupId) {
-					return new ObjectValuePair<>(layout.getPlid(), portletId);
+				if (Validator.isNotNull(candidatePortletId) &&
+					(_getScopeGroupId(layout, candidatePortletId) ==
+						scopeGroupId)) {
+
+					return new ObjectValuePair<>(
+						layout.getPlid(), candidatePortletId);
 				}
 			}
 		}

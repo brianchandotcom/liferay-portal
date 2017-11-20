@@ -49,7 +49,7 @@ public abstract class BaseUpgradePrototype extends UpgradeProcess {
 
 		StringBundler sb = new StringBundler(3);
 
-		sb.append("select companyId from ");
+		sb.append("select distinct companyId from ");
 		sb.append(tableName);
 		sb.append(" where name = ?");
 

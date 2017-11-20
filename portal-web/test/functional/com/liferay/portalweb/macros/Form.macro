@@ -384,8 +384,4 @@
 	<command name="viewSaveNotification">
 		<execute function="AssertTextEquals#assertPartialText" locator1="Form#SAVE_NOTIFICATION" value1="Draft saved on" />
 	</command>
-
-	<command name="viewSidebarTitle">
-		<execute function="AssertTextEquals" locator1="Form#SIDEBAR_HEADER" value1="${fieldLabel}" />
-	</command>
 </definition>

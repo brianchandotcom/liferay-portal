@@ -4517,10 +4517,6 @@
 			<var name="fieldType" value="Text Field" />
 		</execute>
 
-		<execute macro="Form#viewSidebarTitle">
-			<var name="fieldLabel" value="Unlabeled" />
-		</execute>
-
 		<execute macro="FormFields#viewFieldLabel">
 			<var name="fieldName" value="label" />
 			<var name="fieldValue" value="" />

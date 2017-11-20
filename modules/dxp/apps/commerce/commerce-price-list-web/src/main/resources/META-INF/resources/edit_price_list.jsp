@@ -23,27 +23,20 @@ CommercePriceList commercePriceList = commercePriceListDisplayContext.getCommerc
 
 long commercePriceListId = commercePriceListDisplayContext.getCommercePriceListId();
 
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-price-list-details");
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("toolbarItem", toolbarItem);
-portletURL.setParameter("mvcRenderCommandName", "editCommercePriceList");
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(priceListsURL);
 
 renderResponse.setTitle((commercePriceList == null) ? LanguageUtil.get(request, "add-price-list") : commercePriceList.getName());
 %>
 
-<%@ include file="/price_list_navbar.jspf" %>
-
 <portlet:actionURL name="editCommercePriceList" var="editCommercePriceListActionURL" />
 
 <aui:form action="<%= editCommercePriceListActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="addCommercePriceListQualificationTypeRelKeys" type="hidden" value="" />
 	<aui:input name="commercePriceListId" type="hidden" value="<%= commercePriceListId %>" />
+	<aui:input name="deleteCommercePriceListQualificationTypeRelIds" type="hidden" value="" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
 	<c:if test="<%= (commercePriceList != null) && !commercePriceList.isNew() %>">

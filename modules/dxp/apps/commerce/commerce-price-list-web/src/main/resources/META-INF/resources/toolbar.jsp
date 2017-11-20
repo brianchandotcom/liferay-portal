@@ -50,7 +50,7 @@ CommercePriceListDisplayContext commercePriceListDisplayContext = (CommercePrice
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= commercePriceListDisplayContext.getOrderByCol() %>"
 			orderByType="<%= commercePriceListDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"create-date", "display-date"} %>'
+			orderColumns='<%= new String[] {"create-date", "display-date", "priority"} %>'
 			portletURL="<%= commercePriceListDisplayContext.getPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>

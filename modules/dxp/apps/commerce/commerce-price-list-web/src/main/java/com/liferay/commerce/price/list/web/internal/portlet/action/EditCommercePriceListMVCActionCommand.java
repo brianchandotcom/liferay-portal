@@ -17,7 +17,10 @@ package com.liferay.commerce.price.list.web.internal.portlet.action;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.NoSuchPriceListException;
 import com.liferay.commerce.model.CommercePriceList;
+import com.liferay.commerce.model.CommercePriceListQualificationTypeRel;
+import com.liferay.commerce.service.CommercePriceListQualificationTypeRelService;
 import com.liferay.commerce.service.CommercePriceListService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -146,6 +149,8 @@ public class EditCommercePriceListMVCActionCommand
 			actionRequest, "commerceCurrencyId");
 
 		String name = ParamUtil.getString(actionRequest, "name");
+		double priority = ParamUtil.getDouble(actionRequest, "priority");
+
 		int displayDateMonth = ParamUtil.getInteger(
 			actionRequest, "displayDateMonth");
 		int displayDateDay = ParamUtil.getInteger(
@@ -190,24 +195,89 @@ public class EditCommercePriceListMVCActionCommand
 
 		if (commercePriceListId <= 0) {
 			commercePriceList = _commercePriceListService.addCommercePriceList(
-				commerceCurrencyId, name, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, neverExpire,
-				serviceContext);
+				commerceCurrencyId, name, priority, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, serviceContext);
 		}
 		else {
 			commercePriceList =
 				_commercePriceListService.updateCommercePriceList(
-					commercePriceListId, commerceCurrencyId, name,
+					commercePriceListId, commerceCurrencyId, name, priority,
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, expirationDateMonth,
 					expirationDateDay, expirationDateYear, expirationDateHour,
 					expirationDateMinute, neverExpire, serviceContext);
 		}
 
+		if (commercePriceList != null) {
+			updateCommercePriceListQualificationTypeRels(
+				actionRequest, commercePriceList);
+		}
+
 		return commercePriceList;
 	}
+
+	protected void updateCommercePriceListQualificationTypeRels(
+			ActionRequest actionRequest, CommercePriceList commercePriceList)
+		throws PortalException {
+
+		String[] addCommercePriceListQualificationTypeRelKeys =
+			ParamUtil.getStringValues(
+				actionRequest, "addCommercePriceListQualificationTypeRelKeys");
+		long[] deleteCommercePriceListQualificationTypeRelIds =
+			ParamUtil.getLongValues(
+				actionRequest,
+				"deleteCommercePriceListQualificationTypeRelIds");
+
+		if (deleteCommercePriceListQualificationTypeRelIds.length > 0) {
+			for (int i = 0;
+				 i < deleteCommercePriceListQualificationTypeRelIds.length;
+				 i++) {
+
+				long commercePriceListQualificationTypeRelId =
+					deleteCommercePriceListQualificationTypeRelIds[i];
+
+				_commercePriceListQualificationTypeRelService.
+					deleteCommercePriceListQualificationTypeRel(
+						commercePriceListQualificationTypeRelId);
+			}
+		}
+
+		if (addCommercePriceListQualificationTypeRelKeys.length > 0) {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				CommercePriceListQualificationTypeRel.class.getName(),
+				actionRequest);
+
+			for (int i = 0;
+				 i < addCommercePriceListQualificationTypeRelKeys.length;
+				 i++) {
+
+				String commercePriceListQualificationTypeRelKey =
+					addCommercePriceListQualificationTypeRelKeys[i];
+
+				CommercePriceListQualificationTypeRel
+					commercePriceListQualificationTypeRel =
+						_commercePriceListQualificationTypeRelService.
+							fetchCommercePriceListQualificationTypeRel(
+								commercePriceListQualificationTypeRelKey,
+								commercePriceList.getCommercePriceListId());
+
+				if (commercePriceListQualificationTypeRel == null) {
+					_commercePriceListQualificationTypeRelService.
+						addCommercePriceListQualificationTypeRel(
+							commercePriceList.getCommercePriceListId(),
+							commercePriceListQualificationTypeRelKey, i,
+							serviceContext);
+				}
+			}
+		}
+	}
+
+	@Reference
+	private CommercePriceListQualificationTypeRelService
+		_commercePriceListQualificationTypeRelService;
 
 	@Reference
 	private CommercePriceListService _commercePriceListService;

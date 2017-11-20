@@ -129,6 +129,11 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 								property="displayDate"
 							/>
 
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-content"
+								property="priority"
+							/>
+
 							<liferay-ui:search-container-column-jsp
 								cssClass="entry-action-column"
 								path="/price_list_action.jsp"

@@ -27,19 +27,11 @@ SearchContainer<CommercePriceEntry> commercePriceEntriesSearchContainer = commer
 
 PortletURL portletURL = commercePriceEntryDisplayContext.getPortletURL();
 
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-price-entries");
-
-portletURL.setParameter("toolbarItem", toolbarItem);
-
-request.setAttribute("view.jsp-portletURL", portletURL);
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(priceListsURL);
 
 renderResponse.setTitle(commercePriceList.getName());
 %>
-
-<%@ include file="/price_list_navbar.jspf" %>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"

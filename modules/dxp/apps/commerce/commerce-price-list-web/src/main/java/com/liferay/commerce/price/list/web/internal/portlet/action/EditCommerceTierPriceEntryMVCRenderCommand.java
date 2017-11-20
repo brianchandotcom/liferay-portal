@@ -17,15 +17,19 @@ package com.liferay.commerce.price.list.web.internal.portlet.action;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.NoSuchTierPriceEntryException;
 import com.liferay.commerce.price.list.web.internal.display.context.CommerceTierPriceEntryDisplayContext;
+import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.service.CommerceTierPriceEntryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,12 +54,14 @@ public class EditCommerceTierPriceEntryMVCRenderCommand
 		throws PortletException {
 
 		try {
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(renderRequest);
+
 			CommerceTierPriceEntryDisplayContext
 				commerceTierPriceEntryDisplayContext =
 					new CommerceTierPriceEntryDisplayContext(
 						_commercePriceListActionHelper,
-						_commerceTierPriceEntryService, renderRequest,
-						renderResponse);
+						_commerceTierPriceEntryService, httpServletRequest);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -82,5 +88,8 @@ public class EditCommerceTierPriceEntryMVCRenderCommand
 
 	@Reference
 	private CommerceTierPriceEntryService _commerceTierPriceEntryService;
+
+	@Reference
+	private Portal _portal;
 
 }

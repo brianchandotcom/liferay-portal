@@ -17,16 +17,23 @@ package com.liferay.commerce.price.list.web.internal.portlet.action;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.exception.NoSuchPriceListException;
+import com.liferay.commerce.price.CommercePriceListQualificationTypeRegistry;
 import com.liferay.commerce.price.list.web.internal.display.context.CommercePriceListDisplayContext;
+import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
+import com.liferay.commerce.service.CommercePriceListQualificationTypeRelService;
 import com.liferay.commerce.service.CommercePriceListService;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,10 +57,16 @@ public class EditCommercePriceListMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(renderRequest);
+
 			CommercePriceListDisplayContext commercePriceListDisplayContext =
 				new CommercePriceListDisplayContext(
 					_commercePriceListActionHelper, _commerceCurrencyService,
-					_commercePriceListService, renderRequest, renderResponse);
+					_commercePriceListQualificationTypeRegistry,
+					_commercePriceListQualificationTypeRelService,
+					_commercePriceListService, httpServletRequest,
+					_itemSelector);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -72,7 +85,7 @@ public class EditCommercePriceListMVCRenderCommand implements MVCRenderCommand {
 			}
 		}
 
-		return "/edit_price_list.jsp";
+		return "/edit_price_list_screen_navigation.jsp";
 	}
 
 	@Reference
@@ -82,6 +95,20 @@ public class EditCommercePriceListMVCRenderCommand implements MVCRenderCommand {
 	private CommercePriceListActionHelper _commercePriceListActionHelper;
 
 	@Reference
+	private CommercePriceListQualificationTypeRegistry
+		_commercePriceListQualificationTypeRegistry;
+
+	@Reference
+	private CommercePriceListQualificationTypeRelService
+		_commercePriceListQualificationTypeRelService;
+
+	@Reference
 	private CommercePriceListService _commercePriceListService;
+
+	@Reference
+	private ItemSelector _itemSelector;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -51,7 +51,9 @@ public class ResourceResponseImpl
 
 	@Override
 	public void addProperty(Cookie cookie) {
-		response.addCookie(cookie);
+		if (!(isCalledFlushBuffer() || isCommitted())) {
+			response.addCookie(cookie);
+		}
 	}
 
 	@Override

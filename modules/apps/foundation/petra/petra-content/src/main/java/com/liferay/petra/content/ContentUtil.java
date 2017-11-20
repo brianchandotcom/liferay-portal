@@ -27,8 +27,10 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  * @author Peter Fellwock
+ * @deprecated As of 1.0.0, with no direct replacement
  * @see    com.liferay.util.ContentUtil
  */
+@Deprecated
 public class ContentUtil {
 
 	public static String get(ClassLoader classLoader, String location) {

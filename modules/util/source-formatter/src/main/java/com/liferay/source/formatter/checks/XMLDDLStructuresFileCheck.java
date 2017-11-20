@@ -14,10 +14,10 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.xml.Dom4jUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.checks.util.XMLSourceUtil;
-import com.liferay.util.xml.Dom4jUtil;
 
 import java.util.List;
 import java.util.Map;

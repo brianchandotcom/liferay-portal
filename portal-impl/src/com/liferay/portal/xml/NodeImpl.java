@@ -14,13 +14,13 @@
 
 package com.liferay.portal.xml;
 
+import com.liferay.petra.xml.Dom4jUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.Visitor;
-import com.liferay.util.xml.Dom4jUtil;
 
 import java.io.IOException;
 import java.io.Writer;

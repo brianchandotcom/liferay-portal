@@ -25,9 +25,8 @@ public class UpgradeLayoutSetPrototype extends BaseUpgradePrototype {
 	@Override
 	protected void doUpgrade() throws Exception {
 		upgradePrototype(
-			getClass(), LanguageResources.RESOURCE_BUNDLE_LOADER,
-			"LayoutSetPrototype", _NAME, _DESCRIPTION,
-			"layout-set-prototype-intranet-site-title",
+			LanguageResources.RESOURCE_BUNDLE_LOADER, "LayoutSetPrototype",
+			_NAME, _DESCRIPTION, "layout-set-prototype-intranet-site-title",
 			"layout-set-prototype-intranet-site-description");
 	}
 

@@ -124,6 +124,11 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 				Thread.sleep(1000);
 			}
 			catch (InterruptedException ie) {
+				if (_log.isTraceEnabled()) {
+					_log.trace(
+						"Interrupted while waiting for scheduled features to " +
+							"get completed");
+				}
 			}
 		}
 

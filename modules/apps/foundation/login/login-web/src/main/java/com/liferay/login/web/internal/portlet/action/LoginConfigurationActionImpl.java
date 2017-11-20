@@ -18,6 +18,7 @@ import com.liferay.login.web.internal.constants.LoginPortletKeys;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -92,16 +93,16 @@ public class LoginConfigurationActionImpl extends DefaultConfigurationAction {
 	static {
 		try {
 			_ADMIN_EMAIL_PASSWORD_RESET_BODY = StringUtil.read(
-				LoginConfigurationActionImpl.class.getClassLoader(),
+				PortalClassLoaderUtil.getClassLoader(),
 				PropsValues.ADMIN_EMAIL_PASSWORD_RESET_BODY);
 			_ADMIN_EMAIL_PASSWORD_RESET_SUBJECT = StringUtil.read(
-				LoginConfigurationActionImpl.class.getClassLoader(),
+				PortalClassLoaderUtil.getClassLoader(),
 				PropsValues.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT);
 			_ADMIN_EMAIL_PASSWORD_SENT_BODY = StringUtil.read(
-				LoginConfigurationActionImpl.class.getClassLoader(),
+				PortalClassLoaderUtil.getClassLoader(),
 				PropsValues.ADMIN_EMAIL_PASSWORD_SENT_BODY);
 			_ADMIN_EMAIL_PASSWORD_SENT_SUBJECT = StringUtil.read(
-				LoginConfigurationActionImpl.class.getClassLoader(),
+				PortalClassLoaderUtil.getClassLoader(),
 				PropsValues.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT);
 		}
 		catch (IOException ioe) {

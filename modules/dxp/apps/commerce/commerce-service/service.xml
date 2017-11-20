@@ -485,6 +485,7 @@
 
 		<column name="commerceCurrencyId" type="long" />
 		<column name="name" type="String" />
+		<column name="priority" type="double" />
 		<column name="displayDate" type="Date" />
 		<column name="expirationDate" type="Date" />
 		<column name="lastPublishDate" type="Date" />
@@ -498,6 +499,7 @@
 		<order by="desc">
 			<order-column name="displayDate" />
 			<order-column name="createDate" />
+			<order-column name="priority" />
 		</order>
 
 		<!-- Finder methods -->
@@ -529,11 +531,11 @@
 		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
-	<entity local-service="true" name="CommercePriceListUserRel" remote-service="true" uuid="true">
+	<entity local-service="true" name="CommercePriceListQualificationTypeRel" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="commercePriceListUserRelId" primary="true" type="long" />
+		<column db-name="CPLQualificationTypeRelId" name="commercePriceListQualificationTypeRelId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -550,14 +552,14 @@
 		<!-- Other fields -->
 
 		<column name="commercePriceListId" type="long" />
-		<column name="classNameId" type="long" />
-		<column name="classPK" type="long" />
+		<column db-name="CPriceListQualificationType" name="commercePriceListQualificationType" type="String" />
+		<column name="order" type="int" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 
-		<order by="desc">
-			<order-column name="createDate" />
+		<order by="asc">
+			<order-column name="order" />
 		</order>
 
 		<!-- Finder methods -->
@@ -565,9 +567,9 @@
 		<finder name="CommercePriceListId" return-type="Collection">
 			<finder-column name="commercePriceListId" />
 		</finder>
-		<finder name="C_C" return-type="Collection">
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
+		<finder name="C_C" return-type="CommercePriceListQualificationTypeRel" unique="true">
+			<finder-column name="commercePriceListQualificationType" />
+			<finder-column name="commercePriceListId" />
 		</finder>
 
 		<!-- References -->

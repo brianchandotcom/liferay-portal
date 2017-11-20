@@ -141,13 +141,13 @@ public class LCSGatewayServiceImpl
 
 		json = CompressionUtil.compress(json);
 
-		if (_log.isDebugEnabled()) {
+		if (_log.isTraceEnabled()) {
+			_log.trace("Sending " + message);
+		}
+		else if (_log.isDebugEnabled()) {
 			Class<?> clazz = message.getClass();
 
 			_log.debug("Sending " + clazz.getName());
-		}
-		else if (_log.isTraceEnabled()) {
-			_log.trace("Sending " + message);
 		}
 
 		Map<String, String> parameters = new HashMap<>();

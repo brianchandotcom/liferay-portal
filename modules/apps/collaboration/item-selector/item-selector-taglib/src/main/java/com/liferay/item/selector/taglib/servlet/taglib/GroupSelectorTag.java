@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -87,15 +86,6 @@ public class GroupSelectorTag extends IncludeTag {
 		int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
 			cur, delta);
 
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if (permissionChecker.isCompanyAdmin()) {
-			return GroupLocalServiceUtil.search(
-				themeDisplay.getCompanyId(), _CLASS_NAME_IDS_COMPANY_ADMIN,
-				keywords, groupParams, startAndEnd[0], startAndEnd[1], null);
-		}
-
 		return GroupLocalServiceUtil.search(
 			themeDisplay.getCompanyId(), _CLASS_NAME_IDS, keywords, groupParams,
 			startAndEnd[0], startAndEnd[1], null);
@@ -114,15 +104,6 @@ public class GroupSelectorTag extends IncludeTag {
 		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
 		groupParams.put("site", Boolean.TRUE);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if (permissionChecker.isCompanyAdmin()) {
-			return GroupLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), _CLASS_NAME_IDS_COMPANY_ADMIN,
-				keywords, groupParams);
-		}
 
 		return GroupLocalServiceUtil.searchCount(
 			themeDisplay.getCompanyId(), _CLASS_NAME_IDS, keywords,
@@ -147,11 +128,6 @@ public class GroupSelectorTag extends IncludeTag {
 	}
 
 	private static final long[] _CLASS_NAME_IDS = {
-		ClassNameLocalServiceUtil.getClassNameId(Group.class),
-		ClassNameLocalServiceUtil.getClassNameId(Organization.class)
-	};
-
-	private static final long[] _CLASS_NAME_IDS_COMPANY_ADMIN = {
 		ClassNameLocalServiceUtil.getClassNameId(Company.class),
 		ClassNameLocalServiceUtil.getClassNameId(Group.class),
 		ClassNameLocalServiceUtil.getClassNameId(Organization.class)

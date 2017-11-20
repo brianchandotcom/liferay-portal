@@ -15,10 +15,10 @@
 package com.liferay.lcs.util;
 
 import java.util.Map;
-import java.util.concurrent.Future;
 
 /**
  * @author Ivica Cardic
+ * @author Igor Beslic
  */
 public class LCSConnectionManagerUtil {
 
@@ -36,10 +36,6 @@ public class LCSConnectionManagerUtil {
 
 	public static boolean isReady() {
 		return getLCSConnectionManager().isReady();
-	}
-
-	public static Future<?> start() {
-		return getLCSConnectionManager().start();
 	}
 
 	public void setLCSConnectionManager(

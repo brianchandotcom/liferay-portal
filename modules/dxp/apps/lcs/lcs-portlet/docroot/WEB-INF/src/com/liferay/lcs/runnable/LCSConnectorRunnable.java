@@ -21,7 +21,7 @@ import com.liferay.lcs.oauth.OAuthUtil;
 import com.liferay.lcs.rest.LCSClusterEntryToken;
 import com.liferay.lcs.rest.NoSuchLCSSubscriptionEntryException;
 import com.liferay.lcs.util.ClusterNodeUtil;
-import com.liferay.lcs.util.LCSConnectionManagerUtil;
+import com.liferay.lcs.util.LCSConnectionManager;
 import com.liferay.lcs.util.LCSConstants;
 import com.liferay.lcs.util.LCSPortletPreferencesUtil;
 import com.liferay.lcs.util.LCSUtil;
@@ -146,6 +146,12 @@ public class LCSConnectorRunnable implements Runnable {
 		_lcsClusterEntryTokenAdvisor = lcsClusterEntryTokenAdvisor;
 	}
 
+	public void setLCSConnectionManager(
+		LCSConnectionManager lcsConnectionManager) {
+
+		_lcsConnectionManager = lcsConnectionManager;
+	}
+
 	public void stop() {
 		_stop = true;
 	}
@@ -197,7 +203,7 @@ public class LCSConnectorRunnable implements Runnable {
 
 		LCSUtil.processLCSPortletState(LCSPortletState.NO_CONNECTION);
 
-		return LCSConnectionManagerUtil.start();
+		return _lcsConnectionManager.start();
 	}
 
 	private void _checkDefaultPortletPreferences() {
@@ -235,6 +241,7 @@ public class LCSConnectorRunnable implements Runnable {
 
 	private LCSAlertAdvisor _lcsAlertAdvisor;
 	private LCSClusterEntryTokenAdvisor _lcsClusterEntryTokenAdvisor;
+	private LCSConnectionManager _lcsConnectionManager;
 	private boolean _stop;
 
 }

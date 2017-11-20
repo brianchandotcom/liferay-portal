@@ -489,6 +489,7 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 		lcsConnectorRunnable.setLCSAlertAdvisor(_lcsAlertAdvisor);
 		lcsConnectorRunnable.setLCSClusterEntryTokenAdvisor(
 			_lcsClusterEntryTokenAdvisor);
+		lcsConnectorRunnable.setLCSConnectionManager(this);
 
 		_scheduledExecutorService.execute(lcsConnectorRunnable);
 

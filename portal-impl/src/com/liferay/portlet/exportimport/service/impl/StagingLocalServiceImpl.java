@@ -502,6 +502,8 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			ExportImportThreadLocal.setLayoutStagingInProcess(false);
 
 			LocaleThreadLocal.setSiteDefaultLocale(siteDefaultLocale);
+
+			FileUtil.delete(file);
 		}
 	}
 

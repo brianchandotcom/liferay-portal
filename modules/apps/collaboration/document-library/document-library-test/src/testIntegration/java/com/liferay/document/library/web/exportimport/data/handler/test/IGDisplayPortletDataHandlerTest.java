@@ -35,7 +35,8 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class IGDisplayPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
+public class IGDisplayPortletDataHandlerTest
+	extends BasePortletDataHandlerTestCase {
 
 	@ClassRule
 	@Rule

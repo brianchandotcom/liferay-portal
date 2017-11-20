@@ -16,6 +16,8 @@ package com.liferay.user.groups.admin.lar.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.Sync;
+import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys;
@@ -28,13 +30,16 @@ import org.junit.runner.RunWith;
  * @author Zsolt Berentey
  */
 @RunWith(Arquillian.class)
+@Sync
 public class UserGroupsAdminPortletDataHandlerTest
 	extends BasePortletDataHandlerTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
 	protected void addStagedModels() {

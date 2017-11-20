@@ -30,6 +30,8 @@
 		<property name="heartbeatTask" ref="com.liferay.lcs.task.HeartbeatTask" />
 	</bean>
 	<bean class="com.liferay.lcs.command.DeregisterCommand" id="com.liferay.lcs.command.DeregisterCommand">
+		<property name="keyGenerator" ref="com.liferay.lcs.util.KeyGenerator" />
+		<property name="LCSClusterEntryTokenAdvisor" ref="com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor" />
 		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
 	</bean>
 	<bean class="com.liferay.lcs.command.DownloadPatchesCommand" id="com.liferay.lcs.command.DownloadPatchesCommand">
@@ -245,7 +247,6 @@
 		<property name="handshakeWaitTime" value="#{T(com.liferay.lcs.util.PortletPropsValues).COMMUNICATION_HANDSHAKE_WAIT_TIME}" />
 		<property name="heartbeatInterval" value="#{T(com.liferay.lcs.util.PortletPropsValues).COMMUNICATION_HEARTBEAT_INTERVAL}" />
 		<property name="heartbeatTask" ref="com.liferay.lcs.task.HeartbeatTask" />
-		<property name="keyGenerator" ref="com.liferay.lcs.util.KeyGenerator" />
 		<property name="LCSAlertAdvisor" ref="com.liferay.lcs.advisor.LCSAlertAdvisor" />
 		<property name="LCSClusterEntryTokenAdvisor" ref="com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor" />
 		<property name="LCSGatewayService" ref="com.liferay.lcs.service.LCSGatewayService" />

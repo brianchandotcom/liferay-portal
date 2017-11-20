@@ -14,7 +14,11 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Peter Shin
@@ -28,6 +32,7 @@ public class PropertiesSourceFormatterContentCheck extends BaseFileCheck {
 
 		if (fileName.endsWith("/source-formatter.properties")) {
 			content = _checkConvertedKeys(content);
+			content = _checkGitLiferayPortalBranch(content);
 		}
 
 		return content;
@@ -39,6 +44,55 @@ public class PropertiesSourceFormatterContentCheck extends BaseFileCheck {
 		}
 
 		return content;
+	}
+
+	private String _checkGitLiferayPortalBranch(String content) {
+		if (!content.matches("(?s).*^(?!#)git.liferay.portal.branch=.*")) {
+			return content;
+		}
+
+		String gitLiferayPortalBranch = StringPool.BLANK;
+		String previousLine = StringPool.BLANK;
+
+		String[] lines = StringUtil.splitLines(content);
+
+		StringBundler sb = new StringBundler(lines.length * 2);
+
+		for (String line : lines) {
+			String trimmedLine = StringUtil.trim(line);
+
+			if (trimmedLine.startsWith("git.liferay.portal.branch=")) {
+				gitLiferayPortalBranch = trimmedLine.substring(
+					trimmedLine.indexOf(CharPool.EQUAL) + 1);
+			}
+
+			String s = StringUtil.trim(previousLine);
+
+			if (s.equals("git.liferay.portal.branch=\\")) {
+				gitLiferayPortalBranch = StringUtil.trim(line);
+			}
+
+			if (!trimmedLine.startsWith("git.liferay.portal.branch=") &&
+				!s.equals("git.liferay.portal.branch=\\")) {
+
+				sb.append(line);
+				sb.append("\n");
+			}
+
+			previousLine = line;
+		}
+
+		String s = sb.toString();
+
+		if (Validator.isNull(s)) {
+			return StringBundler.concat(
+				StringPool.FOUR_SPACES, "git.liferay.portal.branch=",
+				gitLiferayPortalBranch);
+		}
+
+		return StringBundler.concat(
+			StringUtil.trim(s), "\n\n", StringPool.FOUR_SPACES,
+			"git.liferay.portal.branch=", gitLiferayPortalBranch);
 	}
 
 	private static final String[][] _CONVERTED_KEYS = {

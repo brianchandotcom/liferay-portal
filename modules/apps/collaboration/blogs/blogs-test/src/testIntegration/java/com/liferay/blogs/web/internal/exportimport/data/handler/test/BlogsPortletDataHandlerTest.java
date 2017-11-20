@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -55,13 +54,13 @@ public class BlogsPortletDataHandlerTest
 	}
 
 	@Override
-	protected String getPortletId() {
-		return BlogsPortletKeys.BLOGS;
+	protected DataLevel getDataLevel() {
+		return DataLevel.SITE;
 	}
 
 	@Override
-	protected DataLevel getDataLevel() {
-		return DataLevel.SITE;
+	protected String getPortletId() {
+		return BlogsPortletKeys.BLOGS;
 	}
 
 	@Override

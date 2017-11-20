@@ -82,17 +82,26 @@ public class PropertiesSourceFormatterContentCheck extends BaseFileCheck {
 			previousLine = line;
 		}
 
-		String s = sb.toString();
+		String exclusionsComments = StringBundler.concat(
+			"##\n## Exclusions\n##\n## See ", _SOURCE_FORMATTER_PROPERTIES_URL,
+			"\n## for available properties.\n##");
+		String gitComments = "##\n## Git\n##";
+
+		String s = StringUtil.replace(
+			sb.toString(), new String[] {exclusionsComments, gitComments},
+			new String[] {StringPool.BLANK, StringPool.BLANK});
 
 		if (Validator.isNull(s)) {
 			return StringBundler.concat(
+				exclusionsComments, "\n\n", gitComments, "\n\n",
 				StringPool.FOUR_SPACES, "git.liferay.portal.branch=",
 				gitLiferayPortalBranch);
 		}
 
 		return StringBundler.concat(
-			StringUtil.trim(s), "\n\n", StringPool.FOUR_SPACES,
-			"git.liferay.portal.branch=", gitLiferayPortalBranch);
+			exclusionsComments, "\n\n", StringUtil.trim(s), "\n\n", gitComments,
+			"\n\n", StringPool.FOUR_SPACES, "git.liferay.portal.branch=",
+			gitLiferayPortalBranch);
 	}
 
 	private static final String[][] _CONVERTED_KEYS = {
@@ -101,5 +110,9 @@ public class PropertiesSourceFormatterContentCheck extends BaseFileCheck {
 			"blob/master/source-formatter.properties"
 		}
 	};
+
+	private static final String _SOURCE_FORMATTER_PROPERTIES_URL =
+		"https://github.com/liferay/liferay-portal/blob/master" +
+			"/source-formatter.properties";
 
 }

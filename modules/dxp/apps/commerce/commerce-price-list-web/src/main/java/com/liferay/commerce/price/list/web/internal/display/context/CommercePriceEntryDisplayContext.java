@@ -15,7 +15,10 @@
 package com.liferay.commerce.price.list.web.internal.display.context;
 
 import com.liferay.commerce.model.CommercePriceEntry;
-import com.liferay.commerce.price.list.web.internal.portlet.action.CommercePriceListActionHelper;
+import com.liferay.commerce.price.list.web.display.context.BaseCommercePriceListDisplayContext;
+import com.liferay.commerce.price.list.web.internal.servlet.taglib.ui.CommercePriceListScreenNavigationConstants;
+import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
+import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.item.selector.criterion.CPInstanceItemSelectorCriterion;
 import com.liferay.commerce.service.CommercePriceEntryService;
 import com.liferay.commerce.util.CommerceUtil;
@@ -40,8 +43,8 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Alessio Antonio Rendina
@@ -52,10 +55,9 @@ public class CommercePriceEntryDisplayContext
 	public CommercePriceEntryDisplayContext(
 		CommercePriceListActionHelper commercePriceListActionHelper,
 		CommercePriceEntryService commercePriceEntryService,
-		ItemSelector itemSelector, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+		ItemSelector itemSelector, HttpServletRequest httpServletRequest) {
 
-		super(commercePriceListActionHelper, renderRequest, renderResponse);
+		super(commercePriceListActionHelper, httpServletRequest);
 
 		_commercePriceEntryService = commercePriceEntryService;
 		_itemSelector = itemSelector;
@@ -66,8 +68,12 @@ public class CommercePriceEntryDisplayContext
 			return _commercePriceEntry;
 		}
 
+		CPRequestHelper cpRequestHelper = new CPRequestHelper(
+			httpServletRequest);
+
 		_commercePriceEntry =
-			commercePriceListActionHelper.getCommercePriceEntry(renderRequest);
+			commercePriceListActionHelper.getCommercePriceEntry(
+				cpRequestHelper.getRenderRequest());
 
 		return _commercePriceEntry;
 	}
@@ -84,7 +90,7 @@ public class CommercePriceEntryDisplayContext
 
 	public String getItemSelectorUrl() throws PortalException {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-			RequestBackedPortletURLFactoryUtil.create(renderRequest);
+			RequestBackedPortletURLFactoryUtil.create(httpServletRequest);
 
 		CPInstanceItemSelectorCriterion cpInstanceItemSelectorCriterion =
 			new CPInstanceItemSelectorCriterion();
@@ -111,9 +117,16 @@ public class CommercePriceEntryDisplayContext
 		PortletURL portletURL = super.getPortletURL();
 
 		portletURL.setParameter(
-			"mvcRenderCommandName", "viewCommercePriceEntries");
+			"mvcRenderCommandName", "editCommercePriceList");
+		portletURL.setParameter(
+			"screenNavigationCategoryKey", getScreenNavigationCategoryKey());
 
 		return portletURL;
+	}
+
+	@Override
+	public String getScreenNavigationCategoryKey() throws PortalException {
+		return CommercePriceListScreenNavigationConstants.CATEGORY_KEY_ENTRIES;
 	}
 
 	@Override
@@ -124,11 +137,13 @@ public class CommercePriceEntryDisplayContext
 			return searchContainer;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		searchContainer = new SearchContainer<>(
-			renderRequest, getPortletURL(), null, "there-are-no-price-entries");
+			liferayPortletRequest, getPortletURL(), null,
+			"there-are-no-price-entries");
 
 		OrderByComparator<CommercePriceEntry> orderByComparator =
 			CommerceUtil.getCommercePriceEntryOrderByComparator(

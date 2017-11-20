@@ -17,25 +17,41 @@ package com.liferay.commerce.price.list.web.internal.display.context;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.currency.util.comparator.CommerceCurrencyPriorityComparator;
+import com.liferay.commerce.item.selector.criterion.CommercePriceListQualificationTypeItemSelectorCriterion;
 import com.liferay.commerce.model.CommercePriceList;
-import com.liferay.commerce.price.list.web.internal.portlet.action.CommercePriceListActionHelper;
+import com.liferay.commerce.model.CommercePriceListQualificationTypeRel;
+import com.liferay.commerce.price.CommercePriceListQualificationType;
+import com.liferay.commerce.price.CommercePriceListQualificationTypeRegistry;
+import com.liferay.commerce.price.list.web.display.context.BaseCommercePriceListDisplayContext;
+import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
+import com.liferay.commerce.service.CommercePriceListQualificationTypeRelService;
 import com.liferay.commerce.service.CommercePriceListService;
 import com.liferay.commerce.util.CommerceUtil;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Alessio Antonio Rendina
@@ -46,22 +62,84 @@ public class CommercePriceListDisplayContext
 	public CommercePriceListDisplayContext(
 		CommercePriceListActionHelper commercePriceListActionHelper,
 		CommerceCurrencyService commerceCurrencyService,
+		CommercePriceListQualificationTypeRegistry
+			commercePriceListQualificationTypeRegistry,
+		CommercePriceListQualificationTypeRelService
+			commercePriceListQualificationTypeRelService,
 		CommercePriceListService commercePriceListService,
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		HttpServletRequest httpServletRequest, ItemSelector itemSelector) {
 
-		super(commercePriceListActionHelper, renderRequest, renderResponse);
+		super(commercePriceListActionHelper, httpServletRequest);
 
 		_commerceCurrencyService = commerceCurrencyService;
+		_commercePriceListQualificationTypeRegistry =
+			commercePriceListQualificationTypeRegistry;
+		_commercePriceListQualificationTypeRelService =
+			commercePriceListQualificationTypeRelService;
 		_commercePriceListService = commercePriceListService;
+		_itemSelector = itemSelector;
+
+		setDefaultOrderByCol("priority");
+		setDefaultOrderByType("asc");
 	}
 
 	public List<CommerceCurrency> getCommerceCurrencies() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return _commerceCurrencyService.getCommerceCurrencies(
 			themeDisplay.getScopeGroupId(), true, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, new CommerceCurrencyPriorityComparator(true));
+	}
+
+	public CommercePriceListQualificationType
+		getCommercePriceListQualificationType(String key) {
+
+		return _commercePriceListQualificationTypeRegistry.
+			getCommercePriceListQualificationType(key);
+	}
+
+	public List<CommercePriceListQualificationTypeRel>
+			getCommercePriceListQualificationTypeRels()
+		throws PortalException {
+
+		return _commercePriceListQualificationTypeRelService.
+			getCommercePriceListQualificationTypeRels(getCommercePriceListId());
+	}
+
+	public List<CommercePriceListQualificationType>
+		getCommercePriceListQualificationTypes() {
+
+		return _commercePriceListQualificationTypeRegistry.
+			getCommercePriceListQualificationTypes();
+	}
+
+	public String getItemSelectorUrl() throws PortalException {
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(httpServletRequest);
+
+		CommercePriceListQualificationTypeItemSelectorCriterion
+			commercePriceListQualificationTypeItemSelectorCriterion =
+				new CommercePriceListQualificationTypeItemSelectorCriterion();
+
+		commercePriceListQualificationTypeItemSelectorCriterion.
+			setDesiredItemSelectorReturnTypes(
+				Collections.<ItemSelectorReturnType>singletonList(
+					new UUIDItemSelectorReturnType()));
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			requestBackedPortletURLFactory, "qualificationTypesSelectItem",
+			commercePriceListQualificationTypeItemSelectorCriterion);
+
+		String checkedCommercePriceListQualificationTypeKeys = StringUtil.merge(
+			getCheckedCommercePriceListQualificationTypeKeys());
+
+		itemSelectorURL.setParameter(
+			"checkedCommercePriceListQualificationTypeKeys",
+			checkedCommercePriceListQualificationTypeKeys);
+
+		return itemSelectorURL.toString();
 	}
 
 	@Override
@@ -72,11 +150,13 @@ public class CommercePriceListDisplayContext
 			return searchContainer;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		searchContainer = new SearchContainer<>(
-			renderRequest, getPortletURL(), null, "there-are-no-price-lists");
+			liferayPortletRequest, getPortletURL(), null,
+			"there-are-no-price-lists");
 
 		OrderByComparator<CommercePriceList> orderByComparator =
 			CommerceUtil.getCommercePriceListOrderByComparator(
@@ -128,13 +208,45 @@ public class CommercePriceListDisplayContext
 		}
 
 		_status = ParamUtil.getInteger(
-			renderRequest, "status", WorkflowConstants.STATUS_ANY);
+			httpServletRequest, "status", WorkflowConstants.STATUS_ANY);
 
 		return _status;
 	}
 
+	protected String[] getCheckedCommercePriceListQualificationTypeKeys()
+		throws PortalException {
+
+		List<String> commercePriceListQualificationTypeKeysList =
+			new ArrayList<>();
+
+		List<CommercePriceListQualificationTypeRel>
+			commercePriceListQualificationTypeRels =
+				getCommercePriceListQualificationTypeRels();
+
+		for (CommercePriceListQualificationTypeRel
+				commercePriceListQualificationTypeRel :
+					commercePriceListQualificationTypeRels) {
+
+			commercePriceListQualificationTypeKeysList.add(
+				commercePriceListQualificationTypeRel.
+					getCommercePriceListQualificationType());
+		}
+
+		if (!commercePriceListQualificationTypeKeysList.isEmpty()) {
+			return ArrayUtil.toStringArray(
+				commercePriceListQualificationTypeKeysList);
+		}
+
+		return new String[0];
+	}
+
 	private final CommerceCurrencyService _commerceCurrencyService;
+	private final CommercePriceListQualificationTypeRegistry
+		_commercePriceListQualificationTypeRegistry;
+	private final CommercePriceListQualificationTypeRelService
+		_commercePriceListQualificationTypeRelService;
 	private final CommercePriceListService _commercePriceListService;
+	private final ItemSelector _itemSelector;
 	private Integer _status;
 
 }

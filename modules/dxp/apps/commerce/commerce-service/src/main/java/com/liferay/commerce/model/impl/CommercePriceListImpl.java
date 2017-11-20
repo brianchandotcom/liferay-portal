@@ -16,6 +16,9 @@ package com.liferay.commerce.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.model.CommercePriceListQualificationTypeRel;
+import com.liferay.commerce.service.CommercePriceListQualificationTypeRelLocalServiceUtil;
+
 /**
  * @author Alessio Antonio Rendina
  */
@@ -23,6 +26,14 @@ import aQute.bnd.annotation.ProviderType;
 public class CommercePriceListImpl extends CommercePriceListBaseImpl {
 
 	public CommercePriceListImpl() {
+	}
+
+	public CommercePriceListQualificationTypeRel
+		fetchCommercePriceListQualificationTypeRel(String key) {
+
+		return CommercePriceListQualificationTypeRelLocalServiceUtil.
+			fetchCommercePriceListQualificationTypeRel(
+				key, getCommercePriceListId());
 	}
 
 }

@@ -17,9 +17,6 @@ package com.liferay.polls.internal.exportimport.data.handler.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.polls.constants.PollsPortletKeys;
-import com.liferay.polls.model.PollsChoice;
-import com.liferay.polls.model.PollsQuestion;
-import com.liferay.polls.util.test.PollsTestUtil;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -39,15 +36,6 @@ public class PollsDisplayPortletDataHandlerTest
 
 	@Override
 	protected void addStagedModels() throws Exception {
-		PollsQuestion question = PollsTestUtil.addQuestion(
-			stagingGroup.getGroupId());
-
-		PollsChoice choice = PollsTestUtil.addChoice(
-			stagingGroup.getGroupId(), question.getQuestionId());
-
-		PollsTestUtil.addVote(
-			stagingGroup.getGroupId(), question.getQuestionId(),
-			choice.getChoiceId());
 	}
 
 	@Override

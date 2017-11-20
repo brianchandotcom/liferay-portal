@@ -23,9 +23,12 @@
 							{if $_dirty}
 								{msg desc=""}saving-layout-page-template{/msg}
 							{elseif $_lastSaveDate}
-								{msg desc=""}layout-page-template-saved-at{/msg}
-								{sp}
-								{$_lastSaveDate}
+								{msg desc="layout-page-template-saved-at-x"}
+									layout-page-template-saved-at-
+									{call .badge}
+										{param content: $_lastSaveDate /}
+									{/call}
+								{/msg}
 							{/if}
 						</span>
 					</li>
@@ -83,11 +86,7 @@
 		<div class="taglib-empty-result-message-header"></div>
 
 		<div class="text-center text-muted">
-			{msg desc=""}this-layout-page-template-is-empty{/msg}.
-		</div>
-
-		<div class="text-center text-muted">
-			{msg desc=""}please-add-some-fragments{/msg}.
+			{msg desc=""}this-layout-page-template-is-empty{/msg}
 		</div>
 	</div>
 {/template}

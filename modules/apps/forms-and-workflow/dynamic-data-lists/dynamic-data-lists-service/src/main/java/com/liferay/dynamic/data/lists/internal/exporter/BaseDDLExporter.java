@@ -136,13 +136,15 @@ public abstract class BaseDDLExporter implements DDLExporter {
 
 		String valueString = StringPool.BLANK;
 
+		DDMFormFieldValue ddmFormFieldValue = ddmForFieldValues.get(0);
+
 		if (scope == DDLRecordSetConstants.SCOPE_FORMS) {
 			DDMFormFieldValueRenderer ddmFormFieldValueRenderer =
 				getDDMFormFieldTypeServicesTracker().
-					getDDMFormFieldValueRenderer(ddmFormField.getType());
+					getDDMFormFieldValueRenderer(ddmFormFieldValue.getType());
 
 			valueString = ddmFormFieldValueRenderer.render(
-				ddmForFieldValues.get(0), getLocale());
+				ddmFormFieldValue, getLocale());
 		}
 		else {
 			DDMFormFieldValueRendererRegistry
@@ -152,14 +154,13 @@ public abstract class BaseDDLExporter implements DDLExporter {
 			com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRenderer
 				ddmFormFieldValueRenderer =
 					ddmFormFieldValueRendererRegistry.
-						getDDMFormFieldValueRenderer(ddmFormField.getType());
+						getDDMFormFieldValueRenderer(
+							ddmFormFieldValue.getType());
 
 			String ddmFormFieldType =
 				ddmFormFieldValueRenderer.getSupportedDDMFormFieldType();
 
 			if (Objects.equals(DDMFormFieldType.TEXT_HTML, ddmFormFieldType)) {
-				DDMFormFieldValue ddmFormFieldValue = ddmForFieldValues.get(0);
-
 				Value value = ddmFormFieldValue.getValue();
 
 				valueString = HtmlUtil.escape(value.getString(getLocale()));

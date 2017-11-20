@@ -36,9 +36,9 @@ public class CommercePriceListServiceImpl
 
 	@Override
 	public CommercePriceList addCommercePriceList(
-			long commerceCurrencyId, String name, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
+			long commerceCurrencyId, String name, double priority,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, ServiceContext serviceContext)
@@ -49,8 +49,8 @@ public class CommercePriceListServiceImpl
 			CommerceActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
 
 		return commercePriceListLocalService.addCommercePriceList(
-			commerceCurrencyId, name, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
+			commerceCurrencyId, name, priority, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			serviceContext);
@@ -121,11 +121,12 @@ public class CommercePriceListServiceImpl
 	@Override
 	public CommercePriceList updateCommercePriceList(
 			long commercePriceListId, long commerceCurrencyId, String name,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
+			double priority, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CommercePriceListPermission.check(
@@ -133,11 +134,11 @@ public class CommercePriceListServiceImpl
 			CommerceActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
 
 		return commercePriceListLocalService.updateCommercePriceList(
-			commercePriceListId, commerceCurrencyId, name, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			commercePriceListId, commerceCurrencyId, name, priority,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 }

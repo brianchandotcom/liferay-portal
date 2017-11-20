@@ -66,9 +66,9 @@ public class CommercePriceListLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommercePriceList addCommercePriceList(
-			long commerceCurrencyId, String name, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
+			long commerceCurrencyId, String name, double priority,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, ServiceContext serviceContext)
@@ -107,6 +107,7 @@ public class CommercePriceListLocalServiceImpl
 		commercePriceList.setUserName(user.getFullName());
 		commercePriceList.setCommerceCurrencyId(commerceCurrencyId);
 		commercePriceList.setName(name);
+		commercePriceList.setPriority(priority);
 		commercePriceList.setDisplayDate(displayDate);
 		commercePriceList.setExpirationDate(expirationDate);
 
@@ -250,11 +251,12 @@ public class CommercePriceListLocalServiceImpl
 	@Override
 	public CommercePriceList updateCommercePriceList(
 			long commercePriceListId, long commerceCurrencyId, String name,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
+			double priority, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce price list
@@ -281,6 +283,7 @@ public class CommercePriceListLocalServiceImpl
 
 		commercePriceList.setCommerceCurrencyId(commerceCurrencyId);
 		commercePriceList.setName(name);
+		commercePriceList.setPriority(priority);
 		commercePriceList.setDisplayDate(displayDate);
 		commercePriceList.setExpirationDate(expirationDate);
 

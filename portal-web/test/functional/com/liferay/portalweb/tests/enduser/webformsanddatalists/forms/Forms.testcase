@@ -4475,7 +4475,7 @@
 	</command>
 
 	<command name="ViewBlankLabelWhenAddingNewField" priority="3">
-		<description message="This is a use case for LPS-64379." />
+		<description message="This is a use case for LPS-68182." />
 
 		<execute macro="Navigator#openURL" />
 
@@ -4515,10 +4515,6 @@
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Text Field" />
-		</execute>
-
-		<execute macro="Form#viewSidebarTitle">
-			<var name="fieldLabel" value="Unlabeled" />
 		</execute>
 
 		<execute macro="FormFields#viewFieldLabel">

@@ -99,6 +99,10 @@ public class JSONFactoryUtil {
 		return getJSONFactory().getNullJSON();
 	}
 
+	public static Object getNullJSONObject() {
+		return getJSONFactory().getNullJSONObject();	
+	}
+	
 	public static JSONObject getUnmodifiableJSONObject() {
 		return getJSONFactory().getUnmodifiableJSONObject();
 	}

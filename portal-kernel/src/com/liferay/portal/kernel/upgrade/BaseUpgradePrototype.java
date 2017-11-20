@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -47,15 +46,11 @@ public abstract class BaseUpgradePrototype extends UpgradeProcess {
 				"content.Language", clazz.getClassLoader()),
 			resourceBundleLoader);
 
-		StringBundler sb = new StringBundler(3);
+		String sql = "select distinct companyId from ".concat(tableName);
 
-		sb.append("select distinct companyId from ");
-		sb.append(tableName);
-		sb.append(" where name = ?");
+		sql = sql.concat(" where name = ?");
 
-		try (PreparedStatement ps = connection.prepareStatement(
-				sb.toString())) {
-
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setString(1, name);
 
 			ResultSet rs = ps.executeQuery();
@@ -106,16 +101,12 @@ public abstract class BaseUpgradePrototype extends UpgradeProcess {
 		String descriptionXml = _getLocalizationXml(
 			descriptionKey, "Description", companyId, resourceBundleLoader);
 
-		StringBundler sb = new StringBundler(3);
+		String sql = "update ".concat(tableName);
 
-		sb.append("update ");
-		sb.append(tableName);
-		sb.append(" set name = ?, description = ? where name = ? and ");
-		sb.append("description = ?");
+		sql = sql.concat(
+			" set name = ?, description = ? where name = ? and description = ?");
 
-		try (PreparedStatement ps = connection.prepareStatement(
-				sb.toString())) {
-
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setString(1, nameXml);
 			ps.setString(2, descriptionXml);
 			ps.setString(3, name);

@@ -24,7 +24,6 @@ import java.net.URISyntaxException;
 
 import java.util.Dictionary;
 
-import org.osgi.framework.BundleContext;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Activate;
@@ -38,9 +37,13 @@ import org.osgi.service.component.annotations.Reference;
 public class ConfigurationCleaner {
 
 	@Activate
-	protected void activate(BundleContext bundleContext) throws Exception {
+	protected void activate() throws Exception {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
+
+		if (configurations == null) {
+			return;
+		}
 
 		for (Configuration configuration : configurations) {
 			Dictionary<String, Object> dictionary =

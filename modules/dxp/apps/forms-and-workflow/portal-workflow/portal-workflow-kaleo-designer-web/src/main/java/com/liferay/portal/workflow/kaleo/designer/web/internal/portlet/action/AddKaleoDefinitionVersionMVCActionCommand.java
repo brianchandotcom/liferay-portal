@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.parser.WorkflowModelParser;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
+import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerWebKeys;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 
@@ -137,6 +138,10 @@ public class AddKaleoDefinitionVersionMVCActionCommand
 					definition.getDescription(), definition.getContent(),
 					version, serviceContext);
 		}
+
+		actionRequest.setAttribute(
+			KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION,
+			kaleoDefinitionVersion);
 	}
 
 	protected String getNextVersion(String version) {

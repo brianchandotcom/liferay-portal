@@ -20,9 +20,12 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
+import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerWebKeys;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 
 import java.util.Locale;
 import java.util.Map;
@@ -63,9 +66,18 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 			throw new WorkflowDefinitionFileException();
 		}
 
-		_workflowDefinitionManager.deployWorkflowDefinition(
-			themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-			getTitle(titleMap), content.getBytes());
+		WorkflowDefinition workflowDefinition =
+			_workflowDefinitionManager.deployWorkflowDefinition(
+				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+				getTitle(titleMap), content.getBytes());
+
+		KaleoDefinitionVersion kaleoDefinitionVersion =
+			kaleoDefinitionVersionLocalService.getLatestKaleoDefinitionVersion(
+				themeDisplay.getCompanyId(), workflowDefinition.getName());
+
+		actionRequest.setAttribute(
+			KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION,
+			kaleoDefinitionVersion);
 	}
 
 	@Reference(target = "(proxy.bean=false)")

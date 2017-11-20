@@ -48,10 +48,11 @@ public abstract class BaseUpgradePrototype extends UpgradeProcess {
 
 		String sql = "select distinct companyId from ".concat(tableName);
 
-		sql = sql.concat(" where name = ?");
+		sql = sql.concat(" where name = ? and description = ?");
 
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setString(1, name);
+			ps.setString(2, description);
 
 			ResultSet rs = ps.executeQuery();
 

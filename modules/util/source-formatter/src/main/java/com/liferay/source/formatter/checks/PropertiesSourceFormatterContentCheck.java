@@ -26,16 +26,14 @@ public class PropertiesSourceFormatterContentCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (!fileName.endsWith("/source-formatter.properties")) {
-			return content;
+		if (fileName.endsWith("/source-formatter.properties")) {
+			content = _checkConvertedKeys(content);
 		}
 
-		return _checkSourceFormatterContent(content);
+		return content;
 	}
 
-	private String _checkSourceFormatterContent(String content)
-		throws Exception {
-
+	private String _checkConvertedKeys(String content) {
 		for (String[] array : _CONVERTED_KEYS) {
 			content = StringUtil.replace(content, array[0], array[1]);
 		}

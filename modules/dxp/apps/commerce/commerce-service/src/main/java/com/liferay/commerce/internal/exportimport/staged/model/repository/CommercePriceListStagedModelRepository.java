@@ -119,11 +119,11 @@ public class CommercePriceListStagedModelRepository
 
 		return _commercePriceListLocalService.addCommercePriceList(
 			commercePriceList.getCommerceCurrencyId(),
-			commercePriceList.getName(), displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			commercePriceList.getName(), commercePriceList.getPriority(),
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	@Override
@@ -257,11 +257,11 @@ public class CommercePriceListStagedModelRepository
 		return _commercePriceListLocalService.updateCommercePriceList(
 			commercePriceList.getCommercePriceListId(),
 			commercePriceList.getCommerceCurrencyId(),
-			commercePriceList.getName(), displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			commercePriceList.getName(), commercePriceList.getPriority(),
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	@Reference

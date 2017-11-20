@@ -7,6 +7,7 @@ Export-Package:\
 	com.liferay.commerce.exception,\
 	com.liferay.commerce.inventory,\
 	com.liferay.commerce.model,\
+	com.liferay.commerce.price,\
 	com.liferay.commerce.service,\
 	com.liferay.commerce.service.persistence,\
 	com.liferay.commerce.stock.activity,\

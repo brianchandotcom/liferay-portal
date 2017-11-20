@@ -16,10 +16,14 @@ package com.liferay.commerce.price.list.web.internal.portlet;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.price.CommercePriceListQualificationTypeRegistry;
 import com.liferay.commerce.price.list.web.internal.display.context.CommercePriceListDisplayContext;
-import com.liferay.commerce.price.list.web.internal.portlet.action.CommercePriceListActionHelper;
+import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
+import com.liferay.commerce.service.CommercePriceListQualificationTypeRelService;
 import com.liferay.commerce.service.CommercePriceListService;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -28,6 +32,8 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -65,10 +71,15 @@ public class CommercePriceListPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			renderRequest);
+
 		CommercePriceListDisplayContext commercePriceListDisplayContext =
 			new CommercePriceListDisplayContext(
 				_commercePriceListActionHelper, _commerceCurrencyService,
-				_commercePriceListService, renderRequest, renderResponse);
+				_commercePriceListQualificationTypeRegistry,
+				_commercePriceListQualificationTypeRelService,
+				_commercePriceListService, httpServletRequest, _itemSelector);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commercePriceListDisplayContext);
@@ -83,6 +94,20 @@ public class CommercePriceListPortlet extends MVCPortlet {
 	private CommercePriceListActionHelper _commercePriceListActionHelper;
 
 	@Reference
+	private CommercePriceListQualificationTypeRegistry
+		_commercePriceListQualificationTypeRegistry;
+
+	@Reference
+	private CommercePriceListQualificationTypeRelService
+		_commercePriceListQualificationTypeRelService;
+
+	@Reference
 	private CommercePriceListService _commercePriceListService;
+
+	@Reference
+	private ItemSelector _itemSelector;
+
+	@Reference
+	private Portal _portal;
 
 }

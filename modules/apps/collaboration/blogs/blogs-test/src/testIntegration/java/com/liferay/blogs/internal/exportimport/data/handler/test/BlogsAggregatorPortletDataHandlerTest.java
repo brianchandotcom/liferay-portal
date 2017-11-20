@@ -20,7 +20,6 @@ import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 
-import org.junit.Before;
 import org.junit.runner.RunWith;
 
 /**
@@ -31,11 +30,6 @@ import org.junit.runner.RunWith;
 public class BlogsAggregatorPortletDataHandlerTest
 	extends BasePortletDataHandlerTestCase {
 
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-	}
 
 	@Override
 	protected void addStagedModels() throws Exception {

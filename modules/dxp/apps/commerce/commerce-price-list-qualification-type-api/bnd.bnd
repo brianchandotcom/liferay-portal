@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Commerce Price List Qualification Type API
+Bundle-SymbolicName: com.liferay.commerce.price.list.qualification.type.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.commerce.price.list.qualification.type.exception,\
+	com.liferay.commerce.price.list.qualification.type.model,\
+	com.liferay.commerce.price.list.qualification.type.service,\
+	com.liferay.commerce.price.list.qualification.type.service.persistence

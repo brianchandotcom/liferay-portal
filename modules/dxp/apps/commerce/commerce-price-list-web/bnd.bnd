@@ -1,3 +1,7 @@
 Bundle-Name: Liferay Commerce Price List Web
 Bundle-SymbolicName: com.liferay.commerce.price.list.web
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.commerce.price.list.web.display.context,\
+	com.liferay.commerce.price.list.web.portlet.action
+Web-ContextPath: /commerce-price-list-web

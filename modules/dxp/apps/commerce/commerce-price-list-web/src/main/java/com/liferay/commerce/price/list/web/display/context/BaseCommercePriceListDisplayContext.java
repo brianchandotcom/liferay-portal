@@ -12,20 +12,24 @@
  * details.
  */
 
-package com.liferay.commerce.price.list.web.internal.display.context;
+package com.liferay.commerce.price.list.web.display.context;
 
 import com.liferay.commerce.model.CommercePriceList;
-import com.liferay.commerce.price.list.web.internal.portlet.action.CommercePriceListActionHelper;
+import com.liferay.commerce.price.list.web.internal.servlet.taglib.ui.CommercePriceListScreenNavigationConstants;
+import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
+import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Alessio Antonio Rendina
@@ -34,11 +38,16 @@ public abstract class BaseCommercePriceListDisplayContext<T> {
 
 	public BaseCommercePriceListDisplayContext(
 		CommercePriceListActionHelper commercePriceListActionHelper,
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		HttpServletRequest httpServletRequest) {
 
 		this.commercePriceListActionHelper = commercePriceListActionHelper;
-		this.renderRequest = renderRequest;
-		this.renderResponse = renderResponse;
+		this.httpServletRequest = httpServletRequest;
+
+		CPRequestHelper cpRequestHelper = new CPRequestHelper(
+			httpServletRequest);
+
+		liferayPortletRequest = cpRequestHelper.getLiferayPortletRequest();
+		liferayPortletResponse = cpRequestHelper.getLiferayPortletResponse();
 
 		_defaultOrderByCol = "create-date";
 		_defaultOrderByType = "desc";
@@ -50,7 +59,7 @@ public abstract class BaseCommercePriceListDisplayContext<T> {
 		}
 
 		_commercePriceList = commercePriceListActionHelper.getCommercePriceList(
-			renderRequest);
+			liferayPortletRequest);
 
 		return _commercePriceList;
 	}
@@ -70,25 +79,25 @@ public abstract class BaseCommercePriceListDisplayContext<T> {
 			return _keywords;
 		}
 
-		_keywords = ParamUtil.getString(renderRequest, "keywords");
+		_keywords = ParamUtil.getString(httpServletRequest, "keywords");
 
 		return _keywords;
 	}
 
 	public String getOrderByCol() {
 		return ParamUtil.getString(
-			renderRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM,
+			httpServletRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM,
 			_defaultOrderByCol);
 	}
 
 	public String getOrderByType() {
 		return ParamUtil.getString(
-			renderRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM,
+			httpServletRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM,
 			_defaultOrderByType);
 	}
 
 	public PortletURL getPortletURL() throws PortalException {
-		PortletURL portletURL = renderResponse.createRenderURL();
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		CommercePriceList commercePriceList = getCommercePriceList();
 
@@ -98,19 +107,20 @@ public abstract class BaseCommercePriceListDisplayContext<T> {
 				String.valueOf(getCommercePriceListId()));
 		}
 
-		String delta = ParamUtil.getString(renderRequest, "delta");
+		String delta = ParamUtil.getString(httpServletRequest, "delta");
 
 		if (Validator.isNotNull(delta)) {
 			portletURL.setParameter("delta", delta);
 		}
 
-		String deltaEntry = ParamUtil.getString(renderRequest, "deltaEntry");
+		String deltaEntry = ParamUtil.getString(
+			httpServletRequest, "deltaEntry");
 
 		if (Validator.isNotNull(deltaEntry)) {
 			portletURL.setParameter("deltaEntry", deltaEntry);
 		}
 
-		String keywords = ParamUtil.getString(renderRequest, "keywords");
+		String keywords = ParamUtil.getString(httpServletRequest, "keywords");
 
 		if (Validator.isNotNull(keywords)) {
 			portletURL.setParameter("keywords", keywords);
@@ -128,7 +138,7 @@ public abstract class BaseCommercePriceListDisplayContext<T> {
 			portletURL.setParameter("orderByType", orderByType);
 		}
 
-		String redirect = ParamUtil.getString(renderRequest, "redirect");
+		String redirect = ParamUtil.getString(httpServletRequest, "redirect");
 
 		if (Validator.isNotNull(redirect)) {
 			portletURL.setParameter("redirect", redirect);
@@ -139,10 +149,14 @@ public abstract class BaseCommercePriceListDisplayContext<T> {
 
 	public RowChecker getRowChecker() {
 		if (_rowChecker == null) {
-			_rowChecker = new EmptyOnClickRowChecker(renderResponse);
+			_rowChecker = new EmptyOnClickRowChecker(liferayPortletResponse);
 		}
 
 		return _rowChecker;
+	}
+
+	public String getScreenNavigationCategoryKey() throws PortalException {
+		return CommercePriceListScreenNavigationConstants.CATEGORY_KEY_DETAILS;
 	}
 
 	public abstract SearchContainer<T> getSearchContainer()
@@ -173,12 +187,13 @@ public abstract class BaseCommercePriceListDisplayContext<T> {
 	}
 
 	protected String getNavigation() {
-		return ParamUtil.getString(renderRequest, "navigation");
+		return ParamUtil.getString(httpServletRequest, "navigation");
 	}
 
 	protected final CommercePriceListActionHelper commercePriceListActionHelper;
-	protected final RenderRequest renderRequest;
-	protected final RenderResponse renderResponse;
+	protected final HttpServletRequest httpServletRequest;
+	protected final LiferayPortletRequest liferayPortletRequest;
+	protected final LiferayPortletResponse liferayPortletResponse;
 	protected SearchContainer<T> searchContainer;
 
 	private CommercePriceList _commercePriceList;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.price.list.web.internal.portlet.action;
+package com.liferay.commerce.price.list.web.portlet.action;
 
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.model.CommercePriceEntry;

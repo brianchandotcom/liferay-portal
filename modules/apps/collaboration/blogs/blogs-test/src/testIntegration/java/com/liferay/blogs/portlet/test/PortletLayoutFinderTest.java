@@ -122,19 +122,13 @@ public class PortletLayoutFinderTest {
 		Assert.assertEquals(portletId, result.getPortletId());
 	}
 
-	@Test
+	@Test(expected = NoSuchLayoutException.class)
 	public void testGetPlidAndPortletIdWhenPortletDoesNotExist()
 		throws Exception {
 
 		addLayouts(false, false);
 
-		try {
-			_portletLayoutFinder.find(getThemeDisplay(), _blogsEntryGroupId);
-
-			Assert.fail();
-		}
-		catch (NoSuchLayoutException nsle) {
-		}
+		_portletLayoutFinder.find(getThemeDisplay(), _blogsEntryGroupId);
 	}
 
 	@Test

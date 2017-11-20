@@ -14,13 +14,13 @@
 
 package com.liferay.portal.tools;
 
+import com.liferay.petra.xml.Dom4jUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
-import com.liferay.util.xml.Dom4jUtil;
 
 import java.util.List;
 

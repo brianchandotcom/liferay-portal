@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.configuration.extender;
+package com.liferay.portal.configuration.extender.internal;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Supplier;

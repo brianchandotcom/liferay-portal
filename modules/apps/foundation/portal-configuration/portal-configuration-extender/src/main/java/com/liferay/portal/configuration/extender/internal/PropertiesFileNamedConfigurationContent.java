@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.configuration.extender;
+package com.liferay.portal.configuration.extender.internal;
 
 import java.io.IOException;
 import java.io.InputStream;

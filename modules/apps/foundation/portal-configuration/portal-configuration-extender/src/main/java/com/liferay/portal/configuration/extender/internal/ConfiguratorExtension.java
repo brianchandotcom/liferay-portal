@@ -14,9 +14,6 @@
 
 package com.liferay.portal.configuration.extender.internal;
 
-import com.liferay.portal.configuration.extender.ConfigurationDescription;
-import com.liferay.portal.configuration.extender.ConfigurationDescriptionFactory;
-import com.liferay.portal.configuration.extender.NamedConfigurationContent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;

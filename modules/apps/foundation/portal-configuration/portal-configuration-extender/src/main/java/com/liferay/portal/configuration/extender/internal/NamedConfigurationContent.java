@@ -12,14 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.configuration.extender;
+package com.liferay.portal.configuration.extender.internal;
+
+import java.io.InputStream;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public interface ConfigurationDescriptionFactory {
+public interface NamedConfigurationContent {
 
-	public ConfigurationDescription create(
-		NamedConfigurationContent namedConfigurationContent);
+	public InputStream getInputStream();
+
+	public String getName();
 
 }

@@ -90,6 +90,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.petra.process", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.reflect", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
+	provided group: "com.liferay", name: "com.liferay.petra.xml", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"

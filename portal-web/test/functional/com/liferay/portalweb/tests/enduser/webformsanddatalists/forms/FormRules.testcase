@@ -1246,7 +1246,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewRuleWorksAfterTypingInAFieldWithoutARuleFirst" priority="3">
+	<command name="ViewShowRuleActivationAfterInputtingUnrelatedField" priority="3">
 		<description message="This is a use case for LPS-75495." />
 
 		<execute macro="Navigator#openURL" />

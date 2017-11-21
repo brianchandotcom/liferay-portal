@@ -132,6 +132,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Site Page Edit" />
+			<var name="privacy" value="Public" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

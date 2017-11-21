@@ -92,44 +92,46 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 	<c:otherwise>
 		<liferay-ui:error key="<%= InvalidSiteNavigationMenuItemOrderException.class.getName() %>" message="invalid-site-navigation-menu-items-order" />
 
-		<div class="container-fluid-1280 row">
-			<div class="col-md-9 site-navigation-menu-container" id="<portlet:namespace />menuItemsContainer">
+		<div class="container-fluid-1280">
+			<div class="row">
+				<div class="col-md-9 pt-3 site-navigation-menu-container" id="<portlet:namespace />menuItemsContainer">
 
-				<%
-				for (SiteNavigationMenuItem siteNavigationMenuItem : siteNavigationMenuItems) {
-				%>
+					<%
+					for (SiteNavigationMenuItem siteNavigationMenuItem : siteNavigationMenuItems) {
+					%>
 
-					<liferay-util:include page="/view_site_navigation_menu_item.jsp" servletContext="<%= application %>">
-						<liferay-util:param name="siteNavigationMenuItemId" value="<%= String.valueOf(siteNavigationMenuItem.getSiteNavigationMenuItemId()) %>" />
-					</liferay-util:include>
+						<liferay-util:include page="/view_site_navigation_menu_item.jsp" servletContext="<%= application %>">
+							<liferay-util:param name="siteNavigationMenuItemId" value="<%= String.valueOf(siteNavigationMenuItem.getSiteNavigationMenuItemId()) %>" />
+						</liferay-util:include>
 
-				<%
-				}
-				%>
+					<%
+					}
+					%>
 
-			</div>
+				</div>
 
-			<div class="col-md-3">
-				<div class="hide sidebar sidebar-light" id="<portlet:namespace />sidebar">
-					<div class="sidebar-header">
-						<div class="sidebar-section-flex">
-							<div class="flex-col flex-col-expand">
-								<h4 class="sidebar-title" id="<portlet:namespace />sidebarTitle"></h4>
-							</div>
+				<div class="col-md-3">
+					<div class="hide sidebar sidebar-light" id="<portlet:namespace />sidebar">
+						<div class="sidebar-header">
+							<div class="sidebar-section-flex">
+								<div class="flex-col flex-col-expand">
+									<h4 class="sidebar-title" id="<portlet:namespace />sidebarTitle"></h4>
+								</div>
 
-							<div class="flex-col">
-								<ul class="nav nav-unstyled sidebar-actions">
-									<li class="nav-item">
-										<a class="nav-link nav-link-monospaced sidebar-link" href="javascript:;" id="<portlet:namespace />sidebarClose" role="button">
-											<aui:icon image="angle-right" markupView="lexicon" />
-										</a>
-									</li>
-								</ul>
+								<div class="flex-col">
+									<ul class="nav nav-unstyled sidebar-actions">
+										<li class="nav-item">
+											<a class="nav-link nav-link-monospaced sidebar-link" href="javascript:;" id="<portlet:namespace />sidebarClose" role="button">
+												<aui:icon image="angle-right" markupView="lexicon" />
+											</a>
+										</li>
+									</ul>
+								</div>
 							</div>
 						</div>
-					</div>
 
-					<div class="sidebar-body" id="<portlet:namespace />sidebarBody">
+						<div class="sidebar-body" id="<portlet:namespace />sidebarBody">
+						</div>
 					</div>
 				</div>
 			</div>

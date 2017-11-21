@@ -37,6 +37,10 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
+		if (true) {
+			return content;
+		}
+
 		if (isSubrepository() || isReadOnly(absolutePath)) {
 			return content;
 		}

@@ -33,6 +33,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Zsolt Berentey
  * @author Zoltan Csaszi
+ * @author Gergely Mathe
  */
 @RunWith(Arquillian.class)
 @Sync
@@ -61,6 +62,11 @@ public class IGDisplayPortletDataHandlerTest
 	@Override
 	protected DataLevel getDataLevel() {
 		return DataLevel.PORTLET_INSTANCE;
+	}
+
+	@Override
+	protected String[] getDataPortletPreferences() {
+		return new String[] {"rootFolderId"};
 	}
 
 	@Override

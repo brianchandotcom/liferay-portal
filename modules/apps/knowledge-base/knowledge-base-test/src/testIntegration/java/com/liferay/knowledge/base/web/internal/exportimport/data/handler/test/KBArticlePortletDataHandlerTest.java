@@ -20,15 +20,19 @@ import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
  * @author Zoltan Csaszi
+ * @author Gergely Mathe
  */
 @RunWith(Arquillian.class)
 @Sync
@@ -42,6 +46,14 @@ public class KBArticlePortletDataHandlerTest
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
+		super.setUp();
+	}
+
 	@Override
 	protected void addStagedModels() throws Exception {
 	}
@@ -49,6 +61,11 @@ public class KBArticlePortletDataHandlerTest
 	@Override
 	protected DataLevel getDataLevel() {
 		return DataLevel.PORTLET_INSTANCE;
+	}
+
+	@Override
+	protected String[] getDataPortletPreferences() {
+		return new String[] {"resourcePrimKey"};
 	}
 
 	@Override

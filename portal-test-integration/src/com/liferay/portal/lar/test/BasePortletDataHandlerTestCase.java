@@ -65,6 +65,13 @@ public abstract class BasePortletDataHandlerTestCase {
 	}
 
 	@Test
+	public void testGetDataPortletPreferences() {
+		Assert.assertArrayEquals(
+			portletDataHandler.getDataPortletPreferences(),
+			getDataPortletPreferences());
+	}
+
+	@Test
 	public void testIsDataPortalLevel() {
 		Assert.assertEquals(
 			isDataPortalLevel(), portletDataHandler.isDataPortalLevel());
@@ -178,6 +185,10 @@ public abstract class BasePortletDataHandlerTestCase {
 
 	protected DataLevel getDataLevel() {
 		return DataLevel.SITE;
+	}
+
+	protected String[] getDataPortletPreferences() {
+		return StringPool.EMPTY_ARRAY;
 	}
 
 	protected Date getEndDate() {

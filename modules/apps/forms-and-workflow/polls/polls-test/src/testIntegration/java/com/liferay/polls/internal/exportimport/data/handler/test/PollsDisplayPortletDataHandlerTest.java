@@ -17,18 +17,30 @@ package com.liferay.polls.internal.exportimport.data.handler.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.polls.constants.PollsPortletKeys;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
  * @author Zoltan Csaszi
+ * @author Gergely Mathe
  */
 @RunWith(Arquillian.class)
 public class PollsDisplayPortletDataHandlerTest
 	extends BasePortletDataHandlerTestCase {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
+		super.setUp();
+	}
 
 	@Rule
 	public final LiferayIntegrationTestRule liferayIntegrationTestRule =
@@ -41,6 +53,11 @@ public class PollsDisplayPortletDataHandlerTest
 	@Override
 	protected DataLevel getDataLevel() {
 		return DataLevel.PORTLET_INSTANCE;
+	}
+
+	@Override
+	protected String[] getDataPortletPreferences() {
+		return new String[] {"questionId"};
 	}
 
 	@Override

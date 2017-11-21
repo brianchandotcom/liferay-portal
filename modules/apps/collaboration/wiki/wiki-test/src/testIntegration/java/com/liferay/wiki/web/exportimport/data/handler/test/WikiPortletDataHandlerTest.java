@@ -70,6 +70,11 @@ public class WikiPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 	}
 
 	@Override
+	protected String[] getDataPortletPreferences() {
+		return new String[] {"hiddenNodes, visibleNodes"};
+	}
+
+	@Override
 	protected String getPortletId() {
 		return WikiPortletKeys.WIKI;
 	}

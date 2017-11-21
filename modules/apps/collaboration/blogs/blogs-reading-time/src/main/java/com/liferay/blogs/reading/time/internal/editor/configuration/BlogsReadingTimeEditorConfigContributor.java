@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.reading.time.blogs.internal.editor.configuration;
+package com.liferay.blogs.reading.time.internal.editor.configuration;
 
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = EditorConfigContributor.class
 )
-public class ReadingTimeBlogsEditorConfigContributor
+public class BlogsReadingTimeEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override

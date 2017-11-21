@@ -981,16 +981,23 @@ message.
 					/>
 				</antelope:stringutil>
 
+				<math
+					datatype="int"
+					operand1="${petra.major.version}"
+					operand2="7"
+					operation="/"
+					result="petra.version.check"
+				/>
+
+				<echo message="PVC = ${petra.version.check}" />
+
 				<if>
 					<and>
 						<contains string="${petra.version}" substring="sp" />
-						<bool>
-							<isgreaterthan arg1="petra.major.version" arg2="6"/>
-						</bool>
+						<equals arg1="${petra.version.check}" arg2="1" />
 					</and>
 					<then>
 						<local name="petra.minor.version.number" />
-						<local name="petra.minor.version.number.start.index" />
 
 						<antelope:stringutil property="petra.minor.version.number.start.index">
 							<indexof string="sp" />
@@ -1008,10 +1015,16 @@ message.
 							<substring beginindex="${petra.minor.version.number.start.index}" />
 						</antelope:stringutil>
 
+						<math
+							datatype="int"
+							operand1="${petra.minor.version.number}"
+							operand2="5"
+							operation="/"
+							result="petra.minor.version.check"
+						/>
+
 						<if>
-							<bool>
-								<isgreaterthan arg1="${petra.minor.version.number}" arg2="4" />
-							</bool>
+							<equals arg1="${petra.minor.version.check}" arg2="1" />
 							<then>
 								<property name="petra.use" value="true" />
 							</then>
@@ -1030,7 +1043,7 @@ message.
 					<equals arg1="${petra.use}" arg2="false" />
 					<then>
 
-						<replace file="${app.server.lib.globar.dir}/module.xml">
+						<replace file="${app.server.lib.global.dir}/module.xml">
 							<replacetoken><![CDATA[
 		<resource-root path="com.liferay.petra.concurrent.jar" />
 		<resource-root path="com.liferay.petra.executor.jar" />
@@ -1039,8 +1052,7 @@ message.
 		<resource-root path="com.liferay.petra.memory.jar" />
 		<resource-root path="com.liferay.petra.nio.jar" />
 		<resource-root path="com.liferay.petra.reflect.jar" />
-		<resource-root path="com.liferay.petra.string.jar" />
-								]]>
+		<resource-root path="com.liferay.petra.string.jar" />]]>
 							</replacetoken>
 							<replacevalue></replacevalue>
 						</replace>

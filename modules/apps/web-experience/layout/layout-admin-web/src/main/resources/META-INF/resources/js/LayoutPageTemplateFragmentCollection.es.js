@@ -16,7 +16,7 @@ class LayoutPageTemplateFragmentCollection extends Component {
 	 */
 	_handleEntryClick(event) {
 		const fragmentEntryId = event.delegateTarget.dataset.fragmentEntryId;
-		const fragmentName = this.collection.entries.find(
+		const fragmentName = this.fragmentCollection.fragmentEntries.find(
 			entry => entry.fragmentEntryId === fragmentEntryId
 		).name;
 
@@ -41,14 +41,14 @@ LayoutPageTemplateFragmentCollection.STATE = {
 	 * @memberOf LayoutPageTemplateFragmentCollection
 	 * @type {!Array<object>}
 	 */
-	collection: Config.shapeOf({
+	fragmentCollection: Config.shapeOf({
 		fragmentCollectionId: Config.string().required(),
 		name: Config.string().required(),
-		entries: Config.arrayOf(
+		fragmentEntries: Config.arrayOf(
 			Config.shapeOf({
 				fragmentEntryId: Config.string().required(),
 				name: Config.string().required(),
-			})
+			}).required()
 		).required(),
 	}),
 

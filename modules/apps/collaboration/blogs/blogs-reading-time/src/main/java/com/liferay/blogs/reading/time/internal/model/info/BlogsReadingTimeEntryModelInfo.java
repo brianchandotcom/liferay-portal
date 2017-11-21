@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.reading.time.blogs.internal.model.info;
+package com.liferay.blogs.reading.time.internal.model.info;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
 	service = ReadingTimeModelInfo.class
 )
-public class ReadingTimeBlogsEntryModelInfo
+public class BlogsReadingTimeEntryModelInfo
 	implements ReadingTimeModelInfo<BlogsEntry> {
 
 	@Override

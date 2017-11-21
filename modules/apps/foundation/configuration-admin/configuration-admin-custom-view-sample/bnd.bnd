@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Configuration Admin Custom View Sample
+Bundle-SymbolicName: com.liferay.configuration.admin.custom.view.sample
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+Web-ContextPath: /configuration-admin-custom-view-sample

@@ -26,7 +26,7 @@ typeSettingsProperties.fastLoad(siteNavigationMenuItem.getTypeSettings());
 String selectedFullPageApplicationPortlet = typeSettingsProperties.get("fullPageApplicationPortlet");
 %>
 
-<aui:select label='<%= LanguageUtil.get(resourceBundle, "full-page-application") %>' name="TypeSettingsProperties--fullPageApplicationPortlet--">
+<aui:select label='<%= LanguageUtil.get(resourceBundle, "application") %>' name="TypeSettingsProperties--fullPageApplicationPortlet--">
 
 	<%
 	List<Portlet> portlets = (List<Portlet>)request.getAttribute(SiteNavigationMenuItemTypeFullPageApplicationWebKeys.FULL_PAGE_APPLICATION_PORTLETS);

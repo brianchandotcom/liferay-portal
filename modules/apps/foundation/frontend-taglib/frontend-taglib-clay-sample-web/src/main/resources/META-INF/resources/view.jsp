@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-ui:tabs
-	names="Alerts,Badges,Labels,Progress Bars,Stickers"
+	names="Alerts,Badges,Icons,Labels,Progress Bars,Stickers"
 	refresh="<%= false %>"
 	type="tabs nav-tabs-default"
 >
@@ -30,6 +30,12 @@
 	<liferay-ui:section>
         <div class="container-fluid-1280">
             <%@ include file="/partials/badges.jsp" %>
+        </div>
+    </liferay-ui:section>
+
+	<liferay-ui:section>
+        <div class="container-fluid-1280">
+            <%@ include file="/partials/icons.jsp" %>
         </div>
     </liferay-ui:section>
 

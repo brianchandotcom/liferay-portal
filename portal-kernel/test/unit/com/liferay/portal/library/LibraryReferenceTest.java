@@ -33,8 +33,13 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 
@@ -73,6 +78,7 @@ public class LibraryReferenceTest {
 			documentBuilderFactory.newDocumentBuilder();
 
 		_initEclipse(documentBuilder);
+		_initIntellij(documentBuilder);
 		_initNetBeans(documentBuilder);
 		_initVersionsJars(documentBuilder, _VERSIONS_FILE_NAME, _versionsJars);
 		_initVersionsJars(
@@ -88,6 +94,36 @@ public class LibraryReferenceTest {
 	public void testEclipseSourceDirsInModules() {
 		testNonexistentModuleSourceDirReferences(
 			_eclipseModuleSourceDirs, _ECLIPSE_FILE_NAME);
+	}
+
+	@Test
+	public void testIntellijLibPreModules() {
+		for (Map.Entry<String, List<String>> entry :
+				_intellijModuleSourceModules.entrySet()) {
+
+			String intellijFileName = entry.getKey();
+			List<String> modules = entry.getValue();
+
+			List<String> missingModules = new ArrayList<>();
+
+			for (String moduleSourceDir : _moduleSourceDirs) {
+				int y = moduleSourceDir.indexOf(_SRC_JAVA_DIR_NAME);
+
+				int x = moduleSourceDir.lastIndexOf(CharPool.SLASH, y - 2);
+
+				String moduleName = moduleSourceDir.substring(x + 1, y - 1);
+
+				if (!modules.contains(moduleName)) {
+					missingModules.add(moduleName);
+				}
+			}
+
+			Assert.assertTrue(
+				intellijFileName +
+					" is missing orderEntry elements for modules " +
+						missingModules,
+				missingModules.isEmpty());
+		}
 	}
 
 	@Test
@@ -267,6 +303,30 @@ public class LibraryReferenceTest {
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				_gitIgnoreJars.add(LIB_DIR_NAME + line);
 			}
+		}
+	}
+
+	private static void _initIntellij(DocumentBuilder documentBuilder)
+		throws Exception {
+
+		for (String fileName : _intellijFileNames) {
+			Document document = documentBuilder.parse(new File(fileName));
+
+			NodeList nodeList = document.getElementsByTagName("orderEntry");
+
+			List<String> intellijModuleSourceModules = new ArrayList<>();
+
+			for (int i = 0; i < nodeList.getLength(); i++) {
+				Element element = (Element)nodeList.item(i);
+
+				if (Objects.equals("module", element.getAttribute("type"))) {
+					intellijModuleSourceModules.add(
+						element.getAttribute("module-name"));
+				}
+			}
+
+			_intellijModuleSourceModules.put(
+				fileName, intellijModuleSourceModules);
 		}
 	}
 
@@ -471,6 +531,9 @@ public class LibraryReferenceTest {
 	private static final Set<String> _eclipseModuleSourceDirs = new HashSet<>();
 	private static final Set<String> _excludeJars = new HashSet<>();
 	private static final Set<String> _gitIgnoreJars = new HashSet<>();
+	private static final List<String> _intellijFileNames = new ArrayList<>();
+	private static final Map<String, List<String>>
+		_intellijModuleSourceModules = new HashMap<>();
 	private static final Set<String> _libDependencyJars = new HashSet<>();
 	private static final Set<String> _libJars = new HashSet<>();
 	private static final Set<String> _moduleSourceDirs = new HashSet<>();
@@ -480,5 +543,18 @@ public class LibraryReferenceTest {
 	private static Path _portalPath;
 	private static final Set<String> _versionsExtJars = new HashSet<>();
 	private static final Set<String> _versionsJars = new HashSet<>();
+
+	static {
+		_intellijFileNames.add("portal-impl/portal-impl.iml");
+		_intellijFileNames.add("portal-kernel/portal-kernel.iml");
+		_intellijFileNames.add(
+			"portal-test-integration/portal-test-integration.iml");
+		_intellijFileNames.add("portal-test/portal-test.iml");
+		_intellijFileNames.add("portal-web/portal-web.iml");
+		_intellijFileNames.add("util-bridges/util-bridges.iml");
+		_intellijFileNames.add("util-java/util-java.iml");
+		_intellijFileNames.add("util-slf4j/util-slf4j.iml");
+		_intellijFileNames.add("util-taglib/util-taglib.iml");
+	}
 
 }

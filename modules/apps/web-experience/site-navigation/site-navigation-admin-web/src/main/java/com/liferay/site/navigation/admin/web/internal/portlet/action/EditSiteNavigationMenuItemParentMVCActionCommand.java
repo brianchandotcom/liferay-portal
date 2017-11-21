@@ -14,20 +14,24 @@
 
 package com.liferay.site.navigation.admin.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.web.internal.constants.SiteNavigationAdminPortletKeys;
 import com.liferay.site.navigation.exception.InvalidSiteNavigationMenuItemOrderException;
+import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,30 +61,53 @@ public class EditSiteNavigationMenuItemParentMVCActionCommand
 		long parentSiteNavigationMenuItemId = ParamUtil.getLong(
 			actionRequest, "parentSiteNavigationMenuItemId");
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		hideDefaultSuccessMessage(actionRequest);
-
-		redirect = _http.setParameter(
-			redirect,
-			actionResponse.getNamespace() + "selectedSiteNavigationMenuItemId",
-			siteNavigationMenuItemId);
-
-		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
-
 		try {
-			_siteNavigationMenuItemService.updateSiteNavigationMenuItem(
-				siteNavigationMenuItemId, parentSiteNavigationMenuItemId,
-				serviceContext);
+			SiteNavigationMenuItem siteNavigationMenuItem =
+				_siteNavigationMenuItemService.updateSiteNavigationMenuItem(
+					siteNavigationMenuItemId, parentSiteNavigationMenuItemId,
+					serviceContext);
+
+			String redirect = _getRedirect(
+				actionRequest, siteNavigationMenuItem);
+
+			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 		}
 		catch (InvalidSiteNavigationMenuItemOrderException isnmioe) {
 			SessionErrors.add(actionRequest, isnmioe.getClass());
 
 			sendRedirect(actionRequest, actionResponse);
 		}
+
+		hideDefaultSuccessMessage(actionRequest);
+	}
+
+	private String _getRedirect(
+		ActionRequest actionRequest,
+		SiteNavigationMenuItem siteNavigationMenuItem) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		PortletURL redirectURL = PortletURLFactoryUtil.create(
+			actionRequest, SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
+			themeDisplay.getPlid(), ActionRequest.RENDER_PHASE);
+
+		redirectURL.setParameter("mvcPath", "/edit_site_navigation_menu.jsp");
+		redirectURL.setParameter("redirect", redirect);
+		redirectURL.setParameter(
+			"siteNavigationMenuId",
+			String.valueOf(siteNavigationMenuItem.getSiteNavigationMenuId()));
+		redirectURL.setParameter(
+			"selectedSiteNavigationMenuItemId",
+			String.valueOf(
+				siteNavigationMenuItem.getSiteNavigationMenuItemId()));
+
+		return redirectURL.toString();
 	}
 
 	@Reference

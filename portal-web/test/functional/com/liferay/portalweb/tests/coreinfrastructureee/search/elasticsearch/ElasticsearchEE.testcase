@@ -1,4 +1,5 @@
 <definition component-name="portal-search-ee">
+	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
 	<property name="test.run.environment" value="EE" />
 	<property name="testray.main.component.name" value="Elastic Search Impl" />
@@ -32,7 +33,6 @@
 
 		<property name="app.server.bundles.size" value="1" />
 		<property name="cluster.enabled" value="true" />
-		<property name="portal.release" value="true" />
 		<property name="test.name.skip.portal.instance" value="ElasticsearchEE#ElasticsearchClusterSmokeTest" />
 
 		<!-- Verify the total number of Elasticsearch replicas is two as there are two nodes/bundles running -->
@@ -166,7 +166,6 @@
 	<command name="ElasticsearchRemoteClusterSmokeTest" priority="5">
 		<property name="app.server.bundles.size" value="1" />
 		<property name="cluster.enabled" value="true" />
-		<property name="portal.release" value="true" />
 		<property name="remote.elasticsearch.enabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="ElasticsearchEE#ElasticsearchRemoteSmokeTest" />
 
@@ -284,7 +283,6 @@
 	<command name="ElasticsearchRemoteWithMarvelAndKibanaAndShieldSmokeTest" priority="5">
 		<property name="elastic.kibana.enabled" value="true" />
 		<property name="elastic.shield.enabled" value="true" />
-		<property name="portal.release" value="true" />
 		<property name="remote.elasticsearch.enabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="ElasticsearchEE#ElasticsearchRemoteMarvelKibanaSmokeTest" />
 
@@ -323,7 +321,6 @@
 
 	<command name="ElasticsearchRemoteWithMarvelAndKibanaSmokeTest" priority="5">
 		<property name="elastic.kibana.enabled" value="true" />
-		<property name="portal.release" value="true" />
 		<property name="remote.elasticsearch.enabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="ElasticsearchEE#ElasticsearchRemoteMarvelKibanaSmokeTest" />
 

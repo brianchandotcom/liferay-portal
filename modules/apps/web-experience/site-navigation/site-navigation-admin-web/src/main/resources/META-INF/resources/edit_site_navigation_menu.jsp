@@ -158,7 +158,7 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 		<aui:script require="site-navigation-menu-web/js/SiteNavigationMenuEditor.es as siteNavigationMenuEditorModule">
 			var siteNavigationMenuEditor = new siteNavigationMenuEditorModule.default(
 				{
-					editSiteNavigationMenuItemParentURL: '<portlet:actionURL name="/navigation_menu/edit_site_navigation_menu_item_parent"><portlet:param name="hideDefaultSuccessMessage" value="<%= Boolean.TRUE.toString() %>" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>',
+					editSiteNavigationMenuItemParentURL: '<portlet:actionURL name="/navigation_menu/edit_site_navigation_menu_item_parent"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>',
 					menuContainerSelector: '.site-navigation-menu-container',
 					menuItemSelector: '.site-navigation-menu-item',
 					namespace: '<portlet:namespace />'

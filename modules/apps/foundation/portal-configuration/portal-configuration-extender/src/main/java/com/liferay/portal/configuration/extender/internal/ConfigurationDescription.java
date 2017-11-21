@@ -12,37 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.configuration.extender;
+package com.liferay.portal.configuration.extender.internal;
 
-import java.io.IOException;
-
-import java.net.URL;
+import com.liferay.portal.kernel.util.Supplier;
 
 import java.util.Dictionary;
-import java.util.Enumeration;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public interface BundleStorage {
+public interface ConfigurationDescription {
 
-	public Enumeration<URL> findEntries(
-		String root, String pattern, boolean recurse);
+	public String getFactoryPid();
 
-	public long getBundleId();
+	public String getPid();
 
-	public URL getEntry(String name);
-
-	public Enumeration<String> getEntryPaths(String name);
-
-	public Dictionary<String, String> getHeaders();
-
-	public String getLocation();
-
-	public URL getResource(String name);
-
-	public Enumeration<URL> getResources(String name) throws IOException;
-
-	public String getSymbolicName();
+	public Supplier<Dictionary<String, Object>> getPropertiesSupplier();
 
 }

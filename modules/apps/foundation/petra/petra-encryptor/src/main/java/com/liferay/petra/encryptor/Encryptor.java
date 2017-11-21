@@ -126,10 +126,19 @@ public class Encryptor {
 		return new SecretKeySpec(bytes, Encryptor.KEY_ALGORITHM);
 	}
 
+	/**
+	 * @deprecated As of 1.0.0, replaced by {@link DigesterUtil#digest(String)}
+	 */
+	@Deprecated
 	public static String digest(String text) {
 		return DigesterUtil.digest(text);
 	}
 
+	/**
+	 * @deprecated As of 1.0.0, replaced by {@link
+	 *             DigesterUtil#digest(String, String...)}
+	 */
+	@Deprecated
 	public static String digest(String algorithm, String text) {
 		return DigesterUtil.digest(algorithm, text);
 	}

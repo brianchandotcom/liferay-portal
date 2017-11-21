@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.site.navigation.constants.SiteNavigationWebKeys;
 import com.liferay.site.navigation.menu.item.full.page.application.internal.constants.SiteNavigationMenuItemTypeFullPageApplicationConstants;
 import com.liferay.site.navigation.menu.item.full.page.application.internal.constants.SiteNavigationMenuItemTypeFullPageApplicationWebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -120,6 +121,43 @@ public class FullPageApplicationSiteNavigationMenuItemType
 		_jspRenderer.renderJSP(
 			_servletContext, request, response,
 			"/add_full_page_application.jsp");
+	}
+
+	@Override
+	public void renderEditPage(
+			HttpServletRequest request, HttpServletResponse response,
+			SiteNavigationMenuItem siteNavigationMenuItem)
+		throws IOException {
+
+		List<Portlet> portlets = _portletLocalService.getPortlets();
+
+		if (portlets.isEmpty()) {
+			return;
+		}
+
+		portlets = ListUtil.filter(
+			portlets,
+			new PredicateFilter<Portlet>() {
+
+				@Override
+				public boolean filter(Portlet portlet) {
+					return portlet.isFullPageDisplayable();
+				}
+
+			});
+
+		request.setAttribute(
+			SiteNavigationMenuItemTypeFullPageApplicationWebKeys.
+				FULL_PAGE_APPLICATION_PORTLETS,
+			portlets);
+
+		request.setAttribute(
+			SiteNavigationWebKeys.SITE_NAVIGATION_MENU_ITEM,
+			siteNavigationMenuItem);
+
+		_jspRenderer.renderJSP(
+			_servletContext, request, response,
+			"/edit_full_page_application.jsp");
 	}
 
 	@Reference

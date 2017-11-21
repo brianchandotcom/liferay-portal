@@ -52,6 +52,9 @@ public class EditSiteNavigationMenuItemMVCActionCommand
 		long siteNavigationMenuId = ParamUtil.getLong(
 			actionRequest, "siteNavigationMenuId");
 
+		long parentSiteNavigationMenuItemId = ParamUtil.getLong(
+			actionRequest, "parentSiteNavigationMenuItemId");
+
 		UnicodeProperties typeSettingsProperties =
 			PropertiesParamUtil.getProperties(
 				actionRequest, "TypeSettingsProperties--");
@@ -60,8 +63,8 @@ public class EditSiteNavigationMenuItemMVCActionCommand
 			actionRequest);
 
 		_siteNavigationMenuItemService.updateSiteNavigationMenuItem(
-			siteNavigationMenuId, 0, typeSettingsProperties.toString(),
-			serviceContext);
+			siteNavigationMenuId, parentSiteNavigationMenuItemId,
+			typeSettingsProperties.toString(), serviceContext);
 	}
 
 	@Reference

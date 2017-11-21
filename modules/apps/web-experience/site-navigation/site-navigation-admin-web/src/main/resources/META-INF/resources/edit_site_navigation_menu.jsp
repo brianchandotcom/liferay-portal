@@ -94,7 +94,7 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 
 		<div class="container-fluid-1280">
 			<div class="row">
-				<div class="col-md-9 pt-3 site-navigation-menu-container" id="<portlet:namespace />menuItemsContainer">
+				<div class="col-md-9 pt-3 site-navigation-menu-container">
 
 					<%
 					for (SiteNavigationMenuItem siteNavigationMenuItem : siteNavigationMenuItems) {
@@ -185,17 +185,16 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 			var sidebarBody = A.one('#<portlet:namespace />sidebarBody');
 			var sidebarTitle = A.one('#<portlet:namespace />sidebarTitle');
 
-			A.one('#<portlet:namespace />menuItemsContainer').delegate(
+			A.one('.site-navigation-menu-container').delegate(
 				'click',
 				function(event) {
 					var currentTarget = event.currentTarget;
-					var menuItem = currentTarget.ancestor('.menu-item')
 
 					var data = Liferay.Util.ns(
 						'<portlet:namespace />',
 						{
 							redirect: '<%= currentURL %>',
-							siteNavigationMenuItemId: menuItem.attr('data-siteNavigationMenuItemId')
+							siteNavigationMenuItemId: currentTarget.attr('data-siteNavigationMenuItemId')
 						}
 					);
 
@@ -211,7 +210,7 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 
 									sidebarBody.setContent(responseData);
 
-									sidebarTitle.text(menuItem.attr('data-title'));
+									sidebarTitle.text(currentTarget.attr('data-title'));
 
 									sidebar.removeClass('hide');
 								}
@@ -219,7 +218,7 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 						}
 					);
 				},
-				'.menu-item .lfr-card-title-text'
+				'.site-navigation-menu-item'
 			);
 
 			A.one('#<portlet:namespace />sidebarClose').on(

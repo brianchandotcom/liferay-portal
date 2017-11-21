@@ -31,66 +31,68 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 
 <c:choose>
 	<c:when test="<%= siteNavigationMenuItems.isEmpty() %>">
-		<aui:fieldset-group markupView="lexicon">
-			<aui:fieldset>
-				<div class="text-center">
-					<div>
-						<liferay-ui:message key="this-menu-is-empty" />
+		<div class="container-fluid-1280">
+			<aui:fieldset-group markupView="lexicon">
+				<aui:fieldset>
+					<div class="text-center">
+						<div>
+							<liferay-ui:message key="this-menu-is-empty" />
+						</div>
+
+						<div>
+							<liferay-ui:message key="please-add-elements" />
+						</div>
 					</div>
 
-					<div>
-						<liferay-ui:message key="please-add-elements" />
-					</div>
-				</div>
+					<div class="row" id="<portlet:namespace/>siteNavigationMenuItemTypes">
 
-				<div class="row" id="<portlet:namespace/>siteNavigationMenuItemTypes">
+						<%
+						for (SiteNavigationMenuItemType siteNavigationMenuItemType : siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemTypes()) {
+						%>
 
-					<%
-					for (SiteNavigationMenuItemType siteNavigationMenuItemType : siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemTypes()) {
-					%>
-
-						<div class="col-md-2">
-							<div class="card card-type-asset">
-								<div class="aspect-ratio card-item-first">
-									<div class="aspect-ratio-item-center-middle aspect-ratio-item-fluid">
-										<liferay-ui:icon
-											icon="<%= siteNavigationMenuItemType.getIcon() %>"
-											markupView="lexicon"
-										/>
+							<div class="col-md-2">
+								<div class="card card-type-asset">
+									<div class="aspect-ratio card-item-first">
+										<div class="aspect-ratio-item-center-middle aspect-ratio-item-fluid">
+											<liferay-ui:icon
+												icon="<%= siteNavigationMenuItemType.getIcon() %>"
+												markupView="lexicon"
+											/>
+										</div>
 									</div>
-								</div>
 
-								<div class="card-body">
-									<div class="card-row">
-										<div class="flex-col flex-col-expand">
-											<div class="card-title text-center text-truncate">
-												<liferay-portlet:renderURL var="addURL">
-													<portlet:param name="mvcPath" value="/add_site_navigation_menu_item.jsp" />
-													<portlet:param name="redirect" value="<%= currentURL %>" />
-													<portlet:param name="siteNavigationMenuId" value="<%= String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()) %>" />
-													<portlet:param name="type" value="<%= siteNavigationMenuItemType.getType() %>" />
-												</liferay-portlet:renderURL>
+									<div class="card-body">
+										<div class="card-row">
+											<div class="flex-col flex-col-expand">
+												<div class="card-title text-center text-truncate">
+													<liferay-portlet:renderURL var="addURL">
+														<portlet:param name="mvcPath" value="/add_site_navigation_menu_item.jsp" />
+														<portlet:param name="redirect" value="<%= currentURL %>" />
+														<portlet:param name="siteNavigationMenuId" value="<%= String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()) %>" />
+														<portlet:param name="type" value="<%= siteNavigationMenuItemType.getType() %>" />
+													</liferay-portlet:renderURL>
 
-												<aui:a href="<%= addURL %>" label="<%= siteNavigationMenuItemType.getLabel(locale) %>" />
+													<aui:a href="<%= addURL %>" label="<%= siteNavigationMenuItemType.getLabel(locale) %>" />
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
 
-					<%
-					}
-					%>
+						<%
+						}
+						%>
 
-				</div>
-			</aui:fieldset>
-		</aui:fieldset-group>
+					</div>
+				</aui:fieldset>
+			</aui:fieldset-group>
+		</div>
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:error key="<%= InvalidSiteNavigationMenuItemOrderException.class.getName() %>" message="invalid-site-navigation-menu-items-order" />
 
-		<div class="row">
+		<div class="container-fluid-1280 row">
 			<div class="col-md-9 site-navigation-menu-container" id="<portlet:namespace />menuItemsContainer">
 
 				<%

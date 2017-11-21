@@ -1137,7 +1137,7 @@ public class MBThreadFinderImpl
 	}
 
 	private static final String _INNER_JOIN_SQL =
-		"INNER JOIN MBMessage ON (MBThread.threadId = MBMessage.threadId)";
+		"INNER JOIN MBMessage ON MBThread.threadId = MBMessage.threadId";
 
 	private static final String _USER_ID_SQL = "AND (MBMessage.userId = ?)";
 

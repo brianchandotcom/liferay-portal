@@ -22,8 +22,6 @@ import com.liferay.oauth.model.impl.OAuthApplicationImpl;
 import com.liferay.oauth.model.impl.OAuthApplicationModelImpl;
 import com.liferay.oauth.service.persistence.OAuthApplicationPersistence;
 
-import com.liferay.petra.string.CharPool;
-
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -1448,9 +1446,8 @@ public class OAuthApplicationPersistenceImpl extends BasePersistenceImpl<OAuthAp
 				for (OAuthApplication oAuthApplication : list) {
 					if ((companyId != oAuthApplication.getCompanyId()) ||
 							!StringUtil.wildcardMatches(
-								oAuthApplication.getName(), name,
-								CharPool.UNDERLINE, CharPool.PERCENT,
-								CharPool.BACK_SLASH, false)) {
+								oAuthApplication.getName(), name, '_', '%',
+								'\\', false)) {
 						list = null;
 
 						break;
@@ -2021,9 +2018,8 @@ public class OAuthApplicationPersistenceImpl extends BasePersistenceImpl<OAuthAp
 				for (OAuthApplication oAuthApplication : list) {
 					if ((userId != oAuthApplication.getUserId()) ||
 							!StringUtil.wildcardMatches(
-								oAuthApplication.getName(), name,
-								CharPool.UNDERLINE, CharPool.PERCENT,
-								CharPool.BACK_SLASH, false)) {
+								oAuthApplication.getName(), name, '_', '%',
+								'\\', false)) {
 						list = null;
 
 						break;

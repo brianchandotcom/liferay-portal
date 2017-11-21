@@ -23,12 +23,7 @@
 							{if $_dirty}
 								{msg desc=""}saving-layout-page-template{/msg}
 							{elseif $_lastSaveDate}
-								{msg desc="layout-page-template-saved-at-x"}
-									layout-page-template-saved-at-
-									{call .badge}
-										{param content: $_lastSaveDate /}
-									{/call}
-								{/msg}
+								{msg desc=""}layout-page-template-saved-at-{$_lastSaveDate}{/msg}
 							{/if}
 						</span>
 					</li>

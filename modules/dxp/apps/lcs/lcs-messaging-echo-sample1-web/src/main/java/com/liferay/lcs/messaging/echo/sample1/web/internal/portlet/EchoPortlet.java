@@ -56,11 +56,8 @@ public class EchoPortlet extends MVCPortlet {
 			_log.info("Sending message to OSB LCS Echo service");
 		}
 
-		String payload = "LCS Echo Simple";
-		String responseDestinationName = "lcs_echo";
-
 		_lcsMessageBusService.sendMessage(
-			"osb_lcs_echo", null, payload, responseDestinationName);
+			"osb_lcs_echo", null, "LCS Echo Simple", "lcs_echo");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(EchoPortlet.class);

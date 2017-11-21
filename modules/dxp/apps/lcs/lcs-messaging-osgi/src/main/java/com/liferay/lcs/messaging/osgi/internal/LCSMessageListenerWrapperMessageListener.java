@@ -44,9 +44,9 @@ public class LCSMessageListenerWrapperMessageListener
 	@Override
 	public void receive(Message message) throws MessageListenerException {
 		try {
-			Map<String, Object> values = message.getValues();
-
 			Map<String, String> metadata = new HashMap<>();
+
+			Map<String, Object> values = message.getValues();
 
 			for (String key : values.keySet()) {
 				String stringValue = getStringFromObject(values.get(key));
@@ -54,14 +54,10 @@ public class LCSMessageListenerWrapperMessageListener
 				metadata.put(key, stringValue);
 			}
 
-			String payload = getStringFromObject(message.getPayload());
-
-			String responseDestinationName =
-				message.getResponseDestinationName();
-
 			_lcsMessageListener.receive(
-				message.getDestinationName(), metadata, payload,
-				responseDestinationName);
+				message.getDestinationName(), metadata,
+				getStringFromObject(message.getPayload()),
+				message.getResponseDestinationName());
 		}
 		catch (LCSMessageListenerException lcsmle) {
 			throw new MessageListenerException(lcsmle);

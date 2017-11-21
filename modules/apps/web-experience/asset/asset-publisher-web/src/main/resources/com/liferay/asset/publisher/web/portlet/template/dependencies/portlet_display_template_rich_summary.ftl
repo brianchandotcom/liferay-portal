@@ -193,7 +193,10 @@
 
 <#macro getRelatedAssets>
 	<#if getterUtil.getBoolean(enableRelatedAssets)>
-		<@liferay_ui["asset-links"] assetEntryId=entry.getEntryId() />
+		<@liferay_ui["asset-links"]
+			assetEntryId=entry.getEntryId()
+			viewInContext=!stringUtil.equals(assetLinkBehavior, "showFullContent")
+		/>
 	</#if>
 </#macro>
 

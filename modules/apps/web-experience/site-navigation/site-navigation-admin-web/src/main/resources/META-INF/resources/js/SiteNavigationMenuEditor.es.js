@@ -65,18 +65,19 @@ class SiteNavigationMenuEditor extends State {
 		if (
 			data.source &&
 			data.target &&
-			data.source.dataset.id &&
-			data.source.dataset.id !== data.target.dataset.id
+			data.source.dataset.sitenavigationmenuitemid &&
+			data.source.dataset.sitenavigationmenuitemid !==
+				data.target.dataset.sitenavigationmenuitemid
 		) {
 			const formData = new FormData();
 
 			formData.append(
 				`${this.namespace}siteNavigationMenuItemId`,
-				data.source.dataset.id
+				data.source.dataset.sitenavigationmenuitemid
 			);
 			formData.append(
 				`${this.namespace}parentSiteNavigationMenuItemId`,
-				data.target.dataset.id
+				data.target.dataset.sitenavigationmenuitemid
 			);
 
 			fetch(this.editSiteNavigationMenuItemParentURL, {

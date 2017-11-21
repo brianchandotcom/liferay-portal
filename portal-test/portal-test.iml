@@ -9,6 +9,19 @@
 		</content>
 		<orderEntry type="inheritedJdk" />
 		<orderEntry type="sourceFolder" forTests="false" />
+		<orderEntry type="module" module-name="petra-concurrent" scope="PROVIDED" />
+		<orderEntry type="module" module-name="petra-content" scope="PROVIDED" />
+		<orderEntry type="module" module-name="petra-encryptor" scope="PROVIDED" />
+		<orderEntry type="module" module-name="petra-executor" scope="PROVIDED" />
+		<orderEntry type="module" module-name="petra-function" scope="PROVIDED" />
+		<orderEntry type="module" module-name="petra-io" scope="PROVIDED" />
+		<orderEntry type="module" module-name="petra-lang" scope="PROVIDED" />
+		<orderEntry type="module" module-name="petra-log4j" scope="PROVIDED" />
+		<orderEntry type="module" module-name="petra-mail" scope="PROVIDED" />
+		<orderEntry type="module" module-name="petra-memory" scope="PROVIDED" />
+		<orderEntry type="module" module-name="petra-nio" scope="PROVIDED" />
+		<orderEntry type="module" module-name="petra-reflect" scope="PROVIDED" />
+		<orderEntry type="module" module-name="petra-string" scope="PROVIDED" />
 		<orderEntry type="module" module-name="portal-kernel" scope="PROVIDED" />
 	    <orderEntry type="module" module-name="registry-api" scope="PROVIDED" />
 		<orderEntry type="library" name="development" level="project" />

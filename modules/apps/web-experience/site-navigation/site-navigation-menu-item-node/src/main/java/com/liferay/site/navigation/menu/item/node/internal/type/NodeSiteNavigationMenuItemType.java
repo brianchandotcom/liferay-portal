@@ -80,7 +80,7 @@ public class NodeSiteNavigationMenuItemType
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		_jspRenderer.renderJSP(_servletContext, request, response, "/node.jsp");
+		_jspRenderer.renderJSP(_servletContext, request, response, "/add_node.jsp");
 	}
 
 	@Reference

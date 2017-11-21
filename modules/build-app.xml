@@ -67,7 +67,7 @@
 		<delete file="${dist.dir}/ticket.list.tmp" />
 	</target>
 
-	<target depends="dist-module-artifacts-lpkg,write-lpkg-marketplace-properties" name="build-app-lpkg" unless="module.dirs.null">
+	<target depends="dist-module-artifacts-lpkg,write-lpkg-marketplace-properties" name="build-app-lpkg" unless="${module.dirs.null}">
 		<zip basedir="${osgi.dir}/marketplace" destfile="${osgi.dir}/marketplace/${Liferay-Releng-App-Title}.lpkg" includes="*.jar,*.war,liferay-marketplace.properties" />
 
 		<delete>
@@ -188,7 +188,7 @@
 		</subant>
 	</target>
 
-	<target depends="get-osgi-static-modules,init" name="dist-module-artifacts-lpkg" unless="module.dirs.null">
+	<target depends="get-osgi-static-modules,init" name="dist-module-artifacts-lpkg" unless="${module.dirs.null}">
 		<subant genericantfile="${modules.dir}/build-app-module.xml" target="dist-module-artifact-lpkg">
 			<dirset refid="app.module.dirs" />
 			<property name="osgi.dir" value="${osgi.dir}" />
@@ -286,7 +286,7 @@
 		<set-artifact-versions-previous-release app.version.previous.release="${app.version.previous.release}" />
 	</target>
 
-	<target depends="dist-module-artifacts-lpkg" name="get-lpkg-artifacts-list" unless="module.dirs.null">
+	<target depends="dist-module-artifacts-lpkg" name="get-lpkg-artifacts-list" unless="${module.dirs.null}">
 		<pathconvert pathsep="," property="lpkg.artifacts.list">
 			<chainedmapper>
 				<flattenmapper />
@@ -417,7 +417,7 @@
 		<echo append="true" file="${releng.app.dir}/app.changelog" message="${app.git.id}" />
 	</target>
 
-	<target depends="get-lpkg-artifacts-list" name="write-lpkg-marketplace-properties" unless="module.dirs.null">
+	<target depends="get-lpkg-artifacts-list" name="write-lpkg-marketplace-properties" unless="${module.dirs.null}">
 		<echo file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="bundles=${lpkg.artifacts.list}" />
 
 		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="${line.separator}" />

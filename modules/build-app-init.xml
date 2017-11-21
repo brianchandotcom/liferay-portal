@@ -156,9 +156,9 @@
 	</target>
 
 	<target depends="get-app-module-dirs" name="get-app-module-dirs-null">
-		<condition property="module.dirs.null">
+		<condition else="false" property="module.dirs.null" value="true">
 			<or>
-				<equals arg1="${app.module.dirs}" arg2="" />
+				<equals arg1="${toString:app.module.dirs}" arg2="" />
 				<not>
 					<isreference refid="app.module.dirs" />
 				</not>

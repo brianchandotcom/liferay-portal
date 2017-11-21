@@ -48,9 +48,7 @@ public class PropertiesSourceFormatterContentCheck extends BaseFileCheck {
 	}
 
 	private String _checkGitLiferayPortalBranch(String content) {
-		if (!content.matches(
-				"(?s).*^(?!#)git\\.liferay\\.portal\\.branch=.*")) {
-
+		if (!content.matches("(?s).*[^#]git\\.liferay\\.portal\\.branch=.*")) {
 			return content;
 		}
 

@@ -25,9 +25,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "page-templates"));
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<portlet:renderURL var="mainURL" />
 
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item href="<%= mainURL.toString() %>" label="page-templates" selected="<%= true %>" />
-	</aui:nav>
+	<liferay-util:include page="/navigation_tabs.jsp" servletContext="<%= application %>" />
 
 	<c:if test="<%= layoutPageTemplateDisplayContext.isShowLayoutPageTemplateCollectionsSearch() %>">
 		<portlet:renderURL var="portletURL">

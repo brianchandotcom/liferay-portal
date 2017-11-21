@@ -17,43 +17,26 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-ui:tabs
-	names="Alerts,Badges,Icons,Labels,Progress Bars,Stickers"
+	names="Alerts,Badges,Icons,Labels,Links,Progress Bars,Stickers"
 	refresh="<%= false %>"
 	type="tabs nav-tabs-default"
 >
-	<liferay-ui:section>
-		<div class="container-fluid-1280">
-			<%@ include file="/partials/alerts.jsp" %>
-		</div>
-    </liferay-ui:section>
 
-	<liferay-ui:section>
-        <div class="container-fluid-1280">
-            <%@ include file="/partials/badges.jsp" %>
-        </div>
-    </liferay-ui:section>
+    <%
+    String[] sections = {"alerts", "badges", "icons", "labels", "links", "progressbars", "stickers"};
 
-	<liferay-ui:section>
-        <div class="container-fluid-1280">
-            <%@ include file="/partials/icons.jsp" %>
-        </div>
-    </liferay-ui:section>
+    for (int i = 0; i < sections.length; i++) {
 
-	<liferay-ui:section>
-        <div class="container-fluid-1280">
-            <%@ include file="/partials/labels.jsp" %>
-        </div>
-    </liferay-ui:section>
+        String partial ="/partials/" + sections[i] + ".jsp";
+    %>
 
-	<liferay-ui:section>
-        <div class="container-fluid-1280">
-            <%@ include file="/partials/progressbars.jsp" %>
-        </div>
-    </liferay-ui:section>
+	    <liferay-ui:section>
+            <div class="container-fluid-1280">
+                <liferay-util:include page="<%= partial %>" servletContext="<%= application %>" />
+            </div>
+        </liferay-ui:section>
 
-	<liferay-ui:section>
-        <div class="container-fluid-1280">
-            <%@ include file="/partials/stickers.jsp" %>
-        </div>
-    </liferay-ui:section>
+    <%
+    }
+    %>
 </liferay-ui:tabs>

@@ -127,7 +127,7 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 				if (_log.isTraceEnabled()) {
 					_log.trace(
 						"Interrupted while waiting for scheduled features to " +
-							"get completed");
+							"complete");
 				}
 			}
 		}

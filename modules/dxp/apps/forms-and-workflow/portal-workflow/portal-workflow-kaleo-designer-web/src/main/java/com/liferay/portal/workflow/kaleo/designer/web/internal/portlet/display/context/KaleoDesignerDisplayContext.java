@@ -14,15 +14,21 @@
 
 package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.display.context;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowDefinition;
+import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
+import com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.display.context.util.KaleoDesignerRequestHelper;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionNameComparator;
 import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionTitleComparator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -41,6 +47,9 @@ public class KaleoDesignerDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+
+		_kaleoDesignerRequestHelper = new KaleoDesignerRequestHelper(
+			renderRequest);
 	}
 
 	public PortletURL getBasePortletURL() throws PortalException {
@@ -107,10 +116,26 @@ public class KaleoDesignerDisplayContext {
 			"content.Language", locale, clazz.getClassLoader());
 	}
 
+	public List<WorkflowDefinition> getWorkflowDefinitions(
+			KaleoDefinitionVersion kaleoDefinitionVersion)
+		throws PortalException {
+
+		List<WorkflowDefinition> workflowDefinitions = new ArrayList<>();
+
+		workflowDefinitions =
+			WorkflowDefinitionManagerUtil.getWorkflowDefinitions(
+				_kaleoDesignerRequestHelper.getCompanyId(),
+				kaleoDefinitionVersion.getName(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		return workflowDefinitions;
+	}
+
 	private static final String[] _DISPLAY_VIEWS = {"list"};
 
 	private static final String[] _ORDER_COLUMNS = {"name", "title"};
 
+	private final KaleoDesignerRequestHelper _kaleoDesignerRequestHelper;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 

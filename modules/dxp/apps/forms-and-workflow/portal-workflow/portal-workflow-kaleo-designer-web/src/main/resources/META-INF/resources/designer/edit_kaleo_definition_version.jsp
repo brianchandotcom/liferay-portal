@@ -96,7 +96,7 @@
 
 							<liferay-ui:section>
 								<div class="sidebar-body workflow-definition-sidebar">
-									<liferay-util:include page="/designer/view_workflow_definition_history.jsp" servletContext="<%= application %>">
+									<liferay-util:include page="/designer/view_kaleo_definition_version_history.jsp" servletContext="<%= application %>">
 										<liferay-util:param name="redirect" value="<%= redirect %>" />
 									</liferay-util:include>
 								</div>

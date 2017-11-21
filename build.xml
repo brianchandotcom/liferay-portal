@@ -1044,16 +1044,42 @@ message.
 					<then>
 
 						<replace file="${app.server.lib.global.dir}/module.xml">
-							<replacetoken><![CDATA[
-		<resource-root path="com.liferay.petra.concurrent.jar" />
-		<resource-root path="com.liferay.petra.executor.jar" />
-		<resource-root path="com.liferay.petra.function.jar" />
-		<resource-root path="com.liferay.petra.lang.jar" />
-		<resource-root path="com.liferay.petra.memory.jar" />
-		<resource-root path="com.liferay.petra.nio.jar" />
-		<resource-root path="com.liferay.petra.reflect.jar" />
-		<resource-root path="com.liferay.petra.string.jar" />]]>
-							</replacetoken>
+							<replacetoken><![CDATA[<resource-root path="com.liferay.petra.concurrent.jar" />]]></replacetoken>
+							<replacevalue></replacevalue>
+						</replace>
+
+						<replace file="${app.server.lib.global.dir}/module.xml">
+							<replacetoken><![CDATA[<resource-root path="com.liferay.petra.executor.jar" />]]></replacetoken>
+							<replacevalue></replacevalue>
+						</replace>
+
+						<replace file="${app.server.lib.global.dir}/module.xml">
+							<replacetoken><![CDATA[<resource-root path="com.liferay.petra.function.jar" />]]></replacetoken>
+							<replacevalue></replacevalue>
+						</replace>
+
+						<replace file="${app.server.lib.global.dir}/module.xml">
+							<replacetoken><![CDATA[<resource-root path="com.liferay.petra.lang.jar" />]]></replacetoken>
+							<replacevalue></replacevalue>
+						</replace>
+
+						<replace file="${app.server.lib.global.dir}/module.xml">
+							<replacetoken><![CDATA[<resource-root path="com.liferay.petra.memory.jar" />]]></replacetoken>
+							<replacevalue></replacevalue>
+						</replace>
+
+						<replace file="${app.server.lib.global.dir}/module.xml">
+							<replacetoken><![CDATA[<resource-root path="com.liferay.petra.nio.jar" />]]></replacetoken>
+							<replacevalue></replacevalue>
+						</replace>
+
+						<replace file="${app.server.lib.global.dir}/module.xml">
+							<replacetoken><![CDATA[<resource-root path="com.liferay.petra.reflect.jar" />]]></replacetoken>
+							<replacevalue></replacevalue>
+						</replace>
+
+						<replace file="${app.server.lib.global.dir}/module.xml">
+							<replacetoken><![CDATA[<resource-root path="com.liferay.petra.string.jar" />]]></replacetoken>
 							<replacevalue></replacevalue>
 						</replace>
 					</then>

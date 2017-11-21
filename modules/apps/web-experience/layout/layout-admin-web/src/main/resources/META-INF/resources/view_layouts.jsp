@@ -72,7 +72,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "pages"));
 		>
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
-				name="layout"
+				name="page"
 				value="<%= HtmlUtil.escape(curLayout.getName(locale)) %>"
 			/>
 

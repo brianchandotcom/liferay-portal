@@ -19,6 +19,11 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
+<%@ page import="java.util.ArrayList" %><%@
+page import="java.util.HashMap" %><%@
+page import="java.util.List" %><%@
+page import="java.util.Map" %>
+
 <liferay-theme:defineObjects />
 
 <%@ include file="/init-ext.jsp" %>

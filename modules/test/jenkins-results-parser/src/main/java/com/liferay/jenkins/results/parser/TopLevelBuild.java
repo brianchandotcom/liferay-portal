@@ -233,6 +233,8 @@ public class TopLevelBuild extends BaseBuild {
 		String result = super.getResult();
 
 		if (!downstreamBuilds.isEmpty() && (result == null)) {
+			boolean failureFound = false;
+
 			for (Build downstreamBuild : downstreamBuilds) {
 				String downstreamBuildResult = downstreamBuild.getResult();
 
@@ -243,17 +245,18 @@ public class TopLevelBuild extends BaseBuild {
 				}
 				else {
 					if (!downstreamBuildResult.equals("SUCCESS")) {
-						setResult("FAILURE");
-
-						break;
+						failureFound = true;
 					}
 				}
 			}
 
-			result = super.getResult();
-
 			if (result == null) {
-				setResult("SUCCESS");
+				if (failureFound) {
+					setResult("FAILURE");
+				}
+				else {
+					setResult("SUCCESS");
+				}
 			}
 		}
 

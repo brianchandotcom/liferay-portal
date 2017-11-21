@@ -23,8 +23,6 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSit
 
 List<SiteNavigationMenuItem> siteNavigationMenuItems = SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(siteNavigationMenu.getSiteNavigationMenuId(), 0);
 
-long selectedSiteNavigationMenuItemId = ParamUtil.getLong(request, "selectedSiteNavigationMenuItemId");
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
@@ -112,7 +110,6 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 
 						<liferay-util:include page="/view_site_navigation_menu_item.jsp" servletContext="<%= application %>">
 							<liferay-util:param name="siteNavigationMenuItemId" value="<%= String.valueOf(siteNavigationMenuItem.getSiteNavigationMenuItemId()) %>" />
-							<liferay-util:param name="selectedSiteNavigationMenuItemId" value="<%= String.valueOf(selectedSiteNavigationMenuItemId) %>" />
 						</liferay-util:include>
 
 					<%

@@ -31,7 +31,6 @@ String title = siteNavigationMenuItemType.getTitle(siteNavigationMenuItem, local
 Map<String, Object> data = new HashMap<String, Object>();
 
 data.put("siteNavigationMenuItemId", siteNavigationMenuItemId);
-data.put("parentSiteNavigationMenuItemId", siteNavigationMenuItem.getParentSiteNavigationMenuItemId());
 data.put("title", title);
 
 request.setAttribute("edit_site_navigation_menu.jsp-siteNavigationMenuItemId", siteNavigationMenuItem.getSiteNavigationMenuItemId());
@@ -62,7 +61,6 @@ request.setAttribute("edit_site_navigation_menu.jsp-siteNavigationMenuItemId", s
 	%>
 
 		<liferay-util:include page="/view_site_navigation_menu_item.jsp" servletContext="<%= application %>">
-			<liferay-util:param name="selectedSiteNavigationMenuItemId" value="<%= String.valueOf(selectedSiteNavigationMenuItemId) %>" />
 			<liferay-util:param name="siteNavigationMenuItemId" value="<%= String.valueOf(childSiteNavigationMenuItem.getSiteNavigationMenuItemId()) %>" />
 			<liferay-util:param name="indent" value="<%= Boolean.TRUE.toString() %>" />
 		</liferay-util:include>

@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@ include file="/init.jsp" %>
+
 <blockquote><p>Icon is a visual metaphor representing a concept that lies behind the idea and/or action.</p></blockquote>
 
 <h3>Liferay Icon Library</h3>

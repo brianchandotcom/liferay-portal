@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@ include file="/init.jsp" %>
+
 <blockquote><p>Stickers are a visual way to quickly identify content in a different way than badges and labels.</p></blockquote>
 
 <h3>SQUARE</h3>

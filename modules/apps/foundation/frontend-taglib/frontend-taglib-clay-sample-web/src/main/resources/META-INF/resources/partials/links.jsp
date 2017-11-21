@@ -16,10 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
-<blockquote><p>Progress bar is a progress indicator used to show the completion percentage of a task.</p></blockquote>
+<blockquote><p>A link (also known as hyperlink) is a clickable (text or image) element. The link control is used for navigation.</p></blockquote>
 
-<clay:progressbar maxValue="<%= 100 %>" minValue="<%= 0 %>" value="<%= 30 %>" />
+<h3>SINGLE LINK</h3>
 
-<clay:progressbar maxValue="<%= 100 %>" minValue="<%= 0 %>" status="warning" value="<%= 70 %>" />
+<blockquote><p>Used for stand-alone hyperlinks. Can be a text or an image.</p></blockquote>
 
-<clay:progressbar status="complete" />
+<clay:link href="#" label="text link" />

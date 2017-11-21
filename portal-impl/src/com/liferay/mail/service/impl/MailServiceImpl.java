@@ -19,6 +19,7 @@ import com.liferay.mail.kernel.model.Filter;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
 import com.liferay.mail.kernel.util.Hook;
+import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -96,6 +97,7 @@ public class MailServiceImpl implements MailService, IdentifiableOSGiService {
 		MessageBusUtil.sendMessage(DestinationNames.MAIL, methodHandler);
 	}
 
+	@Clusterable
 	@Override
 	public void clearSession() {
 		_session = null;

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-ui:tabs
-	names="Alerts"
+	names="Alerts,Badges"
 	refresh="<%= false %>"
 	type="tabs nav-tabs-default"
 >
@@ -25,5 +25,11 @@
 		<div class="container-fluid-1280">
 			<%@ include file="/partials/alerts.jsp" %>
 		</div>
+    </liferay-ui:section>
+
+	<liferay-ui:section>
+        <div class="container-fluid-1280">
+            <%@ include file="/partials/badges.jsp" %>
+        </div>
     </liferay-ui:section>
 </liferay-ui:tabs>

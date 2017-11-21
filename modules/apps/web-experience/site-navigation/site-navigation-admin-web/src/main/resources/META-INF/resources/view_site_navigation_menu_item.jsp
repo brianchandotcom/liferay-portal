@@ -37,8 +37,8 @@ data.put("title", title);
 request.setAttribute("edit_site_navigation_menu.jsp-siteNavigationMenuItemId", siteNavigationMenuItem.getSiteNavigationMenuItemId());
 %>
 
-<div class="<%= indent ? "indent" : "" %> container-item">
-	<div class="col-md-4 site-navigation-menu-item <%= selectedSiteNavigationMenuItemId == siteNavigationMenuItemId ? "selected" : "" %>" <%= AUIUtil.buildData(data) %>>
+<div class="<%= indent ? "indent" : StringPool.BLANK %> container-item">
+	<div class="col-md-4 site-navigation-menu-item <%= (selectedSiteNavigationMenuItemId == siteNavigationMenuItemId) ? "selected" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
 		<liferay-frontend:horizontal-card
 			actionJsp="/site_navigation_menu_item_action.jsp"
 			actionJspServletContext="<%= application %>"

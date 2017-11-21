@@ -27,10 +27,10 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Alejandro Tardín
- * @deprecated as of 7.0.0 replaced by {@link #AttachmentContentUpdater}
+ * @deprecated As of 1.2.0, as of 7.0.0 replaced by {@link #AttachmentContentUpdater}
  */
-@Deprecated
 @Component(service = BlogsEntryAttachmentContentUpdater.class)
+@Deprecated
 public class BlogsEntryAttachmentContentUpdater {
 
 	public String updateContent(

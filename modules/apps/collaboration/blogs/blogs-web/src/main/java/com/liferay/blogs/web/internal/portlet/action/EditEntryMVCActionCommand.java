@@ -72,6 +72,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.trash.service.TrashEntryService;
+import com.liferay.upload.AttachmentContentUpdater;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -86,7 +87,6 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 import javax.portlet.WindowState;
 
-import com.liferay.upload.AttachmentContentUpdater;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 

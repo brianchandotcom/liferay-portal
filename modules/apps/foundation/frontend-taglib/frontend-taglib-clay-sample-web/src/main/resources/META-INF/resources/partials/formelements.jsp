@@ -50,3 +50,34 @@
         </tr>
     </tbody>
 </table>
+
+<h3>RADIO BUTTON</h3>
+
+<blockquote><p>A radio button is a component that allows the user selecting something written in its associated text label. A list of consecutive radio buttons would allow the user to select just one thing.</p></blockquote>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>STATE</th>
+            <th>DEFINITION</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><clay:radio checked="<%= true %>" label="asdasd" name="name" /></td>
+            <td>On</td>
+        </tr>
+        <tr>
+            <td><clay:radio label="asdas" name="name" /></td>
+            <td>Off</td>
+        </tr>
+        <tr>
+            <td><clay:radio checked="<%= true %>" disabled="<%= true %>" label="asdsa" name="name" /></td>
+            <td>On disabled</td>
+        </tr>
+        <tr>
+            <td><clay:radio disabled="<%= true %>" label="asdasd" name="name" /></td>
+            <td>Off disabled</td>
+        </tr>
+    </tbody>
+</table>

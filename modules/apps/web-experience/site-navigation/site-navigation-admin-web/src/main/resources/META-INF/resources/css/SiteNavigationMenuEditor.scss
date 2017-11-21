@@ -1,0 +1,17 @@
+.site-navigation-menu-container {
+	.container-item {
+		overflow: hidden;
+		padding: 2px;
+		width: 100%;
+
+		.selected .card {
+			box-shadow: none;
+			outline: 2px solid #65B6F0;
+		}
+	}
+
+	.targetOver .card, &.targetOver {
+		box-shadow: none;
+		outline: 2px dashed #65B6F0;
+	}
+}

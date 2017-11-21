@@ -945,7 +945,6 @@ message.
 				<local name="petra.version.substring.start" />
 				<local name="petra.version.substring.end" />
 				<local name="petra.major.version" />
-				<local name="petra.major.version.index" />
 				<local name="petra.period.index" />
 
 				<antelope:stringutil property="petra.version.substring.start" string="${portal.war.url}">

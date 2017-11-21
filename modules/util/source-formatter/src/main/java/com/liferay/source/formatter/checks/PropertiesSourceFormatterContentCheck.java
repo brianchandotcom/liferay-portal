@@ -89,6 +89,8 @@ public class PropertiesSourceFormatterContentCheck extends BaseFileCheck {
 			sb.toString(), new String[] {exclusionsComments, gitComments},
 			new String[] {StringPool.BLANK, StringPool.BLANK});
 
+		s = StringUtil.trim(s);
+
 		if (Validator.isNull(s)) {
 			return StringBundler.concat(
 				exclusionsComments, "\n\n", gitComments, "\n\n",
@@ -97,8 +99,8 @@ public class PropertiesSourceFormatterContentCheck extends BaseFileCheck {
 		}
 
 		return StringBundler.concat(
-			exclusionsComments, "\n\n", StringUtil.trim(s), "\n\n", gitComments,
-			"\n\n", StringPool.FOUR_SPACES, "git.liferay.portal.branch=",
+			exclusionsComments, "\n\n", s, "\n\n", gitComments, "\n\n",
+			StringPool.FOUR_SPACES, "git.liferay.portal.branch=",
 			gitLiferayPortalBranch);
 	}
 

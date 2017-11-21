@@ -20,6 +20,7 @@
 long assetEntryId = GetterUtil.getLong((String)request.getAttribute("liferay-asset:asset-links:assetEntryId"));
 List<AssetLink> assetLinks = (List<AssetLink>)request.getAttribute("liferay-asset:asset-links:assetLinks");
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-asset:asset-links:portletURL");
+boolean viewInContext = GetterUtil.getBoolean(request.getAttribute("liferay-asset:asset-links:viewInContext"), true);
 %>
 
 <div class="taglib-asset-links">
@@ -94,18 +95,28 @@ PortletURL portletURL = (PortletURL)request.getAttribute("liferay-asset:asset-li
 					viewAssetURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
 				}
 
-				String noSuchEntryRedirect = viewAssetURL.toString();
+				String viewURL = null;
 
-				String urlViewInContext = assetRenderer.getURLViewInContext((LiferayPortletRequest)portletRequest, (LiferayPortletResponse)portletResponse, noSuchEntryRedirect);
+				if (viewInContext) {
+					String noSuchEntryRedirect = viewAssetURL.toString();
 
-				if (Validator.isNotNull(urlViewInContext) && !Objects.equals(urlViewInContext, noSuchEntryRedirect)) {
-					urlViewInContext = HttpUtil.setParameter(urlViewInContext, "inheritRedirect", Boolean.TRUE);
-					urlViewInContext = HttpUtil.setParameter(urlViewInContext, "redirect", currentURL);
+					String urlViewInContext = assetRenderer.getURLViewInContext((LiferayPortletRequest)portletRequest, (LiferayPortletResponse)portletResponse, noSuchEntryRedirect);
+
+					if (Validator.isNotNull(urlViewInContext) && !Objects.equals(urlViewInContext, noSuchEntryRedirect)) {
+						urlViewInContext = HttpUtil.setParameter(urlViewInContext, "inheritRedirect", Boolean.TRUE);
+						urlViewInContext = HttpUtil.setParameter(urlViewInContext, "redirect", currentURL);
+					}
+
+					viewURL = urlViewInContext;
+				}
+
+				if (Validator.isNull(viewURL)) {
+					viewURL = viewAssetURL.toString();
 				}
 		%>
 
 				<li class="asset-links-list-item">
-					<aui:a href="<%= urlViewInContext %>" target='<%= themeDisplay.isStatePopUp() ? "_blank" : "_self" %>'>
+					<aui:a href="<%= viewURL %>" target='<%= themeDisplay.isStatePopUp() ? "_blank" : "_self" %>'>
 						<%= HtmlUtil.escape(assetLinkEntry.getTitle(locale)) %>
 					</aui:a>
 				</li>

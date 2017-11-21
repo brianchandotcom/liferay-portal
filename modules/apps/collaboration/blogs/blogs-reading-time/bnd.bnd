@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Blogs Reading Time
+Bundle-SymbolicName: com.liferay.blogs.reading.time
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Blogs
+-dsannotations-options: inherit

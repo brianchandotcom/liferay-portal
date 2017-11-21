@@ -16,10 +16,6 @@ AUI.add(
 		var Blogs = A.Component.create(
 			{
 				ATTRS: {
-					calculateReadingTimeURL: {
-						validator: Lang.isString
-					},
-
 					constants: {
 						validator: Lang.isObject
 					},
@@ -84,8 +80,6 @@ AUI.add(
 						instance._shortenDescription = !customDescriptionEnabled;
 
 						instance.setDescription(window[instance.ns('contentEditor')].getText());
-
-						instance._calculateReadingTimeFn = A.debounce(instance._calculateReadingTime, 500, instance);
 					},
 
 					destructor: function() {
@@ -135,12 +129,6 @@ AUI.add(
 						}
 
 						instance._originalFriendlyURLChanged = true;
-					},
-
-					updateReadingTime: function(content) {
-						var instance = this;
-
-						instance._calculateReadingTimeFn(content);
 					},
 
 					_automaticURL: function() {
@@ -208,53 +196,6 @@ AUI.add(
 						);
 
 						instance._eventHandles = eventHandles;
-					},
-
-					_calculateReadingTime: function(content) {
-						var instance = this;
-
-						var readingTimeElement = instance.one('#readingTime');
-
-						if (!readingTimeElement) {
-							return;
-						}
-
-						var data = instance.ns(
-							{
-								'content': content
-							}
-						);
-
-						A.io.request(
-							instance.get('calculateReadingTimeURL'),
-							{
-								data: data,
-								dataType: 'JSON',
-								on: {
-									failure: function() {
-										readingTimeElement.hide();
-									},
-									success: function(event, id, obj) {
-										var message = this.get('responseData');
-
-										if (message.readingTime) {
-											var constants = instance.get('constants');
-
-											var html = Lang.sub(
-												constants.X_MINUTES_READ,
-												[message.readingTime]
-											);
-
-											readingTimeElement.html(html);
-											readingTimeElement.show();
-										}
-										else {
-											readingTimeElement.hide();
-										}
-									}
-								}
-							}
-						);
 					},
 
 					_checkImagesBeforeSave: function(draft, ajax) {

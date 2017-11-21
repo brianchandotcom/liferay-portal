@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<taglib
+	version="2.1"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+>
+	<description>Provides the Liferay Reading Time component tags, prefixed with <![CDATA[<code>liferay-reading-time:</code>]]>.</description>
+	<tlib-version>1.0</tlib-version>
+	<short-name>liferay-reading-time</short-name>
+	<uri>http://liferay.com/tld/reading-time</uri>
+	<tag>
+		<description>Renders the reading time for a given model.</description>
+		<name>reading-time</name>
+		<tag-class>com.liferay.reading.time.taglib.servlet.taglib.ReadingTimeTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description><![CDATA[An ID for the component instance.]]></description>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The model to retrieve the reading time from.</description>
+			<name>model</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>

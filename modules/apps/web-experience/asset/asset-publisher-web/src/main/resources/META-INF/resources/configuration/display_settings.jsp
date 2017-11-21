@@ -46,7 +46,7 @@ PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configurat
 
 <aui:input cssClass="hidden-field show-extra-info" name="preferences--showExtraInfo--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isShowExtraInfo() %>" />
 
-<aui:select cssClass="asset-link-behavior hidden-field" name="preferences--assetLinkBehavior--">
+<aui:select cssClass="asset-link-behavior" name="preferences--assetLinkBehavior--">
 	<aui:option label="show-full-content" selected="<%= assetPublisherDisplayContext.isAssetLinkBehaviorShowFullContent() %>" value="showFullContent" />
 	<aui:option label="view-in-context" selected="<%= assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet() %>" value="viewInPortlet" />
 </aui:select>
@@ -90,12 +90,8 @@ PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configurat
 			showParent('.show-context-link');
 			showParent('.show-extra-info');
 		}
-		else {
-			if (displayStyle == 'abstracts') {
-				showParent('.abstract-length');
-			}
-
-			showParent('.asset-link-behavior');
+		else if (displayStyle == 'abstracts') {
+			showParent('.abstract-length');
 		}
 	}
 

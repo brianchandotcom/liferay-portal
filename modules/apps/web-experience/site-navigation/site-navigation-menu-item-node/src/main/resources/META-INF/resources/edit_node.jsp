@@ -14,10 +14,16 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
+<%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
-page import="com.liferay.site.navigation.constants.SiteNavigationWebKeys" %><%@
-page import="com.liferay.site.navigation.model.SiteNavigationMenuItem" %>
+<%
+SiteNavigationMenuItem siteNavigationMenuItem = (SiteNavigationMenuItem)request.getAttribute(SiteNavigationWebKeys.SITE_NAVIGATION_MENU_ITEM);
 
-<%@ include file="/init-ext.jsp" %>
+UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+typeSettingsProperties.fastLoad(siteNavigationMenuItem.getTypeSettings());
+%>
+
+<aui:input label="name" name="TypeSettingsProperties--name--" placeholder="name" value='<%= typeSettingsProperties.get("name") %>'>
+	<aui:validator name="required" />
+</aui:input>

@@ -83,14 +83,16 @@ class SiteNavigationMenuEditor extends State {
 				body: formData,
 				credentials: 'include',
 				method: 'POST',
-			}).then(() => {
-				if (Liferay.SPA) {
-					Liferay.SPA.app.navigate(window.location.href);
+			}).then(
+				() => {
+					if (Liferay.SPA) {
+						Liferay.SPA.app.navigate(window.location.href);
+					}
+					else {
+						window.location.reload();
+					}
 				}
-				else {
-					window.location.reload();
-				}
-			});
+			);
 		}
 	}
 }

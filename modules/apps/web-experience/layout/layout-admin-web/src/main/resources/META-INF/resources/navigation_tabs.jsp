@@ -16,4 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-util:include page="/view_layouts.jsp" servletContext="<%= application %>" />
+<aui:nav cssClass="navbar-nav">
+	<aui:nav-item label="pages" selected="<%= true %>" />
+</aui:nav>

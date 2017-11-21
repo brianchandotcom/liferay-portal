@@ -84,6 +84,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGES_ALL_PRIVATE_PAGES_CHECKBOX</td>
+	<td>xpath=(//div[contains(.,'Private Pages')]//span[contains(@class,'icon-check')])[1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGES_SITE_PAGES_SETTINGS_CHECKBOX</td>
 	<td>//input[contains(@id,'LAYOUT_SET_SETTINGS')]</td>
 	<td></td>

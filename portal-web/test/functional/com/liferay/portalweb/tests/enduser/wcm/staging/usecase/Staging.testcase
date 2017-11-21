@@ -279,6 +279,37 @@
 		</execute>
 	</command>
 
+	<command name="PublishTemplateWithPages" priority="4">
+		<execute macro="Page#add">
+			<var name="pageName" value="Private Staging Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Private" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Publishing" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Staging" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#addPublishTemplate">
+			<var name="publishTemplateDescription" value="Publish Template Description" />
+			<var name="publishTemplateName" value="Publish Template Name" />
+		</execute>
+
+		<execute macro="Staging#configurePublishToLive">
+			<var name="checkPrivatePages" value="Private Staging Page" />
+		</execute>
+
+		<execute macro="Staging#configurePublishToLive">
+			<var name="checkPublicPages" value="Staging Test Page" />
+		</execute>
+	</command>
+
 	<command name="StagingAssetPublisher" priority="3">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Sites" />

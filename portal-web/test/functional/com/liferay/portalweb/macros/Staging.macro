@@ -457,6 +457,64 @@
 				<execute function="AssertClick" locator1="Button#OK" value1="OK" />
 			</then>
 		</if>
+
+		<if>
+			<isset var="checkPrivatePages" />
+			<then>
+				<if>
+					<condition function="IsElementPresent" locator1="PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX" />
+					<then>
+						<execute function="Click" locator1="StagingPublishToLive#PAGES_CHANGE_PRIVATE_BUTTON" />
+					</then>
+				</if>
+
+				<execute function="Click" locator1="PagesConfiguration#PAGES_ALL_PRIVATE_PAGES_CHECKBOX" />
+
+				<execute function="Click" locator1="PagesConfiguration#PAGES_ALL_PRIVATE_PAGES_CHECKBOX" />
+
+				<for list="${checkPrivatePages}" param="pageName">
+					<var name="key_pageName" value="${pageName}" />
+
+					<if>
+						<condition function="IsElementNotPresent" locator1="PagesConfiguration#PAGES_SPECIFIC_PAGE_CHECKED" />
+						<then>
+							<var name="key_pageName" value="${pageName}" />
+
+							<execute function="Click" locator1="PagesConfiguration#PAGES_SPECIFIC_PAGE_NAME" />
+						</then>
+					</if>
+				</for>
+			</then>
+		</if>
+
+		<if>
+			<isset var="checkPublicPages" />
+			<then>
+				<if>
+					<condition function="IsElementPresent" locator1="PagesConfiguration#PAGES_ALL_PRIVATE_PAGES_CHECKBOX" />
+					<then>
+						<execute function="Click" locator1="StagingPublishToLive#PAGES_CHANGE_PUBLIC_BUTTON" />
+					</then>
+				</if>
+
+				<execute function="Click" locator1="PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX" />
+
+				<execute function="Click" locator1="PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX" />
+
+				<for list="${checkPublicPages}" param="pageName">
+					<var name="key_pageName" value="${pageName}" />
+
+					<if>
+						<condition function="IsElementNotPresent" locator1="PagesConfiguration#PAGES_SPECIFIC_PAGE_CHECKED" />
+						<then>
+							<var name="key_pageName" value="${pageName}" />
+
+							<execute function="Click" locator1="PagesConfiguration#PAGES_SPECIFIC_PAGE_NAME" />
+						</then>
+					</if>
+				</for>
+			</then>
+		</if>
 	</command>
 
 	<command name="copyFromLive">

@@ -31,6 +31,7 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 
 import java.io.IOException;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -96,27 +97,10 @@ public class FullPageApplicationSiteNavigationMenuItemType
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		List<Portlet> portlets = _portletLocalService.getPortlets();
-
-		if (portlets.isEmpty()) {
-			return;
-		}
-
-		portlets = ListUtil.filter(
-			portlets,
-			new PredicateFilter<Portlet>() {
-
-				@Override
-				public boolean filter(Portlet portlet) {
-					return portlet.isFullPageDisplayable();
-				}
-
-			});
-
 		request.setAttribute(
 			SiteNavigationMenuItemTypeFullPageApplicationWebKeys.
 				FULL_PAGE_APPLICATION_PORTLETS,
-			portlets);
+			_getPortlets());
 
 		_jspRenderer.renderJSP(
 			_servletContext, request, response,
@@ -129,10 +113,25 @@ public class FullPageApplicationSiteNavigationMenuItemType
 			SiteNavigationMenuItem siteNavigationMenuItem)
 		throws IOException {
 
+		request.setAttribute(
+			SiteNavigationMenuItemTypeFullPageApplicationWebKeys.
+				FULL_PAGE_APPLICATION_PORTLETS,
+			_getPortlets());
+
+		request.setAttribute(
+			SiteNavigationWebKeys.SITE_NAVIGATION_MENU_ITEM,
+			siteNavigationMenuItem);
+
+		_jspRenderer.renderJSP(
+			_servletContext, request, response,
+			"/edit_full_page_application.jsp");
+	}
+
+	private List<Portlet> _getPortlets() {
 		List<Portlet> portlets = _portletLocalService.getPortlets();
 
 		if (portlets.isEmpty()) {
-			return;
+			return Collections.emptyList();
 		}
 
 		portlets = ListUtil.filter(
@@ -146,18 +145,7 @@ public class FullPageApplicationSiteNavigationMenuItemType
 
 			});
 
-		request.setAttribute(
-			SiteNavigationMenuItemTypeFullPageApplicationWebKeys.
-				FULL_PAGE_APPLICATION_PORTLETS,
-			portlets);
-
-		request.setAttribute(
-			SiteNavigationWebKeys.SITE_NAVIGATION_MENU_ITEM,
-			siteNavigationMenuItem);
-
-		_jspRenderer.renderJSP(
-			_servletContext, request, response,
-			"/edit_full_page_application.jsp");
+		return portlets;
 	}
 
 	@Reference

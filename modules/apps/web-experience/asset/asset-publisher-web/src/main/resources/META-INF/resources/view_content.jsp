@@ -69,6 +69,8 @@ else {
 
 		request.setAttribute("view.jsp-print", Boolean.valueOf(print));
 
+		request.setAttribute("view.jsp-viewInContext", assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet());
+
 		PortalUtil.addPortletBreadcrumbEntry(request, title, currentURL);
 		%>
 

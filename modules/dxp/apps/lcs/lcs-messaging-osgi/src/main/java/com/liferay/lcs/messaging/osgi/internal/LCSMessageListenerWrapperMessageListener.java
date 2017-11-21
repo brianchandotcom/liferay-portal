@@ -49,36 +49,19 @@ public class LCSMessageListenerWrapperMessageListener
 			Map<String, Object> values = message.getValues();
 
 			for (String key : values.keySet()) {
-				String stringValue = getStringFromObject(values.get(key));
+				String stringValue = String.valueOf(values.get(key));
 
 				metadata.put(key, stringValue);
 			}
 
 			_lcsMessageListener.receive(
 				message.getDestinationName(), metadata,
-				getStringFromObject(message.getPayload()),
+				String.valueOf(message.getPayload()),
 				message.getResponseDestinationName());
 		}
 		catch (LCSMessageListenerException lcsmle) {
 			throw new MessageListenerException(lcsmle);
 		}
-	}
-
-	protected String getStringFromObject(Object obj) {
-		String string = null;
-
-		if (obj instanceof String) {
-			string = (String)obj;
-		}
-		else {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Object not instance of String.class");
-			}
-
-			string = String.valueOf(obj);
-		}
-
-		return string;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

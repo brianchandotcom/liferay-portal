@@ -37,15 +37,17 @@
 	<command name="AddQuickNote" priority="2">
 		<var name="portletName" value="Quick Note" />
 
-		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="ControlMenu#ADD" value1="Add" />
+		<execute function="Click#clickAt" locator1="ControlMenu#ADD" />
 
 		<execute macro="Panel#expandSidebarApplicationsPanel" />
 
 		<execute function="Type#sendKeysApplicationSearch" locator1="NavBar#APPLICATION_SEARCH_FIELD" value1="${portletName}" />
 
-		<var name="portletLocator" value="//span[@data-title=&quot;${portletName}&quot; and contains(@class,'add-content-item')]" />
+		<execute function="MouseOver" locator1="ControlMenuAddPanel#ADD_PORTLET_DRAG_LINK" />
 
-		<execute function="AssertClick#pauseMakeVisibleAssertTextEqualsClickAt" locator1="${portletLocator}" value1="Add" />
+		<execute function="MouseOver" locator1="ControlMenuAddPanel#ADD_PORTLET_LINK" />
+
+		<execute function="Click" locator1="ControlMenuAddPanel#ADD_PORTLET_LINK" value1="Add" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Quick Note Page" />

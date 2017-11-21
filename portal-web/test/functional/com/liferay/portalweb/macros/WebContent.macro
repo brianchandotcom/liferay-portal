@@ -1,6 +1,8 @@
 <definition>
 	<command name="_gotoAddPGViaWCD">
-		<execute function="Click#makeVisibleClickAt" locator1="WCD#ADD_WEB_CONTENT" />
+		<execute function="MouseOver#mouseOverNotVisible" locator1="WCD#ADD_WEB_CONTENT" />
+
+		<execute function="Click" locator1="WCD#ADD_WEB_CONTENT" />
 
 		<var name="key_structureName" value="Basic Web Content" />
 
@@ -752,7 +754,9 @@
 	</command>
 
 	<command name="addWithWorkflowPGViaAP">
-		<execute function="Click#makeVisibleClickAt" locator1="AP#ADD_ASSET_PLUS_ICON" />
+		<execute function="MouseOver#mouseOverNotVisible" locator1="AP#ADD_ASSET_PLUS_ICON" />
+
+		<execute function="Click" locator1="AP#ADD_ASSET_PLUS_ICON" />
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Web Content">
 			<var name="key_menuItem" value="Basic Web Content" />

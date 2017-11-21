@@ -166,7 +166,9 @@
 	</command>
 
 	<command name="selectPollPG">
-		<execute function="Click#makeVisibleClickAt" locator1="Polls#SELECT_QUESTION" />
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Polls#SELECT_QUESTION" />
+
+		<execute function="Click" locator1="Polls#SELECT_QUESTION" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 

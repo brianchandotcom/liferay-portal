@@ -2,7 +2,7 @@
 	<command name="dragAndDropPortletToPortletColumnPG">
 		<var name="key_portletTitleName" value="${portletName}" />
 
-		<execute function="MakeVisible" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_HEADER" />
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_HEADER" />
 
 		<execute function="AssertTextEquals" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_HEADER" value1="${portletName}" />
 

@@ -9,16 +9,6 @@
 		<execute selenium="click" />
 	</command>
 
-	<command name="makeVisibleClick">
-		<execute function="WaitForSPARefresh" />
-
-		<execute selenium="mouseOver" />
-
-		<execute selenium="makeVisible" />
-
-		<execute selenium="click" />
-	</command>
-
 	<command name="pauseClick">
 		<execute function="WaitForSPARefresh" />
 

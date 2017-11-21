@@ -1017,7 +1017,9 @@
 	</command>
 
 	<command name="viewContentSharingPG">
-		<execute function="Click#makeVisibleClickAt" locator1="AP#ADD_ASSET_PLUS_ICON" />
+		<execute function="MouseOver#mouseOverNotVisible" locator1="AP#ADD_ASSET_PLUS_ICON" />
+
+		<execute function="Click" locator1="AP#ADD_ASSET_PLUS_ICON" />
 
 		<execute function="AssertClick" locator1="AP#ADD_ASSET_SCOPED" value1="Add Content (Select Scope and Type)" />
 
@@ -1230,7 +1232,9 @@
 	<command name="viewMultipleSiteScopesAddDropdowns">
 		<var name="key_siteScope" value="${siteName1}" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="AP#ADD_ASSET_PLUS_ICON" />
+		<execute function="MouseOver#mouseOverNotVisible" locator1="AP#ADD_ASSET_PLUS_ICON" />
+
+		<execute function="Click" locator1="AP#ADD_ASSET_PLUS_ICON" />
 
 		<execute function="AssertClick" locator1="AP#ADD_ASSET_SCOPED" value1="Add Content (Select Scope and Type)" />
 
@@ -1339,7 +1343,9 @@
 	<command name="viewSelectedPG">
 		<var name="key_selectedAsset" value="${selectedAsset}" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="AP#ADD_ASSET_PLUS_ICON" />
+		<execute function="MouseOver#mouseOverNotVisible" locator1="AP#ADD_ASSET_PLUS_ICON" />
+
+		<execute function="Click" locator1="AP#ADD_ASSET_PLUS_ICON" />
 
 		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="${selectedAsset}">
 			<var name="key_menuItem" value="${selectedAsset}" />

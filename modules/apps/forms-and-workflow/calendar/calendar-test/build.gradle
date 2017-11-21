@@ -8,6 +8,7 @@ dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	testIntegrationCompile project(":apps:forms-and-workflow:calendar:calendar-api")
 	testIntegrationCompile project(":apps:forms-and-workflow:calendar:calendar-service")
+	testIntegrationCompile project(":apps:foundation:portal-search:portal-search-test-util")
 	testIntegrationCompile project(":apps:web-experience:export-import:export-import-test-util")
 	testIntegrationCompile project(":core:registry-api")
 }

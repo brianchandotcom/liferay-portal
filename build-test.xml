@@ -1803,9 +1803,11 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 			<echo file="${liferay.home}/osgi/portal/com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration.config">additionalConfigurations=&quot;
 cluster.routing.allocation.disk.threshold_enabled:\ false
 cluster.service.slow_task_logging_threshold:\ 1800s
+httpEnabled=B&quot;false&quot;
 index.indexing.slowlog.threshold.index.warn:\ 1800s
 index.search.slowlog.threshold.fetch.warn:\ 1800s
 index.search.slowlog.threshold.query.warn:\ 1800s
+logExceptionsOnly=B&quot;false&quot;
 monitor.jvm.gc.old.warn:\ 1800s
 monitor.jvm.gc.young.warn:\ 1800s
 threadpool.bulk.size:\ 1
@@ -1824,9 +1826,7 @@ threadpool.search.size:\ 1
 threadpool.snapshot.size:\ 1
 threadpool.suggest.size:\ 1
 threadpool.warmer.size:\ 1
-transport.local.workers:\ 1&quot;
-httpEnabled=B&quot;false&quot;
-logExceptionsOnly=B&quot;false&quot;</echo>
+transport.local.workers:\ 1&quot;</echo>
 		</sequential>
 	</macrodef>
 

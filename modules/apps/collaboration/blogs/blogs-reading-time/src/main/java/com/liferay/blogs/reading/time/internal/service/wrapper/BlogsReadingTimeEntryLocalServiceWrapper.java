@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.reading.time.blogs.internal.service.wrapper;
+package com.liferay.blogs.reading.time.internal.service.wrapper;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
@@ -32,14 +32,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(immediate = true, service = ServiceWrapper.class)
-public class ReadingTimeBlogsEntryLocalServiceWrapper
+public class BlogsReadingTimeEntryLocalServiceWrapper
 	extends BlogsEntryLocalServiceWrapper {
 
-	public ReadingTimeBlogsEntryLocalServiceWrapper() {
+	public BlogsReadingTimeEntryLocalServiceWrapper() {
 		super(null);
 	}
 
-	public ReadingTimeBlogsEntryLocalServiceWrapper(
+	public BlogsReadingTimeEntryLocalServiceWrapper(
 		BlogsEntryLocalService blogsEntryLocalService) {
 
 		super(blogsEntryLocalService);

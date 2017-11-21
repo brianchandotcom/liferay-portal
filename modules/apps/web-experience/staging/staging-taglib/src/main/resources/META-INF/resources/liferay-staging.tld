@@ -364,6 +364,17 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a "(Staging)" suffixed descriptive name for a given Group.</description>
+		<name>staged-descriptive-name</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.StagedDescriptiveNameTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>group</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Displays a badge UI element on the screen with simple publication information, indicating whether a staged model has been published or not.</description>
 		<name>status</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.StatusTag</tag-class>

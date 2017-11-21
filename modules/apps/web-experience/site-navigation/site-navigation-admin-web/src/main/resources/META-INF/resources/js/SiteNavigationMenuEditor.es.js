@@ -15,6 +15,7 @@ class SiteNavigationMenuEditor extends State {
 		this.setState(config);
 
 		this._dragDrop = new DragDrop({
+			cloneContainer: document.body,
 			constrain: this.menuContainerSelector,
 			dragPlaceholder: Drag.Placeholder.CLONE,
 			handles: '.sticker',

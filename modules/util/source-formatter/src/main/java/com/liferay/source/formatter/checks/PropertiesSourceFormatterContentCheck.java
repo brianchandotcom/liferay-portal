@@ -74,10 +74,7 @@ public class PropertiesSourceFormatterContentCheck extends BaseFileCheck {
 			if (s.equals("git.liferay.portal.branch=\\")) {
 				gitLiferayPortalBranch = StringUtil.trim(line);
 			}
-
-			if (!trimmedLine.startsWith("git.liferay.portal.branch=") &&
-				!s.equals("git.liferay.portal.branch=\\")) {
-
+			else if (!trimmedLine.startsWith("git.liferay.portal.branch=")) {
 				sb.append(line);
 				sb.append("\n");
 			}

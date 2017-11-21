@@ -144,6 +144,10 @@ public abstract class MimeResponseImpl
 
 	@Override
 	public void setContentType(String contentType) {
+		if (_calledGetWriter || _calledGetPortletOutputStream) {
+			return;
+		}
+
 		if (Validator.isNull(contentType)) {
 			throw new IllegalArgumentException("Content type is null");
 		}

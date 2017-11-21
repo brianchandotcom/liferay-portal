@@ -20,7 +20,6 @@
 long[] siteNavigationMenuItemIds = ParamUtil.getLongValues(request, "siteNavigationMenuItemId");
 long siteNavigationMenuItemId = siteNavigationMenuItemIds[siteNavigationMenuItemIds.length - 1];
 long selectedSiteNavigationMenuItemId = ParamUtil.getLong(request, "selectedSiteNavigationMenuItemId");
-boolean indent = ParamUtil.getBoolean(request, "indent");
 
 SiteNavigationMenuItem siteNavigationMenuItem = SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItem(siteNavigationMenuItemId);
 
@@ -36,7 +35,7 @@ data.put("title", title);
 request.setAttribute("edit_site_navigation_menu.jsp-siteNavigationMenuItemId", siteNavigationMenuItem.getSiteNavigationMenuItemId());
 %>
 
-<div class="<%= indent ? "indent" : StringPool.BLANK %> container-item">
+<div class="<%= (siteNavigationMenuItem.getParentSiteNavigationMenuItemId() > 0) ? "indent" : StringPool.BLANK %> container-item">
 	<div class="col-md-4 site-navigation-menu-item <%= (selectedSiteNavigationMenuItemId == siteNavigationMenuItemId) ? "selected" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
 		<liferay-frontend:horizontal-card
 			actionJsp="/site_navigation_menu_item_action.jsp"
@@ -62,7 +61,6 @@ request.setAttribute("edit_site_navigation_menu.jsp-siteNavigationMenuItemId", s
 
 		<liferay-util:include page="/view_site_navigation_menu_item.jsp" servletContext="<%= application %>">
 			<liferay-util:param name="siteNavigationMenuItemId" value="<%= String.valueOf(childSiteNavigationMenuItem.getSiteNavigationMenuItemId()) %>" />
-			<liferay-util:param name="indent" value="<%= Boolean.TRUE.toString() %>" />
 		</liferay-util:include>
 
 	<%

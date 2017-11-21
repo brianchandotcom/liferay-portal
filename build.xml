@@ -989,8 +989,6 @@ message.
 					result="petra.version.check"
 				/>
 
-				<echo message="PVC = ${petra.version.check}" />
-
 				<if>
 					<and>
 						<contains string="${petra.version}" substring="sp" />

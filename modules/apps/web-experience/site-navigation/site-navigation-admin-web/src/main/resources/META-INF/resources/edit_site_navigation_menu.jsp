@@ -181,6 +181,7 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 			function handlePortletDestroy() {
 				if (siteNavigationMenuEditor) {
 					siteNavigationMenuEditor.dispose();
+
 					siteNavigationMenuEditor = null;
 				}
 

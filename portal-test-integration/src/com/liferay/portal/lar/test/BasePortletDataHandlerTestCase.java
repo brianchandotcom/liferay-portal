@@ -22,8 +22,12 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -35,10 +39,12 @@ import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -69,6 +75,40 @@ public abstract class BasePortletDataHandlerTestCase {
 		Assert.assertArrayEquals(
 			getDataPortletPreferences(),
 			portletDataHandler.getDataPortletPreferences());
+	}
+
+	@Test
+	public void testDeleteData() throws Exception {
+		initExport();
+
+		long ownerId = PortletKeys.PREFS_OWNER_ID_DEFAULT;
+		int ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;
+
+		javax.portlet.PortletPreferences portletPreferences =
+			PortletPreferencesLocalServiceUtil.fetchPreferences(
+				portletDataContext.getCompanyId(), ownerId, ownerType,
+				portletDataContext.getPlid(),
+				portletDataContext.getPortletId());
+
+		if (portletPreferences == null) {
+			portletPreferences = new PortletPreferencesImpl();
+		}
+
+		addStagedModels();
+
+		portletDataHandler.deleteData(
+			portletDataContext, portletId, portletPreferences);
+
+		Assert.assertEquals(0, getStagedModels().size());
+
+		for (String preferenceKey :
+			portletDataHandler.getDataPortletPreferences()) {
+
+			String portletPreference = portletPreferences.getValue(
+				preferenceKey, StringPool.BLANK);
+
+			Assert.assertEquals(StringPool.BLANK, portletPreference);
+		}
 	}
 
 	@Test
@@ -215,6 +255,10 @@ public abstract class BasePortletDataHandlerTestCase {
 	}
 
 	protected abstract String getPortletId();
+
+	protected List<StagedModel> getStagedModels() {
+		return new ArrayList<>();
+	}
 
 	protected Date getStartDate() {
 		return new Date(System.currentTimeMillis() - Time.HOUR);

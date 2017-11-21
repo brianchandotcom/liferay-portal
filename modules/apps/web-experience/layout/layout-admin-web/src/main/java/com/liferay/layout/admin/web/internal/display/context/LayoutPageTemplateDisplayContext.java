@@ -89,6 +89,7 @@ public class LayoutPageTemplateDisplayContext {
 
 		portletURL.setParameter(
 			"mvcPath", "/view_layout_page_template_entries.jsp");
+		portletURL.setParameter("tabs1", "page-templates");
 
 		if (getLayoutPageTemplateCollectionId() > 0) {
 			portletURL.setParameter(
@@ -198,6 +199,7 @@ public class LayoutPageTemplateDisplayContext {
 
 			backURL.setParameter(
 				"mvcPath", "/view_layout_page_template_collections.jsp");
+			backURL.setParameter("tabs1", "page-templates");
 
 			redirect = backURL.toString();
 		}

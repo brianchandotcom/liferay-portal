@@ -26,6 +26,7 @@ LayoutPageTemplateCollection layoutPageTemplateCollection = (LayoutPageTemplateC
 	<c:if test="<%= LayoutPageTemplateCollectionPermission.contains(permissionChecker, layoutPageTemplateCollection, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editLayoutPageTemplateCollectionURL">
 			<portlet:param name="mvcPath" value="/edit_layout_page_template_collection.jsp" />
+			<portlet:param name="tabs1" value="page-templates" />
 			<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()) %>" />
 		</portlet:renderURL>
 

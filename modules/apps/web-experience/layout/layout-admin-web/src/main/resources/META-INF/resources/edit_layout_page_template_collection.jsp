@@ -29,6 +29,7 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateCo
 
 <portlet:actionURL name="/layout/edit_layout_page_template_collection" var="editLayoutPageTemplateCollectionURL">
 	<portlet:param name="mvcPath" value="/edit_layout_page_template_collection.jsp" />
+	<portlet:param name="tabs1" value="page-templates" />
 </portlet:actionURL>
 
 <aui:form action="<%= editLayoutPageTemplateCollectionURL %>" cssClass="container-fluid-1280" name="fm">

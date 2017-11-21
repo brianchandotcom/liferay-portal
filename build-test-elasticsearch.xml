@@ -587,24 +587,48 @@ username=&quot;liferay&quot;</echo>
 
 		<local name="elasticsearch.server.not.started" />
 
+		<get-testcase-property property.name="remote.elasticsearch.cluster.size" />
+
 		<if>
-			<os family="unix" />
+			<isset property="remote.elasticsearch.cluster.size" />
 			<then>
-				<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
-					<arg value="-c" />
-					<arg value="ES_HEAP_SIZE=512m ./elasticsearch -Des.insecure.allow.root=true -d -p pid-elasticsearch" />
-				</exec>
+				<var name="node.count" value="${remote.elasticsearch.cluster.size}" />
 			</then>
-			<elseif>
-				<os family="windows" />
+			<else>
+				<var name="node.count" value="1" />
+			</else>
+		</if>
+
+		<var name="pid.file.count" value="0" />
+
+		<antelope:repeat count="${node.count}">
+			<math
+				datatype="int"
+				operand1="${pid.file.count}"
+				operand2="1"
+				operation="+"
+				result="pid.file.count"
+			/>
+
+			<if>
+				<os family="unix" />
 				<then>
-					<exec dir="${elasticsearch.dir}/bin" executable="cmd" spawn="true">
-						<arg value="/c" />
-						<arg value="elasticsearch -d -p pid-elasticsearch" />
+					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="ES_HEAP_SIZE=512m ./elasticsearch -Des.insecure.allow.root=true -d -p pid-elasticsearch${pid.file.count}" />
 					</exec>
 				</then>
-			</elseif>
-		</if>
+				<elseif>
+					<os family="windows" />
+					<then>
+						<exec dir="${elasticsearch.dir}/bin" executable="cmd" spawn="true">
+							<arg value="/c" />
+							<arg value="elasticsearch -d -p pid-elasticsearch${pid.file.count}" />
+						</exec>
+					</then>
+				</elseif>
+			</if>
+		</antelope:repeat>
 
 		<if>
 			<equals arg1="${elastic.shield.enabled}" arg2="true" />

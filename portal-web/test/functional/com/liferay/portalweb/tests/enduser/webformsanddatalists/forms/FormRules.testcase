@@ -1339,13 +1339,19 @@
 			<var name="fieldValue" value="testing" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="FormFields#DATE_FIELD" />
+		<execute macro="FormFields#viewDateFieldNotPresent">
+			<var name="fieldLabel" value="Date Field" />
+			<var name="fieldName" value="DateField" />
+		</execute>
 
 		<execute macro="FormFields#editText">
 			<var name="fieldName" value="TextField1" />
 			<var name="fieldValue" value="test" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="FormFields#DATE_FIELD" />
+		<execute macro="FormFields#viewDateField">
+			<var name="fieldLabel" value="Date Field" />
+			<var name="fieldName" value="DateField" />
+		</execute>
 	</command>
 </definition>

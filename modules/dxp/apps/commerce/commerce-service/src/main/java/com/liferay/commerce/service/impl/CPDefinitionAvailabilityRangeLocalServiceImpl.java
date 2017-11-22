@@ -86,6 +86,13 @@ public class CPDefinitionAvailabilityRangeLocalServiceImpl
 				cpDefinitionAvailabilityRange);
 		}
 
+		CPDefinitionAvailabilityRange cpDefinitionAvailabilityRange =
+			fetchCPDefinitionAvailabilityRangeByCPDefinitionId(cpDefinitionId);
+
+		if (cpDefinitionAvailabilityRange != null) {
+			return cpDefinitionAvailabilityRange;
+		}
+
 		return addCPDefinitionAvailabilityRange(
 			cpDefinitionId, commerceAvailabilityRangeId, serviceContext);
 	}

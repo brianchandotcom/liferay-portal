@@ -40,6 +40,14 @@
 		</execute>
 	</command>
 
+	<command name="gotoHeaderMenuItem">
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${menuItem}">
+			<var name="key_menuItem" value="${menuItem}" />
+		</execute>
+	</command>
+
 	<command name="selectEntry">
 		<execute function="Check" locator1="ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX">
 			<var name="key_rowEntry" value="${rowEntry}" />

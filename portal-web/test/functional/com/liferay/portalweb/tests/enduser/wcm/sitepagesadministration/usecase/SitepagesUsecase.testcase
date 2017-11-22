@@ -92,8 +92,10 @@
 	<command name="CannotDeleteLastPublicPageOnLiferay" priority="3">
 		<property name="testray.component.names" value="Site Pages Administration" />
 
-		<execute macro="SitePageNavigator#gotoPages">
-			<var name="page" value="Public Pages" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
 		<execute macro="Page#assertCannotDeleteOnlyPage">
@@ -1364,15 +1366,10 @@
 			<var name="sitePageType" value="Link to URL" />
 		</execute>
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blank Page" />
-			<var name="siteName" value="Page Type Test Site Name" />
-		</execute>
-
 		<execute macro="LexiconEntry#delete">
 			<var name="failure" value="The first page cannot be of type Link to URL." />
 			<var name="dialog" value="Are you sure you want to delete this? It will be deleted immediately." />
-			<var name="rowEntry" value="${pageName}" />
+			<var name="rowEntry" value="Blank Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">

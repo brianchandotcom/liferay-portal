@@ -65,7 +65,9 @@ public class GetFileSetTask extends Task {
 				Level.WARNING, "Class files for {0} were not found!",
 				notFoundClassNames.toString());
 
-			return;
+			if(classResultList.isEmpty()){
+				return;
+			}
 		}
 
 		DirSet srcDirSet = new DirSet();

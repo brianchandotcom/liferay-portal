@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.cart.content.web.internal.portlet;
 
+import com.liferay.commerce.cart.CommerceCartValidatorRegistry;
 import com.liferay.commerce.cart.content.web.internal.display.context.CommerceWishListContentDisplayContext;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
@@ -83,8 +84,9 @@ public class CommerceWishListContentPortlet extends MVCPortlet {
 				new CommerceWishListContentDisplayContext(
 					httpServletRequest, httpServletResponse,
 					_commerceCartHelper, _commerceCartItemService,
-					_commercePriceCalculator, _commercePriceFormatter,
-					_cpDefinitionHelper, _cpInstanceHelper);
+					_commerceCartValidatorRegistry, _commercePriceCalculator,
+					_commercePriceFormatter, _cpDefinitionHelper,
+					_cpInstanceHelper);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -98,6 +100,9 @@ public class CommerceWishListContentPortlet extends MVCPortlet {
 
 	@Reference
 	private CommerceCartItemService _commerceCartItemService;
+
+	@Reference
+	private CommerceCartValidatorRegistry _commerceCartValidatorRegistry;
 
 	@Reference
 	private CommercePriceCalculator _commercePriceCalculator;

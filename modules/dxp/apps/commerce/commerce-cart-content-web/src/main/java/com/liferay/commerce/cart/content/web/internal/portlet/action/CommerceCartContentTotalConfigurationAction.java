@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.cart.content.web.internal.portlet.action;
 
+import com.liferay.commerce.cart.CommerceCartValidatorRegistry;
 import com.liferay.commerce.cart.content.web.internal.display.context.CommerceCartContentTotalDisplayContext;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
@@ -65,9 +66,10 @@ public class CommerceCartContentTotalConfigurationAction
 				commerceCartContentTotalDisplayContext =
 					new CommerceCartContentTotalDisplayContext(
 						request, response, _commerceCartHelper,
-						_commerceCartItemService, _commercePriceCalculator,
-						_commercePriceFormatter, _cpDefinitionHelper,
-						_cpInstanceHelper, _portal);
+						_commerceCartItemService,
+						_commerceCartValidatorRegistry,
+						_commercePriceCalculator, _commercePriceFormatter,
+						_cpDefinitionHelper, _cpInstanceHelper, _portal);
 
 			request.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -97,6 +99,9 @@ public class CommerceCartContentTotalConfigurationAction
 
 	@Reference
 	private CommerceCartItemService _commerceCartItemService;
+
+	@Reference
+	private CommerceCartValidatorRegistry _commerceCartValidatorRegistry;
 
 	@Reference
 	private CommercePriceCalculator _commercePriceCalculator;

@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.cart.content.web.internal.display.context;
 
+import com.liferay.commerce.cart.CommerceCartValidatorRegistry;
 import com.liferay.commerce.cart.content.web.internal.portlet.configuration.CommerceCartContentMiniPortletInstanceConfiguration;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
@@ -40,6 +41,7 @@ public class CommerceCartContentMiniDisplayContext
 			HttpServletResponse httpServletResponse,
 			CommerceCartHelper commerceCartHelper,
 			CommerceCartItemService commerceCartItemService,
+			CommerceCartValidatorRegistry commerceCartValidatorRegistry,
 			CommercePriceCalculator commercePriceCalculator,
 			CommercePriceFormatter commercePriceFormatter,
 			CPDefinitionHelper cpDefinitionHelper,
@@ -48,8 +50,9 @@ public class CommerceCartContentMiniDisplayContext
 
 		super(
 			httpServletRequest, httpServletResponse, commerceCartHelper,
-			commerceCartItemService, commercePriceCalculator,
-			commercePriceFormatter, cpDefinitionHelper, cpInstanceHelper);
+			commerceCartItemService, commerceCartValidatorRegistry,
+			commercePriceCalculator, commercePriceFormatter, cpDefinitionHelper,
+			cpInstanceHelper);
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(

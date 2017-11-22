@@ -17,11 +17,12 @@ package com.liferay.asset.browser.web.internal.display.context;
 import com.liferay.asset.browser.web.internal.configuration.AssetBrowserWebConfigurationValues;
 import com.liferay.asset.browser.web.internal.constants.AssetBrowserPortletKeys;
 import com.liferay.asset.browser.web.internal.search.AssetBrowserSearch;
+import com.liferay.asset.constants.AssetWebKeys;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
-import com.liferay.asset.util.impl.AssetUtil;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -68,6 +69,9 @@ public class AssetBrowserDisplayContext {
 		_request = PortalUtil.getHttpServletRequest(renderRequest);
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+
+		_assetHelper = (AssetHelper)renderRequest.getAttribute(
+			AssetWebKeys.ASSET_HELPER);
 	}
 
 	public String getAddButtonLabel() {
@@ -109,13 +113,13 @@ public class AssetBrowserDisplayContext {
 		if (assetRendererFactory.isSupportsClassTypes() &&
 			(getSubtypeSelectionId() > 0)) {
 
-			addPortletURL = AssetUtil.getAddPortletURL(
+			addPortletURL = _assetHelper.getAddPortletURL(
 				liferayPortletRequest, liferayPortletResponse, groupId,
 				getTypeSelection(), getSubtypeSelectionId(), null, null,
 				getPortletURL().toString());
 		}
 		else {
-			addPortletURL = AssetUtil.getAddPortletURL(
+			addPortletURL = _assetHelper.getAddPortletURL(
 				liferayPortletRequest, liferayPortletResponse, groupId,
 				getTypeSelection(), 0, null, null, getPortletURL().toString());
 		}
@@ -192,7 +196,7 @@ public class AssetBrowserDisplayContext {
 				getStatuses(), assetBrowserSearch.getStart(),
 				assetBrowserSearch.getEnd(), sort);
 
-			List<AssetEntry> assetEntries = AssetUtil.getAssetEntries(hits);
+			List<AssetEntry> assetEntries = _assetHelper.getAssetEntries(hits);
 
 			assetBrowserSearch.setResults(assetEntries);
 		}
@@ -530,6 +534,7 @@ public class AssetBrowserDisplayContext {
 		return _showScheduled;
 	}
 
+	private final AssetHelper _assetHelper;
 	private AssetRendererFactory _assetRendererFactory;
 	private String _displayStyle;
 	private String _eventName;

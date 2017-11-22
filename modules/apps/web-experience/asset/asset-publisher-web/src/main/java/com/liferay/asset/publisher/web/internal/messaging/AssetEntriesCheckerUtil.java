@@ -22,7 +22,7 @@ import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfigurat
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
-import com.liferay.asset.util.impl.AssetUtil;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -388,7 +388,7 @@ public class AssetEntriesCheckerUtil {
 				TimeZoneThreadLocal.getDefaultTimeZone(), 0);
 
 			BaseModelSearchResult<AssetEntry> baseModelSearchResult =
-				AssetUtil.searchAssetEntries(
+				_assetHelper.searchAssetEntries(
 					searchContext, assetEntryQuery, 0,
 					assetPublisherWebConfiguration.dynamicSubscriptionLimit());
 
@@ -426,6 +426,9 @@ public class AssetEntriesCheckerUtil {
 		};
 
 	private static UserLocalService _userLocalService;
+
+	@Reference
+	private AssetHelper _assetHelper;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

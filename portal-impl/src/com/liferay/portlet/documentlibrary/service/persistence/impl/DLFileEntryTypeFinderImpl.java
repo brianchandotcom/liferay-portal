@@ -252,15 +252,6 @@ public class DLFileEntryTypeFinderImpl
 				descriptions);
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 
-			if (orderByComparator != null) {
-				String orderByFields = StringUtil.merge(
-					orderByComparator.getOrderByFields(), StringPool.COMMA);
-
-				sql = StringUtil.replace(
-					sql, "DLFileEntryType.name ASC",
-					orderByFields.concat(" DESC"));
-			}
-
 			if (includeBasicFileEntryType) {
 				sql = sql.concat(StringPool.CLOSE_PARENTHESIS);
 			}

@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaStaticBlock;
 import com.liferay.source.formatter.parser.JavaTerm;
@@ -24,8 +25,10 @@ import com.liferay.source.formatter.util.FileUtil;
 import java.io.File;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
 
 /**
  * @author Hugo Huijser
@@ -73,25 +76,46 @@ public class JavaTermOrderCheck extends BaseJavaTermCheck {
 			return null;
 		}
 
-		String portalCustomSQLContent = getPortalContent(
+		String portalCustomSQLDefaultContent = getPortalContent(
 			"portal-impl/src/custom-sql/default.xml");
 
-		if (portalCustomSQLContent == null) {
+		if (portalCustomSQLDefaultContent == null) {
 			return null;
 		}
 
-		Matcher matcher = _customSQLFilePattern.matcher(portalCustomSQLContent);
+		Document document = DocumentHelper.createDocument();
 
-		while (matcher.find()) {
+		Element rootElement = document.addElement("custom-sql");
+
+		Document customSQLDefaultDocument = SourceUtil.readXML(
+			portalCustomSQLDefaultContent);
+
+		Element customSQLDefaultRootElement =
+			customSQLDefaultDocument.getRootElement();
+
+		for (Element sqlElement :
+				(List<Element>)customSQLDefaultRootElement.elements("sql")) {
+
 			String customSQLFileContent = getPortalContent(
-				"portal-impl/src/" + matcher.group(1));
+				"portal-impl/src/" + sqlElement.attributeValue("file"));
 
-			if (customSQLFileContent != null) {
-				portalCustomSQLContent += customSQLFileContent;
+			if (customSQLFileContent == null) {
+				continue;
+			}
+
+			Document customSQLDocument = SourceUtil.readXML(
+				customSQLFileContent);
+
+			Element customSQLRootElement = customSQLDocument.getRootElement();
+
+			for (Element customSQLElement :
+					(List<Element>)customSQLRootElement.elements("sql")) {
+
+				rootElement.add(customSQLElement.detach());
 			}
 		}
 
-		return portalCustomSQLContent;
+		return document.asXML();
 	}
 
 	private String _getCustomSQLContent(String fileName, String absolutePath)
@@ -188,8 +212,6 @@ public class JavaTermOrderCheck extends BaseJavaTermCheck {
 		return javaClass.getContent();
 	}
 
-	private final Pattern _customSQLFilePattern = Pattern.compile(
-		"<sql file=\"(.*)\" \\/>");
 	private String _portalCustomSQLContent;
 
 }

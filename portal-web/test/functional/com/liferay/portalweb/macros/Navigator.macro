@@ -109,8 +109,6 @@
 			<var name="siteNameURL" value="${siteName}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPrivatePages" />
-
 		<execute macro="Navigator#_gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>

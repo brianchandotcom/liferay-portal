@@ -255,3 +255,15 @@
 .form-builder-select-field .drop-chosen .results-chosen li.option-selected {
 	color: $brand-text-color;
 }
+
+.lfr-notification-container {
+	left: 25%;
+	max-width: 50%;
+	position: absolute;
+	right: 25%;
+}
+
+.commerce-alert-danger {
+	background-color: transparent;
+	font-weight: 600;
+}

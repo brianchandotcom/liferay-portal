@@ -18,6 +18,8 @@ import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -54,14 +56,20 @@ public class ClassLoaderObjectInputStreamTest {
 			new UnsyncByteArrayInputStream(
 				unsyncByteArrayOutputStream.unsafeGetByteArray());
 
-		try (ObjectInputStream objectInputStream =
-				new ClassLoaderObjectInputStream(
-					unsyncByteArrayInputStream,
-					ClassLoaderObjectInputStreamTest.class.getClassLoader())) {
+		try (ObjectInputStream objectInputStream = getObjectInputStream(
+				unsyncByteArrayInputStream,
+				ClassLoaderObjectInputStreamTest.class.getClassLoader())) {
 
 			Assert.assertEquals(
 				testSerializable, objectInputStream.readObject());
 		}
+	}
+
+	protected ObjectInputStream getObjectInputStream(
+			InputStream inputStream, ClassLoader classLoader)
+		throws IOException {
+
+		return new ClassLoaderObjectInputStream(inputStream, classLoader);
 	}
 
 	private static class TestSerializable implements Serializable {

@@ -46,6 +46,10 @@ public class JavaFinderImplCustomSQLCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
+		if (isSubrepository() || isReadOnly(absolutePath)) {
+			return content;
+		}
+
 		if (fileName.endsWith("FinderImpl.java")) {
 			_checkCustomSQL(fileName, absolutePath, content);
 		}

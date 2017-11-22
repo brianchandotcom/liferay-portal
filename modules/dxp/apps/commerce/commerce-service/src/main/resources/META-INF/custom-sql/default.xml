@@ -1,6 +1,16 @@
 <?xml version="1.0"?>
 
 <custom-sql>
+	<sql id="com.liferay.commerce.service.persistence.CommerceCartItemFinder.getCPInstanceQuantity">
+		<![CDATA[
+			SELECT
+				SUM(CommerceCartItem.quantity) AS SUM_VALUE
+			FROM
+				CommerceCartItem
+			WHERE
+				(CommerceCartItem.CPInstanceId = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.commerce.service.persistence.CommerceCountryFinder.findByCommerceWarehouses">
 		<![CDATA[
 			SELECT
@@ -97,7 +107,7 @@
 				CommerceWarehouse.name ASC
 		]]>
 	</sql>
-	<sql id="com.liferay.commerce.service.persistence.CommerceWarehouseItemFinder.findByC_C">
+	<sql id="com.liferay.commerce.service.persistence.CommerceWarehouseItemFinder.findByCPInstanceId">
 		<![CDATA[
 			SELECT
 				{CommerceWarehouseItem.*}
@@ -107,10 +117,19 @@
 				CommerceWarehouse ON
 					(CommerceWarehouseItem.commerceWarehouseId = CommerceWarehouse.commerceWarehouseId)
 			WHERE
-				(CommerceWarehouseItem.classNameId = ?) AND
-				(CommerceWarehouseItem.classPK = ?)
+				(CommerceWarehouseItem.CPInstanceId = ?)
 			ORDER BY
 				CommerceWarehouseItem.quantity
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.service.persistence.CommerceWarehouseItemFinder.getCPInstanceQuantity">
+		<![CDATA[
+			SELECT
+				SUM(CommerceWarehouseItem.quantity) AS SUM_VALUE
+			FROM
+				CommerceWarehouseItem
+			WHERE
+				(CommerceWarehouseItem.CPInstanceId = ?)
 		]]>
 	</sql>
 </custom-sql>

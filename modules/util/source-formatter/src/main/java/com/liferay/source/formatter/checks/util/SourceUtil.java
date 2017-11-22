@@ -104,6 +104,12 @@ public class SourceUtil {
 		return level;
 	}
 
+	public static Document readXML(File file) throws Exception {
+		SAXReader saxReader = SAXReaderFactory.getSAXReader(null, false, false);
+
+		return saxReader.read(file);
+	}
+
 	public static Document readXML(String content) throws Exception {
 		SAXReader saxReader = SAXReaderFactory.getSAXReader(null, false, false);
 

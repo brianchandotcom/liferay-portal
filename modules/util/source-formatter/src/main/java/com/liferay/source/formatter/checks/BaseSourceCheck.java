@@ -43,6 +43,10 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+
 /**
  * @author Hugo Huijser
  */
@@ -227,6 +231,42 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return StringPool.BLANK;
 	}
 
+	protected String getCustomSQLContent(
+			String fileName, String absolutePath, String portalCustomSQLContent)
+		throws Exception {
+
+		if (isPortalSource() && !isModulesFile(absolutePath)) {
+			return portalCustomSQLContent;
+		}
+
+		int i = fileName.lastIndexOf("/src/");
+
+		if (i == -1) {
+			return null;
+		}
+
+		File customSQLFile = new File(
+			fileName.substring(0, i) + "/src/custom-sql/default.xml");
+
+		if (!customSQLFile.exists()) {
+			customSQLFile = new File(
+				fileName.substring(0, i) +
+					"/src/main/resources/META-INF/custom-sql/default.xml");
+		}
+
+		if (!customSQLFile.exists()) {
+			customSQLFile = new File(
+				fileName.substring(0, i) +
+					"/src/main/resources/custom-sql/default.xml");
+		}
+
+		if (!customSQLFile.exists()) {
+			return null;
+		}
+
+		return FileUtil.read(customSQLFile);
+	}
+
 	protected File getFile(String fileName, int level) {
 		return SourceFormatterUtil.getFile(_baseDirName, fileName, level);
 	}
@@ -344,6 +384,53 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		catch (Exception e) {
 			return null;
 		}
+	}
+
+	protected String getPortalCustomSQLContent() throws Exception {
+		if (!isPortalSource()) {
+			return null;
+		}
+
+		String portalCustomSQLDefaultContent = getPortalContent(
+			"portal-impl/src/custom-sql/default.xml");
+
+		if (portalCustomSQLDefaultContent == null) {
+			return null;
+		}
+
+		Document document = DocumentHelper.createDocument();
+
+		Element rootElement = document.addElement("custom-sql");
+
+		Document customSQLDefaultDocument = SourceUtil.readXML(
+			portalCustomSQLDefaultContent);
+
+		Element customSQLDefaultRootElement =
+			customSQLDefaultDocument.getRootElement();
+
+		for (Element sqlElement :
+				(List<Element>)customSQLDefaultRootElement.elements("sql")) {
+
+			String customSQLFileContent = getPortalContent(
+				"portal-impl/src/" + sqlElement.attributeValue("file"));
+
+			if (customSQLFileContent == null) {
+				continue;
+			}
+
+			Document customSQLDocument = SourceUtil.readXML(
+				customSQLFileContent);
+
+			Element customSQLRootElement = customSQLDocument.getRootElement();
+
+			for (Element customSQLElement :
+					(List<Element>)customSQLRootElement.elements("sql")) {
+
+				rootElement.add(customSQLElement.detach());
+			}
+		}
+
+		return document.asXML();
 	}
 
 	protected String getProjectPathPrefix() {

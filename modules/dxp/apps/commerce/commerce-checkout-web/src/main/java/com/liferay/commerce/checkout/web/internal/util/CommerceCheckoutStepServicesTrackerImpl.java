@@ -31,6 +31,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -70,7 +73,11 @@ public class CommerceCheckoutStepServicesTrackerImpl
 	}
 
 	@Override
-	public List<CommerceCheckoutStep> getCommerceCheckoutSteps() {
+	public List<CommerceCheckoutStep> getCommerceCheckoutSteps(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception {
+
 		List<CommerceCheckoutStep> commerceCheckoutSteps = new ArrayList<>();
 
 		List<ServiceWrapper<CommerceCheckoutStep>>
@@ -85,8 +92,14 @@ public class CommerceCheckoutStepServicesTrackerImpl
 				commerceCheckoutStepServiceWrapper :
 					commerceCheckoutStepServiceWrappers) {
 
-			commerceCheckoutSteps.add(
-				commerceCheckoutStepServiceWrapper.getService());
+			CommerceCheckoutStep commerceCheckoutStep =
+				commerceCheckoutStepServiceWrapper.getService();
+
+			if (commerceCheckoutStep.isActive(
+					httpServletRequest, httpServletResponse)) {
+
+				commerceCheckoutSteps.add(commerceCheckoutStep);
+			}
 		}
 
 		return Collections.unmodifiableList(commerceCheckoutSteps);
@@ -94,14 +107,17 @@ public class CommerceCheckoutStepServicesTrackerImpl
 
 	@Override
 	public CommerceCheckoutStep getNextCommerceCheckoutStep(
-		String commerceCheckoutStepName) {
+			String commerceCheckoutStepName,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception {
 
 		if (Validator.isNull(commerceCheckoutStepName)) {
 			return null;
 		}
 
 		List<CommerceCheckoutStep> commerceCheckoutSteps =
-			getCommerceCheckoutSteps();
+			getCommerceCheckoutSteps(httpServletRequest, httpServletResponse);
 
 		CommerceCheckoutStep commerceCheckoutStep = getCommerceCheckoutStep(
 			commerceCheckoutStepName);
@@ -120,14 +136,17 @@ public class CommerceCheckoutStepServicesTrackerImpl
 
 	@Override
 	public CommerceCheckoutStep getPreviusCommerceCheckoutStep(
-		String commerceCheckoutStepName) {
+			String commerceCheckoutStepName,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception {
 
 		if (Validator.isNull(commerceCheckoutStepName)) {
 			return null;
 		}
 
 		List<CommerceCheckoutStep> commerceCheckoutSteps =
-			getCommerceCheckoutSteps();
+			getCommerceCheckoutSteps(httpServletRequest, httpServletResponse);
 
 		CommerceCheckoutStep commerceCheckoutStep = getCommerceCheckoutStep(
 			commerceCheckoutStepName);

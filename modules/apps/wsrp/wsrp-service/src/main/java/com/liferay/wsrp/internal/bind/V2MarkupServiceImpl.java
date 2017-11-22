@@ -591,8 +591,7 @@ public class V2MarkupServiceImpl
 
 		if (Validator.isNotNull(opaqueValue)) {
 			opaqueValue = new String(
-				Base64.decode(Base64.fromURLSafe(opaqueValue)),
-				StringPool.UTF8);
+				Base64.decodeFromURL(opaqueValue), StringPool.UTF8);
 		}
 
 		Map<String, String[]> parameterMap = HttpUtil.parameterMapFromString(
@@ -771,8 +770,7 @@ public class V2MarkupServiceImpl
 			sb.append(StringPool.AMPERSAND);
 
 			opaqueValue = new String(
-				Base64.decode(Base64.fromURLSafe(opaqueValue)),
-				StringPool.UTF8);
+				Base64.decodeFromURL(opaqueValue), StringPool.UTF8);
 
 			sb.append(opaqueValue);
 		}

@@ -1190,8 +1190,7 @@ public class ConsumerPortlet extends MVCPortlet {
 
 		if (Validator.isNotNull(navigationalState)) {
 			navigationalState = new String(
-				Base64.decode(Base64.fromURLSafe(navigationalState)),
-				StringPool.UTF8);
+				Base64.decodeFromURL(navigationalState), StringPool.UTF8);
 
 			navigationalContext.setOpaqueValue(navigationalState);
 		}
@@ -1733,7 +1732,7 @@ public class ConsumerPortlet extends MVCPortlet {
 			if (Validator.isNotNull(opaqueValue)) {
 				byte[] opaqueValueBytes = opaqueValue.getBytes(StringPool.UTF8);
 
-				opaqueValue = Base64.toURLSafe(Base64.encode(opaqueValueBytes));
+				opaqueValue = Base64.encodeToURL(opaqueValueBytes);
 
 				stateAwareResponse.setRenderParameter(
 					"wsrp-navigationalState", opaqueValue);
@@ -1909,7 +1908,7 @@ public class ConsumerPortlet extends MVCPortlet {
 				if (Validator.isNotNull(value)) {
 					byte[] valueBytes = value.getBytes(StringPool.UTF8);
 
-					value = Base64.toURLSafe(Base64.encode(valueBytes));
+					value = Base64.encodeToURL(valueBytes);
 
 					liferayPortletURL.setParameter(name, value);
 				}

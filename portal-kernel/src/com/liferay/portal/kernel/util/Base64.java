@@ -100,6 +100,10 @@ public class Base64 {
 		return sb.toString();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link ##decodeFromURL(String)}
+	 */
+	@Deprecated
 	public static String fromURLSafe(String base64) {
 		return StringUtil.replace(
 			base64,
@@ -143,6 +147,10 @@ public class Base64 {
 		return _stringToObject(s, classLoader, true);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #encodeToURL(byte[])}
+	 */
+	@Deprecated
 	public static String toURLSafe(String base64) {
 		return StringUtil.replace(
 			base64, new char[] {CharPool.PLUS, CharPool.EQUAL, CharPool.SLASH},

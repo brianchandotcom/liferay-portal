@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
@@ -60,15 +61,9 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class PanelAppMyAccountPermissions {
 
 	public void initPermissions(List<Company> companies, Portlet portlet) {
-		String category = portlet.getControlPanelEntryCategory();
-
-		if ((category == null) ||
-			!category.equals(PortletCategoryKeys.USER_MY_ACCOUNT)) {
-
-			return;
+		for (Company company : companies) {
+			initPermissions(company.getCompanyId(), Arrays.asList(portlet));
 		}
-
-		_initPermissions(companies, portlet);
 	}
 
 	public void initPermissions(long companyId, List<Portlet> portlets) {
@@ -133,37 +128,6 @@ public class PanelAppMyAccountPermissions {
 		}
 
 		return null;
-	}
-
-	private void _initPermissions(List<Company> companies, Portlet portlet) {
-		String portletId = portlet.getPortletId();
-		String rootPortletId = portlet.getRootPortletId();
-
-		List<String> actionIds = ResourceActionsUtil.getPortletResourceActions(
-			portlet.getRootPortletId());
-
-		for (Company company : companies) {
-			long companyId = company.getCompanyId();
-
-			try {
-				Role userRole = _getUserRole(companyId);
-
-				if (userRole == null) {
-					continue;
-				}
-
-				_initPermissions(
-					companyId, portletId, rootPortletId, userRole, actionIds);
-			}
-			catch (Exception e) {
-				_log.error(
-					StringBundler.concat(
-						"Unable to initialize My Account panel permissions ",
-						"for portlet ", portletId, " in company ",
-						String.valueOf(companyId)),
-					e);
-			}
-		}
 	}
 
 	private void _initPermissions(
@@ -249,7 +213,7 @@ public class PanelAppMyAccountPermissions {
 					return panelApp;
 				}
 
-				_initPermissions(_companyLocalService.getCompanies(), portlet);
+				initPermissions(_companyLocalService.getCompanies(), portlet);
 
 				return panelApp;
 			}

@@ -16,7 +16,7 @@ package com.liferay.wiki.importer.impl.mediawiki;
 
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.asset.util.impl.AssetUtil;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -764,7 +764,7 @@ public class MediaWikiImporter implements WikiImporter {
 		for (int i = 0; i < textCharArray.length; i++) {
 			char c = textCharArray[i];
 
-			for (char invalidChar : AssetUtil.INVALID_CHARACTERS) {
+			for (char invalidChar : AssetHelper.INVALID_CHARACTERS) {
 				if (c == invalidChar) {
 					textCharArray[i] = CharPool.SPACE;
 

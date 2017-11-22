@@ -1,4 +1,25 @@
 <definition>
+	<command name="delete">
+		<execute macro="LexiconEntry#gotoEntryMenuItemNoError">
+			<var name="menuItem" value="Delete" />
+			<var name="rowEntry" value="${rowEntry}" />
+		</execute>
+
+		<execute function="Confirm" value1="${dialog}" />
+
+		<if>
+			<isset var="failure" />
+			<then>
+				<execute macro="Alert#viewRequestFailedToComplete" />
+
+				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="${failure}" />
+			</then>
+			<else>
+				<execute macro="Alert#waitForSuccessMessageHide" />
+			</else>
+		</if>
+	</command>
+
 	<command name="gotoAdd">
 		<execute function="Click" locator1="Button#PLUS" />
 	</command>

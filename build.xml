@@ -1040,7 +1040,6 @@ message.
 				<if>
 					<equals arg1="${petra.use}" arg2="false" />
 					<then>
-
 						<replace file="${app.server.lib.global.dir}/module.xml">
 							<replacetoken><![CDATA[<resource-root path="com.liferay.petra.concurrent.jar" />]]></replacetoken>
 							<replacevalue></replacevalue>

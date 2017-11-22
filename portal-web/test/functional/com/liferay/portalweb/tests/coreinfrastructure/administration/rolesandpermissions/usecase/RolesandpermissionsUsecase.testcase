@@ -2257,11 +2257,6 @@
 			<var name="privacy" value="Public" />
 		</execute>
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="USA Ice Hockey Team Blog" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
 		<execute macro="PermissionsInline#gotoPagePG">
 			<var name="pageName" value="USA Ice Hockey Team Blog" />
 		</execute>

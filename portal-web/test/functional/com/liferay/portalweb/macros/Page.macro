@@ -1144,14 +1144,17 @@
 	</command>
 
 	<command name="viewPagesOrder">
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Navigation" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="ContentRow#ENTRY_CONTENT_ROW_NUMBER" value1="${pageName1}">
+			<var name="key_rowNumber" value="1" />
 		</execute>
 
-		<var name="key_page" value="${pageName1}" />
-		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK" value1="${pageName1}" />
-		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK_2" value1="${pageName2}" />
-		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK_3" value1="${pageName3}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="ContentRow#ENTRY_CONTENT_ROW_NUMBER" value1="${pageName2}">
+			<var name="key_rowNumber" value="2" />
+		</execute>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="ContentRow#ENTRY_CONTENT_ROW_NUMBER" value1="${pageName3}">
+			<var name="key_rowNumber" value="3" />
+		</execute>
 	</command>
 
 	<command name="viewPageTemplate">

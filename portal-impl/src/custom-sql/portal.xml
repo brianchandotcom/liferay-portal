@@ -76,6 +76,7 @@
 				(Group_.companyId = ?) AND
 				(Group_.parentGroupId = ?) AND
 				(Group_.site = ?)
+				[$ACTIVE$]
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.countByGroupId">
@@ -159,6 +160,7 @@
 				(Group_.companyId = ?) AND
 				(Group_.parentGroupId = ?) AND
 				(Group_.site = ?)
+				[$ACTIVE$]
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findByLiveGroups">

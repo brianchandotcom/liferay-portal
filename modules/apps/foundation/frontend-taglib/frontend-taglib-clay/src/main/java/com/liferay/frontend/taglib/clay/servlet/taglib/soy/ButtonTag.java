@@ -44,11 +44,11 @@ public class ButtonTag extends TemplateRendererTag {
 					"/clay/icons.svg");
 			}
 
-            String alignment = (String)context.get("iconAlignment");
+			String alignment = (String)context.get("iconAlignment");
 
-            if (Validator.isNotNull(alignment)) {
-			    icon.put("alignment", alignment);
-            }
+			if (Validator.isNotNull(alignment)) {
+				icon.put("alignment", alignment);
+			}
 
 			icon.put("spritemap", spritemap);
 			icon.put("symbol", (String)context.get("icon"));

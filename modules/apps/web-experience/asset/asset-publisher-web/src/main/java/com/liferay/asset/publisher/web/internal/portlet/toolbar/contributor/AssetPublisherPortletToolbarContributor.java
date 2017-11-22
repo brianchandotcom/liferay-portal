@@ -19,8 +19,8 @@ import com.liferay.asset.publisher.web.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.web.display.context.AssetPublisherDisplayContext;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.impl.AssetPublisherAddItemHolder;
-import com.liferay.asset.util.impl.AssetUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -232,7 +232,7 @@ public class AssetPublisherPortletToolbarContributor
 				themeDisplay.getLayout(), portletDisplay.getId(),
 				assetPublisherDisplayContext.getPortletResource());
 
-		String url = AssetUtil.getAddURLPopUp(
+		String url = _assetHelper.getAddURLPopUp(
 			curGroupId, themeDisplay.getPlid(),
 			assetPublisherAddItemHolder.getPortletURL(),
 			addDisplayPageParameter, themeDisplay.getLayout());
@@ -294,6 +294,9 @@ public class AssetPublisherPortletToolbarContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetPublisherPortletToolbarContributor.class);
+
+	@Reference
+	private AssetHelper _assetHelper;
 
 	@Reference
 	private AssetPublisherWebUtil _assetPublisherWebUtil;

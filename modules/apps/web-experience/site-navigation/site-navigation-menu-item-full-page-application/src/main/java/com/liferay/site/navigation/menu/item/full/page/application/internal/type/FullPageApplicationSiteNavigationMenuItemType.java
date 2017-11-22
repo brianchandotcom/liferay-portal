@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.site.navigation.constants.SiteNavigationWebKeys;
 import com.liferay.site.navigation.menu.item.full.page.application.internal.constants.SiteNavigationMenuItemTypeFullPageApplicationConstants;
 import com.liferay.site.navigation.menu.item.full.page.application.internal.constants.SiteNavigationMenuItemTypeFullPageApplicationWebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -30,6 +31,7 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 
 import java.io.IOException;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -95,10 +97,41 @@ public class FullPageApplicationSiteNavigationMenuItemType
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
+		request.setAttribute(
+			SiteNavigationMenuItemTypeFullPageApplicationWebKeys.
+				FULL_PAGE_APPLICATION_PORTLETS,
+			_getPortlets());
+
+		_jspRenderer.renderJSP(
+			_servletContext, request, response,
+			"/add_full_page_application.jsp");
+	}
+
+	@Override
+	public void renderEditPage(
+			HttpServletRequest request, HttpServletResponse response,
+			SiteNavigationMenuItem siteNavigationMenuItem)
+		throws IOException {
+
+		request.setAttribute(
+			SiteNavigationMenuItemTypeFullPageApplicationWebKeys.
+				FULL_PAGE_APPLICATION_PORTLETS,
+			_getPortlets());
+
+		request.setAttribute(
+			SiteNavigationWebKeys.SITE_NAVIGATION_MENU_ITEM,
+			siteNavigationMenuItem);
+
+		_jspRenderer.renderJSP(
+			_servletContext, request, response,
+			"/edit_full_page_application.jsp");
+	}
+
+	private List<Portlet> _getPortlets() {
 		List<Portlet> portlets = _portletLocalService.getPortlets();
 
 		if (portlets.isEmpty()) {
-			return;
+			return Collections.emptyList();
 		}
 
 		portlets = ListUtil.filter(
@@ -112,14 +145,7 @@ public class FullPageApplicationSiteNavigationMenuItemType
 
 			});
 
-		request.setAttribute(
-			SiteNavigationMenuItemTypeFullPageApplicationWebKeys.
-				FULL_PAGE_APPLICATION_PORTLETS,
-			portlets);
-
-		_jspRenderer.renderJSP(
-			_servletContext, request, response,
-			"/add_full_page_application.jsp");
+		return portlets;
 	}
 
 	@Reference

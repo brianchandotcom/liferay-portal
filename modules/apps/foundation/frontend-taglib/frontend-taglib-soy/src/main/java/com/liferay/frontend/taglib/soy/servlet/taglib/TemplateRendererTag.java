@@ -170,7 +170,11 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 	}
 
 	protected boolean isRenderJavaScript() {
-		return getHydrate() && Validator.isNotNull(getModule());
+		if (getHydrate() && Validator.isNotNull(getModule())) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected boolean isRenderTemplate() {

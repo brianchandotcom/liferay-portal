@@ -22,21 +22,21 @@
 	type="tabs nav-tabs-default"
 >
 
-    <%
-    String[] sections = {"alerts", "badges", "buttons", "dropdowns", "formelements", "icons", "labels", "links", "navbars", "progressbars", "stickers"};
+	<%
+	String[] sections = {"alerts", "badges", "buttons", "dropdowns", "formelements", "icons", "labels", "links", "navbars", "progressbars", "stickers"};
 
-    for (int i = 0; i < sections.length; i++) {
+	for (int i = 0; i < sections.length; i++) {
+		String partial ="/partials/" + sections[i] + ".jsp";
+	%>
 
-        String partial ="/partials/" + sections[i] + ".jsp";
-    %>
+		<liferay-ui:section>
+			<div class="container-fluid-1280">
+				<liferay-util:include page="<%= partial %>" servletContext="<%= application %>" />
+			</div>
+		</liferay-ui:section>
 
-	    <liferay-ui:section>
-            <div class="container-fluid-1280">
-                <liferay-util:include page="<%= partial %>" servletContext="<%= application %>" />
-            </div>
-        </liferay-ui:section>
+	<%
+	}
+	%>
 
-    <%
-    }
-    %>
 </liferay-ui:tabs>

@@ -18,37 +18,46 @@
 
 <blockquote><p>Labels are a mechanism to categorize information providing quick recognition.</p></blockquote>
 
-<div class="row mb-3">
-    <div class="col-12 d-inline-flex">
-        <clay:label label="Label text" style="info" />
-        <clay:label label="Status" />
-        <clay:label label="Pending" style="warning" />
-        <clay:label label="Rejected" style="danger" />
-        <clay:label label="Approved" style="success" />
-    </div>
+<div class="mb-3 row">
+	<div class="col-2">
+		<div><clay:label label="Label text" style="info" /></div>
+		<div><clay:label label="Label text" size="lg" style="info" /></div>
+	</div>
 
-    <div class="col-12 d-inline-flex">
-        <clay:label label="Label text" size="lg" style="info" />
-        <clay:label label="Status" size="lg" />
-        <clay:label label="Pending" size="lg" style="warning" />
-        <clay:label label="Rejected" size="lg" style="danger" />
-        <clay:label label="Approved" size="lg" style="success" />
-    </div>
+	<div class="col-2">
+		<div><clay:label label="Status" /></div>
+		<div><clay:label label="Status" size="lg" /></div>
+	</div>
+
+	<div class="col-2">
+		<div><clay:label label="Pending" style="warning" /></div>
+		<div><clay:label label="Pending" size="lg" style="warning" /></div>
+	</div>
+
+	<div class="col-2">
+		<div><clay:label label="Rejected" style="danger" /></div>
+		<div><clay:label label="Rejected" size="lg" style="danger" /></div>
+	</div>
+
+	<div class="col-2">
+		<div><clay:label label="Approved" style="success" /></div>
+		<div><clay:label label="Approved" size="lg" style="success" /></div>
+	</div>
 </div>
 
 <h3>LABEL REMOVABLE</h3>
 
-<div class="row mb-3">
-    <div class="col-12 d-inline-flex">
-        <clay:label closeable="<%= true %>" label="Normal Label" />
-        <clay:label closeable="<%= true %>" label="Large Label" size="lg" style="success" />
-    </div>
+<div class="mb-3 row">
+	<div class="col-12">
+		<clay:label closeable="<%= true %>" label="Normal Label" />
+		<clay:label closeable="<%= true %>" label="Large Label" size="lg" style="success" />
+	</div>
 </div>
 
 <h3>LABEL WITH LINK</h3>
 
 <div class="row">
-    <div class="col-12">
-        <clay:label href="#" label="Label Text" />
-    </div>
+	<div class="col-12">
+		<clay:label href="#" label="Label Text" />
+	</div>
 </div>

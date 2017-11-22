@@ -16,18 +16,19 @@ package com.liferay.layout.type.controller.shared.portlet.internal.access.policy
 
 import com.liferay.layout.type.controller.shared.portlet.internal.constants.SharedPortletLayoutTypeControllerConstants;
 import com.liferay.portal.kernel.model.LayoutTypeAccessPolicy;
-import com.liferay.portal.kernel.model.impl.ModificationDeniedLayoutTypeAccessPolicyImpl;
+import com.liferay.portal.kernel.model.impl.DefaultLayoutTypeAccessPolicyImpl;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Leonardo Barros
+ * @deprecated As of 2.0.0, with no direct replacement
  */
 @Component(
-	immediate = true,
 	property = {"layout.type=" + SharedPortletLayoutTypeControllerConstants.LAYOUT_TYPE_SHARED_PORTLET},
 	service = LayoutTypeAccessPolicy.class
 )
+@Deprecated
 public class SharedPortletLayoutTypeAccessPolicy
-	extends ModificationDeniedLayoutTypeAccessPolicyImpl {
+	extends DefaultLayoutTypeAccessPolicyImpl {
 }

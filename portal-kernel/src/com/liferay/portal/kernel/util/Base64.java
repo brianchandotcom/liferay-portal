@@ -30,6 +30,10 @@ import java.io.ObjectOutputStream;
 public class Base64 {
 
 	public static byte[] decode(String base64) {
+		return _decode(base64);
+	}
+
+	private static byte[] _decode(String base64) {
 		if (Validator.isNull(base64)) {
 			return new byte[0];
 		}
@@ -66,10 +70,14 @@ public class Base64 {
 	}
 
 	public static String encode(byte[] raw) {
-		return encode(raw, 0, raw.length);
+		return _encode(raw, 0, raw.length);
 	}
 
 	public static String encode(byte[] raw, int offset, int length) {
+		return _encode(raw, offset, length);
+	}
+
+	private static String _encode(byte[] raw, int offset, int length) {
 		int lastIndex = Math.min(raw.length, offset + length);
 
 		StringBuilder sb = new StringBuilder(
@@ -104,7 +112,7 @@ public class Base64 {
 			_log.error(e, e);
 		}
 
-		return encode(ubaos.unsafeGetByteArray(), 0, ubaos.size());
+		return _encode(ubaos.unsafeGetByteArray(), 0, ubaos.size());
 	}
 
 	public static Object stringToObject(String s) {
@@ -248,7 +256,7 @@ public class Base64 {
 			return null;
 		}
 
-		byte[] bytes = decode(s);
+		byte[] bytes = _decode(s);
 
 		UnsyncByteArrayInputStream ubais = new UnsyncByteArrayInputStream(
 			bytes);

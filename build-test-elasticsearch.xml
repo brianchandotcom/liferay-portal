@@ -585,8 +585,6 @@ username=&quot;liferay&quot;</echo>
 			</then>
 		</if>
 
-		<local name="elasticsearch.server.not.started" />
-
 		<get-testcase-property property.name="remote.elasticsearch.cluster.size" />
 
 		<if>

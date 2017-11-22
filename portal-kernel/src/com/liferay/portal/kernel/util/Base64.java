@@ -37,42 +37,6 @@ public class Base64 {
 		return _decode(base64, true);
 	}
 
-	private static byte[] _decode(String base64, boolean url) {
-		if (Validator.isNull(base64)) {
-			return new byte[0];
-		}
-
-		int pad = 0;
-
-		for (int i = base64.length() - 1; base64.charAt(i) == CharPool.EQUAL;
-			i--) {
-
-			pad++;
-		}
-
-		int length = (base64.length() * 6) / 8 - pad;
-
-		byte[] raw = new byte[length];
-
-		int rawindex = 0;
-
-		for (int i = 0; i < base64.length(); i += 4) {
-			int block = _getValue(base64.charAt(i), url) << 18;
-
-			block += _getValue(base64.charAt(i + 1), url) << 12;
-			block += _getValue(base64.charAt(i + 2), url) << 6;
-			block += _getValue(base64.charAt(i + 3), url);
-
-			for (int j = 0; j < 3 && rawindex + j < raw.length; j++) {
-				raw[rawindex + j] = (byte)(block >> 8 * (2 - j) & 0xff);
-			}
-
-			rawindex += 3;
-		}
-
-		return raw;
-	}
-
 	public static String encode(byte[] raw) {
 		return _encode(raw, 0, raw.length, false);
 	}
@@ -83,21 +47,6 @@ public class Base64 {
 
 	public static String encodeToURL(byte[] raw) {
 		return _encode(raw, 0, raw.length, true);
-	}
-
-	private static String _encode(
-		byte[] raw, int offset, int length, boolean url) {
-
-		int lastIndex = Math.min(raw.length, offset + length);
-
-		StringBuilder sb = new StringBuilder(
-			((lastIndex - offset) / 3 + 1) * 4);
-
-		for (int i = offset; i < lastIndex; i += 3) {
-			sb.append(_encodeBlock(raw, i, lastIndex, url));
-		}
-
-		return sb.toString();
 	}
 
 	/**
@@ -165,6 +114,73 @@ public class Base64 {
 		return _encodeBlock(raw, offset, lastIndex, false);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
+	protected static char getChar(int sixbit) {
+		return _getChar(sixbit, false);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
+	protected static int getValue(char c) {
+		return _getValue(c, false);
+	}
+
+	private static byte[] _decode(String base64, boolean url) {
+		if (Validator.isNull(base64)) {
+			return new byte[0];
+		}
+
+		int pad = 0;
+
+		for (int i = base64.length() - 1; base64.charAt(i) == CharPool.EQUAL;
+			i--) {
+
+			pad++;
+		}
+
+		int length = (base64.length() * 6) / 8 - pad;
+
+		byte[] raw = new byte[length];
+
+		int rawindex = 0;
+
+		for (int i = 0; i < base64.length(); i += 4) {
+			int block = _getValue(base64.charAt(i), url) << 18;
+
+			block += _getValue(base64.charAt(i + 1), url) << 12;
+			block += _getValue(base64.charAt(i + 2), url) << 6;
+			block += _getValue(base64.charAt(i + 3), url);
+
+			for (int j = 0; j < 3 && rawindex + j < raw.length; j++) {
+				raw[rawindex + j] = (byte)(block >> 8 * (2 - j) & 0xff);
+			}
+
+			rawindex += 3;
+		}
+
+		return raw;
+	}
+
+	private static String _encode(
+		byte[] raw, int offset, int length, boolean url) {
+
+		int lastIndex = Math.min(raw.length, offset + length);
+
+		StringBuilder sb = new StringBuilder(
+			((lastIndex - offset) / 3 + 1) * 4);
+
+		for (int i = offset; i < lastIndex; i += 3) {
+			sb.append(_encodeBlock(raw, i, lastIndex, url));
+		}
+
+		return sb.toString();
+	}
+
 	private static char[] _encodeBlock(
 		byte[] raw, int offset, int lastIndex, boolean url) {
 
@@ -212,14 +228,6 @@ public class Base64 {
 		return base64;
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
-	protected static char getChar(int sixbit) {
-		return _getChar(sixbit, false);
-	}
-
 	private static char _getChar(int sixbit, boolean url) {
 		if ((sixbit >= 0) && (sixbit <= 25)) {
 			return (char)(65 + sixbit);
@@ -250,14 +258,6 @@ public class Base64 {
 		}
 
 		return CharPool.SLASH;
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
-	protected static int getValue(char c) {
-		return _getValue(c, false);
 	}
 
 	private static int _getValue(char c, boolean url) {

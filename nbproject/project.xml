@@ -44,6 +44,12 @@
 					<encoding>UTF-8</encoding>
 				</source-folder>
 				<source-folder>
+					<label>modules\apps\foundation\petra\petra-xml\src\main\java</label>
+					<type>java</type>
+					<location>modules/apps/foundation/petra/petra-xml/src/main/java</location>
+					<encoding>UTF-8</encoding>
+				</source-folder>
+				<source-folder>
 					<label>modules\core\petra\petra-concurrent\src\main\java</label>
 					<type>java</type>
 					<location>modules/core/petra/petra-concurrent/src/main/java</location>
@@ -252,6 +258,10 @@
 						<location>modules/apps/foundation/petra/petra-mail/src</location>
 					</source-folder>
 					<source-folder style="packages">
+						<label>modules\apps\foundation\petra\petra-xml\src</label>
+						<location>modules/apps/foundation/petra/petra-xml/src</location>
+					</source-folder>
+					<source-folder style="packages">
 						<label>modules\core\petra\petra-concurrent\src</label>
 						<location>modules/core/petra/petra-concurrent/src</location>
 					</source-folder>
@@ -378,6 +388,7 @@
 				<package-root>modules/apps/foundation/petra/petra-encryptor/src/main/java</package-root>
 				<package-root>modules/apps/foundation/petra/petra-log4j/src/main/java</package-root>
 				<package-root>modules/apps/foundation/petra/petra-mail/src/main/java</package-root>
+				<package-root>modules/apps/foundation/petra/petra-xml/src/main/java</package-root>
 				<package-root>modules/core/petra/petra-concurrent/src/main/java</package-root>
 				<package-root>modules/core/petra/petra-executor/src/main/java</package-root>
 				<package-root>modules/core/petra/petra-function/src/main/java</package-root>

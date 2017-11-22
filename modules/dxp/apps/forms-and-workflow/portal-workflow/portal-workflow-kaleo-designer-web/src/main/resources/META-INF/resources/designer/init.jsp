@@ -32,6 +32,8 @@ page import="com.liferay.portal.kernel.dao.search.DisplayTerms" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
+page import="com.liferay.portal.kernel.util.DateUtil" %><%@
+page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
@@ -53,6 +55,8 @@ page import="com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion" %><
 page import="com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalServiceUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
+<%@ page import="java.text.Format" %>
+
 <%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
@@ -63,4 +67,13 @@ page import="com.liferay.taglib.search.ResultRow" %>
 
 <%
 KaleoDesignerDisplayContext kaleoDesignerDisplayContext = new KaleoDesignerDisplayContext(renderRequest, renderResponse);
+
+Format dateFormatTime = null;
+
+if (!DateUtil.isFormatAmPm(locale)) {
+	dateFormatTime = FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d, yyyy, HH:mm", locale, timeZone);
+}
+else {
+	dateFormatTime = FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d, yyyy, hh:mm a", locale, timeZone);
+}
 %>

@@ -223,8 +223,6 @@ String displayStyle = cpInstanceDisplayContext.getDisplayStyle();
 	function <portlet:namespace />updateCPDefinitionIgnoreSKUCombinations() {
 		var form = AUI.$(document.<portlet:namespace />fm1);
 
-		var form = AUI.$(document.<portlet:namespace />fm1);
-
 		submitForm(form, '<portlet:actionURL name="editProductInstance" />');
 	}
 </aui:script>

@@ -59,7 +59,8 @@ public class JavaTermOrderCheck extends BaseJavaTermCheck {
 		if (absolutePath.contains("/persistence/") &&
 			className.endsWith("FinderImpl")) {
 
-			customSQLContent = _getCustomSQLContent(fileName, absolutePath);
+			customSQLContent = _getCustomSQLContent(
+				fileName, absolutePath, _portalCustomSQLContent);
 		}
 
 		return _sortJavaTerms(
@@ -118,11 +119,12 @@ public class JavaTermOrderCheck extends BaseJavaTermCheck {
 		return document.asXML();
 	}
 
-	private String _getCustomSQLContent(String fileName, String absolutePath)
+	private String _getCustomSQLContent(
+			String fileName, String absolutePath, String portalCustomSQLContent)
 		throws Exception {
 
 		if (isPortalSource() && !isModulesFile(absolutePath)) {
-			return _portalCustomSQLContent;
+			return portalCustomSQLContent;
 		}
 
 		int i = fileName.lastIndexOf("/src/");

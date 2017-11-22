@@ -51,6 +51,6 @@ SearchContainer<CommerceCartItem> commerceCartItemSearchContainer = commerceCart
 		PortletURL checkoutPortletURL = commerceCartContentTotalDisplayContext.getCheckoutPortletURL();
 		%>
 
-		<aui:button cssClass="btn-lg" href="<%= checkoutPortletURL.toString() %>" value="checkout" />
+		<aui:button cssClass="btn-lg" disabled="<%= !commerceCartContentTotalDisplayContext.isValidCommerceCart() %>" href="<%= checkoutPortletURL.toString() %>" value="checkout" />
 	</aui:button-row>
 </liferay-ddm:template-renderer>

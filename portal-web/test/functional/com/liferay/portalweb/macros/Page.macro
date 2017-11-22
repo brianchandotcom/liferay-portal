@@ -279,8 +279,8 @@
 
 	<command name="assertCannotDeleteOnlyPage">
 		<execute macro="LexiconEntry#delete">
-			<var name="failure" value="You must have at least one page." />
 			<var name="dialog" value="Are you sure you want to delete this? It will be deleted immediately." />
+			<var name="failure" value="You must have at least one page." />
 			<var name="rowEntry" value="${pageName}" />
 		</execute>
 	</command>

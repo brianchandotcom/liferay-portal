@@ -54,7 +54,7 @@ public class LayoutSiteNavigationMenuItemType
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "layout");
+		return LanguageUtil.get(locale, "page");
 	}
 
 	@Override

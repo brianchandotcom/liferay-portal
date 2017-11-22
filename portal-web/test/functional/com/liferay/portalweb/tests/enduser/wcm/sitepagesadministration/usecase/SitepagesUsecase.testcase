@@ -1369,8 +1369,10 @@
 			<var name="siteName" value="Page Type Test Site Name" />
 		</execute>
 
-		<execute macro="Page#firstPageCanNotBeOfTypeLinkToURL">
-			<var name="pageName" value="Blank Page" />
+		<execute macro="LexiconEntry#delete">
+			<var name="failure" value="The first page cannot be of type Link to URL." />
+			<var name="dialog" value="Are you sure you want to delete this? It will be deleted immediately." />
+			<var name="rowEntry" value="${pageName}" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">

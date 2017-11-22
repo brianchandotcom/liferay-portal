@@ -374,6 +374,39 @@ public class GitWorkingDirectory {
 	}
 
 	public void fetch(Branch localBranch, boolean noTags, Branch remoteBranch) {
+		if ((remoteBranch.getSHA() != null) &&
+			localSHAExists(remoteBranch.getSHA())) {
+
+			System.out.println(
+				remoteBranch.getSHA() + " already exists in repository");
+
+			if (localBranch != null) {
+				Branch currentBranch = getCurrentBranch();
+
+				String tempBranchName = "temp-" + System.currentTimeMillis();
+
+				Branch tempBranch = null;
+
+				try {
+					tempBranch = createLocalBranch(tempBranchName);
+
+					checkoutBranch(tempBranch);
+
+					createLocalBranch(
+						localBranch.getName(), true, remoteBranch.getSHA());
+				}
+				finally {
+					checkoutBranch(currentBranch);
+
+					if (tempBranch != null) {
+						deleteBranch(tempBranch);
+					}
+				}
+			}
+
+			return;
+		}
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("git fetch --progress -v -f ");
@@ -724,6 +757,19 @@ public class GitWorkingDirectory {
 
 	public File getWorkingDirectory() {
 		return _workingDirectory;
+	}
+
+	public boolean localSHAExists(String sha) {
+		String command = "git cat-file -t " + sha;
+
+		ExecutionResult executionResult = executeBashCommands(
+			1, 1000 * 60 * 3, command);
+
+		if (executionResult.getExitValue() == 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public String log(int num) {

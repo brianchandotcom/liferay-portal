@@ -17,6 +17,7 @@ package com.liferay.petra.concurrent;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.ThreadUtil;
 
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
@@ -396,6 +397,29 @@ public class NoticeableThreadPoolExecutorTest {
 		Assert.assertEquals(2, noticeableThreadPoolExecutor.getPoolSize());
 
 		noticeableThreadPoolExecutor.execute(slowRunnable);
+
+		Thread dispatcherThread = null;
+
+		for (Thread thread : ThreadUtil.getThreads()) {
+			if (thread == null) {
+				continue;
+			}
+
+			String name = thread.getName();
+
+			if (name.startsWith("testStatisticMethods-") &&
+				name.endsWith("-dispatcher")) {
+
+				dispatcherThread = thread;
+
+				break;
+			}
+		}
+
+		Assert.assertNotNull(
+			"Dispatcher thread is not started", dispatcherThread);
+
+		while (dispatcherThread.getState() != Thread.State.WAITING);
 
 		while (!taskBlockingQueue.isEmpty());
 

@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.cart.content.web.internal.display.context;
 
+import com.liferay.commerce.cart.CommerceCartValidatorRegistry;
+import com.liferay.commerce.cart.CommerceCartValidatorResult;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
@@ -40,6 +42,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletURL;
 
@@ -57,6 +60,7 @@ public class CommerceCartContentDisplayContext {
 		HttpServletResponse httpServletResponse,
 		CommerceCartHelper commerceCartHelper,
 		CommerceCartItemService commerceCartItemService,
+		CommerceCartValidatorRegistry commerceCartValidatorRegistry,
 		CommercePriceCalculator commercePriceCalculator,
 		CommercePriceFormatter commercePriceFormatter,
 		CPDefinitionHelper cpDefinitionHelper,
@@ -66,6 +70,7 @@ public class CommerceCartContentDisplayContext {
 		this.httpServletResponse = httpServletResponse;
 		_commerceCartHelper = commerceCartHelper;
 		_commerceCartItemService = commerceCartItemService;
+		_commerceCartValidatorRegistry = commerceCartValidatorRegistry;
 		_commercePriceCalculator = commercePriceCalculator;
 		_commercePriceFormatter = commercePriceFormatter;
 		this.cpDefinitionHelper = cpDefinitionHelper;
@@ -141,6 +146,14 @@ public class CommerceCartContentDisplayContext {
 			CommerceConstants.COMMERCE_CART_TYPE_CART);
 	}
 
+	public Map<Long, List<CommerceCartValidatorResult>>
+			getCommerceCartValidatorResults()
+		throws PortalException {
+
+		return _commerceCartValidatorRegistry.getCommerceCartValidatorResults(
+			_commerceCart);
+	}
+
 	public String getCPDefinitionURL(
 			long cpDefinitionId, ThemeDisplay themeDisplay)
 		throws PortalException {
@@ -202,10 +215,24 @@ public class CommerceCartContentDisplayContext {
 		return _searchContainer;
 	}
 
+	public boolean isValidCommerceCart() throws PortalException {
+		return _commerceCartValidatorRegistry.isValid(_commerceCart);
+	}
+
 	public List<KeyValuePair> parseJSONString(String json, Locale locale)
 		throws PortalException {
 
 		return cpInstanceHelper.parseJSONString(json, locale);
+	}
+
+	public List<CommerceCartValidatorResult> validateCommerceCartItem(
+			long commerceCartItemId)
+		throws PortalException {
+
+		CommerceCartItem commerceCartItem =
+			_commerceCartItemService.fetchCommerceCartItem(commerceCartItemId);
+
+		return _commerceCartValidatorRegistry.validate(commerceCartItem);
 	}
 
 	protected final CPDefinitionHelper cpDefinitionHelper;
@@ -218,6 +245,7 @@ public class CommerceCartContentDisplayContext {
 	private CommerceCart _commerceCart;
 	private final CommerceCartHelper _commerceCartHelper;
 	private final CommerceCartItemService _commerceCartItemService;
+	private final CommerceCartValidatorRegistry _commerceCartValidatorRegistry;
 	private final CommercePriceCalculator _commercePriceCalculator;
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private SearchContainer<CommerceCartItem> _searchContainer;

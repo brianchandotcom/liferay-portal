@@ -65,7 +65,7 @@ public class FullPageApplicationSiteNavigationMenuItemType
 			_resourceBundleLoader.loadResourceBundle(
 				LocaleUtil.toLanguageId(locale));
 
-		return LanguageUtil.get(resourceBundle, "full-page-application");
+		return LanguageUtil.get(resourceBundle, "application");
 	}
 
 	@Override

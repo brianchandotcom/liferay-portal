@@ -56,7 +56,7 @@ public class NodeSiteNavigationMenuItemType
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(locale);
 
-		return LanguageUtil.get(resourceBundle, "page-set");
+		return LanguageUtil.get(resourceBundle, "submenu");
 	}
 
 	@Override

@@ -235,6 +235,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Site Page" />
+			<var name="privacy" value="Private" />
 		</execute>
 	</command>
 
@@ -350,6 +351,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Site Page" />
+			<var name="privacy" value="Public" />
 		</execute>
 	</command>
 

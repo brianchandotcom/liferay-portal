@@ -149,7 +149,6 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/rss/rss-util" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/rss/rss-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/site-navigation/site-navigation-breadcrumb-web" />
-			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/site-navigation/site-navigation-language-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/site-navigation/site-navigation-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/staging/staging-portlet-data-handler" />
 			<property name="allowedExportPackageDirName" value="vulcan-liferay-portal" />

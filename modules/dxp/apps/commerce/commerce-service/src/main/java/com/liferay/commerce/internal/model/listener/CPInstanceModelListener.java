@@ -47,7 +47,7 @@ public class CPInstanceModelListener extends BaseModelListener<CPInstance> {
 			_commercePriceEntryLocalService.
 				deleteCommercePriceEntriesByCPInstanceId(cpInstanceId);
 			_commerceWarehouseItemLocalService.deleteCommerceWarehouseItems(
-				CPInstance.class.getName(), cpInstanceId);
+				cpInstanceId);
 		}
 		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {

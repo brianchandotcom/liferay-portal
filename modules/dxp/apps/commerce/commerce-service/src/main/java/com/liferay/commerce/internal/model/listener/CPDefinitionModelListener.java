@@ -18,7 +18,6 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.commerce.service.CommerceCartItemLocalService;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
-import com.liferay.commerce.service.CommerceWarehouseItemLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -46,8 +45,6 @@ public class CPDefinitionModelListener extends BaseModelListener<CPDefinition> {
 				deleteCPDefinitionInventoryByCPDefinitionId(cpDefinitionId);
 			_commerceOrderItemLocalService.
 				deleteCommerceOrderItemsByCPDefinitionId(cpDefinitionId);
-			_commerceWarehouseItemLocalService.deleteCommerceWarehouseItems(
-				CPDefinition.class.getName(), cpDefinitionId);
 		}
 		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
@@ -64,10 +61,6 @@ public class CPDefinitionModelListener extends BaseModelListener<CPDefinition> {
 
 	@Reference
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
-
-	@Reference
-	private CommerceWarehouseItemLocalService
-		_commerceWarehouseItemLocalService;
 
 	@Reference
 	private CPDefinitionInventoryLocalService

@@ -131,6 +131,7 @@
 
 		<execute macro="Staging#enablePageInSitePagesVariation">
 			<var name="pageName" value="Test Page Name" />
+			<var name="privacy" value="Public" />
 			<var name="sitePagesVariationName" value="Main Variation" />
 		</execute>
 
@@ -451,7 +452,6 @@
 
 		<execute macro="Page#changeLogoViaPageCP">
 			<var name="logoFile" value="Document_2.png" />
-			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">
@@ -533,6 +533,11 @@
 			<var name="pageName" value="Page 2" />
 		</execute>
 
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Page 2" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute macro="Staging#mergeSitePagesVariation">
 			<var name="sitePagesVariationMergeName" value="Summer" />
 			<var name="sitePagesVariationName" value="Main Variation" />
@@ -604,6 +609,11 @@
 			<var name="pageName" value="Page 2" />
 		</execute>
 
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Page 2" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute macro="Staging#mergeSitePagesVariation">
 			<var name="sitePagesVariationMergeName" value="Main Variation" />
 			<var name="sitePagesVariationName" value="Summer" />
@@ -633,6 +643,7 @@
 
 		<execute macro="Staging#enablePageInSitePagesVariation">
 			<var name="pageName" value="Page 2" />
+			<var name="privacy" value="Public" />
 			<var name="sitePagesVariationName" value="Summer" />
 		</execute>
 
@@ -823,9 +834,9 @@
 			<var name="pageName" value="Test Page Name" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoPages">
-			<var name="page" value="Public Pages" />
-			<var name="site" value="Site Name" />
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="Staging#STAGING_PUBLISH_TO_LIVE_BUTTON" />

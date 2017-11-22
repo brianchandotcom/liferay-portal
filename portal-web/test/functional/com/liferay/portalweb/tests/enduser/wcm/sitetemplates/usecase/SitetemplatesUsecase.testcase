@@ -89,12 +89,14 @@
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoPages">
-			<var name="page" value="Public Pages" />
-			<var name="site" value="Site Name" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
 		<execute macro="Page#viewNoDeletePagesAssociatedWithSiteTemplate">
+			<var name="menuItem" value="Delete" />
 			<var name="page" value="Site Child Page Name" />
 		</execute>
 	</command>
@@ -167,7 +169,7 @@
 			<var name="portlet" value="Site Templates" />
 		</execute>
 
-		<execute macro="Page#addPageToSiteTemplates">
+		<execute macro="SiteTemplates#addSitePageViaSiteTemplateCP">
 			<var name="pageName" value="Page1 Name" />
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
@@ -195,7 +197,7 @@
 			<var name="portlet" value="Site Templates" />
 		</execute>
 
-		<execute macro="Page#addPageToSiteTemplates">
+		<execute macro="SiteTemplates#addSitePageViaSiteTemplateCP">
 			<var name="pageName" value="Page2 Name" />
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
@@ -287,11 +289,14 @@
 		</execute>
 
 		<for list="Home,Wiki" param="page">
-			<execute macro="ProductMenu#gotoSiteViaLink">
-				<var name="site" value="UG UserGroup Name" />
+			<execute macro="ProductMenu#gotoPortlet">
+				<var name="category" value="Navigation" />
+				<var name="panel" value="Site Administration" />
+				<var name="portlet" value="Site Pages" />
 			</execute>
 
 			<execute macro="Page#viewNoDeletePagesAssociatedWithSiteTemplate">
+				<var name="menuItem" value="Delete" />
 				<var name="page" value="${page}" />
 			</execute>
 		</for>

@@ -1155,11 +1155,12 @@
 			</execute>
 		</for>
 
-		<execute macro="ProductMenu#gotoPublicPages" />
+		<execute macro="ProductMenu#gotoPublicPages">
+			<var name="privacy" value="Public" />
+		</execute>
 
 		<execute macro="Page#changeLogoViaPageCP">
 			<var name="logoFile" value="Document_3.png" />
-			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="Page#addJavaScript">
@@ -1182,7 +1183,15 @@
 
 		<execute function="Open#openNoError" locator1="${portalURL}/web/russia2018" />
 
-		<execute macro="ProductMenu#gotoPublicPages" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPublicPages">
+			<var name="privacy" value="Public" />
+		</execute>
 
 		<execute macro="Page#addJavaScript">
 			<var name="javaScript" value=" " />

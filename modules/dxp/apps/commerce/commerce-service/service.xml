@@ -734,8 +734,7 @@
 		<!-- Other fields -->
 
 		<column name="commerceWarehouseId" type="long" />
-		<column name="classNameId" type="long" />
-		<column name="classPK" type="long" />
+		<column name="CPInstanceId" type="long" />
 		<column name="quantity" type="int" />
 
 		<!-- Finder methods -->
@@ -743,14 +742,12 @@
 		<finder name="CommerceWarehouseId" return-type="Collection">
 			<finder-column name="commerceWarehouseId" />
 		</finder>
-		<finder name="C_C" return-type="Collection">
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
+		<finder name="CPInstanceId" return-type="Collection">
+			<finder-column name="CPInstanceId" />
 		</finder>
-		<finder name="C_C_C" return-type="CommerceWarehouseItem" unique="true">
+		<finder name="C_C" return-type="CommerceWarehouseItem" unique="true">
 			<finder-column name="commerceWarehouseId" />
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
+			<finder-column name="CPInstanceId" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="CPDefinitionAvailabilityRange" remote-service="true" uuid="true">
@@ -832,6 +829,7 @@
 		<exception>CommerceCartBillingAddress</exception>
 		<exception>CommerceCartShippingAddress</exception>
 		<exception>CommerceCartShippingMethod</exception>
+		<exception>CommerceCartValidator</exception>
 		<exception>CommerceCountryName</exception>
 		<exception>CommerceCountryThreeLettersISOCode</exception>
 		<exception>CommerceCountryTwoLettersISOCode</exception>

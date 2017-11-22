@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Reading Time Service
+Bundle-SymbolicName: com.liferay.reading.time.service
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Reading Time
+Liferay-Require-SchemaVersion: 1.1.0
+Liferay-Service: true

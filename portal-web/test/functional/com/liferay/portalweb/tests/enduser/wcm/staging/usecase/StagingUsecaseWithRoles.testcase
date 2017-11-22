@@ -610,6 +610,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Home" />
+			<var name="privacy" value="Public" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">
@@ -619,6 +620,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Wiki" />
+			<var name="privacy" value="Public" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">
@@ -657,6 +659,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Test Page Name" />
+			<var name="privacy" value="Public" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -685,6 +688,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Home" />
+			<var name="privacy" value="Public" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">
@@ -775,6 +779,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Home" />
+			<var name="privacy" value="Public" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">
@@ -788,6 +793,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Wiki" />
+			<var name="privacy" value="Public" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">
@@ -801,6 +807,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Test Page Name" />
+			<var name="privacy" value="Public" />
 		</execute>
 	</command>
 

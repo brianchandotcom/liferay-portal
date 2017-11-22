@@ -62,7 +62,12 @@ public class CPDisplayLayoutLocalServiceImpl
 
 		long classNameId = classNameLocalService.getClassNameId(clazz);
 
-		cpDisplayLayoutPersistence.removeByC_C(classNameId, classPK);
+		CPDisplayLayout cpDisplayLayout = cpDisplayLayoutPersistence.fetchByC_C(
+			classNameId, classPK);
+
+		if (cpDisplayLayout != null) {
+			cpDisplayLayoutPersistence.remove(cpDisplayLayout);
+		}
 	}
 
 	@Override

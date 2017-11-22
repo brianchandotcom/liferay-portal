@@ -22,24 +22,32 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 public class CommerceWarehouseItemFinderImpl
 	extends CommerceWarehouseItemFinderBaseImpl
 	implements CommerceWarehouseItemFinder {
 
-	public static final String FIND_BY_C_C =
-		CommerceWarehouseItemFinder.class.getName() + ".findByC_C";
+	public static final String FIND_BY_CP_INSTANCE_ID =
+		CommerceWarehouseItemFinder.class.getName() + ".findByCPInstanceId";
+
+	public static final String GET_CP_INSTANCE_QUANTITY =
+		CommerceWarehouseItemFinder.class.getName() + ".getCPInstanceQuantity";
+
+	public static final String SUM_VALUE = "SUM_VALUE";
 
 	@Override
-	public List<CommerceWarehouseItem> findByC_C(
-		long classNameId, long classPK, int start, int end,
+	public List<CommerceWarehouseItem> findByCPInstanceId(
+		long cpInstanceId, int start, int end,
 		OrderByComparator<CommerceWarehouseItem> orderByComparator) {
 
 		Session session = null;
@@ -47,7 +55,7 @@ public class CommerceWarehouseItemFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_C_C);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_CP_INSTANCE_ID);
 
 			sql = CustomSQLUtil.replaceOrderBy(sql, orderByComparator);
 
@@ -58,11 +66,48 @@ public class CommerceWarehouseItemFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(classNameId);
-			qPos.add(classPK);
+			qPos.add(cpInstanceId);
 
 			return (List<CommerceWarehouseItem>)QueryUtil.list(
 				q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public int getCPInstanceQuantity(long cpInstanceId) {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(
+				getClass(), GET_CP_INSTANCE_QUANTITY);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(SUM_VALUE, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(cpInstanceId);
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long sum = itr.next();
+
+				if (sum != null) {
+					return sum.intValue();
+				}
+			}
+
+			return 0;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

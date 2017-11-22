@@ -14,7 +14,11 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Peter Shin
@@ -26,21 +30,100 @@ public class PropertiesSourceFormatterContentCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (!fileName.endsWith("/source-formatter.properties")) {
-			return content;
+		if (fileName.endsWith("/source-formatter.properties")) {
+			content = _checkConvertedKeys(content);
+			content = _checkGitLiferayPortalBranch(content);
+			content = _checkPropertyKeys(content);
 		}
 
-		return _checkSourceFormatterContent(content);
+		return content;
 	}
 
-	private String _checkSourceFormatterContent(String content)
-		throws Exception {
-
+	private String _checkConvertedKeys(String content) {
 		for (String[] array : _CONVERTED_KEYS) {
 			content = StringUtil.replace(content, array[0], array[1]);
 		}
 
 		return content;
+	}
+
+	private String _checkGitLiferayPortalBranch(String content) {
+		if (!content.matches("(?s).*[^#]git\\.liferay\\.portal\\.branch=.*")) {
+			return content;
+		}
+
+		String gitLiferayPortalBranch = StringPool.BLANK;
+		String previousLine = StringPool.BLANK;
+
+		String[] lines = StringUtil.splitLines(content);
+
+		StringBundler sb = new StringBundler(lines.length * 2);
+
+		for (String line : lines) {
+			String trimmedLine = StringUtil.trim(line);
+
+			if (trimmedLine.startsWith("git.liferay.portal.branch=")) {
+				gitLiferayPortalBranch = trimmedLine.substring(
+					trimmedLine.indexOf(CharPool.EQUAL) + 1);
+			}
+
+			String s = StringUtil.trim(previousLine);
+
+			if (s.equals("git.liferay.portal.branch=\\")) {
+				gitLiferayPortalBranch = StringUtil.trim(line);
+			}
+			else if (!trimmedLine.startsWith("git.liferay.portal.branch=")) {
+				sb.append(line);
+				sb.append("\n");
+			}
+
+			previousLine = line;
+		}
+
+		String exclusionsComments = StringBundler.concat(
+			"##\n## Exclusions\n##\n## See ", _SOURCE_FORMATTER_PROPERTIES_URL,
+			"\n## for available properties.\n##");
+		String gitComments = "##\n## Git\n##";
+
+		String s = StringUtil.replace(
+			sb.toString(), new String[] {exclusionsComments, gitComments},
+			new String[] {StringPool.BLANK, StringPool.BLANK});
+
+		s = StringUtil.trim(s);
+
+		if (Validator.isNull(s)) {
+			return StringBundler.concat(
+				exclusionsComments, "\n\n", gitComments, "\n\n",
+				StringPool.FOUR_SPACES, "git.liferay.portal.branch=",
+				gitLiferayPortalBranch);
+		}
+
+		return StringBundler.concat(
+			exclusionsComments, "\n\n", s, "\n\n", gitComments, "\n\n",
+			StringPool.FOUR_SPACES, "git.liferay.portal.branch=",
+			gitLiferayPortalBranch);
+	}
+
+	private String _checkPropertyKeys(String content) {
+		String[] lines = StringUtil.splitLines(content);
+
+		StringBundler sb = new StringBundler(lines.length * 3);
+
+		for (String line : lines) {
+			int pos = line.indexOf(CharPool.EQUAL);
+
+			if (pos != -1) {
+				sb.append(StringPool.FOUR_SPACES);
+				sb.append(StringUtil.trim(line));
+				sb.append("\n");
+			}
+			else {
+				sb.append(line);
+				sb.append("\n");
+			}
+		}
+
+		return StringUtil.trim(sb.toString());
 	}
 
 	private static final String[][] _CONVERTED_KEYS = {
@@ -49,5 +132,9 @@ public class PropertiesSourceFormatterContentCheck extends BaseFileCheck {
 			"blob/master/source-formatter.properties"
 		}
 	};
+
+	private static final String _SOURCE_FORMATTER_PROPERTIES_URL =
+		"https://github.com/liferay/liferay-portal/blob/master" +
+			"/source-formatter.properties";
 
 }

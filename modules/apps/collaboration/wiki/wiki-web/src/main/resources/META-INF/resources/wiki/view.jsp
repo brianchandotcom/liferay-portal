@@ -100,7 +100,7 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(WikiPage.class
 AssetEntryServiceUtil.incrementViewCounter(layoutAssetEntry);
 
 if (Validator.isNotNull(ParamUtil.getString(request, "title"))) {
-	AssetUtil.addLayoutTags(request, AssetTagLocalServiceUtil.getTags(WikiPage.class.getName(), wikiPage.getResourcePrimKey()));
+	assetHelper.addLayoutTags(request, AssetTagLocalServiceUtil.getTags(WikiPage.class.getName(), wikiPage.getResourcePrimKey()));
 }
 
 request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
@@ -442,7 +442,7 @@ if (portletTitleBasedNavigation) {
 						description = StringUtil.shorten(description, 200);
 
 						PortalUtil.setPageDescription(description, request);
-						PortalUtil.setPageKeywords(AssetUtil.getAssetKeywords(WikiPage.class.getName(), wikiPage.getResourcePrimKey()), request);
+						PortalUtil.setPageKeywords(assetHelper.getAssetKeywords(WikiPage.class.getName(), wikiPage.getResourcePrimKey()), request);
 					}
 
 					List<WikiPage> parentPages = wikiPage.getViewableParentPages();

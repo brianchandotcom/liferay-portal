@@ -17,7 +17,7 @@ package com.liferay.asset.search.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
-import com.liferay.asset.util.impl.AssetUtil;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -39,12 +39,17 @@ import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -64,9 +69,25 @@ public class AssetUtilSearchSortTest {
 		new LiferayIntegrationTestRule(),
 		SynchronousDestinationTestRule.INSTANCE);
 
+	@BeforeClass
+	public static void setUpClass() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(AssetHelper.class.getName());
+
+		_serviceTracker.open();
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_serviceTracker.close();
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
+		_assetHelper = _serviceTracker.getService();
 
 		_group = GroupTestUtil.addGroup();
 
@@ -96,7 +117,7 @@ public class AssetUtilSearchSortTest {
 		AssetEntryQuery assetEntryQuery = createAssetEntryQueryOrderBy(
 			Field.PRIORITY);
 
-		Hits hits = AssetUtil.search(
+		Hits hits = _assetHelper.search(
 			searchContext, assetEntryQuery, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
@@ -152,6 +173,10 @@ public class AssetUtilSearchSortTest {
 
 	@Inject
 	private static JournalArticleLocalService _journalArticleLocalService;
+
+	private static ServiceTracker<AssetHelper, AssetHelper> _serviceTracker;
+
+	private AssetHelper _assetHelper;
 
 	@DeleteAfterTestRun
 	private Group _group;

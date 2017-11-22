@@ -316,6 +316,7 @@ public class LayoutsAdminDisplayContext {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/view.jsp");
+		portletURL.setParameter("tabs1", getTabs1());
 		portletURL.setParameter("navigation", getNavigation());
 		portletURL.setParameter("orderByCol", getOrderByCol());
 		portletURL.setParameter("orderByType", getOrderByType());
@@ -420,6 +421,16 @@ public class LayoutsAdminDisplayContext {
 
 	public Long getStagingGroupId() {
 		return _groupDisplayContextHelper.getStagingGroupId();
+	}
+
+	public String getTabs1() {
+		if (_tabs1 != null) {
+			return _tabs1;
+		}
+
+		_tabs1 = ParamUtil.getString(_liferayPortletRequest, "tabs1", "pages");
+
+		return _tabs1;
 	}
 
 	public boolean isPrivateLayout() {
@@ -541,6 +552,7 @@ public class LayoutsAdminDisplayContext {
 	private Layout _selLayout;
 	private LayoutSet _selLayoutSet;
 	private Long _selPlid;
+	private String _tabs1;
 	private final ThemeDisplay _themeDisplay;
 
 }

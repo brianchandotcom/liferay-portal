@@ -16,11 +16,21 @@
 
 <%@ include file="/init.jsp" %>
 
-<c:choose>
-	<c:when test='<%= Objects.equals(layoutsAdminDisplayContext.getTabs1(), "pages") %>'>
-		<liferay-util:include page="/view_layouts.jsp" servletContext="<%= application %>" />
-	</c:when>
-	<c:when test='<%= Objects.equals(layoutsAdminDisplayContext.getTabs1(), "page-templates") %>'>
-		<liferay-util:include page="/view_layout_page_template_collections.jsp" servletContext="<%= application %>" />
-	</c:when>
-</c:choose>
+<aui:nav cssClass="navbar-nav">
+
+	<%
+	PortletURL pagesURL = layoutsAdminDisplayContext.getPortletURL();
+
+	pagesURL.setParameter("tabs1", "pages");
+	%>
+
+	<aui:nav-item href="<%= pagesURL.toString() %>" label="pages" selected='<%= Objects.equals(layoutsAdminDisplayContext.getTabs1(), "pages") %>' />
+
+	<%
+	PortletURL pageTemplatesURL = layoutsAdminDisplayContext.getPortletURL();
+
+	pageTemplatesURL.setParameter("tabs1", "page-templates");
+	%>
+
+	<aui:nav-item href="<%= pageTemplatesURL.toString() %>" label="page-templates" selected='<%= Objects.equals(layoutsAdminDisplayContext.getTabs1(), "page-templates") %>' />
+</aui:nav>

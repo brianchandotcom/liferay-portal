@@ -177,17 +177,8 @@
 			<var name="category" value="Navigation" />
 		</execute>
 
-		<if>
-			<condition function="IsElementNotPresent" locator1="ProductMenu#PUBLIC_PAGES_SELECTED" />
-			<then>
-				<execute function="Click" locator1="ProductMenu#PUBLIC_PAGES" />
-			</then>
-		</if>
-
-		<execute macro="ProductMenuHelper#openProductMenu" />
-
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Navigation" />
+		<execute macro="SitePages#togglePrivacy">
+			<var name="privacy" value="${privacy}" />
 		</execute>
 	</command>
 

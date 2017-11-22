@@ -228,7 +228,7 @@ AUI.add(
 					_getTimestamp: function(value) {
 						var instance = this;
 
-						return A.Cookie.get(instance._cookieKey, instance._cookieOptions) || 0;
+						return A.Cookie.get(instance._cookieKey, instance._cookieOptions) || Date.now();
 					},
 
 					_getWarningTime: function() {

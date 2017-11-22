@@ -15,6 +15,7 @@
 package com.liferay.commerce.cart.content.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.exception.CommerceCartValidatorException;
 import com.liferay.commerce.exception.NoSuchCartItemException;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.service.CommerceCartItemService;
@@ -72,6 +73,11 @@ public class EditCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 					commerceCartItem.getCommerceCartItemId(), quantity,
 					commerceCartItem.getJson());
 			}
+		}
+		catch (CommerceCartValidatorException ccve) {
+			hideDefaultErrorMessage(actionRequest);
+
+			SessionErrors.add(actionRequest, ccve.getClass(), ccve);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchCartItemException ||

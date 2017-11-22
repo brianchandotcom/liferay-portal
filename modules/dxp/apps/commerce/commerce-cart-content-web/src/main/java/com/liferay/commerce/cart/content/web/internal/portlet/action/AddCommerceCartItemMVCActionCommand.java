@@ -14,13 +14,16 @@
 
 package com.liferay.commerce.cart.content.web.internal.portlet.action;
 
+import com.liferay.commerce.cart.CommerceCartValidatorResult;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.exception.CommerceCartValidatorException;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.commerce.service.CommerceCartService;
 import com.liferay.commerce.util.CommerceCartHelper;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -35,6 +38,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
+
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -120,6 +125,26 @@ public class AddCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 				"commerceCartItemId", commerceCartItem.getCommerceCartItemId());
 			jsonObject.put("commerceCartItemsCount", commerceCartItemsCount);
 			jsonObject.put("success", true);
+		}
+		catch (CommerceCartValidatorException ccve) {
+			List<CommerceCartValidatorResult> commerceCartValidatorResults =
+				ccve.getCommerceCommerceCartValidatorResults();
+
+			JSONArray errorArray = _jsonFactory.createJSONArray();
+
+			for (CommerceCartValidatorResult commerceCartValidatorResult :
+					commerceCartValidatorResults) {
+
+				JSONObject errorObject = _jsonFactory.createJSONObject();
+
+				errorObject.put(
+					"message", commerceCartValidatorResult.getMessage());
+
+				errorArray.put(errorObject);
+			}
+
+			jsonObject.put("success", false);
+			jsonObject.put("validatorErrors", errorArray);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -119,14 +119,33 @@ dataMap.put("cp-instance-id", String.valueOf(cpInstanceId));
 								Liferay.fire('commerce:productAddedToCart', response);
 							}
 							else {
-								new Liferay.Notification(
-									{
-										message: '<liferay-ui:message key="an-unexpected-error-occurred" />',
-										render: true,
-										title: '<liferay-ui:message key="danger" />',
-										type: 'danger'
-									}
-								);
+								var validatorErrors = response.validatorErrors;
+
+								if (validatorErrors) {
+									A.Array.each(
+										validatorErrors,
+										function(item, index, validatorErrors) {
+											new Liferay.Notification(
+												{
+													message: Liferay.Language.get(item.message),
+													render: true,
+													title: '',
+													type: 'danger'
+												}
+											);
+										}
+									);
+								}
+								else {
+									new Liferay.Notification(
+										{
+											message: Liferay.Language.get(response.error),
+											render: true,
+											title: '',
+											type: 'danger'
+										}
+									);
+								}
 							}
 						}
 					}

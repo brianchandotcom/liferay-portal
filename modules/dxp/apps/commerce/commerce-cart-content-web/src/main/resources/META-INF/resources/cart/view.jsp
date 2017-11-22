@@ -26,7 +26,38 @@ PortletURL portletURL = commerceCartContentDisplayContext.getPortletURL();
 portletURL.setParameter("searchContainerId", "commerceCartItems");
 
 request.setAttribute("view.jsp-portletURL", portletURL);
+
+List<CommerceCartValidatorResult> commerceCartValidatorResults = new ArrayList<>();
+
+Map<Long, List<CommerceCartValidatorResult>> commerceCartValidatorResultMap = commerceCartContentDisplayContext.getCommerceCartValidatorResults();
 %>
+
+<liferay-ui:error exception="<%= CommerceCartValidatorException.class %>">
+
+	<%
+	CommerceCartValidatorException ccve = (CommerceCartValidatorException)errorException;
+
+	if (ccve != null) {
+		commerceCartValidatorResults = ccve.getCommerceCommerceCartValidatorResults();
+	}
+
+	for (CommerceCartValidatorResult commerceCartValidatorResult : commerceCartValidatorResults) {
+	%>
+
+		<c:choose>
+			<c:when test="<%= commerceCartValidatorResult.hasArgument() %>">
+				<liferay-ui:message arguments="<%= commerceCartValidatorResult.getArgument() %>" key="<%= commerceCartValidatorResult.getMessage() %>" />
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:message key="<%= commerceCartValidatorResult.getMessage() %>" />
+			</c:otherwise>
+		</c:choose>
+
+	<%
+	}
+	%>
+
+</liferay-ui:error>
 
 <div class="container-fluid-1280" id="<portlet:namespace />cartItemsContainer">
 	<div class="commerce-cart-items-container" id="<portlet:namespace />entriesContainer">
@@ -71,6 +102,31 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					<h6 class="text-default">
 						<%= HtmlUtil.escape(stringJoiner.toString()) %>
 					</h6>
+
+					<c:if test="<%= !commerceCartValidatorResultMap.isEmpty() %>">
+
+						<%
+						commerceCartValidatorResults = commerceCartValidatorResultMap.get(commerceCartItem.getCommerceCartItemId());
+
+						for (CommerceCartValidatorResult commerceCartValidatorResult : commerceCartValidatorResults) {
+						%>
+
+							<div class="alert-danger commerce-alert-danger">
+								<c:choose>
+									<c:when test="<%= commerceCartValidatorResult.hasArgument() %>">
+										<liferay-ui:message arguments="<%= commerceCartValidatorResult.getArgument() %>" key="<%= commerceCartValidatorResult.getMessage() %>" />
+									</c:when>
+									<c:otherwise>
+										<liferay-ui:message key="<%= commerceCartValidatorResult.getMessage() %>" />
+									</c:otherwise>
+								</c:choose>
+							</div>
+
+						<%
+						}
+						%>
+
+					</c:if>
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text

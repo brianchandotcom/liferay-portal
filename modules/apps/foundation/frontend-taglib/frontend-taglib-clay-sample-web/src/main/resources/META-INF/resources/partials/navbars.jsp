@@ -22,17 +22,17 @@
 List<Map<String, Object>> items = new ArrayList<>();
 
 for (int i = 0; i < 8; i++) {
-    Map<String, Object> item = new HashMap<>();
+	Map<String, Object> item = new HashMap<>();
 
-    if (i == 0) {
-        item.put("active", true);
-    }
+	if (i == 0) {
+		item.put("active", true);
+	}
 
-    item.put("title", "Page " + i);
+	item.put("title", "Page " + i);
 
-    item.put("url", "#" + i);
+	item.put("url", "#" + i);
 
-    items.add(item);
+	items.add(item);
 }
 %>
 

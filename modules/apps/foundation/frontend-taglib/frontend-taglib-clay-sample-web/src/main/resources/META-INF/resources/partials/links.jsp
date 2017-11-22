@@ -22,4 +22,4 @@
 
 <blockquote><p>Used for stand-alone hyperlinks. Can be a text or an image.</p></blockquote>
 
-<clay:link href="#" label="text link" />
+<clay:link href="#" label="link text" />

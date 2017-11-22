@@ -21,203 +21,206 @@
 <blockquote><p>A dropdown is a list of options related to the element that triggers it.</p></blockquote>
 
 <div class="row">
-    <%
-    List<Map<String, Object>> defaultItems = new ArrayList<>();
 
-    for (int i = 0; i < 4; i++) {
-        Map<String, Object> item = new HashMap<>();
+	<%
+	List<Map<String, Object>> defaultItems = new ArrayList<>();
 
-        if (i == 1) {
-            item.put("disabled", true);
-        }
-        else if (i == 2) {
-            item.put("active", true);
-        }
+	for (int i = 0; i < 4; i++) {
+		Map<String, Object> item = new HashMap<>();
 
-        item.put("label", "Option " + i);
-        item.put("url", "#" + i);
+		if (i == 1) {
+			item.put("disabled", true);
+		}
+		else if (i == 2) {
+			item.put("active", true);
+		}
 
-        defaultItems.add(item);
-    }
-    %>
+		item.put("label", "Option " + i);
+		item.put("url", "#" + i);
 
-    <div class="col-md-2">
-        <clay:dropdown-menu
-            items="<%= defaultItems %>"
-            triggerLabel="Default"
-        />
-    </div>
+		defaultItems.add(item);
+	}
+	%>
 
-    <%
-    List<Map<String, Object>> dividerItems = new ArrayList<>();
+	<div class="col-md-2">
+		<clay:dropdown-menu
+			items="<%= defaultItems %>"
+			triggerLabel="Default"
+		/>
+	</div>
 
-    Map<String, Object> dividerItemsGroup1 = new HashMap<>();
+	<%
+	List<Map<String, Object>> dividerItems = new ArrayList<>();
 
-    dividerItems.add(dividerItemsGroup1);
+	Map<String, Object> dividerItemsGroup1 = new HashMap<>();
 
-    List<Map<String, Object>> dividerItemsGroup1Items = new ArrayList<>();
+	dividerItems.add(dividerItemsGroup1);
 
-    dividerItemsGroup1.put("items", dividerItemsGroup1Items);
-    dividerItemsGroup1.put("separator", true);
-    dividerItemsGroup1.put("type", "group");
+	List<Map<String, Object>> dividerItemsGroup1Items = new ArrayList<>();
 
-    Map<String, Object> editItem = new HashMap<>();
+	dividerItemsGroup1.put("items", dividerItemsGroup1Items);
+	dividerItemsGroup1.put("separator", true);
+	dividerItemsGroup1.put("type", "group");
 
-    editItem.put("label", "Edit");
-    editItem.put("url", "#edit");
+	Map<String, Object> editItem = new HashMap<>();
 
-    dividerItemsGroup1Items.add(editItem);
+	editItem.put("label", "Edit");
+	editItem.put("url", "#edit");
 
-    Map<String, Object> previewItem = new HashMap<>();
+	dividerItemsGroup1Items.add(editItem);
 
-    previewItem.put("label", "Preview");
-    previewItem.put("url", "#preview");
+	Map<String, Object> previewItem = new HashMap<>();
 
-    dividerItemsGroup1Items.add(previewItem);
+	previewItem.put("label", "Preview");
+	previewItem.put("url", "#preview");
 
-    Map<String, Object> dividerItemsGroup2 = new HashMap<>();
+	dividerItemsGroup1Items.add(previewItem);
 
-    dividerItems.add(dividerItemsGroup2);
+	Map<String, Object> dividerItemsGroup2 = new HashMap<>();
 
-    List<Map<String, Object>> dividerItemsGroup2Items = new ArrayList<>();
+	dividerItems.add(dividerItemsGroup2);
 
-    dividerItemsGroup2.put("items", dividerItemsGroup2Items);
-    dividerItemsGroup2.put("type", "group");
+	List<Map<String, Object>> dividerItemsGroup2Items = new ArrayList<>();
 
-    Map<String, Object> expireItem = new HashMap<>();
+	dividerItemsGroup2.put("items", dividerItemsGroup2Items);
+	dividerItemsGroup2.put("type", "group");
 
-    expireItem.put("label", "Expire");
-    expireItem.put("url", "#expire");
+	Map<String, Object> expireItem = new HashMap<>();
 
-    dividerItemsGroup2Items.add(expireItem);
+	expireItem.put("label", "Expire");
+	expireItem.put("url", "#expire");
 
-    Map<String, Object> viewHistoryItem = new HashMap<>();
+	dividerItemsGroup2Items.add(expireItem);
 
-    viewHistoryItem.put("label", "View History");
-    viewHistoryItem.put("url", "#history");
+	Map<String, Object> viewHistoryItem = new HashMap<>();
 
-    dividerItemsGroup2Items.add(viewHistoryItem);
-    %>
+	viewHistoryItem.put("label", "View History");
+	viewHistoryItem.put("url", "#history");
 
-    <div class="col-md-2">
-        <clay:dropdown-menu
-            items="<%= dividerItems %>"
-            triggerLabel="Dividers"
-        />
-    </div>
+	dividerItemsGroup2Items.add(viewHistoryItem);
+	%>
 
-    <%
-    List<Map<String, Object>> inputItems = new ArrayList<>();
+	<div class="col-md-2">
+		<clay:dropdown-menu
+			items="<%= dividerItems %>"
+			triggerLabel="Dividers"
+		/>
+	</div>
 
-    Map<String, Object> inputItemsGroup1 = new HashMap<>();
+	<%
+	List<Map<String, Object>> inputItems = new ArrayList<>();
 
-    inputItems.add(inputItemsGroup1);
+	Map<String, Object> inputItemsGroup1 = new HashMap<>();
 
-    List<Map<String, Object>> inputItemsGroup1Items = new ArrayList<>();
+	inputItems.add(inputItemsGroup1);
 
-    inputItemsGroup1.put("items", inputItemsGroup1Items);
-    inputItemsGroup1.put("label", "Group 1");
-    inputItemsGroup1.put("type", "group");
+	List<Map<String, Object>> inputItemsGroup1Items = new ArrayList<>();
 
-    for (int i = 0; i < 2; i++) {
-        Map<String, Object> item = new HashMap<>();
+	inputItemsGroup1.put("items", inputItemsGroup1Items);
+	inputItemsGroup1.put("label", "Group 1");
+	inputItemsGroup1.put("type", "group");
 
-        item.put("inputValue", "value" + i);
-        item.put("inputName", "checkbox");
-        item.put("label", "Option " + i);
-        item.put("type", "checkbox");
+	for (int i = 0; i < 2; i++) {
+		Map<String, Object> item = new HashMap<>();
 
-        inputItemsGroup1Items.add(item);
-    }
+		item.put("inputName", "checkbox");
+		item.put("inputValue", "value" + i);
+		item.put("label", "Option " + i);
+		item.put("type", "checkbox");
 
-    Map<String, Object> inputItemsGroup2 = new HashMap<>();
+		inputItemsGroup1Items.add(item);
+	}
 
-    inputItems.add(inputItemsGroup2);
+	Map<String, Object> inputItemsGroup2 = new HashMap<>();
 
-    List<Map<String, Object>> inputItemsGroup2Items = new ArrayList<>();
+	inputItems.add(inputItemsGroup2);
 
-    inputItemsGroup2.put("inputName", "radiogroup");
-    inputItemsGroup2.put("items", inputItemsGroup2Items);
-    inputItemsGroup2.put("label", "Group 2");
-    inputItemsGroup2.put("type", "radiogroup");
+	List<Map<String, Object>> inputItemsGroup2Items = new ArrayList<>();
 
-    for (int i = 0; i < 2; i++) {
-        Map<String, Object> item = new HashMap<>();
+	inputItemsGroup2.put("inputName", "radiogroup");
+	inputItemsGroup2.put("items", inputItemsGroup2Items);
+	inputItemsGroup2.put("label", "Group 2");
+	inputItemsGroup2.put("type", "radiogroup");
 
-        item.put("inputValue", "value" + i + 2);
-        item.put("label", "Option " + i + 2);
+	for (int i = 0; i < 2; i++) {
+		Map<String, Object> item = new HashMap<>();
 
-        inputItemsGroup2Items.add(item);
-    }
-    %>
+		item.put("inputValue", "value" + i + 2);
+		item.put("label", "Option " + i + 2);
 
-    <div class="col-md-2">
-        <clay:dropdown-menu
-            buttonLabel="Done"
-            items="<%= inputItems %>"
-            searchable="<%= true %>"
-            triggerLabel="Inputs"
-        />
-    </div>
+		inputItemsGroup2Items.add(item);
+	}
+	%>
 
-    <%
-    List<Map<String, Object>> iconItems = new ArrayList<>();
+	<div class="col-md-2">
+		<clay:dropdown-menu
+			buttonLabel="Done"
+			items="<%= inputItems %>"
+			searchable="<%= true %>"
+			triggerLabel="Inputs"
+		/>
+	</div>
 
-    for (int i = 0; i < 4; i++) {
-        Map<String, Object> item = new HashMap<>();
+	<%
+	List<Map<String, Object>> iconItems = new ArrayList<>();
 
-        if (i == 3) {
-            item.put("disabled", true);
-        }
-        else if (i != 2) {
-            item.put("indicatorSymbol", "check-circle-full");
-        }
+	for (int i = 0; i < 4; i++) {
+		Map<String, Object> item = new HashMap<>();
 
-        item.put("label", "Option " + i);
-        item.put("url", "#" + i);
+		if (i == 3) {
+			item.put("disabled", true);
+		}
+		else if (i != 2) {
+			item.put("indicatorSymbol", "check-circle-full");
+		}
 
-        iconItems.add(item);
-    }
-    %>
+		item.put("label", "Option " + i);
+		item.put("url", "#" + i);
 
-    <div class="col-md-2">
-        <clay:dropdown-menu
-            indicatorsPosition="left"
-            items="<%= iconItems %>"
-            triggerLabel="Icons"
-        />
-    </div>
+		iconItems.add(item);
+	}
+	%>
 
-    <div class="col-md-2">
-        <clay:dropdown-actions
-            items="<%= defaultItems %>"
-        />
-    </div>
+	<div class="col-md-2">
+		<clay:dropdown-menu
+			indicatorsPosition="left"
+			items="<%= iconItems %>"
+			triggerLabel="Icons"
+		/>
+	</div>
 
-    <%
-    List<Map<String, Object>> actionItems = new ArrayList<>();
+	<div class="col-md-2">
+		<clay:dropdown-actions
+			items="<%= defaultItems %>"
 
-    for (int i = 0; i < 4; i++) {
-        Map<String, Object> item = new HashMap<>();
+		/>
+	</div>
 
-        if (i == 2) {
-            item.put("disabled", true);
-        }
+	<%
+	List<Map<String, Object>> actionItems = new ArrayList<>();
 
-        item.put("label", "Option " + i);
-        item.put("url", "#" + i);
+	for (int i = 0; i < 4; i++) {
+		Map<String, Object> item = new HashMap<>();
 
-        actionItems.add(item);
-    }
-    %>
+		if (i == 2) {
+			item.put("disabled", true);
+		}
 
-    <div class="col-md-2">
-        <clay:dropdown-actions
-            buttonLabel="More"
-            buttonStyle="secondary"
-            caption="Showing 4 of 32 Options"
-            helpText="You can customize this menu or see all you have by pressing \"more\"."
-            items="<%= actionItems %>"
-        />
-    </div>
+		item.put("label", "Option " + i);
+		item.put("url", "#" + i);
+
+		actionItems.add(item);
+	}
+	%>
+
+	<div class="col-md-2">
+		<clay:dropdown-actions
+			buttonLabel="More"
+			buttonStyle="secondary"
+			caption="Showing 4 of 32 Options"
+			helpText="You can customize this menu or see all you have by pressing \"more\"."
+			items="<%= actionItems %>"
+
+		/>
+	</div>
 </div>

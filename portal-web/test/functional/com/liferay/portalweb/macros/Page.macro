@@ -364,26 +364,17 @@
 	</command>
 
 	<command name="copyApplicationsFromPageToPage">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Copy Applications">
-			<var name="key_menuItem" value="Copy Applications" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Copy Applications" />
+			<var name="rowEntry" value="${pageName}" />
 		</execute>
-
-		<execute function="SelectFrameTop" />
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="The applications in page ${pageName} will be replaced with the ones in the page you select below." />
 		<execute function="AssertTextEquals" locator1="SitePagesEditPage#COPY_APPLICATIONS_COPY_FROM_PAGE_LABEL" value1="Copy from Page" />
 
-		<execute function="Click" locator1="SitePagesEditPage#COPY_APPLICATIONS_COPY_FROM_PAGE_SELECT" value1="${pageNameCopy}" />
+		<execute function="Select#selectPartialText" locator1="SitePagesEditPage#COPY_APPLICATIONS_COPY_FROM_PAGE_SELECT" value1="${pageNameCopy}" />
 
-		<execute function="SelectFrameTop" />
-
-		<execute macro="Button#clickDone" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="deleteFriendlyURLPG">

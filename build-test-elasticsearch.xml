@@ -612,7 +612,7 @@ username=&quot;liferay&quot;</echo>
 				<then>
 					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
 						<arg value="-c" />
-						<arg value="ES_HEAP_SIZE=512m ./elasticsearch -Des.insecure.allow.root=true -d -p pid-elasticsearch${pid.file.count}" />
+						<arg value="ES_HEAP_SIZE=512m ./elasticsearch -Des.insecure.allow.root=true -d -p pid-elasticsearch-${pid.file.count}" />
 					</exec>
 				</then>
 				<elseif>
@@ -620,7 +620,7 @@ username=&quot;liferay&quot;</echo>
 					<then>
 						<exec dir="${elasticsearch.dir}/bin" executable="cmd" spawn="true">
 							<arg value="/c" />
-							<arg value="elasticsearch -d -p pid-elasticsearch${pid.file.count}" />
+							<arg value="elasticsearch -d -p pid-elasticsearch-${pid.file.count}" />
 						</exec>
 					</then>
 				</elseif>
@@ -743,7 +743,7 @@ elasticsearch.password: "liferay"]]></replacevalue>
 			<if>
 				<os family="unix" />
 				<then>
-					<loadfile property="pid-elasticsearch" srcFile="${elasticsearch.dir}/bin/pid-elasticsearch${pid.file.count}">
+					<loadfile property="pid-elasticsearch" srcFile="${elasticsearch.dir}/bin/pid-elasticsearch-${pid.file.count}">
 						<filterchain>
 							<linecontainsregexp>
 								<regexp pattern="[0-9]*" />
@@ -761,7 +761,7 @@ elasticsearch.password: "liferay"]]></replacevalue>
 					<then>
 						<exec dir="${elasticsearch.dir}/bin" executable="cmd" spawn="true">
 							<arg value="/c" />
-							<arg value="for /f %x in (pid-elasticsearch${pid.file.count}) do taskkill /f /pid %x" />
+							<arg value="for /f %x in (pid-elasticsearch-${pid.file.count}) do taskkill /f /pid %x" />
 						</exec>
 					</then>
 				</elseif>

@@ -1713,7 +1713,7 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 
 					<echo append="true" file="portal-impl/src/portal-ext.properties">
 
- @{property}</echo>
+@{property}</echo>
 				</sequential>
 			</for>
 		</sequential>

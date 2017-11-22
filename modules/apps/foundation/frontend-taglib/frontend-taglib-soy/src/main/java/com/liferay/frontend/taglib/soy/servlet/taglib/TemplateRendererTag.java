@@ -156,7 +156,8 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 	}
 
 	protected String getElementSelector() {
-		return StringPool.POUND.concat(getComponentId()).concat(" > div");
+		return StringPool.POUND.concat(
+			getComponentId()).concat(" > *:first-child");
 	}
 
 	protected boolean isRenderJavaScript() {

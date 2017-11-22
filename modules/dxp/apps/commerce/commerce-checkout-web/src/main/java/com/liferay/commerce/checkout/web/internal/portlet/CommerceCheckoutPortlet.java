@@ -18,7 +18,6 @@ import com.liferay.commerce.checkout.web.internal.display.context.CheckoutDispla
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStepServicesTracker;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.util.CommerceCartHelper;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -86,8 +85,8 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 
 			super.render(renderRequest, renderResponse);
 		}
-		catch (PortalException pe) {
-			throw new PortletException(pe);
+		catch (Exception e) {
+			throw new PortletException(e);
 		}
 	}
 

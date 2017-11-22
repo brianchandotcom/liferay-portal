@@ -22,7 +22,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
-import com.liferay.asset.util.impl.AssetUtil;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
@@ -48,6 +48,9 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 import java.text.DateFormat;
 
@@ -63,8 +66,10 @@ import java.util.Map;
 
 import org.apache.commons.lang.ArrayUtils;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -82,8 +87,24 @@ public abstract class BaseAssetSearchTestCase {
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
+	@BeforeClass
+	public static void setUpClass() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(AssetHelper.class.getName());
+
+		_serviceTracker.open();
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_serviceTracker.close();
+	}
+
 	@Before
 	public void setUp() throws Exception {
+		_assetHelper = _serviceTracker.getService();
+
 		_group1 = GroupTestUtil.addGroup();
 
 		ServiceContext serviceContext =
@@ -1279,11 +1300,11 @@ public abstract class BaseAssetSearchTestCase {
 			AssetEntryQuery assetEntryQuery, SearchContext searchContext)
 		throws Exception {
 
-		Hits results = AssetUtil.search(
+		Hits results = _assetHelper.search(
 			searchContext, assetEntryQuery, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
-		return AssetUtil.getAssetEntries(results);
+		return _assetHelper.getAssetEntries(results);
 	}
 
 	protected int searchCount(
@@ -1291,7 +1312,7 @@ public abstract class BaseAssetSearchTestCase {
 			int start, int end)
 		throws Exception {
 
-		Hits results = AssetUtil.search(
+		Hits results = _assetHelper.search(
 			searchContext, assetEntryQuery, start, end);
 
 		return results.getLength();
@@ -1533,8 +1554,11 @@ public abstract class BaseAssetSearchTestCase {
 		assertCount(size, assetEntryQuery, searchContext, 0, 1);
 	}
 
+	private static ServiceTracker<AssetHelper, AssetHelper> _serviceTracker;
+
 	private long[] _assetCategoryIds1;
 	private long[] _assetCategoryIds2;
+	private AssetHelper _assetHelper;
 	private String[] _assetTagsNames1;
 	private String[] _assetTagsNames2;
 	private long _fashionCategoryId;

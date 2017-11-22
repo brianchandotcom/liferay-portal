@@ -290,7 +290,7 @@
 </tr>
 <tr>
 	<td>COPY_APPLICATIONS_COPY_FROM_PAGE_SELECT</td>
-	<td>//select[contains(@id,'copyLayoutId')]/option[@value='1']</td>
+	<td>//select[contains(@id,'copyLayoutId')]</td>
 	<td></td>
 </tr>
 </tbody>

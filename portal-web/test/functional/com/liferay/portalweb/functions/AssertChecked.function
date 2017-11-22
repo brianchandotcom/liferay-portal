@@ -23,7 +23,7 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
-	<command name="assertCheckedToggleSwitch">
+	<command name="assertCheckedNotVisible">
 		<execute function="WaitForSPARefresh" />
 
 		<execute selenium="waitForElementPresent" />

@@ -82,7 +82,7 @@
 				<for list="${checkSetupName}" param="checkSetupName">
 					<var name="key_checkSetupName" value="${checkSetupName}" />
 
-					<execute function="AssertChecked#assertCheckedToggleSwitch" locator1="ToggleSwitch#SHOW_SPECIFIC_TOGGLE_SWITCH" />
+					<execute function="AssertChecked#assertCheckedNotVisible" locator1="ToggleSwitch#SHOW_SPECIFIC_TOGGLE_SWITCH" />
 				</for>
 			</then>
 		</if>

@@ -755,6 +755,8 @@ elasticsearch.password: "liferay"]]></replacevalue>
 						<arg value="-c" />
 						<arg value="kill ${pid-elasticsearch}" />
 					</exec>
+
+					<var name="pid-elasticsearch" unset="true" />
 				</then>
 				<elseif>
 					<os family="windows" />

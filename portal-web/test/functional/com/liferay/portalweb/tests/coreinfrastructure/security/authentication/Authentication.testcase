@@ -25,8 +25,9 @@
 		</if>
 	</tear-down>
 
-	<command name="TestLDAPConnectionAndEntries" priority="3">
+	<command name="TestLDAPConnectionAndEntries" priority="5">
 		<property name="apacheds.enabled" value="true" />
+		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="Authentication#TestLDAPConnectionAndEntries" />
 
 		<execute macro="ProductMenu#gotoPortlet">

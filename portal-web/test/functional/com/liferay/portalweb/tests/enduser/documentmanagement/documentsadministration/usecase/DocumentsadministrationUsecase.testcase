@@ -1131,7 +1131,7 @@
 			<var name="dmFolderName" value="Unit 1 - Moon Rock Chemistry" />
 		</execute>
 
-		<execute macro="DMFolder#gotoCP">
+		<execute macro="DMFolder#viewCP">
 			<var name="dmFolderName" value="Unit 1 - Moon Rock Chemistry" />
 		</execute>
 
@@ -1139,7 +1139,7 @@
 			<var name="dmSubFolderName" value="The Properties of Moon Rocks" />
 		</execute>
 
-		<execute macro="DMFolder#gotoCP">
+		<execute macro="DMFolder#viewCP">
 			<var name="dmFolderName" value="The Properties of Moon Rocks" />
 		</execute>
 
@@ -1147,7 +1147,7 @@
 			<var name="dmSubFolderName" value="Audio Lectures" />
 		</execute>
 
-		<execute macro="DMFolder#gotoCP">
+		<execute macro="DMFolder#viewCP">
 			<var name="dmFolderName" value="Audio Lectures" />
 		</execute>
 
@@ -1165,11 +1165,11 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMFolder#gotoCP">
+		<execute macro="DMFolder#viewCP">
 			<var name="dmFolderName" value="Unit 1 - Moon Rock Chemistry" />
 		</execute>
 
-		<execute macro="DMFolder#gotoCP">
+		<execute macro="DMFolder#viewCP">
 			<var name="dmFolderName" value="The Properties of Moon Rocks" />
 		</execute>
 
@@ -1695,7 +1695,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoCP">
+		<execute macro="DMFolder#viewCP">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -1714,11 +1714,11 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMFolder#gotoCP">
+		<execute macro="DMFolder#viewCP">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoCP">
+		<execute macro="DMFolder#viewCP">
 			<var name="dmFolderName" value="DM SubFolder Name" />
 		</execute>
 

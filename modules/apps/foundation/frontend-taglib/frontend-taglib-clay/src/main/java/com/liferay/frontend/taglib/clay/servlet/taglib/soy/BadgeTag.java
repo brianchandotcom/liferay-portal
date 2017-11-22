@@ -14,23 +14,15 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
-import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
+import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
 
 /**
  * @author Carlos Lancha
  */
-public class BadgeTag extends TemplateRendererTag {
+public class BadgeTag extends BaseClayTag {
 
-	@Override
-	public int doStartTag() {
-		setTemplateNamespace("ClayBadge.render");
-
-		return super.doStartTag();
-	}
-
-	@Override
-	public String getModule() {
-		return "clay-taglib/clay-badge/src/ClayBadge";
+	public BadgeTag() {
+		super("badge", "ClayBadge");
 	}
 
 	public void setId(String id) {

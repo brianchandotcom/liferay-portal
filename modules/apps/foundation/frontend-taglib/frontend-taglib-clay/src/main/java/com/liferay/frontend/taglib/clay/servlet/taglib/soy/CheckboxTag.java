@@ -14,23 +14,15 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
-import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
+import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
 
 /**
  * @author Chema Balsas
  */
-public class CheckboxTag extends TemplateRendererTag {
+public class CheckboxTag extends BaseClayTag {
 
-	@Override
-	public int doStartTag() {
-		setTemplateNamespace("ClayCheckbox.render");
-
-		return super.doStartTag();
-	}
-
-	@Override
-	public String getModule() {
-		return "clay-taglib/clay-checkbox/src/ClayCheckbox";
+	public CheckboxTag() {
+		super("checkbox", "ClayCheckbox");
 	}
 
 	public void setChecked(Boolean checked) {

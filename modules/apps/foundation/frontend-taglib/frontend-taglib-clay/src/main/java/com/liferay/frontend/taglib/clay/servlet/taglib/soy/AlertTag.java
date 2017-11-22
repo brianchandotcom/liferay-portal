@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
-import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
+import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -24,7 +24,11 @@ import java.util.Map;
 /**
  * @author Carlos Lancha
  */
-public class AlertTag extends TemplateRendererTag {
+public class AlertTag extends BaseClayTag {
+
+	public AlertTag() {
+		super("alert", "ClayAlert", true);
+	}
 
 	@Override
 	public int doStartTag() {
@@ -39,14 +43,7 @@ public class AlertTag extends TemplateRendererTag {
 				themeDisplay.getPathThemeImages().concat("/clay/icons.svg"));
 		}
 
-		setTemplateNamespace("ClayAlert.render");
-
 		return super.doStartTag();
-	}
-
-	@Override
-	public String getModule() {
-		return "clay-taglib/clay-alert/src/ClayAlert";
 	}
 
 	public void setAutoclose(Boolean autoClose) {

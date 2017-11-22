@@ -14,23 +14,15 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
-import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
+import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
 
 /**
  * @author Chema Balsas
  */
-public class RadioTag extends TemplateRendererTag {
+public class RadioTag extends BaseClayTag {
 
-	@Override
-	public int doStartTag() {
-		setTemplateNamespace("ClayRadio.render");
-
-		return super.doStartTag();
-	}
-
-	@Override
-	public String getModule() {
-		return "clay-taglib/clay-radio/src/ClayRadio";
+	public RadioTag() {
+		super("radio", "ClayRadio");
 	}
 
 	public void setChecked(Boolean checked) {

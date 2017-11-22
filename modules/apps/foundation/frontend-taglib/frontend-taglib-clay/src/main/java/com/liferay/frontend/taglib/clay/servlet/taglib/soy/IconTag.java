@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
-import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
+import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -24,7 +24,11 @@ import java.util.Map;
 /**
  * @author Chema Balsas
  */
-public class IconTag extends TemplateRendererTag {
+public class IconTag extends BaseClayTag {
+
+	public IconTag() {
+		super("icon", "ClayIcon");
+	}
 
 	@Override
 	public int doStartTag() {
@@ -39,14 +43,7 @@ public class IconTag extends TemplateRendererTag {
 				themeDisplay.getPathThemeImages().concat("/clay/icons.svg"));
 		}
 
-		setTemplateNamespace("ClayIcon.render");
-
 		return super.doStartTag();
-	}
-
-	@Override
-	public String getModule() {
-		return "clay-taglib/clay-icon/src/ClayIcon";
 	}
 
 	public void setId(String id) {

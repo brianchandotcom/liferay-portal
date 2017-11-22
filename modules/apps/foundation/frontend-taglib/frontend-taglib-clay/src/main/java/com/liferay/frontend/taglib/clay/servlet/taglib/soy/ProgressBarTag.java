@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
-import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
+import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -24,7 +24,11 @@ import java.util.Map;
 /**
  * @author Chema Balsas
  */
-public class ProgressBarTag extends TemplateRendererTag {
+public class ProgressBarTag extends BaseClayTag {
+
+	public ProgressBarTag() {
+		super("progress-bar", "ClayProgressBar", true);
+	}
 
 	@Override
 	public int doStartTag() {
@@ -39,14 +43,7 @@ public class ProgressBarTag extends TemplateRendererTag {
 				themeDisplay.getPathThemeImages().concat("/clay/icons.svg"));
 		}
 
-		setTemplateNamespace("ClayProgressBar.render");
-
 		return super.doStartTag();
-	}
-
-	@Override
-	public String getModule() {
-		return "clay-taglib/clay-progress-bar/src/ClayProgressBar";
 	}
 
 	public void setId(String id) {

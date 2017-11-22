@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
-import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
+import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -25,7 +25,11 @@ import java.util.Map;
 /**
  * @author Carlos Lancha
  */
-public class StickerTag extends TemplateRendererTag {
+public class StickerTag extends BaseClayTag {
+
+	public StickerTag() {
+		super("sticker", "ClaySticker");
+	}
 
 	@Override
 	public int doStartTag() {
@@ -50,14 +54,7 @@ public class StickerTag extends TemplateRendererTag {
 			putValue("icon", icon);
 		}
 
-		setTemplateNamespace("ClaySticker.render");
-
 		return super.doStartTag();
-	}
-
-	@Override
-	public String getModule() {
-		return "clay-taglib/clay-sticker/src/ClaySticker";
 	}
 
 	public void setIcon(String icon) {

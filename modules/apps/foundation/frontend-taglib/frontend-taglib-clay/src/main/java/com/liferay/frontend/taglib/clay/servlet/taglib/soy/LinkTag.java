@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
-import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
+import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -25,7 +25,11 @@ import java.util.Map;
 /**
  * @author Carlos Lancha
  */
-public class LinkTag extends TemplateRendererTag {
+public class LinkTag extends BaseClayTag {
+
+	public LinkTag() {
+		super("link", "ClayLink");
+	}
 
 	@Override
 	public int doStartTag() {
@@ -51,14 +55,7 @@ public class LinkTag extends TemplateRendererTag {
 			putValue("icon", icon);
 		}
 
-		setTemplateNamespace("ClayLink.render");
-
 		return super.doStartTag();
-	}
-
-	@Override
-	public String getModule() {
-		return "clay-taglib/clay-link/src/ClayLink";
 	}
 
 	public void setAriaLabel(String ariaLabel) {

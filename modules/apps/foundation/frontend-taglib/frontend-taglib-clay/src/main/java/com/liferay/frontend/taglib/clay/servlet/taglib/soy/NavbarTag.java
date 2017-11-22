@@ -14,23 +14,15 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
-import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
+import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
 
 /**
  * @author Chema Balsas
  */
-public class NavbarTag extends TemplateRendererTag {
+public class NavbarTag extends BaseClayTag {
 
-	@Override
-	public int doStartTag() {
-		setTemplateNamespace("ClayNavbar.render");
-
-		return super.doStartTag();
-	}
-
-	@Override
-	public String getModule() {
-		return "clay-taglib/clay-sticker/src/ClayNavbar";
+	public NavbarTag() {
+		super("navbar", "ClayNavbar");
 	}
 
 	public void setInverted(Boolean inverted) {

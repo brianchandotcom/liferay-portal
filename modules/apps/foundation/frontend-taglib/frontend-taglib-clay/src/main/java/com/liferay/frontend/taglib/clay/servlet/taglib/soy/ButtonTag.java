@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
-import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
+import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -25,7 +25,11 @@ import java.util.Map;
 /**
  * @author Chema Balsas
  */
-public class ButtonTag extends TemplateRendererTag {
+public class ButtonTag extends BaseClayTag {
+
+	public ButtonTag() {
+		super("button", "ClayButton");
+	}
 
 	@Override
 	public int doStartTag() {
@@ -56,14 +60,7 @@ public class ButtonTag extends TemplateRendererTag {
 			putValue("icon", icon);
 		}
 
-		setTemplateNamespace("ClayButton.render");
-
 		return super.doStartTag();
-	}
-
-	@Override
-	public String getModule() {
-		return "clay-taglib/clay-button/src/ClayButton";
 	}
 
 	public void setAriaLabel(String ariaLabel) {

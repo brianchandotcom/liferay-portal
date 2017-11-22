@@ -65,7 +65,7 @@ public class GetFileSetTask extends Task {
 				Level.WARNING, "Class files for {0} were not found!",
 				notFoundClassNames.toString());
 
-			if(classResultList.isEmpty()){
+			if (classResultList.isEmpty()) {
 				return;
 			}
 		}
@@ -151,8 +151,7 @@ public class GetFileSetTask extends Task {
 						String fileName = fileNamePath.toString();
 
 						for (String className : classNames) {
-							String targetSrcName = className.concat(
-								".java");
+							String targetSrcName = className.concat(".java");
 
 							if (_matchClassName(className, fileName)) {
 								classFileList.add(file);

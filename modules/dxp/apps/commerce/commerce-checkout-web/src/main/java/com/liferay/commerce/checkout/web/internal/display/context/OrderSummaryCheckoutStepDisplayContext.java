@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.checkout.web.internal.display.context;
 
+import com.liferay.commerce.cart.CommerceCartValidatorRegistry;
+import com.liferay.commerce.cart.CommerceCartValidatorResult;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.product.constants.CPConstants;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -42,6 +45,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 
 	public OrderSummaryCheckoutStepDisplayContext(
 			CommerceCartService commerceCartService,
+			CommerceCartValidatorRegistry commerceCartValidatorRegistry,
 			CommercePriceCalculator commercePriceCalculator,
 			CommercePriceFormatter commercePriceFormatter,
 			CPInstanceHelper cpInstanceHelper,
@@ -49,6 +53,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		throws PortalException {
 
 		_commerceCartService = commerceCartService;
+		_commerceCartValidatorRegistry = commerceCartValidatorRegistry;
 		_commercePriceCalculator = commercePriceCalculator;
 		_commercePriceFormatter = commercePriceFormatter;
 		_cpInstanceHelper = cpInstanceHelper;
@@ -100,6 +105,14 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		return _commercePriceFormatter.format(_httpServletRequest, total);
 	}
 
+	public Map<Long, List<CommerceCartValidatorResult>>
+			getCommerceCartValidatorResults()
+		throws PortalException {
+
+		return _commerceCartValidatorRegistry.getCommerceCartValidatorResults(
+			_commerceCart);
+	}
+
 	public String getFormattedPrice(CommerceCartItem commerceCartItem)
 		throws PortalException {
 
@@ -116,6 +129,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 
 	private final CommerceCart _commerceCart;
 	private final CommerceCartService _commerceCartService;
+	private final CommerceCartValidatorRegistry _commerceCartValidatorRegistry;
 	private final CommercePriceCalculator _commercePriceCalculator;
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private final CPInstanceHelper _cpInstanceHelper;

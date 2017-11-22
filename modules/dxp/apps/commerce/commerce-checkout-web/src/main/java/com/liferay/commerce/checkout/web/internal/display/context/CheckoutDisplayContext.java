@@ -38,7 +38,7 @@ public class CheckoutDisplayContext {
 				commerceCheckoutStepServicesTracker,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
-		throws PortalException {
+		throws Exception {
 
 		_commerceCartHelper = commerceCartHelper;
 		_commerceCheckoutStepServicesTracker =
@@ -60,7 +60,8 @@ public class CheckoutDisplayContext {
 
 		if (commerceCheckoutStep == null) {
 			List<CommerceCheckoutStep> commerceCheckoutSteps =
-				_commerceCheckoutStepServicesTracker.getCommerceCheckoutSteps();
+				_commerceCheckoutStepServicesTracker.getCommerceCheckoutSteps(
+					_httpServletRequest, _httpServletResponse);
 
 			commerceCheckoutStep = commerceCheckoutSteps.get(0);
 		}
@@ -76,18 +77,22 @@ public class CheckoutDisplayContext {
 		return _commerceCart.getCommerceCartId();
 	}
 
-	public List<CommerceCheckoutStep> getCommerceCheckoutSteps() {
-		return _commerceCheckoutStepServicesTracker.getCommerceCheckoutSteps();
+	public List<CommerceCheckoutStep> getCommerceCheckoutSteps()
+		throws Exception {
+
+		return _commerceCheckoutStepServicesTracker.getCommerceCheckoutSteps(
+			_httpServletRequest, _httpServletResponse);
 	}
 
 	public String getCurrentCheckoutStepName() {
 		return _currentCheckoutStep.getName();
 	}
 
-	public String getNextCheckoutStepName() {
+	public String getNextCheckoutStepName() throws Exception {
 		CommerceCheckoutStep commerceCheckoutStep =
 			_commerceCheckoutStepServicesTracker.getNextCommerceCheckoutStep(
-				_currentCheckoutStep.getName());
+				_currentCheckoutStep.getName(), _httpServletRequest,
+				_httpServletResponse);
 
 		if (commerceCheckoutStep == null) {
 			return null;
@@ -96,10 +101,11 @@ public class CheckoutDisplayContext {
 		return commerceCheckoutStep.getName();
 	}
 
-	public String getPreviusCheckoutStepName() {
+	public String getPreviusCheckoutStepName() throws Exception {
 		CommerceCheckoutStep commerceCheckoutStep =
 			_commerceCheckoutStepServicesTracker.getPreviusCommerceCheckoutStep(
-				_currentCheckoutStep.getName());
+				_currentCheckoutStep.getName(), _httpServletRequest,
+				_httpServletResponse);
 
 		if (commerceCheckoutStep == null) {
 			return null;

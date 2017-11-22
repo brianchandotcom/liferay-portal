@@ -14,6 +14,7 @@
 
 package com.liferay.asset.publisher.web.portlet;
 
+import com.liferay.asset.constants.AssetWebKeys;
 import com.liferay.asset.publisher.web.configuration.AssetPublisherPortletInstanceConfiguration;
 import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
@@ -23,6 +24,7 @@ import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizerRegistry;
 import com.liferay.asset.publisher.web.util.AssetRSSUtil;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
@@ -321,6 +323,8 @@ public class AssetPublisherPortlet extends MVCPortlet {
 				AssetPublisherWebKeys.ASSET_ENTRY_ACTION_REGISTRY,
 				assetEntryActionRegistry);
 
+			renderRequest.setAttribute(AssetWebKeys.ASSET_HELPER, assetHelper);
+
 			String rootPortletId = PortletIdCodec.decodePortletName(
 				portal.getPortletId(renderRequest));
 
@@ -383,6 +387,9 @@ public class AssetPublisherPortlet extends MVCPortlet {
 
 	@Reference
 	protected AssetEntryActionRegistry assetEntryActionRegistry;
+
+	@Reference
+	protected AssetHelper assetHelper;
 
 	@Reference
 	protected AssetPublisherCustomizerRegistry assetPublisherCustomizerRegistry;

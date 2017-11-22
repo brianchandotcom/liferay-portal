@@ -72,7 +72,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertNotChecked#assertNotCheckedToggleSwitch" />
+		<execute function="AssertNotChecked#assertNotCheckedNotVisible" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

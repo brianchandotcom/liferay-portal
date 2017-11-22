@@ -192,7 +192,7 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 			sb.append(jsResourceURL);
 		}
 
-		sb.append("\" \" type = \"text/javascript\"></script>\n");
+		sb.append("\" type = \"text/javascript\"></script>\n");
 
 		_mergedJSResourceURLs = sb.toString();
 	}
@@ -253,7 +253,7 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 
 			printWriter.write("<script data-senna-track=\"permanent\" src=\"");
 			printWriter.write(staticResourceURL);
-			printWriter.write("\" \" type = \"text/javascript\"></script>\n");
+			printWriter.write("\" type = \"text/javascript\"></script>\n");
 		}
 	}
 

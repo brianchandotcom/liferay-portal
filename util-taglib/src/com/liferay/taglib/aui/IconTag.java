@@ -184,7 +184,7 @@ public class IconTag extends BaseIconTag {
 				jspWriter.write(src);
 				jspWriter.write(StringPool.POUND);
 				jspWriter.write(GetterUtil.getString(getImage()));
-				jspWriter.write("\" />");
+				jspWriter.write("\"></use>");
 				jspWriter.write("<title>");
 				jspWriter.write(title);
 				jspWriter.write("</title>");

@@ -26,14 +26,15 @@ import java.util.List;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 public class CommerceWarehouseItemLocalServiceImpl
 	extends CommerceWarehouseItemLocalServiceBaseImpl {
 
 	@Override
 	public CommerceWarehouseItem addCommerceWarehouseItem(
-			long commerceWarehouseId, String className, long classPK,
-			int quantity, ServiceContext serviceContext)
+			long commerceWarehouseId, long cpInstanceId, int quantity,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceWarehouse commerceWarehouse =
@@ -51,8 +52,7 @@ public class CommerceWarehouseItemLocalServiceImpl
 		commerceWarehouseItem.setUserId(user.getUserId());
 		commerceWarehouseItem.setUserName(user.getFullName());
 		commerceWarehouseItem.setCommerceWarehouseId(commerceWarehouseId);
-		commerceWarehouseItem.setClassName(className);
-		commerceWarehouseItem.setClassPK(classPK);
+		commerceWarehouseItem.setCPInstanceId(cpInstanceId);
 		commerceWarehouseItem.setQuantity(quantity);
 
 		commerceWarehouseItemPersistence.update(commerceWarehouseItem);
@@ -67,38 +67,36 @@ public class CommerceWarehouseItemLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCommerceWarehouseItems(String className, long classPK) {
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		commerceWarehouseItemPersistence.removeByC_C(classNameId, classPK);
+	public void deleteCommerceWarehouseItemsByCPInstanceId(long cpInstanceId) {
+		commerceWarehouseItemPersistence.removeByCPInstanceId(cpInstanceId);
 	}
 
 	@Override
 	public List<CommerceWarehouseItem> getCommerceWarehouseItems(
-		String className, long classPK) {
+		long cpInstanceId) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return commerceWarehouseItemPersistence.findByC_C(classNameId, classPK);
+		return commerceWarehouseItemPersistence.findByCPInstanceId(
+			cpInstanceId);
 	}
 
 	@Override
 	public List<CommerceWarehouseItem> getCommerceWarehouseItems(
-		String className, long classPK, int start, int end,
+		long cpInstanceId, int start, int end,
 		OrderByComparator<CommerceWarehouseItem> orderByComparator) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return commerceWarehouseItemFinder.findByC_C(
-			classNameId, classPK, start, end, orderByComparator);
+		return commerceWarehouseItemFinder.findByCPInstanceId(
+			cpInstanceId, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getCommerceWarehouseItemsCount(String className, long classPK) {
-		long classNameId = classNameLocalService.getClassNameId(className);
+	public int getCommerceWarehouseItemsCount(long cpInstanceId) {
+		return commerceWarehouseItemPersistence.countByCPInstanceId(
+			cpInstanceId);
+	}
 
-		return commerceWarehouseItemPersistence.countByC_C(
-			classNameId, classPK);
+	@Override
+	public int getCPInstanceQuantity(long cpInstanceId) {
+		return commerceWarehouseItemFinder.getCPInstanceQuantity(cpInstanceId);
 	}
 
 	@Override

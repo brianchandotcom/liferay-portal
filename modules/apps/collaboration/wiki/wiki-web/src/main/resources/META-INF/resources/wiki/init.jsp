@@ -16,7 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.document.library.configuration.DLConfiguration" %><%@
+<%@ page import="com.liferay.asset.constants.AssetWebKeys" %><%@
+page import="com.liferay.asset.util.AssetHelper" %><%@
+page import="com.liferay.document.library.configuration.DLConfiguration" %><%@
 page import="com.liferay.frontend.taglib.servlet.taglib.AddMenuItem" %><%@
 page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
 page import="com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil" %><%@
@@ -64,6 +66,8 @@ page import="com.liferay.wiki.web.internal.portlet.toolbar.item.WikiPortletToolb
 page import="com.liferay.wiki.web.util.WikiWebComponentProvider" %>
 
 <%
+AssetHelper assetHelper = (AssetHelper)request.getAttribute(AssetWebKeys.ASSET_HELPER);
+
 WikiRequestHelper wikiRequestHelper = new WikiRequestHelper(request);
 
 WikiGroupServiceOverriddenConfiguration wikiGroupServiceOverriddenConfiguration = wikiRequestHelper.getWikiGroupServiceOverriddenConfiguration();

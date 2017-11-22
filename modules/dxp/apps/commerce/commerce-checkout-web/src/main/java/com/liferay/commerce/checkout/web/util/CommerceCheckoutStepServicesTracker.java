@@ -18,6 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Marco Leo
  */
@@ -27,12 +30,21 @@ public interface CommerceCheckoutStepServicesTracker {
 	public CommerceCheckoutStep getCommerceCheckoutStep(
 		String commerceCheckoutStepName);
 
-	public List<CommerceCheckoutStep> getCommerceCheckoutSteps();
+	public List<CommerceCheckoutStep> getCommerceCheckoutSteps(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception;
 
 	public CommerceCheckoutStep getNextCommerceCheckoutStep(
-		String commerceCheckoutStepName);
+			String commerceCheckoutStepName,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception;
 
 	public CommerceCheckoutStep getPreviusCommerceCheckoutStep(
-		String commerceCheckoutStepName);
+			String commerceCheckoutStepName,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception;
 
 }

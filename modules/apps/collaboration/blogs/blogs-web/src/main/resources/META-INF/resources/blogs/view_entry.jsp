@@ -37,7 +37,7 @@ AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(BlogsEntry.class.get
 
 AssetEntryServiceUtil.incrementViewCounter(assetEntry);
 
-AssetUtil.addLayoutTags(request, AssetTagLocalServiceUtil.getTags(BlogsEntry.class.getName(), entry.getEntryId()));
+assetHelper.addLayoutTags(request, AssetTagLocalServiceUtil.getTags(BlogsEntry.class.getName(), entry.getEntryId()));
 
 RatingsEntry ratingsEntry = null;
 RatingsStats ratingsStats = RatingsStatsLocalServiceUtil.fetchStats(BlogsEntry.class.getName(), entry.getEntryId());

@@ -870,7 +870,7 @@ public class LocalGitSyncUtil {
 
 		gitWorkingDirectory.reset("--hard");
 
-		gitWorkingDirectory.fetch(remoteUpstreamBranch.getRemote());
+		gitWorkingDirectory.fetch(null, remoteUpstreamBranch);
 
 		String tempBranchName = "temp-" + System.currentTimeMillis();
 

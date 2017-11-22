@@ -21,7 +21,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSiteNavigationMenu();
 
-List<SiteNavigationMenuItem> siteNavigationMenuItems = SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(siteNavigationMenu.getSiteNavigationMenuId());
+List<SiteNavigationMenuItem> siteNavigationMenuItems = SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(siteNavigationMenu.getSiteNavigationMenuId(), 0);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -31,125 +31,107 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 
 <c:choose>
 	<c:when test="<%= siteNavigationMenuItems.isEmpty() %>">
-		<aui:fieldset-group markupView="lexicon">
-			<aui:fieldset>
-				<div class="text-center">
-					<div>
-						<liferay-ui:message key="this-menu-is-empty" />
+		<div class="container-fluid-1280">
+			<aui:fieldset-group markupView="lexicon">
+				<aui:fieldset>
+					<div class="text-center">
+						<div>
+							<liferay-ui:message key="this-menu-is-empty" />
+						</div>
+
+						<div>
+							<liferay-ui:message key="please-add-elements" />
+						</div>
 					</div>
 
-					<div>
-						<liferay-ui:message key="please-add-elements" />
-					</div>
-				</div>
+					<div class="row" id="<portlet:namespace/>siteNavigationMenuItemTypes">
 
-				<div class="row" id="<portlet:namespace/>siteNavigationMenuItemTypes">
+						<%
+						for (SiteNavigationMenuItemType siteNavigationMenuItemType : siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemTypes()) {
+						%>
 
-					<%
-					for (SiteNavigationMenuItemType siteNavigationMenuItemType : siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemTypes()) {
-					%>
-
-						<div class="col-md-2">
-							<div class="card card-type-asset">
-								<div class="aspect-ratio card-item-first">
-									<div class="aspect-ratio-item-center-middle aspect-ratio-item-fluid">
-										<liferay-ui:icon
-											icon="<%= siteNavigationMenuItemType.getIcon() %>"
-											markupView="lexicon"
-										/>
+							<div class="col-md-2">
+								<div class="card card-type-asset">
+									<div class="aspect-ratio card-item-first">
+										<div class="aspect-ratio-item-center-middle aspect-ratio-item-fluid">
+											<liferay-ui:icon
+												icon="<%= siteNavigationMenuItemType.getIcon() %>"
+												markupView="lexicon"
+											/>
+										</div>
 									</div>
-								</div>
 
-								<div class="card-body">
-									<div class="card-row">
-										<div class="flex-col flex-col-expand">
-											<div class="card-title text-center text-truncate">
-												<liferay-portlet:renderURL var="addURL">
-													<portlet:param name="mvcPath" value="/add_site_navigation_menu_item.jsp" />
-													<portlet:param name="redirect" value="<%= currentURL %>" />
-													<portlet:param name="siteNavigationMenuId" value="<%= String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()) %>" />
-													<portlet:param name="type" value="<%= siteNavigationMenuItemType.getType() %>" />
-												</liferay-portlet:renderURL>
+									<div class="card-body">
+										<div class="card-row">
+											<div class="flex-col flex-col-expand">
+												<div class="card-title text-center text-truncate">
+													<liferay-portlet:renderURL var="addURL">
+														<portlet:param name="mvcPath" value="/add_site_navigation_menu_item.jsp" />
+														<portlet:param name="redirect" value="<%= currentURL %>" />
+														<portlet:param name="siteNavigationMenuId" value="<%= String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()) %>" />
+														<portlet:param name="type" value="<%= siteNavigationMenuItemType.getType() %>" />
+													</liferay-portlet:renderURL>
 
-												<aui:a href="<%= addURL %>" label="<%= siteNavigationMenuItemType.getLabel(locale) %>" />
+													<aui:a href="<%= addURL %>" label="<%= siteNavigationMenuItemType.getLabel(locale) %>" />
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
+
+						<%
+						}
+						%>
+
+					</div>
+				</aui:fieldset>
+			</aui:fieldset-group>
+		</div>
+	</c:when>
+	<c:otherwise>
+		<liferay-ui:error key="<%= InvalidSiteNavigationMenuItemOrderException.class.getName() %>" message="invalid-site-navigation-menu-items-order" />
+
+		<div class="container-fluid-1280">
+			<div class="row">
+				<div class="col-md-9 pt-3 site-navigation-menu-container">
+
+					<%
+					for (SiteNavigationMenuItem siteNavigationMenuItem : siteNavigationMenuItems) {
+					%>
+
+						<liferay-util:include page="/view_site_navigation_menu_item.jsp" servletContext="<%= application %>">
+							<liferay-util:param name="siteNavigationMenuItemId" value="<%= String.valueOf(siteNavigationMenuItem.getSiteNavigationMenuItemId()) %>" />
+						</liferay-util:include>
 
 					<%
 					}
 					%>
 
 				</div>
-			</aui:fieldset>
-		</aui:fieldset-group>
-	</c:when>
-	<c:otherwise>
-		<div class="container-fluid-1280 row">
-			<div class="col-md-9" id="<portlet:namespace />menuItemsContainer">
 
-				<%
-				for (SiteNavigationMenuItem siteNavigationMenuItem : siteNavigationMenuItems) {
-					Map<String, Object> data = new HashMap<String, Object>();
+				<div class="col-md-3">
+					<div class="hide sidebar sidebar-light" id="<portlet:namespace />sidebar">
+						<div class="sidebar-header">
+							<div class="sidebar-section-flex">
+								<div class="flex-col flex-col-expand">
+									<h4 class="sidebar-title" id="<portlet:namespace />sidebarTitle"></h4>
+								</div>
 
-					data.put("siteNavigationMenuItemId", siteNavigationMenuItem.getSiteNavigationMenuItemId());
-
-					SiteNavigationMenuItemType siteNavigationMenuItemType = siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(siteNavigationMenuItem.getType());
-
-					String title = siteNavigationMenuItemType.getTitle(siteNavigationMenuItem, locale);
-
-					data.put("title", title);
-
-					request.setAttribute("edit_site_navigation_menu.jsp-siteNavigationMenuItemId", siteNavigationMenuItem.getSiteNavigationMenuItemId());
-				%>
-
-					<div class="col-md-4">
-						<liferay-frontend:horizontal-card
-							actionJsp="/site_navigation_menu_item_action.jsp"
-							actionJspServletContext="<%= application %>"
-							cssClass="menu-item"
-							data="<%= data %>"
-							text="<%= title %>"
-							url="javascript:;"
-						>
-							<liferay-frontend:horizontal-card-col>
-								<liferay-frontend:horizontal-card-icon
-									icon="<%= siteNavigationMenuItemType.getIcon() %>"
-								/>
-							</liferay-frontend:horizontal-card-col>
-						</liferay-frontend:horizontal-card>
-					</div>
-
-				<%
-				}
-				%>
-
-			</div>
-
-			<div class="col-md-3">
-				<div class="hide sidebar sidebar-light" id="<portlet:namespace />sidebar">
-					<div class="sidebar-header">
-						<div class="sidebar-section-flex">
-							<div class="flex-col flex-col-expand">
-								<h4 class="sidebar-title" id="<portlet:namespace />sidebarTitle"></h4>
-							</div>
-
-							<div class="flex-col">
-								<ul class="nav nav-unstyled sidebar-actions">
-									<li class="nav-item">
-										<a class="nav-link nav-link-monospaced sidebar-link" href="javascript:;" id="<portlet:namespace />sidebarClose" role="button">
-											<aui:icon image="angle-right" markupView="lexicon" />
-										</a>
-									</li>
-								</ul>
+								<div class="flex-col">
+									<ul class="nav nav-unstyled sidebar-actions">
+										<li class="nav-item">
+											<a class="nav-link nav-link-monospaced sidebar-link" href="javascript:;" id="<portlet:namespace />sidebarClose" role="button">
+												<aui:icon image="angle-right" markupView="lexicon" />
+											</a>
+										</li>
+									</ul>
+								</div>
 							</div>
 						</div>
-					</div>
 
-					<div class="sidebar-body" id="<portlet:namespace />sidebarBody">
+						<div class="sidebar-body" id="<portlet:namespace />sidebarBody">
+						</div>
 					</div>
 				</div>
 			</div>
@@ -175,22 +157,44 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 
 		</liferay-frontend:add-menu>
 
+		<aui:script require="site-navigation-menu-web/js/SiteNavigationMenuEditor.es as siteNavigationMenuEditorModule">
+			var siteNavigationMenuEditor = new siteNavigationMenuEditorModule.default(
+				{
+					editSiteNavigationMenuItemParentURL: '<portlet:actionURL name="/navigation_menu/edit_site_navigation_menu_item_parent"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>',
+					menuContainerSelector: '.site-navigation-menu-container',
+					menuItemSelector: '.site-navigation-menu-item',
+					namespace: '<portlet:namespace />'
+				}
+			);
+
+			function handlePortletDestroy() {
+				if (siteNavigationMenuEditor) {
+					siteNavigationMenuEditor.dispose();
+
+					siteNavigationMenuEditor = null;
+				}
+
+				Liferay.detach('destroyPortlet', handlePortletDestroy);
+			}
+
+			Liferay.on('destroyPortlet', handlePortletDestroy);
+		</aui:script>
+
 		<aui:script use="aui-base">
 			var sidebar = A.one('#<portlet:namespace />sidebar');
 			var sidebarBody = A.one('#<portlet:namespace />sidebarBody');
 			var sidebarTitle = A.one('#<portlet:namespace />sidebarTitle');
 
-			A.one('#<portlet:namespace />menuItemsContainer').delegate(
+			A.one('.site-navigation-menu-container').delegate(
 				'click',
 				function(event) {
 					var currentTarget = event.currentTarget;
-					var menuItem = currentTarget.ancestor('.menu-item')
 
 					var data = Liferay.Util.ns(
 						'<portlet:namespace />',
 						{
 							redirect: '<%= currentURL %>',
-							siteNavigationMenuItemId: menuItem.attr('data-siteNavigationMenuItemId')
+							siteNavigationMenuItemId: currentTarget.attr('data-siteNavigationMenuItemId')
 						}
 					);
 
@@ -206,7 +210,7 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 
 									sidebarBody.setContent(responseData);
 
-									sidebarTitle.text(menuItem.attr('data-title'));
+									sidebarTitle.text(currentTarget.attr('data-title'));
 
 									sidebar.removeClass('hide');
 								}
@@ -214,7 +218,7 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 						}
 					);
 				},
-				'.menu-item .lfr-card-title-text'
+				'.site-navigation-menu-item'
 			);
 
 			A.one('#<portlet:namespace />sidebarClose').on(

@@ -8,6 +8,8 @@ Import-Package:\
 Main-Class: com.liferay.portal.tools.wsdd.builder.WSDDBuilder
 -donotcopy: .touch
 -includeresource:\
+	@com.liferay.petra.xml-[0-9]*.jar!/com/liferay/petra/xml/Dom4jUtil.class,\
+	@com.liferay.petra.xml-[0-9]*.jar!/com/liferay/petra/xml/XMLUtil.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/ImportPackage.class,\
@@ -53,7 +55,5 @@ Main-Class: com.liferay.portal.tools.wsdd.builder.WSDDBuilder
 	@com.liferay.util.java-[0-9]*.jar!/com/liferay/util/ant/AntUtil*,\
 	@com.liferay.util.java-[0-9]*.jar!/com/liferay/util/ant/DeleteTask.class,\
 	@com.liferay.util.java-[0-9]*.jar!/com/liferay/util/ant/Java2WsddTask.class,\
-	@com.liferay.util.java-[0-9]*.jar!/com/liferay/util/xml/Dom4jUtil.class,\
 	@com.liferay.util.java-[0-9]*.jar!/com/liferay/util/xml/XMLSafeReader.class,\
-	@com.liferay.util.java-[0-9]*.jar!/com/liferay/util/xml/XMLUtil.class,\
 	@xercesImpl-[0-9]*.jar!/org/apache/xerces/xni/XNIException.class

@@ -49,11 +49,11 @@ public class Base64 {
 		int rawindex = 0;
 
 		for (int i = 0; i < base64.length(); i += 4) {
-			int block = getValue(base64.charAt(i)) << 18;
+			int block = _getValue(base64.charAt(i)) << 18;
 
-			block += getValue(base64.charAt(i + 1)) << 12;
-			block += getValue(base64.charAt(i + 2)) << 6;
-			block += getValue(base64.charAt(i + 3));
+			block += _getValue(base64.charAt(i + 1)) << 12;
+			block += _getValue(base64.charAt(i + 2)) << 6;
+			block += _getValue(base64.charAt(i + 3));
 
 			for (int j = 0; j < 3 && rawindex + j < raw.length; j++) {
 				raw[rawindex + j] = (byte)(block >> 8 * (2 - j) & 0xff);
@@ -76,7 +76,7 @@ public class Base64 {
 			((lastIndex - offset) / 3 + 1) * 4);
 
 		for (int i = offset; i < lastIndex; i += 3) {
-			sb.append(encodeBlock(raw, i, lastIndex));
+			sb.append(_encodeBlock(raw, i, lastIndex));
 		}
 
 		return sb.toString();
@@ -131,7 +131,15 @@ public class Base64 {
 			new char[] {CharPool.MINUS, CharPool.STAR, CharPool.UNDERLINE});
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected static char[] encodeBlock(byte[] raw, int offset, int lastIndex) {
+		return _encodeBlock(raw, offset, lastIndex);
+	}
+
+	private static char[] _encodeBlock(byte[] raw, int offset, int lastIndex) {
 		int block = 0;
 
 		int slack = lastIndex - offset - 1;
@@ -151,7 +159,7 @@ public class Base64 {
 		for (int i = 0; i < 4; i++) {
 			int sixbit = block >>> 6 * (3 - i) & 0x3f;
 
-			base64[i] = getChar(sixbit);
+			base64[i] = _getChar(sixbit);
 		}
 
 		if (slack < 1) {
@@ -165,7 +173,15 @@ public class Base64 {
 		return base64;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected static char getChar(int sixbit) {
+		return _getChar(sixbit);
+	}
+
+	private static char _getChar(int sixbit) {
 		if ((sixbit >= 0) && (sixbit <= 25)) {
 			return (char)(65 + sixbit);
 		}
@@ -189,7 +205,15 @@ public class Base64 {
 		return CharPool.SLASH;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected static int getValue(char c) {
+		return _getValue(c);
+	}
+
+	private static int _getValue(char c) {
 		if ((c >= CharPool.UPPER_CASE_A) && (c <= CharPool.UPPER_CASE_Z)) {
 			return c - 65;
 		}

@@ -1,0 +1,42 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%@ include file="/init.jsp" %>
+
+<liferay-ui:tabs
+	names="Alerts,Badges,Buttons,Dropdowns,Form Elements,Icons,Labels,Links,Navbar,Progress Bars,Stickers"
+	refresh="<%= false %>"
+	type="tabs nav-tabs-default"
+>
+
+	<%
+	String[] sections = {"alerts", "badges", "buttons", "dropdowns", "formelements", "icons", "labels", "links", "navbars", "progressbars", "stickers"};
+
+	for (int i = 0; i < sections.length; i++) {
+		String partial ="/partials/" + sections[i] + ".jsp";
+	%>
+
+		<liferay-ui:section>
+			<div class="container-fluid-1280">
+				<liferay-util:include page="<%= partial %>" servletContext="<%= application %>" />
+			</div>
+		</liferay-ui:section>
+
+	<%
+	}
+	%>
+
+</liferay-ui:tabs>

@@ -1,0 +1,29 @@
+{
+	"dependencies": {
+		"clay-alert": "^1.0.0-alpha.4",
+		"clay-badge": "^1.0.0-alpha.4",
+		"clay-button": "^1.0.0-alpha.4",
+		"clay-checkbox": "^1.0.0-alpha.4",
+		"clay-collapse": "^1.0.0-alpha.4",
+		"clay-dropdown": "^1.0.0-alpha.4",
+		"clay-icon": "^1.0.0-alpha.4",
+		"clay-label": "^1.0.0-alpha.4",
+		"clay-link": "^1.0.0-alpha.4",
+		"clay-modal": "^1.0.0-alpha.4",
+		"clay-navbar": "^1.0.0-alpha.4",
+		"clay-progress-bar": "^1.0.0-alpha.4",
+		"clay-radio": "^1.0.0-alpha.4",
+		"clay-select": "^1.0.0-alpha.4",
+		"clay-sticker": "^1.0.0-alpha.4"
+	},
+	"devDependencies": {
+		"liferay-npm-bundler": "^1.2.2",
+		"liferay-npm-bundler-preset-standard": "^1.2.2"
+	},
+	"name": "frontend-taglibs-clay",
+	"private": true,
+	"scripts": {
+		"build": "liferay-npm-bundler"
+	},
+	"version": "1.0.0"
+}

@@ -6442,7 +6442,16 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 			</then>
 		</if>
 
-		<prepare-elasticsearch-configuration />
+		<get-testcase-property property.name="testray.main.component.name" />
+
+		<if>
+			<not>
+				<contains string="${testray.main.component.name}" substring="Elastic Search Impl" />
+			</not>
+			<then>
+				<prepare-elasticsearch-configuration />
+			</then>
+		</if>
 	</target>
 
 	<target name="prepare-patching-tool">

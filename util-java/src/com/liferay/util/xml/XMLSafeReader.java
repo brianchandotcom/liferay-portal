@@ -14,6 +14,7 @@
 
 package com.liferay.util.xml;
 
+import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 
 /**

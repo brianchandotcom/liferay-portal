@@ -231,12 +231,13 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return StringPool.BLANK;
 	}
 
-	protected String getCustomSQLContent(
-			String fileName, String absolutePath, String portalCustomSQLContent)
+	protected Document getCustomSQLDocument(
+			String fileName, String absolutePath,
+			Document portalCustomSQLDocument)
 		throws Exception {
 
 		if (isPortalSource() && !isModulesFile(absolutePath)) {
-			return portalCustomSQLContent;
+			return portalCustomSQLDocument;
 		}
 
 		int i = fileName.lastIndexOf("/src/");
@@ -264,7 +265,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			return null;
 		}
 
-		return FileUtil.read(customSQLFile);
+		return SourceUtil.readXML(customSQLFile);
 	}
 
 	protected File getFile(String fileName, int level) {
@@ -386,7 +387,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		}
 	}
 
-	protected String getPortalCustomSQLContent() throws Exception {
+	protected Document getPortalCustomSQLDocument() throws Exception {
 		if (!isPortalSource()) {
 			return null;
 		}
@@ -430,7 +431,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			}
 		}
 
-		return document.asXML();
+		return document;
 	}
 
 	protected String getProjectPathPrefix() {

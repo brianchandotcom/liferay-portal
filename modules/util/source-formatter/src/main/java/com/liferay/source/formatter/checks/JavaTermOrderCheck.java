@@ -22,6 +22,8 @@ import com.liferay.source.formatter.parser.comparator.JavaTermComparator;
 
 import java.util.List;
 
+import org.dom4j.Document;
+
 /**
  * @author Hugo Huijser
  */
@@ -29,7 +31,7 @@ public class JavaTermOrderCheck extends BaseJavaTermCheck {
 
 	@Override
 	public void init() throws Exception {
-		_portalCustomSQLContent = getPortalCustomSQLContent();
+		_portalCustomSQLDocument = getPortalCustomSQLDocument();
 	}
 
 	@Override
@@ -51,8 +53,10 @@ public class JavaTermOrderCheck extends BaseJavaTermCheck {
 		if (absolutePath.contains("/persistence/") &&
 			className.endsWith("FinderImpl")) {
 
-			customSQLContent = getCustomSQLContent(
-				fileName, absolutePath, _portalCustomSQLContent);
+			Document customSQLDocument = getCustomSQLDocument(
+				fileName, absolutePath, _portalCustomSQLDocument);
+
+			customSQLContent = customSQLDocument.asXML();
 		}
 
 		return _sortJavaTerms(
@@ -123,6 +127,6 @@ public class JavaTermOrderCheck extends BaseJavaTermCheck {
 		return javaClass.getContent();
 	}
 
-	private String _portalCustomSQLContent;
+	private Document _portalCustomSQLDocument;
 
 }

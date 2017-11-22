@@ -54,8 +54,7 @@ public class EditCommerceWarehouseItemMVCActionCommand
 
 		long[] addCommerceWarehouseIds = null;
 
-		String className = ParamUtil.getString(actionRequest, "className");
-		long classPK = ParamUtil.getLong(actionRequest, "classPK");
+		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
 		long commerceWarehouseId = ParamUtil.getLong(
 			actionRequest, "commerceWarehouseId");
 
@@ -74,7 +73,7 @@ public class EditCommerceWarehouseItemMVCActionCommand
 			commerceWarehouseId = addCommerceWarehouseIds[i];
 
 			_commerceWarehouseItemService.addCommerceWarehouseItem(
-				commerceWarehouseId, className, classPK, 0, serviceContext);
+				commerceWarehouseId, cpInstanceId, 0, serviceContext);
 		}
 	}
 

@@ -14,10 +14,12 @@
 
 package com.liferay.commerce.checkout.web.internal.util;
 
+import com.liferay.commerce.cart.CommerceCartValidatorRegistry;
 import com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.checkout.web.internal.display.context.OrderSummaryCheckoutStepDisplayContext;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceCartService;
@@ -25,7 +27,10 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -135,9 +140,9 @@ public class OrderSummaryCommerceCheckoutStep implements CommerceCheckoutStep {
 		OrderSummaryCheckoutStepDisplayContext
 			orderSummaryCheckoutStepDisplayContext =
 				new OrderSummaryCheckoutStepDisplayContext(
-					_commerceCartService, _commercePriceCalculator,
-					_commercePriceFormatter, _cpInstanceHelper,
-					httpServletRequest);
+					_commerceCartService, _commerceCartValidatorRegistry,
+					_commercePriceCalculator, _commercePriceFormatter,
+					_cpInstanceHelper, httpServletRequest);
 
 		httpServletRequest.setAttribute(
 			CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT,
@@ -153,11 +158,30 @@ public class OrderSummaryCommerceCheckoutStep implements CommerceCheckoutStep {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		return true;
+		try {
+			long commerceCartId = ParamUtil.getLong(
+				httpServletRequest, "commerceCartId");
+
+			CommerceCart commerceCart = _commerceCartService.fetchCommerceCart(
+				commerceCartId);
+
+			return _commerceCartValidatorRegistry.isValid(commerceCart);
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+
+			return false;
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		OrderSummaryCommerceCheckoutStep.class);
 
 	@Reference
 	private CommerceCartService _commerceCartService;
+
+	@Reference
+	private CommerceCartValidatorRegistry _commerceCartValidatorRegistry;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;

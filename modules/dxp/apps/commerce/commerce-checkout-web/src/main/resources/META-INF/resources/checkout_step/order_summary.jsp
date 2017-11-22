@@ -20,6 +20,8 @@
 OrderSummaryCheckoutStepDisplayContext orderSummaryCheckoutStepDisplayContext = (OrderSummaryCheckoutStepDisplayContext)request.getAttribute(CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT);
 
 CommerceCart commerceCart = orderSummaryCheckoutStepDisplayContext.getCommerceCart();
+
+Map<Long, List<CommerceCartValidatorResult>> commerceCartValidatorResultMap = orderSummaryCheckoutStepDisplayContext.getCommerceCartValidatorResults();
 %>
 
 <div class="address-container row">
@@ -113,6 +115,31 @@ CommerceCart commerceCart = orderSummaryCheckoutStepDisplayContext.getCommerceCa
 						<h6 class="text-default">
 							<%= HtmlUtil.escape(stringJoiner.toString()) %>
 						</h6>
+
+						<c:if test="<%= !commerceCartValidatorResultMap.isEmpty() %>">
+
+							<%
+							List<CommerceCartValidatorResult> commerceCartValidatorResults = commerceCartValidatorResultMap.get(commerceCartItem.getCommerceCartItemId());
+
+							for (CommerceCartValidatorResult commerceCartValidatorResult : commerceCartValidatorResults) {
+							%>
+
+								<div class="alert-danger commerce-alert-danger">
+									<c:choose>
+										<c:when test="<%= commerceCartValidatorResult.hasArgument() %>">
+											<liferay-ui:message arguments="<%= commerceCartValidatorResult.getArgument() %>" key="<%= commerceCartValidatorResult.getMessage() %>" />
+										</c:when>
+										<c:otherwise>
+											<liferay-ui:message key="<%= commerceCartValidatorResult.getMessage() %>" />
+										</c:otherwise>
+									</c:choose>
+								</div>
+
+							<%
+							}
+							%>
+
+						</c:if>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text

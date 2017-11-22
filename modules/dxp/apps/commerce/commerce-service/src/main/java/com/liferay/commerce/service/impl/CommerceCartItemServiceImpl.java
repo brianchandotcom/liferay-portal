@@ -86,6 +86,11 @@ public class CommerceCartItemServiceImpl
 	}
 
 	@Override
+	public int getCPInstanceQuantity(long cpInstanceId) throws PortalException {
+		return commerceCartItemLocalService.getCPInstanceQuantity(cpInstanceId);
+	}
+
+	@Override
 	public CommerceCartItem updateCommerceCartItem(
 			long commerceCartItemId, int quantity, String json)
 		throws PortalException {

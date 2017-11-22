@@ -14,6 +14,10 @@
 
 package com.liferay.commerce.service.impl;
 
+import com.liferay.commerce.cart.CommerceCartValidatorRegistry;
+import com.liferay.commerce.cart.CommerceCartValidatorResult;
+import com.liferay.commerce.exception.CommerceCartValidatorException;
+import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -48,7 +52,7 @@ public class CommerceCartItemLocalServiceImpl
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
 
-		validate(cpDefinitionId, cpInstanceId);
+		validate(cpDefinitionId, cpInstanceId, commerceCartId, quantity);
 
 		long commerceCartItemId = counterLocalService.increment();
 
@@ -169,6 +173,11 @@ public class CommerceCartItemLocalServiceImpl
 	}
 
 	@Override
+	public int getCPInstanceQuantity(long cpInstanceId) {
+		return commerceCartItemFinder.getCPInstanceQuantity(cpInstanceId);
+	}
+
+	@Override
 	public CommerceCartItem updateCommerceCartItem(
 			long commerceCartItemId, int quantity, String json)
 		throws PortalException {
@@ -177,6 +186,13 @@ public class CommerceCartItemLocalServiceImpl
 
 		CommerceCartItem commerceCartItem =
 			commerceCartItemPersistence.findByPrimaryKey(commerceCartItemId);
+
+		int newQuantity = quantity - commerceCartItem.getQuantity();
+
+		validate(
+			commerceCartItem.getCPDefinitionId(),
+			commerceCartItem.getCPInstanceId(),
+			commerceCartItem.getCommerceCartId(), newQuantity);
 
 		commerceCartItem.setQuantity(quantity);
 		commerceCartItem.setJson(json);
@@ -192,7 +208,9 @@ public class CommerceCartItemLocalServiceImpl
 	}
 
 	@Override
-	public void validate(long cpDefinitionId, long cpInstanceId)
+	public void validate(
+			long cpDefinitionId, long cpInstanceId, long commerceCartId,
+			int quantity)
 		throws PortalException {
 
 		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
@@ -211,7 +229,24 @@ public class CommerceCartItemLocalServiceImpl
 							cpDefinition.getCPDefinitionId());
 			}
 		}
+
+		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
+			cpInstanceId);
+		CommerceCart commerceCart = commerceCartLocalService.fetchCommerceCart(
+			commerceCartId);
+
+		List<CommerceCartValidatorResult> commerceCartValidatorResults =
+			commerceCartValidatorRegistry.validate(
+				cpInstance, commerceCart, quantity);
+
+		if (!commerceCartValidatorResults.isEmpty()) {
+			throw new CommerceCartValidatorException(
+				commerceCartValidatorResults);
+		}
 	}
+
+	@ServiceReference(type = CommerceCartValidatorRegistry.class)
+	protected CommerceCartValidatorRegistry commerceCartValidatorRegistry;
 
 	@ServiceReference(type = CPDefinitionLocalService.class)
 	private CPDefinitionLocalService _cpDefinitionLocalService;

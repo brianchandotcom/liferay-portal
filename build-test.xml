@@ -1446,12 +1446,47 @@ war.path=${app.server.weblogic.portal.dir}/</echo>
 				</then>
 			</if>
 
-			<gradle-execute failonerror="false" task="@{task}">
-				<arg value="--build-file=portal-web/build-test.gradle" />
-				<arg value="-Plocal=${test.poshi.runner.local.release}" />
-				<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
-				<arg value="-Ptmp.maven.repository.dir=../.m2-tmp" />
-			</gradle-execute>
+			<local name="java.jdk.home" />
+
+			<if>
+				<and>
+					<equals arg1="${ant.java.version}" arg2="1.7" />
+					<isset property="java.jdk.7.x32.home" />
+				</and>
+				<then>
+					<property name="java.jdk.home" value="${java.jdk.7.x32.home}" />
+				</then>
+				<elseif>
+					<isset property="java.jdk.8.x32.home" />
+					<then>
+						<property name="java.jdk.home" value="${java.jdk.8.x32.home}" />
+					</then>
+				</elseif>
+			</if>
+
+			<if>
+				<and>
+					<isset property="env.JENKINS_HOME" />
+					<available file="${java.jdk.home}" />
+				</and>
+				<then>
+					<gradle-execute failonerror="false" task="@{task}">
+						<arg value="--build-file=portal-web/build-test.gradle" />
+						<arg value="-Plocal=${test.poshi.runner.local.release}" />
+						<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
+						<arg value="-Ptmp.maven.repository.dir=../.m2-tmp" />
+						<env key="JAVA_HOME" path="${java.jdk.home}" />
+					</gradle-execute>
+				</then>
+				<else>
+					<gradle-execute failonerror="false" task="@{task}">
+						<arg value="--build-file=portal-web/build-test.gradle" />
+						<arg value="-Plocal=${test.poshi.runner.local.release}" />
+						<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
+						<arg value="-Ptmp.maven.repository.dir=../.m2-tmp" />
+					</gradle-execute>
+				</else>
+			</if>
 		</sequential>
 	</macrodef>
 

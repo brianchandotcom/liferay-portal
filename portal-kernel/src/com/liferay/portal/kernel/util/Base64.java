@@ -41,6 +41,10 @@ public class Base64 {
 		return _encode(raw, 0, raw.length, false);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static String encode(byte[] raw, int offset, int length) {
 		return _encode(raw, offset, length, false);
 	}
@@ -90,6 +94,10 @@ public class Base64 {
 		return _stringToObject(s, null, true);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static Object stringToObjectSilent(
 		String s, ClassLoader classLoader) {
 

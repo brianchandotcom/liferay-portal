@@ -779,7 +779,10 @@
 			<var name="pageName" value="Private Staging Page" />
 		</execute>
 
-		<execute function="Refresh#refresh" />
+		<execute macro="Navigator#gotoPrivateStagedSitePage">
+			<var name="pageName" value="Private Staging Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
 
 		<execute macro="Staging#gotoPublishToLive" />
 
@@ -789,10 +792,14 @@
 
 		<execute macro="Staging#publishToLive" />
 
-		<execute macro="ProductMenu#gotoPrivatePages" />
+		<execute macro="Navigator#gotoPrivateSitePage">
+			<var name="pageName" value="Private Staging Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Private Staging Page" />
+			<var name="privacy" value="Private" />
 		</execute>
 	</command>
 

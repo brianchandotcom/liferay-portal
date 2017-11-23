@@ -435,7 +435,7 @@
 
 	<command name="viewDefaultDisplayStyle">
 		<execute function="AssertElementPresent" locator1="Icon#DISPLAY_STYLE_ACTIVE">
-			<var name="displayStyle" value="${displayStyle}" />
+			<var name="key_displayStyle" value="${displayStyle}" />
 		</execute>
 	</command>
 

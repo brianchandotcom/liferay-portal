@@ -4,6 +4,8 @@
 	<bean class="com.liferay.portlet.messageboards.service.impl.MBBanLocalServiceImpl" id="com.liferay.message.boards.kernel.service.MBBanLocalService" />
 	<bean class="com.liferay.portlet.messageboards.service.impl.MBBanServiceImpl" id="com.liferay.message.boards.kernel.service.MBBanService" />
 	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBBanPersistenceImpl" id="com.liferay.message.boards.kernel.service.persistence.MBBanPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.messageboards.service.impl.MBStatsUserLocalServiceImpl" id="com.liferay.message.boards.kernel.service.MBStatsUserLocalService" />
+	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBStatsUserPersistenceImpl" id="com.liferay.message.boards.kernel.service.persistence.MBStatsUserPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portlet.messageboards.service.impl.MBThreadFlagLocalServiceImpl" id="com.liferay.message.boards.kernel.service.MBThreadFlagLocalService" />
 	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBThreadFlagPersistenceImpl" id="com.liferay.message.boards.kernel.service.persistence.MBThreadFlagPersistence" parent="basePersistence" />
 </beans>

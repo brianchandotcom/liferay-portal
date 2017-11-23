@@ -1137,12 +1137,6 @@
 		<execute function="AssertElementNotPresent" locator1="Message#CUSTOMIZED_PAGE_INFO" />
 	</command>
 
-	<command name="viewPageOrderStagingLivePG">
-		<execute function="AssertTextEquals" locator1="Home#PAGE_1_STAGING_LIVE" value1="${pageName1}" />
-		<execute function="AssertTextEquals" locator1="Home#PAGE_2_STAGING_LIVE" value1="${pageName2}" />
-		<execute function="AssertTextEquals" locator1="Home#PAGE_3_STAGING_LIVE" value1="${pageName3}" />
-	</command>
-
 	<command name="viewPagesOrder">
 		<execute function="AssertTextEquals#assertPartialText" locator1="ContentRow#ENTRY_CONTENT_ROW_NUMBER" value1="${pageName1}">
 			<var name="key_rowNumber" value="1" />

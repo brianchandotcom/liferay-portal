@@ -61,7 +61,7 @@ public class ConfiguratorExtender extends AbstractExtender {
 	}
 
 	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
+		cardinality = ReferenceCardinality.AT_LEAST_ONE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
 		unbind = "removeConfigurationDescriptionFactory"
@@ -73,7 +73,7 @@ public class ConfiguratorExtender extends AbstractExtender {
 	}
 
 	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
+		cardinality = ReferenceCardinality.AT_LEAST_ONE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
 		unbind = "removeNamedConfigurationContentFactory"

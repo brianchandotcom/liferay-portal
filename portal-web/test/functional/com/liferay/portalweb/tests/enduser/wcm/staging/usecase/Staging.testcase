@@ -2011,10 +2011,6 @@
 			<var name="pageName" value="Test Page 2" />
 		</execute>
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
 		<execute macro="Page#viewPagesOrder">
 			<var name="pageName1" value="Staging Test Page" />
 			<var name="pageName2" value="Test Page 1" />

@@ -1022,7 +1022,10 @@
 			<var name="pageName" value="Test Variation Page" />
 		</execute>
 
-		<execute function="Pause" locator1="5000" />
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Test Variation Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
 
 		<execute macro="Staging#addPageVariationPG">
 			<var name="pageVariationName" value="Test Page Variation" />

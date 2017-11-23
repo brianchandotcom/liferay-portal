@@ -9,8 +9,6 @@
 >
 	<bean class="com.liferay.portlet.messageboards.service.impl.MBMailingListLocalServiceImpl" id="com.liferay.message.boards.kernel.service.MBMailingListLocalService" />
 	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBMailingListPersistenceImpl" id="com.liferay.message.boards.kernel.service.persistence.MBMailingListPersistence" parent="basePersistence" />
-	<bean class="com.liferay.portlet.messageboards.service.impl.MBStatsUserLocalServiceImpl" id="com.liferay.message.boards.kernel.service.MBStatsUserLocalService" />
-	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBStatsUserPersistenceImpl" id="com.liferay.message.boards.kernel.service.persistence.MBStatsUserPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portal.service.impl.SubscriptionLocalServiceImpl" id="com.liferay.portal.kernel.service.SubscriptionLocalService" />
 	<bean class="com.liferay.portal.service.persistence.impl.SubscriptionPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.SubscriptionPersistence" parent="basePersistence" />
 </beans>

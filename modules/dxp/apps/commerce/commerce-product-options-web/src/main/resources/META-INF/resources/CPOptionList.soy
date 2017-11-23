@@ -29,10 +29,10 @@
 			<thead>
 				<tr>
 					<th class="table-cell-content">
-						<span class="text-truncate" title="Id">Id</span>
+						<span class="text-truncate" title="Id">{msg desc=""}Id{/msg}</span>
 					</th>
 					<th class="table-cell-content">
-						<span class="text-truncate" title="Description">Title</span>
+						<span class="text-truncate" title="Description">{msg desc=""}Title{/msg}</span>
 					</th>
 					<th></th>
 				</tr>
@@ -100,7 +100,7 @@
 		</td>
 		<td>
 			{if $showButton}
-				<button class="btn btn-link" type="button" onclick="{$_handleEditValues}">values</button>
+				<button class="btn btn-link" type="button" onclick="{$_handleEditValues}">{msg desc=""}values{/msg}</button>
 			{/if}
 		</td>
 	</tr>

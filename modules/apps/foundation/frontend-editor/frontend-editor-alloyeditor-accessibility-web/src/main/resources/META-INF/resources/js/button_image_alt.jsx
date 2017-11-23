@@ -30,7 +30,7 @@
 
 				return {
 					element: image,
-					imageAlt: image.getAttribute('alt')
+					imageAlt: image ? image.getAttribute('alt') : ''
 				};
 			},
 

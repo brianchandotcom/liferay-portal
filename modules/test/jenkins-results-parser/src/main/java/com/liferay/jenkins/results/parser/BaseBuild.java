@@ -874,19 +874,12 @@ public abstract class BaseBuild implements Build {
 		return JenkinsResultsParserUtil.combine(
 			Integer.toString(getDownstreamBuildCount("starting")),
 			" Starting  ", "/ ",
-
 			Integer.toString(getDownstreamBuildCount("missing")), " Missing  ",
-			"/ ",
-
-			Integer.toString(getDownstreamBuildCount("queued")), " Queued  ",
-			"/ ",
-
+			"/ ", Integer.toString(getDownstreamBuildCount("queued")),
+			" Queued  ", "/ ",
 			Integer.toString(getDownstreamBuildCount("running")), " Running  ",
-			"/ ",
-
-			Integer.toString(getDownstreamBuildCount("completed")),
+			"/ ", Integer.toString(getDownstreamBuildCount("completed")),
 			" Completed  ", "/ ",
-
 			Integer.toString(getDownstreamBuildCount(null)), " Total ");
 	}
 

@@ -67,8 +67,8 @@ public abstract class BasePortletDataHandlerTestCase {
 	@Test
 	public void testGetDataPortletPreferences() {
 		Assert.assertArrayEquals(
-			portletDataHandler.getDataPortletPreferences(),
-			getDataPortletPreferences());
+			getDataPortletPreferences(),
+			portletDataHandler.getDataPortletPreferences());
 	}
 
 	@Test

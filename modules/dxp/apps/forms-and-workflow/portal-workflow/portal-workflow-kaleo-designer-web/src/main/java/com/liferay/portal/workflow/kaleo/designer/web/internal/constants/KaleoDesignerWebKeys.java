@@ -21,6 +21,9 @@ package com.liferay.portal.workflow.kaleo.designer.web.internal.constants;
  */
 public class KaleoDesignerWebKeys {
 
+	public static final String KALEO_DESIGNER_DISPLAY_CONTEXT =
+		"KALEO_DESIGNER_DISPLAY_CONTEXT";
+
 	/**
 	 * {@value #KALEO_DRAFT_DEFINITION} is used to retrieve the Kaleo draft
 	 * definition from the request attribute.

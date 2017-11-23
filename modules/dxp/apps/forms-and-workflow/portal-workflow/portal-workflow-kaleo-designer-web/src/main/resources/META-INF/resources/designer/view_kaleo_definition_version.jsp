@@ -45,7 +45,7 @@ renderResponse.setTitle(workflowDefinition.getName());
 		</div>
 
 		<%
-		String userName = "UserName";
+		String userName = kaleoDesignerDisplayContext.getUserName(workflowDefinition);
 		%>
 
 		<span>

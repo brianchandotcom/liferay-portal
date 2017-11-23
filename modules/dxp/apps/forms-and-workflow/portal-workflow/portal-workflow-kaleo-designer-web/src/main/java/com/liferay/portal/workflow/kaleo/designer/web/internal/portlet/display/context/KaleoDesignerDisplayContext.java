@@ -16,6 +16,8 @@ package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.display.
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -42,11 +44,13 @@ import javax.portlet.RenderResponse;
 public class KaleoDesignerDisplayContext {
 
 	public KaleoDesignerDisplayContext(
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			UserLocalService userLocalService)
 		throws PortalException {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+		_userLocalService = userLocalService;
 
 		_kaleoDesignerRequestHelper = new KaleoDesignerRequestHelper(
 			renderRequest);
@@ -116,6 +120,18 @@ public class KaleoDesignerDisplayContext {
 			"content.Language", locale, clazz.getClassLoader());
 	}
 
+	public String getUserName(KaleoDefinitionVersion workflowDefinition) {
+		User user = _userLocalService.fetchUser(workflowDefinition.getUserId());
+
+		if ((user == null) || user.isDefaultUser() ||
+			Validator.isNull(user.getFullName())) {
+
+			return null;
+		}
+
+		return user.getFullName();
+	}
+
 	public List<WorkflowDefinition> getWorkflowDefinitions(
 			KaleoDefinitionVersion kaleoDefinitionVersion)
 		throws PortalException {
@@ -138,5 +154,6 @@ public class KaleoDesignerDisplayContext {
 	private final KaleoDesignerRequestHelper _kaleoDesignerRequestHelper;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
+	private final UserLocalService _userLocalService;
 
 }

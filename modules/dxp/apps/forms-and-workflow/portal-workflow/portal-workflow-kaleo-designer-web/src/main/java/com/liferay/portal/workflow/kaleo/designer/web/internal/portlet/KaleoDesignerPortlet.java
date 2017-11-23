@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.comparator.UserFirstNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerWebKeys;
+import com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.display.context.KaleoDesignerDisplayContext;
 import com.liferay.portal.workflow.kaleo.exception.DuplicateKaleoDefinitionNameException;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
@@ -110,7 +111,8 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 				renderRequest, DuplicateKaleoDefinitionNameException.class)) {
 
 			try {
-				setKaleoDefinitionVersionRenderRequestAttribute(renderRequest);
+				setKaleoDefinitionVersionRenderRequestAttribute(
+					renderRequest, renderResponse);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -318,11 +320,20 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 	}
 
 	protected void setKaleoDefinitionVersionRenderRequestAttribute(
-			RenderRequest renderRequest)
+			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		if (_kaleoDesignerDisplayContext == null) {
+			_kaleoDesignerDisplayContext = new KaleoDesignerDisplayContext(
+				renderRequest, renderResponse, _userLocalService);
+		}
+
+		renderRequest.setAttribute(
+			KaleoDesignerWebKeys.KALEO_DESIGNER_DISPLAY_CONTEXT,
+			_kaleoDesignerDisplayContext);
 
 		String name = ParamUtil.getString(renderRequest, "name");
 		String draftVersion = ParamUtil.getString(
@@ -356,11 +367,14 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 
 	private KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;
+	private KaleoDesignerDisplayContext _kaleoDesignerDisplayContext;
 
 	@Reference
 	private Portal _portal;
 
 	private RoleLocalService _roleLocalService;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

@@ -66,7 +66,7 @@ page import="com.liferay.taglib.search.ResultRow" %>
 <portlet:defineObjects />
 
 <%
-KaleoDesignerDisplayContext kaleoDesignerDisplayContext = new KaleoDesignerDisplayContext(renderRequest, renderResponse);
+KaleoDesignerDisplayContext kaleoDesignerDisplayContext = (KaleoDesignerDisplayContext)renderRequest.getAttribute(KaleoDesignerWebKeys.KALEO_DESIGNER_DISPLAY_CONTEXT);
 
 Format dateFormatTime = null;
 

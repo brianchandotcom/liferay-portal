@@ -31,9 +31,9 @@ KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)request.
 		className="com.liferay.portal.kernel.workflow.WorkflowDefinition"
 		modelVar="workflowDefinition"
 	>
-		<liferay-ui:search-container-column-date
+		<liferay-ui:search-container-column-jsp
 			cssClass="lfr-version-column"
-			value="<%= workflowDefinition.getModifiedDate() %>"
+			path="/designer/kaleo_definition_version_history_info.jsp"
 		/>
 
 		<liferay-ui:search-container-column-jsp

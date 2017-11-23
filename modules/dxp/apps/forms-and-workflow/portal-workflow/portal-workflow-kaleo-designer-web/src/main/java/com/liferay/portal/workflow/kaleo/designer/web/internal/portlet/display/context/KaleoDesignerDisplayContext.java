@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
@@ -127,6 +128,18 @@ public class KaleoDesignerDisplayContext {
 			Validator.isNull(user.getFullName())) {
 
 			return null;
+		}
+
+		return user.getFullName();
+	}
+	
+	public String getUserNameOrBlank(WorkflowDefinition workflowDefinition) {
+		User user = _userLocalService.fetchUser(workflowDefinition.getUserId());
+
+		if ((user == null) || user.isDefaultUser() ||
+			Validator.isNull(user.getFullName())) {
+
+			return StringPool.BLANK;
 		}
 
 		return user.getFullName();

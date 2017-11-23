@@ -14,12 +14,14 @@
 
 package com.liferay.lcs.messaging.analytics;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import com.liferay.lcs.messaging.Message;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -90,6 +92,10 @@ public class AnalyticsEventsMessage extends Message {
 			return _applicationId;
 		}
 
+		public Date getEventDate() {
+			return _eventDate;
+		}
+
 		@NotNull
 		public String getEventId() {
 			return _eventId;
@@ -103,6 +109,10 @@ public class AnalyticsEventsMessage extends Message {
 			_applicationId = applicationId;
 		}
 
+		public void setEventDate(Date eventDate) {
+			_eventDate = eventDate;
+		}
+
 		public void setEventId(String eventId) {
 			_eventId = eventId;
 		}
@@ -112,6 +122,11 @@ public class AnalyticsEventsMessage extends Message {
 		}
 
 		private String _applicationId;
+		@JsonFormat(
+			pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+			shape = JsonFormat.Shape.STRING, timezone = "UTC"
+		)
+		private Date _eventDate;
 		private String _eventId;
 		private Map<String, String> _properties = Collections.emptyMap();
 

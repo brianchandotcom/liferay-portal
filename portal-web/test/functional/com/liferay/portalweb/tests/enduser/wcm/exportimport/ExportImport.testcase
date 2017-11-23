@@ -624,7 +624,6 @@
 		</execute>
 
 		<execute macro="Page#changeCurrentTheme">
-			<var name="page" value="Public Pages" />
 			<var name="themeName" value="Standard" />
 		</execute>
 

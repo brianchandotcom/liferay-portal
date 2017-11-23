@@ -36,10 +36,10 @@ public @interface Details {
 
 	public static final String OSGI_WEBRESOURCE = "osgi.webresource";
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "apply-versioning", required = false)
 	public boolean applyVersioning();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "expose-global", required = false)
 	public boolean exposeGlobal();
 
 }

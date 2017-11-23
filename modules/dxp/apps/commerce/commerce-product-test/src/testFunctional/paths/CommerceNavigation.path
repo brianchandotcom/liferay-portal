@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>ENTRY_TITLE</td>
-	<td>//tr[@data-qa-id='row']//a[contains(.,'${key_entryTitle}')] | //div/h5/a[contains(.,'${key_entryTitle}')] | //div/span/a[contains(.,'${key_entryTitle}')]</td>
+	<td>//div[@class='products-container']//a[contains(.,'${key_entryTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

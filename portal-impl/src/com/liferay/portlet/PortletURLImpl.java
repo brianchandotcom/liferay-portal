@@ -1246,6 +1246,10 @@ public class PortletURLImpl
 		_secure = PortalUtil.isSecure(request);
 		_wsrp = ParamUtil.getBoolean(request, "wsrp");
 
+		if (lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
+			_copyCurrentRenderParameters = true;
+		}
+
 		if (!portlet.isUndeployedPortlet()) {
 			Set<String> autopropagatedParameters =
 				portlet.getAutopropagatedParameters();

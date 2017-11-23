@@ -54,7 +54,6 @@ public class DDLFormPortletDataHandlerTest
 
 	@Override
 	protected void addStagedModels() throws Exception {
-		return;
 	}
 
 	@Override

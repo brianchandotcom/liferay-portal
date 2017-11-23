@@ -102,6 +102,8 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 			"resourcePrimKey",
 			String.valueOf(
 				_wikiAttachmentItemSelectorCriterion.getWikiPageResourceId()));
+		portletURL.setParameter(
+			"mimeTypes", _wikiAttachmentItemSelectorCriterion.getMimeTypes());
 
 		return portletURL;
 	}

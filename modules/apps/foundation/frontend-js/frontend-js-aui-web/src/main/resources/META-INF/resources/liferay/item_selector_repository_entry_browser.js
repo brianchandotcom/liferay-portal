@@ -206,8 +206,12 @@ AUI.add(
 								}
 							}
 							else if (errorType === STATUS_CODE.SC_FILE_EXTENSION_EXCEPTION) {
-								message = Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-extension-x'), [error.message]);
-							}
+								if (error.message === undefined) {
+									message = Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-file-type'));
+								}
+								else {
+									message = Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-extension-x'), [error.message]);
+								}							}
 							else if (errorType === STATUS_CODE.SC_FILE_NAME_EXCEPTION) {
 								message = Liferay.Language.get('please-enter-a-file-with-a-valid-file-name');
 							}

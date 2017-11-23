@@ -1443,11 +1443,6 @@
 			<var name="userScreenName" value="usersn1" />
 		</execute>
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blog Page Template" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
 		<execute macro="PermissionsInline#gotoPagePG">
 			<var name="pageName" value="Blog Page Template" />
 		</execute>
@@ -1455,11 +1450,6 @@
 		<execute macro="Role#removePermissionPG">
 			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
 			<var name="roleTitle" value="Guest" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blog Page Template" />
-			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="PermissionsInline#gotoPagePG">
@@ -1472,11 +1462,6 @@
 				<var name="roleTitle" value="Site Member" />
 			</execute>
 		</for>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Blog Page Template" />
-			<var name="siteName" value="Site Name" />
-		</execute>
 
 		<execute macro="PermissionsInline#gotoPagePG">
 			<var name="pageName" value="Blog Page Template" />

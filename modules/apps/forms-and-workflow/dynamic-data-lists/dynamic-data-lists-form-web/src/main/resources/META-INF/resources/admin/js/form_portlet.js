@@ -678,7 +678,13 @@ AUI.add(
 						instance.one('#formBuilder').show();
 
 						if (instance._isFormView()) {
-							instance.get('ruleBuilder').get('boundingBox').ancestor().addClass('hide');
+							var ruleBuilder = instance.get('ruleBuilder');
+
+							var ruleBuilderNode = ruleBuilder.get('boundingBox');
+
+							var ruleBuilderAncestorNode = ruleBuilderNode.ancestor();
+
+							ruleBuilderAncestorNode.addClass('hide');
 
 							instance.one('#showRules').removeClass('active');
 						}
@@ -783,14 +789,18 @@ AUI.add(
 					_onRulesButtonClick: function() {
 						var instance = this;
 
-						var ancestor = instance.get('ruleBuilder').get('boundingBox').ancestor();
+						var ruleBuilder = instance.get('ruleBuilder');
+
+						var ruleBuilderNode = ruleBuilder.get('boundingBox');
+
+						var ruleBuilderAncestorNode = ruleBuilderNode.ancestor();
 
 						instance.one('#formBuilder').hide();
-						if (ancestor.hasClass('hide')) {
-							ancestor.removeClass('hide');
+						if (ruleBuilderAncestorNode.hasClass('hide')) {
+							ruleBuilderAncestorNode.removeClass('hide');
 						}
 						else {
-							instance.get('ruleBuilder').show();
+							ruleBuilder.show();
 						}
 
 						A.one('.ddl-form-builder-buttons').addClass('hide');

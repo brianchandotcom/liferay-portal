@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.recent.bloggers.internal.exportimport.data.handler.test;
+package com.liferay.blogs.recent.bloggers.web.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.recent.bloggers.web.constants.RecentBloggersPortletKeys;

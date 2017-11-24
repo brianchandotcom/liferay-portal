@@ -14,10 +14,12 @@
 
 package com.liferay.journal.configuration;
 
-import com.liferay.petra.content.ContentUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.io.IOException;
 
 /**
  * @author     Eduardo Garcia
@@ -39,8 +41,14 @@ public class JournalServiceConfigurationUtil {
 	}
 
 	public static String getContent(String location) {
-		return ContentUtil.get(
-			JournalServiceConfigurationUtil.class.getClassLoader(), location);
+		try {
+			return StringUtil.read(
+				JournalServiceConfigurationUtil.class.getClassLoader(),
+				location);
+		}
+		catch (IOException ioe) {
+			return null;
+		}
 	}
 
 	private static final Configuration _configuration =

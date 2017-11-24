@@ -12,16 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.util;
+package com.liferay.message.boards.internal.util;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 
 /**
  * @author Thiago Moreira
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.internal.util.MailingListThreadLocal}
  */
-@Deprecated
 public class MailingListThreadLocal {
 
 	public static boolean isSourceMailingList() {
@@ -35,6 +32,6 @@ public class MailingListThreadLocal {
 	private static final ThreadLocal<Boolean> _sourceMailingList =
 		new CentralizedThreadLocal<>(
 			MailingListThreadLocal.class + "._sourceMailingList",
-			() -> Boolean.FALSE, false);
+				() -> Boolean.FALSE, false);
 
 }

@@ -312,17 +312,23 @@ public class JournalContentDisplayContext {
 		}
 
 		_ddmTemplateKey = ParamUtil.getString(
-			_portletRequest, "ddmTemplateKey",
-			_journalContentPortletInstanceConfiguration.ddmTemplateKey());
+			_portletRequest, "ddmTemplateKey");
 
 		if (Validator.isNotNull(_ddmTemplateKey)) {
 			return _ddmTemplateKey;
 		}
 
+		long articleResourcePrimKey = ParamUtil.getLong(
+			_portletRequest, "articleResourcePrimKey");
+
 		JournalArticle article = getArticle();
 
-		if (article != null) {
+		if ((article != null) && (articleResourcePrimKey > 0)) {
 			_ddmTemplateKey = article.getDDMTemplateKey();
+		}
+		else {
+			_ddmTemplateKey =
+				_journalContentPortletInstanceConfiguration.ddmTemplateKey();
 		}
 
 		return _ddmTemplateKey;

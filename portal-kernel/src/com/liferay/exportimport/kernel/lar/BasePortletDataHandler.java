@@ -388,6 +388,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 				portletDataContext, portletId, portletPreferences, data);
 		}
 		catch (Exception e) {
+			_log.error(e.getMessage(), e);
 			throw _handleException(
 				e, PortletDataException.IMPORT_PORTLET_DATA, portletId);
 		}

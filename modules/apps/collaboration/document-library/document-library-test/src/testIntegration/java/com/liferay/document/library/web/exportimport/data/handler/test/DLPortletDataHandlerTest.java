@@ -24,14 +24,16 @@ import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileShortcutLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLTrashServiceUtil;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.lar.DLPortletDataHandler;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.exportimport.kernel.lar.DataLevel;
-import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -53,6 +55,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.service.test.ServiceTestUtil;
@@ -221,9 +224,6 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			stagingGroup.getGroupId(), DLFileEntryMetadata.class.getName());
 
-		portletDataContext.isPathProcessed(
-			ExportImportPathUtil.getModelPath(ddmStructure));
-
 		DLFileEntryType dlFileEntryType =
 			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
 				TestPropsValues.getUserId(), stagingGroup.getGroupId(),
@@ -264,14 +264,32 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 	protected List<StagedModel> getStagedModels() {
 		List<StagedModel> stagedModels = new ArrayList<>();
 
-		stagedModels.addAll(
-			DLFolderLocalServiceUtil.getFolders(
-				portletDataContext.getGroupId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+		List<DLFolder> folders = DLFolderLocalServiceUtil.getFolders(
+			portletDataContext.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		stagedModels.addAll(folders);
+
+		for (DLFolder folder : folders) {
+			stagedModels.addAll(
+				DLFileEntryLocalServiceUtil.getFileEntries(
+					portletDataContext.getGroupId(), folder.getFolderId()));
+
+			stagedModels.addAll(
+				DLFileShortcutLocalServiceUtil.getFileShortcuts(
+					portletDataContext.getGroupId(), folder.getFolderId(), true,
+					WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS));
+		}
+
 		stagedModels.addAll(
 			DLFileEntryLocalServiceUtil.getFileEntries(
 				portletDataContext.getGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+
+		stagedModels.addAll(
+			RepositoryLocalServiceUtil.getGroupRepositories(
+				portletDataContext.getGroupId()));
 
 		return stagedModels;
 	}

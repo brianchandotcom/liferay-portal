@@ -14,27 +14,28 @@
 					<var name="key_menuItem" value="Edit" />
 				</execute>
 			</else>
-		</command>
+		</if>
+	</command>
 
-		<command name="gotoSitesCommerce" summary="Navigate to Product Menu > Sites > Commerce > ${portlet}">
-			<execute macro="Navigator#openURL" />
+	<command name="gotoSitesCommerce" summary="Navigate to Product Menu > Sites > Commerce > ${portlet}">
+		<execute macro="Navigator#openURL" />
 
-			<execute macro="ProductMenuHelper#expandPanelSites" />
+		<execute macro="ProductMenuHelper#expandPanelSites" />
 
-			<execute macro="ProductMenuHelper#expandCategory">
-				<var name="category" value="Commerce" />
-			</execute>
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Commerce" />
+		</execute>
 
-			<execute macro="ProductMenuHelper#gotoPortlet">
-				<var name="portlet" value="${portlet}" />
-			</execute>
-		</command>
+		<execute macro="ProductMenuHelper#gotoPortlet">
+			<var name="portlet" value="${portlet}" />
+		</execute>
+	</command>
 
-		<command name="searchEntry">
-			<execute function="Type" locator1="TextInput#SEARCH" value1="${entryTitle}">
-				<var name="entryTitle" value="${entryTitle}" />
-			</execute>
+	<command name="searchEntry">
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${entryTitle}">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
 
-			<execute function="Click" locator1="CommerceNavigation#SEARCH" />
-		</command>
+		<execute function="Click" locator1="CommerceNavigation#SEARCH" />
+	</command>
 </definition>

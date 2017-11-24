@@ -12,21 +12,28 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.portlet.action;
+package com.liferay.reading.time.web.internal.portlet.action;
 
-import com.liferay.blogs.constants.BlogsPortletKeys;
-import com.liferay.blogs.web.internal.util.BlogsUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.reading.time.calculator.ReadingTimeCalculator;
+import com.liferay.reading.time.message.ReadingTimeMessageProvider;
+import com.liferay.reading.time.web.constants.ReadingTimePortletKeys;
+
+import java.time.Duration;
+
+import java.util.Locale;
+import java.util.Optional;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -34,10 +41,8 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
-		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN,
-		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_AGGREGATOR,
-		"mvc.command.name=/blogs/calculate_reading_time"
+		"javax.portlet.name=" + ReadingTimePortletKeys.READING_TIME,
+		"mvc.command.name=/reading_time/calculate"
 	},
 	service = MVCResourceCommand.class
 )
@@ -52,11 +57,31 @@ public class CalculateReadingTimeMVCResourceCommand
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		String content = ParamUtil.getString(resourceRequest, "content");
+		String contentType = ParamUtil.getString(
+			resourceRequest, "contentType");
+		Locale locale = resourceRequest.getLocale();
 
-		jsonObject.put("readingTime", BlogsUtil.getReadingTimeMinutes(content));
+		Optional<Duration> readingTimeOptional =
+			_readingTimeCalculator.calculate(content, contentType, locale);
+
+		readingTimeOptional.ifPresent(
+			readingTime -> {
+				jsonObject.put(
+					"readingTimeInSeconds", (float)readingTime.getSeconds());
+
+				jsonObject.put(
+					"readingTimeMessage",
+					_readingTimeMessageProvider.provide(readingTime, locale));
+			});
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonObject);
 	}
+
+	@Reference
+	private ReadingTimeCalculator _readingTimeCalculator;
+
+	@Reference
+	private ReadingTimeMessageProvider _readingTimeMessageProvider;
 
 }

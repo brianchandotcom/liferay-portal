@@ -12,26 +12,14 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.util;
-
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.Validator;
+package com.liferay.reading.time.web.constants;
 
 /**
- * @author Roberto Díaz
+ * @author Alejandro Tardín
  */
-public class BlogsUtil {
+public class ReadingTimePortletKeys {
 
-	public static int getReadingTimeMinutes(String content) {
-		String strippedContent = HtmlUtil.stripHtml(content);
-
-		if (Validator.isNull(strippedContent)) {
-			return 0;
-		}
-
-		String[] words = strippedContent.split("(?:\\h|\\v)+");
-
-		return Math.round(words.length / 250F);
-	}
+	public static final String READING_TIME =
+		"com_liferay_reading_time_web_portlet_ReadingTimePortlet";
 
 }

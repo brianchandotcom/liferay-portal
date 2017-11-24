@@ -195,9 +195,12 @@
 	<command name="CheckGroupedDraftCatalogEntry" priority="5">
 		<execute test-case="CPCommerceCatalog#AddGroupedDraftCatalogEntry" />
 
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Catalog" />
+		</execute>
+
 		<execute macro="CommerceNavigator#gotoEntry">
 			<var name="entryTitle" value="Grouped Product 1 Title" />
-			<var name="portlet" value="Catalog" />
 		</execute>
 
 		<execute macro="CommerceEntry#viewCatalogEntry">
@@ -212,7 +215,6 @@
 
 		<execute macro="CommerceNavigator#gotoEntry">
 			<var name="entryTitle" value="Grouped Product 1 Title" />
-			<var name="portlet" value="Catalog" />
 		</execute>
 
 		<execute macro="CommerceEntry#viewCatalogEntry">
@@ -227,7 +229,6 @@
 
 		<execute macro="CommerceNavigator#gotoEntry">
 			<var name="entryTitle" value="Simple Product 1 Title" />
-			<var name="portlet" value="Catalog" />
 		</execute>
 
 		<execute macro="CommerceEntry#viewCatalogEntry">
@@ -242,7 +243,6 @@
 
 		<execute macro="CommerceNavigator#gotoEntry">
 			<var name="entryTitle" value="Virtual Product 1 Title" />
-			<var name="portlet" value="Catalog" />
 		</execute>
 
 		<execute macro="CommerceEntry#viewCatalogEntry">
@@ -255,9 +255,12 @@
 	<command name="CheckSimpleDraftCatalogEntry" priority="5">
 		<execute test-case="CPCommerceCatalog#AddSimpleDraftCatalogEntry" />
 
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Catalog" />
+		</execute>
+
 		<execute macro="CommerceNavigator#gotoEntry">
 			<var name="entryTitle" value="Simple Product 1 Title" />
-			<var name="portlet" value="Catalog" />
 		</execute>
 
 		<execute macro="CommerceEntry#viewCatalogEntry">
@@ -270,9 +273,12 @@
 	<command name="CheckVirtualDraftCatalogEntry" priority="5">
 		<execute test-case="CPCommerceCatalog#AddVirtualDraftCatalogEntry" />
 
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Catalog" />
+		</execute>
+
 		<execute macro="CommerceNavigator#gotoEntry">
 			<var name="entryTitle" value="Virtual Product 1 Title" />
-			<var name="portlet" value="Catalog" />
 		</execute>
 
 		<execute macro="CommerceEntry#viewCatalogEntry">
@@ -351,7 +357,6 @@
 
 		<execute macro="CommerceNavigator#gotoEntry">
 			<var name="entryTitle" value="Simple Product 1 Title" />
-			<var name="portlet" value="Catalog" />
 		</execute>
 
 		<execute macro="CommerceEntry#editEntryTitle">
@@ -388,7 +393,6 @@
 
 		<execute macro="CommerceNavigator#gotoEntry">
 			<var name="entryTitle" value="New Product Title" />
-			<var name="portlet" value="Catalog" />
 		</execute>
 
 		<execute macro="CommerceEntry#viewCatalogEntry">
@@ -405,7 +409,6 @@
 
 		<execute macro="CommerceNavigator#gotoEntry">
 			<var name="entryTitle" value="Simple Product 1 Title" />
-			<var name="portlet" value="Catalog" />
 		</execute>
 
 		<execute macro="WebContent#addExpirationDateCP">
@@ -422,7 +425,6 @@
 
 		<execute macro="CommerceNavigator#gotoEntry">
 			<var name="entryTitle" value="Simple Product 1 Title" />
-			<var name="portlet" value="Catalog" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="TextInput#EXPIRATION_DATE" value1="01/02/3000" />

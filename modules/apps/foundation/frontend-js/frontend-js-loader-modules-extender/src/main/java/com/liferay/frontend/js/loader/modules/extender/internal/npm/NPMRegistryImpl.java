@@ -139,7 +139,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 					Version version2 = Version.from(
 						jsPackage2.getVersion(), true);
 
-					return version1.compareTo(version2);
+					return version2.compareTo(version1);
 				}
 
 			});

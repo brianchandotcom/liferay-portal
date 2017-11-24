@@ -18,8 +18,8 @@ import com.liferay.mail.kernel.model.Account;
 import com.liferay.message.boards.internal.util.MailingListThreadLocal;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageConstants;
-import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
-import com.liferay.message.boards.kernel.service.MBMessageServiceUtil;
+import com.liferay.message.boards.kernel.service.MBMessageLocalService;
+import com.liferay.message.boards.kernel.service.MBMessageService;
 import com.liferay.petra.mail.MailEngine;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -30,10 +30,10 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.PermissionCheckerUtil;
 import com.liferay.portlet.messageboards.util.MBMailMessage;
@@ -55,6 +55,7 @@ import javax.mail.URLName;
 import javax.mail.internet.InternetAddress;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Thiago Moreira
@@ -190,8 +191,7 @@ public class MailingListMessageListener extends BaseMessageListener {
 
 		boolean anonymous = false;
 
-		User user = UserLocalServiceUtil.fetchUserByEmailAddress(
-			companyId, from);
+		User user = _userLocalService.fetchUserByEmailAddress(companyId, from);
 
 		if (user == null) {
 			if (!mailingListRequest.isAllowAnonymous()) {
@@ -200,7 +200,7 @@ public class MailingListMessageListener extends BaseMessageListener {
 
 			anonymous = true;
 
-			user = UserLocalServiceUtil.getUserById(
+			user = _userLocalService.getUserById(
 				companyId, mailingListRequest.getUserId());
 		}
 
@@ -213,7 +213,7 @@ public class MailingListMessageListener extends BaseMessageListener {
 		MBMessage parentMessage = null;
 
 		if (parentMessageId > 0) {
-			parentMessage = MBMessageLocalServiceUtil.fetchMBMessage(
+			parentMessage = _mbMessageLocalService.fetchMBMessage(
 				parentMessageId);
 		}
 
@@ -240,7 +240,7 @@ public class MailingListMessageListener extends BaseMessageListener {
 			MBMessage.class.getName(), PortletProvider.Action.VIEW);
 
 		serviceContext.setLayoutFullURL(
-			PortalUtil.getLayoutFullURL(groupId, portletId));
+			_portal.getLayoutFullURL(groupId, portletId));
 
 		serviceContext.setScopeGroupId(groupId);
 
@@ -249,13 +249,13 @@ public class MailingListMessageListener extends BaseMessageListener {
 
 		try {
 			if (parentMessage == null) {
-				MBMessageServiceUtil.addMessage(
+				_mbMessageService.addMessage(
 					groupId, categoryId, subject, mbMailMessage.getBody(),
 					MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs,
 					anonymous, 0.0, true, serviceContext);
 			}
 			else {
-				MBMessageServiceUtil.addMessage(
+				_mbMessageService.addMessage(
 					parentMessage.getMessageId(), subject,
 					mbMailMessage.getBody(), MBMessageConstants.DEFAULT_FORMAT,
 					inputStreamOVPs, anonymous, 0.0, true, serviceContext);
@@ -292,5 +292,17 @@ public class MailingListMessageListener extends BaseMessageListener {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MailingListMessageListener.class);
+
+	@Reference
+	private MBMessageLocalService _mbMessageLocalService;
+
+	@Reference
+	private MBMessageService _mbMessageService;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

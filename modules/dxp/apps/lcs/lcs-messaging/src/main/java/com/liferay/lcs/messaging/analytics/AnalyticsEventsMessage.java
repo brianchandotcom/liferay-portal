@@ -122,11 +122,13 @@ public class AnalyticsEventsMessage extends Message {
 		}
 
 		private String _applicationId;
+
 		@JsonFormat(
 			pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
 			shape = JsonFormat.Shape.STRING, timezone = "UTC"
 		)
 		private Date _eventDate;
+
 		private String _eventId;
 		private Map<String, String> _properties = Collections.emptyMap();
 

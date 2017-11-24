@@ -263,7 +263,7 @@ public class MailingListMessageListener extends BaseMessageListener {
 		}
 		finally {
 			for (ObjectValuePair<String, InputStream> inputStreamOVP :
-				inputStreamOVPs) {
+					inputStreamOVPs) {
 
 				try (InputStream inputStream = inputStreamOVP.getValue()) {
 				}

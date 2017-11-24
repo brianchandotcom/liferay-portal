@@ -678,7 +678,7 @@ AUI.add(
 						instance.one('#formBuilder').show();
 
 						if (instance._isFormView()) {
-							instance.get('ruleBuilder').hide();
+							instance.get('ruleBuilder').get('boundingBox').ancestor().addClass('hide');
 
 							instance.one('#showRules').removeClass('active');
 						}
@@ -718,6 +718,7 @@ AUI.add(
 						instance._autosave(
 							function() {
 								var publishedValue = instance.get('published');
+
 								var newPublishedValue = !publishedValue;
 
 								var payload = instance.ns(
@@ -782,9 +783,15 @@ AUI.add(
 					_onRulesButtonClick: function() {
 						var instance = this;
 
-						instance.one('#formBuilder').hide();
+						var ancestor = instance.get('ruleBuilder').get('boundingBox').ancestor();
 
-						instance.get('ruleBuilder').show();
+						instance.one('#formBuilder').hide();
+						if (ancestor.hasClass('hide')) {
+							ancestor.removeClass('hide');
+						}
+						else {
+							instance.get('ruleBuilder').show();
+						}
 
 						A.one('.ddl-form-builder-buttons').addClass('hide');
 						A.one('.portlet-forms').addClass('liferay-ddl-form-rule-builder');

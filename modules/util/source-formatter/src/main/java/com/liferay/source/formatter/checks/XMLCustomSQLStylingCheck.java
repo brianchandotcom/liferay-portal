@@ -18,9 +18,14 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.checks.util.SourceUtil;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.dom4j.Document;
+import org.dom4j.Element;
 
 /**
  * @author Hugo Huijser
@@ -41,22 +46,24 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 			return content;
 		}
 
-		if (fileName.contains("/custom-sql/")) {
-			_checkIncorrectLineBreakAfterComma(fileName, content);
-			_checkMissingLineBreakAfterKeyword(fileName, content);
-			_checkMissingParentheses(fileName, content);
-			_checkMultiLineClause(fileName, content);
-			_checkScalability(fileName, absolutePath, content);
-
-			content = _fixIncorrectAndOr(content);
-			content = _fixMissingLineBreakAfterOpenParenthesis(content);
-			content = _fixMissingLineBreakBeforeOpenParenthesis(content);
-			content = _fixRedundantParenthesesForSingleLineClause(content);
-			content = _fixSinglePredicateClause(content);
-			content = _formatSingleLineClauseWithMultiplePredicates(
-				fileName, content);
-			content = _formatUnionStatement(fileName, content);
+		if (!fileName.contains("/custom-sql/")) {
+			return content;
 		}
+
+		_checkIncorrectLineBreakAfterComma(fileName, content);
+		_checkMissingLineBreakAfterKeyword(fileName, content);
+		_checkMissingParentheses(fileName, content);
+		_checkMultiLineClause(fileName, content);
+		_checkScalability(fileName, absolutePath, content);
+
+		content = _fixIncorrectAndOr(content);
+		content = _fixMissingLineBreakAfterOpenParenthesis(content);
+		content = _fixMissingLineBreakBeforeOpenParenthesis(content);
+		content = _fixRedundantParenthesesForSingleLineClause(content);
+		content = _fixSinglePredicateClause(content);
+		content = _formatSingleLineClauseWithMultiplePredicates(
+			fileName, content);
+		content = _formatUnionStatement(fileName, content);
 
 		return content;
 	}
@@ -207,32 +214,36 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 	}
 
 	private void _checkScalability(
-		String fileName, String absolutePath, String content) {
+			String fileName, String absolutePath, String content)
+		throws Exception {
 
-		Matcher matcher = _whereNotInSQLPattern.matcher(content);
+		Document document = SourceUtil.readXML(content);
 
-		while (matcher.find()) {
-			int x = content.lastIndexOf("<sql id=", matcher.start());
+		Element rootElement = document.getRootElement();
 
-			int y = content.indexOf(CharPool.QUOTE, x);
+		for (Element sqlElement : (List<Element>)rootElement.elements("sql")) {
+			String sql = sqlElement.getText();
 
-			int z = content.indexOf(CharPool.QUOTE, y + 1);
+			Matcher matcher = _whereNotInSQLPattern.matcher(sql);
 
-			String id = content.substring(y + 1, z);
+			while (matcher.find()) {
+				String id = sqlElement.attributeValue("id");
 
-			x = id.lastIndexOf(CharPool.PERIOD);
+				int x = id.lastIndexOf(CharPool.PERIOD);
 
-			y = id.lastIndexOf(CharPool.PERIOD, x - 1);
+				int y = id.lastIndexOf(CharPool.PERIOD, x - 1);
 
-			String entityName = id.substring(y + 1, x);
+				String entityName = id.substring(y + 1, x);
 
-			if (!isExcludedPath(
-					_CUSTOM_FINDER_SCALABILITY_EXCLUDES, absolutePath,
-					entityName)) {
+				if (!isExcludedPath(
+						_CUSTOM_FINDER_SCALABILITY_EXCLUDES, absolutePath,
+						entityName)) {
 
-				addMessage(
-					fileName,
-					"Avoid using WHERE ... NOT IN: " + id + ", see LPS-51315");
+					addMessage(
+						fileName,
+						"Avoid using WHERE ... NOT IN: " + id +
+							", see LPS-51315");
+				}
 			}
 		}
 	}

@@ -24,7 +24,7 @@ import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
- * @author Zsolt Berentey
+ * @author Zoltan Csaszi
  */
 @RunWith(Arquillian.class)
 public class PollsDisplayPortletDataHandlerTest

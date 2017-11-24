@@ -14,6 +14,7 @@
 
 package com.liferay.asset.publisher.web.display.context;
 
+import com.liferay.asset.constants.AssetWebKeys;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.action.AssetEntryAction;
 import com.liferay.asset.kernel.model.AssetCategory;
@@ -38,8 +39,8 @@ import com.liferay.asset.publisher.web.internal.action.AssetEntryActionRegistry;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.impl.AssetPublisherAddItemHolder;
-import com.liferay.asset.util.impl.AssetUtil;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -126,6 +127,8 @@ public class AssetPublisherDisplayContext {
 		_assetEntryActionRegistry =
 			(AssetEntryActionRegistry)portletRequest.getAttribute(
 				AssetPublisherWebKeys.ASSET_ENTRY_ACTION_REGISTRY);
+		_assetHelper = (AssetHelper)portletRequest.getAttribute(
+			AssetWebKeys.ASSET_HELPER);
 		_assetPublisherWebUtil =
 			(AssetPublisherWebUtil)portletRequest.getAttribute(
 				AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_UTIL);
@@ -162,7 +165,7 @@ public class AssetPublisherDisplayContext {
 
 		_abstractLength = GetterUtil.getInteger(
 			_portletPreferences.getValue("abstractLength", null),
-			AssetUtil.ASSET_ENTRY_ABSTRACT_LENGTH);
+			AssetHelper.ASSET_ENTRY_ABSTRACT_LENGTH);
 
 		return _abstractLength;
 	}
@@ -828,7 +831,7 @@ public class AssetPublisherDisplayContext {
 
 		for (long groupId : groupIds) {
 			List<AssetPublisherAddItemHolder> assetPublisherAddItemHolders =
-				AssetUtil.getAssetPublisherAddItemHolders(
+				_assetHelper.getAssetPublisherAddItemHolders(
 					liferayPortletRequest, liferayPortletResponse, groupId,
 					getClassNameIds(), getClassTypeIds(),
 					getAllAssetCategoryIds(), getAllAssetTagNames(), redirect);
@@ -878,7 +881,7 @@ public class AssetPublisherDisplayContext {
 
 		for (long groupId : groupIds) {
 			List<AssetPublisherAddItemHolder> assetPublisherAddItemHolders =
-				AssetUtil.getAssetPublisherAddItemHolders(
+				_assetHelper.getAssetPublisherAddItemHolders(
 					liferayPortletRequest, liferayPortletResponse, groupId,
 					getClassNameIds(), getClassTypeIds(),
 					getAllAssetCategoryIds(), getAllAssetTagNames(), redirect);
@@ -1559,6 +1562,7 @@ public class AssetPublisherDisplayContext {
 	private Boolean _anyAssetType;
 	private final AssetEntryActionRegistry _assetEntryActionRegistry;
 	private AssetEntryQuery _assetEntryQuery;
+	private AssetHelper _assetHelper;
 	private String _assetLinkBehavior;
 	private final AssetPublisherCustomizer _assetPublisherCustomizer;
 	private final AssetPublisherPortletInstanceConfiguration

@@ -64,6 +64,8 @@ page import="com.liferay.wiki.web.internal.portlet.toolbar.item.WikiPortletToolb
 page import="com.liferay.wiki.web.util.WikiWebComponentProvider" %>
 
 <%
+AssetHelper assetHelper = (AssetHelper)request.getAttribute(AssetWebKeys.ASSET_HELPER);
+
 WikiRequestHelper wikiRequestHelper = new WikiRequestHelper(request);
 
 WikiGroupServiceOverriddenConfiguration wikiGroupServiceOverriddenConfiguration = wikiRequestHelper.getWikiGroupServiceOverriddenConfiguration();

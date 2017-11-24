@@ -14,6 +14,8 @@
 
 package com.liferay.blogs.web.internal.portlet;
 
+import com.liferay.asset.constants.AssetWebKeys;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -63,6 +65,8 @@ public class BlogsAggregatorPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		renderRequest.setAttribute(AssetWebKeys.ASSET_HELPER, _assetHelper);
+
 		renderRequest.setAttribute(TrashWebKeys.TRASH_HELPER, _trashHelper);
 
 		super.render(renderRequest, renderResponse);
@@ -74,6 +78,9 @@ public class BlogsAggregatorPortlet extends MVCPortlet {
 	)
 	protected void setRelease(Release release) {
 	}
+
+	@Reference
+	private AssetHelper _assetHelper;
 
 	@Reference
 	private TrashHelper _trashHelper;

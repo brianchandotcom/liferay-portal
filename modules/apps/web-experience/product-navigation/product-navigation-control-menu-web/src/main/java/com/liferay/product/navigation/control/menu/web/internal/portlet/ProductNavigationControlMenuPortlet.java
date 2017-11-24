@@ -14,13 +14,21 @@
 
 package com.liferay.product.navigation.control.menu.web.internal.portlet;
 
+import com.liferay.asset.constants.AssetWebKeys;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.product.navigation.control.menu.web.internal.constants.ProductNavigationControlMenuPortletKeys;
 
+import java.io.IOException;
+
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -45,6 +53,16 @@ import org.osgi.service.component.annotations.Component;
 public class ProductNavigationControlMenuPortlet extends MVCPortlet {
 
 	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(AssetWebKeys.ASSET_HELPER, _assetHelper);
+
+		super.doDispatch(renderRequest, renderResponse);
+	}
+
+	@Override
 	protected boolean isSessionErrorException(Throwable cause) {
 		if (cause instanceof SystemException ||
 			super.isSessionErrorException(cause)) {
@@ -54,5 +72,8 @@ public class ProductNavigationControlMenuPortlet extends MVCPortlet {
 
 		return false;
 	}
+
+	@Reference
+	private AssetHelper _assetHelper;
 
 }

@@ -16,7 +16,7 @@ package com.liferay.blogs.web.asset;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
-import com.liferay.asset.util.impl.AssetUtil;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.permission.BlogsEntryPermission;
@@ -148,13 +148,13 @@ public class BlogsEntryAssetRenderer
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		int abstractLength = AssetUtil.ASSET_ENTRY_ABSTRACT_LENGTH;
+		int abstractLength = AssetHelper.ASSET_ENTRY_ABSTRACT_LENGTH;
 
 		if (portletRequest != null) {
 			abstractLength = GetterUtil.getInteger(
 				portletRequest.getAttribute(
 					WebKeys.ASSET_ENTRY_ABSTRACT_LENGTH),
-				AssetUtil.ASSET_ENTRY_ABSTRACT_LENGTH);
+				AssetHelper.ASSET_ENTRY_ABSTRACT_LENGTH);
 		}
 
 		String summary = _entry.getDescription();

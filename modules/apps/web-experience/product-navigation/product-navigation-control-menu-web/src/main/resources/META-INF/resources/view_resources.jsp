@@ -139,7 +139,7 @@ if (Validator.isNotNull(keywords)) {
 				assetEntryQuery.setOrderByType2("ASC");
 				assetEntryQuery.setStart(0);
 
-				BaseModelSearchResult<AssetEntry> baseModelSearchResult = AssetUtil.searchAssetEntries(request, assetEntryQuery, 0, delta);
+				BaseModelSearchResult<AssetEntry> baseModelSearchResult = assetHelper.searchAssetEntries(request, assetEntryQuery, 0, delta);
 
 				for (AssetEntry assetEntry : baseModelSearchResult.getBaseModels()) {
 					String className = PortalUtil.getClassName(assetEntry.getClassNameId());

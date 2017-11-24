@@ -217,30 +217,39 @@ AUI.add(
 						instance.set('currentIndex', links.size() - 1);
 					},
 
-					updateCurrentImage: function(imageData, link) {
+					updateCurrentImage: function(itemData, link) {
 						var instance = this;
 
 						link = link || instance.get('links').item(instance.get('currentIndex'));
 
-						var imageURL = imageData.file.url;
+						var file = itemData.file;
+
+						var imageURL = file.url;
 
 						var image = instance._getCurrentImage();
 
-						image.attr('src', imageURL);
+						if (!file.type.match(/image.*/)) {
+							preview = Liferay.ThemeDisplay.getPathThemeImages() + '/file_system/large/default.png';
+
+							image.attr('src', preview);
+						}
+						else {
+							image.attr('src', imageURL);
+						}
 
 						var returnType = link.attr('data-returnType');
 
-						if (imageData.file.resolvedValue) {
-							link.setData('value', imageData.file.resolvedValue);
+						if (file.resolvedValue) {
+							link.setData('value', file.resolvedValue);
 						}
 						else {
 							var imageValue = {
-								fileEntryId: imageData.file.fileEntryId,
-								groupId: imageData.file.groupId,
-								title: imageData.file.title,
-								type: imageData.file.type,
+								fileEntryId: file.fileEntryId,
+								groupId: file.groupId,
+								title: file.title,
+								type: file.type,
 								url: imageURL,
-								uuid: imageData.file.uuid
+								uuid: file.uuid
 							};
 
 							link.setData('value', JSON.stringify(imageValue));

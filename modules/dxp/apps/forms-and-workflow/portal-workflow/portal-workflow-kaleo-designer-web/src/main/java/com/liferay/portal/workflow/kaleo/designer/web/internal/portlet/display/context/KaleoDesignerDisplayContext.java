@@ -31,6 +31,7 @@ import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionN
 import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionTitleComparator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -132,7 +133,7 @@ public class KaleoDesignerDisplayContext {
 
 		return user.getFullName();
 	}
-	
+
 	public String getUserNameOrBlank(WorkflowDefinition workflowDefinition) {
 		User user = _userLocalService.fetchUser(workflowDefinition.getUserId());
 
@@ -156,6 +157,8 @@ public class KaleoDesignerDisplayContext {
 				_kaleoDesignerRequestHelper.getCompanyId(),
 				kaleoDefinitionVersion.getName(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
+
+		Collections.reverse(workflowDefinitions);
 
 		return workflowDefinitions;
 	}

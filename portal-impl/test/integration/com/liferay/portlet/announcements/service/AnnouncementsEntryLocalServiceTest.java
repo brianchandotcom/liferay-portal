@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.announcements.service;
 
+import com.liferay.announcements.kernel.exception.EntryDisplayDateException;
+import com.liferay.announcements.kernel.exception.EntryExpirationDateException;
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.kernel.model.AnnouncementsFlagConstants;
 import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalServiceUtil;
@@ -23,6 +25,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -41,6 +44,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -201,11 +205,20 @@ public class AnnouncementsEntryLocalServiceTest {
 	protected AnnouncementsEntry addEntry(long classNameId, long classPK)
 		throws Exception {
 
+		User user = TestPropsValues.getUser();
+
+		Date displayDate = PortalUtil.getDate(
+			1, 1, 1990, 1, 1, user.getTimeZone(),
+			EntryDisplayDateException.class);
+		Date expirationDate = PortalUtil.getDate(
+			1, 1, 3000, 1, 1, user.getTimeZone(),
+			EntryExpirationDateException.class);
+
 		return AnnouncementsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), classNameId, classPK,
 			StringUtil.randomString(), StringUtil.randomString(),
-			"http://localhost", "general", 1, 1, 1990, 1, 1, false, 1, 1, 3000,
-			1, 1, 1, false);
+			"http://localhost", "general", displayDate, expirationDate, 1,
+			false);
 	}
 
 	protected void deleteRoleAnnouncements(int roleType) throws Exception {

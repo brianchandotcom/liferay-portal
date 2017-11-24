@@ -172,9 +172,9 @@ long recordSetId = ddlFormDisplayContext.getRecordSetId();
 							}
 							else {
 								Liferay.after(
-									Liferay.namespace('DDM').Form + ':render',
+									'<%= ddlFormDisplayContext.getContainerId() %>DDMForm:render',
 									function(event) {
-										<portlet:namespace />form = Liferay.component(event.containerId + 'DDMForm');
+										<portlet:namespace />form = Liferay.component('<%= ddlFormDisplayContext.getContainerId() %>DDMForm');
 
 										if (<portlet:namespace />form) {
 											<portlet:namespace />startAutoSave();

@@ -22,6 +22,10 @@ String redirect = ParamUtil.getString(request, "redirect");
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
+
+KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)request.getAttribute(KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION);
+
+boolean showActions = workflowDefinition.getVersion() != (int)Double.parseDouble(kaleoDefinitionVersion.getVersion());
 %>
 
 <portlet:renderURL var="viewURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -37,18 +41,20 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 	<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
 </liferay-portlet:actionURL>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" id='<%= "iconMenu_" + String.valueOf(workflowDefinition.getVersion()) %>' markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<liferay-ui:icon
-		id='<%= "previewBeforeRevert" + String.valueOf(workflowDefinition.getVersion()) %>'
-		message="preview"
-		url="javascript:;"
-	/>
+<c:if test="<%= showActions %>">
+	<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" id='<%= "iconMenu_" + String.valueOf(workflowDefinition.getVersion()) %>' markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+		<liferay-ui:icon
+			id='<%= "previewBeforeRevert" + String.valueOf(workflowDefinition.getVersion()) %>'
+			message="preview"
+			url="javascript:;"
+		/>
 
-	<liferay-ui:icon
-		message="restore"
-		url="<%= revertURL %>"
-	/>
-</liferay-ui:icon-menu>
+		<liferay-ui:icon
+			message="restore"
+			url="<%= revertURL %>"
+		/>
+	</liferay-ui:icon-menu>
+</c:if>
 
 <aui:script use="liferay-kaleo-designer-utils">
 	var title = '<liferay-ui:message key="preview" translateArguments="<%= false %>"/>';

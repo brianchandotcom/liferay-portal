@@ -529,6 +529,6 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 	private final Pattern _unionPattern = Pattern.compile(
 		"(\\S)(\\s+)UNION( ALL)?\\s+(\\S)");
 	private final Pattern _whereNotInSQLPattern = Pattern.compile(
-		"WHERE[ \t\n]+\\(*[a-zA-z0-9.]+ NOT IN");
+		"WHERE\\s.*\\sNOT IN", Pattern.DOTALL);
 
 }

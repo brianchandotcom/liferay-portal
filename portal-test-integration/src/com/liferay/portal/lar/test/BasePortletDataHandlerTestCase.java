@@ -20,19 +20,22 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.StagedModel;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
@@ -42,10 +45,12 @@ import com.liferay.registry.RegistryUtil;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -81,20 +86,12 @@ public abstract class BasePortletDataHandlerTestCase {
 	public void testDeleteData() throws Exception {
 		initExport();
 
-		long ownerId = PortletKeys.PREFS_OWNER_ID_DEFAULT;
-		int ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;
-
 		javax.portlet.PortletPreferences portletPreferences =
-			PortletPreferencesLocalServiceUtil.fetchPreferences(
-				portletDataContext.getCompanyId(), ownerId, ownerType,
-				portletDataContext.getPlid(),
-				portletDataContext.getPortletId());
-
-		if (portletPreferences == null) {
-			portletPreferences = new PortletPreferencesImpl();
-		}
+			new PortletPreferencesImpl();
 
 		addStagedModels();
+
+		portletDataContext.setEndDate(getEndDate());
 
 		portletDataHandler.deleteData(
 			portletDataContext, portletId, portletPreferences);
@@ -109,6 +106,99 @@ public abstract class BasePortletDataHandlerTestCase {
 
 			Assert.assertEquals(StringPool.BLANK, portletPreference);
 		}
+	}
+
+	@Test
+	public void testExportImportData() throws Exception {
+		initExport();
+
+		addStagedModels();
+
+		javax.portlet.PortletPreferences portletPreferences =
+			new PortletPreferencesImpl();
+
+		portletDataContext.setEndDate(getEndDate());
+
+		String exportData = portletDataHandler.exportData(
+			portletDataContext, portletId, portletPreferences);
+
+		Document document = SAXReaderUtil.read(exportData);
+
+		Element rootElement = document.getRootElement();
+
+		List<StagedModel> exportedStagedModels = getStagedModels();
+
+		for (StagedModel stagedModel : exportedStagedModels) {
+			Element element = rootElement.element(
+				stagedModel.getModelClass().getSimpleName());
+
+			List<Node> stagedModelNodes = element.content();
+
+			boolean contains = false;
+
+			for (Node node : stagedModelNodes) {
+				if (node instanceof Element) {
+					String uuid = ((Element)node).attribute("uuid").getValue();
+
+					if (stagedModel.getUuid().equals(uuid)) {
+						contains = true;
+					}
+				}
+			}
+
+			Assert.assertTrue(contains);
+		}
+
+		ZipWriter exportZipWriter = portletDataContext.getZipWriter();
+
+		initExport();
+
+		Group cleanGroup = GroupTestUtil.addGroup();
+
+		UserIdStrategy testUserIdStrategy = new UserIdStrategy() {
+
+			@Override
+			public long getUserId(String userUuid) {
+				try {
+					return TestPropsValues.getUserId();
+				}
+				catch (Exception e) {
+					return 0;
+				}
+			}
+
+		};
+
+		portletDataContext.setUserIdStrategy(testUserIdStrategy);
+
+		portletDataContext.setDataStrategy(
+			PortletDataHandlerKeys.DATA_STRATEGY_MIRROR);
+
+		portletDataContext.setZipReader(
+			ZipReaderFactoryUtil.getZipReader(exportZipWriter.getFile()));
+
+		portletDataContext.setScopeGroupId(cleanGroup.getGroupId());
+		portletDataContext.setGroupId(cleanGroup.getGroupId());
+
+		portletDataContext.clearScopedPrimaryKeys();
+
+		portletDataHandler.importData(
+			portletDataContext, portletId, portletPreferences, exportData);
+
+		List<StagedModel> importedStagedModels = getStagedModels();
+
+		Set<String> exportedUuidSet = new HashSet<>();
+		Set<String> importedUuidSet = new HashSet<>();
+
+		for (StagedModel stagedModel : exportedStagedModels) {
+			exportedUuidSet.add(stagedModel.getUuid());
+		}
+
+		for (StagedModel stagedModel : importedStagedModels) {
+			importedUuidSet.add(stagedModel.getUuid());
+		}
+
+		Assert.assertEquals(exportedUuidSet, importedUuidSet);
 	}
 
 	@Test

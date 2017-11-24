@@ -15,7 +15,10 @@
 package com.liferay.portlet.announcements.service;
 
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
+import com.liferay.announcements.kernel.model.AnnouncementsFlagConstants;
 import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalServiceUtil;
+import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
@@ -34,8 +37,12 @@ import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.util.LinkedHashMap;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -44,6 +51,7 @@ import org.junit.Test;
 
 /**
  * @author Christopher Kian
+ * @author Hugo Huijser
  */
 @Sync
 public class AnnouncementsEntryLocalServiceTest {
@@ -142,6 +150,52 @@ public class AnnouncementsEntryLocalServiceTest {
 		Assert.assertNull(
 			AnnouncementsEntryLocalServiceUtil.fetchAnnouncementsEntry(
 				entry.getEntryId()));
+	}
+
+	@Test
+	public void testGetEntries() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		AnnouncementsEntry entry1 = addEntry(
+			group.getClassNameId(), group.getGroupId());
+		AnnouncementsEntry entry2 = addEntry(
+			group.getClassNameId(), group.getGroupId());
+		AnnouncementsEntry entry3 = addEntry(
+			group.getClassNameId(), group.getGroupId());
+
+		AnnouncementsFlagLocalServiceUtil.addFlag(
+			TestPropsValues.getUserId(), entry1.getEntryId(),
+			AnnouncementsFlagConstants.HIDDEN);
+		AnnouncementsFlagLocalServiceUtil.addFlag(
+			TestPropsValues.getUserId(), entry2.getEntryId(),
+			AnnouncementsFlagConstants.HIDDEN);
+
+		LinkedHashMap<Long, long[]> scopes = new LinkedHashMap<>();
+
+		scopes.put(
+			PortalUtil.getClassNameId(Group.class.getName()),
+			new long[] {group.getGroupId()});
+
+		List<AnnouncementsEntry> hiddenEntries =
+			AnnouncementsEntryLocalServiceUtil.getEntries(
+				TestPropsValues.getUserId(), scopes, false,
+				AnnouncementsFlagConstants.HIDDEN, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		Assert.assertEquals(hiddenEntries.toString(), 2, hiddenEntries.size());
+
+		List<AnnouncementsEntry> notHiddenEntries =
+			AnnouncementsEntryLocalServiceUtil.getEntries(
+				TestPropsValues.getUserId(), scopes, false,
+				AnnouncementsFlagConstants.NOT_HIDDEN, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			notHiddenEntries.toString(), 1, notHiddenEntries.size());
+
+		AnnouncementsEntry entry = notHiddenEntries.get(0);
+
+		Assert.assertEquals(entry.getEntryId(), entry3.getEntryId());
 	}
 
 	protected AnnouncementsEntry addEntry(long classNameId, long classPK)

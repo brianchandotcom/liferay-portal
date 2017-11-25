@@ -97,6 +97,13 @@ public class CPDefinitionOptionValueRelServiceUtil {
 			start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
+		long groupId, java.lang.String key, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCPDefinitionOptionValueRels(groupId, key, start, end);
+	}
+
 	public static int getCPDefinitionOptionValueRelsCount(
 		long cpDefinitionOptionRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {

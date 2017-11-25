@@ -1095,6 +1095,169 @@ public class CPDefinitionOptionValueRelUtil {
 	}
 
 	/**
+	* Returns all the cp definition option value rels where key = &#63;.
+	*
+	* @param key the key
+	* @return the matching cp definition option value rels
+	*/
+	public static List<CPDefinitionOptionValueRel> findBykey(
+		java.lang.String key) {
+		return getPersistence().findBykey(key);
+	}
+
+	/**
+	* Returns a range of all the cp definition option value rels where key = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionOptionValueRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param key the key
+	* @param start the lower bound of the range of cp definition option value rels
+	* @param end the upper bound of the range of cp definition option value rels (not inclusive)
+	* @return the range of matching cp definition option value rels
+	*/
+	public static List<CPDefinitionOptionValueRel> findBykey(
+		java.lang.String key, int start, int end) {
+		return getPersistence().findBykey(key, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the cp definition option value rels where key = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionOptionValueRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param key the key
+	* @param start the lower bound of the range of cp definition option value rels
+	* @param end the upper bound of the range of cp definition option value rels (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching cp definition option value rels
+	*/
+	public static List<CPDefinitionOptionValueRel> findBykey(
+		java.lang.String key, int start, int end,
+		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
+		return getPersistence().findBykey(key, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the cp definition option value rels where key = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionOptionValueRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param key the key
+	* @param start the lower bound of the range of cp definition option value rels
+	* @param end the upper bound of the range of cp definition option value rels (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching cp definition option value rels
+	*/
+	public static List<CPDefinitionOptionValueRel> findBykey(
+		java.lang.String key, int start, int end,
+		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findBykey(key, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first cp definition option value rel in the ordered set where key = &#63;.
+	*
+	* @param key the key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp definition option value rel
+	* @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
+	*/
+	public static CPDefinitionOptionValueRel findBykey_First(
+		java.lang.String key,
+		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException {
+		return getPersistence().findBykey_First(key, orderByComparator);
+	}
+
+	/**
+	* Returns the first cp definition option value rel in the ordered set where key = &#63;.
+	*
+	* @param key the key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
+	*/
+	public static CPDefinitionOptionValueRel fetchBykey_First(
+		java.lang.String key,
+		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
+		return getPersistence().fetchBykey_First(key, orderByComparator);
+	}
+
+	/**
+	* Returns the last cp definition option value rel in the ordered set where key = &#63;.
+	*
+	* @param key the key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp definition option value rel
+	* @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
+	*/
+	public static CPDefinitionOptionValueRel findBykey_Last(
+		java.lang.String key,
+		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException {
+		return getPersistence().findBykey_Last(key, orderByComparator);
+	}
+
+	/**
+	* Returns the last cp definition option value rel in the ordered set where key = &#63;.
+	*
+	* @param key the key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
+	*/
+	public static CPDefinitionOptionValueRel fetchBykey_Last(
+		java.lang.String key,
+		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
+		return getPersistence().fetchBykey_Last(key, orderByComparator);
+	}
+
+	/**
+	* Returns the cp definition option value rels before and after the current cp definition option value rel in the ordered set where key = &#63;.
+	*
+	* @param CPDefinitionOptionValueRelId the primary key of the current cp definition option value rel
+	* @param key the key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next cp definition option value rel
+	* @throws NoSuchCPDefinitionOptionValueRelException if a cp definition option value rel with the primary key could not be found
+	*/
+	public static CPDefinitionOptionValueRel[] findBykey_PrevAndNext(
+		long CPDefinitionOptionValueRelId, java.lang.String key,
+		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException {
+		return getPersistence()
+				   .findBykey_PrevAndNext(CPDefinitionOptionValueRelId, key,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the cp definition option value rels where key = &#63; from the database.
+	*
+	* @param key the key
+	*/
+	public static void removeBykey(java.lang.String key) {
+		getPersistence().removeBykey(key);
+	}
+
+	/**
+	* Returns the number of cp definition option value rels where key = &#63;.
+	*
+	* @param key the key
+	* @return the number of matching cp definition option value rels
+	*/
+	public static int countBykey(java.lang.String key) {
+		return getPersistence().countBykey(key);
+	}
+
+	/**
 	* Caches the cp definition option value rel in the entity cache if it is enabled.
 	*
 	* @param cpDefinitionOptionValueRel the cp definition option value rel

@@ -91,6 +91,14 @@ public class CPDefinitionOptionValueRelServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
+		long groupId, java.lang.String key, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionOptionValueRelService.getCPDefinitionOptionValueRels(groupId,
+			key, start, end);
+	}
+
+	@Override
 	public int getCPDefinitionOptionValueRelsCount(long cpDefinitionOptionRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionOptionValueRelService.getCPDefinitionOptionValueRelsCount(cpDefinitionOptionRelId);

@@ -241,6 +241,15 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 	}
 
 	@Test
+	public void testCountBykey() throws Exception {
+		_persistence.countBykey(StringPool.BLANK);
+
+		_persistence.countBykey(StringPool.NULL);
+
+		_persistence.countBykey((String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CPDefinitionOptionValueRel newCPDefinitionOptionValueRel = addCPDefinitionOptionValueRel();
 

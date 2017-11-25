@@ -3333,6 +3333,559 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 	private static final String _FINDER_COLUMN_C_K_KEY_1 = "cpDefinitionOptionValueRel.key IS NULL";
 	private static final String _FINDER_COLUMN_C_K_KEY_2 = "cpDefinitionOptionValueRel.key = ?";
 	private static final String _FINDER_COLUMN_C_K_KEY_3 = "(cpDefinitionOptionValueRel.key IS NULL OR cpDefinitionOptionValueRel.key = '')";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_KEY = new FinderPath(CPDefinitionOptionValueRelModelImpl.ENTITY_CACHE_ENABLED,
+			CPDefinitionOptionValueRelModelImpl.FINDER_CACHE_ENABLED,
+			CPDefinitionOptionValueRelImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBykey",
+			new String[] {
+				String.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KEY = new FinderPath(CPDefinitionOptionValueRelModelImpl.ENTITY_CACHE_ENABLED,
+			CPDefinitionOptionValueRelModelImpl.FINDER_CACHE_ENABLED,
+			CPDefinitionOptionValueRelImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBykey",
+			new String[] { String.class.getName() },
+			CPDefinitionOptionValueRelModelImpl.KEY_COLUMN_BITMASK |
+			CPDefinitionOptionValueRelModelImpl.PRIORITY_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_KEY = new FinderPath(CPDefinitionOptionValueRelModelImpl.ENTITY_CACHE_ENABLED,
+			CPDefinitionOptionValueRelModelImpl.FINDER_CACHE_ENABLED,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countBykey", new String[] { String.class.getName() });
+
+	/**
+	 * Returns all the cp definition option value rels where key = &#63;.
+	 *
+	 * @param key the key
+	 * @return the matching cp definition option value rels
+	 */
+	@Override
+	public List<CPDefinitionOptionValueRel> findBykey(String key) {
+		return findBykey(key, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the cp definition option value rels where key = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionOptionValueRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param key the key
+	 * @param start the lower bound of the range of cp definition option value rels
+	 * @param end the upper bound of the range of cp definition option value rels (not inclusive)
+	 * @return the range of matching cp definition option value rels
+	 */
+	@Override
+	public List<CPDefinitionOptionValueRel> findBykey(String key, int start,
+		int end) {
+		return findBykey(key, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp definition option value rels where key = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionOptionValueRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param key the key
+	 * @param start the lower bound of the range of cp definition option value rels
+	 * @param end the upper bound of the range of cp definition option value rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp definition option value rels
+	 */
+	@Override
+	public List<CPDefinitionOptionValueRel> findBykey(String key, int start,
+		int end, OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
+		return findBykey(key, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp definition option value rels where key = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionOptionValueRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param key the key
+	 * @param start the lower bound of the range of cp definition option value rels
+	 * @param end the upper bound of the range of cp definition option value rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching cp definition option value rels
+	 */
+	@Override
+	public List<CPDefinitionOptionValueRel> findBykey(String key, int start,
+		int end,
+		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KEY;
+			finderArgs = new Object[] { key };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_KEY;
+			finderArgs = new Object[] { key, start, end, orderByComparator };
+		}
+
+		List<CPDefinitionOptionValueRel> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CPDefinitionOptionValueRel>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel : list) {
+					if (!Objects.equals(key, cpDefinitionOptionValueRel.getKey())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_CPDEFINITIONOPTIONVALUEREL_WHERE);
+
+			boolean bindKey = false;
+
+			if (key == null) {
+				query.append(_FINDER_COLUMN_KEY_KEY_1);
+			}
+			else if (key.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_KEY_KEY_3);
+			}
+			else {
+				bindKey = true;
+
+				query.append(_FINDER_COLUMN_KEY_KEY_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CPDefinitionOptionValueRelModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindKey) {
+					qPos.add(key);
+				}
+
+				if (!pagination) {
+					list = (List<CPDefinitionOptionValueRel>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CPDefinitionOptionValueRel>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first cp definition option value rel in the ordered set where key = &#63;.
+	 *
+	 * @param key the key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp definition option value rel
+	 * @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
+	 */
+	@Override
+	public CPDefinitionOptionValueRel findBykey_First(String key,
+		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
+		throws NoSuchCPDefinitionOptionValueRelException {
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel = fetchBykey_First(key,
+				orderByComparator);
+
+		if (cpDefinitionOptionValueRel != null) {
+			return cpDefinitionOptionValueRel;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("key=");
+		msg.append(key);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCPDefinitionOptionValueRelException(msg.toString());
+	}
+
+	/**
+	 * Returns the first cp definition option value rel in the ordered set where key = &#63;.
+	 *
+	 * @param key the key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
+	 */
+	@Override
+	public CPDefinitionOptionValueRel fetchBykey_First(String key,
+		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
+		List<CPDefinitionOptionValueRel> list = findBykey(key, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last cp definition option value rel in the ordered set where key = &#63;.
+	 *
+	 * @param key the key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp definition option value rel
+	 * @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
+	 */
+	@Override
+	public CPDefinitionOptionValueRel findBykey_Last(String key,
+		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
+		throws NoSuchCPDefinitionOptionValueRelException {
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel = fetchBykey_Last(key,
+				orderByComparator);
+
+		if (cpDefinitionOptionValueRel != null) {
+			return cpDefinitionOptionValueRel;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("key=");
+		msg.append(key);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCPDefinitionOptionValueRelException(msg.toString());
+	}
+
+	/**
+	 * Returns the last cp definition option value rel in the ordered set where key = &#63;.
+	 *
+	 * @param key the key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
+	 */
+	@Override
+	public CPDefinitionOptionValueRel fetchBykey_Last(String key,
+		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
+		int count = countBykey(key);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CPDefinitionOptionValueRel> list = findBykey(key, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the cp definition option value rels before and after the current cp definition option value rel in the ordered set where key = &#63;.
+	 *
+	 * @param CPDefinitionOptionValueRelId the primary key of the current cp definition option value rel
+	 * @param key the key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next cp definition option value rel
+	 * @throws NoSuchCPDefinitionOptionValueRelException if a cp definition option value rel with the primary key could not be found
+	 */
+	@Override
+	public CPDefinitionOptionValueRel[] findBykey_PrevAndNext(
+		long CPDefinitionOptionValueRelId, String key,
+		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
+		throws NoSuchCPDefinitionOptionValueRelException {
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel = findByPrimaryKey(CPDefinitionOptionValueRelId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CPDefinitionOptionValueRel[] array = new CPDefinitionOptionValueRelImpl[3];
+
+			array[0] = getBykey_PrevAndNext(session,
+					cpDefinitionOptionValueRel, key, orderByComparator, true);
+
+			array[1] = cpDefinitionOptionValueRel;
+
+			array[2] = getBykey_PrevAndNext(session,
+					cpDefinitionOptionValueRel, key, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CPDefinitionOptionValueRel getBykey_PrevAndNext(Session session,
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel, String key,
+		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_CPDEFINITIONOPTIONVALUEREL_WHERE);
+
+		boolean bindKey = false;
+
+		if (key == null) {
+			query.append(_FINDER_COLUMN_KEY_KEY_1);
+		}
+		else if (key.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_KEY_KEY_3);
+		}
+		else {
+			bindKey = true;
+
+			query.append(_FINDER_COLUMN_KEY_KEY_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CPDefinitionOptionValueRelModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (bindKey) {
+			qPos.add(key);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(cpDefinitionOptionValueRel);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CPDefinitionOptionValueRel> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the cp definition option value rels where key = &#63; from the database.
+	 *
+	 * @param key the key
+	 */
+	@Override
+	public void removeBykey(String key) {
+		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel : findBykey(
+				key, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(cpDefinitionOptionValueRel);
+		}
+	}
+
+	/**
+	 * Returns the number of cp definition option value rels where key = &#63;.
+	 *
+	 * @param key the key
+	 * @return the number of matching cp definition option value rels
+	 */
+	@Override
+	public int countBykey(String key) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_KEY;
+
+		Object[] finderArgs = new Object[] { key };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_CPDEFINITIONOPTIONVALUEREL_WHERE);
+
+			boolean bindKey = false;
+
+			if (key == null) {
+				query.append(_FINDER_COLUMN_KEY_KEY_1);
+			}
+			else if (key.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_KEY_KEY_3);
+			}
+			else {
+				bindKey = true;
+
+				query.append(_FINDER_COLUMN_KEY_KEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindKey) {
+					qPos.add(key);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_KEY_KEY_1 = "cpDefinitionOptionValueRel.key IS NULL";
+	private static final String _FINDER_COLUMN_KEY_KEY_2 = "cpDefinitionOptionValueRel.key = ?";
+	private static final String _FINDER_COLUMN_KEY_KEY_3 = "(cpDefinitionOptionValueRel.key IS NULL OR cpDefinitionOptionValueRel.key = '')";
 
 	public CPDefinitionOptionValueRelPersistenceImpl() {
 		setModelClass(CPDefinitionOptionValueRel.class);
@@ -3741,6 +4294,12 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CPDEFINITIONOPTIONRELID,
 				args);
 
+			args = new Object[] { cpDefinitionOptionValueRelModelImpl.getKey() };
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_KEY, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KEY,
+				args);
+
 			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
 				FINDER_ARGS_EMPTY);
@@ -3843,6 +4402,23 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_CPDEFINITIONOPTIONRELID,
 					args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CPDEFINITIONOPTIONRELID,
+					args);
+			}
+
+			if ((cpDefinitionOptionValueRelModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KEY.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						cpDefinitionOptionValueRelModelImpl.getOriginalKey()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_KEY, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KEY,
+					args);
+
+				args = new Object[] { cpDefinitionOptionValueRelModelImpl.getKey() };
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_KEY, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KEY,
 					args);
 			}
 		}

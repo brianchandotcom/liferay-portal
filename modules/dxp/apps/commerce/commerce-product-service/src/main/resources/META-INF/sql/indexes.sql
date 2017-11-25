@@ -33,6 +33,7 @@ create unique index IX_EB691260 on CPDefinitionOptionRel (uuid_[$COLUMN_LENGTH:7
 create unique index IX_8FDF08C0 on CPDefinitionOptionValueRel (CPDefinitionOptionRelId, key_[$COLUMN_LENGTH:75$]);
 create index IX_44C2E505 on CPDefinitionOptionValueRel (companyId);
 create index IX_695AE8C7 on CPDefinitionOptionValueRel (groupId);
+create index IX_2434CAD7 on CPDefinitionOptionValueRel (key_[$COLUMN_LENGTH:75$]);
 create index IX_CD95E77 on CPDefinitionOptionValueRel (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_34516B9 on CPDefinitionOptionValueRel (uuid_[$COLUMN_LENGTH:75$], groupId);
 

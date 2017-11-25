@@ -269,6 +269,10 @@ public interface CPDefinitionOptionValueRelLocalService extends BaseLocalService
 	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
 		long[] cpDefinitionOptionValueRelsId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
+		java.lang.String key, int start, int end);
+
 	/**
 	* Returns all the cp definition option value rels matching the UUID and company.
 	*

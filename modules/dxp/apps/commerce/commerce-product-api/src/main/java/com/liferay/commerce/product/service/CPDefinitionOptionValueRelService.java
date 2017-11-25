@@ -94,6 +94,11 @@ public interface CPDefinitionOptionValueRelService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
+		long groupId, java.lang.String key, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPDefinitionOptionValueRelsCount(long cpDefinitionOptionRelId)
 		throws PortalException;
 

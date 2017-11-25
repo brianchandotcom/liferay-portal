@@ -310,6 +310,13 @@ public class CPDefinitionOptionValueRelLocalServiceWrapper
 		return _cpDefinitionOptionValueRelLocalService.getCPDefinitionOptionValueRels(cpDefinitionOptionValueRelsId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
+		java.lang.String key, int start, int end) {
+		return _cpDefinitionOptionValueRelLocalService.getCPDefinitionOptionValueRels(key,
+			start, end);
+	}
+
 	/**
 	* Returns all the cp definition option value rels matching the UUID and company.
 	*

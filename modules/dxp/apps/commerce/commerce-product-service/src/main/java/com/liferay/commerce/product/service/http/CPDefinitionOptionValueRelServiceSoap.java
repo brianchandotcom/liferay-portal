@@ -155,6 +155,23 @@ public class CPDefinitionOptionValueRelServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRelSoap[] getCPDefinitionOptionValueRels(
+		long groupId, java.lang.String key, int start, int end)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionValueRel> returnValue =
+				CPDefinitionOptionValueRelServiceUtil.getCPDefinitionOptionValueRels(groupId,
+					key, start, end);
+
+			return com.liferay.commerce.product.model.CPDefinitionOptionValueRelSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRelSoap[] getCPDefinitionOptionValueRels(
 		long cpDefinitionOptionRelId, int start, int end)
 		throws RemoteException {
 		try {

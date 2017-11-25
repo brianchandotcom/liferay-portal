@@ -17,6 +17,7 @@ package com.liferay.commerce.product.internal.util;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPFriendlyURLEntry;
+import com.liferay.commerce.product.search.FacetImpl;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.search.facet.util.FacetFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -140,28 +140,17 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 				facetMap.put(key, facetValues);
 			}
 
-			if (options.isEmpty()) {
-				String[] optionsArray = ArrayUtil.toStringArray(options);
-
-				searchContext.setAttribute("OPTIONS", optionsArray);
-			}
-
 			for (Map.Entry<String, List<String>> entry : facetMap.entrySet()) {
 				String fieldName = entry.getKey();
 
-				MultiValueFacet multiValueFacet = new MultiValueFacet(
-					searchContext);
-
-				multiValueFacet.setFieldName(fieldName);
+				FacetImpl facet = new FacetImpl(fieldName, searchContext);
 
 				List<String> facetValues = entry.getValue();
 
 				String[] facetValuesArray = ArrayUtil.toStringArray(
 					facetValues);
 
-				multiValueFacet.setValues(facetValuesArray);
-
-				searchContext.setAttribute(fieldName, facetValuesArray);
+				facet.select(facetValuesArray);
 
 				if (fieldName.equals("assetCategoryIds")) {
 					Stream<String> facetValuesStream = Arrays.stream(
@@ -175,7 +164,7 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 					searchContext.setAssetCategoryIds(assetCategoryIds);
 				}
 
-				facets.add(multiValueFacet);
+				facets.add(facet);
 			}
 		}
 

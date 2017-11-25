@@ -16,8 +16,12 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.search.CPDefinitionIndexer;
+import com.liferay.commerce.product.search.FacetImpl;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
+import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
@@ -25,6 +29,7 @@ import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.search.Field;
@@ -33,7 +38,6 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -42,8 +46,12 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.util.List;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -103,29 +111,42 @@ public class CPDefinitionsFacetsMVCResourceCommand
 			resourceRequest, "filterFields");
 		String filtersValues = ParamUtil.getString(
 			resourceRequest, "filtersValues");
+		String indexFieldName = _getIndexFieldName(fieldName);
+
+		String currentOptionKey = StringPool.BLANK;
+
+		if (fieldName.startsWith("OPTION_")) {
+			currentOptionKey = fieldName.replace("OPTION_", "");
+		}
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		SearchContext searchContext = buildSearchContext(resourceRequest);
 
-		_cpDefinitionHelper.getFacets(
+		List<Facet> facets = _cpDefinitionHelper.getFacets(
 			filterFields, filtersValues, searchContext);
 
-		Facet facet = new MultiValueFacet(searchContext);
+		searchContext.setFacets(facets);
 
-		if (fieldName.startsWith("OPTION_")) {
-			fieldName = fieldName.replace("OPTION_", "");
+		Facet facet = null;
 
-			fieldName = _getIndexFieldName(fieldName);
+		if (filterFields.contains(fieldName)) {
+			for (Facet curFacet : facets) {
+				if (indexFieldName.equals(curFacet.getFieldName())) {
+					facet = curFacet;
+					break;
+				}
+			}
 		}
+		else {
+			facet = new FacetImpl(indexFieldName, searchContext);
 
-		facet.setFieldName(fieldName);
-
-		searchContext.addFacet(facet);
+			searchContext.addFacet(facet);
+		}
 
 		QueryConfig queryConfig = new QueryConfig();
 
-		queryConfig.addSelectedFieldNames(fieldName);
+		queryConfig.addSelectedFieldNames(indexFieldName);
 
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(false);
@@ -140,6 +161,9 @@ public class CPDefinitionsFacetsMVCResourceCommand
 		FacetCollector facetCollector = facet.getFacetCollector();
 
 		for (TermCollector termCollector : facetCollector.getTermCollectors()) {
+
+			String label = termCollector.getTerm();
+
 			JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 			jsonObject.put("term", termCollector.getTerm());
@@ -147,8 +171,9 @@ public class CPDefinitionsFacetsMVCResourceCommand
 			if (fieldName.equals(Field.STATUS)) {
 				int status = GetterUtil.getInteger(termCollector.getTerm());
 
-				jsonObject.put(
-					"label", WorkflowConstants.getStatusLabel(status));
+				label = LanguageUtil.get(
+					themeDisplay.getLocale(),
+					WorkflowConstants.getStatusLabel(status));
 			}
 			else if (fieldName.equals(
 						CPDefinitionIndexer.FIELD_PRODUCT_TYPE_NAME)) {
@@ -158,8 +183,7 @@ public class CPDefinitionsFacetsMVCResourceCommand
 				CPType cpType = _cpTypeServicesTracker.getCPType(
 					productTypeName);
 
-				jsonObject.put(
-					"label", cpType.getLabel(themeDisplay.getLocale()));
+				label = cpType.getLabel(themeDisplay.getLocale();
 			}
 			else if (fieldName.equals(CPDefinitionIndexer.FIELD_OPTION_NAMES)) {
 				String optionKey = termCollector.getTerm();
@@ -168,14 +192,27 @@ public class CPDefinitionsFacetsMVCResourceCommand
 					themeDisplay.getScopeGroupId(), optionKey);
 
 				if (cpOption != null) {
-					jsonObject.put(
-						"label", cpOption.getTitle(themeDisplay.getLocale()));
+					label =  cpOption.getTitle(themeDisplay.getLocale());
 				}
 			}
-			else {
-				jsonObject.put("label", termCollector.getTerm());
+			else if (Validator.isNotNull(currentOptionKey)) {
+
+				List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+					_cpDefinitionOptionValueRelService.
+						getCPDefinitionOptionValueRels(
+							themeDisplay.getScopeGroupId(),
+							termCollector.getTerm(), 0, 1);
+
+				if (!cpDefinitionOptionValueRels.isEmpty()) {
+					CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+						cpDefinitionOptionValueRels.get(0);
+
+					label = cpDefinitionOptionValueRel.getTitle(
+						themeDisplay.getLocale());
+				}
 			}
 
+			jsonObject.put("label", label);
 			jsonObject.put("frequency", termCollector.getFrequency());
 
 			jsonArray.put(jsonObject);
@@ -189,12 +226,25 @@ public class CPDefinitionsFacetsMVCResourceCommand
 		ServletResponseUtil.write(response, jsonArray.toString());
 	}
 
-	private String _getIndexFieldName(String optionKey) {
-		return "ATTRIBUTE_" + optionKey + "_VALUES_NAMES";
+	private String _getIndexFieldName(String fieldName) {
+		if (fieldName.startsWith("OPTION_")) {
+			fieldName = fieldName.replace("OPTION_", "");
+
+			return "ATTRIBUTE_" + fieldName + "_VALUES_NAMES";
+		}
+
+		return fieldName;
 	}
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;
+
+	@Reference
+	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;
+
+	@Reference
+	private CPDefinitionOptionValueRelService
+		_cpDefinitionOptionValueRelService;
 
 	@Reference
 	private CPOptionService _cpOptionService;

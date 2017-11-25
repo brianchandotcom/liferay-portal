@@ -46,6 +46,7 @@ public class JavaEmptyLinesCheck extends EmptyLinesCheck {
 	private String _fixIncorrectEmptyLineInsideStatement(String content) {
 		int pos = -1;
 
+		outerLoop:
 		while (true) {
 			int previousPos = pos;
 
@@ -59,11 +60,9 @@ public class JavaEmptyLinesCheck extends EmptyLinesCheck {
 				continue;
 			}
 
-			String s = content.substring(previousPos, pos);
+			String s1 = content.substring(previousPos, pos);
 
-			if (s.endsWith("{") || (getLevel(s) == 0) ||
-				(getLevel(s, "{", "}") != 0)) {
-
+			if (getLevel(s1) <= 0) {
 				continue;
 			}
 
@@ -81,10 +80,30 @@ public class JavaEmptyLinesCheck extends EmptyLinesCheck {
 				continue;
 			}
 
-			int x = s.lastIndexOf("{");
+			int x = s1.length();
 
-			if ((x != -1) && (getLevel(s.substring(x + 1), "{", "}") == 0)) {
-				continue;
+			while (true) {
+				x = s1.lastIndexOf("(", x - 1);
+
+				if (x == -1) {
+					break;
+				}
+
+				String s2 = s1.substring(x);
+
+				if (getLevel(s2) > 0) {
+					if (getLevel(s2, "{", "}") > 0) {
+						continue outerLoop;
+					}
+
+					String s3 = StringUtil.trim(s1.substring(0, x));
+
+					if (s3.endsWith("\ttry")) {
+						continue outerLoop;
+					}
+
+					break;
+				}
 			}
 
 			return StringUtil.replaceFirst(content, "\n\n", "\n", pos);

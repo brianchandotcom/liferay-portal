@@ -22,7 +22,6 @@ import com.liferay.commerce.product.definitions.web.internal.util.CPDefinitionsP
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
-import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
 import com.liferay.item.selector.ItemSelector;
@@ -53,7 +52,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.taglib.util.CustomAttributesUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -87,30 +85,22 @@ public class CPDefinitionsDisplayContext
 		_itemSelector = itemSelector;
 	}
 
-	public String getCategorySelectorURL(String eventName) {
-		try {
-			PortletURL portletURL = PortletProviderUtil.getPortletURL(
-				httpServletRequest, AssetCategory.class.getName(),
-				PortletProvider.Action.BROWSE);
+	public String getCategorySelectorURL(String eventName) throws Exception {
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			httpServletRequest, AssetCategory.class.getName(),
+			PortletProvider.Action.BROWSE);
 
-			if (portletURL == null) {
-				return null;
-			}
-
-			portletURL.setParameter("eventName", eventName);
-			portletURL.setParameter(
-				"selectedCategories", "{selectedCategories}");
-			portletURL.setParameter("singleSelect", "{singleSelect}");
-			portletURL.setParameter("vocabularyIds", "{vocabularyIds}");
-
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-			return portletURL.toString();
-		}
-		catch (Exception e) {
+		if (portletURL == null) {
+			return null;
 		}
 
-		return null;
+		portletURL.setParameter("eventName", eventName);
+		portletURL.setParameter("selectedCategories", "{selectedCategories}");
+		portletURL.setParameter("singleSelect", "{singleSelect}");
+		portletURL.setParameter("vocabularyIds", "{vocabularyIds}");
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+		return portletURL.toString();
 	}
 
 	public String getItemSelectorUrl() {
@@ -214,47 +204,9 @@ public class CPDefinitionsDisplayContext
 		return managementBarFilterItems;
 	}
 
-	public String getNavigation() {
-		return ParamUtil.getString(httpServletRequest, "navigation", "all");
-	}
-
-	public String[] getNavigationKeys() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		List<String> navigationKeysList = new ArrayList<>();
-
-		navigationKeysList.add("all");
-
-		List<CPType> cpTypes = getCPTypes();
-
-		for (CPType cpType : cpTypes) {
-			navigationKeysList.add(cpType.getLabel(themeDisplay.getLocale()));
-		}
-
-		String[] navigationKeys = new String[navigationKeysList.size()];
-
-		navigationKeys = navigationKeysList.toArray(navigationKeys);
-
-		return navigationKeys;
-	}
-
 	@Override
 	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = super.getPortletURL();
-
-		String navigation = ParamUtil.getString(
-			httpServletRequest, "navigation");
-		String status = ParamUtil.getString(httpServletRequest, "status");
-
-		if (Validator.isNotNull(navigation)) {
-			portletURL.setParameter("navigation", getNavigation());
-		}
-
-		if (Validator.isNotNull(status)) {
-			portletURL.setParameter("status", String.valueOf(getStatus()));
-		}
 
 		String filterFields = ParamUtil.getString(
 			httpServletRequest, "filterFields");
@@ -278,16 +230,6 @@ public class CPDefinitionsDisplayContext
 		}
 
 		return portletURL;
-	}
-
-	public String getProductTypeName() {
-		String navigation = getNavigation();
-
-		if (navigation.equals("all")) {
-			return null;
-		}
-
-		return navigation;
 	}
 
 	@Override
@@ -314,44 +256,24 @@ public class CPDefinitionsDisplayContext
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setRowChecker(getRowChecker());
 
-		if (isSearch()) {
-			Sort sort = CPDefinitionsPortletUtil.getCPDefinitionSort(
-				getOrderByCol(), getOrderByType());
+		Sort sort = CPDefinitionsPortletUtil.getCPDefinitionSort(
+			getOrderByCol(), getOrderByType());
 
-			String filterFields = ParamUtil.getString(
-				httpServletRequest, "filterFields");
+		String filterFields = ParamUtil.getString(
+			httpServletRequest, "filterFields");
 
-			String filtersValues = ParamUtil.getString(
-				httpServletRequest, "filtersValues");
+		String filtersValues = ParamUtil.getString(
+			httpServletRequest, "filtersValues");
 
-			BaseModelSearchResult<CPDefinition>
-				cpDefinitionBaseModelSearchResult =
-					_cpDefinitionHelper.getCPDefinitions(
-						themeDisplay.getCompanyId(),
-						themeDisplay.getScopeGroupId(), getKeywords(),
-						filterFields, filtersValues, searchContainer.getStart(),
-						searchContainer.getEnd(), sort);
+		BaseModelSearchResult<CPDefinition> cpDefinitionBaseModelSearchResult =
+			_cpDefinitionHelper.getCPDefinitions(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+				getKeywords(), filterFields, filtersValues,
+				searchContainer.getStart(), searchContainer.getEnd(), sort);
 
-			searchContainer.setTotal(
-				cpDefinitionBaseModelSearchResult.getLength());
-			searchContainer.setResults(
-				cpDefinitionBaseModelSearchResult.getBaseModels());
-		}
-		else {
-			int total = _cpDefinitionService.getCPDefinitionsCount(
-				getScopeGroupId(), getProductTypeName(),
-				themeDisplay.getLanguageId(), getStatus());
-
-			searchContainer.setTotal(total);
-
-			List<CPDefinition> results = _cpDefinitionService.getCPDefinitions(
-				getScopeGroupId(), getProductTypeName(),
-				themeDisplay.getLanguageId(), getStatus(),
-				searchContainer.getStart(), searchContainer.getEnd(),
-				orderByComparator);
-
-			searchContainer.setResults(results);
-		}
+		searchContainer.setTotal(cpDefinitionBaseModelSearchResult.getLength());
+		searchContainer.setResults(
+			cpDefinitionBaseModelSearchResult.getBaseModels());
 
 		return searchContainer;
 	}

@@ -79,6 +79,7 @@ Import-Package: *
 Include-Resource:\
 	classes,\
 	@../tmp/lib-pre/com.liferay.portal.impl.blogs.compat.jar,\
+	@../tmp/lib-pre/com.liferay.portal.impl.document.library.compat.jar,\
 	@../tmp/lib-pre/com.liferay.portal.impl.trash.compat.jar
 Private-Package: com.liferay.*.dependencies
 -baseline: *;file=${project.dir}/.bnd/ant-baseline-cache/com.liferay.portal.impl-2.23.0.jar

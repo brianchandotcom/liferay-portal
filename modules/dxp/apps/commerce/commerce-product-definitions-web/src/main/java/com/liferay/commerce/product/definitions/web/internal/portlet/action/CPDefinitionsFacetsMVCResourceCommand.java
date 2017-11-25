@@ -161,7 +161,6 @@ public class CPDefinitionsFacetsMVCResourceCommand
 		FacetCollector facetCollector = facet.getFacetCollector();
 
 		for (TermCollector termCollector : facetCollector.getTermCollectors()) {
-
 			String label = termCollector.getTerm();
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject();
@@ -183,7 +182,7 @@ public class CPDefinitionsFacetsMVCResourceCommand
 				CPType cpType = _cpTypeServicesTracker.getCPType(
 					productTypeName);
 
-				label = cpType.getLabel(themeDisplay.getLocale();
+				label = cpType.getLabel(themeDisplay.getLocale());
 			}
 			else if (fieldName.equals(CPDefinitionIndexer.FIELD_OPTION_NAMES)) {
 				String optionKey = termCollector.getTerm();
@@ -192,11 +191,10 @@ public class CPDefinitionsFacetsMVCResourceCommand
 					themeDisplay.getScopeGroupId(), optionKey);
 
 				if (cpOption != null) {
-					label =  cpOption.getTitle(themeDisplay.getLocale());
+					label = cpOption.getTitle(themeDisplay.getLocale());
 				}
 			}
 			else if (Validator.isNotNull(currentOptionKey)) {
-
 				List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
 					_cpDefinitionOptionValueRelService.
 						getCPDefinitionOptionValueRels(
@@ -212,8 +210,8 @@ public class CPDefinitionsFacetsMVCResourceCommand
 				}
 			}
 
-			jsonObject.put("label", label);
 			jsonObject.put("frequency", termCollector.getFrequency());
+			jsonObject.put("label", label);
 
 			jsonArray.put(jsonObject);
 		}

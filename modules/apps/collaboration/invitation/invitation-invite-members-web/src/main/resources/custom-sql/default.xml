@@ -3,16 +3,12 @@
 <custom-sql>
 	<sql id="com.liferay.portal.service.persistence.UserFinder.filterByUsersGroupsGroupId">
 		<![CDATA[
+			LEFT JOIN
+				Users_Groups ON
+					(Users_Groups.groupId = ?) AND
+					(Users_Groups.userId = User_UserId)
 			WHERE
-				User_.userId NOT IN
-					(
-						SELECT
-							DISTINCT Users_Groups.userId
-						FROM
-							Users_Groups
-						WHERE
-							Users_Groups.groupId = ?
-					)
+				Users_Groups.userId IS NULL
 		]]>
 	</sql>
 </custom-sql>

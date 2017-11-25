@@ -25,24 +25,17 @@
 				COUNT(DISTINCT AnnouncementsEntry.entryId) AS COUNT_VALUE
 			FROM
 				AnnouncementsEntry
+			LEFT JOIN
+				AnnouncementsFlag ON
+					(AnnouncementsFlag.entryId = AnnouncementsEntry.entryId) AND
+					(AnnouncementsFlag.userId = ?) AND
+					(AnnouncementsFlag.value = ?)
 			WHERE
 				([$CLASS_PKS$]) AND
 				(AnnouncementsEntry.displayDate <= ? [$AND_OR_NULL_CHECK$]) AND
 				(AnnouncementsEntry.expirationDate >= ? [$AND_OR_NULL_CHECK$]) AND
 				(AnnouncementsEntry.alert = ?) AND
-				(
-					AnnouncementsEntry.entryId NOT IN
-						(
-							SELECT
-								DISTINCT AnnouncementsFlag.entryId
-							FROM
-								AnnouncementsFlag
-							WHERE
-								(AnnouncementsFlag.entryId = AnnouncementsEntry.entryId) AND
-								(AnnouncementsFlag.userId = ?) AND
-								(AnnouncementsFlag.value = ?)
-						)
-				)
+				(AnnouncementsFlag.entryId IS NULL)
 		]]>
 	</sql>
 	<sql id="com.liferay.announcements.kernel.service.persistence.AnnouncementsEntryFinder.findByDisplayDate">
@@ -83,24 +76,17 @@
 				{AnnouncementsEntry.*}
 			FROM
 				AnnouncementsEntry
+			LEFT JOIN
+				AnnouncementsFlag ON
+					(AnnouncementsFlag.entryId = AnnouncementsEntry.entryId) AND
+					(AnnouncementsFlag.userId = ?) AND
+					(AnnouncementsFlag.value = ?)
 			WHERE
 				([$CLASS_PKS$]) AND
 				(AnnouncementsEntry.displayDate <= ? [$AND_OR_NULL_CHECK$]) AND
 				(AnnouncementsEntry.expirationDate >= ? [$AND_OR_NULL_CHECK$]) AND
 				(AnnouncementsEntry.alert = ?) AND
-				(
-					AnnouncementsEntry.entryId NOT IN
-						(
-							SELECT
-								DISTINCT AnnouncementsFlag.entryId
-							FROM
-								AnnouncementsFlag
-							WHERE
-								(AnnouncementsFlag.entryId = AnnouncementsEntry.entryId) AND
-								(AnnouncementsFlag.userId = ?) AND
-								(AnnouncementsFlag.value = ?)
-						)
-				)
+				(AnnouncementsFlag.entryId IS NULL)
 			ORDER BY
 				AnnouncementsEntry.priority DESC,
 				AnnouncementsEntry.modifiedDate DESC

@@ -62,22 +62,20 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
-<div id="<portlet:namespace />productDefinitionsContainer">
+<div class="product-definitions-container" id="<portlet:namespace />productDefinitionsContainer">
 	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-		<c:if test="<%= cpDefinitionsDisplayContext.isShowInfoPanel() %>">
-			<liferay-portlet:resourceURL
-				copyCurrentRenderParameters="<%= false %>"
-				id="cpDefinitionInfoPanel"
-				var="sidebarPanelURL"
-			/>
+		<liferay-portlet:resourceURL
+			copyCurrentRenderParameters="<%= false %>"
+			id="cpDefinitionInfoPanel"
+			var="sidebarPanelURL"
+		/>
 
-			<liferay-frontend:sidebar-panel
-				resourceURL="<%= sidebarPanelURL %>"
-				searchContainerId="cpDefinitions"
-			>
-				<liferay-util:include page="/definition_info_panel.jsp" servletContext="<%= application %>" />
-			</liferay-frontend:sidebar-panel>
-		</c:if>
+		<liferay-frontend:sidebar-panel
+			resourceURL="<%= sidebarPanelURL %>"
+			searchContainerId="cpDefinitions"
+		>
+			<liferay-util:include page="/definition_info_panel.jsp" servletContext="<%= application %>" />
+		</liferay-frontend:sidebar-panel>
 
 		<div class="sidenav-content">
 			<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">

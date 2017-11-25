@@ -42,17 +42,6 @@ CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayC
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys="<%= cpDefinitionsDisplayContext.getNavigationKeys() %>"
-			portletURL="<%= cpDefinitionsDisplayContext.getPortletURL() %>"
-		/>
-
-		<liferay-frontend:management-bar-filter
-			label="status"
-			managementBarFilterItems="<%= cpDefinitionsDisplayContext.getManagementBarStatusFilterItems() %>"
-			value="<%= cpDefinitionsDisplayContext.getManagementBarStatusFilterValue() %>"
-		/>
-
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= cpDefinitionsDisplayContext.getOrderByCol() %>"
 			orderByType="<%= cpDefinitionsDisplayContext.getOrderByType() %>"
@@ -62,18 +51,16 @@ CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayC
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<c:if test="<%= cpDefinitionsDisplayContext.isShowInfoPanel() %>">
-			<liferay-frontend:management-bar-sidenav-toggler-button
-				icon="info-circle"
-				label="info"
-			/>
-		</c:if>
+		<liferay-frontend:management-bar-sidenav-toggler-button
+			icon="info-circle"
+			label="info"
+		/>
 
 		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPDefinitions();" %>' icon='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>' label='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>' />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<div class="container-fluid-1280" id="<portlet:namespace />DefinitionToolbarFilter">
+<div id="<portlet:namespace />DefinitionToolbarFilter">
 </div>
 
 <liferay-portlet:resourceURL id="cpDefinitionsFacets" var="cpDefinitionsFacetsURL">

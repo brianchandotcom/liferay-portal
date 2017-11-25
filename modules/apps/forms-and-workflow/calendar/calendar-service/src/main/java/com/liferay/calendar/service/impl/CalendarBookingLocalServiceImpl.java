@@ -1870,6 +1870,14 @@ public class CalendarBookingLocalServiceImpl
 			return CalendarBookingWorkflowConstants.STATUS_PENDING;
 		}
 
+		if ((newParentStatus ==
+				CalendarBookingWorkflowConstants.STATUS_MAYBE) ||
+			(newParentStatus ==
+				CalendarBookingWorkflowConstants.STATUS_DENIED)) {
+
+			return oldChildStatus;
+		}
+
 		if (newParentStatus !=
 				CalendarBookingWorkflowConstants.STATUS_APPROVED) {
 

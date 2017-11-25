@@ -1,8 +1,12 @@
 .portlet-commerce-product-definitions {
+	.product-definitions-container{
+		padding-top: 2rem;
+	}
+
 	.commerce-product-definition-description, .commerce-product-definition-title, .commerce-product-definition-url-title, .commerce-product-definition-meta-title, .commerce-product-definition-meta-keywords, .commerce-product-definition-meta-description {
 		.input-localized-content {
 			display: none;
-		}
+	 	}
 	}
 
 	#carousel-product-definitions {
@@ -31,7 +35,7 @@
 			right: 0;
 			text-align: center;
 			top: 5px;
-		}
+	 	}
 
 		dt.h5 {
 			color: #6B6C7E;
@@ -60,5 +64,65 @@
 
 	.product-detail-header {
 		background-color: #FFF;
+	}
+
+	.management-bar{
+		margin-bottom: 0;
+	}
+}
+
+.definition-toolbar-filter{
+	background-color: #FFF;
+
+	.label{
+		margin-right: 10px;
+	}
+
+	.filter-selector{
+		padding-bottom: 1rem;
+		padding-top: 1rem;
+
+		&.form-inline{
+			margin-bottom: 0px;
+		}
+
+		label{
+			font-weight: normal;
+		}
+
+		select{
+			margin-left: 1rem;
+		}
+
+		.filter-selector-select{
+			margin-right: 1rem;
+		}
+
+		.filter-select{
+			margin-right: 1rem;
+		}
+
+		.categoriesselector {
+			display: inline-block;
+			vertical-align: middle;
+
+			.categoriesselector-content {
+				ul {
+					margin-bottom: 0;
+				}
+			}
+	 	}
+	}
+
+	.filter-list{
+		border-color: #F1F2F5;
+		border-style: solid;
+		border-width: 1px 0 0 0;
+		padding-bottom: 1rem;
+		padding-top: 1rem;
+
+		p{
+			margin-bottom: 0;
+		}
 	}
 }

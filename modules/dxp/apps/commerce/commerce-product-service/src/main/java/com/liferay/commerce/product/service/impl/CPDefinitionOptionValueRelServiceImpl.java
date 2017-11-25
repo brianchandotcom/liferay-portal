@@ -135,6 +135,15 @@ public class CPDefinitionOptionValueRelServiceImpl
 	}
 
 	@Override
+	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
+			long groupId, String key, int start, int end)
+		throws PortalException {
+
+		return cpDefinitionOptionValueRelLocalService.
+			getCPDefinitionOptionValueRels(key, start, end);
+	}
+
+	@Override
 	public int getCPDefinitionOptionValueRelsCount(long cpDefinitionOptionRelId)
 		throws PortalException {
 

@@ -234,6 +234,13 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 	}
 
 	@Override
+	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
+		String key, int start, int end) {
+
+		return cpDefinitionOptionValueRelPersistence.findBykey(key, start, end);
+	}
+
+	@Override
 	public int getCPDefinitionOptionValueRelsCount(
 		long cpDefinitionOptionRelId) {
 

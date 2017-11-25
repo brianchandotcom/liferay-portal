@@ -15,9 +15,7 @@ import templates from './DefinitionToolbarFilter.soy';
  */
 class DefinitionToolbarFilter extends Component {
 
-	constructor(opt_config, opt_parentElement) {
-		super(opt_config, opt_parentElement)
-
+	created() {
 		this._buildFilters()
 	}
 
@@ -41,7 +39,7 @@ class DefinitionToolbarFilter extends Component {
 						singleSelect: true,
 						portletURL: this.categorySelectorURL,
 						vocabularyIds: this.vocabularyIds,
-						title: 'Select Category'
+						title: Liferay.Language.get('select-category')
 					};
 
 					this.categoriesSelector_ = new Liferay.AssetTaglibCategoriesSelector(config);
@@ -76,8 +74,33 @@ class DefinitionToolbarFilter extends Component {
 		this._loadOptionValues();
 	}
 
+	_getLabel(selection) {
+		if (this._currentSelection == "optionsNames") {
+
+			return Liferay.Language.get('option');
+		}
+		else if (this._currentSelection == "assetCategoryIds") {
+
+			return Liferay.Language.get('categorty');
+		}
+		else if (this._currentSelection == "productTypeName") {
+
+			return Liferay.Language.get('product-type');
+		}
+		else if (this._currentSelection == "status") {
+
+			return Liferay.Language.get('status');
+		}
+
+		return '';
+	}
+
 	_handleAddFilter() {
 		var filters = this._filters;
+
+		var field = this._currentSelection;
+		var label = '';
+		var value = '';
 
 		if (this._currentSelection == "optionsNames") {
 			var optionValueSelect = this.element.querySelector('#optionValues');
@@ -86,27 +109,18 @@ class DefinitionToolbarFilter extends Component {
 
 			var currentOptionValue = optionValueSelect.options[optionValueSelect.selectedIndex];
 
-			var label = currentOptionValue.getAttribute('data-label');
+			label = currentOptionValue.getAttribute('data-label');
 
-			filters.push(
-				{
-					field: "OPTION_" + this._currentOption,
-					value: optionValue,
-					label: label
-				}
-			);
+			field =  "OPTION_" + this._currentOption;
+
+			value = optionValue;
 		}
 		else if (this._currentSelection == "assetCategoryIds") {
 			var category = this.categoriesSelector_.entries.values[0];
 
-			filters.push(
-				{
-					field: this._currentSelection,
-					value: category.categoryId,
-					label: category.value
-				}
-			);
+			label = category.value;
 
+			value =  category.categoryId;
 		}
 		else {
 			var currentSelect = this.element.querySelector('#' + this._currentSelection);
@@ -115,16 +129,20 @@ class DefinitionToolbarFilter extends Component {
 
 			var currentOption = currentSelect.options[currentSelect.selectedIndex];
 
-			var label = currentOption.getAttribute('data-label');
+			label = currentOption.getAttribute('data-label');
 
-			filters.push(
-				{
-					field: this._currentSelection,
-					value: fieldValue,
-					label: label
-				}
-			);
+			value =  fieldValue;
 		}
+
+		label =  this._getLabel(this._currentSelection) + ' : ' + label;
+
+		filters.push(
+			{
+				field: field,
+				label: label,
+				value: value
+			}
+		);
 
 		this._filters = filters;
 
@@ -177,6 +195,7 @@ class DefinitionToolbarFilter extends Component {
 
 		filterFields.forEach(
 			function(field, index) {
+
 				filters.push(
 					{
 						field:field,

@@ -313,6 +313,9 @@
 		<finder name="CPDefinitionOptionRelId" return-type="Collection">
 			<finder-column name="CPDefinitionOptionRelId" />
 		</finder>
+		<finder name="key" return-type="Collection">
+			<finder-column name="key" />
+		</finder>
 		<finder name="C_K" return-type="CPDefinitionOptionValueRel" unique="true">
 			<finder-column name="CPDefinitionOptionRelId" />
 			<finder-column name="key" />

@@ -56,7 +56,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Assert;
@@ -110,6 +113,45 @@ public class DLFileEntryFinderTest {
 			_repository.getRepositoryId(), "-NewRepository", serviceContext);
 
 		_newRepositoryFolder = (Folder)objects[0];
+	}
+
+	@Test
+	public void testCountBy_G_U_R_F_M_FileVersionUserChangedByWorkflow()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		FileEntry fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
+			_user.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), "FE.txt", false, serviceContext);
+
+		DLFileEntry dlFileEntry =
+			((LiferayFileEntry)fileEntry).getDLFileEntry();
+
+		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
+
+		DLFileEntryLocalServiceUtil.updateStatus(
+			TestPropsValues.getUserId(), dlFileVersion.getFileVersionId(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext,
+			new HashMap<String, Serializable>());
+
+		QueryDefinition<DLFileEntry> queryDefinition = new QueryDefinition<>();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		List<Long> repositoryIds = ListUtil.toList(
+			new long[] {_group.getGroupId()});
+
+		List<Long> folderIds = ListUtil.toList(
+			new long[] {DLFolderConstants.DEFAULT_PARENT_FOLDER_ID});
+
+		Assert.assertEquals(
+			1,
+			doCountBy_G_U_R_F_M(
+				_user.getUserId(), repositoryIds, folderIds, null,
+				queryDefinition));
 	}
 
 	@Test
@@ -914,6 +956,48 @@ public class DLFileEntryFinderTest {
 			doCountBy_G_U_R_F_M_NewRepository(
 				_defaultRepositoryFolder.getUserId(), ContentTypes.TEXT_PLAIN,
 				queryDefinition));
+	}
+
+	@Test
+	public void testFindBy_G_U_R_F_M_FileVersionUserChangedByWorkflow()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		FileEntry fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
+			_user.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), "FE.txt", false, serviceContext);
+
+		DLFileEntry dlFileEntry =
+			((LiferayFileEntry)fileEntry).getDLFileEntry();
+
+		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
+
+		DLFileEntryLocalServiceUtil.updateStatus(
+			TestPropsValues.getUserId(), dlFileVersion.getFileVersionId(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext,
+			new HashMap<String, Serializable>());
+
+		QueryDefinition<DLFileEntry> queryDefinition = new QueryDefinition<>();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		List<Long> repositoryIds = ListUtil.toList(
+			new long[] {_group.getGroupId()});
+
+		List<Long> folderIds = ListUtil.toList(
+			new long[] {DLFolderConstants.DEFAULT_PARENT_FOLDER_ID});
+
+		List<DLFileEntry> dlFileEntries = doFindBy_G_U_R_F_M(
+			_user.getUserId(), repositoryIds, folderIds, null, queryDefinition);
+
+		Assert.assertEquals(dlFileEntries.toString(), 1, dlFileEntries.size());
+
+		dlFileEntry = dlFileEntries.get(0);
+
+		Assert.assertEquals("FE.txt", dlFileEntry.getTitle());
 	}
 
 	@Test

@@ -65,6 +65,14 @@ public class SitemapImpl implements Sitemap {
 
 		locElement.addText(encodeXML(url));
 
+		if (modifiedDate != null) {
+			Element modifiedDateElement = urlElement.addElement("lastmod");
+
+			DateFormat iso8601DateFormat = DateUtil.getISO8601Format();
+
+			modifiedDateElement.addText(iso8601DateFormat.format(modifiedDate));
+		}
+
 		if (typeSettingsProperties == null) {
 			if (Validator.isNotNull(
 					PropsValues.SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY)) {
@@ -118,14 +126,6 @@ public class SitemapImpl implements Sitemap {
 				priorityElement.addText(
 					PropsValues.SITES_SITEMAP_DEFAULT_PRIORITY);
 			}
-		}
-
-		if (modifiedDate != null) {
-			Element modifiedDateElement = urlElement.addElement("lastmod");
-
-			DateFormat iso8601DateFormat = DateUtil.getISO8601Format();
-
-			modifiedDateElement.addText(iso8601DateFormat.format(modifiedDate));
 		}
 
 		if (alternateURLs != null) {

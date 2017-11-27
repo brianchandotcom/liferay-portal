@@ -29,19 +29,14 @@ public class ServiceTrackerUtil {
 		BundleContext bundleContext, Class<SR> clazz, String filterString,
 		ServiceTrackerCustomizer<SR, TS> serviceTrackerCustomizer) {
 
-		String finalFilterString;
-
 		if (filterString != null) {
 			if (clazz != null) {
-				finalFilterString = String.format(
+				filterString = String.format(
 					"(&(objectClass=" + clazz.getName() + ")%s)", filterString);
-			}
-			else {
-				finalFilterString = filterString;
 			}
 
 			try {
-				Filter filter = bundleContext.createFilter(finalFilterString);
+				Filter filter = bundleContext.createFilter(filterString);
 
 				return new ServiceTracker<>(
 					bundleContext, filter, serviceTrackerCustomizer);

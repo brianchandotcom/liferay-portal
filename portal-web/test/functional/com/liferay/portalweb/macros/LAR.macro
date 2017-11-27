@@ -476,7 +476,7 @@
 			<var name="key_menuItem" value="Export Templates" />
 		</execute>
 
-		<execute function="Click" locator1="ExportImport#PLUS" />
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${exportTemplateName}" />

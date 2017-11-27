@@ -34,6 +34,7 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -531,7 +532,12 @@ public class LibraryReferenceTest {
 	private static final Set<String> _eclipseModuleSourceDirs = new HashSet<>();
 	private static final Set<String> _excludeJars = new HashSet<>();
 	private static final Set<String> _gitIgnoreJars = new HashSet<>();
-	private static final List<String> _intellijFileNames = new ArrayList<>();
+	private static final List<String> _intellijFileNames = Arrays.asList(
+		"portal-impl/portal-impl.iml", "portal-kernel/portal-kernel.iml",
+		"portal-test-integration/portal-test-integration.iml",
+		"portal-test/portal-test.iml", "portal-web/portal-web.iml",
+		"util-bridges/util-bridges.iml", "util-java/util-java.iml",
+		"util-slf4j/util-slf4j.iml", "util-taglib/util-taglib.iml");
 	private static final Map<String, List<String>>
 		_intellijModuleSourceModules = new HashMap<>();
 	private static final Set<String> _libDependencyJars = new HashSet<>();
@@ -543,18 +549,5 @@ public class LibraryReferenceTest {
 	private static Path _portalPath;
 	private static final Set<String> _versionsExtJars = new HashSet<>();
 	private static final Set<String> _versionsJars = new HashSet<>();
-
-	static {
-		_intellijFileNames.add("portal-impl/portal-impl.iml");
-		_intellijFileNames.add("portal-kernel/portal-kernel.iml");
-		_intellijFileNames.add(
-			"portal-test-integration/portal-test-integration.iml");
-		_intellijFileNames.add("portal-test/portal-test.iml");
-		_intellijFileNames.add("portal-web/portal-web.iml");
-		_intellijFileNames.add("util-bridges/util-bridges.iml");
-		_intellijFileNames.add("util-java/util-java.iml");
-		_intellijFileNames.add("util-slf4j/util-slf4j.iml");
-		_intellijFileNames.add("util-taglib/util-taglib.iml");
-	}
 
 }

@@ -182,18 +182,18 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public JSONArray getLayoutColumnsJSONArray() throws Exception {
-		JSONArray layoutBlocksJSONArray = JSONFactoryUtil.createJSONArray();
+		JSONArray layoutColumnsJSONArray = JSONFactoryUtil.createJSONArray();
 
-		layoutBlocksJSONArray.put(_getLayoutsJSONArray(0));
+		layoutColumnsJSONArray.put(_getLayoutsJSONArray(0));
 
 		if (getSelPlid() == LayoutConstants.DEFAULT_PLID) {
-			return layoutBlocksJSONArray;
+			return layoutColumnsJSONArray;
 		}
 
 		Layout selLayout = getSelLayout();
 
 		if (selLayout == null) {
-			return layoutBlocksJSONArray;
+			return layoutColumnsJSONArray;
 		}
 
 		List<Layout> layouts = selLayout.getAncestors();
@@ -201,14 +201,14 @@ public class LayoutsAdminDisplayContext {
 		Collections.reverse(layouts);
 
 		for (Layout layout : layouts) {
-			layoutBlocksJSONArray.put(
+			layoutColumnsJSONArray.put(
 				_getLayoutsJSONArray(layout.getLayoutId()));
 		}
 
-		layoutBlocksJSONArray.put(
+		layoutColumnsJSONArray.put(
 			_getLayoutsJSONArray(selLayout.getLayoutId()));
 
-		return layoutBlocksJSONArray;
+		return layoutColumnsJSONArray;
 	}
 
 	public List<LayoutDescription> getLayoutDescriptions() {

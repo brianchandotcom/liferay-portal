@@ -559,33 +559,18 @@ public class ClusterSchedulerEngine
 				return;
 			}
 			catch (Exception e) {
-				StringBundler sb = new StringBundler(7);
+				StringBundler sb = new StringBundler(5);
 
 				sb.append(
 					"Unable to load memory clustered jobs from master in ");
 				sb.append(_callMasterTimeout);
 				sb.append(" seconds, you might need to increase value set to ");
 				sb.append("\"clusterable.advice.call.master.timeout\", ");
-				sb.append("will retry in ");
-				sb.append(_callMasterTimeout);
-				sb.append(" seconds");
+				sb.append("will retry again");
 
 				_log.error(sb.toString(), e);
 			}
 
-			try {
-				Thread.sleep(_callMasterTimeout);
-			}
-			catch (InterruptedException ie) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Give up the master call retry waiting due to " +
-							"interruption",
-						ie);
-				}
-
-				return;
-			}
 		}
 	}
 

@@ -96,22 +96,18 @@ public class LayoutsAdminDisplayContext {
 			PortletRequest.RENDER_PHASE);
 
 		addLayoutURL.setParameter("mvcPath", "/add_layout.jsp");
+		addLayoutURL.setParameter("redirect", _themeDisplay.getURLCurrent());
+		addLayoutURL.setParameter("backURL", _themeDisplay.getURLCurrent());
+		addLayoutURL.setParameter("groupId", String.valueOf(getSelGroupId()));
 
 		if (selPlid >= LayoutConstants.DEFAULT_PLID) {
 			addLayoutURL.setParameter("selPlid", String.valueOf(selPlid));
 		}
 
-		addLayoutURL.setParameter("groupId", String.valueOf(getSelGroupId()));
-
 		if (privateLayout != null) {
 			addLayoutURL.setParameter(
 				"privateLayout", String.valueOf(privateLayout));
 		}
-
-		addLayoutURL.setParameter(
-			"backURL",
-			PortalUtil.getCurrentURL(
-				PortalUtil.getHttpServletRequest(_liferayPortletRequest)));
 
 		return addLayoutURL;
 	}

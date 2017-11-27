@@ -4,7 +4,6 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "3.5.0"
 	provided group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.3.0-20171013.044758-4"
 	provided group: "com.liferay", name: "com.liferay.frontend.taglib.soy", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.journal.api", version: "3.0.0-20170601.182427-18"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.35.0"
 	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "2.0.0"

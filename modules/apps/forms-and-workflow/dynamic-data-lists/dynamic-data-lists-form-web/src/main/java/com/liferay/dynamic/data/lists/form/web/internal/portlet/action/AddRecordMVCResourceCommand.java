@@ -22,33 +22,21 @@ import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService;
+import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormContextDeserializer;
+import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormContextDeserializerRequest;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
-import com.liferay.dynamic.data.mapping.model.Value;
-import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-import java.util.Locale;
-import java.util.Map;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -58,6 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
+ * @author Harlan Bruno
  */
 @Component(
 	immediate = true,
@@ -68,57 +57,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCResourceCommand.class
 )
 public class AddRecordMVCResourceCommand extends BaseMVCResourceCommand {
-
-	protected DDMFormFieldValue createDDMFormFieldValue(
-		Map<String, DDMFormField> ddmFormFieldsMap, Locale siteDefaultLocale,
-		JSONObject jsonObject) {
-
-		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
-
-		ddmFormFieldValue.setInstanceId(
-			jsonObject.getString("instanceId", StringPool.BLANK));
-
-		String name = jsonObject.getString("name", StringPool.BLANK);
-
-		ddmFormFieldValue.setName(name);
-
-		DDMFormField ddmFormField = ddmFormFieldsMap.get(name);
-
-		Value value = null;
-
-		if (ddmFormField.isLocalizable()) {
-			value = createLocalizedValue(
-				siteDefaultLocale, jsonObject.getJSONObject("value"));
-		}
-		else {
-			value = new UnlocalizedValue(
-				jsonObject.getString("value", StringPool.BLANK));
-		}
-
-		ddmFormFieldValue.setValue(value);
-
-		return ddmFormFieldValue;
-	}
-
-	protected void createDDMFormFieldValues(
-		DDMFormValues ddmFormValues, JSONObject jsonObject) {
-
-		JSONArray jsonArray = jsonObject.getJSONArray("fieldValues");
-
-		if (jsonArray == null) {
-			return;
-		}
-
-		Map<String, DDMFormField> ddmFormFieldsMap = getDDMFormFieldsMap(
-			ddmFormValues);
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			ddmFormValues.addDDMFormFieldValue(
-				createDDMFormFieldValue(
-					ddmFormFieldsMap, ddmFormValues.getDefaultLocale(),
-					jsonArray.getJSONObject(i)));
-		}
-	}
 
 	protected DDMFormValues createDDMFormValues(
 			DDLRecordSet recordSet, ResourceRequest resourceRequest)
@@ -133,31 +71,9 @@ public class AddRecordMVCResourceCommand extends BaseMVCResourceCommand {
 
 		DDMForm ddmForm = getDDMForm(recordSet);
 
-		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
-
-		setDDMFormValuesLocales(
-			_portal.getSiteDefaultLocale(recordSet.getGroupId()),
-			ddmFormValues);
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			serializedDDMFormValues);
-
-		createDDMFormFieldValues(ddmFormValues, jsonObject);
-
-		return ddmFormValues;
-	}
-
-	protected Value createLocalizedValue(
-		Locale siteDefaultLocale, JSONObject jsonObject) {
-
-		Value value = new LocalizedValue(siteDefaultLocale);
-
-		String valueString = jsonObject.getString(
-			LanguageUtil.getLanguageId(siteDefaultLocale), StringPool.BLANK);
-
-		value.addString(siteDefaultLocale, valueString);
-
-		return value;
+		return _ddlFormBuilderContextToDDMFormValues.deserialize(
+			DDMFormContextDeserializerRequest.with(
+				ddmForm, serializedDDMFormValues));
 	}
 
 	protected ServiceContext createServiceContext(
@@ -222,20 +138,11 @@ public class AddRecordMVCResourceCommand extends BaseMVCResourceCommand {
 		return ddmStructure.getDDMForm();
 	}
 
-	protected Map<String, DDMFormField> getDDMFormFieldsMap(
-		DDMFormValues ddmFormValues) {
-
-		DDMForm ddmForm = ddmFormValues.getDDMForm();
-
-		return ddmForm.getDDMFormFieldsMap(true);
-	}
-
-	protected void setDDMFormValuesLocales(
-		Locale siteDefaultLocale, DDMFormValues ddmFormValues) {
-
-		ddmFormValues.addAvailableLocale(siteDefaultLocale);
-		ddmFormValues.setDefaultLocale(siteDefaultLocale);
-	}
+	@Reference(
+		target = "(dynamic.data.mapping.form.builder.context.deserializer.type=formValues)"
+	)
+	private DDMFormContextDeserializer<DDMFormValues>
+		_ddlFormBuilderContextToDDMFormValues;
 
 	@Reference
 	private DDLRecordService _ddlRecordService;
@@ -245,11 +152,5 @@ public class AddRecordMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private DDLRecordVersionLocalService _ddlRecordVersionLocalService;
-
-	@Reference
-	private JSONFactory _jsonFactory;
-
-	@Reference
-	private Portal _portal;
 
 }

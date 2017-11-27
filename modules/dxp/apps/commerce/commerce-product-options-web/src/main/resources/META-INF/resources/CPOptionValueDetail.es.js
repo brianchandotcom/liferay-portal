@@ -44,7 +44,7 @@ class CPOptionValueDetail extends Component {
 
 				globalEval.runScriptsInElement(optionValueDetail);
 
-				var title = optionValueDetail.querySelector('#' + that.namespace + 'title');
+				var title = optionValueDetail.querySelector('#' + that.namespace + 'optionValueTitle');
 
 				if (title) {
 					title.addEventListener(

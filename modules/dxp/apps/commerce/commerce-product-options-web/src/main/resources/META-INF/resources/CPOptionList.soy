@@ -42,7 +42,7 @@
 				{if $currentCPOptionId == '0'}
 					{call .optionRow}
 						{param id: '0' /}
-						{param title: $newOptionTitle ? '[ New Option ]' : $newOptionTitle /}
+						{param title: $newOptionTitle /}
 						{param selected: true /}
 						{param showButton: false /}
 					{/call}
@@ -96,7 +96,15 @@
 			{/if}
 		</td>
 		<td class="table-cell-content">
-			{$title}
+			{if $id != 0}
+				{$title}
+			{else}
+				 {if $title == ''}
+					[{msg desc=""}new-option{/msg}]
+				{else}
+					{$title}
+				{/if}
+			{/if}
 		</td>
 		<td>
 			{if $showButton}

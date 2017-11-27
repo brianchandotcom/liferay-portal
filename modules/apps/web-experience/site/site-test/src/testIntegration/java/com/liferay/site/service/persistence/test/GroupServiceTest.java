@@ -539,6 +539,82 @@ public class GroupServiceTest {
 	}
 
 	@Test
+	public void testGetGlobalSiteDefaultLocale() throws Exception {
+		Company company = CompanyLocalServiceUtil.getCompany(
+			_group.getCompanyId());
+
+		Assert.assertEquals(
+			company.getLocale(),
+			PortalUtil.getSiteDefaultLocale(company.getGroupId()));
+	}
+
+	@Test
+	public void testGetGlobalSiteDefaultLocaleWhenCompanyLocaleModified()
+		throws Exception {
+
+		Company company = CompanyLocalServiceUtil.getCompany(
+			_group.getCompanyId());
+
+		User defaultUser = company.getDefaultUser();
+
+		String languageId = defaultUser.getLanguageId();
+
+		try {
+			defaultUser.setLanguageId(
+				LanguageUtil.getLanguageId(LocaleUtil.BRAZIL));
+
+			defaultUser = UserLocalServiceUtil.updateUser(defaultUser);
+
+			Assert.assertEquals(
+				LocaleUtil.BRAZIL,
+				PortalUtil.getSiteDefaultLocale(company.getGroupId()));
+		}
+		finally {
+			defaultUser.setLanguageId(languageId);
+
+			UserLocalServiceUtil.updateUser(defaultUser);
+		}
+	}
+
+	@Test
+	public void testGetSiteDefaultInheritLocale() throws Exception {
+		Company company = CompanyLocalServiceUtil.getCompany(
+			_group.getCompanyId());
+
+		Assert.assertEquals(
+			company.getLocale(),
+			PortalUtil.getSiteDefaultLocale(_group.getGroupId()));
+	}
+
+	@Test
+	public void testGetSiteDefaultInheritLocaleWhenCompanyLocaleModified()
+		throws Exception {
+
+		Company company = CompanyLocalServiceUtil.getCompany(
+			_group.getCompanyId());
+
+		User defaultUser = company.getDefaultUser();
+
+		String languageId = defaultUser.getLanguageId();
+
+		try {
+			defaultUser.setLanguageId(
+				LanguageUtil.getLanguageId(LocaleUtil.CHINA));
+
+			defaultUser = UserLocalServiceUtil.updateUser(defaultUser);
+
+			Assert.assertEquals(
+				LocaleUtil.CHINA,
+				PortalUtil.getSiteDefaultLocale(_group.getGroupId()));
+		}
+		finally {
+			defaultUser.setLanguageId(languageId);
+
+			UserLocalServiceUtil.updateUser(defaultUser);
+		}
+	}
+
+	@Test
 	public void testGroupHasCurrentPageScopeDescriptiveName() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 

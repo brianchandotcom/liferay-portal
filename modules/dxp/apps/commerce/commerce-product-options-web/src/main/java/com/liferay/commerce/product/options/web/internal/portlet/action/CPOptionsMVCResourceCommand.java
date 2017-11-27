@@ -24,15 +24,18 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.portlet.ResourceRequest;
@@ -64,16 +67,22 @@ public class CPOptionsMVCResourceCommand extends BaseMVCResourceCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		String keyword = ParamUtil.getString(resourceRequest, "keyword");
+
+		Sort sort = SortFactoryUtil.create("title", Sort.STRING_TYPE, false);
+
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		List<CPOption> cpOptions = _cpOptionService.getCPOptions(
-			themeDisplay.getScopeGroupId(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+		BaseModelSearchResult<CPOption> cpOptionsSearchResult =
+			_cpOptionService.searchCPOptions(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+				keyword, QueryUtil.ALL_POS, QueryUtil.ALL_POS, sort);
 
-		for (CPOption cpOption : cpOptions) {
+		for (CPOption cpOption : cpOptionsSearchResult.getBaseModels()) {
 			JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 			jsonObject.put("cpOptionId", cpOption.getCPOptionId());
+			jsonObject.put("key", cpOption.getKey());
 
 			jsonObject.put(
 				"title", cpOption.getTitle(themeDisplay.getLanguageId()));

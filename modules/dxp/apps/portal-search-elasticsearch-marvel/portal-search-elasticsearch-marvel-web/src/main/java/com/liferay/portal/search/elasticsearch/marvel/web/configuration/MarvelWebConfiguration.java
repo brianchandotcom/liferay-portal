@@ -32,22 +32,25 @@ public interface MarvelWebConfiguration {
 
 	@Meta.AD(
 		deflt = "http://localhost:5601", description = "kibana-url-help",
-		required = false
+		name = "kibana-url", required = false
 	)
 	public String kibanaURL();
 
-	@Meta.AD(description = "proxy-servlet-log-enable-help", required = false)
+	@Meta.AD(
+		description = "proxy-servlet-log-enable-help",
+		name = "proxy-servlet-log-enable", required = false
+	)
 	public boolean proxyServletLogEnable();
 
 	@Meta.AD(
 		deflt = "liferay", description = "shield-password-help",
-		required = false
+		name = "shield-password", required = false
 	)
 	public String shieldPassword();
 
 	@Meta.AD(
 		deflt = "liferay", description = "shield-username-help",
-		required = false
+		name = "shield-username", required = false
 	)
 	public String shieldUserName();
 

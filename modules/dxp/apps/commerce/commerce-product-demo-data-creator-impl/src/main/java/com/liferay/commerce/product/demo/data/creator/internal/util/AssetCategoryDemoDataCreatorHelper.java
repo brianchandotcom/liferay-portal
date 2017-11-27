@@ -16,7 +16,6 @@ package com.liferay.commerce.product.demo.data.creator.internal.util;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
 import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -46,14 +45,14 @@ public class AssetCategoryDemoDataCreatorHelper
 
 	public void addAssetCategories(
 			long userId, long groupId, long vocabularyId, long parentCategoryId,
-			String layoutUuid, JSONArray jsonArray)
+			JSONArray jsonArray)
 		throws Exception {
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject categoryJSONObject = jsonArray.getJSONObject(i);
 
 			AssetCategory assetCategory = getAssetCategory(
-				userId, groupId, parentCategoryId, vocabularyId, layoutUuid,
+				userId, groupId, parentCategoryId, vocabularyId,
 				categoryJSONObject);
 
 			JSONArray categoriesJSONArray = categoryJSONObject.getJSONArray(
@@ -64,8 +63,7 @@ public class AssetCategoryDemoDataCreatorHelper
 
 				addAssetCategories(
 					userId, groupId, vocabularyId,
-					assetCategory.getCategoryId(), layoutUuid,
-					categoriesJSONArray);
+					assetCategory.getCategoryId(), categoriesJSONArray);
 			}
 		}
 	}
@@ -95,7 +93,7 @@ public class AssetCategoryDemoDataCreatorHelper
 
 	protected AssetCategory getAssetCategory(
 			long userId, long groupId, long parentCategoryId, long vocabularyId,
-			String layoutUuid, JSONObject categoryJSONObject)
+			JSONObject categoryJSONObject)
 		throws Exception {
 
 		String key = categoryJSONObject.getString("key");
@@ -132,10 +130,6 @@ public class AssetCategoryDemoDataCreatorHelper
 		_cpFriendlyURLEntryLocalService.addCPFriendlyURLEntries(
 			groupId, serviceContext.getCompanyId(), AssetCategory.class,
 			assetCategory.getCategoryId(), titleMap);
-
-		_cpDisplayLayoutLocalService.addCPDisplayLayout(
-			AssetCategory.class, assetCategory.getCategoryId(), layoutUuid,
-			serviceContext);
 
 		JSONArray imagesJSONArray = categoryJSONObject.getJSONArray("images");
 
@@ -182,9 +176,6 @@ public class AssetCategoryDemoDataCreatorHelper
 	@Reference
 	private CPAttachmentFileEntryDemoDataCreatorHelper
 		_cpAttachmentFileEntryDemoDataCreatorHelper;
-
-	@Reference
-	private CPDisplayLayoutLocalService _cpDisplayLayoutLocalService;
 
 	@Reference
 	private CPFriendlyURLEntryLocalService _cpFriendlyURLEntryLocalService;

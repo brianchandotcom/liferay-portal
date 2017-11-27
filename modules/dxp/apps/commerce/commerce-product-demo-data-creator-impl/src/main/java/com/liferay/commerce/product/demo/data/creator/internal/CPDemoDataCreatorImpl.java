@@ -21,7 +21,6 @@ import com.liferay.commerce.product.demo.data.creator.internal.util.CPDefinition
 import com.liferay.commerce.product.demo.data.creator.internal.util.CPOptionCategoryDemoDataCreatorHelper;
 import com.liferay.commerce.product.demo.data.creator.internal.util.CPOptionDemoDataCreatorHelper;
 import com.liferay.commerce.product.demo.data.creator.internal.util.CPSpecificationOptionDemoDataCreatorHelper;
-import com.liferay.commerce.product.demo.data.creator.internal.util.LayoutDemoDataCreatorHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import org.osgi.service.component.annotations.Component;
@@ -47,7 +46,6 @@ public class CPDemoDataCreatorImpl implements CPDemoDataCreator {
 	@Override
 	public void delete(long userId, long groupId) throws PortalException {
 		_assetVocabularyDemoDataCreatorHelper.deleteAssetVocabularies();
-		_layoutDemoDataCreatorHelper.deleteLayouts(userId, groupId);
 
 		_cpDefinitionDemoDataCreatorHelper.deleteCPDefinitions();
 		_cpOptionCategoryDemoDataCreatorHelper.deleteCPOptionCategories();
@@ -84,8 +82,5 @@ public class CPDemoDataCreatorImpl implements CPDemoDataCreator {
 	@Reference
 	private CPSpecificationOptionDemoDataCreatorHelper
 		_cpSpecificationOptionDemoDataCreatorHelper;
-
-	@Reference
-	private LayoutDemoDataCreatorHelper _layoutDemoDataCreatorHelper;
 
 }

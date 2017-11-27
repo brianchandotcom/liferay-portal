@@ -17,7 +17,6 @@ package com.liferay.commerce.product.demo.data.creator.internal.util;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -47,12 +46,6 @@ public class AssetVocabularyDemoDataCreatorHelper
 
 		ServiceContext serviceContext = getServiceContext(userId, groupId);
 
-		// Layout
-
-		String layoutUuid = _layoutDemoDataCreatorHelper.getLayoutUuid(
-			userId, groupId, "Categories",
-			CPPortletKeys.CP_CATEGORY_CONTENT_WEB);
-
 		// Asset vocabularies
 
 		JSONArray assetVocabulariesJSONArray = getAssetVocabulariesJSONArray();
@@ -61,14 +54,12 @@ public class AssetVocabularyDemoDataCreatorHelper
 			JSONObject assetVocabularyJSONObject =
 				assetVocabulariesJSONArray.getJSONObject(i);
 
-			createAssetVocabulary(
-				assetVocabularyJSONObject, layoutUuid, serviceContext);
+			createAssetVocabulary(assetVocabularyJSONObject, serviceContext);
 		}
 	}
 
 	public AssetVocabulary createAssetVocabulary(
-			JSONObject assetVocabularyJSONObject, String layoutUuid,
-			ServiceContext serviceContext)
+			JSONObject assetVocabularyJSONObject, ServiceContext serviceContext)
 		throws Exception {
 
 		String title = assetVocabularyJSONObject.getString("vocabulary");
@@ -100,7 +91,7 @@ public class AssetVocabularyDemoDataCreatorHelper
 		_assetCategoryDemoDataCreatorHelper.addAssetCategories(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			assetVocabulary.getVocabularyId(),
-			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, layoutUuid,
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			categoriesJSONArray);
 
 		return assetVocabulary;
@@ -157,8 +148,5 @@ public class AssetVocabularyDemoDataCreatorHelper
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
-
-	@Reference
-	private LayoutDemoDataCreatorHelper _layoutDemoDataCreatorHelper;
 
 }

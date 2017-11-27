@@ -14,12 +14,10 @@
 
 package com.liferay.commerce.product.demo.data.creator.internal.util;
 
-import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
-import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -66,15 +64,8 @@ public class CPDefinitionDemoDataCreatorHelper
 
 			String title = productJSONObject.getString("title");
 			String description = productJSONObject.getString("description");
-			String urlTitle = productJSONObject.getString("urlTitle");
 			String productTypeName = productJSONObject.getString(
 				"productTypeName");
-
-			// Layout
-
-			String layoutUuid = _layoutDemoDataCreatorHelper.getLayoutUuid(
-				userId, groupId, "Product detail",
-				CPPortletKeys.CP_CONTENT_WEB);
 
 			// Asset Categories
 
@@ -88,8 +79,8 @@ public class CPDefinitionDemoDataCreatorHelper
 			// Commerce product definition
 
 			CPDefinition cpDefinition = createCPDefinition(
-				userId, groupId, title, description, urlTitle, layoutUuid,
-				productTypeName, assetCategoryIds);
+				userId, groupId, title, description, productTypeName,
+				assetCategoryIds);
 
 			// Commerce product option categories
 
@@ -189,8 +180,7 @@ public class CPDefinitionDemoDataCreatorHelper
 
 	protected CPDefinition createCPDefinition(
 			long userId, long groupId, String title, String description,
-			String urlTitle, String layoutUuid, String productTypeName,
-			long[] assetCategoryIds)
+			String productTypeName, long[] assetCategoryIds)
 		throws PortalException {
 
 		CPDefinition cpDefinition = getCPDefinitionByTitle(title);
@@ -246,12 +236,6 @@ public class CPDefinitionDemoDataCreatorHelper
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute, true,
-			serviceContext);
-
-		// Commerce product display layout
-
-		_cpDisplayLayoutLocalService.addCPDisplayLayout(
-			CPDefinition.class, cpDefinition.getCPDefinitionId(), layoutUuid,
 			serviceContext);
 
 		_cpDefinitions.put(title, cpDefinition);
@@ -337,9 +321,6 @@ public class CPDefinitionDemoDataCreatorHelper
 	private Map<String, CPDefinition> _cpDefinitions;
 
 	@Reference
-	private CPDisplayLayoutLocalService _cpDisplayLayoutLocalService;
-
-	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Reference
@@ -352,8 +333,5 @@ public class CPDefinitionDemoDataCreatorHelper
 	@Reference
 	private CPSpecificationOptionDemoDataCreatorHelper
 		_cpSpecificationOptionDemoDataCreatorHelper;
-
-	@Reference
-	private LayoutDemoDataCreatorHelper _layoutDemoDataCreatorHelper;
 
 }

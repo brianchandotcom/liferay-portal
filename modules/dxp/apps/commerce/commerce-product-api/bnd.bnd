@@ -4,6 +4,7 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.commerce.product.constants,\
 	com.liferay.commerce.product.exception,\
+	com.liferay.commerce.product.importer,\
 	com.liferay.commerce.product.model,\
 	com.liferay.commerce.product.service,\
 	com.liferay.commerce.product.service.persistence,\

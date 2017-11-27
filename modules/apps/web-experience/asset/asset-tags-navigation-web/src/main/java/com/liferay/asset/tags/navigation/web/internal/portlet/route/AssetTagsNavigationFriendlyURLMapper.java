@@ -14,7 +14,7 @@
 
 package com.liferay.asset.tags.navigation.web.internal.portlet.route;
 
-import com.liferay.asset.tags.navigation.web.constants.AssetTagsNavigationPortletKeys;
+import com.liferay.asset.tags.navigation.constants.AssetTagsNavigationPortletKeys;
 import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 

@@ -135,7 +135,6 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/asset/asset-display-template-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/asset/asset-publisher-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/asset/asset-service" />
-			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/asset/asset-tags-navigation-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/export-import/export-import-resources-importer" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/export-import/export-import-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/export-import/export-import-web" />

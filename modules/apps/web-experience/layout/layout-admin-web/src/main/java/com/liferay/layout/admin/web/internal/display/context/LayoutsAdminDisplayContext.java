@@ -214,6 +214,10 @@ public class LayoutsAdminDisplayContext {
 		return _displayStyle;
 	}
 
+	public String getEditLayoutURL(Layout layout) throws PortalException {
+		return PortalUtil.getLayoutFullURL(layout, _themeDisplay);
+	}
+
 	public Group getGroup() {
 		return _groupDisplayContextHelper.getGroup();
 	}
@@ -589,10 +593,6 @@ public class LayoutsAdminDisplayContext {
 		return _tabs1;
 	}
 
-	public String getViewLayoutURL(Layout layout) throws PortalException {
-		return PortalUtil.getLayoutFullURL(layout, _themeDisplay);
-	}
-
 	public boolean isMillerColumnsEnabled() {
 		if (_millerColumnsEnabled != null) {
 			return _millerColumnsEnabled;
@@ -813,7 +813,7 @@ public class LayoutsAdminDisplayContext {
 			jsonObject.put("orphanPortletsURL", getOrphanPortletsURL(layout));
 		}
 
-		jsonObject.put("viewPageURL", getViewLayoutURL(layout));
+		jsonObject.put("editLayoutURL", getEditLayoutURL(layout));
 
 		return jsonObject;
 	}

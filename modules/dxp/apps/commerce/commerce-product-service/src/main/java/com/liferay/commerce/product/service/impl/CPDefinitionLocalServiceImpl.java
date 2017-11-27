@@ -192,7 +192,7 @@ public class CPDefinitionLocalServiceImpl
 		// Commerce product friendly URL
 
 		if (Validator.isNull(urlTitleMap)) {
-			urlTitleMap = _getUniqueUrlTitles(cpDefinition, urlTitleMap);
+			urlTitleMap = _getUniqueUrlTitles(cpDefinition, titleMap);
 		}
 
 		cpFriendlyURLEntryLocalService.addCPFriendlyURLEntries(

@@ -41,9 +41,4 @@ public class CPGroupServiceImpl extends CPGroupServiceBaseImpl {
 		return cpGroupLocalService.fetchCPGroupByGroupId(groupId);
 	}
 
-	@Override
-	public CPGroup getCPGroupByGroupId(long groupId) throws PortalException {
-		return cpGroupLocalService.getCPGroupByGroupId(groupId);
-	}
-
 }

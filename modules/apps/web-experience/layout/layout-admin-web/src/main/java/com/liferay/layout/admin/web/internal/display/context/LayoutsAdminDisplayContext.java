@@ -36,8 +36,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
@@ -65,7 +63,6 @@ import java.util.Locale;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 /**
@@ -783,22 +780,7 @@ public class LayoutsAdminDisplayContext {
 	private JSONObject _getActionsJSONObject(Layout layout) throws Exception {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		String portletId = PortletProviderUtil.getPortletId(
-			Layout.class.getName(), PortletProvider.Action.EDIT);
-
-		PortletURL redirectURL = PortalUtil.getControlPanelPortletURL(
-			_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-			PortletRequest.RENDER_PHASE);
-
-		redirectURL.setParameter(
-			"groupId", String.valueOf(layout.getGroupId()));
-		redirectURL.setParameter(
-			"privateLayout", String.valueOf(layout.isPrivateLayout()));
-
-		if (LayoutPermissionUtil.contains(
-				_themeDisplay.getPermissionChecker(), layout,
-				ActionKeys.ADD_LAYOUT)) {
-
+		if (showAddChildPageAction(layout)) {
 			JSONObject addChildPageJSONObject =
 				JSONFactoryUtil.createJSONObject();
 
@@ -806,70 +788,26 @@ public class LayoutsAdminDisplayContext {
 				"label",
 				LanguageUtil.get(_themeDisplay.getLocale(), "add-child-page"));
 
-			PortletURL addLayoutURL = PortalUtil.getControlPanelPortletURL(
-				_liferayPortletRequest, portletId, PortletRequest.RENDER_PHASE);
-
-			addLayoutURL.setParameter("mvcPath", "/add_layout.jsp");
-			addLayoutURL.setParameter(
-				"groupId", String.valueOf(layout.getGroupId()));
-			addLayoutURL.setParameter(
-				"privateLayout", String.valueOf(layout.isPrivateLayout()));
-
-			redirectURL.setParameter(
-				"selectedLayoutId", String.valueOf(layout.getLayoutId()));
-
-			addLayoutURL.setParameter("redirect", redirectURL.toString());
-			addLayoutURL.setParameter(
-				"selPlid", String.valueOf(layout.getPlid()));
-
-			addChildPageJSONObject.put("url", addLayoutURL.toString());
+			addChildPageJSONObject.put(
+				"url",
+				getAddLayoutURL(layout.getPlid(), layout.isPrivateLayout()));
 
 			jsonObject.put("add", addChildPageJSONObject);
 		}
 
-		if (LayoutPermissionUtil.contains(
-				_themeDisplay.getPermissionChecker(), layout,
-				ActionKeys.DELETE)) {
-
+		if (showDeleteAction(layout)) {
 			JSONObject deletePageJSONObject =
 				JSONFactoryUtil.createJSONObject();
 
 			deletePageJSONObject.put(
-				"confirmMessage",
-				LanguageUtil.get(
-					_themeDisplay.getLocale(),
-					"are-you-sure-you-want-to-delete-the-selected-page"));
-
-			deletePageJSONObject.put(
 				"label", LanguageUtil.get(_themeDisplay.getLocale(), "delete"));
 
-			PortletURL deleteLayoutURL = PortalUtil.getControlPanelPortletURL(
-				_liferayPortletRequest, portletId, PortletRequest.ACTION_PHASE);
-
-			deleteLayoutURL.setParameter(
-				ActionRequest.ACTION_NAME, "/layout/delete_layout");
-			deleteLayoutURL.setParameter("mvcPath", "/edit_layout.jsp");
-
-			redirectURL.setParameter(
-				"selectedLayoutId", String.valueOf(layout.getParentLayoutId()));
-
-			deleteLayoutURL.setParameter("redirect", redirectURL.toString());
-			deleteLayoutURL.setParameter(
-				"groupId", String.valueOf(layout.getGroupId()));
-			deleteLayoutURL.setParameter(
-				"selPlid", String.valueOf(layout.getPlid()));
-			deleteLayoutURL.setParameter(
-				"privateLayout", String.valueOf(layout.isPrivateLayout()));
-
-			deletePageJSONObject.put("url", deleteLayoutURL.toString());
+			deletePageJSONObject.put("url", getDeleteLayoutURL(layout));
 
 			jsonObject.put("delete", deletePageJSONObject);
 		}
 
-		if (LayoutPermissionUtil.contains(
-				_themeDisplay.getPermissionChecker(), layout,
-				ActionKeys.UPDATE)) {
-
+		if (showConfigureAction(layout)) {
 			JSONObject configurePageJSONObject =
 				JSONFactoryUtil.createJSONObject();
 
@@ -877,22 +815,7 @@ public class LayoutsAdminDisplayContext {
 				"label",
 				LanguageUtil.get(_themeDisplay.getLocale(), "configure"));
 
-			PortletURL editLayoutURL = PortalUtil.getControlPanelPortletURL(
-				_liferayPortletRequest, portletId, PortletRequest.RENDER_PHASE);
-
-			editLayoutURL.setParameter(
-				"groupId", String.valueOf(layout.getGroupId()));
-			editLayoutURL.setParameter(
-				"selPlid", String.valueOf(layout.getPlid()));
-
-			redirectURL.setParameter(
-				"selectedLayoutId", String.valueOf(layout.getLayoutId()));
-
-			editLayoutURL.setParameter("redirect", redirectURL.toString());
-			editLayoutURL.setParameter(
-				"privateLayout", String.valueOf(layout.isPrivateLayout()));
-
-			configurePageJSONObject.put("url", editLayoutURL.toString());
+			configurePageJSONObject.put("url", getEditLayoutURL(layout));
 
 			jsonObject.put("configure", configurePageJSONObject);
 		}

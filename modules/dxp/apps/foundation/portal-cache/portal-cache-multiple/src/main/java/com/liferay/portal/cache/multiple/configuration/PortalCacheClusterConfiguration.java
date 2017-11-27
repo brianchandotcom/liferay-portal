@@ -24,14 +24,15 @@ import com.liferay.portal.kernel.cluster.Priority;
  */
 @ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
-	id = "com.liferay.portal.cache.cluster.configuration.PortalCacheClusterConfiguration"
+	id = "com.liferay.portal.cache.cluster.configuration.PortalCacheClusterConfiguration",
+	name = "portal-cache-cluster-configuration-name"
 )
 public interface PortalCacheClusterConfiguration {
 
-	@Meta.AD(deflt = "LEVEL1,LEVEL2", required = false)
+	@Meta.AD(deflt = "LEVEL1,LEVEL2", name = "priorities", required = false)
 	public Priority[] priorities();
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(deflt = "false", name = "using-coalesced-pipe", required = false)
 	public boolean usingCoalescedPipe();
 
 }

@@ -696,6 +696,10 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	private boolean _isActive(long plid) throws PortalException {
+		if (getSelPlid() == LayoutConstants.DEFAULT_PLID) {
+			return false;
+		}
+
 		if (plid == getSelPlid()) {
 			return true;
 		}

@@ -40,24 +40,10 @@ public class CPGroupServiceWrapper implements CPGroupService,
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPGroup deleteCPGroupByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpGroupService.deleteCPGroupByGroupId(groupId);
-	}
-
-	@Override
 	public com.liferay.commerce.product.model.CPGroup fetchCPGroupByGroupId(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpGroupService.fetchCPGroupByGroupId(groupId);
-	}
-
-	@Override
-	public com.liferay.commerce.product.model.CPGroup getCPGroupByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpGroupService.getCPGroupByGroupId(groupId);
 	}
 
 	/**

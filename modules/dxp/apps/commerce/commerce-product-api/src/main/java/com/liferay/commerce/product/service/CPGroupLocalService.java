@@ -101,9 +101,6 @@ public interface CPGroupLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public CPGroup deleteCPGroup(long CPGroupId) throws PortalException;
 
-	public CPGroup deleteCPGroupByGroupId(long groupId)
-		throws PortalException;
-
 	/**
 	* @throws PortalException
 	*/
@@ -189,9 +186,6 @@ public interface CPGroupLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPGroup getCPGroup(long CPGroupId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPGroup getCPGroupByGroupId(long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the cp groups.

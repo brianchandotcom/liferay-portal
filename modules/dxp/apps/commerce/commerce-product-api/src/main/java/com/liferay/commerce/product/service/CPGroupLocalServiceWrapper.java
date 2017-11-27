@@ -89,13 +89,6 @@ public class CPGroupLocalServiceWrapper implements CPGroupLocalService,
 		return _cpGroupLocalService.deleteCPGroup(CPGroupId);
 	}
 
-	@Override
-	public com.liferay.commerce.product.model.CPGroup deleteCPGroupByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpGroupLocalService.deleteCPGroupByGroupId(groupId);
-	}
-
 	/**
 	* @throws PortalException
 	*/
@@ -219,13 +212,6 @@ public class CPGroupLocalServiceWrapper implements CPGroupLocalService,
 	public com.liferay.commerce.product.model.CPGroup getCPGroup(long CPGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpGroupLocalService.getCPGroup(CPGroupId);
-	}
-
-	@Override
-	public com.liferay.commerce.product.model.CPGroup getCPGroupByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpGroupLocalService.getCPGroupByGroupId(groupId);
 	}
 
 	/**

@@ -88,76 +88,13 @@ public class CPGroupServiceHttp {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CPGroup deleteCPGroupByGroupId(
-		HttpPrincipal httpPrincipal, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(CPGroupServiceUtil.class,
-					"deleteCPGroupByGroupId",
-					_deleteCPGroupByGroupIdParameterTypes1);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (com.liferay.commerce.product.model.CPGroup)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
 	public static com.liferay.commerce.product.model.CPGroup fetchCPGroupByGroupId(
 		HttpPrincipal httpPrincipal, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPGroupServiceUtil.class,
 					"fetchCPGroupByGroupId",
-					_fetchCPGroupByGroupIdParameterTypes2);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (com.liferay.commerce.product.model.CPGroup)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static com.liferay.commerce.product.model.CPGroup getCPGroupByGroupId(
-		HttpPrincipal httpPrincipal, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(CPGroupServiceUtil.class,
-					"getCPGroupByGroupId", _getCPGroupByGroupIdParameterTypes3);
+					_fetchCPGroupByGroupIdParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -187,13 +124,7 @@ public class CPGroupServiceHttp {
 	private static final Class<?>[] _addCPGroupParameterTypes0 = new Class[] {
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _deleteCPGroupByGroupIdParameterTypes1 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[] _fetchCPGroupByGroupIdParameterTypes2 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[] _getCPGroupByGroupIdParameterTypes3 = new Class[] {
+	private static final Class<?>[] _fetchCPGroupByGroupIdParameterTypes1 = new Class[] {
 			long.class
 		};
 }

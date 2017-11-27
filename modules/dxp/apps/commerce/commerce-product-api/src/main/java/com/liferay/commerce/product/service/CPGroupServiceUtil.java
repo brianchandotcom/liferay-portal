@@ -47,22 +47,10 @@ public class CPGroupServiceUtil {
 		return getService().addCPGroup(serviceContext);
 	}
 
-	public static com.liferay.commerce.product.model.CPGroup deleteCPGroupByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteCPGroupByGroupId(groupId);
-	}
-
 	public static com.liferay.commerce.product.model.CPGroup fetchCPGroupByGroupId(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().fetchCPGroupByGroupId(groupId);
-	}
-
-	public static com.liferay.commerce.product.model.CPGroup getCPGroupByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCPGroupByGroupId(groupId);
 	}
 
 	/**

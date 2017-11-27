@@ -80,38 +80,10 @@ public class CPGroupServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CPGroupSoap deleteCPGroupByGroupId(
-		long groupId) throws RemoteException {
-		try {
-			com.liferay.commerce.product.model.CPGroup returnValue = CPGroupServiceUtil.deleteCPGroupByGroupId(groupId);
-
-			return com.liferay.commerce.product.model.CPGroupSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static com.liferay.commerce.product.model.CPGroupSoap fetchCPGroupByGroupId(
 		long groupId) throws RemoteException {
 		try {
 			com.liferay.commerce.product.model.CPGroup returnValue = CPGroupServiceUtil.fetchCPGroupByGroupId(groupId);
-
-			return com.liferay.commerce.product.model.CPGroupSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.product.model.CPGroupSoap getCPGroupByGroupId(
-		long groupId) throws RemoteException {
-		try {
-			com.liferay.commerce.product.model.CPGroup returnValue = CPGroupServiceUtil.getCPGroupByGroupId(groupId);
 
 			return com.liferay.commerce.product.model.CPGroupSoap.toSoapModel(returnValue);
 		}

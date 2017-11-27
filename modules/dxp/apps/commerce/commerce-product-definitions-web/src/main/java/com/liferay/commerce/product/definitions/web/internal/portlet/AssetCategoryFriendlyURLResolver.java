@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
-import com.liferay.portal.kernel.service.LayoutService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.InheritableMap;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -190,12 +190,15 @@ public class AssetCategoryFriendlyURLResolver implements FriendlyURLResolver {
 				AssetCategory.class, categoryId);
 
 		if (cpDisplayLayout == null) {
-			return null;
+			long plid = _portal.getPlidFromPortletId(
+				groupId, privateLayout, CPPortletKeys.CP_CATEGORY_CONTENT_WEB);
+
+			return _layoutLocalService.getLayout(plid);
 		}
 
 		String layoutUuid = cpDisplayLayout.getLayoutUuid();
 
-		return _layoutService.getLayoutByUuidAndGroupId(
+		return _layoutLocalService.getLayoutByUuidAndGroupId(
 			layoutUuid, groupId, privateLayout);
 	}
 
@@ -215,7 +218,7 @@ public class AssetCategoryFriendlyURLResolver implements FriendlyURLResolver {
 	private Http _http;
 
 	@Reference
-	private LayoutService _layoutService;
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

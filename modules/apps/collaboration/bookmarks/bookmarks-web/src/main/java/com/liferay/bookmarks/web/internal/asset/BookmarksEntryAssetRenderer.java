@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.bookmarks.asset;
+package com.liferay.bookmarks.web.internal.asset;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
@@ -44,9 +44,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Julio Camarero
  * @author Juan Fernández
  * @author Sergio González
- * @deprecated As of 1.2.0, with no direct replacement
  */
-@Deprecated
 public class BookmarksEntryAssetRenderer
 	extends BaseJSPAssetRenderer<BookmarksEntry> implements TrashRenderer {
 

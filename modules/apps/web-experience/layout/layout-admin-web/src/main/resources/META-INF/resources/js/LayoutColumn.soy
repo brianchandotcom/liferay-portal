@@ -1,0 +1,91 @@
+{namespace LayoutColumn}
+
+/**
+ * LayoutColumn
+ */
+{template .render}
+	{@param layoutColumn: list<[
+		active: bool,
+		hasChild: bool,
+		plid: string,
+		title: string,
+		url: string
+	]>}
+	{@param pathThemeImages: string}
+	{@param portletNamespace: string}
+
+	<ul class="border col-11 col-md-6 col-lg-4 layout-column list-group p-0">
+		{foreach $layoutColumnItem in $layoutColumn}
+			{call .layoutColumnItem}
+				{param layoutColumnItem: $layoutColumnItem /}
+				{param pathThemeImages: $pathThemeImages /}
+				{param portletNamespace: $portletNamespace /}
+			{/call}
+		{/foreach}
+	</ul>
+{/template}
+
+/**
+ * Lexicon icon
+ */
+{template .lexiconIcon}
+	{@param name: string}
+	{@param pathThemeImages: string}
+
+	<svg aria-hidden="true" class="lexicon-icon lexicon-icon-{$name}">
+		<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$name}" />
+	</svg>
+{/template}
+
+/**
+ * Renders a Lexicon Horizontal Card
+ */
+{template .layoutColumnItem}
+	{@param layoutColumnItem: [
+		active: bool,
+		hasChild: bool,
+		plid: string,
+		title: string,
+		url: string
+	]}
+	{@param pathThemeImages: string}
+	{@param portletNamespace: string}
+
+	{let $listGroupItemClasses kind="text"}
+		list-group-item
+		{sp}list-group-item-flex
+
+		{if $layoutColumnItem.active}
+			{sp}active
+		{/if}
+	{/let}
+
+	<li class="{$listGroupItemClasses}">
+		<div class="flex-col">
+			<div class="custom-control custom-checkbox">
+				<label>
+					<input class="custom-control-input" name="{$portletNamespace}rowIds" type="checkbox" value="{$layoutColumnItem.plid}"/>
+
+					<span class="custom-control-indicator"></span>
+				</label>
+			</div>
+		</div>
+
+		<div class="flex-col flex-col-expand">
+			<h4 class="list-group-title text-truncate">
+				{$layoutColumnItem.title}
+			</h4>
+		</div>
+
+		{if $layoutColumnItem.hasChild}
+			<div class="flex-col">
+				<a href="{$layoutColumnItem.url}">
+					{call .lexiconIcon}
+						{param name: 'angle-right' /}
+						{param pathThemeImages: $pathThemeImages /}
+					{/call}
+				</a>
+			</div>
+		{/if}
+	</li>
+{/template}

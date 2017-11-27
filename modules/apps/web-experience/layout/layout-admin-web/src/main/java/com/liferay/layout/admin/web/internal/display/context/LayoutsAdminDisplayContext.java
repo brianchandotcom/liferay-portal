@@ -17,9 +17,15 @@ package com.liferay.layout.admin.web.internal.display.context;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.util.comparator.LayoutCreateDateComparator;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -35,6 +41,7 @@ import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -46,6 +53,7 @@ import com.liferay.portal.util.LayoutDescription;
 import com.liferay.portal.util.LayoutListUtil;
 import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -105,6 +113,40 @@ public class LayoutsAdminDisplayContext {
 		return addLayoutURL;
 	}
 
+	public JSONArray getBreadcrumbEntriesJSONArray() throws PortalException {
+		JSONArray breadcrumbEntriesJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
+		breadcrumbEntriesJSONArray.put(
+			_getBreadcrumbEntryJSONObject(
+				LayoutConstants.DEFAULT_PLID,
+				LanguageUtil.get(_themeDisplay.getLocale(), "home")));
+
+		if (getSelPlid() == LayoutConstants.DEFAULT_PLID) {
+			return breadcrumbEntriesJSONArray;
+		}
+
+		Layout selLayout = getSelLayout();
+
+		List<Layout> ancestors = selLayout.getAncestors();
+
+		Collections.reverse(ancestors);
+
+		for (Layout layout : ancestors) {
+			breadcrumbEntriesJSONArray.put(
+				_getBreadcrumbEntryJSONObject(
+					layout.getPlid(),
+					layout.getName(_themeDisplay.getLocale())));
+		}
+
+		breadcrumbEntriesJSONArray.put(
+			_getBreadcrumbEntryJSONObject(
+				selLayout.getPlid(),
+				selLayout.getName(_themeDisplay.getLocale())));
+
+		return breadcrumbEntriesJSONArray;
+	}
+
 	public String getDisplayStyle() {
 		if (Validator.isNotNull(_displayStyle)) {
 			return _displayStyle;
@@ -130,6 +172,32 @@ public class LayoutsAdminDisplayContext {
 
 	public UnicodeProperties getGroupTypeSettings() {
 		return _groupDisplayContextHelper.getGroupTypeSettings();
+	}
+
+	public JSONArray getLayoutColumnsJSONArray() throws Exception {
+		JSONArray layoutBlocksJSONArray = JSONFactoryUtil.createJSONArray();
+
+		layoutBlocksJSONArray.put(_getLayoutsJSONArray(0));
+
+		if (getSelPlid() == LayoutConstants.DEFAULT_PLID) {
+			return layoutBlocksJSONArray;
+		}
+
+		Layout selLayout = getSelLayout();
+
+		List<Layout> ancestors = selLayout.getAncestors();
+
+		Collections.reverse(ancestors);
+
+		for (Layout layout : ancestors) {
+			layoutBlocksJSONArray.put(
+				_getLayoutsJSONArray(layout.getLayoutId()));
+		}
+
+		layoutBlocksJSONArray.put(
+			_getLayoutsJSONArray(selLayout.getLayoutId()));
+
+		return layoutBlocksJSONArray;
 	}
 
 	public List<LayoutDescription> getLayoutDescriptions() {
@@ -182,6 +250,14 @@ public class LayoutsAdminDisplayContext {
 				"taglib-empty-result-message-header-has-plus-btn");
 		}
 
+		layoutsSearchContainer.setOrderByCol(getOrderByCol());
+
+		OrderByComparator orderByComparator = _getOrderByComparator();
+
+		layoutsSearchContainer.setOrderByComparator(orderByComparator);
+
+		layoutsSearchContainer.setOrderByType(getOrderByType());
+
 		EmptyOnClickRowChecker emptyOnClickRowChecker =
 			new EmptyOnClickRowChecker(_liferayPortletResponse);
 
@@ -190,7 +266,9 @@ public class LayoutsAdminDisplayContext {
 		int layoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
 			getSelGroup(), isPrivatePages());
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			getSelGroupId(), isPrivatePages());
+			getSelGroupId(), isPrivatePages(),
+			layoutsSearchContainer.getStart(), layoutsSearchContainer.getEnd(),
+			orderByComparator);
 
 		layoutsSearchContainer.setTotal(layoutsCount);
 		layoutsSearchContainer.setResults(layouts);
@@ -433,6 +511,17 @@ public class LayoutsAdminDisplayContext {
 		return _tabs1;
 	}
 
+	public boolean isMillerColumnsEnabled() {
+		if (_millerColumnsEnabled != null) {
+			return _millerColumnsEnabled;
+		}
+
+		_millerColumnsEnabled = ParamUtil.getBoolean(
+			_liferayPortletRequest, "millerColumns");
+
+		return _millerColumnsEnabled;
+	}
+
 	public boolean isPrivateLayout() {
 		if (_privateLayout != null) {
 			return _privateLayout;
@@ -534,6 +623,94 @@ public class LayoutsAdminDisplayContext {
 			_themeDisplay.getPermissionChecker(), layout, ActionKeys.UPDATE);
 	}
 
+	private JSONObject _getBreadcrumbEntryJSONObject(long plid, String title)
+		throws PortalException {
+
+		JSONObject breadcrumbEntryJSONObject =
+			JSONFactoryUtil.createJSONObject();
+
+		breadcrumbEntryJSONObject.put("title", title);
+
+		PortletURL portletURL = getPortletURL();
+
+		portletURL.setParameter("selPlid", String.valueOf(plid));
+
+		breadcrumbEntryJSONObject.put("url", portletURL.toString());
+
+		return breadcrumbEntryJSONObject;
+	}
+
+	private JSONArray _getLayoutsJSONArray(long parentLayoutId)
+		throws Exception {
+
+		JSONArray layoutsJSONArray = JSONFactoryUtil.createJSONArray();
+
+		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+			getGroupId(), isPrivateLayout(), parentLayoutId, false,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, _getOrderByComparator());
+
+		for (Layout layout : layouts) {
+			JSONObject layoutJSONObject = JSONFactoryUtil.createJSONObject();
+
+			layoutJSONObject.put("active", _isActive(layout.getPlid()));
+
+			int childLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
+				getGroup(), isPrivateLayout(), layout.getLayoutId());
+
+			layoutJSONObject.put("hasChild", childLayoutsCount > 0);
+
+			layoutJSONObject.put("plid", layout.getPlid());
+
+			if (childLayoutsCount > 0) {
+				PortletURL portletURL = getPortletURL();
+
+				portletURL.setParameter(
+					"selPlid", String.valueOf(layout.getPlid()));
+
+				layoutJSONObject.put("url", portletURL.toString());
+			}
+
+			layoutJSONObject.put(
+				"title", layout.getName(_themeDisplay.getLocale()));
+
+			layoutsJSONArray.put(layoutJSONObject);
+		}
+
+		return layoutsJSONArray;
+	}
+
+	private OrderByComparator _getOrderByComparator() {
+		boolean orderByAsc = false;
+
+		if (Objects.equals(getOrderByType(), "asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<Layout> orderByComparator = null;
+
+		if (Objects.equals(getOrderByCol(), "create-date")) {
+			orderByComparator = new LayoutCreateDateComparator(orderByAsc);
+		}
+
+		return orderByComparator;
+	}
+
+	private boolean _isActive(long plid) throws PortalException {
+		if (plid == getSelPlid()) {
+			return true;
+		}
+
+		Layout selLayout = getSelLayout();
+
+		for (Layout layout : selLayout.getAncestors()) {
+			if (plid == layout.getPlid()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private String _displayStyle;
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
 	private List<LayoutDescription> _layoutDescriptions;
@@ -541,6 +718,7 @@ public class LayoutsAdminDisplayContext {
 	private SearchContainer _layoutsSearchContainer;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private Boolean _millerColumnsEnabled;
 	private String _navigation;
 	private String[] _navigationKeys;
 	private String _orderByCol;

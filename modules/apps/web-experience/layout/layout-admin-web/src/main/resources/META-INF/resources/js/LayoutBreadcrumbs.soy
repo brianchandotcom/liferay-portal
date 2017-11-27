@@ -1,0 +1,27 @@
+{namespace LayoutBreadcrumbs}
+
+/**
+ * LayoutBreadcrumbs
+ */
+{template .render}
+	{@param breadcrumbEntries: list<[
+		title: string,
+		url: string
+	]>}
+
+	<ol class="breadcrumb">
+		{foreach $breadcrumbEntry in $breadcrumbEntries}
+			{if isLast($breadcrumbEntry)}
+				<li class="active breadcrumb-item">
+					<span class="breadcrumb-text-truncate">{$breadcrumbEntry.title}</span>
+				</li>
+			{else}
+				<li class="breadcrumb-item">
+					<a class="breadcrumb-link" href="{$breadcrumbEntry.url}">
+						<span class="breadcrumb-text-truncate">{$breadcrumbEntry.title}</span>
+					</a>
+				</li>
+			{/if}
+		{/foreach}
+	</ol>
+{/template}

@@ -751,6 +751,21 @@ public interface LayoutLocalService extends BaseLocalService,
 	public List<Layout> getLayouts(long groupId, boolean privateLayout);
 
 	/**
+	* Returns a range of all the layouts belonging to the group.
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @param start the lower bound of the range of layouts
+	* @param end the upper bound of the range of layouts (not inclusive)
+	* @param obc the comparator to order the layouts
+	* @return the matching layouts, or <code>null</code> if no matches were
+	found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Layout> getLayouts(long groupId, boolean privateLayout,
+		int start, int end, OrderByComparator<Layout> obc);
+
+	/**
 	* Returns all the layouts belonging to the group that are children of the
 	* parent layout.
 	*
@@ -814,7 +829,8 @@ public interface LayoutLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Layout> getLayouts(long groupId, boolean privateLayout,
-		long parentLayoutId, int start, int end, OrderByComparator<Layout> obc);
+		long parentLayoutId, boolean incomplete, int start, int end,
+		OrderByComparator<Layout> obc);
 
 	/**
 	* Returns all the layouts that match the layout IDs and belong to the

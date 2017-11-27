@@ -1,0 +1,30 @@
+{namespace Layout}
+
+/**
+ * Layout
+ */
+{template .render}
+	{@param breadcrumbEntries: list<[
+		title: string,
+		url: string
+	]>}
+	{@param layoutColumns: list<?>}
+	{@param pathThemeImages: string}
+	{@param portletNamespace: string}
+
+	<div ref="layout">
+		{call LayoutBreadcrumbs.render}
+			{param breadcrumbEntries: $breadcrumbEntries /}
+		{/call}
+
+		<div class="bg-light row" ref="layoutColumns">
+			{foreach $layoutColumn in $layoutColumns}
+				{call LayoutColumn.render}
+					{param layoutColumn: $layoutColumn /}
+					{param pathThemeImages: $pathThemeImages /}
+					{param portletNamespace: $portletNamespace /}
+				{/call}
+			{/foreach}
+		</div>
+	</div>
+{/template}

@@ -893,6 +893,23 @@ public class LayoutLocalServiceUtil {
 	}
 
 	/**
+	* Returns a range of all the layouts belonging to the group.
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @param start the lower bound of the range of layouts
+	* @param end the upper bound of the range of layouts (not inclusive)
+	* @param obc the comparator to order the layouts
+	* @return the matching layouts, or <code>null</code> if no matches were
+	found
+	*/
+	public static java.util.List<com.liferay.portal.kernel.model.Layout> getLayouts(
+		long groupId, boolean privateLayout, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Layout> obc) {
+		return getService().getLayouts(groupId, privateLayout, start, end, obc);
+	}
+
+	/**
 	* Returns all the layouts belonging to the group that are children of the
 	* parent layout.
 	*
@@ -960,12 +977,12 @@ public class LayoutLocalServiceUtil {
 	found
 	*/
 	public static java.util.List<com.liferay.portal.kernel.model.Layout> getLayouts(
-		long groupId, boolean privateLayout, long parentLayoutId, int start,
-		int end,
+		long groupId, boolean privateLayout, long parentLayoutId,
+		boolean incomplete, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Layout> obc) {
 		return getService()
-				   .getLayouts(groupId, privateLayout, parentLayoutId, start,
-			end, obc);
+				   .getLayouts(groupId, privateLayout, parentLayoutId,
+			incomplete, start, end, obc);
 	}
 
 	/**

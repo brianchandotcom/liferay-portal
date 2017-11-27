@@ -169,6 +169,9 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 			if (arguments.length == 6) {
 				showIncomplete = (Boolean)arguments[3];
 			}
+			else if (arguments.length == 7) {
+				showIncomplete = (Boolean)arguments[3];
+			}
 			else if (Arrays.equals(parameterTypes, _GET_LAYOUTS_TYPES)) {
 				showIncomplete = true;
 			}

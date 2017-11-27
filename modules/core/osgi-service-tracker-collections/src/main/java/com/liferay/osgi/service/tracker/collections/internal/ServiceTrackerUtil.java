@@ -52,12 +52,14 @@ public class ServiceTrackerUtil {
 				return null;
 			}
 		}
-		else if (clazz != null) {
+
+		if (clazz != null) {
 			return new ServiceTracker<>(
 				bundleContext, clazz, serviceTrackerCustomizer);
 		}
 
-		throw new IllegalArgumentException();
+		throw new IllegalArgumentException(
+			"Filter string and clazz can not both be null.");
 	}
 
 	public static <T> T throwException(Throwable throwable) {

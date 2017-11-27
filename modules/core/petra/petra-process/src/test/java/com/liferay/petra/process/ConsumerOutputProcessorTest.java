@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.kernel.process;
+package com.liferay.petra.process;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import org.junit.Assert;

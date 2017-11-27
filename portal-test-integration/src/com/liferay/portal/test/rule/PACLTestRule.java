@@ -38,6 +38,7 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.spring.context.PortletContextLoaderListener;
 import com.liferay.portal.test.mock.AutoDeployMockServletContext;
 import com.liferay.portal.util.InitUtil;
+import com.liferay.portal.util.PortalClassPathUtil;
 import com.liferay.portal.util.PropsUtil;
 
 import java.lang.reflect.InvocationHandler;
@@ -382,6 +383,7 @@ public class PACLTestRule implements TestRule {
 
 	static {
 		ClassPathUtil.initializeClassPaths(new MockServletContext());
+		PortalClassPathUtil.initializeClassPaths(new MockServletContext());
 
 		List<String> configLocations = ListUtil.fromArray(
 			PropsUtil.getArray(PropsKeys.SPRING_CONFIGS));

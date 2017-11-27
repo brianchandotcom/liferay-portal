@@ -12,30 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.kernel.process.local;
+package com.liferay.petra.process.local;
 
+import com.liferay.petra.concurrent.NoticeableFuture;
+import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.petra.process.ProcessCallable;
+import com.liferay.petra.process.ProcessChannel;
+import com.liferay.petra.process.ProcessConfig;
+import com.liferay.petra.process.ProcessConfig.Builder;
+import com.liferay.petra.process.ProcessException;
+import com.liferay.petra.process.ProcessExecutor;
+import com.liferay.petra.process.ProcessLog;
+import com.liferay.petra.process.ProcessLog.Level;
+import com.liferay.petra.process.TerminationProcessException;
+import com.liferay.petra.process.local.LocalProcessLauncher.ProcessContext;
+import com.liferay.petra.process.local.LocalProcessLauncher.ShutdownHook;
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.portal.kernel.process.ProcessCallable;
-import com.liferay.portal.kernel.process.ProcessChannel;
-import com.liferay.portal.kernel.process.ProcessConfig;
-import com.liferay.portal.kernel.process.ProcessConfig.Builder;
-import com.liferay.portal.kernel.process.ProcessException;
-import com.liferay.portal.kernel.process.ProcessExecutor;
-import com.liferay.portal.kernel.process.ProcessLog;
-import com.liferay.portal.kernel.process.ProcessLog.Level;
-import com.liferay.portal.kernel.process.TerminationProcessException;
-import com.liferay.portal.kernel.process.local.LocalProcessLauncher.ProcessContext;
-import com.liferay.portal.kernel.process.local.LocalProcessLauncher.ShutdownHook;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SocketUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.ThreadUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -103,27 +102,6 @@ public class LocalProcessExecutorTest {
 			}
 
 		};
-
-	@Test
-	public void testDeprecatedMethods() {
-		ProcessConfig processConfig = _createJPDAProcessConfig(_JPDA_OPTIONS1);
-
-		Assert.assertArrayEquals(
-			StringUtil.split(
-				processConfig.getBootstrapClassPath(), File.pathSeparatorChar),
-			processConfig.getBootstrapClassPathElements());
-		Assert.assertArrayEquals(
-			StringUtil.split(
-				processConfig.getRuntimeClassPath(), File.pathSeparatorChar),
-			processConfig.getRuntimeClassPathElements());
-
-		Assert.assertNull(ProcessContext.getProcessOutputStream());
-	}
-
-	@Test
-	public void testDestroy() throws Exception {
-		_localProcessExecutor.destroy();
-	}
 
 	@Test
 	public void testHeartBeatThreadDetachOnBrokenPipe() throws Exception {
@@ -1196,10 +1174,11 @@ public class LocalProcessExecutorTest {
 			}
 		}
 
-		Assert.fail(
+		Assert.assertFalse(
 			StringBundler.concat(
 				"After waited ", String.valueOf(time), " ",
-				String.valueOf(timeUnit), ". ", message));
+				String.valueOf(timeUnit), ". ", message),
+			supplier.get());
 	}
 
 	private static final String _JPDA_OPTIONS1 =

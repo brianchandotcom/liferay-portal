@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.io.DummyOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -42,7 +41,9 @@ import java.lang.reflect.Field;
 import java.net.URL;
 import java.net.URLClassLoader;
 
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -199,7 +200,19 @@ public class XugglerAutoInstallHelper {
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		Set<URL> urls = ClassPathUtil.getClassPathURLs(contextClassLoader);
+		Set<URL> urls = new LinkedHashSet<>();
+
+		ClassLoader classLoader = contextClassLoader;
+
+		while (classLoader != null) {
+			if (classLoader instanceof URLClassLoader) {
+				URLClassLoader urlClassLoader = (URLClassLoader)classLoader;
+
+				Collections.addAll(urls, urlClassLoader.getURLs());
+			}
+
+			classLoader = classLoader.getParent();
+		}
 
 		Iterator<URL> iterator = urls.iterator();
 

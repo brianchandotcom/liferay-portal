@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.kernel.process;
+package com.liferay.petra.process;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.CaptureHandler;
@@ -48,7 +48,15 @@ public class LoggingOutputProcessorTest extends BaseOutputProcessorTestCase {
 	@Test
 	public void testLoggingSuccess() throws Exception {
 		LoggingOutputProcessor loggingOutputProcessor =
-			(LoggingOutputProcessor)LoggingOutputProcessor.INSTANCE;
+			new LoggingOutputProcessor(
+				(stdErr, line) -> {
+					if (stdErr) {
+						_log.error(line);
+					}
+					else if (_log.isInfoEnabled()) {
+						_log.info(line);
+					}
+				});
 
 		String stdErrString = "This is standard error message.";
 
@@ -56,7 +64,7 @@ public class LoggingOutputProcessorTest extends BaseOutputProcessorTestCase {
 
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
-					LoggingOutputProcessor.class.getName(), Level.OFF)) {
+					LoggingOutputProcessorTest.class.getName(), Level.OFF)) {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 

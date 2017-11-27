@@ -63,6 +63,7 @@ import com.liferay.portal.servlet.PortalSessionListener;
 import com.liferay.portal.spring.aop.DynamicProxyCreator;
 import com.liferay.portal.spring.bean.BeanReferenceRefreshUtil;
 import com.liferay.portal.util.InitUtil;
+import com.liferay.portal.util.PortalClassPathUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebAppPool;
 import com.liferay.portlet.PortletContextBagPool;
@@ -216,6 +217,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		}
 
 		ClassPathUtil.initializeClassPaths(servletContext);
+		PortalClassPathUtil.initializeClassPaths(servletContext);
 
 		InitUtil.init();
 

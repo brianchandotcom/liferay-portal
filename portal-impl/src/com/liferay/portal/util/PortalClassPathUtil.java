@@ -12,16 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.kernel.process;
-
-import aQute.bnd.annotation.ProviderType;
+package com.liferay.portal.util;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.process.ProcessConfig;
+import com.liferay.petra.process.ProcessConfig.Builder;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.process.ProcessConfig.Builder;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -36,15 +35,12 @@ import java.io.FileFilter;
 
 import java.lang.reflect.Method;
 
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.net.URLConnection;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
@@ -52,79 +48,25 @@ import javax.servlet.ServletException;
 
 /**
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, replaced by {@link com.liferay.petra.process.
- *             ClassPathUtil} and {@link com.liferay.portal.util.
- *             PortalClassPathUtil}
  */
-@Deprecated
-@ProviderType
-public class ClassPathUtil {
+public class PortalClassPathUtil {
 
-	public static String buildClassPath(Class<?>... classes) {
-		if (ArrayUtil.isEmpty(classes)) {
-			return StringPool.BLANK;
-		}
+	public static ProcessConfig createProcessConfig(Class<?>... classes) {
+		Builder builder = new Builder();
 
-		StringBundler sb = new StringBundler(classes.length * 2);
+		builder.setArguments(Arrays.asList("-Djava.awt.headless=true"));
 
-		for (Class<?> clazz : classes) {
-			sb.append(_buildClassPath(clazz.getClassLoader(), clazz.getName()));
-			sb.append(File.pathSeparator);
-		}
+		String classpath = _buildClassPath(classes);
 
-		sb.setIndex(sb.index() - 1);
+		classpath = classpath.concat(File.pathSeparator).concat(
+			_portalProcessConfig.getBootstrapClassPath());
 
-		return sb.toString();
-	}
+		builder.setBootstrapClassPath(classpath);
 
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
-	public static Set<URL> getClassPathURLs(ClassLoader classLoader) {
-		Set<URL> urls = new LinkedHashSet<>();
+		builder.setReactClassLoader(PortalClassLoaderUtil.getClassLoader());
+		builder.setRuntimeClassPath(classpath);
 
-		while (classLoader != null) {
-			if (classLoader instanceof URLClassLoader) {
-				URLClassLoader urlClassLoader = (URLClassLoader)classLoader;
-
-				Collections.addAll(urls, urlClassLoader.getURLs());
-			}
-
-			classLoader = classLoader.getParent();
-		}
-
-		return urls;
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link com.liferay.petra.process.
-	 *             ClassPathUtil#getClassPathURLs(String)}
-	 */
-	@Deprecated
-	public static URL[] getClassPathURLs(String classPath)
-		throws MalformedURLException {
-
-		return com.liferay.petra.process.ClassPathUtil.getClassPathURLs(
-			classPath);
-	}
-
-	public static String getGlobalClassPath() {
-		return _globalClassPath;
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link com.liferay.petra.process.
-	 *             ClassPathUtil#getJVMClassPath(boolean)}
-	 */
-	@Deprecated
-	public static String getJVMClassPath(boolean includeBootClassPath) {
-		return com.liferay.petra.process.ClassPathUtil.getJVMClassPath(
-			includeBootClassPath);
-	}
-
-	public static String getPortalClassPath() {
-		return _portalClassPath;
+		return builder.build();
 	}
 
 	public static ProcessConfig getPortalProcessConfig() {
@@ -153,7 +95,7 @@ public class ClassPathUtil {
 
 		sb.append(portalGlobalClassPath);
 
-		_globalClassPath = sb.toString();
+		String globalClassPath = sb.toString();
 
 		sb.append(File.pathSeparator);
 		sb.append(
@@ -166,16 +108,33 @@ public class ClassPathUtil {
 			sb.append("/WEB-INF/classes");
 		}
 
-		_portalClassPath = sb.toString();
+		String portalClassPath = sb.toString();
 
 		Builder builder = new Builder();
 
 		builder.setArguments(Arrays.asList("-Djava.awt.headless=true"));
-		builder.setBootstrapClassPath(_globalClassPath);
+		builder.setBootstrapClassPath(globalClassPath);
 		builder.setReactClassLoader(classLoader);
-		builder.setRuntimeClassPath(_portalClassPath);
+		builder.setRuntimeClassPath(portalClassPath);
 
 		_portalProcessConfig = builder.build();
+	}
+
+	private static String _buildClassPath(Class<?>... classes) {
+		if (ArrayUtil.isEmpty(classes)) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(classes.length * 2);
+
+		for (Class<?> clazz : classes) {
+			sb.append(_buildClassPath(clazz.getClassLoader(), clazz.getName()));
+			sb.append(File.pathSeparator);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
 	}
 
 	private static String _buildClassPath(
@@ -344,10 +303,9 @@ public class ClassPathUtil {
 			});
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(ClassPathUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortalClassPathUtil.class);
 
-	private static String _globalClassPath;
-	private static String _portalClassPath;
 	private static ProcessConfig _portalProcessConfig;
 
 }

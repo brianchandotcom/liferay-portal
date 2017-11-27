@@ -12,6 +12,7 @@
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="modules/core/petra/petra-lang/src/main/java"/>
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="modules/core/petra/petra-memory/src/main/java"/>
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="modules/core/petra/petra-nio/src/main/java"/>
+	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="modules/core/petra/petra-process/src/main/java"/>
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="modules/core/petra/petra-reflect/src/main/java"/>
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="modules/core/petra/petra-string/src/main/java"/>
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="modules/core/registry-api/src/main/java"/>

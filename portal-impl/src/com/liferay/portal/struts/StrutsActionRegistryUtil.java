@@ -119,9 +119,8 @@ public class StrutsActionRegistryUtil {
 		if (object instanceof String[]) {
 			return (String[])object;
 		}
-		else {
-			return new String[] {(String)object};
-		}
+
+		return new String[] {(String)object};
 	}
 
 	private static final ServiceTrackerMap<String, Action> _actions;

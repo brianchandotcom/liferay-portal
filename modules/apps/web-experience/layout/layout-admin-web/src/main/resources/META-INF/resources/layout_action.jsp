@@ -31,14 +31,9 @@ Layout curLayout = (Layout)row.getObject();
 	</c:if>
 
 	<c:if test="<%= layoutsAdminDisplayContext.showAddChildPageAction(curLayout) %>">
-
-		<%
-		PortletURL addLayoutURL = layoutsAdminDisplayContext.getAddLayoutURL(curLayout.getPlid(), curLayout.isPrivateLayout());
-		%>
-
 		<liferay-ui:icon
 			message="add-child-page"
-			url="<%= addLayoutURL.toString() %>"
+			url="<%= layoutsAdminDisplayContext.getAddLayoutURL(curLayout.getPlid(), curLayout.isPrivateLayout()) %>"
 		/>
 	</c:if>
 

@@ -87,11 +87,11 @@ public class LayoutsAdminDisplayContext {
 			WebKeys.LAYOUT_DESCRIPTIONS, getLayoutDescriptions());
 	}
 
-	public PortletURL getAddLayoutURL() {
+	public String getAddLayoutURL() {
 		return getAddLayoutURL(LayoutConstants.DEFAULT_PLID, isPrivatePages());
 	}
 
-	public PortletURL getAddLayoutURL(long selPlid, Boolean privateLayout) {
+	public String getAddLayoutURL(long selPlid, Boolean privateLayout) {
 		PortletURL addLayoutURL = _liferayPortletResponse.createRenderURL();
 
 		addLayoutURL.setParameter("mvcPath", "/add_layout.jsp");
@@ -108,7 +108,7 @@ public class LayoutsAdminDisplayContext {
 				"privateLayout", String.valueOf(privateLayout));
 		}
 
-		return addLayoutURL;
+		return addLayoutURL.toString();
 	}
 
 	public JSONArray getBreadcrumbEntriesJSONArray() throws PortalException {

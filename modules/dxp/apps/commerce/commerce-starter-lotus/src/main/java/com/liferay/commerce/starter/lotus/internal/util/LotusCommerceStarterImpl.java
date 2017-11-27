@@ -163,15 +163,6 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 		return StringPool.BLANK;
 	}
 
-	@Override
-	public String getPreviewImageSrc(HttpServletRequest httpServletRequest) {
-		String contextPath = _servletContext.getContextPath();
-
-		String previewImageSrc = contextPath + "/images/thumbnail.png";
-
-		return previewImageSrc;
-	}
-
 	public JSONObject getSampleDataJSONObject() throws Exception {
 		Class<?> clazz = getClass();
 

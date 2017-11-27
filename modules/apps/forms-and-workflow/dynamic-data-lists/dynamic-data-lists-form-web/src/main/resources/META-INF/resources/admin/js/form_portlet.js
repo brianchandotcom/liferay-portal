@@ -617,6 +617,32 @@ AUI.add(
 						instance.one('#publish').html(Liferay.Language.get('publish-form'));
 					},
 
+					_hideFormBuilder: function() {
+						var instance = this;
+
+						instance.one('#formBuilder').hide();
+
+						A.one('.ddl-form-builder-buttons').addClass('hide');
+
+						instance.one('#showForm').removeClass('active');
+					},
+
+					_hideRuleBuilder: function() {
+						var instance = this;
+
+						var ruleBuilder = instance.get('ruleBuilder');
+
+						var ruleBuilderNode = ruleBuilder.get('boundingBox');
+
+						var ruleBuilderAncestorNode = ruleBuilderNode.ancestor();
+
+						ruleBuilderAncestorNode.addClass('hide');
+
+						instance.one('#showRules').removeClass('active');
+
+						A.one('.portlet-forms').removeClass('liferay-ddl-form-rule-builder');
+					},
+
 					_isFormView: function() {
 						var instance = this;
 
@@ -675,24 +701,9 @@ AUI.add(
 					_onFormButtonClick: function() {
 						var instance = this;
 
-						instance.one('#formBuilder').show();
+						instance._hideRuleBuilder();
 
-						if (instance._isFormView()) {
-							var ruleBuilder = instance.get('ruleBuilder');
-
-							var ruleBuilderNode = ruleBuilder.get('boundingBox');
-
-							var ruleBuilderAncestorNode = ruleBuilderNode.ancestor();
-
-							ruleBuilderAncestorNode.addClass('hide');
-
-							instance.one('#showRules').removeClass('active');
-						}
-
-						A.one('.ddl-form-builder-buttons').removeClass('hide');
-						A.one('.portlet-forms').removeClass('liferay-ddl-form-rule-builder');
-
-						instance.one('#showForm').addClass('active');
+						instance._showFormBuilder();
 					},
 
 					_onNameEditorChange: function(event) {
@@ -789,25 +800,9 @@ AUI.add(
 					_onRulesButtonClick: function() {
 						var instance = this;
 
-						var ruleBuilder = instance.get('ruleBuilder');
+						instance._hideFormBuilder();
 
-						var ruleBuilderNode = ruleBuilder.get('boundingBox');
-
-						var ruleBuilderAncestorNode = ruleBuilderNode.ancestor();
-
-						instance.one('#formBuilder').hide();
-						if (ruleBuilderAncestorNode.hasClass('hide')) {
-							ruleBuilderAncestorNode.removeClass('hide');
-						}
-						else {
-							ruleBuilder.show();
-						}
-
-						A.one('.ddl-form-builder-buttons').addClass('hide');
-						A.one('.portlet-forms').addClass('liferay-ddl-form-rule-builder');
-
-						instance.one('#showRules').addClass('active');
-						instance.one('#showForm').removeClass('active');
+						instance._showRuleBuilder();
 					},
 
 					_onSaveButtonClick: function(event) {
@@ -895,6 +890,37 @@ AUI.add(
 						alert.show();
 
 						instance.set('alert', alert);
+					},
+
+					_showFormBuilder: function() {
+						var instance = this;
+
+						instance.one('#formBuilder').show();
+
+						A.one('.ddl-form-builder-buttons').removeClass('hide');
+
+						instance.one('#showForm').addClass('active');
+					},
+
+					_showRuleBuilder: function() {
+						var instance = this;
+
+						var ruleBuilder = instance.get('ruleBuilder');
+
+						var ruleBuilderNode = ruleBuilder.get('boundingBox');
+
+						var ruleBuilderAncestorNode = ruleBuilderNode.ancestor();
+
+						if (ruleBuilderAncestorNode.hasClass('hide')) {
+							ruleBuilderAncestorNode.removeClass('hide');
+						}
+						else {
+							ruleBuilder.show();
+						}
+
+						A.one('.portlet-forms').addClass('liferay-ddl-form-rule-builder');
+
+						instance.one('#showRules').addClass('active');
 					},
 
 					_syncDescription: function() {

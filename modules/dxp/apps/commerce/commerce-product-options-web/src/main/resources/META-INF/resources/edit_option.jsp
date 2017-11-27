@@ -31,6 +31,8 @@ availableLocalesSet.add(LocaleUtil.fromLanguageId(defaultLanguageId));
 availableLocalesSet.addAll(cpOptionDisplayContext.getAvailableLocales());
 
 Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
+
+boolean hasCustomAttributesAvailable = CustomAttributesUtil.hasCustomAttributes(company.getCompanyId(), CPOption.class.getName(), cpOptionId, null);
 %>
 
 <portlet:actionURL name="editProductOption" var="editProductOptionActionURL" />
@@ -90,14 +92,18 @@ Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLoca
 			<aui:input name="skuContributor" />
 
 			<aui:input helpMessage="key-help" name="key" />
-
-			<liferay-expando:custom-attribute-list
-				className="<%= CPOption.class.getName() %>"
-				classPK="<%= (cpOption != null) ? cpOption.getCPOptionId() : 0 %>"
-				editable="<%= true %>"
-				label="<%= true %>"
-			/>
 		</aui:fieldset>
+
+		<c:if test="<%= hasCustomAttributesAvailable %>">
+			<aui:fieldset>
+				<liferay-expando:custom-attribute-list
+					className="<%= CPOption.class.getName() %>"
+					classPK="<%= (cpOption != null) ? cpOption.getCPOptionId() : 0 %>"
+					editable="<%= true %>"
+					label="<%= true %>"
+				/>
+			</aui:fieldset>
+		</c:if>
 
 		<c:if test="<%= cpOption == null %>">
 			<aui:script sandbox="<%= true %>">

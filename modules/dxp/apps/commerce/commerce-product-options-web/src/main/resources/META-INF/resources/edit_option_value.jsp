@@ -36,6 +36,8 @@ if (cpOptionValue != null) {
 }
 
 Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
+
+boolean hasCustomAttributesAvailable = CustomAttributesUtil.hasCustomAttributes(company.getCompanyId(), CPOptionValue.class.getName(), cpOptionValueId, null);
 %>
 
 <portlet:actionURL name="editProductOptionValue" var="editProductOptionValueActionURL" />
@@ -66,14 +68,18 @@ Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLoca
 			<aui:input name="priority" />
 
 			<aui:input helpMessage="key-help" name="key" />
-
-			<liferay-expando:custom-attribute-list
-				className="<%= CPOptionValue.class.getName() %>"
-				classPK="<%= (cpOptionValue != null) ? cpOptionValue.getCPOptionValueId() : 0 %>"
-				editable="<%= true %>"
-				label="<%= true %>"
-			/>
 		</aui:fieldset>
+
+		<c:if test="<%= hasCustomAttributesAvailable %>">
+			<aui:fieldset>
+				<liferay-expando:custom-attribute-list
+					className="<%= CPOptionValue.class.getName() %>"
+					classPK="<%= (cpOptionValue != null) ? cpOptionValue.getCPOptionValueId() : 0 %>"
+					editable="<%= true %>"
+					label="<%= true %>"
+				/>
+			</aui:fieldset>
+		</c:if>
 
 		<c:if test="<%= cpOptionValue == null %>">
 			<aui:script sandbox="<%= true %>">

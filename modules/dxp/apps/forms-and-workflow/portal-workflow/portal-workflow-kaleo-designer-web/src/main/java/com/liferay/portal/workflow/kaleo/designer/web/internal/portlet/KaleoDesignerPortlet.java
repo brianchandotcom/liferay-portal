@@ -336,16 +336,15 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 			_kaleoDesignerDisplayContext);
 
 		String name = ParamUtil.getString(renderRequest, "name");
-		String draftVersion = ParamUtil.getString(
-			renderRequest, "draftVersion");
 
 		if (Validator.isNull(name)) {
 			return;
 		}
 
 		KaleoDefinitionVersion kaleoDefinitionVersion =
-			_kaleoDefinitionVersionLocalService.getKaleoDefinitionVersion(
-				themeDisplay.getCompanyId(), name, draftVersion);
+			_kaleoDefinitionVersionLocalService.
+				fetchLatestKaleoDefinitionVersion(
+					themeDisplay.getCompanyId(), name, null);
 
 		renderRequest.setAttribute(
 			KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION,

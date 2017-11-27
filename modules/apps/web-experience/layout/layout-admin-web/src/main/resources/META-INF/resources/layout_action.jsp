@@ -40,18 +40,9 @@ Layout curLayout = (Layout)row.getObject();
 	</c:if>
 
 	<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, curLayout, ActionKeys.ADD_LAYOUT) %>">
-		<portlet:renderURL var="addChildPageURL">
-			<portlet:param name="mvcPath" value="/add_layout.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="backURL" value="<%= currentURL %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(curLayout.getGroupId()) %>" />
-			<portlet:param name="selPlid" value="<%= String.valueOf(curLayout.getPlid()) %>" />
-			<portlet:param name="privateLayout" value="<%= String.valueOf(curLayout.isPrivateLayout()) %>" />
-		</portlet:renderURL>
-
 		<liferay-ui:icon
 			message="add-child-page"
-			url="<%= addChildPageURL %>"
+			url="<%= layoutsAdminDisplayContext.getAddLayoutURL(curLayout.getPlid(), curLayout.isPrivateLayout()) %>"
 		/>
 	</c:if>
 

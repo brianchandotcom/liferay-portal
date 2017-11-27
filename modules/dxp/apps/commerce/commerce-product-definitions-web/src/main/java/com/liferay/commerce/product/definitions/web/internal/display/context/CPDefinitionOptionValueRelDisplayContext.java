@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.util.CustomAttributesUtil;
 
 import java.util.List;
 
@@ -189,6 +190,17 @@ public class CPDefinitionOptionValueRelDisplayContext extends
 		}
 
 		return searchContainer;
+	}
+
+	public boolean hasCustomAttributesAvailable() throws Exception {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return CustomAttributesUtil.hasCustomAttributes(
+			themeDisplay.getCompanyId(),
+			CPDefinitionOptionValueRel.class.getName(),
+			getCPDefinitionOptionValueRelId(), null);
 	}
 
 	private CPDefinitionOptionRel _cpDefinitionOptionRel;

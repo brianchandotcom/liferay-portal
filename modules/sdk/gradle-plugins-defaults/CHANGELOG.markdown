@@ -2461,6 +2461,11 @@ the `npmInstall` task.
 ### Changed
 - [LPS-75965]: Update the [Liferay Gradle Plugins] dependency to version 3.5.46.
 
+## 5.1.54 - 2017-11-21
+
+### Changed
+- [LPS-75971]: Update the [Liferay Gradle Plugins] dependency to version 3.5.47.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -2740,6 +2745,7 @@ the `npmInstall` task.
 [LPS-75910]: https://issues.liferay.com/browse/LPS-75910
 [LPS-75952]: https://issues.liferay.com/browse/LPS-75952
 [LPS-75965]: https://issues.liferay.com/browse/LPS-75965
+[LPS-75971]: https://issues.liferay.com/browse/LPS-75971
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

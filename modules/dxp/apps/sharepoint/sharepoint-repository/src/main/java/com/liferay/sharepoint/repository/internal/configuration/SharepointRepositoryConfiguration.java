@@ -32,31 +32,31 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface SharepointRepositoryConfiguration {
 
-	@Meta.AD
+	@Meta.AD(name = "name", required = false)
 	public String name();
 
-	@Meta.AD
+	@Meta.AD(name = "authorization-grant-endpoint", required = false)
 	public String authorizationGrantEndpoint();
 
-	@Meta.AD
+	@Meta.AD(name = "authorization-token-endpoint", required = false)
 	public String authorizationTokenEndpoint();
 
-	@Meta.AD
+	@Meta.AD(name = "client-id", required = false)
 	public String clientId();
 
-	@Meta.AD
+	@Meta.AD(name = "client-secret", required = false)
 	public String clientSecret();
 
-	@Meta.AD
+	@Meta.AD(name = "scope", required = false)
 	public String scope();
 
-	@Meta.AD
+	@Meta.AD(name = "tenant-id", required = false)
 	public String tenantId();
 
-	@Meta.AD
+	@Meta.AD(name = "site-domain", required = false)
 	public String siteDomain();
 
-	@Meta.AD
+	@Meta.AD(name = "resource", required = false)
 	public String resource();
 
 }

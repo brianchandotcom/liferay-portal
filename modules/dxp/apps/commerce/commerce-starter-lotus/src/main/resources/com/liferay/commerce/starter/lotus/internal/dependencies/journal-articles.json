@@ -1,0 +1,10 @@
+[
+	{
+		"articleId": "prova",
+		"content": "<?xml version=\"1.0\"?><root available-locales=\"en_US\" default-locale=\"en_US\"><dynamic-element name=\"content\" type=\"text_area\" index-type=\"text\" instance-id=\"zeob\"><dynamic-content language-id=\"en_US\"><![CDATA[<p>[%prova.png%]</p>]]></dynamic-content></dynamic-element></root>",
+		"ddmStructureKey": "BASIC-WEB-CONTENT",
+		"ddmTemplateKey": "BASIC-WEB-CONTENT",
+		"description": "prova",
+		"title": "prova"
+	}
+]

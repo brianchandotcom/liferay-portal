@@ -16,14 +16,14 @@ package com.liferay.bookmarks.social.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.model.BookmarksFolder;
-import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
-import com.liferay.bookmarks.social.BookmarksFolderActivityInterpreter;
+import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.bookmarks.util.test.BookmarksTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.service.test.ServiceTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.social.activity.test.util.BaseSocialActivityInterpreterTestCase;
 import com.liferay.social.kernel.model.SocialActivityConstants;
@@ -64,7 +64,7 @@ public class BookmarksFolderActivityInterpreterTest
 
 	@Override
 	protected SocialActivityInterpreter getActivityInterpreter() {
-		return new BookmarksFolderActivityInterpreter();
+		return _socialActivityInterpreter;
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class BookmarksFolderActivityInterpreterTest
 
 	@Override
 	protected void moveModelsToTrash() throws Exception {
-		BookmarksFolderLocalServiceUtil.moveFolderToTrash(
+		_bookmarksFolderLocalService.moveFolderToTrash(
 			TestPropsValues.getUserId(), _folder.getFolderId());
 	}
 
@@ -92,9 +92,17 @@ public class BookmarksFolderActivityInterpreterTest
 
 	@Override
 	protected void restoreModelsFromTrash() throws Exception {
-		BookmarksFolderLocalServiceUtil.restoreFolderFromTrash(
+		_bookmarksFolderLocalService.restoreFolderFromTrash(
 			TestPropsValues.getUserId(), _folder.getFolderId());
 	}
+
+	@Inject
+	private static BookmarksFolderLocalService _bookmarksFolderLocalService;
+
+	@Inject(
+		filter = "model.class.name=com.liferay.bookmarks.model.BookmarksFolder"
+	)
+	private static SocialActivityInterpreter _socialActivityInterpreter;
 
 	private BookmarksFolder _folder;
 

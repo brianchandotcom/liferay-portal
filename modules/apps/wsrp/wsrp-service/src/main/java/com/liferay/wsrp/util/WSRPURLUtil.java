@@ -43,11 +43,7 @@ public class WSRPURLUtil {
 		byte[] hmacSHA = getHMACSha(
 			key.getEncoded(), wsrpAuth.getBytes(StringPool.UTF8));
 
-		wsrpAuth = Base64.encode(hmacSHA);
-
-		wsrpAuth = Base64.toURLSafe(wsrpAuth);
-
-		return wsrpAuth;
+		return Base64.encodeToURL(hmacSHA);
 	}
 
 	protected byte[] getHMACSha(byte[] key, byte[] data) throws Exception {

@@ -748,11 +748,13 @@ public abstract class BaseBuild implements Build {
 		if ((_result == null) && (getBuildURL() != null)) {
 			JSONObject resultJSONObject = getBuildJSONObject("result");
 
-			_result = resultJSONObject.optString("result");
+			String result = resultJSONObject.optString("result");
 
-			if (_result.equals("")) {
-				_result = null;
+			if (result.equals("")) {
+				result = null;
 			}
+
+			setResult(result);
 		}
 
 		return _result;
@@ -2217,7 +2219,10 @@ public abstract class BaseBuild implements Build {
 		if (_isDifferent(result, _result)) {
 			_result = result;
 
-			if (_result == null) {
+			if ((_result == null) ||
+				(getDownstreamBuildCount("completed") <
+					getDownstreamBuildCount(null))) {
+
 				setStatus("running");
 			}
 			else {

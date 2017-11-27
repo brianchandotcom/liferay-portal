@@ -491,6 +491,30 @@
 			<finder-column name="main" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="CPGroup" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="CPGroupId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="CPGroup" unique="true">
+			<finder-column name="groupId" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="CPInstance" remote-service="true" trash-enabled="true" uuid="true">
 
 		<!-- PK fields -->

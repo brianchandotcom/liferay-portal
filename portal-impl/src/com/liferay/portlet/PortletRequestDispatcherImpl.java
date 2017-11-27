@@ -266,6 +266,9 @@ public class PortletRequestDispatcherImpl
 
 			throw new PortletException(se);
 		}
+		finally {
+			portletRequestImpl.setPortletRequestDispatcherRequest(null);
+		}
 	}
 
 	protected Map<String, String[]> toParameterMap(String queryString) {

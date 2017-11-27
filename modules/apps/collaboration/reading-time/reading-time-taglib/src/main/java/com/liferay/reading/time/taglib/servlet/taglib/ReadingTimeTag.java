@@ -74,14 +74,14 @@ public class ReadingTimeTag extends AttributesTagSupport {
 		_model = model;
 	}
 
-	private Optional<String> _buildTag(Duration readingTime) {
-		String readingTimeMessage = _getReadingTimeMessage(readingTime);
+	private Optional<String> _buildTag(Duration readingTimeDuration) {
+		String readingTimeMessage = _getReadingTimeMessage(readingTimeDuration);
 
 		if (Validator.isNotNull(readingTimeMessage)) {
 			StringBundler sb = new StringBundler(10);
 
 			sb.append("<time class=\"reading-time\" datetime=\"");
-			sb.append(String.valueOf(readingTime.getSeconds()));
+			sb.append(String.valueOf(readingTimeDuration.getSeconds()));
 			sb.append("s");
 			sb.append("\"");
 
@@ -125,7 +125,7 @@ public class ReadingTimeTag extends AttributesTagSupport {
 		return Optional.empty();
 	}
 
-	private String _getReadingTimeMessage(Duration readingTime) {
+	private String _getReadingTimeMessage(Duration readingTimeDuration) {
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
 		BundleContext bundleContext = bundle.getBundleContext();
@@ -140,7 +140,7 @@ public class ReadingTimeTag extends AttributesTagSupport {
 					bundleContext.getService(serviceReference);
 
 				return readingTimeMessageProvider.provide(
-					readingTime, PortalUtil.getLocale(request));
+					readingTimeDuration, PortalUtil.getLocale(request));
 			}
 		}
 

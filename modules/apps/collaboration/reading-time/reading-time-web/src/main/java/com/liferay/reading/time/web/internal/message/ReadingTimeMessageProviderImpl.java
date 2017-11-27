@@ -35,11 +35,11 @@ public class ReadingTimeMessageProviderImpl
 	implements ReadingTimeMessageProvider {
 
 	@Override
-	public String provide(Duration readingTime, Locale locale) {
+	public String provide(Duration readingTimeDuration, Locale locale) {
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(locale);
 
-		long readingTimeInMinutes = readingTime.toMinutes();
+		long readingTimeInMinutes = readingTimeDuration.toMinutes();
 
 		if (readingTimeInMinutes == 0) {
 			return LanguageUtil.get(resourceBundle, "less-than-a-minute-read");

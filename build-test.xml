@@ -8719,8 +8719,15 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					]]>
 				</beanshell>
 
+				<get-testcase-property property.name="test.ignore.tomcat.ext.environment" />
+
 				<if>
-					<equals arg1="${enable.ext.environment}" arg2="true" />
+					<and>
+						<equals arg1="${enable.ext.environment}" arg2="true" />
+						<not>
+							<isset property="test.ignore.tomcat.ext.environment" />
+						</not>
+					</and>
 					<then>
 						<replace file="${app.server.dir}/conf/Catalina/localhost/ROOT.xml">
 							<replacetoken><![CDATA[</Context>]]></replacetoken>

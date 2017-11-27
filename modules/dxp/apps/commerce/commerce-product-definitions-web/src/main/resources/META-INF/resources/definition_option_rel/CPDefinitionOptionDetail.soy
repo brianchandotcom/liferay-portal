@@ -1,0 +1,30 @@
+{namespace CPDefinitionOptionDetail}
+
+/**
+ * CP Option Detail
+ *
+ */
+{template .render}
+	{@param? cpDefinitionOptionRelId: string}
+	{@param? id: string}
+	{@param? _handleCancel: any }
+	{@param? _handleDeleteOption: any }
+	{@param? _handleSaveOption: any }
+
+	<div id="{$id}">
+
+		<h4 class="section-header">{msg desc=""}option-detail{/msg}</h4>
+
+		<div class="option-detail" ref="option-detail"></div>
+
+		<div class="button-holder product-definition-option-rel-button-row">
+			<button class="btn btn-primary" type="button" onclick="{$_handleSaveOption}">{msg desc=""}save{/msg}</button>
+
+			{if $cpDefinitionOptionRelId != '0'}
+				<button class="btn btn-secondary" type="button"  onclick="{$_handleDeleteOption}">{msg desc=""}delete{/msg}</button>
+			{/if}
+
+			<button class="btn btn-link" type="button" onclick="{$_handleCancel}">{msg desc=""}cancel{/msg}</button>
+		</div>
+	</div>
+{/template}

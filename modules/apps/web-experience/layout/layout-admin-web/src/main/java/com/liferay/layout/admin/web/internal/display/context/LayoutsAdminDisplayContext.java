@@ -820,6 +820,56 @@ public class LayoutsAdminDisplayContext {
 			jsonObject.put("configure", configurePageJSONObject);
 		}
 
+		if (showPermissionsAction(layout)) {
+			JSONObject permissionsJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			permissionsJSONObject.put(
+				"label",
+				LanguageUtil.get(_themeDisplay.getLocale(), "permissions"));
+
+			permissionsJSONObject.put("url", getPermissionsURL(layout));
+
+			jsonObject.put("permissions", permissionsJSONObject);
+		}
+
+		if (showCopyApplicationsAction(layout)) {
+			JSONObject copyApplicationsJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			copyApplicationsJSONObject.put(
+				"label",
+				LanguageUtil.get(
+					_themeDisplay.getLocale(), "copy-applications"));
+
+			copyApplicationsJSONObject.put(
+				"url", getCopyApplicationsURL(layout));
+
+			jsonObject.put("copyApplications", copyApplicationsJSONObject);
+		}
+
+		if (showOrphanPortletsAction(layout)) {
+			JSONObject orphanPortletsJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			orphanPortletsJSONObject.put(
+				"label",
+				LanguageUtil.get(_themeDisplay.getLocale(), "orphan-portlets"));
+
+			orphanPortletsJSONObject.put("url", getOrphanPortletsURL(layout));
+
+			jsonObject.put("orphanPortlets", orphanPortletsJSONObject);
+		}
+
+		JSONObject viewPageJSONObject = JSONFactoryUtil.createJSONObject();
+
+		viewPageJSONObject.put(
+			"label", LanguageUtil.get(_themeDisplay.getLocale(), "view-page"));
+
+		viewPageJSONObject.put("url", getViewLayoutURL(layout));
+
+		jsonObject.put("viewPage", viewPageJSONObject);
+
 		return jsonObject;
 	}
 

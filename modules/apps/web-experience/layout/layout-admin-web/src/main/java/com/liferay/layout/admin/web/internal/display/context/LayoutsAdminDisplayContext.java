@@ -131,6 +131,10 @@ public class LayoutsAdminDisplayContext {
 
 		Layout selLayout = getSelLayout();
 
+		if (selLayout == null) {
+			return breadcrumbEntriesJSONArray;
+		}
+
 		List<Layout> layouts = selLayout.getAncestors();
 
 		Collections.reverse(layouts);
@@ -187,6 +191,10 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		Layout selLayout = getSelLayout();
+
+		if (selLayout == null) {
+			return layoutBlocksJSONArray;
+		}
 
 		List<Layout> layouts = selLayout.getAncestors();
 
@@ -825,6 +833,10 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		Layout selLayout = getSelLayout();
+
+		if (selLayout == null) {
+			return false;
+		}
 
 		for (Layout layout : selLayout.getAncestors()) {
 			if (plid == layout.getPlid()) {

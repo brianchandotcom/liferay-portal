@@ -1,7 +1,3 @@
-/* eslint-disable require-jsdoc */
-
-'use strict';
-
 import MarkerBase from '../../src/main/resources/META-INF/resources/js/MarkerBase.es';
 
 describe('MarkerBase', () => {

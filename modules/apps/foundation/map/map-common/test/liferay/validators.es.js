@@ -1,8 +1,3 @@
-/* eslint-disable require-jsdoc */
-/* global assert */
-
-'use strict';
-
 import {isSubsetOf} from '../../src/main/resources/META-INF/resources/js/validators.es';
 
 describe('validators', () => {

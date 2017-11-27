@@ -1,7 +1,3 @@
-/* global assert */
-
-'use strict';
-
 import GeoJSONBase from '../../src/main/resources/META-INF/resources/js/GeoJSONBase.es';
 
 describe('GeoJSONBase', () => {

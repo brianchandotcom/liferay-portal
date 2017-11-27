@@ -1,8 +1,3 @@
-/* eslint-disable require-jsdoc */
-/* global sinon, assert */
-
-'use strict';
-
 import MapBase from '../../src/main/resources/META-INF/resources/js/MapBase.es';
 
 describe('MapBase', () => {

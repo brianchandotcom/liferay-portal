@@ -35,37 +35,37 @@ public interface ReportsGroupServiceEmailConfiguration {
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/portal/reports/engine/console/admin/dependencies/email_delivery_body.tmpl}",
-		required = false
+		name = "email-delivery-body", required = false
 	)
 	public LocalizedValuesMap emailDeliveryBody();
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/portal/reports/engine/console/admin/dependencies/email_delivery_subject.tmpl}",
-		required = false
+		name = "email-delivery-subject", required = false
 	)
 	public LocalizedValuesMap emailDeliverySubject();
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/portal/reports/engine/console/admin/dependencies/email_notifications_body.tmpl}",
-		required = false
+		name = "email-notifications-body", required = false
 	)
 	public LocalizedValuesMap emailNotificationsBody();
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/portal/reports/engine/console/admin/dependencies/email_notifications_subject.tmpl}",
-		required = false
+		name = "email-notifications-subject", required = false
 	)
 	public LocalizedValuesMap emailNotificationsSubject();
 
 	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/admin.email.from.address}",
-		required = false
+		name = "email-from-address", required = false
 	)
 	public String emailFromAddress();
 
 	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/admin.email.from.name}",
-		required = false
+		name = "email-from-name", required = false
 	)
 	public String emailFromName();
 

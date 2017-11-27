@@ -29,10 +29,12 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface ReportsPortletMessagingConfiguration {
 
-	@Meta.AD(deflt = "200", required = false)
+	@Meta.AD(
+		deflt = "200", name = "report-message-queue-size", required = false
+	)
 	public int reportMessageQueueSize();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "enabled", required = false)
 	public boolean enabled();
 
 }

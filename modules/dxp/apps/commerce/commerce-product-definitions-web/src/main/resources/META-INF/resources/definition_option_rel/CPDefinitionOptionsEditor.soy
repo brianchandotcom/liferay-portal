@@ -1,0 +1,81 @@
+{namespace CPDefinitionOptionsEditor}
+
+/**
+ * CP Options Editor
+ *
+ */
+{template .render}
+	{@param? id: string}
+	{@param? namespace: string}
+	{@param? optionURL: string}
+	{@param? cpDefinitionOptionValueRelsURL: string}
+	{@param? cpDefinitionOptionValueRelURL: string}
+	{@param? pathThemeImages: string}
+	{@param? _currentOption: string}
+	{@param? _cpDefinitionOptions: ?}
+	{@param? _handleAddOption: any }
+	{@param? _handleCancelEditing: any }
+	{@param? _handleCloseValueEditor: any }
+	{@param? _handleEditValues: any }
+	{@param? _handleoptionDeleted: any }
+	{@param? _handleOptionSaved: any }
+	{@param? _handleOptionSelected: any }
+	{@param? _handleTitleChange: any }
+	{@param? _showValues: bool}
+
+	<div id="{$id}" class="commerce-product-option-editor">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-body">
+						<div class="form-container">
+
+							{call CPDefinitionOptionList.render}
+								{param currentCPDefinitionOptionId: $_currentOption /}
+								{param cpDefinitionOptions: $_cpDefinitionOptions /}
+								{param pathThemeImages: $pathThemeImages /}
+								{param events: ['addOption': $_handleAddOption , 'editValues' : $_handleEditValues , 'optionSelected': $_handleOptionSelected] /}
+							{/call}
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-body">
+						<div class="form-container">
+							{if $_currentOption}
+								{call CPDefinitionOptionDetail.render}
+									{param cpDefinitionOptionRelId : $_currentOption /}
+									{param namespace: $namespace /}
+									{param optionURL: $optionURL /}
+									{param pathThemeImages: $pathThemeImages /}
+									{param events: ['cancel': $_handleCancelEditing , 'optionDeleted': $_handleoptionDeleted , 'optionSaved': $_handleOptionSaved , 'titleChange': $_handleTitleChange ] /}
+								{/call}
+							{else}
+								<div class="alert alert-info" role="alert">
+									{msg desc=""}no-option-selected{/msg}
+								</div>
+							{/if}
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			{if $_currentOption}
+				{call CPDefinitionOptionValuesEditor.render}
+					{param show: $_showValues /}
+					{param cpDefinitionOptionRelId: $_currentOption /}
+					{param cpDefinitionOptionValueRelsURL: $cpDefinitionOptionValueRelsURL /}
+					{param cpDefinitionOptionValueRelURL: $cpDefinitionOptionValueRelURL /}
+					{param namespace: $namespace /}
+					{param pathThemeImages: $pathThemeImages /}
+					{param events: ['close': $_handleCloseValueEditor] /}
+				{/call}
+			{/if}
+	   </div>
+	</div>
+{/template}

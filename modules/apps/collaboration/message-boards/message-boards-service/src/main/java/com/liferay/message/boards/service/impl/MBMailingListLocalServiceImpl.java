@@ -20,6 +20,7 @@ import com.liferay.message.boards.exception.MailingListInUserNameException;
 import com.liferay.message.boards.exception.MailingListOutEmailAddressException;
 import com.liferay.message.boards.exception.MailingListOutServerNameException;
 import com.liferay.message.boards.exception.MailingListOutUserNameException;
+import com.liferay.message.boards.internal.messaging.MailingListRequest;
 import com.liferay.message.boards.model.MBMailingList;
 import com.liferay.message.boards.service.base.MBMailingListLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,7 +37,6 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
-import com.liferay.portlet.messageboards.messaging.MailingListRequest;
 
 import java.util.Calendar;
 

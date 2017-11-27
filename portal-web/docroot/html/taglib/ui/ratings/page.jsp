@@ -187,7 +187,7 @@ if (!inTrash) {
 								if (inTrash) {
 									thumbsTitle = LanguageUtil.get(resourceBundle, "ratings-are-disabled-because-this-entry-is-in-the-recycle-bin");
 								}
-								else {
+								else if (!enabled) {
 									thumbsTitle = LanguageUtil.get(resourceBundle, "ratings-are-disabled-in-staging");
 								}
 								%>

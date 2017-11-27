@@ -1,10 +1,9 @@
-import com.liferay.gradle.util.StringUtil
+apply plugin: "com.liferay.osgi.portal.compat.defaults.plugin"
 
 task deployLib(type: Copy)
-task importFiles(type: Copy)
 
-classes {
-	dependsOn importFiles
+transformImportedFiles {
+	enabled = false
 }
 
 dependencies {
@@ -25,47 +24,5 @@ deployLib {
 
 	rename {
 		"com.liferay.util.taglib.compat.jar"
-	}
-}
-
-importFiles {
-	into {
-		compileJava.destinationDir
-	}
-}
-
-liferay {
-	deployDir = "../../../tmp/lib-pre"
-}
-
-Properties importedFilesProperties = new Properties()
-
-File importedFilesPropertiesFile = file("imported-files.properties")
-
-importedFilesPropertiesFile.withInputStream {
-	importedFilesProperties.load it
-}
-
-importedFilesProperties.each {
-	String dependencyNotation, String dependencyIncludes ->
-
-	String dependencySuffix = dependencyNotation.replaceAll(/[\.|:](\w)/) {
-		String s = it[1]
-
-		s.toUpperCase()
-	}
-
-	Configuration dependencyConfiguration = configurations.create("importedFiles" + StringUtil.capitalize(dependencySuffix))
-
-	dependencyConfiguration.transitive = false
-
-	dependencies.add dependencyConfiguration.name, dependencyNotation
-
-	importFiles {
-		from {
-			zipTree(dependencyConfiguration.singleFile)
-		} {
-			include dependencyIncludes.tokenize(",")
-		}
 	}
 }

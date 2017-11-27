@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,13 +69,13 @@ public abstract class OrganizationBaseImpl extends OrganizationModelImpl
 
 		StringBundler sb = new StringBundler((organizations.size() * 2) + 1);
 
-		sb.append(StringPool.SLASH);
+		sb.append("/");
 
 		for (int i = organizations.size() - 1; i >= 0; i--) {
 			organization = organizations.get(i);
 
 			sb.append(organization.getOrganizationId());
-			sb.append(StringPool.SLASH);
+			sb.append("/");
 		}
 
 		return sb.toString();

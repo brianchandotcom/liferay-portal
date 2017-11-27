@@ -46,10 +46,8 @@ import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -239,7 +237,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -326,7 +324,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchUserException(msg.toString());
 	}
@@ -374,7 +372,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchUserException(msg.toString());
 	}
@@ -463,7 +461,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3);
 		}
 		else {
@@ -599,7 +597,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -790,7 +788,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -885,7 +883,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchUserException(msg.toString());
 	}
@@ -938,7 +936,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchUserException(msg.toString());
 	}
@@ -1032,7 +1030,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 		}
 		else {
@@ -1174,7 +1172,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1432,7 +1430,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		msg.append("companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchUserException(msg.toString());
 	}
@@ -1480,7 +1478,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		msg.append("companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchUserException(msg.toString());
 	}
@@ -1750,7 +1748,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			msg.append("contactId=");
 			msg.append(contactId);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -2064,7 +2062,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			if (emailAddress == null) {
 				query.append(_FINDER_COLUMN_EMAILADDRESS_EMAILADDRESS_1);
 			}
-			else if (emailAddress.equals(StringPool.BLANK)) {
+			else if (emailAddress.equals("")) {
 				query.append(_FINDER_COLUMN_EMAILADDRESS_EMAILADDRESS_3);
 			}
 			else {
@@ -2151,7 +2149,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		msg.append("emailAddress=");
 		msg.append(emailAddress);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchUserException(msg.toString());
 	}
@@ -2200,7 +2198,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		msg.append("emailAddress=");
 		msg.append(emailAddress);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchUserException(msg.toString());
 	}
@@ -2292,7 +2290,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		if (emailAddress == null) {
 			query.append(_FINDER_COLUMN_EMAILADDRESS_EMAILADDRESS_1);
 		}
-		else if (emailAddress.equals(StringPool.BLANK)) {
+		else if (emailAddress.equals("")) {
 			query.append(_FINDER_COLUMN_EMAILADDRESS_EMAILADDRESS_3);
 		}
 		else {
@@ -2428,7 +2426,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			if (emailAddress == null) {
 				query.append(_FINDER_COLUMN_EMAILADDRESS_EMAILADDRESS_1);
 			}
-			else if (emailAddress.equals(StringPool.BLANK)) {
+			else if (emailAddress.equals("")) {
 				query.append(_FINDER_COLUMN_EMAILADDRESS_EMAILADDRESS_3);
 			}
 			else {
@@ -2501,7 +2499,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			msg.append("portraitId=");
 			msg.append(portraitId);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -2719,7 +2717,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			msg.append(", userId=");
 			msg.append(userId);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -3146,7 +3144,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		msg.append(", createDate=");
 		msg.append(createDate);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchUserException(msg.toString());
 	}
@@ -3200,7 +3198,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		msg.append(", createDate=");
 		msg.append(createDate);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchUserException(msg.toString());
 	}
@@ -3717,7 +3715,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		msg.append(", modifiedDate=");
 		msg.append(modifiedDate);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchUserException(msg.toString());
 	}
@@ -3771,7 +3769,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		msg.append(", modifiedDate=");
 		msg.append(modifiedDate);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchUserException(msg.toString());
 	}
@@ -4084,7 +4082,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			msg.append(", defaultUser=");
 			msg.append(defaultUser);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -4318,7 +4316,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			msg.append(", screenName=");
 			msg.append(screenName);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -4383,7 +4381,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			if (screenName == null) {
 				query.append(_FINDER_COLUMN_C_SN_SCREENNAME_1);
 			}
-			else if (screenName.equals(StringPool.BLANK)) {
+			else if (screenName.equals("")) {
 				query.append(_FINDER_COLUMN_C_SN_SCREENNAME_3);
 			}
 			else {
@@ -4490,7 +4488,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			if (screenName == null) {
 				query.append(_FINDER_COLUMN_C_SN_SCREENNAME_1);
 			}
-			else if (screenName.equals(StringPool.BLANK)) {
+			else if (screenName.equals("")) {
 				query.append(_FINDER_COLUMN_C_SN_SCREENNAME_3);
 			}
 			else {
@@ -4572,7 +4570,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			msg.append(", emailAddress=");
 			msg.append(emailAddress);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -4637,7 +4635,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			if (emailAddress == null) {
 				query.append(_FINDER_COLUMN_C_EA_EMAILADDRESS_1);
 			}
-			else if (emailAddress.equals(StringPool.BLANK)) {
+			else if (emailAddress.equals("")) {
 				query.append(_FINDER_COLUMN_C_EA_EMAILADDRESS_3);
 			}
 			else {
@@ -4744,7 +4742,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			if (emailAddress == null) {
 				query.append(_FINDER_COLUMN_C_EA_EMAILADDRESS_1);
 			}
-			else if (emailAddress.equals(StringPool.BLANK)) {
+			else if (emailAddress.equals("")) {
 				query.append(_FINDER_COLUMN_C_EA_EMAILADDRESS_3);
 			}
 			else {
@@ -4826,7 +4824,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			msg.append(", facebookId=");
 			msg.append(facebookId);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -5060,7 +5058,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			msg.append(", googleUserId=");
 			msg.append(googleUserId);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -5125,7 +5123,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			if (googleUserId == null) {
 				query.append(_FINDER_COLUMN_C_GUID_GOOGLEUSERID_1);
 			}
-			else if (googleUserId.equals(StringPool.BLANK)) {
+			else if (googleUserId.equals("")) {
 				query.append(_FINDER_COLUMN_C_GUID_GOOGLEUSERID_3);
 			}
 			else {
@@ -5243,7 +5241,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			if (googleUserId == null) {
 				query.append(_FINDER_COLUMN_C_GUID_GOOGLEUSERID_1);
 			}
-			else if (googleUserId.equals(StringPool.BLANK)) {
+			else if (googleUserId.equals("")) {
 				query.append(_FINDER_COLUMN_C_GUID_GOOGLEUSERID_3);
 			}
 			else {
@@ -5325,7 +5323,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			msg.append(", openId=");
 			msg.append(openId);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -5390,7 +5388,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			if (openId == null) {
 				query.append(_FINDER_COLUMN_C_O_OPENID_1);
 			}
-			else if (openId.equals(StringPool.BLANK)) {
+			else if (openId.equals("")) {
 				query.append(_FINDER_COLUMN_C_O_OPENID_3);
 			}
 			else {
@@ -5508,7 +5506,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			if (openId == null) {
 				query.append(_FINDER_COLUMN_C_O_OPENID_1);
 			}
-			else if (openId.equals(StringPool.BLANK)) {
+			else if (openId.equals("")) {
 				query.append(_FINDER_COLUMN_C_O_OPENID_3);
 			}
 			else {
@@ -5780,7 +5778,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		msg.append(", status=");
 		msg.append(status);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchUserException(msg.toString());
 	}
@@ -5833,7 +5831,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		msg.append(", status=");
 		msg.append(status);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchUserException(msg.toString());
 	}
@@ -6362,7 +6360,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		msg.append(", modifiedDate=");
 		msg.append(modifiedDate);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchUserException(msg.toString());
 	}
@@ -6423,7 +6421,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		msg.append(", modifiedDate=");
 		msg.append(modifiedDate);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchUserException(msg.toString());
 	}
@@ -6992,7 +6990,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		msg.append(", status=");
 		msg.append(status);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchUserException(msg.toString());
 	}
@@ -7053,7 +7051,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		msg.append(", status=");
 		msg.append(status);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchUserException(msg.toString());
 	}
@@ -7326,8 +7324,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		setModelClass(User.class);
 
 		try {
-			Field field = ReflectionUtil.getDeclaredField(BasePersistenceImpl.class,
+			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
+
+			field.setAccessible(true);
 
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -8348,12 +8348,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

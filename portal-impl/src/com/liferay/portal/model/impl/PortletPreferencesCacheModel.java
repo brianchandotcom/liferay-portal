@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -112,14 +111,14 @@ public class PortletPreferencesCacheModel implements CacheModel<PortletPreferenc
 		portletPreferencesImpl.setPlid(plid);
 
 		if (portletId == null) {
-			portletPreferencesImpl.setPortletId(StringPool.BLANK);
+			portletPreferencesImpl.setPortletId("");
 		}
 		else {
 			portletPreferencesImpl.setPortletId(portletId);
 		}
 
 		if (preferences == null) {
-			portletPreferencesImpl.setPreferences(StringPool.BLANK);
+			portletPreferencesImpl.setPreferences("");
 		}
 		else {
 			portletPreferencesImpl.setPreferences(preferences);
@@ -163,14 +162,14 @@ public class PortletPreferencesCacheModel implements CacheModel<PortletPreferenc
 		objectOutput.writeLong(plid);
 
 		if (portletId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(portletId);
 		}
 
 		if (preferences == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(preferences);

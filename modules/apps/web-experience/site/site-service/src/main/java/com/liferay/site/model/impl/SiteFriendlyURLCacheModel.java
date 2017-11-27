@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.site.model.SiteFriendlyURL;
 
@@ -100,7 +99,7 @@ public class SiteFriendlyURLCacheModel implements CacheModel<SiteFriendlyURL>,
 		SiteFriendlyURLImpl siteFriendlyURLImpl = new SiteFriendlyURLImpl();
 
 		if (uuid == null) {
-			siteFriendlyURLImpl.setUuid(StringPool.BLANK);
+			siteFriendlyURLImpl.setUuid("");
 		}
 		else {
 			siteFriendlyURLImpl.setUuid(uuid);
@@ -111,7 +110,7 @@ public class SiteFriendlyURLCacheModel implements CacheModel<SiteFriendlyURL>,
 		siteFriendlyURLImpl.setUserId(userId);
 
 		if (userName == null) {
-			siteFriendlyURLImpl.setUserName(StringPool.BLANK);
+			siteFriendlyURLImpl.setUserName("");
 		}
 		else {
 			siteFriendlyURLImpl.setUserName(userName);
@@ -134,14 +133,14 @@ public class SiteFriendlyURLCacheModel implements CacheModel<SiteFriendlyURL>,
 		siteFriendlyURLImpl.setGroupId(groupId);
 
 		if (friendlyURL == null) {
-			siteFriendlyURLImpl.setFriendlyURL(StringPool.BLANK);
+			siteFriendlyURLImpl.setFriendlyURL("");
 		}
 		else {
 			siteFriendlyURLImpl.setFriendlyURL(friendlyURL);
 		}
 
 		if (languageId == null) {
-			siteFriendlyURLImpl.setLanguageId(StringPool.BLANK);
+			siteFriendlyURLImpl.setLanguageId("");
 		}
 		else {
 			siteFriendlyURLImpl.setLanguageId(languageId);
@@ -182,7 +181,7 @@ public class SiteFriendlyURLCacheModel implements CacheModel<SiteFriendlyURL>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -195,7 +194,7 @@ public class SiteFriendlyURLCacheModel implements CacheModel<SiteFriendlyURL>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -207,14 +206,14 @@ public class SiteFriendlyURLCacheModel implements CacheModel<SiteFriendlyURL>,
 		objectOutput.writeLong(groupId);
 
 		if (friendlyURL == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(friendlyURL);
 		}
 
 		if (languageId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(languageId);

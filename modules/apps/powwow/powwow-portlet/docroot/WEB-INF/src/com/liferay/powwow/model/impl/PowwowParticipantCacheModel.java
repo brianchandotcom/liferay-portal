@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.powwow.model.PowwowParticipant;
 
@@ -109,7 +108,7 @@ public class PowwowParticipantCacheModel implements CacheModel<PowwowParticipant
 		powwowParticipantImpl.setUserId(userId);
 
 		if (userName == null) {
-			powwowParticipantImpl.setUserName(StringPool.BLANK);
+			powwowParticipantImpl.setUserName("");
 		}
 		else {
 			powwowParticipantImpl.setUserName(userName);
@@ -132,7 +131,7 @@ public class PowwowParticipantCacheModel implements CacheModel<PowwowParticipant
 		powwowParticipantImpl.setPowwowMeetingId(powwowMeetingId);
 
 		if (name == null) {
-			powwowParticipantImpl.setName(StringPool.BLANK);
+			powwowParticipantImpl.setName("");
 		}
 		else {
 			powwowParticipantImpl.setName(name);
@@ -141,7 +140,7 @@ public class PowwowParticipantCacheModel implements CacheModel<PowwowParticipant
 		powwowParticipantImpl.setParticipantUserId(participantUserId);
 
 		if (emailAddress == null) {
-			powwowParticipantImpl.setEmailAddress(StringPool.BLANK);
+			powwowParticipantImpl.setEmailAddress("");
 		}
 		else {
 			powwowParticipantImpl.setEmailAddress(emailAddress);
@@ -191,7 +190,7 @@ public class PowwowParticipantCacheModel implements CacheModel<PowwowParticipant
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -203,7 +202,7 @@ public class PowwowParticipantCacheModel implements CacheModel<PowwowParticipant
 		objectOutput.writeLong(powwowMeetingId);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
@@ -212,7 +211,7 @@ public class PowwowParticipantCacheModel implements CacheModel<PowwowParticipant
 		objectOutput.writeLong(participantUserId);
 
 		if (emailAddress == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(emailAddress);

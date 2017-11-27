@@ -21,7 +21,6 @@ import com.liferay.mail.reader.model.Folder;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -101,7 +100,7 @@ public class FolderCacheModel implements CacheModel<Folder>, Externalizable {
 		folderImpl.setUserId(userId);
 
 		if (userName == null) {
-			folderImpl.setUserName(StringPool.BLANK);
+			folderImpl.setUserName("");
 		}
 		else {
 			folderImpl.setUserName(userName);
@@ -124,14 +123,14 @@ public class FolderCacheModel implements CacheModel<Folder>, Externalizable {
 		folderImpl.setAccountId(accountId);
 
 		if (fullName == null) {
-			folderImpl.setFullName(StringPool.BLANK);
+			folderImpl.setFullName("");
 		}
 		else {
 			folderImpl.setFullName(fullName);
 		}
 
 		if (displayName == null) {
-			folderImpl.setDisplayName(StringPool.BLANK);
+			folderImpl.setDisplayName("");
 		}
 		else {
 			folderImpl.setDisplayName(displayName);
@@ -172,7 +171,7 @@ public class FolderCacheModel implements CacheModel<Folder>, Externalizable {
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -184,14 +183,14 @@ public class FolderCacheModel implements CacheModel<Folder>, Externalizable {
 		objectOutput.writeLong(accountId);
 
 		if (fullName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(fullName);
 		}
 
 		if (displayName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(displayName);

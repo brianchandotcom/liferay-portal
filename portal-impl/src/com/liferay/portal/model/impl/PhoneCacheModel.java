@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -121,7 +120,7 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 		phoneImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
-			phoneImpl.setUuid(StringPool.BLANK);
+			phoneImpl.setUuid("");
 		}
 		else {
 			phoneImpl.setUuid(uuid);
@@ -132,7 +131,7 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 		phoneImpl.setUserId(userId);
 
 		if (userName == null) {
-			phoneImpl.setUserName(StringPool.BLANK);
+			phoneImpl.setUserName("");
 		}
 		else {
 			phoneImpl.setUserName(userName);
@@ -156,14 +155,14 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 		phoneImpl.setClassPK(classPK);
 
 		if (number == null) {
-			phoneImpl.setNumber(StringPool.BLANK);
+			phoneImpl.setNumber("");
 		}
 		else {
 			phoneImpl.setNumber(number);
 		}
 
 		if (extension == null) {
-			phoneImpl.setExtension(StringPool.BLANK);
+			phoneImpl.setExtension("");
 		}
 		else {
 			phoneImpl.setExtension(extension);
@@ -208,7 +207,7 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -221,7 +220,7 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -235,14 +234,14 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 		objectOutput.writeLong(classPK);
 
 		if (number == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(number);
 		}
 
 		if (extension == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(extension);

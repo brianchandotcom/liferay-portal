@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -549,7 +548,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -561,7 +560,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -762,7 +761,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -861,7 +860,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	@Override
 	public String getTitle() {
 		if (_title == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _title;
@@ -960,7 +959,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	@Override
 	public String getDescription() {
 		if (_description == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _description;
@@ -1063,7 +1062,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	@Override
 	public String getKeywords() {
 		if (_keywords == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _keywords;
@@ -1164,7 +1163,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	@Override
 	public String getRobots() {
 		if (_robots == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _robots;
@@ -1263,7 +1262,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	@Override
 	public String getTypeSettings() {
 		if (_typeSettings == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _typeSettings;
@@ -1290,7 +1289,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	@Override
 	public String getThemeId() {
 		if (_themeId == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _themeId;
@@ -1306,7 +1305,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	@Override
 	public String getColorSchemeId() {
 		if (_colorSchemeId == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _colorSchemeId;
@@ -1322,7 +1321,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	@Override
 	public String getCss() {
 		if (_css == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _css;
@@ -1376,7 +1375,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -1388,7 +1387,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	@Override
 	public String getStatusByUserName() {
 		if (_statusByUserName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _statusByUserName;
@@ -1575,7 +1574,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		String xml = getName();
 
 		if (xml == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 
 		Locale defaultLocale = LocaleUtil.getSiteDefault();

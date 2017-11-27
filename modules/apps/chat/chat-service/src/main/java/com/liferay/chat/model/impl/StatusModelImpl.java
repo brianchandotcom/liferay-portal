@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -248,7 +247,7 @@ public class StatusModelImpl extends BaseModelImpl<Status>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -327,7 +326,7 @@ public class StatusModelImpl extends BaseModelImpl<Status>
 	@Override
 	public String getActivePanelIds() {
 		if (_activePanelIds == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _activePanelIds;
@@ -342,7 +341,7 @@ public class StatusModelImpl extends BaseModelImpl<Status>
 	@Override
 	public String getMessage() {
 		if (_message == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _message;

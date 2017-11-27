@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.shopping.model.ShoppingCart;
 import com.liferay.shopping.model.ShoppingCartModel;
@@ -307,7 +306,7 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -322,7 +321,7 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -363,7 +362,7 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 	@Override
 	public String getItemIds() {
 		if (_itemIds == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _itemIds;
@@ -378,7 +377,7 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 	@Override
 	public String getCouponCodes() {
 		if (_couponCodes == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _couponCodes;

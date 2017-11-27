@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -437,7 +436,7 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -449,7 +448,7 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -495,7 +494,7 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -521,7 +520,7 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 	@Override
 	public String getServletContextNames() {
 		if (_servletContextNames == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _servletContextNames;
@@ -537,7 +536,7 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 	@Override
 	public String getTaskExecutorClassName() {
 		if (_taskExecutorClassName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _taskExecutorClassName;
@@ -637,7 +636,7 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 	@Override
 	public String getStatusMessage() {
 		if (_statusMessage == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _statusMessage;

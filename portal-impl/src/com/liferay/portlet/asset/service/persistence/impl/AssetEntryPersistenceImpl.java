@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import com.liferay.portlet.asset.model.impl.AssetEntryImpl;
@@ -309,7 +308,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		msg.append("groupId=");
 		msg.append(groupId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -358,7 +357,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		msg.append("groupId=");
 		msg.append(groupId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -812,7 +811,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		msg.append("companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -863,7 +862,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		msg.append("companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -1314,7 +1313,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		msg.append("visible=");
 		msg.append(visible);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -1363,7 +1362,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		msg.append("visible=");
 		msg.append(visible);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -1830,7 +1829,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		msg.append("publishDate=");
 		msg.append(publishDate);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -1881,7 +1880,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		msg.append("publishDate=");
 		msg.append(publishDate);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -2376,7 +2375,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		msg.append("expirationDate=");
 		msg.append(expirationDate);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -2427,7 +2426,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		msg.append("expirationDate=");
 		msg.append(expirationDate);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -2830,7 +2829,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 			if (layoutUuid == null) {
 				query.append(_FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_1);
 			}
-			else if (layoutUuid.equals(StringPool.BLANK)) {
+			else if (layoutUuid.equals("")) {
 				query.append(_FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_3);
 			}
 			else {
@@ -2919,7 +2918,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		msg.append("layoutUuid=");
 		msg.append(layoutUuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -2970,7 +2969,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		msg.append("layoutUuid=");
 		msg.append(layoutUuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -3062,7 +3061,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		if (layoutUuid == null) {
 			query.append(_FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_1);
 		}
-		else if (layoutUuid.equals(StringPool.BLANK)) {
+		else if (layoutUuid.equals("")) {
 			query.append(_FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_3);
 		}
 		else {
@@ -3198,7 +3197,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 			if (layoutUuid == null) {
 				query.append(_FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_1);
 			}
-			else if (layoutUuid.equals(StringPool.BLANK)) {
+			else if (layoutUuid.equals("")) {
 				query.append(_FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_3);
 			}
 			else {
@@ -3277,7 +3276,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 			msg.append(", classUuid=");
 			msg.append(classUuid);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -3342,7 +3341,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 			if (classUuid == null) {
 				query.append(_FINDER_COLUMN_G_CU_CLASSUUID_1);
 			}
-			else if (classUuid.equals(StringPool.BLANK)) {
+			else if (classUuid.equals("")) {
 				query.append(_FINDER_COLUMN_G_CU_CLASSUUID_3);
 			}
 			else {
@@ -3460,7 +3459,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 			if (classUuid == null) {
 				query.append(_FINDER_COLUMN_G_CU_CLASSUUID_1);
 			}
-			else if (classUuid.equals(StringPool.BLANK)) {
+			else if (classUuid.equals("")) {
 				query.append(_FINDER_COLUMN_G_CU_CLASSUUID_3);
 			}
 			else {
@@ -3542,7 +3541,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 			msg.append(", classPK=");
 			msg.append(classPK);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -3984,7 +3983,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		msg.append(", visible=");
 		msg.append(visible);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -4045,7 +4044,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		msg.append(", visible=");
 		msg.append(visible);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -4611,7 +4610,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		msg.append(", expirationDate=");
 		msg.append(expirationDate);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -4679,7 +4678,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		msg.append(", expirationDate=");
 		msg.append(expirationDate);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchEntryException(msg.toString());
 	}
@@ -5760,12 +5759,12 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

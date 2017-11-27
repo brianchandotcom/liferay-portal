@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -170,9 +169,9 @@ public class ReleasePersistenceTest {
 
 	@Test
 	public void testCountByServletContextName() throws Exception {
-		_persistence.countByServletContextName(StringPool.BLANK);
+		_persistence.countByServletContextName("");
 
-		_persistence.countByServletContextName(StringPool.NULL);
+		_persistence.countByServletContextName("null");
 
 		_persistence.countByServletContextName((String)null);
 	}

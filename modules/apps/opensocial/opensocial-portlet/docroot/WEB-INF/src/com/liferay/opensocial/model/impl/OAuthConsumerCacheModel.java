@@ -21,7 +21,6 @@ import com.liferay.opensocial.model.OAuthConsumer;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -113,35 +112,35 @@ public class OAuthConsumerCacheModel implements CacheModel<OAuthConsumer>,
 		}
 
 		if (gadgetKey == null) {
-			oAuthConsumerImpl.setGadgetKey(StringPool.BLANK);
+			oAuthConsumerImpl.setGadgetKey("");
 		}
 		else {
 			oAuthConsumerImpl.setGadgetKey(gadgetKey);
 		}
 
 		if (serviceName == null) {
-			oAuthConsumerImpl.setServiceName(StringPool.BLANK);
+			oAuthConsumerImpl.setServiceName("");
 		}
 		else {
 			oAuthConsumerImpl.setServiceName(serviceName);
 		}
 
 		if (consumerKey == null) {
-			oAuthConsumerImpl.setConsumerKey(StringPool.BLANK);
+			oAuthConsumerImpl.setConsumerKey("");
 		}
 		else {
 			oAuthConsumerImpl.setConsumerKey(consumerKey);
 		}
 
 		if (consumerSecret == null) {
-			oAuthConsumerImpl.setConsumerSecret(StringPool.BLANK);
+			oAuthConsumerImpl.setConsumerSecret("");
 		}
 		else {
 			oAuthConsumerImpl.setConsumerSecret(consumerSecret);
 		}
 
 		if (keyType == null) {
-			oAuthConsumerImpl.setKeyType(StringPool.BLANK);
+			oAuthConsumerImpl.setKeyType("");
 		}
 		else {
 			oAuthConsumerImpl.setKeyType(keyType);
@@ -176,35 +175,35 @@ public class OAuthConsumerCacheModel implements CacheModel<OAuthConsumer>,
 		objectOutput.writeLong(modifiedDate);
 
 		if (gadgetKey == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(gadgetKey);
 		}
 
 		if (serviceName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(serviceName);
 		}
 
 		if (consumerKey == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(consumerKey);
 		}
 
 		if (consumerSecret == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(consumerSecret);
 		}
 
 		if (keyType == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(keyType);

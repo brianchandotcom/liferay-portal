@@ -8,7 +8,6 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.service.Invokable${sessionTypeName}Service;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import org.osgi.framework.Bundle;
@@ -135,14 +134,7 @@ public class ${entity.name}${sessionTypeName}ServiceUtil {
 		<#else>
 			if (_service == null) {
 				<#if validator.isNotNull(pluginName)>
-					Invokable${sessionTypeName}Service invokable${sessionTypeName}Service = (Invokable${sessionTypeName}Service)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(), ${entity.name}${sessionTypeName}Service.class.getName());
-
-					if (invokable${sessionTypeName}Service instanceof ${entity.name}${sessionTypeName}Service) {
-						_service = (${entity.name}${sessionTypeName}Service)invokable${sessionTypeName}Service;
-					}
-					else {
-						_service = new ${entity.name}${sessionTypeName}ServiceClp(invokable${sessionTypeName}Service);
-					}
+					_service = (${entity.name}${sessionTypeName}Service)PortletBeanLocatorUtil.locate(ServletContextUtil.getServletContextName(), ${entity.name}${sessionTypeName}Service.class.getName());
 				<#else>
 					_service = (${entity.name}${sessionTypeName}Service)PortalBeanLocatorUtil.locate(${entity.name}${sessionTypeName}Service.class.getName());
 				</#if>

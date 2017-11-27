@@ -7,7 +7,6 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.lang.reflect.Field;
 
@@ -35,7 +34,9 @@ public class ${entity.name}FinderBaseImpl
 
 		<#if entity.badNamedColumnsList?size != 0>
 			try {
-				Field field = ReflectionUtil.getDeclaredField(BasePersistenceImpl.class, "_dbColumnNames");
+				Field field = BasePersistenceImpl.class.getDeclaredField("_dbColumnNames");
+
+				field.setAccessible(true);
 
 				Map<String, String> dbColumnNames = new HashMap<String, String>();
 

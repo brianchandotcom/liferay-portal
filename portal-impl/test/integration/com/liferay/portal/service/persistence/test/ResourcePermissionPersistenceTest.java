@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -167,9 +166,9 @@ public class ResourcePermissionPersistenceTest {
 
 	@Test
 	public void testCountByName() throws Exception {
-		_persistence.countByName(StringPool.BLANK);
+		_persistence.countByName("");
 
-		_persistence.countByName(StringPool.NULL);
+		_persistence.countByName("null");
 
 		_persistence.countByName((String)null);
 	}
@@ -195,19 +194,19 @@ public class ResourcePermissionPersistenceTest {
 
 	@Test
 	public void testCountByC_LikeP() throws Exception {
-		_persistence.countByC_LikeP(RandomTestUtil.nextLong(), StringPool.BLANK);
+		_persistence.countByC_LikeP(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByC_LikeP(0L, StringPool.NULL);
+		_persistence.countByC_LikeP(0L, "null");
 
 		_persistence.countByC_LikeP(0L, (String)null);
 	}
 
 	@Test
 	public void testCountByC_N_S() throws Exception {
-		_persistence.countByC_N_S(RandomTestUtil.nextLong(), StringPool.BLANK,
+		_persistence.countByC_N_S(RandomTestUtil.nextLong(), "",
 			RandomTestUtil.nextInt());
 
-		_persistence.countByC_N_S(0L, StringPool.NULL, 0);
+		_persistence.countByC_N_S(0L, "null", 0);
 
 		_persistence.countByC_N_S(0L, (String)null, 0);
 	}
@@ -215,31 +214,29 @@ public class ResourcePermissionPersistenceTest {
 	@Test
 	public void testCountByC_S_P() throws Exception {
 		_persistence.countByC_S_P(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt(), StringPool.BLANK);
+			RandomTestUtil.nextInt(), "");
 
-		_persistence.countByC_S_P(0L, 0, StringPool.NULL);
+		_persistence.countByC_S_P(0L, 0, "null");
 
 		_persistence.countByC_S_P(0L, 0, (String)null);
 	}
 
 	@Test
 	public void testCountByC_N_S_P() throws Exception {
-		_persistence.countByC_N_S_P(RandomTestUtil.nextLong(),
-			StringPool.BLANK, RandomTestUtil.nextInt(), StringPool.BLANK);
+		_persistence.countByC_N_S_P(RandomTestUtil.nextLong(), "",
+			RandomTestUtil.nextInt(), "");
 
-		_persistence.countByC_N_S_P(0L, StringPool.NULL, 0, StringPool.NULL);
+		_persistence.countByC_N_S_P(0L, "null", 0, "null");
 
 		_persistence.countByC_N_S_P(0L, (String)null, 0, (String)null);
 	}
 
 	@Test
 	public void testCountByC_N_S_P_R() throws Exception {
-		_persistence.countByC_N_S_P_R(RandomTestUtil.nextLong(),
-			StringPool.BLANK, RandomTestUtil.nextInt(), StringPool.BLANK,
-			RandomTestUtil.nextLong());
+		_persistence.countByC_N_S_P_R(RandomTestUtil.nextLong(), "",
+			RandomTestUtil.nextInt(), "", RandomTestUtil.nextLong());
 
-		_persistence.countByC_N_S_P_R(0L, StringPool.NULL, 0, StringPool.NULL,
-			0L);
+		_persistence.countByC_N_S_P_R(0L, "null", 0, "null", 0L);
 
 		_persistence.countByC_N_S_P_R(0L, (String)null, 0, (String)null, 0L);
 	}
@@ -254,12 +251,11 @@ public class ResourcePermissionPersistenceTest {
 
 	@Test
 	public void testCountByC_N_S_P_R_V() throws Exception {
-		_persistence.countByC_N_S_P_R_V(RandomTestUtil.nextLong(),
-			StringPool.BLANK, RandomTestUtil.nextInt(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean());
+		_persistence.countByC_N_S_P_R_V(RandomTestUtil.nextLong(), "",
+			RandomTestUtil.nextInt(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
 
-		_persistence.countByC_N_S_P_R_V(0L, StringPool.NULL, 0, 0L, 0L,
+		_persistence.countByC_N_S_P_R_V(0L, "null", 0, 0L, 0L,
 			RandomTestUtil.randomBoolean());
 
 		_persistence.countByC_N_S_P_R_V(0L, (String)null, 0, 0L, 0L,

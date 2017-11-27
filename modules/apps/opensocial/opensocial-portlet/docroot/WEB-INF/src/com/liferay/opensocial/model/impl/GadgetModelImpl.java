@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -279,7 +278,7 @@ public class GadgetModelImpl extends BaseModelImpl<Gadget>
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _uuid;
@@ -365,7 +364,7 @@ public class GadgetModelImpl extends BaseModelImpl<Gadget>
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -383,7 +382,7 @@ public class GadgetModelImpl extends BaseModelImpl<Gadget>
 	@Override
 	public String getUrl() {
 		if (_url == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _url;
@@ -409,7 +408,7 @@ public class GadgetModelImpl extends BaseModelImpl<Gadget>
 	@Override
 	public String getPortletCategoryNames() {
 		if (_portletCategoryNames == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _portletCategoryNames;

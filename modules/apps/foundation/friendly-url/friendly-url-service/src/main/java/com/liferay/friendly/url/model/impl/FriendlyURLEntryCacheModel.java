@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -114,7 +113,7 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 		friendlyURLEntryImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
-			friendlyURLEntryImpl.setUuid(StringPool.BLANK);
+			friendlyURLEntryImpl.setUuid("");
 		}
 		else {
 			friendlyURLEntryImpl.setUuid(uuid);
@@ -142,7 +141,7 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 		friendlyURLEntryImpl.setClassPK(classPK);
 
 		if (defaultLanguageId == null) {
-			friendlyURLEntryImpl.setDefaultLanguageId(StringPool.BLANK);
+			friendlyURLEntryImpl.setDefaultLanguageId("");
 		}
 		else {
 			friendlyURLEntryImpl.setDefaultLanguageId(defaultLanguageId);
@@ -178,7 +177,7 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -197,7 +196,7 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 		objectOutput.writeLong(classPK);
 
 		if (defaultLanguageId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(defaultLanguageId);

@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -324,7 +323,7 @@ public class KBFolderModelImpl extends BaseModelImpl<KBFolder>
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _uuid;
@@ -420,7 +419,7 @@ public class KBFolderModelImpl extends BaseModelImpl<KBFolder>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -432,7 +431,7 @@ public class KBFolderModelImpl extends BaseModelImpl<KBFolder>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -499,7 +498,7 @@ public class KBFolderModelImpl extends BaseModelImpl<KBFolder>
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -525,7 +524,7 @@ public class KBFolderModelImpl extends BaseModelImpl<KBFolder>
 	@Override
 	public String getUrlTitle() {
 		if (_urlTitle == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _urlTitle;
@@ -551,7 +550,7 @@ public class KBFolderModelImpl extends BaseModelImpl<KBFolder>
 	@Override
 	public String getDescription() {
 		if (_description == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _description;

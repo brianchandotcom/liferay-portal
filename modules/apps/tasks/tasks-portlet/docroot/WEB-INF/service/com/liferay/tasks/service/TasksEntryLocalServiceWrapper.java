@@ -370,14 +370,6 @@ public class TasksEntryLocalServiceWrapper implements TasksEntryLocalService,
 	}
 
 	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _tasksEntryLocalService.invokeMethod(name, parameterTypes,
-			arguments);
-	}
-
-	@Override
 	public void updateAsset(long userId,
 		com.liferay.tasks.model.TasksEntry tasksEntry, long[] assetCategoryIds,
 		java.lang.String[] assetTagNames)

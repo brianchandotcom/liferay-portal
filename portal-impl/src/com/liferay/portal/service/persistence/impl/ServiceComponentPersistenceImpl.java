@@ -32,10 +32,8 @@ import com.liferay.portal.kernel.model.ServiceComponent;
 import com.liferay.portal.kernel.service.persistence.ServiceComponentPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.impl.ServiceComponentImpl;
 import com.liferay.portal.model.impl.ServiceComponentModelImpl;
 
@@ -237,7 +235,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 			if (buildNamespace == null) {
 				query.append(_FINDER_COLUMN_BUILDNAMESPACE_BUILDNAMESPACE_1);
 			}
-			else if (buildNamespace.equals(StringPool.BLANK)) {
+			else if (buildNamespace.equals("")) {
 				query.append(_FINDER_COLUMN_BUILDNAMESPACE_BUILDNAMESPACE_3);
 			}
 			else {
@@ -326,7 +324,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		msg.append("buildNamespace=");
 		msg.append(buildNamespace);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchServiceComponentException(msg.toString());
 	}
@@ -377,7 +375,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		msg.append("buildNamespace=");
 		msg.append(buildNamespace);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchServiceComponentException(msg.toString());
 	}
@@ -471,7 +469,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		if (buildNamespace == null) {
 			query.append(_FINDER_COLUMN_BUILDNAMESPACE_BUILDNAMESPACE_1);
 		}
-		else if (buildNamespace.equals(StringPool.BLANK)) {
+		else if (buildNamespace.equals("")) {
 			query.append(_FINDER_COLUMN_BUILDNAMESPACE_BUILDNAMESPACE_3);
 		}
 		else {
@@ -607,7 +605,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 			if (buildNamespace == null) {
 				query.append(_FINDER_COLUMN_BUILDNAMESPACE_BUILDNAMESPACE_1);
 			}
-			else if (buildNamespace.equals(StringPool.BLANK)) {
+			else if (buildNamespace.equals("")) {
 				query.append(_FINDER_COLUMN_BUILDNAMESPACE_BUILDNAMESPACE_3);
 			}
 			else {
@@ -688,7 +686,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 			msg.append(", buildNumber=");
 			msg.append(buildNumber);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -753,7 +751,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 			if (buildNamespace == null) {
 				query.append(_FINDER_COLUMN_BNS_BNU_BUILDNAMESPACE_1);
 			}
-			else if (buildNamespace.equals(StringPool.BLANK)) {
+			else if (buildNamespace.equals("")) {
 				query.append(_FINDER_COLUMN_BNS_BNU_BUILDNAMESPACE_3);
 			}
 			else {
@@ -863,7 +861,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 			if (buildNamespace == null) {
 				query.append(_FINDER_COLUMN_BNS_BNU_BUILDNAMESPACE_1);
 			}
-			else if (buildNamespace.equals(StringPool.BLANK)) {
+			else if (buildNamespace.equals("")) {
 				query.append(_FINDER_COLUMN_BNS_BNU_BUILDNAMESPACE_3);
 			}
 			else {
@@ -917,8 +915,10 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		setModelClass(ServiceComponent.class);
 
 		try {
-			Field field = ReflectionUtil.getDeclaredField(BasePersistenceImpl.class,
+			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
+
+			field.setAccessible(true);
 
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -1417,12 +1417,12 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

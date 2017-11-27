@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.service.persistence.UserNotificationDeliveryPer
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.impl.UserNotificationDeliveryImpl;
 import com.liferay.portal.model.impl.UserNotificationDeliveryModelImpl;
 
@@ -300,7 +299,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 		msg.append("userId=");
 		msg.append(userId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchUserNotificationDeliveryException(msg.toString());
 	}
@@ -351,7 +350,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 		msg.append("userId=");
 		msg.append(userId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchUserNotificationDeliveryException(msg.toString());
 	}
@@ -657,7 +656,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 			msg.append(", deliveryType=");
 			msg.append(deliveryType);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -738,7 +737,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 			if (portletId == null) {
 				query.append(_FINDER_COLUMN_U_P_C_N_D_PORTLETID_1);
 			}
-			else if (portletId.equals(StringPool.BLANK)) {
+			else if (portletId.equals("")) {
 				query.append(_FINDER_COLUMN_U_P_C_N_D_PORTLETID_3);
 			}
 			else {
@@ -873,7 +872,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 			if (portletId == null) {
 				query.append(_FINDER_COLUMN_U_P_C_N_D_PORTLETID_1);
 			}
-			else if (portletId.equals(StringPool.BLANK)) {
+			else if (portletId.equals("")) {
 				query.append(_FINDER_COLUMN_U_P_C_N_D_PORTLETID_3);
 			}
 			else {
@@ -1449,12 +1448,12 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.social.networking.model.WallEntry;
 
@@ -99,7 +98,7 @@ public class WallEntryCacheModel implements CacheModel<WallEntry>,
 		wallEntryImpl.setUserId(userId);
 
 		if (userName == null) {
-			wallEntryImpl.setUserName(StringPool.BLANK);
+			wallEntryImpl.setUserName("");
 		}
 		else {
 			wallEntryImpl.setUserName(userName);
@@ -120,7 +119,7 @@ public class WallEntryCacheModel implements CacheModel<WallEntry>,
 		}
 
 		if (comments == null) {
-			wallEntryImpl.setComments(StringPool.BLANK);
+			wallEntryImpl.setComments("");
 		}
 		else {
 			wallEntryImpl.setComments(comments);
@@ -158,7 +157,7 @@ public class WallEntryCacheModel implements CacheModel<WallEntry>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -168,7 +167,7 @@ public class WallEntryCacheModel implements CacheModel<WallEntry>,
 		objectOutput.writeLong(modifiedDate);
 
 		if (comments == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(comments);

@@ -21,7 +21,6 @@ import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -94,7 +93,7 @@ public class AnnouncementsDeliveryCacheModel implements CacheModel<Announcements
 		announcementsDeliveryImpl.setUserId(userId);
 
 		if (type == null) {
-			announcementsDeliveryImpl.setType(StringPool.BLANK);
+			announcementsDeliveryImpl.setType("");
 		}
 		else {
 			announcementsDeliveryImpl.setType(type);
@@ -135,7 +134,7 @@ public class AnnouncementsDeliveryCacheModel implements CacheModel<Announcements
 		objectOutput.writeLong(userId);
 
 		if (type == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(type);

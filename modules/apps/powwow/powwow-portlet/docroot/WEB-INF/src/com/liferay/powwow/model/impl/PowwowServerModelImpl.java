@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.powwow.model.PowwowServer;
 import com.liferay.powwow.model.PowwowServerModel;
@@ -286,7 +285,7 @@ public class PowwowServerModelImpl extends BaseModelImpl<PowwowServer>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -297,7 +296,7 @@ public class PowwowServerModelImpl extends BaseModelImpl<PowwowServer>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -338,7 +337,7 @@ public class PowwowServerModelImpl extends BaseModelImpl<PowwowServer>
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -355,7 +354,7 @@ public class PowwowServerModelImpl extends BaseModelImpl<PowwowServer>
 	@Override
 	public String getProviderType() {
 		if (_providerType == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _providerType;
@@ -380,7 +379,7 @@ public class PowwowServerModelImpl extends BaseModelImpl<PowwowServer>
 	@Override
 	public String getUrl() {
 		if (_url == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _url;
@@ -395,7 +394,7 @@ public class PowwowServerModelImpl extends BaseModelImpl<PowwowServer>
 	@Override
 	public String getApiKey() {
 		if (_apiKey == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _apiKey;
@@ -410,7 +409,7 @@ public class PowwowServerModelImpl extends BaseModelImpl<PowwowServer>
 	@Override
 	public String getSecret() {
 		if (_secret == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _secret;

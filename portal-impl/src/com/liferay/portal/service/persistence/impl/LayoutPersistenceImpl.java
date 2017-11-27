@@ -40,10 +40,8 @@ import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -234,7 +232,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -322,7 +320,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLayoutException(msg.toString());
 	}
@@ -371,7 +369,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLayoutException(msg.toString());
 	}
@@ -462,7 +460,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3);
 		}
 		else {
@@ -598,7 +596,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -688,7 +686,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			msg.append(", privateLayout=");
 			msg.append(privateLayout);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -755,7 +753,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_P_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_G_P_UUID_3);
 			}
 			else {
@@ -870,7 +868,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_P_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_G_P_UUID_3);
 			}
 			else {
@@ -1073,7 +1071,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1169,7 +1167,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLayoutException(msg.toString());
 	}
@@ -1224,7 +1222,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLayoutException(msg.toString());
 	}
@@ -1318,7 +1316,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 		}
 		else {
@@ -1460,7 +1458,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1719,7 +1717,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		msg.append("groupId=");
 		msg.append(groupId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLayoutException(msg.toString());
 	}
@@ -1768,7 +1766,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		msg.append("groupId=");
 		msg.append(groupId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLayoutException(msg.toString());
 	}
@@ -2578,7 +2576,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		msg.append("companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLayoutException(msg.toString());
 	}
@@ -2627,7 +2625,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		msg.append("companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLayoutException(msg.toString());
 	}
@@ -2899,7 +2897,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			msg.append("iconImageId=");
 			msg.append(iconImageId);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -3232,7 +3230,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			if (layoutPrototypeUuid == null) {
 				query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_1);
 			}
-			else if (layoutPrototypeUuid.equals(StringPool.BLANK)) {
+			else if (layoutPrototypeUuid.equals("")) {
 				query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_3);
 			}
 			else {
@@ -3321,7 +3319,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		msg.append("layoutPrototypeUuid=");
 		msg.append(layoutPrototypeUuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLayoutException(msg.toString());
 	}
@@ -3372,7 +3370,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		msg.append("layoutPrototypeUuid=");
 		msg.append(layoutPrototypeUuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLayoutException(msg.toString());
 	}
@@ -3464,7 +3462,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		if (layoutPrototypeUuid == null) {
 			query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_1);
 		}
-		else if (layoutPrototypeUuid.equals(StringPool.BLANK)) {
+		else if (layoutPrototypeUuid.equals("")) {
 			query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_3);
 		}
 		else {
@@ -3600,7 +3598,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			if (layoutPrototypeUuid == null) {
 				query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_1);
 			}
-			else if (layoutPrototypeUuid.equals(StringPool.BLANK)) {
+			else if (layoutPrototypeUuid.equals("")) {
 				query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_3);
 			}
 			else {
@@ -3800,7 +3798,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			if (sourcePrototypeLayoutUuid == null) {
 				query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_1);
 			}
-			else if (sourcePrototypeLayoutUuid.equals(StringPool.BLANK)) {
+			else if (sourcePrototypeLayoutUuid.equals("")) {
 				query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_3);
 			}
 			else {
@@ -3890,7 +3888,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		msg.append("sourcePrototypeLayoutUuid=");
 		msg.append(sourcePrototypeLayoutUuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLayoutException(msg.toString());
 	}
@@ -3943,7 +3941,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		msg.append("sourcePrototypeLayoutUuid=");
 		msg.append(sourcePrototypeLayoutUuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLayoutException(msg.toString());
 	}
@@ -4037,7 +4035,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		if (sourcePrototypeLayoutUuid == null) {
 			query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_1);
 		}
-		else if (sourcePrototypeLayoutUuid.equals(StringPool.BLANK)) {
+		else if (sourcePrototypeLayoutUuid.equals("")) {
 			query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_3);
 		}
 		else {
@@ -4176,7 +4174,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			if (sourcePrototypeLayoutUuid == null) {
 				query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_1);
 			}
-			else if (sourcePrototypeLayoutUuid.equals(StringPool.BLANK)) {
+			else if (sourcePrototypeLayoutUuid.equals("")) {
 				query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_3);
 			}
 			else {
@@ -4455,7 +4453,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		msg.append(", privateLayout=");
 		msg.append(privateLayout);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLayoutException(msg.toString());
 	}
@@ -4511,7 +4509,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		msg.append(", privateLayout=");
 		msg.append(privateLayout);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLayoutException(msg.toString());
 	}
@@ -5294,7 +5292,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			if (layoutPrototypeUuid == null) {
 				query.append(_FINDER_COLUMN_C_L_LAYOUTPROTOTYPEUUID_1);
 			}
-			else if (layoutPrototypeUuid.equals(StringPool.BLANK)) {
+			else if (layoutPrototypeUuid.equals("")) {
 				query.append(_FINDER_COLUMN_C_L_LAYOUTPROTOTYPEUUID_3);
 			}
 			else {
@@ -5389,7 +5387,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		msg.append(", layoutPrototypeUuid=");
 		msg.append(layoutPrototypeUuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLayoutException(msg.toString());
 	}
@@ -5445,7 +5443,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		msg.append(", layoutPrototypeUuid=");
 		msg.append(layoutPrototypeUuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLayoutException(msg.toString());
 	}
@@ -5541,7 +5539,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		if (layoutPrototypeUuid == null) {
 			query.append(_FINDER_COLUMN_C_L_LAYOUTPROTOTYPEUUID_1);
 		}
-		else if (layoutPrototypeUuid.equals(StringPool.BLANK)) {
+		else if (layoutPrototypeUuid.equals("")) {
 			query.append(_FINDER_COLUMN_C_L_LAYOUTPROTOTYPEUUID_3);
 		}
 		else {
@@ -5683,7 +5681,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			if (layoutPrototypeUuid == null) {
 				query.append(_FINDER_COLUMN_C_L_LAYOUTPROTOTYPEUUID_1);
 			}
-			else if (layoutPrototypeUuid.equals(StringPool.BLANK)) {
+			else if (layoutPrototypeUuid.equals("")) {
 				query.append(_FINDER_COLUMN_C_L_LAYOUTPROTOTYPEUUID_3);
 			}
 			else {
@@ -5765,7 +5763,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			msg.append(", iconImageId=");
 			msg.append(iconImageId);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -6010,7 +6008,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			msg.append(", layoutId=");
 			msg.append(layoutId);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -6476,7 +6474,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		msg.append(", parentLayoutId=");
 		msg.append(parentLayoutId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLayoutException(msg.toString());
 	}
@@ -6537,7 +6535,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		msg.append(", parentLayoutId=");
 		msg.append(parentLayoutId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLayoutException(msg.toString());
 	}
@@ -7150,15 +7148,15 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		query.append(_FINDER_COLUMN_G_P_P_PRIVATELAYOUT_2);
 
 		if (parentLayoutIds.length > 0) {
-			query.append(StringPool.OPEN_PARENTHESIS);
+			query.append("(");
 
 			query.append(_FINDER_COLUMN_G_P_P_PARENTLAYOUTID_7);
 
 			query.append(StringUtil.merge(parentLayoutIds));
 
-			query.append(StringPool.CLOSE_PARENTHESIS);
+			query.append(")");
 
-			query.append(StringPool.CLOSE_PARENTHESIS);
+			query.append(")");
 		}
 
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
@@ -7366,15 +7364,15 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			query.append(_FINDER_COLUMN_G_P_P_PRIVATELAYOUT_2);
 
 			if (parentLayoutIds.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
+				query.append("(");
 
 				query.append(_FINDER_COLUMN_G_P_P_PARENTLAYOUTID_7);
 
 				query.append(StringUtil.merge(parentLayoutIds));
 
-				query.append(StringPool.CLOSE_PARENTHESIS);
+				query.append(")");
 
-				query.append(StringPool.CLOSE_PARENTHESIS);
+				query.append(")");
 			}
 
 			query.setStringAt(removeConjunction(query.stringAt(query.index() -
@@ -7553,15 +7551,15 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			query.append(_FINDER_COLUMN_G_P_P_PRIVATELAYOUT_2);
 
 			if (parentLayoutIds.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
+				query.append("(");
 
 				query.append(_FINDER_COLUMN_G_P_P_PARENTLAYOUTID_7);
 
 				query.append(StringUtil.merge(parentLayoutIds));
 
-				query.append(StringPool.CLOSE_PARENTHESIS);
+				query.append(")");
 
-				query.append(StringPool.CLOSE_PARENTHESIS);
+				query.append(")");
 			}
 
 			query.setStringAt(removeConjunction(query.stringAt(query.index() -
@@ -7693,15 +7691,15 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		query.append(_FINDER_COLUMN_G_P_P_PRIVATELAYOUT_2);
 
 		if (parentLayoutIds.length > 0) {
-			query.append(StringPool.OPEN_PARENTHESIS);
+			query.append("(");
 
 			query.append(_FINDER_COLUMN_G_P_P_PARENTLAYOUTID_7);
 
 			query.append(StringUtil.merge(parentLayoutIds));
 
-			query.append(StringPool.CLOSE_PARENTHESIS);
+			query.append(")");
 
-			query.append(StringPool.CLOSE_PARENTHESIS);
+			query.append(")");
 		}
 
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
@@ -7911,7 +7909,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			if (type == null) {
 				query.append(_FINDER_COLUMN_G_P_T_TYPE_1);
 			}
-			else if (type.equals(StringPool.BLANK)) {
+			else if (type.equals("")) {
 				query.append(_FINDER_COLUMN_G_P_T_TYPE_3);
 			}
 			else {
@@ -8012,7 +8010,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		msg.append(", type=");
 		msg.append(type);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLayoutException(msg.toString());
 	}
@@ -8073,7 +8071,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		msg.append(", type=");
 		msg.append(type);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLayoutException(msg.toString());
 	}
@@ -8174,7 +8172,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		if (type == null) {
 			query.append(_FINDER_COLUMN_G_P_T_TYPE_1);
 		}
-		else if (type.equals(StringPool.BLANK)) {
+		else if (type.equals("")) {
 			query.append(_FINDER_COLUMN_G_P_T_TYPE_3);
 		}
 		else {
@@ -8362,7 +8360,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		if (type == null) {
 			query.append(_FINDER_COLUMN_G_P_T_TYPE_1_SQL);
 		}
-		else if (type.equals(StringPool.BLANK)) {
+		else if (type.equals("")) {
 			query.append(_FINDER_COLUMN_G_P_T_TYPE_3_SQL);
 		}
 		else {
@@ -8510,7 +8508,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		if (type == null) {
 			query.append(_FINDER_COLUMN_G_P_T_TYPE_1_SQL);
 		}
-		else if (type.equals(StringPool.BLANK)) {
+		else if (type.equals("")) {
 			query.append(_FINDER_COLUMN_G_P_T_TYPE_3_SQL);
 		}
 		else {
@@ -8688,7 +8686,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			if (type == null) {
 				query.append(_FINDER_COLUMN_G_P_T_TYPE_1);
 			}
-			else if (type.equals(StringPool.BLANK)) {
+			else if (type.equals("")) {
 				query.append(_FINDER_COLUMN_G_P_T_TYPE_3);
 			}
 			else {
@@ -8761,7 +8759,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		if (type == null) {
 			query.append(_FINDER_COLUMN_G_P_T_TYPE_1_SQL);
 		}
-		else if (type.equals(StringPool.BLANK)) {
+		else if (type.equals("")) {
 			query.append(_FINDER_COLUMN_G_P_T_TYPE_3_SQL);
 		}
 		else {
@@ -8860,7 +8858,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			msg.append(", friendlyURL=");
 			msg.append(friendlyURL);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -8931,7 +8929,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			if (friendlyURL == null) {
 				query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_1);
 			}
-			else if (friendlyURL.equals(StringPool.BLANK)) {
+			else if (friendlyURL.equals("")) {
 				query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_3);
 			}
 			else {
@@ -9046,7 +9044,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			if (friendlyURL == null) {
 				query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_1);
 			}
-			else if (friendlyURL.equals(StringPool.BLANK)) {
+			else if (friendlyURL.equals("")) {
 				query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_3);
 			}
 			else {
@@ -9143,7 +9141,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			msg.append(", sourcePrototypeLayoutUuid=");
 			msg.append(sourcePrototypeLayoutUuid);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -9218,7 +9216,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			if (sourcePrototypeLayoutUuid == null) {
 				query.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_1);
 			}
-			else if (sourcePrototypeLayoutUuid.equals(StringPool.BLANK)) {
+			else if (sourcePrototypeLayoutUuid.equals("")) {
 				query.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_3);
 			}
 			else {
@@ -9349,7 +9347,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			if (sourcePrototypeLayoutUuid == null) {
 				query.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_1);
 			}
-			else if (sourcePrototypeLayoutUuid.equals(StringPool.BLANK)) {
+			else if (sourcePrototypeLayoutUuid.equals("")) {
 				query.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_3);
 			}
 			else {
@@ -9654,7 +9652,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		msg.append(", priority=");
 		msg.append(priority);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLayoutException(msg.toString());
 	}
@@ -9722,7 +9720,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		msg.append(", priority=");
 		msg.append(priority);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLayoutException(msg.toString());
 	}
@@ -10438,8 +10436,10 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		setModelClass(Layout.class);
 
 		try {
-			Field field = ReflectionUtil.getDeclaredField(BasePersistenceImpl.class,
+			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
+
+			field.setAccessible(true);
 
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -11410,12 +11410,12 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

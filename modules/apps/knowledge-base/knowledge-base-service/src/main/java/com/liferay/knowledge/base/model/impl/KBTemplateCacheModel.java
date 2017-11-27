@@ -21,7 +21,6 @@ import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -100,7 +99,7 @@ public class KBTemplateCacheModel implements CacheModel<KBTemplate>,
 		KBTemplateImpl kbTemplateImpl = new KBTemplateImpl();
 
 		if (uuid == null) {
-			kbTemplateImpl.setUuid(StringPool.BLANK);
+			kbTemplateImpl.setUuid("");
 		}
 		else {
 			kbTemplateImpl.setUuid(uuid);
@@ -112,7 +111,7 @@ public class KBTemplateCacheModel implements CacheModel<KBTemplate>,
 		kbTemplateImpl.setUserId(userId);
 
 		if (userName == null) {
-			kbTemplateImpl.setUserName(StringPool.BLANK);
+			kbTemplateImpl.setUserName("");
 		}
 		else {
 			kbTemplateImpl.setUserName(userName);
@@ -133,14 +132,14 @@ public class KBTemplateCacheModel implements CacheModel<KBTemplate>,
 		}
 
 		if (title == null) {
-			kbTemplateImpl.setTitle(StringPool.BLANK);
+			kbTemplateImpl.setTitle("");
 		}
 		else {
 			kbTemplateImpl.setTitle(title);
 		}
 
 		if (content == null) {
-			kbTemplateImpl.setContent(StringPool.BLANK);
+			kbTemplateImpl.setContent("");
 		}
 		else {
 			kbTemplateImpl.setContent(content);
@@ -181,7 +180,7 @@ public class KBTemplateCacheModel implements CacheModel<KBTemplate>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -196,7 +195,7 @@ public class KBTemplateCacheModel implements CacheModel<KBTemplate>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -206,14 +205,14 @@ public class KBTemplateCacheModel implements CacheModel<KBTemplate>,
 		objectOutput.writeLong(modifiedDate);
 
 		if (title == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(title);
 		}
 
 		if (content == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(content);

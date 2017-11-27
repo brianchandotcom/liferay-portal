@@ -21,7 +21,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -102,7 +101,7 @@ public class LayoutPageTemplateCollectionCacheModel implements CacheModel<Layout
 		layoutPageTemplateCollectionImpl.setUserId(userId);
 
 		if (userName == null) {
-			layoutPageTemplateCollectionImpl.setUserName(StringPool.BLANK);
+			layoutPageTemplateCollectionImpl.setUserName("");
 		}
 		else {
 			layoutPageTemplateCollectionImpl.setUserName(userName);
@@ -124,14 +123,14 @@ public class LayoutPageTemplateCollectionCacheModel implements CacheModel<Layout
 		}
 
 		if (name == null) {
-			layoutPageTemplateCollectionImpl.setName(StringPool.BLANK);
+			layoutPageTemplateCollectionImpl.setName("");
 		}
 		else {
 			layoutPageTemplateCollectionImpl.setName(name);
 		}
 
 		if (description == null) {
-			layoutPageTemplateCollectionImpl.setDescription(StringPool.BLANK);
+			layoutPageTemplateCollectionImpl.setDescription("");
 		}
 		else {
 			layoutPageTemplateCollectionImpl.setDescription(description);
@@ -170,7 +169,7 @@ public class LayoutPageTemplateCollectionCacheModel implements CacheModel<Layout
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -180,14 +179,14 @@ public class LayoutPageTemplateCollectionCacheModel implements CacheModel<Layout
 		objectOutput.writeLong(modifiedDate);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);

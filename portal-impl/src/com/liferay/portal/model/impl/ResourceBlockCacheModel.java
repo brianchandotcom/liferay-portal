@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ResourceBlock;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -110,14 +109,14 @@ public class ResourceBlockCacheModel implements CacheModel<ResourceBlock>,
 		resourceBlockImpl.setGroupId(groupId);
 
 		if (name == null) {
-			resourceBlockImpl.setName(StringPool.BLANK);
+			resourceBlockImpl.setName("");
 		}
 		else {
 			resourceBlockImpl.setName(name);
 		}
 
 		if (permissionsHash == null) {
-			resourceBlockImpl.setPermissionsHash(StringPool.BLANK);
+			resourceBlockImpl.setPermissionsHash("");
 		}
 		else {
 			resourceBlockImpl.setPermissionsHash(permissionsHash);
@@ -157,14 +156,14 @@ public class ResourceBlockCacheModel implements CacheModel<ResourceBlock>,
 		objectOutput.writeLong(groupId);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (permissionsHash == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(permissionsHash);

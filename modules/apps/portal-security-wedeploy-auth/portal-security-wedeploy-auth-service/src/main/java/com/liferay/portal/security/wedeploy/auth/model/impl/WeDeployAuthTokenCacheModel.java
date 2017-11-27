@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken;
 
 import java.io.Externalizable;
@@ -99,7 +98,7 @@ public class WeDeployAuthTokenCacheModel implements CacheModel<WeDeployAuthToken
 		weDeployAuthTokenImpl.setUserId(userId);
 
 		if (userName == null) {
-			weDeployAuthTokenImpl.setUserName(StringPool.BLANK);
+			weDeployAuthTokenImpl.setUserName("");
 		}
 		else {
 			weDeployAuthTokenImpl.setUserName(userName);
@@ -120,14 +119,14 @@ public class WeDeployAuthTokenCacheModel implements CacheModel<WeDeployAuthToken
 		}
 
 		if (clientId == null) {
-			weDeployAuthTokenImpl.setClientId(StringPool.BLANK);
+			weDeployAuthTokenImpl.setClientId("");
 		}
 		else {
 			weDeployAuthTokenImpl.setClientId(clientId);
 		}
 
 		if (token == null) {
-			weDeployAuthTokenImpl.setToken(StringPool.BLANK);
+			weDeployAuthTokenImpl.setToken("");
 		}
 		else {
 			weDeployAuthTokenImpl.setToken(token);
@@ -166,7 +165,7 @@ public class WeDeployAuthTokenCacheModel implements CacheModel<WeDeployAuthToken
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -176,14 +175,14 @@ public class WeDeployAuthTokenCacheModel implements CacheModel<WeDeployAuthToken
 		objectOutput.writeLong(modifiedDate);
 
 		if (clientId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(clientId);
 		}
 
 		if (token == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(token);

@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -183,27 +182,27 @@ public class LayoutFriendlyURLPersistenceTest {
 
 	@Test
 	public void testCountByUuid() throws Exception {
-		_persistence.countByUuid(StringPool.BLANK);
+		_persistence.countByUuid("");
 
-		_persistence.countByUuid(StringPool.NULL);
+		_persistence.countByUuid("null");
 
 		_persistence.countByUuid((String)null);
 	}
 
 	@Test
 	public void testCountByUUID_G() throws Exception {
-		_persistence.countByUUID_G(StringPool.BLANK, RandomTestUtil.nextLong());
+		_persistence.countByUUID_G("", RandomTestUtil.nextLong());
 
-		_persistence.countByUUID_G(StringPool.NULL, 0L);
+		_persistence.countByUUID_G("null", 0L);
 
 		_persistence.countByUUID_G((String)null, 0L);
 	}
 
 	@Test
 	public void testCountByUuid_C() throws Exception {
-		_persistence.countByUuid_C(StringPool.BLANK, RandomTestUtil.nextLong());
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
 
-		_persistence.countByUuid_C(StringPool.NULL, 0L);
+		_persistence.countByUuid_C("null", 0L);
 
 		_persistence.countByUuid_C((String)null, 0L);
 	}
@@ -231,18 +230,18 @@ public class LayoutFriendlyURLPersistenceTest {
 
 	@Test
 	public void testCountByP_F() throws Exception {
-		_persistence.countByP_F(RandomTestUtil.nextLong(), StringPool.BLANK);
+		_persistence.countByP_F(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByP_F(0L, StringPool.NULL);
+		_persistence.countByP_F(0L, "null");
 
 		_persistence.countByP_F(0L, (String)null);
 	}
 
 	@Test
 	public void testCountByP_L() throws Exception {
-		_persistence.countByP_L(RandomTestUtil.nextLong(), StringPool.BLANK);
+		_persistence.countByP_L(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByP_L(0L, StringPool.NULL);
+		_persistence.countByP_L(0L, "null");
 
 		_persistence.countByP_L(0L, (String)null);
 	}
@@ -256,10 +255,9 @@ public class LayoutFriendlyURLPersistenceTest {
 	@Test
 	public void testCountByG_P_F() throws Exception {
 		_persistence.countByG_P_F(RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean(), StringPool.BLANK);
+			RandomTestUtil.randomBoolean(), "");
 
-		_persistence.countByG_P_F(0L, RandomTestUtil.randomBoolean(),
-			StringPool.NULL);
+		_persistence.countByG_P_F(0L, RandomTestUtil.randomBoolean(), "null");
 
 		_persistence.countByG_P_F(0L, RandomTestUtil.randomBoolean(),
 			(String)null);
@@ -268,10 +266,10 @@ public class LayoutFriendlyURLPersistenceTest {
 	@Test
 	public void testCountByG_P_F_L() throws Exception {
 		_persistence.countByG_P_F_L(RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean(), StringPool.BLANK, StringPool.BLANK);
+			RandomTestUtil.randomBoolean(), "", "");
 
-		_persistence.countByG_P_F_L(0L, RandomTestUtil.randomBoolean(),
-			StringPool.NULL, StringPool.NULL);
+		_persistence.countByG_P_F_L(0L, RandomTestUtil.randomBoolean(), "null",
+			"null");
 
 		_persistence.countByG_P_F_L(0L, RandomTestUtil.randomBoolean(),
 			(String)null, (String)null);

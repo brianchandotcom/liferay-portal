@@ -31,10 +31,8 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -228,7 +226,7 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -316,7 +314,7 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchDeviceException(msg.toString());
 	}
@@ -365,7 +363,7 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchDeviceException(msg.toString());
 	}
@@ -457,7 +455,7 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3);
 		}
 		else {
@@ -593,7 +591,7 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -784,7 +782,7 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -881,7 +879,7 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchDeviceException(msg.toString());
 	}
@@ -937,7 +935,7 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchDeviceException(msg.toString());
 	}
@@ -1032,7 +1030,7 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 		}
 		else {
@@ -1174,7 +1172,7 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1432,7 +1430,7 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 		msg.append("userId=");
 		msg.append(userId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchDeviceException(msg.toString());
 	}
@@ -1481,7 +1479,7 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 		msg.append("userId=");
 		msg.append(userId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchDeviceException(msg.toString());
 	}
@@ -1860,7 +1858,7 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 			if (userName == null) {
 				query.append(_FINDER_COLUMN_C_U_USERNAME_1);
 			}
-			else if (userName.equals(StringPool.BLANK)) {
+			else if (userName.equals("")) {
 				query.append(_FINDER_COLUMN_C_U_USERNAME_3);
 			}
 			else {
@@ -1955,7 +1953,7 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 		msg.append(", userName=");
 		msg.append(userName);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchDeviceException(msg.toString());
 	}
@@ -2011,7 +2009,7 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 		msg.append(", userName=");
 		msg.append(userName);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchDeviceException(msg.toString());
 	}
@@ -2108,7 +2106,7 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 		if (userName == null) {
 			query.append(_FINDER_COLUMN_C_U_USERNAME_1);
 		}
-		else if (userName.equals(StringPool.BLANK)) {
+		else if (userName.equals("")) {
 			query.append(_FINDER_COLUMN_C_U_USERNAME_3);
 		}
 		else {
@@ -2250,7 +2248,7 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 			if (userName == null) {
 				query.append(_FINDER_COLUMN_C_U_USERNAME_1);
 			}
-			else if (userName.equals(StringPool.BLANK)) {
+			else if (userName.equals("")) {
 				query.append(_FINDER_COLUMN_C_U_USERNAME_3);
 			}
 			else {
@@ -2302,8 +2300,10 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 		setModelClass(SyncDevice.class);
 
 		try {
-			Field field = ReflectionUtil.getDeclaredField(BasePersistenceImpl.class,
+			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
+
+			field.setAccessible(true);
 
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -2832,12 +2832,12 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

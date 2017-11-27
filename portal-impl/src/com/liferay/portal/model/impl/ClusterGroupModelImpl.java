@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -198,7 +197,7 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -213,7 +212,7 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 	@Override
 	public String getClusterNodeIds() {
 		if (_clusterNodeIds == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _clusterNodeIds;

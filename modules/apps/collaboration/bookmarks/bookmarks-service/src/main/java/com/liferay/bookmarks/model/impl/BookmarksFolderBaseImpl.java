@@ -21,7 +21,6 @@ import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,13 +70,13 @@ public abstract class BookmarksFolderBaseImpl extends BookmarksFolderModelImpl
 
 		StringBundler sb = new StringBundler((bookmarksFolders.size() * 2) + 1);
 
-		sb.append(StringPool.SLASH);
+		sb.append("/");
 
 		for (int i = bookmarksFolders.size() - 1; i >= 0; i--) {
 			bookmarksFolder = bookmarksFolders.get(i);
 
 			sb.append(bookmarksFolder.getFolderId());
-			sb.append(StringPool.SLASH);
+			sb.append("/");
 		}
 
 		return sb.toString();

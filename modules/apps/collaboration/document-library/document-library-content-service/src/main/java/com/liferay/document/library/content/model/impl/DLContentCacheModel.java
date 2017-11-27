@@ -21,7 +21,6 @@ import com.liferay.document.library.content.model.DLContent;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -95,14 +94,14 @@ public class DLContentCacheModel implements CacheModel<DLContent>,
 		dlContentImpl.setRepositoryId(repositoryId);
 
 		if (path == null) {
-			dlContentImpl.setPath(StringPool.BLANK);
+			dlContentImpl.setPath("");
 		}
 		else {
 			dlContentImpl.setPath(path);
 		}
 
 		if (version == null) {
-			dlContentImpl.setVersion(StringPool.BLANK);
+			dlContentImpl.setVersion("");
 		}
 		else {
 			dlContentImpl.setVersion(version);
@@ -142,14 +141,14 @@ public class DLContentCacheModel implements CacheModel<DLContent>,
 		objectOutput.writeLong(repositoryId);
 
 		if (path == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(path);
 		}
 
 		if (version == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(version);

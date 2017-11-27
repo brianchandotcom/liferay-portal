@@ -21,7 +21,6 @@ import com.liferay.message.boards.model.MBBan;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -97,7 +96,7 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 		MBBanImpl mbBanImpl = new MBBanImpl();
 
 		if (uuid == null) {
-			mbBanImpl.setUuid(StringPool.BLANK);
+			mbBanImpl.setUuid("");
 		}
 		else {
 			mbBanImpl.setUuid(uuid);
@@ -109,7 +108,7 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 		mbBanImpl.setUserId(userId);
 
 		if (userName == null) {
-			mbBanImpl.setUserName(StringPool.BLANK);
+			mbBanImpl.setUserName("");
 		}
 		else {
 			mbBanImpl.setUserName(userName);
@@ -166,7 +165,7 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -181,7 +180,7 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);

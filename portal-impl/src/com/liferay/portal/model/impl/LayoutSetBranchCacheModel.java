@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -135,7 +134,7 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 		layoutSetBranchImpl.setUserId(userId);
 
 		if (userName == null) {
-			layoutSetBranchImpl.setUserName(StringPool.BLANK);
+			layoutSetBranchImpl.setUserName("");
 		}
 		else {
 			layoutSetBranchImpl.setUserName(userName);
@@ -158,14 +157,14 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 		layoutSetBranchImpl.setPrivateLayout(privateLayout);
 
 		if (name == null) {
-			layoutSetBranchImpl.setName(StringPool.BLANK);
+			layoutSetBranchImpl.setName("");
 		}
 		else {
 			layoutSetBranchImpl.setName(name);
 		}
 
 		if (description == null) {
-			layoutSetBranchImpl.setDescription(StringPool.BLANK);
+			layoutSetBranchImpl.setDescription("");
 		}
 		else {
 			layoutSetBranchImpl.setDescription(description);
@@ -175,35 +174,35 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 		layoutSetBranchImpl.setLogoId(logoId);
 
 		if (themeId == null) {
-			layoutSetBranchImpl.setThemeId(StringPool.BLANK);
+			layoutSetBranchImpl.setThemeId("");
 		}
 		else {
 			layoutSetBranchImpl.setThemeId(themeId);
 		}
 
 		if (colorSchemeId == null) {
-			layoutSetBranchImpl.setColorSchemeId(StringPool.BLANK);
+			layoutSetBranchImpl.setColorSchemeId("");
 		}
 		else {
 			layoutSetBranchImpl.setColorSchemeId(colorSchemeId);
 		}
 
 		if (css == null) {
-			layoutSetBranchImpl.setCss(StringPool.BLANK);
+			layoutSetBranchImpl.setCss("");
 		}
 		else {
 			layoutSetBranchImpl.setCss(css);
 		}
 
 		if (settings == null) {
-			layoutSetBranchImpl.setSettings(StringPool.BLANK);
+			layoutSetBranchImpl.setSettings("");
 		}
 		else {
 			layoutSetBranchImpl.setSettings(settings);
 		}
 
 		if (layoutSetPrototypeUuid == null) {
-			layoutSetBranchImpl.setLayoutSetPrototypeUuid(StringPool.BLANK);
+			layoutSetBranchImpl.setLayoutSetPrototypeUuid("");
 		}
 		else {
 			layoutSetBranchImpl.setLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
@@ -261,7 +260,7 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -273,14 +272,14 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 		objectOutput.writeBoolean(privateLayout);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);
@@ -291,35 +290,35 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 		objectOutput.writeLong(logoId);
 
 		if (themeId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(themeId);
 		}
 
 		if (colorSchemeId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(colorSchemeId);
 		}
 
 		if (css == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(css);
 		}
 
 		if (settings == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(settings);
 		}
 
 		if (layoutSetPrototypeUuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(layoutSetPrototypeUuid);

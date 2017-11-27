@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -114,14 +113,14 @@ public class FriendlyURLEntryLocalizationCacheModel implements CacheModel<Friend
 		friendlyURLEntryLocalizationImpl.setFriendlyURLEntryId(friendlyURLEntryId);
 
 		if (languageId == null) {
-			friendlyURLEntryLocalizationImpl.setLanguageId(StringPool.BLANK);
+			friendlyURLEntryLocalizationImpl.setLanguageId("");
 		}
 		else {
 			friendlyURLEntryLocalizationImpl.setLanguageId(languageId);
 		}
 
 		if (urlTitle == null) {
-			friendlyURLEntryLocalizationImpl.setUrlTitle(StringPool.BLANK);
+			friendlyURLEntryLocalizationImpl.setUrlTitle("");
 		}
 		else {
 			friendlyURLEntryLocalizationImpl.setUrlTitle(urlTitle);
@@ -167,14 +166,14 @@ public class FriendlyURLEntryLocalizationCacheModel implements CacheModel<Friend
 		objectOutput.writeLong(friendlyURLEntryId);
 
 		if (languageId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(languageId);
 		}
 
 		if (urlTitle == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(urlTitle);

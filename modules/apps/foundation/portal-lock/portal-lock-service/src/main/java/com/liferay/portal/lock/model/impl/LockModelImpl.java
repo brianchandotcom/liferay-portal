@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.lock.model.Lock;
 import com.liferay.portal.lock.model.LockModel;
 
@@ -262,7 +261,7 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _uuid;
@@ -332,7 +331,7 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -343,7 +342,7 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -368,7 +367,7 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	@Override
 	public String getClassName() {
 		if (_className == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _className;
@@ -393,7 +392,7 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	@Override
 	public String getKey() {
 		if (_key == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _key;
@@ -418,7 +417,7 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	@Override
 	public String getOwner() {
 		if (_owner == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _owner;

@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.social.networking.model.MeetupsEntry;
 
@@ -110,7 +109,7 @@ public class MeetupsEntryCacheModel implements CacheModel<MeetupsEntry>,
 		meetupsEntryImpl.setUserId(userId);
 
 		if (userName == null) {
-			meetupsEntryImpl.setUserName(StringPool.BLANK);
+			meetupsEntryImpl.setUserName("");
 		}
 		else {
 			meetupsEntryImpl.setUserName(userName);
@@ -131,14 +130,14 @@ public class MeetupsEntryCacheModel implements CacheModel<MeetupsEntry>,
 		}
 
 		if (title == null) {
-			meetupsEntryImpl.setTitle(StringPool.BLANK);
+			meetupsEntryImpl.setTitle("");
 		}
 		else {
 			meetupsEntryImpl.setTitle(title);
 		}
 
 		if (description == null) {
-			meetupsEntryImpl.setDescription(StringPool.BLANK);
+			meetupsEntryImpl.setDescription("");
 		}
 		else {
 			meetupsEntryImpl.setDescription(description);
@@ -202,7 +201,7 @@ public class MeetupsEntryCacheModel implements CacheModel<MeetupsEntry>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -212,14 +211,14 @@ public class MeetupsEntryCacheModel implements CacheModel<MeetupsEntry>,
 		objectOutput.writeLong(modifiedDate);
 
 		if (title == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(title);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);

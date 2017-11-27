@@ -11,7 +11,7 @@ if (${finderCol.name} == null) {
 		query.append(_FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_1${finderFieldSuffix});
 	</#if>
 }
-else if (${finderCol.name}.equals(StringPool.BLANK)) {
+else if (${finderCol.name}.equals("")) {
 	<#if hasConjunction>
 		query.append(_FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_6${finderFieldSuffix});
 	<#else>

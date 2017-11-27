@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -198,27 +197,27 @@ public class CalendarResourcePersistenceTest {
 
 	@Test
 	public void testCountByUuid() throws Exception {
-		_persistence.countByUuid(StringPool.BLANK);
+		_persistence.countByUuid("");
 
-		_persistence.countByUuid(StringPool.NULL);
+		_persistence.countByUuid("null");
 
 		_persistence.countByUuid((String)null);
 	}
 
 	@Test
 	public void testCountByUUID_G() throws Exception {
-		_persistence.countByUUID_G(StringPool.BLANK, RandomTestUtil.nextLong());
+		_persistence.countByUUID_G("", RandomTestUtil.nextLong());
 
-		_persistence.countByUUID_G(StringPool.NULL, 0L);
+		_persistence.countByUUID_G("null", 0L);
 
 		_persistence.countByUUID_G((String)null, 0L);
 	}
 
 	@Test
 	public void testCountByUuid_C() throws Exception {
-		_persistence.countByUuid_C(StringPool.BLANK, RandomTestUtil.nextLong());
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
 
-		_persistence.countByUuid_C(StringPool.NULL, 0L);
+		_persistence.countByUuid_C("null", 0L);
 
 		_persistence.countByUuid_C((String)null, 0L);
 	}
@@ -239,9 +238,9 @@ public class CalendarResourcePersistenceTest {
 
 	@Test
 	public void testCountByG_C() throws Exception {
-		_persistence.countByG_C(RandomTestUtil.nextLong(), StringPool.BLANK);
+		_persistence.countByG_C(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByG_C(0L, StringPool.NULL);
+		_persistence.countByG_C(0L, "null");
 
 		_persistence.countByG_C(0L, (String)null);
 	}
@@ -270,11 +269,10 @@ public class CalendarResourcePersistenceTest {
 
 	@Test
 	public void testCountByC_C_A() throws Exception {
-		_persistence.countByC_C_A(RandomTestUtil.nextLong(), StringPool.BLANK,
+		_persistence.countByC_C_A(RandomTestUtil.nextLong(), "",
 			RandomTestUtil.randomBoolean());
 
-		_persistence.countByC_C_A(0L, StringPool.NULL,
-			RandomTestUtil.randomBoolean());
+		_persistence.countByC_C_A(0L, "null", RandomTestUtil.randomBoolean());
 
 		_persistence.countByC_C_A(0L, (String)null,
 			RandomTestUtil.randomBoolean());

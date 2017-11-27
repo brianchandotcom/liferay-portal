@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -287,7 +286,7 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 	@Override
 	public String getPortletId() {
 		if (_portletId == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _portletId;
@@ -313,7 +312,7 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 	@Override
 	public String getRoles() {
 		if (_roles == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _roles;

@@ -21,7 +21,6 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -101,7 +100,7 @@ public class FragmentCollectionCacheModel implements CacheModel<FragmentCollecti
 		fragmentCollectionImpl.setUserId(userId);
 
 		if (userName == null) {
-			fragmentCollectionImpl.setUserName(StringPool.BLANK);
+			fragmentCollectionImpl.setUserName("");
 		}
 		else {
 			fragmentCollectionImpl.setUserName(userName);
@@ -122,14 +121,14 @@ public class FragmentCollectionCacheModel implements CacheModel<FragmentCollecti
 		}
 
 		if (name == null) {
-			fragmentCollectionImpl.setName(StringPool.BLANK);
+			fragmentCollectionImpl.setName("");
 		}
 		else {
 			fragmentCollectionImpl.setName(name);
 		}
 
 		if (description == null) {
-			fragmentCollectionImpl.setDescription(StringPool.BLANK);
+			fragmentCollectionImpl.setDescription("");
 		}
 		else {
 			fragmentCollectionImpl.setDescription(description);
@@ -168,7 +167,7 @@ public class FragmentCollectionCacheModel implements CacheModel<FragmentCollecti
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -178,14 +177,14 @@ public class FragmentCollectionCacheModel implements CacheModel<FragmentCollecti
 		objectOutput.writeLong(modifiedDate);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);

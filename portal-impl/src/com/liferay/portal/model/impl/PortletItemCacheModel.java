@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.PortletItem;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -119,7 +118,7 @@ public class PortletItemCacheModel implements CacheModel<PortletItem>,
 		portletItemImpl.setUserId(userId);
 
 		if (userName == null) {
-			portletItemImpl.setUserName(StringPool.BLANK);
+			portletItemImpl.setUserName("");
 		}
 		else {
 			portletItemImpl.setUserName(userName);
@@ -140,14 +139,14 @@ public class PortletItemCacheModel implements CacheModel<PortletItem>,
 		}
 
 		if (name == null) {
-			portletItemImpl.setName(StringPool.BLANK);
+			portletItemImpl.setName("");
 		}
 		else {
 			portletItemImpl.setName(name);
 		}
 
 		if (portletId == null) {
-			portletItemImpl.setPortletId(StringPool.BLANK);
+			portletItemImpl.setPortletId("");
 		}
 		else {
 			portletItemImpl.setPortletId(portletId);
@@ -194,7 +193,7 @@ public class PortletItemCacheModel implements CacheModel<PortletItem>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -204,14 +203,14 @@ public class PortletItemCacheModel implements CacheModel<PortletItem>,
 		objectOutput.writeLong(modifiedDate);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (portletId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(portletId);

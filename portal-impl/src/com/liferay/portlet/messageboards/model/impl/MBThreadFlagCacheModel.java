@@ -21,7 +21,6 @@ import com.liferay.message.boards.kernel.model.MBThreadFlag;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -101,7 +100,7 @@ public class MBThreadFlagCacheModel implements CacheModel<MBThreadFlag>,
 		MBThreadFlagImpl mbThreadFlagImpl = new MBThreadFlagImpl();
 
 		if (uuid == null) {
-			mbThreadFlagImpl.setUuid(StringPool.BLANK);
+			mbThreadFlagImpl.setUuid("");
 		}
 		else {
 			mbThreadFlagImpl.setUuid(uuid);
@@ -113,7 +112,7 @@ public class MBThreadFlagCacheModel implements CacheModel<MBThreadFlag>,
 		mbThreadFlagImpl.setUserId(userId);
 
 		if (userName == null) {
-			mbThreadFlagImpl.setUserName(StringPool.BLANK);
+			mbThreadFlagImpl.setUserName("");
 		}
 		else {
 			mbThreadFlagImpl.setUserName(userName);
@@ -170,7 +169,7 @@ public class MBThreadFlagCacheModel implements CacheModel<MBThreadFlag>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -185,7 +184,7 @@ public class MBThreadFlagCacheModel implements CacheModel<MBThreadFlag>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);

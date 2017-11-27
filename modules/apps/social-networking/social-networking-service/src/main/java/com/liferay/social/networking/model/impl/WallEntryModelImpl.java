@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.social.networking.model.WallEntry;
 import com.liferay.social.networking.model.WallEntryModel;
@@ -281,7 +280,7 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -296,7 +295,7 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -339,7 +338,7 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 	@Override
 	public String getComments() {
 		if (_comments == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _comments;

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.UserIdMapper;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -108,21 +107,21 @@ public class UserIdMapperCacheModel implements CacheModel<UserIdMapper>,
 		userIdMapperImpl.setUserId(userId);
 
 		if (type == null) {
-			userIdMapperImpl.setType(StringPool.BLANK);
+			userIdMapperImpl.setType("");
 		}
 		else {
 			userIdMapperImpl.setType(type);
 		}
 
 		if (description == null) {
-			userIdMapperImpl.setDescription(StringPool.BLANK);
+			userIdMapperImpl.setDescription("");
 		}
 		else {
 			userIdMapperImpl.setDescription(description);
 		}
 
 		if (externalUserId == null) {
-			userIdMapperImpl.setExternalUserId(StringPool.BLANK);
+			userIdMapperImpl.setExternalUserId("");
 		}
 		else {
 			userIdMapperImpl.setExternalUserId(externalUserId);
@@ -159,21 +158,21 @@ public class UserIdMapperCacheModel implements CacheModel<UserIdMapper>,
 		objectOutput.writeLong(userId);
 
 		if (type == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(type);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);
 		}
 
 		if (externalUserId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(externalUserId);

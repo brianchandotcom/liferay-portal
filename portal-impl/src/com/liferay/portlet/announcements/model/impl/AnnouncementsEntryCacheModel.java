@@ -21,7 +21,6 @@ import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -112,7 +111,7 @@ public class AnnouncementsEntryCacheModel implements CacheModel<AnnouncementsEnt
 		AnnouncementsEntryImpl announcementsEntryImpl = new AnnouncementsEntryImpl();
 
 		if (uuid == null) {
-			announcementsEntryImpl.setUuid(StringPool.BLANK);
+			announcementsEntryImpl.setUuid("");
 		}
 		else {
 			announcementsEntryImpl.setUuid(uuid);
@@ -123,7 +122,7 @@ public class AnnouncementsEntryCacheModel implements CacheModel<AnnouncementsEnt
 		announcementsEntryImpl.setUserId(userId);
 
 		if (userName == null) {
-			announcementsEntryImpl.setUserName(StringPool.BLANK);
+			announcementsEntryImpl.setUserName("");
 		}
 		else {
 			announcementsEntryImpl.setUserName(userName);
@@ -147,28 +146,28 @@ public class AnnouncementsEntryCacheModel implements CacheModel<AnnouncementsEnt
 		announcementsEntryImpl.setClassPK(classPK);
 
 		if (title == null) {
-			announcementsEntryImpl.setTitle(StringPool.BLANK);
+			announcementsEntryImpl.setTitle("");
 		}
 		else {
 			announcementsEntryImpl.setTitle(title);
 		}
 
 		if (content == null) {
-			announcementsEntryImpl.setContent(StringPool.BLANK);
+			announcementsEntryImpl.setContent("");
 		}
 		else {
 			announcementsEntryImpl.setContent(content);
 		}
 
 		if (url == null) {
-			announcementsEntryImpl.setUrl(StringPool.BLANK);
+			announcementsEntryImpl.setUrl("");
 		}
 		else {
 			announcementsEntryImpl.setUrl(url);
 		}
 
 		if (type == null) {
-			announcementsEntryImpl.setType(StringPool.BLANK);
+			announcementsEntryImpl.setType("");
 		}
 		else {
 			announcementsEntryImpl.setType(type);
@@ -228,7 +227,7 @@ public class AnnouncementsEntryCacheModel implements CacheModel<AnnouncementsEnt
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -241,7 +240,7 @@ public class AnnouncementsEntryCacheModel implements CacheModel<AnnouncementsEnt
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -255,28 +254,28 @@ public class AnnouncementsEntryCacheModel implements CacheModel<AnnouncementsEnt
 		objectOutput.writeLong(classPK);
 
 		if (title == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(title);
 		}
 
 		if (content == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(content);
 		}
 
 		if (url == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(url);
 		}
 
 		if (type == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(type);

@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.social.kernel.model.SocialActivitySetting;
 
@@ -96,14 +95,14 @@ public class SocialActivitySettingCacheModel implements CacheModel<SocialActivit
 		socialActivitySettingImpl.setActivityType(activityType);
 
 		if (name == null) {
-			socialActivitySettingImpl.setName(StringPool.BLANK);
+			socialActivitySettingImpl.setName("");
 		}
 		else {
 			socialActivitySettingImpl.setName(name);
 		}
 
 		if (value == null) {
-			socialActivitySettingImpl.setValue(StringPool.BLANK);
+			socialActivitySettingImpl.setValue("");
 		}
 		else {
 			socialActivitySettingImpl.setValue(value);
@@ -143,14 +142,14 @@ public class SocialActivitySettingCacheModel implements CacheModel<SocialActivit
 		objectOutput.writeInt(activityType);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (value == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(value);

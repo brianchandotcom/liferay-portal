@@ -21,7 +21,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateFragment;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -104,7 +103,7 @@ public class LayoutPageTemplateFragmentCacheModel implements CacheModel<LayoutPa
 		layoutPageTemplateFragmentImpl.setUserId(userId);
 
 		if (userName == null) {
-			layoutPageTemplateFragmentImpl.setUserName(StringPool.BLANK);
+			layoutPageTemplateFragmentImpl.setUserName("");
 		}
 		else {
 			layoutPageTemplateFragmentImpl.setUserName(userName);
@@ -166,7 +165,7 @@ public class LayoutPageTemplateFragmentCacheModel implements CacheModel<LayoutPa
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);

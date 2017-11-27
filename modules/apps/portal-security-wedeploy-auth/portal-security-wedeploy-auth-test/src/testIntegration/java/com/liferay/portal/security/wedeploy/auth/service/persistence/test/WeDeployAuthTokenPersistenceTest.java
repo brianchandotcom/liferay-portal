@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.security.wedeploy.auth.exception.NoSuchTokenException;
 import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken;
@@ -168,19 +167,18 @@ public class WeDeployAuthTokenPersistenceTest {
 
 	@Test
 	public void testCountByT_T() throws Exception {
-		_persistence.countByT_T(StringPool.BLANK, RandomTestUtil.nextInt());
+		_persistence.countByT_T("", RandomTestUtil.nextInt());
 
-		_persistence.countByT_T(StringPool.NULL, 0);
+		_persistence.countByT_T("null", 0);
 
 		_persistence.countByT_T((String)null, 0);
 	}
 
 	@Test
 	public void testCountByCI_T_T() throws Exception {
-		_persistence.countByCI_T_T(StringPool.BLANK, StringPool.BLANK,
-			RandomTestUtil.nextInt());
+		_persistence.countByCI_T_T("", "", RandomTestUtil.nextInt());
 
-		_persistence.countByCI_T_T(StringPool.NULL, StringPool.NULL, 0);
+		_persistence.countByCI_T_T("null", "null", 0);
 
 		_persistence.countByCI_T_T((String)null, (String)null, 0);
 	}

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -295,7 +294,7 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -321,7 +320,7 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	@Override
 	public String getA2() {
 		if (_a2 == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _a2;
@@ -347,7 +346,7 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	@Override
 	public String getA3() {
 		if (_a3 == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _a3;
@@ -373,7 +372,7 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	@Override
 	public String getNumber() {
 		if (_number == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _number;
@@ -389,7 +388,7 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	@Override
 	public String getIdd() {
 		if (_idd == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _idd;

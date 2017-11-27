@@ -21,7 +21,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -101,7 +100,7 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 		layoutPageTemplateEntryImpl.setUserId(userId);
 
 		if (userName == null) {
-			layoutPageTemplateEntryImpl.setUserName(StringPool.BLANK);
+			layoutPageTemplateEntryImpl.setUserName("");
 		}
 		else {
 			layoutPageTemplateEntryImpl.setUserName(userName);
@@ -124,7 +123,7 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 		layoutPageTemplateEntryImpl.setLayoutPageTemplateCollectionId(layoutPageTemplateCollectionId);
 
 		if (name == null) {
-			layoutPageTemplateEntryImpl.setName(StringPool.BLANK);
+			layoutPageTemplateEntryImpl.setName("");
 		}
 		else {
 			layoutPageTemplateEntryImpl.setName(name);
@@ -164,7 +163,7 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -176,7 +175,7 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 		objectOutput.writeLong(layoutPageTemplateCollectionId);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);

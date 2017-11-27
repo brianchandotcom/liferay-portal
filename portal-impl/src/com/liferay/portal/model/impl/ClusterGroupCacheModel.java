@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.ClusterGroup;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -102,14 +101,14 @@ public class ClusterGroupCacheModel implements CacheModel<ClusterGroup>,
 		clusterGroupImpl.setClusterGroupId(clusterGroupId);
 
 		if (name == null) {
-			clusterGroupImpl.setName(StringPool.BLANK);
+			clusterGroupImpl.setName("");
 		}
 		else {
 			clusterGroupImpl.setName(name);
 		}
 
 		if (clusterNodeIds == null) {
-			clusterGroupImpl.setClusterNodeIds(StringPool.BLANK);
+			clusterGroupImpl.setClusterNodeIds("");
 		}
 		else {
 			clusterGroupImpl.setClusterNodeIds(clusterNodeIds);
@@ -141,14 +140,14 @@ public class ClusterGroupCacheModel implements CacheModel<ClusterGroup>,
 		objectOutput.writeLong(clusterGroupId);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (clusterNodeIds == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(clusterNodeIds);

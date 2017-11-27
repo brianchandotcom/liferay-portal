@@ -21,7 +21,6 @@ import com.liferay.contacts.model.Entry;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -102,7 +101,7 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
 		entryImpl.setUserId(userId);
 
 		if (userName == null) {
-			entryImpl.setUserName(StringPool.BLANK);
+			entryImpl.setUserName("");
 		}
 		else {
 			entryImpl.setUserName(userName);
@@ -123,21 +122,21 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
 		}
 
 		if (fullName == null) {
-			entryImpl.setFullName(StringPool.BLANK);
+			entryImpl.setFullName("");
 		}
 		else {
 			entryImpl.setFullName(fullName);
 		}
 
 		if (emailAddress == null) {
-			entryImpl.setEmailAddress(StringPool.BLANK);
+			entryImpl.setEmailAddress("");
 		}
 		else {
 			entryImpl.setEmailAddress(emailAddress);
 		}
 
 		if (comments == null) {
-			entryImpl.setComments(StringPool.BLANK);
+			entryImpl.setComments("");
 		}
 		else {
 			entryImpl.setComments(comments);
@@ -177,7 +176,7 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -187,21 +186,21 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
 		objectOutput.writeLong(modifiedDate);
 
 		if (fullName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(fullName);
 		}
 
 		if (emailAddress == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(emailAddress);
 		}
 
 		if (comments == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(comments);

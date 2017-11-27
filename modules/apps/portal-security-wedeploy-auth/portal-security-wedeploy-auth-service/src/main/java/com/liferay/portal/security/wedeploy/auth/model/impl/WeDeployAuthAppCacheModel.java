@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp;
 
 import java.io.Externalizable;
@@ -101,7 +100,7 @@ public class WeDeployAuthAppCacheModel implements CacheModel<WeDeployAuthApp>,
 		weDeployAuthAppImpl.setUserId(userId);
 
 		if (userName == null) {
-			weDeployAuthAppImpl.setUserName(StringPool.BLANK);
+			weDeployAuthAppImpl.setUserName("");
 		}
 		else {
 			weDeployAuthAppImpl.setUserName(userName);
@@ -122,28 +121,28 @@ public class WeDeployAuthAppCacheModel implements CacheModel<WeDeployAuthApp>,
 		}
 
 		if (name == null) {
-			weDeployAuthAppImpl.setName(StringPool.BLANK);
+			weDeployAuthAppImpl.setName("");
 		}
 		else {
 			weDeployAuthAppImpl.setName(name);
 		}
 
 		if (redirectURI == null) {
-			weDeployAuthAppImpl.setRedirectURI(StringPool.BLANK);
+			weDeployAuthAppImpl.setRedirectURI("");
 		}
 		else {
 			weDeployAuthAppImpl.setRedirectURI(redirectURI);
 		}
 
 		if (clientId == null) {
-			weDeployAuthAppImpl.setClientId(StringPool.BLANK);
+			weDeployAuthAppImpl.setClientId("");
 		}
 		else {
 			weDeployAuthAppImpl.setClientId(clientId);
 		}
 
 		if (clientSecret == null) {
-			weDeployAuthAppImpl.setClientSecret(StringPool.BLANK);
+			weDeployAuthAppImpl.setClientSecret("");
 		}
 		else {
 			weDeployAuthAppImpl.setClientSecret(clientSecret);
@@ -180,7 +179,7 @@ public class WeDeployAuthAppCacheModel implements CacheModel<WeDeployAuthApp>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -190,28 +189,28 @@ public class WeDeployAuthAppCacheModel implements CacheModel<WeDeployAuthApp>,
 		objectOutput.writeLong(modifiedDate);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (redirectURI == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(redirectURI);
 		}
 
 		if (clientId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(clientId);
 		}
 
 		if (clientSecret == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(clientSecret);

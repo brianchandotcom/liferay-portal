@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.social.kernel.model.SocialRelation;
 
@@ -90,7 +89,7 @@ public class SocialRelationCacheModel implements CacheModel<SocialRelation>,
 		SocialRelationImpl socialRelationImpl = new SocialRelationImpl();
 
 		if (uuid == null) {
-			socialRelationImpl.setUuid(StringPool.BLANK);
+			socialRelationImpl.setUuid("");
 		}
 		else {
 			socialRelationImpl.setUuid(uuid);
@@ -129,7 +128,7 @@ public class SocialRelationCacheModel implements CacheModel<SocialRelation>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);

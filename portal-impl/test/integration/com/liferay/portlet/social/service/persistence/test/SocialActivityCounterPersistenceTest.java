@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -202,10 +201,10 @@ public class SocialActivityCounterPersistenceTest {
 	@Test
 	public void testCountByG_C_C_N_O_S() throws Exception {
 		_persistence.countByG_C_C_N_O_S(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			StringPool.BLANK, RandomTestUtil.nextInt(), RandomTestUtil.nextInt());
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "",
+			RandomTestUtil.nextInt(), RandomTestUtil.nextInt());
 
-		_persistence.countByG_C_C_N_O_S(0L, 0L, 0L, StringPool.NULL, 0, 0);
+		_persistence.countByG_C_C_N_O_S(0L, 0L, 0L, "null", 0, 0);
 
 		_persistence.countByG_C_C_N_O_S(0L, 0L, 0L, (String)null, 0, 0);
 	}
@@ -213,10 +212,10 @@ public class SocialActivityCounterPersistenceTest {
 	@Test
 	public void testCountByG_C_C_N_O_E() throws Exception {
 		_persistence.countByG_C_C_N_O_E(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			StringPool.BLANK, RandomTestUtil.nextInt(), RandomTestUtil.nextInt());
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "",
+			RandomTestUtil.nextInt(), RandomTestUtil.nextInt());
 
-		_persistence.countByG_C_C_N_O_E(0L, 0L, 0L, StringPool.NULL, 0, 0);
+		_persistence.countByG_C_C_N_O_E(0L, 0L, 0L, "null", 0, 0);
 
 		_persistence.countByG_C_C_N_O_E(0L, 0L, 0L, (String)null, 0, 0);
 	}

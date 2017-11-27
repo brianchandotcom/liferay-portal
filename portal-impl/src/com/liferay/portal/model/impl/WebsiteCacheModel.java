@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -121,7 +120,7 @@ public class WebsiteCacheModel implements CacheModel<Website>, Externalizable,
 		websiteImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
-			websiteImpl.setUuid(StringPool.BLANK);
+			websiteImpl.setUuid("");
 		}
 		else {
 			websiteImpl.setUuid(uuid);
@@ -132,7 +131,7 @@ public class WebsiteCacheModel implements CacheModel<Website>, Externalizable,
 		websiteImpl.setUserId(userId);
 
 		if (userName == null) {
-			websiteImpl.setUserName(StringPool.BLANK);
+			websiteImpl.setUserName("");
 		}
 		else {
 			websiteImpl.setUserName(userName);
@@ -156,7 +155,7 @@ public class WebsiteCacheModel implements CacheModel<Website>, Externalizable,
 		websiteImpl.setClassPK(classPK);
 
 		if (url == null) {
-			websiteImpl.setUrl(StringPool.BLANK);
+			websiteImpl.setUrl("");
 		}
 		else {
 			websiteImpl.setUrl(url);
@@ -208,7 +207,7 @@ public class WebsiteCacheModel implements CacheModel<Website>, Externalizable,
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -221,7 +220,7 @@ public class WebsiteCacheModel implements CacheModel<Website>, Externalizable,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -235,7 +234,7 @@ public class WebsiteCacheModel implements CacheModel<Website>, Externalizable,
 		objectOutput.writeLong(classPK);
 
 		if (url == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(url);

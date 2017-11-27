@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ServiceComponent;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -104,7 +103,7 @@ public class ServiceComponentCacheModel implements CacheModel<ServiceComponent>,
 		serviceComponentImpl.setServiceComponentId(serviceComponentId);
 
 		if (buildNamespace == null) {
-			serviceComponentImpl.setBuildNamespace(StringPool.BLANK);
+			serviceComponentImpl.setBuildNamespace("");
 		}
 		else {
 			serviceComponentImpl.setBuildNamespace(buildNamespace);
@@ -114,7 +113,7 @@ public class ServiceComponentCacheModel implements CacheModel<ServiceComponent>,
 		serviceComponentImpl.setBuildDate(buildDate);
 
 		if (data == null) {
-			serviceComponentImpl.setData(StringPool.BLANK);
+			serviceComponentImpl.setData("");
 		}
 		else {
 			serviceComponentImpl.setData(data);
@@ -146,7 +145,7 @@ public class ServiceComponentCacheModel implements CacheModel<ServiceComponent>,
 		objectOutput.writeLong(serviceComponentId);
 
 		if (buildNamespace == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(buildNamespace);
@@ -157,7 +156,7 @@ public class ServiceComponentCacheModel implements CacheModel<ServiceComponent>,
 		objectOutput.writeLong(buildDate);
 
 		if (data == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(data);

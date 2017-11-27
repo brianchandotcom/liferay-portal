@@ -21,7 +21,6 @@ import com.liferay.calendar.model.Calendar;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -111,7 +110,7 @@ public class CalendarCacheModel implements CacheModel<Calendar>, Externalizable 
 		CalendarImpl calendarImpl = new CalendarImpl();
 
 		if (uuid == null) {
-			calendarImpl.setUuid(StringPool.BLANK);
+			calendarImpl.setUuid("");
 		}
 		else {
 			calendarImpl.setUuid(uuid);
@@ -123,7 +122,7 @@ public class CalendarCacheModel implements CacheModel<Calendar>, Externalizable 
 		calendarImpl.setUserId(userId);
 
 		if (userName == null) {
-			calendarImpl.setUserName(StringPool.BLANK);
+			calendarImpl.setUserName("");
 		}
 		else {
 			calendarImpl.setUserName(userName);
@@ -146,21 +145,21 @@ public class CalendarCacheModel implements CacheModel<Calendar>, Externalizable 
 		calendarImpl.setCalendarResourceId(calendarResourceId);
 
 		if (name == null) {
-			calendarImpl.setName(StringPool.BLANK);
+			calendarImpl.setName("");
 		}
 		else {
 			calendarImpl.setName(name);
 		}
 
 		if (description == null) {
-			calendarImpl.setDescription(StringPool.BLANK);
+			calendarImpl.setDescription("");
 		}
 		else {
 			calendarImpl.setDescription(description);
 		}
 
 		if (timeZoneId == null) {
-			calendarImpl.setTimeZoneId(StringPool.BLANK);
+			calendarImpl.setTimeZoneId("");
 		}
 		else {
 			calendarImpl.setTimeZoneId(timeZoneId);
@@ -217,7 +216,7 @@ public class CalendarCacheModel implements CacheModel<Calendar>, Externalizable 
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -232,7 +231,7 @@ public class CalendarCacheModel implements CacheModel<Calendar>, Externalizable 
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -244,21 +243,21 @@ public class CalendarCacheModel implements CacheModel<Calendar>, Externalizable 
 		objectOutput.writeLong(calendarResourceId);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);
 		}
 
 		if (timeZoneId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(timeZoneId);

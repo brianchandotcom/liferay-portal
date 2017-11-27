@@ -21,7 +21,6 @@ import com.liferay.counter.kernel.model.Counter;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -79,7 +78,7 @@ public class CounterCacheModel implements CacheModel<Counter>, Externalizable {
 		CounterImpl counterImpl = new CounterImpl();
 
 		if (name == null) {
-			counterImpl.setName(StringPool.BLANK);
+			counterImpl.setName("");
 		}
 		else {
 			counterImpl.setName(name);
@@ -103,7 +102,7 @@ public class CounterCacheModel implements CacheModel<Counter>, Externalizable {
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);

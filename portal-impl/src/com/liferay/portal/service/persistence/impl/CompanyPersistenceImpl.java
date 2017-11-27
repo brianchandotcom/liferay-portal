@@ -32,10 +32,8 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.impl.CompanyImpl;
 import com.liferay.portal.model.impl.CompanyModelImpl;
@@ -116,7 +114,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 			msg.append("webId=");
 			msg.append(webId);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -175,7 +173,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 			if (webId == null) {
 				query.append(_FINDER_COLUMN_WEBID_WEBID_1);
 			}
-			else if (webId.equals(StringPool.BLANK)) {
+			else if (webId.equals("")) {
 				query.append(_FINDER_COLUMN_WEBID_WEBID_3);
 			}
 			else {
@@ -274,7 +272,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 			if (webId == null) {
 				query.append(_FINDER_COLUMN_WEBID_WEBID_1);
 			}
-			else if (webId.equals(StringPool.BLANK)) {
+			else if (webId.equals("")) {
 				query.append(_FINDER_COLUMN_WEBID_WEBID_3);
 			}
 			else {
@@ -347,7 +345,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 			msg.append("mx=");
 			msg.append(mx);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -406,7 +404,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 			if (mx == null) {
 				query.append(_FINDER_COLUMN_MX_MX_1);
 			}
-			else if (mx.equals(StringPool.BLANK)) {
+			else if (mx.equals("")) {
 				query.append(_FINDER_COLUMN_MX_MX_3);
 			}
 			else {
@@ -516,7 +514,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 			if (mx == null) {
 				query.append(_FINDER_COLUMN_MX_MX_1);
 			}
-			else if (mx.equals(StringPool.BLANK)) {
+			else if (mx.equals("")) {
 				query.append(_FINDER_COLUMN_MX_MX_3);
 			}
 			else {
@@ -589,7 +587,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 			msg.append("logoId=");
 			msg.append(logoId);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -979,7 +977,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		msg.append("system=");
 		msg.append(system);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCompanyException(msg.toString());
 	}
@@ -1028,7 +1026,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		msg.append("system=");
 		msg.append(system);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCompanyException(msg.toString());
 	}
@@ -1275,8 +1273,10 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		setModelClass(Company.class);
 
 		try {
-			Field field = ReflectionUtil.getDeclaredField(BasePersistenceImpl.class,
+			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
+
+			field.setAccessible(true);
 
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -1801,12 +1801,12 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

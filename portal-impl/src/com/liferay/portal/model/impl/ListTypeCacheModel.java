@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -100,14 +99,14 @@ public class ListTypeCacheModel implements CacheModel<ListType>, Externalizable,
 		listTypeImpl.setListTypeId(listTypeId);
 
 		if (name == null) {
-			listTypeImpl.setName(StringPool.BLANK);
+			listTypeImpl.setName("");
 		}
 		else {
 			listTypeImpl.setName(name);
 		}
 
 		if (type == null) {
-			listTypeImpl.setType(StringPool.BLANK);
+			listTypeImpl.setType("");
 		}
 		else {
 			listTypeImpl.setType(type);
@@ -135,14 +134,14 @@ public class ListTypeCacheModel implements CacheModel<ListType>, Externalizable,
 		objectOutput.writeLong(listTypeId);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (type == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(type);

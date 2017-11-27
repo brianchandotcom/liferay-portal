@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -508,7 +507,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _uuid;
@@ -612,7 +611,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -628,7 +627,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -671,7 +670,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	@Override
 	public String getClassName() {
 		if (getClassNameId() <= 0) {
-			return StringPool.BLANK;
+			return "";
 		}
 
 		return PortalUtil.getClassName(getClassNameId());
@@ -760,7 +759,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	@Override
 	public String getTreePath() {
 		if (_treePath == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _treePath;
@@ -776,7 +775,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -802,7 +801,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	@Override
 	public String getFileName() {
 		if (_fileName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _fileName;
@@ -828,7 +827,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	@Override
 	public String getExtension() {
 		if (_extension == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _extension;
@@ -844,7 +843,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	@Override
 	public String getMimeType() {
 		if (_mimeType == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _mimeType;
@@ -870,7 +869,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	@Override
 	public String getTitle() {
 		if (_title == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _title;
@@ -896,7 +895,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	@Override
 	public String getDescription() {
 		if (_description == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _description;
@@ -912,7 +911,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	@Override
 	public String getExtraSettings() {
 		if (_extraSettings == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _extraSettings;
@@ -951,7 +950,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	@Override
 	public String getVersion() {
 		if (_version == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _version;

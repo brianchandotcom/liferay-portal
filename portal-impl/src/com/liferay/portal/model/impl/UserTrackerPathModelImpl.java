@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -244,7 +243,7 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 	@Override
 	public String getPath() {
 		if (_path == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _path;

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -117,7 +116,7 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 		userNotificationEventImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
-			userNotificationEventImpl.setUuid(StringPool.BLANK);
+			userNotificationEventImpl.setUuid("");
 		}
 		else {
 			userNotificationEventImpl.setUuid(uuid);
@@ -128,7 +127,7 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 		userNotificationEventImpl.setUserId(userId);
 
 		if (type == null) {
-			userNotificationEventImpl.setType(StringPool.BLANK);
+			userNotificationEventImpl.setType("");
 		}
 		else {
 			userNotificationEventImpl.setType(type);
@@ -140,7 +139,7 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 		userNotificationEventImpl.setDelivered(delivered);
 
 		if (payload == null) {
-			userNotificationEventImpl.setPayload(StringPool.BLANK);
+			userNotificationEventImpl.setPayload("");
 		}
 		else {
 			userNotificationEventImpl.setPayload(payload);
@@ -186,7 +185,7 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -199,7 +198,7 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 		objectOutput.writeLong(userId);
 
 		if (type == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(type);
@@ -214,7 +213,7 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 		objectOutput.writeBoolean(delivered);
 
 		if (payload == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(payload);

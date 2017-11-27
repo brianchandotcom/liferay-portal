@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -162,27 +161,27 @@ public class PortletPreferencesPersistenceTest {
 
 	@Test
 	public void testCountByPortletId() throws Exception {
-		_persistence.countByPortletId(StringPool.BLANK);
+		_persistence.countByPortletId("");
 
-		_persistence.countByPortletId(StringPool.NULL);
+		_persistence.countByPortletId("null");
 
 		_persistence.countByPortletId((String)null);
 	}
 
 	@Test
 	public void testCountByO_P() throws Exception {
-		_persistence.countByO_P(RandomTestUtil.nextInt(), StringPool.BLANK);
+		_persistence.countByO_P(RandomTestUtil.nextInt(), "");
 
-		_persistence.countByO_P(0, StringPool.NULL);
+		_persistence.countByO_P(0, "null");
 
 		_persistence.countByO_P(0, (String)null);
 	}
 
 	@Test
 	public void testCountByP_P() throws Exception {
-		_persistence.countByP_P(RandomTestUtil.nextLong(), StringPool.BLANK);
+		_persistence.countByP_P(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByP_P(0L, StringPool.NULL);
+		_persistence.countByP_P(0L, "null");
 
 		_persistence.countByP_P(0L, (String)null);
 	}
@@ -198,9 +197,9 @@ public class PortletPreferencesPersistenceTest {
 	@Test
 	public void testCountByO_O_PI() throws Exception {
 		_persistence.countByO_O_PI(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt(), StringPool.BLANK);
+			RandomTestUtil.nextInt(), "");
 
-		_persistence.countByO_O_PI(0L, 0, StringPool.NULL);
+		_persistence.countByO_O_PI(0L, 0, "null");
 
 		_persistence.countByO_O_PI(0L, 0, (String)null);
 	}
@@ -208,9 +207,9 @@ public class PortletPreferencesPersistenceTest {
 	@Test
 	public void testCountByO_P_P() throws Exception {
 		_persistence.countByO_P_P(RandomTestUtil.nextInt(),
-			RandomTestUtil.nextLong(), StringPool.BLANK);
+			RandomTestUtil.nextLong(), "");
 
-		_persistence.countByO_P_P(0, 0L, StringPool.NULL);
+		_persistence.countByO_P_P(0, 0L, "null");
 
 		_persistence.countByO_P_P(0, 0L, (String)null);
 	}
@@ -218,10 +217,9 @@ public class PortletPreferencesPersistenceTest {
 	@Test
 	public void testCountByC_O_O_LikeP() throws Exception {
 		_persistence.countByC_O_O_LikeP(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
-			StringPool.BLANK);
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(), "");
 
-		_persistence.countByC_O_O_LikeP(0L, 0L, 0, StringPool.NULL);
+		_persistence.countByC_O_O_LikeP(0L, 0L, 0, "null");
 
 		_persistence.countByC_O_O_LikeP(0L, 0L, 0, (String)null);
 	}
@@ -229,10 +227,9 @@ public class PortletPreferencesPersistenceTest {
 	@Test
 	public void testCountByO_O_P_P() throws Exception {
 		_persistence.countByO_O_P_P(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt(), RandomTestUtil.nextLong(),
-			StringPool.BLANK);
+			RandomTestUtil.nextInt(), RandomTestUtil.nextLong(), "");
 
-		_persistence.countByO_O_P_P(0L, 0, 0L, StringPool.NULL);
+		_persistence.countByO_O_P_P(0L, 0, 0L, "null");
 
 		_persistence.countByO_O_P_P(0L, 0, 0L, (String)null);
 	}

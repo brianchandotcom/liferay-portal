@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -224,9 +223,9 @@ public class BackgroundTaskPersistenceTest {
 
 	@Test
 	public void testCountByG_T() throws Exception {
-		_persistence.countByG_T(RandomTestUtil.nextLong(), StringPool.BLANK);
+		_persistence.countByG_T(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByG_T(0L, StringPool.NULL);
+		_persistence.countByG_T(0L, "null");
 
 		_persistence.countByG_T(0L, (String)null);
 	}
@@ -234,10 +233,7 @@ public class BackgroundTaskPersistenceTest {
 	@Test
 	public void testCountByG_TArrayable() throws Exception {
 		_persistence.countByG_T(new long[] { RandomTestUtil.nextLong(), 0L },
-			new String[] {
-				RandomTestUtil.randomString(), StringPool.BLANK, StringPool.NULL,
-				null, null
-			});
+			new String[] { RandomTestUtil.randomString(), "", "null", null, null });
 	}
 
 	@Test
@@ -250,9 +246,9 @@ public class BackgroundTaskPersistenceTest {
 
 	@Test
 	public void testCountByT_S() throws Exception {
-		_persistence.countByT_S(StringPool.BLANK, RandomTestUtil.nextInt());
+		_persistence.countByT_S("", RandomTestUtil.nextInt());
 
-		_persistence.countByT_S(StringPool.NULL, 0);
+		_persistence.countByT_S("null", 0);
 
 		_persistence.countByT_S((String)null, 0);
 	}
@@ -260,17 +256,15 @@ public class BackgroundTaskPersistenceTest {
 	@Test
 	public void testCountByT_SArrayable() throws Exception {
 		_persistence.countByT_S(new String[] {
-				RandomTestUtil.randomString(), StringPool.BLANK, StringPool.NULL,
-				null, null
+				RandomTestUtil.randomString(), "", "null", null, null
 			}, RandomTestUtil.nextInt());
 	}
 
 	@Test
 	public void testCountByG_N_T() throws Exception {
-		_persistence.countByG_N_T(RandomTestUtil.nextLong(), StringPool.BLANK,
-			StringPool.BLANK);
+		_persistence.countByG_N_T(RandomTestUtil.nextLong(), "", "");
 
-		_persistence.countByG_N_T(0L, StringPool.NULL, StringPool.NULL);
+		_persistence.countByG_N_T(0L, "null", "null");
 
 		_persistence.countByG_N_T(0L, (String)null, (String)null);
 	}
@@ -283,11 +277,10 @@ public class BackgroundTaskPersistenceTest {
 
 	@Test
 	public void testCountByG_T_C() throws Exception {
-		_persistence.countByG_T_C(RandomTestUtil.nextLong(), StringPool.BLANK,
+		_persistence.countByG_T_C(RandomTestUtil.nextLong(), "",
 			RandomTestUtil.randomBoolean());
 
-		_persistence.countByG_T_C(0L, StringPool.NULL,
-			RandomTestUtil.randomBoolean());
+		_persistence.countByG_T_C(0L, "null", RandomTestUtil.randomBoolean());
 
 		_persistence.countByG_T_C(0L, (String)null,
 			RandomTestUtil.randomBoolean());
@@ -296,18 +289,16 @@ public class BackgroundTaskPersistenceTest {
 	@Test
 	public void testCountByG_T_CArrayable() throws Exception {
 		_persistence.countByG_T_C(new long[] { RandomTestUtil.nextLong(), 0L },
-			new String[] {
-				RandomTestUtil.randomString(), StringPool.BLANK, StringPool.NULL,
-				null, null
-			}, RandomTestUtil.randomBoolean());
+			new String[] { RandomTestUtil.randomString(), "", "null", null, null },
+			RandomTestUtil.randomBoolean());
 	}
 
 	@Test
 	public void testCountByG_T_S() throws Exception {
-		_persistence.countByG_T_S(RandomTestUtil.nextLong(), StringPool.BLANK,
+		_persistence.countByG_T_S(RandomTestUtil.nextLong(), "",
 			RandomTestUtil.nextInt());
 
-		_persistence.countByG_T_S(0L, StringPool.NULL, 0);
+		_persistence.countByG_T_S(0L, "null", 0);
 
 		_persistence.countByG_T_S(0L, (String)null, 0);
 	}
@@ -315,18 +306,16 @@ public class BackgroundTaskPersistenceTest {
 	@Test
 	public void testCountByG_T_SArrayable() throws Exception {
 		_persistence.countByG_T_S(RandomTestUtil.nextLong(),
-			new String[] {
-				RandomTestUtil.randomString(), StringPool.BLANK, StringPool.NULL,
-				null, null
-			}, RandomTestUtil.nextInt());
+			new String[] { RandomTestUtil.randomString(), "", "null", null, null },
+			RandomTestUtil.nextInt());
 	}
 
 	@Test
 	public void testCountByG_N_T_C() throws Exception {
-		_persistence.countByG_N_T_C(RandomTestUtil.nextLong(),
-			StringPool.BLANK, StringPool.BLANK, RandomTestUtil.randomBoolean());
+		_persistence.countByG_N_T_C(RandomTestUtil.nextLong(), "", "",
+			RandomTestUtil.randomBoolean());
 
-		_persistence.countByG_N_T_C(0L, StringPool.NULL, StringPool.NULL,
+		_persistence.countByG_N_T_C(0L, "null", "null",
 			RandomTestUtil.randomBoolean());
 
 		_persistence.countByG_N_T_C(0L, (String)null, (String)null,

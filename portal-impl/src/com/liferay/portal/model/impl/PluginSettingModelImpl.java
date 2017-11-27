@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -298,7 +297,7 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	@Override
 	public String getPluginId() {
 		if (_pluginId == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _pluginId;
@@ -324,7 +323,7 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	@Override
 	public String getPluginType() {
 		if (_pluginType == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _pluginType;
@@ -350,7 +349,7 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	@Override
 	public String getRoles() {
 		if (_roles == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _roles;

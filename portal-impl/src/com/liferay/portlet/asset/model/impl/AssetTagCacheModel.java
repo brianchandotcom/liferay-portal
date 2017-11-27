@@ -21,7 +21,6 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -99,7 +98,7 @@ public class AssetTagCacheModel implements CacheModel<AssetTag>, Externalizable 
 		AssetTagImpl assetTagImpl = new AssetTagImpl();
 
 		if (uuid == null) {
-			assetTagImpl.setUuid(StringPool.BLANK);
+			assetTagImpl.setUuid("");
 		}
 		else {
 			assetTagImpl.setUuid(uuid);
@@ -111,7 +110,7 @@ public class AssetTagCacheModel implements CacheModel<AssetTag>, Externalizable 
 		assetTagImpl.setUserId(userId);
 
 		if (userName == null) {
-			assetTagImpl.setUserName(StringPool.BLANK);
+			assetTagImpl.setUserName("");
 		}
 		else {
 			assetTagImpl.setUserName(userName);
@@ -132,7 +131,7 @@ public class AssetTagCacheModel implements CacheModel<AssetTag>, Externalizable 
 		}
 
 		if (name == null) {
-			assetTagImpl.setName(StringPool.BLANK);
+			assetTagImpl.setName("");
 		}
 		else {
 			assetTagImpl.setName(name);
@@ -176,7 +175,7 @@ public class AssetTagCacheModel implements CacheModel<AssetTag>, Externalizable 
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -191,7 +190,7 @@ public class AssetTagCacheModel implements CacheModel<AssetTag>, Externalizable 
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -201,7 +200,7 @@ public class AssetTagCacheModel implements CacheModel<AssetTag>, Externalizable 
 		objectOutput.writeLong(modifiedDate);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);

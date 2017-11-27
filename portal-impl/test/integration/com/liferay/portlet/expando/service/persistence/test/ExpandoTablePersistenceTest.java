@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -149,9 +148,9 @@ public class ExpandoTablePersistenceTest {
 	@Test
 	public void testCountByC_C_N() throws Exception {
 		_persistence.countByC_C_N(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), StringPool.BLANK);
+			RandomTestUtil.nextLong(), "");
 
-		_persistence.countByC_C_N(0L, 0L, StringPool.NULL);
+		_persistence.countByC_C_N(0L, 0L, "null");
 
 		_persistence.countByC_C_N(0L, 0L, (String)null);
 	}

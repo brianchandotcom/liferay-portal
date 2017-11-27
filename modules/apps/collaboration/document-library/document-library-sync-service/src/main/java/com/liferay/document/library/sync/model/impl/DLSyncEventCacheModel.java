@@ -21,7 +21,6 @@ import com.liferay.document.library.sync.model.DLSyncEvent;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -92,14 +91,14 @@ public class DLSyncEventCacheModel implements CacheModel<DLSyncEvent>,
 		dlSyncEventImpl.setModifiedTime(modifiedTime);
 
 		if (event == null) {
-			dlSyncEventImpl.setEvent(StringPool.BLANK);
+			dlSyncEventImpl.setEvent("");
 		}
 		else {
 			dlSyncEventImpl.setEvent(event);
 		}
 
 		if (type == null) {
-			dlSyncEventImpl.setType(StringPool.BLANK);
+			dlSyncEventImpl.setType("");
 		}
 		else {
 			dlSyncEventImpl.setType(type);
@@ -135,14 +134,14 @@ public class DLSyncEventCacheModel implements CacheModel<DLSyncEvent>,
 		objectOutput.writeLong(modifiedTime);
 
 		if (event == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(event);
 		}
 
 		if (type == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(type);

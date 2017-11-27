@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.trash.model.TrashEntry;
 
@@ -105,7 +104,7 @@ public class TrashEntryCacheModel implements CacheModel<TrashEntry>,
 		trashEntryImpl.setUserId(userId);
 
 		if (userName == null) {
-			trashEntryImpl.setUserName(StringPool.BLANK);
+			trashEntryImpl.setUserName("");
 		}
 		else {
 			trashEntryImpl.setUserName(userName);
@@ -123,7 +122,7 @@ public class TrashEntryCacheModel implements CacheModel<TrashEntry>,
 		trashEntryImpl.setSystemEventSetKey(systemEventSetKey);
 
 		if (typeSettings == null) {
-			trashEntryImpl.setTypeSettings(StringPool.BLANK);
+			trashEntryImpl.setTypeSettings("");
 		}
 		else {
 			trashEntryImpl.setTypeSettings(typeSettings);
@@ -170,7 +169,7 @@ public class TrashEntryCacheModel implements CacheModel<TrashEntry>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -185,7 +184,7 @@ public class TrashEntryCacheModel implements CacheModel<TrashEntry>,
 		objectOutput.writeLong(systemEventSetKey);
 
 		if (typeSettings == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(typeSettings);

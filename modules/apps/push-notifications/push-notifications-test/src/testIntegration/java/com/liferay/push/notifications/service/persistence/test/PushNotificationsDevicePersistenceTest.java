@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -157,18 +156,18 @@ public class PushNotificationsDevicePersistenceTest {
 
 	@Test
 	public void testCountByToken() throws Exception {
-		_persistence.countByToken(StringPool.BLANK);
+		_persistence.countByToken("");
 
-		_persistence.countByToken(StringPool.NULL);
+		_persistence.countByToken("null");
 
 		_persistence.countByToken((String)null);
 	}
 
 	@Test
 	public void testCountByU_P() throws Exception {
-		_persistence.countByU_P(RandomTestUtil.nextLong(), StringPool.BLANK);
+		_persistence.countByU_P(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByU_P(0L, StringPool.NULL);
+		_persistence.countByU_P(0L, "null");
 
 		_persistence.countByU_P(0L, (String)null);
 	}

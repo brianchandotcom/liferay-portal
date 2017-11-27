@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -150,27 +149,27 @@ public class CountryPersistenceTest {
 
 	@Test
 	public void testCountByName() throws Exception {
-		_persistence.countByName(StringPool.BLANK);
+		_persistence.countByName("");
 
-		_persistence.countByName(StringPool.NULL);
+		_persistence.countByName("null");
 
 		_persistence.countByName((String)null);
 	}
 
 	@Test
 	public void testCountByA2() throws Exception {
-		_persistence.countByA2(StringPool.BLANK);
+		_persistence.countByA2("");
 
-		_persistence.countByA2(StringPool.NULL);
+		_persistence.countByA2("null");
 
 		_persistence.countByA2((String)null);
 	}
 
 	@Test
 	public void testCountByA3() throws Exception {
-		_persistence.countByA3(StringPool.BLANK);
+		_persistence.countByA3("");
 
-		_persistence.countByA3(StringPool.NULL);
+		_persistence.countByA3("null");
 
 		_persistence.countByA3((String)null);
 	}

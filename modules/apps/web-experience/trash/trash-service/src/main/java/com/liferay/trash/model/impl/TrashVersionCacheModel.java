@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.trash.model.TrashVersion;
 
@@ -96,7 +95,7 @@ public class TrashVersionCacheModel implements CacheModel<TrashVersion>,
 		trashVersionImpl.setClassPK(classPK);
 
 		if (typeSettings == null) {
-			trashVersionImpl.setTypeSettings(StringPool.BLANK);
+			trashVersionImpl.setTypeSettings("");
 		}
 		else {
 			trashVersionImpl.setTypeSettings(typeSettings);
@@ -139,7 +138,7 @@ public class TrashVersionCacheModel implements CacheModel<TrashVersion>,
 		objectOutput.writeLong(classPK);
 
 		if (typeSettings == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(typeSettings);

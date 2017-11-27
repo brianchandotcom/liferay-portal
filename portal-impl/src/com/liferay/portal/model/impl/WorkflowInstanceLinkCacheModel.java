@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -119,7 +118,7 @@ public class WorkflowInstanceLinkCacheModel implements CacheModel<WorkflowInstan
 		workflowInstanceLinkImpl.setUserId(userId);
 
 		if (userName == null) {
-			workflowInstanceLinkImpl.setUserName(StringPool.BLANK);
+			workflowInstanceLinkImpl.setUserName("");
 		}
 		else {
 			workflowInstanceLinkImpl.setUserName(userName);
@@ -184,7 +183,7 @@ public class WorkflowInstanceLinkCacheModel implements CacheModel<WorkflowInstan
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);

@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -151,9 +150,9 @@ public class PortletPersistenceTest {
 
 	@Test
 	public void testCountByC_P() throws Exception {
-		_persistence.countByC_P(RandomTestUtil.nextLong(), StringPool.BLANK);
+		_persistence.countByC_P(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByC_P(0L, StringPool.NULL);
+		_persistence.countByC_P(0L, "null");
 
 		_persistence.countByC_P(0L, (String)null);
 	}

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.LayoutBranch;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -117,7 +116,7 @@ public class LayoutBranchCacheModel implements CacheModel<LayoutBranch>,
 		layoutBranchImpl.setUserId(userId);
 
 		if (userName == null) {
-			layoutBranchImpl.setUserName(StringPool.BLANK);
+			layoutBranchImpl.setUserName("");
 		}
 		else {
 			layoutBranchImpl.setUserName(userName);
@@ -127,14 +126,14 @@ public class LayoutBranchCacheModel implements CacheModel<LayoutBranch>,
 		layoutBranchImpl.setPlid(plid);
 
 		if (name == null) {
-			layoutBranchImpl.setName(StringPool.BLANK);
+			layoutBranchImpl.setName("");
 		}
 		else {
 			layoutBranchImpl.setName(name);
 		}
 
 		if (description == null) {
-			layoutBranchImpl.setDescription(StringPool.BLANK);
+			layoutBranchImpl.setDescription("");
 		}
 		else {
 			layoutBranchImpl.setDescription(description);
@@ -183,7 +182,7 @@ public class LayoutBranchCacheModel implements CacheModel<LayoutBranch>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -194,14 +193,14 @@ public class LayoutBranchCacheModel implements CacheModel<LayoutBranch>,
 		objectOutput.writeLong(plid);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);

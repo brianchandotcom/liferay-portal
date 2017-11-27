@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.impl.ClassNameImpl;
 import com.liferay.portal.model.impl.ClassNameModelImpl;
 
@@ -111,7 +110,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 			msg.append("value=");
 			msg.append(value);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -170,7 +169,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 			if (value == null) {
 				query.append(_FINDER_COLUMN_VALUE_VALUE_1);
 			}
-			else if (value.equals(StringPool.BLANK)) {
+			else if (value.equals("")) {
 				query.append(_FINDER_COLUMN_VALUE_VALUE_3);
 			}
 			else {
@@ -270,7 +269,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 			if (value == null) {
 				query.append(_FINDER_COLUMN_VALUE_VALUE_1);
 			}
-			else if (value.equals(StringPool.BLANK)) {
+			else if (value.equals("")) {
 				query.append(_FINDER_COLUMN_VALUE_VALUE_3);
 			}
 			else {
@@ -748,12 +747,12 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

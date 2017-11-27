@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -215,9 +214,9 @@ public class ShoppingCouponPersistenceTest {
 
 	@Test
 	public void testCountByCode() throws Exception {
-		_persistence.countByCode(StringPool.BLANK);
+		_persistence.countByCode("");
 
-		_persistence.countByCode(StringPool.NULL);
+		_persistence.countByCode("null");
 
 		_persistence.countByCode((String)null);
 	}

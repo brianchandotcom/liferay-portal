@@ -21,7 +21,6 @@ import com.liferay.external.data.source.test.model.TestEntity;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -82,7 +81,7 @@ public class TestEntityCacheModel implements CacheModel<TestEntity>,
 		testEntityImpl.setId(id);
 
 		if (data == null) {
-			testEntityImpl.setData(StringPool.BLANK);
+			testEntityImpl.setData("");
 		}
 		else {
 			testEntityImpl.setData(data);
@@ -105,7 +104,7 @@ public class TestEntityCacheModel implements CacheModel<TestEntity>,
 		objectOutput.writeLong(id);
 
 		if (data == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(data);

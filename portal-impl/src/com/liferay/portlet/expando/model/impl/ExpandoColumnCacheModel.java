@@ -21,7 +21,6 @@ import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -94,7 +93,7 @@ public class ExpandoColumnCacheModel implements CacheModel<ExpandoColumn>,
 		expandoColumnImpl.setTableId(tableId);
 
 		if (name == null) {
-			expandoColumnImpl.setName(StringPool.BLANK);
+			expandoColumnImpl.setName("");
 		}
 		else {
 			expandoColumnImpl.setName(name);
@@ -103,14 +102,14 @@ public class ExpandoColumnCacheModel implements CacheModel<ExpandoColumn>,
 		expandoColumnImpl.setType(type);
 
 		if (defaultData == null) {
-			expandoColumnImpl.setDefaultData(StringPool.BLANK);
+			expandoColumnImpl.setDefaultData("");
 		}
 		else {
 			expandoColumnImpl.setDefaultData(defaultData);
 		}
 
 		if (typeSettings == null) {
-			expandoColumnImpl.setTypeSettings(StringPool.BLANK);
+			expandoColumnImpl.setTypeSettings("");
 		}
 		else {
 			expandoColumnImpl.setTypeSettings(typeSettings);
@@ -145,7 +144,7 @@ public class ExpandoColumnCacheModel implements CacheModel<ExpandoColumn>,
 		objectOutput.writeLong(tableId);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
@@ -154,14 +153,14 @@ public class ExpandoColumnCacheModel implements CacheModel<ExpandoColumn>,
 		objectOutput.writeInt(type);
 
 		if (defaultData == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(defaultData);
 		}
 
 		if (typeSettings == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(typeSettings);

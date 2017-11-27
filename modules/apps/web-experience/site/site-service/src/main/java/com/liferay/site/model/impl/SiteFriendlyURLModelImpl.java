@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.site.model.SiteFriendlyURL;
 import com.liferay.site.model.SiteFriendlyURLModel;
@@ -248,7 +247,7 @@ public class SiteFriendlyURLModelImpl extends BaseModelImpl<SiteFriendlyURL>
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _uuid;
@@ -318,7 +317,7 @@ public class SiteFriendlyURLModelImpl extends BaseModelImpl<SiteFriendlyURL>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -329,7 +328,7 @@ public class SiteFriendlyURLModelImpl extends BaseModelImpl<SiteFriendlyURL>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -392,7 +391,7 @@ public class SiteFriendlyURLModelImpl extends BaseModelImpl<SiteFriendlyURL>
 	@Override
 	public String getFriendlyURL() {
 		if (_friendlyURL == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _friendlyURL;
@@ -417,7 +416,7 @@ public class SiteFriendlyURLModelImpl extends BaseModelImpl<SiteFriendlyURL>
 	@Override
 	public String getLanguageId() {
 		if (_languageId == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _languageId;

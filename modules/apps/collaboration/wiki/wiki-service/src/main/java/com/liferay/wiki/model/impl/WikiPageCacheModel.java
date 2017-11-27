@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.wiki.model.WikiPage;
 
@@ -125,7 +124,7 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 		WikiPageImpl wikiPageImpl = new WikiPageImpl();
 
 		if (uuid == null) {
-			wikiPageImpl.setUuid(StringPool.BLANK);
+			wikiPageImpl.setUuid("");
 		}
 		else {
 			wikiPageImpl.setUuid(uuid);
@@ -138,7 +137,7 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 		wikiPageImpl.setUserId(userId);
 
 		if (userName == null) {
-			wikiPageImpl.setUserName(StringPool.BLANK);
+			wikiPageImpl.setUserName("");
 		}
 		else {
 			wikiPageImpl.setUserName(userName);
@@ -161,7 +160,7 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 		wikiPageImpl.setNodeId(nodeId);
 
 		if (title == null) {
-			wikiPageImpl.setTitle(StringPool.BLANK);
+			wikiPageImpl.setTitle("");
 		}
 		else {
 			wikiPageImpl.setTitle(title);
@@ -171,21 +170,21 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 		wikiPageImpl.setMinorEdit(minorEdit);
 
 		if (content == null) {
-			wikiPageImpl.setContent(StringPool.BLANK);
+			wikiPageImpl.setContent("");
 		}
 		else {
 			wikiPageImpl.setContent(content);
 		}
 
 		if (summary == null) {
-			wikiPageImpl.setSummary(StringPool.BLANK);
+			wikiPageImpl.setSummary("");
 		}
 		else {
 			wikiPageImpl.setSummary(summary);
 		}
 
 		if (format == null) {
-			wikiPageImpl.setFormat(StringPool.BLANK);
+			wikiPageImpl.setFormat("");
 		}
 		else {
 			wikiPageImpl.setFormat(format);
@@ -194,14 +193,14 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 		wikiPageImpl.setHead(head);
 
 		if (parentTitle == null) {
-			wikiPageImpl.setParentTitle(StringPool.BLANK);
+			wikiPageImpl.setParentTitle("");
 		}
 		else {
 			wikiPageImpl.setParentTitle(parentTitle);
 		}
 
 		if (redirectTitle == null) {
-			wikiPageImpl.setRedirectTitle(StringPool.BLANK);
+			wikiPageImpl.setRedirectTitle("");
 		}
 		else {
 			wikiPageImpl.setRedirectTitle(redirectTitle);
@@ -218,7 +217,7 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 		wikiPageImpl.setStatusByUserId(statusByUserId);
 
 		if (statusByUserName == null) {
-			wikiPageImpl.setStatusByUserName(StringPool.BLANK);
+			wikiPageImpl.setStatusByUserName("");
 		}
 		else {
 			wikiPageImpl.setStatusByUserName(statusByUserName);
@@ -279,7 +278,7 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -296,7 +295,7 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -308,7 +307,7 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 		objectOutput.writeLong(nodeId);
 
 		if (title == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(title);
@@ -319,21 +318,21 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 		objectOutput.writeBoolean(minorEdit);
 
 		if (content == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(content);
 		}
 
 		if (summary == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(summary);
 		}
 
 		if (format == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(format);
@@ -342,14 +341,14 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 		objectOutput.writeBoolean(head);
 
 		if (parentTitle == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(parentTitle);
 		}
 
 		if (redirectTitle == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(redirectTitle);
@@ -362,7 +361,7 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 		objectOutput.writeLong(statusByUserId);
 
 		if (statusByUserName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(statusByUserName);

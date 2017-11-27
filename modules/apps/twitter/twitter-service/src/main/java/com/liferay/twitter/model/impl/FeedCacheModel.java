@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.twitter.model.Feed;
 
@@ -99,7 +98,7 @@ public class FeedCacheModel implements CacheModel<Feed>, Externalizable {
 		feedImpl.setUserId(userId);
 
 		if (userName == null) {
-			feedImpl.setUserName(StringPool.BLANK);
+			feedImpl.setUserName("");
 		}
 		else {
 			feedImpl.setUserName(userName);
@@ -122,7 +121,7 @@ public class FeedCacheModel implements CacheModel<Feed>, Externalizable {
 		feedImpl.setTwitterUserId(twitterUserId);
 
 		if (twitterScreenName == null) {
-			feedImpl.setTwitterScreenName(StringPool.BLANK);
+			feedImpl.setTwitterScreenName("");
 		}
 		else {
 			feedImpl.setTwitterScreenName(twitterScreenName);
@@ -162,7 +161,7 @@ public class FeedCacheModel implements CacheModel<Feed>, Externalizable {
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -174,7 +173,7 @@ public class FeedCacheModel implements CacheModel<Feed>, Externalizable {
 		objectOutput.writeLong(twitterUserId);
 
 		if (twitterScreenName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(twitterScreenName);

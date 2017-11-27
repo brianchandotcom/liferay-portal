@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -184,10 +183,9 @@ public class SocialActivityLimitPersistenceTest {
 	public void testCountByG_U_C_C_A_A() throws Exception {
 		_persistence.countByG_U_C_C_A_A(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
-			StringPool.BLANK);
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(), "");
 
-		_persistence.countByG_U_C_C_A_A(0L, 0L, 0L, 0L, 0, StringPool.NULL);
+		_persistence.countByG_U_C_C_A_A(0L, 0L, 0L, 0L, 0, "null");
 
 		_persistence.countByG_U_C_C_A_A(0L, 0L, 0L, 0L, 0, (String)null);
 	}

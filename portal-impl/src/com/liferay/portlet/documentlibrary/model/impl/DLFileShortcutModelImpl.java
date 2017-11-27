@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -380,7 +379,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _uuid;
@@ -476,7 +475,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -488,7 +487,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -589,7 +588,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 	@Override
 	public String getTreePath() {
 		if (_treePath == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _treePath;
@@ -683,7 +682,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -695,7 +694,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 	@Override
 	public String getStatusByUserName() {
 		if (_statusByUserName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _statusByUserName;

@@ -21,7 +21,6 @@ import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -88,7 +87,7 @@ public class ExpandoTableCacheModel implements CacheModel<ExpandoTable>,
 		expandoTableImpl.setClassNameId(classNameId);
 
 		if (name == null) {
-			expandoTableImpl.setName(StringPool.BLANK);
+			expandoTableImpl.setName("");
 		}
 		else {
 			expandoTableImpl.setName(name);
@@ -119,7 +118,7 @@ public class ExpandoTableCacheModel implements CacheModel<ExpandoTable>,
 		objectOutput.writeLong(classNameId);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);

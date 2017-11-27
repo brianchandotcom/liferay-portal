@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.wsrp.model.WSRPConsumer;
 import com.liferay.wsrp.model.WSRPConsumerModel;
@@ -274,7 +273,7 @@ public class WSRPConsumerModelImpl extends BaseModelImpl<WSRPConsumer>
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _uuid;
@@ -355,7 +354,7 @@ public class WSRPConsumerModelImpl extends BaseModelImpl<WSRPConsumer>
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -372,7 +371,7 @@ public class WSRPConsumerModelImpl extends BaseModelImpl<WSRPConsumer>
 	@Override
 	public String getUrl() {
 		if (_url == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _url;
@@ -387,7 +386,7 @@ public class WSRPConsumerModelImpl extends BaseModelImpl<WSRPConsumer>
 	@Override
 	public String getWsdl() {
 		if (_wsdl == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _wsdl;
@@ -402,7 +401,7 @@ public class WSRPConsumerModelImpl extends BaseModelImpl<WSRPConsumer>
 	@Override
 	public String getRegistrationContextString() {
 		if (_registrationContextString == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _registrationContextString;
@@ -417,7 +416,7 @@ public class WSRPConsumerModelImpl extends BaseModelImpl<WSRPConsumer>
 	@Override
 	public String getRegistrationPropertiesString() {
 		if (_registrationPropertiesString == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _registrationPropertiesString;
@@ -433,7 +432,7 @@ public class WSRPConsumerModelImpl extends BaseModelImpl<WSRPConsumer>
 	@Override
 	public String getForwardCookies() {
 		if (_forwardCookies == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _forwardCookies;
@@ -448,7 +447,7 @@ public class WSRPConsumerModelImpl extends BaseModelImpl<WSRPConsumer>
 	@Override
 	public String getForwardHeaders() {
 		if (_forwardHeaders == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _forwardHeaders;
@@ -463,7 +462,7 @@ public class WSRPConsumerModelImpl extends BaseModelImpl<WSRPConsumer>
 	@Override
 	public String getMarkupCharacterSets() {
 		if (_markupCharacterSets == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _markupCharacterSets;

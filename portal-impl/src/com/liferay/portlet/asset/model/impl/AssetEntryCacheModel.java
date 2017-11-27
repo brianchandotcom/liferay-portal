@@ -21,7 +21,6 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -137,7 +136,7 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry>,
 		assetEntryImpl.setUserId(userId);
 
 		if (userName == null) {
-			assetEntryImpl.setUserName(StringPool.BLANK);
+			assetEntryImpl.setUserName("");
 		}
 		else {
 			assetEntryImpl.setUserName(userName);
@@ -161,7 +160,7 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry>,
 		assetEntryImpl.setClassPK(classPK);
 
 		if (classUuid == null) {
-			assetEntryImpl.setClassUuid(StringPool.BLANK);
+			assetEntryImpl.setClassUuid("");
 		}
 		else {
 			assetEntryImpl.setClassUuid(classUuid);
@@ -200,42 +199,42 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry>,
 		}
 
 		if (mimeType == null) {
-			assetEntryImpl.setMimeType(StringPool.BLANK);
+			assetEntryImpl.setMimeType("");
 		}
 		else {
 			assetEntryImpl.setMimeType(mimeType);
 		}
 
 		if (title == null) {
-			assetEntryImpl.setTitle(StringPool.BLANK);
+			assetEntryImpl.setTitle("");
 		}
 		else {
 			assetEntryImpl.setTitle(title);
 		}
 
 		if (description == null) {
-			assetEntryImpl.setDescription(StringPool.BLANK);
+			assetEntryImpl.setDescription("");
 		}
 		else {
 			assetEntryImpl.setDescription(description);
 		}
 
 		if (summary == null) {
-			assetEntryImpl.setSummary(StringPool.BLANK);
+			assetEntryImpl.setSummary("");
 		}
 		else {
 			assetEntryImpl.setSummary(summary);
 		}
 
 		if (url == null) {
-			assetEntryImpl.setUrl(StringPool.BLANK);
+			assetEntryImpl.setUrl("");
 		}
 		else {
 			assetEntryImpl.setUrl(url);
 		}
 
 		if (layoutUuid == null) {
-			assetEntryImpl.setLayoutUuid(StringPool.BLANK);
+			assetEntryImpl.setLayoutUuid("");
 		}
 		else {
 			assetEntryImpl.setLayoutUuid(layoutUuid);
@@ -306,7 +305,7 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -320,7 +319,7 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry>,
 		objectOutput.writeLong(classPK);
 
 		if (classUuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(classUuid);
@@ -337,42 +336,42 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry>,
 		objectOutput.writeLong(expirationDate);
 
 		if (mimeType == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(mimeType);
 		}
 
 		if (title == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(title);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);
 		}
 
 		if (summary == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(summary);
 		}
 
 		if (url == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(url);
 		}
 
 		if (layoutUuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(layoutUuid);

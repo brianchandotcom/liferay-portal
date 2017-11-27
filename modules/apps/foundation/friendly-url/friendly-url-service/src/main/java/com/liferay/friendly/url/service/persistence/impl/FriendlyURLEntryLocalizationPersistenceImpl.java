@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -312,7 +311,7 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 		msg.append("friendlyURLEntryId=");
 		msg.append(friendlyURLEntryId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchFriendlyURLEntryLocalizationException(msg.toString());
 	}
@@ -365,7 +364,7 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 		msg.append("friendlyURLEntryId=");
 		msg.append(friendlyURLEntryId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchFriendlyURLEntryLocalizationException(msg.toString());
 	}
@@ -656,7 +655,7 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			msg.append(", languageId=");
 			msg.append(languageId);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -724,7 +723,7 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			if (languageId == null) {
 				query.append(_FINDER_COLUMN_FRIENDLYURLENTRYID_LANGUAGEID_LANGUAGEID_1);
 			}
-			else if (languageId.equals(StringPool.BLANK)) {
+			else if (languageId.equals("")) {
 				query.append(_FINDER_COLUMN_FRIENDLYURLENTRYID_LANGUAGEID_LANGUAGEID_3);
 			}
 			else {
@@ -836,7 +835,7 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			if (languageId == null) {
 				query.append(_FINDER_COLUMN_FRIENDLYURLENTRYID_LANGUAGEID_LANGUAGEID_1);
 			}
-			else if (languageId.equals(StringPool.BLANK)) {
+			else if (languageId.equals("")) {
 				query.append(_FINDER_COLUMN_FRIENDLYURLENTRYID_LANGUAGEID_LANGUAGEID_3);
 			}
 			else {
@@ -937,7 +936,7 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			msg.append(", urlTitle=");
 			msg.append(urlTitle);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -1009,7 +1008,7 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			if (urlTitle == null) {
 				query.append(_FINDER_COLUMN_G_C_U_URLTITLE_1);
 			}
-			else if (urlTitle.equals(StringPool.BLANK)) {
+			else if (urlTitle.equals("")) {
 				query.append(_FINDER_COLUMN_G_C_U_URLTITLE_3);
 			}
 			else {
@@ -1126,7 +1125,7 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			if (urlTitle == null) {
 				query.append(_FINDER_COLUMN_G_C_U_URLTITLE_1);
 			}
-			else if (urlTitle.equals(StringPool.BLANK)) {
+			else if (urlTitle.equals("")) {
 				query.append(_FINDER_COLUMN_G_C_U_URLTITLE_3);
 			}
 			else {
@@ -1735,12 +1734,12 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

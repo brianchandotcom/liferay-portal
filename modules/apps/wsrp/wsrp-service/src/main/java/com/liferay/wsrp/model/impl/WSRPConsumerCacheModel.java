@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.wsrp.model.WSRPConsumer;
 
@@ -106,7 +105,7 @@ public class WSRPConsumerCacheModel implements CacheModel<WSRPConsumer>,
 		WSRPConsumerImpl wsrpConsumerImpl = new WSRPConsumerImpl();
 
 		if (uuid == null) {
-			wsrpConsumerImpl.setUuid(StringPool.BLANK);
+			wsrpConsumerImpl.setUuid("");
 		}
 		else {
 			wsrpConsumerImpl.setUuid(uuid);
@@ -130,56 +129,56 @@ public class WSRPConsumerCacheModel implements CacheModel<WSRPConsumer>,
 		}
 
 		if (name == null) {
-			wsrpConsumerImpl.setName(StringPool.BLANK);
+			wsrpConsumerImpl.setName("");
 		}
 		else {
 			wsrpConsumerImpl.setName(name);
 		}
 
 		if (url == null) {
-			wsrpConsumerImpl.setUrl(StringPool.BLANK);
+			wsrpConsumerImpl.setUrl("");
 		}
 		else {
 			wsrpConsumerImpl.setUrl(url);
 		}
 
 		if (wsdl == null) {
-			wsrpConsumerImpl.setWsdl(StringPool.BLANK);
+			wsrpConsumerImpl.setWsdl("");
 		}
 		else {
 			wsrpConsumerImpl.setWsdl(wsdl);
 		}
 
 		if (registrationContextString == null) {
-			wsrpConsumerImpl.setRegistrationContextString(StringPool.BLANK);
+			wsrpConsumerImpl.setRegistrationContextString("");
 		}
 		else {
 			wsrpConsumerImpl.setRegistrationContextString(registrationContextString);
 		}
 
 		if (registrationPropertiesString == null) {
-			wsrpConsumerImpl.setRegistrationPropertiesString(StringPool.BLANK);
+			wsrpConsumerImpl.setRegistrationPropertiesString("");
 		}
 		else {
 			wsrpConsumerImpl.setRegistrationPropertiesString(registrationPropertiesString);
 		}
 
 		if (forwardCookies == null) {
-			wsrpConsumerImpl.setForwardCookies(StringPool.BLANK);
+			wsrpConsumerImpl.setForwardCookies("");
 		}
 		else {
 			wsrpConsumerImpl.setForwardCookies(forwardCookies);
 		}
 
 		if (forwardHeaders == null) {
-			wsrpConsumerImpl.setForwardHeaders(StringPool.BLANK);
+			wsrpConsumerImpl.setForwardHeaders("");
 		}
 		else {
 			wsrpConsumerImpl.setForwardHeaders(forwardHeaders);
 		}
 
 		if (markupCharacterSets == null) {
-			wsrpConsumerImpl.setMarkupCharacterSets(StringPool.BLANK);
+			wsrpConsumerImpl.setMarkupCharacterSets("");
 		}
 		else {
 			wsrpConsumerImpl.setMarkupCharacterSets(markupCharacterSets);
@@ -221,7 +220,7 @@ public class WSRPConsumerCacheModel implements CacheModel<WSRPConsumer>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -234,56 +233,56 @@ public class WSRPConsumerCacheModel implements CacheModel<WSRPConsumer>,
 		objectOutput.writeLong(modifiedDate);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (url == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(url);
 		}
 
 		if (wsdl == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(wsdl);
 		}
 
 		if (registrationContextString == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(registrationContextString);
 		}
 
 		if (registrationPropertiesString == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(registrationPropertiesString);
 		}
 
 		if (forwardCookies == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(forwardCookies);
 		}
 
 		if (forwardHeaders == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(forwardHeaders);
 		}
 
 		if (markupCharacterSets == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(markupCharacterSets);

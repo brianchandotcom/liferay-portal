@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.wsrp.model.WSRPConsumerPortlet;
 
@@ -96,7 +95,7 @@ public class WSRPConsumerPortletCacheModel implements CacheModel<WSRPConsumerPor
 		WSRPConsumerPortletImpl wsrpConsumerPortletImpl = new WSRPConsumerPortletImpl();
 
 		if (uuid == null) {
-			wsrpConsumerPortletImpl.setUuid(StringPool.BLANK);
+			wsrpConsumerPortletImpl.setUuid("");
 		}
 		else {
 			wsrpConsumerPortletImpl.setUuid(uuid);
@@ -122,14 +121,14 @@ public class WSRPConsumerPortletCacheModel implements CacheModel<WSRPConsumerPor
 		wsrpConsumerPortletImpl.setWsrpConsumerId(wsrpConsumerId);
 
 		if (name == null) {
-			wsrpConsumerPortletImpl.setName(StringPool.BLANK);
+			wsrpConsumerPortletImpl.setName("");
 		}
 		else {
 			wsrpConsumerPortletImpl.setName(name);
 		}
 
 		if (portletHandle == null) {
-			wsrpConsumerPortletImpl.setPortletHandle(StringPool.BLANK);
+			wsrpConsumerPortletImpl.setPortletHandle("");
 		}
 		else {
 			wsrpConsumerPortletImpl.setPortletHandle(portletHandle);
@@ -167,7 +166,7 @@ public class WSRPConsumerPortletCacheModel implements CacheModel<WSRPConsumerPor
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -182,14 +181,14 @@ public class WSRPConsumerPortletCacheModel implements CacheModel<WSRPConsumerPor
 		objectOutput.writeLong(wsrpConsumerId);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (portletHandle == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(portletHandle);

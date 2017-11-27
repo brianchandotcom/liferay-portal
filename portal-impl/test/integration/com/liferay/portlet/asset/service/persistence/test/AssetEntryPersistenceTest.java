@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -274,18 +273,18 @@ public class AssetEntryPersistenceTest {
 
 	@Test
 	public void testCountByLayoutUuid() throws Exception {
-		_persistence.countByLayoutUuid(StringPool.BLANK);
+		_persistence.countByLayoutUuid("");
 
-		_persistence.countByLayoutUuid(StringPool.NULL);
+		_persistence.countByLayoutUuid("null");
 
 		_persistence.countByLayoutUuid((String)null);
 	}
 
 	@Test
 	public void testCountByG_CU() throws Exception {
-		_persistence.countByG_CU(RandomTestUtil.nextLong(), StringPool.BLANK);
+		_persistence.countByG_CU(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByG_CU(0L, StringPool.NULL);
+		_persistence.countByG_CU(0L, "null");
 
 		_persistence.countByG_CU(0L, (String)null);
 	}

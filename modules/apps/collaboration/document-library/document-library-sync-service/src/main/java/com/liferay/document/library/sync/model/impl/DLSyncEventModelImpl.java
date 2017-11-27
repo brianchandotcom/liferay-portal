@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -234,7 +233,7 @@ public class DLSyncEventModelImpl extends BaseModelImpl<DLSyncEvent>
 	@Override
 	public String getEvent() {
 		if (_event == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _event;
@@ -249,7 +248,7 @@ public class DLSyncEventModelImpl extends BaseModelImpl<DLSyncEvent>
 	@Override
 	public String getType() {
 		if (_type == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _type;

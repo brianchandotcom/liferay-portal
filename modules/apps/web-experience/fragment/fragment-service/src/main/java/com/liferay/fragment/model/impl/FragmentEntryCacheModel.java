@@ -21,7 +21,6 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -107,7 +106,7 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 		fragmentEntryImpl.setUserId(userId);
 
 		if (userName == null) {
-			fragmentEntryImpl.setUserName(StringPool.BLANK);
+			fragmentEntryImpl.setUserName("");
 		}
 		else {
 			fragmentEntryImpl.setUserName(userName);
@@ -130,28 +129,28 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 		fragmentEntryImpl.setFragmentCollectionId(fragmentCollectionId);
 
 		if (name == null) {
-			fragmentEntryImpl.setName(StringPool.BLANK);
+			fragmentEntryImpl.setName("");
 		}
 		else {
 			fragmentEntryImpl.setName(name);
 		}
 
 		if (css == null) {
-			fragmentEntryImpl.setCss(StringPool.BLANK);
+			fragmentEntryImpl.setCss("");
 		}
 		else {
 			fragmentEntryImpl.setCss(css);
 		}
 
 		if (html == null) {
-			fragmentEntryImpl.setHtml(StringPool.BLANK);
+			fragmentEntryImpl.setHtml("");
 		}
 		else {
 			fragmentEntryImpl.setHtml(html);
 		}
 
 		if (js == null) {
-			fragmentEntryImpl.setJs(StringPool.BLANK);
+			fragmentEntryImpl.setJs("");
 		}
 		else {
 			fragmentEntryImpl.setJs(js);
@@ -194,7 +193,7 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -206,28 +205,28 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 		objectOutput.writeLong(fragmentCollectionId);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (css == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(css);
 		}
 
 		if (html == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(html);
 		}
 
 		if (js == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(js);

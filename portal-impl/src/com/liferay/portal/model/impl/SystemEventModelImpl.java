@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -350,7 +349,7 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -361,7 +360,7 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -388,7 +387,7 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 	@Override
 	public String getClassName() {
 		if (getClassNameId() <= 0) {
-			return StringPool.BLANK;
+			return "";
 		}
 
 		return PortalUtil.getClassName(getClassNameId());
@@ -452,7 +451,7 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 	@Override
 	public String getClassUuid() {
 		if (_classUuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _classUuid;
@@ -531,7 +530,7 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 	@Override
 	public String getExtraData() {
 		if (_extraData == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _extraData;

@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -173,9 +172,9 @@ public class FriendlyURLEntryLocalizationPersistenceTest {
 	public void testCountByFriendlyURLEntryId_LanguageId()
 		throws Exception {
 		_persistence.countByFriendlyURLEntryId_LanguageId(RandomTestUtil.nextLong(),
-			StringPool.BLANK);
+			"");
 
-		_persistence.countByFriendlyURLEntryId_LanguageId(0L, StringPool.NULL);
+		_persistence.countByFriendlyURLEntryId_LanguageId(0L, "null");
 
 		_persistence.countByFriendlyURLEntryId_LanguageId(0L, (String)null);
 	}
@@ -183,9 +182,9 @@ public class FriendlyURLEntryLocalizationPersistenceTest {
 	@Test
 	public void testCountByG_C_U() throws Exception {
 		_persistence.countByG_C_U(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), StringPool.BLANK);
+			RandomTestUtil.nextLong(), "");
 
-		_persistence.countByG_C_U(0L, 0L, StringPool.NULL);
+		_persistence.countByG_C_U(0L, 0L, "null");
 
 		_persistence.countByG_C_U(0L, 0L, (String)null);
 	}

@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.shopping.model.ShoppingCategory;
 
@@ -103,7 +102,7 @@ public class ShoppingCategoryCacheModel implements CacheModel<ShoppingCategory>,
 		shoppingCategoryImpl.setUserId(userId);
 
 		if (userName == null) {
-			shoppingCategoryImpl.setUserName(StringPool.BLANK);
+			shoppingCategoryImpl.setUserName("");
 		}
 		else {
 			shoppingCategoryImpl.setUserName(userName);
@@ -126,14 +125,14 @@ public class ShoppingCategoryCacheModel implements CacheModel<ShoppingCategory>,
 		shoppingCategoryImpl.setParentCategoryId(parentCategoryId);
 
 		if (name == null) {
-			shoppingCategoryImpl.setName(StringPool.BLANK);
+			shoppingCategoryImpl.setName("");
 		}
 		else {
 			shoppingCategoryImpl.setName(name);
 		}
 
 		if (description == null) {
-			shoppingCategoryImpl.setDescription(StringPool.BLANK);
+			shoppingCategoryImpl.setDescription("");
 		}
 		else {
 			shoppingCategoryImpl.setDescription(description);
@@ -174,7 +173,7 @@ public class ShoppingCategoryCacheModel implements CacheModel<ShoppingCategory>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -186,14 +185,14 @@ public class ShoppingCategoryCacheModel implements CacheModel<ShoppingCategory>,
 		objectOutput.writeLong(parentCategoryId);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);

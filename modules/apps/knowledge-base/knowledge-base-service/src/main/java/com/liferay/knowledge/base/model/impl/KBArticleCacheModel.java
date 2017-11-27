@@ -21,7 +21,6 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -136,7 +135,7 @@ public class KBArticleCacheModel implements CacheModel<KBArticle>,
 		KBArticleImpl kbArticleImpl = new KBArticleImpl();
 
 		if (uuid == null) {
-			kbArticleImpl.setUuid(StringPool.BLANK);
+			kbArticleImpl.setUuid("");
 		}
 		else {
 			kbArticleImpl.setUuid(uuid);
@@ -149,7 +148,7 @@ public class KBArticleCacheModel implements CacheModel<KBArticle>,
 		kbArticleImpl.setUserId(userId);
 
 		if (userName == null) {
-			kbArticleImpl.setUserName(StringPool.BLANK);
+			kbArticleImpl.setUserName("");
 		}
 		else {
 			kbArticleImpl.setUserName(userName);
@@ -176,28 +175,28 @@ public class KBArticleCacheModel implements CacheModel<KBArticle>,
 		kbArticleImpl.setVersion(version);
 
 		if (title == null) {
-			kbArticleImpl.setTitle(StringPool.BLANK);
+			kbArticleImpl.setTitle("");
 		}
 		else {
 			kbArticleImpl.setTitle(title);
 		}
 
 		if (urlTitle == null) {
-			kbArticleImpl.setUrlTitle(StringPool.BLANK);
+			kbArticleImpl.setUrlTitle("");
 		}
 		else {
 			kbArticleImpl.setUrlTitle(urlTitle);
 		}
 
 		if (content == null) {
-			kbArticleImpl.setContent(StringPool.BLANK);
+			kbArticleImpl.setContent("");
 		}
 		else {
 			kbArticleImpl.setContent(content);
 		}
 
 		if (description == null) {
-			kbArticleImpl.setDescription(StringPool.BLANK);
+			kbArticleImpl.setDescription("");
 		}
 		else {
 			kbArticleImpl.setDescription(description);
@@ -206,7 +205,7 @@ public class KBArticleCacheModel implements CacheModel<KBArticle>,
 		kbArticleImpl.setPriority(priority);
 
 		if (sections == null) {
-			kbArticleImpl.setSections(StringPool.BLANK);
+			kbArticleImpl.setSections("");
 		}
 		else {
 			kbArticleImpl.setSections(sections);
@@ -217,7 +216,7 @@ public class KBArticleCacheModel implements CacheModel<KBArticle>,
 		kbArticleImpl.setMain(main);
 
 		if (sourceURL == null) {
-			kbArticleImpl.setSourceURL(StringPool.BLANK);
+			kbArticleImpl.setSourceURL("");
 		}
 		else {
 			kbArticleImpl.setSourceURL(sourceURL);
@@ -234,7 +233,7 @@ public class KBArticleCacheModel implements CacheModel<KBArticle>,
 		kbArticleImpl.setStatusByUserId(statusByUserId);
 
 		if (statusByUserName == null) {
-			kbArticleImpl.setStatusByUserName(StringPool.BLANK);
+			kbArticleImpl.setStatusByUserName("");
 		}
 		else {
 			kbArticleImpl.setStatusByUserName(statusByUserName);
@@ -305,7 +304,7 @@ public class KBArticleCacheModel implements CacheModel<KBArticle>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -322,7 +321,7 @@ public class KBArticleCacheModel implements CacheModel<KBArticle>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -342,28 +341,28 @@ public class KBArticleCacheModel implements CacheModel<KBArticle>,
 		objectOutput.writeInt(version);
 
 		if (title == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(title);
 		}
 
 		if (urlTitle == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(urlTitle);
 		}
 
 		if (content == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(content);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);
@@ -372,7 +371,7 @@ public class KBArticleCacheModel implements CacheModel<KBArticle>,
 		objectOutput.writeDouble(priority);
 
 		if (sections == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(sections);
@@ -385,7 +384,7 @@ public class KBArticleCacheModel implements CacheModel<KBArticle>,
 		objectOutput.writeBoolean(main);
 
 		if (sourceURL == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(sourceURL);
@@ -398,7 +397,7 @@ public class KBArticleCacheModel implements CacheModel<KBArticle>,
 		objectOutput.writeLong(statusByUserId);
 
 		if (statusByUserName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(statusByUserName);

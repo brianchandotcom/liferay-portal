@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -293,7 +292,7 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -330,7 +329,7 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 	@Override
 	public String getDefaultData() {
 		if (_defaultData == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _defaultData;
@@ -346,7 +345,7 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 	@Override
 	public String getTypeSettings() {
 		if (_typeSettings == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _typeSettings;

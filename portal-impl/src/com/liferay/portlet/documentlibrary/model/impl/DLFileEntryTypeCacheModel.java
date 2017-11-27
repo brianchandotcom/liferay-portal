@@ -21,7 +21,6 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -102,7 +101,7 @@ public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType>,
 		DLFileEntryTypeImpl dlFileEntryTypeImpl = new DLFileEntryTypeImpl();
 
 		if (uuid == null) {
-			dlFileEntryTypeImpl.setUuid(StringPool.BLANK);
+			dlFileEntryTypeImpl.setUuid("");
 		}
 		else {
 			dlFileEntryTypeImpl.setUuid(uuid);
@@ -114,7 +113,7 @@ public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType>,
 		dlFileEntryTypeImpl.setUserId(userId);
 
 		if (userName == null) {
-			dlFileEntryTypeImpl.setUserName(StringPool.BLANK);
+			dlFileEntryTypeImpl.setUserName("");
 		}
 		else {
 			dlFileEntryTypeImpl.setUserName(userName);
@@ -135,21 +134,21 @@ public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType>,
 		}
 
 		if (fileEntryTypeKey == null) {
-			dlFileEntryTypeImpl.setFileEntryTypeKey(StringPool.BLANK);
+			dlFileEntryTypeImpl.setFileEntryTypeKey("");
 		}
 		else {
 			dlFileEntryTypeImpl.setFileEntryTypeKey(fileEntryTypeKey);
 		}
 
 		if (name == null) {
-			dlFileEntryTypeImpl.setName(StringPool.BLANK);
+			dlFileEntryTypeImpl.setName("");
 		}
 		else {
 			dlFileEntryTypeImpl.setName(name);
 		}
 
 		if (description == null) {
-			dlFileEntryTypeImpl.setDescription(StringPool.BLANK);
+			dlFileEntryTypeImpl.setDescription("");
 		}
 		else {
 			dlFileEntryTypeImpl.setDescription(description);
@@ -191,7 +190,7 @@ public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -206,7 +205,7 @@ public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -216,21 +215,21 @@ public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType>,
 		objectOutput.writeLong(modifiedDate);
 
 		if (fileEntryTypeKey == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(fileEntryTypeKey);
 		}
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);

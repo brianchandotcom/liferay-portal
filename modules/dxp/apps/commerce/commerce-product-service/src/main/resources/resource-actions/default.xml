@@ -10,6 +10,7 @@
 			<portlet-name>com_liferay_commerce_product_options_web_internal_portlet_CPOptionCategoriesPortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_product_options_web_internal_portlet_CPOptionsPortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_product_options_web_internal_portlet_CPSpecificationOptionsPortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_wizard_web_internal_portlet_CommerceWizardPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -19,6 +20,7 @@
 				<action-key>ADD_COMMERCE_PRODUCT_OPTION</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_OPTION_CATEGORY</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_SPECIFICATION_OPTION</action-key>
+				<action-key>ENABLE_COMMERCE_FEATURES</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_ATTACHMENTS</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_IMAGES</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS</action-key>
@@ -32,6 +34,7 @@
 				<action-key>ADD_COMMERCE_PRODUCT_OPTION</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_OPTION_CATEGORY</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_SPECIFICATION_OPTION</action-key>
+				<action-key>ENABLE_COMMERCE_FEATURES</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_ATTACHMENTS</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_IMAGES</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS</action-key>

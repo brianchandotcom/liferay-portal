@@ -1,0 +1,117 @@
+{namespace CPDefinitionOptionValueList}
+
+/**
+ * CP Option Value List
+ *
+ */
+{template .render}
+	{@param? currentCPDefinitionOptionValueRelId: string}
+	{@param? id: string}
+	{@param? cpDefinitionOptionValueRels: ?}
+	{@param? pathThemeImages: string}
+	{@param? newCPDefinitionOptionValueRelTitle: string}
+	{@param? _handleAddOptionValueClick: any}
+	{@param? _handleSelectCPDefinitionOptionValueRelClick: any}
+
+	<h4 class="section-header">
+
+		Option Values
+
+		<button onClick="{$_handleAddOptionValueClick}" class="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none" type="button">
+			<svg aria-hidden="true" class="lexicon-icon lexicon-icon-plus">
+				<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#plus"></use>
+			</svg>
+		</button>
+	</h4>
+	<div id="{$id}">
+		<table class="table table-autofit table-heading-nowrap table-responsive table-hover">
+			<thead>
+				<tr>
+					<th class="">
+						<span class="text-truncate" title="Id">{msg desc=""}id{/msg}</span>
+					</th>
+					<th class="table-cell-content">
+						<span class="text-truncate" title="Description">{msg desc=""}title{/msg}</span>
+					</th>
+					<th class="">
+						<span class="text-truncate" title="Priority">{msg desc=""}priority{/msg}</span>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+
+				{if $currentCPDefinitionOptionValueRelId == '0'}
+					{call .cpDefinitionOptionValueRelRow}
+						{param id: '0' /}
+						{param title: $newCPDefinitionOptionValueRelTitle /}
+						{param selected: true /}
+						{param priority: 0 /}
+						{param _handleSelectCPDefinitionOptionValueRelClick: $_handleSelectCPDefinitionOptionValueRelClick /}
+					{/call}
+				{/if}
+
+				{if $cpDefinitionOptionValueRels}
+
+					{foreach $cpDefinitionValueRel in $cpDefinitionOptionValueRels}
+
+						{call .cpDefinitionOptionValueRelRow}
+							{param id: $cpDefinitionValueRel.cpDefinitionOptionValueRelId /}
+							{param title: $cpDefinitionValueRel.title /}
+							{param selected: $cpDefinitionValueRel.cpDefinitionOptionValueRelId == $currentCPDefinitionOptionValueRelId /}
+							{param priority: $cpDefinitionValueRel.priority /}
+							{param _handleSelectCPDefinitionOptionValueRelClick: $_handleSelectCPDefinitionOptionValueRelClick /}
+						{/call}
+
+					{/foreach}
+
+				{/if}
+
+			</tbody>
+		</table>
+	</div>
+
+{/template}
+
+/**
+ * CP Definition Option Value Rel Row
+ *
+ */
+{template .cpDefinitionOptionValueRelRow}
+	{@param id: string}
+	{@param title: null|string }
+	{@param? selected: bool}
+	{@param? priority: number}
+	{@param? _handleSelectCPDefinitionOptionValueRelClick: any}
+
+	{let $classes kind="text"}
+		{if $selected}
+			table-active
+		{/if}
+	{/let}
+
+	<tr data-id="{$id}" onclick="{$_handleSelectCPDefinitionOptionValueRelClick}" class="{$classes}">
+		<td class="">
+			{if $id != 0}
+				{$id}
+			{/if}
+		</td>
+		<td class="table-cell-content">
+			{if $id != 0}
+				{$title}
+			{else}
+				 {if $title == ''}
+					[{msg desc=""}new-option-value{/msg}]
+				{else}
+					{$title}
+				{/if}
+			{/if}
+
+		</td>
+		<td class="">
+		  {if $id != 0}
+			 {$priority}
+		  {/if}
+		</td>
+	</tr>
+
+{/template}

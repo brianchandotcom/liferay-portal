@@ -777,98 +777,39 @@ public class LayoutsAdminDisplayContext {
 			ActionKeys.PERMISSIONS);
 	}
 
-	private JSONObject _getActionsJSONObject(Layout layout) throws Exception {
+	private JSONObject _getActionURLsJSONObject(Layout layout)
+		throws Exception {
+
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		if (showAddChildPageAction(layout)) {
-			JSONObject addChildPageJSONObject =
-				JSONFactoryUtil.createJSONObject();
-
-			addChildPageJSONObject.put(
-				"label",
-				LanguageUtil.get(_themeDisplay.getLocale(), "add-child-page"));
-
-			addChildPageJSONObject.put(
-				"url",
+			jsonObject.put(
+				"addURL",
 				getAddLayoutURL(layout.getPlid(), layout.isPrivateLayout()));
-
-			jsonObject.put("add", addChildPageJSONObject);
 		}
 
 		if (showDeleteAction(layout)) {
-			JSONObject deletePageJSONObject =
-				JSONFactoryUtil.createJSONObject();
-
-			deletePageJSONObject.put(
-				"label", LanguageUtil.get(_themeDisplay.getLocale(), "delete"));
-
-			deletePageJSONObject.put("url", getDeleteLayoutURL(layout));
-
-			jsonObject.put("delete", deletePageJSONObject);
+			jsonObject.put("deleteURL", getDeleteLayoutURL(layout));
 		}
 
 		if (showConfigureAction(layout)) {
-			JSONObject configurePageJSONObject =
-				JSONFactoryUtil.createJSONObject();
-
-			configurePageJSONObject.put(
-				"label",
-				LanguageUtil.get(_themeDisplay.getLocale(), "configure"));
-
-			configurePageJSONObject.put("url", getEditLayoutURL(layout));
-
-			jsonObject.put("configure", configurePageJSONObject);
+			jsonObject.put("configureURL", getEditLayoutURL(layout));
 		}
 
 		if (showPermissionsAction(layout)) {
-			JSONObject permissionsJSONObject =
-				JSONFactoryUtil.createJSONObject();
-
-			permissionsJSONObject.put(
-				"label",
-				LanguageUtil.get(_themeDisplay.getLocale(), "permissions"));
-
-			permissionsJSONObject.put("url", getPermissionsURL(layout));
-
-			jsonObject.put("permissions", permissionsJSONObject);
+			jsonObject.put("permissionsURL", getPermissionsURL(layout));
 		}
 
 		if (showCopyApplicationsAction(layout)) {
-			JSONObject copyApplicationsJSONObject =
-				JSONFactoryUtil.createJSONObject();
-
-			copyApplicationsJSONObject.put(
-				"label",
-				LanguageUtil.get(
-					_themeDisplay.getLocale(), "copy-applications"));
-
-			copyApplicationsJSONObject.put(
-				"url", getCopyApplicationsURL(layout));
-
-			jsonObject.put("copyApplications", copyApplicationsJSONObject);
+			jsonObject.put(
+				"copyApplicationsURL", getCopyApplicationsURL(layout));
 		}
 
 		if (showOrphanPortletsAction(layout)) {
-			JSONObject orphanPortletsJSONObject =
-				JSONFactoryUtil.createJSONObject();
-
-			orphanPortletsJSONObject.put(
-				"label",
-				LanguageUtil.get(_themeDisplay.getLocale(), "orphan-portlets"));
-
-			orphanPortletsJSONObject.put("url", getOrphanPortletsURL(layout));
-
-			jsonObject.put("orphanPortlets", orphanPortletsJSONObject);
+			jsonObject.put("orphanPortletsURL", getOrphanPortletsURL(layout));
 		}
 
-		JSONObject viewPageJSONObject = JSONFactoryUtil.createJSONObject();
-
-		viewPageJSONObject.put(
-			"label", LanguageUtil.get(_themeDisplay.getLocale(), "view-page"));
-
-		viewPageJSONObject.put("url", getViewLayoutURL(layout));
-
-		jsonObject.put("viewPage", viewPageJSONObject);
+		jsonObject.put("viewPageURL", getViewLayoutURL(layout));
 
 		return jsonObject;
 	}
@@ -902,7 +843,8 @@ public class LayoutsAdminDisplayContext {
 		for (Layout layout : layouts) {
 			JSONObject layoutJSONObject = JSONFactoryUtil.createJSONObject();
 
-			layoutJSONObject.put("actions", _getActionsJSONObject(layout));
+			layoutJSONObject.put(
+				"actionURLs", _getActionURLsJSONObject(layout));
 			layoutJSONObject.put("active", _isActive(layout.getPlid()));
 
 			int childLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(

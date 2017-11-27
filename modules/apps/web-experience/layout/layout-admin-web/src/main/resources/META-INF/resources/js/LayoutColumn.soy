@@ -5,7 +5,7 @@
  */
 {template .render}
 	{@param layoutColumn: list<[
-		actions: map<string, ?>,
+		actionURLs: map<string, string>,
 		active: bool,
 		hasChild: bool,
 		plid: string,
@@ -43,7 +43,7 @@
  */
 {template .layoutColumnItem}
 	{@param layoutColumnItem: [
-		actions: map<string, ?>,
+		actionURLs: map<string, string>,
 		active: bool,
 		hasChild: bool,
 		plid: string,
@@ -79,9 +79,9 @@
 			</h4>
 		</div>
 
-		{if $layoutColumnItem.actions['add']}
+		{if $layoutColumnItem.actionURLs['addURL']}
 			<div class="flex-col pt-1">
-				<a href="{$layoutColumnItem.actions['add'].url}">
+				<a href="{$layoutColumnItem.actionURLs['addURL']}">
 					{call .lexiconIcon}
 						{param name: 'plus' /}
 						{param pathThemeImages: $pathThemeImages /}
@@ -100,13 +100,39 @@
 				</a>
 
 				<div class="dropdown-menu">
-					{foreach $action in keys($layoutColumnItem.actions)}
-						{if $action != 'add'}
-							<a class="dropdown-item" href="{$layoutColumnItem.actions[$action].url}">
-								{$layoutColumnItem.actions[$action].label}
-							</a>
-						{/if}
-					{/foreach}
+					{if $layoutColumnItem.actionURLs['configureURL']}
+						<a class="dropdown-item" href="{$layoutColumnItem.actionURLs['configureURL']}">
+							{msg desc=""}configure{/msg}
+						</a>
+					{/if}
+
+					{if $layoutColumnItem.actionURLs['permissionsURL']}
+						<a class="dropdown-item" href="{$layoutColumnItem.actionURLs['permissionsURL']}">
+							{msg desc=""}permissions{/msg}
+						</a>
+					{/if}
+
+					{if $layoutColumnItem.actionURLs['copyApplicationsURL']}
+						<a class="dropdown-item" href="{$layoutColumnItem.actionURLs['copyApplicationsURL']}">
+							{msg desc=""}copy-applications{/msg}
+						</a>
+					{/if}
+
+					{if $layoutColumnItem.actionURLs['orphanPortletsURL']}
+						<a class="dropdown-item" href="{$layoutColumnItem.actionURLs['orphanPortletsURL']}">
+							{msg desc=""}orphan-portlets{/msg}
+						</a>
+					{/if}
+
+					<a class="dropdown-item" href="{$layoutColumnItem.actionURLs['viewPageURL']}" target="_blank">
+						{msg desc=""}view-page{/msg}
+					</a>
+
+					{if $layoutColumnItem.actionURLs['deleteURL']}
+						<a class="dropdown-item" href="{$layoutColumnItem.actionURLs['deleteURL']}">
+							{msg desc=""}delete{/msg}
+						</a>
+					{/if}
 				</div>
 			</div>
 		</div>

@@ -17,7 +17,7 @@
 <div class="product-detail-header">
 	<div class="container-fluid-1280">
 		<div class="col-md-12">
-			<div class="breadcrumb">
+			<div>
 				<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
 			</div>
 

@@ -29,9 +29,9 @@ import com.liferay.vulcan.pagination.PageItems;
 import com.liferay.vulcan.pagination.Pagination;
 import com.liferay.vulcan.resource.CollectionResource;
 import com.liferay.vulcan.resource.Representor;
+import com.liferay.vulcan.resource.Representor.Builder;
 import com.liferay.vulcan.resource.Routes;
 import com.liferay.vulcan.resource.ScopedCollectionResource;
-import com.liferay.vulcan.resource.builder.RepresentorBuilder;
 import com.liferay.vulcan.resource.builder.RoutesBuilder;
 import com.liferay.vulcan.resource.identifier.LongIdentifier;
 
@@ -59,7 +59,7 @@ public class MediaObjectScopedCollectionResource
 
 	@Override
 	public Representor<DLFileEntry, LongIdentifier> buildRepresentor(
-		RepresentorBuilder<DLFileEntry, LongIdentifier> representorBuilder) {
+		Representor.Builder<DLFileEntry, LongIdentifier> representorBuilder) {
 
 		return representorBuilder.identifier(
 			dlFileEntry -> dlFileEntry::getFileEntryId

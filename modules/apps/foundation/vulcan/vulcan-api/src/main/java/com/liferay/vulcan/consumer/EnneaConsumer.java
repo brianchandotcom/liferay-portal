@@ -30,6 +30,20 @@ import java.util.Objects;
 public interface EnneaConsumer<A, B, C, D, E, F, G, H, I> {
 
 	/**
+	 * Returns an empty {@code EnneaConsumer} that doesn't perform any
+	 * operation.
+	 *
+	 * @return an empty {@code EnneaConsumer} that doesn't perform any operation
+	 * @review
+	 */
+	public static <A, B, C, D, E, F, G, H, I>
+		EnneaConsumer<A, B, C, D, E, F, G, H, I> empty() {
+
+		return (a, b, c, d, e, f, g, h, i) -> {
+		};
+	}
+
+	/**
 	 * Operates with nine parameters and returns {@code void}. This function can
 	 * be implemented explicitly or with a lambda.
 	 *

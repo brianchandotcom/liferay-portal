@@ -62,13 +62,7 @@ public class EnneaConsumerTest {
 
 	@Test(expected = NullPointerException.class)
 	public void testOnInvokingAndThenWithNullAfterThrowsException() {
-		EnneaConsumer<String, String, String, String, String, String, String,
-			String, String> enneaConsumer = (
-				string1, string2, string3, string4, string5, string6, string7,
-				string8, string9) -> {
-				};
-
-		enneaConsumer.andThen(null);
+		EnneaConsumer.empty().andThen(null);
 	}
 
 }

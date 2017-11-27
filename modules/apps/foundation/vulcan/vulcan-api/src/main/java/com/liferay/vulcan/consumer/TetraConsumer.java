@@ -30,6 +30,18 @@ import java.util.Objects;
 public interface TetraConsumer<A, B, C, D> {
 
 	/**
+	 * Returns an empty {@code TetraConsumer} that doesn't perform any
+	 * operation.
+	 *
+	 * @return an empty {@code TetraConsumer} that doesn't perform any operation
+	 * @review
+	 */
+	public static <A, B, C, D> TetraConsumer<A, B, C, D> empty() {
+		return (a, b, c, d) -> {
+		};
+	}
+
+	/**
 	 * Operates with four parameters and returns {@code void}. This function can
 	 * be implemented explicitly or with a lambda.
 	 *

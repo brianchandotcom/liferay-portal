@@ -30,6 +30,19 @@ import java.util.Objects;
 public interface DecaConsumer<A, B, C, D, E, F, G, H, I, J> {
 
 	/**
+	 * Returns an empty {@code DecaConsumer} that doesn't perform any operation.
+	 *
+	 * @return an empty {@code DecaConsumer} that doesn't perform any operation
+	 * @review
+	 */
+	public static <A, B, C, D, E, F, G, H, I, J>
+		DecaConsumer<A, B, C, D, E, F, G, H, I, J> empty() {
+
+		return (a, b, c, d, e, f, g, h, i, j) -> {
+		};
+	}
+
+	/**
 	 * Operates with ten parameters and returns {@code void}. This function can
 	 * be implemented explicitly or with a lambda.
 	 *

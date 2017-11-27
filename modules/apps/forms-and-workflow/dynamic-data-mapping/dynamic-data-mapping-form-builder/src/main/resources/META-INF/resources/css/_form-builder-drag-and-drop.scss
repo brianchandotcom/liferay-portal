@@ -1,0 +1,70 @@
+.form-builder {
+	.layout-col-content {
+		border-radius: 5px;
+		height: 100%;
+		padding: 0 32px;
+	}
+
+	fieldset[disabled] .form-control, .form-control[disabled] {
+		background-color: #869CAD;
+	}
+
+	.form-builder-layout .layout-row-container-row .layout-row .col.col-empty.col-empty-over {
+		background-color: #F0F5FF;
+		border: 2px dashed #80ACFF;
+		border-radius: 4px;
+		opacity: 1;
+	}
+
+	div.form-builder-field-list-container {
+		border: 1px solid transparent;
+		padding: 0 20px 0 20px;
+		@include transition(border ease-out 0.3s);
+
+		div.lfr-ddm-field-actions-container {
+			opacity: 0;
+			position: absolute;
+			right: 0;
+			top: calc(-40px/2);
+			@include transition(all ease 0.3s);
+			visibility: hidden;
+		}
+
+		.btn {
+			border-color: #CDCED9;
+			margin-left: 7px;
+
+			&:hover {
+				cursor: pointer;
+			}
+		}
+
+		&:hover {
+			border-color: #CDCED9;
+
+			.form-builder-field {
+				cursor: default;
+			}
+
+			.lfr-ddm-field-actions-container {
+				opacity: 1;
+				visibility: visible;
+			}
+		}
+	}
+}
+
+.yui3-dd-proxy .form-builder-field-list-container {
+	height: 134px;
+	opacity: 0.85;
+
+	@include transform(translateY(-60px));
+
+	div.lfr-ddm-field-actions-container {
+		display: none;
+	}
+}
+
+.yui3-dd-proxy *, .yui3-dd-shim, .yui3-dd-proxy {
+	cursor: -webkit-grabbing!important;
+}

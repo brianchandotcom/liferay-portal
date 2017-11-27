@@ -3,9 +3,32 @@
 /**
  * Defines the delegated template for the sidebar.
  */
+{deltemplate DDMSidebar.sidebar_toolbar variant="'fieldTypes'"}
+	{call .toolbar data="all" /}
+{/deltemplate}
+
+/**
+* Defines the delegated template for the sidebar.
+*/
 {deltemplate DDMSidebar.sidebar_body variant="'fieldTypes'"}
 	{call .render data="all" /}
 {/deltemplate}
+
+/**
+* Prints the toolbar of the sidebar.
+*/
+{template .toolbar}
+	{@param? description: string}
+	{@param? title: string}
+
+	{if $title}
+		<h4 class="form-builder-sidebar-title truncate-text" title="{$title}">{$title}</h4>
+	{/if}
+
+	{if $description}
+		<h5 class="form-builder-sidebar-description" title="{$description}">{$description}</h5>
+	{/if}
+{/template}
 
 /**
  * Prints the field types sidebar.

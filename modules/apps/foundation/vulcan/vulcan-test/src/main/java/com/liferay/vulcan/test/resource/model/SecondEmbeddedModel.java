@@ -12,43 +12,24 @@
  * details.
  */
 
-package com.liferay.vulcan.test.message;
+package com.liferay.vulcan.test.resource.model;
 
 /**
- * Instances of this class represent a JSON object field, represented by a
- * String key and a value of type {@code T}.
+ * Instances of this interface represent a second layer embeddable mock model
+ * that can be mapped into a {@link com.liferay.vulcan.resource.Representor}
+ * using {@link MockRepresentorCreator} methods.
  *
  * @author Alejandro Hernández
  * @review
  */
-public class Field<T> {
-
-	public Field(String key, T value) {
-		_key = key;
-		_value = value;
-	}
+@FunctionalInterface
+public interface SecondEmbeddedModel {
 
 	/**
-	 * Returns the key of this field.
+	 * Returns the ID.
 	 *
-	 * @return the key of the field
-	 * @review
+	 * @return the ID
 	 */
-	public String getKey() {
-		return _key;
-	}
-
-	/**
-	 * Returns the value of this field.
-	 *
-	 * @return the value of the field
-	 * @review
-	 */
-	public T getValue() {
-		return _value;
-	}
-
-	private final String _key;
-	private final T _value;
+	public String getId();
 
 }

@@ -35,9 +35,9 @@
 						)
 				)
 				TEMP_TABLE
-					INNER JOIN
-						DDMDataProviderInstance ON
-							TEMP_TABLE.dataProviderInstanceId = DDMDataProviderInstance.dataProviderInstanceId
+			INNER JOIN
+				DDMDataProviderInstance ON
+					TEMP_TABLE.dataProviderInstanceId = DDMDataProviderInstance.dataProviderInstanceId
 			ORDER BY
 				DDMDataProviderInstance.dataProviderInstanceId DESC
 		]]>
@@ -132,9 +132,9 @@
 						[$STATUS$]
 				)
 				TEMP_TABLE
-					INNER JOIN
-						DDMStructure ON
-							TEMP_TABLE.structureId = DDMStructure.structureId
+			INNER JOIN
+				DDMStructure ON
+					TEMP_TABLE.structureId = DDMStructure.structureId
 			ORDER BY
 				DDMStructure.structureId DESC
 		]]>
@@ -279,9 +279,9 @@
 						[$STATUS$]
 				)
 				TEMP_TABLE
-					INNER JOIN
-						DDMTemplate ON
-							TEMP_TABLE.templateId = DDMTemplate.templateId
+			INNER JOIN
+				DDMTemplate ON
+					TEMP_TABLE.templateId = DDMTemplate.templateId
 			ORDER BY
 				DDMTemplate.templateId DESC
 		]]>

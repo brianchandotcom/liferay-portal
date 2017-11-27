@@ -1,3 +1,16 @@
+div.layout-builder-resize-col-draggable-handle {
+	background-color: transparent;
+	border-radius: 0;
+	color: #1C67FB;
+	font-size: 20px;
+	padding: 0;
+	text-align: center;
+
+	&:hover, &.layout-builder-resize-col-draggable-handle {
+		background: transparent;
+	}
+}
+
 .form-builder-field-move-target:last-child {
 	margin-top: -22px;
 }
@@ -50,6 +63,38 @@
 
 .layout-builder-moving:hover .layout-builder-move-cut-row-button.layout-builder-move-cancel {
 	display: none;
+}
+
+.lfr-ddm-field-actions-container {
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	opacity: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	visibility: hidden;
+	z-index: 2;
+
+	button {
+		border: solid 1px #CCC;
+		display: block;
+		margin: 4px 0;
+	}
+	@include transition(all ease 0.3s);
+}
+
+.lfr-ddm-form-field-container.form-builder-field {
+	min-height: 113px;
+
+	&:hover .lfr-ddm-field-actions-container {
+		opacity: 1;
+		visibility: visible;
+	}
+}
+
+.lfr-edit-field {
+	cursor: pointer;
 }
 
 .tool-tip-cut-row.tool-tip-white {

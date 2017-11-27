@@ -14,6 +14,14 @@
 
 package com.liferay.vulcan;
 
+import static com.openpojo.reflection.impl.PojoClassFactory.getPojoClass;
+
+import com.liferay.vulcan.pagination.PageItems;
+import com.liferay.vulcan.pagination.SingleModel;
+import com.liferay.vulcan.resource.RelatedCollection;
+import com.liferay.vulcan.resource.RelatedModel;
+
+import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.utils.AttributeHelper;
 import com.openpojo.validation.Validator;
 import com.openpojo.validation.ValidatorBuilder;
@@ -54,12 +62,22 @@ public class POJOTest {
 
 	@Test
 	public void testIdentifier() {
-		_validator.validate("com.liferay.vulcan.resource");
+		PojoClass relatedCollectionPojoClass = getPojoClass(
+			RelatedCollection.class);
+
+		PojoClass relatedModelPojoClass = getPojoClass(RelatedModel.class);
+
+		_validator.validate(relatedCollectionPojoClass);
+		_validator.validate(relatedModelPojoClass);
 	}
 
 	@Test
 	public void testPagination() {
-		_validator.validate("com.liferay.vulcan.pagination");
+		PojoClass pageItemsPojoClass = getPojoClass(PageItems.class);
+		PojoClass singleModelPojoClass = getPojoClass(SingleModel.class);
+
+		_validator.validate(pageItemsPojoClass);
+		_validator.validate(singleModelPojoClass);
 	}
 
 	@Test

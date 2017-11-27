@@ -56,11 +56,7 @@ public class PentaConsumerTest {
 
 	@Test(expected = NullPointerException.class)
 	public void testOnInvokingAndThenWithNullAfterThrowsException() {
-		PentaConsumer<String, String, String, String, String> pentaConsumer =
-			(string1, string2, string3, string4, string5) -> {
-			};
-
-		pentaConsumer.andThen(null);
+		PentaConsumer.empty().andThen(null);
 	}
 
 }

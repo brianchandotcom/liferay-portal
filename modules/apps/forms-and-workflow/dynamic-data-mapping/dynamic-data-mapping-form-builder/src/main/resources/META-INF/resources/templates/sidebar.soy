@@ -1,26 +1,102 @@
 {namespace DDMSidebar}
 
 /**
+* Prints the DDM sidebar header.
+*/
+{template .header}
+{@param closeButtonIcon: html}
+{@param toolbarButtonIcon: html}
+{@param? toolbarTemplateContext: [options: list<[buttonClass: string, handler: string, label: string]>]}
+{@param? type: string}
+
+<div class="sidebar-header">
+	<div class="sidebar-section-flex">
+		<div class="flex-col flex-col-expand">
+			{if $type}
+				{delcall DDMSidebar.sidebar_toolbar variant="$type" data="all" /}
+			{else}
+				{delcall DDMSidebar.sidebar_toolbar data="all" /}
+			{/if}
+		</div>
+		<div class="flex-col">
+			<ul class="nav nav-unstyled sidebar-actions">
+				{if $toolbarTemplateContext}
+					<li class="nav-item">
+						{call .field_options_toolbar data="all" /}
+					</li>
+				{/if}
+				<li class="nav-item">
+					<a class="form-builder-sidebar-close nav-link nav-link-monospaced sidebar-link" href="javascript:;">
+						{$closeButtonIcon}
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+{/template}
+
+/**
  * Prints the DDM sidebar.
  */
 {template .render}
 	{@param closeButtonIcon: html}
 	{@param toolbarButtonIcon: html}
 	{@param? bodyContent: html}
-	{@param? description: string}
-	{@param? title: string}
+	{@param? currentFieldType: [
+		icon: html,
+		name: string
+	]}
+	{@param? fieldTypeOptions: [
+		basic: list<[description: string, icon: html, label: string, name: string]>,
+		customized: list<[description: string, icon: html, label: string, name: string]>
+	]}
 	{@param? toolbarTemplateContext: [options: list<[buttonClass: string, handler: string, label: string]>]}
 	{@param? type: string}
 
-	<div class="sidebar">
-		{call .header data="all" /}
+	<div class="sidebar" id="lfr-ddm-sidebar">
 		{if $type}
+			{call .header data="all" /}
+
 			{delcall DDMSidebar.sidebar_body variant="$type" data="all" /}
 		{else}
+			{call .header data="all" /}
+
 			{delcall DDMSidebar.sidebar_body data="all" /}
 		{/if}
 	</div>
 {/template}
+
+/**
+* Prints the DDM sidebar toolbar
+*/
+{deltemplate DDMSidebar.sidebar_toolbar}
+	{@param? fieldTypeOptions: [
+		basic: list<[description: string, icon: html, label: string, name: string]>,
+		customized: list<[description: string, icon: html, label: string, name: string]>
+	]}
+
+	{if length(keys($fieldTypeOptions)) != 0}
+		<ul class="lfr-ddm-toolbar-field-type nav">
+			<li class="dropdown nav-item">
+				<button aria-expanded="false" aria-haspopup="true" class="btn btn-unstyled pl-0 dropdown-toggle nav-link"
+						data-toggle="dropdown" type="button" id="field-type-menu-content">
+				</button>
+
+				<div aria-labelledby="" class="dropdown-menu" x-placement="bottom-start">
+					{foreach $fieldType in $fieldTypeOptions.basic}
+						<a class="dropdown-item" data-name="{$fieldType.name}" href="#1">{$fieldType.icon} {$fieldType.label}</a>
+					{/foreach}
+
+					{foreach $fieldType in $fieldTypeOptions.customized}
+						<a class="dropdown-item" data-name="{$fieldType.name}" href="#1">{$fieldType.icon} {$fieldType.label}</a>
+					{/foreach}
+				</div>
+
+			</li>
+		</ul>
+	{/if}
+{/deltemplate}
 
 /**
  * Prints the DDM sidebar body.
@@ -39,49 +115,4 @@
 	{@param? toolbarTemplateContext: [options: list<[buttonClass: string, handler: string, label: string]>]}
 
 	{call DDMFieldSettingsToolbar.render data="all" /}
-{/template}
-
-/**
- * Prints the DDM sidebar header.
- */
-{template .header}
-	{@param closeButtonIcon: html}
-	{@param toolbarButtonIcon: html}
-	{@param? description: string}
-	{@param? title: string}
-	{@param? toolbarTemplateContext: [options: list<[buttonClass: string, handler: string, label: string]>]}
-
-	<div class="sidebar-header">
-		<div class="sidebar-section-flex">
-			<div class="flex-col flex-col-expand">
-				{if $title}
-					<h4 class="form-builder-sidebar-title sidebar-title text-truncate"
-						title="{$title}">
-						{$title}
-					</h4>
-				{/if}
-			</div>
-			<div class="flex-col">
-				<ul class="nav nav-unstyled sidebar-actions">
-					{if $toolbarTemplateContext}
-						<li class="nav-item">
-							{call .field_options_toolbar data="all" /}
-						</li>
-					{/if}
-					<li class="nav-item">
-						<a class="form-builder-sidebar-close nav-link nav-link-monospaced sidebar-link"
-							href="javascript:;">
-							{$closeButtonIcon}
-						</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-		<div class="sidebar-section">
-			<h5 class="form-builder-sidebar-description sidebar-subtitle text-truncate"
-				title="{$description}">
-				{$description}
-			</h5>
-		</div>
-	</div>
 {/template}

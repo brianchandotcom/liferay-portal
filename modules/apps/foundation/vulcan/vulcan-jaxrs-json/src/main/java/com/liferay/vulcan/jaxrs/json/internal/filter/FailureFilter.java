@@ -15,13 +15,13 @@
 package com.liferay.vulcan.jaxrs.json.internal.filter;
 
 import com.liferay.vulcan.error.VulcanDeveloperError.MustHaveExceptionConverter;
-import com.liferay.vulcan.jaxrs.json.internal.writer.WriterHelper;
 import com.liferay.vulcan.logger.VulcanLogger;
 import com.liferay.vulcan.message.json.ErrorMessageMapper;
 import com.liferay.vulcan.result.APIError;
 import com.liferay.vulcan.result.Try;
 import com.liferay.vulcan.wiring.osgi.manager.ErrorMessageMapperManager;
 import com.liferay.vulcan.wiring.osgi.manager.ExceptionConverterManager;
+import com.liferay.vulcan.writer.ErrorWriter;
 
 import java.io.IOException;
 
@@ -76,7 +76,7 @@ public class FailureFilter implements ContainerResponseFilter {
 				_errorMessageMapperManager.getErrorMessageMapper(
 					apiError, _httpHeaders);
 
-			String result = WriterHelper.writeError(
+			String result = ErrorWriter.writeError(
 				errorMessageMapper, apiError, _httpHeaders);
 
 			MultivaluedMap<String, Object> headers =

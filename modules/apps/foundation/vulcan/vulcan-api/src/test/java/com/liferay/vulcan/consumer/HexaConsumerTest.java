@@ -58,12 +58,7 @@ public class HexaConsumerTest {
 
 	@Test(expected = NullPointerException.class)
 	public void testOnInvokingAndThenWithNullAfterThrowsException() {
-		HexaConsumer<String, String, String, String, String, String>
-			hexaConsumer = (
-				string1, string2, string3, string4, string5, string6) -> {
-				};
-
-		hexaConsumer.andThen(null);
+		HexaConsumer.empty().andThen(null);
 	}
 
 }

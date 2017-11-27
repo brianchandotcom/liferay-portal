@@ -30,6 +30,19 @@ import java.util.Objects;
 public interface OctaConsumer<A, B, C, D, E, F, G, H> {
 
 	/**
+	 * Returns an empty {@code OctaConsumer} that doesn't perform any operation.
+	 *
+	 * @return an empty {@code OctaConsumer} that doesn't perform any operation
+	 * @review
+	 */
+	public static <A, B, C, D, E, F, G, H>
+		OctaConsumer<A, B, C, D, E, F, G, H> empty() {
+
+		return (a, b, c, d, e, f, g, h) -> {
+		};
+	}
+
+	/**
 	 * Operates with eight parameters and returns {@code void}. This function
 	 * can be implemented explicitly or with a lambda.
 	 *

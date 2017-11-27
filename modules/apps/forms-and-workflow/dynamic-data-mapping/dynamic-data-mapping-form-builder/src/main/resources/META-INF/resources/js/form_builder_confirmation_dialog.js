@@ -25,7 +25,7 @@ AUI.add(
 								footer: [
 									{
 										cssClass: [CSS_BTN_LG, CSS_BTN_PRIMARY].join(' '),
-										labelHTML: Liferay.Language.get('yes-cancel'),
+										labelHTML: config.labelHTML,
 										on: {
 											click: function(event) {
 												if (Lang.isFunction(config.confirmFn)) {
@@ -54,7 +54,7 @@ AUI.add(
 							width: false
 						},
 						id: config.id,
-						title: Liferay.Language.get('cancel-field-changes-question')
+						title: config.title
 					}
 				);
 			}

@@ -30,8 +30,8 @@ import com.liferay.vulcan.pagination.PageItems;
 import com.liferay.vulcan.pagination.Pagination;
 import com.liferay.vulcan.resource.CollectionResource;
 import com.liferay.vulcan.resource.Representor;
+import com.liferay.vulcan.resource.Representor.Builder;
 import com.liferay.vulcan.resource.Routes;
-import com.liferay.vulcan.resource.builder.RepresentorBuilder;
 import com.liferay.vulcan.resource.builder.RoutesBuilder;
 import com.liferay.vulcan.resource.identifier.LongIdentifier;
 import com.liferay.vulcan.resource.identifier.RootIdentifier;
@@ -68,7 +68,7 @@ public class PersonCollectionResource
 
 	@Override
 	public Representor<User, LongIdentifier> buildRepresentor(
-		RepresentorBuilder<User, LongIdentifier> representorBuilder) {
+		Representor.Builder<User, LongIdentifier> representorBuilder) {
 
 		return representorBuilder.identifier(
 			user -> user::getUserId

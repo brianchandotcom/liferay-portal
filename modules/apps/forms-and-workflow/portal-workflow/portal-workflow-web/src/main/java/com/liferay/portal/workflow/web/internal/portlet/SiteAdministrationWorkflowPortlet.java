@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.Component;
 public class SiteAdministrationWorkflowPortlet extends BaseWorkflowPortlet {
 
 	@Override
-	public List<String> getPortletTabNames() {
+	public List<String> getWorkflowPortletTabNames() {
 		return Arrays.asList(WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK);
 	}
 

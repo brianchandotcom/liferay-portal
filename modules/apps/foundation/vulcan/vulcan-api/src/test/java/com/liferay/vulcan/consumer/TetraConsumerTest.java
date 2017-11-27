@@ -55,11 +55,7 @@ public class TetraConsumerTest {
 
 	@Test(expected = NullPointerException.class)
 	public void testOnInvokingAndThenWithNullAfterThrowsException() {
-		TetraConsumer<String, String, String, String> tetraConsumer =
-			(string1, string2, string3, string4) -> {
-			};
-
-		tetraConsumer.andThen(null);
+		TetraConsumer.empty().andThen(null);
 	}
 
 }

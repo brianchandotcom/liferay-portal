@@ -27,8 +27,6 @@ import com.liferay.vulcan.resource.Routes;
 import com.liferay.vulcan.resource.ScopedCollectionResource;
 import com.liferay.vulcan.resource.identifier.Identifier;
 import com.liferay.vulcan.result.Try;
-import com.liferay.vulcan.wiring.osgi.internal.resource.builder.RepresentorBuilderImpl;
-import com.liferay.vulcan.wiring.osgi.internal.resource.builder.RepresentorBuilderImpl.RepresentorImpl;
 import com.liferay.vulcan.wiring.osgi.internal.resource.builder.RoutesBuilderImpl;
 import com.liferay.vulcan.wiring.osgi.util.GenericUtil;
 
@@ -98,7 +96,7 @@ public class CollectionResourceManager extends BaseManager<CollectionResource> {
 	public <T, U extends Identifier> Optional<Representor<T, U>>
 		getRepresentorOptional(Class<T> modelClass) {
 
-		Optional<RepresentorImpl> optional = Optional.ofNullable(
+		Optional<Representor> optional = Optional.ofNullable(
 			_representors.get(modelClass.getName()));
 
 		return optional.map(representor -> (Representor<T, U>)representor);
@@ -187,12 +185,11 @@ public class CollectionResourceManager extends BaseManager<CollectionResource> {
 						() -> (List)_relatedCollections.get(
 							modelClass.getName());
 
-				RepresentorImpl representor =
-					(RepresentorImpl)collectionResource.buildRepresentor(
-						new RepresentorBuilderImpl<>(
-							identifierClass,
-							_addRelatedCollectionTriConsumer(modelClass),
-							relatedCollectionSupplier));
+				Representor representor = collectionResource.buildRepresentor(
+					new Representor.Builder<>(
+						identifierClass,
+						_addRelatedCollectionTriConsumer(modelClass),
+						relatedCollectionSupplier));
 
 				_representors.put(modelClass.getName(), representor);
 
@@ -243,7 +240,8 @@ public class CollectionResourceManager extends BaseManager<CollectionResource> {
 	private Function<Class<?>, Optional<?>> _getProvideClassFunction(
 		HttpServletRequest httpServletRequest) {
 
-		return clazz -> _providerManager.provide(clazz, httpServletRequest);
+		return clazz -> _providerManager.provideOptional(
+			clazz, httpServletRequest);
 	}
 
 	private <T, U extends Identifier> Function<HttpServletRequest, Routes<?>>
@@ -283,7 +281,7 @@ public class CollectionResourceManager extends BaseManager<CollectionResource> {
 
 	private final Map<String, List<RelatedCollection<?, ?>>>
 		_relatedCollections = new ConcurrentHashMap<>();
-	private final Map<String, RepresentorImpl> _representors =
+	private final Map<String, Representor> _representors =
 		new ConcurrentHashMap<>();
 	private final List<String> _rootCollectionResourceNames = new ArrayList<>();
 	private final Map<String, Function<HttpServletRequest, Routes<?>>>

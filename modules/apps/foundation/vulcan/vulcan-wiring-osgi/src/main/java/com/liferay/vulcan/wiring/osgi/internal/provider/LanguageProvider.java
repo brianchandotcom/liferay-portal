@@ -17,8 +17,10 @@ package com.liferay.vulcan.wiring.osgi.internal.provider;
 import com.liferay.vulcan.language.Language;
 import com.liferay.vulcan.provider.Provider;
 
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Locale;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -38,8 +40,10 @@ public class LanguageProvider implements Provider<Language> {
 		return new Language() {
 
 			@Override
-			public Enumeration<Locale> getLocales() {
-				return httpServletRequest.getLocales();
+			public Stream<Locale> getLocales() {
+				Enumeration<Locale> locales = httpServletRequest.getLocales();
+
+				return Collections.list(locales).stream();
 			}
 
 			@Override

@@ -193,7 +193,7 @@ public class RootEndpointImpl implements RootEndpoint {
 		List<String> rootCollectionResourceNames =
 			_collectionResourceManager.getRootCollectionResourceNames();
 
-		Optional<ServerURL> optional = _providerManager.provide(
+		Optional<ServerURL> optional = _providerManager.provideOptional(
 			ServerURL.class, _httpServletRequest);
 
 		ServerURL serverURL = optional.orElseThrow(

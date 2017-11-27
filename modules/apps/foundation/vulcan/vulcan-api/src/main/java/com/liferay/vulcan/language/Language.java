@@ -14,8 +14,8 @@
 
 package com.liferay.vulcan.language;
 
-import java.util.Enumeration;
 import java.util.Locale;
+import java.util.stream.Stream;
 
 /**
  * Represents information about the requested languages.
@@ -25,26 +25,27 @@ import java.util.Locale;
 public interface Language {
 
 	/**
-	 * Returns the {@code Enumeration} of the request's preferred {@code
-	 * Locale}, in decreasing order.
+	 * Returns the {@code Stream} of the request's preferred {@code Locale}, in
+	 * decreasing order.
 	 *
 	 * <p>
-	 * The enumeration starts with the first locale added on the {@code
-	 * Accept-Language} header and continues with the rest of the header.
+	 * The stream values start with the first locale added on the {@code
+	 * Accept-Language} header and continue with the rest of the header.
 	 * </p>
 	 *
 	 * <p>
 	 * If the request doesn't have an {@code Accept-Language} header, this
-	 * method returns an {@code Enumeration} containing the default locale for
-	 * the server.
+	 * method returns an {@code Stream} containing the default locale for the
+	 * server.
 	 * </p>
 	 *
-	 * @return the {@code Enumeration} of the request's preferred {@code
-	 *         Locale}, if the {@code Accept-Language} header is present;
-	 *         otherwise returns the {@code Enumeration} containing the server's
-	 *         default locale
+	 * @return the {@code Stream} of the request's preferred {@code Locale}, if
+	 *         the {@code Accept-Language} header is present; otherwise returns
+	 *         the {@code Stream} containing the server's default locale
 	 */
-	public Enumeration<Locale> getLocales();
+	public default Stream<Locale> getLocales() {
+		return Stream.of(getPreferredLocale());
+	}
 
 	/**
 	 * Returns the first {@code Locale} added on the {@code Accept-Language}

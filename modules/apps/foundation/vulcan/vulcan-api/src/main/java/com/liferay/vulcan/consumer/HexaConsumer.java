@@ -30,6 +30,17 @@ import java.util.Objects;
 public interface HexaConsumer<A, B, C, D, E, F> {
 
 	/**
+	 * Returns an empty {@code HexaConsumer} that doesn't perform any operation.
+	 *
+	 * @return an empty {@code HexaConsumer} that doesn't perform any operation
+	 * @review
+	 */
+	public static <A, B, C, D, E, F> HexaConsumer<A, B, C, D, E, F> empty() {
+		return (a, b, c, d, e, f) -> {
+		};
+	}
+
+	/**
 	 * Operates with six parameters and returns {@code void}. This function can
 	 * be implemented explicitly or with a lambda.
 	 *

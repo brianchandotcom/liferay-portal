@@ -8,6 +8,7 @@ dependencies {
 	provided group: "org.hamcrest", name: "hamcrest-all", version: "1.3"
 	provided project(":apps:foundation:vulcan:vulcan-api")
 	provided project(":apps:foundation:vulcan:vulcan-jaxrs-json")
+	provided project(":apps:foundation:vulcan:vulcan-writer-api")
 }
 
 deploy {

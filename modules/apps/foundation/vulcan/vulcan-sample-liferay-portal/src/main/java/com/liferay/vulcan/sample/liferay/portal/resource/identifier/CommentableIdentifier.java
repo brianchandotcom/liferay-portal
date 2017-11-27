@@ -26,7 +26,7 @@ import com.liferay.vulcan.resource.identifier.Identifier;
  * <p>
  * This identifier should only be used to identify comment collections added
  * through {@link
- * com.liferay.vulcan.resource.builder.RepresentorBuilder.FirstStep#addRelatedCollection(
+ * com.liferay.vulcan.resource.builder.Representor.Builder.FirstStep#addRelatedCollection(
  * String, Class, java.util.function.Function)}
  * </p>
  *

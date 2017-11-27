@@ -16,7 +16,7 @@ package com.liferay.vulcan.resource;
 
 import aQute.bnd.annotation.ConsumerType;
 
-import com.liferay.vulcan.resource.builder.RepresentorBuilder;
+import com.liferay.vulcan.resource.Representor.Builder;
 import com.liferay.vulcan.resource.builder.RoutesBuilder;
 import com.liferay.vulcan.resource.identifier.Identifier;
 
@@ -29,7 +29,7 @@ import com.liferay.vulcan.resource.identifier.Identifier;
  * </p>
  *
  * <p>
- * Representors created by the {@link #buildRepresentor(RepresentorBuilder)}
+ * Representors created by the {@link #buildRepresentor(Representor.Builder)}
  * method hold all the information needed to write your domain models'
  * hypermedia representations.
  * </p>
@@ -42,7 +42,7 @@ import com.liferay.vulcan.resource.identifier.Identifier;
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
- * @see    RepresentorBuilder
+ * @see    Builder
  * @see    RoutesBuilder
  */
 @ConsumerType
@@ -50,22 +50,20 @@ public interface CollectionResource<T, U extends Identifier> {
 
 	/**
 	 * Creates a {@link Representor} for a certain domain model from the
-	 * provided {@link RepresentorBuilder}.
+	 * provided {@link Builder}.
 	 *
 	 * <p>
 	 * To construct a representor, you must call {@link
-	 * RepresentorBuilder.FirstStep#build()} ()}. Before calling this method,
-	 * you must call the other representor builder methods to populate the
-	 * builder with data. This ensures that the resulting representor contains
-	 * the data.
+	 * Builder.FirstStep#build()} ()}. Before calling this method, you must call
+	 * the other representor builder methods to populate the builder with data.
+	 * This ensures that the resulting representor contains the data.
 	 * </p>
 	 *
 	 * @param representorBuilder the representor builder used to create the
 	 *        representor
-	 * @see   RepresentorBuilder
+	 * @see   Builder
 	 */
-	public Representor<T, U> buildRepresentor(
-		RepresentorBuilder<T, U> representorBuilder);
+	public Representor<T, U> buildRepresentor(Builder<T, U> representorBuilder);
 
 	/**
 	 * Returns the resource's name.

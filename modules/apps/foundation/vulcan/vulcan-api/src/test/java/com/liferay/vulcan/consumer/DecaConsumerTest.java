@@ -63,13 +63,7 @@ public class DecaConsumerTest {
 
 	@Test(expected = NullPointerException.class)
 	public void testOnInvokingAndThenWithNullAfterThrowsException() {
-		DecaConsumer<String, String, String, String, String, String, String,
-			String, String, String> decaConsumer = (
-				string1, string2, string3, string4, string5, string6, string7,
-				string8, string9, string10) -> {
-				};
-
-		decaConsumer.andThen(null);
+		DecaConsumer.empty().andThen(null);
 	}
 
 }

@@ -23,16 +23,13 @@ import com.liferay.vulcan.pagination.Page;
 import javax.ws.rs.core.HttpHeaders;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * @author Alejandro Hernández
  */
-@RunWith(MockitoJUnitRunner.class)
 public class PageMessageMapperTest {
 
 	@Test

@@ -30,6 +30,18 @@ import java.util.Objects;
 public interface PentaConsumer<A, B, C, D, E> {
 
 	/**
+	 * Returns an empty {@code PentaConsumer} that doesn't perform any
+	 * operation.
+	 *
+	 * @return an empty {@code PentaConsumer} that doesn't perform any operation
+	 * @review
+	 */
+	public static <A, B, C, D, E> PentaConsumer<A, B, C, D, E> empty() {
+		return (a, b, c, d, e) -> {
+		};
+	}
+
+	/**
 	 * Operates with five parameters and returns {@code void}. This function can
 	 * be implemented explicitly or with a lambda.
 	 *

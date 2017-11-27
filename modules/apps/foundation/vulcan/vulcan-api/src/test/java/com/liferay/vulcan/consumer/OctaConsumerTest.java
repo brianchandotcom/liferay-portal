@@ -61,13 +61,7 @@ public class OctaConsumerTest {
 
 	@Test(expected = NullPointerException.class)
 	public void testOnInvokingAndThenWithNullAfterThrowsException() {
-		OctaConsumer<String, String, String, String, String, String, String,
-			String> octaConsumer = (
-				string1, string2, string3, string4, string5, string6, string7,
-				string8) -> {
-				};
-
-		octaConsumer.andThen(null);
+		OctaConsumer.empty().andThen(null);
 	}
 
 }

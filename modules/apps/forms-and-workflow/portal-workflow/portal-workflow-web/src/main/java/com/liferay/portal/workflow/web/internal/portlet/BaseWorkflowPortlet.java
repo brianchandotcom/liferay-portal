@@ -44,21 +44,21 @@ import org.osgi.service.component.annotations.Deactivate;
  */
 public abstract class BaseWorkflowPortlet extends MVCPortlet {
 
-	public String getDefaultPortletTabName() {
-		List<String> tabNames = getPortletTabNames();
+	public String getDefaultWorkflowPortletTabName() {
+		List<String> workflowPortletTabNames = getWorkflowPortletTabNames();
 
-		return tabNames.get(0);
+		return workflowPortletTabNames.get(0);
 	}
 
-	public abstract List<String> getPortletTabNames();
+	public abstract List<String> getWorkflowPortletTabNames();
 
-	public List<WorkflowPortletTab> getPortletTabs() {
-		List<String> portletTabNames = getPortletTabNames();
+	public List<WorkflowPortletTab> getWorkflowPortletTabs() {
+		List<String> workflowPortletTabNames = getWorkflowPortletTabNames();
 
-		Stream<String> stream = portletTabNames.stream();
+		Stream<String> stream = workflowPortletTabNames.stream();
 
 		return stream.map(
-			name -> _portletTabServiceTrackerMap.getService(name)
+			name -> _workflowPortletTabServiceTrackerMap.getService(name)
 		).collect(
 			Collectors.toList()
 		);
@@ -69,8 +69,9 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortletException {
 
-		for (WorkflowPortletTab portletTab : getPortletTabs()) {
-			portletTab.prepareProcessAction(actionRequest, actionResponse);
+		for (WorkflowPortletTab workflowPortletTab : getWorkflowPortletTabs()) {
+			workflowPortletTab.prepareProcessAction(
+				actionRequest, actionResponse);
 		}
 
 		super.processAction(actionRequest, actionResponse);
@@ -83,8 +84,8 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 
 		addRenderRequestAttributes(renderRequest);
 
-		for (WorkflowPortletTab portletTab : getPortletTabs()) {
-			portletTab.prepareRender(renderRequest, renderResponse);
+		for (WorkflowPortletTab workflowPortletTab : getWorkflowPortletTabs()) {
+			workflowPortletTab.prepareRender(renderRequest, renderResponse);
 		}
 
 		super.render(renderRequest, renderResponse);
@@ -92,24 +93,25 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_portletTabServiceTrackerMap = ServiceTrackerMapFactory.singleValueMap(
-			bundleContext, WorkflowPortletTab.class,
-			"portal.workflow.tabs.name");
+		_workflowPortletTabServiceTrackerMap =
+			ServiceTrackerMapFactory.singleValueMap(
+				bundleContext, WorkflowPortletTab.class,
+				"portal.workflow.tabs.name");
 
-		_portletTabServiceTrackerMap.open();
+		_workflowPortletTabServiceTrackerMap.open();
 	}
 
 	protected void addRenderRequestAttributes(RenderRequest renderRequest) {
 		renderRequest.setAttribute(
-			WorkflowWebKeys.WORKFLOW_PORTLET_TABS, getPortletTabs());
+			WorkflowWebKeys.WORKFLOW_PORTLET_TABS, getWorkflowPortletTabs());
 		renderRequest.setAttribute(
-			WorkflowWebKeys.WORKFLOW_SELECTED_PORTLET_TAB,
-			getSelectedPortletTab(renderRequest));
+			WorkflowWebKeys.SELECTED_WORKFLOW_PORTLET_TAB,
+			getSelectedWorkflowPortletTab(renderRequest));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_portletTabServiceTrackerMap.close();
+		_workflowPortletTabServiceTrackerMap.close();
 	}
 
 	@Override
@@ -123,28 +125,32 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 			include("/instance/error.jsp", renderRequest, renderResponse);
 		}
 		else {
-			for (WorkflowPortletTab portletTab : getPortletTabs()) {
-				portletTab.prepareDispatch(renderRequest, renderResponse);
+			for (WorkflowPortletTab workflowPortletTab :
+					getWorkflowPortletTabs()) {
+
+				workflowPortletTab.prepareDispatch(
+					renderRequest, renderResponse);
 			}
 
 			super.doDispatch(renderRequest, renderResponse);
 		}
 	}
 
-	protected WorkflowPortletTab getPortletTab(String name) {
-		return _portletTabServiceTrackerMap.getService(name);
-	}
-
-	protected WorkflowPortletTab getSelectedPortletTab(
+	protected WorkflowPortletTab getSelectedWorkflowPortletTab(
 		RenderRequest renderRequest) {
 
-		String tabName = ParamUtil.get(
-			renderRequest, "tab", getDefaultPortletTabName());
+		String workflowPortletTabName = ParamUtil.get(
+			renderRequest, "tab", getDefaultWorkflowPortletTabName());
 
-		return _portletTabServiceTrackerMap.getService(tabName);
+		return _workflowPortletTabServiceTrackerMap.getService(
+			workflowPortletTabName);
+	}
+
+	protected WorkflowPortletTab getWorkflowPortletTab(String name) {
+		return _workflowPortletTabServiceTrackerMap.getService(name);
 	}
 
 	private ServiceTrackerMap<String, WorkflowPortletTab>
-		_portletTabServiceTrackerMap;
+		_workflowPortletTabServiceTrackerMap;
 
 }

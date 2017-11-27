@@ -60,13 +60,7 @@ public class HeptaConsumerTest {
 
 	@Test(expected = NullPointerException.class)
 	public void testOnInvokingAndThenWithNullAfterThrowsException() {
-		HeptaConsumer<String, String, String, String, String, String, String>
-			heptaConsumer = (
-				string1, string2, string3, string4, string5, string6,
-				string7) -> {
-				};
-
-		heptaConsumer.andThen(null);
+		HeptaConsumer.empty().andThen(null);
 	}
 
 }

@@ -30,6 +30,17 @@ import java.util.Objects;
 public interface TriConsumer<A, B, C> {
 
 	/**
+	 * Returns an empty {@code TriConsumer} that doesn't perform any operation.
+	 *
+	 * @return an empty {@code TriConsumer} that doesn't perform any operation
+	 * @review
+	 */
+	public static <A, B, C> TriConsumer<A, B, C> empty() {
+		return (a, b, c) -> {
+		};
+	}
+
+	/**
 	 * Operates with three parameters and returns {@code void}. This function
 	 * can be implemented explicitly or with a lambda.
 	 *

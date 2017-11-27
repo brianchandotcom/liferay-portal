@@ -47,7 +47,7 @@ public class ProviderManager extends BaseManager<Provider> {
 	 * @return the instance of {@code T}, if a valid {@code Provider} is
 	 *         present; {@code Optional#empty()} otherwise
 	 */
-	public <T> Optional<T> provide(
+	public <T> Optional<T> provideOptional(
 		Class<T> clazz, HttpServletRequest httpServletRequest) {
 
 		Optional<Provider> optional = getServiceOptional(clazz);
@@ -57,6 +57,24 @@ public class ProviderManager extends BaseManager<Provider> {
 		).map(
 			provider -> provider.createContext(httpServletRequest)
 		);
+	}
+
+	/**
+	 * Returns an instance of type T if a valid {@link Provider} can be found.
+	 * Returns {@code null} otherwise.
+	 *
+	 * @param  clazz the type class to be provided.
+	 * @param  httpServletRequest the current request.
+	 * @return the instance of T, if a valid {@link Provider} is present; {@code
+	 *         null} otherwise.
+	 * @review
+	 */
+	public <T> T provideOrNull(
+		Class<T> clazz, HttpServletRequest httpServletRequest) {
+
+		Optional<T> optional = provideOptional(clazz, httpServletRequest);
+
+		return optional.orElse(null);
 	}
 
 	@Reference(cardinality = MULTIPLE, policy = DYNAMIC, policyOption = GREEDY)

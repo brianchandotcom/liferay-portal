@@ -561,7 +561,7 @@ AUI.add(
 
 							var fieldDefinition = instance.getFieldDefinition();
 
-							if (fieldDefinition.required) {
+							if (!A.UA.ie && fieldDefinition.required) {
 								labelNode.append(TPL_REQUIRED_MARK);
 							}
 

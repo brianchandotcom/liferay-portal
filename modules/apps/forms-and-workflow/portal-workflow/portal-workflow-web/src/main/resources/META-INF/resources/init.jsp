@@ -35,6 +35,6 @@ page import="com.liferay.taglib.servlet.PipingServletResponse" %>
 <portlet:defineObjects />
 
 <%
-List<WorkflowPortletTab> portletTabs = (List<WorkflowPortletTab>)renderRequest.getAttribute(WorkflowWebKeys.WORKFLOW_PORTLET_TABS);
-WorkflowPortletTab selectedPortletTab = (WorkflowPortletTab)renderRequest.getAttribute(WorkflowWebKeys.WORKFLOW_SELECTED_PORTLET_TAB);
+List<WorkflowPortletTab> workflowPortletTabs = (List<WorkflowPortletTab>)renderRequest.getAttribute(WorkflowWebKeys.WORKFLOW_PORTLET_TABS);
+WorkflowPortletTab selectedWorkflowPortletTab = (WorkflowPortletTab)renderRequest.getAttribute(WorkflowWebKeys.SELECTED_WORKFLOW_PORTLET_TAB);
 %>

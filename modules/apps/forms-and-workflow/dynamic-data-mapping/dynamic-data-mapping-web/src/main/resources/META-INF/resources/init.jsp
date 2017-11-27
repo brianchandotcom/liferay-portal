@@ -71,7 +71,6 @@ page import="com.liferay.dynamic.data.mapping.validator.DDMFormValidationExcepti
 page import="com.liferay.dynamic.data.mapping.web.configuration.DDMWebConfigurationKeys" %><%@
 page import="com.liferay.dynamic.data.mapping.web.configuration.DDMWebConfigurationUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.web.internal.display.context.DDMDisplayContext" %><%@
-page import="com.liferay.petra.content.ContentUtil" %><%@
 page import="com.liferay.petra.string.CharPool" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.configuration.Filter" %><%@

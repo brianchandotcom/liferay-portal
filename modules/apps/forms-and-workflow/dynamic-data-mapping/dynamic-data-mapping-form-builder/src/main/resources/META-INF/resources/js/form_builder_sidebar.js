@@ -26,6 +26,10 @@ AUI.add(
 						value: ''
 					},
 
+					fieldTypeOptions: {
+						value: []
+					},
+
 					open: {
 						value: false
 					},
@@ -125,6 +129,7 @@ AUI.add(
 							bodyContent: instance.get('bodyContent'),
 							closeButtonIcon: Liferay.Util.getLexiconIconTpl('times'),
 							description: instance.get('description'),
+							fieldTypeOptions: instance.get('fieldTypeOptions'),
 							title: instance.get('title'),
 							toolbarButtonIcon: Liferay.Util.getLexiconIconTpl('ellipsis-v')
 						};
@@ -185,6 +190,28 @@ AUI.add(
 						if (toolbar) {
 							toolbar.set('element', boundingBox.one('.dropdown'));
 						}
+					},
+
+					_getFieldTypes: function(fieldTypes) {
+						var instance = this;
+
+						var types = [];
+
+						fieldTypes.forEach(
+							function(fieldType) {
+								types.push(
+									{
+										description: fieldType.get('description'),
+										group: fieldType.get('group') || 'customized',
+										icon: window.DDMFieldTypesSidebar.render.Soy.toIncDom(Liferay.Util.getLexiconIconTpl(fieldType.get('icon'))),
+										label: fieldType.get('label'),
+										name: fieldType.get('name')
+									}
+								);
+							}
+						);
+
+						return _.groupBy(types, 'group');
 					},
 
 					_onClickDocument: function(event) {

@@ -15,12 +15,12 @@
 package com.liferay.vulcan.jaxrs.json.internal.exception.mapper;
 
 import com.liferay.vulcan.error.VulcanDeveloperError.MustHaveExceptionConverter;
-import com.liferay.vulcan.jaxrs.json.internal.writer.WriterHelper;
 import com.liferay.vulcan.logger.VulcanLogger;
 import com.liferay.vulcan.message.json.ErrorMessageMapper;
 import com.liferay.vulcan.result.APIError;
 import com.liferay.vulcan.wiring.osgi.manager.ErrorMessageMapperManager;
 import com.liferay.vulcan.wiring.osgi.manager.ExceptionConverterManager;
+import com.liferay.vulcan.writer.ErrorWriter;
 
 import java.util.Optional;
 
@@ -62,7 +62,7 @@ public class GeneralExceptionMapper implements ExceptionMapper<Exception> {
 				apiError, _httpHeaders);
 
 		return responseBuilder.entity(
-			WriterHelper.writeError(errorMessageMapper, apiError, _httpHeaders)
+			ErrorWriter.writeError(errorMessageMapper, apiError, _httpHeaders)
 		).type(
 			errorMessageMapper.getMediaType()
 		).build();

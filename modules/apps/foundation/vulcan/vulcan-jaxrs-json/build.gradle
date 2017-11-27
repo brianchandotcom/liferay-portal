@@ -8,4 +8,5 @@ dependencies {
 	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	provided project(":apps:foundation:vulcan:vulcan-api")
 	provided project(":apps:foundation:vulcan:vulcan-wiring-osgi")
+	provided project(":apps:foundation:vulcan:vulcan-writer-api")
 }

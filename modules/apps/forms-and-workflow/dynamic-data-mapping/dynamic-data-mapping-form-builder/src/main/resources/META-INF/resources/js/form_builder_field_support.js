@@ -188,7 +188,6 @@ AUI.add(
 
 			loadSettingsForm: function() {
 				var instance = this;
-
 				var settingsRetriever = instance.get('settingsRetriever');
 
 				return settingsRetriever.getSettingsContext(instance)

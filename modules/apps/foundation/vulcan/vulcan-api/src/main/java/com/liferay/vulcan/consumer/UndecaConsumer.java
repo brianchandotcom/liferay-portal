@@ -30,6 +30,21 @@ import java.util.Objects;
 public interface UndecaConsumer<A, B, C, D, E, F, G, H, I, J, K> {
 
 	/**
+	 * Returns an empty {@code UndecaConsumer} that doesn't perform any
+	 * operation.
+	 *
+	 * @return an empty {@code UndecaConsumer} that doesn't perform any
+	 *         operation
+	 * @review
+	 */
+	public static <A, B, C, D, E, F, G, H, I, J, K>
+		UndecaConsumer<A, B, C, D, E, F, G, H, I, J, K> empty() {
+
+		return (a, b, c, d, e, f, g, h, i, j, k) -> {
+		};
+	}
+
+	/**
 	 * Operates with eleven parameters and returns {@code void}. This function
 	 * can be implemented explicitly or with a lambda.
 	 *

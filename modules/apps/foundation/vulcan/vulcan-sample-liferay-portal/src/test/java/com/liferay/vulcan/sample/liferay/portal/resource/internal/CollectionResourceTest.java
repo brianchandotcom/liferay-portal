@@ -17,8 +17,7 @@ package com.liferay.vulcan.sample.liferay.portal.resource.internal;
 import static org.mockito.Matchers.any;
 
 import com.liferay.vulcan.consumer.TriConsumer;
-import com.liferay.vulcan.resource.builder.RepresentorBuilder;
-import com.liferay.vulcan.wiring.osgi.internal.resource.builder.RepresentorBuilderImpl;
+import com.liferay.vulcan.resource.Representor;
 import com.liferay.vulcan.wiring.osgi.internal.resource.builder.RoutesBuilderImpl;
 
 import java.util.function.BiFunction;
@@ -36,13 +35,12 @@ public class CollectionResourceTest {
 
 	@Before
 	public void setUp() {
-		RepresentorBuilderImpl representorBuilderImpl =
-			new RepresentorBuilderImpl(
-				null, Mockito.mock(TriConsumer.class), null);
+		Representor.Builder builder = new Representor.Builder<>(
+			null, Mockito.mock(TriConsumer.class), null);
 
-		representorBuilderSpy = Mockito.spy(representorBuilderImpl);
+		representorBuilderSpy = Mockito.spy(builder);
 
-		_identifierSpy = Mockito.spy(representorBuilderImpl.identifier(null));
+		_identifierSpy = Mockito.spy(builder.identifier(null));
 
 		Mockito.when(
 			representorBuilderSpy.identifier(any(Function.class))
@@ -86,7 +84,7 @@ public class CollectionResourceTest {
 		);
 	}
 
-	protected RepresentorBuilder.FirstStep verifyIdentifier() {
+	protected Representor.Builder.FirstStep verifyIdentifier() {
 		return Mockito.verify(_identifierSpy);
 	}
 
@@ -94,9 +92,9 @@ public class CollectionResourceTest {
 		return Mockito.verify(routesBuilderMock);
 	}
 
-	protected RepresentorBuilderImpl representorBuilderSpy;
+	protected Representor.Builder representorBuilderSpy;
 	protected RoutesBuilderImpl routesBuilderMock;
 
-	private RepresentorBuilder.FirstStep _identifierSpy;
+	private Representor.Builder.FirstStep _identifierSpy;
 
 }

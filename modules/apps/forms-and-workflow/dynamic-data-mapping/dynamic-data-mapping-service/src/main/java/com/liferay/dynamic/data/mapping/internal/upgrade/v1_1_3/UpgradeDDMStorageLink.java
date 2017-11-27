@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.internal.upgrade.v1_1_3;
 
 import com.liferay.dynamic.data.mapping.internal.upgrade.v1_1_3.util.DDMStorageLinkTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
 
 import java.sql.PreparedStatement;
@@ -26,25 +27,6 @@ import java.sql.ResultSet;
  */
 public class UpgradeDDMStorageLink extends UpgradeProcess {
 
-	public long getLatestStructureVersionId(long ddmStructureId)
-		throws Exception {
-
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select structureVersionId from DDMStructureVersion where " +
-					"structureId = ? order by createDate desc")) {
-
-			ps.setLong(1, ddmStructureId);
-
-			try (ResultSet rs = ps.executeQuery()) {
-				if (rs.next()) {
-					return rs.getLong("structureVersionId");
-				}
-
-				return 0;
-			}
-		}
-	}
-
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (!hasColumn("DDMStorageLink", "structureVersionId")) {
@@ -54,7 +36,12 @@ public class UpgradeDDMStorageLink extends UpgradeProcess {
 		}
 
 		try (PreparedStatement ps1 = connection.prepareStatement(
-				"select structureId from DDMStorageLink");
+				StringBundler.concat(
+					"select structureId, structureVersionId from ",
+					"DDMStructureVersion parent where parent.structureId in (",
+					"select structureId from DDMStorageLink) and version in (",
+					"select max(child.version) from DDMStructureVersion child ",
+					"where child.structureId = parent.structureId)"));
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
@@ -65,8 +52,7 @@ public class UpgradeDDMStorageLink extends UpgradeProcess {
 			while (rs.next()) {
 				long ddmStructureId = rs.getLong("structureId");
 
-				long ddmStructureVersionId = getLatestStructureVersionId(
-					ddmStructureId);
+				long ddmStructureVersionId = rs.getLong("structureVersionId");
 
 				if (ddmStructureVersionId > 0) {
 					ps2.setLong(1, ddmStructureVersionId);

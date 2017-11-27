@@ -19,15 +19,15 @@
 <liferay-ui:success key='<%= portletName + "requestProcessed" %>' message="your-request-completed-successfully" />
 
 <liferay-util:include page="/navigation.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="searchPage" value="<%= selectedPortletTab.getSearchJspPath() %>" />
+	<liferay-util:param name="searchPage" value="<%= selectedWorkflowPortletTab.getSearchJspPath() %>" />
 
 	<%
-	PortletURL searchURL = selectedPortletTab.getSearchURL(renderRequest, renderResponse);
+	PortletURL searchURL = selectedWorkflowPortletTab.getSearchURL(renderRequest, renderResponse);
 	%>
 
 	<liferay-util:param name="searchURL" value="<%= searchURL.toString() %>" />
 </liferay-util:include>
 
 <%
-selectedPortletTab.include(request, PipingServletResponse.createPipingServletResponse(pageContext), null);
+selectedWorkflowPortletTab.include(request, PipingServletResponse.createPipingServletResponse(pageContext), null);
 %>

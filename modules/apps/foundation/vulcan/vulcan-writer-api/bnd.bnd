@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Vulcan Writer API
+Bundle-SymbolicName: com.liferay.vulcan.writer.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.vulcan.writer,\
+	com.liferay.vulcan.writer.alias,\
+	com.liferay.vulcan.writer.url,\
+	com.liferay.vulcan.writer.util

@@ -30,6 +30,20 @@ import java.util.Objects;
 public interface HeptaConsumer<A, B, C, D, E, F, G> {
 
 	/**
+	 * Returns an empty {@code HeptaConsumer} that doesn't perform any
+	 * operation.
+	 *
+	 * @return an empty {@code HeptaConsumer} that doesn't perform any operation
+	 * @review
+	 */
+	public static <A, B, C, D, E, F, G>
+		HeptaConsumer<A, B, C, D, E, F, G> empty() {
+
+		return (a, b, c, d, e, f, g) -> {
+		};
+	}
+
+	/**
 	 * Operates with nine parameters and returns {@code void}. This function can
 	 * be implemented explicitly or with a lambda.
 	 *

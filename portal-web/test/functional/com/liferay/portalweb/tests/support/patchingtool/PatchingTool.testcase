@@ -1,5 +1,6 @@
 <definition component-name="support-qa">
 	<property name="portal.fixpack.release" value="true" />
+	<property name="test.ignore.tomcat.ext.environment" value="true" />
 	<property name="testray.main.component.name" value="Patching Tool" />
 
 	<var method="TestPropsUtil#get('test.build.fix.pack.zip.url')" name="testBuildFixPackZipURL" />

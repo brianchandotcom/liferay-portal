@@ -38,25 +38,25 @@
 .ddl-form-settings-modal {
 	.ddl-form-settings-modal-content {
 		.modal-body {
-			padding: 0px;
+			padding: 0;
 		}
 	}
 
 	.ddl-record-set-settings {
-		padding: 0px;
+		padding: 0;
 
 		.lfr-ddm-form-page {
 			.row {
-				margin-left: 0px;
-				margin-right: 0px;
-				padding: 0px;
+				margin-left: 0;
+				margin-right: 0;
+				padding: 0;
 			}
 		}
 	}
 
 	.navbar-nav {
 		float: none;
-		margin-right: 0px;
+		margin-right: 0;
 	}
 }
 
@@ -287,6 +287,10 @@
 			position: relative;
 		}
 
+		.hide {
+			display: none;
+		}
+
 		.liferay-ddm-form-field-text textarea {
 			resize: none;
 		}
@@ -299,7 +303,7 @@
 	.form-builder-tabview,
 	.lfr-ddm-form-wizard {
 		border-bottom: 1px solid #DEE4E9;
-		padding: 20px 34px 11px 34px;
+		padding: 20px 34px 11px;
 		position: relative;
 	}
 

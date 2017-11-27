@@ -36,7 +36,6 @@ public class CPGroupLocalServiceImpl extends CPGroupLocalServiceBaseImpl {
 
 		CPGroup cpGroup = cpGroupPersistence.create(cpGroupId);
 
-		cpGroup.setUuid(serviceContext.getUuid());
 		cpGroup.setGroupId(groupId);
 		cpGroup.setCompanyId(user.getCompanyId());
 		cpGroup.setUserId(user.getUserId());

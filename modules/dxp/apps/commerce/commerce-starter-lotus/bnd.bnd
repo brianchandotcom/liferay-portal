@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Commerce Starter Lotus
+Bundle-SymbolicName: com.liferay.commerce.starter.lotus
+Bundle-Version: 1.0.0
+Web-ContextPath: /commerce-starter-lotus

@@ -91,9 +91,7 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public PortletURL getAddLayoutURL(long selPlid, Boolean privateLayout) {
-		PortletURL addLayoutURL = PortalUtil.getControlPanelPortletURL(
-			_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-			PortletRequest.RENDER_PHASE);
+		PortletURL addLayoutURL = _liferayPortletResponse.createRenderURL();
 
 		addLayoutURL.setParameter("mvcPath", "/add_layout.jsp");
 		addLayoutURL.setParameter("redirect", _themeDisplay.getURLCurrent());

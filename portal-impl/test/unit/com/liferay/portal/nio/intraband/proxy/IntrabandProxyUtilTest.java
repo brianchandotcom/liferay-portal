@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -81,7 +82,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -1259,7 +1259,9 @@ public class IntrabandProxyUtilTest {
 		Assert.assertEquals(var, varInsnNode.var);
 	}
 
-	private String[] _buildProxyMethodSignatures(Class<?> clazz) {
+	private String[] _buildProxyMethodSignatures(Class<?> clazz)
+		throws Exception {
+
 		List<Method> proxyMethods = new ArrayList<>();
 
 		for (Method method : _getVisibleMethods(clazz)) {
@@ -2376,7 +2378,7 @@ public class IntrabandProxyUtilTest {
 			_classLoader, TestValidateClass.class, skeletonOrStub);
 	}
 
-	private List<Method> _getCopiedMethods(Class<?> clazz) {
+	private List<Method> _getCopiedMethods(Class<?> clazz) throws Exception {
 		List<Method> emptyMethods = new ArrayList<>();
 
 		for (Method method : _getVisibleMethods(clazz)) {
@@ -2394,7 +2396,7 @@ public class IntrabandProxyUtilTest {
 		return emptyMethods;
 	}
 
-	private List<Method> _getEmptyMethods(Class<?> clazz) {
+	private List<Method> _getEmptyMethods(Class<?> clazz) throws Exception {
 		List<Method> emptyMethods = new ArrayList<>();
 
 		for (Method method : _getVisibleMethods(clazz)) {
@@ -2409,7 +2411,7 @@ public class IntrabandProxyUtilTest {
 		return emptyMethods;
 	}
 
-	private List<Method> _getIdMethods(Class<?> clazz) {
+	private List<Method> _getIdMethods(Class<?> clazz) throws Exception {
 		List<Method> idMethods = new ArrayList<>();
 
 		for (Method method : _getVisibleMethods(clazz)) {
@@ -2421,7 +2423,7 @@ public class IntrabandProxyUtilTest {
 		return idMethods;
 	}
 
-	private List<Method> _getProxyMethods(Class<?> clazz) {
+	private List<Method> _getProxyMethods(Class<?> clazz) throws Exception {
 		List<Method> proxyMethods = new ArrayList<>();
 
 		for (Method method : _getVisibleMethods(clazz)) {
@@ -2435,25 +2437,8 @@ public class IntrabandProxyUtilTest {
 		return proxyMethods;
 	}
 
-	private Set<Method> _getVisibleMethods(Class<?> clazz) {
-		Set<Method> visibleMethods = new HashSet<>(
-			Arrays.asList(clazz.getMethods()));
-
-		Collections.addAll(visibleMethods, clazz.getDeclaredMethods());
-
-		while ((clazz = clazz.getSuperclass()) != null) {
-			for (Method method : clazz.getDeclaredMethods()) {
-				int modifiers = method.getModifiers();
-
-				if (!Modifier.isPrivate(modifiers) &
-					!Modifier.isPublic(modifiers)) {
-
-					visibleMethods.add(method);
-				}
-			}
-		}
-
-		return visibleMethods;
+	private Set<Method> _getVisibleMethods(Class<?> clazz) throws Exception {
+		return (Set<Method>)_getVisibleMethodsMethod.invoke(null, clazz);
 	}
 
 	private ClassNode _loadClass(Class<?> clazz) {
@@ -2490,6 +2475,7 @@ public class IntrabandProxyUtilTest {
 		IntrabandProxyUtilTest.class.getClassLoader();
 	private static final Map<Class<?>, Object> _defaultValueMap =
 		new HashMap<>();
+	private static final Method _getVisibleMethodsMethod;
 	private static final Map<Class<?>, Object> _sampleValueMap =
 		new HashMap<>();
 	private static final Type[] _types = {
@@ -2499,6 +2485,14 @@ public class IntrabandProxyUtilTest {
 	};
 
 	static {
+		try {
+			_getVisibleMethodsMethod = ReflectionUtil.getDeclaredMethod(
+				IntrabandProxyUtil.class, "_getVisibleMethods", Class.class);
+		}
+		catch (Exception e) {
+			throw new ExceptionInInitializerError(e);
+		}
+
 		_autoboxingMap.put(boolean.class, Boolean.class);
 		_autoboxingMap.put(byte.class, Number.class);
 		_autoboxingMap.put(char.class, Character.class);

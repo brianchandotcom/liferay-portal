@@ -38,12 +38,6 @@ import com.liferay.commerce.product.service.persistence.CPOptionPersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionValuePersistence;
 import com.liferay.commerce.product.service.persistence.CPSpecificationOptionPersistence;
 
-import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
-import com.liferay.exportimport.kernel.lar.ManifestSummary;
-import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -53,7 +47,6 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -234,18 +227,6 @@ public abstract class CPGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the cp group matching the UUID and group.
-	 *
-	 * @param uuid the cp group's UUID
-	 * @param groupId the primary key of the group
-	 * @return the matching cp group, or <code>null</code> if a matching cp group could not be found
-	 */
-	@Override
-	public CPGroup fetchCPGroupByUuidAndGroupId(String uuid, long groupId) {
-		return cpGroupPersistence.fetchByUUID_G(uuid, groupId);
-	}
-
-	/**
 	 * Returns the cp group with the primary key.
 	 *
 	 * @param CPGroupId the primary key of the cp group
@@ -292,57 +273,6 @@ public abstract class CPGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("CPGroupId");
 	}
 
-	@Override
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		final PortletDataContext portletDataContext) {
-		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
-				@Override
-				public long performCount() throws PortalException {
-					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
-
-					StagedModelType stagedModelType = getStagedModelType();
-
-					long modelAdditionCount = super.performCount();
-
-					manifestSummary.addModelAdditionCount(stagedModelType,
-						modelAdditionCount);
-
-					long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(portletDataContext,
-							stagedModelType);
-
-					manifestSummary.addModelDeletionCount(stagedModelType,
-						modelDeletionCount);
-
-					return modelAdditionCount;
-				}
-			};
-
-		initActionableDynamicQuery(exportActionableDynamicQuery);
-
-		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					portletDataContext.addDateRangeCriteria(dynamicQuery,
-						"modifiedDate");
-				}
-			});
-
-		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
-
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<CPGroup>() {
-				@Override
-				public void performAction(CPGroup cpGroup)
-					throws PortalException {
-					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						cpGroup);
-				}
-			});
-		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(
-				PortalUtil.getClassNameId(CPGroup.class.getName())));
-
-		return exportActionableDynamicQuery;
-	}
-
 	/**
 	 * @throws PortalException
 	 */
@@ -356,51 +286,6 @@ public abstract class CPGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return cpGroupPersistence.findByPrimaryKey(primaryKeyObj);
-	}
-
-	/**
-	 * Returns all the cp groups matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the cp groups
-	 * @param companyId the primary key of the company
-	 * @return the matching cp groups, or an empty list if no matches were found
-	 */
-	@Override
-	public List<CPGroup> getCPGroupsByUuidAndCompanyId(String uuid,
-		long companyId) {
-		return cpGroupPersistence.findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of cp groups matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the cp groups
-	 * @param companyId the primary key of the company
-	 * @param start the lower bound of the range of cp groups
-	 * @param end the upper bound of the range of cp groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the range of matching cp groups, or an empty list if no matches were found
-	 */
-	@Override
-	public List<CPGroup> getCPGroupsByUuidAndCompanyId(String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<CPGroup> orderByComparator) {
-		return cpGroupPersistence.findByUuid_C(uuid, companyId, start, end,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the cp group matching the UUID and group.
-	 *
-	 * @param uuid the cp group's UUID
-	 * @param groupId the primary key of the group
-	 * @return the matching cp group
-	 * @throws PortalException if a matching cp group could not be found
-	 */
-	@Override
-	public CPGroup getCPGroupByUuidAndGroupId(String uuid, long groupId)
-		throws PortalException {
-		return cpGroupPersistence.findByUUID_G(uuid, groupId);
 	}
 
 	/**

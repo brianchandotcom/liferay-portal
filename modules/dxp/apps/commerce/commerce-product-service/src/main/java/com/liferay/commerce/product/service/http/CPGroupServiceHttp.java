@@ -120,12 +120,13 @@ public class CPGroupServiceHttp {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CPGroup getCPGroupByGroupId(
+	public static com.liferay.commerce.product.model.CPGroup fetchCPGroupByGroupId(
 		HttpPrincipal httpPrincipal, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPGroupServiceUtil.class,
-					"getCPGroupByGroupId", _getCPGroupByGroupIdParameterTypes2);
+					"fetchCPGroupByGroupId",
+					_fetchCPGroupByGroupIdParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -151,13 +152,12 @@ public class CPGroupServiceHttp {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CPGroup fetchCPGroupByGroupId(
+	public static com.liferay.commerce.product.model.CPGroup getCPGroupByGroupId(
 		HttpPrincipal httpPrincipal, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPGroupServiceUtil.class,
-					"fetchCPGroupByGroupId",
-					_fetchCPGroupByGroupIdParameterTypes3);
+					"getCPGroupByGroupId", _getCPGroupByGroupIdParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -190,10 +190,10 @@ public class CPGroupServiceHttp {
 	private static final Class<?>[] _deleteCPGroupByGroupIdParameterTypes1 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCPGroupByGroupIdParameterTypes2 = new Class[] {
+	private static final Class<?>[] _fetchCPGroupByGroupIdParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _fetchCPGroupByGroupIdParameterTypes3 = new Class[] {
+	private static final Class<?>[] _getCPGroupByGroupIdParameterTypes3 = new Class[] {
 			long.class
 		};
 }

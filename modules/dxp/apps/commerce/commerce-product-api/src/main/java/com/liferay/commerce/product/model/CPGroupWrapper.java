@@ -18,8 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
-import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -59,7 +57,6 @@ public class CPGroupWrapper implements CPGroup, ModelWrapper<CPGroup> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
 		attributes.put("CPGroupId", getCPGroupId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -73,12 +70,6 @@ public class CPGroupWrapper implements CPGroup, ModelWrapper<CPGroup> {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
 		Long CPGroupId = (Long)attributes.get("CPGroupId");
 
 		if (CPGroupId != null) {
@@ -232,16 +223,6 @@ public class CPGroupWrapper implements CPGroup, ModelWrapper<CPGroup> {
 		return _cpGroup.getUserUuid();
 	}
 
-	/**
-	* Returns the uuid of this cp group.
-	*
-	* @return the uuid of this cp group
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _cpGroup.getUuid();
-	}
-
 	@Override
 	public int hashCode() {
 		return _cpGroup.hashCode();
@@ -388,16 +369,6 @@ public class CPGroupWrapper implements CPGroup, ModelWrapper<CPGroup> {
 		_cpGroup.setUserUuid(userUuid);
 	}
 
-	/**
-	* Sets the uuid of this cp group.
-	*
-	* @param uuid the uuid of this cp group
-	*/
-	@Override
-	public void setUuid(java.lang.String uuid) {
-		_cpGroup.setUuid(uuid);
-	}
-
 	@Override
 	public com.liferay.portal.kernel.model.CacheModel<CPGroup> toCacheModel() {
 		return _cpGroup.toCacheModel();
@@ -440,11 +411,6 @@ public class CPGroupWrapper implements CPGroup, ModelWrapper<CPGroup> {
 		}
 
 		return false;
-	}
-
-	@Override
-	public StagedModelType getStagedModelType() {
-		return _cpGroup.getStagedModelType();
 	}
 
 	@Override

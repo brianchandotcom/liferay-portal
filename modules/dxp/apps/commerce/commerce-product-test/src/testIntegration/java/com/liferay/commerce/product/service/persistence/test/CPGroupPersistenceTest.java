@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -57,7 +56,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -125,8 +123,6 @@ public class CPGroupPersistenceTest {
 
 		CPGroup newCPGroup = _persistence.create(pk);
 
-		newCPGroup.setUuid(RandomTestUtil.randomString());
-
 		newCPGroup.setGroupId(RandomTestUtil.nextLong());
 
 		newCPGroup.setCompanyId(RandomTestUtil.nextLong());
@@ -143,7 +139,6 @@ public class CPGroupPersistenceTest {
 
 		CPGroup existingCPGroup = _persistence.findByPrimaryKey(newCPGroup.getPrimaryKey());
 
-		Assert.assertEquals(existingCPGroup.getUuid(), newCPGroup.getUuid());
 		Assert.assertEquals(existingCPGroup.getCPGroupId(),
 			newCPGroup.getCPGroupId());
 		Assert.assertEquals(existingCPGroup.getGroupId(),
@@ -159,33 +154,6 @@ public class CPGroupPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCPGroup.getModifiedDate()),
 			Time.getShortTimestamp(newCPGroup.getModifiedDate()));
-	}
-
-	@Test
-	public void testCountByUuid() throws Exception {
-		_persistence.countByUuid(StringPool.BLANK);
-
-		_persistence.countByUuid(StringPool.NULL);
-
-		_persistence.countByUuid((String)null);
-	}
-
-	@Test
-	public void testCountByUUID_G() throws Exception {
-		_persistence.countByUUID_G(StringPool.BLANK, RandomTestUtil.nextLong());
-
-		_persistence.countByUUID_G(StringPool.NULL, 0L);
-
-		_persistence.countByUUID_G((String)null, 0L);
-	}
-
-	@Test
-	public void testCountByUuid_C() throws Exception {
-		_persistence.countByUuid_C(StringPool.BLANK, RandomTestUtil.nextLong());
-
-		_persistence.countByUuid_C(StringPool.NULL, 0L);
-
-		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -218,9 +186,9 @@ public class CPGroupPersistenceTest {
 	}
 
 	protected OrderByComparator<CPGroup> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("CPGroup", "uuid", true,
-			"CPGroupId", true, "groupId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true);
+		return OrderByComparatorFactoryUtil.create("CPGroup", "CPGroupId",
+			true, "groupId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true);
 	}
 
 	@Test
@@ -421,13 +389,6 @@ public class CPGroupPersistenceTest {
 
 		CPGroup existingCPGroup = _persistence.findByPrimaryKey(newCPGroup.getPrimaryKey());
 
-		Assert.assertTrue(Objects.equals(existingCPGroup.getUuid(),
-				ReflectionTestUtil.invoke(existingCPGroup, "getOriginalUuid",
-					new Class<?>[0])));
-		Assert.assertEquals(Long.valueOf(existingCPGroup.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(existingCPGroup,
-				"getOriginalGroupId", new Class<?>[0]));
-
 		Assert.assertEquals(Long.valueOf(existingCPGroup.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(existingCPGroup,
 				"getOriginalGroupId", new Class<?>[0]));
@@ -437,8 +398,6 @@ public class CPGroupPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		CPGroup cpGroup = _persistence.create(pk);
-
-		cpGroup.setUuid(RandomTestUtil.randomString());
 
 		cpGroup.setGroupId(RandomTestUtil.nextLong());
 

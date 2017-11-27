@@ -198,7 +198,6 @@
 		<field name="main" type="boolean" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPGroup">
-		<field name="uuid" type="String" />
 		<field name="CPGroupId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />

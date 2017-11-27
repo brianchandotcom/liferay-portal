@@ -34,7 +34,6 @@ public class CPGroupSoap implements Serializable {
 	public static CPGroupSoap toSoapModel(CPGroup model) {
 		CPGroupSoap soapModel = new CPGroupSoap();
 
-		soapModel.setUuid(model.getUuid());
 		soapModel.setCPGroupId(model.getCPGroupId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -94,14 +93,6 @@ public class CPGroupSoap implements Serializable {
 		setCPGroupId(pk);
 	}
 
-	public String getUuid() {
-		return _uuid;
-	}
-
-	public void setUuid(String uuid) {
-		_uuid = uuid;
-	}
-
 	public long getCPGroupId() {
 		return _CPGroupId;
 	}
@@ -158,7 +149,6 @@ public class CPGroupSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	private String _uuid;
 	private long _CPGroupId;
 	private long _groupId;
 	private long _companyId;

@@ -23,8 +23,6 @@ import com.liferay.commerce.product.model.CPGroupSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -34,7 +32,6 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -73,7 +70,6 @@ public class CPGroupModelImpl extends BaseModelImpl<CPGroup>
 	 */
 	public static final String TABLE_NAME = "CPGroup";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "uuid_", Types.VARCHAR },
 			{ "CPGroupId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -85,7 +81,6 @@ public class CPGroupModelImpl extends BaseModelImpl<CPGroup>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPGroupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -95,7 +90,7 @@ public class CPGroupModelImpl extends BaseModelImpl<CPGroup>
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPGroup (uuid_ VARCHAR(75) null,CPGroupId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CPGroup (CPGroupId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CPGroup";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpGroup.CPGroupId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPGroup.CPGroupId ASC";
@@ -111,10 +106,8 @@ public class CPGroupModelImpl extends BaseModelImpl<CPGroup>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.commerce.product.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.commerce.product.model.CPGroup"),
 			true);
-	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
-	public static final long UUID_COLUMN_BITMASK = 4L;
-	public static final long CPGROUPID_COLUMN_BITMASK = 8L;
+	public static final long GROUPID_COLUMN_BITMASK = 1L;
+	public static final long CPGROUPID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -129,7 +122,6 @@ public class CPGroupModelImpl extends BaseModelImpl<CPGroup>
 
 		CPGroup model = new CPGroupImpl();
 
-		model.setUuid(soapModel.getUuid());
 		model.setCPGroupId(soapModel.getCPGroupId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -201,7 +193,6 @@ public class CPGroupModelImpl extends BaseModelImpl<CPGroup>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
 		attributes.put("CPGroupId", getCPGroupId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -218,12 +209,6 @@ public class CPGroupModelImpl extends BaseModelImpl<CPGroup>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
 		Long CPGroupId = (Long)attributes.get("CPGroupId");
 
 		if (CPGroupId != null) {
@@ -269,30 +254,6 @@ public class CPGroupModelImpl extends BaseModelImpl<CPGroup>
 
 	@JSON
 	@Override
-	public String getUuid() {
-		if (_uuid == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _uuid;
-		}
-	}
-
-	@Override
-	public void setUuid(String uuid) {
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
-		}
-
-		_uuid = uuid;
-	}
-
-	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
-	}
-
-	@JSON
-	@Override
 	public long getCPGroupId() {
 		return _CPGroupId;
 	}
@@ -333,19 +294,7 @@ public class CPGroupModelImpl extends BaseModelImpl<CPGroup>
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
 		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -419,12 +368,6 @@ public class CPGroupModelImpl extends BaseModelImpl<CPGroup>
 		_modifiedDate = modifiedDate;
 	}
 
-	@Override
-	public StagedModelType getStagedModelType() {
-		return new StagedModelType(PortalUtil.getClassNameId(
-				CPGroup.class.getName()));
-	}
-
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -456,7 +399,6 @@ public class CPGroupModelImpl extends BaseModelImpl<CPGroup>
 	public Object clone() {
 		CPGroupImpl cpGroupImpl = new CPGroupImpl();
 
-		cpGroupImpl.setUuid(getUuid());
 		cpGroupImpl.setCPGroupId(getCPGroupId());
 		cpGroupImpl.setGroupId(getGroupId());
 		cpGroupImpl.setCompanyId(getCompanyId());
@@ -526,15 +468,9 @@ public class CPGroupModelImpl extends BaseModelImpl<CPGroup>
 	public void resetOriginalValues() {
 		CPGroupModelImpl cpGroupModelImpl = this;
 
-		cpGroupModelImpl._originalUuid = cpGroupModelImpl._uuid;
-
 		cpGroupModelImpl._originalGroupId = cpGroupModelImpl._groupId;
 
 		cpGroupModelImpl._setOriginalGroupId = false;
-
-		cpGroupModelImpl._originalCompanyId = cpGroupModelImpl._companyId;
-
-		cpGroupModelImpl._setOriginalCompanyId = false;
 
 		cpGroupModelImpl._setModifiedDate = false;
 
@@ -544,14 +480,6 @@ public class CPGroupModelImpl extends BaseModelImpl<CPGroup>
 	@Override
 	public CacheModel<CPGroup> toCacheModel() {
 		CPGroupCacheModel cpGroupCacheModel = new CPGroupCacheModel();
-
-		cpGroupCacheModel.uuid = getUuid();
-
-		String uuid = cpGroupCacheModel.uuid;
-
-		if ((uuid != null) && (uuid.length() == 0)) {
-			cpGroupCacheModel.uuid = null;
-		}
 
 		cpGroupCacheModel.CPGroupId = getCPGroupId();
 
@@ -592,11 +520,9 @@ public class CPGroupModelImpl extends BaseModelImpl<CPGroup>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(15);
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", CPGroupId=");
+		sb.append("{CPGroupId=");
 		sb.append(getCPGroupId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
@@ -617,16 +543,12 @@ public class CPGroupModelImpl extends BaseModelImpl<CPGroup>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.product.model.CPGroup");
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>CPGroupId</column-name><column-value><![CDATA[");
 		sb.append(getCPGroupId());
@@ -665,15 +587,11 @@ public class CPGroupModelImpl extends BaseModelImpl<CPGroup>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			CPGroup.class
 		};
-	private String _uuid;
-	private String _originalUuid;
 	private long _CPGroupId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

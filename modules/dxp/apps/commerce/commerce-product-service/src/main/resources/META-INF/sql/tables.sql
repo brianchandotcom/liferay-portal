@@ -166,7 +166,6 @@ create table CPFriendlyURLEntry (
 );
 
 create table CPGroup (
-	uuid_ VARCHAR(75) null,
 	CPGroupId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,

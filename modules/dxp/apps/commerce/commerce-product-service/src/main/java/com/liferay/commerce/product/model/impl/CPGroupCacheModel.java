@@ -65,11 +65,9 @@ public class CPGroupCacheModel implements CacheModel<CPGroup>, Externalizable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(15);
 
-		sb.append("{uuid=");
-		sb.append(uuid);
-		sb.append(", CPGroupId=");
+		sb.append("{CPGroupId=");
 		sb.append(CPGroupId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -91,13 +89,6 @@ public class CPGroupCacheModel implements CacheModel<CPGroup>, Externalizable {
 	@Override
 	public CPGroup toEntityModel() {
 		CPGroupImpl cpGroupImpl = new CPGroupImpl();
-
-		if (uuid == null) {
-			cpGroupImpl.setUuid(StringPool.BLANK);
-		}
-		else {
-			cpGroupImpl.setUuid(uuid);
-		}
 
 		cpGroupImpl.setCPGroupId(CPGroupId);
 		cpGroupImpl.setGroupId(groupId);
@@ -132,8 +123,6 @@ public class CPGroupCacheModel implements CacheModel<CPGroup>, Externalizable {
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		uuid = objectInput.readUTF();
-
 		CPGroupId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -149,13 +138,6 @@ public class CPGroupCacheModel implements CacheModel<CPGroup>, Externalizable {
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(uuid);
-		}
-
 		objectOutput.writeLong(CPGroupId);
 
 		objectOutput.writeLong(groupId);
@@ -175,7 +157,6 @@ public class CPGroupCacheModel implements CacheModel<CPGroup>, Externalizable {
 		objectOutput.writeLong(modifiedDate);
 	}
 
-	public String uuid;
 	public long CPGroupId;
 	public long groupId;
 	public long companyId;

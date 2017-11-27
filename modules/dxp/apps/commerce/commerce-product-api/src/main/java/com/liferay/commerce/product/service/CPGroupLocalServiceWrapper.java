@@ -203,19 +203,6 @@ public class CPGroupLocalServiceWrapper implements CPGroupLocalService,
 		return _cpGroupLocalService.fetchCPGroupByGroupId(groupId);
 	}
 
-	/**
-	* Returns the cp group matching the UUID and group.
-	*
-	* @param uuid the cp group's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp group, or <code>null</code> if a matching cp group could not be found
-	*/
-	@Override
-	public com.liferay.commerce.product.model.CPGroup fetchCPGroupByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return _cpGroupLocalService.fetchCPGroupByUuidAndGroupId(uuid, groupId);
-	}
-
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _cpGroupLocalService.getActionableDynamicQuery();
@@ -242,21 +229,6 @@ public class CPGroupLocalServiceWrapper implements CPGroupLocalService,
 	}
 
 	/**
-	* Returns the cp group matching the UUID and group.
-	*
-	* @param uuid the cp group's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp group
-	* @throws PortalException if a matching cp group could not be found
-	*/
-	@Override
-	public com.liferay.commerce.product.model.CPGroup getCPGroupByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpGroupLocalService.getCPGroupByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
 	* Returns a range of all the cp groups.
 	*
 	* <p>
@@ -274,38 +246,6 @@ public class CPGroupLocalServiceWrapper implements CPGroupLocalService,
 	}
 
 	/**
-	* Returns all the cp groups matching the UUID and company.
-	*
-	* @param uuid the UUID of the cp groups
-	* @param companyId the primary key of the company
-	* @return the matching cp groups, or an empty list if no matches were found
-	*/
-	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPGroup> getCPGroupsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return _cpGroupLocalService.getCPGroupsByUuidAndCompanyId(uuid,
-			companyId);
-	}
-
-	/**
-	* Returns a range of cp groups matching the UUID and company.
-	*
-	* @param uuid the UUID of the cp groups
-	* @param companyId the primary key of the company
-	* @param start the lower bound of the range of cp groups
-	* @param end the upper bound of the range of cp groups (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the range of matching cp groups, or an empty list if no matches were found
-	*/
-	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPGroup> getCPGroupsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPGroup> orderByComparator) {
-		return _cpGroupLocalService.getCPGroupsByUuidAndCompanyId(uuid,
-			companyId, start, end, orderByComparator);
-	}
-
-	/**
 	* Returns the number of cp groups.
 	*
 	* @return the number of cp groups
@@ -313,12 +253,6 @@ public class CPGroupLocalServiceWrapper implements CPGroupLocalService,
 	@Override
 	public int getCPGroupsCount() {
 		return _cpGroupLocalService.getCPGroupsCount();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return _cpGroupLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	@Override

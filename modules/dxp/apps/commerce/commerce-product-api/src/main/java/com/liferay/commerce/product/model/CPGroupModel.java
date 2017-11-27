@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
-import com.liferay.portal.kernel.model.StagedAuditedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -45,7 +44,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface CPGroupModel extends BaseModel<CPGroup>, GroupedModel,
-	ShardedModel, StagedAuditedModel {
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -65,23 +64,6 @@ public interface CPGroupModel extends BaseModel<CPGroup>, GroupedModel,
 	 * @param primaryKey the primary key of this cp group
 	 */
 	public void setPrimaryKey(long primaryKey);
-
-	/**
-	 * Returns the uuid of this cp group.
-	 *
-	 * @return the uuid of this cp group
-	 */
-	@AutoEscape
-	@Override
-	public String getUuid();
-
-	/**
-	 * Sets the uuid of this cp group.
-	 *
-	 * @param uuid the uuid of this cp group
-	 */
-	@Override
-	public void setUuid(String uuid);
 
 	/**
 	 * Returns the cp group ID of this cp group.

@@ -20,6 +20,6 @@ package com.liferay.asset.categories.admin.web.internal.constants;
 public class AssetCategoriesAdminWebKeys {
 
 	public static final String ASSET_CATEGORIES_ADMIN_CONFIGURATION =
-		"ASSET_PUBLISHER_WEB_CONFIGURATION";
+		"ASSET_CATEGORIES_ADMIN_CONFIGURATION";
 
 }

@@ -454,7 +454,7 @@ public class GitWorkingDirectory {
 	}
 
 	public void fetch(Remote remote) {
-		fetch(null, new Branch(null, remote, null));
+		fetch(null, new Branch(this, null, remote, null));
 	}
 
 	public Branch getBranch(String branchName, Remote remote) {
@@ -476,7 +476,7 @@ public class GitWorkingDirectory {
 				return null;
 			}
 
-			return new Branch(branchName, null, getBranchSHA(branchName));
+			return new Branch(this, branchName, null, getBranchSHA(branchName));
 		}
 
 		List<Branch> branches = getBranches(branchName, remote);
@@ -500,7 +500,8 @@ public class GitWorkingDirectory {
 			if (branchName != null) {
 				if (localBranchNames.contains(branchName)) {
 					localBranches.add(
-						new Branch(branchName, null, getBranchSHA(branchName)));
+						new Branch(
+							this, branchName, null, getBranchSHA(branchName)));
 				}
 
 				return localBranches;
@@ -509,7 +510,8 @@ public class GitWorkingDirectory {
 			for (String localBranchName : localBranchNames) {
 				localBranches.add(
 					new Branch(
-						localBranchName, null, getBranchSHA(localBranchName)));
+						this, localBranchName, null,
+						getBranchSHA(localBranchName)));
 			}
 
 			return localBranches;
@@ -576,6 +578,37 @@ public class GitWorkingDirectory {
 		}
 
 		return executionResult.getStandardOut();
+	}
+
+	public String getBranchSHA(String branchName, Remote remote) {
+		if (remote == null) {
+			return getBranchSHA(branchName);
+		}
+
+		String command = JenkinsResultsParserUtil.combine(
+			"git ls-remote -h ", remote.getName(), " ", branchName);
+
+		ExecutionResult executionResult = executeBashCommands(
+			1, 1000 * 60 * 10, command);
+
+		if (executionResult.getExitValue() != 0) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to get remote branch SHA ", remote.toString(), " ",
+					branchName, "\n", executionResult.getStandardError()));
+		}
+
+		String input = executionResult.getStandardOut();
+
+		for (String line : input.split("\n")) {
+			Matcher matcher = _gitLsRemotePattern.matcher(line);
+
+			if (matcher.find()) {
+				return matcher.group("sha");
+			}
+		}
+
+		return null;
 	}
 
 	public Branch getCurrentBranch() {
@@ -998,10 +1031,19 @@ public class GitWorkingDirectory {
 			return _sha;
 		}
 
-		private Branch(String name, Remote remote, String sha) {
+		private Branch(
+			GitWorkingDirectory gitWorkingDirectory, String name, Remote remote,
+			String sha) {
+
 			_name = name;
 			_remote = remote;
-			_sha = sha;
+
+			if ((name != null) && (sha == null)) {
+				_sha = gitWorkingDirectory.getBranchSHA(name, remote);
+			}
+			else {
+				_sha = sha;
+			}
 		}
 
 		private final String _name;
@@ -1252,7 +1294,8 @@ public class GitWorkingDirectory {
 			if (matcher.find()) {
 				branches.add(
 					new Branch(
-						matcher.group("name"), remote, matcher.group("sha")));
+						this, matcher.group("name"), remote,
+						matcher.group("sha")));
 			}
 		}
 

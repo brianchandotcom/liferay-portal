@@ -47,25 +47,20 @@ public abstract class BaseLDAPExportModelListener<T extends BaseModel<T>>
 			return;
 		}
 
-		Callable<Void> callable = new Callable<Void>() {
+		Callable<Void> callable = () -> {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
 
-			@Override
-			public Void call() throws Exception {
-				ServiceContext serviceContext =
-					ServiceContextThreadLocal.getServiceContext();
+			Map<String, Serializable> expandoBridgeAttributes = null;
 
-				Map<String, Serializable> expandoBridgeAttributes = null;
-
-				if (serviceContext != null) {
-					expandoBridgeAttributes =
-						serviceContext.getExpandoBridgeAttributes();
-				}
-
-				userExporter.exportUser(user, expandoBridgeAttributes);
-
-				return null;
+			if (serviceContext != null) {
+				expandoBridgeAttributes =
+					serviceContext.getExpandoBridgeAttributes();
 			}
 
+			userExporter.exportUser(user, expandoBridgeAttributes);
+
+			return null;
 		};
 
 		if (ldapSettings.isPasswordPolicyEnabled(user.getCompanyId()) &&

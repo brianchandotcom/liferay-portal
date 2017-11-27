@@ -15,20 +15,20 @@
 package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelKeyException;
-import com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException;
+import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -57,27 +57,12 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 			ActionRequest actionRequest)
 		throws Exception {
 
-		long[] deleteCPDefinitionOptionValueRelIds = null;
-
 		long cpDefinitionOptionValueRelId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionOptionValueRelId");
 
 		if (cpDefinitionOptionValueRelId > 0) {
-			deleteCPDefinitionOptionValueRelIds =
-				new long[] {cpDefinitionOptionValueRelId};
-		}
-		else {
-			deleteCPDefinitionOptionValueRelIds = StringUtil.split(
-				ParamUtil.getString(
-					actionRequest, "deleteCPDefinitionOptionValueRelIds"),
-				0L);
-		}
-
-		for (long deleteCPDefinitionOptionValueRelId :
-				deleteCPDefinitionOptionValueRelIds) {
-
 			_cpDefinitionOptionValueRelService.deleteCPDefinitionOptionValueRel(
-				deleteCPDefinitionOptionValueRelId);
+				cpDefinitionOptionValueRelId);
 		}
 	}
 
@@ -88,38 +73,34 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateCPDefinitionOptionValueRel(actionRequest);
+				CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+					updateCPDefinitionOptionValueRel(actionRequest);
+
+				jsonObject.put(
+					"cpDefinitionOptionValueRelId",
+					cpDefinitionOptionValueRel.
+						getCPDefinitionOptionValueRelId());
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteCPDefinitionOptionValueRels(actionRequest);
 			}
+
+			jsonObject.put("success", true);
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchCPDefinitionOptionValueRelException ||
-				e instanceof PrincipalException) {
+			_log.error(e);
 
-				SessionErrors.add(actionRequest, e.getClass());
-
-				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
-			}
-			else if (e instanceof CPDefinitionOptionValueRelKeyException) {
-				hideDefaultErrorMessage(actionRequest);
-				hideDefaultSuccessMessage(actionRequest);
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				actionResponse.setRenderParameter(
-					"mvcRenderCommandName",
-					"editProductDefinitionOptionValueRel");
-
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else {
-				throw e;
-			}
+			jsonObject.put("message", e.getMessage());
+			jsonObject.put("success", false);
 		}
+
+		hideDefaultSuccessMessage(actionRequest);
+
+		_actionHelper.writeJSON(actionRequest, actionResponse, jsonObject);
 	}
 
 	protected CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
@@ -165,8 +146,17 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 		return cpDefinitionOptionValueRel;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditCPDefinitionOptionValueRelMVCActionCommand.class);
+
+	@Reference
+	private ActionHelper _actionHelper;
+
 	@Reference
 	private CPDefinitionOptionValueRelService
 		_cpDefinitionOptionValueRelService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

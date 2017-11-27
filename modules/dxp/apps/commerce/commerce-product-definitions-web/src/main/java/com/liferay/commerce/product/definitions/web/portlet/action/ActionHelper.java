@@ -33,12 +33,20 @@ import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -454,6 +462,21 @@ public class ActionHelper {
 			cpDefinitionId, true);
 	}
 
+	public void writeJSON(
+			PortletRequest portletRequest, ActionResponse actionResponse,
+			Object jsonObj)
+		throws IOException {
+
+		HttpServletResponse response = _portal.getHttpServletResponse(
+			actionResponse);
+
+		response.setContentType(ContentTypes.APPLICATION_JSON);
+
+		ServletResponseUtil.write(response, jsonObj.toString());
+
+		response.flushBuffer();
+	}
+
 	@Reference
 	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;
 
@@ -479,5 +502,8 @@ public class ActionHelper {
 
 	@Reference
 	private CPTypeServicesTracker _cpTypeServicesTracker;
+
+	@Reference
+	private Portal _portal;
 
 }

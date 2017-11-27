@@ -40,7 +40,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	<portlet:param name="jspPage" value="/view.jsp" />
 </liferay-portlet:renderURL>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+<aui:nav-bar cssClass="collapse-basic-search navbar-inverse" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item
 			href="<%= viewProductDefinitionsURL.toString() %>"

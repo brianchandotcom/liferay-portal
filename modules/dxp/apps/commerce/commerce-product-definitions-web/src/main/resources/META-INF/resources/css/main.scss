@@ -9,6 +9,24 @@
 	 	}
 	}
 
+	.commerce-product-option-editor{
+		margin-top:20px;
+
+		.section-header{
+			font-size: 1.2rem;
+
+			.btn-primary{
+				float: right;
+			}
+		}
+	}
+
+	.product-definition-option-rel-button-row{
+		.btn{
+			margin-right:5px;
+		}
+	}
+
 	#carousel-product-definitions {
 		position: relative;
 

@@ -19,56 +19,59 @@
 <%
 CPDefinitionOptionValueRelDisplayContext cpDefinitionOptionValueRelDisplayContext = (CPDefinitionOptionValueRelDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CPDefinition cpDefinition = cpDefinitionOptionValueRelDisplayContext.getCPDefinition();
-
-CPDefinitionOptionRel cpDefinitionOptionRel = cpDefinitionOptionValueRelDisplayContext.getCPDefinitionOptionRel();
-
 long cpDefinitionOptionRelId = cpDefinitionOptionValueRelDisplayContext.getCPDefinitionOptionRelId();
 
 CPDefinitionOptionValueRel cpDefinitionOptionValueRel = cpDefinitionOptionValueRelDisplayContext.getCPDefinitionOptionValueRel();
 
 long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.getCPDefinitionOptionValueRelId();
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcRenderCommandName", "editProductDefinitionOptionValueRel");
-
-PortletURL productOptionValueRelsURL = renderResponse.createRenderURL();
-
-productOptionValueRelsURL.setParameter("mvcRenderCommandName", "viewProductDefinitionOptionValueRels");
-productOptionValueRelsURL.setParameter("cpDefinitionOptionRelId", String.valueOf(cpDefinitionOptionRel.getCPDefinitionOptionRelId()));
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(productOptionValueRelsURL.toString());
-
-String contextTitle = cpDefinition.getTitle(languageId) + " - " + cpDefinitionOptionRel.getTitle(locale);
-
-String title;
-
-if (cpDefinitionOptionValueRel == null) {
-	title = LanguageUtil.format(request, "add-option-value-to-x", contextTitle);
-}
-else {
-	title = contextTitle + " - " + cpDefinitionOptionValueRel.getTitle(locale);
-}
-
-renderResponse.setTitle(title);
 %>
 
 <portlet:actionURL name="editProductDefinitionOptionValueRel" var="editProductDefinitionOptionValueRelActionURL" />
 
-<aui:form action="<%= editProductDefinitionOptionValueRelActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= editProductDefinitionOptionValueRelActionURL %>" cssClass="container-fluid-1280" method="post" name="cpDefinitionOptionValueRelfm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpDefinitionOptionValueRel == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= productOptionValueRelsURL %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="cpDefinitionOptionRelId" type="hidden" value="<%= String.valueOf(cpDefinitionOptionRelId) %>" />
 	<aui:input name="cpDefinitionOptionValueRelId" type="hidden" value="<%= String.valueOf(cpDefinitionOptionValueRelId) %>" />
 
 	<div class="lfr-form-content">
-		<liferay-ui:form-navigator
-			backURL="<%= productOptionValueRelsURL.toString() %>"
-			formModelBean="<%= cpDefinitionOptionValueRel %>"
-			id="<%= CPDefinitionOptionValueRelFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION_OPTION_VALUE_REL %>"
-			markupView="lexicon"
-		/>
+		<aui:model-context bean="<%= cpDefinitionOptionValueRel %>" model="<%= CPDefinitionOptionValueRel.class %>" />
+
+		<liferay-ui:error exception="<%= CPDefinitionOptionValueRelKeyException.class %>" message="please-enter-a-unique-key" />
+
+		<aui:fieldset>
+			<aui:input id="optionValueTitle" name="title" />
+
+			<aui:input name="priority" />
+
+			<aui:input helpMessage="key-help" name="key" />
+
+			<c:if test="<%= cpDefinitionOptionValueRelDisplayContext.hasCustomAttributesAvailable() %>">
+				<liferay-expando:custom-attribute-list
+					className="<%= CPDefinitionOptionValueRel.class.getName() %>"
+					classPK="<%= (cpDefinitionOptionValueRel != null) ? cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId() : 0 %>"
+					editable="<%= true %>"
+					label="<%= true %>"
+				/>
+			</c:if>
+		</aui:fieldset>
+
+		<c:if test="<%= cpDefinitionOptionValueRel == null %>">
+			<aui:script sandbox="<%= true %>">
+				var form = $(document.<portlet:namespace />cpDefinitionOptionValueRelfm);
+
+				var keyInput = form.fm('key');
+				var titleInput = form.fm('title');
+
+				var onTitleInput = _.debounce(
+					function(event) {
+						keyInput.val(titleInput.val());
+					},
+					200
+				);
+
+				titleInput.on('input', onTitleInput);
+			</aui:script>
+		</c:if>
 	</div>
 </aui:form>

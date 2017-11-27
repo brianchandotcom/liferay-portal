@@ -19,32 +19,12 @@
 <%
 CPDefinitionOptionRelDisplayContext cpDefinitionOptionRelDisplayContext = (CPDefinitionOptionRelDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition();
-
 CPDefinitionOptionRel cpDefinitionOptionRel = cpDefinitionOptionRelDisplayContext.getCPDefinitionOptionRel();
 
 long cpDefinitionOptionRelId = cpDefinitionOptionRelDisplayContext.getCPDefinitionOptionRelId();
 
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-commerce-product-definition-option-rel-details");
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("toolbarItem", toolbarItem);
-portletURL.setParameter("mvcRenderCommandName", "editProductDefinitionOptionRel");
-
-PortletURL productOptionRelsURL = renderResponse.createRenderURL();
-
-productOptionRelsURL.setParameter("mvcRenderCommandName", "editProductDefinition");
-productOptionRelsURL.setParameter("cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
-productOptionRelsURL.setParameter("screenNavigationCategoryKey", cpDefinitionOptionRelDisplayContext.getScreenNavigationCategoryKey());
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(productOptionRelsURL.toString());
-
-renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinitionOptionRel.getTitle(languageId));
+List<DDMFormFieldType> ddmFormFieldTypes = cpDefinitionOptionRelDisplayContext.getDDMFormFieldTypes();
 %>
-
-<%@ include file="/definition_option_rel_navbar.jspf" %>
 
 <portlet:actionURL name="editProductDefinitionOptionRel" var="editProductDefinitionOptionRelActionURL" />
 
@@ -56,11 +36,57 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinition
 	<aui:input name="cpOptionId" type="hidden" value="<%= cpDefinitionOptionRel.getCPOptionId() %>" />
 
 	<div class="lfr-form-content">
-		<liferay-ui:form-navigator
-			backURL="<%= productOptionRelsURL.toString() %>"
-			formModelBean="<%= cpDefinitionOptionRel %>"
-			id="<%= CPDefinitionOptionRelFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION_OPTION_REL %>"
-			markupView="lexicon"
-		/>
+		<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
+
+		<aui:model-context bean="<%= cpDefinitionOptionRel %>" model="<%= CPDefinitionOptionRel.class %>" />
+
+		<aui:fieldset>
+			<aui:input name="title" />
+
+			<aui:input name="description" />
+
+			<aui:select
+				label="field-type"
+				name="DDMFormFieldTypeName"
+				showEmptyOption="<%= true %>"
+			>
+
+				<%
+				for (DDMFormFieldType ddmFormFieldType : ddmFormFieldTypes) {
+				%>
+
+					<aui:option
+						label="<%= ddmFormFieldType.getName() %>"
+						selected="<%= (cpDefinitionOptionRel != null) && cpDefinitionOptionRel.getDDMFormFieldTypeName().equals(ddmFormFieldType.getName()) %>"
+						value="<%= ddmFormFieldType.getName() %>"
+					/>
+
+				<%
+				}
+				%>
+
+			</aui:select>
+
+			<aui:input name="facetable" />
+
+			<aui:input name="required" />
+
+			<aui:input name="skuContributor" />
+
+			<aui:input name="priority" />
+
+			<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="custom-fields" />
+
+			<aui:model-context bean="<%= cpDefinitionOptionRel %>" model="<%= CPDefinitionOptionRel.class %>" />
+
+			<c:if test="<%= cpDefinitionOptionRelDisplayContext.hasCustomAttributesAvailable() %>">
+				<liferay-expando:custom-attribute-list
+					className="<%= CPDefinitionOptionRel.class.getName() %>"
+					classPK="<%= (cpDefinitionOptionRel != null) ? cpDefinitionOptionRel.getCPDefinitionOptionRelId() : 0 %>"
+					editable="<%= true %>"
+					label="<%= true %>"
+				/>
+			</c:if>
+		</aui:fieldset>
 	</div>
 </aui:form>

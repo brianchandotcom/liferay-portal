@@ -232,21 +232,21 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_K() throws Exception {
-		_persistence.countByC_K(RandomTestUtil.nextLong(), StringPool.BLANK);
-
-		_persistence.countByC_K(0L, StringPool.NULL);
-
-		_persistence.countByC_K(0L, (String)null);
-	}
-
-	@Test
 	public void testCountBykey() throws Exception {
 		_persistence.countBykey(StringPool.BLANK);
 
 		_persistence.countBykey(StringPool.NULL);
 
 		_persistence.countBykey((String)null);
+	}
+
+	@Test
+	public void testCountByC_K() throws Exception {
+		_persistence.countByC_K(RandomTestUtil.nextLong(), StringPool.BLANK);
+
+		_persistence.countByC_K(0L, StringPool.NULL);
+
+		_persistence.countByC_K(0L, (String)null);
 	}
 
 	@Test

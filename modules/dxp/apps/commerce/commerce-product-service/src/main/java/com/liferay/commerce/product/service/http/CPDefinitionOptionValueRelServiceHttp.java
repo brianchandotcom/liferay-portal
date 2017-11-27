@@ -226,46 +226,12 @@ public class CPDefinitionOptionValueRelServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String key,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(CPDefinitionOptionValueRelServiceUtil.class,
-					"getCPDefinitionOptionValueRels",
-					_getCPDefinitionOptionValueRelsParameterTypes5);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					key, start, end);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionValueRel>)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
 		HttpPrincipal httpPrincipal, long cpDefinitionOptionRelId, int start,
 		int end) throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionOptionValueRelServiceUtil.class,
 					"getCPDefinitionOptionValueRels",
-					_getCPDefinitionOptionValueRelsParameterTypes6);
+					_getCPDefinitionOptionValueRelsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpDefinitionOptionRelId, start, end);
@@ -300,10 +266,44 @@ public class CPDefinitionOptionValueRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionOptionValueRelServiceUtil.class,
 					"getCPDefinitionOptionValueRels",
-					_getCPDefinitionOptionValueRelsParameterTypes7);
+					_getCPDefinitionOptionValueRelsParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpDefinitionOptionRelId, start, end, orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionValueRel>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
+		HttpPrincipal httpPrincipal, long groupId, java.lang.String key,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CPDefinitionOptionValueRelServiceUtil.class,
+					"getCPDefinitionOptionValueRels",
+					_getCPDefinitionOptionValueRelsParameterTypes7);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					key, start, end);
 
 			Object returnObj = null;
 
@@ -479,14 +479,14 @@ public class CPDefinitionOptionValueRelServiceHttp {
 	private static final Class<?>[] _getCPDefinitionOptionValueRelParameterTypes4 =
 		new Class[] { long.class };
 	private static final Class<?>[] _getCPDefinitionOptionValueRelsParameterTypes5 =
-		new Class[] { long.class, java.lang.String.class, int.class, int.class };
-	private static final Class<?>[] _getCPDefinitionOptionValueRelsParameterTypes6 =
 		new Class[] { long.class, int.class, int.class };
-	private static final Class<?>[] _getCPDefinitionOptionValueRelsParameterTypes7 =
+	private static final Class<?>[] _getCPDefinitionOptionValueRelsParameterTypes6 =
 		new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
+	private static final Class<?>[] _getCPDefinitionOptionValueRelsParameterTypes7 =
+		new Class[] { long.class, java.lang.String.class, int.class, int.class };
 	private static final Class<?>[] _getCPDefinitionOptionValueRelsCountParameterTypes8 =
 		new Class[] { long.class };
 	private static final Class<?>[] _searchParameterTypes9 = new Class[] {

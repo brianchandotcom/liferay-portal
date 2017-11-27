@@ -20,6 +20,8 @@ import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.admin.web.internal.util.CommerceAdminModuleRegistry;
 import com.liferay.commerce.admin.web.util.CommerceAdminModule;
 import com.liferay.commerce.application.list.constants.CommercePanelCategoryKeys;
+import com.liferay.commerce.product.model.CPGroup;
+import com.liferay.commerce.product.service.CPGroupService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
@@ -55,6 +57,13 @@ public class CommerceAdminPanelApp extends BasePanelApp {
 		boolean show = super.isShow(permissionChecker, group);
 
 		if (show) {
+			CPGroup cpGroup = _cpGroupService.fetchCPGroupByGroupId(
+				group.getGroupId());
+
+			if (cpGroup == null) {
+				show = false;
+			}
+
 			Map<String, CommerceAdminModule> commerceAdminModules =
 				_commerceAdminModuleRegistry.getCommerceAdminModules();
 
@@ -77,5 +86,8 @@ public class CommerceAdminPanelApp extends BasePanelApp {
 
 	@Reference
 	private CommerceAdminModuleRegistry _commerceAdminModuleRegistry;
+
+	@Reference
+	private CPGroupService _cpGroupService;
 
 }

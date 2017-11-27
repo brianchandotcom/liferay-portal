@@ -491,7 +491,7 @@
 			<finder-column name="main" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="CPGroup" remote-service="true" uuid="true">
+	<entity local-service="true" name="CPGroup" remote-service="true">
 
 		<!-- PK fields -->
 

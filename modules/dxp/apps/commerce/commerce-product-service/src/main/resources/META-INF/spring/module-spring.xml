@@ -28,6 +28,9 @@
 	<bean class="com.liferay.commerce.product.service.impl.CPFriendlyURLEntryLocalServiceImpl" id="com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPFriendlyURLEntryServiceImpl" id="com.liferay.commerce.product.service.CPFriendlyURLEntryService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPFriendlyURLEntryPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPFriendlyURLEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.product.service.impl.CPGroupLocalServiceImpl" id="com.liferay.commerce.product.service.CPGroupLocalService" />
+	<bean class="com.liferay.commerce.product.service.impl.CPGroupServiceImpl" id="com.liferay.commerce.product.service.CPGroupService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPGroupPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPGroupPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.product.service.impl.CPInstanceLocalServiceImpl" id="com.liferay.commerce.product.service.CPInstanceLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPInstanceServiceImpl" id="com.liferay.commerce.product.service.CPInstanceService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPInstancePersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPInstancePersistence" parent="basePersistence" />

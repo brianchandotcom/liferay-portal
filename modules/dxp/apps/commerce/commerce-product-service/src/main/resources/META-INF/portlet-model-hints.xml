@@ -197,6 +197,16 @@
 		</field>
 		<field name="main" type="boolean" />
 	</model>
+	<model name="com.liferay.commerce.product.model.CPGroup">
+		<field name="uuid" type="String" />
+		<field name="CPGroupId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
 	<model name="com.liferay.commerce.product.model.CPInstance">
 		<field name="uuid" type="String" />
 		<field name="CPInstanceId" type="long" />

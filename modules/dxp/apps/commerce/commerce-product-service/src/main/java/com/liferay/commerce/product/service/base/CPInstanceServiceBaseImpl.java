@@ -27,6 +27,7 @@ import com.liferay.commerce.product.service.persistence.CPDefinitionPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionSpecificationOptionValuePersistence;
 import com.liferay.commerce.product.service.persistence.CPDisplayLayoutPersistence;
 import com.liferay.commerce.product.service.persistence.CPFriendlyURLEntryPersistence;
+import com.liferay.commerce.product.service.persistence.CPGroupPersistence;
 import com.liferay.commerce.product.service.persistence.CPInstanceFinder;
 import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
 import com.liferay.commerce.product.service.persistence.CPMeasurementUnitPersistence;
@@ -587,6 +588,62 @@ public abstract class CPInstanceServiceBaseImpl extends BaseServiceImpl
 	public void setCPFriendlyURLEntryPersistence(
 		CPFriendlyURLEntryPersistence cpFriendlyURLEntryPersistence) {
 		this.cpFriendlyURLEntryPersistence = cpFriendlyURLEntryPersistence;
+	}
+
+	/**
+	 * Returns the cp group local service.
+	 *
+	 * @return the cp group local service
+	 */
+	public com.liferay.commerce.product.service.CPGroupLocalService getCPGroupLocalService() {
+		return cpGroupLocalService;
+	}
+
+	/**
+	 * Sets the cp group local service.
+	 *
+	 * @param cpGroupLocalService the cp group local service
+	 */
+	public void setCPGroupLocalService(
+		com.liferay.commerce.product.service.CPGroupLocalService cpGroupLocalService) {
+		this.cpGroupLocalService = cpGroupLocalService;
+	}
+
+	/**
+	 * Returns the cp group remote service.
+	 *
+	 * @return the cp group remote service
+	 */
+	public com.liferay.commerce.product.service.CPGroupService getCPGroupService() {
+		return cpGroupService;
+	}
+
+	/**
+	 * Sets the cp group remote service.
+	 *
+	 * @param cpGroupService the cp group remote service
+	 */
+	public void setCPGroupService(
+		com.liferay.commerce.product.service.CPGroupService cpGroupService) {
+		this.cpGroupService = cpGroupService;
+	}
+
+	/**
+	 * Returns the cp group persistence.
+	 *
+	 * @return the cp group persistence
+	 */
+	public CPGroupPersistence getCPGroupPersistence() {
+		return cpGroupPersistence;
+	}
+
+	/**
+	 * Sets the cp group persistence.
+	 *
+	 * @param cpGroupPersistence the cp group persistence
+	 */
+	public void setCPGroupPersistence(CPGroupPersistence cpGroupPersistence) {
+		this.cpGroupPersistence = cpGroupPersistence;
 	}
 
 	/**
@@ -1445,6 +1502,12 @@ public abstract class CPInstanceServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.commerce.product.service.CPFriendlyURLEntryService cpFriendlyURLEntryService;
 	@BeanReference(type = CPFriendlyURLEntryPersistence.class)
 	protected CPFriendlyURLEntryPersistence cpFriendlyURLEntryPersistence;
+	@BeanReference(type = com.liferay.commerce.product.service.CPGroupLocalService.class)
+	protected com.liferay.commerce.product.service.CPGroupLocalService cpGroupLocalService;
+	@BeanReference(type = com.liferay.commerce.product.service.CPGroupService.class)
+	protected com.liferay.commerce.product.service.CPGroupService cpGroupService;
+	@BeanReference(type = CPGroupPersistence.class)
+	protected CPGroupPersistence cpGroupPersistence;
 	@BeanReference(type = com.liferay.commerce.product.service.CPInstanceLocalService.class)
 	protected com.liferay.commerce.product.service.CPInstanceLocalService cpInstanceLocalService;
 	@BeanReference(type = CPInstanceService.class)

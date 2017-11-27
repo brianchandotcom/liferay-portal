@@ -92,6 +92,10 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 		return _componentId;
 	}
 
+	public boolean getHydrate() {
+		return _hydrate;
+	}
+
 	public String getModule() {
 		return _module;
 	}
@@ -129,6 +133,10 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 		_dependencies = dependencies;
 	}
 
+	public void setHydrate(boolean hydrate) {
+		_hydrate = hydrate;
+	}
+
 	public void setModule(String module) {
 		_module = module;
 	}
@@ -142,6 +150,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 			_componentId = null;
 			_context = null;
 			_dependencies = null;
+			_hydrate = true;
 			_module = null;
 			_templateNamespace = null;
 		}
@@ -156,11 +165,16 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 	}
 
 	protected String getElementSelector() {
-		return StringPool.POUND.concat(getComponentId()).concat(" > div");
+		return StringPool.POUND.concat(
+			getComponentId()).concat(" > *:first-child");
 	}
 
 	protected boolean isRenderJavaScript() {
-		return Validator.isNotNull(getModule());
+		if (getHydrate() && Validator.isNotNull(getModule())) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected boolean isRenderTemplate() {
@@ -207,13 +221,19 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 
 		_template.prepare(request);
 
-		jspWriter.append("<div id=\"");
-		jspWriter.append(HtmlUtil.escapeAttribute(getComponentId()));
-		jspWriter.append("\">");
+		boolean renderJavaScript = isRenderJavaScript();
+
+		if (renderJavaScript) {
+			jspWriter.append("<div id=\"");
+			jspWriter.append(HtmlUtil.escapeAttribute(getComponentId()));
+			jspWriter.append("\">");
+		}
 
 		_template.processTemplate(jspWriter);
 
-		jspWriter.append("</div>");
+		if (renderJavaScript) {
+			jspWriter.append("</div>");
+		}
 	}
 
 	private SoyJavaScriptRenderer _getJavaScriptComponentRenderer()
@@ -241,6 +261,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 	private String _componentId;
 	private Map<String, Object> _context;
 	private Set<String> _dependencies;
+	private boolean _hydrate = true;
 	private String _module;
 	private Template _template;
 	private String _templateNamespace;

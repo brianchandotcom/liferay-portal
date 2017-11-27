@@ -32,6 +32,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description></description>
+			<name>hydrate</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>The AMD module of the component's JavaScript.</description>
 			<name>module</name>
 			<required>false</required>

@@ -52,7 +52,7 @@ class CPDefinitionOptionsEditor extends Component {
 							});
 						}
 					},
-					title: 'select-options-to-add',
+					title: Liferay.Language.get('select-options-to-add'),
 					url: that.optionsItemSelectorURL
 				}
 			);

@@ -49,7 +49,10 @@ class Layout extends Component {
 	 * @inheritDoc
 	 */
 	rendered() {
-		this.refs.layout.scrollLeft = this.refs.layout.scrollWidth;
+		requestAnimationFrame(() => {
+			this.refs.layoutColumns.scrollLeft =
+				this.refs.layoutColumns.scrollWidth;
+		});
 	}
 }
 

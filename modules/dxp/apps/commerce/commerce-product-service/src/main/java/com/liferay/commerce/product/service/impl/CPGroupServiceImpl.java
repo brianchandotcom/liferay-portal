@@ -14,8 +14,10 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.model.CPGroup;
 import com.liferay.commerce.product.service.base.CPGroupServiceBaseImpl;
+import com.liferay.commerce.product.service.permission.CPPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -28,12 +30,11 @@ public class CPGroupServiceImpl extends CPGroupServiceBaseImpl {
 	public CPGroup addCPGroup(ServiceContext serviceContext)
 		throws PortalException {
 
-		return cpGroupLocalService.addCPGroup(serviceContext);
-	}
+		CPPermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			CPActionKeys.ENABLE_COMMERCE_FEATURES);
 
-	@Override
-	public CPGroup deleteCPGroupByGroupId(long groupId) throws PortalException {
-		return cpGroupLocalService.deleteCPGroupByGroupId(groupId);
+		return cpGroupLocalService.addCPGroup(serviceContext);
 	}
 
 	@Override

@@ -132,6 +132,14 @@ AUI.add(
 						return instance.definitionController.serializeDefinition(json);
 					},
 
+					setEditorContent: function(content) {
+						var instance = this;
+
+						var editor = instance.editor;
+
+						editor.set('value', content);
+					},
+
 					showEditor: function() {
 						var instance = this;
 
@@ -150,6 +158,39 @@ AUI.add(
 						}
 
 						editor.set('value', content);
+					},
+
+					showSuccessMessage: function() {
+						var instance = this;
+
+						var successMessage = Liferay.Language.get('definition-imported-sucessfully');
+
+						var alert = instance._alert;
+
+						if (alert) {
+							alert.destroy();
+						}
+
+						alert = new Liferay.Alert(
+							{
+								closeable: true,
+								delay: {
+									hide: 3000,
+									show: 0
+								},
+								icon: 'check',
+								message: successMessage,
+								type: 'success'
+							}
+						);
+
+						if (!alert.get('rendered')) {
+							alert.render('.portlet-column');
+						}
+
+						alert.show();
+
+						instance._alert = alert;
 					},
 
 					_afterRenderKaleoDesigner: function() {

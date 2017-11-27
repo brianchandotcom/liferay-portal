@@ -322,6 +322,15 @@
 													</div>
 
 													<div class="tab-pane">
+														<liferay-util:buffer var="importFileMark">
+															<aui:a href="#" id="uploadLink">
+																<%= StringUtil.toLowerCase(LanguageUtil.get(request, "import-a-file")) %>
+															</aui:a>
+														</liferay-util:buffer>
+
+														<liferay-ui:message arguments="<%= importFileMark %>" key="write-your-definition-or-x" translateArguments="<%= false %>" />
+														<input id="<portlet:namespace />upload" style="display:none" type="file" />
+
 														<div class="lfr-template-editor-wrapper" id="<portlet:namespace />editorWrapper"></div>
 													</div>
 												</div>
@@ -705,6 +714,38 @@
 										srcNode: '#<portlet:namespace />propertyBuilderContent'
 									}
 								).render();
+
+								var uploadFile = $('#<portlet:namespace />upload');
+
+								uploadFile.on(
+									'change',
+									function(evt) {
+										var files = evt.target.files;
+
+										if (files) {
+											var reader = new FileReader();
+
+											reader.onloadend = function(evt) {
+
+												if (evt.target.readyState == FileReader.DONE) {
+													<portlet:namespace />kaleoDesigner.setEditorContent(evt.target.result);
+												}
+											};
+
+											reader.readAsText(files[0]);
+										}
+									}
+								);
+
+								var uploadLink = $('#<portlet:namespace />uploadLink');
+
+								uploadLink.on(
+									'click',
+									function(event) {
+										event.preventDefault();
+										uploadFile.trigger('click');
+									}
+								);
 
 								<portlet:namespace />kaleoDesigner.contentTabView.after(
 									{

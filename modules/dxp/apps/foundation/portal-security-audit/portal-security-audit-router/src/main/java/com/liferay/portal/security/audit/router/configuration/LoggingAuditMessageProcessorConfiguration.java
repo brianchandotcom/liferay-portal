@@ -30,13 +30,16 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface LoggingAuditMessageProcessorConfiguration {
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(deflt = "false", name = "enabled", required = false)
 	public boolean enabled();
 
-	@Meta.AD(deflt = "CSV", optionValues = {"CSV", "JSON"}, required = false)
+	@Meta.AD(
+		deflt = "CSV", name = "log-message-format",
+		optionValues = {"CSV", "JSON"}, required = false
+	)
 	public String logMessageFormat();
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(deflt = "false", name = "output-to-console", required = false)
 	public boolean outputToConsole();
 
 }

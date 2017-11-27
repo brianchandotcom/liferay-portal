@@ -43,8 +43,8 @@ public class JavaCollatorUtilCheck extends BaseFileCheck {
 		while (index != -1) {
 			if (!ToolsUtil.isInsideQuotes(content, index)) {
 				addMessage(
-					fileName, "Use CollatorUtil.getInstance(Locale) instead",
-					getLineCount(content, index));
+					fileName, "Use CollatorUtil.getInstance(Locale)",
+					"collator.markdown", getLineCount(content, index));
 			}
 
 			index = content.indexOf("Collator.getInstance(", index + 1);

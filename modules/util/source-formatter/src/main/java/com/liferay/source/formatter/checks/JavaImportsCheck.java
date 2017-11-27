@@ -54,7 +54,8 @@ public class JavaImportsCheck extends BaseFileCheck {
 			sb.append("' instead");
 
 			addMessage(
-				fileName, sb.toString(), getLineCount(content, matcher.end()));
+				fileName, sb.toString(), "imports.markdown",
+				getLineCount(content, matcher.end()));
 		}
 
 		return content;

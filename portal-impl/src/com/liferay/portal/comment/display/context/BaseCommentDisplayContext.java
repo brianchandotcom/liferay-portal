@@ -15,6 +15,7 @@
 package com.liferay.portal.comment.display.context;
 
 import com.liferay.portal.kernel.comment.display.context.CommentDisplayContext;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.security.sso.SSOUtil;
 
@@ -27,6 +28,12 @@ public abstract class BaseCommentDisplayContext
 	@Override
 	public boolean isReplyButtonVisible() {
 		ThemeDisplay themeDisplay = getThemeDisplay();
+
+		Group group = themeDisplay.getSiteGroup();
+
+		if (group.isStagingGroup()) {
+			return false;
+		}
 
 		if (themeDisplay.isSignedIn() ||
 			!SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId())) {

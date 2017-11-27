@@ -1,0 +1,5 @@
+.widget-toolbar {
+	.btn + .btn, .widget-group + .widget-group {
+		margin-left: $spacer;
+	}
+}

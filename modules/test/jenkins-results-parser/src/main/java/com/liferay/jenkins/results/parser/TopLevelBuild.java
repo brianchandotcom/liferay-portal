@@ -252,10 +252,10 @@ public class TopLevelBuild extends BaseBuild {
 
 			if (result == null) {
 				if (hasFailure) {
-					setResult("FAILURE");
+					return "FAILURE";
 				}
 				else {
-					setResult("SUCCESS");
+					return "SUCCESS";
 				}
 			}
 		}

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLContentLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLContentLocalService" />
+	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLContentPersistenceImpl" id="com.liferay.document.library.kernel.service.persistence.DLContentPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLFileRankLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLFileRankLocalService" />
+	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileRankPersistenceImpl" id="com.liferay.document.library.kernel.service.persistence.DLFileRankPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileRankFinderImpl" id="com.liferay.document.library.kernel.service.persistence.DLFileRankFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLSyncEventLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLSyncEventLocalService" />
+	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLSyncEventPersistenceImpl" id="com.liferay.document.library.kernel.service.persistence.DLSyncEventPersistence" parent="basePersistence" />
+</beans>

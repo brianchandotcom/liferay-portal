@@ -17,8 +17,8 @@
 
 		<div class="option-value-detail"></div>
 
-		<div>
-			<button class="btn" type="button" onclick="{$_handleSaveOptionValue}">{msg desc=""}Save{/msg}</button>
+		<div class="option-rel-button-row">
+			<button class="btn btn-primary" type="button" onclick="{$_handleSaveOptionValue}">{msg desc=""}Save{/msg}</button>
 
 			{if $cpOptionValueId != '0'}
 				<button class="btn btn-secondary" type="button"  onclick="{$_handleDeleteOptionValue}">{msg desc=""}Delete{/msg}</button>

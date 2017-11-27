@@ -589,7 +589,7 @@ public class LayoutsAdminDisplayContext {
 		return _tabs1;
 	}
 
-	public String getViewLayoutURL(Layout layout) throws PortalException {
+	public String getEditLayoutURL(Layout layout) throws PortalException {
 		return PortalUtil.getLayoutFullURL(layout, _themeDisplay);
 	}
 
@@ -813,7 +813,7 @@ public class LayoutsAdminDisplayContext {
 			jsonObject.put("orphanPortletsURL", getOrphanPortletsURL(layout));
 		}
 
-		jsonObject.put("viewPageURL", getViewLayoutURL(layout));
+		jsonObject.put("editLayoutURL", getEditLayoutURL(layout));
 
 		return jsonObject;
 	}

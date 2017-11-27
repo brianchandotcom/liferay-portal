@@ -12,12 +12,11 @@
  * details.
  */
 
-package com.liferay.bookmarks.internal.trash;
+package com.liferay.bookmarks.web.internal.trash;
 
-import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.bookmarks.service.BookmarksEntryLocalService;
+import com.liferay.bookmarks.asset.BookmarksFolderAssetRenderer;
+import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
-import com.liferay.bookmarks.service.permission.BookmarksEntryPermissionChecker;
 import com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker;
 import com.liferay.bookmarks.util.BookmarksUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -28,6 +27,8 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.trash.TrashHelper;
 
 import javax.portlet.PortletRequest;
 
@@ -35,34 +36,38 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Represents the trash handler for bookmarks entries entity.
+ * Represents the trash handler for bookmarks folder entity.
  *
- * @author Levente Hudák
- * @author Zsolt Berentey
+ * @author Eudaldo Alonso
  */
 @Component(
-	property = {"model.class.name=com.liferay.bookmarks.model.BookmarksEntry"},
+	property = {"model.class.name=com.liferay.bookmarks.model.BookmarksFolder"},
 	service = TrashHandler.class
 )
-public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
+public class BookmarksFolderTrashHandler extends BookmarksBaseTrashHandler {
 
 	@Override
 	public void deleteTrashEntry(long classPK) throws PortalException {
-		_bookmarksEntryLocalService.deleteEntry(classPK);
+		_bookmarksFolderLocalService.deleteFolder(classPK, false);
 	}
 
 	@Override
 	public String getClassName() {
-		return BookmarksEntry.class.getName();
+		return BookmarksFolder.class.getName();
+	}
+
+	@Override
+	public String getDeleteMessage() {
+		return "found-in-deleted-folder-x";
 	}
 
 	@Override
 	public ContainerModel getParentContainerModel(long classPK)
 		throws PortalException {
 
-		BookmarksEntry entry = _bookmarksEntryLocalService.getEntry(classPK);
+		BookmarksFolder folder = getBookmarksFolder(classPK);
 
-		long parentFolderId = entry.getFolderId();
+		long parentFolderId = folder.getParentFolderId();
 
 		if (parentFolderId <= 0) {
 			return null;
@@ -72,12 +77,14 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 	}
 
 	@Override
-	public ContainerModel getParentContainerModel(TrashedModel trashedModel)
+	public String getRestoreContainedModelLink(
+			PortletRequest portletRequest, long classPK)
 		throws PortalException {
 
-		BookmarksEntry entry = (BookmarksEntry)trashedModel;
+		BookmarksFolder folder = getBookmarksFolder(classPK);
 
-		return getContainerModel(entry.getFolderId());
+		return BookmarksUtil.getControlPanelLink(
+			portletRequest, folder.getFolderId());
 	}
 
 	@Override
@@ -85,25 +92,32 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 			PortletRequest portletRequest, long classPK)
 		throws PortalException {
 
-		BookmarksEntry entry = _bookmarksEntryLocalService.getEntry(classPK);
+		BookmarksFolder folder = getBookmarksFolder(classPK);
 
 		return BookmarksUtil.getControlPanelLink(
-			portletRequest, entry.getFolderId());
+			portletRequest, folder.getParentFolderId());
 	}
 
 	@Override
 	public String getRestoreMessage(PortletRequest portletRequest, long classPK)
 		throws PortalException {
 
-		BookmarksEntry entry = _bookmarksEntryLocalService.getEntry(classPK);
+		BookmarksFolder folder = getBookmarksFolder(classPK);
 
 		return BookmarksUtil.getAbsolutePath(
-			portletRequest, entry.getFolderId());
+			portletRequest, folder.getParentFolderId());
 	}
 
 	@Override
 	public TrashedModel getTrashedModel(long classPK) {
-		return _bookmarksEntryLocalService.fetchBookmarksEntry(classPK);
+		return _bookmarksFolderLocalService.fetchBookmarksFolder(classPK);
+	}
+
+	@Override
+	public TrashRenderer getTrashRenderer(long classPK) throws PortalException {
+		BookmarksFolder folder = getBookmarksFolder(classPK);
+
+		return new BookmarksFolderAssetRenderer(folder, _trashHelper);
 	}
 
 	@Override
@@ -114,7 +128,7 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 
 		if (trashActionId.equals(TrashActionKeys.MOVE)) {
 			return BookmarksFolderPermissionChecker.contains(
-				permissionChecker, groupId, classPK, ActionKeys.ADD_ENTRY);
+				permissionChecker, groupId, classPK, ActionKeys.ADD_FOLDER);
 		}
 
 		return super.hasTrashPermission(
@@ -122,17 +136,22 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 	}
 
 	@Override
-	public boolean isRestorable(long classPK) throws PortalException {
-		BookmarksEntry entry = _bookmarksEntryLocalService.getEntry(classPK);
+	public boolean isContainerModel() {
+		return true;
+	}
 
-		if ((entry.getFolderId() > 0) &&
+	@Override
+	public boolean isRestorable(long classPK) throws PortalException {
+		BookmarksFolder folder = getBookmarksFolder(classPK);
+
+		if ((folder.getParentFolderId() > 0) &&
 			(_bookmarksFolderLocalService.fetchBookmarksFolder(
-				entry.getFolderId()) == null)) {
+				folder.getParentFolderId()) == null)) {
 
 			return false;
 		}
 
-		return !entry.isInTrashContainer();
+		return !folder.isInTrashContainer();
 	}
 
 	@Override
@@ -141,7 +160,7 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_bookmarksEntryLocalService.moveEntry(classPK, containerModelId);
+		_bookmarksFolderLocalService.moveFolder(classPK, containerModelId);
 	}
 
 	@Override
@@ -150,7 +169,7 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_bookmarksEntryLocalService.moveEntryFromTrash(
+		_bookmarksFolderLocalService.moveFolderFromTrash(
 			userId, classPK, containerId);
 	}
 
@@ -158,14 +177,20 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 	public void restoreTrashEntry(long userId, long classPK)
 		throws PortalException {
 
-		_bookmarksEntryLocalService.restoreEntryFromTrash(userId, classPK);
+		_bookmarksFolderLocalService.restoreFolderFromTrash(userId, classPK);
+	}
+
+	protected BookmarksFolder getBookmarksFolder(long classPK)
+		throws PortalException {
+
+		return _bookmarksFolderLocalService.getFolder(classPK);
 	}
 
 	@Override
 	protected long getGroupId(long classPK) throws PortalException {
-		BookmarksEntry entry = _bookmarksEntryLocalService.getEntry(classPK);
+		BookmarksFolder folder = getBookmarksFolder(classPK);
 
-		return entry.getGroupId();
+		return folder.getGroupId();
 	}
 
 	@Override
@@ -173,17 +198,10 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		BookmarksEntry entry = _bookmarksEntryLocalService.getEntry(classPK);
+		BookmarksFolder folder = getBookmarksFolder(classPK);
 
-		return BookmarksEntryPermissionChecker.contains(
-			permissionChecker, entry, actionId);
-	}
-
-	@Reference(unbind = "-")
-	protected void setBookmarksEntryLocalService(
-		BookmarksEntryLocalService bookmarksEntryLocalService) {
-
-		_bookmarksEntryLocalService = bookmarksEntryLocalService;
+		return BookmarksFolderPermissionChecker.contains(
+			permissionChecker, folder, actionId);
 	}
 
 	@Reference(unbind = "-")
@@ -193,7 +211,9 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 		_bookmarksFolderLocalService = bookmarksFolderLocalService;
 	}
 
-	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 	private BookmarksFolderLocalService _bookmarksFolderLocalService;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

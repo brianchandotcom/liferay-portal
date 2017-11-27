@@ -39,7 +39,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author     Levente Hudák
  * @author     Zsolt Berentey
  * @deprecated As of 1.1.0, moved to {@link
- *             com.liferay.bookmarks.internal.trash.BookmarksEntryTrashHandler}
+ *             com.liferay.bookmarks.web.internal.trash.
+ *             BookmarksEntryTrashHandler}
  */
 @Deprecated
 public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {

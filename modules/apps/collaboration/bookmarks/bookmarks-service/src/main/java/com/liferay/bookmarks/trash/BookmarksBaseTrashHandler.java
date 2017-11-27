@@ -35,7 +35,8 @@ import java.util.List;
  *
  * @author     Eudaldo Alonso
  * @deprecated As of 1.1.0, moved to {@link
- *             com.liferay.bookmarks.internal.trash.BookmarksBaseTrashHandler}
+ *             com.liferay.bookmarks.web.internal.trash.
+ *             BookmarksBaseTrashHandler}
  */
 @Deprecated
 public abstract class BookmarksBaseTrashHandler extends BaseTrashHandler {

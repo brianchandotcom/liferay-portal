@@ -23,12 +23,14 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "forms-and-workflow")
 @Meta.OCD(
-	id = "com.liferay.portal.reports.engine.console.web.admin.configuration.ReportsEngineAdminWebConfiguration"
+	id = "com.liferay.portal.reports.engine.console.web.admin.configuration.ReportsEngineAdminWebConfiguration",
+	name = "reports-engine-admin-web-configuration-name"
 )
 public interface ReportsEngineAdminWebConfiguration {
 
 	@Meta.AD(
-		deflt = "list", optionLabels = {"Descriptive", "List"},
+		deflt = "list", name = "default-display-view",
+		optionLabels = {"Descriptive", "List"},
 		optionValues = {"descriptive", "list"}, required = false
 	)
 	public String defaultDisplayView();

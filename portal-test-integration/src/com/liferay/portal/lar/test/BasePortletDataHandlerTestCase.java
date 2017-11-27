@@ -130,16 +130,7 @@ public abstract class BasePortletDataHandlerTestCase {
 		ManifestSummary manifestSummary =
 			portletDataContext.getManifestSummary();
 
-		for (String manifestSummaryKey :
-				manifestSummary.getManifestSummaryKeys()) {
-
-			Assert.assertFalse(
-				manifestSummaryKey.endsWith(
-					StagedModelType.REFERRER_CLASS_NAME_ALL));
-			Assert.assertFalse(
-				manifestSummaryKey.endsWith(
-					StagedModelType.REFERRER_CLASS_NAME_ANY));
-		}
+		checkManifestSummaryReferrerClassNames(manifestSummary);
 
 		for (String manifestSummaryKey :
 				expectedManifestSummary.getManifestSummaryKeys()) {
@@ -167,6 +158,21 @@ public abstract class BasePortletDataHandlerTestCase {
 				Assert.assertEquals(
 					expectedModelAdditionCount, modelAdditionCount);
 			}
+		}
+	}
+
+	protected void checkManifestSummaryReferrerClassNames(
+		ManifestSummary manifestSummary) {
+
+		for (String manifestSummaryKey :
+				manifestSummary.getManifestSummaryKeys()) {
+
+			Assert.assertFalse(
+				manifestSummaryKey.endsWith(
+					StagedModelType.REFERRER_CLASS_NAME_ALL));
+			Assert.assertFalse(
+				manifestSummaryKey.endsWith(
+					StagedModelType.REFERRER_CLASS_NAME_ANY));
 		}
 	}
 

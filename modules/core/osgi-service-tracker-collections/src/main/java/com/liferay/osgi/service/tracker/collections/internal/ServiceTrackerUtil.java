@@ -14,6 +14,9 @@
 
 package com.liferay.osgi.service.tracker.collections.internal;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Filter;
 import org.osgi.framework.InvalidSyntaxException;
@@ -30,10 +33,15 @@ public class ServiceTrackerUtil {
 		ServiceTrackerCustomizer<SR, TS> serviceTrackerCustomizer) {
 
 		if (filterString != null) {
+			if (clazz != null) {
+				filterString = StringBundler.concat(
+					"(&(objectClass=", clazz.getName(),
+					StringPool.CLOSE_PARENTHESIS, filterString,
+					StringPool.CLOSE_PARENTHESIS);
+			}
+
 			try {
-				Filter filter = bundleContext.createFilter(
-					"(&(objectClass=" + clazz.getName() + ")" + filterString +
-						")");
+				Filter filter = bundleContext.createFilter(filterString);
 
 				return new ServiceTracker<>(
 					bundleContext, filter, serviceTrackerCustomizer);
@@ -44,10 +52,14 @@ public class ServiceTrackerUtil {
 				return null;
 			}
 		}
-		else {
+
+		if (clazz != null) {
 			return new ServiceTracker<>(
 				bundleContext, clazz, serviceTrackerCustomizer);
 		}
+
+		throw new IllegalArgumentException(
+			"Filter string and clazz can not both be null.");
 	}
 
 	public static <T> T throwException(Throwable throwable) {

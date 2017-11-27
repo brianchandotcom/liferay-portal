@@ -17,19 +17,19 @@ package com.liferay.portal.struts;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.struts.StrutsPortletAction;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceRegistration;
-import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.registry.collections.ServiceTrackerMap;
+import com.liferay.registry.collections.ServiceTrackerMapFactory;
+import com.liferay.registry.collections.ServiceTrackerMapFactoryUtil;
 import com.liferay.registry.collections.StringServiceRegistrationMap;
 import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.struts.action.Action;
 
@@ -40,15 +40,15 @@ import org.apache.struts.action.Action;
 public class StrutsActionRegistryUtil {
 
 	public static Action getAction(String path) {
-		Action action = _actions.get(path);
+		Action action = _actions.getService(path);
 
 		if (action != null) {
 			return action;
 		}
 
-		for (Map.Entry<String, Action> entry : _actions.entrySet()) {
-			if (path.startsWith(entry.getKey())) {
-				return entry.getValue();
+		for (String key : _actions.keySet()) {
+			if (path.startsWith(key)) {
+				return _actions.getService(key);
 			}
 		}
 
@@ -56,7 +56,13 @@ public class StrutsActionRegistryUtil {
 	}
 
 	public static Map<String, Action> getActions() {
-		return _actions;
+		Map<String, Action> map = new HashMap<>();
+
+		for (String key : _actions.keySet()) {
+			map.put(key, _actions.getService(key));
+		}
+
+		return map;
 	}
 
 	public static void register(String path, StrutsAction strutsAction) {
@@ -105,9 +111,19 @@ public class StrutsActionRegistryUtil {
 		}
 	}
 
-	private static final Map<String, Action> _actions =
-		new ConcurrentHashMap<>();
-	private static final ServiceTracker<?, Action> _serviceTracker;
+	private static String[] _getPaths(
+		ServiceReference<Object> serviceReference) {
+
+		Object object = serviceReference.getProperty("path");
+
+		if (object instanceof String[]) {
+			return (String[])object;
+		}
+
+		return new String[] {(String)object};
+	}
+
+	private static final ServiceTrackerMap<String, Action> _actions;
 	private static final StringServiceRegistrationMap<StrutsAction>
 		_strutsActionServiceRegistrations =
 			new StringServiceRegistrationMapImpl<>();
@@ -133,12 +149,6 @@ public class StrutsActionRegistryUtil {
 				action = new PortletActionAdapter((StrutsPortletAction)service);
 			}
 
-			String[] paths = _getPaths(serviceReference);
-
-			for (String path : paths) {
-				_actions.put(path, action);
-			}
-
 			return action;
 		}
 
@@ -154,40 +164,30 @@ public class StrutsActionRegistryUtil {
 			Registry registry = RegistryUtil.getRegistry();
 
 			registry.ungetService(serviceReference);
-
-			String[] paths = _getPaths(serviceReference);
-
-			for (String path : paths) {
-				_actions.remove(path);
-			}
-		}
-
-		private String[] _getPaths(ServiceReference<Object> serviceReference) {
-			Object object = serviceReference.getProperty("path");
-
-			if (object instanceof String[]) {
-				return (String[])object;
-			}
-			else {
-				return new String[] {(String)object};
-			}
 		}
 
 	}
 
 	static {
-		Registry registry = RegistryUtil.getRegistry();
+		String filterString = StringBundler.concat(
+			"(&(|(objectClass=", StrutsAction.class.getName(), ")(objectClass=",
+			StrutsPortletAction.class.getName(), "))(path=*))");
 
-		Filter filter = registry.getFilter(
-			StringBundler.concat(
-				"(&(|(objectClass=", StrutsAction.class.getName(),
-				")(objectClass=", StrutsPortletAction.class.getName(),
-				"))(path=*))"));
+		ServiceTrackerMapFactory serviceTrackerMapFactory =
+			ServiceTrackerMapFactoryUtil.getServiceTrackerMapFactory();
 
-		_serviceTracker = registry.trackServices(
-			filter, new ActionServiceTrackerCustomizer());
+		_actions = serviceTrackerMapFactory.singleValueMap(
+			null, filterString,
+			(serviceReference, emitter) -> {
+				String[] paths = _getPaths(serviceReference);
 
-		_serviceTracker.open();
+				for (String path : paths) {
+					emitter.emit(path);
+				}
+			},
+			new ActionServiceTrackerCustomizer());
+
+		_actions.open();
 	}
 
 }

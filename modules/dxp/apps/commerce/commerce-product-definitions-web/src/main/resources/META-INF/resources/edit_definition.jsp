@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-product-definitions");
+
 CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
@@ -50,6 +52,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 request.setAttribute("view.jsp-showSearch", false);
 %>
 
+<%@ include file="/navbar.jspf" %>
 <%@ include file="/breadcrumb.jspf" %>
 
 <liferay-frontend:screen-navigation

@@ -18,12 +18,6 @@
 
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-product-options");
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("toolbarItem", toolbarItem);
-
-request.setAttribute("view.jsp-portletURL", portletURL);
 %>
 
 <%@ include file="/navbar.jspf" %>

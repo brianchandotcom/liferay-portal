@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Portal Impl Message Boards Compat
+Bundle-SymbolicName: com.liferay.portal.impl.message.boards.compat
+Bundle-Version: 1.0.0
+Export-Package:\
+    com.liferay.portal.verify.model,\
+    com.liferay.portlet.messageboards.model.impl,\
+    com.liferay.portlet.messageboards.service.base,\
+    com.liferay.portlet.messageboards.service.impl,\
+    com.liferay.portlet.messageboards.service.persistence.impl

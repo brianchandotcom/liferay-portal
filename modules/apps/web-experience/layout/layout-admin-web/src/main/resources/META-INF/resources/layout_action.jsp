@@ -23,116 +23,57 @@ Layout curLayout = (Layout)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, curLayout, ActionKeys.UPDATE) %>">
-		<portlet:renderURL var="editLayoutURL">
-			<portlet:param name="mvcPath" value="/edit_layout.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="backURL" value="<%= currentURL %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(curLayout.getGroupId()) %>" />
-			<portlet:param name="selPlid" value="<%= String.valueOf(curLayout.getPlid()) %>" />
-			<portlet:param name="privateLayout" value="<%= String.valueOf(curLayout.isPrivateLayout()) %>" />
-		</portlet:renderURL>
-
+	<c:if test="<%= layoutsAdminDisplayContext.showConfigureAction(curLayout) %>">
 		<liferay-ui:icon
 			message="configure"
-			url="<%= editLayoutURL %>"
+			url="<%= layoutsAdminDisplayContext.getEditLayoutURL(curLayout) %>"
 		/>
 	</c:if>
 
-	<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, curLayout, ActionKeys.ADD_LAYOUT) %>">
+	<c:if test="<%= layoutsAdminDisplayContext.showAddChildPageAction(curLayout) %>">
+
+		<%
+		PortletURL addLayoutURL = layoutsAdminDisplayContext.getAddLayoutURL(curLayout.getPlid(), curLayout.isPrivateLayout());
+		%>
+
 		<liferay-ui:icon
 			message="add-child-page"
-			url="<%= layoutsAdminDisplayContext.getAddLayoutURL(curLayout.getPlid(), curLayout.isPrivateLayout()) %>"
+			url="<%= addLayoutURL.toString() %>"
 		/>
 	</c:if>
 
-	<%
-	Group selGroup = layoutsAdminDisplayContext.getSelGroup();
-	%>
-
-	<c:if test="<%= !StagingUtil.isIncomplete(curLayout) && !selGroup.isLayoutPrototype() && LayoutPermissionUtil.contains(themeDisplay.getPermissionChecker(), curLayout, ActionKeys.PERMISSIONS) %>">
-		<liferay-security:permissionsURL
-			modelResource="<%= Layout.class.getName() %>"
-			modelResourceDescription="<%= HtmlUtil.escape(curLayout.getName(themeDisplay.getLocale())) %>"
-			resourcePrimKey="<%= String.valueOf(curLayout.getPlid()) %>"
-			var="permissionsURL"
-			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-		/>
-
+	<c:if test="<%= layoutsAdminDisplayContext.showPermissionsAction(curLayout) %>">
 		<liferay-ui:icon
 			message="permissions"
 			method="get"
-			url="<%= permissionsURL %>"
+			url="<%= layoutsAdminDisplayContext.getPermissionsURL(curLayout) %>"
 			useDialog="<%= true %>"
 		/>
 	</c:if>
 
 	<c:if test="<%= layoutsAdminDisplayContext.showCopyApplicationsAction(curLayout) %>">
-		<portlet:renderURL var="copyApplicationsURL">
-			<portlet:param name="mvcPath" value="/copy_applications.jsp" />
-			<portlet:param name="backURL" value="<%= currentURL %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(curLayout.getGroupId()) %>" />
-			<portlet:param name="selPlid" value="<%= String.valueOf(curLayout.getPlid()) %>" />
-			<portlet:param name="privateLayout" value="<%= String.valueOf(curLayout.isPrivateLayout()) %>" />
-		</portlet:renderURL>
-
 		<liferay-ui:icon
 			message="copy-applications"
-			url="<%= copyApplicationsURL %>"
+			url="<%= layoutsAdminDisplayContext.getCopyApplicationsURL(curLayout) %>"
 		/>
 	</c:if>
 
-	<%
-	OrphanPortletsDisplayContext orphanPortletsDisplayContext = new OrphanPortletsDisplayContext(renderRequest);
-	%>
-
-	<c:if test="<%= !StagingUtil.isIncomplete(curLayout) && curLayout.isSupportsEmbeddedPortlets() && ListUtil.isNotEmpty(orphanPortletsDisplayContext.getOrphanPortlets(curLayout)) %>">
-		<portlet:renderURL var="orphanPortletsURL">
-			<portlet:param name="mvcPath" value="/orphan_portlets.jsp" />
-			<portlet:param name="backURL" value="<%= currentURL %>" />
-			<portlet:param name="selPlid" value="<%= String.valueOf(curLayout.getPlid()) %>" />
-		</portlet:renderURL>
-
+	<c:if test="<%= layoutsAdminDisplayContext.showOrphanPortletsAction(curLayout) %>">
 		<liferay-ui:icon
 			message="orphan-portlets"
-			url="<%= orphanPortletsURL %>"
+			url="<%= layoutsAdminDisplayContext.getOrphanPortletsURL(curLayout) %>"
 		/>
 	</c:if>
 
 	<liferay-ui:icon
 		message="view-page"
 		target="_blank"
-		url="<%= PortalUtil.getLayoutFullURL(curLayout, themeDisplay) %>"
+		url="<%= layoutsAdminDisplayContext.getViewLayoutURL(curLayout) %>"
 	/>
 
-	<%
-	boolean isDeletable = true;
-
-	if (StagingUtil.isIncomplete(curLayout)) {
-		isDeletable = false;
-	}
-
-	if (!LayoutPermissionUtil.contains(permissionChecker, curLayout, ActionKeys.DELETE)) {
-		isDeletable = false;
-	}
-
-	Group group = curLayout.getGroup();
-
-	int layoutsCount = LayoutLocalServiceUtil.getLayoutsCount(group, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-	if (group.isGuest() && !curLayout.isPrivateLayout() && curLayout.isRootLayout() && (layoutsCount == 1)) {
-		isDeletable = false;
-	}
-	%>
-
-	<c:if test="<%= isDeletable %>">
-		<portlet:actionURL name="/layout/delete_layout" var="deleteLayoutURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="selPlid" value="<%= String.valueOf(curLayout.getPlid()) %>" />
-		</portlet:actionURL>
-
+	<c:if test="<%= layoutsAdminDisplayContext.showDeleteAction(curLayout) %>">
 		<liferay-ui:icon-delete
-			url="<%= deleteLayoutURL %>"
+			url="<%= layoutsAdminDisplayContext.getDeleteLayoutURL(curLayout) %>"
 		/>
 	</c:if>
 </liferay-ui:icon-menu>

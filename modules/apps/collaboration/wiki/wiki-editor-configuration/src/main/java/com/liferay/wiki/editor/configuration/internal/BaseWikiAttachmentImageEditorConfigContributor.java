@@ -134,6 +134,8 @@ public abstract class BaseWikiAttachmentImageEditorConfigContributor
 		uploadURL.setParameter(
 			ActionRequest.ACTION_NAME, "/wiki/upload_page_attachment");
 		uploadURL.setParameter(
+			"mimeTypes", PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES);
+		uploadURL.setParameter(
 			"resourcePrimKey", String.valueOf(wikiPageResourcePrimKey));
 
 		ItemSelectorCriterion uploadItemSelectorCriterion =

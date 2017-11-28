@@ -287,28 +287,50 @@ public class GitWorkingDirectory {
 	public Branch createLocalBranch(
 		String branchName, boolean force, String startPoint) {
 
-		StringBuilder sb = new StringBuilder();
+		Branch currentBranch = getCurrentBranch();
 
-		sb.append("git branch ");
+		Branch tempBranch = null;
 
-		if (force) {
-			sb.append("-f ");
+		try {
+			if (branchName.equals(currentBranch.getName())) {
+				String tempBranchName = "temp-" + System.currentTimeMillis();
+
+				tempBranch = createLocalBranch(tempBranchName);
+
+				checkoutBranch(tempBranch);
+			}
+
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("git branch ");
+
+			if (force) {
+				sb.append("-f ");
+			}
+
+			sb.append(branchName);
+
+			if (startPoint != null) {
+				sb.append(" ");
+				sb.append(startPoint);
+			}
+
+			ExecutionResult executionResult = executeBashCommands(
+				sb.toString());
+
+			if (executionResult.getExitValue() != 0) {
+				throw new RuntimeException(
+					JenkinsResultsParserUtil.combine(
+						"Unable to create local branch ", branchName, " at ",
+						startPoint, "\n", executionResult.getStandardError()));
+			}
 		}
+		finally {
+			if (tempBranch != null) {
+				checkoutBranch(currentBranch);
 
-		sb.append(branchName);
-
-		if (startPoint != null) {
-			sb.append(" ");
-			sb.append(startPoint);
-		}
-
-		ExecutionResult executionResult = executeBashCommands(sb.toString());
-
-		if (executionResult.getExitValue() != 0) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to create local branch ", branchName, " at ",
-					startPoint, "\n", executionResult.getStandardError()));
+				deleteBranch(tempBranch);
+			}
 		}
 
 		return getBranch(branchName, null);
@@ -381,30 +403,58 @@ public class GitWorkingDirectory {
 				remoteBranch.getSHA() + " already exists in repository");
 
 			if (localBranch != null) {
-				Branch currentBranch = getCurrentBranch();
-
-				String tempBranchName = "temp-" + System.currentTimeMillis();
-
-				Branch tempBranch = null;
-
-				try {
-					tempBranch = createLocalBranch(tempBranchName);
-
-					checkoutBranch(tempBranch);
-
-					createLocalBranch(
-						localBranch.getName(), true, remoteBranch.getSHA());
-				}
-				finally {
-					checkoutBranch(currentBranch);
-
-					if (tempBranch != null) {
-						deleteBranch(tempBranch);
-					}
-				}
+				createLocalBranch(
+					localBranch.getName(), true, remoteBranch.getSHA());
 			}
 
 			return;
+		}
+		else {
+			Remote remote = remoteBranch.getRemote();
+
+			String remoteURL = remote.getRemoteURL();
+
+			if (remoteURL.contains("github-dev.liferay.com")) {
+				executeBashCommands("rm -f ~/.ssh/known_hosts");
+			}
+
+			if (remoteURL.contains("github.com:liferay")) {
+				remoteURL = remoteURL.replace(
+					"github.com:liferay", "github-dev.liferay.com:liferay");
+
+				Remote gitHubDevRemote = null;
+
+				try {
+					gitHubDevRemote = addRemote(
+						true, "github-dev-remote", remoteURL);
+
+					Branch localGitRemoteBranch = getBranch(
+						remoteBranch.getName(), gitHubDevRemote);
+
+					if (localGitRemoteBranch != null) {
+						fetch(localBranch, noTags, localGitRemoteBranch);
+
+						String upstreamBranchSHA = remoteBranch.getSHA();
+
+						if (localSHAExists(upstreamBranchSHA)) {
+							if (!upstreamBranchSHA.equals(
+									localGitRemoteBranch.getSHA())) {
+
+								createLocalBranch(
+									localBranch.getName(), true,
+									remoteBranch.getSHA());
+							}
+
+							return;
+						}
+					}
+				}
+				finally {
+					if (gitHubDevRemote != null) {
+						removeRemote(gitHubDevRemote);
+					}
+				}
+			}
 		}
 
 		StringBuilder sb = new StringBuilder();

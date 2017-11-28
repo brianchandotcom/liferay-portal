@@ -83,6 +83,7 @@ public class SystemEventLocalServiceImpl
 			type, extraData, StringPool.BLANK);
 	}
 
+	@Override
 	public void checkSystemEvents() throws PortalException {
 		if (PropsValues.STAGING_SYSTEM_EVENT_MAX_AGE <= 0) {
 			return;
@@ -142,6 +143,7 @@ public class SystemEventLocalServiceImpl
 			groupId, classNameId, classPK, type);
 	}
 
+	@Override
 	public boolean validateGroup(long groupId) throws PortalException {
 		if (groupId > 0) {
 			Group group = groupLocalService.getGroup(groupId);

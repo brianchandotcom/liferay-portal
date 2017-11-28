@@ -80,6 +80,7 @@ public class ExportedMissingReferenceBackwardCompatbilityExportImportTest
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 
@@ -91,6 +92,7 @@ public class ExportedMissingReferenceBackwardCompatbilityExportImportTest
 	}
 
 	@After
+	@Override
 	public void tearDown() throws Exception {
 		ExportImportLifecycleEventListenerRegistryUtil.unregister(
 			_removeAttributeFromLARExportImportLifecycleListener);

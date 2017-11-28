@@ -31,6 +31,7 @@ import org.osgi.service.component.annotations.Component;
 public class UserFileUploadsConfigurationDDMFormDeclaration
 	implements ConfigurationDDMFormDeclaration {
 
+	@Override
 	public Class<?> getDDMFormClass() {
 		return UserFileUploadsConfigurationForm.class;
 	}

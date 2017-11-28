@@ -41,6 +41,7 @@ public class UpgradeUploadServletRequestConfiguration extends UpgradeProcess {
 		_prefsProps = prefsProps;
 	}
 
+	@Override
 	protected void doUpgrade() throws Exception {
 		Configuration configuration = _configurationAdmin.getConfiguration(
 			UploadServletRequestConfiguration.class.getName(),

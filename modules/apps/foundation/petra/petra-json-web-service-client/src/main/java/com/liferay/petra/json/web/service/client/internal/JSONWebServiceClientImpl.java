@@ -68,6 +68,7 @@ public class JSONWebServiceClientImpl extends BaseJSONWebServiceClientImpl {
 		afterPropertiesSet();
 	}
 
+	@Override
 	public void afterPropertiesSet() throws IOReactorException {
 		super.afterPropertiesSet();
 	}

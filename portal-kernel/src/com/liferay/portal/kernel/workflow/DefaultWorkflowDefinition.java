@@ -51,6 +51,7 @@ public class DefaultWorkflowDefinition
 		return _inputStream;
 	}
 
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}

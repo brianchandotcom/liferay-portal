@@ -37,6 +37,7 @@ import org.osgi.service.component.annotations.Component;
 public class WikiContentAlloyEditorCreoleLinkBrowseConfigContributor
 	extends BaseWikiContentAlloyEditorLinkBrowseConfigContributor {
 
+	@Override
 	protected ItemSelectorReturnType getItemSelectorReturnType() {
 		return new WikiPageTitleItemSelectorReturnType();
 	}

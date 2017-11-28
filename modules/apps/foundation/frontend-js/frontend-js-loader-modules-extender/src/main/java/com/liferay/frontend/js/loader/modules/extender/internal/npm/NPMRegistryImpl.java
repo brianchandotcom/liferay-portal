@@ -72,6 +72,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 	 * @param  identifier the NPM module's ID
 	 * @return the NPM module descriptor with the ID
 	 */
+	@Override
 	public JSModule getJSModule(String identifier) {
 		return _jsModules.get(identifier);
 	}
@@ -92,6 +93,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 	 *
 	 * @return the deployed NPM packages
 	 */
+	@Override
 	public Collection<JSPackage> getJSPackages() {
 		return _jsPackages.values();
 	}
@@ -102,6 +104,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 	 * @param  identifier the resolved module's ID
 	 * @return the resolved module with the ID
 	 */
+	@Override
 	public JSModule getResolvedJSModule(String identifier) {
 		return _resolvedJSModules.get(identifier);
 	}
@@ -111,10 +114,12 @@ public class NPMRegistryImpl implements NPMRegistry {
 	 *
 	 * @return the resolved modules deployed to the portal
 	 */
+	@Override
 	public Collection<JSModule> getResolvedJSModules() {
 		return _resolvedJSModules.values();
 	}
 
+	@Override
 	public JSPackage resolveJSPackageDependency(
 		JSPackageDependency jsPackageDependency) {
 

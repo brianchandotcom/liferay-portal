@@ -43,14 +43,17 @@ public class BaseCommit implements Commit {
 		return false;
 	}
 
+	@Override
 	public String getAbbreviatedSHA() {
 		return _sha.substring(0, 7);
 	}
 
+	@Override
 	public String getMessage() {
 		return _message;
 	}
 
+	@Override
 	public String getSHA() {
 		return _sha;
 	}

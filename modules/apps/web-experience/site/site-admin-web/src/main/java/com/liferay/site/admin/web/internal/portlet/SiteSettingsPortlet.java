@@ -51,6 +51,7 @@ import org.osgi.service.component.annotations.Component;
 )
 public class SiteSettingsPortlet extends SiteAdminPortlet {
 
+	@Override
 	protected PortletURL getSiteAdministrationURL(
 		ActionRequest actionRequest, Group group) {
 

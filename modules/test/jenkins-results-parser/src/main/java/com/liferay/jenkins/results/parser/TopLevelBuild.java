@@ -690,6 +690,7 @@ public class TopLevelBuild extends BaseBuild {
 			getJenkinsReportDownstreamElement());
 	}
 
+	@Override
 	protected String getJenkinsReportBuildInfoCellElementTagName() {
 		return "th";
 	}

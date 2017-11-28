@@ -53,6 +53,7 @@ public class PoshiElementAttribute implements Attribute {
 		return _attribute.asXPathResult(parent);
 	}
 
+	@Override
 	public Object clone() {
 		return new PoshiElementAttribute((Attribute)_attribute.clone());
 	}

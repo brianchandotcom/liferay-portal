@@ -361,6 +361,7 @@ public class BatchBuild extends BaseBuild {
 		return getGitHubMessageJobResultsElement(false);
 	}
 
+	@Override
 	protected Element getGitHubMessageJobResultsElement(
 		boolean showCommonFailuresCount) {
 
@@ -413,6 +414,7 @@ public class BatchBuild extends BaseBuild {
 				" Failed.", getFailureMessageElement()));
 	}
 
+	@Override
 	protected String getJenkinsReportBuildInfoCellElementTagName() {
 		return "th";
 	}

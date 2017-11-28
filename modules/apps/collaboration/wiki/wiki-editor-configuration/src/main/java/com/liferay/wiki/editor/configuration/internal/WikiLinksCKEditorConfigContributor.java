@@ -36,6 +36,7 @@ import org.osgi.service.component.annotations.Component;
 public class WikiLinksCKEditorConfigContributor
 	extends BaseWikiLinksCKEditorConfigContributor {
 
+	@Override
 	protected ItemSelectorReturnType getItemSelectorReturnType() {
 		return new WikiPageURLItemSelectorReturnType();
 	}

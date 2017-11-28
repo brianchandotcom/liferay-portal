@@ -83,6 +83,7 @@ public class WabBuildAutoUpgradeTest extends BaseBuildAutoUpgradeTestCase {
 	}
 
 	@After
+	@Override
 	public void tearDown() throws Throwable {
 		super.tearDown();
 

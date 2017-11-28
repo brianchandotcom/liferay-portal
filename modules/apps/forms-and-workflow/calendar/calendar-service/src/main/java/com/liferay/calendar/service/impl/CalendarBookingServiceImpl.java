@@ -386,6 +386,7 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 		return calendarBookings;
 	}
 
+	@Override
 	public List<CalendarBooking> getChildCalendarBookings(
 			long parentCalendarBookingId,
 			boolean includeStagingCalendarBookings)

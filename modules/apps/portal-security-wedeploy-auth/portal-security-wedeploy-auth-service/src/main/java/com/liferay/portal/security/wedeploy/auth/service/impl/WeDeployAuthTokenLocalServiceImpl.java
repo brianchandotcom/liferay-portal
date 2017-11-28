@@ -123,6 +123,7 @@ public class WeDeployAuthTokenLocalServiceImpl
 		return weDeployAuthToken;
 	}
 
+	@Override
 	public WeDeployAuthToken getWeDeployAuthToken(String token, int type)
 		throws PortalException {
 

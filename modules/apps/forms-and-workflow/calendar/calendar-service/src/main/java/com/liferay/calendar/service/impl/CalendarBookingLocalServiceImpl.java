@@ -896,6 +896,7 @@ public class CalendarBookingLocalServiceImpl
 		return followingRecurringCalendarBookings;
 	}
 
+	@Override
 	public boolean hasExclusiveCalendarBooking(
 			Calendar calendar, long startTime, long endTime)
 		throws PortalException {
@@ -1004,6 +1005,7 @@ public class CalendarBookingLocalServiceImpl
 		return calendarBooking;
 	}
 
+	@Override
 	public boolean isStagingCalendarBooking(CalendarBooking calendarBooking)
 		throws PortalException {
 

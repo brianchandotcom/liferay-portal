@@ -30,6 +30,7 @@ import com.liferay.tasks.service.permission.TasksPermission;
  */
 public class TasksEntryServiceImpl extends TasksEntryServiceBaseImpl {
 
+	@Override
 	public TasksEntry addTasksEntry(
 			String title, int priority, long assigneeUserId, int dueDateMonth,
 			int dueDateDay, int dueDateYear, int dueDateHour, int dueDateMinute,
@@ -46,6 +47,7 @@ public class TasksEntryServiceImpl extends TasksEntryServiceBaseImpl {
 			serviceContext);
 	}
 
+	@Override
 	public TasksEntry deleteTasksEntry(long tasksEntryId)
 		throws PortalException {
 
@@ -55,6 +57,7 @@ public class TasksEntryServiceImpl extends TasksEntryServiceBaseImpl {
 		return tasksEntryLocalService.deleteTasksEntry(tasksEntryId);
 	}
 
+	@Override
 	public TasksEntry getTasksEntry(long tasksEntryId) throws PortalException {
 		TasksEntryPermission.check(
 			getPermissionChecker(), tasksEntryId, ActionKeys.VIEW);
@@ -62,6 +65,7 @@ public class TasksEntryServiceImpl extends TasksEntryServiceBaseImpl {
 		return tasksEntryLocalService.getTasksEntry(tasksEntryId);
 	}
 
+	@Override
 	public TasksEntry updateTasksEntry(
 			long tasksEntryId, String title, int priority, long assigneeUserId,
 			long resolverUserId, int dueDateMonth, int dueDateDay,
@@ -78,6 +82,7 @@ public class TasksEntryServiceImpl extends TasksEntryServiceBaseImpl {
 			neverDue, status, serviceContext);
 	}
 
+	@Override
 	public TasksEntry updateTasksEntryStatus(
 			long tasksEntryId, long resolverUserId, int status,
 			ServiceContext serviceContext)

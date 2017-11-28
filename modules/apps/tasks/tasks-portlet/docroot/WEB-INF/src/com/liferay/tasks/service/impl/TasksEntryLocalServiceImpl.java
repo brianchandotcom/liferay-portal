@@ -46,6 +46,7 @@ import java.util.List;
  */
 public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 
+	@Override
 	public TasksEntry addTasksEntry(
 			long userId, String title, int priority, long assigneeUserId,
 			int dueDateMonth, int dueDateDay, int dueDateYear, int dueDateHour,
@@ -154,6 +155,7 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 		return tasksEntry;
 	}
 
+	@Override
 	public List<TasksEntry> getAssigneeTasksEntries(
 		long assigneeUserId, int start, int end) {
 
@@ -161,10 +163,12 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 			assigneeUserId, start, end);
 	}
 
+	@Override
 	public int getAssigneeTasksEntriesCount(long assigneeUserId) {
 		return tasksEntryPersistence.countByAssigneeUserId(assigneeUserId);
 	}
 
+	@Override
 	public List<TasksEntry> getGroupAssigneeTasksEntries(
 		long groupId, long assigneeUserId, int start, int end) {
 
@@ -172,12 +176,14 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 			groupId, assigneeUserId, start, end);
 	}
 
+	@Override
 	public int getGroupAssigneeTasksEntriesCount(
 		long groupId, long assigneeUserId) {
 
 		return tasksEntryPersistence.countByG_A(groupId, assigneeUserId);
 	}
 
+	@Override
 	public List<TasksEntry> getGroupResolverTasksEntries(
 		long groupId, long resolverUserId, int start, int end) {
 
@@ -185,22 +191,26 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 			groupId, resolverUserId, start, end);
 	}
 
+	@Override
 	public int getGroupResolverTasksEntriesCount(
 		long groupId, long resolverUserId) {
 
 		return tasksEntryPersistence.countByG_R(groupId, resolverUserId);
 	}
 
+	@Override
 	public List<TasksEntry> getGroupUserTasksEntries(
 		long groupId, long userId, int start, int end) {
 
 		return tasksEntryPersistence.findByG_U(groupId, userId, start, end);
 	}
 
+	@Override
 	public int getGroupUserTasksEntriesCount(long groupId, long userId) {
 		return tasksEntryPersistence.countByG_U(groupId, userId);
 	}
 
+	@Override
 	public List<TasksEntry> getResolverTasksEntries(
 		long resolverUserId, int start, int end) {
 
@@ -208,14 +218,17 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 			resolverUserId, start, end);
 	}
 
+	@Override
 	public int getResolverTasksEntriesCount(long resolverUserId) {
 		return tasksEntryPersistence.countByResolverUserId(resolverUserId);
 	}
 
+	@Override
 	public List<TasksEntry> getTasksEntries(long groupId, int start, int end) {
 		return tasksEntryPersistence.findByGroupId(groupId, start, end);
 	}
 
+	@Override
 	public List<TasksEntry> getTasksEntries(
 		long groupId, long userId, int priority, long assigneeUserId,
 		int status, long[] assetTagIds, long[] notAssetTagIds, int start,
@@ -226,10 +239,12 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 			notAssetTagIds, start, end);
 	}
 
+	@Override
 	public int getTasksEntriesCount(long groupId) {
 		return tasksEntryPersistence.countByGroupId(groupId);
 	}
 
+	@Override
 	public int getTasksEntriesCount(
 		long groupId, long userId, int priority, long assigneeUserId,
 		int status, long[] tagsEntryIds, long[] notTagsEntryIds) {
@@ -244,16 +259,19 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 		return tasksEntryPersistence.findByPrimaryKey(tasksEntryId);
 	}
 
+	@Override
 	public List<TasksEntry> getUserTasksEntries(
 		long userId, int start, int end) {
 
 		return tasksEntryPersistence.findByUserId(userId, start, end);
 	}
 
+	@Override
 	public int getUserTasksEntriesCount(long userId) {
 		return tasksEntryPersistence.countByUserId(userId);
 	}
 
+	@Override
 	public void updateAsset(
 			long userId, TasksEntry tasksEntry, long[] assetCategoryIds,
 			String[] assetTagNames)
@@ -264,6 +282,7 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 			tasksEntry.getTasksEntryId(), assetCategoryIds, assetTagNames);
 	}
 
+	@Override
 	public TasksEntry updateTasksEntry(
 			long tasksEntryId, String title, int priority, long assigneeUserId,
 			long resolverUserId, int dueDateMonth, int dueDateDay,
@@ -332,6 +351,7 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 		return tasksEntry;
 	}
 
+	@Override
 	public TasksEntry updateTasksEntryStatus(
 			long tasksEntryId, long resolverUserId, int status,
 			ServiceContext serviceContext)

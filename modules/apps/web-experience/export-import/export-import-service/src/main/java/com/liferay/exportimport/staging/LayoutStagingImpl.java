@@ -186,6 +186,7 @@ public class LayoutStagingImpl implements LayoutStaging {
 		}
 	}
 
+	@Override
 	public Layout mergeLayoutRevisionIntoLayout(Layout layout) {
 		LayoutStagingHandler layoutStagingHandler = getLayoutStagingHandler(
 			layout);

@@ -402,6 +402,7 @@ public abstract class BaseJSONWebServiceClientImpl
 		return doPost(url, parameters, Collections.<String, String>emptyMap());
 	}
 
+	@Override
 	public String doPostAsJSON(String url, Object object)
 		throws JSONWebServiceInvocationException,
 			   JSONWebServiceSerializeException,

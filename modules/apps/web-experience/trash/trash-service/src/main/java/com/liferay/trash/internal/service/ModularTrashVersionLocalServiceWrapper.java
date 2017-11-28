@@ -101,6 +101,7 @@ public class ModularTrashVersionLocalServiceWrapper
 		return ModelAdapterUtil.adapt(TrashVersion.class, trashVersion);
 	}
 
+	@Override
 	public TrashVersion deleteTrashVersion(TrashVersion trashVersion) {
 		com.liferay.trash.model.TrashVersion deleteTrashVersion =
 			_trashVersionLocalService.deleteTrashVersion(

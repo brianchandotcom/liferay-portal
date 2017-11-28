@@ -576,6 +576,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		return viewURL;
 	}
 
+	@Override
 	public long[] getClassNameIds(
 		PortletPreferences portletPreferences, long[] availableClassNameIds) {
 

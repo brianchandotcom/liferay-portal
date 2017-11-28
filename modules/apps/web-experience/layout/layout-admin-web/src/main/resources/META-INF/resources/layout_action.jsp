@@ -23,10 +23,16 @@ Layout curLayout = (Layout)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+	<liferay-ui:icon
+		message="edit"
+		target="_blank"
+		url="<%= layoutsAdminDisplayContext.getEditLayoutURL(curLayout) %>"
+	/>
+
 	<c:if test="<%= layoutsAdminDisplayContext.showConfigureAction(curLayout) %>">
 		<liferay-ui:icon
 			message="configure"
-			url="<%= layoutsAdminDisplayContext.getEditLayoutURL(curLayout) %>"
+			url="<%= layoutsAdminDisplayContext.getConfigureLayoutURL(curLayout) %>"
 		/>
 	</c:if>
 
@@ -59,12 +65,6 @@ Layout curLayout = (Layout)row.getObject();
 			url="<%= layoutsAdminDisplayContext.getOrphanPortletsURL(curLayout) %>"
 		/>
 	</c:if>
-
-	<liferay-ui:icon
-		message="view-page"
-		target="_blank"
-		url="<%= layoutsAdminDisplayContext.getViewLayoutURL(curLayout) %>"
-	/>
 
 	<c:if test="<%= layoutsAdminDisplayContext.showDeleteAction(curLayout) %>">
 		<liferay-ui:icon-delete

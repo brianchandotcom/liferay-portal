@@ -149,6 +149,25 @@ public class LayoutsAdminDisplayContext {
 		return breadcrumbEntriesJSONArray;
 	}
 
+	public String getConfigureLayoutURL(Layout layout) {
+		PortletURL configureLayoutURL =
+			_liferayPortletResponse.createRenderURL();
+
+		configureLayoutURL.setParameter("mvcPath", "/edit_layout.jsp");
+		configureLayoutURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+		configureLayoutURL.setParameter(
+			"backURL", _themeDisplay.getURLCurrent());
+		configureLayoutURL.setParameter(
+			"groupId", String.valueOf(layout.getGroupId()));
+		configureLayoutURL.setParameter(
+			"selPlid", String.valueOf(layout.getPlid()));
+		configureLayoutURL.setParameter(
+			"privateLayout", String.valueOf(layout.isPrivateLayout()));
+
+		return configureLayoutURL.toString();
+	}
+
 	public String getCopyApplicationsURL(Layout layout) {
 		PortletURL copyApplicationsURL =
 			_liferayPortletResponse.createRenderURL();
@@ -193,21 +212,6 @@ public class LayoutsAdminDisplayContext {
 			LayoutAdminPortletKeys.GROUP_PAGES, "display-style", "list");
 
 		return _displayStyle;
-	}
-
-	public String getEditLayoutURL(Layout layout) {
-		PortletURL editLayoutURL = _liferayPortletResponse.createRenderURL();
-
-		editLayoutURL.setParameter("mvcPath", "/edit_layout.jsp");
-		editLayoutURL.setParameter("redirect", _themeDisplay.getURLCurrent());
-		editLayoutURL.setParameter("backURL", _themeDisplay.getURLCurrent());
-		editLayoutURL.setParameter(
-			"groupId", String.valueOf(layout.getGroupId()));
-		editLayoutURL.setParameter("selPlid", String.valueOf(layout.getPlid()));
-		editLayoutURL.setParameter(
-			"privateLayout", String.valueOf(layout.isPrivateLayout()));
-
-		return editLayoutURL.toString();
 	}
 
 	public Group getGroup() {
@@ -585,7 +589,7 @@ public class LayoutsAdminDisplayContext {
 		return _tabs1;
 	}
 
-	public String getViewLayoutURL(Layout layout) throws PortalException {
+	public String getEditLayoutURL(Layout layout) throws PortalException {
 		return PortalUtil.getLayoutFullURL(layout, _themeDisplay);
 	}
 
@@ -788,16 +792,8 @@ public class LayoutsAdminDisplayContext {
 				getAddLayoutURL(layout.getPlid(), layout.isPrivateLayout()));
 		}
 
-		if (showDeleteAction(layout)) {
-			jsonObject.put("deleteURL", getDeleteLayoutURL(layout));
-		}
-
 		if (showConfigureAction(layout)) {
-			jsonObject.put("configureURL", getEditLayoutURL(layout));
-		}
-
-		if (showPermissionsAction(layout)) {
-			jsonObject.put("permissionsURL", getPermissionsURL(layout));
+			jsonObject.put("configureURL", getConfigureLayoutURL(layout));
 		}
 
 		if (showCopyApplicationsAction(layout)) {
@@ -805,11 +801,19 @@ public class LayoutsAdminDisplayContext {
 				"copyApplicationsURL", getCopyApplicationsURL(layout));
 		}
 
+		if (showDeleteAction(layout)) {
+			jsonObject.put("deleteURL", getDeleteLayoutURL(layout));
+		}
+
+		jsonObject.put("editLayoutURL", getEditLayoutURL(layout));
+
 		if (showOrphanPortletsAction(layout)) {
 			jsonObject.put("orphanPortletsURL", getOrphanPortletsURL(layout));
 		}
 
-		jsonObject.put("viewPageURL", getViewLayoutURL(layout));
+		if (showPermissionsAction(layout)) {
+			jsonObject.put("permissionsURL", getPermissionsURL(layout));
+		}
 
 		return jsonObject;
 	}

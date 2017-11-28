@@ -148,19 +148,19 @@ public class PortletContainerImpl implements PortletContainer {
 	public void processPublicRenderParameters(
 		HttpServletRequest request, Layout layout, Portlet targetPortlet) {
 
-		LayoutTypePortlet layoutTypePortlet = null;
-
 		LayoutType layoutType = layout.getLayoutType();
 
-		if (layoutType instanceof LayoutTypePortlet) {
-			layoutTypePortlet = (LayoutTypePortlet)layoutType;
-
-			List<Portlet> portlets = layoutTypePortlet.getPortlets();
-
-			portlets.remove(targetPortlet);
-
-			_processPublicRenderParameters(request, layout, portlets);
+		if (!(layoutType instanceof LayoutTypePortlet)) {
+			return;
 		}
+
+		LayoutTypePortlet layoutTypePortlet = (LayoutTypePortlet)layoutType;
+
+		List<Portlet> portlets = layoutTypePortlet.getPortlets();
+
+		portlets.remove(targetPortlet);
+
+		_processPublicRenderParameters(request, layout, portlets);
 	}
 
 	@Override

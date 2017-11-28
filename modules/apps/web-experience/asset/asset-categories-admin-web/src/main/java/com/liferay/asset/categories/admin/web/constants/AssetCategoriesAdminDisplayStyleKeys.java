@@ -17,7 +17,7 @@ package com.liferay.asset.categories.admin.web.constants;
 /**
  * @author Jürgen Kappler
  */
-public class AssetCategoriesNavigationDisplayStyleKeys {
+public class AssetCategoriesAdminDisplayStyleKeys {
 
 	public static final String DEFAULT = "default";
 

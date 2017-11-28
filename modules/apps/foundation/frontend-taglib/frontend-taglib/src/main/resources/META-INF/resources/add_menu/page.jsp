@@ -56,6 +56,13 @@ String viewMoreURL = (String)request.getAttribute("liferay-frontend:add-menu:vie
 			$(document).ready(
 				function() {
 					$('[data-toggle="tooltip"]').tooltip();
+
+					Liferay.once(
+						'startNavigate',
+						function() {
+							$('[data-toggle="tooltip"]').tooltip('dispose');
+						}
+					);
 				}
 			);
 		</aui:script>

@@ -69,6 +69,7 @@ import com.liferay.util.SerializableUtil;
 import java.io.Serializable;
 import java.io.Writer;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -160,7 +161,7 @@ public class PortletContainerImpl implements PortletContainer {
 
 		portlets.remove(targetPortlet);
 
-		_processPublicRenderParameters(request, layout, portlets);
+		_processPublicRenderParameters(request, layout, portlets, false);
 	}
 
 	@Override
@@ -292,7 +293,8 @@ public class PortletContainerImpl implements PortletContainer {
 		}
 
 		_processPublicRenderParameters(
-			request, layout, portlet, themeDisplay.isLifecycleAction());
+			request, layout, Arrays.asList(portlet),
+			themeDisplay.isLifecycleAction());
 
 		if (themeDisplay.isLifecycleRender() ||
 			themeDisplay.isLifecycleResource()) {
@@ -554,7 +556,8 @@ public class PortletContainerImpl implements PortletContainer {
 	}
 
 	private void _processPublicRenderParameters(
-		HttpServletRequest request, Layout layout, List<Portlet> portlets) {
+		HttpServletRequest request, Layout layout, List<Portlet> portlets,
+		boolean lifecycleAction) {
 
 		PortletQName portletQName = PortletQNameUtil.getPortletQName();
 		Map<String, String[]> publicRenderParameters = null;
@@ -589,67 +592,23 @@ public class PortletContainerImpl implements PortletContainer {
 				if (name.startsWith(
 						PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE)) {
 
+					String[] values = entry.getValue();
+
+					if (lifecycleAction) {
+						String[] oldValues = publicRenderParameters.get(
+							publicRenderParameterName);
+
+						if ((oldValues != null) && (oldValues.length != 0)) {
+							values = ArrayUtil.append(values, oldValues);
+						}
+					}
+
 					publicRenderParameters.put(
-						publicRenderParameterName, entry.getValue());
+						publicRenderParameterName, values);
 				}
 				else {
 					publicRenderParameters.remove(publicRenderParameterName);
 				}
-			}
-		}
-	}
-
-	private void _processPublicRenderParameters(
-		HttpServletRequest request, Layout layout, Portlet portlet,
-		boolean lifecycleAction) {
-
-		PortletQName portletQName = PortletQNameUtil.getPortletQName();
-		Map<String, String[]> publicRenderParameters = null;
-		Map<String, String[]> parameters = request.getParameterMap();
-
-		for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
-			String name = entry.getKey();
-
-			QName qName = portletQName.getQName(name);
-
-			if (qName == null) {
-				continue;
-			}
-
-			PublicRenderParameter publicRenderParameter =
-				portlet.getPublicRenderParameter(
-					qName.getNamespaceURI(), qName.getLocalPart());
-
-			if (publicRenderParameter == null) {
-				continue;
-			}
-
-			if (publicRenderParameters == null) {
-				publicRenderParameters = PublicRenderParametersPool.get(
-					request, layout.getPlid());
-			}
-
-			String publicRenderParameterName =
-				portletQName.getPublicRenderParameterName(qName);
-
-			if (name.startsWith(
-					PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE)) {
-
-				String[] values = entry.getValue();
-
-				if (lifecycleAction) {
-					String[] oldValues = publicRenderParameters.get(
-						publicRenderParameterName);
-
-					if ((oldValues != null) && (oldValues.length != 0)) {
-						values = ArrayUtil.append(values, oldValues);
-					}
-				}
-
-				publicRenderParameters.put(publicRenderParameterName, values);
-			}
-			else {
-				publicRenderParameters.remove(publicRenderParameterName);
 			}
 		}
 	}

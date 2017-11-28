@@ -286,8 +286,8 @@
 	</command>
 
 	<command name="changeCurrentTheme">
-		<execute macro="LexiconEntry#gotoHeaderMenuItem">
-			<var name="menuItem" value="Configure" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configure" />
 		</execute>
 
 		<execute function="Click" locator1="SitePagesEditPage#CHANGE_CURRENT_THEME_BUTTON" />
@@ -302,44 +302,21 @@
 
 		<execute function="SelectFrameTop" value1="relative=top" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="changeLogoViaPageCP">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Navigation" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Pages" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configure" />
 		</execute>
 
-		<if>
-			<isset var="page" />
-			<then>
-				<execute macro="LexiconEntry#gotoEntryMenuItem">
-					<var name="menuItem" value="Configure" />
-					<var name="rowEntry" value="${page}" />
-				</execute>
-			</then>
-			<else>
-				<execute macro="LexiconEntry#gotoHeaderMenuItem">
-					<var name="menuItem" value="Configure" />
-				</execute>
-			</else>
-		</if>
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Configure">
+			<var name="key_menuItem" value="Configure" />
+		</execute>
 
-		<if>
-			<condition function="IsElementPresent" locator1="SitePagesEditPage#PAGE_TYPE_LAYOUT" />
-			<then>
-				<execute function="AssertClick" locator1="SitePages#DETAILS_NAVIGATION_ADVANCED" value1="Advanced" />
-			</then>
-			<else>
-				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="Logo" />
-				</execute>
-			</else>
-		</if>
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Logo" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Button#CHANGE_LOGO" value1="Change" />
 
@@ -351,7 +328,7 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<execute function="AssertClick" locator1="Button#DONE" value1="Done" />
+		<execute macro="Button#clickDone" />
 
 		<execute function="Pause" locator1="5000" />
 
@@ -831,8 +808,8 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoHeaderMenuItem">
-			<var name="menuItem" value="Configure" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configure" />
 		</execute>
 
 		<execute function="AssertTextPresent" locator1="SitePagesEditPage#VIEW_THEME" value1="${themeName}" />

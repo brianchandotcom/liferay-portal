@@ -76,7 +76,7 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 
 		_cpGroupLocalService.addCPGroup(serviceContext);
 
-		createSampleData(httpServletRequest, serviceContext);
+		//cd cocreateSampleData(httpServletRequest, serviceContext);
 	}
 
 	public void createSampleData(
@@ -172,7 +172,7 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 
 		Class<?> clazz = getClass();
 
-		String journalArticlePath = DEPENDECY_PATH + "/journal-articles.json";
+		String journalArticlePath = DEPENDECY_PATH + "journal-articles.json";
 
 		String journalArticleJSON = StringUtil.read(
 			clazz.getClassLoader(), journalArticlePath, false);
@@ -189,7 +189,7 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 
 		Class<?> clazz = getClass();
 
-		String layoutsPath = DEPENDECY_PATH + "/layouts.json";
+		String layoutsPath = DEPENDECY_PATH + "layouts.json";
 
 		String layoutsJSON = StringUtil.read(
 			clazz.getClassLoader(), layoutsPath, false);
@@ -206,9 +206,7 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 	@Reference
 	private CommerceStarterRegistry _commerceStarterRegistry;
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.demo.data.creator.impl)"
-	)
+	@Reference
 	private CPDemoDataCreator _cpDemoDataCreator;
 
 	@Reference

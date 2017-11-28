@@ -208,6 +208,8 @@ public class CPFileImporterImpl implements CPFileImporter {
 		String description = jsonObject.getString("description");
 		String title = jsonObject.getString("title");
 
+		articleId = StringUtil.toUpperCase(StringUtil.trim(articleId));
+
 		JournalArticle journalArticle =
 			_journalArticleLocalService.fetchArticle(
 				serviceContext.getScopeGroupId(), articleId);

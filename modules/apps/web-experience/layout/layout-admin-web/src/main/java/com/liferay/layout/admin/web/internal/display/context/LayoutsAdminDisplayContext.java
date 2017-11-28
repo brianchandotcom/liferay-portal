@@ -17,7 +17,7 @@ package com.liferay.layout.admin.web.internal.display.context;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.layout.admin.web.configuration.LayoutAdminWebConfiguration;
-import com.liferay.layout.admin.web.constants.LayoutDisplayStyleKeys;
+import com.liferay.layout.admin.web.constants.LayoutAdminDisplayStyleKeys;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.util.comparator.LayoutCreateDateComparator;
@@ -605,7 +605,7 @@ public class LayoutsAdminDisplayContext {
 
 		if (Objects.equals(
 				layoutAdminWebConfiguration.layoutDisplayStyle(),
-				LayoutDisplayStyleKeys.MILLER)) {
+				LayoutAdminDisplayStyleKeys.MILLER)) {
 
 			_millerColumnsEnabled = true;
 		}

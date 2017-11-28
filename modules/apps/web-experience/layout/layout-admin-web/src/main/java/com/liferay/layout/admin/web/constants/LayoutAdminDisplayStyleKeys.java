@@ -17,7 +17,7 @@ package com.liferay.layout.admin.web.constants;
 /**
  * @author Jürgen Kappler
  */
-public class LayoutDisplayStyleKeys {
+public class LayoutAdminDisplayStyleKeys {
 
 	public static final String FLATTENED = "flattened-style";
 

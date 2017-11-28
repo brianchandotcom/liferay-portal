@@ -16,7 +16,7 @@ package com.liferay.layout.admin.web.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.layout.admin.web.constants.LayoutDisplayStyleKeys;
+import com.liferay.layout.admin.web.constants.LayoutAdminDisplayStyleKeys;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -31,10 +31,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface LayoutAdminWebConfiguration {
 
 	@Meta.AD(
-		deflt = LayoutDisplayStyleKeys.FLATTENED, name = "layout-display-style",
-		optionLabels = {"Flattened", "Miller"},
+		deflt = LayoutAdminDisplayStyleKeys.FLATTENED,
+		name = "layout-display-style", optionLabels = {"Flattened", "Miller"},
 		optionValues = {
-			LayoutDisplayStyleKeys.FLATTENED, LayoutDisplayStyleKeys.MILLER
+			LayoutAdminDisplayStyleKeys.FLATTENED,
+			LayoutAdminDisplayStyleKeys.MILLER
 		},
 		required = false
 	)

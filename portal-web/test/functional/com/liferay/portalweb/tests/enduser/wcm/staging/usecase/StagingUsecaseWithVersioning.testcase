@@ -150,6 +150,48 @@
 		</execute>
 	</command>
 
+	<command name="PublicationWithoutReadyForPublication" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Staging Test Page 2" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page 2" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Hello World" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" >
+			<var name="pleaseDoNotMarkAsReady" value="true" />
+		</execute>
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#viewNoPage">
+			<var name="pageName" value="Staging Test Page 2" />
+			<var name="privacy" value="Public" />
+		</execute>
+	</command>
+
 	<command name="PublishCustomPortletTitle" priority="3">
 		<execute macro="Staging#addSitePagesVariationPG">
 			<var name="sitePagesVariationName" value="Site Pages Variation Name" />

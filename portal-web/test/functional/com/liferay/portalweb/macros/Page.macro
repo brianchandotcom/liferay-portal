@@ -997,6 +997,22 @@
 		</if>
 	</command>
 
+	<command name="viewNoPage">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#togglePrivacy">
+			<var name="privacy" value="${privacy}" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="ContentRow#ENTRY_CONTENT_ENTRY" value1="${pageName}">
+			<var name="key_rowEntry" value="${pageName}" />
+		</execute>
+	</command>
+
 	<command name="viewNoPG">
 		<var name="key_pageName" value="${pageName}" />
 

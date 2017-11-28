@@ -711,19 +711,14 @@
 		</if>
 
 		<if>
-			<condition function="IsElementPresent" locator1="Staging#STAGING_MENU_READY_FOR_PUBLICATION" />
-			<then>
-				<execute function="Check#toggleSwitch" locator1="Staging#STAGING_MENU_READY_FOR_PUBLICATION" />
-			</then>
-		</if>
-
-		<if>
 			<and>
-				<condition function="IsElementPresent" locator1="SitePages#NAVIGATION_PUBLIC_PAGES" />
-				<condition function="IsElementPresent" locator1="Staging#STAGING_BUTTON" />
+				<condition function="IsElementPresent" locator1="Staging#STAGING_MENU_READY_FOR_PUBLICATION" />
+				<not>
+					<isset var="pleaseDoNotMarkAsReady" />
+				</not>
 			</and>
 			<then>
-				<execute function="AssertClick" locator1="Staging#STAGING_BUTTON" value1="Staging" />
+				<execute function="Check#toggleSwitch" locator1="Staging#STAGING_MENU_READY_FOR_PUBLICATION" />
 			</then>
 		</if>
 

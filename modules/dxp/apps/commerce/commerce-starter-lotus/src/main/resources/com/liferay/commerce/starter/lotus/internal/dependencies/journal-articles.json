@@ -24,7 +24,7 @@
 		"title": "Categories and separator"
 	},
 	{
-		"articleId": "card-accepted",
+		"articleId": "cards-accepted",
 		"content": "<?xml version=\"1.0\"?><root available-locales=\"en_US\" default-locale=\"en_US\"><dynamic-element name=\"content\" type=\"text_area\" index-type=\"text\" instance-id=\"mult\"><dynamic-content language-id=\"en_US\"><![CDATA[<div class=\"text-center text-dark wrapped-lines-bottom mt-4 pb-4\"><span>FREE SHIPPING  <br />if you spend more $ 1000.00</span></div><div class=\"text-center text-dark wrapped-lines-bottom mt-4 pb-4\"><span class=\"text-center d-block mb-4\">CARDS ACCEPTED</span>[%cards.png%]</div>]]></dynamic-content></dynamic-element></root>",
 		"ddmStructureKey": "BASIC-WEB-CONTENT",
 		"ddmTemplateKey": "BASIC-WEB-CONTENT",

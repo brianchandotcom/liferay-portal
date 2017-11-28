@@ -16,6 +16,7 @@ package com.liferay.asset.category.property.service.persistence.impl;
 
 import com.liferay.asset.kernel.model.AssetCategoryProperty;
 import com.liferay.asset.kernel.service.persistence.AssetCategoryPropertyFinder;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portlet.asset.model.impl.AssetCategoryPropertyImpl;
-import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -50,7 +50,7 @@ public class AssetCategoryPropertyFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_G_K);
+			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_K);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -95,7 +95,7 @@ public class AssetCategoryPropertyFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_G_K);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_K);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 

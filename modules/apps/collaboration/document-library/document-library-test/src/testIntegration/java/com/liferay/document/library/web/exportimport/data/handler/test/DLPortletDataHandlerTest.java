@@ -18,6 +18,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.model.DLFileShortcut;
+import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
@@ -32,6 +34,8 @@ import com.liferay.document.library.web.lar.DLPortletDataHandler;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -83,6 +87,8 @@ import org.junit.runner.RunWith;
 @Sync
 public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
+	public static final String NAMESPACE = "document_library";
+
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
@@ -100,7 +106,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 	@Test
 	public void testCustomRepositoryEntriesExport() throws Exception {
-		initExport();
+		initContext();
 
 		addRepositoryEntries();
 
@@ -256,6 +262,37 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 	}
 
 	@Override
+	protected PortletDataHandlerControl[] getExportControls() {
+		return new PortletDataHandlerControl[] {
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "repositories", true, false, null,
+				Repository.class.getName(),
+				StagedModelType.REFERRER_CLASS_NAME_ALL),
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "folders", true, false, null,
+				DLFolderConstants.getClassName()),
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "documents", true, false,
+				new PortletDataHandlerControl[] {
+					new PortletDataHandlerBoolean(
+						NAMESPACE, "previews-and-thumbnails")
+				},
+				DLFileEntryConstants.getClassName()),
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "document-types", true, false, null,
+				DLFileEntryType.class.getName()),
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "shortcuts", true, false, null,
+				DLFileShortcutConstants.getClassName())
+		};
+	}
+
+	@Override
+	protected PortletDataHandlerControl[] getImportControls() {
+		return getExportControls();
+	}
+
+	@Override
 	protected String getPortletId() {
 		return DLPortletKeys.DOCUMENT_LIBRARY;
 	}
@@ -278,7 +315,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 			stagedModels.addAll(
 				DLFileShortcutLocalServiceUtil.getFileShortcuts(
 					portletDataContext.getGroupId(), folder.getFolderId(), true,
-					WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+					WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS));
 		}
 
@@ -288,10 +325,26 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
 
 		stagedModels.addAll(
+			DLFileShortcutLocalServiceUtil.getFileShortcuts(
+				portletDataContext.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, true,
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS));
+
+		stagedModels.addAll(
 			RepositoryLocalServiceUtil.getGroupRepositories(
 				portletDataContext.getGroupId()));
 
+		stagedModels.addAll(
+			DLFileEntryTypeLocalServiceUtil.getFileEntryTypes(
+				new long[] {portletDataContext.getGroupId()}));
+
 		return stagedModels;
+	}
+
+	@Override
+	protected PortletDataHandlerControl[] getStagingControls() {
+		return getExportControls();
 	}
 
 	@Override
@@ -307,6 +360,11 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 	@Override
 	protected boolean isDataSiteLevel() {
 		return true;
+	}
+
+	@Override
+	protected boolean isDisplayPortlet() {
+		return super.isDisplayPortlet();
 	}
 
 }

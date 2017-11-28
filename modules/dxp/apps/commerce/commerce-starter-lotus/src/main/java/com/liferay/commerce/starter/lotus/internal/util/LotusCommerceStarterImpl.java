@@ -76,7 +76,7 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 
 		_cpGroupLocalService.addCPGroup(serviceContext);
 
-		//cd cocreateSampleData(httpServletRequest, serviceContext);
+		createSampleData(httpServletRequest, serviceContext);
 	}
 
 	public void createSampleData(

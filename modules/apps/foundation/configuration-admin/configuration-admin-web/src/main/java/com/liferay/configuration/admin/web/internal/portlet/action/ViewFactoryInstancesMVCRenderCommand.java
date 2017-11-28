@@ -20,6 +20,7 @@ import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelIterator;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
 import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
+import com.liferay.configuration.admin.web.internal.util.ConfigurationMVCRenderCommandUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -63,6 +64,14 @@ public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 				themeDisplay.getLanguageId());
 
 		String factoryPid = ParamUtil.getString(renderRequest, "factoryPid");
+
+		MVCRenderCommand renderCommand =
+			ConfigurationMVCRenderCommandUtil.
+				getViewFactoryInstancesMVCRenderCommand(factoryPid);
+
+		if (renderCommand != null) {
+			return renderCommand.render(renderRequest, renderResponse);
+		}
 
 		try {
 			ConfigurationModel factoryConfigurationModel =

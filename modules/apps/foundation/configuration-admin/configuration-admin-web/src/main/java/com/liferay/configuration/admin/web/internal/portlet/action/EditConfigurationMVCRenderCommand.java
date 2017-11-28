@@ -17,6 +17,7 @@ package com.liferay.configuration.admin.web.internal.portlet.action;
 import com.liferay.configuration.admin.web.internal.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.web.internal.constants.ConfigurationAdminWebKeys;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
+import com.liferay.configuration.admin.web.internal.util.ConfigurationMVCRenderCommandUtil;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
 import com.liferay.configuration.admin.web.internal.util.DDMFormRendererHelper;
 import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
@@ -62,6 +63,14 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 		String factoryPid = ParamUtil.getString(renderRequest, "factoryPid");
 
 		String pid = ParamUtil.getString(renderRequest, "pid", factoryPid);
+
+		MVCRenderCommand renderCommand =
+			ConfigurationMVCRenderCommandUtil.
+				getEditConfigurationMVCRenderCommand(pid);
+
+		if (renderCommand != null) {
+			return renderCommand.render(renderRequest, renderResponse);
+		}
 
 		Map<String, ConfigurationModel> configurationModels =
 			_configurationModelRetriever.getConfigurationModels(

@@ -168,12 +168,6 @@
 	</command>
 
 	<command name="addJavaScript">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Navigation" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Pages" />
-		</execute>
-
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
 			<var name="menuItem" value="Configure" />
 			<var name="rowEntry" value="${pageName}" />
@@ -292,12 +286,6 @@
 	</command>
 
 	<command name="changeCurrentTheme">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Navigation" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Pages" />
-		</execute>
-
 		<execute macro="LexiconEntry#gotoHeaderMenuItem">
 			<var name="menuItem" value="Configure" />
 		</execute>

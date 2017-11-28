@@ -43,6 +43,10 @@ public class LayoutSetPrototypePortletDataHandlerTest
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
+	public void testPrepareManifestSummary() throws Exception {
+	}
+
+	@Override
 	protected void addStagedModels() throws Exception {
 	}
 

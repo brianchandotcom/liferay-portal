@@ -53,9 +53,7 @@ public class TopLevelBuild extends BaseBuild {
 	public void addDownstreamBuilds(String... urls) {
 		super.addDownstreamBuilds(urls);
 
-		String result = getResult();
-
-		if ((result != null) && (urls.length > 0)) {
+		if (urls.length > 0) {
 			setResult(null);
 		}
 	}
@@ -252,10 +250,10 @@ public class TopLevelBuild extends BaseBuild {
 
 			if (result == null) {
 				if (hasFailure) {
-					setResult("FAILURE");
+					return "FAILURE";
 				}
 				else {
-					setResult("SUCCESS");
+					return "SUCCESS";
 				}
 			}
 		}

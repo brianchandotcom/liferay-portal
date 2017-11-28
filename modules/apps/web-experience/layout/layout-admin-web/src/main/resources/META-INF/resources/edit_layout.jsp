@@ -21,6 +21,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL");
 
+String portletResource = ParamUtil.getString(request, "portletResource");
+
 if (Validator.isNull(backURL)) {
 	backURL = PortalUtil.getLayoutFullURL(layoutsAdminDisplayContext.getSelLayout(), themeDisplay);
 }
@@ -145,6 +147,7 @@ renderResponse.setTitle(selLayout.getName(locale));
 			<aui:input name="privateLayout" type="hidden" value="<%= layoutsAdminDisplayContext.isPrivateLayout() %>" />
 			<aui:input name="layoutId" type="hidden" value="<%= layoutsAdminDisplayContext.getLayoutId() %>" />
 			<aui:input name="<%= PortletDataHandlerKeys.SELECTED_LAYOUTS %>" type="hidden" />
+			<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 
 			<liferay-ui:error exception="<%= LayoutTypeException.class %>">
 

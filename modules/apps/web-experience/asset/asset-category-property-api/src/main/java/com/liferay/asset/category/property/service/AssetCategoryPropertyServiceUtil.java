@@ -41,6 +41,26 @@ public class AssetCategoryPropertyServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.asset.category.property.service.impl.AssetCategoryPropertyServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.asset.category.property.model.AssetCategoryProperty addCategoryProperty(
+		long entryId, java.lang.String key, java.lang.String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addCategoryProperty(entryId, key, value);
+	}
+
+	public static void deleteCategoryProperty(long categoryPropertyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCategoryProperty(categoryPropertyId);
+	}
+
+	public static java.util.List<com.liferay.asset.category.property.model.AssetCategoryProperty> getCategoryProperties(
+		long entryId) {
+		return getService().getCategoryProperties(entryId);
+	}
+
+	public static java.util.List<com.liferay.asset.category.property.model.AssetCategoryProperty> getCategoryPropertyValues(
+		long companyId, java.lang.String key) {
+		return getService().getCategoryPropertyValues(companyId, key);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -49,6 +69,22 @@ public class AssetCategoryPropertyServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.asset.category.property.model.AssetCategoryProperty updateCategoryProperty(
+		long userId, long categoryPropertyId, java.lang.String key,
+		java.lang.String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCategoryProperty(userId, categoryPropertyId, key,
+			value);
+	}
+
+	public static com.liferay.asset.category.property.model.AssetCategoryProperty updateCategoryProperty(
+		long categoryPropertyId, java.lang.String key, java.lang.String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCategoryProperty(categoryPropertyId, key, value);
 	}
 
 	public static AssetCategoryPropertyService getService() {

@@ -16,6 +16,7 @@ package com.liferay.asset.category.property.service.base;
 
 import com.liferay.asset.category.property.model.AssetCategoryProperty;
 import com.liferay.asset.category.property.service.AssetCategoryPropertyService;
+import com.liferay.asset.category.property.service.persistence.AssetCategoryPropertyFinder;
 import com.liferay.asset.category.property.service.persistence.AssetCategoryPropertyPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -108,6 +109,25 @@ public abstract class AssetCategoryPropertyServiceBaseImpl
 	public void setAssetCategoryPropertyPersistence(
 		AssetCategoryPropertyPersistence assetCategoryPropertyPersistence) {
 		this.assetCategoryPropertyPersistence = assetCategoryPropertyPersistence;
+	}
+
+	/**
+	 * Returns the asset category property finder.
+	 *
+	 * @return the asset category property finder
+	 */
+	public AssetCategoryPropertyFinder getAssetCategoryPropertyFinder() {
+		return assetCategoryPropertyFinder;
+	}
+
+	/**
+	 * Sets the asset category property finder.
+	 *
+	 * @param assetCategoryPropertyFinder the asset category property finder
+	 */
+	public void setAssetCategoryPropertyFinder(
+		AssetCategoryPropertyFinder assetCategoryPropertyFinder) {
+		this.assetCategoryPropertyFinder = assetCategoryPropertyFinder;
 	}
 
 	/**
@@ -239,6 +259,8 @@ public abstract class AssetCategoryPropertyServiceBaseImpl
 	protected AssetCategoryPropertyService assetCategoryPropertyService;
 	@BeanReference(type = AssetCategoryPropertyPersistence.class)
 	protected AssetCategoryPropertyPersistence assetCategoryPropertyPersistence;
+	@BeanReference(type = AssetCategoryPropertyFinder.class)
+	protected AssetCategoryPropertyFinder assetCategoryPropertyFinder;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)

@@ -34,6 +34,33 @@ public class AssetCategoryPropertyServiceWrapper
 		_assetCategoryPropertyService = assetCategoryPropertyService;
 	}
 
+	@Override
+	public com.liferay.asset.category.property.model.AssetCategoryProperty addCategoryProperty(
+		long entryId, java.lang.String key, java.lang.String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetCategoryPropertyService.addCategoryProperty(entryId, key,
+			value);
+	}
+
+	@Override
+	public void deleteCategoryProperty(long categoryPropertyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetCategoryPropertyService.deleteCategoryProperty(categoryPropertyId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.asset.category.property.model.AssetCategoryProperty> getCategoryProperties(
+		long entryId) {
+		return _assetCategoryPropertyService.getCategoryProperties(entryId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.asset.category.property.model.AssetCategoryProperty> getCategoryPropertyValues(
+		long companyId, java.lang.String key) {
+		return _assetCategoryPropertyService.getCategoryPropertyValues(companyId,
+			key);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -42,6 +69,23 @@ public class AssetCategoryPropertyServiceWrapper
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _assetCategoryPropertyService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.asset.category.property.model.AssetCategoryProperty updateCategoryProperty(
+		long userId, long categoryPropertyId, java.lang.String key,
+		java.lang.String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetCategoryPropertyService.updateCategoryProperty(userId,
+			categoryPropertyId, key, value);
+	}
+
+	@Override
+	public com.liferay.asset.category.property.model.AssetCategoryProperty updateCategoryProperty(
+		long categoryPropertyId, java.lang.String key, java.lang.String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetCategoryPropertyService.updateCategoryProperty(categoryPropertyId,
+			key, value);
 	}
 
 	@Override

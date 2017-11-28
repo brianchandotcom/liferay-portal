@@ -71,6 +71,10 @@ public interface AssetCategoryPropertyLocalService extends BaseLocalService,
 	public AssetCategoryProperty addAssetCategoryProperty(
 		AssetCategoryProperty assetCategoryProperty);
 
+	public AssetCategoryProperty addCategoryProperty(long userId,
+		long categoryId, java.lang.String key, java.lang.String value)
+		throws PortalException;
+
 	/**
 	* Creates a new asset category property with the primary key. Does not add the asset category property to the database.
 	*
@@ -100,6 +104,13 @@ public interface AssetCategoryPropertyLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public AssetCategoryProperty deleteAssetCategoryProperty(
 		long categoryPropertyId) throws PortalException;
+
+	public void deleteCategoryProperties(long entryId);
+
+	public void deleteCategoryProperty(AssetCategoryProperty categoryProperty);
+
+	public void deleteCategoryProperty(long categoryPropertyId)
+		throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -172,6 +183,10 @@ public interface AssetCategoryPropertyLocalService extends BaseLocalService,
 		long categoryPropertyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetCategoryProperty fetchCategoryProperty(long categoryId,
+		java.lang.String key);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
@@ -209,6 +224,24 @@ public interface AssetCategoryPropertyLocalService extends BaseLocalService,
 		long categoryPropertyId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetCategoryProperty> getCategoryProperties();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetCategoryProperty> getCategoryProperties(long entryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetCategoryProperty getCategoryProperty(long categoryPropertyId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetCategoryProperty getCategoryProperty(long categoryId,
+		java.lang.String key) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetCategoryProperty> getCategoryPropertyValues(long groupId,
+		java.lang.String key);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
@@ -232,4 +265,12 @@ public interface AssetCategoryPropertyLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public AssetCategoryProperty updateAssetCategoryProperty(
 		AssetCategoryProperty assetCategoryProperty);
+
+	public AssetCategoryProperty updateCategoryProperty(long userId,
+		long categoryPropertyId, java.lang.String key, java.lang.String value)
+		throws PortalException;
+
+	public AssetCategoryProperty updateCategoryProperty(
+		long categoryPropertyId, java.lang.String key, java.lang.String value)
+		throws PortalException;
 }

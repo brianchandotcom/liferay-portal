@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.category.property.model.AssetCategoryProperty;
 import com.liferay.asset.category.property.service.AssetCategoryPropertyLocalService;
+import com.liferay.asset.category.property.service.persistence.AssetCategoryPropertyFinder;
 import com.liferay.asset.category.property.service.persistence.AssetCategoryPropertyPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -358,6 +359,25 @@ public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the asset category property finder.
+	 *
+	 * @return the asset category property finder
+	 */
+	public AssetCategoryPropertyFinder getAssetCategoryPropertyFinder() {
+		return assetCategoryPropertyFinder;
+	}
+
+	/**
+	 * Sets the asset category property finder.
+	 *
+	 * @param assetCategoryPropertyFinder the asset category property finder
+	 */
+	public void setAssetCategoryPropertyFinder(
+		AssetCategoryPropertyFinder assetCategoryPropertyFinder) {
+		this.assetCategoryPropertyFinder = assetCategoryPropertyFinder;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -469,6 +489,8 @@ public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 	protected AssetCategoryPropertyLocalService assetCategoryPropertyLocalService;
 	@BeanReference(type = AssetCategoryPropertyPersistence.class)
 	protected AssetCategoryPropertyPersistence assetCategoryPropertyPersistence;
+	@BeanReference(type = AssetCategoryPropertyFinder.class)
+	protected AssetCategoryPropertyFinder assetCategoryPropertyFinder;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)

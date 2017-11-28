@@ -46,6 +46,15 @@ public class AssetCategoryPropertyLocalServiceWrapper
 		return _assetCategoryPropertyLocalService.addAssetCategoryProperty(assetCategoryProperty);
 	}
 
+	@Override
+	public com.liferay.asset.category.property.model.AssetCategoryProperty addCategoryProperty(
+		long userId, long categoryId, java.lang.String key,
+		java.lang.String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetCategoryPropertyLocalService.addCategoryProperty(userId,
+			categoryId, key, value);
+	}
+
 	/**
 	* Creates a new asset category property with the primary key. Does not add the asset category property to the database.
 	*
@@ -82,6 +91,23 @@ public class AssetCategoryPropertyLocalServiceWrapper
 		long categoryPropertyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetCategoryPropertyLocalService.deleteAssetCategoryProperty(categoryPropertyId);
+	}
+
+	@Override
+	public void deleteCategoryProperties(long entryId) {
+		_assetCategoryPropertyLocalService.deleteCategoryProperties(entryId);
+	}
+
+	@Override
+	public void deleteCategoryProperty(
+		com.liferay.asset.category.property.model.AssetCategoryProperty categoryProperty) {
+		_assetCategoryPropertyLocalService.deleteCategoryProperty(categoryProperty);
+	}
+
+	@Override
+	public void deleteCategoryProperty(long categoryPropertyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetCategoryPropertyLocalService.deleteCategoryProperty(categoryPropertyId);
 	}
 
 	/**
@@ -187,6 +213,13 @@ public class AssetCategoryPropertyLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.asset.category.property.model.AssetCategoryProperty fetchCategoryProperty(
+		long categoryId, java.lang.String key) {
+		return _assetCategoryPropertyLocalService.fetchCategoryProperty(categoryId,
+			key);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _assetCategoryPropertyLocalService.getActionableDynamicQuery();
 	}
@@ -234,6 +267,39 @@ public class AssetCategoryPropertyLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.asset.category.property.model.AssetCategoryProperty> getCategoryProperties() {
+		return _assetCategoryPropertyLocalService.getCategoryProperties();
+	}
+
+	@Override
+	public java.util.List<com.liferay.asset.category.property.model.AssetCategoryProperty> getCategoryProperties(
+		long entryId) {
+		return _assetCategoryPropertyLocalService.getCategoryProperties(entryId);
+	}
+
+	@Override
+	public com.liferay.asset.category.property.model.AssetCategoryProperty getCategoryProperty(
+		long categoryPropertyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetCategoryPropertyLocalService.getCategoryProperty(categoryPropertyId);
+	}
+
+	@Override
+	public com.liferay.asset.category.property.model.AssetCategoryProperty getCategoryProperty(
+		long categoryId, java.lang.String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetCategoryPropertyLocalService.getCategoryProperty(categoryId,
+			key);
+	}
+
+	@Override
+	public java.util.List<com.liferay.asset.category.property.model.AssetCategoryProperty> getCategoryPropertyValues(
+		long groupId, java.lang.String key) {
+		return _assetCategoryPropertyLocalService.getCategoryPropertyValues(groupId,
+			key);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		return _assetCategoryPropertyLocalService.getIndexableActionableDynamicQuery();
 	}
@@ -265,6 +331,23 @@ public class AssetCategoryPropertyLocalServiceWrapper
 	public com.liferay.asset.category.property.model.AssetCategoryProperty updateAssetCategoryProperty(
 		com.liferay.asset.category.property.model.AssetCategoryProperty assetCategoryProperty) {
 		return _assetCategoryPropertyLocalService.updateAssetCategoryProperty(assetCategoryProperty);
+	}
+
+	@Override
+	public com.liferay.asset.category.property.model.AssetCategoryProperty updateCategoryProperty(
+		long userId, long categoryPropertyId, java.lang.String key,
+		java.lang.String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetCategoryPropertyLocalService.updateCategoryProperty(userId,
+			categoryPropertyId, key, value);
+	}
+
+	@Override
+	public com.liferay.asset.category.property.model.AssetCategoryProperty updateCategoryProperty(
+		long categoryPropertyId, java.lang.String key, java.lang.String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetCategoryPropertyLocalService.updateCategoryProperty(categoryPropertyId,
+			key, value);
 	}
 
 	@Override

@@ -46,6 +46,9 @@ String languageId = LanguageUtil.getLanguageId(request);
 String title = assetRenderer.getTitle(LocaleUtil.fromLanguageId(languageId));
 
 boolean print = ((Boolean)request.getAttribute("view.jsp-print")).booleanValue();
+
+boolean viewInContext = ((Boolean)request.getAttribute("view.jsp-viewInContext")).booleanValue();
+
 boolean workflowEnabled = WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(assetEntry.getCompanyId(), assetEntry.getGroupId(), assetEntry.getClassName());
 
 assetPublisherDisplayContext.setLayoutAssetEntry(assetEntry);
@@ -211,6 +214,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 			<liferay-asset:asset-links
 				assetEntryId="<%= assetEntry.getEntryId() %>"
 				portletURL="<%= assetLingsURL %>"
+				viewInContext="<%= viewInContext %>"
 			/>
 		</c:if>
 

@@ -44,6 +44,7 @@ public class GradleVersionCheck extends BaseFileCheck {
 
 				addMessage(
 					fileName, "Do not use 'default' version for '" + name + "'",
+					"gradle_versioning.markdown",
 					getLineCount(content, matcher.start()));
 			}
 		}

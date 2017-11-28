@@ -29,8 +29,6 @@ public class BNDSchemaVersionCheck extends BaseFileCheck {
 
 		_checkMissingSchemaVersion(fileName, absolutePath, content);
 
-		// LPS-61288
-
 		if (fileName.endsWith("-web/bnd.bnd") &&
 			content.contains("Liferay-Require-SchemaVersion: 1.0.0")) {
 

@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.util.PortletCategoryKeys;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -74,14 +73,6 @@ public class PanelAppMyAccountPermissions {
 		}
 
 		for (Portlet portlet : portlets) {
-			String category = portlet.getControlPanelEntryCategory();
-
-			if ((category == null) ||
-				!category.equals(PortletCategoryKeys.USER_MY_ACCOUNT)) {
-
-				continue;
-			}
-
 			try {
 				List<String> actionIds =
 					ResourceActionsUtil.getPortletResourceActions(

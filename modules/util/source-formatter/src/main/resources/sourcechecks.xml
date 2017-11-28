@@ -53,7 +53,6 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/microblogs/microblogs-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/wiki/wiki-engine-input-editor-common" />
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/wiki/wiki-service" />
-			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/wiki/wiki-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/events-display/events-display-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/forms-and-workflow/calendar/calendar-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/forms-and-workflow/dynamic-data-lists/dynamic-data-lists-service" />

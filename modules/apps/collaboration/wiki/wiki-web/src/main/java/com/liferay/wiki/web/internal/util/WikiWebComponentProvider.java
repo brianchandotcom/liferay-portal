@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.web.util;
+package com.liferay.wiki.web.internal.util;
 
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.web.internal.display.context.WikiDisplayContextProvider;

@@ -90,6 +90,13 @@ public class AssetCategoryPropertyLocalServiceImpl
 	}
 
 	@Override
+	public AssetCategoryProperty fetchCategoryProperty(
+		long categoryId, String key) {
+
+		return assetCategoryPropertyPersistence.fetchByCA_K(categoryId, key);
+	}
+
+	@Override
 	public List<AssetCategoryProperty> getCategoryProperties() {
 		return assetCategoryPropertyPersistence.findAll();
 	}

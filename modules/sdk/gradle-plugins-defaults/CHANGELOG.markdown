@@ -2480,6 +2480,11 @@ plugin to properly configure the portal compatibility OSGi modules.
 ### Changed
 - [LPS-75778]: Update the [Liferay Gradle Plugins] dependency to version 3.5.49.
 
+## 5.2.1 - 2017-11-28
+
+### Changed
+- [LPS-72912]: Update the [Liferay Gradle Plugins] dependency to version 3.5.50.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -2653,6 +2658,7 @@ plugin to properly configure the portal compatibility OSGi modules.
 [LPS-72851]: https://issues.liferay.com/browse/LPS-72851
 [LPS-72854]: https://issues.liferay.com/browse/LPS-72854
 [LPS-72868]: https://issues.liferay.com/browse/LPS-72868
+[LPS-72912]: https://issues.liferay.com/browse/LPS-72912
 [LPS-72914]: https://issues.liferay.com/browse/LPS-72914
 [LPS-72989]: https://issues.liferay.com/browse/LPS-72989
 [LPS-73058]: https://issues.liferay.com/browse/LPS-73058

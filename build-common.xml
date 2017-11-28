@@ -1178,6 +1178,7 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 							<exec dir="${project.dir}/${build.binaries.cache.dir}" executable="git" failonerror="true">
 								<arg value="pull" />
 								<arg value="--rebase" />
+								<arg value="${build.binaries.cache.url}" />
 							</exec>
 						</then>
 					</if>

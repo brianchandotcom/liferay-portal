@@ -320,6 +320,15 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		}
 	}
 
+	@SuppressWarnings("unused")
+	@Transactional(
+		isolation = Isolation.PORTAL, propagation = Propagation.REQUIRES_NEW,
+		rollbackFor = {Exception.class}
+	)
+	public void invoke(Method method) throws Exception {
+		method.invoke(this);
+	}
+
 	@Override
 	public void persistModel(BaseModel<?> baseModel) throws Exception {
 		if (!(baseModel instanceof PersistedModel)) {
@@ -536,14 +545,12 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	protected void executeResource(Method method) throws Exception {
 		try {
 			if (method != null) {
-				Class<?> superClass = clazz.getSuperclass();
-
-				Method invokeMethod = superClass.getDeclaredMethod(
+				Method invokeMethod = clazz.getMethod(
 					"invoke", new Class<?>[] {Method.class});
 
 				ServiceBeanMethodInvocationFactoryUtil.proceed(
-					this, BaseAlloyControllerImpl.class, invokeMethod,
-					new Object[] {method}, new String[] {"transactionAdvice"});
+					this, clazz, invokeMethod, new Object[] {method},
+					new String[] {"transactionAdvice"});
 			}
 		}
 		catch (Exception e) {
@@ -1058,15 +1065,6 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		company = themeDisplay.getCompany();
 		locale = themeDisplay.getLocale();
 		user = themeDisplay.getUser();
-	}
-
-	@SuppressWarnings("unused")
-	@Transactional(
-		isolation = Isolation.PORTAL, propagation = Propagation.REQUIRES_NEW,
-		rollbackFor = {Exception.class}
-	)
-	protected void invoke(Method method) throws Exception {
-		method.invoke(this);
 	}
 
 	protected JSONSerializable invokeAlloyController(

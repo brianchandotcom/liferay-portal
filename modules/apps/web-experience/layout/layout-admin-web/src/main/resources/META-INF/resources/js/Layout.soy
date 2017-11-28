@@ -17,7 +17,7 @@
 			{param breadcrumbEntries: $breadcrumbEntries /}
 		{/call}
 
-		<div class="bg-light row" ref="layoutColumns">
+		<div class="bg-light flex-nowrap layout-columns row" ref="layoutColumns">
 			{foreach $layoutColumn in $layoutColumns}
 				{call LayoutColumn.render}
 					{param layoutColumn: $layoutColumn /}

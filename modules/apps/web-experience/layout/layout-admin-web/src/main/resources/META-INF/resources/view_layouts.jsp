@@ -120,16 +120,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "pages"));
 </aui:form>
 
 <c:if test="<%= layoutsAdminDisplayContext.isShowAddRootLayoutButton() %>">
-
-	<%
-	PortletURL addLayoutURL = layoutsAdminDisplayContext.getAddLayoutURL();
-
-	addLayoutURL.setParameter("redirect", currentURL);
-	addLayoutURL.setParameter("backURL", currentURL);
-	%>
-
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "page") %>' url="<%= addLayoutURL.toString() %>" />
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "page") %>' url="<%= layoutsAdminDisplayContext.getAddLayoutURL() %>" />
 	</liferay-frontend:add-menu>
 </c:if>
 

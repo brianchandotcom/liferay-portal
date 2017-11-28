@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -53,17 +55,23 @@ public class DescriptiveNameTag extends IncludeTag {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String stagedDescriptiveName = "";
+		StringBundler sb = new StringBundler(1);
 
 		try {
-			stagedDescriptiveName = HtmlUtil.escape(
+			String descriptiveName = HtmlUtil.escape(
 				_group.getDescriptiveName(themeDisplay.getLocale()));
+
+			sb.append(descriptiveName);
 
 			if (_group.isStaged() && !_group.isStagedRemotely() &&
 				_group.isStagingGroup()) {
 
-				stagedDescriptiveName +=
-					" (" + LanguageUtil.get(request, "staging") + ")";
+				sb.append(StringPool.SPACE);
+				sb.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(LanguageUtil.get(request, "staging"));
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+
+				return sb.toString();
 			}
 		}
 		catch (PortalException pe) {
@@ -72,7 +80,7 @@ public class DescriptiveNameTag extends IncludeTag {
 			}
 		}
 
-		return stagedDescriptiveName;
+		return StringPool.BLANK;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

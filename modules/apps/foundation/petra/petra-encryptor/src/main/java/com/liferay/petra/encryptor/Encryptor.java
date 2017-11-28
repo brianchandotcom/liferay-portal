@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -87,8 +85,6 @@ public class Encryptor {
 
 		try {
 			if (cipher == null) {
-				Security.addProvider(getProvider());
-
 				cipher = Cipher.getInstance(algorithm);
 
 				cipher.init(Cipher.DECRYPT_MODE, key);
@@ -171,8 +167,6 @@ public class Encryptor {
 
 		try {
 			if (cipher == null) {
-				Security.addProvider(getProvider());
-
 				cipher = Cipher.getInstance(algorithm);
 
 				cipher.init(Cipher.ENCRYPT_MODE, key);
@@ -208,8 +202,6 @@ public class Encryptor {
 
 	public static Key generateKey(String algorithm) throws EncryptorException {
 		try {
-			Security.addProvider(getProvider());
-
 			KeyGenerator keyGenerator = KeyGenerator.getInstance(algorithm);
 
 			keyGenerator.init(KEY_SIZE, new SecureRandom());
@@ -223,46 +215,44 @@ public class Encryptor {
 		}
 	}
 
-	public static Provider getProvider()
-		throws ClassNotFoundException, IllegalAccessException,
-			   InstantiationException {
+	/**
+	 * @deprecated As of 1.0.0, with no direct replacement
+	 */
+	@Deprecated
+	public static Provider getProvider() {
+		return _provider;
+	}
 
-		Class<?> providerClass = null;
-
+	static {
 		try {
-			providerClass = Class.forName(PROVIDER_CLASS);
-		}
-		catch (ClassNotFoundException cnfe) {
-			if (ServerDetector.isWebSphere() &&
-				PROVIDER_CLASS.equals(SUN_PROVIDER_CLASS)) {
+			Class<?> providerClass = null;
 
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						StringBundler.concat(
-							"WebSphere does not have ", SUN_PROVIDER_CLASS,
-							", using ", IBM_PROVIDER_CLASS, " instead"));
+			try {
+				providerClass = Class.forName(PROVIDER_CLASS);
+			}
+			catch (ClassNotFoundException cnfe) {
+				try {
+					if (PROVIDER_CLASS.equals(SUN_PROVIDER_CLASS)) {
+						providerClass = Class.forName(IBM_PROVIDER_CLASS);
+					}
+				}
+				catch (ClassNotFoundException cnfe2) {
+					cnfe.addSuppressed(cnfe2);
 				}
 
-				providerClass = Class.forName(IBM_PROVIDER_CLASS);
-			}
-			else if (System.getProperty("java.vm.vendor").equals(
-						"IBM Corporation")) {
-
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						StringBundler.concat(
-							"IBM JVM does not have ", SUN_PROVIDER_CLASS,
-							", using ", IBM_PROVIDER_CLASS, " instead"));
+				if (providerClass == null) {
+					throw new IllegalStateException(
+						"Cannot find provider class: " + PROVIDER_CLASS, cnfe);
 				}
+			}
 
-				providerClass = Class.forName(IBM_PROVIDER_CLASS);
-			}
-			else {
-				throw cnfe;
-			}
+			_provider = (Provider)providerClass.newInstance();
+
+			Security.addProvider(_provider);
 		}
-
-		return (Provider)providerClass.newInstance();
+		catch (ReflectiveOperationException roe) {
+			throw new ExceptionInInitializerError(roe);
+		}
 	}
 
 	public static String serializeKey(Key key) {
@@ -275,5 +265,6 @@ public class Encryptor {
 		new ConcurrentHashMap<>(1, 1F, 1);
 	private static final Map<String, Cipher> _encryptCipherMap =
 		new ConcurrentHashMap<>(1, 1F, 1);
+	private static final Provider _provider;
 
 }

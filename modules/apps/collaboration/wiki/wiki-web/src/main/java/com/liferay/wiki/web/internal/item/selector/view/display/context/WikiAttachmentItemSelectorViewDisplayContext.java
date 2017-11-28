@@ -99,11 +99,11 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "/wiki/upload_page_attachment");
 		portletURL.setParameter(
+			"mimeTypes", _wikiAttachmentItemSelectorCriterion.getMimeTypes());
+		portletURL.setParameter(
 			"resourcePrimKey",
 			String.valueOf(
 				_wikiAttachmentItemSelectorCriterion.getWikiPageResourceId()));
-		portletURL.setParameter(
-			"mimeTypes", _wikiAttachmentItemSelectorCriterion.getMimeTypes());
 
 		return portletURL;
 	}

@@ -26,6 +26,8 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,6 +53,16 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class ProductNavigationControlMenuPortlet extends MVCPortlet {
+
+	@Override
+	public void serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws IOException, PortletException {
+
+		resourceRequest.setAttribute(AssetWebKeys.ASSET_HELPER, _assetHelper);
+
+		super.serveResource(resourceRequest, resourceResponse);
+	}
 
 	@Override
 	protected void doDispatch(

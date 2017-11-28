@@ -15,12 +15,12 @@
 package com.liferay.portal.configuration.extender.internal.test;
 
 import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
-import com.liferay.portal.configuration.extender.ConfigurationDescription;
-import com.liferay.portal.configuration.extender.ConfigurationDescriptionFactory;
-import com.liferay.portal.configuration.extender.FactoryConfigurationDescription;
-import com.liferay.portal.configuration.extender.NamedConfigurationContent;
-import com.liferay.portal.configuration.extender.SingleConfigurationDescription;
+import com.liferay.portal.configuration.extender.internal.ConfigurationDescription;
+import com.liferay.portal.configuration.extender.internal.ConfigurationDescriptionFactory;
 import com.liferay.portal.configuration.extender.internal.ConfiguratorExtension;
+import com.liferay.portal.configuration.extender.internal.FactoryConfigurationDescription;
+import com.liferay.portal.configuration.extender.internal.NamedConfigurationContent;
+import com.liferay.portal.configuration.extender.internal.SingleConfigurationDescription;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Supplier;

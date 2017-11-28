@@ -15,10 +15,6 @@
 package com.liferay.portal.configuration.extender.internal;
 
 import com.liferay.osgi.felix.util.AbstractExtender;
-import com.liferay.portal.configuration.extender.BundleStorage;
-import com.liferay.portal.configuration.extender.ConfigurationDescriptionFactory;
-import com.liferay.portal.configuration.extender.NamedConfigurationContent;
-import com.liferay.portal.configuration.extender.NamedConfigurationContentFactory;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.IOException;

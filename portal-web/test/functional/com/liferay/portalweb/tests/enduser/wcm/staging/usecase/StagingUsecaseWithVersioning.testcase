@@ -484,12 +484,6 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPublicPages" />
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
 		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="Page#changeLogoViaPageCP">

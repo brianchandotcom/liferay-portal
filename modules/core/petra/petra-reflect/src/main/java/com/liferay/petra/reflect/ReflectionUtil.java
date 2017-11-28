@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.petra.reflect;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

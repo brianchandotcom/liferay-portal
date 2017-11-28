@@ -57,7 +57,7 @@ public class LocalGitSyncUtil {
 			GitWorkingDirectory.Remote remote = gitWorkingDirectory.getRemote(
 				localGitRemoteName);
 
-			if ((remote == null) || !url.equals(remote.getRemoteURL())) {
+			if ((remote == null) || !url.equals(remote.getRemoteURL()) || !remote.isResponsive()) {
 				remote = gitWorkingDirectory.addRemote(
 					true, localGitRemoteName, url);
 			}

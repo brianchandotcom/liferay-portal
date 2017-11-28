@@ -101,53 +101,6 @@
 		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
 		<reference entity="AssetVocabulary" package-path="com.liferay.portlet.asset" />
 	</entity>
-	<entity local-service="true" name="AssetCategoryProperty" remote-service="true">
-
-		<!-- PK fields -->
-
-		<column name="categoryPropertyId" primary="true" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column name="categoryId" type="long" />
-		<column name="key" type="String" />
-		<column name="value" type="String" />
-
-		<!-- Order -->
-
-		<order by="asc">
-			<order-column name="key" />
-		</order>
-
-		<!-- Finder methods -->
-
-		<finder name="CompanyId" return-type="Collection">
-			<finder-column name="companyId" />
-		</finder>
-		<finder name="CategoryId" return-type="Collection">
-			<finder-column name="categoryId" />
-		</finder>
-		<finder name="C_K" return-type="Collection">
-			<finder-column name="companyId" />
-			<finder-column name="key" />
-		</finder>
-		<finder name="CA_K" return-type="AssetCategoryProperty" unique="true">
-			<finder-column name="categoryId" />
-			<finder-column name="key" />
-		</finder>
-
-		<!-- References -->
-
-		<reference entity="User" package-path="com.liferay.portal" />
-	</entity>
 	<entity local-service="true" name="AssetEntry" remote-service="true">
 
 		<!-- PK fields -->
@@ -467,10 +420,7 @@
 		<exception>AssetLink</exception>
 		<exception>AssetTag</exception>
 		<exception>CategoryName</exception>
-		<exception>CategoryPropertyKey</exception>
-		<exception>CategoryPropertyValue</exception>
 		<exception>DuplicateCategory</exception>
-		<exception>DuplicateCategoryProperty</exception>
 		<exception>DuplicateQueryRule</exception>
 		<exception>DuplicateTag</exception>
 		<exception>DuplicateVocabulary</exception>

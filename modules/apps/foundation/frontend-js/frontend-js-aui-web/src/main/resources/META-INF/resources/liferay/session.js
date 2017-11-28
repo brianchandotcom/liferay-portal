@@ -295,11 +295,10 @@ AUI.add(
 
 						value = String(value || Date.now());
 
+						instance._initTimestamp = value;
+
 						if (navigator.cookieEnabled) {
-							return A.Cookie.set(instance._cookieKey, value, instance._cookieOptions);
-						}
-						else {
-							return intance._initTimestamp = value;
+							A.Cookie.set(instance._cookieKey, value, instance._cookieOptions);
 						}
 					},
 

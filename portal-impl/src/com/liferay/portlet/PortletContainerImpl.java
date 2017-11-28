@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -156,12 +155,9 @@ public class PortletContainerImpl implements PortletContainer {
 		if (layoutType instanceof LayoutTypePortlet) {
 			layoutTypePortlet = (LayoutTypePortlet)layoutType;
 
-			List<Portlet> portlets = ListUtil.copy(
-				layoutTypePortlet.getPortlets());
+			List<Portlet> portlets = layoutTypePortlet.getPortlets();
 
-			if (targetPortlet != null) {
-				portlets.remove(targetPortlet);
-			}
+			portlets.remove(targetPortlet);
 
 			_processPublicRenderParameters(request, layout, portlets);
 		}

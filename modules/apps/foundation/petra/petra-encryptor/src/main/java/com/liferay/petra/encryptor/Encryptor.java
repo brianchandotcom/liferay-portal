@@ -223,6 +223,18 @@ public class Encryptor {
 		return _provider;
 	}
 
+	public static String serializeKey(Key key) {
+		return Base64.encode(key.getEncoded());
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(Encryptor.class);
+
+	private static final Map<String, Cipher> _decryptCipherMap =
+		new ConcurrentHashMap<>(1, 1F, 1);
+	private static final Map<String, Cipher> _encryptCipherMap =
+		new ConcurrentHashMap<>(1, 1F, 1);
+	private static final Provider _provider;
+
 	static {
 		try {
 			Class<?> providerClass = null;
@@ -254,17 +266,5 @@ public class Encryptor {
 			throw new ExceptionInInitializerError(roe);
 		}
 	}
-
-	public static String serializeKey(Key key) {
-		return Base64.encode(key.getEncoded());
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(Encryptor.class);
-
-	private static final Map<String, Cipher> _decryptCipherMap =
-		new ConcurrentHashMap<>(1, 1F, 1);
-	private static final Map<String, Cipher> _encryptCipherMap =
-		new ConcurrentHashMap<>(1, 1F, 1);
-	private static final Provider _provider;
 
 }

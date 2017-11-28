@@ -45,6 +45,11 @@ public class CPGroupLocalServiceImpl extends CPGroupLocalServiceBaseImpl {
 	}
 
 	@Override
+	public CPGroup deleteCPGroupByGroupId(long groupId) throws PortalException {
+		return cpGroupPersistence.removeByGroupId(groupId);
+	}
+
+	@Override
 	public CPGroup fetchCPGroupByGroupId(long groupId) throws PortalException {
 		return cpGroupPersistence.fetchByGroupId(groupId);
 	}

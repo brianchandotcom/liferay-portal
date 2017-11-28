@@ -1,14 +1,36 @@
 [
 	{
 		"layoutTemplateId": "1_column",
-		"name": "Commerce Home",
+		"name": "Home",
 		"portlets": [
 			{
 				"layoutColumnId": "column-1",
 				"layoutColumnPos": "0",
 				"portletName": "com_liferay_journal_content_web_portlet_JournalContentPortlet",
 				"portletPreferences": {
-					"articleId": "prova",
+					"articleId": "carousel",
+					"assetEntryId": "",
+					"ddmTemplateKey": "BASIC-WEB-CONTENT",
+					"groupId": ""
+				}
+			},
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": "1",
+				"portletName": "com_liferay_journal_content_web_portlet_JournalContentPortlet",
+				"portletPreferences": {
+					"articleId": "features",
+					"assetEntryId": "",
+					"ddmTemplateKey": "BASIC-WEB-CONTENT",
+					"groupId": ""
+				}
+			},
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": "2",
+				"portletName": "com_liferay_journal_content_web_portlet_JournalContentPortlet",
+				"portletPreferences": {
+					"articleId": "categories-and-separator",
 					"assetEntryId": "",
 					"ddmTemplateKey": "BASIC-WEB-CONTENT",
 					"groupId": ""
@@ -18,7 +40,7 @@
 	},
 	{
 		"layoutTemplateId": "commerce_1_2_columns_width_limited",
-		"name": "Commerce Categories",
+		"name": "Categories",
 		"portlets": [
 			{
 				"layoutColumnId": "column-1",
@@ -39,7 +61,7 @@
 	},
 	{
 		"layoutTemplateId": "1_column",
-		"name": "Commerce Product Detail",
+		"name": "Product Detail",
 		"portlets": [
 			{
 				"layoutColumnId": "column-1",
@@ -50,7 +72,7 @@
 	},
 	{
 		"layoutTemplateId": "commerce_2_columns_width_limited_70_30",
-		"name": "Commerce Cart",
+		"name": "Cart",
 		"portlets": [
 			{
 				"layoutColumnId": "column-1",
@@ -61,17 +83,39 @@
 				"layoutColumnId": "column-2",
 				"layoutColumnPos": "0",
 				"portletName": "com_liferay_commerce_cart_content_web_internal_portlet_CommerceCartContentTotalPortlet"
+			},
+			{
+				"layoutColumnId": "column-2",
+				"layoutColumnPos": "1",
+				"portletName": "com_liferay_journal_content_web_portlet_JournalContentPortlet",
+				"portletPreferences": {
+					"articleId": "cards-accepted",
+					"assetEntryId": "",
+					"ddmTemplateKey": "BASIC-WEB-CONTENT",
+					"groupId": ""
+				}
 			}
 		]
 	},
 	{
 		"layoutTemplateId": "commerce_1_column_width_limited",
-		"name": "Commerce Checkout",
+		"name": "Checkout",
 		"portlets": [
 			{
 				"layoutColumnId": "column-1",
 				"layoutColumnPos": "0",
 				"portletName": "com_liferay_commerce_checkout_web_internal_portlet_CommerceCheckoutPortlet"
+			}
+		]
+	},
+	{
+		"layoutTemplateId": "commerce_1_column_width_limited",
+		"name": "WishLists",
+		"portlets": [
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": "0",
+				"portletName": "com_liferay_commerce_cart_content_web_internal_portlet_CommerceWishListContentPortlet"
 			}
 		]
 	}

@@ -79,7 +79,7 @@
 		<pathconvert pathsep="," property="app.names">
 			<flattenmapper />
 			<path>
-				<dirset dir="${modules.dir}" includes="apps/*,private/apps/*">
+				<dirset dir="${modules.dir}" excludes="${build.modules.excludes}" includes="apps/*,private/apps/*">
 					<present targetdir="${modules.dir}">
 						<mapper from="*" to="*/app.bnd" type="glob" />
 					</present>

@@ -14,28 +14,140 @@
 
 package com.liferay.asset.category.property.service.impl;
 
-import com.liferay.asset.category.property.service.base.AssetCategoryPropertyServiceBaseImpl;
+import com.liferay.asset.kernel.model.AssetCategoryProperty;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portlet.asset.service.base.AssetCategoryPropertyServiceBaseImpl;
+import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * The implementation of the asset category property remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.asset.category.property.service.AssetCategoryPropertyService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
  * @author Brian Wing Shun Chan
- * @see AssetCategoryPropertyServiceBaseImpl
- * @see com.liferay.asset.category.property.service.AssetCategoryPropertyServiceUtil
+ * @author Jorge Ferrer
  */
 public class AssetCategoryPropertyServiceImpl
 	extends AssetCategoryPropertyServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.asset.category.property.service.AssetCategoryPropertyServiceUtil} to access the asset category property remote service.
-	 */
+	@Override
+	public AssetCategoryProperty addCategoryProperty(
+			long entryId, String key, String value)
+		throws PortalException {
+
+		AssetCategoryPermission.check(
+			getPermissionChecker(), entryId, ActionKeys.UPDATE);
+
+		return assetCategoryPropertyLocalService.addCategoryProperty(
+			getUserId(), entryId, key, value);
+	}
+
+	@Override
+	public void deleteCategoryProperty(long categoryPropertyId)
+		throws PortalException {
+
+		AssetCategoryProperty assetCategoryProperty =
+			assetCategoryPropertyLocalService.getAssetCategoryProperty(
+				categoryPropertyId);
+
+		AssetCategoryPermission.check(
+			getPermissionChecker(), assetCategoryProperty.getCategoryId(),
+			ActionKeys.UPDATE);
+
+		assetCategoryPropertyLocalService.deleteCategoryProperty(
+			categoryPropertyId);
+	}
+
+	@Override
+	public List<AssetCategoryProperty> getCategoryProperties(long entryId) {
+		try {
+			if (AssetCategoryPermission.contains(
+					getPermissionChecker(), entryId, ActionKeys.VIEW)) {
+
+				return assetCategoryPropertyLocalService.getCategoryProperties(
+					entryId);
+			}
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to get asset category property for asset entry " +
+						entryId,
+					pe);
+			}
+		}
+
+		return new ArrayList<>();
+	}
+
+	@Override
+	public List<AssetCategoryProperty> getCategoryPropertyValues(
+		long companyId, String key) {
+
+		return filterAssetCategoryProperties(
+			assetCategoryPropertyLocalService.getCategoryPropertyValues(
+				companyId, key));
+	}
+
+	@Override
+	public AssetCategoryProperty updateCategoryProperty(
+			long userId, long categoryPropertyId, String key, String value)
+		throws PortalException {
+
+		AssetCategoryProperty assetCategoryProperty =
+			assetCategoryPropertyLocalService.getAssetCategoryProperty(
+				categoryPropertyId);
+
+		AssetCategoryPermission.check(
+			getPermissionChecker(), assetCategoryProperty.getCategoryId(),
+			ActionKeys.UPDATE);
+
+		return assetCategoryPropertyLocalService.updateCategoryProperty(
+			userId, categoryPropertyId, key, value);
+	}
+
+	@Override
+	public AssetCategoryProperty updateCategoryProperty(
+			long categoryPropertyId, String key, String value)
+		throws PortalException {
+
+		return updateCategoryProperty(0, categoryPropertyId, key, value);
+	}
+
+	protected List<AssetCategoryProperty> filterAssetCategoryProperties(
+		List<AssetCategoryProperty> assetCategoryProperties) {
+
+		List<AssetCategoryProperty> filteredAssetCategoryProperties =
+			new ArrayList<>(assetCategoryProperties.size());
+
+		for (AssetCategoryProperty assetCategoryProperty :
+				assetCategoryProperties) {
+
+			try {
+				if (AssetCategoryPermission.contains(
+						getPermissionChecker(),
+						assetCategoryProperty.getCategoryId(),
+						ActionKeys.VIEW)) {
+
+					filteredAssetCategoryProperties.add(assetCategoryProperty);
+				}
+			}
+			catch (PortalException pe) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(pe, pe);
+				}
+			}
+		}
+
+		return filteredAssetCategoryProperties;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetCategoryPropertyServiceImpl.class);
+
 }

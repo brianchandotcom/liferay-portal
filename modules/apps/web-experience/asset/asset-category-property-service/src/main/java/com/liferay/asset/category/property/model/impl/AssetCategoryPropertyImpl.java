@@ -14,26 +14,8 @@
 
 package com.liferay.asset.category.property.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 /**
- * The extended model implementation for the AssetCategoryProperty service. Represents a row in the &quot;AssetCategoryProperty&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.asset.category.property.model.AssetCategoryProperty} interface.
- * </p>
- *
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class AssetCategoryPropertyImpl extends AssetCategoryPropertyBaseImpl {
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a asset category property model instance should use the {@link com.liferay.asset.category.property.model.AssetCategoryProperty} interface instead.
-	 */
-	public AssetCategoryPropertyImpl() {
-	}
-
 }

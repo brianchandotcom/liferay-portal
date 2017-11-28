@@ -306,7 +306,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testLPS28266() throws Exception {
-		test("LPS28266.testjava", "Use rs.getInt(1) for count, see LPS-28266");
+		test("LPS28266.testjava", "Use rs.getInt(1) for count");
 	}
 
 	@Test

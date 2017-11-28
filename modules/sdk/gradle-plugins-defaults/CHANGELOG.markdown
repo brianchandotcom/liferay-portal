@@ -2491,6 +2491,8 @@ plugin to properly configure the portal compatibility OSGi modules.
 - [LPS-76181]: Add property `exactVersion` to the `updateFileVersions`. If set
 to `true`, the task updates all versions to the current one, even if the "major"
 part has not been increased.
+- [LPS-76182]: Ignore a whole subtree if a `.lfrbuild-releng-ignore` marker file
+is found in a parent directory.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -2777,6 +2779,7 @@ part has not been increased.
 [LPS-76110]: https://issues.liferay.com/browse/LPS-76110
 [LPS-76145]: https://issues.liferay.com/browse/LPS-76145
 [LPS-76181]: https://issues.liferay.com/browse/LPS-76181
+[LPS-76182]: https://issues.liferay.com/browse/LPS-76182
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

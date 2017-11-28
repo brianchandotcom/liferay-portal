@@ -94,6 +94,12 @@ public class CPGroupLocalServiceUtil {
 		return getService().deleteCPGroup(CPGroupId);
 	}
 
+	public static com.liferay.commerce.product.model.CPGroup deleteCPGroupByGroupId(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteCPGroupByGroupId(groupId);
+	}
+
 	/**
 	* @throws PortalException
 	*/

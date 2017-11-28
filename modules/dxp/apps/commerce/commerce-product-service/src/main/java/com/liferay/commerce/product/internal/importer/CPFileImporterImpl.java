@@ -84,7 +84,7 @@ import org.osgi.service.component.annotations.Reference;
 public class CPFileImporterImpl implements CPFileImporter {
 
 	public static final String IMG_TAG =
-		"<img src='%s' data-fileentryid='%s' />";
+		"<img alt='' src='%s' data-fileentryid='%s' />";
 
 	public static final String PLACEHOLDER_REGEX = "\\[%[^\\[%]+%\\]";
 

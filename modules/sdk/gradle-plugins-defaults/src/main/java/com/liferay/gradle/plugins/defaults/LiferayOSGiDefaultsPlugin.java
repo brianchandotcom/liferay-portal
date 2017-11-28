@@ -1238,8 +1238,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	private ReplaceRegexTask _addTaskUpdateFileVersions(
 		final Project project, final GitRepo gitRepo) {
 
-		ReplaceRegexTask replaceRegexTask = GradleUtil.addTask(
+		final ReplaceRegexTask replaceRegexTask = GradleUtil.addTask(
 			project, UPDATE_FILE_VERSIONS_TASK_NAME, ReplaceRegexTask.class);
+
+		GradleUtil.setProperty(
+			replaceRegexTask, _UPDATE_FILE_VERSIONS_EXACT_VERSION_PROPERTY_NAME,
+			Boolean.FALSE);
 
 		replaceRegexTask.pre(
 			new Closure<String>(project) {
@@ -1294,6 +1298,15 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						!projectPath.startsWith(":private:") &&
 						(gitRepo == null)) {
 
+						return true;
+					}
+
+					boolean exactVersion = GradleUtil.getProperty(
+						replaceRegexTask,
+						_UPDATE_FILE_VERSIONS_EXACT_VERSION_PROPERTY_NAME,
+						false);
+
+					if (exactVersion) {
 						return true;
 					}
 
@@ -4207,6 +4220,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private static final String _SOURCE_FORMATTER_PORTAL_TOOL_NAME =
 		"com.liferay.source.formatter";
+
+	private static final String
+		_UPDATE_FILE_VERSIONS_EXACT_VERSION_PROPERTY_NAME = "exactVersion";
 
 	private static final BackupFilesBuildAdapter _backupFilesBuildAdapter =
 		new BackupFilesBuildAdapter();

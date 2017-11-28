@@ -1,10 +1,10 @@
 ## String concatenation
 
 When concatenating more than 3 String objects, we should make use of
-```StringBundler``` instead of using the plus operator.
+`StringBundler` instead of using the plus operator.
 
-If we do not already have a ```StringBundler``` object available and we have all
-the String objects available, we should call the method
+If we do not already have a `StringBundler` object available and we have all the
+String objects available, we should call the method
 `StringBundler.concat(String...)`
 
 #### Example
@@ -21,7 +21,7 @@ _log(
     "."));
 ```
 
-If a ```StringBundler``` object is already available, we can write
+If a `StringBundler` object is already available, we can write
 
 ```java
 sb.append("User ");
@@ -34,7 +34,7 @@ _log(sb.toString());
 ```
 
 When concatenating more than 3 arguments, but not all of those are Strings
-object, we should still use ```StringBundler.concat``` and convert the arguments
+object, we should still use `StringBundler.concat` and convert the arguments
 that are not a String object first.
 
 #### Example

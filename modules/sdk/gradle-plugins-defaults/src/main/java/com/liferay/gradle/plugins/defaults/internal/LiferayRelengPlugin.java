@@ -687,9 +687,10 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 				@Override
 				public boolean isSatisfiedBy(Task task) {
-					if (FileUtil.exists(
-							task.getProject(), RELENG_IGNORE_FILE_NAME)) {
+					File relengIgnoreDir = GradleUtil.getRootDir(
+						task.getProject(), RELENG_IGNORE_FILE_NAME);
 
+					if (relengIgnoreDir != null) {
 						return false;
 					}
 

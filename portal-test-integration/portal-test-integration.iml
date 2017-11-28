@@ -19,6 +19,7 @@
 		<orderEntry type="module" module-name="petra-mail" scope="PROVIDED" />
 		<orderEntry type="module" module-name="petra-memory" scope="PROVIDED" />
 		<orderEntry type="module" module-name="petra-nio" scope="PROVIDED" />
+		<orderEntry type="module" module-name="petra-process" scope="PROVIDED" />
 		<orderEntry type="module" module-name="petra-reflect" scope="PROVIDED" />
 		<orderEntry type="module" module-name="petra-string" scope="PROVIDED" />
 		<orderEntry type="module" module-name="portal-kernel" />

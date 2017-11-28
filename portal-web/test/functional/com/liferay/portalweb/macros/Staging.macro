@@ -694,6 +694,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="${pageName}" />
+			<var name="privacy" value="${privacy}" />
 		</execute>
 	</command>
 

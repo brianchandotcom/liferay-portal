@@ -16,6 +16,8 @@ package com.liferay.asset.category.property.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.asset.category.property.model.AssetCategoryProperty;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -23,7 +25,10 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for AssetCategoryProperty. Methods of this
@@ -49,6 +54,18 @@ public interface AssetCategoryPropertyService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetCategoryPropertyServiceUtil} to access the asset category property remote service. Add custom service methods to {@link com.liferay.asset.category.property.service.impl.AssetCategoryPropertyServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public AssetCategoryProperty addCategoryProperty(long entryId,
+		java.lang.String key, java.lang.String value) throws PortalException;
+
+	public void deleteCategoryProperty(long categoryPropertyId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetCategoryProperty> getCategoryProperties(long entryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetCategoryProperty> getCategoryPropertyValues(
+		long companyId, java.lang.String key);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -56,4 +73,12 @@ public interface AssetCategoryPropertyService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	public AssetCategoryProperty updateCategoryProperty(long userId,
+		long categoryPropertyId, java.lang.String key, java.lang.String value)
+		throws PortalException;
+
+	public AssetCategoryProperty updateCategoryProperty(
+		long categoryPropertyId, java.lang.String key, java.lang.String value)
+		throws PortalException;
 }

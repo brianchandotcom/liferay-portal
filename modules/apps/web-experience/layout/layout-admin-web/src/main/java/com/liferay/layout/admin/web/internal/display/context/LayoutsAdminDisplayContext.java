@@ -792,16 +792,8 @@ public class LayoutsAdminDisplayContext {
 				getAddLayoutURL(layout.getPlid(), layout.isPrivateLayout()));
 		}
 
-		if (showDeleteAction(layout)) {
-			jsonObject.put("deleteURL", getDeleteLayoutURL(layout));
-		}
-
 		if (showConfigureAction(layout)) {
 			jsonObject.put("configureURL", getConfigureLayoutURL(layout));
-		}
-
-		if (showPermissionsAction(layout)) {
-			jsonObject.put("permissionsURL", getPermissionsURL(layout));
 		}
 
 		if (showCopyApplicationsAction(layout)) {
@@ -809,11 +801,19 @@ public class LayoutsAdminDisplayContext {
 				"copyApplicationsURL", getCopyApplicationsURL(layout));
 		}
 
+		if (showDeleteAction(layout)) {
+			jsonObject.put("deleteURL", getDeleteLayoutURL(layout));
+		}
+
+		jsonObject.put("editLayoutURL", getEditLayoutURL(layout));
+
 		if (showOrphanPortletsAction(layout)) {
 			jsonObject.put("orphanPortletsURL", getOrphanPortletsURL(layout));
 		}
 
-		jsonObject.put("editLayoutURL", getEditLayoutURL(layout));
+		if (showPermissionsAction(layout)) {
+			jsonObject.put("permissionsURL", getPermissionsURL(layout));
+		}
 
 		return jsonObject;
 	}

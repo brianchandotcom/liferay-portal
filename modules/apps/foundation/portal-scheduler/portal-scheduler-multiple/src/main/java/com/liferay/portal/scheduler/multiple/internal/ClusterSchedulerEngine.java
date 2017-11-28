@@ -570,7 +570,6 @@ public class ClusterSchedulerEngine
 
 				_log.error(sb.toString(), e);
 			}
-
 		}
 	}
 

@@ -107,6 +107,17 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a "(Staging)" suffixed descriptive name for a given Group.</description>
+		<name>descriptive-name</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.DescriptiveNameTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>group</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Renders a menu item for the Export Entity screen's UI.</description>
 		<name>export-entity</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.ExportEntityTag</tag-class>
@@ -359,17 +370,6 @@
 		<attribute>
 			<description>The tree ID from the caller environment.</description>
 			<name>treeId</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
-		<description>Creates a "(Staging)" suffixed descriptive name for a given Group.</description>
-		<name>staged-descriptive-name</name>
-		<tag-class>com.liferay.staging.taglib.servlet.taglib.StagedDescriptiveNameTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>group</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

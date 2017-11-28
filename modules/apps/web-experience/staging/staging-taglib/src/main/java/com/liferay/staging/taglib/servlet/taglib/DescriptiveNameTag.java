@@ -29,7 +29,7 @@ import javax.servlet.jsp.JspWriter;
 /**
  * @author Balázs Sáfrány-Kovalik
  */
-public class StagedDescriptiveNameTag extends IncludeTag {
+public class DescriptiveNameTag extends IncludeTag {
 
 	@Override
 	public void cleanUp() {
@@ -44,12 +44,12 @@ public class StagedDescriptiveNameTag extends IncludeTag {
 	protected int processEndTag() throws Exception {
 		JspWriter jspWriter = pageContext.getOut();
 
-		jspWriter.write(_getStagedDescriptiveName());
+		jspWriter.write(_getDescriptiveName());
 
 		return EVAL_PAGE;
 	}
 
-	private String _getStagedDescriptiveName() {
+	private String _getDescriptiveName() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -76,7 +76,7 @@ public class StagedDescriptiveNameTag extends IncludeTag {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		StagedDescriptiveNameTag.class);
+		DescriptiveNameTag.class);
 
 	private Group _group;
 

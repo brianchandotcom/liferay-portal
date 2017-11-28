@@ -17,7 +17,6 @@ package com.liferay.commerce.product.internal.importer;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.commerce.product.importer.CPFileImporter;
-import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
@@ -102,7 +101,8 @@ public class CPFileImporterImpl implements CPFileImporter {
 	@Override
 	public void createJournalArticles(
 			JSONArray journalArticleJSONArray, ClassLoader classLoader,
-			String dependenciesFilePath, ServiceContext serviceContext)
+			String dependenciesFilePath, ServiceContext serviceContext,
+			ThemeDisplay themeDisplay)
 		throws Exception {
 
 		for (int i = 0; i < journalArticleJSONArray.length(); i++) {
@@ -111,7 +111,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 			createJournalArticle(
 				journalArticleJSONObject, classLoader, dependenciesFilePath,
-				serviceContext);
+				serviceContext, themeDisplay);
 		}
 	}
 
@@ -198,7 +198,8 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 	protected JournalArticle createJournalArticle(
 			JSONObject jsonObject, ClassLoader classLoader,
-			String dependenciesFilePath, ServiceContext serviceContext)
+			String dependenciesFilePath, ServiceContext serviceContext,
+			ThemeDisplay themeDisplay)
 		throws Exception {
 
 		String articleId = jsonObject.getString("articleId");
@@ -229,6 +230,10 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 		titleMap.put(Locale.US, title);
 		descriptionMap.put(Locale.US, description);
+
+		content = getNormalizedContent(
+			content, classLoader, dependenciesFilePath, serviceContext,
+			themeDisplay);
 
 		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
 			serviceContext.getTimeZone());
@@ -339,9 +344,9 @@ public class CPFileImporterImpl implements CPFileImporter {
 				serviceContext.getScopeGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName);
 		}
-		catch (NoSuchFileEntryException nsfee) {
+		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsfee, nsfee);
+				_log.debug(e, e);
 			}
 		}
 
@@ -423,7 +428,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 				IMG_TAG, previewURL,
 				String.valueOf(fileEntry.getFileEntryId()));
 
-			content = content.replaceAll(placeHolder, imgHtmlTag);
+			content = content.replace(placeHolder, imgHtmlTag);
 		}
 
 		return content;

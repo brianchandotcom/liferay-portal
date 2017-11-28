@@ -29,10 +29,12 @@ import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ThemeLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -64,11 +66,15 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 
 	@Override
 	public void create(HttpServletRequest httpServletRequest) throws Exception {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		ServiceContext serviceContext = getServiceContext(httpServletRequest);
 
 		_cpFileImporter.cleanLayouts(serviceContext);
 
-		createJournalArticles(serviceContext);
+		createJournalArticles(serviceContext, themeDisplay);
 
 		_cpFileImporter.updateLookAndFeel(LOTUS_THEME_ID, serviceContext);
 
@@ -167,7 +173,8 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 			"/render.jsp");
 	}
 
-	protected void createJournalArticles(ServiceContext serviceContext)
+	protected void createJournalArticles(
+			ServiceContext serviceContext, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		Class<?> clazz = getClass();
@@ -181,7 +188,8 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 			journalArticleJSON);
 
 		_cpFileImporter.createJournalArticles(
-			jsonArray, clazz.getClassLoader(), DEPENDECY_PATH, serviceContext);
+			jsonArray, clazz.getClassLoader(), DEPENDECY_PATH, serviceContext,
+			themeDisplay);
 	}
 
 	protected void createLayouts(ServiceContext serviceContext)

@@ -56,16 +56,15 @@ public class JavaModuleTestCheck extends BaseFileCheck {
 				content.contains("import org.powermock.")) {
 
 				addMessage(
-					fileName,
-					"Do not use PowerMock inside Arquillian tests, see " +
-						"LPS-56706");
+					fileName, "Do not use PowerMock inside Arquillian tests",
+					"power_mock.markdown");
 			}
 
 			if (!packageName.endsWith(".test")) {
 				addMessage(
 					fileName,
-					"Module integration test must be under a test " +
-						"subpackage, see LPS-57722");
+					"Module integration test must be under a test subpackage",
+					"modules_tests.markdown");
 			}
 		}
 		else if ((absolutePath.contains("/test/unit/") ||
@@ -74,8 +73,8 @@ public class JavaModuleTestCheck extends BaseFileCheck {
 
 			addMessage(
 				fileName,
-				"Module unit test should not be under a test subpackage, see " +
-					"LPS-57722");
+				"Module unit test should not be under a test subpackage",
+				"modules_tests.markdown");
 		}
 	}
 

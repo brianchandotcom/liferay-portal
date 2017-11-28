@@ -152,7 +152,8 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 			addMessage(
 				fileName,
 				"Use @Reference instead of calling " + serviceUtilClassName +
-					" directly, see LPS-59076");
+					" directly",
+				"osgi_components.markdown");
 		}
 	}
 
@@ -190,8 +191,8 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 					addMessage(
 						fileName,
 						"Use portal service reference instead of '" +
-							serviceReferenceUtilClassName +
-								"' in modules, see LPS-69661");
+							serviceReferenceUtilClassName + "' in modules",
+						"osgi_components.markdown");
 
 					return;
 				}
@@ -293,7 +294,8 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					"Add '-dsannotations-options: inherit' to '" +
-						bndSettings.getFileName());
+						bndSettings.getFileName(),
+					"osgi_components_inheritance.markdown");
 			}
 		}
 

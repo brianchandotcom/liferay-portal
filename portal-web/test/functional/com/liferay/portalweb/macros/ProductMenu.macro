@@ -168,20 +168,6 @@
 		</execute>
 	</command>
 
-	<command name="gotoPublicPages" summary="Navigate to Product Menu > Sites > Navigation > Public Pages > ${page}">
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="Site Administration" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Navigation" />
-		</execute>
-
-		<execute macro="SitePages#togglePrivacy">
-			<var name="privacy" value="${privacy}" />
-		</execute>
-	</command>
-
 	<command name="gotoPublicSite" summary="Navigate to Product Menu > Sites > Site Popup > ${site}">
 		<execute macro="ProductMenuHelper#expandPanel">
 			<var name="panel" value="Site Administration" />

@@ -2471,6 +2471,12 @@ the `npmInstall` task.
 ### Changed
 - [LPS-76110]: Update the [Liferay Gradle Plugins] dependency to version 3.5.48.
 
+## 5.2.0 - 2017-11-27
+
+### Added
+- [LPS-76145]: Add new `com.liferay.osgi.portal.compat.defaults.plugin` Gradle
+plugin to properly configure the portal compatibility OSGi modules.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -2752,6 +2758,7 @@ the `npmInstall` task.
 [LPS-75965]: https://issues.liferay.com/browse/LPS-75965
 [LPS-75971]: https://issues.liferay.com/browse/LPS-75971
 [LPS-76110]: https://issues.liferay.com/browse/LPS-76110
+[LPS-76145]: https://issues.liferay.com/browse/LPS-76145
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

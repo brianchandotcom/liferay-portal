@@ -66,6 +66,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.lang.time.StopWatch;
@@ -583,7 +584,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	protected String getSortFieldName(Sort sort, String scoreFieldName) {
 		String sortFieldName = sort.getFieldName();
 
-		if (sortFieldName.equals(Field.PRIORITY)) {
+		if (Objects.equals(sortFieldName, Field.PRIORITY)) {
 			return sortFieldName;
 		}
 

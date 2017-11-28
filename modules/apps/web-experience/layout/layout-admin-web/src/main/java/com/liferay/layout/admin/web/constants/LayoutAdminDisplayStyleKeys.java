@@ -12,16 +12,15 @@
  * details.
  */
 
-package com.liferay.layout.admin.web.internal.constants;
+package com.liferay.layout.admin.web.constants;
 
 /**
- * @author Julio Camarero
+ * @author Jürgen Kappler
  */
-public class LayoutAdminWebKeys {
+public class LayoutAdminDisplayStyleKeys {
 
-	public static final String ITEM_SELECTOR = "ITEM_SELECTOR";
+	public static final String FLATTENED = "flattened-style";
 
-	public static final String LAYOUT_ADMIN_CONFIGURATION =
-		"LAYOUT_ADMIN_CONFIGURATION";
+	public static final String MILLER = "miller-style";
 
 }

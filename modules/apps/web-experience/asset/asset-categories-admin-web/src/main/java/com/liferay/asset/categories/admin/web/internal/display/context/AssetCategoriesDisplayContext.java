@@ -15,7 +15,7 @@
 package com.liferay.asset.categories.admin.web.internal.display.context;
 
 import com.liferay.asset.categories.admin.web.configuration.AssetCategoriesAdminWebConfiguration;
-import com.liferay.asset.categories.admin.web.constants.AssetCategoriesNavigationDisplayStyleKeys;
+import com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminDisplayStyleKeys;
 import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminPortletKeys;
 import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminWebKeys;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
@@ -749,7 +749,7 @@ public class AssetCategoriesDisplayContext {
 		if (StringUtil.equals(
 				_assetCategoriesAdminWebConfiguration.
 					categoryNavigationDisplayStyle(),
-				AssetCategoriesNavigationDisplayStyleKeys.FLATTENED_TREE)) {
+				AssetCategoriesAdminDisplayStyleKeys.FLATTENED_TREE)) {
 
 			return true;
 		}

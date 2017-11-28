@@ -60,14 +60,20 @@ public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		String factoryPid = ParamUtil.getString(renderRequest, "factoryPid");
+
+		MVCRenderCommand customRenderCommand = _renderCommands.get(factoryPid);
+
+		if (customRenderCommand != null) {
+			return customRenderCommand.render(renderRequest, renderResponse);
+		}
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		Map<String, ConfigurationModel> configurationModels =
 			_configurationModelRetriever.getConfigurationModels(
 				themeDisplay.getLanguageId());
-
-		String factoryPid = ParamUtil.getString(renderRequest, "factoryPid");
 
 		try {
 			ConfigurationModel factoryConfigurationModel =

@@ -27,7 +27,7 @@ public class JavaStopWatchCheck extends BaseFileCheck {
 
 		if (pos != -1) {
 			addMessage(
-				fileName, "Do not set stopwatch to null, see LPS-45492",
+				fileName, "Do not set stopwatch to null", "stop_watch.markdown",
 				getLineCount(content, pos));
 		}
 

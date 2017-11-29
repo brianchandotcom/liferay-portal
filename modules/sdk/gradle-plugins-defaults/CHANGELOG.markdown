@@ -2499,6 +2499,11 @@ is found in a parent directory.
 ### Changed
 - [LPS-75859]: Update the [Liferay Gradle Plugins] dependency to version 3.5.51.
 
+## 5.2.4 - 2017-11-28
+
+### Changed
+- [LPS-75901]: Update the [Liferay Gradle Plugins] dependency to version 3.5.52.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -2778,6 +2783,7 @@ is found in a parent directory.
 [LPS-75798]: https://issues.liferay.com/browse/LPS-75798
 [LPS-75829]: https://issues.liferay.com/browse/LPS-75829
 [LPS-75859]: https://issues.liferay.com/browse/LPS-75859
+[LPS-75901]: https://issues.liferay.com/browse/LPS-75901
 [LPS-75910]: https://issues.liferay.com/browse/LPS-75910
 [LPS-75952]: https://issues.liferay.com/browse/LPS-75952
 [LPS-75965]: https://issues.liferay.com/browse/LPS-75965

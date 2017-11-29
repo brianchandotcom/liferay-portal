@@ -98,6 +98,20 @@ public class LegacyDataArchive {
 		return false;
 	}
 
+	public void updateCommit() {
+		Commit commit = _getCommit();
+
+		if (commit == null) {
+			return;
+		}
+
+		if ((_commit != null) && _commit.equals(commit)) {
+			return;
+		}
+
+		_commit = commit;
+	}
+
 	public void updateLegacyDataArchive() throws IOException {
 		if (_generatedLegacyDataArchiveFile.exists()) {
 			JenkinsResultsParserUtil.copy(

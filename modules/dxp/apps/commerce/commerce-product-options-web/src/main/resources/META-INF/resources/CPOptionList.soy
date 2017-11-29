@@ -18,7 +18,7 @@
 
 		Options
 
-		<button onClick="{$_handleAddOptionClick}" class="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none" type="button">
+		<button class="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none" onClick="{$_handleAddOptionClick}" type="button">
 			<svg aria-hidden="true" class="lexicon-icon lexicon-icon-plus">
 				<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#plus"></use>
 			</svg>
@@ -82,7 +82,7 @@
 		{/if}
 	{/let}
 
-	<tr data-id="{$id}" onclick="{$_handleSelectOptionClick}" class="{$classes}">
+	<tr class="{$classes}" data-id="{$id}" onclick="{$_handleSelectOptionClick}">
 		<td>
 			{if $id != 0}
 				{$id}
@@ -101,7 +101,7 @@
 		</td>
 		<td>
 			{if $showButton}
-				<button class="btn btn-link" type="button" onclick="{$_handleEditValues}">{msg desc=""}values{/msg}</button>
+				<button class="btn btn-link" onclick="{$_handleEditValues}" type="button">{msg desc=""}values{/msg}</button>
 			{/if}
 		</td>
 	</tr>

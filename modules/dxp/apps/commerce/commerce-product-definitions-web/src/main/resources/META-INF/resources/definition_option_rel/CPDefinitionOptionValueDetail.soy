@@ -17,13 +17,13 @@
 		<div class="option-value-detail"></div>
 
 		<div class="button-holder product-definition-option-rel-button-row">
-			<button class="btn btn-primary" type="button" onclick="{$_handleSaveOptionValue}">{msg desc=""}Save{/msg}</button>
+			<button class="btn btn-primary" onclick="{$_handleSaveOptionValue}" type="button">{msg desc=""}Save{/msg}</button>
 
 			{if $cpDefinitionOptionValueRelId != '0'}
-				<button class="btn btn-secondary" type="button" onclick="{$_handleDeleteOptionValue}">{msg desc=""}Delete{/msg}</button>
+				<button class="btn btn-secondary" onclick="{$_handleDeleteOptionValue}" type="button">{msg desc=""}Delete{/msg}</button>
 			{/if}
 
-			<button class="btn btn-link" type="button" onclick="{$_handleCancel}">{msg desc=""}cancel{/msg}</button>
+			<button class="btn btn-link" onclick="{$_handleCancel}" type="button">{msg desc=""}cancel{/msg}</button>
 		</div>
 	</div>
 {/template}

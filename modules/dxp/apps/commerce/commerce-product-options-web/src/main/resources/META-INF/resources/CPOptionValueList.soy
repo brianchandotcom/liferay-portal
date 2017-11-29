@@ -17,7 +17,7 @@
 
 		Option Values
 
-		<button onClick="{$_handleAddOptionValueClick}" class="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none" type="button">
+		<button class="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none" onClick="{$_handleAddOptionValueClick}" type="button">
 			<svg aria-hidden="true" class="lexicon-icon lexicon-icon-plus">
 				<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#plus"></use>
 			</svg>
@@ -72,7 +72,7 @@
 							{/if}
 						{/let}
 
-						<tr data-id="{$optionValue.cpOptionValueId}" onclick="{$_handleSelectOptionValueClick}" class="{$classes}">
+						<tr class="{$classes}" data-id="{$optionValue.cpOptionValueId}" onclick="{$_handleSelectOptionValueClick}">
 							<td>
 								{$optionValue.cpOptionValueId}
 							</td>

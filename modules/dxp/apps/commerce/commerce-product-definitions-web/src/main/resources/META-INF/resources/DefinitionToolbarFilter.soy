@@ -15,7 +15,7 @@
 	{@param? _terms: ?}
 	{@param? _optionValues: ?}
 
-	<div id="{$id}" class="definition-toolbar-filter">
+	<div class="definition-toolbar-filter" id="{$id}">
 		<div class="container-fluid-1280">
 			<div class="form-group form-inline filter-selector">
 				<div class="form-inline-group">
@@ -54,7 +54,7 @@
 					{/if}
 
 					{if $_currentSelection != 'assetCategoryIds' }
-						<button class="btn btn-secondary add-filter-button" type="button" onclick="{$_handleAddFilter}">{msg desc=""}add-filter{/msg}</button>
+						<button class="btn btn-secondary add-filter-button" onclick="{$_handleAddFilter}" type="button">{msg desc=""}add-filter{/msg}</button>
 					{/if}
 				</div>
 			</div>
@@ -158,7 +158,7 @@
 				{foreach $filter in $filters}
 					<span class="label label-dismissible label-lg label-secondary">
 						{$filter.label}
-						<button aria-label="Close" class="close" type="button" data-index="{index($filter)}" onClick="{$_handlerRemoveFilter}">
+						<button aria-label="Close" class="close" data-index="{index($filter)}" onClick="{$_handlerRemoveFilter}" type="button">
 							<svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
 								<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#times"></use>
 							</svg>

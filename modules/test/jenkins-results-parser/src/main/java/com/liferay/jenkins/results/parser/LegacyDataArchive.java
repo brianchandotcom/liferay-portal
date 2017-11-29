@@ -63,6 +63,22 @@ public class LegacyDataArchive {
 		return _portalVersion;
 	}
 
+	public boolean isMissing() {
+		if (_commit == null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isStale() {
+		if (!isMissing() && !isUpdated()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isUpdated() {
 		if (_commit == null) {
 			return false;

@@ -27,6 +27,7 @@ String productMenuState = SessionClicks.get(request, ProductNavigationProductMen
 				<a href="<%= PortalUtil.addPreservedParameters(themeDisplay, themeDisplay.getURLPortal(), false, true) %>">
 					<span class="company-details truncate-text">
 						<img alt="" class="company-logo" src="<%= themeDisplay.getRealCompanyLogo() %>" />
+
 						<span class="company-name"><%= HtmlUtil.escape(company.getName()) %></span>
 					</span>
 				</a>

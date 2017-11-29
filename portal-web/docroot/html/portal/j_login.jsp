@@ -51,6 +51,7 @@ if (PropsValues.PORTAL_JAAS_ENABLE && (jUserName != null)) {
 				<meta content="no-cache" http-equiv="Cache-Control" />
 				<meta content="no-cache" http-equiv="Pragma" />
 				<meta content="0" http-equiv="Expires" />
+
 				<script src="<%= themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript() %>/misc/xp_progress.js" type="text/javascript"></script>
 			</head>
 

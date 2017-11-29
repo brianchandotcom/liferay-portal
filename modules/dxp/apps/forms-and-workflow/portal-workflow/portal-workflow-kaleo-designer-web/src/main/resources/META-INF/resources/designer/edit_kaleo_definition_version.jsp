@@ -60,6 +60,8 @@
 		portletDisplay.setURLBack(redirect);
 
 		renderResponse.setTitle((kaleoDefinitionVersion == null) ? LanguageUtil.get(request, "new-workflow") : name);
+
+		String publishUpdateButtonLabel = kaleoDefinitionVersion == null ? "publish" : "update";
 		%>
 
 		<c:if test="<%= kaleoDefinitionVersion != null %>">
@@ -926,20 +928,13 @@
 					</aui:fieldset-group>
 
 					<aui:button-row>
-						<c:if test="<%= KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), KaleoDesignerActionKeys.ADD_DRAFT) || ((kaleoDefinitionVersion != null) && KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE)) %>">
-							<aui:button onClick='<%= renderResponse.getNamespace() + "addKaleoDefinitionVersion();" %>' value="save-as-draft" />
-						</c:if>
-
 						<c:if test="<%= KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), KaleoDesignerActionKeys.PUBLISH) %>">
-							<aui:button onClick='<%= renderResponse.getNamespace() + "publishKaleoDefinitionVersion();" %>' primary="<%= true %>" value="publish" />
+							<aui:button onClick='<%= renderResponse.getNamespace() + "publishKaleoDefinitionVersion();" %>' primary="<%= true %>" value="<%= publishUpdateButtonLabel %>" />
 						</c:if>
 
-						<c:if test="<%= Validator.isNotNull(redirect) %>">
-							<aui:button href="<%= redirect %>" value="cancel" />
-						</c:if>
-
-						<c:if test="<%= Validator.isNull(redirect) %>">
-							<aui:button onClick='<%= renderResponse.getNamespace() + "closeKaleoDialog();" %>' value="cancel" />
+						<c:if test="<%= KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), KaleoDesignerActionKeys.ADD_DRAFT)
+							&& kaleoDefinitionVersion == null %>">
+							<aui:button onClick='<%= renderResponse.getNamespace() + "addKaleoDefinitionVersion();" %>' value="save" />
 						</c:if>
 
 						<span class="lfr-portlet-workflowdesigner-message" id="<portlet:namespace />toolbarMessage"></span>

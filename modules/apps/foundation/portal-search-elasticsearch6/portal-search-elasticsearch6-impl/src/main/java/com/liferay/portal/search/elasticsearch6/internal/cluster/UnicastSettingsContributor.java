@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author André de Oliveira
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration",
+	configurationPid = "com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration",
 	immediate = true, property = {"operation.mode=EMBEDDED"},
 	service = SettingsContributor.class
 )
@@ -48,10 +48,9 @@ public class UnicastSettingsContributor extends BaseSettingsContributor {
 			return;
 		}
 
+		clientSettingsHelper.put("discovery.type", "zen");
 		clientSettingsHelper.putArray(
 			"discovery.zen.ping.unicast.hosts", _getHosts());
-
-		clientSettingsHelper.put("node.local", "false");
 	}
 
 	@Activate

@@ -150,7 +150,9 @@ public class AddKaleoDefinitionVersionMVCActionCommand
 		return versionParts[0] + StringPool.PERIOD + ++versionParts[1];
 	}
 
-	protected String getTitle(Map<Locale, String> titleMap) {
+	protected String getTitle(Map<Locale, String> titleMap)
+		throws WorkflowException {
+
 		if (titleMap == null) {
 			return null;
 		}

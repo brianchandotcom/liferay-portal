@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
+import com.liferay.portal.kernel.workflow.WorkflowDefinitionTitleException;
+import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerWebKeys;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
@@ -78,6 +80,19 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 		actionRequest.setAttribute(
 			KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION,
 			kaleoDefinitionVersion);
+	}
+
+	@Override
+	protected String getTitle(Map<Locale, String> titleMap)
+		throws WorkflowException {
+
+		String title = super.getTitle(titleMap);
+
+		if (Validator.isNull(title)) {
+			throw new WorkflowDefinitionTitleException();
+		}
+
+		return title;
 	}
 
 	@Reference(target = "(proxy.bean=false)")

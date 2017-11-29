@@ -47,10 +47,7 @@ public class LegacyDataArchiveGroup {
 			}
 		}
 
-		GitWorkingDirectory legacyGitWorkingDirectory =
-			_legacyDataArchiveUtil.getLegacyGitWorkingDirectory();
-
-		String status = legacyGitWorkingDirectory.status();
+		String status = _legacyGitWorkingDirectory.status();
 
 		if (!status.contains("nothing to commit") &&
 			!status.contains("nothing added to commit")) {
@@ -60,13 +57,17 @@ public class LegacyDataArchiveGroup {
 			String portalVersion =
 				_legacyDataArchivePortalVersion.getPortalVersion();
 
-			legacyGitWorkingDirectory.commitStagedFilesToCurrentBranch(
+			_legacyGitWorkingDirectory.commitStagedFilesToCurrentBranch(
 				JenkinsResultsParserUtil.combine(
 					"archive:ignore Update '", _dataArchiveType, "' for '",
 					portalVersion, "' at ",
 					latestTestCommit.getAbbreviatedSHA(), "."));
 
-			String gitLog = legacyGitWorkingDirectory.log(1);
+			for (LegacyDataArchive legacyDataArchive : _legacyDataArchives) {
+				legacyDataArchive.updateCommit();
+			}
+
+			String gitLog = _legacyGitWorkingDirectory.log(1);
 
 			_commit = CommitFactory.newCommit(gitLog);
 		}

@@ -10,6 +10,15 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
+	<command name="deleteCollection">
+		<execute macro="LexiconEntry#deleteEntry">
+			<var name="menuItem" value="${menuItem}" />
+			<var name="rowEntry" value="${collectionName}" />
+		</execute>
+
+		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+	</command>
+
 	<command name="editCollection">
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${collectionName}" />

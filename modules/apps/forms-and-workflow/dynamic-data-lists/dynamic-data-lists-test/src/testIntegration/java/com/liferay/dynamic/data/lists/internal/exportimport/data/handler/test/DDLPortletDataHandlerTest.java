@@ -12,30 +12,32 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.web.internal.exportimport.data.handler.test;
+package com.liferay.dynamic.data.lists.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
+import com.liferay.dynamic.data.lists.helper.DDLRecordSetTestHelper;
+import com.liferay.dynamic.data.lists.helper.DDLRecordTestHelper;
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
+import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
-import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
- * @author Gergely Mathe
+ * @author Zsolt Berentey
  */
 @RunWith(Arquillian.class)
 @Sync
-public class DDLDisplayPortletDataHandlerTest
-	extends BasePortletDataHandlerTestCase {
+public class DDLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 	@ClassRule
 	@Rule
@@ -44,28 +46,45 @@ public class DDLDisplayPortletDataHandlerTest
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		ServiceTestUtil.setUser(TestPropsValues.getUser());
-
-		super.setUp();
-	}
-
 	@Override
 	protected void addStagedModels() throws Exception {
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			stagingGroup.getGroupId(), DDLRecordSet.class.getName());
+
+		DDLRecordSetTestHelper recordSetTestHelper = new DDLRecordSetTestHelper(
+			stagingGroup);
+
+		DDLRecordSet recordSet = recordSetTestHelper.addRecordSet(ddmStructure);
+
+		DDLRecordTestHelper recordTestHelper = new DDLRecordTestHelper(
+			stagingGroup, recordSet);
+
+		recordTestHelper.addRecord();
 	}
 
 	@Override
-	protected String[] getDataPortletPreferences() {
-		return new String[] {
-			"displayDDMTemplateId", "formDDMTemplateId", "recordSetId"
-		};
+	protected DataLevel getDataLevel() {
+		return DataLevel.SITE;
 	}
 
 	@Override
 	protected String getPortletId() {
-		return DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY;
+		return DDLPortletKeys.DYNAMIC_DATA_LISTS;
+	}
+
+	@Override
+	protected boolean isDataPortalLevel() {
+		return false;
+	}
+
+	@Override
+	protected boolean isDataPortletInstanceLevel() {
+		return false;
+	}
+
+	@Override
+	protected boolean isDataSiteLevel() {
+		return true;
 	}
 
 }

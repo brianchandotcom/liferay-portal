@@ -52,6 +52,11 @@ public class DDLFormPortletDataHandlerTest
 	}
 
 	@Override
+	protected String[] getDataPortletPreferences() {
+		return new String[] {"recordSetId"};
+	}
+
+	@Override
 	protected String getPortletId() {
 		return DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM;
 	}

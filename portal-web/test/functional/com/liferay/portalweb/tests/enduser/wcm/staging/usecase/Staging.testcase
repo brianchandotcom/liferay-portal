@@ -280,10 +280,8 @@
 	</command>
 
 	<command name="PublishTemplateWithPages" priority="4">
-		<execute macro="Page#add">
+		<execute macro="SitePages#addPrivatePage">
 			<var name="pageName" value="Private Staging Page" />
-			<var name="siteName" value="Site Name" />
-			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">

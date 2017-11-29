@@ -51,6 +51,16 @@ public class GitUtil {
 		return getFileNames(baseDirName, mergeBaseCommitId);
 	}
 
+	public static String getCurrentBranchName() throws Exception {
+		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
+			"git branch | grep \\*");
+
+		String currentBranchName = StringUtil.replaceFirst(
+			unsyncBufferedReader.readLine(), CharPool.STAR, StringPool.BLANK);
+
+		return StringUtil.trim(currentBranchName);
+	}
+
 	public static List<String> getLatestAuthorFileNames(String baseDirName)
 		throws Exception {
 

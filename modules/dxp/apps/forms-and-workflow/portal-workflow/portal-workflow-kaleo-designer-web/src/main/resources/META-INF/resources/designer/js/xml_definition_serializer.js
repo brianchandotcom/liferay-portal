@@ -232,7 +232,7 @@ AUI.add(
 					);
 				}
 				else if (assignmentType === 'user') {
-					if (isArray(dataAssignments.userId) && dataAssignments.userId.length > 0) {
+					if (isArray(dataAssignments.userId) && dataAssignments.userId.filter(isValue).length !== 0) {
 						var xmlUser = XMLUtil.createObj('user');
 
 						dataAssignments.userId.forEach(

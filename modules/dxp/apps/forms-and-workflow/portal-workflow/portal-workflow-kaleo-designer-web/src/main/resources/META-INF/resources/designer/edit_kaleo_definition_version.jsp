@@ -59,7 +59,7 @@
 		portletDisplay.setShowBackIcon(true);
 		portletDisplay.setURLBack(redirect);
 
-		renderResponse.setTitle((kaleoDefinitionVersion == null) ? LanguageUtil.get(request, "new-definition") : name);
+		renderResponse.setTitle((kaleoDefinitionVersion == null) ? LanguageUtil.get(request, "new-workflow") : name);
 		%>
 
 		<c:if test="<%= kaleoDefinitionVersion != null %>">

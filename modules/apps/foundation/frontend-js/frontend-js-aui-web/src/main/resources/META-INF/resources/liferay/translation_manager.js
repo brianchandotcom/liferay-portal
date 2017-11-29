@@ -280,6 +280,40 @@ AUI.add(
 						);
 					},
 
+					checkAvailableLocales: function(locales) {
+						var instance = this;
+
+						var availableLocales = instance.get('availableLocales');
+
+						if (availableLocales.length == 0) {
+							return;
+						}
+
+						var deleteLocales = [];
+
+						for (var i = 0; i < availableLocales.length; i++) {
+							var contains = false;
+
+							for (var j = 0; j < locales.length; j++) {
+								if (availableLocales[i] == locales[j]) {
+									contains = true;
+
+									break;
+								}
+							}
+
+								if (!contains) {
+									deleteLocales.push(availableLocales[i]);
+								}
+						}
+
+						for (var k = 0; k < deleteLocales.length; k++) {
+							AArray.removeItem(availableLocales, deleteLocales[k]);
+						}
+
+						instance.set('availableLocales', availableLocales);
+					},
+
 					toggleDefaultLocales: function() {
 						var instance = this;
 
@@ -402,6 +436,10 @@ AUI.add(
 						var instance = this;
 
 						var locales = A.Object.keys(val);
+
+						if (locales.length != 0) {
+							this.checkAvailableLocales(locales);
+						}
 
 						locales.sort();
 

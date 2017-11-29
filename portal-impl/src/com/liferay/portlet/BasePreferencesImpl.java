@@ -240,6 +240,9 @@ public abstract class BasePreferencesImpl implements Serializable {
 			if (actualValue == null) {
 				return null;
 			}
+			else if (actualValue == _NULL_ELEMENT) {
+				return new String[] {null};
+			}
 			else {
 				return new String[] {actualValue};
 			}
@@ -291,6 +294,10 @@ public abstract class BasePreferencesImpl implements Serializable {
 	protected String[] getXMLSafeValues(String[] values) {
 		if (values == null) {
 			return new String[] {_NULL_VALUE};
+		}
+
+		if ((values.length == 1) && (values[0] == null)) {
+			return new String[] {_NULL_ELEMENT};
 		}
 
 		String[] xmlSafeValues = new String[values.length];
@@ -351,6 +358,8 @@ public abstract class BasePreferencesImpl implements Serializable {
 
 		return portletPreferencesElement.toXMLString();
 	}
+
+	private static final String _NULL_ELEMENT = "NULL_ELEMENT";
 
 	private static final String _NULL_VALUE = "NULL_VALUE";
 

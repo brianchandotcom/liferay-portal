@@ -45,7 +45,8 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
-		"mvc.command.name=/edit_configuration"
+		"mvc.command.name=/edit_configuration",
+		"service.ranking:Integer=" + Integer.MAX_VALUE
 	},
 	service = MVCRenderCommand.class
 )

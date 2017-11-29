@@ -46,14 +46,6 @@ public class KBArticlePortletDataHandlerTest
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		ServiceTestUtil.setUser(TestPropsValues.getUser());
-
-		super.setUp();
-	}
-
 	@Override
 	protected void addStagedModels() throws Exception {
 	}

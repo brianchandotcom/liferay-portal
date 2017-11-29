@@ -44,13 +44,6 @@ public class PollsDisplayPortletDataHandlerTest
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		ServiceTestUtil.setUser(TestPropsValues.getUser());
-
-		super.setUp();
-	}
 
 	@Rule
 	public final LiferayIntegrationTestRule liferayIntegrationTestRule =

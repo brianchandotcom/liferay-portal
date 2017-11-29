@@ -8,6 +8,7 @@ AUI.add(
 		var XMLFormatter = new Liferay.XMLFormatter();
 		var XMLUtil = Liferay.XMLUtil;
 
+		var isArray = Lang.isArray;
 		var isObject = Lang.isObject;
 		var isValue = Lang.isValue;
 
@@ -231,31 +232,36 @@ AUI.add(
 					);
 				}
 				else if (assignmentType === 'user') {
-					var xmlUser = XMLUtil.createObj('user');
+					if (isArray(dataAssignments.userId) && dataAssignments.userId.length > 0) {
+						var xmlUser = XMLUtil.createObj('user');
 
-					dataAssignments.userId.forEach(
-						function(item, index, collection) {
-							buffer.push(xmlUser.open);
+						dataAssignments.userId.forEach(
+							function(item, index, collection) {
+								buffer.push(xmlUser.open);
 
-							var userContent = null;
+								var userContent = null;
 
-							if (isValue(item)) {
-								userContent = XMLUtil.create('userId', item);
+								if (isValue(item)) {
+									userContent = XMLUtil.create('userId', item);
+								}
+								else if (isValue(dataAssignments.emailAddress[index])) {
+									userContent = XMLUtil.create('emailAddress', dataAssignments.emailAddress[index]);
+								}
+								else if (isValue(dataAssignments.screenName[index])) {
+									userContent = XMLUtil.create('screenName', dataAssignments.screenName[index]);
+								}
+
+								if (userContent) {
+									buffer.push(userContent);
+								}
+
+								buffer.push(xmlUser.close);
 							}
-							else if (isValue(dataAssignments.emailAddress[index])) {
-								userContent = XMLUtil.create('emailAddress', dataAssignments.emailAddress[index]);
-							}
-							else if (isValue(dataAssignments.screenName[index])) {
-								userContent = XMLUtil.create('screenName', dataAssignments.screenName[index]);
-							}
-
-							if (userContent) {
-								buffer.push(userContent);
-							}
-
-							buffer.push(xmlUser.close);
-						}
-					);
+						);
+					}
+					else {
+						buffer.push('<user/>');
+					}
 				}
 				else if (assignmentType === 'taskAssignees') {
 					buffer.push('<assignees/>');

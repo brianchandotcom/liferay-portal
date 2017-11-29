@@ -21,8 +21,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+
+import org.dom4j.Element;
 
 /**
  * @author Michael Hashimoto
@@ -62,8 +66,7 @@ public class LegacyDataArchiveUtil {
 				_legacyGitWorkingDirectory.getUpstreamBranchName(), null);
 
 		String dataArchiveBranchName = JenkinsResultsParserUtil.combine(
-			upstreamBranch.getName(), "-data-archive-",
-			String.valueOf(System.currentTimeMillis()));
+			"data-archive-", String.valueOf(System.currentTimeMillis()));
 
 		_dataArchiveBranch = _legacyGitWorkingDirectory.getBranch(
 			dataArchiveBranchName, null);
@@ -92,6 +95,8 @@ public class LegacyDataArchiveUtil {
 			}
 		}
 
+		_commitReadmeFile();
+
 		GitWorkingDirectory.Remote upstreamRemote =
 			_legacyGitWorkingDirectory.getRemote("upstream");
 
@@ -115,6 +120,258 @@ public class LegacyDataArchiveUtil {
 
 	public GitWorkingDirectory getLegacyGitWorkingDirectory() {
 		return _legacyGitWorkingDirectory;
+	}
+
+	private void _commitReadmeFile() {
+		Element rootElement = Dom4JUtil.getNewElement("div");
+
+		Dom4JUtil.getNewElement("h1", rootElement, "Legacy Database Archives");
+
+		for (LegacyDataArchivePortalVersion legacyDataArchivePortalVersion :
+				_legacyDataArchivePortalVersions) {
+
+			Dom4JUtil.getNewElement(
+				"h2", rootElement,
+				legacyDataArchivePortalVersion.getPortalVersion());
+
+			Element testCommitElement = Dom4JUtil.getNewElement(
+				"p", rootElement);
+
+			Dom4JUtil.getNewElement(
+				"span", testCommitElement, "Last Commit in ");
+
+			File testDirectory =
+				legacyDataArchivePortalVersion.getPortalVersionTestDirectory();
+
+			Dom4JUtil.getNewAnchorElement(
+				_getFilePathURL(testDirectory), testCommitElement, "Test");
+
+			Dom4JUtil.getNewElement("span", testCommitElement, " Folder:");
+
+			Commit testCommit =
+				legacyDataArchivePortalVersion.getLatestTestCommit();
+
+			Dom4JUtil.getNewAnchorElement(
+				_getCommitURL(testCommit), testCommitElement,
+				testCommit.getAbbreviatedSHA());
+
+			Dom4JUtil.getNewElement(
+				"span", testCommitElement, testCommit.getMessage());
+
+			List<LegacyDataArchiveGroup> legacyDataArchiveGroups =
+				legacyDataArchivePortalVersion.getLegacyDataArchiveGroups();
+
+			if (legacyDataArchivePortalVersion.hasUpdatedArchives()) {
+				Dom4JUtil.getNewElement(
+					"h4", rootElement, "Updated Data Archives:");
+
+				for (LegacyDataArchiveGroup legacyDataArchiveGroup :
+						legacyDataArchiveGroups) {
+
+					if (!legacyDataArchiveGroup.hasUpdatedArchives()) {
+						continue;
+					}
+
+					Element detailsElement = Dom4JUtil.getNewElement(
+						"details", rootElement);
+
+					Element summaryElement = Dom4JUtil.getNewElement(
+						"summary", detailsElement);
+
+					List<LegacyDataArchive> updatedLegacyDataArchives =
+						new ArrayList<>();
+
+					List<LegacyDataArchive> legacyDataArchives =
+						legacyDataArchiveGroup.getLegacyDataArchives();
+
+					for (LegacyDataArchive legacyDataArchive :
+							legacyDataArchives) {
+
+						if (legacyDataArchive.isUpdated()) {
+							updatedLegacyDataArchives.add(legacyDataArchive);
+						}
+					}
+
+					Dom4JUtil.getNewElement(
+						"b", summaryElement,
+						"(" + updatedLegacyDataArchives.size() + ")");
+
+					Commit commit = legacyDataArchiveGroup.getCommit();
+
+					Dom4JUtil.getNewAnchorElement(
+						_getCommitURL(commit), summaryElement,
+						commit.getAbbreviatedSHA());
+
+					Dom4JUtil.getNewElement(
+						"span", summaryElement, commit.getMessage());
+
+					Element dataArchivesElement = Dom4JUtil.getNewElement(
+						"ul", detailsElement);
+
+					for (LegacyDataArchive updatedLegacyDataArchive :
+							updatedLegacyDataArchives) {
+
+						File legacyDataArchiveFile =
+							updatedLegacyDataArchive.getLegacyDataArchiveFile();
+
+						Element dataArchiveElement = Dom4JUtil.getNewElement(
+							"li", dataArchivesElement);
+
+						Dom4JUtil.getNewAnchorElement(
+							_getFilePathURL(
+								legacyDataArchiveFile,
+								_dataArchiveBranch.getName()),
+							dataArchiveElement,
+							_getRelativePath(legacyDataArchiveFile));
+					}
+				}
+			}
+
+			if (legacyDataArchivePortalVersion.hasStaleArchives()) {
+				Dom4JUtil.getNewElement(
+					"h4", rootElement, "Stale Data Archives:");
+
+				Map<Commit, List<LegacyDataArchive>> staleDataArchivesMap =
+					new HashMap<>();
+
+				for (LegacyDataArchiveGroup legacyDataArchiveGroup :
+						legacyDataArchiveGroups) {
+
+					if (!legacyDataArchiveGroup.hasStaleArchives()) {
+						continue;
+					}
+
+					for (LegacyDataArchive legacyDataArchive :
+							legacyDataArchiveGroup.getLegacyDataArchives()) {
+
+						if (legacyDataArchive.isStale()) {
+							Commit commit = legacyDataArchive.getCommit();
+
+							List<LegacyDataArchive> staleDataArchives =
+								staleDataArchivesMap.get(commit);
+
+							if (staleDataArchives == null) {
+								staleDataArchives = new ArrayList<>();
+							}
+
+							staleDataArchives.add(legacyDataArchive);
+
+							staleDataArchivesMap.put(commit, staleDataArchives);
+						}
+					}
+				}
+
+				for (Commit commit : staleDataArchivesMap.keySet()) {
+					List<LegacyDataArchive> staleDataArchives =
+						staleDataArchivesMap.get(commit);
+
+					Element detailsElement = Dom4JUtil.getNewElement(
+						"details", rootElement);
+
+					Element summaryElement = Dom4JUtil.getNewElement(
+						"summary", detailsElement);
+
+					Dom4JUtil.getNewElement(
+						"b", summaryElement,
+						"(" + staleDataArchives.size() + ")");
+
+					Dom4JUtil.getNewAnchorElement(
+						_getCommitURL(commit), summaryElement,
+						commit.getAbbreviatedSHA());
+
+					Dom4JUtil.getNewElement(
+						"span", summaryElement, commit.getMessage());
+
+					Element dataArchivesElement = Dom4JUtil.getNewElement(
+						"ul", detailsElement);
+
+					for (LegacyDataArchive staleDataArchive :
+							staleDataArchives) {
+
+						File legacyDataArchiveFile =
+							staleDataArchive.getLegacyDataArchiveFile();
+
+						Element dataArchiveElement = Dom4JUtil.getNewElement(
+							"li", dataArchivesElement);
+
+						Dom4JUtil.getNewAnchorElement(
+							_getFilePathURL(legacyDataArchiveFile),
+							dataArchiveElement,
+							_getRelativePath(legacyDataArchiveFile));
+					}
+				}
+			}
+
+			if (legacyDataArchivePortalVersion.hasMissingArchives()) {
+				Dom4JUtil.getNewElement(
+					"h4", rootElement, "Missing Data Archives:");
+
+				for (LegacyDataArchiveGroup legacyDataArchiveGroup :
+						legacyDataArchiveGroups) {
+
+					if (!legacyDataArchiveGroup.hasMissingArchives()) {
+						continue;
+					}
+
+					List<LegacyDataArchive> missingDataArchives =
+						new ArrayList<>();
+
+					for (LegacyDataArchive legacyDataArchive :
+							legacyDataArchiveGroup.getLegacyDataArchives()) {
+
+						if (legacyDataArchive.isMissing()) {
+							missingDataArchives.add(legacyDataArchive);
+						}
+					}
+
+					Element detailsElement = Dom4JUtil.getNewElement(
+						"details", rootElement);
+
+					Element summaryElement = Dom4JUtil.getNewElement(
+						"summary", detailsElement);
+
+					Dom4JUtil.getNewElement(
+						"b", summaryElement,
+						"(" + missingDataArchives.size() + ")");
+
+					Dom4JUtil.getNewElement(
+						"span", summaryElement,
+						legacyDataArchiveGroup.getDataArchiveType());
+
+					Element dataArchivesElement = Dom4JUtil.getNewElement(
+						"ul", detailsElement);
+
+					for (LegacyDataArchive missingDataArchive :
+							missingDataArchives) {
+
+						File legacyDataArchiveFile =
+							missingDataArchive.getLegacyDataArchiveFile();
+
+						Dom4JUtil.getNewElement(
+							"li", dataArchivesElement,
+							_getRelativePath(legacyDataArchiveFile));
+					}
+				}
+			}
+		}
+
+		try {
+			File readmeFile = new File(
+				_legacyGitWorkingDirectory.getWorkingDirectory(), "README.md");
+
+			JenkinsResultsParserUtil.write(
+				readmeFile, Dom4JUtil.format(rootElement, true));
+
+			_legacyGitWorkingDirectory.stageFileInCurrentBranch(
+				readmeFile.getCanonicalPath());
+
+			_legacyGitWorkingDirectory.commitStagedFilesToCurrentBranch(
+				JenkinsResultsParserUtil.combine(
+					"archive:ignore Update README.md to show changes."));
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	private Properties _getBuildProperties() {
@@ -141,6 +398,22 @@ public class LegacyDataArchiveUtil {
 		return buildProperties;
 	}
 
+	private String _getCommitURL(Commit commit) {
+		return JenkinsResultsParserUtil.combine(
+			"https://github.com/liferay/liferay-qa-portal-legacy-ee/commit/",
+			commit.getSHA());
+	}
+
+	private String _getFilePathURL(File file) {
+		return _getFilePathURL(file, "master");
+	}
+
+	private String _getFilePathURL(File file, String ref) {
+		return JenkinsResultsParserUtil.combine(
+			"https://github.com/liferay/liferay-qa-portal-legacy-ee/tree/", ref,
+			"/", _getRelativePath(file));
+	}
+
 	private List<LegacyDataArchivePortalVersion>
 		_getLegacyDataArchivePortalVersions() {
 
@@ -165,6 +438,21 @@ public class LegacyDataArchiveUtil {
 		Collections.sort(portalVersions);
 
 		return portalVersions;
+	}
+
+	private String _getRelativePath(File file) {
+		try {
+			String filePath = file.getCanonicalPath();
+
+			File legacyWorkingDirectory =
+				_legacyGitWorkingDirectory.getWorkingDirectory();
+
+			return filePath.replace(
+				legacyWorkingDirectory.getCanonicalPath() + "/", "");
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	private final Properties _buildProperties;

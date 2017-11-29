@@ -85,8 +85,6 @@ public class CPFileImporterImpl implements CPFileImporter {
 	public static final String IMG_TAG =
 		"<img alt='' src='%s' data-fileentryid='%s' />";
 
-	public static final String PLACEHOLDER_REGEX = "\\[%[^\\[%]+%\\]";
-
 	@Override
 	public void cleanLayouts(ServiceContext serviceContext)
 		throws PortalException {
@@ -404,13 +402,10 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 		Set<String> placeHolders = new HashSet<>();
 
-		Pattern regex = Pattern.compile(
-			PLACEHOLDER_REGEX, Pattern.CASE_INSENSITIVE);
+		Matcher matcher = _placeholderPattern.matcher(content);
 
-		Matcher regexMatcher = regex.matcher(content);
-
-		while (regexMatcher.find()) {
-			placeHolders.add(regexMatcher.group());
+		while (matcher.find()) {
+			placeHolders.add(matcher.group());
 		}
 
 		for (String placeHolder : placeHolders) {
@@ -500,6 +495,9 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPFileImporterImpl.class);
+
+	private static final Pattern _placeholderPattern = Pattern.compile(
+		"\\[%[^\\[%]+%\\]", Pattern.CASE_INSENSITIVE);
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

@@ -3066,7 +3066,7 @@ information. Make sure to commit in all build services results.
 
 				<echo>Running com.liferay.source.formatter.jar ${Bundle-Version}.</echo>
 
-				<ant dir="portal-impl" target="format-source">
+				<ant dir="portal-impl" target="format-source-all">
 					<property name="show.documentation" value="false" />
 					<property name="source.auto.fix" value="false" />
 					<property name="source.fail.on.error" value="true" />

@@ -306,7 +306,9 @@ public class ReflectionUtil {
 
 	static {
 		try {
-			_CLONE_METHOD = getDeclaredMethod(Object.class, "clone");
+			_CLONE_METHOD = Object.class.getDeclaredMethod("clone");
+
+			_CLONE_METHOD.setAccessible(true);
 		}
 		catch (Exception e) {
 			throw new ExceptionInInitializerError(e);

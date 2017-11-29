@@ -88,21 +88,7 @@ public class LegacyDataArchive {
 		return false;
 	}
 
-	public void updateCommit() {
-		Commit commit = _getCommit();
-
-		if (commit == null) {
-			return;
-		}
-
-		if ((_commit != null) && _commit.equals(commit)) {
-			return;
-		}
-
-		_commit = commit;
-	}
-
-	public void updateLegacyDataArchive() throws IOException {
+	public void stageLegacyDataArchive() throws IOException {
 		String dataArchiveType = _legacyDataArchiveGroup.getDataArchiveType();
 		File generatedArchiveDirectory =
 			_legacyDataArchiveUtil.getGeneratedArchiveDirectory();
@@ -118,28 +104,28 @@ public class LegacyDataArchive {
 			JenkinsResultsParserUtil.copy(
 				generatedLegacyDataArchiveFile, _legacyDataArchiveFile);
 
-			String legacyDataArchiveFilePath =
-				_legacyDataArchiveFile.getCanonicalPath();
-			File legacyWorkingDirectory =
-				_legacyDataArchiveUtil.getLegacyWorkingDirectory();
-
-			legacyDataArchiveFilePath = legacyDataArchiveFilePath.replaceAll(
-				legacyWorkingDirectory + "/", "");
-
-			GitWorkingDirectory legacyGitWorkingDirectory =
-				_legacyDataArchiveUtil.getLegacyGitWorkingDirectory();
-
-			legacyGitWorkingDirectory.stageFileInCurrentBranch(
-				legacyDataArchiveFilePath);
+			_legacyGitWorkingDirectory.stageFileInCurrentBranch(
+				_legacyDataArchiveFile.getCanonicalPath());
 		}
+	}
+
+	public void updateCommit() {
+		Commit commit = _getCommit();
+
+		if (commit == null) {
+			return;
+		}
+
+		if ((_commit != null) && _commit.equals(commit)) {
+			return;
+		}
+
+		_commit = commit;
 	}
 
 	private Commit _getCommit() {
 		if (_legacyDataArchiveFile.exists()) {
-			GitWorkingDirectory legacyGitWorkingDirectory =
-				_legacyDataArchiveUtil.getLegacyGitWorkingDirectory();
-
-			String gitLog = legacyGitWorkingDirectory.log(
+			String gitLog = _legacyGitWorkingDirectory.log(
 				1, _legacyDataArchiveFile);
 
 			return CommitFactory.newCommit(gitLog);

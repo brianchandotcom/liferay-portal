@@ -56,13 +56,13 @@ public class LegacyDataArchiveUtil {
 
 		_legacyGitWorkingDirectory.clean();
 
-		Properties buildProperties = _getBuildProperties();
+		_buildProperties = _getBuildProperties();
 
-		_legacyDataArchives = _getLegacyDataArchives(buildProperties);
+		_legacyDataArchives = _getLegacyDataArchives(_buildProperties);
 
 		_latestLegacyDataArchiveCommits = _getLatestLegacyDataArchiveCommits();
 		_latestManualCommit = _getLatestManualCommit();
-		_portalVersions = _getPortalVersions(buildProperties);
+		_portalVersions = _getPortalVersions(_buildProperties);
 
 		_legacyDataArchiveGroupMap = _getLegacyDataArchiveGroupMap(
 			_legacyDataArchives);
@@ -110,6 +110,10 @@ public class LegacyDataArchiveUtil {
 			true, temporaryBranch, temporaryBranchName, upstreamRemote);
 
 		return temporaryBranch;
+	}
+
+	public Properties getBuildProperties() {
+		return _buildProperties;
 	}
 
 	public File getGeneratedLegacyDataArchiveDirectory() {
@@ -472,6 +476,7 @@ public class LegacyDataArchiveUtil {
 	private static final Pattern _jobVariantPattern = Pattern.compile(
 		"[^/]+/([^/]+)/([^/]+)/\\d+");
 
+	private final Properties _buildProperties;
 	private final File _generatedLegacyDataArchiveDirectory;
 	private final List<Commit> _latestLegacyDataArchiveCommits;
 	private final Commit _latestManualCommit;

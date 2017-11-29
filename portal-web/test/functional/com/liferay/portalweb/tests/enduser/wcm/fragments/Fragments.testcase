@@ -130,6 +130,94 @@ element.style.border='2px dashed red';
 		<execute function="SelectFrameTop" />
 	</command>
 
+	<command name="DeleteFragment" priority="5">
+		<property name="portal.acceptance" value="pending" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Fragments" />
+		</execute>
+
+		<execute macro="Collection#addCollection">
+			<var name="collectionDescription" value="Collection Description" />
+			<var name="collectionName" value="Collection Name" />
+		</execute>
+
+		<execute macro="Collection#gotoCollection">
+			<var name="collectionName" value="Collection Name" />
+		</execute>
+
+		<execute macro="Fragment#addFragment">
+			<var name="fragmentName" value="Fragment Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Fragments" />
+		</execute>
+
+		<execute macro="Collection#gotoCollection">
+			<var name="collectionName" value="Collection Name" />
+		</execute>
+
+		<execute macro="Fragment#deleteFragment">
+			<var name="fragmentName" value="Fragment Name" />
+			<var name="menuItem" value="Delete" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Fragments" />
+		</execute>
+
+		<execute macro="Collection#gotoCollection">
+			<var name="collectionName" value="Collection Name" />
+		</execute>
+
+		<execute macro="LexiconEntry#viewNoEntry">
+			<var name="rowEntry" value="Fragment Name" />
+		</execute>
+	</command>
+
+	<command name="DeleteFragmentCollection" priority="5">
+		<property name="portal.acceptance" value="pending" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Fragments" />
+		</execute>
+
+		<execute macro="Collection#addCollection">
+			<var name="collectionDescription" value="Collection Description" />
+			<var name="collectionName" value="Collection Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Fragments" />
+		</execute>
+
+		<execute macro="Collection#deleteCollection">
+			<var name="collectionName" value="Collection Name" />
+			<var name="menuItem" value="Delete" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Fragments" />
+		</execute>
+
+		<execute macro="LexiconEntry#viewNoEntry">
+			<var name="rowEntry" value="Collection Name" />
+		</execute>
+	</command>
+
 	<command name="RenameFragment" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />

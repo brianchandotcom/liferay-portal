@@ -122,6 +122,10 @@ public class LegacyDataArchiveUtil {
 		return _legacyGitWorkingDirectory;
 	}
 
+	public List<String> getPortalVersions() {
+		return _portalVersions;
+	}
+
 	private void _commitReadmeFile() {
 		Element rootElement = Dom4JUtil.getNewElement("div");
 

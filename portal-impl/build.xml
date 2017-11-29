@@ -547,6 +547,16 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</if>
 	</target>
 
+	<target name="format-source">
+		<echo>
+Running SourceFormatter on added/modified files in the current branch only. Please run the following command to run SourceFormatter on all files:
+
+ant format-source-all
+		</echo>
+
+		<antcall target="format-source-current-branch" />
+	</target>
+
 	<target name="format-source-all">
 		<property location="${project.dir}/modules" name="source.formatter.modules.dir.absolute.path" />
 

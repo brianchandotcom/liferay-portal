@@ -74,26 +74,7 @@ public class ServletPaths {
 			return this;
 		}
 
-		int pos = normalizedPath.indexOf(CharPool.QUESTION);
-
-		if (pos != -1) {
-			normalizedPath = normalizedPath.substring(0, pos);
-		}
-
-		String downPathString = _resourcePath.concat(normalizedPath);
-
-		if (normalizedPath.contains("./")) {
-			Path downPath = Paths.get(_resourcePath, normalizedPath);
-
-			downPath = downPath.normalize();
-
-			downPathString = downPath.toString();
-
-			downPathString = downPathString.replace(
-				CharPool.BACK_SLASH, CharPool.SLASH);
-		}
-
-		return new ServletPaths(downPathString, _servletContext);
+		return new ServletPaths(normalizedPath, _servletContext);
 	}
 
 	public String getContent() {
@@ -129,6 +110,12 @@ public class ServletPaths {
 			return StringPool.BLANK;
 		}
 
+		int pos = path.indexOf(CharPool.QUESTION);
+
+		if (pos != -1) {
+			path = path.substring(0, pos);
+		}
+
 		if (path.charAt(path.length() - 1) == CharPool.SLASH) {
 			path = path.substring(0, path.length() - 1);
 		}
@@ -138,6 +125,19 @@ public class ServletPaths {
 				CharPool.SLASH)) {
 
 			path = StringPool.SLASH.concat(path);
+		}
+
+		if (path.contains("./")) {
+			Path downPath = Paths.get(_resourcePath, path);
+
+			downPath = downPath.normalize();
+
+			path = downPath.toString();
+
+			path = path.replace(CharPool.BACK_SLASH, CharPool.SLASH);
+		}
+		else {
+			path = _resourcePath.concat(path);
 		}
 
 		return path;

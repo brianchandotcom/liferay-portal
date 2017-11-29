@@ -940,112 +940,17 @@ message.
 				<isset property="portal.war.url" />
 			</and>
 			<then>
-				<local name="petra.use" />
 				<local name="petra.version" />
-				<local name="petra.version.substring.start" />
-				<local name="petra.version.substring.end" />
-				<local name="petra.major.version" />
-				<local name="petra.period.index" />
 
-				<antelope:stringutil property="petra.version.substring.start" string="${portal.war.url}">
-					<lastindexof string="/" />
-				</antelope:stringutil>
+				<propertyregex defaultValue="0" input="${portal.war.url}" property="petra.version" regexp="http://mirrors/releases\.liferay\.com/portal/[^/]+/.+-(\d+)\.(\d+)-ga(\d+)-\d+\.war" select="\1\2\3" />
 
-				<antelope:stringutil property="petra.version.substring.end" string="${portal.war.url}">
-					<lastindexof string="-" />
-				</antelope:stringutil>
+				<antelope:if>
+					<bool>
+						<islessthan arg1="${petra.version}" arg2="705" />
+					</bool>
 
-				<antelope:stringutil property="petra.version" string="${portal.war.url}">
-					<substring
-						beginindex="${petra.version.substring.start}"
-						endindex="${petra.version.substring.end}"
-					/>
-				</antelope:stringutil>
-
-				<antelope:stringutil property="petra.period.index" string="${petra.version}">
-					<indexof string="." />
-				</antelope:stringutil>
-
-				<math
-					datatype="int"
-					operand1="${petra.period.index}"
-					operand2="1"
-					operation="-"
-					result="petra.major.version.index"
-				/>
-
-				<antelope:stringutil property="petra.major.version" string="${petra.version}">
-					<substring
-						beginindex="${petra.major.version.index}"
-						endindex="${petra.period.index}"
-					/>
-				</antelope:stringutil>
-
-				<math
-					datatype="int"
-					operand1="${petra.major.version}"
-					operand2="7"
-					operation="/"
-					result="petra.version.check"
-				/>
-
-				<if>
-					<and>
-						<contains string="${petra.version}" substring="sp" />
-						<equals arg1="${petra.version.check}" arg2="1" />
-					</and>
-					<then>
-						<local name="petra.minor.version.number" />
-
-						<antelope:stringutil property="petra.minor.version.number.start.index">
-							<indexof string="sp" />
-						</antelope:stringutil>
-
-						<math
-							datatype="int"
-							operand1="${petra.minor.version.number.start.index}"
-							operand2="2"
-							operation="+"
-							result="petra.minor.version.number.start.index"
-						/>
-
-						<antelope:stringutil property="petra.minor.version.number" string="${petra.version}">
-							<substring beginindex="${petra.minor.version.number.start.index}" />
-						</antelope:stringutil>
-
-						<math
-							datatype="int"
-							operand1="${petra.minor.version.number}"
-							operand2="5"
-							operation="/"
-							result="petra.minor.version.check"
-						/>
-
-						<if>
-							<equals arg1="${petra.minor.version.check}" arg2="1" />
-							<then>
-								<property name="petra.use" value="true" />
-							</then>
-							<else>
-								<property name="petra.use" value="false" />
-							</else>
-						</if>
-					</then>
-					<else>
-						<property name="petra.use" value="false" />
-					</else>
-				</if>
-
-				<if>
-					<equals arg1="${petra.use}" arg2="false" />
-					<then>
-						<replaceregexp file="${app.server.lib.global.dir}/module.xml"
-							flags="g"
-							match="\s*&lt;resource-root path=&quot;com.liferay.petra[^\n^\r]*[\n\r]"
-							replace=""
-						/>
-					</then>
-				</if>
+					<replaceregexp file="${app.server.lib.global.dir}/module.xml" flags="g" match="\s*&lt;resource-root path=&quot;com.liferay.petra[^\n^\r]*[\n\r]" replace="" />
+				</antelope:if>
 			</then>
 		</if>
 

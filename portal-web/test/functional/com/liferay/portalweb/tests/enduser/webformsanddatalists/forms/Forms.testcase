@@ -1984,6 +1984,10 @@
 			<var name="pageName" value="Form Page" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Form Page" />
+		</execute>
+
 		<execute macro="Portlet#addPG">
 			<var name="pageName" value="Form Page" />
 			<var name="portletName" value="Form" />

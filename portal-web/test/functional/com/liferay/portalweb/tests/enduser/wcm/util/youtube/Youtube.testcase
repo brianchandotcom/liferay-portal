@@ -35,12 +35,12 @@
 	</tear-down>
 
 	<command name="AddYoutubeVideo" priority="4">
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="YouTube" />
-		</execute>
-
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Page Name" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="YouTube" />
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
@@ -75,6 +75,10 @@
 	</command>
 
 	<command name="YoutubePortletSmoke" priority="4">
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Test Page Name" />
+		</execute>
+
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="YouTube" />
 		</execute>

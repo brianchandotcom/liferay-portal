@@ -101,8 +101,15 @@
 			<var name="pageName" value="Navigation Test Page2" />
 		</execute>
 
-		<execute macro="Navigator#gotoEditPageViaControlMenu" >
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Navigation Test Page2" />
+		</execute>
+
+		<execute macro="Navigator#gotoEditPageViaControlMenu" />
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Configure" />
+			<var name="rowEntry" value="Navigation Test Page2" />
 		</execute>
 
 		<execute macro="Page#editName">
@@ -111,6 +118,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Navigation Test Page2 Edit" />
+			<var name="privacy" value="Public" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

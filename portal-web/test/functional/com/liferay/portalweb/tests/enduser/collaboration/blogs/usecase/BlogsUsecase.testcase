@@ -905,6 +905,11 @@
 			<var name="pageName" value="Blogs Page 1" />
 		</execute>
 
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Blogs Page 1" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Blogs" />
 		</execute>
@@ -941,6 +946,11 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Blogs Page 2" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Blogs Page 2" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Portlet#addPG">

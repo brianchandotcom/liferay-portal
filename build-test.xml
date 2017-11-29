@@ -3809,6 +3809,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 	<macrodef name="stop-app-server">
 		<attribute default="0" name="app.server.bundle.index" />
+		<attribute default="0" name="app.server.explicit.stop.count" />
 
 		<sequential>
 			<if>
@@ -3817,16 +3818,19 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					<stop-app-server-cmd
 						app.server.bin.dir="${app.server.tcat.admin.bin.dir}"
 						app.server.bundle.index="@{app.server.bundle.index}"
+						count="@{app.server.explicit.stop.count}"
 					/>
 
 					<stop-app-server-cmd
 						app.server.bin.dir="${app.server.tcat.agent.bin.dir}"
 						app.server.bundle.index="@{app.server.bundle.index}"
+						count="@{app.server.explicit.stop.count}"
 					/>
 				</then>
 				<else>
 					<stop-app-server-cmd
 						app.server.bundle.index="@{app.server.bundle.index}"
+						count="@{app.server.explicit.stop.count}"
 					/>
 				</else>
 			</if>
@@ -3836,6 +3840,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 	<macrodef name="stop-app-server-cmd">
 		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
 		<attribute default="0" name="app.server.bundle.index" />
+		<attribute name="app.server.explicit.stop.count" />
 
 		<sequential>
 			<set-app-server-properties
@@ -3912,9 +3917,24 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 								</then>
 							</if>
 
-							<stop-app-server app.server.bundle.index="@{app.server.bundle.index}" />
+							<fail message="Server is still available at ${app.server.waiting.url}.${line.separator}${jstack.output}">
+								<condition>
+									<equals arg1="@{app.server.explicit.stop.count}" arg2="3" />
+								</condition>
+							</fail>
 
-							<fail if="app.server.stopping.timeout" message="Server is still available at ${app.server.waiting.url}.${line.separator}${jstack.output}" />
+							<math
+								datatype="int"
+								operand1="@{app.server.explicit.stop.count}"
+								operand2="1"
+								operation="+"
+								result="app.server.explicit.stop.count"
+							/>
+
+							<stop-app-server 
+								app.server.bundle.index="@{app.server.bundle.index}"
+								count="${app.server.explicit.stop.count}"
+								/>
 						</then>
 					</if>
 				</sequential>

@@ -302,9 +302,9 @@ AUI.add(
 								}
 							}
 
-								if (!contains) {
-									deleteLocales.push(availableLocales[i]);
-								}
+							if (!contains) {
+								deleteLocales.push(availableLocales[i]);
+							}
 						}
 
 						for (var k = 0; k < deleteLocales.length; k++) {

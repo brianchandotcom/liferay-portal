@@ -75,6 +75,10 @@ public class LegacyDataArchivePortalVersion {
 		return _portalVersion;
 	}
 
+	public File getPortalVersionTestDirectory() {
+		return _portalVersionTestDirectory;
+	}
+
 	public boolean hasMissingArchives() {
 		for (LegacyDataArchiveGroup legacyDataArchiveGroup :
 				_legacyDataArchiveGroups) {

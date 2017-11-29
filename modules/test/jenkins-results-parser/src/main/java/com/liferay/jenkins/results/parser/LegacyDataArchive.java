@@ -51,6 +51,14 @@ public class LegacyDataArchive {
 		_commit = _getCommit();
 	}
 
+	public Commit getCommit() {
+		return _commit;
+	}
+
+	public File getLegacyDataArchiveFile() {
+		return _legacyDataArchiveFile;
+	}
+
 	public boolean isMissing() {
 		if (_commit == null) {
 			return true;

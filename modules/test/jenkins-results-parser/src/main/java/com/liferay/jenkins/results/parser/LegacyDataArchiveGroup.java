@@ -85,6 +85,10 @@ public class LegacyDataArchiveGroup {
 		return _legacyDataArchivePortalVersion;
 	}
 
+	public List<LegacyDataArchive> getLegacyDataArchives() {
+		return _legacyDataArchives;
+	}
+
 	public boolean hasMissingArchives() {
 		for (LegacyDataArchive legacyDataArchive : _legacyDataArchives) {
 			if (legacyDataArchive.isMissing()) {

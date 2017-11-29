@@ -26,6 +26,10 @@
 
 		<execute function="AssertVisible" locator1="AdaptiveMediaTable#PROGRESS" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="AdaptiveMediaTable#PROGRESS" value1="${percentAdapted}" />
+
+		<execute macro="Alert#_closeMessage">
+			<var name="messageType" value="GENERIC" />
+		</execute>
 	</command>
 
 	<command name="addImageResolution">

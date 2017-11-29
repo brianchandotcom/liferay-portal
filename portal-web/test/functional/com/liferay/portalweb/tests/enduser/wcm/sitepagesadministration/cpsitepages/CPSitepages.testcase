@@ -892,7 +892,6 @@
 		</execute>
 
 		<execute macro="Page#editSelectPageType">
-			<var name="page" value="Site Page" />
 			<var name="pageType" value="Embedded" />
 		</execute>
 

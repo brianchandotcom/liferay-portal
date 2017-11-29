@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.comment.WorkflowableComment;
 import com.liferay.portal.kernel.comment.display.context.CommentTreeDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -76,7 +77,7 @@ public class DefaultCommentTreeDisplayContext
 	@Override
 	public boolean isActionControlsVisible() throws PortalException {
 		if ((_discussionComment == null) ||
-			_discussionTaglibHelper.isHideControls()) {
+			_discussionTaglibHelper.isHideControls() || _isStagingGroup()) {
 
 			return false;
 		}
@@ -86,7 +87,7 @@ public class DefaultCommentTreeDisplayContext
 
 	@Override
 	public boolean isDeleteActionControlVisible() throws PortalException {
-		if (_discussionPermission == null) {
+		if ((_discussionPermission == null) || _isStagingGroup()) {
 			return false;
 		}
 
@@ -105,12 +106,16 @@ public class DefaultCommentTreeDisplayContext
 
 	@Override
 	public boolean isEditActionControlVisible() throws PortalException {
-		return hasUpdatePermission();
+		if (_isStagingGroup() || !hasUpdatePermission()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
 	public boolean isEditControlsVisible() throws PortalException {
-		if (_discussionTaglibHelper.isHideControls()) {
+		if (_discussionTaglibHelper.isHideControls() || _isStagingGroup()) {
 			return false;
 		}
 
@@ -130,7 +135,7 @@ public class DefaultCommentTreeDisplayContext
 
 	@Override
 	public boolean isReplyActionControlVisible() throws PortalException {
-		if (_discussionPermission == null) {
+		if ((_discussionPermission == null) || _isStagingGroup()) {
 			return false;
 		}
 
@@ -245,6 +250,14 @@ public class DefaultCommentTreeDisplayContext
 
 		return permissionChecker.isGroupAdmin(
 			_discussionRequestHelper.getScopeGroupId());
+	}
+
+	private boolean _isStagingGroup() {
+		ThemeDisplay themeDisplay = getThemeDisplay();
+
+		Group siteGroup = themeDisplay.getSiteGroup();
+
+		return siteGroup.isStagingGroup();
 	}
 
 	private final DiscussionComment _discussionComment;

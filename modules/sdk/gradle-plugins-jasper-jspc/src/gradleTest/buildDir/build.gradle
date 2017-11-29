@@ -1,0 +1,52 @@
+import org.gradle.util.VersionNumber
+
+apply plugin: "com.liferay.jasper.jspc"
+
+buildDir = file("build_gradle_test")
+
+task runGradleTest
+
+VersionNumber gradleVersionNumber = VersionNumber.parse(gradle.gradleVersion)
+
+if (gradleVersionNumber >= new VersionNumber(2, 12, 0, null)) {
+	dependencies {
+		compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+		compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "2.0.0"
+		compileOnly group: "javax.portlet", name: "portlet-api", version: "2.0"
+	}
+}
+else {
+	dependencies {
+		compile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+		compile group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "2.0.0"
+		compile group: "javax.portlet", name: "portlet-api", version: "2.0"
+	}
+}
+
+repositories {
+	maven {
+		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	dependsOn compileJSP
+
+	doLast {
+		File dir = file("build")
+
+		assert !dir.exists()
+
+		dir = file("build_gradle_test/jspc")
+
+		assert dir.exists()
+
+		dir = file("build_gradle_test/tmp/compileJSP/org/apache/jsp")
+
+		for (String fileName in ["init_jsp.class", "view_jsp.class"]) {
+			File generatedFile = new File(dir, fileName)
+
+			assert generatedFile.exists()
+		}
+	}
+}

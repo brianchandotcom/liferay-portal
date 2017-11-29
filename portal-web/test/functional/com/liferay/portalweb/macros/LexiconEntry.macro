@@ -20,16 +20,6 @@
 		</if>
 	</command>
 
-	<command name="deleteEntry">
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
-			<var name="key_rowEntry" value="${rowEntry}" />
-		</execute>
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${menuItem}">
-			<var name="key_menuItem" value="${menuItem}" />
-		</execute>
-	</command>
-
 	<command name="gotoAdd">
 		<execute function="Click" locator1="Button#PLUS" />
 	</command>

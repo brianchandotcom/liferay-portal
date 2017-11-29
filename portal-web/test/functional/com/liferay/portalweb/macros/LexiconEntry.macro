@@ -5,7 +5,7 @@
 			<var name="rowEntry" value="${rowEntry}" />
 		</execute>
 
-		<execute function="Confirm" value1="${dialog}" />
+		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 		<if>
 			<isset var="failure" />

@@ -1367,7 +1367,6 @@
 		</execute>
 
 		<execute macro="LexiconEntry#delete">
-			<var name="dialog" value="Are you sure you want to delete this? It will be deleted immediately." />
 			<var name="failure" value="The first page cannot be of type Link to URL." />
 			<var name="rowEntry" value="Blank Page" />
 		</execute>

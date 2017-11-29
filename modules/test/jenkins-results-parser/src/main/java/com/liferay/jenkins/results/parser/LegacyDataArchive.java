@@ -34,12 +34,12 @@ public class LegacyDataArchive {
 		_databaseName = databaseName;
 		_portalVersion = portalVersion;
 
-		File legacyDataWorkingDirectory =
-			legacyDataArchiveUtil.getLegacyDataWorkingDirectory();
+		File legacyWorkingDirectory =
+			legacyDataArchiveUtil.getLegacyWorkingDirectory();
 
 		_committedLegacyDataArchiveFile = new File(
 			JenkinsResultsParserUtil.combine(
-				legacyDataWorkingDirectory.toString(), "/", _portalVersion,
+				legacyWorkingDirectory.toString(), "/", _portalVersion,
 				"/data-archive/", _legacyDataArchiveType, "-", _databaseName,
 				".zip"));
 
@@ -120,27 +120,27 @@ public class LegacyDataArchive {
 
 			String committedLegacyDataArchiveFilePath =
 				_committedLegacyDataArchiveFile.getCanonicalPath();
-			File legacyDataWorkingDirectory =
-				_legacyDataArchiveBranch.getLegacyDataWorkingDirectory();
+			File legacyWorkingDirectory =
+				_legacyDataArchiveBranch.getLegacyWorkingDirectory();
 
 			committedLegacyDataArchiveFilePath =
 				committedLegacyDataArchiveFilePath.replaceAll(
-					legacyDataWorkingDirectory + "/", "");
+					legacyWorkingDirectory + "/", "");
 
-			GitWorkingDirectory legacyDataGitWorkingDirectory =
-				_legacyDataArchiveBranch.getLegacyDataGitWorkingDirectory();
+			GitWorkingDirectory legacyGitWorkingDirectory =
+				_legacyDataArchiveBranch.getLegacyGitWorkingDirectory();
 
-			legacyDataGitWorkingDirectory.stageFileInCurrentBranch(
+			legacyGitWorkingDirectory.stageFileInCurrentBranch(
 				committedLegacyDataArchiveFilePath);
 		}
 	}
 
 	private Commit _getCommit() {
 		if (_committedLegacyDataArchiveFile.exists()) {
-			GitWorkingDirectory legacyDataGitWorkingDirectory =
-				_legacyDataArchiveBranch.getLegacyDataGitWorkingDirectory();
+			GitWorkingDirectory legacyGitWorkingDirectory =
+				_legacyDataArchiveBranch.getLegacyGitWorkingDirectory();
 
-			String gitLog = legacyDataGitWorkingDirectory.log(
+			String gitLog = legacyGitWorkingDirectory.log(
 				1, _committedLegacyDataArchiveFile);
 
 			return CommitFactory.newCommit(gitLog);

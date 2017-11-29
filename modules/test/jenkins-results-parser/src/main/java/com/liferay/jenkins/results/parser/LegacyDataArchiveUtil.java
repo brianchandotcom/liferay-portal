@@ -40,21 +40,21 @@ public class LegacyDataArchiveUtil {
 
 	public LegacyDataArchiveUtil(
 		File generatedLegacyDataArchiveDirectory,
-		GitWorkingDirectory legacyDataGitWorkingDirectory) {
+		GitWorkingDirectory legacyGitWorkingDirectory) {
 
 		_generatedLegacyDataArchiveDirectory =
 			generatedLegacyDataArchiveDirectory;
-		_legacyDataGitWorkingDirectory = legacyDataGitWorkingDirectory;
+		_legacyGitWorkingDirectory = legacyGitWorkingDirectory;
 
 		GitWorkingDirectory.Branch upstreamBranch =
-			_legacyDataGitWorkingDirectory.getBranch(
-				_legacyDataGitWorkingDirectory.getUpstreamBranchName(), null);
+			_legacyGitWorkingDirectory.getBranch(
+				_legacyGitWorkingDirectory.getUpstreamBranchName(), null);
 
-		_legacyDataGitWorkingDirectory.checkoutBranch(upstreamBranch);
+		_legacyGitWorkingDirectory.checkoutBranch(upstreamBranch);
 
-		_legacyDataGitWorkingDirectory.reset("--hard");
+		_legacyGitWorkingDirectory.reset("--hard");
 
-		_legacyDataGitWorkingDirectory.clean();
+		_legacyGitWorkingDirectory.clean();
 
 		Properties buildProperties = _getBuildProperties();
 
@@ -72,25 +72,25 @@ public class LegacyDataArchiveUtil {
 		throws IOException {
 
 		GitWorkingDirectory.Branch upstreamBranch =
-			_legacyDataGitWorkingDirectory.getBranch(
-				_legacyDataGitWorkingDirectory.getUpstreamBranchName(), null);
+			_legacyGitWorkingDirectory.getBranch(
+				_legacyGitWorkingDirectory.getUpstreamBranchName(), null);
 
 		String temporaryBranchName =
 			upstreamBranch.getName() + "-temp-" + System.currentTimeMillis();
 
 		GitWorkingDirectory.Branch temporaryBranch =
-			_legacyDataGitWorkingDirectory.getBranch(temporaryBranchName, null);
+			_legacyGitWorkingDirectory.getBranch(temporaryBranchName, null);
 
 		if (temporaryBranch != null) {
-			_legacyDataGitWorkingDirectory.deleteBranch(
-				_legacyDataGitWorkingDirectory.getBranch(
+			_legacyGitWorkingDirectory.deleteBranch(
+				_legacyGitWorkingDirectory.getBranch(
 					temporaryBranchName, null));
 		}
 
-		temporaryBranch = _legacyDataGitWorkingDirectory.createLocalBranch(
+		temporaryBranch = _legacyGitWorkingDirectory.createLocalBranch(
 			temporaryBranchName);
 
-		_legacyDataGitWorkingDirectory.checkoutBranch(temporaryBranch);
+		_legacyGitWorkingDirectory.checkoutBranch(temporaryBranch);
 
 		for (LegacyDataArchiveGroup legacyDataArchiveGroup :
 				_legacyDataArchiveGroupMap.values()) {
@@ -104,9 +104,9 @@ public class LegacyDataArchiveUtil {
 		}
 
 		GitWorkingDirectory.Remote upstreamRemote =
-			_legacyDataGitWorkingDirectory.getRemote("upstream");
+			_legacyGitWorkingDirectory.getRemote("upstream");
 
-		_legacyDataGitWorkingDirectory.pushToRemote(
+		_legacyGitWorkingDirectory.pushToRemote(
 			true, temporaryBranch, temporaryBranchName, upstreamRemote);
 
 		return temporaryBranch;
@@ -128,12 +128,12 @@ public class LegacyDataArchiveUtil {
 		return _legacyDataArchiveTypes;
 	}
 
-	public GitWorkingDirectory getLegacyDataGitWorkingDirectory() {
-		return _legacyDataGitWorkingDirectory;
+	public GitWorkingDirectory getLegacyGitWorkingDirectory() {
+		return _legacyGitWorkingDirectory;
 	}
 
-	public File getLegacyDataWorkingDirectory() {
-		return _legacyDataGitWorkingDirectory.getWorkingDirectory();
+	public File getLegacyWorkingDirectory() {
+		return _legacyGitWorkingDirectory.getWorkingDirectory();
 	}
 
 	public Set<String> getPortalVersions() {
@@ -198,48 +198,48 @@ public class LegacyDataArchiveUtil {
 		}
 
 		String upstreamBranchName =
-			_legacyDataGitWorkingDirectory.getUpstreamBranchName();
+			_legacyGitWorkingDirectory.getUpstreamBranchName();
 
 		GitWorkingDirectory.Remote upstreamRemote =
-			_legacyDataGitWorkingDirectory.getRemote("upstream");
+			_legacyGitWorkingDirectory.getRemote("upstream");
 
 		GitWorkingDirectory.Branch upstreamRemoteBranch =
-			_legacyDataGitWorkingDirectory.getBranch(
+			_legacyGitWorkingDirectory.getBranch(
 				upstreamBranchName, upstreamRemote);
 
-		_legacyDataGitWorkingDirectory.checkoutBranch(upstreamRemoteBranch);
+		_legacyGitWorkingDirectory.checkoutBranch(upstreamRemoteBranch);
 
-		_legacyDataGitWorkingDirectory.reset("--hard");
+		_legacyGitWorkingDirectory.reset("--hard");
 
-		_legacyDataGitWorkingDirectory.clean();
+		_legacyGitWorkingDirectory.clean();
 
 		String temporaryBranchName =
 			upstreamBranchName + "-temp-" + System.currentTimeMillis();
 
 		GitWorkingDirectory.Branch temporaryBranch =
-			_legacyDataGitWorkingDirectory.getBranch(temporaryBranchName, null);
+			_legacyGitWorkingDirectory.getBranch(temporaryBranchName, null);
 
 		if (temporaryBranch != null) {
-			_legacyDataGitWorkingDirectory.deleteBranch(
-				_legacyDataGitWorkingDirectory.getBranch(
+			_legacyGitWorkingDirectory.deleteBranch(
+				_legacyGitWorkingDirectory.getBranch(
 					temporaryBranchName, null));
 		}
 
-		temporaryBranch = _legacyDataGitWorkingDirectory.createLocalBranch(
+		temporaryBranch = _legacyGitWorkingDirectory.createLocalBranch(
 			temporaryBranchName);
 
-		_legacyDataGitWorkingDirectory.checkoutBranch(temporaryBranch);
+		_legacyGitWorkingDirectory.checkoutBranch(temporaryBranch);
 
 		for (Commit commit : commitCondidates.values()) {
-			_legacyDataGitWorkingDirectory.cherryPick(commit);
+			_legacyGitWorkingDirectory.cherryPick(commit);
 		}
 
 		try {
-			_legacyDataGitWorkingDirectory.pushToRemote(
+			_legacyGitWorkingDirectory.pushToRemote(
 				false, temporaryBranch, upstreamBranchName, upstreamRemote);
 		}
 		finally {
-			_legacyDataGitWorkingDirectory.pushToRemote(
+			_legacyGitWorkingDirectory.pushToRemote(
 				false, null, temporaryBranchName, upstreamRemote);
 		}
 	}
@@ -248,7 +248,7 @@ public class LegacyDataArchiveUtil {
 		Properties buildProperties = new Properties();
 
 		File legacyDataWorkingDirectory =
-			_legacyDataGitWorkingDirectory.getWorkingDirectory();
+			_legacyGitWorkingDirectory.getWorkingDirectory();
 
 		File buildPropertiesFile = new File(
 			legacyDataWorkingDirectory, "build.properties");
@@ -289,7 +289,7 @@ public class LegacyDataArchiveUtil {
 	private List<Commit> _getLatestLegacyDataArchiveCommits() {
 		List<Commit> latestLegacyDataArchiveCommits = new ArrayList<>();
 
-		String gitLog = _legacyDataGitWorkingDirectory.log(50);
+		String gitLog = _legacyGitWorkingDirectory.log(50);
 
 		String[] gitLogEntities = gitLog.split("\n");
 
@@ -309,7 +309,7 @@ public class LegacyDataArchiveUtil {
 	}
 
 	private Commit _getLatestManualCommit() {
-		String gitLog = _legacyDataGitWorkingDirectory.log(50);
+		String gitLog = _legacyGitWorkingDirectory.log(50);
 
 		String[] gitLogEntities = gitLog.split("\n");
 
@@ -363,7 +363,7 @@ public class LegacyDataArchiveUtil {
 		List<LegacyDataArchive> legacyDataArchives = new ArrayList<>();
 
 		File legacyDataWorkingDirectory =
-			_legacyDataGitWorkingDirectory.getWorkingDirectory();
+			_legacyGitWorkingDirectory.getWorkingDirectory();
 
 		Set<String> portalVersions = _getPortalVersions(buildProperties);
 
@@ -479,7 +479,7 @@ public class LegacyDataArchiveUtil {
 		_legacyDataArchiveGroupMap;
 	private final List<LegacyDataArchive> _legacyDataArchives;
 	private final Set<String> _legacyDataArchiveTypes = new HashSet<>();
-	private final GitWorkingDirectory _legacyDataGitWorkingDirectory;
+	private final GitWorkingDirectory _legacyGitWorkingDirectory;
 	private final Set<String> _portalVersions;
 
 }

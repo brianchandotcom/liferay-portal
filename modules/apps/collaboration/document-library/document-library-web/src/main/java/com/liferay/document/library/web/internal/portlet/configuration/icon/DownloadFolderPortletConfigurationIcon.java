@@ -98,6 +98,10 @@ public class DownloadFolderPortletConfigurationIcon
 		try {
 			Folder folder = ActionUtil.getFolder(portletRequest);
 
+			if (folder.isMountPoint()) {
+				return false;
+			}
+
 			return DLFolderPermission.contains(
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(), folder.getFolderId(),

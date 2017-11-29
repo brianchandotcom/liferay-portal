@@ -1,7 +1,9 @@
-.btn-group {
-	flex-flow: wrap;
+@if $compat-button_groups {
+	.btn-group {
+		flex-flow: wrap;
 
-	&.dropdown {
-		display: inline-flex;
+		&.dropdown {
+			display: inline-flex;
+		}
 	}
 }

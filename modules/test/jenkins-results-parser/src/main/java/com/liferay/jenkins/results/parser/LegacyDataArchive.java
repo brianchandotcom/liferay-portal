@@ -17,8 +17,6 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.List;
-
 /**
  * @author Michael Hashimoto
  */
@@ -74,15 +72,13 @@ public class LegacyDataArchive {
 			return false;
 		}
 
-		List<Commit> latestLegacyDataArchiveCommits =
-			_legacyDataArchiveUtil.getLatestLegacyDataArchiveCommits();
+		Commit latestTestCommit =
+			_legacyDataArchivePortalVersion.getLatestTestCommit();
 
-		for (Commit latestLegacyDataArchiveCommit :
-				latestLegacyDataArchiveCommits) {
+		String commitMessage = _commit.getMessage();
 
-			if (_commit.equals(latestLegacyDataArchiveCommit)) {
-				return true;
-			}
+		if (commitMessage.contains(latestTestCommit.getAbbreviatedSHA())) {
+			return true;
 		}
 
 		return false;
@@ -95,14 +91,14 @@ public class LegacyDataArchive {
 		String portalVersion =
 			_legacyDataArchivePortalVersion.getPortalVersion();
 
-		File generatedLegacyDataArchiveFile = new File(
+		File generatedArchiveFile = new File(
 			JenkinsResultsParserUtil.combine(
 				generatedArchiveDirectory.toString(), "/", portalVersion, "/",
 				dataArchiveType, "-", _databaseName, ".zip"));
 
-		if (generatedLegacyDataArchiveFile.exists()) {
+		if (generatedArchiveFile.exists()) {
 			JenkinsResultsParserUtil.copy(
-				generatedLegacyDataArchiveFile, _legacyDataArchiveFile);
+				generatedArchiveFile, _legacyDataArchiveFile);
 
 			_legacyGitWorkingDirectory.stageFileInCurrentBranch(
 				_legacyDataArchiveFile.getCanonicalPath());

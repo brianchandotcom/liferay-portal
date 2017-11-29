@@ -50,10 +50,15 @@ public class LegacyDataArchivePortalVersion {
 
 		_dataArchiveTypes = _getDataArchiveTypes();
 		_databaseNames = _getDatabaseNames();
+		_latestTestCommit = _getLatestTestCommit();
 	}
 
 	public List<String> getDatabaseNames() {
 		return _databaseNames;
+	}
+
+	public Commit getLatestTestCommit() {
+		return _latestTestCommit;
 	}
 
 	public LegacyDataArchiveUtil getLegacyDataArchiveUtil() {
@@ -115,6 +120,25 @@ public class LegacyDataArchivePortalVersion {
 		return databaseNames;
 	}
 
+	private Commit _getLatestTestCommit() {
+		String gitLog = _legacyGitWorkingDirectory.log(
+			50, _portalVersionTestDirectory);
+
+		String[] gitLogEntities = gitLog.split("\n");
+
+		for (String gitLogEntity : gitLogEntities) {
+			Commit commit = CommitFactory.newCommit(gitLogEntity);
+
+			if (commit.getType() != Commit.Type.MANUAL) {
+				continue;
+			}
+
+			return commit;
+		}
+
+		return null;
+	}
+
 	private Set<String> _getPoshiPropertyValues(
 		Element element, String targetPoshiPropertyName) {
 
@@ -153,6 +177,7 @@ public class LegacyDataArchivePortalVersion {
 
 	private final List<String> _dataArchiveTypes;
 	private final List<String> _databaseNames;
+	private final Commit _latestTestCommit;
 	private final LegacyDataArchiveUtil _legacyDataArchiveUtil;
 	private final GitWorkingDirectory _legacyGitWorkingDirectory;
 	private final String _portalVersion;

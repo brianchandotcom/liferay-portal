@@ -83,12 +83,10 @@ public class CPDefinitionOptionRelsMVCResourceCommand
 			jsonObject.put(
 				"cpDefinitionOptionRelId",
 				cpDefinitionOptionRel.getCPDefinitionOptionRelId());
-
+			jsonObject.put("priority", cpDefinitionOptionRel.getPriority());
 			jsonObject.put(
 				"title",
 				cpDefinitionOptionRel.getTitle(themeDisplay.getLanguageId()));
-
-			jsonObject.put("priority", cpDefinitionOptionRel.getPriority());
 
 			Map<String, Object> properties =
 				_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(

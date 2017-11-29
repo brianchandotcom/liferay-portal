@@ -40,11 +40,8 @@
 				</tr>
 			</thead>
 			<tbody>
-
 				{if $cpDefinitionOptions}
-
 					{foreach $cpDefinitionOption in $cpDefinitionOptions}
-
 						{call .cpDefinitionOptionRow}
 							{param id: $cpDefinitionOption.cpDefinitionOptionRelId /}
 							{param title: $cpDefinitionOption.title /}
@@ -54,15 +51,11 @@
 							{param _handleSelectOptionClick: $_handleSelectOptionClick /}
 							{param _handleEditValues: $_handleEditValues /}
 						{/call}
-
 					{/foreach}
-
 				{/if}
-
 			</tbody>
 		</table>
 	</div>
-
 {/template}
 
 /**
@@ -102,5 +95,4 @@
 			{/if}
 		</td>
 	</tr>
-
 {/template}

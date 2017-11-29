@@ -187,10 +187,10 @@ request.setAttribute("cpDefinition", cpDefinition);
 											CPSpecificationOption cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
 										%>
 
-										<tr>
-											<td><%= cpSpecificationOption.getTitle(languageId) %></td>
-											<td><%= cpDefinitionSpecificationOptionValue.getValue(languageId) %></td>
-										</tr>
+											<tr>
+												<td><%= cpSpecificationOption.getTitle(languageId) %></td>
+												<td><%= cpDefinitionSpecificationOptionValue.getValue(languageId) %></td>
+											</tr>
 
 										<%
 										}
@@ -211,20 +211,20 @@ request.setAttribute("cpDefinition", cpDefinition);
 											FileEntry fileEntry = curCPAttachmentFileEntry.getFileEntry();
 										%>
 
-										<tr>
-											<td>
-												<span><%= curCPAttachmentFileEntry.getTitle(languageId) %></span>
+											<tr>
+												<td>
+													<span><%= curCPAttachmentFileEntry.getTitle(languageId) %></span>
 
-												<span>
-													<aui:icon
-														cssClass="icon-monospaced"
-														image="download"
-														markupView="lexicon"
-														url="<%= groupedCPTypeDisplayContext.getDownloadFileEntryURL(fileEntry) %>"
-													/>
-												</span>
-											</td>
-										</tr>
+													<span>
+														<aui:icon
+															cssClass="icon-monospaced"
+															image="download"
+															markupView="lexicon"
+															url="<%= groupedCPTypeDisplayContext.getDownloadFileEntryURL(fileEntry) %>"
+														/>
+													</span>
+												</td>
+											</tr>
 
 										<%
 										}

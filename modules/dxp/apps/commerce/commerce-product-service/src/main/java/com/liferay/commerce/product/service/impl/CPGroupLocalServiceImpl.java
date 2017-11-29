@@ -41,7 +41,9 @@ public class CPGroupLocalServiceImpl extends CPGroupLocalServiceBaseImpl {
 		cpGroup.setUserId(user.getUserId());
 		cpGroup.setUserName(user.getFullName());
 
-		return cpGroupPersistence.update(cpGroup);
+		cpGroupPersistence.update(cpGroup);
+
+		return cpGroup;
 	}
 
 	@Override

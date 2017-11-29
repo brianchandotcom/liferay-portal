@@ -29,32 +29,32 @@
 					</select>
 
 					{switch $_currentSelection}
-					  {case 'status'}
-						{call .status}
-							{param terms: $_terms /}
-						{/call}
+						{case 'status'}
+							{call .status}
+								{param terms: $_terms /}
+							{/call}
 						{case 'productTypeName'}
-						   {call .productTypeName}
-							   {param terms: $_terms /}
-						   {/call}
+							{call .productTypeName}
+								{param terms: $_terms /}
+							{/call}
 						{case 'optionsNames'}
-						   {call .option}
-							   {param terms: $_terms /}
-							   {param handleOptionChange: $_handleOptionChange /}
-						   {/call}
-						   {case 'assetCategoryIds'}
-							  {call .category}
-							  {/call}
+							{call .option}
+								{param terms: $_terms /}
+								{param handleOptionChange: $_handleOptionChange /}
+							{/call}
+						{case 'assetCategoryIds'}
+							{call .category}
+							{/call}
 					{/switch}
 
-					 {if $_currentSelection == 'optionsNames' and $_optionValues.length > 0 }
-						  {call .optionValues}
-							  {param optionValues: $_optionValues /}
-						  {/call}
+					{if $_currentSelection == 'optionsNames' and $_optionValues.length > 0 }
+						{call .optionValues}
+							{param optionValues: $_optionValues /}
+						{/call}
 					{/if}
 
 					{if $_currentSelection != 'assetCategoryIds' }
-						<button class="btn btn-secondary add-filter-button" type="button"  onclick="{$_handleAddFilter}">{msg desc=""}add-filter{/msg}</button>
+						<button class="btn btn-secondary add-filter-button" type="button" onclick="{$_handleAddFilter}">{msg desc=""}add-filter{/msg}</button>
 					{/if}
 				</div>
 			</div>
@@ -76,11 +76,11 @@
 	{@param? handleOptionChange: any}
 
 	<label>{msg desc=""}is{/msg}</label>
-	<select class="form-control filter-select" id="optionsNames"  onChange="{$handleOptionChange}">
+	<select class="form-control filter-select" id="optionsNames" onChange="{$handleOptionChange}">
 		<option value="">{msg desc=""}select-option{/msg}</option>
 		{if $terms}
 			{foreach $term in $terms}
-				<option data-label="{$term.label}" value="{$term.term}">{$term.label}  ({$term.frequency})</option>
+				<option data-label="{$term.label}" value="{$term.term}">{$term.label} ({$term.frequency})</option>
 			{/foreach}
 		{/if}
 	</select>
@@ -94,10 +94,10 @@
 
 	<label>{msg desc=""}is{/msg}</label>
 
-	<select class="form-control  filter-select" id="optionValues">
+	<select class="form-control filter-select" id="optionValues">
 		{if $optionValues}
 			{foreach $optionValue in $optionValues}
-				<option data-label="{$optionValue.label}" value="{$optionValue.term}">{$optionValue.label}  ({$optionValue.frequency})</option>
+				<option data-label="{$optionValue.label}" value="{$optionValue.term}">{$optionValue.label} ({$optionValue.frequency})</option>
 			{/foreach}
 		{/if}
 	</select>
@@ -110,10 +110,10 @@
 	{@param? terms: ?}
 
 	<label>{msg desc=""}is{/msg}</label>
-	<select class="form-control  filter-select" id="status">
+	<select class="form-control filter-select" id="status">
 		{if $terms}
 			{foreach $term in $terms}
-				<option data-label="{$term.label}" value="{$term.term}">{$term.label}  ({$term.frequency})</option>
+				<option data-label="{$term.label}" value="{$term.term}">{$term.label} ({$term.frequency})</option>
 			{/foreach}
 		{/if}
 	</select>
@@ -126,10 +126,10 @@
 	{@param? terms: ?}
 
 	<label>{msg desc=""}is{/msg}</label>
-	<select class="form-control  filter-select" id="productTypeName">
+	<select class="form-control filter-select" id="productTypeName">
 		{if $terms}
 			{foreach $term in $terms}
-				<option data-label="{$term.label}" value="{$term.term}">{$term.label}  ({$term.frequency})</option>
+				<option data-label="{$term.label}" value="{$term.term}">{$term.label} ({$term.frequency})</option>
 			{/foreach}
 		{/if}
 	</select>
@@ -139,9 +139,9 @@
  * Prints category filters
  */
 {template .category}
-		<div id="assetCategoriesSelector">
-		</div>
-		<input name="categoryIds" id="categoryIds" ref="hiddenInput" type="hidden" />
+	<div id="assetCategoriesSelector">
+	</div>
+	<input name="categoryIds" id="categoryIds" ref="hiddenInput" type="hidden" />
 {/template}
 
 /**

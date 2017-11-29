@@ -29,16 +29,13 @@
 				<div class="card">
 					<div class="card-body">
 						<div class="form-container">
-
 							{call CPDefinitionOptionList.render}
 								{param currentCPDefinitionOptionId: $_currentOption /}
 								{param cpDefinitionOptions: $_cpDefinitionOptions /}
 								{param pathThemeImages: $pathThemeImages /}
 								{param events: ['addOption': $_handleAddOption , 'editValues' : $_handleEditValues , 'optionSelected': $_handleOptionSelected] /}
 							{/call}
-
 						</div>
-
 					</div>
 				</div>
 			</div>
@@ -60,7 +57,6 @@
 								</div>
 							{/if}
 						</div>
-
 					</div>
 				</div>
 			</div>
@@ -76,6 +72,6 @@
 					{param events: ['close': $_handleCloseValueEditor] /}
 				{/call}
 			{/if}
-	   </div>
+		</div>
 	</div>
 {/template}

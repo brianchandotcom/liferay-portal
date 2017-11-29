@@ -27,19 +27,18 @@
 		<table class="table table-autofit table-heading-nowrap table-responsive table-hover">
 			<thead>
 				<tr>
-					<th class="">
+					<th>
 						<span class="text-truncate" title="Id">{msg desc=""}id{/msg}</span>
 					</th>
 					<th class="table-cell-content">
 						<span class="text-truncate" title="Description">{msg desc=""}title{/msg}</span>
 					</th>
-					<th class="">
+					<th>
 						<span class="text-truncate" title="Priority">{msg desc=""}priority{/msg}</span>
 					</th>
 				</tr>
 			</thead>
 			<tbody>
-
 				{if $currentCPDefinitionOptionValueRelId == '0'}
 					{call .cpDefinitionOptionValueRelRow}
 						{param id: '0' /}
@@ -51,9 +50,7 @@
 				{/if}
 
 				{if $cpDefinitionOptionValueRels}
-
 					{foreach $cpDefinitionValueRel in $cpDefinitionOptionValueRels}
-
 						{call .cpDefinitionOptionValueRelRow}
 							{param id: $cpDefinitionValueRel.cpDefinitionOptionValueRelId /}
 							{param title: $cpDefinitionValueRel.title /}
@@ -61,15 +58,11 @@
 							{param priority: $cpDefinitionValueRel.priority /}
 							{param _handleSelectCPDefinitionOptionValueRelClick: $_handleSelectCPDefinitionOptionValueRelClick /}
 						{/call}
-
 					{/foreach}
-
 				{/if}
-
 			</tbody>
 		</table>
 	</div>
-
 {/template}
 
 /**
@@ -90,7 +83,7 @@
 	{/let}
 
 	<tr data-id="{$id}" onclick="{$_handleSelectCPDefinitionOptionValueRelClick}" class="{$classes}">
-		<td class="">
+		<td>
 			{if $id != 0}
 				{$id}
 			{/if}
@@ -99,19 +92,17 @@
 			{if $id != 0}
 				{$title}
 			{else}
-				 {if $title == ''}
+				{if $title == ''}
 					[{msg desc=""}new-option-value{/msg}]
 				{else}
 					{$title}
 				{/if}
 			{/if}
-
 		</td>
-		<td class="">
-		  {if $id != 0}
-			 {$priority}
-		  {/if}
+		<td>
+			{if $id != 0}
+				{$priority}
+			{/if}
 		</td>
 	</tr>
-
 {/template}

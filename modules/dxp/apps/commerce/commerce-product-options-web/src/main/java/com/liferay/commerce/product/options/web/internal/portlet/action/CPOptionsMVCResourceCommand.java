@@ -83,7 +83,6 @@ public class CPOptionsMVCResourceCommand extends BaseMVCResourceCommand {
 
 			jsonObject.put("cpOptionId", cpOption.getCPOptionId());
 			jsonObject.put("key", cpOption.getKey());
-
 			jsonObject.put(
 				"title", cpOption.getTitle(themeDisplay.getLanguageId()));
 

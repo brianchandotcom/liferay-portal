@@ -181,19 +181,19 @@ request.setAttribute("cpDefinition", cpDefinition);
 										%>
 
 										<tr>
-											<td>
-												<span><%= curCPAttachmentFileEntry.getTitle(languageId) %></span>
+												<td>
+													<span><%= curCPAttachmentFileEntry.getTitle(languageId) %></span>
 
-												<span>
-													<aui:icon
-														cssClass="icon-monospaced"
-														image="download"
-														markupView="lexicon"
-														url="<%= cpTypeDisplayContext.getDownloadFileEntryURL(fileEntry) %>"
-													/>
-												</span>
-											</td>
-										</tr>
+													<span>
+														<aui:icon
+															cssClass="icon-monospaced"
+															image="download"
+															markupView="lexicon"
+															url="<%= cpTypeDisplayContext.getDownloadFileEntryURL(fileEntry) %>"
+														/>
+													</span>
+												</td>
+											</tr>
 
 										<%
 										}

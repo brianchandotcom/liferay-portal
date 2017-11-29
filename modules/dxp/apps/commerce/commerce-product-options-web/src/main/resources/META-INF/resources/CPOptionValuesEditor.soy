@@ -23,72 +23,68 @@
 	{@param? _newOptionValueTitle: string}
 
 	<div id="{$id}">
-	   {let $classes kind="text"}
+	{let $classes kind="text"}
 			{sp}modal
 
-		   {if $show}
-			   {sp}show
-		   {else}
-			   {sp}hide
-		   {/if}
-	   {/let}
+		{if $show}
+			{sp}show
+		{else}
+			{sp}hide
+		{/if}
+	{/let}
 
-	   <div aria-labelledby="clayLargeModalLabel" class="{$classes}" role="dialog" tabindex="-1">
-		   <div class="modal-dialog modal-full-screen">
-			   <div class="modal-content">
-				   <div class="modal-header">
-					   <div class="modal-title" id="clayLargeModalLabel"></div>
-					   <button aria-labelledby="Close" class="close" data-dismiss="modal" role="button" type="button" onClick="{$_handleClose}">
-						   <svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
-							   <use xlink:href="{$pathThemeImages}/lexicon/icons.svg#times" />
-						   </svg>
-					   </button>
-				   </div>
-				   <div class="modal-body">
-						<div class="row">
-							<div class="col-md-6">
-								<div class="card">
-									<div class="card-body">
-										<div class="form-container">
-
-											{call CPOptionValueList.render}
-												{param currentCPOptionValueId: $_currentOptionValue /}
-												{param newOptionValueTitle: $_newOptionValueTitle /}
-												{param optionValues: $_optionValues /}
+	<div aria-labelledby="clayLargeModalLabel" class="{$classes}" role="dialog" tabindex="-1">
+		<div class="modal-dialog modal-full-screen">
+			<div class="modal-content">
+				<div class="modal-header">
+					<div class="modal-title" id="clayLargeModalLabel"></div>
+					<button aria-labelledby="Close" class="close" data-dismiss="modal" role="button" type="button" onClick="{$_handleClose}">
+						<svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
+							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#times" />
+						</svg>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-body">
+									<div class="form-container">
+										{call CPOptionValueList.render}
+											{param currentCPOptionValueId: $_currentOptionValue /}
+											{param newOptionValueTitle: $_newOptionValueTitle /}
+											{param optionValues: $_optionValues /}
+											{param pathThemeImages: $pathThemeImages /}
+											{param events: ['addOptionValue': $_handleAddOptionValue , 'optionValueSelected': $_handleOptionValueSelected] /}
+										{/call}
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-body">
+									<div class="form-container">
+										{if $_currentOptionValue}
+											{call CPOptionValueDetail.render}
+												{param cpOptionId : $cpOptionId /}
+												{param cpOptionValueId : $_currentOptionValue /}
+												{param namespace: $namespace /}
+												{param optionValueURL: $optionValueURL /}
 												{param pathThemeImages: $pathThemeImages /}
-												{param events: ['addOptionValue': $_handleAddOptionValue , 'optionValueSelected': $_handleOptionValueSelected] /}
+												{param events: ['cancel': $_handleCancelEditing , 'optionValueDelated': $_handleOptionValueDelated , 'optionValueSaved': $_handleOptionValueSaved , 'titleChange': $_handleTitleChange] /}
 											{/call}
-
-										</div>
-
+										{/if}
 									</div>
 								</div>
 							</div>
-							<div class="col-md-6">
-								<div class="card">
-									<div class="card-body">
-										<div class="form-container">
-											{if $_currentOptionValue}
-												{call CPOptionValueDetail.render}
-													{param cpOptionId : $cpOptionId /}
-													{param cpOptionValueId : $_currentOptionValue /}
-													{param namespace: $namespace /}
-													{param optionValueURL: $optionValueURL /}
-													{param pathThemeImages: $pathThemeImages /}
-													{param events: ['cancel': $_handleCancelEditing , 'optionValueDelated': $_handleOptionValueDelated , 'optionValueSaved': $_handleOptionValueSaved , 'titleChange': $_handleTitleChange] /}
-												{/call}
-											{/if}
-										</div>
-									</div>
-								</div>
-							</div>
-					   </div>
-				   </div>
-			   </div>
-		   </div>
-	   </div>
-	   {if $show}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{if $show}
 			<div class="modal-backdrop fade show"></div>
-	   {/if}
+		{/if}
 	</div>
 {/template}

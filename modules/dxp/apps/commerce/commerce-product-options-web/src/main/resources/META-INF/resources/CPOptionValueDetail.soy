@@ -12,7 +12,6 @@
 	{@param? _handleSaveOptionValue: any }
 
 	<div id="{$id}">
-
 		<h4 class="section-header">{msg desc=""}option-value-detail{/msg}</h4>
 
 		<div class="option-value-detail"></div>
@@ -21,7 +20,7 @@
 			<button class="btn btn-primary" type="button" onclick="{$_handleSaveOptionValue}">{msg desc=""}Save{/msg}</button>
 
 			{if $cpOptionValueId != '0'}
-				<button class="btn btn-secondary" type="button"  onclick="{$_handleDeleteOptionValue}">{msg desc=""}Delete{/msg}</button>
+				<button class="btn btn-secondary" type="button" onclick="{$_handleDeleteOptionValue}">{msg desc=""}Delete{/msg}</button>
 			{/if}
 
 			<button class="btn btn-link" type="button" onclick="{$_handleCancel}">{msg desc=""}cancel{/msg}</button>

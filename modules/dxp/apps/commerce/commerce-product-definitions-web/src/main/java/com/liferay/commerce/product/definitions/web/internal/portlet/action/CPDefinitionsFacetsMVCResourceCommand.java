@@ -134,6 +134,7 @@ public class CPDefinitionsFacetsMVCResourceCommand
 			for (Facet curFacet : facets) {
 				if (indexFieldName.equals(curFacet.getFieldName())) {
 					facet = curFacet;
+
 					break;
 				}
 			}

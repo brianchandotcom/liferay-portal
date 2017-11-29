@@ -27,19 +27,18 @@
 		<table class="table table-autofit table-heading-nowrap table-responsive table-hover">
 			<thead>
 				<tr>
-					<th class="">
+					<th>
 						<span class="text-truncate" title="Id">{msg desc=""}id{/msg}</span>
 					</th>
 					<th class="table-cell-content">
 						<span class="text-truncate" title="Description">{msg desc=""}title{/msg}</span>
 					</th>
-					<th class="">
+					<th>
 						<span class="text-truncate" title="Priority">{msg desc=""}priority{/msg}</span>
 					</th>
 				</tr>
 			</thead>
 			<tbody>
-
 				{let $attributes kind="attributes"}
 					class="
 
@@ -53,47 +52,40 @@
 					"
 				{/let}
 
-				<tr data-id="0"  {$attributes}>
-					<td class=""></td>
+				<tr data-id="0" {$attributes}>
+					<td></td>
 					<td class="table-cell-content">
-						  {if $newOptionValueTitle == ''}
-							 [{msg desc=""}new-option-value{/msg}]
-						  {else}
-							  {$newOptionValueTitle}
-						  {/if}
+						{if $newOptionValueTitle == ''}
+							[{msg desc=""}new-option-value{/msg}]
+						{else}
+							{$newOptionValueTitle}
+						{/if}
 					</td>
-					<td class=""></td>
+					<td></td>
 				</tr>
 
 				{if $optionValues}
-
 					{foreach $optionValue in $optionValues}
-
 						{let $classes kind="text"}
-
 							{if $optionValue.cpOptionValueId == $currentCPOptionValueId}
 								{sp}table-active
 							{/if}
 						{/let}
 
 						<tr data-id="{$optionValue.cpOptionValueId}" onclick="{$_handleSelectOptionValueClick}" class="{$classes}">
-							<td class="">
+							<td>
 								{$optionValue.cpOptionValueId}
 							</td>
 							<td class="table-cell-content">
 								{$optionValue.title}
 							</td>
-							<td class="">
+							<td>
 								{$optionValue.priority}
 							</td>
 						</tr>
-
 					{/foreach}
-
 				{/if}
-
 			</tbody>
 		</table>
 	</div>
-
 {/template}

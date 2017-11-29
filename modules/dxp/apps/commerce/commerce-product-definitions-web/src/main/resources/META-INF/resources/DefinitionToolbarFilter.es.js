@@ -76,19 +76,15 @@ class DefinitionToolbarFilter extends Component {
 
 	_getLabel(selection) {
 		if (this._currentSelection == "optionsNames") {
-
 			return Liferay.Language.get('option');
 		}
 		else if (this._currentSelection == "assetCategoryIds") {
-
 			return Liferay.Language.get('categorty');
 		}
 		else if (this._currentSelection == "productTypeName") {
-
 			return Liferay.Language.get('product-type');
 		}
 		else if (this._currentSelection == "status") {
-
 			return Liferay.Language.get('status');
 		}
 
@@ -111,7 +107,7 @@ class DefinitionToolbarFilter extends Component {
 
 			label = currentOptionValue.getAttribute('data-label');
 
-			field =  "OPTION_" + this._currentOption;
+			field = "OPTION_" + this._currentOption;
 
 			value = optionValue;
 		}
@@ -120,7 +116,7 @@ class DefinitionToolbarFilter extends Component {
 
 			label = category.value;
 
-			value =  category.categoryId;
+			value = category.categoryId;
 		}
 		else {
 			var currentSelect = this.element.querySelector('#' + this._currentSelection);
@@ -131,10 +127,10 @@ class DefinitionToolbarFilter extends Component {
 
 			label = currentOption.getAttribute('data-label');
 
-			value =  fieldValue;
+			value = fieldValue;
 		}
 
-		label =  this._getLabel(this._currentSelection) + ' : ' + label;
+		label = this._getLabel(this._currentSelection) + ' : ' + label;
 
 		filters.push(
 			{

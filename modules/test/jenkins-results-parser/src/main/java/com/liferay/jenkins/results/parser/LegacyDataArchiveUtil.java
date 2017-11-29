@@ -18,13 +18,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 
 /**
  * @author Michael Hashimoto
@@ -50,8 +47,6 @@ public class LegacyDataArchiveUtil {
 
 		_buildProperties = _getBuildProperties();
 
-		_latestLegacyDataArchiveCommits = _getLatestLegacyDataArchiveCommits();
-		_latestManualCommit = _getLatestManualCommit();
 		_portalVersions = _getPortalVersions();
 	}
 
@@ -63,20 +58,8 @@ public class LegacyDataArchiveUtil {
 		return _generatedArchiveDirectory;
 	}
 
-	public List<Commit> getLatestLegacyDataArchiveCommits() {
-		return _latestLegacyDataArchiveCommits;
-	}
-
-	public Commit getLatestManualCommit() {
-		return _latestManualCommit;
-	}
-
 	public GitWorkingDirectory getLegacyGitWorkingDirectory() {
 		return _legacyGitWorkingDirectory;
-	}
-
-	public File getLegacyWorkingDirectory() {
-		return _legacyGitWorkingDirectory.getWorkingDirectory();
 	}
 
 	public List<String> getPortalVersions() {
@@ -107,64 +90,6 @@ public class LegacyDataArchiveUtil {
 		return buildProperties;
 	}
 
-	private Set<String> _getDatabaseNames(
-		Properties buildProperties, String portalVersion) {
-
-		String legacyDataArchiveDatabaseNames = buildProperties.getProperty(
-			"legacy.data.archive.database.names");
-
-		String databaseNamesPortalVersionKey = JenkinsResultsParserUtil.combine(
-			"legacy.data.archive.database.names[", portalVersion, "]");
-
-		if (buildProperties.containsKey(databaseNamesPortalVersionKey)) {
-			legacyDataArchiveDatabaseNames = buildProperties.getProperty(
-				databaseNamesPortalVersionKey);
-		}
-
-		return new HashSet<>(
-			Arrays.asList(legacyDataArchiveDatabaseNames.split(",")));
-	}
-
-	private List<Commit> _getLatestLegacyDataArchiveCommits() {
-		List<Commit> latestLegacyDataArchiveCommits = new ArrayList<>();
-
-		String gitLog = _legacyGitWorkingDirectory.log(50);
-
-		String[] gitLogEntities = gitLog.split("\n");
-
-		for (String gitLogEntity : gitLogEntities) {
-			Commit commit = CommitFactory.newCommit(gitLogEntity);
-
-			if (commit.getType() == Commit.Type.LEGACY_ARCHIVE) {
-				latestLegacyDataArchiveCommits.add(commit);
-
-				continue;
-			}
-
-			break;
-		}
-
-		return latestLegacyDataArchiveCommits;
-	}
-
-	private Commit _getLatestManualCommit() {
-		String gitLog = _legacyGitWorkingDirectory.log(50);
-
-		String[] gitLogEntities = gitLog.split("\n");
-
-		for (String gitLogEntity : gitLogEntities) {
-			Commit commit = CommitFactory.newCommit(gitLogEntity);
-
-			if (commit.getType() != Commit.Type.MANUAL) {
-				continue;
-			}
-
-			return commit;
-		}
-
-		return null;
-	}
-
 	private List<String> _getPortalVersions() {
 		String legacyDataArchivePortalVersionsString =
 			_buildProperties.getProperty("legacy.data.archive.portal.versions");
@@ -179,8 +104,6 @@ public class LegacyDataArchiveUtil {
 
 	private final Properties _buildProperties;
 	private final File _generatedArchiveDirectory;
-	private final List<Commit> _latestLegacyDataArchiveCommits;
-	private final Commit _latestManualCommit;
 	private final GitWorkingDirectory _legacyGitWorkingDirectory;
 	private final List<String> _portalVersions;
 

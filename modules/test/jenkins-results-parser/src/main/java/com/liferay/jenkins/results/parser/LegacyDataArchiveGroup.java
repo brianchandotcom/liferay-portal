@@ -40,10 +40,6 @@ public class LegacyDataArchiveGroup {
 		_legacyDataArchives = _getLegacyDataArchives();
 	}
 
-	public void addLegacyDataArchive(LegacyDataArchive legacyDataArchive) {
-		_legacyDataArchives.add(legacyDataArchive);
-	}
-
 	public void commitLegacyDataArchives() throws IOException {
 		for (LegacyDataArchive legacyDataArchive : _legacyDataArchives) {
 			if (!legacyDataArchive.isUpdated()) {
@@ -59,8 +55,8 @@ public class LegacyDataArchiveGroup {
 		if (!status.contains("nothing to commit") &&
 			!status.contains("nothing added to commit")) {
 
-			Commit latestManualCommit =
-				_legacyDataArchiveUtil.getLatestManualCommit();
+			Commit latestTestCommit =
+				_legacyDataArchivePortalVersion.getLatestTestCommit();
 			String portalVersion =
 				_legacyDataArchivePortalVersion.getPortalVersion();
 
@@ -68,7 +64,7 @@ public class LegacyDataArchiveGroup {
 				JenkinsResultsParserUtil.combine(
 					"archive:ignore Update '", _dataArchiveType, "' for '",
 					portalVersion, "' at ",
-					latestManualCommit.getAbbreviatedSHA(), "."));
+					latestTestCommit.getAbbreviatedSHA(), "."));
 
 			String gitLog = legacyGitWorkingDirectory.log(1);
 
@@ -116,16 +112,6 @@ public class LegacyDataArchiveGroup {
 		}
 
 		return false;
-	}
-
-	public boolean isUpdated() {
-		for (LegacyDataArchive legacyDataArchive : _legacyDataArchives) {
-			if (!legacyDataArchive.isUpdated()) {
-				return false;
-			}
-		}
-
-		return true;
 	}
 
 	private List<LegacyDataArchive> _getLegacyDataArchives() {

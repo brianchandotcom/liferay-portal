@@ -418,9 +418,9 @@ public class GitWorkingDirectory {
 				executeBashCommands("rm -f ~/.ssh/known_hosts");
 			}
 
-			if (remoteURL.contains("github.com:liferay")) {
+			if (remoteURL.contains("github.com:liferay/")) {
 				remoteURL = remoteURL.replace(
-					"github.com:liferay", "github-dev.liferay.com:liferay");
+					"github.com:liferay/", "github-dev.liferay.com:liferay/");
 
 				Remote gitHubDevRemote = null;
 

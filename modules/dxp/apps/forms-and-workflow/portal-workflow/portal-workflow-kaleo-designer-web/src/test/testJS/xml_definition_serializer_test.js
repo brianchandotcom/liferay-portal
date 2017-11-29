@@ -110,6 +110,41 @@ describe(
 						done();
 					}
 				);
+
+				it(
+					'should serialize <user> element even if empty.',
+					function(done) {
+						var jsonDefinition = {
+							nodes: [
+								{
+									name: 'task1',
+									notifications: {
+										name: ['notification1'],
+										recipients: [
+											{
+												assignmentType: ['user']
+											}
+										]
+									},
+									xmlType: 'task'
+								}
+							]
+						};
+
+						var definition = serializeDefinition(
+							XML_NAMESPACE,
+							METADATA,
+							jsonDefinition
+						);
+
+						assert(
+							definition.indexOf('<user') > 0,
+							'<users/> element not serialized.'
+						);
+
+						done();
+					}
+				);
 			}
 		);
 	}

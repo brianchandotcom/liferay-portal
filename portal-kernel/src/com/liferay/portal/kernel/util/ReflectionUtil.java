@@ -263,9 +263,7 @@ public class ReflectionUtil {
 		int modifiers = field.getModifiers();
 
 		if ((modifiers & Modifier.FINAL) == Modifier.FINAL) {
-			Field modifiersField = getDeclaredField(Field.class, "modifiers");
-
-			modifiersField.setInt(field, modifiers & ~Modifier.FINAL);
+			_MODIFIERS_FIELD.setInt(field, modifiers & ~Modifier.FINAL);
 		}
 
 		return field;
@@ -304,11 +302,17 @@ public class ReflectionUtil {
 
 	private static final Method _CLONE_METHOD;
 
+	private static final Field _MODIFIERS_FIELD;
+
 	static {
 		try {
 			_CLONE_METHOD = Object.class.getDeclaredMethod("clone");
 
 			_CLONE_METHOD.setAccessible(true);
+
+			_MODIFIERS_FIELD = Field.class.getDeclaredField("modifiers");
+
+			_MODIFIERS_FIELD.setAccessible(true);
 		}
 		catch (Exception e) {
 			throw new ExceptionInInitializerError(e);

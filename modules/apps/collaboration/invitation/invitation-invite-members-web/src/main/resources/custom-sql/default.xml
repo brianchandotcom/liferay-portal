@@ -6,7 +6,7 @@
 			LEFT JOIN
 				Users_Groups ON
 					(Users_Groups.groupId = ?) AND
-					(Users_Groups.userId = User_UserId)
+					(Users_Groups.userId = User_.userId)
 			WHERE
 				Users_Groups.userId IS NULL
 		]]>

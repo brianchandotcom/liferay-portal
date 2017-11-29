@@ -88,6 +88,36 @@ public class LegacyDataArchiveGroup {
 		return _legacyDataArchivePortalVersion;
 	}
 
+	public boolean hasMissingArchives() {
+		for (LegacyDataArchive legacyDataArchive : _legacyDataArchives) {
+			if (legacyDataArchive.isMissing()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public boolean hasStaleArchives() {
+		for (LegacyDataArchive legacyDataArchive : _legacyDataArchives) {
+			if (legacyDataArchive.isStale()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public boolean hasUpdatedArchives() {
+		for (LegacyDataArchive legacyDataArchive : _legacyDataArchives) {
+			if (legacyDataArchive.isUpdated()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public boolean isUpdated() {
 		for (LegacyDataArchive legacyDataArchive : _legacyDataArchives) {
 			if (!legacyDataArchive.isUpdated()) {

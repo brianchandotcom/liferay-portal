@@ -51,6 +51,8 @@ public class LegacyDataArchivePortalVersion {
 		_dataArchiveTypes = _getDataArchiveTypes();
 		_databaseNames = _getDatabaseNames();
 		_latestTestCommit = _getLatestTestCommit();
+
+		_legacyDataArchiveGroups = _getLegacyDataArchiveGroups();
 	}
 
 	public List<String> getDatabaseNames() {
@@ -67,6 +69,42 @@ public class LegacyDataArchivePortalVersion {
 
 	public String getPortalVersion() {
 		return _portalVersion;
+	}
+
+	public boolean hasMissingArchives() {
+		for (LegacyDataArchiveGroup legacyDataArchiveGroup :
+				_legacyDataArchiveGroups) {
+
+			if (legacyDataArchiveGroup.hasMissingArchives()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public boolean hasStaleArchives() {
+		for (LegacyDataArchiveGroup legacyDataArchiveGroup :
+				_legacyDataArchiveGroups) {
+
+			if (legacyDataArchiveGroup.hasStaleArchives()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public boolean hasUpdatedArchives() {
+		for (LegacyDataArchiveGroup legacyDataArchiveGroup :
+				_legacyDataArchiveGroups) {
+
+			if (legacyDataArchiveGroup.hasUpdatedArchives()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private List<String> _getDataArchiveTypes() {
@@ -139,6 +177,17 @@ public class LegacyDataArchivePortalVersion {
 		return null;
 	}
 
+	private List<LegacyDataArchiveGroup> _getLegacyDataArchiveGroups() {
+		List<LegacyDataArchiveGroup> legacyDataArchiveTypes = new ArrayList<>();
+
+		for (String dataArchiveType : _dataArchiveTypes) {
+			legacyDataArchiveTypes.add(
+				new LegacyDataArchiveGroup(this, dataArchiveType));
+		}
+
+		return legacyDataArchiveTypes;
+	}
+
 	private Set<String> _getPoshiPropertyValues(
 		Element element, String targetPoshiPropertyName) {
 
@@ -178,6 +227,7 @@ public class LegacyDataArchivePortalVersion {
 	private final List<String> _dataArchiveTypes;
 	private final List<String> _databaseNames;
 	private final Commit _latestTestCommit;
+	private final List<LegacyDataArchiveGroup> _legacyDataArchiveGroups;
 	private final LegacyDataArchiveUtil _legacyDataArchiveUtil;
 	private final GitWorkingDirectory _legacyGitWorkingDirectory;
 	private final String _portalVersion;

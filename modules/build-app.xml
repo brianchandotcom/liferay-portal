@@ -4,6 +4,9 @@
 <project name="build-app">
 	<extension-point name="release-tool-dependencies" />
 
+	<property location="${modules.dir}/../bundles" name="liferay.home" />
+	<property location="${modules.dir}/.." name="project.dir" />
+
 	<property file="../app.server.${user.name}.properties" />
 	<property file="../app.server.${env.COMPUTERNAME}.properties" />
 	<property file="../app.server.${env.HOST}.properties" />
@@ -11,9 +14,6 @@
 	<property file="../app.server.properties" />
 
 	<property file="../build.properties" />
-
-	<property location="${modules.dir}/../bundles" name="liferay.home" />
-	<property location="${modules.dir}/.." name="project.dir" />
 
 	<property name="build.modules.excludes" value="**/adaptive-media/**" />
 

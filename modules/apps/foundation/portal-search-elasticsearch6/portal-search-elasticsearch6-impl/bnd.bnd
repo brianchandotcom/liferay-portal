@@ -2,8 +2,15 @@ Bundle-Name: Liferay Portal Search Elasticsearch 6 Implementation
 Bundle-SymbolicName: com.liferay.portal.search.elasticsearch6.impl
 Bundle-Version: 1.0.0
 Import-Package:\
+	!com.barchart.udt.*,\
+	\
+	!com.beust.jcommander.*,\
+	\
 	!com.carrotsearch.hppc.*,\
 	\
+	!com.conversantmedia.util.concurrent.*,\
+	\
+	!com.fasterxml.aalto.*,\
 	!com.fasterxml.jackson.*,\
 	\
 	!com.github.mustachejava.*,\
@@ -11,9 +18,16 @@ Import-Package:\
 	!com.google.common.*,\
 	!com.google.protobuf.*,\
 	\
+	!com.jcraft.*,\
+	\
+	!com.lmax.disruptor.*,\
+	\
 	!com.ning.compress.*,\
 	\
+	!com.puppycrawl.tools.checkstyle.*,\
+	\
 	!com.sun.jna.*,\
+	!com.sun.nio.sctp.*,\
 	\
 	!com.tdunning.math.stats.*,\
 	\
@@ -22,11 +36,19 @@ Import-Package:\
 	\
 	!com.twitter.jsr166e.*,\
 	\
+	!gnu.io.*,\
+	\
 	!groovy.*,\
+	\
+	!javassist.*,\
 	\
 	!jline.*,\
 	\
 	!junit.*,\
+	\
+	!lzma.sdk.*,\
+	\
+	!net.jpountz.*,\
 	\
 	!org.HdrHistogram.*,\
 	\
@@ -34,17 +56,26 @@ Import-Package:\
 	\
 	!org.apache.bsf.*,\
 	!org.apache.commons.cli.*,\
+	!org.apache.commons.compress.*,\
+	!org.apache.commons.csv.*,\
 	!org.apache.commons.io.*,\
 	!org.apache.commons.lang.*,\
+	!org.apache.http.*,\
 	!org.apache.ivy.*,\
+	!org.apache.kafka.clients.producer.*,\
+	!org.apache.logging.log4j.*,\
 	!org.apache.lucene.expressions.*,\
 	!org.apache.lucene.geo3d.*,\
+	!org.apache.lucene.spatial.*,\
 	!org.apache.tomcat.jni.*,\
 	\
 	!org.bouncycastle.*,\
 	\
 	!org.codehaus.groovy.*,\
 	\
+	!org.conscrypt.*,\
+	\
+	!org.eclipse.jetty.alpn.*,\
 	!org.eclipse.jetty.npn.*,\
 	\
 	!org.elasticsearch.index.shard.service.*,\
@@ -57,9 +88,18 @@ Import-Package:\
 	!org.jboss.marshalling.*,\
 	!org.jboss.netty.*,\
 	\
+	!org.jctools.queues.*,\
+	\
+	!org.joda.convert.*,\
 	!org.joda.time.*,\
 	\
 	!org.junit.*,\
+	\
+	!org.noggit.*,\
+	\
+	!org.owasp.html.*,\
+	\
+	!org.zeromq.*,\
 	\
 	!sun.security.*,\
 	\

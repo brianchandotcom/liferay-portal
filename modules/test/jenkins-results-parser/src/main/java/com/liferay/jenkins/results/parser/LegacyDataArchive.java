@@ -25,42 +25,32 @@ import java.util.List;
 public class LegacyDataArchive {
 
 	public LegacyDataArchive(
-		LegacyDataArchiveUtil legacyDataArchiveUtil,
-		String legacyDataArchiveType, String databaseName,
-		String portalVersion) {
+		LegacyDataArchiveGroup legacyDataArchiveGroup, String databaseName) {
 
-		_legacyDataArchiveBranch = legacyDataArchiveUtil;
-		_legacyDataArchiveType = legacyDataArchiveType;
+		_legacyDataArchiveGroup = legacyDataArchiveGroup;
 		_databaseName = databaseName;
-		_portalVersion = portalVersion;
 
-		File legacyWorkingDirectory =
-			legacyDataArchiveUtil.getLegacyWorkingDirectory();
+		_legacyDataArchivePortalVersion =
+			_legacyDataArchiveGroup.getLegacyDataArchivePortalVersion();
 
-		_committedLegacyDataArchiveFile = new File(
+		_legacyDataArchiveUtil =
+			_legacyDataArchivePortalVersion.getLegacyDataArchiveUtil();
+
+		_legacyGitWorkingDirectory =
+			_legacyDataArchiveUtil.getLegacyGitWorkingDirectory();
+
+		String dataArchiveType = _legacyDataArchiveGroup.getDataArchiveType();
+		String portalVersion =
+			_legacyDataArchivePortalVersion.getPortalVersion();
+		File legacyDataWorkingDirectory =
+			_legacyGitWorkingDirectory.getWorkingDirectory();
+
+		_legacyDataArchiveFile = new File(
 			JenkinsResultsParserUtil.combine(
-				legacyWorkingDirectory.toString(), "/", _portalVersion,
-				"/data-archive/", _legacyDataArchiveType, "-", _databaseName,
-				".zip"));
-
-		File generatedLegacyDataArchiveDirectory =
-			legacyDataArchiveUtil.getGeneratedLegacyDataArchiveDirectory();
-
-		_generatedLegacyDataArchiveFile = new File(
-			JenkinsResultsParserUtil.combine(
-				generatedLegacyDataArchiveDirectory.toString(), "/",
-				_portalVersion, "/", _legacyDataArchiveType, "-", _databaseName,
-				".zip"));
+				legacyDataWorkingDirectory.toString(), "/", portalVersion,
+				"/data-archive/", dataArchiveType, "-", _databaseName, ".zip"));
 
 		_commit = _getCommit();
-	}
-
-	public String getLegacyDataArchiveType() {
-		return _legacyDataArchiveType;
-	}
-
-	public String getPortalVersion() {
-		return _portalVersion;
 	}
 
 	public boolean isMissing() {
@@ -85,7 +75,7 @@ public class LegacyDataArchive {
 		}
 
 		List<Commit> latestLegacyDataArchiveCommits =
-			_legacyDataArchiveBranch.getLatestLegacyDataArchiveCommits();
+			_legacyDataArchiveUtil.getLatestLegacyDataArchiveCommits();
 
 		for (Commit latestLegacyDataArchiveCommit :
 				latestLegacyDataArchiveCommits) {
@@ -113,35 +103,44 @@ public class LegacyDataArchive {
 	}
 
 	public void updateLegacyDataArchive() throws IOException {
-		if (_generatedLegacyDataArchiveFile.exists()) {
+		String dataArchiveType = _legacyDataArchiveGroup.getDataArchiveType();
+		File generatedArchiveDirectory =
+			_legacyDataArchiveUtil.getGeneratedArchiveDirectory();
+		String portalVersion =
+			_legacyDataArchivePortalVersion.getPortalVersion();
+
+		File generatedLegacyDataArchiveFile = new File(
+			JenkinsResultsParserUtil.combine(
+				generatedArchiveDirectory.toString(), "/", portalVersion, "/",
+				dataArchiveType, "-", _databaseName, ".zip"));
+
+		if (generatedLegacyDataArchiveFile.exists()) {
 			JenkinsResultsParserUtil.copy(
-				_generatedLegacyDataArchiveFile,
-				_committedLegacyDataArchiveFile);
+				generatedLegacyDataArchiveFile, _legacyDataArchiveFile);
 
-			String committedLegacyDataArchiveFilePath =
-				_committedLegacyDataArchiveFile.getCanonicalPath();
+			String legacyDataArchiveFilePath =
+				_legacyDataArchiveFile.getCanonicalPath();
 			File legacyWorkingDirectory =
-				_legacyDataArchiveBranch.getLegacyWorkingDirectory();
+				_legacyDataArchiveUtil.getLegacyWorkingDirectory();
 
-			committedLegacyDataArchiveFilePath =
-				committedLegacyDataArchiveFilePath.replaceAll(
-					legacyWorkingDirectory + "/", "");
+			legacyDataArchiveFilePath = legacyDataArchiveFilePath.replaceAll(
+				legacyWorkingDirectory + "/", "");
 
 			GitWorkingDirectory legacyGitWorkingDirectory =
-				_legacyDataArchiveBranch.getLegacyGitWorkingDirectory();
+				_legacyDataArchiveUtil.getLegacyGitWorkingDirectory();
 
 			legacyGitWorkingDirectory.stageFileInCurrentBranch(
-				committedLegacyDataArchiveFilePath);
+				legacyDataArchiveFilePath);
 		}
 	}
 
 	private Commit _getCommit() {
-		if (_committedLegacyDataArchiveFile.exists()) {
+		if (_legacyDataArchiveFile.exists()) {
 			GitWorkingDirectory legacyGitWorkingDirectory =
-				_legacyDataArchiveBranch.getLegacyGitWorkingDirectory();
+				_legacyDataArchiveUtil.getLegacyGitWorkingDirectory();
 
 			String gitLog = legacyGitWorkingDirectory.log(
-				1, _committedLegacyDataArchiveFile);
+				1, _legacyDataArchiveFile);
 
 			return CommitFactory.newCommit(gitLog);
 		}
@@ -150,11 +149,12 @@ public class LegacyDataArchive {
 	}
 
 	private Commit _commit;
-	private final File _committedLegacyDataArchiveFile;
 	private final String _databaseName;
-	private final File _generatedLegacyDataArchiveFile;
-	private final LegacyDataArchiveUtil _legacyDataArchiveBranch;
-	private final String _legacyDataArchiveType;
-	private final String _portalVersion;
+	private final File _legacyDataArchiveFile;
+	private final LegacyDataArchiveGroup _legacyDataArchiveGroup;
+	private final LegacyDataArchivePortalVersion
+		_legacyDataArchivePortalVersion;
+	private final LegacyDataArchiveUtil _legacyDataArchiveUtil;
+	private final GitWorkingDirectory _legacyGitWorkingDirectory;
 
 }

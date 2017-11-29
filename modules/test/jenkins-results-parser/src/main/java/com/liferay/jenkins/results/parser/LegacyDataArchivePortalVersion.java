@@ -52,6 +52,18 @@ public class LegacyDataArchivePortalVersion {
 		_databaseNames = _getDatabaseNames();
 	}
 
+	public List<String> getDatabaseNames() {
+		return _databaseNames;
+	}
+
+	public LegacyDataArchiveUtil getLegacyDataArchiveUtil() {
+		return _legacyDataArchiveUtil;
+	}
+
+	public String getPortalVersion() {
+		return _portalVersion;
+	}
+
 	private List<String> _getDataArchiveTypes() {
 		Set<String> dataArchiveTypeSet = new HashSet<>();
 

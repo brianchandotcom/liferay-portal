@@ -25,12 +25,19 @@ import java.util.List;
 public class LegacyDataArchiveGroup {
 
 	public LegacyDataArchiveGroup(
-		LegacyDataArchiveUtil legacyDataArchiveUtil,
-		String legacyDataArchiveType, String portalVersion) {
+		LegacyDataArchivePortalVersion legacyDataArchivePortalVersion,
+		String dataArchiveType) {
 
-		_legacyDataArchiveUtil = legacyDataArchiveUtil;
-		_legacyDataArchiveType = legacyDataArchiveType;
-		_portalVersion = portalVersion;
+		_legacyDataArchivePortalVersion = legacyDataArchivePortalVersion;
+		_dataArchiveType = dataArchiveType;
+
+		_legacyDataArchiveUtil =
+			_legacyDataArchivePortalVersion.getLegacyDataArchiveUtil();
+
+		_legacyGitWorkingDirectory =
+			_legacyDataArchiveUtil.getLegacyGitWorkingDirectory();
+
+		_legacyDataArchives = _getLegacyDataArchives();
 	}
 
 	public void addLegacyDataArchive(LegacyDataArchive legacyDataArchive) {
@@ -54,11 +61,13 @@ public class LegacyDataArchiveGroup {
 
 			Commit latestManualCommit =
 				_legacyDataArchiveUtil.getLatestManualCommit();
+			String portalVersion =
+				_legacyDataArchivePortalVersion.getPortalVersion();
 
 			legacyGitWorkingDirectory.commitStagedFilesToCurrentBranch(
 				JenkinsResultsParserUtil.combine(
-					"archive:ignore Update '", _legacyDataArchiveType,
-					"' for '", _portalVersion, "' at ",
+					"archive:ignore Update '", _dataArchiveType, "' for '",
+					portalVersion, "' at ",
 					latestManualCommit.getAbbreviatedSHA(), "."));
 
 			String gitLog = legacyGitWorkingDirectory.log(1);
@@ -71,8 +80,12 @@ public class LegacyDataArchiveGroup {
 		return _commit;
 	}
 
-	public String getLegacyDataArchiveType() {
-		return _legacyDataArchiveType;
+	public String getDataArchiveType() {
+		return _dataArchiveType;
+	}
+
+	public LegacyDataArchivePortalVersion getLegacyDataArchivePortalVersion() {
+		return _legacyDataArchivePortalVersion;
 	}
 
 	public boolean isUpdated() {
@@ -85,10 +98,25 @@ public class LegacyDataArchiveGroup {
 		return true;
 	}
 
+	private List<LegacyDataArchive> _getLegacyDataArchives() {
+		List<LegacyDataArchive> legacyDataArchives = new ArrayList<>();
+
+		List<String> databaseNames =
+			_legacyDataArchivePortalVersion.getDatabaseNames();
+
+		for (String databaseName : databaseNames) {
+			legacyDataArchives.add(new LegacyDataArchive(this, databaseName));
+		}
+
+		return legacyDataArchives;
+	}
+
 	private Commit _commit;
-	private List<LegacyDataArchive> _legacyDataArchives = new ArrayList<>();
-	private final String _legacyDataArchiveType;
+	private final String _dataArchiveType;
+	private final LegacyDataArchivePortalVersion
+		_legacyDataArchivePortalVersion;
+	private final List<LegacyDataArchive> _legacyDataArchives;
 	private final LegacyDataArchiveUtil _legacyDataArchiveUtil;
-	private final String _portalVersion;
+	private final GitWorkingDirectory _legacyGitWorkingDirectory;
 
 }

@@ -32,11 +32,10 @@ import java.util.Set;
 public class LegacyDataArchiveUtil {
 
 	public LegacyDataArchiveUtil(
-		File generatedLegacyDataArchiveDirectory,
+		File generatedArchiveDirectory,
 		GitWorkingDirectory legacyGitWorkingDirectory) {
 
-		_generatedLegacyDataArchiveDirectory =
-			generatedLegacyDataArchiveDirectory;
+		_generatedArchiveDirectory = generatedArchiveDirectory;
 		_legacyGitWorkingDirectory = legacyGitWorkingDirectory;
 
 		GitWorkingDirectory.Branch upstreamBranch =
@@ -60,8 +59,8 @@ public class LegacyDataArchiveUtil {
 		return _buildProperties;
 	}
 
-	public File getGeneratedLegacyDataArchiveDirectory() {
-		return _generatedLegacyDataArchiveDirectory;
+	public File getGeneratedArchiveDirectory() {
+		return _generatedArchiveDirectory;
 	}
 
 	public List<Commit> getLatestLegacyDataArchiveCommits() {
@@ -179,7 +178,7 @@ public class LegacyDataArchiveUtil {
 	}
 
 	private final Properties _buildProperties;
-	private final File _generatedLegacyDataArchiveDirectory;
+	private final File _generatedArchiveDirectory;
 	private final List<Commit> _latestLegacyDataArchiveCommits;
 	private final Commit _latestManualCommit;
 	private final GitWorkingDirectory _legacyGitWorkingDirectory;

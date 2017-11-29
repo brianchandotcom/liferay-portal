@@ -24,6 +24,17 @@ renderResponse.setTitle(LanguageUtil.get(request, "pages"));
 	<liferay-util:include page="/navigation_tabs.jsp" servletContext="<%= application %>" />
 </aui:nav-bar>
 
+<liferay-ui:error exception="<%= LayoutTypeException.class %>">
+
+	<%
+	LayoutTypeException lte = (LayoutTypeException)errorException;
+	%>
+
+	<c:if test="<%= lte.getType() == LayoutTypeException.FIRST_LAYOUT %>">
+		<liferay-ui:message arguments='<%= "layout.types." + lte.getLayoutType() %>' key="the-first-page-cannot-be-of-type-x" />
+	</c:if>
+</liferay-ui:error>
+
 <liferay-frontend:management-bar
 	disabled="<%= false %>"
 	includeCheckBox="<%= true %>"

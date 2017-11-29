@@ -21,7 +21,6 @@ import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -104,7 +103,7 @@ public class CPOptionCategoryCacheModel implements CacheModel<CPOptionCategory>,
 		CPOptionCategoryImpl cpOptionCategoryImpl = new CPOptionCategoryImpl();
 
 		if (uuid == null) {
-			cpOptionCategoryImpl.setUuid(StringPool.BLANK);
+			cpOptionCategoryImpl.setUuid("");
 		}
 		else {
 			cpOptionCategoryImpl.setUuid(uuid);
@@ -116,7 +115,7 @@ public class CPOptionCategoryCacheModel implements CacheModel<CPOptionCategory>,
 		cpOptionCategoryImpl.setUserId(userId);
 
 		if (userName == null) {
-			cpOptionCategoryImpl.setUserName(StringPool.BLANK);
+			cpOptionCategoryImpl.setUserName("");
 		}
 		else {
 			cpOptionCategoryImpl.setUserName(userName);
@@ -137,14 +136,14 @@ public class CPOptionCategoryCacheModel implements CacheModel<CPOptionCategory>,
 		}
 
 		if (title == null) {
-			cpOptionCategoryImpl.setTitle(StringPool.BLANK);
+			cpOptionCategoryImpl.setTitle("");
 		}
 		else {
 			cpOptionCategoryImpl.setTitle(title);
 		}
 
 		if (description == null) {
-			cpOptionCategoryImpl.setDescription(StringPool.BLANK);
+			cpOptionCategoryImpl.setDescription("");
 		}
 		else {
 			cpOptionCategoryImpl.setDescription(description);
@@ -153,7 +152,7 @@ public class CPOptionCategoryCacheModel implements CacheModel<CPOptionCategory>,
 		cpOptionCategoryImpl.setPriority(priority);
 
 		if (key == null) {
-			cpOptionCategoryImpl.setKey(StringPool.BLANK);
+			cpOptionCategoryImpl.setKey("");
 		}
 		else {
 			cpOptionCategoryImpl.setKey(key);
@@ -197,7 +196,7 @@ public class CPOptionCategoryCacheModel implements CacheModel<CPOptionCategory>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -212,7 +211,7 @@ public class CPOptionCategoryCacheModel implements CacheModel<CPOptionCategory>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -222,14 +221,14 @@ public class CPOptionCategoryCacheModel implements CacheModel<CPOptionCategory>,
 		objectOutput.writeLong(modifiedDate);
 
 		if (title == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(title);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);
@@ -238,7 +237,7 @@ public class CPOptionCategoryCacheModel implements CacheModel<CPOptionCategory>,
 		objectOutput.writeDouble(priority);
 
 		if (key == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(key);

@@ -21,7 +21,6 @@ import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -108,7 +107,7 @@ public class CPDefinitionSpecificationOptionValueCacheModel
 			new CPDefinitionSpecificationOptionValueImpl();
 
 		if (uuid == null) {
-			cpDefinitionSpecificationOptionValueImpl.setUuid(StringPool.BLANK);
+			cpDefinitionSpecificationOptionValueImpl.setUuid("");
 		}
 		else {
 			cpDefinitionSpecificationOptionValueImpl.setUuid(uuid);
@@ -120,7 +119,7 @@ public class CPDefinitionSpecificationOptionValueCacheModel
 		cpDefinitionSpecificationOptionValueImpl.setUserId(userId);
 
 		if (userName == null) {
-			cpDefinitionSpecificationOptionValueImpl.setUserName(StringPool.BLANK);
+			cpDefinitionSpecificationOptionValueImpl.setUserName("");
 		}
 		else {
 			cpDefinitionSpecificationOptionValueImpl.setUserName(userName);
@@ -147,7 +146,7 @@ public class CPDefinitionSpecificationOptionValueCacheModel
 		cpDefinitionSpecificationOptionValueImpl.setCPOptionCategoryId(CPOptionCategoryId);
 
 		if (value == null) {
-			cpDefinitionSpecificationOptionValueImpl.setValue(StringPool.BLANK);
+			cpDefinitionSpecificationOptionValueImpl.setValue("");
 		}
 		else {
 			cpDefinitionSpecificationOptionValueImpl.setValue(value);
@@ -198,7 +197,7 @@ public class CPDefinitionSpecificationOptionValueCacheModel
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -213,7 +212,7 @@ public class CPDefinitionSpecificationOptionValueCacheModel
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -229,7 +228,7 @@ public class CPDefinitionSpecificationOptionValueCacheModel
 		objectOutput.writeLong(CPOptionCategoryId);
 
 		if (value == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(value);

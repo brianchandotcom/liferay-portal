@@ -21,7 +21,6 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -103,7 +102,7 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		commerceOrderImpl.setUserId(userId);
 
 		if (userName == null) {
-			commerceOrderImpl.setUserName(StringPool.BLANK);
+			commerceOrderImpl.setUserName("");
 		}
 		else {
 			commerceOrderImpl.setUserName(userName);
@@ -164,7 +163,7 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);

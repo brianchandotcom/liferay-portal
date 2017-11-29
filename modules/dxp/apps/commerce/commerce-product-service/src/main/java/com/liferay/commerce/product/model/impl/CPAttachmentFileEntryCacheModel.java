@@ -21,7 +21,6 @@ import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -122,7 +121,7 @@ public class CPAttachmentFileEntryCacheModel implements CacheModel<CPAttachmentF
 		CPAttachmentFileEntryImpl cpAttachmentFileEntryImpl = new CPAttachmentFileEntryImpl();
 
 		if (uuid == null) {
-			cpAttachmentFileEntryImpl.setUuid(StringPool.BLANK);
+			cpAttachmentFileEntryImpl.setUuid("");
 		}
 		else {
 			cpAttachmentFileEntryImpl.setUuid(uuid);
@@ -134,7 +133,7 @@ public class CPAttachmentFileEntryCacheModel implements CacheModel<CPAttachmentF
 		cpAttachmentFileEntryImpl.setUserId(userId);
 
 		if (userName == null) {
-			cpAttachmentFileEntryImpl.setUserName(StringPool.BLANK);
+			cpAttachmentFileEntryImpl.setUserName("");
 		}
 		else {
 			cpAttachmentFileEntryImpl.setUserName(userName);
@@ -173,14 +172,14 @@ public class CPAttachmentFileEntryCacheModel implements CacheModel<CPAttachmentF
 		}
 
 		if (title == null) {
-			cpAttachmentFileEntryImpl.setTitle(StringPool.BLANK);
+			cpAttachmentFileEntryImpl.setTitle("");
 		}
 		else {
 			cpAttachmentFileEntryImpl.setTitle(title);
 		}
 
 		if (json == null) {
-			cpAttachmentFileEntryImpl.setJson(StringPool.BLANK);
+			cpAttachmentFileEntryImpl.setJson("");
 		}
 		else {
 			cpAttachmentFileEntryImpl.setJson(json);
@@ -201,7 +200,7 @@ public class CPAttachmentFileEntryCacheModel implements CacheModel<CPAttachmentF
 		cpAttachmentFileEntryImpl.setStatusByUserId(statusByUserId);
 
 		if (statusByUserName == null) {
-			cpAttachmentFileEntryImpl.setStatusByUserName(StringPool.BLANK);
+			cpAttachmentFileEntryImpl.setStatusByUserName("");
 		}
 		else {
 			cpAttachmentFileEntryImpl.setStatusByUserName(statusByUserName);
@@ -260,7 +259,7 @@ public class CPAttachmentFileEntryCacheModel implements CacheModel<CPAttachmentF
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -275,7 +274,7 @@ public class CPAttachmentFileEntryCacheModel implements CacheModel<CPAttachmentF
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -293,14 +292,14 @@ public class CPAttachmentFileEntryCacheModel implements CacheModel<CPAttachmentF
 		objectOutput.writeLong(expirationDate);
 
 		if (title == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(title);
 		}
 
 		if (json == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(json);
@@ -316,7 +315,7 @@ public class CPAttachmentFileEntryCacheModel implements CacheModel<CPAttachmentF
 		objectOutput.writeLong(statusByUserId);
 
 		if (statusByUserName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(statusByUserName);

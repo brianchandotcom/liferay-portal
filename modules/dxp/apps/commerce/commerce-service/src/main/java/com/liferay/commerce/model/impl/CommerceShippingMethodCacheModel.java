@@ -21,7 +21,6 @@ import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -107,7 +106,7 @@ public class CommerceShippingMethodCacheModel implements CacheModel<CommerceShip
 		commerceShippingMethodImpl.setUserId(userId);
 
 		if (userName == null) {
-			commerceShippingMethodImpl.setUserName(StringPool.BLANK);
+			commerceShippingMethodImpl.setUserName("");
 		}
 		else {
 			commerceShippingMethodImpl.setUserName(userName);
@@ -128,21 +127,21 @@ public class CommerceShippingMethodCacheModel implements CacheModel<CommerceShip
 		}
 
 		if (name == null) {
-			commerceShippingMethodImpl.setName(StringPool.BLANK);
+			commerceShippingMethodImpl.setName("");
 		}
 		else {
 			commerceShippingMethodImpl.setName(name);
 		}
 
 		if (description == null) {
-			commerceShippingMethodImpl.setDescription(StringPool.BLANK);
+			commerceShippingMethodImpl.setDescription("");
 		}
 		else {
 			commerceShippingMethodImpl.setDescription(description);
 		}
 
 		if (engineKey == null) {
-			commerceShippingMethodImpl.setEngineKey(StringPool.BLANK);
+			commerceShippingMethodImpl.setEngineKey("");
 		}
 		else {
 			commerceShippingMethodImpl.setEngineKey(engineKey);
@@ -189,7 +188,7 @@ public class CommerceShippingMethodCacheModel implements CacheModel<CommerceShip
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -199,21 +198,21 @@ public class CommerceShippingMethodCacheModel implements CacheModel<CommerceShip
 		objectOutput.writeLong(modifiedDate);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);
 		}
 
 		if (engineKey == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(engineKey);

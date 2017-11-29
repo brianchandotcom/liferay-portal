@@ -21,7 +21,6 @@ import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -108,7 +107,7 @@ public class CPMeasurementUnitCacheModel implements CacheModel<CPMeasurementUnit
 		CPMeasurementUnitImpl cpMeasurementUnitImpl = new CPMeasurementUnitImpl();
 
 		if (uuid == null) {
-			cpMeasurementUnitImpl.setUuid(StringPool.BLANK);
+			cpMeasurementUnitImpl.setUuid("");
 		}
 		else {
 			cpMeasurementUnitImpl.setUuid(uuid);
@@ -120,7 +119,7 @@ public class CPMeasurementUnitCacheModel implements CacheModel<CPMeasurementUnit
 		cpMeasurementUnitImpl.setUserId(userId);
 
 		if (userName == null) {
-			cpMeasurementUnitImpl.setUserName(StringPool.BLANK);
+			cpMeasurementUnitImpl.setUserName("");
 		}
 		else {
 			cpMeasurementUnitImpl.setUserName(userName);
@@ -141,14 +140,14 @@ public class CPMeasurementUnitCacheModel implements CacheModel<CPMeasurementUnit
 		}
 
 		if (name == null) {
-			cpMeasurementUnitImpl.setName(StringPool.BLANK);
+			cpMeasurementUnitImpl.setName("");
 		}
 		else {
 			cpMeasurementUnitImpl.setName(name);
 		}
 
 		if (key == null) {
-			cpMeasurementUnitImpl.setKey(StringPool.BLANK);
+			cpMeasurementUnitImpl.setKey("");
 		}
 		else {
 			cpMeasurementUnitImpl.setKey(key);
@@ -202,7 +201,7 @@ public class CPMeasurementUnitCacheModel implements CacheModel<CPMeasurementUnit
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -217,7 +216,7 @@ public class CPMeasurementUnitCacheModel implements CacheModel<CPMeasurementUnit
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -227,14 +226,14 @@ public class CPMeasurementUnitCacheModel implements CacheModel<CPMeasurementUnit
 		objectOutput.writeLong(modifiedDate);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (key == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(key);

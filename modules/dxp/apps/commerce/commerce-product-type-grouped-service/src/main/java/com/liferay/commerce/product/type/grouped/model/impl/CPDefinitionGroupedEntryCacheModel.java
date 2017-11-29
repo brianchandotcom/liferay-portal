@@ -21,7 +21,6 @@ import com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -102,7 +101,7 @@ public class CPDefinitionGroupedEntryCacheModel implements CacheModel<CPDefiniti
 		CPDefinitionGroupedEntryImpl cpDefinitionGroupedEntryImpl = new CPDefinitionGroupedEntryImpl();
 
 		if (uuid == null) {
-			cpDefinitionGroupedEntryImpl.setUuid(StringPool.BLANK);
+			cpDefinitionGroupedEntryImpl.setUuid("");
 		}
 		else {
 			cpDefinitionGroupedEntryImpl.setUuid(uuid);
@@ -114,7 +113,7 @@ public class CPDefinitionGroupedEntryCacheModel implements CacheModel<CPDefiniti
 		cpDefinitionGroupedEntryImpl.setUserId(userId);
 
 		if (userName == null) {
-			cpDefinitionGroupedEntryImpl.setUserName(StringPool.BLANK);
+			cpDefinitionGroupedEntryImpl.setUserName("");
 		}
 		else {
 			cpDefinitionGroupedEntryImpl.setUserName(userName);
@@ -172,7 +171,7 @@ public class CPDefinitionGroupedEntryCacheModel implements CacheModel<CPDefiniti
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -187,7 +186,7 @@ public class CPDefinitionGroupedEntryCacheModel implements CacheModel<CPDefiniti
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);

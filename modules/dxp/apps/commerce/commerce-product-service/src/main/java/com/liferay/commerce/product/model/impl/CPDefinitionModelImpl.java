@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -545,7 +544,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 				languageId);
 
 		if (cpDefinitionLocalization == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 
 		return cpDefinitionLocalization.getTitle();
@@ -600,7 +599,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 				languageId);
 
 		if (cpDefinitionLocalization == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 
 		return cpDefinitionLocalization.getShortDescription();
@@ -655,7 +654,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 				languageId);
 
 		if (cpDefinitionLocalization == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 
 		return cpDefinitionLocalization.getDescription();
@@ -710,7 +709,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 				languageId);
 
 		if (cpDefinitionLocalization == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 
 		return cpDefinitionLocalization.getMetaTitle();
@@ -765,7 +764,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 				languageId);
 
 		if (cpDefinitionLocalization == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 
 		return cpDefinitionLocalization.getMetaKeywords();
@@ -820,7 +819,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 				languageId);
 
 		if (cpDefinitionLocalization == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 
 		return cpDefinitionLocalization.getMetaDescription();
@@ -830,7 +829,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _uuid;
@@ -926,7 +925,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -938,7 +937,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -984,7 +983,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 	@Override
 	public String getProductTypeName() {
 		if (_productTypeName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _productTypeName;
@@ -1140,7 +1139,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 	@Override
 	public String getDDMStructureKey() {
 		if (_DDMStructureKey == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _DDMStructureKey;
@@ -1237,7 +1236,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -1249,7 +1248,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 	@Override
 	public String getStatusByUserName() {
 		if (_statusByUserName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _statusByUserName;
@@ -1276,7 +1275,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 	@Override
 	public String getDefaultLanguageId() {
 		if (_defaultLanguageId == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _defaultLanguageId;

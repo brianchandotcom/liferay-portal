@@ -21,7 +21,6 @@ import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -114,7 +113,7 @@ public class CommerceCountryCacheModel implements CacheModel<CommerceCountry>,
 		CommerceCountryImpl commerceCountryImpl = new CommerceCountryImpl();
 
 		if (uuid == null) {
-			commerceCountryImpl.setUuid(StringPool.BLANK);
+			commerceCountryImpl.setUuid("");
 		}
 		else {
 			commerceCountryImpl.setUuid(uuid);
@@ -126,7 +125,7 @@ public class CommerceCountryCacheModel implements CacheModel<CommerceCountry>,
 		commerceCountryImpl.setUserId(userId);
 
 		if (userName == null) {
-			commerceCountryImpl.setUserName(StringPool.BLANK);
+			commerceCountryImpl.setUserName("");
 		}
 		else {
 			commerceCountryImpl.setUserName(userName);
@@ -147,7 +146,7 @@ public class CommerceCountryCacheModel implements CacheModel<CommerceCountry>,
 		}
 
 		if (name == null) {
-			commerceCountryImpl.setName(StringPool.BLANK);
+			commerceCountryImpl.setName("");
 		}
 		else {
 			commerceCountryImpl.setName(name);
@@ -157,14 +156,14 @@ public class CommerceCountryCacheModel implements CacheModel<CommerceCountry>,
 		commerceCountryImpl.setShippingAllowed(shippingAllowed);
 
 		if (twoLettersISOCode == null) {
-			commerceCountryImpl.setTwoLettersISOCode(StringPool.BLANK);
+			commerceCountryImpl.setTwoLettersISOCode("");
 		}
 		else {
 			commerceCountryImpl.setTwoLettersISOCode(twoLettersISOCode);
 		}
 
 		if (threeLettersISOCode == null) {
-			commerceCountryImpl.setThreeLettersISOCode(StringPool.BLANK);
+			commerceCountryImpl.setThreeLettersISOCode("");
 		}
 		else {
 			commerceCountryImpl.setThreeLettersISOCode(threeLettersISOCode);
@@ -223,7 +222,7 @@ public class CommerceCountryCacheModel implements CacheModel<CommerceCountry>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -238,7 +237,7 @@ public class CommerceCountryCacheModel implements CacheModel<CommerceCountry>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -248,7 +247,7 @@ public class CommerceCountryCacheModel implements CacheModel<CommerceCountry>,
 		objectOutput.writeLong(modifiedDate);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
@@ -259,14 +258,14 @@ public class CommerceCountryCacheModel implements CacheModel<CommerceCountry>,
 		objectOutput.writeBoolean(shippingAllowed);
 
 		if (twoLettersISOCode == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(twoLettersISOCode);
 		}
 
 		if (threeLettersISOCode == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(threeLettersISOCode);

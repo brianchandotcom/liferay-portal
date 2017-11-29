@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -181,9 +180,9 @@ public class CPDefinitionLocalizationPersistenceTest {
 	public void testCountByCPDefinitionId_LanguageId()
 		throws Exception {
 		_persistence.countByCPDefinitionId_LanguageId(RandomTestUtil.nextLong(),
-			StringPool.BLANK);
+			"");
 
-		_persistence.countByCPDefinitionId_LanguageId(0L, StringPool.NULL);
+		_persistence.countByCPDefinitionId_LanguageId(0L, "null");
 
 		_persistence.countByCPDefinitionId_LanguageId(0L, (String)null);
 	}

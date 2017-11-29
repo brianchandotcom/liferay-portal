@@ -21,7 +21,6 @@ import com.liferay.commerce.model.CommercePriceEntry;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -104,7 +103,7 @@ public class CommercePriceEntryCacheModel implements CacheModel<CommercePriceEnt
 		CommercePriceEntryImpl commercePriceEntryImpl = new CommercePriceEntryImpl();
 
 		if (uuid == null) {
-			commercePriceEntryImpl.setUuid(StringPool.BLANK);
+			commercePriceEntryImpl.setUuid("");
 		}
 		else {
 			commercePriceEntryImpl.setUuid(uuid);
@@ -116,7 +115,7 @@ public class CommercePriceEntryCacheModel implements CacheModel<CommercePriceEnt
 		commercePriceEntryImpl.setUserId(userId);
 
 		if (userName == null) {
-			commercePriceEntryImpl.setUserName(StringPool.BLANK);
+			commercePriceEntryImpl.setUserName("");
 		}
 		else {
 			commercePriceEntryImpl.setUserName(userName);
@@ -182,7 +181,7 @@ public class CommercePriceEntryCacheModel implements CacheModel<CommercePriceEnt
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -197,7 +196,7 @@ public class CommercePriceEntryCacheModel implements CacheModel<CommercePriceEnt
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);

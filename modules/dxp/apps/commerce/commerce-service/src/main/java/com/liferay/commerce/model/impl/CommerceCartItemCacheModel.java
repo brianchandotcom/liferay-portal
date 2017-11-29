@@ -21,7 +21,6 @@ import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -107,7 +106,7 @@ public class CommerceCartItemCacheModel implements CacheModel<CommerceCartItem>,
 		commerceCartItemImpl.setUserId(userId);
 
 		if (userName == null) {
-			commerceCartItemImpl.setUserName(StringPool.BLANK);
+			commerceCartItemImpl.setUserName("");
 		}
 		else {
 			commerceCartItemImpl.setUserName(userName);
@@ -133,7 +132,7 @@ public class CommerceCartItemCacheModel implements CacheModel<CommerceCartItem>,
 		commerceCartItemImpl.setQuantity(quantity);
 
 		if (json == null) {
-			commerceCartItemImpl.setJson(StringPool.BLANK);
+			commerceCartItemImpl.setJson("");
 		}
 		else {
 			commerceCartItemImpl.setJson(json);
@@ -179,7 +178,7 @@ public class CommerceCartItemCacheModel implements CacheModel<CommerceCartItem>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -197,7 +196,7 @@ public class CommerceCartItemCacheModel implements CacheModel<CommerceCartItem>,
 		objectOutput.writeInt(quantity);
 
 		if (json == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(json);

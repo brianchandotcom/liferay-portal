@@ -21,7 +21,6 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -134,7 +133,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		CPDefinitionImpl cpDefinitionImpl = new CPDefinitionImpl();
 
 		if (uuid == null) {
-			cpDefinitionImpl.setUuid(StringPool.BLANK);
+			cpDefinitionImpl.setUuid("");
 		}
 		else {
 			cpDefinitionImpl.setUuid(uuid);
@@ -146,7 +145,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		cpDefinitionImpl.setUserId(userId);
 
 		if (userName == null) {
-			cpDefinitionImpl.setUserName(StringPool.BLANK);
+			cpDefinitionImpl.setUserName("");
 		}
 		else {
 			cpDefinitionImpl.setUserName(userName);
@@ -167,7 +166,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		}
 
 		if (productTypeName == null) {
-			cpDefinitionImpl.setProductTypeName(StringPool.BLANK);
+			cpDefinitionImpl.setProductTypeName("");
 		}
 		else {
 			cpDefinitionImpl.setProductTypeName(productTypeName);
@@ -185,7 +184,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		cpDefinitionImpl.setWeight(weight);
 
 		if (DDMStructureKey == null) {
-			cpDefinitionImpl.setDDMStructureKey(StringPool.BLANK);
+			cpDefinitionImpl.setDDMStructureKey("");
 		}
 		else {
 			cpDefinitionImpl.setDDMStructureKey(DDMStructureKey);
@@ -216,7 +215,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		cpDefinitionImpl.setStatusByUserId(statusByUserId);
 
 		if (statusByUserName == null) {
-			cpDefinitionImpl.setStatusByUserName(StringPool.BLANK);
+			cpDefinitionImpl.setStatusByUserName("");
 		}
 		else {
 			cpDefinitionImpl.setStatusByUserName(statusByUserName);
@@ -230,7 +229,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		}
 
 		if (defaultLanguageId == null) {
-			cpDefinitionImpl.setDefaultLanguageId(StringPool.BLANK);
+			cpDefinitionImpl.setDefaultLanguageId("");
 		}
 		else {
 			cpDefinitionImpl.setDefaultLanguageId(defaultLanguageId);
@@ -293,7 +292,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -308,7 +307,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -318,7 +317,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		objectOutput.writeLong(modifiedDate);
 
 		if (productTypeName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(productTypeName);
@@ -345,7 +344,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		objectOutput.writeDouble(weight);
 
 		if (DDMStructureKey == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(DDMStructureKey);
@@ -360,7 +359,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		objectOutput.writeLong(statusByUserId);
 
 		if (statusByUserName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(statusByUserName);
@@ -369,7 +368,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		objectOutput.writeLong(statusDate);
 
 		if (defaultLanguageId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(defaultLanguageId);

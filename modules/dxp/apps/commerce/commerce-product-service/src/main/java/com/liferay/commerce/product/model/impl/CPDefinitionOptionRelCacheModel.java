@@ -21,7 +21,6 @@ import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -112,7 +111,7 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 		CPDefinitionOptionRelImpl cpDefinitionOptionRelImpl = new CPDefinitionOptionRelImpl();
 
 		if (uuid == null) {
-			cpDefinitionOptionRelImpl.setUuid(StringPool.BLANK);
+			cpDefinitionOptionRelImpl.setUuid("");
 		}
 		else {
 			cpDefinitionOptionRelImpl.setUuid(uuid);
@@ -124,7 +123,7 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 		cpDefinitionOptionRelImpl.setUserId(userId);
 
 		if (userName == null) {
-			cpDefinitionOptionRelImpl.setUserName(StringPool.BLANK);
+			cpDefinitionOptionRelImpl.setUserName("");
 		}
 		else {
 			cpDefinitionOptionRelImpl.setUserName(userName);
@@ -148,21 +147,21 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 		cpDefinitionOptionRelImpl.setCPOptionId(CPOptionId);
 
 		if (title == null) {
-			cpDefinitionOptionRelImpl.setTitle(StringPool.BLANK);
+			cpDefinitionOptionRelImpl.setTitle("");
 		}
 		else {
 			cpDefinitionOptionRelImpl.setTitle(title);
 		}
 
 		if (description == null) {
-			cpDefinitionOptionRelImpl.setDescription(StringPool.BLANK);
+			cpDefinitionOptionRelImpl.setDescription("");
 		}
 		else {
 			cpDefinitionOptionRelImpl.setDescription(description);
 		}
 
 		if (DDMFormFieldTypeName == null) {
-			cpDefinitionOptionRelImpl.setDDMFormFieldTypeName(StringPool.BLANK);
+			cpDefinitionOptionRelImpl.setDDMFormFieldTypeName("");
 		}
 		else {
 			cpDefinitionOptionRelImpl.setDDMFormFieldTypeName(DDMFormFieldTypeName);
@@ -213,7 +212,7 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -228,7 +227,7 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -242,21 +241,21 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 		objectOutput.writeLong(CPOptionId);
 
 		if (title == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(title);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);
 		}
 
 		if (DDMFormFieldTypeName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(DDMFormFieldTypeName);

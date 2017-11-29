@@ -89,8 +89,7 @@ public class CPGroupServiceHttp {
 	}
 
 	public static com.liferay.commerce.product.model.CPGroup fetchCPGroupByGroupId(
-		HttpPrincipal httpPrincipal, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		HttpPrincipal httpPrincipal, long groupId) {
 		try {
 			MethodKey methodKey = new MethodKey(CPGroupServiceUtil.class,
 					"fetchCPGroupByGroupId",
@@ -104,10 +103,6 @@ public class CPGroupServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 

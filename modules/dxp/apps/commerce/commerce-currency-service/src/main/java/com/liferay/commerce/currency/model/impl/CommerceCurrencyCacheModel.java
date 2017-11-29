@@ -21,7 +21,6 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -110,7 +109,7 @@ public class CommerceCurrencyCacheModel implements CacheModel<CommerceCurrency>,
 		CommerceCurrencyImpl commerceCurrencyImpl = new CommerceCurrencyImpl();
 
 		if (uuid == null) {
-			commerceCurrencyImpl.setUuid(StringPool.BLANK);
+			commerceCurrencyImpl.setUuid("");
 		}
 		else {
 			commerceCurrencyImpl.setUuid(uuid);
@@ -122,7 +121,7 @@ public class CommerceCurrencyCacheModel implements CacheModel<CommerceCurrency>,
 		commerceCurrencyImpl.setUserId(userId);
 
 		if (userName == null) {
-			commerceCurrencyImpl.setUserName(StringPool.BLANK);
+			commerceCurrencyImpl.setUserName("");
 		}
 		else {
 			commerceCurrencyImpl.setUserName(userName);
@@ -143,14 +142,14 @@ public class CommerceCurrencyCacheModel implements CacheModel<CommerceCurrency>,
 		}
 
 		if (code == null) {
-			commerceCurrencyImpl.setCode(StringPool.BLANK);
+			commerceCurrencyImpl.setCode("");
 		}
 		else {
 			commerceCurrencyImpl.setCode(code);
 		}
 
 		if (name == null) {
-			commerceCurrencyImpl.setName(StringPool.BLANK);
+			commerceCurrencyImpl.setName("");
 		}
 		else {
 			commerceCurrencyImpl.setName(name);
@@ -159,7 +158,7 @@ public class CommerceCurrencyCacheModel implements CacheModel<CommerceCurrency>,
 		commerceCurrencyImpl.setRate(rate);
 
 		if (roundingType == null) {
-			commerceCurrencyImpl.setRoundingType(StringPool.BLANK);
+			commerceCurrencyImpl.setRoundingType("");
 		}
 		else {
 			commerceCurrencyImpl.setRoundingType(roundingType);
@@ -213,7 +212,7 @@ public class CommerceCurrencyCacheModel implements CacheModel<CommerceCurrency>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -228,7 +227,7 @@ public class CommerceCurrencyCacheModel implements CacheModel<CommerceCurrency>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -238,14 +237,14 @@ public class CommerceCurrencyCacheModel implements CacheModel<CommerceCurrency>,
 		objectOutput.writeLong(modifiedDate);
 
 		if (code == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(code);
 		}
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
@@ -254,7 +253,7 @@ public class CommerceCurrencyCacheModel implements CacheModel<CommerceCurrency>,
 		objectOutput.writeDouble(rate);
 
 		if (roundingType == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(roundingType);

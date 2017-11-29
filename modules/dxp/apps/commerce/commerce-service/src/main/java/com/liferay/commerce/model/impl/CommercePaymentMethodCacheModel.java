@@ -21,7 +21,6 @@ import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -107,7 +106,7 @@ public class CommercePaymentMethodCacheModel implements CacheModel<CommercePayme
 		commercePaymentMethodImpl.setUserId(userId);
 
 		if (userName == null) {
-			commercePaymentMethodImpl.setUserName(StringPool.BLANK);
+			commercePaymentMethodImpl.setUserName("");
 		}
 		else {
 			commercePaymentMethodImpl.setUserName(userName);
@@ -128,21 +127,21 @@ public class CommercePaymentMethodCacheModel implements CacheModel<CommercePayme
 		}
 
 		if (name == null) {
-			commercePaymentMethodImpl.setName(StringPool.BLANK);
+			commercePaymentMethodImpl.setName("");
 		}
 		else {
 			commercePaymentMethodImpl.setName(name);
 		}
 
 		if (description == null) {
-			commercePaymentMethodImpl.setDescription(StringPool.BLANK);
+			commercePaymentMethodImpl.setDescription("");
 		}
 		else {
 			commercePaymentMethodImpl.setDescription(description);
 		}
 
 		if (engineKey == null) {
-			commercePaymentMethodImpl.setEngineKey(StringPool.BLANK);
+			commercePaymentMethodImpl.setEngineKey("");
 		}
 		else {
 			commercePaymentMethodImpl.setEngineKey(engineKey);
@@ -189,7 +188,7 @@ public class CommercePaymentMethodCacheModel implements CacheModel<CommercePayme
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -199,21 +198,21 @@ public class CommercePaymentMethodCacheModel implements CacheModel<CommercePayme
 		objectOutput.writeLong(modifiedDate);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);
 		}
 
 		if (engineKey == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(engineKey);

@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -292,7 +291,7 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 	@Override
 	public String getLanguageId() {
 		if (_languageId == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _languageId;
@@ -317,7 +316,7 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 	@Override
 	public String getTitle() {
 		if (_title == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _title;
@@ -332,7 +331,7 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 	@Override
 	public String getShortDescription() {
 		if (_shortDescription == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _shortDescription;
@@ -347,7 +346,7 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 	@Override
 	public String getDescription() {
 		if (_description == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _description;
@@ -362,7 +361,7 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 	@Override
 	public String getMetaTitle() {
 		if (_metaTitle == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _metaTitle;
@@ -377,7 +376,7 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 	@Override
 	public String getMetaKeywords() {
 		if (_metaKeywords == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _metaKeywords;
@@ -392,7 +391,7 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 	@Override
 	public String getMetaDescription() {
 		if (_metaDescription == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _metaDescription;

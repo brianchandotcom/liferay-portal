@@ -21,7 +21,6 @@ import com.liferay.commerce.product.model.CPGroup;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -96,7 +95,7 @@ public class CPGroupCacheModel implements CacheModel<CPGroup>, Externalizable {
 		cpGroupImpl.setUserId(userId);
 
 		if (userName == null) {
-			cpGroupImpl.setUserName(StringPool.BLANK);
+			cpGroupImpl.setUserName("");
 		}
 		else {
 			cpGroupImpl.setUserName(userName);
@@ -147,7 +146,7 @@ public class CPGroupCacheModel implements CacheModel<CPGroup>, Externalizable {
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);

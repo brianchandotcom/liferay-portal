@@ -41,8 +41,7 @@ public class CPGroupServiceWrapper implements CPGroupService,
 
 	@Override
 	public com.liferay.commerce.product.model.CPGroup fetchCPGroupByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long groupId) {
 		return _cpGroupService.fetchCPGroupByGroupId(groupId);
 	}
 

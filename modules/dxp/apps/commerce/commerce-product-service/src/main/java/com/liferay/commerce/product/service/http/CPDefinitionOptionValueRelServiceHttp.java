@@ -295,8 +295,7 @@ public class CPDefinitionOptionValueRelServiceHttp {
 
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String key,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		int start, int end) {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionOptionValueRelServiceUtil.class,
 					"getCPDefinitionOptionValueRels",
@@ -311,10 +310,6 @@ public class CPDefinitionOptionValueRelServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 

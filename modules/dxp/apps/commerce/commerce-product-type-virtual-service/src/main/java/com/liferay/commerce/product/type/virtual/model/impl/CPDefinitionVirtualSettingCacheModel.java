@@ -21,7 +21,6 @@ import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSettin
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -121,7 +120,7 @@ public class CPDefinitionVirtualSettingCacheModel implements CacheModel<CPDefini
 		CPDefinitionVirtualSettingImpl cpDefinitionVirtualSettingImpl = new CPDefinitionVirtualSettingImpl();
 
 		if (uuid == null) {
-			cpDefinitionVirtualSettingImpl.setUuid(StringPool.BLANK);
+			cpDefinitionVirtualSettingImpl.setUuid("");
 		}
 		else {
 			cpDefinitionVirtualSettingImpl.setUuid(uuid);
@@ -133,7 +132,7 @@ public class CPDefinitionVirtualSettingCacheModel implements CacheModel<CPDefini
 		cpDefinitionVirtualSettingImpl.setUserId(userId);
 
 		if (userName == null) {
-			cpDefinitionVirtualSettingImpl.setUserName(StringPool.BLANK);
+			cpDefinitionVirtualSettingImpl.setUserName("");
 		}
 		else {
 			cpDefinitionVirtualSettingImpl.setUserName(userName);
@@ -158,14 +157,14 @@ public class CPDefinitionVirtualSettingCacheModel implements CacheModel<CPDefini
 		cpDefinitionVirtualSettingImpl.setFileEntryId(fileEntryId);
 
 		if (url == null) {
-			cpDefinitionVirtualSettingImpl.setUrl(StringPool.BLANK);
+			cpDefinitionVirtualSettingImpl.setUrl("");
 		}
 		else {
 			cpDefinitionVirtualSettingImpl.setUrl(url);
 		}
 
 		if (activationStatus == null) {
-			cpDefinitionVirtualSettingImpl.setActivationStatus(StringPool.BLANK);
+			cpDefinitionVirtualSettingImpl.setActivationStatus("");
 		}
 		else {
 			cpDefinitionVirtualSettingImpl.setActivationStatus(activationStatus);
@@ -177,7 +176,7 @@ public class CPDefinitionVirtualSettingCacheModel implements CacheModel<CPDefini
 		cpDefinitionVirtualSettingImpl.setSampleFileEntryId(sampleFileEntryId);
 
 		if (sampleUrl == null) {
-			cpDefinitionVirtualSettingImpl.setSampleUrl(StringPool.BLANK);
+			cpDefinitionVirtualSettingImpl.setSampleUrl("");
 		}
 		else {
 			cpDefinitionVirtualSettingImpl.setSampleUrl(sampleUrl);
@@ -186,7 +185,7 @@ public class CPDefinitionVirtualSettingCacheModel implements CacheModel<CPDefini
 		cpDefinitionVirtualSettingImpl.setTermsOfUseRequired(termsOfUseRequired);
 
 		if (termsOfUseContent == null) {
-			cpDefinitionVirtualSettingImpl.setTermsOfUseContent(StringPool.BLANK);
+			cpDefinitionVirtualSettingImpl.setTermsOfUseContent("");
 		}
 		else {
 			cpDefinitionVirtualSettingImpl.setTermsOfUseContent(termsOfUseContent);
@@ -248,7 +247,7 @@ public class CPDefinitionVirtualSettingCacheModel implements CacheModel<CPDefini
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -263,7 +262,7 @@ public class CPDefinitionVirtualSettingCacheModel implements CacheModel<CPDefini
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -277,14 +276,14 @@ public class CPDefinitionVirtualSettingCacheModel implements CacheModel<CPDefini
 		objectOutput.writeLong(fileEntryId);
 
 		if (url == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(url);
 		}
 
 		if (activationStatus == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(activationStatus);
@@ -299,7 +298,7 @@ public class CPDefinitionVirtualSettingCacheModel implements CacheModel<CPDefini
 		objectOutput.writeLong(sampleFileEntryId);
 
 		if (sampleUrl == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(sampleUrl);
@@ -308,7 +307,7 @@ public class CPDefinitionVirtualSettingCacheModel implements CacheModel<CPDefini
 		objectOutput.writeBoolean(termsOfUseRequired);
 
 		if (termsOfUseContent == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(termsOfUseContent);

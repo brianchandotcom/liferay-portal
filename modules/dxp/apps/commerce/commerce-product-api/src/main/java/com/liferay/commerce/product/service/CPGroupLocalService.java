@@ -174,8 +174,7 @@ public interface CPGroupLocalService extends BaseLocalService,
 	public CPGroup fetchCPGroup(long CPGroupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPGroup fetchCPGroupByGroupId(long groupId)
-		throws PortalException;
+	public CPGroup fetchCPGroupByGroupId(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

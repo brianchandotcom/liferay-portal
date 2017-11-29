@@ -57,8 +57,7 @@ public interface CPGroupService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPGroup fetchCPGroupByGroupId(long groupId)
-		throws PortalException;
+	public CPGroup fetchCPGroupByGroupId(long groupId);
 
 	/**
 	* Returns the OSGi service identifier.

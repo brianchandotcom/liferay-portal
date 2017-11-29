@@ -21,7 +21,6 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -130,7 +129,7 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		CPInstanceImpl cpInstanceImpl = new CPInstanceImpl();
 
 		if (uuid == null) {
-			cpInstanceImpl.setUuid(StringPool.BLANK);
+			cpInstanceImpl.setUuid("");
 		}
 		else {
 			cpInstanceImpl.setUuid(uuid);
@@ -142,7 +141,7 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		cpInstanceImpl.setUserId(userId);
 
 		if (userName == null) {
-			cpInstanceImpl.setUserName(StringPool.BLANK);
+			cpInstanceImpl.setUserName("");
 		}
 		else {
 			cpInstanceImpl.setUserName(userName);
@@ -165,28 +164,28 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		cpInstanceImpl.setCPDefinitionId(CPDefinitionId);
 
 		if (sku == null) {
-			cpInstanceImpl.setSku(StringPool.BLANK);
+			cpInstanceImpl.setSku("");
 		}
 		else {
 			cpInstanceImpl.setSku(sku);
 		}
 
 		if (gtin == null) {
-			cpInstanceImpl.setGtin(StringPool.BLANK);
+			cpInstanceImpl.setGtin("");
 		}
 		else {
 			cpInstanceImpl.setGtin(gtin);
 		}
 
 		if (manufacturerPartNumber == null) {
-			cpInstanceImpl.setManufacturerPartNumber(StringPool.BLANK);
+			cpInstanceImpl.setManufacturerPartNumber("");
 		}
 		else {
 			cpInstanceImpl.setManufacturerPartNumber(manufacturerPartNumber);
 		}
 
 		if (DDMContent == null) {
-			cpInstanceImpl.setDDMContent(StringPool.BLANK);
+			cpInstanceImpl.setDDMContent("");
 		}
 		else {
 			cpInstanceImpl.setDDMContent(DDMContent);
@@ -224,7 +223,7 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		cpInstanceImpl.setStatusByUserId(statusByUserId);
 
 		if (statusByUserName == null) {
-			cpInstanceImpl.setStatusByUserName(StringPool.BLANK);
+			cpInstanceImpl.setStatusByUserName("");
 		}
 		else {
 			cpInstanceImpl.setStatusByUserName(statusByUserName);
@@ -289,7 +288,7 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -304,7 +303,7 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -316,28 +315,28 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		objectOutput.writeLong(CPDefinitionId);
 
 		if (sku == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(sku);
 		}
 
 		if (gtin == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(gtin);
 		}
 
 		if (manufacturerPartNumber == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(manufacturerPartNumber);
 		}
 
 		if (DDMContent == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(DDMContent);
@@ -363,7 +362,7 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		objectOutput.writeLong(statusByUserId);
 
 		if (statusByUserName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(statusByUserName);

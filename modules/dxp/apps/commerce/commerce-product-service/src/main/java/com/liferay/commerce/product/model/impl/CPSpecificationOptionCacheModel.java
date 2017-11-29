@@ -21,7 +21,6 @@ import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -106,7 +105,7 @@ public class CPSpecificationOptionCacheModel implements CacheModel<CPSpecificati
 		CPSpecificationOptionImpl cpSpecificationOptionImpl = new CPSpecificationOptionImpl();
 
 		if (uuid == null) {
-			cpSpecificationOptionImpl.setUuid(StringPool.BLANK);
+			cpSpecificationOptionImpl.setUuid("");
 		}
 		else {
 			cpSpecificationOptionImpl.setUuid(uuid);
@@ -118,7 +117,7 @@ public class CPSpecificationOptionCacheModel implements CacheModel<CPSpecificati
 		cpSpecificationOptionImpl.setUserId(userId);
 
 		if (userName == null) {
-			cpSpecificationOptionImpl.setUserName(StringPool.BLANK);
+			cpSpecificationOptionImpl.setUserName("");
 		}
 		else {
 			cpSpecificationOptionImpl.setUserName(userName);
@@ -141,14 +140,14 @@ public class CPSpecificationOptionCacheModel implements CacheModel<CPSpecificati
 		cpSpecificationOptionImpl.setCPOptionCategoryId(CPOptionCategoryId);
 
 		if (title == null) {
-			cpSpecificationOptionImpl.setTitle(StringPool.BLANK);
+			cpSpecificationOptionImpl.setTitle("");
 		}
 		else {
 			cpSpecificationOptionImpl.setTitle(title);
 		}
 
 		if (description == null) {
-			cpSpecificationOptionImpl.setDescription(StringPool.BLANK);
+			cpSpecificationOptionImpl.setDescription("");
 		}
 		else {
 			cpSpecificationOptionImpl.setDescription(description);
@@ -157,7 +156,7 @@ public class CPSpecificationOptionCacheModel implements CacheModel<CPSpecificati
 		cpSpecificationOptionImpl.setFacetable(facetable);
 
 		if (key == null) {
-			cpSpecificationOptionImpl.setKey(StringPool.BLANK);
+			cpSpecificationOptionImpl.setKey("");
 		}
 		else {
 			cpSpecificationOptionImpl.setKey(key);
@@ -204,7 +203,7 @@ public class CPSpecificationOptionCacheModel implements CacheModel<CPSpecificati
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -219,7 +218,7 @@ public class CPSpecificationOptionCacheModel implements CacheModel<CPSpecificati
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -231,14 +230,14 @@ public class CPSpecificationOptionCacheModel implements CacheModel<CPSpecificati
 		objectOutput.writeLong(CPOptionCategoryId);
 
 		if (title == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(title);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);
@@ -247,7 +246,7 @@ public class CPSpecificationOptionCacheModel implements CacheModel<CPSpecificati
 		objectOutput.writeBoolean(facetable);
 
 		if (key == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(key);

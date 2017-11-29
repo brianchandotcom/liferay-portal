@@ -193,8 +193,7 @@ public class CPGroupLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPGroup fetchCPGroupByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long groupId) {
 		return getService().fetchCPGroupByGroupId(groupId);
 	}
 

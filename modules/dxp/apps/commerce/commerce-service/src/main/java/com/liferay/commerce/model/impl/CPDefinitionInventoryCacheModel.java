@@ -21,7 +21,6 @@ import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -116,7 +115,7 @@ public class CPDefinitionInventoryCacheModel implements CacheModel<CPDefinitionI
 		CPDefinitionInventoryImpl cpDefinitionInventoryImpl = new CPDefinitionInventoryImpl();
 
 		if (uuid == null) {
-			cpDefinitionInventoryImpl.setUuid(StringPool.BLANK);
+			cpDefinitionInventoryImpl.setUuid("");
 		}
 		else {
 			cpDefinitionInventoryImpl.setUuid(uuid);
@@ -128,7 +127,7 @@ public class CPDefinitionInventoryCacheModel implements CacheModel<CPDefinitionI
 		cpDefinitionInventoryImpl.setUserId(userId);
 
 		if (userName == null) {
-			cpDefinitionInventoryImpl.setUserName(StringPool.BLANK);
+			cpDefinitionInventoryImpl.setUserName("");
 		}
 		else {
 			cpDefinitionInventoryImpl.setUserName(userName);
@@ -151,14 +150,14 @@ public class CPDefinitionInventoryCacheModel implements CacheModel<CPDefinitionI
 		cpDefinitionInventoryImpl.setCPDefinitionId(CPDefinitionId);
 
 		if (CPDefinitionInventoryEngine == null) {
-			cpDefinitionInventoryImpl.setCPDefinitionInventoryEngine(StringPool.BLANK);
+			cpDefinitionInventoryImpl.setCPDefinitionInventoryEngine("");
 		}
 		else {
 			cpDefinitionInventoryImpl.setCPDefinitionInventoryEngine(CPDefinitionInventoryEngine);
 		}
 
 		if (lowStockActivity == null) {
-			cpDefinitionInventoryImpl.setLowStockActivity(StringPool.BLANK);
+			cpDefinitionInventoryImpl.setLowStockActivity("");
 		}
 		else {
 			cpDefinitionInventoryImpl.setLowStockActivity(lowStockActivity);
@@ -172,7 +171,7 @@ public class CPDefinitionInventoryCacheModel implements CacheModel<CPDefinitionI
 		cpDefinitionInventoryImpl.setMaxCartQuantity(maxCartQuantity);
 
 		if (allowedCartQuantities == null) {
-			cpDefinitionInventoryImpl.setAllowedCartQuantities(StringPool.BLANK);
+			cpDefinitionInventoryImpl.setAllowedCartQuantities("");
 		}
 		else {
 			cpDefinitionInventoryImpl.setAllowedCartQuantities(allowedCartQuantities);
@@ -224,7 +223,7 @@ public class CPDefinitionInventoryCacheModel implements CacheModel<CPDefinitionI
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -239,7 +238,7 @@ public class CPDefinitionInventoryCacheModel implements CacheModel<CPDefinitionI
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -251,14 +250,14 @@ public class CPDefinitionInventoryCacheModel implements CacheModel<CPDefinitionI
 		objectOutput.writeLong(CPDefinitionId);
 
 		if (CPDefinitionInventoryEngine == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(CPDefinitionInventoryEngine);
 		}
 
 		if (lowStockActivity == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(lowStockActivity);
@@ -277,7 +276,7 @@ public class CPDefinitionInventoryCacheModel implements CacheModel<CPDefinitionI
 		objectOutput.writeInt(maxCartQuantity);
 
 		if (allowedCartQuantities == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(allowedCartQuantities);

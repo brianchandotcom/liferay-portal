@@ -21,7 +21,6 @@ import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -104,7 +103,7 @@ public class CPOptionValueCacheModel implements CacheModel<CPOptionValue>,
 		CPOptionValueImpl cpOptionValueImpl = new CPOptionValueImpl();
 
 		if (uuid == null) {
-			cpOptionValueImpl.setUuid(StringPool.BLANK);
+			cpOptionValueImpl.setUuid("");
 		}
 		else {
 			cpOptionValueImpl.setUuid(uuid);
@@ -116,7 +115,7 @@ public class CPOptionValueCacheModel implements CacheModel<CPOptionValue>,
 		cpOptionValueImpl.setUserId(userId);
 
 		if (userName == null) {
-			cpOptionValueImpl.setUserName(StringPool.BLANK);
+			cpOptionValueImpl.setUserName("");
 		}
 		else {
 			cpOptionValueImpl.setUserName(userName);
@@ -139,7 +138,7 @@ public class CPOptionValueCacheModel implements CacheModel<CPOptionValue>,
 		cpOptionValueImpl.setCPOptionId(CPOptionId);
 
 		if (title == null) {
-			cpOptionValueImpl.setTitle(StringPool.BLANK);
+			cpOptionValueImpl.setTitle("");
 		}
 		else {
 			cpOptionValueImpl.setTitle(title);
@@ -148,7 +147,7 @@ public class CPOptionValueCacheModel implements CacheModel<CPOptionValue>,
 		cpOptionValueImpl.setPriority(priority);
 
 		if (key == null) {
-			cpOptionValueImpl.setKey(StringPool.BLANK);
+			cpOptionValueImpl.setKey("");
 		}
 		else {
 			cpOptionValueImpl.setKey(key);
@@ -193,7 +192,7 @@ public class CPOptionValueCacheModel implements CacheModel<CPOptionValue>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -208,7 +207,7 @@ public class CPOptionValueCacheModel implements CacheModel<CPOptionValue>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -220,7 +219,7 @@ public class CPOptionValueCacheModel implements CacheModel<CPOptionValue>,
 		objectOutput.writeLong(CPOptionId);
 
 		if (title == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(title);
@@ -229,7 +228,7 @@ public class CPOptionValueCacheModel implements CacheModel<CPOptionValue>,
 		objectOutput.writeDouble(priority);
 
 		if (key == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(key);

@@ -21,7 +21,6 @@ import com.liferay.commerce.model.CommerceAvailabilityRange;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -100,7 +99,7 @@ public class CommerceAvailabilityRangeCacheModel implements CacheModel<CommerceA
 		CommerceAvailabilityRangeImpl commerceAvailabilityRangeImpl = new CommerceAvailabilityRangeImpl();
 
 		if (uuid == null) {
-			commerceAvailabilityRangeImpl.setUuid(StringPool.BLANK);
+			commerceAvailabilityRangeImpl.setUuid("");
 		}
 		else {
 			commerceAvailabilityRangeImpl.setUuid(uuid);
@@ -112,7 +111,7 @@ public class CommerceAvailabilityRangeCacheModel implements CacheModel<CommerceA
 		commerceAvailabilityRangeImpl.setUserId(userId);
 
 		if (userName == null) {
-			commerceAvailabilityRangeImpl.setUserName(StringPool.BLANK);
+			commerceAvailabilityRangeImpl.setUserName("");
 		}
 		else {
 			commerceAvailabilityRangeImpl.setUserName(userName);
@@ -133,7 +132,7 @@ public class CommerceAvailabilityRangeCacheModel implements CacheModel<CommerceA
 		}
 
 		if (title == null) {
-			commerceAvailabilityRangeImpl.setTitle(StringPool.BLANK);
+			commerceAvailabilityRangeImpl.setTitle("");
 		}
 		else {
 			commerceAvailabilityRangeImpl.setTitle(title);
@@ -178,7 +177,7 @@ public class CommerceAvailabilityRangeCacheModel implements CacheModel<CommerceA
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -193,7 +192,7 @@ public class CommerceAvailabilityRangeCacheModel implements CacheModel<CommerceA
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -203,7 +202,7 @@ public class CommerceAvailabilityRangeCacheModel implements CacheModel<CommerceA
 		objectOutput.writeLong(modifiedDate);
 
 		if (title == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(title);

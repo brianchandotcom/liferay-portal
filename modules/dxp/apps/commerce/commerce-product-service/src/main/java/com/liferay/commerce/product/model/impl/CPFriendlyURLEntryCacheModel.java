@@ -21,7 +21,6 @@ import com.liferay.commerce.product.model.CPFriendlyURLEntry;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -104,7 +103,7 @@ public class CPFriendlyURLEntryCacheModel implements CacheModel<CPFriendlyURLEnt
 		CPFriendlyURLEntryImpl cpFriendlyURLEntryImpl = new CPFriendlyURLEntryImpl();
 
 		if (uuid == null) {
-			cpFriendlyURLEntryImpl.setUuid(StringPool.BLANK);
+			cpFriendlyURLEntryImpl.setUuid("");
 		}
 		else {
 			cpFriendlyURLEntryImpl.setUuid(uuid);
@@ -116,7 +115,7 @@ public class CPFriendlyURLEntryCacheModel implements CacheModel<CPFriendlyURLEnt
 		cpFriendlyURLEntryImpl.setUserId(userId);
 
 		if (userName == null) {
-			cpFriendlyURLEntryImpl.setUserName(StringPool.BLANK);
+			cpFriendlyURLEntryImpl.setUserName("");
 		}
 		else {
 			cpFriendlyURLEntryImpl.setUserName(userName);
@@ -140,14 +139,14 @@ public class CPFriendlyURLEntryCacheModel implements CacheModel<CPFriendlyURLEnt
 		cpFriendlyURLEntryImpl.setClassPK(classPK);
 
 		if (languageId == null) {
-			cpFriendlyURLEntryImpl.setLanguageId(StringPool.BLANK);
+			cpFriendlyURLEntryImpl.setLanguageId("");
 		}
 		else {
 			cpFriendlyURLEntryImpl.setLanguageId(languageId);
 		}
 
 		if (urlTitle == null) {
-			cpFriendlyURLEntryImpl.setUrlTitle(StringPool.BLANK);
+			cpFriendlyURLEntryImpl.setUrlTitle("");
 		}
 		else {
 			cpFriendlyURLEntryImpl.setUrlTitle(urlTitle);
@@ -188,7 +187,7 @@ public class CPFriendlyURLEntryCacheModel implements CacheModel<CPFriendlyURLEnt
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -203,7 +202,7 @@ public class CPFriendlyURLEntryCacheModel implements CacheModel<CPFriendlyURLEnt
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -217,14 +216,14 @@ public class CPFriendlyURLEntryCacheModel implements CacheModel<CPFriendlyURLEnt
 		objectOutput.writeLong(classPK);
 
 		if (languageId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(languageId);
 		}
 
 		if (urlTitle == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(urlTitle);

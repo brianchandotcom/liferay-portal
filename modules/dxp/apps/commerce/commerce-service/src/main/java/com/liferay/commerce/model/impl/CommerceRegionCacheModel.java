@@ -21,7 +21,6 @@ import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -106,7 +105,7 @@ public class CommerceRegionCacheModel implements CacheModel<CommerceRegion>,
 		CommerceRegionImpl commerceRegionImpl = new CommerceRegionImpl();
 
 		if (uuid == null) {
-			commerceRegionImpl.setUuid(StringPool.BLANK);
+			commerceRegionImpl.setUuid("");
 		}
 		else {
 			commerceRegionImpl.setUuid(uuid);
@@ -118,7 +117,7 @@ public class CommerceRegionCacheModel implements CacheModel<CommerceRegion>,
 		commerceRegionImpl.setUserId(userId);
 
 		if (userName == null) {
-			commerceRegionImpl.setUserName(StringPool.BLANK);
+			commerceRegionImpl.setUserName("");
 		}
 		else {
 			commerceRegionImpl.setUserName(userName);
@@ -141,14 +140,14 @@ public class CommerceRegionCacheModel implements CacheModel<CommerceRegion>,
 		commerceRegionImpl.setCommerceCountryId(commerceCountryId);
 
 		if (name == null) {
-			commerceRegionImpl.setName(StringPool.BLANK);
+			commerceRegionImpl.setName("");
 		}
 		else {
 			commerceRegionImpl.setName(name);
 		}
 
 		if (code == null) {
-			commerceRegionImpl.setCode(StringPool.BLANK);
+			commerceRegionImpl.setCode("");
 		}
 		else {
 			commerceRegionImpl.setCode(code);
@@ -198,7 +197,7 @@ public class CommerceRegionCacheModel implements CacheModel<CommerceRegion>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -213,7 +212,7 @@ public class CommerceRegionCacheModel implements CacheModel<CommerceRegion>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -225,14 +224,14 @@ public class CommerceRegionCacheModel implements CacheModel<CommerceRegion>,
 		objectOutput.writeLong(commerceCountryId);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (code == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(code);

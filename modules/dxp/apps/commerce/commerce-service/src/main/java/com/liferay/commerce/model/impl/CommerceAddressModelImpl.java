@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -473,7 +472,7 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -485,7 +484,7 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -554,7 +553,7 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -570,7 +569,7 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -586,7 +585,7 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 	@Override
 	public String getDescription() {
 		if (_description == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _description;
@@ -602,7 +601,7 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 	@Override
 	public String getStreet1() {
 		if (_street1 == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _street1;
@@ -618,7 +617,7 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 	@Override
 	public String getStreet2() {
 		if (_street2 == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _street2;
@@ -634,7 +633,7 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 	@Override
 	public String getStreet3() {
 		if (_street3 == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _street3;
@@ -650,7 +649,7 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 	@Override
 	public String getCity() {
 		if (_city == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _city;
@@ -666,7 +665,7 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 	@Override
 	public String getZip() {
 		if (_zip == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _zip;
@@ -750,7 +749,7 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 	@Override
 	public String getPhoneNumber() {
 		if (_phoneNumber == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _phoneNumber;

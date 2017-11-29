@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -311,7 +310,7 @@ public class CommerceOrderItemPersistenceImpl extends BasePersistenceImpl<Commer
 		msg.append("commerceOrderId=");
 		msg.append(commerceOrderId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchOrderItemException(msg.toString());
 	}
@@ -363,7 +362,7 @@ public class CommerceOrderItemPersistenceImpl extends BasePersistenceImpl<Commer
 		msg.append("commerceOrderId=");
 		msg.append(commerceOrderId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchOrderItemException(msg.toString());
 	}
@@ -831,7 +830,7 @@ public class CommerceOrderItemPersistenceImpl extends BasePersistenceImpl<Commer
 		msg.append("CPDefinitionId=");
 		msg.append(CPDefinitionId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchOrderItemException(msg.toString());
 	}
@@ -882,7 +881,7 @@ public class CommerceOrderItemPersistenceImpl extends BasePersistenceImpl<Commer
 		msg.append("CPDefinitionId=");
 		msg.append(CPDefinitionId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchOrderItemException(msg.toString());
 	}
@@ -1349,7 +1348,7 @@ public class CommerceOrderItemPersistenceImpl extends BasePersistenceImpl<Commer
 		msg.append("CPInstanceId=");
 		msg.append(CPInstanceId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchOrderItemException(msg.toString());
 	}
@@ -1400,7 +1399,7 @@ public class CommerceOrderItemPersistenceImpl extends BasePersistenceImpl<Commer
 		msg.append("CPInstanceId=");
 		msg.append(CPInstanceId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchOrderItemException(msg.toString());
 	}
@@ -2164,12 +2163,12 @@ public class CommerceOrderItemPersistenceImpl extends BasePersistenceImpl<Commer
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

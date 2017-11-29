@@ -21,7 +21,6 @@ import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -102,7 +101,7 @@ public class CPDefinitionLinkCacheModel implements CacheModel<CPDefinitionLink>,
 		CPDefinitionLinkImpl cpDefinitionLinkImpl = new CPDefinitionLinkImpl();
 
 		if (uuid == null) {
-			cpDefinitionLinkImpl.setUuid(StringPool.BLANK);
+			cpDefinitionLinkImpl.setUuid("");
 		}
 		else {
 			cpDefinitionLinkImpl.setUuid(uuid);
@@ -114,7 +113,7 @@ public class CPDefinitionLinkCacheModel implements CacheModel<CPDefinitionLink>,
 		cpDefinitionLinkImpl.setUserId(userId);
 
 		if (userName == null) {
-			cpDefinitionLinkImpl.setUserName(StringPool.BLANK);
+			cpDefinitionLinkImpl.setUserName("");
 		}
 		else {
 			cpDefinitionLinkImpl.setUserName(userName);
@@ -172,7 +171,7 @@ public class CPDefinitionLinkCacheModel implements CacheModel<CPDefinitionLink>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -187,7 +186,7 @@ public class CPDefinitionLinkCacheModel implements CacheModel<CPDefinitionLink>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);

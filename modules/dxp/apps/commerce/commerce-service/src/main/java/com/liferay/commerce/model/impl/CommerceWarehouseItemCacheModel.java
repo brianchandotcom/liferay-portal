@@ -21,7 +21,6 @@ import com.liferay.commerce.model.CommerceWarehouseItem;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -105,7 +104,7 @@ public class CommerceWarehouseItemCacheModel implements CacheModel<CommerceWareh
 		commerceWarehouseItemImpl.setUserId(userId);
 
 		if (userName == null) {
-			commerceWarehouseItemImpl.setUserName(StringPool.BLANK);
+			commerceWarehouseItemImpl.setUserName("");
 		}
 		else {
 			commerceWarehouseItemImpl.setUserName(userName);
@@ -169,7 +168,7 @@ public class CommerceWarehouseItemCacheModel implements CacheModel<CommerceWareh
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);

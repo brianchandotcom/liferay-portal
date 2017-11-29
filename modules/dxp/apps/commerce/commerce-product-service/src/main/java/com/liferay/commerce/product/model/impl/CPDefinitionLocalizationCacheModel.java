@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -117,49 +116,49 @@ public class CPDefinitionLocalizationCacheModel implements CacheModel<CPDefiniti
 		cpDefinitionLocalizationImpl.setCPDefinitionId(CPDefinitionId);
 
 		if (languageId == null) {
-			cpDefinitionLocalizationImpl.setLanguageId(StringPool.BLANK);
+			cpDefinitionLocalizationImpl.setLanguageId("");
 		}
 		else {
 			cpDefinitionLocalizationImpl.setLanguageId(languageId);
 		}
 
 		if (title == null) {
-			cpDefinitionLocalizationImpl.setTitle(StringPool.BLANK);
+			cpDefinitionLocalizationImpl.setTitle("");
 		}
 		else {
 			cpDefinitionLocalizationImpl.setTitle(title);
 		}
 
 		if (shortDescription == null) {
-			cpDefinitionLocalizationImpl.setShortDescription(StringPool.BLANK);
+			cpDefinitionLocalizationImpl.setShortDescription("");
 		}
 		else {
 			cpDefinitionLocalizationImpl.setShortDescription(shortDescription);
 		}
 
 		if (description == null) {
-			cpDefinitionLocalizationImpl.setDescription(StringPool.BLANK);
+			cpDefinitionLocalizationImpl.setDescription("");
 		}
 		else {
 			cpDefinitionLocalizationImpl.setDescription(description);
 		}
 
 		if (metaTitle == null) {
-			cpDefinitionLocalizationImpl.setMetaTitle(StringPool.BLANK);
+			cpDefinitionLocalizationImpl.setMetaTitle("");
 		}
 		else {
 			cpDefinitionLocalizationImpl.setMetaTitle(metaTitle);
 		}
 
 		if (metaKeywords == null) {
-			cpDefinitionLocalizationImpl.setMetaKeywords(StringPool.BLANK);
+			cpDefinitionLocalizationImpl.setMetaKeywords("");
 		}
 		else {
 			cpDefinitionLocalizationImpl.setMetaKeywords(metaKeywords);
 		}
 
 		if (metaDescription == null) {
-			cpDefinitionLocalizationImpl.setMetaDescription(StringPool.BLANK);
+			cpDefinitionLocalizationImpl.setMetaDescription("");
 		}
 		else {
 			cpDefinitionLocalizationImpl.setMetaDescription(metaDescription);
@@ -200,49 +199,49 @@ public class CPDefinitionLocalizationCacheModel implements CacheModel<CPDefiniti
 		objectOutput.writeLong(CPDefinitionId);
 
 		if (languageId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(languageId);
 		}
 
 		if (title == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(title);
 		}
 
 		if (shortDescription == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(shortDescription);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);
 		}
 
 		if (metaTitle == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(metaTitle);
 		}
 
 		if (metaKeywords == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(metaKeywords);
 		}
 
 		if (metaDescription == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(metaDescription);

@@ -21,7 +21,6 @@ import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -100,7 +99,7 @@ public class CPDisplayLayoutCacheModel implements CacheModel<CPDisplayLayout>,
 		CPDisplayLayoutImpl cpDisplayLayoutImpl = new CPDisplayLayoutImpl();
 
 		if (uuid == null) {
-			cpDisplayLayoutImpl.setUuid(StringPool.BLANK);
+			cpDisplayLayoutImpl.setUuid("");
 		}
 		else {
 			cpDisplayLayoutImpl.setUuid(uuid);
@@ -112,7 +111,7 @@ public class CPDisplayLayoutCacheModel implements CacheModel<CPDisplayLayout>,
 		cpDisplayLayoutImpl.setUserId(userId);
 
 		if (userName == null) {
-			cpDisplayLayoutImpl.setUserName(StringPool.BLANK);
+			cpDisplayLayoutImpl.setUserName("");
 		}
 		else {
 			cpDisplayLayoutImpl.setUserName(userName);
@@ -136,7 +135,7 @@ public class CPDisplayLayoutCacheModel implements CacheModel<CPDisplayLayout>,
 		cpDisplayLayoutImpl.setClassPK(classPK);
 
 		if (layoutUuid == null) {
-			cpDisplayLayoutImpl.setLayoutUuid(StringPool.BLANK);
+			cpDisplayLayoutImpl.setLayoutUuid("");
 		}
 		else {
 			cpDisplayLayoutImpl.setLayoutUuid(layoutUuid);
@@ -172,7 +171,7 @@ public class CPDisplayLayoutCacheModel implements CacheModel<CPDisplayLayout>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -187,7 +186,7 @@ public class CPDisplayLayoutCacheModel implements CacheModel<CPDisplayLayout>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -201,7 +200,7 @@ public class CPDisplayLayoutCacheModel implements CacheModel<CPDisplayLayout>,
 		objectOutput.writeLong(classPK);
 
 		if (layoutUuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(layoutUuid);

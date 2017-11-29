@@ -21,7 +21,6 @@ import com.liferay.commerce.model.CommerceCart;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -106,7 +105,7 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 		CommerceCartImpl commerceCartImpl = new CommerceCartImpl();
 
 		if (uuid == null) {
-			commerceCartImpl.setUuid(StringPool.BLANK);
+			commerceCartImpl.setUuid("");
 		}
 		else {
 			commerceCartImpl.setUuid(uuid);
@@ -118,7 +117,7 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 		commerceCartImpl.setUserId(userId);
 
 		if (userName == null) {
-			commerceCartImpl.setUserName(StringPool.BLANK);
+			commerceCartImpl.setUserName("");
 		}
 		else {
 			commerceCartImpl.setUserName(userName);
@@ -139,7 +138,7 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 		}
 
 		if (name == null) {
-			commerceCartImpl.setName(StringPool.BLANK);
+			commerceCartImpl.setName("");
 		}
 		else {
 			commerceCartImpl.setName(name);
@@ -151,7 +150,7 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 		commerceCartImpl.setCommerceShippingMethodId(commerceShippingMethodId);
 
 		if (commerceShippingOptionName == null) {
-			commerceCartImpl.setCommerceShippingOptionName(StringPool.BLANK);
+			commerceCartImpl.setCommerceShippingOptionName("");
 		}
 		else {
 			commerceCartImpl.setCommerceShippingOptionName(commerceShippingOptionName);
@@ -192,7 +191,7 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -207,7 +206,7 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -217,7 +216,7 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 		objectOutput.writeLong(modifiedDate);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
@@ -232,7 +231,7 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 		objectOutput.writeLong(commerceShippingMethodId);
 
 		if (commerceShippingOptionName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(commerceShippingOptionName);

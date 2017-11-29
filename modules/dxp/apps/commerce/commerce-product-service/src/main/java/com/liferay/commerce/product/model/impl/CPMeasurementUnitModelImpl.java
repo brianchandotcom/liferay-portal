@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -352,7 +351,7 @@ public class CPMeasurementUnitModelImpl extends BaseModelImpl<CPMeasurementUnit>
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _uuid;
@@ -448,7 +447,7 @@ public class CPMeasurementUnitModelImpl extends BaseModelImpl<CPMeasurementUnit>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -460,7 +459,7 @@ public class CPMeasurementUnitModelImpl extends BaseModelImpl<CPMeasurementUnit>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -504,7 +503,7 @@ public class CPMeasurementUnitModelImpl extends BaseModelImpl<CPMeasurementUnit>
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -603,7 +602,7 @@ public class CPMeasurementUnitModelImpl extends BaseModelImpl<CPMeasurementUnit>
 	@Override
 	public String getKey() {
 		if (_key == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _key;
@@ -758,7 +757,7 @@ public class CPMeasurementUnitModelImpl extends BaseModelImpl<CPMeasurementUnit>
 		String xml = getName();
 
 		if (xml == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 
 		Locale defaultLocale = LocaleUtil.getSiteDefault();

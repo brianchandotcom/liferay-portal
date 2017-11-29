@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -391,7 +390,7 @@ public class CPDefinitionInventoryModelImpl extends BaseModelImpl<CPDefinitionIn
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _uuid;
@@ -487,7 +486,7 @@ public class CPDefinitionInventoryModelImpl extends BaseModelImpl<CPDefinitionIn
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -499,7 +498,7 @@ public class CPDefinitionInventoryModelImpl extends BaseModelImpl<CPDefinitionIn
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -566,7 +565,7 @@ public class CPDefinitionInventoryModelImpl extends BaseModelImpl<CPDefinitionIn
 	@Override
 	public String getCPDefinitionInventoryEngine() {
 		if (_CPDefinitionInventoryEngine == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _CPDefinitionInventoryEngine;
@@ -583,7 +582,7 @@ public class CPDefinitionInventoryModelImpl extends BaseModelImpl<CPDefinitionIn
 	@Override
 	public String getLowStockActivity() {
 		if (_lowStockActivity == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _lowStockActivity;
@@ -683,7 +682,7 @@ public class CPDefinitionInventoryModelImpl extends BaseModelImpl<CPDefinitionIn
 	@Override
 	public String getAllowedCartQuantities() {
 		if (_allowedCartQuantities == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _allowedCartQuantities;

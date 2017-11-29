@@ -21,7 +21,6 @@ import com.liferay.commerce.product.model.CPOption;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -109,7 +108,7 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 		CPOptionImpl cpOptionImpl = new CPOptionImpl();
 
 		if (uuid == null) {
-			cpOptionImpl.setUuid(StringPool.BLANK);
+			cpOptionImpl.setUuid("");
 		}
 		else {
 			cpOptionImpl.setUuid(uuid);
@@ -121,7 +120,7 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 		cpOptionImpl.setUserId(userId);
 
 		if (userName == null) {
-			cpOptionImpl.setUserName(StringPool.BLANK);
+			cpOptionImpl.setUserName("");
 		}
 		else {
 			cpOptionImpl.setUserName(userName);
@@ -142,21 +141,21 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 		}
 
 		if (title == null) {
-			cpOptionImpl.setTitle(StringPool.BLANK);
+			cpOptionImpl.setTitle("");
 		}
 		else {
 			cpOptionImpl.setTitle(title);
 		}
 
 		if (description == null) {
-			cpOptionImpl.setDescription(StringPool.BLANK);
+			cpOptionImpl.setDescription("");
 		}
 		else {
 			cpOptionImpl.setDescription(description);
 		}
 
 		if (DDMFormFieldTypeName == null) {
-			cpOptionImpl.setDDMFormFieldTypeName(StringPool.BLANK);
+			cpOptionImpl.setDDMFormFieldTypeName("");
 		}
 		else {
 			cpOptionImpl.setDDMFormFieldTypeName(DDMFormFieldTypeName);
@@ -167,7 +166,7 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 		cpOptionImpl.setSkuContributor(skuContributor);
 
 		if (key == null) {
-			cpOptionImpl.setKey(StringPool.BLANK);
+			cpOptionImpl.setKey("");
 		}
 		else {
 			cpOptionImpl.setKey(key);
@@ -216,7 +215,7 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -231,7 +230,7 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -241,21 +240,21 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 		objectOutput.writeLong(modifiedDate);
 
 		if (title == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(title);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);
 		}
 
 		if (DDMFormFieldTypeName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(DDMFormFieldTypeName);
@@ -268,7 +267,7 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 		objectOutput.writeBoolean(skuContributor);
 
 		if (key == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(key);

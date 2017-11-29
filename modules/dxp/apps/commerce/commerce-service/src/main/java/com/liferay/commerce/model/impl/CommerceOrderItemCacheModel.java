@@ -21,7 +21,6 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -113,7 +112,7 @@ public class CommerceOrderItemCacheModel implements CacheModel<CommerceOrderItem
 		commerceOrderItemImpl.setUserId(userId);
 
 		if (userName == null) {
-			commerceOrderItemImpl.setUserName(StringPool.BLANK);
+			commerceOrderItemImpl.setUserName("");
 		}
 		else {
 			commerceOrderItemImpl.setUserName(userName);
@@ -139,21 +138,21 @@ public class CommerceOrderItemCacheModel implements CacheModel<CommerceOrderItem
 		commerceOrderItemImpl.setQuantity(quantity);
 
 		if (json == null) {
-			commerceOrderItemImpl.setJson(StringPool.BLANK);
+			commerceOrderItemImpl.setJson("");
 		}
 		else {
 			commerceOrderItemImpl.setJson(json);
 		}
 
 		if (title == null) {
-			commerceOrderItemImpl.setTitle(StringPool.BLANK);
+			commerceOrderItemImpl.setTitle("");
 		}
 		else {
 			commerceOrderItemImpl.setTitle(title);
 		}
 
 		if (sku == null) {
-			commerceOrderItemImpl.setSku(StringPool.BLANK);
+			commerceOrderItemImpl.setSku("");
 		}
 		else {
 			commerceOrderItemImpl.setSku(sku);
@@ -205,7 +204,7 @@ public class CommerceOrderItemCacheModel implements CacheModel<CommerceOrderItem
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -223,21 +222,21 @@ public class CommerceOrderItemCacheModel implements CacheModel<CommerceOrderItem
 		objectOutput.writeInt(quantity);
 
 		if (json == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(json);
 		}
 
 		if (title == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(title);
 		}
 
 		if (sku == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(sku);

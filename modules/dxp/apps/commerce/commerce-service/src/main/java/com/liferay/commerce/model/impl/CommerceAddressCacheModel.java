@@ -21,7 +21,6 @@ import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -127,7 +126,7 @@ public class CommerceAddressCacheModel implements CacheModel<CommerceAddress>,
 		commerceAddressImpl.setUserId(userId);
 
 		if (userName == null) {
-			commerceAddressImpl.setUserName(StringPool.BLANK);
+			commerceAddressImpl.setUserName("");
 		}
 		else {
 			commerceAddressImpl.setUserName(userName);
@@ -150,49 +149,49 @@ public class CommerceAddressCacheModel implements CacheModel<CommerceAddress>,
 		commerceAddressImpl.setAddressUserId(addressUserId);
 
 		if (name == null) {
-			commerceAddressImpl.setName(StringPool.BLANK);
+			commerceAddressImpl.setName("");
 		}
 		else {
 			commerceAddressImpl.setName(name);
 		}
 
 		if (description == null) {
-			commerceAddressImpl.setDescription(StringPool.BLANK);
+			commerceAddressImpl.setDescription("");
 		}
 		else {
 			commerceAddressImpl.setDescription(description);
 		}
 
 		if (street1 == null) {
-			commerceAddressImpl.setStreet1(StringPool.BLANK);
+			commerceAddressImpl.setStreet1("");
 		}
 		else {
 			commerceAddressImpl.setStreet1(street1);
 		}
 
 		if (street2 == null) {
-			commerceAddressImpl.setStreet2(StringPool.BLANK);
+			commerceAddressImpl.setStreet2("");
 		}
 		else {
 			commerceAddressImpl.setStreet2(street2);
 		}
 
 		if (street3 == null) {
-			commerceAddressImpl.setStreet3(StringPool.BLANK);
+			commerceAddressImpl.setStreet3("");
 		}
 		else {
 			commerceAddressImpl.setStreet3(street3);
 		}
 
 		if (city == null) {
-			commerceAddressImpl.setCity(StringPool.BLANK);
+			commerceAddressImpl.setCity("");
 		}
 		else {
 			commerceAddressImpl.setCity(city);
 		}
 
 		if (zip == null) {
-			commerceAddressImpl.setZip(StringPool.BLANK);
+			commerceAddressImpl.setZip("");
 		}
 		else {
 			commerceAddressImpl.setZip(zip);
@@ -204,7 +203,7 @@ public class CommerceAddressCacheModel implements CacheModel<CommerceAddress>,
 		commerceAddressImpl.setLongitude(longitude);
 
 		if (phoneNumber == null) {
-			commerceAddressImpl.setPhoneNumber(StringPool.BLANK);
+			commerceAddressImpl.setPhoneNumber("");
 		}
 		else {
 			commerceAddressImpl.setPhoneNumber(phoneNumber);
@@ -266,7 +265,7 @@ public class CommerceAddressCacheModel implements CacheModel<CommerceAddress>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -278,49 +277,49 @@ public class CommerceAddressCacheModel implements CacheModel<CommerceAddress>,
 		objectOutput.writeLong(addressUserId);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);
 		}
 
 		if (street1 == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(street1);
 		}
 
 		if (street2 == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(street2);
 		}
 
 		if (street3 == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(street3);
 		}
 
 		if (city == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(city);
 		}
 
 		if (zip == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(zip);
@@ -335,7 +334,7 @@ public class CommerceAddressCacheModel implements CacheModel<CommerceAddress>,
 		objectOutput.writeDouble(longitude);
 
 		if (phoneNumber == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(phoneNumber);

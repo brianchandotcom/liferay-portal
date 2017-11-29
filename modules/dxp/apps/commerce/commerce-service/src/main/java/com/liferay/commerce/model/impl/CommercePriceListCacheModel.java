@@ -21,7 +21,6 @@ import com.liferay.commerce.model.CommercePriceList;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -112,7 +111,7 @@ public class CommercePriceListCacheModel implements CacheModel<CommercePriceList
 		CommercePriceListImpl commercePriceListImpl = new CommercePriceListImpl();
 
 		if (uuid == null) {
-			commercePriceListImpl.setUuid(StringPool.BLANK);
+			commercePriceListImpl.setUuid("");
 		}
 		else {
 			commercePriceListImpl.setUuid(uuid);
@@ -124,7 +123,7 @@ public class CommercePriceListCacheModel implements CacheModel<CommercePriceList
 		commercePriceListImpl.setUserId(userId);
 
 		if (userName == null) {
-			commercePriceListImpl.setUserName(StringPool.BLANK);
+			commercePriceListImpl.setUserName("");
 		}
 		else {
 			commercePriceListImpl.setUserName(userName);
@@ -147,7 +146,7 @@ public class CommercePriceListCacheModel implements CacheModel<CommercePriceList
 		commercePriceListImpl.setCommerceCurrencyId(commerceCurrencyId);
 
 		if (name == null) {
-			commercePriceListImpl.setName(StringPool.BLANK);
+			commercePriceListImpl.setName("");
 		}
 		else {
 			commercePriceListImpl.setName(name);
@@ -178,7 +177,7 @@ public class CommercePriceListCacheModel implements CacheModel<CommercePriceList
 		commercePriceListImpl.setStatusByUserId(statusByUserId);
 
 		if (statusByUserName == null) {
-			commercePriceListImpl.setStatusByUserName(StringPool.BLANK);
+			commercePriceListImpl.setStatusByUserName("");
 		}
 		else {
 			commercePriceListImpl.setStatusByUserName(statusByUserName);
@@ -228,7 +227,7 @@ public class CommercePriceListCacheModel implements CacheModel<CommercePriceList
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -243,7 +242,7 @@ public class CommercePriceListCacheModel implements CacheModel<CommercePriceList
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -255,7 +254,7 @@ public class CommercePriceListCacheModel implements CacheModel<CommercePriceList
 		objectOutput.writeLong(commerceCurrencyId);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
@@ -270,7 +269,7 @@ public class CommercePriceListCacheModel implements CacheModel<CommercePriceList
 		objectOutput.writeLong(statusByUserId);
 
 		if (statusByUserName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(statusByUserName);

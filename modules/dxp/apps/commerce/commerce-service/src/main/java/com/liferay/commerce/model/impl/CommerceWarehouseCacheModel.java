@@ -21,7 +21,6 @@ import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -119,7 +118,7 @@ public class CommerceWarehouseCacheModel implements CacheModel<CommerceWarehouse
 		commerceWarehouseImpl.setUserId(userId);
 
 		if (userName == null) {
-			commerceWarehouseImpl.setUserName(StringPool.BLANK);
+			commerceWarehouseImpl.setUserName("");
 		}
 		else {
 			commerceWarehouseImpl.setUserName(userName);
@@ -140,49 +139,49 @@ public class CommerceWarehouseCacheModel implements CacheModel<CommerceWarehouse
 		}
 
 		if (name == null) {
-			commerceWarehouseImpl.setName(StringPool.BLANK);
+			commerceWarehouseImpl.setName("");
 		}
 		else {
 			commerceWarehouseImpl.setName(name);
 		}
 
 		if (description == null) {
-			commerceWarehouseImpl.setDescription(StringPool.BLANK);
+			commerceWarehouseImpl.setDescription("");
 		}
 		else {
 			commerceWarehouseImpl.setDescription(description);
 		}
 
 		if (street1 == null) {
-			commerceWarehouseImpl.setStreet1(StringPool.BLANK);
+			commerceWarehouseImpl.setStreet1("");
 		}
 		else {
 			commerceWarehouseImpl.setStreet1(street1);
 		}
 
 		if (street2 == null) {
-			commerceWarehouseImpl.setStreet2(StringPool.BLANK);
+			commerceWarehouseImpl.setStreet2("");
 		}
 		else {
 			commerceWarehouseImpl.setStreet2(street2);
 		}
 
 		if (street3 == null) {
-			commerceWarehouseImpl.setStreet3(StringPool.BLANK);
+			commerceWarehouseImpl.setStreet3("");
 		}
 		else {
 			commerceWarehouseImpl.setStreet3(street3);
 		}
 
 		if (city == null) {
-			commerceWarehouseImpl.setCity(StringPool.BLANK);
+			commerceWarehouseImpl.setCity("");
 		}
 		else {
 			commerceWarehouseImpl.setCity(city);
 		}
 
 		if (zip == null) {
-			commerceWarehouseImpl.setZip(StringPool.BLANK);
+			commerceWarehouseImpl.setZip("");
 		}
 		else {
 			commerceWarehouseImpl.setZip(zip);
@@ -239,7 +238,7 @@ public class CommerceWarehouseCacheModel implements CacheModel<CommerceWarehouse
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -249,49 +248,49 @@ public class CommerceWarehouseCacheModel implements CacheModel<CommerceWarehouse
 		objectOutput.writeLong(modifiedDate);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);
 		}
 
 		if (street1 == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(street1);
 		}
 
 		if (street2 == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(street2);
 		}
 
 		if (street3 == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(street3);
 		}
 
 		if (city == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(city);
 		}
 
 		if (zip == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(zip);

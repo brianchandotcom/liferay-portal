@@ -21,7 +21,6 @@ import com.liferay.commerce.model.CPDefinitionAvailabilityRange;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -101,7 +100,7 @@ public class CPDefinitionAvailabilityRangeCacheModel implements CacheModel<CPDef
 		CPDefinitionAvailabilityRangeImpl cpDefinitionAvailabilityRangeImpl = new CPDefinitionAvailabilityRangeImpl();
 
 		if (uuid == null) {
-			cpDefinitionAvailabilityRangeImpl.setUuid(StringPool.BLANK);
+			cpDefinitionAvailabilityRangeImpl.setUuid("");
 		}
 		else {
 			cpDefinitionAvailabilityRangeImpl.setUuid(uuid);
@@ -113,7 +112,7 @@ public class CPDefinitionAvailabilityRangeCacheModel implements CacheModel<CPDef
 		cpDefinitionAvailabilityRangeImpl.setUserId(userId);
 
 		if (userName == null) {
-			cpDefinitionAvailabilityRangeImpl.setUserName(StringPool.BLANK);
+			cpDefinitionAvailabilityRangeImpl.setUserName("");
 		}
 		else {
 			cpDefinitionAvailabilityRangeImpl.setUserName(userName);
@@ -175,7 +174,7 @@ public class CPDefinitionAvailabilityRangeCacheModel implements CacheModel<CPDef
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -190,7 +189,7 @@ public class CPDefinitionAvailabilityRangeCacheModel implements CacheModel<CPDef
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);

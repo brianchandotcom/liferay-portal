@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -360,7 +359,7 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _uuid;
@@ -456,7 +455,7 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -468,7 +467,7 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -512,7 +511,7 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 	@Override
 	public String getTitle() {
 		if (_title == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _title;
@@ -613,7 +612,7 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 	@Override
 	public String getDescription() {
 		if (_description == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _description;
@@ -716,7 +715,7 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 	@Override
 	public String getDDMFormFieldTypeName() {
 		if (_DDMFormFieldTypeName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _DDMFormFieldTypeName;
@@ -783,7 +782,7 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 	@Override
 	public String getKey() {
 		if (_key == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _key;
@@ -873,7 +872,7 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		String xml = getTitle();
 
 		if (xml == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 
 		Locale defaultLocale = LocaleUtil.getSiteDefault();

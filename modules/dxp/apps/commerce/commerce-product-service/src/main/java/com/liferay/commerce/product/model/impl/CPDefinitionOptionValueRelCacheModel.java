@@ -21,7 +21,6 @@ import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -103,7 +102,7 @@ public class CPDefinitionOptionValueRelCacheModel implements CacheModel<CPDefini
 		CPDefinitionOptionValueRelImpl cpDefinitionOptionValueRelImpl = new CPDefinitionOptionValueRelImpl();
 
 		if (uuid == null) {
-			cpDefinitionOptionValueRelImpl.setUuid(StringPool.BLANK);
+			cpDefinitionOptionValueRelImpl.setUuid("");
 		}
 		else {
 			cpDefinitionOptionValueRelImpl.setUuid(uuid);
@@ -115,7 +114,7 @@ public class CPDefinitionOptionValueRelCacheModel implements CacheModel<CPDefini
 		cpDefinitionOptionValueRelImpl.setUserId(userId);
 
 		if (userName == null) {
-			cpDefinitionOptionValueRelImpl.setUserName(StringPool.BLANK);
+			cpDefinitionOptionValueRelImpl.setUserName("");
 		}
 		else {
 			cpDefinitionOptionValueRelImpl.setUserName(userName);
@@ -139,7 +138,7 @@ public class CPDefinitionOptionValueRelCacheModel implements CacheModel<CPDefini
 		cpDefinitionOptionValueRelImpl.setCPDefinitionOptionRelId(CPDefinitionOptionRelId);
 
 		if (title == null) {
-			cpDefinitionOptionValueRelImpl.setTitle(StringPool.BLANK);
+			cpDefinitionOptionValueRelImpl.setTitle("");
 		}
 		else {
 			cpDefinitionOptionValueRelImpl.setTitle(title);
@@ -148,7 +147,7 @@ public class CPDefinitionOptionValueRelCacheModel implements CacheModel<CPDefini
 		cpDefinitionOptionValueRelImpl.setPriority(priority);
 
 		if (key == null) {
-			cpDefinitionOptionValueRelImpl.setKey(StringPool.BLANK);
+			cpDefinitionOptionValueRelImpl.setKey("");
 		}
 		else {
 			cpDefinitionOptionValueRelImpl.setKey(key);
@@ -185,7 +184,7 @@ public class CPDefinitionOptionValueRelCacheModel implements CacheModel<CPDefini
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -200,7 +199,7 @@ public class CPDefinitionOptionValueRelCacheModel implements CacheModel<CPDefini
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -212,7 +211,7 @@ public class CPDefinitionOptionValueRelCacheModel implements CacheModel<CPDefini
 		objectOutput.writeLong(CPDefinitionOptionRelId);
 
 		if (title == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(title);
@@ -221,7 +220,7 @@ public class CPDefinitionOptionValueRelCacheModel implements CacheModel<CPDefini
 		objectOutput.writeDouble(priority);
 
 		if (key == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(key);

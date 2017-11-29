@@ -15,6 +15,7 @@
 package com.liferay.portal.search.elasticsearch6.internal.connection;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,12 +23,13 @@ import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch6.internal.cluster.ClusterSettingsContext;
 import com.liferay.portal.search.elasticsearch6.internal.index.IndexFactory;
 import com.liferay.portal.search.elasticsearch6.settings.SettingsContributor;
+
+import io.netty.buffer.ByteBufUtil;
 
 import java.io.IOException;
 
@@ -45,10 +47,8 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.common.inject.Injector;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.node.Node;
-import org.elasticsearch.node.NodeBuilder;
+import org.elasticsearch.node.NodeValidationException;
 import org.elasticsearch.threadpool.ThreadPool;
-
-import org.jboss.netty.util.internal.ByteBufferUtil;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -64,7 +64,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Michael C. Han
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration",
+	configurationPid = "com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration",
 	immediate = true, property = {"operation.mode=EMBEDDED"},
 	service = ElasticsearchConnection.class
 )
@@ -80,14 +80,13 @@ public class EmbeddedElasticsearchConnection
 		}
 
 		try {
-			Class.forName(ByteBufferUtil.class.getName());
+			Class.forName(ByteBufUtil.class.getName());
 		}
 		catch (ClassNotFoundException cnfe) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
-						"Unable to preload ",
-						String.valueOf(ByteBufferUtil.class),
+						"Unable to preload ", String.valueOf(ByteBufUtil.class),
 						" to prevent Netty shutdown concurrent class loading ",
 						"interruption issue"),
 					cnfe);
@@ -122,7 +121,12 @@ public class EmbeddedElasticsearchConnection
 			}
 		}
 
-		_node.close();
+		try {
+			_node.close();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 
 		_node = null;
 
@@ -175,7 +179,7 @@ public class EmbeddedElasticsearchConnection
 			"cluster.name", elasticsearchConfiguration.clusterName());
 		settingsBuilder.put(
 			"cluster.routing.allocation.disk.threshold_enabled", false);
-		settingsBuilder.put("discovery.zen.ping.multicast.enabled", false);
+		settingsBuilder.put("discovery.type", "single-node");
 	}
 
 	protected void configureHttp() {
@@ -197,12 +201,8 @@ public class EmbeddedElasticsearchConnection
 			"http.cors.allow-origin",
 			elasticsearchConfiguration.httpCORSAllowOrigin());
 
-		String httpCORSConfigurations =
-			elasticsearchConfiguration.httpCORSConfigurations();
-
-		if (Validator.isNotNull(httpCORSConfigurations)) {
-			settingsBuilder.loadFromSource(httpCORSConfigurations);
-		}
+		settingsBuilder.loadFromSource(
+			elasticsearchConfiguration.httpCORSConfigurations());
 	}
 
 	protected void configureNetworking() {
@@ -242,6 +242,12 @@ public class EmbeddedElasticsearchConnection
 		if (Validator.isNotNull(transportTcpPort)) {
 			settingsBuilder.put("transport.tcp.port", transportTcpPort);
 		}
+
+		settingsBuilder.put("transport.type", "netty4");
+	}
+
+	protected void configurePACLTestRule() {
+		settingsBuilder.put("node.max_local_storage_nodes", "2");
 	}
 
 	protected void configurePaths() {
@@ -254,13 +260,8 @@ public class EmbeddedElasticsearchConnection
 		settingsBuilder.put(
 			"path.logs", props.get(PropsKeys.LIFERAY_HOME) + "/logs");
 		settingsBuilder.put(
-			"path.plugins",
-			props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch/plugins");
-		settingsBuilder.put(
 			"path.repo",
 			props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch/repo");
-		settingsBuilder.put(
-			"path.work", SystemProperties.get(SystemProperties.TMP_DIR));
 	}
 
 	protected void configurePlugin(String name, Settings settings) {
@@ -270,7 +271,7 @@ public class EmbeddedElasticsearchConnection
 		try {
 			embeddedElasticsearchPluginManager.install();
 		}
-		catch (IOException ioe) {
+		catch (Exception ioe) {
 			throw new RuntimeException(
 				"Unable to install " + name + " plugin", ioe);
 		}
@@ -291,6 +292,16 @@ public class EmbeddedElasticsearchConnection
 		for (String plugin : plugins) {
 			configurePlugin(plugin, settings);
 		}
+	}
+
+	protected void configureTestMode() {
+		if (!PortalRunMode.isTestMode()) {
+			return;
+		}
+
+		settingsBuilder.put("monitor.jvm.gc.enabled", StringPool.FALSE);
+
+		configurePACLTestRule();
 	}
 
 	@Override
@@ -320,7 +331,12 @@ public class EmbeddedElasticsearchConnection
 
 		_node = createNode(settingsBuilder.build());
 
-		_node.start();
+		try {
+			_node.start();
+		}
+		catch (NodeValidationException nve) {
+			throw new RuntimeException(nve);
+		}
 
 		Client client = _node.client();
 
@@ -337,22 +353,13 @@ public class EmbeddedElasticsearchConnection
 		return client;
 	}
 
-	protected Node createEmbeddedElasticsearchNode(Settings settings) {
-		NodeBuilder nodeBuilder = new NodeBuilder();
-
-		nodeBuilder.settings(settings);
-
-		nodeBuilder.local(true);
-
-		return nodeBuilder.build();
-	}
-
 	protected EmbeddedElasticsearchPluginManager
 		createEmbeddedElasticsearchPluginManager(
 			String name, Settings settings) {
 
 		return new EmbeddedElasticsearchPluginManager(
-			name, settings.get("path.plugins"),
+			name,
+			props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch/plugins",
 			new PluginManagerFactoryImpl(settings), new PluginZipFactoryImpl());
 	}
 
@@ -370,7 +377,7 @@ public class EmbeddedElasticsearchConnection
 		System.setProperty("jna.tmpdir", _jnaTmpDirName);
 
 		try {
-			return createEmbeddedElasticsearchNode(settings);
+			return EmbeddedElasticsearchNode.newInstance(settings);
 		}
 		finally {
 			thread.setContextClassLoader(contextClassLoader);
@@ -393,36 +400,24 @@ public class EmbeddedElasticsearchConnection
 	protected void loadRequiredDefaultConfigurations() {
 		settingsBuilder.put("action.auto_create_index", false);
 		settingsBuilder.put(
-			"bootstrap.mlockall",
+			"bootstrap.memory_lock",
 			elasticsearchConfiguration.bootstrapMlockAll());
 
 		configureClustering();
 
 		configureHttp();
 
-		settingsBuilder.put("index.number_of_replicas", 0);
-		settingsBuilder.put("index.number_of_shards", 1);
-
 		configureNetworking();
 
-		settingsBuilder.put("node.client", false);
 		settingsBuilder.put("node.data", true);
+		settingsBuilder.put("node.ingest", true);
+		settingsBuilder.put("node.master", true);
 
 		configurePaths();
 
 		configurePlugins();
 
-		if (PortalRunMode.isTestMode()) {
-			settingsBuilder.put("index.refresh_interval", "1ms");
-			settingsBuilder.put(
-				"index.search.slowlog.threshold.fetch.warn", "-1");
-			settingsBuilder.put(
-				"index.search.slowlog.threshold.query.warn", "-1");
-			settingsBuilder.put("index.translog.flush_threshold_ops", "1");
-			settingsBuilder.put("index.translog.interval", "1ms");
-			settingsBuilder.put(
-				"monitor.jvm.enabled", Boolean.FALSE.toString());
-		}
+		configureTestMode();
 	}
 
 	protected void removeObsoletePlugin(String name, Settings settings) {
@@ -432,7 +427,7 @@ public class EmbeddedElasticsearchConnection
 		try {
 			embeddedElasticsearchPluginManager.removeObsoletePlugin();
 		}
-		catch (IOException ioe) {
+		catch (Exception ioe) {
 			throw new RuntimeException(
 				"Unable to remove " + name + " plugin", ioe);
 		}

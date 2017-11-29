@@ -54,8 +54,59 @@ public class LegacyDataArchiveUtil {
 			_getLegacyDataArchivePortalVersions();
 	}
 
+	public GitWorkingDirectory.Branch createDataArchiveBranch()
+		throws IOException {
+
+		GitWorkingDirectory.Branch upstreamBranch =
+			_legacyGitWorkingDirectory.getBranch(
+				_legacyGitWorkingDirectory.getUpstreamBranchName(), null);
+
+		String dataArchiveBranchName = JenkinsResultsParserUtil.combine(
+			upstreamBranch.getName(), "-data-archive-",
+			String.valueOf(System.currentTimeMillis()));
+
+		_dataArchiveBranch = _legacyGitWorkingDirectory.getBranch(
+			dataArchiveBranchName, null);
+
+		if (_dataArchiveBranch != null) {
+			_legacyGitWorkingDirectory.deleteBranch(
+				_legacyGitWorkingDirectory.getBranch(
+					dataArchiveBranchName, null));
+		}
+
+		_dataArchiveBranch = _legacyGitWorkingDirectory.createLocalBranch(
+			dataArchiveBranchName);
+
+		_legacyGitWorkingDirectory.checkoutBranch(_dataArchiveBranch);
+
+		for (LegacyDataArchivePortalVersion legacyDataArchivePortalVersion :
+				_legacyDataArchivePortalVersions) {
+
+			List<LegacyDataArchiveGroup> legacyDataArchiveGroups =
+				legacyDataArchivePortalVersion.getLegacyDataArchiveGroups();
+
+			for (LegacyDataArchiveGroup legacyDataArchiveGroup :
+					legacyDataArchiveGroups) {
+
+				legacyDataArchiveGroup.commitLegacyDataArchives();
+			}
+		}
+
+		GitWorkingDirectory.Remote upstreamRemote =
+			_legacyGitWorkingDirectory.getRemote("upstream");
+
+		_legacyGitWorkingDirectory.pushToRemote(
+			true, _dataArchiveBranch, dataArchiveBranchName, upstreamRemote);
+
+		return _dataArchiveBranch;
+	}
+
 	public Properties getBuildProperties() {
 		return _buildProperties;
+	}
+
+	public GitWorkingDirectory.Branch getDataArchiveBranch() {
+		return _dataArchiveBranch;
 	}
 
 	public File getGeneratedArchiveDirectory() {
@@ -117,6 +168,7 @@ public class LegacyDataArchiveUtil {
 	}
 
 	private final Properties _buildProperties;
+	private GitWorkingDirectory.Branch _dataArchiveBranch;
 	private final File _generatedArchiveDirectory;
 	private final List<LegacyDataArchivePortalVersion>
 		_legacyDataArchivePortalVersions;

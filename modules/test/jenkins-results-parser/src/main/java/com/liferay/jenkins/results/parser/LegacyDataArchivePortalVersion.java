@@ -63,6 +63,10 @@ public class LegacyDataArchivePortalVersion {
 		return _latestTestCommit;
 	}
 
+	public List<LegacyDataArchiveGroup> getLegacyDataArchiveGroups() {
+		return _legacyDataArchiveGroups;
+	}
+
 	public LegacyDataArchiveUtil getLegacyDataArchiveUtil() {
 		return _legacyDataArchiveUtil;
 	}

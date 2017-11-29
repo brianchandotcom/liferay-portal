@@ -547,7 +547,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</if>
 	</target>
 
-	<target name="format-source">
+	<target name="format-source-all">
 		<property location="${project.dir}/modules" name="source.formatter.modules.dir.absolute.path" />
 
 		<if>
@@ -710,13 +710,13 @@ This target does not format .es.js files. Please run the following command from 
 	</target>
 
 	<target name="format-source-bnd">
-		<antcall target="format-source">
+		<antcall target="format-source-all">
 			<param name="source.file.extensions" value="bnd,gradle" />
 		</antcall>
 	</target>
 
 	<target name="format-source-current-branch">
-		<antcall target="format-source">
+		<antcall target="format-source-all">
 			<param name="format.current.branch" value="true" />
 		</antcall>
 	</target>
@@ -728,13 +728,13 @@ This target does not format .es.js files. Please run the following command from 
 	</target>
 
 	<target name="format-source-debug">
-		<antcall target="format-source">
+		<antcall target="format-source-all">
 			<param name="source.formatter.show.debug.information" value="true" />
 		</antcall>
 	</target>
 
 	<target name="format-source-latest-author">
-		<antcall target="format-source">
+		<antcall target="format-source-all">
 			<param name="format.latest.author" value="true" />
 		</antcall>
 	</target>
@@ -746,7 +746,7 @@ This target does not format .es.js files. Please run the following command from 
 	</target>
 
 	<target name="format-source-local-changes">
-		<antcall target="format-source">
+		<antcall target="format-source-all">
 			<param name="format.local.changes" value="true" />
 		</antcall>
 	</target>

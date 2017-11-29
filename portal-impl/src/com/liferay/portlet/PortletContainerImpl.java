@@ -142,16 +142,26 @@ public class PortletContainerImpl implements PortletContainer {
 	public void processPublicRenderParameters(
 		HttpServletRequest request, Layout layout) {
 
-		LayoutTypePortlet layoutTypePortlet = null;
+		processPublicRenderParameters(request, layout, null);
+	}
+
+	@Override
+	public void processPublicRenderParameters(
+		HttpServletRequest request, Layout layout, Portlet targetPortlet) {
 
 		LayoutType layoutType = layout.getLayoutType();
 
-		if (layoutType instanceof LayoutTypePortlet) {
-			layoutTypePortlet = (LayoutTypePortlet)layoutType;
-
-			_processPublicRenderParameters(
-				request, layout, layoutTypePortlet.getPortlets());
+		if (!(layoutType instanceof LayoutTypePortlet)) {
+			return;
 		}
+
+		LayoutTypePortlet layoutTypePortlet = (LayoutTypePortlet)layoutType;
+
+		List<Portlet> portlets = layoutTypePortlet.getPortlets();
+
+		portlets.remove(targetPortlet);
+
+		_processPublicRenderParameters(request, layout, portlets, false);
 	}
 
 	@Override
@@ -214,12 +224,6 @@ public class PortletContainerImpl implements PortletContainer {
 		}
 
 		return scopeGroupId;
-	}
-
-	protected void processPublicRenderParameters(
-		HttpServletRequest request, Layout layout, Portlet portlet) {
-
-		_processPublicRenderParameters(request, layout, Arrays.asList(portlet));
 	}
 
 	protected Event serializeEvent(
@@ -288,7 +292,9 @@ public class PortletContainerImpl implements PortletContainer {
 				LanguageUtil.getLanguageId(request));
 		}
 
-		processPublicRenderParameters(request, layout, portlet);
+		_processPublicRenderParameters(
+			request, layout, Arrays.asList(portlet),
+			themeDisplay.isLifecycleAction());
 
 		if (themeDisplay.isLifecycleRender() ||
 			themeDisplay.isLifecycleResource()) {
@@ -550,12 +556,11 @@ public class PortletContainerImpl implements PortletContainer {
 	}
 
 	private void _processPublicRenderParameters(
-		HttpServletRequest request, Layout layout, List<Portlet> portlets) {
+		HttpServletRequest request, Layout layout, List<Portlet> portlets,
+		boolean lifecycleAction) {
 
 		PortletQName portletQName = PortletQNameUtil.getPortletQName();
 		Map<String, String[]> publicRenderParameters = null;
-		ThemeDisplay themeDisplay = null;
-
 		Map<String, String[]> parameters = request.getParameterMap();
 
 		for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
@@ -587,14 +592,9 @@ public class PortletContainerImpl implements PortletContainer {
 				if (name.startsWith(
 						PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE)) {
 
-					if (themeDisplay == null) {
-						themeDisplay = (ThemeDisplay)request.getAttribute(
-							WebKeys.THEME_DISPLAY);
-					}
-
 					String[] values = entry.getValue();
 
-					if (themeDisplay.isLifecycleAction()) {
+					if (lifecycleAction) {
 						String[] oldValues = publicRenderParameters.get(
 							publicRenderParameterName);
 

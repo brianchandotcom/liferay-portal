@@ -153,6 +153,13 @@ public class PortletContainerUtil {
 		getPortletContainer().processPublicRenderParameters(request, layout);
 	}
 
+	public static void processPublicRenderParameters(
+		HttpServletRequest request, Layout layout, Portlet targetPortlet) {
+
+		getPortletContainer().processPublicRenderParameters(
+			request, layout, targetPortlet);
+	}
+
 	public static void render(
 			HttpServletRequest request, HttpServletResponse response,
 			Portlet portlet)

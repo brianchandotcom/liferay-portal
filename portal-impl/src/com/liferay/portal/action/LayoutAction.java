@@ -318,7 +318,7 @@ public class LayoutAction extends Action {
 				// on the page can set the page title and page subtitle
 
 				PortletContainerUtil.processPublicRenderParameters(
-					request, layout);
+					request, layout, portlet);
 
 				if (layout.includeLayoutContent(request, response)) {
 					return null;

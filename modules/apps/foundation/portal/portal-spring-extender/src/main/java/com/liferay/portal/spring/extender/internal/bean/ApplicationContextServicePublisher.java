@@ -16,6 +16,7 @@ package com.liferay.portal.spring.extender.internal.bean;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.spring.osgi.OSGIBean;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -26,6 +27,7 @@ import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.List;
@@ -93,6 +95,14 @@ public class ApplicationContextServicePublisher {
 
 		properties.put("origin.bundle.symbolic.name", symbloicName);
 
+		if (object instanceof OSGIBean) {
+			OSGIBean osgiBean = (OSGIBean)object;
+
+			properties.putAll(osgiBean.getProperties());
+
+			return properties;
+		}
+
 		Class<? extends Object> clazz = null;
 
 		try {
@@ -115,10 +125,20 @@ public class ApplicationContextServicePublisher {
 	}
 
 	protected Set<Class<?>> getInterfaces(Object object) throws Exception {
-		Class<? extends Object> clazz = getTargetClass(object);
+		if (object instanceof OSGIBean) {
+			OSGIBean osgiBean = (OSGIBean)object;
+
+			Collection<Class<?>> services = osgiBean.getServices();
+
+			for (Class<?> serviceClazz : services) {
+				serviceClazz.cast(object);
+			}
+
+			return new HashSet<>(services);
+		}
 
 		OSGiBeanProperties osgiBeanProperties = AnnotationUtils.findAnnotation(
-			clazz, OSGiBeanProperties.class);
+			getTargetClass(object), OSGiBeanProperties.class);
 
 		if (osgiBeanProperties == null) {
 			return new HashSet<>(

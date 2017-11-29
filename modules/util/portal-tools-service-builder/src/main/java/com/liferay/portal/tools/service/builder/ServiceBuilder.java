@@ -795,11 +795,6 @@ public class ServiceBuilder {
 							_removeServiceUtil(
 								entity, _SESSION_TYPE_LOCAL,
 								_serviceOutputPath);
-							_removeServiceClp(
-								entity, _SESSION_TYPE_LOCAL,
-								_serviceOutputPath);
-							_removeServiceClpInvoker(
-								entity, _SESSION_TYPE_LOCAL);
 							_removeServiceWrapper(
 								entity, _SESSION_TYPE_LOCAL,
 								_serviceOutputPath);
@@ -834,11 +829,6 @@ public class ServiceBuilder {
 							_removeServiceUtil(
 								entity, _SESSION_TYPE_REMOTE,
 								_serviceOutputPath);
-							_removeServiceClp(
-								entity, _SESSION_TYPE_REMOTE,
-								_serviceOutputPath);
-							_removeServiceClpInvoker(
-								entity, _SESSION_TYPE_REMOTE);
 							_removeServiceWrapper(
 								entity, _SESSION_TYPE_REMOTE,
 								_serviceOutputPath);
@@ -5880,6 +5870,8 @@ public class ServiceBuilder {
 		_removeModelClp(entity, _oldServiceOutputPath);
 		_removeServiceClp(entity, _SESSION_TYPE_LOCAL, _oldServiceOutputPath);
 		_removeServiceClp(entity, _SESSION_TYPE_REMOTE, _oldServiceOutputPath);
+		_removeServiceClpInvoker(entity, _SESSION_TYPE_LOCAL);
+		_removeServiceClpInvoker(entity, _SESSION_TYPE_REMOTE);
 		_removeServiceClpMessageListener(_oldServiceOutputPath);
 		_removeServiceClpSerializer(_oldServiceOutputPath);
 

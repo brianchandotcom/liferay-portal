@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -48,6 +49,9 @@ public class LegacyDataArchiveUtil {
 		_buildProperties = _getBuildProperties();
 
 		_portalVersions = _getPortalVersions();
+
+		_legacyDataArchivePortalVersions =
+			_getLegacyDataArchivePortalVersions();
 	}
 
 	public Properties getBuildProperties() {
@@ -60,10 +64,6 @@ public class LegacyDataArchiveUtil {
 
 	public GitWorkingDirectory getLegacyGitWorkingDirectory() {
 		return _legacyGitWorkingDirectory;
-	}
-
-	public List<String> getPortalVersions() {
-		return _portalVersions;
 	}
 
 	private Properties _getBuildProperties() {
@@ -90,6 +90,20 @@ public class LegacyDataArchiveUtil {
 		return buildProperties;
 	}
 
+	private List<LegacyDataArchivePortalVersion>
+		_getLegacyDataArchivePortalVersions() {
+
+		List<LegacyDataArchivePortalVersion> legacyDataArchivePortalVersions =
+			new ArrayList<>();
+
+		for (String portalVersion : _portalVersions) {
+			legacyDataArchivePortalVersions.add(
+				new LegacyDataArchivePortalVersion(this, portalVersion));
+		}
+
+		return legacyDataArchivePortalVersions;
+	}
+
 	private List<String> _getPortalVersions() {
 		String legacyDataArchivePortalVersionsString =
 			_buildProperties.getProperty("legacy.data.archive.portal.versions");
@@ -104,6 +118,8 @@ public class LegacyDataArchiveUtil {
 
 	private final Properties _buildProperties;
 	private final File _generatedArchiveDirectory;
+	private final List<LegacyDataArchivePortalVersion>
+		_legacyDataArchivePortalVersions;
 	private final GitWorkingDirectory _legacyGitWorkingDirectory;
 	private final List<String> _portalVersions;
 

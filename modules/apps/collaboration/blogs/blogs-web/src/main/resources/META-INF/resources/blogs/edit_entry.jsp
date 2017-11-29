@@ -55,18 +55,23 @@ if (portletTitleBasedNavigation) {
 %>
 
 <liferay-util:buffer var="saveStatus">
-	<small class="text-capitalize text-muted" id="<portlet:namespace />saveStatus">
-		<c:if test="<%= entry != null %>">
-			<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
+	<c:choose>
+		<c:when test="<%= entry != null %>">
+			<small class="text-capitalize text-muted" id="<portlet:namespace />saveStatus">
+				<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
 
-			<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-		</c:if>
-	</small>
+				<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+			</small>
+		</c:when>
+		<c:otherwise>
+			<small class="text-capitalize text-muted" id="<portlet:namespace />saveStatus"></small>
+		</c:otherwise>
+	</c:choose>
 </liferay-util:buffer>
 
 <liferay-util:buffer var="readingTime">
 	<c:if test="<%= blogsPortletInstanceConfiguration.enableReadingTime() %>">
-		<small class="text-muted">
+		<small class="reading-time-wrapper text-muted">
 			<liferay-reading-time:reading-time id="readingTime" model="<%= entry %>" />
 		</small>
 	</c:if>

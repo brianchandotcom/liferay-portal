@@ -180,6 +180,34 @@ describe(
 						done();
 					}
 				);
+
+				it(
+					'should not serialize <assignment> if assignment object is empty.',
+					function(done) {
+						var jsonDefinition = {
+							nodes: [
+								{
+									name: 'task1',
+									assignments: {},
+									xmlType: 'task'
+								}
+							]
+						};
+
+						var definition = serializeDefinition(
+							XML_NAMESPACE,
+							METADATA,
+							jsonDefinition
+						);
+
+						assert(
+							definition.indexOf('<assignments') < 0,
+							'<assignments/> element serialized from empty object.'
+						);
+
+						done();
+					}
+				);
 			}
 		);
 	}

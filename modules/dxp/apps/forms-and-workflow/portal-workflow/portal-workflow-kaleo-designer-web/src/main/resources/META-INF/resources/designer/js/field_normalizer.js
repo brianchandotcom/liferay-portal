@@ -95,7 +95,7 @@ AUI.add(
 						function(item1, index1, collection1) {
 							var value = data[0][item1];
 
-							if (typeof value === "undefined") {
+							if (!isValue(value)) {
 								return;
 							}
 
@@ -117,18 +117,18 @@ AUI.add(
 								}
 							);
 
-							if (isValue(item1)) {
+							if (isValue(value) && AArray.some(value, isValue)) {
 								assignments.assignmentType = AArray(item1);
 							}
 						}
 					);
-				}
 
-				if (assignments.assignmentType == 'roleId') {
-					populateRole(assignments);
-				}
-				else if (assignments.assignmentType == 'user') {
-					populateUser(assignments);
+					if (assignments.assignmentType == 'roleId') {
+						populateRole(assignments);
+					}
+					else if (assignments.assignmentType == 'user') {
+						populateUser(assignments);
+					}
 				}
 
 				return assignments;

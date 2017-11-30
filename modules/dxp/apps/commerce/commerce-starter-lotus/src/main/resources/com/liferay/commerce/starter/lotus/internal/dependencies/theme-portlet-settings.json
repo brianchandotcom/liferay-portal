@@ -1,0 +1,49 @@
+[
+	{
+		"instanceId": "cpAssetCategoriesNavigationPortlet_navigation_menu",
+		"portletName": "com_liferay_commerce_product_asset_categories_navigation_web_internal_portlet_CPAssetCategoriesNavigationPortlet",
+		"portletPreferences": {
+			"assetVocabularyId": ""
+		},
+		"vocabularyName": "Commerce"
+	},
+	{
+		"instanceId": "footer_navigation_menu_01",
+		"portletName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet",
+		"portletPreferences": {
+			"displayDepth": "0",
+			"displayStyleGroupId": "",
+			"includedLayouts": "auto",
+			"rootLayoutLevel": "0",
+			"rootLayoutType": "select",
+			"rootLayoutUuid": ""
+		},
+		"rootLayoutFriendlyURL": "/company"
+	},
+	{
+		"instanceId": "footer_navigation_menu_02",
+		"portletName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet",
+		"portletPreferences": {
+			"displayDepth": "0",
+			"displayStyleGroupId": "",
+			"includedLayouts": "auto",
+			"rootLayoutLevel": "0",
+			"rootLayoutType": "select",
+			"rootLayoutUuid": ""
+		},
+		"rootLayoutFriendlyURL": "/company"
+	},
+	{
+		"instanceId": "footer_navigation_menu_03",
+		"portletName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet",
+		"portletPreferences": {
+			"displayDepth": "0",
+			"displayStyleGroupId": "",
+			"includedLayouts": "auto",
+			"rootLayoutLevel": "0",
+			"rootLayoutType": "select",
+			"rootLayoutUuid": ""
+		},
+		"rootLayoutFriendlyURL": "/company"
+	}
+]

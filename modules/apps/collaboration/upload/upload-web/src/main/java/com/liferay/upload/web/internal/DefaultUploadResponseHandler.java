@@ -123,6 +123,7 @@ public class DefaultUploadResponseHandler implements UploadResponseHandler {
 			"attributeDataImageId", EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
 		imageJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
 		imageJSONObject.put("groupId", fileEntry.getGroupId());
+		imageJSONObject.put("mimeType", fileEntry.getMimeType());
 
 		String randomId = ParamUtil.getString(uploadPortletRequest, "randomId");
 

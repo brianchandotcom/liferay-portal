@@ -228,7 +228,7 @@ AUI.add(
 
 						var image = instance._getCurrentImage();
 
-						if (!file.type.match(/image.*/)) {
+						if (!file.mimeType.match(/image.*/)) {
 							preview = Liferay.ThemeDisplay.getPathThemeImages() + '/file_system/large/default.png';
 
 							image.attr('src', preview);

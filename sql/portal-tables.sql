@@ -99,18 +99,6 @@ create table AssetCategory (
 	lastPublishDate DATE null
 );
 
-create table AssetCategoryProperty (
-	categoryPropertyId LONG not null primary key,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	categoryId LONG,
-	key_ VARCHAR(75) null,
-	value VARCHAR(75) null
-);
-
 create table AssetEntries_AssetCategories (
 	companyId LONG not null,
 	categoryId LONG not null,

@@ -32,23 +32,25 @@ AUI.add(
 		};
 
 		var populateUser = function(assignments) {
-			KaleoDesignerRemoteServices.getUser(
-				assignments.userId,
-				function(data) {
-					AArray.each(
-						data,
-						function(item) {
-							if (item) {
-								var index = assignments.userId.indexOf(item.userId);
+			if (isValue(assignments.userId)) {
+				KaleoDesignerRemoteServices.getUser(
+					assignments.userId,
+					function(data) {
+						AArray.each(
+							data,
+							function(item) {
+								if (item) {
+									var index = assignments.userId.indexOf(item.userId);
 
-								assignments.emailAddress[index] = item.emailAddress;
-								assignments.fullName[index] = item.fullName;
-								assignments.screenName[index] = item.screenName;
+									assignments.emailAddress[index] = item.emailAddress;
+									assignments.fullName[index] = item.fullName;
+									assignments.screenName[index] = item.screenName;
+								}
 							}
-						}
-					);
-				}
-			);
+						);
+					}
+				);
+			}
 		};
 
 		var _put = function(obj, key, value) {

@@ -4627,7 +4627,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewDataProviderRetrievesDataWhenUserisLoggedOff" priority="5">
+	<command name="ViewDataProviderRetrievesDataWhenForGuestUser" priority="5">
 		<description message="This is a use case for LPS-75682." />
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />

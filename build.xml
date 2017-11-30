@@ -946,7 +946,7 @@ message.
 
 				<antelope:if>
 					<bool>
-						<islessthan arg1="${petra.version}" arg2="705" />
+						<islessthan arg1="${petra.version}" arg2="706" />
 					</bool>
 
 					<replaceregexp file="${app.server.lib.global.dir}/module.xml" flags="g" match="\s*&lt;resource-root path=&quot;com.liferay.petra[^\n^\r]*[\n\r]" replace="" />

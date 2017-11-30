@@ -4,4 +4,5 @@ Bundle-Version: 1.0.0
 -includeresource:\
 	test-classes/integration,\
 	@lib/com.liferay.configuration.admin.web.jar!/com/liferay/configuration/admin/web/internal/model/ConfigurationModel.class,\
-	@lib/com.liferay.configuration.admin.web.jar!/com/liferay/configuration/admin/web/internal/util/ConfigurationDDMFormDeclarationUtil.class
+	@lib/com.liferay.configuration.admin.web.jar!/com/liferay/configuration/admin/web/internal/util/ConfigurationDDMFormDeclarationUtil.class,\
+	@lib/com.liferay.configuration.admin.web.jar!/com/liferay/configuration/admin/web/internal/util/ConfigurationMVCRenderCommandUtil.class

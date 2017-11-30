@@ -28,17 +28,26 @@ import java.sql.SQLException;
  */
 public class CalendarUpgradeTestUtil {
 
+	public static UpgradeProcess getServiceUpgradeStep(
+		String upgradeStepClassName) {
+
+		return getUpgradeStep(
+			_UPGRADE_SERVICE_CLASS_NAME, upgradeStepClassName);
+	}
+
 	public static UpgradeDatabaseTestHelper getUpgradeDatabaseTestHelper()
 		throws SQLException {
 
 		return new UpgradeDatabaseTestHelperImpl(DataAccess.getConnection());
 	}
 
-	public static UpgradeProcess getUpgradeStep(String upgradeStepClassName) {
+	public static UpgradeProcess getUpgradeStep(
+		String upgradeClassName, String upgradeStepClassName) {
+
 		Registry registry = RegistryUtil.getRegistry();
 
 		return registry.callService(
-			_UPGRADE_SERVICE_CLASS_NAME,
+			upgradeClassName,
 			(UpgradeStepRegistrator upgradeStepRegistror) -> {
 				SearchRegistry searchRegistry = new SearchRegistry(
 					upgradeStepClassName);
@@ -49,8 +58,17 @@ public class CalendarUpgradeTestUtil {
 			});
 	}
 
+	public static UpgradeProcess getWebUpgradeStep(
+		String upgradeStepClassName) {
+
+		return getUpgradeStep(_UPGRADE_WEB_CLASS_NAME, upgradeStepClassName);
+	}
+
 	private static final String _UPGRADE_SERVICE_CLASS_NAME =
 		"com.liferay.calendar.internal.upgrade.CalendarServiceUpgrade";
+
+	private static final String _UPGRADE_WEB_CLASS_NAME =
+		"com.liferay.calendar.web.internal.upgrade.CalendarWebUpgrade";
 
 	private static class SearchRegistry
 		implements UpgradeStepRegistrator.Registry {

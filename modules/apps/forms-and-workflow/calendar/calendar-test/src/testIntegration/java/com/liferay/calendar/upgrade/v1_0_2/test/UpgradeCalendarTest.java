@@ -57,7 +57,7 @@ public class UpgradeCalendarTest {
 
 		_user = UserTestUtil.addUser();
 
-		_upgradeProcess = CalendarUpgradeTestUtil.getUpgradeStep(
+		_upgradeProcess = CalendarUpgradeTestUtil.getServiceUpgradeStep(
 			"com.liferay.calendar.internal.upgrade.v1_0_2.UpgradeCalendar");
 		_upgradeDatabaseTestHelper =
 			CalendarUpgradeTestUtil.getUpgradeDatabaseTestHelper();

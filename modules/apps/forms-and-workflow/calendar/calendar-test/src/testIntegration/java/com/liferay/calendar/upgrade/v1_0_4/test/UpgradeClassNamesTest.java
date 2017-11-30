@@ -195,7 +195,7 @@ public class UpgradeClassNamesTest {
 	}
 
 	protected void setUpUpgradeCalendarResource() {
-		_upgradeProcess = CalendarUpgradeTestUtil.getUpgradeStep(
+		_upgradeProcess = CalendarUpgradeTestUtil.getServiceUpgradeStep(
 			"v1_0_4.UpgradeClassNames");
 	}
 

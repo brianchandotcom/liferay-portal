@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -41,12 +42,15 @@ import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Iterator;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletPreferences;
 
@@ -117,8 +121,11 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 	}
 
 	@Override
-	public String getDescription(HttpServletRequest httpServletRequest) {
-		return "The Lotus store is a pre-defined front store.";
+	public String getDescription(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		return LanguageUtil.get(resourceBundle, "lotus-store-description");
 	}
 
 	@Override
@@ -127,8 +134,11 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 	}
 
 	@Override
-	public String getName(HttpServletRequest httpServletRequest) {
-		return "Lotus Store";
+	public String getName(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		return LanguageUtil.get(resourceBundle, "lotus-store");
 	}
 
 	public ServiceContext getServiceContext(
@@ -182,6 +192,9 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
+
+		httpServletRequest.setAttribute(
+			"render.jsp-servletContext", _servletContext);
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,

@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.product.util;
 
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,11 +26,11 @@ public interface CommerceStarter {
 
 	public void create(HttpServletRequest httpServletRequest) throws Exception;
 
-	public String getDescription(HttpServletRequest httpServletRequest);
+	public String getDescription(Locale locale);
 
 	public String getKey();
 
-	public String getName(HttpServletRequest httpServletRequest);
+	public String getName(Locale locale);
 
 	public String getThumbnailSrc();
 

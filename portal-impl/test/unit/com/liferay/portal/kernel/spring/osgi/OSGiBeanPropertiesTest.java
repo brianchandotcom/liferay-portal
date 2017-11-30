@@ -85,7 +85,7 @@ public class OSGiBeanPropertiesTest {
 	}
 
 	@Test
-	public void testServicesAnnotatedButExtendsMutliple() {
+	public void testServicesAnnotatedButExtendsMultiple() {
 		class B implements EventListener, Serializable {
 		}
 

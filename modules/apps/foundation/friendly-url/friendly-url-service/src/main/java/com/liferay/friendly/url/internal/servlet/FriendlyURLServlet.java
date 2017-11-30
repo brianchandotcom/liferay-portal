@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.site.model.SiteFriendlyURL;
 import com.liferay.site.service.SiteFriendlyURLLocalService;
 
@@ -209,9 +210,16 @@ public class FriendlyURLServlet extends HttpServlet {
 				String i18nLanguageId = (String)request.getAttribute(
 					WebKeys.I18N_LANGUAGE_ID);
 
-				if ((Validator.isNotNull(i18nLanguageId) &&
-					 !LanguageUtil.isAvailableLocale(
-						 group.getGroupId(), i18nLanguageId)) ||
+				boolean localeUnavailable = false;
+
+				if (Validator.isNotNull(i18nLanguageId) &&
+					!LanguageUtil.isAvailableLocale(
+						group.getGroupId(), i18nLanguageId)) {
+
+					localeUnavailable = true;
+				}
+
+				if (localeUnavailable ||
 					!StringUtil.equalsIgnoreCase(
 						layoutFriendlyURLSeparatorCompositeFriendlyURL,
 						layout.getFriendlyURL(locale)) ||
@@ -221,6 +229,13 @@ public class FriendlyURLServlet extends HttpServlet {
 						request, layout,
 						layoutFriendlyURLSeparatorCompositeFriendlyURL,
 						alternativeSiteFriendlyURL);
+
+					if (localeUnavailable &&
+						PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE) {
+
+						locale = LocaleUtil.fromLanguageId(
+							group.getDefaultLanguageId());
+					}
 
 					String redirect = portal.getLocalizedFriendlyURL(
 						request, layout, locale, originalLocale);

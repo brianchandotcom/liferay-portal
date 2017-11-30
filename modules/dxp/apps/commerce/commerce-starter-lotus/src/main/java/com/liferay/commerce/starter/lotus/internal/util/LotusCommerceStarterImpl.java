@@ -118,7 +118,7 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 
 	@Override
 	public String getDescription(HttpServletRequest httpServletRequest) {
-		return StringPool.BLANK;
+		return "The Lotus store is a pre-defined front store.";
 	}
 
 	@Override
@@ -152,6 +152,15 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 	}
 
 	@Override
+	public String getThumbnailSrc() {
+		String contextPath = _servletContext.getContextPath();
+
+		String thumbnailSrc = contextPath + "/images/thumbnail.png";
+
+		return thumbnailSrc;
+	}
+
+	@Override
 	public boolean isActive(HttpServletRequest httpServletRequest) {
 		long companyId = _portal.getCompanyId(httpServletRequest);
 
@@ -173,13 +182,6 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
-
-		CommerceStarter commerceStarter =
-			_commerceStarterRegistry.getCommerceStarter(
-				LotusCommerceStarterImpl.KEY);
-
-		httpServletRequest.setAttribute(
-			"render.jsp-commerceStarter", commerceStarter);
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,

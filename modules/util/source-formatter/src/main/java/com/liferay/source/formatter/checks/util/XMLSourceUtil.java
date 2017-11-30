@@ -25,6 +25,24 @@ import org.dom4j.Element;
  */
 public class XMLSourceUtil {
 
+	public static boolean isInsideCDATAMarkup(String content, int pos) {
+		String s = content.substring(pos);
+
+		int x = s.indexOf("]]>");
+
+		if (x == -1) {
+			return false;
+		}
+
+		s = s.substring(0, x);
+
+		if (!s.contains("<![CDATA[")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static void sortElementsByChildElement(
 		Element element, String elementName, String childElementName) {
 

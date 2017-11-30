@@ -17,10 +17,15 @@ package com.liferay.commerce.wizard.web.internal.portlet.action;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.util.CommerceStarter;
 import com.liferay.commerce.product.util.CommerceStarterRegistry;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -59,7 +64,14 @@ public class ApplyCommerceStarterMVCActionCommand extends BaseMVCActionCommand {
 
 		commerceStarter.create(httpServletRequest);
 
-		String redirect = _portal.getHomeURL(httpServletRequest);
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = _layoutLocalService.fetchFirstLayout(
+			themeDisplay.getScopeGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		String redirect = _portal.getLayoutFullURL(layout, themeDisplay);
 
 		sendRedirect(actionRequest, actionResponse, redirect);
 
@@ -68,6 +80,9 @@ public class ApplyCommerceStarterMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CommerceStarterRegistry _commerceStarterRegistry;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

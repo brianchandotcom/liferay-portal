@@ -183,6 +183,12 @@
 		<execute function="AssertClick" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_OPTIONS_LIST" value1="${outputParameterType}" />
 	</command>
 
+	<command name="selectDataProviderPermission">
+		<var name="selectedOption" value="${selectOption}" />
+
+		<execute function="Select" locator1="Form#DATA_PROVIDER_PERMISSIONS_PARAMETER_SELECT_VIEWABLE_BY" value1="${selectedOption}" />
+	</command>
+
 	<command name="selectGridRadioOption">
 		<var name="key_categoryColumnName" value="${categoryColumnName}" />
 		<var name="key_optionRowName" value="${optionRowName}" />

@@ -4627,6 +4627,103 @@
 		</execute>
 	</command>
 
+	<command name="ViewDataProviderRetrievesDataWhenUserisLoggedOff" priority="5">
+		<description message="This is a use case for LPS-75682." />
+
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoDataProviders" />
+
+		<execute macro="FormsAdminNavigator#gotoAddDataProvider" />
+
+		<execute macro="FormsAdmin#editDataProvider">
+			<var name="name" value="Liferay Countries" />
+			<var name="outputParameterLabel" value="Countries Full Name" />
+			<var name="outputParameterName" value="Country Name" />
+			<var name="outputParameterPath" value="nameCurrentValue" />
+			<var name="outputParameterType" value="List" />
+			<var name="password" value="test" />
+			<var name="url" value="${portalURL}/api/jsonws/country/get-countries" />
+			<var name="username" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="FormFields#selectDataProviderPermission">
+			<var name="selectOption" value="Anyone (Guest Role)" />
+		</execute>
+
+		<execute macro="FormsAdmin#saveDataProvider" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoAddForm" />
+
+		<execute macro="Form#editName" />
+
+		<execute macro="Form#editDescription" />
+
+		<execute macro="Form#gotoAddField">
+			<var name="fieldType" value="Select from List" />
+		</execute>
+
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="Countries" />
+		</execute>
+
+		<execute macro="Form#editFieldDataProvider">
+			<var name="dataProvider" value="Liferay Countries" />
+			<var name="dataProviderOutput" value="Countries Full Name" />
+		</execute>
+
+		<execute macro="Form#closeSidebar" />
+
+		<execute macro="FormsAdminNavigator#gotoFormBuilder" />
+
+		<execute macro="Form#save" />
+
+		<execute macro="Form#publishForm" />
+
+		<execute macro="FormsAdminNavigator#gotoPublishCopyURLLink" />
+
+		<execute macro="Form#getPublishedFormPublicURL">
+			<return from="publicURL" name="publishedFormPublicURL" />
+			<var name="publishedFormPublicURL" value="${publishedFormPublicURL}" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${publishedFormPublicURL}" />
+		</execute>
+
+		<execute macro="FormFields#viewSelectOptionsList">
+			<var name="fieldName" value="Countries" />
+			<var name="selectOption" value="Afghanistan" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${publishedFormPublicURL}" />
+		</execute>
+
+		<execute macro="FormFields#viewSelectOptionsList">
+			<var name="fieldName" value="Countries" />
+			<var name="selectOption" value="Afghanistan" />
+		</execute>
+	</command>
+
 	<command name="ViewDefaultFieldNamesWithPunctuationCharacters" priority="4">
 		<description message="This is a use case for LPS-64305." />
 

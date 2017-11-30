@@ -17,50 +17,58 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceStarter lotusCommerceStarter = (CommerceStarter)request.getAttribute("render.jsp-commerceStarter");
+ServletContext servletContext = (ServletContext)request.getAttribute("render.jsp-servletContext");
 %>
 
-<div class="row">
-	<div class="col-md-6">
-		<div class="carousel slide w100" data-interval="false" id="carousel-commerce-starter-lotus">
-			<div class="carousel-inner" role="listbox">
-				<div class="active carousel-item">
-					<img src="/o/commerce-starter-lotus/images/carousel_01.png" />
-				</div>
-
-				<div class="carousel-item">
-					<img src="/o/commerce-starter-lotus/images/carousel_01.png" />
-				</div>
-
-				<div class="carousel-item">
-					<img src="/o/commerce-starter-lotus/images/carousel_01.png" />
-				</div>
+<div class="commerce-starter-content row">
+	<div class="carousel slide w100" data-interval="false" id="carousel-commerce-starter-lotus">
+		<div class="carousel-inner" role="listbox">
+			<div class="active carousel-item">
+				<img src="<%= servletContext.getContextPath() %>/images/carousel_01.jpg" />
 			</div>
 
-			<a class="carousel-control carousel-control-left left" data-slide="prev" href="#carousel-commerce-starter-lotus" role="button">
-				<liferay-ui:icon
-					cssClass="commerce-wizard-icon-angle-left"
-					icon="angle-left"
-					markupView="lexicon"
-				/>
-
-				<span class="sr-only">Previous</span>
-			</a>
-
-			<a class="carousel-control carousel-control-right right" data-slide="next" href="#carousel-commerce-starter-lotus" role="button">
-				<liferay-ui:icon
-					cssClass="commerce-wizard-icon-angle-right"
-					icon="angle-right"
-					markupView="lexicon"
-				/>
-
-				<span class="sr-only">Next</span>
-			</a>
+			<div class="carousel-item">
+				<img src="<%= servletContext.getContextPath() %>/images/carousel_02.jpg" />
+			</div>
 		</div>
+
+		<a class="carousel-control carousel-control-left left" data-slide="prev" href="#carousel-commerce-starter-lotus" role="button">
+			<liferay-ui:icon
+				cssClass="commerce-wizard-icon-angle-left"
+				icon="angle-left"
+				markupView="lexicon"
+			/>
+
+			<span class="sr-only">Previous</span>
+		</a>
+
+		<a class="carousel-control carousel-control-right right" data-slide="next" href="#carousel-commerce-starter-lotus" role="button">
+			<liferay-ui:icon
+				cssClass="commerce-wizard-icon-angle-right"
+				icon="angle-right"
+				markupView="lexicon"
+			/>
+
+			<span class="sr-only">Next</span>
+		</a>
 	</div>
 
-	<div class="col-md-6">
-		<aui:button name='<%= lotusCommerceStarter.getKey() + "ApplyButton" %>' primary="<%= true %>" value="apply" />
+	<div class="row" style="margin-top:50px;">
+		<div class="col-md-6">
+			<h3>Key Features Include</h3>
+
+			<p>Vitae elit vel eros rhoncus auctor hac habitasse platea dictumst. Proin lobortis dia Nunc quis neque semper, mollis eros et Suspendisse ac laoreet orci, eu dapiho ncus auctor hac habitasse platea dictumst. Proin lobortis dia Nunc quis</p>
+		</div>
+
+		<div class="col-md-6">
+			<p>
+				Morbi vitae elit vel eros rhoncus auctor
+				In hac habitasse platea dictumst. Proin lobortis dia
+				Nunc quis neque semper, mollis eros et
+				Suspendisse ac laoreet orci, eu dapibus metus. Etiam nec lobortis urna. Integer rhoncu
+				Proin lobortis diam et consequat dignissim
+			</p>
+		</div>
 	</div>
 </div>
 
@@ -70,11 +78,16 @@ CommerceStarter lotusCommerceStarter = (CommerceStarter)request.getAttribute("re
 	}
 
 	#carousel-commerce-starter-lotus .carousel-item > img {
+		border-radius: 4px;
 		width: 100%;
 	}
 
 	#carousel-commerce-starter-lotus .carousel-control {
-		color: #000000;
+		background-color: #303140;
+		padding: 6px 10px;
+		border-radius: 50%;
+		color: #FFF;
+		opacity: 0.7;
 		position: absolute;
 	}
 
@@ -87,23 +100,8 @@ CommerceStarter lotusCommerceStarter = (CommerceStarter)request.getAttribute("re
 		right: 5%;
 		top: 50%;
 	}
+
+	.commerce-starter-content {
+		padding: 0 35px;
+	}
 </style>
-
-<aui:script>
-	var applyButton = AUI.$('#<%= renderResponse.getNamespace() + lotusCommerceStarter.getKey() + "ApplyButton" %>');
-
-	applyButton.on(
-		'click',
-		function(event) {
-			event.preventDefault();
-
-			if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-continue-all-contents-will-be-deleted") %>')) {
-				AUI.$('#<portlet:namespace />commerceStarterKey').val('<%= lotusCommerceStarter.getKey() %>');
-
-				var form = AUI.$(document.<portlet:namespace />fm);
-
-				submitForm(form);
-			}
-		}
-	);
-</aui:script>

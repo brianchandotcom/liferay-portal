@@ -1,5 +1,7 @@
 'use strict';
 
+var isValue;
+
 describe(
 	'Liferay.KaleoDesignerXMLDefinition',
 	function() {
@@ -8,6 +10,8 @@ describe(
 				AUI().use(
 					'liferay-kaleo-designer-xml-definition',
 					function(A) {
+						isValue = A.Lang.isValue;
+
 						done();
 					}
 				);
@@ -75,6 +79,36 @@ describe(
 												var recipient = notification.recipients[0];
 
 												assert.equal(recipient.receptionType, 'bcc');
+											}
+										);
+
+										done();
+									}
+								);
+							}
+						);
+
+						it(
+							'should not have a "receptionType" attribute if not present in definition',
+							function(done) {
+								Liferay.Test.loadResource('recipients-with-no-reception-type-definition.xml')
+								.then(
+									function(definition) {
+										var xmlDefinition = new Liferay.KaleoDesignerXMLDefinition(
+											{
+												value: definition
+											}
+										);
+
+										xmlDefinition.forEachField(
+											function(tagName, fieldData) {
+												var result = fieldData.results[0];
+
+												var notification = result.notifications[0];
+
+												var recipient = notification.recipients[0];
+
+												assert(!isValue(recipient.receptionType));
 											}
 										);
 

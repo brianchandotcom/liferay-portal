@@ -2519,6 +2519,13 @@ is found in a parent directory.
 ### Changed
 - [LPS-76202]: Update the [Liferay Gradle Plugins] dependency to version 3.5.55.
 
+## 5.2.8 - 2017-11-30
+
+### Changed
+- [LPS-76224]: Update the [Liferay Gradle Plugins] dependency to version 3.5.56.
+- [LPS-76224]: Update the [Liferay Gradle Plugins Baseline] dependency to
+version 1.1.9.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -2808,6 +2815,7 @@ is found in a parent directory.
 [LPS-76181]: https://issues.liferay.com/browse/LPS-76181
 [LPS-76182]: https://issues.liferay.com/browse/LPS-76182
 [LPS-76202]: https://issues.liferay.com/browse/LPS-76202
+[LPS-76224]: https://issues.liferay.com/browse/LPS-76224
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

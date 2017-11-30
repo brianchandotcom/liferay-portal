@@ -21,7 +21,6 @@ import com.liferay.commerce.product.demo.data.creator.internal.util.CPDefinition
 import com.liferay.commerce.product.demo.data.creator.internal.util.CPOptionCategoryDemoDataCreatorHelper;
 import com.liferay.commerce.product.demo.data.creator.internal.util.CPOptionDemoDataCreatorHelper;
 import com.liferay.commerce.product.demo.data.creator.internal.util.CPSpecificationOptionDemoDataCreatorHelper;
-import com.liferay.portal.kernel.exception.PortalException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,30 +35,16 @@ public class CPDemoDataCreatorImpl implements CPDemoDataCreator {
 	public void create(long userId, long groupId, boolean buildSkus)
 		throws Exception {
 
-		init();
+		_assetCategoryDemoDataCreatorHelper.init();
+		_cpDefinitionDemoDataCreatorHelper.init();
+		_cpOptionDemoDataCreatorHelper.init();
+		_cpSpecificationOptionDemoDataCreatorHelper.init();
 
 		_assetVocabularyDemoDataCreatorHelper.addAssetVocabularies(
 			userId, groupId);
 
 		_cpDefinitionDemoDataCreatorHelper.addCPDefinitions(
 			userId, groupId, buildSkus);
-	}
-
-	@Override
-	public void delete(long userId, long groupId) throws PortalException {
-		_cpDefinitionDemoDataCreatorHelper.deleteCPDefinitions();
-		_cpOptionCategoryDemoDataCreatorHelper.deleteCPOptionCategories();
-		_cpOptionDemoDataCreatorHelper.deleteCPOptions();
-		_cpSpecificationOptionDemoDataCreatorHelper.
-			deleteCPSpecificationOptions();
-	}
-
-	@Override
-	public void init() {
-		_assetCategoryDemoDataCreatorHelper.init();
-		_cpDefinitionDemoDataCreatorHelper.init();
-		_cpOptionDemoDataCreatorHelper.init();
-		_cpSpecificationOptionDemoDataCreatorHelper.init();
 	}
 
 	@Reference

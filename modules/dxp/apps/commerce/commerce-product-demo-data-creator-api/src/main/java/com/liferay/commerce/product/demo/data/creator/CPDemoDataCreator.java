@@ -16,8 +16,6 @@ package com.liferay.commerce.product.demo.data.creator;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.exception.PortalException;
-
 /**
  * @author Alessio Antonio Rendina
  */
@@ -26,9 +24,5 @@ public interface CPDemoDataCreator {
 
 	public void create(long userId, long groupId, boolean buildSkus)
 		throws Exception;
-
-	public void delete(long userId, long groupId) throws PortalException;
-
-	public void init();
 
 }

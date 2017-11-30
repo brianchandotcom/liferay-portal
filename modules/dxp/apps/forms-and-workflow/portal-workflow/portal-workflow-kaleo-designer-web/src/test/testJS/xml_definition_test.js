@@ -113,6 +113,36 @@ describe(
 								);
 							}
 						);
+
+						it(
+							'should have "assignees" as recipient.',
+							function(done) {
+								Liferay.Test.loadResource('recipients-with-assignees-definition.xml')
+								.then(
+									function(definition) {
+										var xmlDefinition = new Liferay.KaleoDesignerXMLDefinition(
+											{
+												value: definition
+											}
+										);
+
+										xmlDefinition.forEachField(
+											function(tagName, fieldData) {
+												var result = fieldData.results[0];
+
+												var notification = result.notifications[0];
+
+												var recipient = notification.recipients[0];
+
+												assert(isValue(recipient.taskAssignees));
+											}
+										);
+
+										done();
+									}
+								);
+							}
+						);
 					}
 				);
 			}

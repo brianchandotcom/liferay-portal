@@ -105,10 +105,10 @@
 				width: 30px;
 
 				&.active, &:hover {
+					background-color: #E7E7ED;
+					height: 30px;
 					margin: 0 2px;
 					width: 30px;
-					height: 30px;
-					background-color: #E7E7ED;
 				}
 			}
 		}

@@ -184,8 +184,6 @@
 	</command>
 
 	<command name="selectDataProviderPermission">
-		<var name="selectOption" value="${selectOption}" />
-
 		<if>
 			<condition function="IsElementNotPresent" locator1="Form#DATA_PROVIDER_PERMISSIONS_VIEWABLE_BY_SELECT" />
 			<then>

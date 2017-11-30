@@ -337,6 +337,15 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 
 		String name = ParamUtil.getString(renderRequest, "name");
 
+		if (_kaleoDesignerDisplayContext == null) {
+			_kaleoDesignerDisplayContext = new KaleoDesignerDisplayContext(
+				renderRequest, renderResponse, _userLocalService);
+		}
+
+		renderRequest.setAttribute(
+			KaleoDesignerWebKeys.KALEO_DESIGNER_DISPLAY_CONTEXT,
+			_kaleoDesignerDisplayContext);
+
 		if (Validator.isNull(name)) {
 			return;
 		}

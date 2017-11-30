@@ -61,11 +61,42 @@
 
 		renderResponse.setTitle((kaleoDefinitionVersion == null) ? LanguageUtil.get(request, "new-workflow") : name);
 
-		String publishUpdateButtonLabel = kaleoDefinitionVersion == null ? "publish" : "update";
+		String publishUpdateButtonLabel = kaleoDefinitionVersion == null
+				|| !kaleoDefinitionVersion.isApproved() ? "publish" : "update";
 		%>
 
 		<c:if test="<%= kaleoDefinitionVersion != null %>">
+			<aui:model-context bean="<%= kaleoDefinitionVersion %>" model="<%= KaleoDefinitionVersion.class %>" />
+
 			<liferay-frontend:info-bar>
+				<div class="container-fluid-1280">
+					<div class="info-bar-item">
+						<c:choose>
+							<c:when test="<%= !kaleoDefinitionVersion.isDraft() && !kaleoDefinitionVersion.isInactive() %>">
+								<span class="label label-info"><%= LanguageUtil.get(request, "published") %></span>
+							</c:when>
+							<c:otherwise>
+								<span class="label label-secondary"><%= LanguageUtil.get(request, "not-published") %></span>
+							</c:otherwise>
+						</c:choose>
+					</div>
+
+					<%
+					String userName = kaleoDesignerDisplayContext.getUserName(kaleoDefinitionVersion);
+					%>
+
+					<span>
+						<c:choose>
+							<c:when test="<%= userName == null %>">
+								<%= dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()) %>
+							</c:when>
+							<c:otherwise>
+								<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()), userName} %>" key="x-by-x" translateArguments="<%= false %>" />
+							</c:otherwise>
+						</c:choose>
+					</span>
+				</div>
+
 				<liferay-frontend:info-bar-buttons>
 					<liferay-frontend:info-bar-sidenav-toggler-button
 						icon="info-circle"
@@ -933,7 +964,7 @@
 						</c:if>
 
 						<c:if test="<%= KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), KaleoDesignerActionKeys.ADD_DRAFT)
-							&& kaleoDefinitionVersion == null %>">
+							&& kaleoDefinitionVersion == null || kaleoDefinitionVersion.isDraft()) %>">
 							<aui:button onClick='<%= renderResponse.getNamespace() + "addKaleoDefinitionVersion();" %>' value="save" />
 						</c:if>
 

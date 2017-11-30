@@ -18,6 +18,7 @@
 
 	<logger additivity="false" name="com.liferay.lcs">
 		<level value="INFO" />
+
 		<appender-ref ref="RollingFileAppender" />
 	</logger>
 </log4j:configuration>

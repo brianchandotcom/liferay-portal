@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.elasticsearch6.internal.settings.SettingsBuilder;
 import com.liferay.portal.search.elasticsearch6.internal.util.LogUtil;
 import com.liferay.portal.search.elasticsearch6.internal.util.ResourceUtil;
 import com.liferay.portal.search.elasticsearch6.settings.TypeMappingsHelper;
@@ -40,6 +41,7 @@ import org.elasticsearch.cluster.metadata.MappingMetaData;
 import org.elasticsearch.common.collect.ImmutableOpenMap;
 import org.elasticsearch.common.compress.CompressedXContent;
 import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.xcontent.XContentType;
 
 /**
  * @author André de Oliveira
@@ -61,7 +63,8 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 		putMappingRequestBuilder.setSource(
 			mergeDynamicTemplates(
 				source, indexName,
-				LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE));
+				LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE),
+			XContentType.JSON);
 		putMappingRequestBuilder.setType(
 			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
 
@@ -79,7 +82,8 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 		CreateIndexRequestBuilder createIndexRequestBuilder, String mappings) {
 
 		createIndexRequestBuilder.addMapping(
-			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE, mappings);
+			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE, mappings,
+			XContentType.JSON);
 	}
 
 	public void createOptionalDefaultTypeMappings(String indexName) {
@@ -95,10 +99,12 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 	}
 
 	public void createRequiredDefaultAnalyzers(Settings.Builder builder) {
+		SettingsBuilder settingsBuilder = new SettingsBuilder(builder);
+
 		String requiredDefaultAnalyzers = ResourceUtil.getResourceAsString(
 			getClass(), IndexSettingsConstants.INDEX_SETTINGS_FILE_NAME);
 
-		builder.loadFromSource(requiredDefaultAnalyzers);
+		settingsBuilder.loadFromSource(requiredDefaultAnalyzers);
 	}
 
 	public void createRequiredDefaultTypeMappings(

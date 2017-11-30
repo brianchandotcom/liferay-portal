@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.PortletException;
@@ -37,6 +38,9 @@ import javax.portlet.RenderResponse;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Jorge Ferrer
@@ -113,11 +117,34 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 		return "/error.jsp";
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(&(javax.portlet.name=" + ConfigurationAdminPortletKeys.SYSTEM_SETTINGS + ")(mvc.command.name=/edit_configuration)(configurationPid=*))",
+		unbind = "removeRenderCommand"
+	)
+	protected void addRenderCommand(
+		MVCRenderCommand mvcRenderCommand, Map<String, Object> properties) {
+
+		_renderCommands.put(
+			(String)properties.get("configurationPid"), mvcRenderCommand);
+	}
+
+	protected void removeRenderCommand(
+		MVCRenderCommand mvcRenderCommand, Map<String, Object> properties) {
+
+		_renderCommands.remove(properties.get("configurationPid"));
+	}
+
 	@Reference
 	private ConfigurationModelRetriever _configurationModelRetriever;
 
 	@Reference
 	private DDMFormRenderer _ddmFormRenderer;
+
+	private final Map<String, MVCRenderCommand> _renderCommands =
+		new HashMap<>();
 
 	@Reference
 	private ResourceBundleLoaderProvider _resourceBundleLoaderProvider;

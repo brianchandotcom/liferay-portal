@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +37,9 @@ import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Jorge Ferrer
@@ -92,8 +96,31 @@ public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 		}
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(&(javax.portlet.name=" + ConfigurationAdminPortletKeys.SYSTEM_SETTINGS + ")(mvc.command.name=/view_factory_instances)(configurationPid=*))",
+		unbind = "removeRenderCommand"
+	)
+	protected void addRenderCommand(
+		MVCRenderCommand mvcRenderCommand, Map<String, Object> properties) {
+
+		_renderCommands.put(
+			(String)properties.get("configurationPid"), mvcRenderCommand);
+	}
+
+	protected void removeRenderCommand(
+		MVCRenderCommand mvcRenderCommand, Map<String, Object> properties) {
+
+		_renderCommands.remove(properties.get("configurationPid"));
+	}
+
 	@Reference
 	private ConfigurationModelRetriever _configurationModelRetriever;
+
+	private final Map<String, MVCRenderCommand> _renderCommands =
+		new HashMap<>();
 
 	@Reference
 	private ResourceBundleLoaderProvider _resourceBundleLoaderProvider;

@@ -53,7 +53,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		if ((renderRequest.getRemoteUser() == null) ||
 			!windowState.equals(WindowState.MAXIMIZED)) {
 
-			return "/view.jsp";
+			return "/null.jsp";
 		}
 
 		try {

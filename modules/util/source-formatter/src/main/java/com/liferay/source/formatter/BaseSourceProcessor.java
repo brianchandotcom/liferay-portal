@@ -515,7 +515,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		String content = FileUtil.read(file);
 
-		if (_hasGeneratedTag(content)) {
+		if (hasGeneratedTag(content)) {
 			return;
 		}
 
@@ -543,7 +543,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return sourceChecks;
 	}
 
-	private boolean _hasGeneratedTag(String content) {
+	protected boolean hasGeneratedTag(String content) {
 		if ((content.contains("@generated") || content.contains("$ANTLR")) &&
 			!content.contains("hasGeneratedTag")) {
 

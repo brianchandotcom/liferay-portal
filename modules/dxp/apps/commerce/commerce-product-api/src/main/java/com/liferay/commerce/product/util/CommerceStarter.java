@@ -30,6 +30,8 @@ public interface CommerceStarter {
 
 	public String getName(HttpServletRequest httpServletRequest);
 
+	public String getThumbnailSrc();
+
 	public boolean isActive(HttpServletRequest httpServletRequest);
 
 	public void renderPreview(

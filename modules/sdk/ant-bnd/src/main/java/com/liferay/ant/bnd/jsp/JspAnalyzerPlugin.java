@@ -375,7 +375,7 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 
 		Map<String, Resource> resourceMap = resourceMaps.get(root);
 
-		if (resourceMap == null || resourceMap.isEmpty()) {
+		if ((resourceMap == null) || resourceMap.isEmpty()) {
 			Resource resource = jar.getResource(root);
 
 			if ((resource != null) &&

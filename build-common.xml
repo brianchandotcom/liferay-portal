@@ -1042,7 +1042,7 @@ information.
 								datatype="int"
 								operand1="${artifact.version.micro}"
 								operand2="1"
-								operation="add"
+								operation="+"
 								result="artifact.version.micro"
 							/>
 

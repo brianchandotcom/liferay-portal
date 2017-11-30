@@ -53,10 +53,10 @@ List<CommerceStarter> commerceStarters = commerceStarterDisplayContext.getCommer
 							</portlet:renderURL>
 
 							<a href="<%= viewCommerceStarterDetailsURL.toString() %>">
-								<h3><%= commerceStarter.getName(request) %></h3>
+								<h3><%= commerceStarter.getName(locale) %></h3>
 							</a>
 
-							<p><%= commerceStarter.getDescription(request) %></p>
+							<p><%= commerceStarter.getDescription(locale) %></p>
 						</div>
 					</div>
 

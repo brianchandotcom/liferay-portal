@@ -125,7 +125,7 @@ public class AddKaleoDefinitionVersionMVCActionCommand
 			kaleoDefinitionVersion =
 				kaleoDefinitionVersionLocalService.addKaleoDefinitionVersion(
 					definition.getName(), getTitle(titleMap),
-					definition.getDescription(), definition.getContent(), "1.0",
+					definition.getDescription(), definition.getContent(), "0.1",
 					serviceContext);
 		}
 		else {

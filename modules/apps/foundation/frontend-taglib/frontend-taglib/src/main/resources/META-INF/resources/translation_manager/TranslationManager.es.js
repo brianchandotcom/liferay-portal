@@ -129,6 +129,8 @@ class TranslationManager extends Component {
 	 * @private
 	 */
 	startCompatibility_() {
+		this.destroy = this.dispose;
+
 		this.compatibilityEventProxy_ = new CompatibilityEventProxy(
 			{
 				host: this,

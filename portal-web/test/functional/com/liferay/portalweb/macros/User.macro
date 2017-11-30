@@ -1338,11 +1338,11 @@
 		<execute macro="Button#clickSave" />
 
 		<if>
-			<equals arg1="${trivialPassword}" arg2="true" />
+			<equals arg1="${changeable}" arg2="false" />
 			<then>
 				<execute macro="Alert#viewRequestFailedToComplete" />
 
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="That password uses common words. Please enter a password that is harder to guess (i.e. contains a mix of numbers and letters)." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Passwords may not be changed under the current password policy." />
 			</then>
 			<elseif>
 				<equals arg1="${passwordTooShort}" arg2="true" />
@@ -1353,19 +1353,19 @@
 				</then>
 			</elseif>
 			<elseif>
+				<equals arg1="${trivialPassword}" arg2="true" />
+				<then>
+					<execute macro="Alert#viewRequestFailedToComplete" />
+
+					<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="That password uses common words. Please enter a password that is harder to guess (i.e. contains a mix of numbers and letters)." />
+				</then>
+			</elseif>
+			<elseif>
 				<isset var="regex" />
 				<then>
 					<execute macro="Alert#viewRequestFailedToComplete" />
 
 					<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="That password does not comply with the regular expression ${regex}. Please enter a different password." />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${changeable}" arg2="false" />
-				<then>
-					<execute macro="Alert#viewRequestFailedToComplete" />
-
-					<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Passwords may not be changed under the current password policy." />
 				</then>
 			</elseif>
 			<else>

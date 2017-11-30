@@ -22,88 +22,45 @@
 			<h1><liferay-ui:message key="choose-your-method" /></h1>
 		</div>
 
-		<portlet:actionURL name="selectMethod" var="selectMethodURL" />
+		<div class="commerce-wizard-select-method row">
+			<div class="col-md-4 commerce-wizard-method">
+				<portlet:actionURL name="selectMethod" var="selectMethodURL">
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="selectedMethod" value="<%= CommerceWizardConstants.WIZARD_PREDEFINED_METHOD %>" />
+				</portlet:actionURL>
 
-		<aui:form action="<%= selectMethodURL %>" method="post" name="fm">
-			<div class="commerce-wizard-select-method row">
-				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-				<aui:input name="selectedMethod" type="hidden" />
-
-				<div class="col-md-4 commerce-wizard-method" data-value="<%= CommerceWizardConstants.WIZARD_PREDEFINED_METHOD %>">
+				<a href="<%= selectMethodURL.toString() %>">
 					<liferay-ui:icon
 						cssClass="commerce-wizard-icon-magic"
 						icon="magic"
 						markupView="lexicon"
 					/>
-
-					<h4><liferay-ui:message key="predefined" /></h4>
-
-					<p class="text-default"><liferay-ui:message key="commerce-wizard-predefined-description" /></p>
-				</div>
-
-				<div class="col-md-4 commerce-wizard-method-disabled" data-value="<%= CommerceWizardConstants.WIZARD_CUSTOM_METHOD %>">
-					<liferay-ui:icon
-						cssClass="commerce-wizard-icon-pencil"
-						icon="pencil"
-						markupView="lexicon"
-					/>
-
-					<h4><liferay-ui:message key="custom" /></h4>
-				</div>
-
-				<div class="col-md-4 commerce-wizard-method-disabled" data-value="<%= CommerceWizardConstants.WIZARD_IMPORT_METHOD %>">
-					<liferay-ui:icon
-						cssClass="commerce-wizard-icon-download"
-						icon="download"
-						markupView="lexicon"
-					/>
-
-					<h4><liferay-ui:message key="import" /></h4>
-				</div>
-			</div>
-
-			<div class="commerce-wizard-button-row">
-				<a class="btn btn-left btn-secondary disabled" href="<%= redirect %>" id="previousButton">
-					<liferay-ui:icon
-						cssClass="commerce-wizard-icon-angle-left"
-						icon="angle-left"
-						markupView="lexicon"
-					/>
-
-					<liferay-ui:message key="previous" />
 				</a>
 
-				<a class="btn btn-right btn-secondary hide" id="nextButton" onclick="<%= renderResponse.getNamespace() + "selectMethod();" %>">
-					<liferay-ui:message key="next" />
+				<h4><liferay-ui:message key="predefined" /></h4>
 
-					<liferay-ui:icon
-						cssClass="commerce-wizard-icon-angle-right"
-						icon="angle-right"
-						markupView="lexicon"
-					/>
-				</a>
+				<p class="text-default"><liferay-ui:message key="commerce-wizard-predefined-description" /></p>
 			</div>
-		</aui:form>
+
+			<div class="col-md-4 commerce-wizard-method-disabled">
+				<liferay-ui:icon
+					cssClass="commerce-wizard-icon-pencil"
+					icon="pencil"
+					markupView="lexicon"
+				/>
+
+				<h4><liferay-ui:message key="custom" /></h4>
+			</div>
+
+			<div class="col-md-4 commerce-wizard-method-disabled">
+				<liferay-ui:icon
+					cssClass="commerce-wizard-icon-download"
+					icon="download"
+					markupView="lexicon"
+				/>
+
+				<h4><liferay-ui:message key="import" /></h4>
+			</div>
+		</div>
 	</div>
 </div>
-
-<aui:script>
-	$('.commerce-wizard-select-method .commerce-wizard-method').click(
-		function() {
-			$(this).parent().find('.commerce-wizard-method').removeClass('selected-method');
-			$(this).addClass('selected-method');
-
-			var val = $(this).attr('data-value');
-
-			$(this).parent().find('#<portlet:namespace />selectedMethod').val(val);
-
-			$('#nextButton').removeClass('hide');
-		}
-	);
-
-	function <portlet:namespace />selectMethod() {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		submitForm(form);
-	}
-</aui:script>

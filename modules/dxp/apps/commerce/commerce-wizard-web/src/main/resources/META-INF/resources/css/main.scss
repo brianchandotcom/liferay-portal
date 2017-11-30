@@ -1,116 +1,131 @@
 .portlet-commerce-wizard {
-	.commerce-wizard-container {
-		background-color: #FFF;
-		margin-top: 81px;
+#commerce-starters-container {
+border-top: 1px solid #E7E7ED;
+min-height: 500px;
+overflow-x: hidden;
+overflow-y: auto;
+padding: 35px 23px;
+}
 
-		.commerce-wizard-header {
-			border-bottom: 1px solid #E7E7ED;
-			padding: 18px 23px;
-		}
+.commerce-wizard-container {
+background-color: #FFF;
+margin-top: 81px;
+padding: 0;
 
-		.commerce-wizard-button-row {
-			border-top: 1px solid #E7E7ED;
-			padding: 32px;
-			text-align: center;
-
-			& > a {
-				bottom: 10px;
-				position: absolute;
-			}
-
-			.btn-left {
-				left: 15px;
-			}
-
-			.btn-right {
-				right: 15px;
-			}
+	.commerce-starter {
+		.col-md-9 > a, .col-md-9 > a:hover, .col-md-9 > a:focus {
+			color: #272833;
 		}
 	}
 
-	.commerce-wizard-select-method {
-		text-align: center;
+.commerce-wizard-header {
+padding: 18px 23px;
 
-		.lexicon-icon-download, .lexicon-icon-magic, .lexicon-icon-pencil {
-			fill: #E4E4E4;
-			height: 48px;
-			margin-bottom: 25px;
-			margin-top: 50px;
-			width: 48px;
-		}
+.commerce-starter-controls {
+text-align: right;
+}
+}
 
-		.commerce-wizard-method-disabled {
-			cursor: not-allowed;
-		}
+.commerce-wizard-button-row {
+border-top: 1px solid #E7E7ED;
+padding: 32px;
+text-align: center;
 
-		.commerce-wizard-method {
-			cursor: pointer;
+& > a {
+	bottom: 10px;
+	position: absolute;
+}
 
-			& > p {
-				margin-bottom: 75px;
-			}
-		}
+.btn-left {
+	left: 15px;
+}
 
-		.commerce-wizard-method:hover, .selected-method {
-			.lexicon-icon-download, .lexicon-icon-magic, .lexicon-icon-pencil {
-				fill: #0B5FFF;
-			}
-		}
+.btn-right {
+	right: 15px;
+}
+}
+}
+
+.commerce-wizard-select-method {
+border-top: 1px solid #E7E7ED;
+text-align: center;
+
+.lexicon-icon-download, .lexicon-icon-magic, .lexicon-icon-pencil {
+fill: #E4E4E4;
+height: 48px;
+margin-bottom: 25px;
+margin-top: 50px;
+width: 48px;
+}
+
+.commerce-wizard-method-disabled {
+cursor: not-allowed;
+}
+
+.commerce-wizard-method > p {
+	margin-bottom: 75px;
+}
+
+.commerce-wizard-method:hover, .selected-method {
+.lexicon-icon-download, .lexicon-icon-magic, .lexicon-icon-pencil {
+	fill: #0B5FFF;
+}
+}
+}
+
+.multi-step-indicator-label {
+max-width: none;
+}
+
+#carousel-container {
+margin-bottom: 100px;
+position: relative;
+
+.carousel-item {
+border: 1px solid #E7E7ED;
+border-radius: 4px;
+margin-top: 50px;
+}
+
+.carousel-control {
+color: #000000;
+position: absolute;
+}
+
+.carousel-control-left {
+left: 5%;
+top: 50%;
+}
+
+.carousel-control-right {
+right: 5%;
+top: 50%;
+}
+
+.carousel-indicators {
+bottom: -75px;
+
+li {
+	background-color: #FFF;
+	border: none;
+	border-radius: 10%;
+	color: #000;
+	cursor: pointer;
+	height: 30px;
+	line-height: 30px;
+	margin: 0 2px;
+	text-align: center;
+	text-indent: 0;
+	transition: all 0.25s ease;
+	width: 30px;
+
+	&.active, &:hover {
+	 margin: 0 2px;
+	 width: 30px;
+	 height: 30px;
+	 background-color: #E7E7ED;
 	}
-
-	.multi-step-indicator-label {
-		max-width: none;
-	}
-
-	#carousel-container {
-		margin-bottom: 100px;
-		position: relative;
-
-		.carousel-item {
-			border: 1px solid #E7E7ED;
-			border-radius: 4px;
-			margin-top: 50px;
-		}
-
-		.carousel-control {
-			color: #000000;
-			position: absolute;
-		}
-
-		.carousel-control-left {
-			left: 5%;
-			top: 50%;
-		}
-
-		.carousel-control-right {
-			right: 5%;
-			top: 50%;
-		}
-
-		.carousel-indicators {
-			bottom: -75px;
-
-			li {
-				background-color: #FFF;
-				border: none;
-				border-radius: 10%;
-				color: #000;
-				cursor: pointer;
-				height: 30px;
-				line-height: 30px;
-				margin: 0 2px;
-				text-align: center;
-				text-indent: 0;
-				transition: all 0.25s ease;
-				width: 30px;
-
-				&.active, &:hover {
-					background-color: #E7E7ED;
-					height: 30px;
-					margin: 0 2px;
-					width: 30px;
-				}
-			}
-		}
-	}
+}
+}
+}
 }

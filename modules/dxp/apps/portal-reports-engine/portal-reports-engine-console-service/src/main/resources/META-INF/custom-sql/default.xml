@@ -39,10 +39,10 @@
 				Reports_Entry
 			INNER JOIN
 				Reports_Definition ON
-					(Reports_Definition.definitionId = Reports_Entry.definitionId)
+					Reports_Definition.definitionId = Reports_Entry.definitionId
 			INNER JOIN
 				User_ ON
-					(User_.userId = Reports_Entry.userId)
+					User_.userId = Reports_Entry.userId
 			WHERE
 				(Reports_Entry.groupId = ?) AND
 				(Reports_Entry.createDate > ?) AND
@@ -59,10 +59,10 @@
 				Reports_Entry
 			INNER JOIN
 				Reports_Definition ON
-					(Reports_Definition.definitionId = Reports_Entry.definitionId)
+					Reports_Definition.definitionId = Reports_Entry.definitionId
 			INNER JOIN
 				User_ ON
-					(User_.userId = Reports_Entry.userId)
+					User_.userId = Reports_Entry.userId
 			WHERE
 				(Reports_Entry.groupId = ?) AND
 				(Reports_Entry.createDate > ?) AND

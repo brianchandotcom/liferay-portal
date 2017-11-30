@@ -12,16 +12,11 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.web.internal.exportimport.data.handler.test;
+package com.liferay.knowledge.base.web.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
-import com.liferay.dynamic.data.lists.helper.DDLRecordSetTestHelper;
-import com.liferay.dynamic.data.lists.helper.DDLRecordTestHelper;
-import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.exportimport.kernel.lar.DataLevel;
+import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -33,11 +28,13 @@ import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
- * @author Zsolt Berentey
+ * @author Zoltan Csaszi
+ * @author Gergely Mathe
  */
 @RunWith(Arquillian.class)
 @Sync
-public class DDLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
+public class KBDisplayPortletDataHandlerTest
+	extends BasePortletDataHandlerTestCase {
 
 	@ClassRule
 	@Rule
@@ -48,28 +45,21 @@ public class DDLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 	@Override
 	protected void addStagedModels() throws Exception {
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			stagingGroup.getGroupId(), DDLRecordSet.class.getName());
-
-		DDLRecordSetTestHelper recordSetTestHelper = new DDLRecordSetTestHelper(
-			stagingGroup);
-
-		DDLRecordSet recordSet = recordSetTestHelper.addRecordSet(ddmStructure);
-
-		DDLRecordTestHelper recordTestHelper = new DDLRecordTestHelper(
-			stagingGroup, recordSet);
-
-		recordTestHelper.addRecord();
 	}
 
 	@Override
 	protected DataLevel getDataLevel() {
-		return DataLevel.SITE;
+		return DataLevel.PORTLET_INSTANCE;
+	}
+
+	@Override
+	protected String[] getDataPortletPreferences() {
+		return new String[] {"resourceClassNameId", "resourcePrimKey"};
 	}
 
 	@Override
 	protected String getPortletId() {
-		return DDLPortletKeys.DYNAMIC_DATA_LISTS;
+		return KBPortletKeys.KNOWLEDGE_BASE_DISPLAY;
 	}
 
 	@Override
@@ -79,12 +69,12 @@ public class DDLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 	@Override
 	protected boolean isDataPortletInstanceLevel() {
-		return false;
+		return true;
 	}
 
 	@Override
 	protected boolean isDataSiteLevel() {
-		return true;
+		return false;
 	}
 
 }

@@ -1,5 +1,6 @@
 [
 	{
+		"hidden": false,
 		"layoutTemplateId": "1_column",
 		"name": "Home",
 		"portlets": [
@@ -39,6 +40,7 @@
 		]
 	},
 	{
+		"hidden": true,
 		"layoutTemplateId": "commerce_1_2_columns_width_limited",
 		"name": "Categories",
 		"portlets": [
@@ -60,6 +62,7 @@
 		]
 	},
 	{
+		"hidden": true,
 		"layoutTemplateId": "1_column",
 		"name": "Product Detail",
 		"portlets": [
@@ -71,6 +74,7 @@
 		]
 	},
 	{
+		"hidden": true,
 		"layoutTemplateId": "commerce_2_columns_width_limited_70_30",
 		"name": "Cart",
 		"portlets": [
@@ -98,6 +102,7 @@
 		]
 	},
 	{
+		"hidden": true,
 		"layoutTemplateId": "commerce_1_column_width_limited",
 		"name": "Checkout",
 		"portlets": [
@@ -109,6 +114,7 @@
 		]
 	},
 	{
+		"hidden": true,
 		"layoutTemplateId": "commerce_1_column_width_limited",
 		"name": "WishLists",
 		"portlets": [
@@ -118,5 +124,34 @@
 				"portletName": "com_liferay_commerce_cart_content_web_internal_portlet_CommerceWishListContentPortlet"
 			}
 		]
+	},
+	{
+		"hidden": false,
+		"layoutTemplateId": "1_column",
+		"layoutType": "node",
+		"name": "Company",
+		"subLayouts": [
+			{
+				"hidden": false,
+				"layoutTemplateId": "1_column",
+				"name": "About us"
+			},
+			{
+				"hidden": false,
+				"layoutTemplateId": "1_column",
+				"name": "Careers"
+			},
+			{
+				"hidden": false,
+				"layoutTemplateId": "1_column",
+				"name": "Manufacturers"
+			},
+			{
+				"hidden": false,
+				"layoutTemplateId": "1_column",
+				"name": "Contact us"
+			}
+		]
 	}
+
 ]

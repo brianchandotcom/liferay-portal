@@ -316,7 +316,7 @@ AUI.add(
 
 						var recipientsAttrs = {};
 
-						if (recipients[index].receptionType && recipients[index].receptionType.length > 0) {
+						if (recipients[index].receptionType && AArray.some(recipients[index].receptionType, isValue)) {
 							recipientsAttrs.receptionType = recipients[index].receptionType;
 						}
 

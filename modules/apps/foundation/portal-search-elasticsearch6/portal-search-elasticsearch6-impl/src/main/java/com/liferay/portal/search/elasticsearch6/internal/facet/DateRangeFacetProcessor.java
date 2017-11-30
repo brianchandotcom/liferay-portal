@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.bucket.range.date.DateRangeBuilder;
+import org.elasticsearch.search.aggregations.bucket.range.DateRangeAggregationBuilder;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -53,12 +53,12 @@ public class DateRangeFacetProcessor
 			return;
 		}
 
-		DateRangeBuilder dateRangeBuilder = AggregationBuilders.dateRange(
-			facetConfiguration.getFieldName());
+		DateRangeAggregationBuilder dateRangeAggregationBuilder =
+			AggregationBuilders.dateRange(facetConfiguration.getFieldName());
 
 		String format = jsonObject.getString("format");
 
-		dateRangeBuilder.format(format);
+		dateRangeAggregationBuilder.format(format);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject rangeJSONObject = jsonArray.getJSONObject(i);
@@ -70,10 +70,10 @@ public class DateRangeFacetProcessor
 
 			String[] rangeParts = range.split(StringPool.SPACE);
 
-			dateRangeBuilder.addRange(rangeParts[0], rangeParts[2]);
+			dateRangeAggregationBuilder.addRange(rangeParts[0], rangeParts[2]);
 		}
 
-		searchRequestBuilder.addAggregation(dateRangeBuilder);
+		searchRequestBuilder.addAggregation(dateRangeAggregationBuilder);
 	}
 
 }

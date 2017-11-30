@@ -32,20 +32,17 @@ public class TermSuggesterTranslatorImpl
 
 	@Override
 	public SuggestBuilder translate(TermSuggester termSuggester) {
-		SuggestBuilder suggestBuilder = new SuggestBuilder(
-			termSuggester.getName());
+		SuggestBuilder suggestBuilder = new SuggestBuilder();
 
 		TermSuggestionBuilder termSuggesterBuilder =
-			SuggestBuilders.termSuggestion(termSuggester.getName());
-
-		termSuggesterBuilder.field(termSuggester.getField());
+			SuggestBuilders.termSuggestion(termSuggester.getField());
 
 		if (Validator.isNotNull(termSuggester.getAnalyzer())) {
 			termSuggesterBuilder.analyzer(termSuggester.getAnalyzer());
 		}
 
 		if (termSuggester.getAccuracy() != null) {
-			termSuggesterBuilder.setAccuracy(termSuggester.getAccuracy());
+			termSuggesterBuilder.accuracy(termSuggester.getAccuracy());
 		}
 
 		if (termSuggester.getMaxEdits() != null) {
@@ -83,22 +80,23 @@ public class TermSuggesterTranslatorImpl
 		}
 
 		if (termSuggester.getSort() != null) {
-			termSuggesterBuilder.sort(translate(termSuggester.getSort()));
+			termSuggesterBuilder.sort(translateSort(termSuggester.getSort()));
 		}
 
 		if (termSuggester.getStringDistance() != null) {
 			termSuggesterBuilder.stringDistance(
-				translate(termSuggester.getStringDistance()));
+				translateDistance(termSuggester.getStringDistance()));
 		}
 
 		if (termSuggester.getSuggestMode() != null) {
 			termSuggesterBuilder.suggestMode(
-				translate(termSuggester.getSuggestMode()));
+				translateMode(termSuggester.getSuggestMode()));
 		}
 
 		termSuggesterBuilder.text(termSuggester.getValue());
 
-		suggestBuilder.addSuggestion(termSuggesterBuilder);
+		suggestBuilder.addSuggestion(
+			termSuggester.getName(), termSuggesterBuilder);
 
 		return suggestBuilder;
 	}

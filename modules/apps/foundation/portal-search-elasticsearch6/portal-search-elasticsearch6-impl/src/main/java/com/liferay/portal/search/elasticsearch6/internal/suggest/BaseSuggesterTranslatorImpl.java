@@ -16,6 +16,9 @@ package com.liferay.portal.search.elasticsearch6.internal.suggest;
 
 import com.liferay.portal.kernel.search.suggest.Suggester;
 
+import org.elasticsearch.search.suggest.SortBy;
+import org.elasticsearch.search.suggest.term.TermSuggestionBuilder;
+
 /**
  * @author Michael C. Han
  */
@@ -57,6 +60,49 @@ public abstract class BaseSuggesterTranslatorImpl {
 		}
 		else {
 			return "missing";
+		}
+	}
+
+	protected TermSuggestionBuilder.StringDistanceImpl translateDistance(
+		Suggester.StringDistance stringDistance) {
+
+		if (stringDistance == Suggester.StringDistance.DAMERAU_LEVENSHTEIN) {
+			return TermSuggestionBuilder.StringDistanceImpl.DAMERAU_LEVENSHTEIN;
+		}
+		else if (stringDistance == Suggester.StringDistance.JAROWINKLER) {
+			return TermSuggestionBuilder.StringDistanceImpl.JAROWINKLER;
+		}
+		else if (stringDistance == Suggester.StringDistance.LEVENSTEIN) {
+			return TermSuggestionBuilder.StringDistanceImpl.LEVENSTEIN;
+		}
+		else if (stringDistance == Suggester.StringDistance.NGRAM) {
+			return TermSuggestionBuilder.StringDistanceImpl.NGRAM;
+		}
+		else {
+			return TermSuggestionBuilder.StringDistanceImpl.INTERNAL;
+		}
+	}
+
+	protected TermSuggestionBuilder.SuggestMode translateMode(
+		Suggester.SuggestMode suggestMode) {
+
+		if (suggestMode == Suggester.SuggestMode.ALWAYS) {
+			return TermSuggestionBuilder.SuggestMode.ALWAYS;
+		}
+		else if (suggestMode == Suggester.SuggestMode.POPULAR) {
+			return TermSuggestionBuilder.SuggestMode.POPULAR;
+		}
+		else {
+			return TermSuggestionBuilder.SuggestMode.MISSING;
+		}
+	}
+
+	protected SortBy translateSort(Suggester.Sort sort) {
+		if (sort == Suggester.Sort.FREQUENCY) {
+			return SortBy.FREQUENCY;
+		}
+		else {
+			return SortBy.SCORE;
 		}
 	}
 

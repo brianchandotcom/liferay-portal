@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch6.internal.index.IndexNameBuilder;
 import com.liferay.portal.search.elasticsearch6.internal.util.DocumentTypes;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.elasticsearch.index.query.MoreLikeThisQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -37,15 +39,13 @@ public class MoreLikeThisQueryTranslatorImpl
 
 	@Override
 	public QueryBuilder translate(MoreLikeThisQuery moreLikeThisQuery) {
-		Collection<String> fields = moreLikeThisQuery.getFields();
+		List<String> fields = moreLikeThisQuery.getFields();
 
-		MoreLikeThisQueryBuilder moreLikeThisQueryBuilder =
-			QueryBuilders.moreLikeThisQuery(
-				fields.toArray(new String[fields.size()]));
+		List<String> likeTexts = new ArrayList<>();
 
-		if (Validator.isNotNull(moreLikeThisQuery.getAnalyzer())) {
-			moreLikeThisQueryBuilder.analyzer(moreLikeThisQuery.getAnalyzer());
-		}
+		likeTexts.addAll(fields);
+
+		List<MoreLikeThisQueryBuilder.Item> likeItems = new ArrayList<>();
 
 		if (moreLikeThisQuery.getDocumentUIDs() != null) {
 			String type = moreLikeThisQuery.getType();
@@ -61,13 +61,22 @@ public class MoreLikeThisQueryTranslatorImpl
 							moreLikeThisQuery.getCompanyId()),
 						type, documentUID);
 
-				moreLikeThisQueryBuilder.like(moreLikeThisQueryBuilderItem);
+				likeItems.add(moreLikeThisQueryBuilderItem);
 			}
 		}
 
 		if (Validator.isNotNull(moreLikeThisQuery.getLikeText())) {
-			moreLikeThisQueryBuilder.addLikeText(
-				moreLikeThisQuery.getLikeText());
+			likeTexts.add(moreLikeThisQuery.getLikeText());
+		}
+
+		MoreLikeThisQueryBuilder moreLikeThisQueryBuilder =
+			QueryBuilders.moreLikeThisQuery(
+				likeTexts.toArray(new String[likeTexts.size()]),
+				likeItems.toArray(
+					new MoreLikeThisQueryBuilder.Item[likeItems.size()]));
+
+		if (Validator.isNotNull(moreLikeThisQuery.getAnalyzer())) {
+			moreLikeThisQueryBuilder.analyzer(moreLikeThisQuery.getAnalyzer());
 		}
 
 		if (moreLikeThisQuery.getMaxDocFrequency() != null) {

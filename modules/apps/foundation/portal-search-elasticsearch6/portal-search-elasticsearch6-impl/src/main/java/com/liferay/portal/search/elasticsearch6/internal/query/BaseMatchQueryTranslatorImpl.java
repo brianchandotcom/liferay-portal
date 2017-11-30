@@ -16,21 +16,19 @@ package com.liferay.portal.search.elasticsearch6.internal.query;
 
 import com.liferay.portal.kernel.search.generic.MatchQuery;
 
-import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.index.query.Operator;
 
 /**
  * @author Michael C. Han
  */
 public abstract class BaseMatchQueryTranslatorImpl {
 
-	protected MatchQueryBuilder.Operator translate(
-		MatchQuery.Operator matchQueryOperator) {
-
+	protected Operator translate(MatchQuery.Operator matchQueryOperator) {
 		if (matchQueryOperator == MatchQuery.Operator.AND) {
-			return MatchQueryBuilder.Operator.AND;
+			return Operator.AND;
 		}
 		else if (matchQueryOperator == MatchQuery.Operator.OR) {
-			return MatchQueryBuilder.Operator.AND;
+			return Operator.AND;
 		}
 
 		throw new IllegalArgumentException(
@@ -75,14 +73,15 @@ public abstract class BaseMatchQueryTranslatorImpl {
 			"Invalid rewrite method: " + matchQueryRewriteMethod);
 	}
 
-	protected MatchQueryBuilder.ZeroTermsQuery translate(
-		MatchQuery.ZeroTermsQuery matchQueryZeroTermsQuery) {
+	protected org.elasticsearch.index.search.MatchQuery.ZeroTermsQuery
+		translate(MatchQuery.ZeroTermsQuery matchQueryZeroTermsQuery) {
 
 		if (matchQueryZeroTermsQuery == MatchQuery.ZeroTermsQuery.ALL) {
-			return MatchQueryBuilder.ZeroTermsQuery.ALL;
+			return org.elasticsearch.index.search.MatchQuery.ZeroTermsQuery.ALL;
 		}
 		else if (matchQueryZeroTermsQuery == MatchQuery.ZeroTermsQuery.NONE) {
-			return MatchQueryBuilder.ZeroTermsQuery.NONE;
+			return
+				org.elasticsearch.index.search.MatchQuery.ZeroTermsQuery.NONE;
 		}
 
 		throw new IllegalArgumentException(

@@ -18,10 +18,10 @@ import com.liferay.portal.kernel.search.suggest.AggregateSuggester;
 import com.liferay.portal.kernel.search.suggest.Suggester;
 import com.liferay.portal.kernel.search.suggest.SuggesterTranslator;
 
-import java.util.List;
 import java.util.Map;
 
 import org.elasticsearch.search.suggest.SuggestBuilder;
+import org.elasticsearch.search.suggest.SuggestionBuilder;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -37,10 +37,9 @@ public class AggregateSuggesterTranslatorImpl
 		AggregateSuggester aggregateSuggester,
 		SuggesterTranslator<SuggestBuilder> suggesterTranslator) {
 
-		SuggestBuilder aggregateSuggestBuilder = new SuggestBuilder(
-			aggregateSuggester.getName());
+		SuggestBuilder aggregateSuggestBuilder = new SuggestBuilder();
 
-		aggregateSuggestBuilder.setText(aggregateSuggester.getValue());
+		aggregateSuggestBuilder.setGlobalText(aggregateSuggester.getValue());
 
 		Map<String, Suggester> suggesters = aggregateSuggester.getSuggesters();
 
@@ -48,15 +47,19 @@ public class AggregateSuggesterTranslatorImpl
 			SuggestBuilder suggestBuilder = suggesterTranslator.translate(
 				suggester, null);
 
-			List<SuggestBuilder.SuggestionBuilder<?>> suggestionBuilders =
-				suggestBuilder.getSuggestion();
+			Map<String, SuggestionBuilder<?>> suggestionBuilders =
+				suggestBuilder.getSuggestions();
 
-			for (SuggestBuilder.SuggestionBuilder<?> suggestionBuilder :
-					suggestionBuilders) {
+			for (Map.Entry<String, SuggestionBuilder<?>> suggestionBuilder :
+					suggestionBuilders.entrySet()) {
 
-				suggestionBuilder.text(null);
+				suggestionBuilder.getValue(
+				).text(
+					null
+				);
 
-				aggregateSuggestBuilder.addSuggestion(suggestionBuilder);
+				aggregateSuggestBuilder.addSuggestion(
+					aggregateSuggester.getName(), suggestionBuilder.getValue());
 			}
 		}
 

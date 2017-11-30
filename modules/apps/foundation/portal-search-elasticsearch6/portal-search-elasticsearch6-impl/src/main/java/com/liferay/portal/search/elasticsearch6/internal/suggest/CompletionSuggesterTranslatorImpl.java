@@ -32,13 +32,11 @@ public class CompletionSuggesterTranslatorImpl
 
 	@Override
 	public SuggestBuilder translate(CompletionSuggester completionSuggester) {
-		SuggestBuilder suggestBuilder = new SuggestBuilder(
-			completionSuggester.getName());
+		SuggestBuilder suggestBuilder = new SuggestBuilder();
 
 		CompletionSuggestionBuilder completionSuggesterBuilder =
-			SuggestBuilders.completionSuggestion(completionSuggester.getName());
-
-		completionSuggesterBuilder.field(completionSuggester.getField());
+			SuggestBuilders.completionSuggestion(
+				completionSuggester.getField());
 
 		if (Validator.isNotNull(completionSuggester.getAnalyzer())) {
 			completionSuggesterBuilder.analyzer(
@@ -56,7 +54,8 @@ public class CompletionSuggesterTranslatorImpl
 
 		completionSuggesterBuilder.text(completionSuggester.getValue());
 
-		suggestBuilder.addSuggestion(completionSuggesterBuilder);
+		suggestBuilder.addSuggestion(
+			completionSuggester.getName(), completionSuggesterBuilder);
 
 		return suggestBuilder;
 	}

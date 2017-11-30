@@ -24,15 +24,19 @@ import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.common.geo.GeoDistance;
+import org.elasticsearch.common.geo.GeoPoint;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.bucket.terms.TermsBuilder;
-import org.elasticsearch.search.aggregations.metrics.tophits.TopHitsBuilder;
+import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
+import org.elasticsearch.search.aggregations.metrics.tophits.TopHitsAggregationBuilder;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.GeoDistanceSortBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
@@ -54,55 +58,67 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 
 		GroupBy groupBy = searchContext.getGroupBy();
 
-		TermsBuilder termsBuilder = AggregationBuilders.terms(
-			GROUP_BY_AGGREGATION_PREFIX + groupBy.getField());
+		TermsAggregationBuilder termsAggregationBuilder =
+			AggregationBuilders.terms(
+				GROUP_BY_AGGREGATION_PREFIX + groupBy.getField());
 
-		termsBuilder = termsBuilder.field(groupBy.getField());
+		termsAggregationBuilder = termsAggregationBuilder.field(
+			groupBy.getField());
 
-		TopHitsBuilder topHitsBuilder = getTopHitsBuilder(
+		TopHitsAggregationBuilder topHitsAggregationBuilder = getTopHitsBuilder(
 			searchContext, start, end, groupBy);
 
-		termsBuilder.subAggregation(topHitsBuilder);
+		termsAggregationBuilder.subAggregation(topHitsAggregationBuilder);
 
-		searchRequestBuilder.addAggregation(termsBuilder);
+		searchRequestBuilder.addAggregation(termsAggregationBuilder);
 	}
 
 	protected void addHighlightedField(
-		TopHitsBuilder topHitsBuilder, QueryConfig queryConfig,
+		TopHitsAggregationBuilder topHitsAggregationBuilder,
+		HighlightBuilder highlightBuilder, QueryConfig queryConfig,
 		String fieldName) {
 
-		topHitsBuilder.addHighlightedField(
+		highlightBuilder.field(
 			fieldName, queryConfig.getHighlightFragmentSize(),
 			queryConfig.getHighlightSnippetSize());
 
 		String localizedFieldName = DocumentImpl.getLocalizedName(
 			queryConfig.getLocale(), fieldName);
 
-		topHitsBuilder.addHighlightedField(
+		highlightBuilder.field(
 			localizedFieldName, queryConfig.getHighlightFragmentSize(),
 			queryConfig.getHighlightSnippetSize());
+
+		topHitsAggregationBuilder.highlighter(highlightBuilder);
 	}
 
 	protected void addHighlights(
-		TopHitsBuilder topHitsBuilder, QueryConfig queryConfig) {
+		TopHitsAggregationBuilder topHitsAggregationBuilder,
+		QueryConfig queryConfig) {
 
 		if (!queryConfig.isHighlightEnabled()) {
 			return;
 		}
 
+		HighlightBuilder highlightBuilder = new HighlightBuilder();
+
 		for (String highlightFieldName : queryConfig.getHighlightFieldNames()) {
 			addHighlightedField(
-				topHitsBuilder, queryConfig, highlightFieldName);
+				topHitsAggregationBuilder, highlightBuilder, queryConfig,
+				highlightFieldName);
 		}
 
-		topHitsBuilder.setHighlighterPostTags(
-			HighlightUtil.HIGHLIGHT_TAG_CLOSE);
-		topHitsBuilder.setHighlighterPreTags(HighlightUtil.HIGHLIGHT_TAG_OPEN);
-		topHitsBuilder.setHighlighterRequireFieldMatch(
+		highlightBuilder.postTags(HighlightUtil.HIGHLIGHT_TAG_CLOSE);
+		highlightBuilder.preTags(HighlightUtil.HIGHLIGHT_TAG_OPEN);
+		highlightBuilder.requireFieldMatch(
 			queryConfig.isHighlightRequireFieldMatch());
+
+		topHitsAggregationBuilder.highlighter(highlightBuilder);
 	}
 
-	protected void addSorts(TopHitsBuilder topHitsBuilder, Sort[] sorts) {
+	protected void addSorts(
+		TopHitsAggregationBuilder topHitsAggregationBuilder, Sort[] sorts) {
+
 		if (ArrayUtil.isEmpty(sorts)) {
 			return;
 		}
@@ -137,18 +153,23 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 			else if (sort.getType() == Sort.GEO_DISTANCE_TYPE) {
 				GeoDistanceSort geoDistanceSort = (GeoDistanceSort)sort;
 
-				GeoDistanceSortBuilder geoDistanceSortBuilder =
-					SortBuilders.geoDistanceSort(sortFieldName);
-
-				geoDistanceSortBuilder.geoDistance(GeoDistance.DEFAULT);
+				List<GeoPoint> geoPoints = new ArrayList<>();
 
 				for (GeoLocationPoint geoLocationPoint :
 						geoDistanceSort.getGeoLocationPoints()) {
 
-					geoDistanceSortBuilder.point(
-						geoLocationPoint.getLatitude(),
-						geoLocationPoint.getLongitude());
+					geoPoints.add(
+						new GeoPoint(
+							geoLocationPoint.getLatitude(),
+							geoLocationPoint.getLongitude()));
 				}
+
+				GeoDistanceSortBuilder geoDistanceSortBuilder =
+					SortBuilders.geoDistanceSort(
+						sortFieldName,
+						geoPoints.toArray(new GeoPoint[geoPoints.size()]));
+
+				geoDistanceSortBuilder.geoDistance(GeoDistance.ARC);
 
 				Collection<String> geoHashes = geoDistanceSort.getGeoHashes();
 
@@ -170,15 +191,15 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 
 			sortBuilder.order(sortOrder);
 
-			topHitsBuilder.addSort(sortBuilder);
+			topHitsAggregationBuilder.sort(sortBuilder);
 		}
 	}
 
-	protected TopHitsBuilder getTopHitsBuilder(
+	protected TopHitsAggregationBuilder getTopHitsBuilder(
 		SearchContext searchContext, int start, int end, GroupBy groupBy) {
 
-		TopHitsBuilder topHitsBuilder = AggregationBuilders.topHits(
-			TOP_HITS_AGGREGATION_NAME);
+		TopHitsAggregationBuilder topHitsAggregationBuilder =
+			AggregationBuilders.topHits(TOP_HITS_AGGREGATION_NAME);
 
 		int groupyByStart = groupBy.getStart();
 
@@ -186,7 +207,7 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 			groupyByStart = start;
 		}
 
-		topHitsBuilder.setFrom(groupyByStart);
+		topHitsAggregationBuilder.from(groupyByStart);
 
 		int groupBySize = groupBy.getSize();
 
@@ -194,12 +215,13 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 			groupBySize = end - start + 1;
 		}
 
-		topHitsBuilder.setSize(groupBySize);
+		topHitsAggregationBuilder.size(groupBySize);
 
-		addHighlights(topHitsBuilder, searchContext.getQueryConfig());
-		addSorts(topHitsBuilder, searchContext.getSorts());
+		addHighlights(
+			topHitsAggregationBuilder, searchContext.getQueryConfig());
+		addSorts(topHitsAggregationBuilder, searchContext.getSorts());
 
-		return topHitsBuilder;
+		return topHitsAggregationBuilder;
 	}
 
 }

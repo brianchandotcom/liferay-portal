@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.generic.NestedQuery;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
 
+import org.apache.lucene.search.join.ScoreMode;
+
 import org.elasticsearch.index.query.NestedQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -39,7 +41,7 @@ public class NestedQueryTranslatorImpl implements NestedQueryTranslator {
 		QueryBuilder queryBuilder = query.accept(queryVisitor);
 
 		NestedQueryBuilder nestedQueryBuilder = QueryBuilders.nestedQuery(
-			nestedQuery.getPath(), queryBuilder);
+			nestedQuery.getPath(), queryBuilder, ScoreMode.Total);
 
 		if (!nestedQuery.isDefaultBoost()) {
 			nestedQueryBuilder.boost(nestedQuery.getBoost());

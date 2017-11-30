@@ -23,18 +23,18 @@ import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.missing.Missing;
-import org.elasticsearch.search.aggregations.bucket.missing.MissingBuilder;
+import org.elasticsearch.search.aggregations.bucket.missing.MissingAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.max.Max;
-import org.elasticsearch.search.aggregations.metrics.max.MaxBuilder;
+import org.elasticsearch.search.aggregations.metrics.max.MaxAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.min.Min;
-import org.elasticsearch.search.aggregations.metrics.min.MinBuilder;
-import org.elasticsearch.search.aggregations.metrics.stats.StatsBuilder;
+import org.elasticsearch.search.aggregations.metrics.min.MinAggregationBuilder;
+import org.elasticsearch.search.aggregations.metrics.stats.StatsAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.stats.extended.ExtendedStats;
-import org.elasticsearch.search.aggregations.metrics.stats.extended.ExtendedStatsBuilder;
+import org.elasticsearch.search.aggregations.metrics.stats.extended.ExtendedStatsAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.sum.Sum;
-import org.elasticsearch.search.aggregations.metrics.sum.SumBuilder;
+import org.elasticsearch.search.aggregations.metrics.sum.SumAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.valuecount.ValueCount;
-import org.elasticsearch.search.aggregations.metrics.valuecount.ValueCountBuilder;
+import org.elasticsearch.search.aggregations.metrics.valuecount.ValueCountAggregationBuilder;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -120,63 +120,67 @@ public class DefaultStatsTranslator implements StatsTranslator {
 		String field = stats.getField();
 
 		if (stats.isCount()) {
-			ValueCountBuilder valueCountBuilder = AggregationBuilders.count(
-				field + "_count");
+			ValueCountAggregationBuilder valueCountAggregationBuilder =
+				AggregationBuilders.count(field + "_count");
 
-			valueCountBuilder.field(field);
+			valueCountAggregationBuilder.field(field);
 
-			searchRequestBuilder.addAggregation(valueCountBuilder);
+			searchRequestBuilder.addAggregation(valueCountAggregationBuilder);
 		}
 
 		if (stats.isMax()) {
-			MaxBuilder maxBuilder = AggregationBuilders.max(field + "_max");
+			MaxAggregationBuilder maxAggregationBuilder =
+				AggregationBuilders.max(field + "_max");
 
-			maxBuilder.field(field);
+			maxAggregationBuilder.field(field);
 
-			searchRequestBuilder.addAggregation(maxBuilder);
+			searchRequestBuilder.addAggregation(maxAggregationBuilder);
 		}
 
 		if (stats.isMean()) {
-			StatsBuilder statsBuilder = AggregationBuilders.stats(
-				field + "_stats");
+			StatsAggregationBuilder statsAggregationBuilder =
+				AggregationBuilders.stats(field + "_stats");
 
-			statsBuilder.field(field);
+			statsAggregationBuilder.field(field);
 
-			searchRequestBuilder.addAggregation(statsBuilder);
+			searchRequestBuilder.addAggregation(statsAggregationBuilder);
 		}
 
 		if (stats.isMin()) {
-			MinBuilder minBuilder = AggregationBuilders.min(field + "_min");
+			MinAggregationBuilder minAggregationBuilder =
+				AggregationBuilders.min(field + "_min");
 
-			minBuilder.field(field);
+			minAggregationBuilder.field(field);
 
-			searchRequestBuilder.addAggregation(minBuilder);
+			searchRequestBuilder.addAggregation(minAggregationBuilder);
 		}
 
 		if (stats.isMissing()) {
-			MissingBuilder missingBuilder = AggregationBuilders.missing(
-				field + "_missing");
+			MissingAggregationBuilder missingAggregationBuilder =
+				AggregationBuilders.missing(field + "_missing");
 
-			missingBuilder.field(field);
+			missingAggregationBuilder.field(field);
 
-			searchRequestBuilder.addAggregation(missingBuilder);
+			searchRequestBuilder.addAggregation(missingAggregationBuilder);
 		}
 
 		if (stats.isStandardDeviation() || stats.isSumOfSquares()) {
-			ExtendedStatsBuilder extendedStatsBuilder =
+			ExtendedStatsAggregationBuilder extendedStatsAggregationBuilder =
 				AggregationBuilders.extendedStats(field + "_extendedStats");
 
-			extendedStatsBuilder.field(field);
+			extendedStatsAggregationBuilder.field(field);
 
-			searchRequestBuilder.addAggregation(extendedStatsBuilder);
+			searchRequestBuilder.addAggregation(
+				extendedStatsAggregationBuilder);
 		}
 
 		if (stats.isSum()) {
-			SumBuilder sumBuilder = AggregationBuilders.sum(field + "_sum");
+			SumAggregationBuilder sumAggregationBuilder =
+				AggregationBuilders.sum(field + "_sum");
 
-			sumBuilder.field(field);
+			sumAggregationBuilder.field(field);
 
-			searchRequestBuilder.addAggregation(sumBuilder);
+			searchRequestBuilder.addAggregation(sumAggregationBuilder);
 		}
 	}
 

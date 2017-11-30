@@ -83,6 +83,7 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 		Map<String, Resource> resources = jar.getResources();
 
 		Set<String> keys = new HashSet<String>(resources.keySet());
+
 		Set<String> taglibURIs = new HashSet<>();
 
 		for (String key : keys) {
@@ -126,10 +127,12 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 			contentY = contentX;
 
 			int importX = content.indexOf("import=\"", contentY);
+
 			int importY = -1;
 
 			if (importX != -1) {
 				importX = importX + "import=\"".length();
+
 				importY = content.indexOf("\"", importX);
 			}
 
@@ -468,10 +471,12 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 			contentY = contentX;
 
 			int importX = content.indexOf("uri=\"", contentY);
+
 			int importY = -1;
 
 			if (importX != -1) {
 				importX = importX + "uri=\"".length();
+
 				importY = content.indexOf("\"", importX);
 			}
 
@@ -566,6 +571,7 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 			String value = new String(chars, start, length);
 
 			_hasURI = _uri.equals(value.replaceAll("^\\s*(.*)\\s*$", "$1"));
+
 			_inURI = false;
 		}
 

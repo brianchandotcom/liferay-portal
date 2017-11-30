@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 import org.elasticsearch.Version;
-import org.elasticsearch.common.cli.Terminal;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -46,18 +45,19 @@ public class EmbeddedElasticsearchPluginManagerTest {
 
 	@Test
 	public void testInstallForTheFirstTime() throws Exception {
-		install();
+		install("analysis-kuromoji");
 
 		Mockito.verify(
 			_pluginManager
-		).downloadAndExtract(
-			Mockito.eq(_PLUGIN_NAME), Mockito.<Terminal>any(), Mockito.eq(true)
+		).install(
+			Mockito.eq("analysis-kuromoji")
 		);
 
 		Mockito.verify(
 			_pluginZipFactory
 		).createPluginZip(
-			"/plugins/" + _PLUGIN_NAME + "-" + Version.CURRENT + ".zip"
+			"/plugins/org.elasticsearch.plugin.analysis.kuromoji-" +
+				Version.CURRENT + ".zip"
 		);
 
 		Mockito.verify(
@@ -73,8 +73,8 @@ public class EmbeddedElasticsearchPluginManagerTest {
 
 		Mockito.verify(
 			_pluginManager, Mockito.never()
-		).downloadAndExtract(
-			Mockito.anyString(), Mockito.<Terminal>any(), Mockito.anyBoolean()
+		).install(
+			Mockito.anyString()
 		);
 
 		Mockito.verify(
@@ -94,8 +94,8 @@ public class EmbeddedElasticsearchPluginManagerTest {
 
 		Mockito.verify(
 			_pluginManager
-		).removePlugin(
-			Mockito.eq(_PLUGIN_NAME), Mockito.<Terminal>any()
+		).remove(
+			Mockito.eq(_PLUGIN_NAME)
 		);
 	}
 
@@ -146,10 +146,14 @@ public class EmbeddedElasticsearchPluginManagerTest {
 		return path;
 	}
 
-	protected void install() throws IOException {
+	protected void install() throws Exception {
+		install(_PLUGIN_NAME);
+	}
+
+	protected void install(String pluginName) throws Exception {
 		EmbeddedElasticsearchPluginManager embeddedElasticsearchPluginManager =
 			new EmbeddedElasticsearchPluginManager(
-				_PLUGIN_NAME, _PLUGINS_PATH_STRING, _pluginManagerFactory,
+				pluginName, _PLUGINS_PATH_STRING, _pluginManagerFactory,
 				_pluginZipFactory);
 
 		embeddedElasticsearchPluginManager.removeObsoletePlugin();
@@ -184,12 +188,18 @@ public class EmbeddedElasticsearchPluginManagerTest {
 			ioException
 		).when(
 			_pluginManager
-		).downloadAndExtract(
-			Mockito.anyString(), Mockito.<Terminal>any(), Mockito.anyBoolean()
+		).install(
+			Mockito.anyString()
 		);
 	}
 
-	protected void setUpPluginManagerFactory() {
+	protected void setUpPluginManagerFactory() throws Exception {
+		Mockito.doReturn(
+			new Path[0]
+		).when(
+			_pluginManager
+		).getInstalledPluginsPaths();
+
 		Mockito.doReturn(
 			_pluginManager
 		).when(
@@ -205,7 +215,7 @@ public class EmbeddedElasticsearchPluginManagerTest {
 		);
 	}
 
-	protected void setUpPluginZipFactory() throws IOException {
+	protected void setUpPluginZipFactory() throws Exception {
 		Mockito.doReturn(
 			_pluginZip
 		).when(

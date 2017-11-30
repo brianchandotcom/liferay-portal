@@ -328,6 +328,17 @@
 	<td>//div[contains(@data-fieldname,'outputParameters')]/following-sibling::div[contains(@class,'field-repeatable')]//a[contains(@class,'add-button')]</td>
 	<td></td>
 </tr>
+<!--DATA_PROVIDER_PERMISSIONS_PARAMETER-->
+<tr>
+	<td>DATA_PROVIDER_PERMISSIONS_PARAMETER_PANEL</td>
+	<td>//div[contains(@id,'permissionsTitle')]//a[contains(@class,'collapse-icon')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATA_PROVIDER_PERMISSIONS_VIEWABLE_BY_SELECT</td>
+	<td>//div[contains(@id,'permissionsContent')]//select[contains(@id,'inputPermissionsViewRole')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

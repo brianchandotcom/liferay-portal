@@ -17,6 +17,7 @@ package com.liferay.frontend.js.spa.web.internal.servlet.taglib.util;
 import com.liferay.frontend.js.spa.web.configuration.SPAConfiguration;
 import com.liferay.frontend.js.spa.web.configuration.SPAConfigurationUtil;
 import com.liferay.osgi.util.StringPlus;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -44,6 +45,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -60,7 +62,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.metatype.annotations.Designate;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -71,7 +72,6 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 	configurationPid = "com.liferay.frontend.js.spa.web.configuration.SPAConfiguration",
 	service = SPAUtil.class
 )
-@Designate(ocd = SPAConfiguration.class)
 public class SPAUtil {
 
 	public long getCacheExpirationTime(long companyId) {
@@ -172,12 +172,13 @@ public class SPAUtil {
 
 	@Activate
 	protected void activate(
-			BundleContext bundleContext, SPAConfiguration spaConfiguration)
+			BundleContext bundleContext, Map<String, Object> properties)
 		throws InvalidSyntaxException {
 
-		_cacheExpirationTime = _getCacheExpirationTime(spaConfiguration);
+		_spaConfiguration = ConfigurableUtil.createConfigurable(
+			SPAConfiguration.class, properties);
 
-		_spaConfiguration = spaConfiguration;
+		_cacheExpirationTime = _getCacheExpirationTime(_spaConfiguration);
 
 		Collections.addAll(
 			_navigationExceptionSelectors,
@@ -203,13 +204,14 @@ public class SPAUtil {
 	}
 
 	@Modified
-	protected void modified(SPAConfiguration spaConfiguration) {
-		_cacheExpirationTime = _getCacheExpirationTime(spaConfiguration);
-
+	protected void modified(Map<String, Object> properties) {
 		_navigationExceptionSelectors.removeAll(
 			Arrays.asList(_spaConfiguration.navigationExceptionSelectors()));
 
-		_spaConfiguration = spaConfiguration;
+		_spaConfiguration = ConfigurableUtil.createConfigurable(
+			SPAConfiguration.class, properties);
+
+		_cacheExpirationTime = _getCacheExpirationTime(_spaConfiguration);
 
 		Collections.addAll(
 			_navigationExceptionSelectors,

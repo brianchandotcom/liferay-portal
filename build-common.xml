@@ -1075,6 +1075,12 @@ information.
 
 							<echo file="${project.dir}/modules/.releng/${artifact.name}.properties">artifact.git.id=${artifact.git.id}
 artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed.artifact.name}/${artifact.version}/com.liferay.${processed.artifact.name}-${artifact.version}.@{packaging}</echo>
+
+							<gradle-execute dir="${project.dir}/modules" task="lockDependencyVersion">
+								<arg value="--build-file=releng.gradle" />
+								<arg value="-PdependencyName=com.liferay.${processed.artifact.name}" />
+								<arg value="-PdependencyVersion=${artifact.version.major.minor}.0" />
+							</gradle-execute>
 						</then>
 					</if>
 

@@ -94,7 +94,7 @@ lockDependencyVersion {
 
 		dependencyProjectName = dependencyProjectName.replace('.' as char, '-' as char)
 
-		if (dependencyName.startsWith("com.liferay.portal.")) {
+		if (dependencyName.startsWith("com.liferay.portal.") || dependencyName.startsWith("com.liferay.util.")) {
 			dependencyGroup = "com.liferay.portal"
 			dependencyPattern = ~/provided\s+group:\s*"${dependencyGroup}",\s*name:\s*"${dependencyName}",\s*version:\s*"default"/
 		}

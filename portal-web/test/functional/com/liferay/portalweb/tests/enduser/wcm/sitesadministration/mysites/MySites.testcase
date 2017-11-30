@@ -119,7 +119,6 @@
 		<execute macro="User#loginPG" >
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="UserBar#gotoDashboard" />
@@ -133,7 +132,6 @@
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
-			<var name="userScreenName" value="usersn" />
 		</execute>
 	</command>
 
@@ -181,7 +179,6 @@
 		<execute macro="User#loginPG" >
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="UserBar#gotoDashboard" />
@@ -196,7 +193,6 @@
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
-			<var name="userScreenName" value="usersn" />
 		</execute>
 	</command>
 
@@ -243,7 +239,6 @@
 		<execute macro="User#loginPG" >
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="UserBar#gotoDashboard" />
@@ -268,7 +263,6 @@
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
-			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
@@ -293,7 +287,6 @@
 		<execute macro="User#loginPG" >
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="UserBar#gotoDashboard" />
@@ -308,7 +301,6 @@
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
-			<var name="userScreenName" value="usersn" />
 		</execute>
 	</command>
 
@@ -355,7 +347,6 @@
 		<execute macro="User#loginPG" >
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="UserBar#gotoDashboard" />
@@ -375,7 +366,6 @@
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
-			<var name="userScreenName" value="usersn" />
 		</execute>
 	</command>
 

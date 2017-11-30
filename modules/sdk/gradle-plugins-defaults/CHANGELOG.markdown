@@ -2504,6 +2504,16 @@ is found in a parent directory.
 ### Changed
 - [LPS-75901]: Update the [Liferay Gradle Plugins] dependency to version 3.5.52.
 
+## 5.2.5 - 2017-11-29
+
+### Changed
+- [LPS-75901]: Update the [Liferay Gradle Plugins] dependency to version 3.5.53.
+
+## 5.2.6 - 2017-11-29
+
+### Changed
+- [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version 3.5.54.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public

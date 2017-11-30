@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -63,15 +65,25 @@ public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 			group.getGroupId(), false, "/shared");
 
 		if (sharedLayout == null) {
-			addPublicLayout(company.getCompanyId(), group.getGroupId());
+			sharedLayout = addPublicLayout(
+				company.getCompanyId(), group.getGroupId());
+
+			addFormsPortlet(sharedLayout);
 		}
+
+		verifyLayout(sharedLayout);
 
 		Layout privateLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			group.getGroupId(), true, "/shared");
 
 		if (privateLayout == null) {
-			addPrivateLayout(company.getCompanyId(), group.getGroupId());
+			privateLayout = addPrivateLayout(
+				company.getCompanyId(), group.getGroupId());
+
+			addFormsPortlet(privateLayout);
 		}
+
+		verifyLayout(privateLayout);
 	}
 
 	protected Group addFormsGroup(long companyId) throws PortalException {
@@ -89,7 +101,17 @@ public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 			GroupConstants.FORMS_FRIENDLY_URL, false, false, true, null);
 	}
 
-	protected void addPrivateLayout(long companyId, long groupId)
+	protected void addFormsPortlet(Layout layout) {
+		UnicodeProperties layoutTypeSettingsProperties =
+			layout.getTypeSettingsProperties();
+
+		layoutTypeSettingsProperties.setProperty(
+			"fullPageApplicationPortlet", _DYNAMIC_DATA_LISTS_FORM);
+
+		_layoutLocalService.updateLayout(layout);
+	}
+
+	protected Layout addPrivateLayout(long companyId, long groupId)
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -114,17 +136,17 @@ public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 			serviceContext);
 
 		updateUserLayoutViewPermissionPermission(companyId, layout);
+
+		return layout;
 	}
 
-	protected void addPublicLayout(long companyId, long groupId)
+	protected Layout addPublicLayout(long companyId, long groupId)
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAttribute(
-			"layout.instanceable.allowed", Boolean.TRUE);
 		serviceContext.setAttribute("layoutUpdateable", Boolean.FALSE);
 
 		serviceContext.setScopeGroupId(groupId);
@@ -133,11 +155,11 @@ public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 
 		serviceContext.setUserId(defaultUserId);
 
-		_layoutLocalService.addLayout(
+		return _layoutLocalService.addLayout(
 			defaultUserId, groupId, false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Shared",
 			StringPool.BLANK, StringPool.BLANK,
-			LayoutConstants.TYPE_SHARED_PORTLET, true, "/shared",
+			_LAYOUT_TYPE_FULL_PAGE_APPLICATION, true, "/shared",
 			serviceContext);
 	}
 
@@ -186,6 +208,26 @@ public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 			ResourceConstants.SCOPE_GROUP, String.valueOf(layout.getGroupId()),
 			role.getRoleId(), ActionKeys.VIEW);
 	}
+
+	protected void verifyLayout(Layout layout) {
+		if (StringUtil.equals(
+				layout.getType(), _LAYOUT_TYPE_FULL_PAGE_APPLICATION)) {
+
+			return;
+		}
+
+		layout.setType(_LAYOUT_TYPE_FULL_PAGE_APPLICATION);
+
+		_layoutLocalService.updateLayout(layout);
+
+		addFormsPortlet(layout);
+	}
+
+	private static final String _DYNAMIC_DATA_LISTS_FORM =
+		"com_liferay_dynamic_data_lists_form_web_portlet_DDLFormPortlet";
+
+	private static final String _LAYOUT_TYPE_FULL_PAGE_APPLICATION =
+		"full_page_application";
 
 	private GroupLocalService _groupLocalService;
 	private LayoutLocalService _layoutLocalService;

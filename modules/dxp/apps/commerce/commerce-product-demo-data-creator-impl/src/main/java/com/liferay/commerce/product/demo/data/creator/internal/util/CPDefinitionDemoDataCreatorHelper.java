@@ -31,12 +31,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -170,7 +170,7 @@ public class CPDefinitionDemoDataCreatorHelper
 	}
 
 	public void init() {
-		_cpDefinitions = new HashMap<>();
+		_cpDefinitions = new ConcurrentHashMap<>();
 	}
 
 	@Activate

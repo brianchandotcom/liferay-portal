@@ -36,6 +36,8 @@ public class CPDemoDataCreatorImpl implements CPDemoDataCreator {
 	public void create(long userId, long groupId, boolean buildSkus)
 		throws Exception {
 
+		init();
+
 		_assetVocabularyDemoDataCreatorHelper.addAssetVocabularies(
 			userId, groupId);
 
@@ -45,8 +47,6 @@ public class CPDemoDataCreatorImpl implements CPDemoDataCreator {
 
 	@Override
 	public void delete(long userId, long groupId) throws PortalException {
-		_assetVocabularyDemoDataCreatorHelper.deleteAssetVocabularies();
-
 		_cpDefinitionDemoDataCreatorHelper.deleteCPDefinitions();
 		_cpOptionCategoryDemoDataCreatorHelper.deleteCPOptionCategories();
 		_cpOptionDemoDataCreatorHelper.deleteCPOptions();
@@ -57,7 +57,9 @@ public class CPDemoDataCreatorImpl implements CPDemoDataCreator {
 	@Override
 	public void init() {
 		_assetCategoryDemoDataCreatorHelper.init();
+		_cpDefinitionDemoDataCreatorHelper.init();
 		_cpOptionDemoDataCreatorHelper.init();
+		_cpSpecificationOptionDemoDataCreatorHelper.init();
 	}
 
 	@Reference

@@ -17,21 +17,13 @@ package com.liferay.commerce.product.demo.data.creator.internal.util;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -64,26 +56,17 @@ public class AssetVocabularyDemoDataCreatorHelper
 
 		String title = assetVocabularyJSONObject.getString("vocabulary");
 
-		AssetVocabulary assetVocabulary = _assetVocabularies.get(title);
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.fetchGroupVocabulary(
+				serviceContext.getScopeGroupId(), title);
 
 		if (assetVocabulary != null) {
-			return assetVocabulary;
-		}
-
-		assetVocabulary = _assetVocabularyLocalService.fetchGroupVocabulary(
-			serviceContext.getScopeGroupId(), title);
-
-		if (assetVocabulary != null) {
-			_assetVocabularies.put(title, assetVocabulary);
-
 			return assetVocabulary;
 		}
 
 		assetVocabulary = _assetVocabularyLocalService.addVocabulary(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(), title,
 			serviceContext);
-
-		_assetVocabularies.put(title, assetVocabulary);
 
 		JSONArray categoriesJSONArray = assetVocabularyJSONObject.getJSONArray(
 			"categories");
@@ -95,36 +78,6 @@ public class AssetVocabularyDemoDataCreatorHelper
 			categoriesJSONArray);
 
 		return assetVocabulary;
-	}
-
-	public void deleteAssetVocabularies() throws PortalException {
-		Set<Map.Entry<String, AssetVocabulary>> entrySet =
-			_assetVocabularies.entrySet();
-
-		Iterator<Map.Entry<String, AssetVocabulary>> iterator =
-			entrySet.iterator();
-
-		while (iterator.hasNext()) {
-			Map.Entry<String, AssetVocabulary> entry = iterator.next();
-
-			_assetVocabularyLocalService.deleteVocabulary(entry.getValue());
-
-			iterator.remove();
-		}
-	}
-
-	public void init() {
-		_assetVocabularies = new HashMap<>();
-	}
-
-	@Activate
-	protected void activate() {
-		init();
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_assetVocabularies = null;
 	}
 
 	protected JSONArray getAssetVocabulariesJSONArray() throws Exception {
@@ -143,8 +96,6 @@ public class AssetVocabularyDemoDataCreatorHelper
 	@Reference
 	private AssetCategoryDemoDataCreatorHelper
 		_assetCategoryDemoDataCreatorHelper;
-
-	private Map<String, AssetVocabulary> _assetVocabularies;
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;

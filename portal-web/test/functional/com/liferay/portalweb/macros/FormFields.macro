@@ -186,7 +186,16 @@
 	<command name="selectDataProviderPermission">
 		<var name="selectOption" value="${selectOption}" />
 
-		<execute function="Select" locator1="Form#DATA_PROVIDER_PERMISSIONS_PARAMETER_SELECT_VIEWABLE_BY" value1="${selectOption}" />
+		<if>
+			<condition function="IsElementNotPresent" locator1="Form#DATA_PROVIDER_PERMISSIONS_VIEWABLE_BY_SELECT" />
+			<then>
+				<execute function="Click" locator1="Form#DATA_PROVIDER_PERMISSIONS_PARAMETER_PANEL" />
+
+				<execute function="AssertElementPresent" locator1="Form#DATA_PROVIDER_PERMISSIONS_VIEWABLE_BY_SELECT" />
+			</then>
+		</if>
+
+		<execute function="Select" locator1="Form#DATA_PROVIDER_PERMISSIONS_VIEWABLE_BY_SELECT" value1="${selectOption}" />
 	</command>
 
 	<command name="selectGridRadioOption">

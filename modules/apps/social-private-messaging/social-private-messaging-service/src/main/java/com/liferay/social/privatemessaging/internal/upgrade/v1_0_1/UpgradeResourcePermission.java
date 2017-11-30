@@ -15,7 +15,7 @@
 package com.liferay.social.privatemessaging.internal.upgrade.v1_0_1;
 
 import com.liferay.document.library.kernel.model.DLFolder;
-import com.liferay.message.boards.web.constants.MBPortletKeys;
+import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;

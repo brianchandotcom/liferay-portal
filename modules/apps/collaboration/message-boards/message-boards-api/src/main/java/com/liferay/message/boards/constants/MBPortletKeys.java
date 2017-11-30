@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.web.constants;
+package com.liferay.message.boards.constants;
 
 /**
  * @author Adolfo Pérez

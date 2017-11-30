@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.message.boards.api
 Bundle-Version: 3.2.0
 Export-Package:\
 	com.liferay.message.boards.configuration,\
+	com.liferay.message.boards.constants,\
 	com.liferay.message.boards.display.context,\
 	com.liferay.message.boards.exception,\
 	com.liferay.message.boards.model,\

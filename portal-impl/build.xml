@@ -548,13 +548,39 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 	</target>
 
 	<target name="format-source">
-		<echo>
+		<java
+			classname="com.liferay.portal.tools.GitUtil"
+			classpathref="project.classpath"
+			dir="${project.dir}"
+			fork="true"
+			newenvironment="true"
+			outputProperty="baseline.current.branch.file.names"
+			resultproperty="baseline.current.branch.result"
+		>
+			<arg value="git.type=current-branch" />
+			<arg value="git.working.branch.name=${git.working.branch.name}" />
+		</java>
+
+		<if>
+			<or>
+				<equals arg1="${baseline.current.branch.file.names}" arg2="" />
+				<not>
+					<equals arg1="${baseline.current.branch.result}" arg2="0" />
+				</not>
+			</or>
+			<then>
+				<antcall target="format-source-all" />
+			</then>
+			<else>
+				<echo>
 Running SourceFormatter on added/modified files in the current branch only. Please run the following command to run SourceFormatter on all files:
 
 ant format-source-all
-		</echo>
+				</echo>
 
-		<antcall target="format-source-current-branch" />
+				<antcall target="format-source-current-branch" />
+			</else>
+		</if>
 	</target>
 
 	<target name="format-source-all">

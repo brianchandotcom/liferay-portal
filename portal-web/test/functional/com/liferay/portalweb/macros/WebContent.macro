@@ -26,6 +26,8 @@
 		<if>
 			<isset var="webContentTitle" />
 			<then>
+				<execute function="Click" locator1="TextInput#TITLE" />
+
 				<execute macro="PortletEntry#inputTitle">
 					<var name="title" value="${webContentTitle}" />
 				</execute>

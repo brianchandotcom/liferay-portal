@@ -115,14 +115,16 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 	@Override
 	public void createLayouts(
-			JSONArray jsonArray, ClassLoader classLoader,
+			JSONArray jsonArray, Layout parentLayout, ClassLoader classLoader,
 			String dependenciesFilePath, ServiceContext serviceContext)
 		throws Exception {
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			createLayout(jsonObject, serviceContext);
+			createLayout(
+				jsonObject, parentLayout, classLoader, dependenciesFilePath,
+				serviceContext);
 		}
 	}
 
@@ -258,11 +260,24 @@ public class CPFileImporterImpl implements CPFileImporter {
 	}
 
 	protected void createLayout(
-			JSONObject jsonObject, ServiceContext serviceContext)
+			JSONObject jsonObject, Layout parentLayout, ClassLoader classLoader,
+			String dependenciesFilePath, ServiceContext serviceContext)
 		throws Exception {
 
+		boolean hidden = jsonObject.getBoolean("hidden");
 		String layoutTemplateId = jsonObject.getString("layoutTemplateId");
+		String layoutType = jsonObject.getString("layoutType");
 		String name = jsonObject.getString("name");
+
+		Long parentLayoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
+
+		if (parentLayout != null) {
+			parentLayoutId = parentLayout.getLayoutId();
+		}
+
+		if (Validator.isNull(layoutType)) {
+			layoutType = LayoutConstants.TYPE_PORTLET;
+		}
 
 		String friendlyURL = StringUtil.toLowerCase(name);
 
@@ -274,18 +289,29 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 		Layout layout = _layoutLocalService.addLayout(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name, name,
-			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, true, friendlyURL,
-			serviceContext);
+			parentLayoutId, name, name, StringPool.BLANK, layoutType, hidden,
+			friendlyURL, serviceContext);
 
 		JSONArray portletsJSONArray = jsonObject.getJSONArray("portlets");
 
-		addLayoutPortlets(
-			portletsJSONArray, layout, layoutTemplateId, serviceContext);
+		if ((portletsJSONArray != null) && (portletsJSONArray.length() > 0)) {
+			addLayoutPortlets(
+				portletsJSONArray, layout, layoutTemplateId, serviceContext);
+		}
 
-		_layoutLocalService.updateLayout(
+		layout = _layoutLocalService.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
+
+		JSONArray sublayoutsJSONArray = jsonObject.getJSONArray("subLayouts");
+
+		if ((sublayoutsJSONArray != null) &&
+			(sublayoutsJSONArray.length() > 0)) {
+
+			createLayouts(
+				sublayoutsJSONArray, layout, classLoader, dependenciesFilePath,
+				serviceContext);
+		}
 	}
 
 	protected void deleteThemeSettingsProperties(

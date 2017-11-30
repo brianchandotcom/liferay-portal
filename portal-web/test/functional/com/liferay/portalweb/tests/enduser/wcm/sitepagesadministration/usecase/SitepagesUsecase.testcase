@@ -205,52 +205,6 @@
 		</execute>
 	</command>
 
-	<command name="LoadMoreResultsLinkAreMissingAtAllLevelsInTreeView" priority="3">
-		<property name="custom.properties" value="layout.manage.pages.initial.children=3" />
-		<property name="testray.component.names" value="Site Pages Administration" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Navigation" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Pages" />
-		</execute>
-
-		<for list="Page1 Name,Page2 Name,Page3 Name,Page4 Name" param="pageName">
-			<execute macro="SitePages#addPublicPage">
-				<var name="pageName" value="${pageName}" />
-			</execute>
-		</for>
-
-		<execute macro="SitePageNavigator#gotoPages">
-			<var name="page" value="Public Pages" />
-		</execute>
-
-		<execute macro="Page#viewLoadMoreResultsPages">
-			<var name="siteChildPages" value="false" />
-		</execute>
-
-		<for list="Child Page1 Name,Child Page2 Name,Child Page3 Name,Child Page4 Name, Child Page5 Name" param="siteChildPageName">
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Navigation" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Site Pages" />
-			</execute>
-
-			<execute macro="SitePages#addPublicChildPage">
-				<var name="childPageName" value="${siteChildPageName}" />
-				<var name="parentPageName" value="Welcome" />
-			</execute>
-		</for>
-
-		<execute macro="SitePageNavigator#gotoPages">
-			<var name="page" value="Public Pages" />
-		</execute>
-
-		<execute macro="Page#viewLoadMoreResultsPages">
-			<var name="siteChildPages" value="true" />
-		</execute>
-	</command>
-
 	<command name="SitesPanelLayout" priority="3">
 		<property name="testray.component.names" value="Site Pages Administration" />
 

@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
@@ -38,8 +37,7 @@ public interface CPFileImporter {
 		throws Exception;
 
 	public void createLayouts(
-			JSONArray jsonArray, Layout parentLayout, ClassLoader classLoader,
-			String dependenciesFilePath, ServiceContext serviceContext)
+			JSONArray jsonArray, ServiceContext serviceContext)
 		throws Exception;
 
 	public void updateLookAndFeel(String themeId, ServiceContext serviceContext)

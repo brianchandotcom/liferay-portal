@@ -115,17 +115,10 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 	@Override
 	public void createLayouts(
-			JSONArray jsonArray, Layout parentLayout, ClassLoader classLoader,
-			String dependenciesFilePath, ServiceContext serviceContext)
+			JSONArray jsonArray, ServiceContext serviceContext)
 		throws Exception {
 
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			createLayout(
-				jsonObject, parentLayout, classLoader, dependenciesFilePath,
-				serviceContext);
-		}
+		createLayouts(jsonArray, null, serviceContext);
 	}
 
 	@Override
@@ -260,8 +253,8 @@ public class CPFileImporterImpl implements CPFileImporter {
 	}
 
 	protected void createLayout(
-			JSONObject jsonObject, Layout parentLayout, ClassLoader classLoader,
-			String dependenciesFilePath, ServiceContext serviceContext)
+			JSONObject jsonObject, Layout parentLayout,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		boolean hidden = jsonObject.getBoolean("hidden");
@@ -308,9 +301,19 @@ public class CPFileImporterImpl implements CPFileImporter {
 		if ((sublayoutsJSONArray != null) &&
 			(sublayoutsJSONArray.length() > 0)) {
 
-			createLayouts(
-				sublayoutsJSONArray, layout, classLoader, dependenciesFilePath,
-				serviceContext);
+			createLayouts(sublayoutsJSONArray, layout, serviceContext);
+		}
+	}
+
+	protected void createLayouts(
+			JSONArray jsonArray, Layout parentLayout,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			createLayout(jsonObject, parentLayout, serviceContext);
 		}
 	}
 

@@ -3002,6 +3002,12 @@ to version 2.3.34.
 - [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
 1.0.505.
 
+## 3.5.55 - 2017-11-29
+
+### Changed
+- [LPS-76202]: Update the [Liferay Gradle Plugins Jasper JSPC] dependency to
+version 2.0.3.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -3271,4 +3277,5 @@ to version 2.3.34.
 [LPS-75965]: https://issues.liferay.com/browse/LPS-75965
 [LPS-75971]: https://issues.liferay.com/browse/LPS-75971
 [LPS-76110]: https://issues.liferay.com/browse/LPS-76110
+[LPS-76202]: https://issues.liferay.com/browse/LPS-76202
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

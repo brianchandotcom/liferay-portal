@@ -20,11 +20,6 @@
 </tr>
 <!--SITE_VARIATION-->
 <tr>
-	<td>MANAGE_SITE_PAGES_VARIATIONS_IFRAME</td>
-	<td>//iframe[contains(@id,'_layoutSetBranches_iframe_')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_SITE_PAGES_VARIATIONS_BUTTON</td>
 	<td>//a[contains(@id,'_addBranchButton')]</td>
 	<td></td>
@@ -35,16 +30,6 @@
 	<td></td>
 </tr>
 <!--SITE_PAGES_VARIATIONS_TABLE-->
-<tr>
-	<td>SITE_PAGES_VARIATIONS_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_sitePagesVariationName}')]/td</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_PAGES_VARIATIONS_TABLE_DESCRIPTION</td>
-	<td>//tr[contains(.,'${key_sitePagesVariationName}')]/td[2]</td>
-	<td></td>
-</tr>
 <tr>
 	<td>SITE_PAGES_VARIATIONS_TABLE_ACTIONS</td>
 	<td>//tr[contains(.,'${key_sitePagesVariationName}')]/td[3]//div/a</td>
@@ -96,49 +81,6 @@
 <tr>
 	<td>MERGE_SITE_PAGES_VARIATION_TABLE_SELECT_LINK</td>
 	<td>//tbody//tr[contains(.,'${key_sitePagesVariationMergeName}')]/td[contains(.,'Select')]//a</td>
-	<td></td>
-</tr>
-<!--PAGE_VARIATION-->
-<tr>
-	<td>MANAGE_PAGE_VARIATIONS_IFRAME</td>
-	<td>//iframe[contains(@id,'_layoutRevisions_iframe_')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_PAGE_VARIATION_BUTTON</td>
-	<td>//button[contains(.,'Add Page Variation')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--PAGE_VARIATION_TABLE-->
-<tr>
-	<td>PAGE_VARIATION_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_pageVariationName}')]/td[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_VARIATION_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_pageVariationName}')]/td[3]//div/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--PAGE_VARIATIONS_TABLE_ACTIONS_MENULIST-->
-<tr>
-	<td>PAGE_VARIATIONS_TABLE_ACTIONS_MENULIST_EDIT</td>
-	<td>//a[contains(@id,'_layoutRevisionsSearchContainer_2_menu_edit')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_VARIATIONS_TABLE_ACTIONS_MENULIST_DELETE</td>
-	<td>//a[contains(@id,'_layoutRevisionsSearchContainer_2_menu_delete')]</td>
 	<td></td>
 </tr>
 </tbody>

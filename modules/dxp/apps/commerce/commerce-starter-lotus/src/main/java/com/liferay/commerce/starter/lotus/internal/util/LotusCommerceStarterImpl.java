@@ -112,7 +112,6 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 	public void createSampleData(ServiceContext serviceContext)
 		throws Exception {
 
-		_cpDemoDataCreator.init();
 		_cpDemoDataCreator.create(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(), true);
 	}
@@ -218,9 +217,7 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(layoutsJSON);
 
-		_cpFileImporter.createLayouts(
-			jsonArray, null, clazz.getClassLoader(), DEPENDECY_PATH,
-			serviceContext);
+		_cpFileImporter.createLayouts(jsonArray, serviceContext);
 	}
 
 	protected JSONArray getThemePortletSettingJSONArray() throws Exception {

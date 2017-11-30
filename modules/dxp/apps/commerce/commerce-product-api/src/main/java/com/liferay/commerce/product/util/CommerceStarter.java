@@ -30,8 +30,6 @@ public interface CommerceStarter {
 
 	public String getName(HttpServletRequest httpServletRequest);
 
-	public boolean hasSampleData(HttpServletRequest httpServletRequest);
-
 	public boolean isActive(HttpServletRequest httpServletRequest);
 
 	public void renderPreview(

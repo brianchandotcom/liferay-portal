@@ -60,8 +60,6 @@ CommerceStarter lotusCommerceStarter = (CommerceStarter)request.getAttribute("re
 	</div>
 
 	<div class="col-md-6">
-		<aui:input label="sample-data" name="sampleData" type="checkbox" />
-
 		<aui:button name='<%= lotusCommerceStarter.getKey() + "ApplyButton" %>' primary="<%= true %>" value="apply" />
 	</div>
 </div>

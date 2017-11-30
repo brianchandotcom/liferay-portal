@@ -54,6 +54,17 @@ public class GetFileSetTask extends Task {
 
 		Collections.addAll(classNames, _classNames.split(","));
 
+		Set<String> improperClassName = new HashSet<>();
+
+		if (!_checkClassNames(classNames, improperClassName)) {
+			_LOGGER.log(
+				Level.WARNING,
+				"Please input class names instead of test class names!" +
+					"Please check:{0}",
+				improperClassName.toString());
+			return;
+		}
+
 		List<Path> classResultList = new ArrayList();
 		List<Path> srcResultList = new ArrayList();
 
@@ -77,6 +88,14 @@ public class GetFileSetTask extends Task {
 
 		for (Path srcFilePath : srcResultList) {
 			String srcResult = String.valueOf(srcFilePath);
+
+			if (!_checkSrcPath(srcResult, improperClassName)) {
+				_LOGGER.log(
+					Level.WARNING,
+					"Input incorrect class name! Please check:{0}",
+					improperClassName.toString());
+				return;
+			}
 
 			int srcDirIndex = srcResult.indexOf("src") + 3;
 
@@ -181,6 +200,38 @@ public class GetFileSetTask extends Task {
 
 	public void setRootDir(String rootDir) {
 		_rootDir = rootDir;
+	}
+
+	private boolean _checkClassNames(
+		List<String> classNames, Set<String> improperClassName) {
+
+		for (String className : classNames) {
+			if (className.endsWith("Test")) {
+				improperClassName.add(className);
+			}
+		}
+
+		if (!improperClassName.isEmpty()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _checkSrcPath(
+		String absoluteFileName, Set<String> improperClassName) {
+
+		if (!absoluteFileName.contains("src")) {
+			int startIndex = absoluteFileName.lastIndexOf(File.separator);
+			int endIndex = absoluteFileName.lastIndexOf(".");
+
+			improperClassName.add(
+				absoluteFileName.substring(startIndex + 1, endIndex));
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private boolean _matchClassName(String className, String fileName) {

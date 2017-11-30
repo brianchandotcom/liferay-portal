@@ -3002,7 +3002,7 @@ to version 2.3.34.
 - [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
 1.0.505.
 
-## 3.5.55 - 2017-11-29
+## 3.5.55 - 2017-11-30
 
 ### Changed
 - [LPS-76202]: Update the [Liferay Gradle Plugins Jasper JSPC] dependency to

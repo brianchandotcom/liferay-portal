@@ -330,17 +330,7 @@
 </tr>
 <!--DATA_PROVIDER_PERMISSIONS_PARAMETER-->
 <tr>
-	<td>DATA_PROVIDER_PERMISSIONS_PARAMETER_FIELD</td>
-	<td>//div[contains(@id,'permissionsTitle')]//a[contains(@class,'collapse-icon')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DATA_PROVIDER_PERMISSIONS_PARAMETER_SELECT_VIEWABLE_BY</td>
-	<td>//div[contains(@id,'permissionsContent')]//select[contains(@id,'inputPermissionsViewRole')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DATA_PROVIDER_PERMISSIONS_PARAMETER_SELECT_OPTION_VIEWABLE_BY</td>
+	<td>DATA_PROVIDER_PERMISSIONS_VIEWABLE_BY_SELECT</td>
 	<td>//div[contains(@id,'permissionsContent')]//select[contains(@id,'inputPermissionsViewRole')]/option[contains(@value, '${key_selectOption}')]</td>
 	<td></td>
 </tr>

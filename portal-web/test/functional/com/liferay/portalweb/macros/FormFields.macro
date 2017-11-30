@@ -184,9 +184,9 @@
 	</command>
 
 	<command name="selectDataProviderPermission">
-		<var name="selectedOption" value="${selectOption}" />
+		<var name="selectOption" value="${selectOption}" />
 
-		<execute function="Select" locator1="Form#DATA_PROVIDER_PERMISSIONS_PARAMETER_SELECT_VIEWABLE_BY" value1="${selectedOption}" />
+		<execute function="Select" locator1="Form#DATA_PROVIDER_PERMISSIONS_PARAMETER_SELECT_VIEWABLE_BY" value1="${selectOption}" />
 	</command>
 
 	<command name="selectGridRadioOption">

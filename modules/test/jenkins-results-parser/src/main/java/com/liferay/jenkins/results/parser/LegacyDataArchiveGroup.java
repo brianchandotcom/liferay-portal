@@ -62,19 +62,11 @@ public class LegacyDataArchiveGroup {
 					"archive:ignore Update '", _dataArchiveType, "' for '",
 					portalVersion, "' at ",
 					latestTestCommit.getAbbreviatedSHA(), "."));
-
-			for (LegacyDataArchive legacyDataArchive : _legacyDataArchives) {
-				legacyDataArchive.updateCommit();
-			}
-
-			String gitLog = _legacyGitWorkingDirectory.log(1);
-
-			_commit = CommitFactory.newCommit(gitLog);
 		}
 	}
 
 	public Commit getCommit() {
-		return _commit;
+		return CommitFactory.newCommit(_legacyGitWorkingDirectory.log(1));
 	}
 
 	public String getDataArchiveType() {
@@ -132,7 +124,6 @@ public class LegacyDataArchiveGroup {
 		return legacyDataArchives;
 	}
 
-	private Commit _commit;
 	private final String _dataArchiveType;
 	private final LegacyDataArchivePortalVersion
 		_legacyDataArchivePortalVersion;

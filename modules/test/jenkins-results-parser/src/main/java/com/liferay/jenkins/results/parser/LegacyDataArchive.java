@@ -47,12 +47,17 @@ public class LegacyDataArchive {
 			JenkinsResultsParserUtil.combine(
 				legacyDataWorkingDirectory.toString(), "/", portalVersion,
 				"/data-archive/", dataArchiveType, "-", _databaseName, ".zip"));
-
-		_commit = _getCommit();
 	}
 
 	public Commit getCommit() {
-		return _commit;
+		if (_legacyDataArchiveFile.exists()) {
+			String gitLog = _legacyGitWorkingDirectory.log(
+				1, _legacyDataArchiveFile);
+
+			return CommitFactory.newCommit(gitLog);
+		}
+
+		return null;
 	}
 
 	public File getLegacyDataArchiveFile() {
@@ -60,7 +65,7 @@ public class LegacyDataArchive {
 	}
 
 	public boolean isMissing() {
-		if (_commit == null) {
+		if (getCommit() == null) {
 			return true;
 		}
 
@@ -76,14 +81,16 @@ public class LegacyDataArchive {
 	}
 
 	public boolean isUpdated() {
-		if (_commit == null) {
+		Commit commit = getCommit();
+
+		if (commit == null) {
 			return false;
 		}
 
 		Commit latestTestCommit =
 			_legacyDataArchivePortalVersion.getLatestTestCommit();
 
-		String commitMessage = _commit.getMessage();
+		String commitMessage = commit.getMessage();
 
 		if (commitMessage.contains(latestTestCommit.getAbbreviatedSHA())) {
 			return true;
@@ -113,32 +120,6 @@ public class LegacyDataArchive {
 		}
 	}
 
-	public void updateCommit() {
-		Commit commit = _getCommit();
-
-		if (commit == null) {
-			return;
-		}
-
-		if ((_commit != null) && _commit.equals(commit)) {
-			return;
-		}
-
-		_commit = commit;
-	}
-
-	private Commit _getCommit() {
-		if (_legacyDataArchiveFile.exists()) {
-			String gitLog = _legacyGitWorkingDirectory.log(
-				1, _legacyDataArchiveFile);
-
-			return CommitFactory.newCommit(gitLog);
-		}
-
-		return null;
-	}
-
-	private Commit _commit;
 	private final String _databaseName;
 	private final File _legacyDataArchiveFile;
 	private final LegacyDataArchiveGroup _legacyDataArchiveGroup;

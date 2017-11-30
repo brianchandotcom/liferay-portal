@@ -45,47 +45,47 @@
 						</button>
 					</div>
 					<div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="form-container">
-                                            {call CPDefinitionOptionValueList.render}
-                                                {param currentCPDefinitionOptionValueRelId: $_currentCPDefinitionOptionValueRelId /}
-                                                {param newCPDefinitionOptionValueRelTitle: $_newCPDefinitionOptionValueRelTitle /}
-                                                {param cpDefinitionOptionValueRels: $_cpDefinitionOptionValueRels /}
-                                                {param pathThemeImages: $pathThemeImages /}
-                                                {param events: ['addOptionValue': $_handleAddOptionValue , 'optionValueSelected': $_handleOptionValueSelected] /}
-                                            {/call}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="form-container">
-                                            {if $_currentCPDefinitionOptionValueRelId}
-                                                {call CPDefinitionOptionValueDetail.render}
-                                                    {param cpDefinitionOptionRelId : $cpDefinitionOptionRelId /}
-                                                    {param cpDefinitionOptionValueRelId : $_currentCPDefinitionOptionValueRelId /}
-                                                    {param namespace: $namespace /}
-                                                    {param cpDefinitionOptionValueRelURL: $cpDefinitionOptionValueRelURL /}
-                                                    {param pathThemeImages: $pathThemeImages /}
-                                                    {param events: ['cancel': $_handleCancelEditing , 'optionValueDelated': $_handleOptionValueDelated , 'optionValueSaved': $_handleOptionValueSaved , 'titleChange': $_handleTitleChange] /}
-                                                {/call}
-                                            {/if}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="card">
+									<div class="card-body">
+										<div class="form-container">
+											{call CPDefinitionOptionValueList.render}
+												{param currentCPDefinitionOptionValueRelId: $_currentCPDefinitionOptionValueRelId /}
+												{param newCPDefinitionOptionValueRelTitle: $_newCPDefinitionOptionValueRelTitle /}
+												{param cpDefinitionOptionValueRels: $_cpDefinitionOptionValueRels /}
+												{param pathThemeImages: $pathThemeImages /}
+												{param events: ['addOptionValue': $_handleAddOptionValue , 'optionValueSelected': $_handleOptionValueSelected] /}
+											{/call}
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="card">
+									<div class="card-body">
+										<div class="form-container">
+											{if $_currentCPDefinitionOptionValueRelId}
+												{call CPDefinitionOptionValueDetail.render}
+													{param cpDefinitionOptionRelId : $cpDefinitionOptionRelId /}
+													{param cpDefinitionOptionValueRelId : $_currentCPDefinitionOptionValueRelId /}
+													{param namespace: $namespace /}
+													{param cpDefinitionOptionValueRelURL: $cpDefinitionOptionValueRelURL /}
+													{param pathThemeImages: $pathThemeImages /}
+													{param events: ['cancel': $_handleCancelEditing , 'optionValueDelated': $_handleOptionValueDelated , 'optionValueSaved': $_handleOptionValueSaved , 'titleChange': $_handleTitleChange] /}
+												{/call}
+											{/if}
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
-			{if $show}
-				<div class="modal-backdrop fade show"></div>
-			{/if}
 		</div>
+		{if $show}
+			<div class="modal-backdrop fade show"></div>
+		{/if}
 	</div>
 {/template}

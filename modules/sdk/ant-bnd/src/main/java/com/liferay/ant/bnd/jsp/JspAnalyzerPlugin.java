@@ -30,15 +30,13 @@ import aQute.bnd.osgi.Packages;
 import aQute.bnd.osgi.Resource;
 import aQute.bnd.service.AnalyzerPlugin;
 import aQute.lib.env.Header;
-
 import aQute.lib.io.IO;
 import aQute.lib.strings.Strings;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
@@ -112,7 +110,9 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 		return false;
 	}
 
-	protected void addApiUses(Analyzer analyzer, String content) {
+	protected void addApiUses(Analyzer analyzer, String originalContent) {
+		String content = originalContent.replaceAll("<%--[\\s\\S]*?--%>","");
+
 		int contentX = -1;
 		int contentY = content.length();
 

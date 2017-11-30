@@ -17,9 +17,6 @@ package com.liferay.portal.verify;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -322,30 +319,12 @@ public class VerifyPermission extends VerifyProcess {
 	}
 
 	protected void fixUserDefaultRolePermissions() throws Exception {
-		DB db = DBManagerUtil.getDB();
-
-		DBType dbType = db.getDBType();
-
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			long userClassNameId = PortalUtil.getClassNameId(User.class);
 			long userGroupClassNameId = PortalUtil.getClassNameId(
 				UserGroup.class);
 
 			long[] companyIds = PortalInstances.getCompanyIdsBySQL();
-
-			if ((dbType == DBType.MARIADB) || (dbType == DBType.MYSQL)) {
-				fixUserDefaultRolePermissionsMySQL(
-					userClassNameId, userGroupClassNameId, companyIds);
-
-				return;
-			}
-
-			if (dbType == DBType.ORACLE) {
-				fixUserDefaultRolePermissionsOracle(
-					userClassNameId, userGroupClassNameId, companyIds);
-
-				return;
-			}
 
 			for (long companyId : companyIds) {
 				Role powerUserRole = RoleLocalServiceUtil.getRole(

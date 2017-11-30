@@ -2514,7 +2514,7 @@ is found in a parent directory.
 ### Changed
 - [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version 3.5.54.
 
-## 5.2.7 - 2017-11-29
+## 5.2.7 - 2017-11-30
 
 ### Changed
 - [LPS-76202]: Update the [Liferay Gradle Plugins] dependency to version 3.5.55.

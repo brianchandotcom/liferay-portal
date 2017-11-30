@@ -21,7 +21,7 @@
 - [LPS-74368]: Remove all dependency exclusions from the `jspCTool`
 configuration's `com.liferay.jasper.jspc` default dependency.
 
-## 2.0.3 - 2017-11-29
+## 2.0.3 - 2017-11-30
 
 ### Fixed
 - [LPS-76202]: Defer evaluation of the project's build directory so it can be

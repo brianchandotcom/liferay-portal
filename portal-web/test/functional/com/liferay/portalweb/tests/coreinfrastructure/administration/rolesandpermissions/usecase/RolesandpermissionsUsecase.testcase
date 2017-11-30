@@ -2249,10 +2249,6 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="USA Ice Hockey Team Blog" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="pageName" value="USA Ice Hockey Team Blog" />
 			<var name="pageTemplateName" value="Blog" />
 			<var name="privacy" value="Public" />
 		</execute>

@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.knowledge.base.web.configuration;
+package com.liferay.knowledge.base.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Roberto Díaz
@@ -26,30 +27,17 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE
 )
 @Meta.OCD(
-	id = "com.liferay.knowledge.base.web.configuration.KBSectionPortletInstanceConfiguration",
+	id = "com.liferay.knowledge.base.web.configuration.KBDisplayPortletInstanceConfiguration",
 	localization = "content/Language",
-	name = "knowledge-base-section-portlet-instance-configuration-name"
+	name = "knowledge-base-display-portlet-instance-configuration-name"
 )
-public interface KBSectionPortletInstanceConfiguration {
+public interface KBDisplayPortletInstanceConfiguration {
 
-	@Meta.AD(
-		deflt = "true", name = "show-kb-articles-sections-title",
-		required = false
-	)
-	public boolean showKBArticlesSectionsTitle();
+	@Meta.AD(deflt = "0", name = "resource-prim-key", required = false)
+	public long resourcePrimKey();
 
-	@Meta.AD(deflt = "general", name = "kb-articles-sections", required = false)
-	public String[] kbArticlesSections();
-
-	@Meta.AD(
-		deflt = "title", name = "kb-article-display-style", required = false
-	)
-	public String kbArticleDisplayStyle();
-
-	@Meta.AD(
-		deflt = "true", name = "show-kb-articles-pagination", required = false
-	)
-	public boolean showKBArticlesPagination();
+	@Meta.AD(deflt = "0", name = "resource-class-name-id", required = false)
+	public long resourceClassNameId();
 
 	@Meta.AD(
 		deflt = "false", name = "enable-kb-article-description",
@@ -63,14 +51,14 @@ public interface KBSectionPortletInstanceConfiguration {
 	public boolean enableKBArticleRatings();
 
 	@Meta.AD(
-		deflt = "true", name = "show-kb-article-attachments", required = false
-	)
-	public boolean showKBArticleAttachments();
-
-	@Meta.AD(
 		deflt = "true", name = "show-kb-article-asset-entries", required = false
 	)
 	public boolean showKBArticleAssetEntries();
+
+	@Meta.AD(
+		deflt = "true", name = "show-kb-article-attachments", required = false
+	)
+	public boolean showKBArticleAttachments();
 
 	@Meta.AD(
 		deflt = "true", name = "enable-kb-article-asset-links", required = false
@@ -98,21 +86,10 @@ public interface KBSectionPortletInstanceConfiguration {
 	public boolean enableKBArticlePrint();
 
 	@Meta.AD(
-		deflt = "false", name = "enable-social-bookmarks", required = false
-	)
-	public boolean enableSocialBookmarks();
-
-	@Meta.AD(
 		deflt = "menu", name = "social-bookmarks-display-style",
 		required = false
 	)
 	public String socialBookmarksDisplayStyle();
-
-	@Meta.AD(
-		deflt = "bottom", name = "social-bookmarks-display-position",
-		required = false
-	)
-	public String socialBookmarksDisplayPosition();
 
 	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/social.bookmark.types}",
@@ -120,10 +97,12 @@ public interface KBSectionPortletInstanceConfiguration {
 	)
 	public String socialBookmarksTypes();
 
-	@Meta.AD(name = "admin-kb-article-sections", required = false)
-	public String[] adminKBArticleSections();
+	@Meta.AD(
+		deflt = StringPool.BLANK, name = "content-root-prefix", required = false
+	)
+	public String contentRootPrefix();
 
-	@Meta.AD(name = "admin-kb-article-sections-default", required = false)
-	public String[] adminKBArticleSectionsDefault();
+	@Meta.AD(deflt = "3", name = "maximum-nesting-level", required = false)
+	public int maxNestingLevel();
 
 }

@@ -3527,6 +3527,7 @@
 		<tag-class>com.liferay.taglib.ui.SocialBookmarksSettingsTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Deprecated as of 7.0.0, with no direct replacement.</description>
 			<name>displayPosition</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3537,6 +3538,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Deprecated as of 7.0.0, with no direct replacement.</description>
 			<name>enabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

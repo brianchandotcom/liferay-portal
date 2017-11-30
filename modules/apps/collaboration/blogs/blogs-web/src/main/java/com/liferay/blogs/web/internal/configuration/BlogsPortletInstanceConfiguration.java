@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.web.configuration;
+package com.liferay.blogs.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -56,9 +56,6 @@ public interface BlogsPortletInstanceConfiguration {
 	@Meta.AD(deflt = "true", name = "enable-related-assets", required = false)
 	public boolean enableRelatedAssets();
 
-	@Meta.AD(deflt = "true", name = "enable-social-bookmarks", required = false)
-	public boolean enableSocialBookmarks();
-
 	@Meta.AD(deflt = "false", name = "enable-view-count", required = false)
 	public boolean enableViewCount();
 
@@ -67,12 +64,6 @@ public interface BlogsPortletInstanceConfiguration {
 		name = "page-delta", required = false
 	)
 	public String pageDelta();
-
-	@Meta.AD(
-		deflt = "bottom", name = "social-bookmarks-display-position",
-		required = false
-	)
-	public String socialBookmarksDisplayPosition();
 
 	@Meta.AD(
 		deflt = "menu", name = "social-bookmarks-display-style",

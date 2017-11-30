@@ -118,6 +118,8 @@ AUI.add(
 					},
 
 					_afterOrderClick: function(event, box) {
+						var instance = this;
+
 						var target = event.domEvent.target;
 						var targetBtn = target.ancestor('.btn', true);
 
@@ -130,7 +132,7 @@ AUI.add(
 								direction = 0;
 							}
 
-							Util.reorder(box, direction);
+							instance._orderItem(box, direction);
 						}
 					},
 
@@ -175,6 +177,18 @@ AUI.add(
 						var instance = this;
 
 						box.attr('selectedIndex', '-1');
+					},
+
+					_orderItem: function(box, direction) {
+						Util.reorder(box, direction);
+
+						Liferay.fire(
+							NAME + ':orderItem',
+							{
+								box: box,
+								direction: direction
+							}
+						);
 					},
 
 					_renderBoxes: function() {

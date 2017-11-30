@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.knowledge.base.web.configuration.definition;
+package com.liferay.blogs.web.internal.configuration.definition;
 
-import com.liferay.knowledge.base.web.configuration.KBDisplayPortletInstanceConfiguration;
+import com.liferay.blogs.web.internal.configuration.BlogsPortletInstanceConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Roberto Díaz
+ * @author Sergio González
  */
 @Component
-public class KBDisplayPortletInstanceConfigurationBeanDeclaration
+public class BlogsPortletInstanceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return KBDisplayPortletInstanceConfiguration.class;
+		return BlogsPortletInstanceConfiguration.class;
 	}
 
 }

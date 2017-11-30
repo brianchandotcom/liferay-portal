@@ -39,6 +39,11 @@ public class BlogsWebUpgrade implements UpgradeStepRegistrator {
 			"com.liferay.blogs.web", "0.0.1", "1.0.0",
 			new UpgradePortletPreferences(),
 			new UpgradePortletSettings(_settingsFactory));
+
+		registry.register(
+			"com.liferay.blogs.web", "1.0.0", "1.1.0",
+			new com.liferay.blogs.web.internal.upgrade.v1_1_0.
+				UpgradePortletPreferences());
 	}
 
 	@Reference(unbind = "-")

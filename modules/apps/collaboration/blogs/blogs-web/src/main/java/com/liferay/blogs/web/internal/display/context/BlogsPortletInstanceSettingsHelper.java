@@ -14,7 +14,7 @@
 
 package com.liferay.blogs.web.internal.display.context;
 
-import com.liferay.blogs.web.configuration.BlogsPortletInstanceConfiguration;
+import com.liferay.blogs.web.internal.configuration.BlogsPortletInstanceConfiguration;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 

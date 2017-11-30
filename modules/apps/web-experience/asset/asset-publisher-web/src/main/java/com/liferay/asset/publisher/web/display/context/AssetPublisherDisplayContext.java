@@ -923,15 +923,12 @@ public class AssetPublisherDisplayContext {
 		return _selectionStyle;
 	}
 
+	/**
+	 * @deprecated As of 2.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public String getSocialBookmarksDisplayPosition() {
-		if (_socialBookmarksDisplayPosition != null) {
-			return _socialBookmarksDisplayPosition;
-		}
-
-		_socialBookmarksDisplayPosition = _portletPreferences.getValue(
-			"socialBookmarksDisplayPosition", "bottom");
-
-		return _socialBookmarksDisplayPosition;
+		return "bottom";
 	}
 
 	public String getSocialBookmarksDisplayStyle() {
@@ -950,6 +947,22 @@ public class AssetPublisherDisplayContext {
 		}
 
 		return _socialBookmarksDisplayStyle;
+	}
+
+	public String getSocialBookmarksTypes() {
+		if (_socialBookmarksTypes != null) {
+			return _socialBookmarksTypes;
+		}
+
+		_socialBookmarksTypes = _portletPreferences.getValue(
+			"socialBookmarksTypes", null);
+
+		if (_socialBookmarksTypes == null) {
+			_socialBookmarksTypes = PropsUtil.get(
+				PropsKeys.SOCIAL_BOOKMARK_TYPES);
+		}
+
+		return _socialBookmarksTypes;
 	}
 
 	public String getTagSelectorURL() {
@@ -1180,15 +1193,12 @@ public class AssetPublisherDisplayContext {
 		return false;
 	}
 
+	/**
+	 * @deprecated As of 2.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public boolean isEnableSocialBookmarks() {
-		if (_enableSocialBookmarks != null) {
-			return _enableSocialBookmarks;
-		}
-
-		_enableSocialBookmarks = GetterUtil.getBoolean(
-			_portletPreferences.getValue("enableSocialBookmarks", null), true);
-
-		return _enableSocialBookmarks;
+		return true;
 	}
 
 	public boolean isEnableTagBasedNavigation() {
@@ -1591,7 +1601,6 @@ public class AssetPublisherDisplayContext {
 	private Boolean _enableRatings;
 	private Boolean _enableRelatedAssets;
 	private Boolean _enableRSS;
-	private Boolean _enableSocialBookmarks;
 	private Boolean _enableTagBasedNavigation;
 	private Boolean _enableViewCountIncrement;
 	private Boolean _excludeZeroViewCount;
@@ -1626,8 +1635,8 @@ public class AssetPublisherDisplayContext {
 	private Boolean _showExtraInfo;
 	private Boolean _showMetadataDescriptions;
 	private Boolean _showOnlyLayoutAssets;
-	private String _socialBookmarksDisplayPosition;
 	private String _socialBookmarksDisplayStyle;
+	private String _socialBookmarksTypes;
 	private Boolean _subtypeFieldsFilterEnabled;
 	private TimeZone _timeZone;
 	private Long _userId;

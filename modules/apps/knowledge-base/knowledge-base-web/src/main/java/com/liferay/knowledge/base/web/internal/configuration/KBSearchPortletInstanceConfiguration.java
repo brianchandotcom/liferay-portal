@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.knowledge.base.web.configuration;
+package com.liferay.knowledge.base.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -101,21 +101,10 @@ public interface KBSearchPortletInstanceConfiguration {
 	public boolean enableKBArticlePrint();
 
 	@Meta.AD(
-		deflt = "false", name = "enable-social-bookmarks", required = false
-	)
-	public boolean enableSocialBookmarks();
-
-	@Meta.AD(
 		deflt = "menu", name = "social-bookmarks-display-style",
 		required = false
 	)
 	public String socialBookmarksDisplayStyle();
-
-	@Meta.AD(
-		deflt = "bottom", name = "social-bookmarks-display-position",
-		required = false
-	)
-	public String socialBookmarksDisplayPosition();
 
 	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/social.bookmark.types}",

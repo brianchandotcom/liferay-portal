@@ -131,9 +131,12 @@
 <br />
 
 <aui:row cssClass="panel-group">
-	<liferay-ui:social-bookmarks-settings
-		displayPosition="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayPosition() %>"
-		displayStyle="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayStyle() %>"
-		enabled="<%= assetPublisherDisplayContext.isEnableSocialBookmarks() %>"
-	/>
+	<aui:col>
+		<liferay-ui:panel collapsible="<%= false %>" markupView="lexicon" title="social-bookmarks">
+			<liferay-ui:social-bookmarks-settings
+				displayStyle="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayStyle() %>"
+				types="<%= assetPublisherDisplayContext.getSocialBookmarksTypes() %>"
+			/>
+		</liferay-ui:panel>
+	</aui:col>
 </aui:row>

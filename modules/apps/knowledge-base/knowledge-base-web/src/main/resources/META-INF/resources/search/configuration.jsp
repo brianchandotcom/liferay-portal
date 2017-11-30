@@ -69,10 +69,12 @@ kbSearchPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBSearch
 
 							<aui:input label="enable-print" name="preferences--enableKBArticlePrint--" type="checkbox" value="<%= kbSearchPortletInstanceConfiguration.enableKBArticlePrint() %>" />
 
+							<h4 class="section-header">
+								<liferay-ui:message key="social-bookmarks" />
+							</h4>
+
 							<liferay-ui:social-bookmarks-settings
-								displayPosition="<%= kbSearchPortletInstanceConfiguration.socialBookmarksDisplayPosition() %>"
 								displayStyle="<%= kbSearchPortletInstanceConfiguration.socialBookmarksDisplayStyle() %>"
-								enabled="<%= kbSearchPortletInstanceConfiguration.enableSocialBookmarks() %>"
 								types="<%= kbSearchPortletInstanceConfiguration.socialBookmarksTypes() %>"
 							/>
 						</aui:fieldset>

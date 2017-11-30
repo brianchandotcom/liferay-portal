@@ -24,16 +24,22 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class SocialBookmarksSettingsTag extends IncludeTag {
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public void setDisplayPosition(String displayPosition) {
-		_displayPosition = displayPosition;
 	}
 
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public void setEnabled(boolean enabled) {
-		_enabled = enabled;
 	}
 
 	public void setTypes(String types) {
@@ -43,8 +49,6 @@ public class SocialBookmarksSettingsTag extends IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_displayStyle = null;
-		_displayPosition = null;
-		_enabled = false;
 		_types = null;
 	}
 
@@ -56,13 +60,7 @@ public class SocialBookmarksSettingsTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-ui:social-bookmarks-settings:displayPosition",
-			_displayPosition);
-		request.setAttribute(
 			"liferay-ui:social-bookmarks-settings:displayStyle", _displayStyle);
-		request.setAttribute(
-			"liferay-ui:social-bookmarks-settings:enabled",
-			String.valueOf(_enabled));
 		request.setAttribute(
 			"liferay-ui:social-bookmarks-settings:types", _types);
 	}
@@ -70,9 +68,7 @@ public class SocialBookmarksSettingsTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/social_bookmarks_settings/page.jsp";
 
-	private String _displayPosition;
 	private String _displayStyle;
-	private boolean _enabled;
 	private String _types;
 
 }

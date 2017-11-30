@@ -201,12 +201,10 @@
 </#macro>
 
 <#macro getSocialBookmarks>
-	<#if getterUtil.getBoolean(enableSocialBookmarks)>
-		<@liferay_ui["social-bookmarks"]
-			displayStyle="${socialBookmarksDisplayStyle}"
-			target="_blank"
-			title=entry.getTitle(locale)
-			url=viewURL
-		/>
-	</#if>
+	<@liferay_ui["social-bookmarks"]
+		displayStyle="${socialBookmarksDisplayStyle}"
+		target="_blank"
+		title=entry.getTitle(locale)
+		url=viewURL
+	/>
 </#macro>

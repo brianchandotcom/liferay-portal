@@ -12,12 +12,11 @@
  * details.
  */
 
-package com.liferay.knowledge.base.web.configuration;
+package com.liferay.knowledge.base.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Roberto Díaz
@@ -27,11 +26,11 @@ import com.liferay.portal.kernel.util.StringPool;
 	scope = ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE
 )
 @Meta.OCD(
-	id = "com.liferay.knowledge.base.web.configuration.KBDisplayPortletInstanceConfiguration",
+	id = "com.liferay.knowledge.base.web.configuration.KBArticlePortletInstanceConfiguration",
 	localization = "content/Language",
-	name = "knowledge-base-display-portlet-instance-configuration-name"
+	name = "knowledge-base-article-portlet-instance-configuration-name"
 )
-public interface KBDisplayPortletInstanceConfiguration {
+public interface KBArticlePortletInstanceConfiguration {
 
 	@Meta.AD(deflt = "0", name = "resource-prim-key", required = false)
 	public long resourcePrimKey();
@@ -66,7 +65,7 @@ public interface KBDisplayPortletInstanceConfiguration {
 	public boolean enableKBArticleAssetLinks();
 
 	@Meta.AD(
-		deflt = "true", name = "enable-kb-article-view-count-increment",
+		deflt = "false", name = "enable-kb-article-view-count-increment",
 		required = false
 	)
 	public boolean enableKBArticleViewCountIncrement();
@@ -86,34 +85,15 @@ public interface KBDisplayPortletInstanceConfiguration {
 	public boolean enableKBArticlePrint();
 
 	@Meta.AD(
-		deflt = "false", name = "enable-social-bookmarks", required = false
-	)
-	public boolean enableSocialBookmarks();
-
-	@Meta.AD(
 		deflt = "menu", name = "social-bookmarks-display-style",
 		required = false
 	)
 	public String socialBookmarksDisplayStyle();
 
 	@Meta.AD(
-		deflt = "bottom", name = "social-bookmarks-display-position",
-		required = false
-	)
-	public String socialBookmarksDisplayPosition();
-
-	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/social.bookmark.types}",
 		name = "social-bookmarks-types", required = false
 	)
 	public String socialBookmarksTypes();
-
-	@Meta.AD(
-		deflt = StringPool.BLANK, name = "content-root-prefix", required = false
-	)
-	public String contentRootPrefix();
-
-	@Meta.AD(deflt = "3", name = "maximum-nesting-level", required = false)
-	public int maxNestingLevel();
 
 }

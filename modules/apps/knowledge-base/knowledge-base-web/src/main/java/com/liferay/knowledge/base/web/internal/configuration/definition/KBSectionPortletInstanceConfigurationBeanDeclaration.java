@@ -12,29 +12,23 @@
  * details.
  */
 
-package com.liferay.blogs.web.configuration.definition;
+package com.liferay.knowledge.base.web.internal.configuration.definition;
 
-import com.liferay.blogs.constants.BlogsPortletKeys;
-import com.liferay.blogs.web.configuration.BlogsPortletInstanceConfiguration;
-import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
+import com.liferay.knowledge.base.web.internal.configuration.KBSectionPortletInstanceConfiguration;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Sergio González
+ * @author Roberto Díaz
  */
 @Component
-public class BlogsPortletInstanceConfigurationPidMapping
-	implements ConfigurationPidMapping {
+public class KBSectionPortletInstanceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return BlogsPortletInstanceConfiguration.class;
-	}
-
-	@Override
-	public String getConfigurationPid() {
-		return BlogsPortletKeys.BLOGS;
+		return KBSectionPortletInstanceConfiguration.class;
 	}
 
 }

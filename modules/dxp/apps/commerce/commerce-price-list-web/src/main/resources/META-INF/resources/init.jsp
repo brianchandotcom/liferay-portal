@@ -43,6 +43,7 @@ page import="com.liferay.commerce.price.list.web.internal.display.context.Commer
 page import="com.liferay.commerce.price.list.web.internal.servlet.taglib.ui.CommercePriceEntryFormNavigatorConstants" %><%@
 page import="com.liferay.commerce.price.list.web.internal.servlet.taglib.ui.CommercePriceListFormNavigatorConstants" %><%@
 page import="com.liferay.commerce.product.constants.CPPortletKeys" %><%@
+page import="com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPInstanceException" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.commerce.product.model.CPInstance" %><%@
@@ -60,7 +61,9 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
 
 <%@ page import="java.util.Collections" %><%@
-page import="java.util.List" %>
+page import="java.util.HashMap" %><%@
+page import="java.util.List" %><%@
+page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 
@@ -73,8 +76,10 @@ page import="java.util.List" %>
 <%
 String lifecycle = (String)request.getAttribute(liferayPortletRequest.LIFECYCLE_PHASE);
 
+PortletURL catalogURLObj = PortalUtil.getControlPanelPortletURL(request, CPPortletKeys.CP_DEFINITIONS, lifecycle);
 PortletURL priceListsURLObj = PortalUtil.getControlPanelPortletURL(request, CommercePortletKeys.COMMERCE_PRICE_LIST, lifecycle);
 
+String catalogURL = catalogURLObj.toString();
 String priceListsURL = priceListsURLObj.toString();
 
 String languageId = LanguageUtil.getLanguageId(locale);

@@ -41,19 +41,24 @@ portletURL.setParameter("toolbarItem", toolbarItem);
 
 request.setAttribute("view.jsp-portletURL", portletURL);
 
-PortletURL instancePriceListsURL = renderResponse.createRenderURL();
+PortletURL productSkusURL = cpInstanceCommerceTierPriceEntryDisplayContext.getProductSkusURL();
 
-instancePriceListsURL.setParameter("mvcRenderCommandName", "editProductInstance");
-instancePriceListsURL.setParameter("cpDefinitionId", String.valueOf(cpDefinitionId));
-instancePriceListsURL.setParameter("cpInstanceId", String.valueOf(cpInstanceId));
-instancePriceListsURL.setParameter("screenNavigationCategoryKey", cpInstanceCommerceTierPriceEntryDisplayContext.getScreenNavigationCategoryKey());
+PortletURL instancePriceListsURL = cpInstanceCommerceTierPriceEntryDisplayContext.getInstancePriceListURL();
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(instancePriceListsURL.toString());
+String title = commercePriceList.getName();
 
-renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpInstance.getSku() + " - " + commercePriceList.getName());
+Map<String, Object> data = new HashMap<>();
+
+data.put("direction-right", Boolean.TRUE.toString());
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "products"), catalogURL, data);
+PortalUtil.addPortletBreadcrumbEntry(request, cpDefinition.getTitle(languageId), String.valueOf(cpInstanceCommerceTierPriceEntryDisplayContext.getEditProductDefinitionURL()), data);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SKUS), productSkusURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, cpInstance.getSku(), instancePriceListsURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 %>
 
+<%@ include file="/breadcrumb.jspf" %>
 <%@ include file="/instance_price_entry_navbar.jspf" %>
 
 <liferay-frontend:management-bar

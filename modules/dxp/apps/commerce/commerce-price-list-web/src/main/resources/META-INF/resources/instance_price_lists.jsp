@@ -19,8 +19,6 @@
 <%
 CPInstanceCommercePriceEntryDisplayContext cpInstanceCommercePriceEntryDisplayContext = (CPInstanceCommercePriceEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CPDefinition cpDefinition = cpInstanceCommercePriceEntryDisplayContext.getCPDefinition();
-
 CPInstance cpInstance = cpInstanceCommercePriceEntryDisplayContext.getCPInstance();
 
 long cpDefinitionId = cpInstanceCommercePriceEntryDisplayContext.getCPDefinitionId();
@@ -35,11 +33,6 @@ PortletURL productSkusURL = PortalUtil.getControlPanelPortletURL(request, CPPort
 productSkusURL.setParameter("mvcRenderCommandName", "editProductDefinition");
 productSkusURL.setParameter("cpDefinitionId", String.valueOf(cpDefinitionId));
 productSkusURL.setParameter("screenNavigationCategoryKey", "skus");
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(productSkusURL.toString());
-
-renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpInstance.getSku());
 %>
 
 <liferay-frontend:management-bar

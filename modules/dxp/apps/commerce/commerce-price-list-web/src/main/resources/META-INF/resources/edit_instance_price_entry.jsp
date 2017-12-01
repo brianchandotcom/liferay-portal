@@ -19,13 +19,13 @@
 <%
 CPInstanceCommercePriceEntryDisplayContext cpInstanceCommercePriceEntryDisplayContext = (CPInstanceCommercePriceEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CPDefinition cpDefinition = cpInstanceCommercePriceEntryDisplayContext.getCPDefinition();
-
-CPInstance cpInstance = cpInstanceCommercePriceEntryDisplayContext.getCPInstance();
-
 CommercePriceEntry commercePriceEntry = cpInstanceCommercePriceEntryDisplayContext.getCommercePriceEntry();
 
 CommercePriceList commercePriceList = commercePriceEntry.getCommercePriceList();
+
+CPDefinition cpDefinition = cpInstanceCommercePriceEntryDisplayContext.getCPDefinition();
+
+CPInstance cpInstance = cpInstanceCommercePriceEntryDisplayContext.getCPInstance();
 
 long commercePriceEntryId = commercePriceEntry.getCommercePriceEntryId();
 long cpDefinitionId = cpInstanceCommercePriceEntryDisplayContext.getCPDefinitionId();
@@ -33,19 +33,24 @@ long cpInstanceId = cpInstanceCommercePriceEntryDisplayContext.getCPInstanceId()
 
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-price-entry-details");
 
-PortletURL instancePriceListsURL = renderResponse.createRenderURL();
+PortletURL productSkusURL = cpInstanceCommercePriceEntryDisplayContext.getProductSkusURL();
 
-instancePriceListsURL.setParameter("mvcRenderCommandName", "editProductInstance");
-instancePriceListsURL.setParameter("cpDefinitionId", String.valueOf(cpDefinitionId));
-instancePriceListsURL.setParameter("cpInstanceId", String.valueOf(cpInstanceId));
-instancePriceListsURL.setParameter("screenNavigationCategoryKey", cpInstanceCommercePriceEntryDisplayContext.getScreenNavigationCategoryKey());
+PortletURL instancePriceListsURL = cpInstanceCommercePriceEntryDisplayContext.getInstancePriceListURL();
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(instancePriceListsURL.toString());
+String title = commercePriceList.getName();
 
-renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpInstance.getSku() + " - " + commercePriceList.getName());
+Map<String, Object> data = new HashMap<>();
+
+data.put("direction-right", Boolean.TRUE.toString());
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "products"), catalogURL, data);
+PortalUtil.addPortletBreadcrumbEntry(request, cpDefinition.getTitle(languageId), String.valueOf(cpInstanceCommercePriceEntryDisplayContext.getEditProductDefinitionURL()), data);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SKUS), productSkusURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, cpInstance.getSku(), instancePriceListsURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 %>
 
+<%@ include file="/breadcrumb.jspf" %>
 <%@ include file="/instance_price_entry_navbar.jspf" %>
 
 <portlet:actionURL name="editCPInstanceCommercePriceEntry" var="editCommercePriceEntryActionURL" />

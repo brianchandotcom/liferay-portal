@@ -21,30 +21,40 @@ CPInstanceCommerceTierPriceEntryDisplayContext cpInstanceCommerceTierPriceEntryD
 
 CommerceTierPriceEntry commerceTierPriceEntry = cpInstanceCommerceTierPriceEntryDisplayContext.getCommerceTierPriceEntry();
 
+CommercePriceEntry commercePriceEntry = cpInstanceCommerceTierPriceEntryDisplayContext.getCommercePriceEntry();
+
+CommercePriceList commercePriceList = commercePriceEntry.getCommercePriceList();
+
 CPDefinition cpDefinition = cpInstanceCommerceTierPriceEntryDisplayContext.getCPDefinition();
 
 CPInstance cpInstance = cpInstanceCommerceTierPriceEntryDisplayContext.getCPInstance();
 
 long commercePriceEntryId = cpInstanceCommerceTierPriceEntryDisplayContext.getCommercePriceEntryId();
 long commerceTierPriceEntryId = cpInstanceCommerceTierPriceEntryDisplayContext.getCommerceTierPriceEntryId();
-long cpDefinitionId = cpInstanceCommerceTierPriceEntryDisplayContext.getCPDefinitionId();
-long cpInstanceId = cpInstanceCommerceTierPriceEntryDisplayContext.getCPInstanceId();
 
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-tier-price-entries");
 
-PortletURL instanceTierPriceEntriesURL = renderResponse.createRenderURL();
+PortletURL productSkusURL = cpInstanceCommerceTierPriceEntryDisplayContext.getProductSkusURL();
 
-instanceTierPriceEntriesURL.setParameter("mvcRenderCommandName", "viewCPInstanceCommerceTierPriceEntries");
-instanceTierPriceEntriesURL.setParameter("commercePriceEntryId", String.valueOf(commercePriceEntryId));
-instanceTierPriceEntriesURL.setParameter("cpDefinitionId", String.valueOf(cpDefinitionId));
-instanceTierPriceEntriesURL.setParameter("cpInstanceId", String.valueOf(cpInstanceId));
-instanceTierPriceEntriesURL.setParameter("toolbarItem", toolbarItem);
+PortletURL instancePriceListsURL = cpInstanceCommerceTierPriceEntryDisplayContext.getInstancePriceListURL();
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(instanceTierPriceEntriesURL.toString());
+PortletURL instanceTierPriceEntriesURL = cpInstanceCommerceTierPriceEntryDisplayContext.getInstanceTierPriceEntriesURL();
 
-renderResponse.setTitle(cpInstanceCommerceTierPriceEntryDisplayContext.getContextTitle());
+String title = cpInstanceCommerceTierPriceEntryDisplayContext.getContextTitle();
+
+Map<String, Object> data = new HashMap<>();
+
+data.put("direction-right", Boolean.TRUE.toString());
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "products"), catalogURL, data);
+PortalUtil.addPortletBreadcrumbEntry(request, cpDefinition.getTitle(languageId), String.valueOf(cpInstanceCommerceTierPriceEntryDisplayContext.getEditProductDefinitionURL()), data);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SKUS), productSkusURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, cpInstance.getSku(), instancePriceListsURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, commercePriceList.getName(), instanceTierPriceEntriesURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 %>
+
+<%@ include file="/breadcrumb.jspf" %>
 
 <portlet:actionURL name="editCPInstanceCommerceTierPriceEntry" var="editCommerceTierPriceEntryActionURL" />
 
@@ -57,11 +67,13 @@ renderResponse.setTitle(cpInstanceCommerceTierPriceEntryDisplayContext.getContex
 	<div class="lfr-form-content">
 		<aui:model-context bean="<%= commerceTierPriceEntry %>" model="<%= CommerceTierPriceEntry.class %>" />
 
-		<aui:fieldset>
-			<aui:input name="price" />
+		<aui:fieldset-group>
+			<aui:fieldset>
+				<aui:input name="price" />
 
-			<aui:input name="minQuantity" />
-		</aui:fieldset>
+				<aui:input name="minQuantity" />
+			</aui:fieldset>
+		</aui:fieldset-group>
 
 		<c:if test="<%= cpInstanceCommerceTierPriceEntryDisplayContext.hasCustomAttributes() %>">
 			<aui:fieldset>

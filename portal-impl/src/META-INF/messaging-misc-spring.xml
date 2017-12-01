@@ -19,11 +19,6 @@
 			<util:constant static-field="com.liferay.portal.kernel.cluster.Priority.LEVEL5" />
 		</property>
 	</bean>
-	<bean class="com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper" id="messageListener.message_boards_mailing_list">
-		<property name="messageListener">
-			<bean class="com.liferay.portlet.messageboards.messaging.MailingListMessageListener" />
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.liveusers.messaging.LiveUsersMessageListener" id="messageListener.live_users" />
 	<bean class="com.liferay.portlet.documentlibrary.messaging.AudioProcessorMessageListener" id="messageListener.document_library_audio_processor" />
 	<bean class="com.liferay.portlet.documentlibrary.messaging.ImageProcessorMessageListener" id="messageListener.document_library_image_processor" />
@@ -168,11 +163,6 @@
 					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
 						<ref bean="messageListener.live_users" />
 						<ref bean="messageListener.live_users_cluster" />
-					</list>
-				</entry>
-				<entry key="liferay/message_boards_mailing_list">
-					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
-						<ref bean="messageListener.message_boards_mailing_list" />
 					</list>
 				</entry>
 			</map>

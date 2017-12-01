@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.source.formatter.checks.util.XMLSourceUtil;
+
 import java.util.List;
 
 /**
@@ -38,6 +40,27 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected String[] doGetIncludes() {
 		return _INCLUDES;
+	}
+
+	@Override
+	protected boolean hasGeneratedTag(String content) {
+		if (!content.contains("@generated")) {
+			return false;
+		}
+
+		int pos = -1;
+
+		while (true) {
+			pos = content.indexOf("@generated", pos + 1);
+
+			if (pos == -1) {
+				return false;
+			}
+
+			if (!XMLSourceUtil.isInsideCDATAMarkup(content, pos)) {
+				return true;
+			}
+		}
 	}
 
 	private static final String[] _INCLUDES = {

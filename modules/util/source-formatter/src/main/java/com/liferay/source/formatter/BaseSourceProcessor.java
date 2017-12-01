@@ -371,6 +371,17 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return _sourceFormatterExcludes;
 	}
 
+	protected boolean hasGeneratedTag(String content) {
+		if ((content.contains("@generated") || content.contains("$ANTLR")) &&
+			!content.contains("hasGeneratedTag")) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	protected void postFormat() throws Exception {
 	}
 
@@ -515,7 +526,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		String content = FileUtil.read(file);
 
-		if (_hasGeneratedTag(content)) {
+		if (hasGeneratedTag(content)) {
 			return;
 		}
 
@@ -541,17 +552,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return sourceChecks;
-	}
-
-	private boolean _hasGeneratedTag(String content) {
-		if ((content.contains("@generated") || content.contains("$ANTLR")) &&
-			!content.contains("hasGeneratedTag")) {
-
-			return true;
-		}
-		else {
-			return false;
-		}
 	}
 
 	private void _initSourceCheck(SourceCheck sourceCheck) throws Exception {

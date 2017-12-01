@@ -125,6 +125,10 @@ public class BNDExportsCheck extends BaseFileCheck {
 
 			line = StringUtil.removeSubstring(line, ",\\");
 
+			if (line.indexOf(StringPool.SEMICOLON) != -1) {
+				line = line.substring(0, line.indexOf(StringPool.SEMICOLON));
+			}
+
 			exportPackages.add(line.replace(CharPool.PERIOD, CharPool.SLASH));
 		}
 

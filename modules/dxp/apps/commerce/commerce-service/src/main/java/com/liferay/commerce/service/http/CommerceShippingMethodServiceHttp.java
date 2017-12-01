@@ -124,12 +124,45 @@ public class CommerceShippingMethodServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceShippingMethod getCommerceShippingMethod(
+		HttpPrincipal httpPrincipal, long commerceShippingMethodId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceShippingMethodServiceUtil.class,
+					"getCommerceShippingMethod",
+					_getCommerceShippingMethodParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceShippingMethodId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.model.CommerceShippingMethod)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.util.List<com.liferay.commerce.model.CommerceShippingMethod> getCommerceShippingMethods(
 		HttpPrincipal httpPrincipal, long groupId, boolean active) {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceShippingMethodServiceUtil.class,
 					"getCommerceShippingMethods",
-					_getCommerceShippingMethodsParameterTypes2);
+					_getCommerceShippingMethodsParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					active);
@@ -163,7 +196,7 @@ public class CommerceShippingMethodServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceShippingMethodServiceUtil.class,
 					"updateCommerceShippingMethod",
-					_updateCommerceShippingMethodParameterTypes3);
+					_updateCommerceShippingMethodParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceShippingMethodId, nameMap, descriptionMap,
@@ -199,10 +232,13 @@ public class CommerceShippingMethodServiceHttp {
 		};
 	private static final Class<?>[] _deleteCommerceShippingMethodParameterTypes1 =
 		new Class[] { long.class };
-	private static final Class<?>[] _getCommerceShippingMethodsParameterTypes2 = new Class[] {
+	private static final Class<?>[] _getCommerceShippingMethodParameterTypes2 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _getCommerceShippingMethodsParameterTypes3 = new Class[] {
 			long.class, boolean.class
 		};
-	private static final Class<?>[] _updateCommerceShippingMethodParameterTypes3 =
+	private static final Class<?>[] _updateCommerceShippingMethodParameterTypes4 =
 		new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
 			java.util.Map.class, double.class, boolean.class,

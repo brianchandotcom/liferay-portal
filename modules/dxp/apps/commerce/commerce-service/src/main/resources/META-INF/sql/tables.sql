@@ -87,7 +87,8 @@ create table CommerceCart (
 	billingAddressId LONG,
 	shippingAddressId LONG,
 	commerceShippingMethodId LONG,
-	commerceShippingOptionName VARCHAR(75) null
+	shippingOptionName VARCHAR(75) null,
+	shippingPrice DOUBLE
 );
 
 create table CommerceCartItem (

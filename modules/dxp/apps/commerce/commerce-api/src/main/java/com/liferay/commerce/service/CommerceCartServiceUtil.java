@@ -106,13 +106,13 @@ public class CommerceCartServiceUtil {
 
 	public static com.liferay.commerce.model.CommerceCart updateCommerceCart(
 		long commerceCartId, long billingAddressId, long shippingAddressId,
-		long commerceShippingMethodId,
-		java.lang.String commerceShippingOptionName)
+		long commerceShippingMethodId, java.lang.String shippingOptionName,
+		double shippingPrice)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCommerceCart(commerceCartId, billingAddressId,
-			shippingAddressId, commerceShippingMethodId,
-			commerceShippingOptionName);
+			shippingAddressId, commerceShippingMethodId, shippingOptionName,
+			shippingPrice);
 	}
 
 	public static com.liferay.commerce.model.CommerceCart updateUser(

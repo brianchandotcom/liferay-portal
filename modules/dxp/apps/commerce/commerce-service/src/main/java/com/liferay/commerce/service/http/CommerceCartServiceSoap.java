@@ -202,12 +202,12 @@ public class CommerceCartServiceSoap {
 
 	public static com.liferay.commerce.model.CommerceCartSoap updateCommerceCart(
 		long commerceCartId, long billingAddressId, long shippingAddressId,
-		long commerceShippingMethodId,
-		java.lang.String commerceShippingOptionName) throws RemoteException {
+		long commerceShippingMethodId, java.lang.String shippingOptionName,
+		double shippingPrice) throws RemoteException {
 		try {
 			com.liferay.commerce.model.CommerceCart returnValue = CommerceCartServiceUtil.updateCommerceCart(commerceCartId,
 					billingAddressId, shippingAddressId,
-					commerceShippingMethodId, commerceShippingOptionName);
+					commerceShippingMethodId, shippingOptionName, shippingPrice);
 
 			return com.liferay.commerce.model.CommerceCartSoap.toSoapModel(returnValue);
 		}

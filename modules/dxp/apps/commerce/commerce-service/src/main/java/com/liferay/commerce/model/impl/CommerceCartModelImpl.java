@@ -86,7 +86,8 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 			{ "billingAddressId", Types.BIGINT },
 			{ "shippingAddressId", Types.BIGINT },
 			{ "commerceShippingMethodId", Types.BIGINT },
-			{ "commerceShippingOptionName", Types.VARCHAR }
+			{ "shippingOptionName", Types.VARCHAR },
+			{ "shippingPrice", Types.DOUBLE }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -104,10 +105,11 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 		TABLE_COLUMNS_MAP.put("billingAddressId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("shippingAddressId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceShippingMethodId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("commerceShippingOptionName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("shippingOptionName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("shippingPrice", Types.DOUBLE);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceCart (uuid_ VARCHAR(75) null,commerceCartId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,type_ INTEGER,billingAddressId LONG,shippingAddressId LONG,commerceShippingMethodId LONG,commerceShippingOptionName VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceCart (uuid_ VARCHAR(75) null,commerceCartId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,type_ INTEGER,billingAddressId LONG,shippingAddressId LONG,commerceShippingMethodId LONG,shippingOptionName VARCHAR(75) null,shippingPrice DOUBLE)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceCart";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceCart.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceCart.createDate ASC";
@@ -159,7 +161,8 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 		model.setBillingAddressId(soapModel.getBillingAddressId());
 		model.setShippingAddressId(soapModel.getShippingAddressId());
 		model.setCommerceShippingMethodId(soapModel.getCommerceShippingMethodId());
-		model.setCommerceShippingOptionName(soapModel.getCommerceShippingOptionName());
+		model.setShippingOptionName(soapModel.getShippingOptionName());
+		model.setShippingPrice(soapModel.getShippingPrice());
 
 		return model;
 	}
@@ -237,8 +240,8 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 		attributes.put("billingAddressId", getBillingAddressId());
 		attributes.put("shippingAddressId", getShippingAddressId());
 		attributes.put("commerceShippingMethodId", getCommerceShippingMethodId());
-		attributes.put("commerceShippingOptionName",
-			getCommerceShippingOptionName());
+		attributes.put("shippingOptionName", getShippingOptionName());
+		attributes.put("shippingPrice", getShippingPrice());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -327,11 +330,16 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 			setCommerceShippingMethodId(commerceShippingMethodId);
 		}
 
-		String commerceShippingOptionName = (String)attributes.get(
-				"commerceShippingOptionName");
+		String shippingOptionName = (String)attributes.get("shippingOptionName");
 
-		if (commerceShippingOptionName != null) {
-			setCommerceShippingOptionName(commerceShippingOptionName);
+		if (shippingOptionName != null) {
+			setShippingOptionName(shippingOptionName);
+		}
+
+		Double shippingPrice = (Double)attributes.get("shippingPrice");
+
+		if (shippingPrice != null) {
+			setShippingPrice(shippingPrice);
 		}
 	}
 
@@ -609,18 +617,29 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 
 	@JSON
 	@Override
-	public String getCommerceShippingOptionName() {
-		if (_commerceShippingOptionName == null) {
+	public String getShippingOptionName() {
+		if (_shippingOptionName == null) {
 			return "";
 		}
 		else {
-			return _commerceShippingOptionName;
+			return _shippingOptionName;
 		}
 	}
 
 	@Override
-	public void setCommerceShippingOptionName(String commerceShippingOptionName) {
-		_commerceShippingOptionName = commerceShippingOptionName;
+	public void setShippingOptionName(String shippingOptionName) {
+		_shippingOptionName = shippingOptionName;
+	}
+
+	@JSON
+	@Override
+	public double getShippingPrice() {
+		return _shippingPrice;
+	}
+
+	@Override
+	public void setShippingPrice(double shippingPrice) {
+		_shippingPrice = shippingPrice;
 	}
 
 	@Override
@@ -673,7 +692,8 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 		commerceCartImpl.setBillingAddressId(getBillingAddressId());
 		commerceCartImpl.setShippingAddressId(getShippingAddressId());
 		commerceCartImpl.setCommerceShippingMethodId(getCommerceShippingMethodId());
-		commerceCartImpl.setCommerceShippingOptionName(getCommerceShippingOptionName());
+		commerceCartImpl.setShippingOptionName(getShippingOptionName());
+		commerceCartImpl.setShippingPrice(getShippingPrice());
 
 		commerceCartImpl.resetOriginalValues();
 
@@ -829,21 +849,22 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 
 		commerceCartCacheModel.commerceShippingMethodId = getCommerceShippingMethodId();
 
-		commerceCartCacheModel.commerceShippingOptionName = getCommerceShippingOptionName();
+		commerceCartCacheModel.shippingOptionName = getShippingOptionName();
 
-		String commerceShippingOptionName = commerceCartCacheModel.commerceShippingOptionName;
+		String shippingOptionName = commerceCartCacheModel.shippingOptionName;
 
-		if ((commerceShippingOptionName != null) &&
-				(commerceShippingOptionName.length() == 0)) {
-			commerceCartCacheModel.commerceShippingOptionName = null;
+		if ((shippingOptionName != null) && (shippingOptionName.length() == 0)) {
+			commerceCartCacheModel.shippingOptionName = null;
 		}
+
+		commerceCartCacheModel.shippingPrice = getShippingPrice();
 
 		return commerceCartCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -871,8 +892,10 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 		sb.append(getShippingAddressId());
 		sb.append(", commerceShippingMethodId=");
 		sb.append(getCommerceShippingMethodId());
-		sb.append(", commerceShippingOptionName=");
-		sb.append(getCommerceShippingOptionName());
+		sb.append(", shippingOptionName=");
+		sb.append(getShippingOptionName());
+		sb.append(", shippingPrice=");
+		sb.append(getShippingPrice());
 		sb.append("}");
 
 		return sb.toString();
@@ -880,7 +903,7 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.model.CommerceCart");
@@ -939,8 +962,12 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 		sb.append(getCommerceShippingMethodId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>commerceShippingOptionName</column-name><column-value><![CDATA[");
-		sb.append(getCommerceShippingOptionName());
+			"<column><column-name>shippingOptionName</column-name><column-value><![CDATA[");
+		sb.append(getShippingOptionName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>shippingPrice</column-name><column-value><![CDATA[");
+		sb.append(getShippingPrice());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -980,7 +1007,8 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 	private long _originalShippingAddressId;
 	private boolean _setOriginalShippingAddressId;
 	private long _commerceShippingMethodId;
-	private String _commerceShippingOptionName;
+	private String _shippingOptionName;
+	private double _shippingPrice;
 	private long _columnBitmask;
 	private CommerceCart _escapedModel;
 }

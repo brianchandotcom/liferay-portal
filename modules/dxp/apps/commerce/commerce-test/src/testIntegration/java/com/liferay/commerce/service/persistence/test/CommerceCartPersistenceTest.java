@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -148,7 +149,9 @@ public class CommerceCartPersistenceTest {
 
 		newCommerceCart.setCommerceShippingMethodId(RandomTestUtil.nextLong());
 
-		newCommerceCart.setCommerceShippingOptionName(RandomTestUtil.randomString());
+		newCommerceCart.setShippingOptionName(RandomTestUtil.randomString());
+
+		newCommerceCart.setShippingPrice(RandomTestUtil.nextDouble());
 
 		_commerceCarts.add(_persistence.update(newCommerceCart));
 
@@ -182,8 +185,10 @@ public class CommerceCartPersistenceTest {
 			newCommerceCart.getShippingAddressId());
 		Assert.assertEquals(existingCommerceCart.getCommerceShippingMethodId(),
 			newCommerceCart.getCommerceShippingMethodId());
-		Assert.assertEquals(existingCommerceCart.getCommerceShippingOptionName(),
-			newCommerceCart.getCommerceShippingOptionName());
+		Assert.assertEquals(existingCommerceCart.getShippingOptionName(),
+			newCommerceCart.getShippingOptionName());
+		AssertUtils.assertEquals(existingCommerceCart.getShippingPrice(),
+			newCommerceCart.getShippingPrice());
 	}
 
 	@Test
@@ -273,7 +278,8 @@ public class CommerceCartPersistenceTest {
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "name", true, "type", true,
 			"billingAddressId", true, "shippingAddressId", true,
-			"commerceShippingMethodId", true, "commerceShippingOptionName", true);
+			"commerceShippingMethodId", true, "shippingOptionName", true,
+			"shippingPrice", true);
 	}
 
 	@Test
@@ -515,7 +521,9 @@ public class CommerceCartPersistenceTest {
 
 		commerceCart.setCommerceShippingMethodId(RandomTestUtil.nextLong());
 
-		commerceCart.setCommerceShippingOptionName(RandomTestUtil.randomString());
+		commerceCart.setShippingOptionName(RandomTestUtil.randomString());
+
+		commerceCart.setShippingPrice(RandomTestUtil.nextDouble());
 
 		_commerceCarts.add(_persistence.update(commerceCart));
 

@@ -76,7 +76,8 @@
 		<property name="billingAddressId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="shippingAddressId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="commerceShippingMethodId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="commerceShippingOptionName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="shippingOptionName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="shippingPrice" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 	</class>
 	<class name="com.liferay.commerce.model.impl.CommerceCartItemImpl" table="CommerceCartItem">
 		<id name="commerceCartItemId" type="long">

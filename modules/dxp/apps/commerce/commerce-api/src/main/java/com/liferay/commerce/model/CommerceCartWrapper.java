@@ -73,8 +73,8 @@ public class CommerceCartWrapper implements CommerceCart,
 		attributes.put("billingAddressId", getBillingAddressId());
 		attributes.put("shippingAddressId", getShippingAddressId());
 		attributes.put("commerceShippingMethodId", getCommerceShippingMethodId());
-		attributes.put("commerceShippingOptionName",
-			getCommerceShippingOptionName());
+		attributes.put("shippingOptionName", getShippingOptionName());
+		attributes.put("shippingPrice", getShippingPrice());
 
 		return attributes;
 	}
@@ -160,11 +160,16 @@ public class CommerceCartWrapper implements CommerceCart,
 			setCommerceShippingMethodId(commerceShippingMethodId);
 		}
 
-		String commerceShippingOptionName = (String)attributes.get(
-				"commerceShippingOptionName");
+		String shippingOptionName = (String)attributes.get("shippingOptionName");
 
-		if (commerceShippingOptionName != null) {
-			setCommerceShippingOptionName(commerceShippingOptionName);
+		if (shippingOptionName != null) {
+			setShippingOptionName(shippingOptionName);
+		}
+
+		Double shippingPrice = (Double)attributes.get("shippingPrice");
+
+		if (shippingPrice != null) {
+			setShippingPrice(shippingPrice);
 		}
 	}
 
@@ -217,16 +222,6 @@ public class CommerceCartWrapper implements CommerceCart,
 	@Override
 	public long getCommerceShippingMethodId() {
 		return _commerceCart.getCommerceShippingMethodId();
-	}
-
-	/**
-	* Returns the commerce shipping option name of this commerce cart.
-	*
-	* @return the commerce shipping option name of this commerce cart
-	*/
-	@Override
-	public java.lang.String getCommerceShippingOptionName() {
-		return _commerceCart.getCommerceShippingOptionName();
 	}
 
 	/**
@@ -313,6 +308,26 @@ public class CommerceCartWrapper implements CommerceCart,
 	@Override
 	public long getShippingAddressId() {
 		return _commerceCart.getShippingAddressId();
+	}
+
+	/**
+	* Returns the shipping option name of this commerce cart.
+	*
+	* @return the shipping option name of this commerce cart
+	*/
+	@Override
+	public java.lang.String getShippingOptionName() {
+		return _commerceCart.getShippingOptionName();
+	}
+
+	/**
+	* Returns the shipping price of this commerce cart.
+	*
+	* @return the shipping price of this commerce cart
+	*/
+	@Override
+	public double getShippingPrice() {
+		return _commerceCart.getShippingPrice();
 	}
 
 	/**
@@ -432,17 +447,6 @@ public class CommerceCartWrapper implements CommerceCart,
 	}
 
 	/**
-	* Sets the commerce shipping option name of this commerce cart.
-	*
-	* @param commerceShippingOptionName the commerce shipping option name of this commerce cart
-	*/
-	@Override
-	public void setCommerceShippingOptionName(
-		java.lang.String commerceShippingOptionName) {
-		_commerceCart.setCommerceShippingOptionName(commerceShippingOptionName);
-	}
-
-	/**
 	* Sets the company ID of this commerce cart.
 	*
 	* @param companyId the company ID of this commerce cart
@@ -536,6 +540,26 @@ public class CommerceCartWrapper implements CommerceCart,
 	@Override
 	public void setShippingAddressId(long shippingAddressId) {
 		_commerceCart.setShippingAddressId(shippingAddressId);
+	}
+
+	/**
+	* Sets the shipping option name of this commerce cart.
+	*
+	* @param shippingOptionName the shipping option name of this commerce cart
+	*/
+	@Override
+	public void setShippingOptionName(java.lang.String shippingOptionName) {
+		_commerceCart.setShippingOptionName(shippingOptionName);
+	}
+
+	/**
+	* Sets the shipping price of this commerce cart.
+	*
+	* @param shippingPrice the shipping price of this commerce cart
+	*/
+	@Override
+	public void setShippingPrice(double shippingPrice) {
+		_commerceCart.setShippingPrice(shippingPrice);
 	}
 
 	/**

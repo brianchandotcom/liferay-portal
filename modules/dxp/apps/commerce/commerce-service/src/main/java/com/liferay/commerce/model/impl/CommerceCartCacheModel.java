@@ -65,7 +65,7 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -93,8 +93,10 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 		sb.append(shippingAddressId);
 		sb.append(", commerceShippingMethodId=");
 		sb.append(commerceShippingMethodId);
-		sb.append(", commerceShippingOptionName=");
-		sb.append(commerceShippingOptionName);
+		sb.append(", shippingOptionName=");
+		sb.append(shippingOptionName);
+		sb.append(", shippingPrice=");
+		sb.append(shippingPrice);
 		sb.append("}");
 
 		return sb.toString();
@@ -149,12 +151,14 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 		commerceCartImpl.setShippingAddressId(shippingAddressId);
 		commerceCartImpl.setCommerceShippingMethodId(commerceShippingMethodId);
 
-		if (commerceShippingOptionName == null) {
-			commerceCartImpl.setCommerceShippingOptionName("");
+		if (shippingOptionName == null) {
+			commerceCartImpl.setShippingOptionName("");
 		}
 		else {
-			commerceCartImpl.setCommerceShippingOptionName(commerceShippingOptionName);
+			commerceCartImpl.setShippingOptionName(shippingOptionName);
 		}
+
+		commerceCartImpl.setShippingPrice(shippingPrice);
 
 		commerceCartImpl.resetOriginalValues();
 
@@ -184,7 +188,9 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 		shippingAddressId = objectInput.readLong();
 
 		commerceShippingMethodId = objectInput.readLong();
-		commerceShippingOptionName = objectInput.readUTF();
+		shippingOptionName = objectInput.readUTF();
+
+		shippingPrice = objectInput.readDouble();
 	}
 
 	@Override
@@ -230,12 +236,14 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 
 		objectOutput.writeLong(commerceShippingMethodId);
 
-		if (commerceShippingOptionName == null) {
+		if (shippingOptionName == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(commerceShippingOptionName);
+			objectOutput.writeUTF(shippingOptionName);
 		}
+
+		objectOutput.writeDouble(shippingPrice);
 	}
 
 	public String uuid;
@@ -251,5 +259,6 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 	public long billingAddressId;
 	public long shippingAddressId;
 	public long commerceShippingMethodId;
-	public String commerceShippingOptionName;
+	public String shippingOptionName;
+	public double shippingPrice;
 }

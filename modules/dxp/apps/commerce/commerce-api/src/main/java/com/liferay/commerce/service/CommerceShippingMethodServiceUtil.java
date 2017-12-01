@@ -60,6 +60,12 @@ public class CommerceShippingMethodServiceUtil {
 		getService().deleteCommerceShippingMethod(commerceShippingMethodId);
 	}
 
+	public static com.liferay.commerce.model.CommerceShippingMethod getCommerceShippingMethod(
+		long commerceShippingMethodId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceShippingMethod(commerceShippingMethodId);
+	}
+
 	public static java.util.List<com.liferay.commerce.model.CommerceShippingMethod> getCommerceShippingMethods(
 		long groupId, boolean active) {
 		return getService().getCommerceShippingMethods(groupId, active);

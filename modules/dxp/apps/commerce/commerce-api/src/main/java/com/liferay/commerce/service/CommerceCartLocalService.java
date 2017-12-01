@@ -303,6 +303,9 @@ public interface CommerceCartLocalService extends BaseLocalService,
 		long userCommerceCartId, ServiceContext serviceContext)
 		throws PortalException;
 
+	public CommerceCart resetCommerceCartShipping(long commerceCartId)
+		throws PortalException;
+
 	/**
 	* Updates the commerce cart in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -314,8 +317,8 @@ public interface CommerceCartLocalService extends BaseLocalService,
 
 	public CommerceCart updateCommerceCart(long commerceCartId,
 		long billingAddressId, long shippingAddressId,
-		long commerceShippingMethodId,
-		java.lang.String commerceShippingOptionName) throws PortalException;
+		long commerceShippingMethodId, java.lang.String shippingOptionName,
+		double shippingPrice) throws PortalException;
 
 	public CommerceCart updateUser(long commerceCartId, long userId)
 		throws PortalException;

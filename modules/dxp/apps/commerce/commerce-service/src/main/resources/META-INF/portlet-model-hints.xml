@@ -66,7 +66,8 @@
 		<field name="billingAddressId" type="long" />
 		<field name="shippingAddressId" type="long" />
 		<field name="commerceShippingMethodId" type="long" />
-		<field name="commerceShippingOptionName" type="String" />
+		<field name="shippingOptionName" type="String" />
+		<field name="shippingPrice" type="double" />
 	</model>
 	<model name="com.liferay.commerce.model.CommerceCartItem">
 		<field name="commerceCartItemId" type="long" />

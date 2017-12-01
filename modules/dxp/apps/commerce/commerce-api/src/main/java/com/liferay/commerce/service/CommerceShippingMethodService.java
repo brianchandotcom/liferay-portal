@@ -69,6 +69,10 @@ public interface CommerceShippingMethodService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceShippingMethod getCommerceShippingMethod(
+		long commerceShippingMethodId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceShippingMethod> getCommerceShippingMethods(
 		long groupId, boolean active);
 

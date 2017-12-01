@@ -47,7 +47,8 @@ public class CommerceCartSoap implements Serializable {
 		soapModel.setBillingAddressId(model.getBillingAddressId());
 		soapModel.setShippingAddressId(model.getShippingAddressId());
 		soapModel.setCommerceShippingMethodId(model.getCommerceShippingMethodId());
-		soapModel.setCommerceShippingOptionName(model.getCommerceShippingOptionName());
+		soapModel.setShippingOptionName(model.getShippingOptionName());
+		soapModel.setShippingPrice(model.getShippingPrice());
 
 		return soapModel;
 	}
@@ -204,12 +205,20 @@ public class CommerceCartSoap implements Serializable {
 		_commerceShippingMethodId = commerceShippingMethodId;
 	}
 
-	public String getCommerceShippingOptionName() {
-		return _commerceShippingOptionName;
+	public String getShippingOptionName() {
+		return _shippingOptionName;
 	}
 
-	public void setCommerceShippingOptionName(String commerceShippingOptionName) {
-		_commerceShippingOptionName = commerceShippingOptionName;
+	public void setShippingOptionName(String shippingOptionName) {
+		_shippingOptionName = shippingOptionName;
+	}
+
+	public double getShippingPrice() {
+		return _shippingPrice;
+	}
+
+	public void setShippingPrice(double shippingPrice) {
+		_shippingPrice = shippingPrice;
 	}
 
 	private String _uuid;
@@ -225,5 +234,6 @@ public class CommerceCartSoap implements Serializable {
 	private long _billingAddressId;
 	private long _shippingAddressId;
 	private long _commerceShippingMethodId;
-	private String _commerceShippingOptionName;
+	private String _shippingOptionName;
+	private double _shippingPrice;
 }

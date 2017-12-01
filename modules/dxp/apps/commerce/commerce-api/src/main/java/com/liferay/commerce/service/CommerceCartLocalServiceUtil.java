@@ -347,6 +347,12 @@ public class CommerceCartLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static com.liferay.commerce.model.CommerceCart resetCommerceCartShipping(
+		long commerceCartId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().resetCommerceCartShipping(commerceCartId);
+	}
+
 	/**
 	* Updates the commerce cart in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -360,13 +366,13 @@ public class CommerceCartLocalServiceUtil {
 
 	public static com.liferay.commerce.model.CommerceCart updateCommerceCart(
 		long commerceCartId, long billingAddressId, long shippingAddressId,
-		long commerceShippingMethodId,
-		java.lang.String commerceShippingOptionName)
+		long commerceShippingMethodId, java.lang.String shippingOptionName,
+		double shippingPrice)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCommerceCart(commerceCartId, billingAddressId,
-			shippingAddressId, commerceShippingMethodId,
-			commerceShippingOptionName);
+			shippingAddressId, commerceShippingMethodId, shippingOptionName,
+			shippingPrice);
 	}
 
 	public static com.liferay.commerce.model.CommerceCart updateUser(

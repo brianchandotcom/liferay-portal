@@ -1042,7 +1042,7 @@ information.
 								datatype="int"
 								operand1="${artifact.version.micro}"
 								operand2="1"
-								operation="add"
+								operation="+"
 								result="artifact.version.micro"
 							/>
 
@@ -1051,6 +1051,12 @@ information.
 								file="bnd.bnd"
 								token="Bundle-Version: ${artifact.version}"
 								value="Bundle-Version: ${artifact.version.major.minor}.${artifact.version.micro}"
+							/>
+
+							<replaceregexp
+								file="bnd.bnd"
+								match="\Q/.bnd/ant-baseline-cache/com.liferay.${processed.artifact.name}-\E\d+\.\d+\.\d+\.jar"
+								replace=".bnd/ant-baseline-cache/com.liferay.${processed.artifact.name}-${artifact.version.major.minor}.0.jar"
 							/>
 						</then>
 					</if>
@@ -1069,6 +1075,12 @@ information.
 
 							<echo file="${project.dir}/modules/.releng/${artifact.name}.properties">artifact.git.id=${artifact.git.id}
 artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed.artifact.name}/${artifact.version}/com.liferay.${processed.artifact.name}-${artifact.version}.@{packaging}</echo>
+
+							<gradle-execute dir="${project.dir}/modules" task="lockDependencyVersion">
+								<arg value="--build-file=releng.gradle" />
+								<arg value="-PdependencyName=com.liferay.${processed.artifact.name}" />
+								<arg value="-PdependencyVersion=${artifact.version.major.minor}.0" />
+							</gradle-execute>
 						</then>
 					</if>
 

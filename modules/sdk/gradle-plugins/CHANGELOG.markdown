@@ -3012,6 +3012,11 @@ to version 2.3.35.
 - [LPS-76202]: Update the [Liferay Gradle Plugins Jasper JSPC] dependency to
 version 2.0.3.
 
+## 3.5.56 - 2017-11-30
+
+### Changed
+- [LPS-76224]: Update the [Liferay Ant BND] dependency to version 2.0.42.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -3282,4 +3287,5 @@ version 2.0.3.
 [LPS-75971]: https://issues.liferay.com/browse/LPS-75971
 [LPS-76110]: https://issues.liferay.com/browse/LPS-76110
 [LPS-76202]: https://issues.liferay.com/browse/LPS-76202
+[LPS-76224]: https://issues.liferay.com/browse/LPS-76224
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

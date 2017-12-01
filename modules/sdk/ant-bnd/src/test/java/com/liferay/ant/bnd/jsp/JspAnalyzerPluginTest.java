@@ -17,6 +17,7 @@ package com.liferay.ant.bnd.jsp;
 import aQute.bnd.osgi.Builder;
 import aQute.bnd.osgi.Constants;
 import aQute.bnd.osgi.Packages;
+
 import aQute.lib.io.IO;
 
 import java.io.InputStream;
@@ -25,7 +26,6 @@ import java.net.URL;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.regex.Matcher;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -74,11 +74,11 @@ public class JspAnalyzerPluginTest {
 	}
 
 	@Test
-	public void testImportsWithMulitplesAndStatics() throws Exception {
+	public void testImportsWithMultiplesAndStatics() throws Exception {
 		JspAnalyzerPlugin jspAnalyzerPlugin = new JspAnalyzerPlugin();
 
 		URL url = getResource(
-			"dependencies/imports_without_mutlipackages_and_statics.jsp");
+			"dependencies/imports_without_multipackages_and_statics.jsp");
 
 		InputStream inputStream = url.openStream();
 
@@ -103,6 +103,36 @@ public class JspAnalyzerPluginTest {
 			referredPackages.containsFQN("javax.portlet.tck.constants"));
 		Assert.assertTrue(referredPackages.containsFQN("javax.servlet"));
 		Assert.assertTrue(referredPackages.containsFQN("javax.servlet.http"));
+	}
+
+	@Test
+	public void testPageImportsWithComments() throws Exception {
+		JspAnalyzerPlugin jspAnalyzerPlugin = new JspAnalyzerPlugin();
+
+		URL url = getResource("dependencies/page_imports_with_comments.jsp");
+
+		InputStream inputStream = url.openStream();
+
+		String content = IO.collect(inputStream);
+
+		Builder builder = new Builder();
+
+		builder.build();
+
+		jspAnalyzerPlugin.addApiUses(builder, content);
+
+		Packages referredPackages = builder.getReferred();
+
+		Assert.assertTrue(referredPackages.containsFQN("java.io"));
+		Assert.assertFalse(referredPackages.containsFQN("javax.portlet"));
+		Assert.assertFalse(
+			referredPackages.containsFQN("javax.portlet.filter"));
+		Assert.assertFalse(
+			referredPackages.containsFQN("javax.portlet.tck.beans"));
+		Assert.assertTrue(
+			referredPackages.containsFQN("javax.portlet.tck.constants"));
+		Assert.assertFalse(referredPackages.containsFQN("javax.servlet"));
+		Assert.assertFalse(referredPackages.containsFQN("javax.servlet.http"));
 	}
 
 	@Test

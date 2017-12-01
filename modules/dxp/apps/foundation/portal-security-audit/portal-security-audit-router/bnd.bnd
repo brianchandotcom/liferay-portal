@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Security Audit Router
 Bundle-SymbolicName: com.liferay.portal.security.audit.router
-Bundle-Version: 1.0.12
+Bundle-Version: 1.0.13
 Export-Package: com.liferay.portal.security.audit.router
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Audit

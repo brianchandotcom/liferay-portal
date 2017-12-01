@@ -56,7 +56,9 @@ public class JavaTermOrderCheck extends BaseJavaTermCheck {
 			Document customSQLDocument = getCustomSQLDocument(
 				fileName, absolutePath, _portalCustomSQLDocument);
 
-			customSQLContent = customSQLDocument.asXML();
+			if (customSQLDocument != null) {
+				customSQLContent = customSQLDocument.asXML();
+			}
 		}
 
 		return _sortJavaTerms(

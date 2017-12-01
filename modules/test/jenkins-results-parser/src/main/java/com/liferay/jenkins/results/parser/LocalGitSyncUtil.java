@@ -494,7 +494,7 @@ public class LocalGitSyncUtil {
 							return null;
 					}
 					else {
-						return lrgName;
+						return lrgu;
 					}
 				}
 			};
@@ -505,7 +505,12 @@ public class LocalGitSyncUtil {
 		ParallelExecutor<String> parallelExecutor = new ParallelExecutor<>(
 			callables, null);
 
-		validatedURLList.addAll(parallelExecutor.execute());
+		for (String lrgu : parallelExecutor.execute()) {
+			if (lrgu != null) {
+				validatedURLList.add(lrgu);
+			}
+		}
+		return validatedURLList;
 	}
 
 	protected static String localGitURLToName(String localGitRemoteURL,

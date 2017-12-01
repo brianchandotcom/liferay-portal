@@ -201,6 +201,7 @@ import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.model.impl.CookieRemotePreference;
 import com.liferay.portal.model.impl.LayoutTypeImpl;
+import com.liferay.portal.model.impl.LayoutTypePortletImpl;
 import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.security.jaas.JAASHelper;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
@@ -312,6 +313,7 @@ import org.apache.struts.Globals;
  * @author Hugo Huijser
  * @author Juan Fernández
  * @author Marco Leo
+ * @author Neil Griffin
  */
 @DoPrivileged
 public class PortalImpl implements Portal {
@@ -553,7 +555,7 @@ public class PortalImpl implements Portal {
 						portalInetSocketAddressEventListenerServiceTracker =
 							registry.trackServices(
 								PortalInetSocketAddressEventListener.class,
-								new PortalInetSocketAddressEventListenerServiceTrackerCustomizer());
+								new PortalInetSocketAddressEventListenerSTC());
 
 			portalInetSocketAddressEventListenerServiceTracker.open();
 		}
@@ -7170,6 +7172,19 @@ public class PortalImpl implements Portal {
 
 				updateLayout = true;
 			}
+			else if (layoutType instanceof LayoutTypePortletImpl) {
+				LayoutTypePortletImpl layoutTypePortletImpl =
+					(LayoutTypePortletImpl)layoutType;
+
+				if (!layoutTypePortletImpl.hasModeCustomPortletId(
+						portletId, portletMode.toString())) {
+
+					layoutTypePortletImpl.addModeCustomPortletId(
+						portletId, portletMode.toString());
+
+					updateLayout = true;
+				}
+			}
 
 			if (updateLayout &&
 				PortletPermissionUtil.contains(
@@ -8868,7 +8883,7 @@ public class PortalImpl implements Portal {
 
 	}
 
-	private class PortalInetSocketAddressEventListenerServiceTrackerCustomizer
+	private class PortalInetSocketAddressEventListenerSTC
 		implements ServiceTrackerCustomizer
 			<PortalInetSocketAddressEventListener,
 				PortalInetSocketAddressEventListener> {

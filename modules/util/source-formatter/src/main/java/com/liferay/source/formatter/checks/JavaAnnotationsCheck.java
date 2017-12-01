@@ -134,6 +134,80 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 			annotation, StringPool.PERCENT, StringPool.BLANK, matcher.start());
 	}
 
+	private String _formatAnnotationParameterProperties(String annotation) {
+		if (!annotation.contains("@Component(")) {
+			return annotation;
+		}
+
+		Matcher matcher = _annotationParameterPropertyPattern.matcher(
+			annotation);
+
+		while (matcher.find()) {
+			int x = matcher.end();
+
+			while (true) {
+				x = annotation.indexOf(CharPool.CLOSE_CURLY_BRACE, x + 1);
+
+				if (!ToolsUtil.isInsideQuotes(annotation, x)) {
+					break;
+				}
+			}
+
+			String parameterProperties = annotation.substring(matcher.end(), x);
+
+			String newParameterProperties = StringUtil.replace(
+				parameterProperties, new String[] {" =", "= "},
+				new String[] {"=", "="});
+
+			if (!parameterProperties.equals(newParameterProperties)) {
+				return StringUtil.replaceFirst(
+					annotation, parameterProperties, newParameterProperties);
+			}
+
+			parameterProperties = StringUtil.replace(
+				parameterProperties,
+				new String[] {
+					StringPool.TAB, StringPool.FOUR_SPACES, StringPool.NEW_LINE
+				},
+				new String[] {
+					StringPool.BLANK, StringPool.BLANK, StringPool.SPACE
+				});
+
+			parameterProperties = StringUtil.trim(parameterProperties);
+
+			if (parameterProperties.startsWith(StringPool.AT)) {
+				continue;
+			}
+
+			String[] parameterPropertiesArray = StringUtil.split(
+				parameterProperties, StringPool.COMMA_AND_SPACE);
+
+			AnnotationParameterPropertyComparator comparator =
+				new AnnotationParameterPropertyComparator(matcher.group(1));
+
+			for (int i = 1; i < parameterPropertiesArray.length; i++) {
+				String parameterProperty = parameterPropertiesArray[i];
+				String previousParameterProperty =
+					parameterPropertiesArray[i - 1];
+
+				if (comparator.compare(
+						previousParameterProperty, parameterProperty) > 0) {
+
+					annotation = StringUtil.replaceFirst(
+						annotation, previousParameterProperty,
+						parameterProperty);
+					annotation = StringUtil.replaceLast(
+						annotation, parameterProperty,
+						previousParameterProperty);
+
+					return annotation;
+				}
+			}
+		}
+
+		return annotation;
+	}
+
 	private String _formatAnnotations(String fileName, String content)
 		throws Exception {
 
@@ -240,80 +314,6 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 		}
 
 		return sb.toString();
-	}
-
-	private String _formatAnnotationParameterProperties(String annotation) {
-		if (!annotation.contains("@Component(")) {
-			return annotation;
-		}
-
-		Matcher matcher = _annotationParameterPropertyPattern.matcher(
-			annotation);
-
-		while (matcher.find()) {
-			int x = matcher.end();
-
-			while (true) {
-				x = annotation.indexOf(CharPool.CLOSE_CURLY_BRACE, x + 1);
-
-				if (!ToolsUtil.isInsideQuotes(annotation, x)) {
-					break;
-				}
-			}
-
-			String parameterProperties = annotation.substring(matcher.end(), x);
-
-			String newParameterProperties = StringUtil.replace(
-				parameterProperties, new String[] {" =", "= "},
-				new String[] {"=", "="});
-
-			if (!parameterProperties.equals(newParameterProperties)) {
-				return StringUtil.replaceFirst(
-					annotation, parameterProperties, newParameterProperties);
-			}
-
-			parameterProperties = StringUtil.replace(
-				parameterProperties,
-				new String[] {
-					StringPool.TAB, StringPool.FOUR_SPACES, StringPool.NEW_LINE
-				},
-				new String[] {
-					StringPool.BLANK, StringPool.BLANK, StringPool.SPACE
-				});
-
-			parameterProperties = StringUtil.trim(parameterProperties);
-
-			if (parameterProperties.startsWith(StringPool.AT)) {
-				continue;
-			}
-
-			String[] parameterPropertiesArray = StringUtil.split(
-				parameterProperties, StringPool.COMMA_AND_SPACE);
-
-			AnnotationParameterPropertyComparator comparator =
-				new AnnotationParameterPropertyComparator(matcher.group(1));
-
-			for (int i = 1; i < parameterPropertiesArray.length; i++) {
-				String parameterProperty = parameterPropertiesArray[i];
-				String previousParameterProperty =
-					parameterPropertiesArray[i - 1];
-
-				if (comparator.compare(
-						previousParameterProperty, parameterProperty) > 0) {
-
-					annotation = StringUtil.replaceFirst(
-						annotation, previousParameterProperty,
-						parameterProperty);
-					annotation = StringUtil.replaceLast(
-						annotation, parameterProperty,
-						previousParameterProperty);
-
-					return annotation;
-				}
-			}
-		}
-
-		return annotation;
 	}
 
 	private List<String> _splitAnnotations(

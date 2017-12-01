@@ -133,7 +133,7 @@
 		<column name="billingAddressId" type="long" />
 		<column name="shippingAddressId" type="long" />
 		<column name="commerceShippingMethodId" type="long" />
-		<column name="commerceShippingOptionName" type="String" />
+		<column name="shippingOptionName" type="String" />
 
 		<!-- Order -->
 

@@ -94,12 +94,12 @@ public class CommerceCartServiceImpl extends CommerceCartServiceBaseImpl {
 	@Override
 	public CommerceCart updateCommerceCart(
 			long commerceCartId, long billingAddressId, long shippingAddressId,
-			long commerceShippingMethodId, String commerceShippingOptionName)
+			long commerceShippingMethodId, String shippingOptionName)
 		throws PortalException {
 
 		return commerceCartLocalService.updateCommerceCart(
 			commerceCartId, billingAddressId, shippingAddressId,
-			commerceShippingMethodId, commerceShippingOptionName);
+			commerceShippingMethodId, shippingOptionName);
 	}
 
 	@Override

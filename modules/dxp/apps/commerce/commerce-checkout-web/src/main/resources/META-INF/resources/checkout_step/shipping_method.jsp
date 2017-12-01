@@ -24,7 +24,7 @@ CommerceCart commerceCart = shippingMethodCheckoutStepDisplayContext.getCommerce
 String commerceShippingOptionKey = ParamUtil.getString(request, "commerceShippingOptionKey");
 
 if (Validator.isNull(commerceShippingOptionKey)) {
-	commerceShippingOptionKey = shippingMethodCheckoutStepDisplayContext.getCommerceShippingOptionKey(commerceCart.getCommerceShippingMethodId(), commerceCart.getCommerceShippingOptionName());
+	commerceShippingOptionKey = shippingMethodCheckoutStepDisplayContext.getCommerceShippingOptionKey(commerceCart.getCommerceShippingMethodId(), commerceCart.getShippingOptionName());
 }
 %>
 

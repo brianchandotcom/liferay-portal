@@ -71,14 +71,14 @@ public class ShippingMethodCheckoutStepDisplayContext {
 	}
 
 	public String getCommerceShippingOptionKey(
-		long commerceShippingMethodId, String commerceShippingOptionName) {
+		long commerceShippingMethodId, String shippingOptionName) {
 
 		char separator =
 			ShippingMethodCommerceCheckoutStep.
 				COMMERCE_SHIPPING_OPTION_KEY_SEPARATOR;
 
 		return String.valueOf(commerceShippingMethodId) + separator +
-			commerceShippingOptionName;
+			shippingOptionName;
 	}
 
 	public String getCommerceShippingOptionLabel(

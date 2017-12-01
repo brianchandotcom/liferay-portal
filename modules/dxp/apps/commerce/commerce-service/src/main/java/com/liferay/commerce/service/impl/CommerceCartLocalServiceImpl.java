@@ -186,7 +186,7 @@ public class CommerceCartLocalServiceImpl
 	@Override
 	public CommerceCart updateCommerceCart(
 			long commerceCartId, long billingAddressId, long shippingAddressId,
-			long commerceShippingMethodId, String commerceShippingOptionName)
+			long commerceShippingMethodId, String shippingOptionName)
 		throws PortalException {
 
 		CommerceCart commerceCart = commerceCartPersistence.findByPrimaryKey(
@@ -195,7 +195,7 @@ public class CommerceCartLocalServiceImpl
 		commerceCart.setBillingAddressId(billingAddressId);
 		commerceCart.setShippingAddressId(shippingAddressId);
 		commerceCart.setCommerceShippingMethodId(commerceShippingMethodId);
-		commerceCart.setCommerceShippingOptionName(commerceShippingOptionName);
+		commerceCart.setShippingOptionName(shippingOptionName);
 
 		commerceCartPersistence.update(commerceCart);
 

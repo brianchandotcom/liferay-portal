@@ -168,14 +168,14 @@ public class ShippingMethodCommerceCheckoutStep
 
 		long commerceShippingMethodId = Long.valueOf(
 			commerceShippingOptionKey.substring(0, pos));
-		String commerceShippingOptionName = commerceShippingOptionKey.substring(
+		String shippingOptionName = commerceShippingOptionKey.substring(
 			pos + 1);
 
 		_commerceCartService.updateCommerceCart(
 			commerceCart.getCommerceCartId(),
 			commerceCart.getBillingAddressId(),
 			commerceCart.getShippingAddressId(), commerceShippingMethodId,
-			commerceShippingOptionName);
+			shippingOptionName);
 	}
 
 	@Reference

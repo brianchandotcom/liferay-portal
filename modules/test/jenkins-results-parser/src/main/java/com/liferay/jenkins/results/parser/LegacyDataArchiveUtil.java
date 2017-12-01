@@ -61,26 +61,22 @@ public class LegacyDataArchiveUtil {
 	public GitWorkingDirectory.Branch createDataArchiveBranch()
 		throws IOException {
 
-		GitWorkingDirectory.Branch upstreamBranch =
-			_legacyGitWorkingDirectory.getBranch(
-				_legacyGitWorkingDirectory.getUpstreamBranchName(), null);
-
 		String dataArchiveBranchName = JenkinsResultsParserUtil.combine(
 			"data-archive-", String.valueOf(System.currentTimeMillis()));
 
-		_dataArchiveBranch = _legacyGitWorkingDirectory.getBranch(
+		_localDataArchiveBranch = _legacyGitWorkingDirectory.getBranch(
 			dataArchiveBranchName, null);
 
-		if (_dataArchiveBranch != null) {
+		if (_localDataArchiveBranch != null) {
 			_legacyGitWorkingDirectory.deleteBranch(
 				_legacyGitWorkingDirectory.getBranch(
 					dataArchiveBranchName, null));
 		}
 
-		_dataArchiveBranch = _legacyGitWorkingDirectory.createLocalBranch(
+		_localDataArchiveBranch = _legacyGitWorkingDirectory.createLocalBranch(
 			dataArchiveBranchName);
 
-		_legacyGitWorkingDirectory.checkoutBranch(_dataArchiveBranch);
+		_legacyGitWorkingDirectory.checkoutBranch(_localDataArchiveBranch);
 
 		for (LegacyDataArchivePortalVersion legacyDataArchivePortalVersion :
 				_legacyDataArchivePortalVersions) {
@@ -100,10 +96,15 @@ public class LegacyDataArchiveUtil {
 		GitWorkingDirectory.Remote upstreamRemote =
 			_legacyGitWorkingDirectory.getRemote("upstream");
 
-		_legacyGitWorkingDirectory.pushToRemote(
-			true, _dataArchiveBranch, dataArchiveBranchName, upstreamRemote);
+		if (!_legacyGitWorkingDirectory.pushToRemote(
+				true, _localDataArchiveBranch, dataArchiveBranchName,
+				upstreamRemote)) {
 
-		return _dataArchiveBranch;
+			throw new RuntimeException(
+				"Unable to push data archive branch to upstream");
+		}
+
+		return _localDataArchiveBranch;
 	}
 
 	public Properties getBuildProperties() {
@@ -111,7 +112,7 @@ public class LegacyDataArchiveUtil {
 	}
 
 	public GitWorkingDirectory.Branch getDataArchiveBranch() {
-		return _dataArchiveBranch;
+		return _localDataArchiveBranch;
 	}
 
 	public File getGeneratedArchiveDirectory() {
@@ -124,18 +125,6 @@ public class LegacyDataArchiveUtil {
 
 	public List<String> getPortalVersions() {
 		return _portalVersions;
-	}
-
-	protected String getFilePathURL(File file) {
-		return getFilePathURL(file, "master");
-	}
-
-	protected String getFilePathURL(File file, String ref) {
-		return JenkinsResultsParserUtil.combine(
-			"https://github.com/liferay/liferay-qa-portal-legacy-ee/tree/", ref,
-			"/",
-			JenkinsResultsParserUtil.getPathRelativeTo(
-				file, _legacyGitWorkingDirectory.getWorkingDirectory()));
 	}
 
 	private void _commitReadmeFile() {
@@ -160,7 +149,10 @@ public class LegacyDataArchiveUtil {
 				legacyDataArchivePortalVersion.getPortalVersionTestDirectory();
 
 			Dom4JUtil.getNewAnchorElement(
-				getFilePathURL(testDirectory), testCommitElement, "Test");
+				_legacyGitWorkingDirectory.getGitHubFileURL(
+					"master", _legacyGitWorkingDirectory.getRemote("upstream"),
+					testDirectory, false),
+				testCommitElement, "Test");
 
 			Dom4JUtil.getNewElement("span", testCommitElement, " Folder:");
 
@@ -234,9 +226,11 @@ public class LegacyDataArchiveUtil {
 							"li", dataArchivesElement);
 
 						Dom4JUtil.getNewAnchorElement(
-							getFilePathURL(
-								legacyDataArchiveFile,
-								_dataArchiveBranch.getName()),
+							_legacyGitWorkingDirectory.getGitHubFileURL(
+								_localDataArchiveBranch.getName(),
+								_legacyGitWorkingDirectory.getRemote(
+									"upstream"),
+								legacyDataArchiveFile, false),
 							dataArchiveElement,
 							JenkinsResultsParserUtil.getPathRelativeTo(
 								legacyDataArchiveFile,
@@ -314,7 +308,11 @@ public class LegacyDataArchiveUtil {
 							"li", dataArchivesElement);
 
 						Dom4JUtil.getNewAnchorElement(
-							getFilePathURL(legacyDataArchiveFile),
+							_legacyGitWorkingDirectory.getGitHubFileURL(
+								"master",
+								_legacyGitWorkingDirectory.getRemote(
+									"upstream"),
+								legacyDataArchiveFile, false),
 							dataArchiveElement,
 							JenkinsResultsParserUtil.getPathRelativeTo(
 								legacyDataArchiveFile,
@@ -450,11 +448,11 @@ public class LegacyDataArchiveUtil {
 	}
 
 	private final Properties _buildProperties;
-	private GitWorkingDirectory.Branch _dataArchiveBranch;
 	private final File _generatedArchiveDirectory;
 	private final List<LegacyDataArchivePortalVersion>
 		_legacyDataArchivePortalVersions;
 	private final GitWorkingDirectory _legacyGitWorkingDirectory;
+	private GitWorkingDirectory.Branch _localDataArchiveBranch;
 	private final List<String> _portalVersions;
 
 }

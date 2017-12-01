@@ -15,13 +15,13 @@
 package com.liferay.asset.tag.stats.service.impl;
 
 import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.asset.kernel.model.AssetTagStats;
+import com.liferay.asset.tag.stats.model.AssetTagStats;
+import com.liferay.asset.tag.stats.service.base.AssetTagStatsLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portlet.asset.service.base.AssetTagStatsLocalServiceBaseImpl;
 
 import java.util.List;
 

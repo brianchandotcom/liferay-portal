@@ -110,6 +110,7 @@ public class LegacyDataArchive {
 	}
 
 	public enum Status {
+
 		MISSING, STALE, UNCHANGED, UPDATED
 	}
 

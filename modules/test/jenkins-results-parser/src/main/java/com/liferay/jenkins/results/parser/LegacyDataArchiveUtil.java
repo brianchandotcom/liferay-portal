@@ -133,22 +133,9 @@ public class LegacyDataArchiveUtil {
 	protected String getFilePathURL(File file, String ref) {
 		return JenkinsResultsParserUtil.combine(
 			"https://github.com/liferay/liferay-qa-portal-legacy-ee/tree/", ref,
-			"/", getRelativePath(file));
-	}
-
-	protected String getRelativePath(File file) {
-		try {
-			String filePath = file.getCanonicalPath();
-
-			File legacyWorkingDirectory =
-				_legacyGitWorkingDirectory.getWorkingDirectory();
-
-			return filePath.replace(
-				legacyWorkingDirectory.getCanonicalPath() + "/", "");
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
+			"/",
+			JenkinsResultsParserUtil.getPathRelativeTo(
+				file, _legacyGitWorkingDirectory.getWorkingDirectory()));
 	}
 
 	private void _commitReadmeFile() {
@@ -251,7 +238,10 @@ public class LegacyDataArchiveUtil {
 								legacyDataArchiveFile,
 								_dataArchiveBranch.getName()),
 							dataArchiveElement,
-							getRelativePath(legacyDataArchiveFile));
+							JenkinsResultsParserUtil.getPathRelativeTo(
+								legacyDataArchiveFile,
+								_legacyGitWorkingDirectory.
+									getWorkingDirectory()));
 					}
 				}
 			}
@@ -326,7 +316,10 @@ public class LegacyDataArchiveUtil {
 						Dom4JUtil.getNewAnchorElement(
 							getFilePathURL(legacyDataArchiveFile),
 							dataArchiveElement,
-							getRelativePath(legacyDataArchiveFile));
+							JenkinsResultsParserUtil.getPathRelativeTo(
+								legacyDataArchiveFile,
+								_legacyGitWorkingDirectory.
+									getWorkingDirectory()));
 					}
 				}
 			}
@@ -378,7 +371,10 @@ public class LegacyDataArchiveUtil {
 
 						Dom4JUtil.getNewElement(
 							"li", dataArchivesElement,
-							getRelativePath(legacyDataArchiveFile));
+							JenkinsResultsParserUtil.getPathRelativeTo(
+								legacyDataArchiveFile,
+								_legacyGitWorkingDirectory.
+									getWorkingDirectory()));
 					}
 				}
 			}

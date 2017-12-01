@@ -14,24 +14,8 @@
 
 package com.liferay.asset.tag.stats.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 /**
- * The extended model implementation for the AssetTagStats service. Represents a row in the &quot;AssetTagStats&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.asset.tag.stats.model.AssetTagStats} interface.
- * </p>
- *
- * @author Brian Wing Shun Chan
+ * @author Jorge Ferrer
  */
-@ProviderType
 public class AssetTagStatsImpl extends AssetTagStatsBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a asset tag stats model instance should use the {@link com.liferay.asset.tag.stats.model.AssetTagStats} interface instead.
-	 */
-	public AssetTagStatsImpl() {
-	}
 }

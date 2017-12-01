@@ -14,10 +14,13 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.dom4j.Element;
 
 /**
  * @author Michael Hashimoto
@@ -126,6 +129,54 @@ public class LegacyDataArchiveGroup {
 		}
 
 		return false;
+	}
+
+	protected LegacyDataReadMeSummaryElement
+		getLegacyDataReadMeSummaryElement() {
+
+		LegacyDataArchive.Status status = getStatus();
+		Element summaryContentElement = Dom4JUtil.getNewElement("div");
+		Commit commit = getCommit();
+
+		if (commit != null) {
+			Dom4JUtil.getNewAnchorElement(
+				commit.getGitHubCommitURL(), summaryContentElement,
+				commit.getAbbreviatedSHA());
+
+			Dom4JUtil.getNewElement(
+				"span", summaryContentElement, commit.getMessage());
+		}
+		else {
+			Dom4JUtil.getNewElement(
+				"span", summaryContentElement, getDataArchiveType());
+		}
+
+		LegacyDataReadMeSummaryElement legacyDataReadMeSummaryElement =
+			new LegacyDataReadMeSummaryElement();
+
+		legacyDataReadMeSummaryElement.setSummaryContent(summaryContentElement);
+
+		for (LegacyDataArchive legacyDataArchive : getLegacyDataArchives()) {
+			if (legacyDataArchive.getStatus() == status) {
+				File legacyDataArchiveFile =
+					legacyDataArchive.getLegacyDataArchiveFile();
+
+				GitWorkingDirectory.Branch dataArchiveBranch =
+					_legacyDataArchiveUtil.getDataArchiveBranch();
+
+				legacyDataReadMeSummaryElement.addLineItem(
+					Dom4JUtil.getNewAnchorElement(
+						_legacyGitWorkingDirectory.getGitHubFileURL(
+							dataArchiveBranch.getName(),
+							_legacyGitWorkingDirectory.getRemote("upstream"),
+							legacyDataArchiveFile, false),
+						JenkinsResultsParserUtil.getPathRelativeTo(
+							legacyDataArchiveFile,
+							_legacyGitWorkingDirectory.getWorkingDirectory())));
+			}
+		}
+
+		return legacyDataReadMeSummaryElement;
 	}
 
 	private List<LegacyDataArchive> _getLegacyDataArchives() {

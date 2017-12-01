@@ -48,6 +48,7 @@ import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
+import com.liferay.gradle.plugins.lang.builder.BuildLangTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.patcher.PatchTask;
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
@@ -442,6 +443,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_configureTaskTestIntegration(project);
 		_configureTaskTlddoc(project, portalRootDir);
 		_configureTasksBaseline(project);
+		_configureTasksBuildLang(project);
 		_configureTasksCheckOSGiBundleState(project, liferayExtension);
 		_configureTasksFindBugs(project);
 		_configureTasksJavaCompile(project);
@@ -2749,6 +2751,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
+	private void _configureTaskBuildLang(BuildLangTask buildLangTask) {
+		buildLangTask.setTranslate(false);
+	}
+
 	private void _configureTaskBuildService(Project project) {
 		BuildServiceTask buildServiceTask =
 			(BuildServiceTask)GradleUtil.getTask(
@@ -3212,6 +3218,21 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				@Override
 				public void execute(BaselineTask baselineTask) {
 					_configureTaskBaseline(baselineTask);
+				}
+
+			});
+	}
+
+	private void _configureTasksBuildLang(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			BuildLangTask.class,
+			new Action<BuildLangTask>() {
+
+				@Override
+				public void execute(BuildLangTask buildLangTask) {
+					_configureTaskBuildLang(buildLangTask);
 				}
 
 			});

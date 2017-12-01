@@ -187,9 +187,9 @@ public class AssetTagStatsLocalServiceImpl
 	public AssetTagStats updateTagStats(long tagId, long classNameId)
 		throws PortalException {
 
-		AssetTag tag = assetTagPersistence.findByPrimaryKey(tagId);
+		AssetTag tag = assetTagLocalService.getTag(tagId);
 
-		int assetCount = assetTagFinder.countByG_C_N(
+		int assetCount = assetTagLocalService.getTagsSize(
 			tag.getGroupId(), classNameId, tag.getName());
 
 		AssetTagStats tagStats = getTagStats(tagId, classNameId);

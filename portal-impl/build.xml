@@ -140,8 +140,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<arg value="lang.dir=${lang.dir}" />
 			<arg value="lang.file=${lang.file}" />
 			<arg value="lang.plugin=false" />
-			<arg value="lang.translate=true" />
-			<arg value="lang.translate.subscription.key=${microsoft.translator.subscription.key}" />
+			<arg value="lang.translate=false" />
 		</java>
 	</target>
 

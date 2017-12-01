@@ -23,23 +23,25 @@ public interface KBArchive {
 
 	public Collection<Folder> getFolders();
 
-	public interface File {
+	public interface File extends Resource {
 
 		public String getContent();
 
-		public String getName();
-
 	}
 
-	public interface Folder {
+	public interface Folder extends Resource {
 
 		public Collection<File> getFiles();
 
 		public File getIntroFile();
 
-		public String getName();
-
 		public File getParentFolderIntroFile();
+
+	}
+
+	public interface Resource {
+
+		public String getName();
 
 	}
 

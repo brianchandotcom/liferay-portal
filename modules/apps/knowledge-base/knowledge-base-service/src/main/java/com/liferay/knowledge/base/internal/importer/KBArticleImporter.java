@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipReader;
@@ -40,8 +41,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author James Hinkey
@@ -88,9 +87,7 @@ public class KBArticleImporter {
 			long userId, long groupId, long parentKBFolderId,
 			long parentResourceClassNameId, long parentResourcePrimaryKey,
 			String markdown, String fileEntryName, ZipReader zipReader,
-			Map<String, String> metadata,
-			PrioritizationStrategy prioritizationStrategy,
-			ServiceContext serviceContext)
+			Map<String, String> metadata, ServiceContext serviceContext)
 		throws KBArticleImportException {
 
 		if (Validator.isNull(markdown)) {
@@ -105,12 +102,6 @@ public class KBArticleImporter {
 
 		KBArticle kbArticle = _kbArticleLocalService.fetchKBArticleByUrlTitle(
 			groupId, parentKBFolderId, urlTitle);
-
-		boolean newKBArticle = false;
-
-		if (kbArticle == null) {
-			newKBArticle = true;
-		}
 
 		try {
 			if (kbArticle == null) {
@@ -154,14 +145,6 @@ public class KBArticleImporter {
 				kbArticleMarkdownConverter.getSourceURL(), null, null, null,
 				serviceContext);
 
-			if (newKBArticle) {
-				prioritizationStrategy.addKBArticle(kbArticle, fileEntryName);
-			}
-			else {
-				prioritizationStrategy.updateKBArticle(
-					kbArticle, fileEntryName);
-			}
-
 			return kbArticle;
 		}
 		catch (Exception e) {
@@ -173,6 +156,35 @@ public class KBArticleImporter {
 			sb.append(e.getLocalizedMessage());
 
 			throw new KBArticleImportException(sb.toString(), e);
+		}
+	}
+
+	protected double getKBArchiveResourcePriority(
+			KBArchive.Resource kbArchiveResource)
+		throws KBArticleImportException {
+
+		String kbArchiveResourceName = kbArchiveResource.getName();
+
+		int slashIndex = kbArchiveResourceName.lastIndexOf(StringPool.SLASH);
+
+		String shortFileName = StringPool.BLANK;
+
+		if ((slashIndex > -1) &&
+			(kbArchiveResourceName.length() > (slashIndex + 1))) {
+
+			shortFileName = kbArchiveResourceName.substring(slashIndex + 1);
+		}
+
+		String leadingDigits = StringUtil.extractLeadingDigits(shortFileName);
+
+		try {
+			double priority = Double.parseDouble(leadingDigits);
+
+			return Math.max(1.0, priority);
+		}
+		catch (NumberFormatException nfe) {
+			throw new KBArticleImportException(
+				"Invalid numerical prefix: " + kbArchiveResourceName, nfe);
 		}
 	}
 
@@ -216,10 +228,6 @@ public class KBArticleImporter {
 
 		int importedKBArticlesCount = 0;
 
-		PrioritizationStrategy prioritizationStrategy =
-			PrioritizationStrategy.create(
-				groupId, parentKBFolderId, prioritizeByNumericalPrefix);
-
 		KBArchive kbArchive = _kbArchiveFactory.createKBArchive(
 			groupId, zipReader);
 
@@ -246,21 +254,25 @@ public class KBArticleImporter {
 						parentIntroKBArticle.getResourcePrimKey();
 				}
 
-				String introFileName = introFile.getName();
-
-				if (prioritizeByNumericalPrefix) {
-					introFileName = _mergeFolderPriority(folder, introFileName);
-				}
-
 				introKBArticle = addKBArticleMarkdown(
 					userId, groupId, parentKBFolderId,
 					sectionResourceClassNameId, sectionResourcePrimaryKey,
-					introFile.getContent(), introFileName, zipReader, metadata,
-					prioritizationStrategy, serviceContext);
+					introFile.getContent(), introFile.getName(), zipReader,
+					metadata, serviceContext);
 
 				importedKBArticlesCount++;
 
 				introFileNameKBArticleMap.put(introFile, introKBArticle);
+
+				if (prioritizeByNumericalPrefix) {
+					double introFilePriority = getKBArchiveResourcePriority(
+						folder);
+
+					_kbArticleLocalService.moveKBArticle(
+						userId, introKBArticle.getResourcePrimKey(),
+						sectionResourceClassNameId, sectionResourcePrimaryKey,
+						introFilePriority);
+				}
 			}
 
 			long sectionResourceClassNameId = _portal.getClassNameId(
@@ -283,43 +295,31 @@ public class KBArticleImporter {
 					}
 				}
 
-				addKBArticleMarkdown(
+				KBArticle kbArticle = addKBArticleMarkdown(
 					userId, groupId, parentKBFolderId,
 					sectionResourceClassNameId, sectionResourcePrimaryKey,
 					markdown, file.getName(), zipReader, metadata,
-					prioritizationStrategy, serviceContext);
+					serviceContext);
 
 				importedKBArticlesCount++;
+
+				if (prioritizeByNumericalPrefix) {
+					double nonIntroFilePriority = getKBArchiveResourcePriority(
+						file);
+
+					_kbArticleLocalService.moveKBArticle(
+						userId, kbArticle.getResourcePrimKey(),
+						sectionResourceClassNameId, sectionResourcePrimaryKey,
+						nonIntroFilePriority);
+				}
 			}
 		}
-
-		prioritizationStrategy.prioritizeKBArticles();
 
 		return importedKBArticlesCount;
 	}
 
-	private String _mergeFolderPriority(
-		KBArchive.Folder folder, String introFileName) {
-
-		Matcher folderNameMatcher = _priorityPattern.matcher(folder.getName());
-
-		if (!folderNameMatcher.find()) {
-			return introFileName;
-		}
-
-		String folderPrefix = folderNameMatcher.group(1);
-
-		Matcher introFileNameMatcher = _priorityPattern.matcher(introFileName);
-
-		return introFileNameMatcher.replaceFirst(
-			StringPool.SLASH + folderPrefix + "$2");
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBArticleImporter.class);
-
-	private static final Pattern _priorityPattern = Pattern.compile(
-		"/(\\d+)(-[^/]+)$");
 
 	private final KBArchiveFactory _kbArchiveFactory;
 	private final KBArticleLocalService _kbArticleLocalService;

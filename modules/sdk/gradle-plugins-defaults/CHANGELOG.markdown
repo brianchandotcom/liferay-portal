@@ -2519,7 +2519,7 @@ is found in a parent directory.
 ### Changed
 - [LPS-76202]: Update the [Liferay Gradle Plugins] dependency to version 3.5.55.
 
-## 5.2.8 - 2017-11-30
+## 5.2.8 - 2017-12-01
 
 ### Changed
 - [LPS-76224]: Update the [Liferay Gradle Plugins] dependency to version 3.5.56.

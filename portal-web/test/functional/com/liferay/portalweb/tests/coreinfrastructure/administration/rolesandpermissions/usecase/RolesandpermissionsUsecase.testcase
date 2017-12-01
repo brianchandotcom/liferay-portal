@@ -2250,7 +2250,6 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="USA Ice Hockey Team Blog" />
 			<var name="pageTemplateName" value="Blog" />
-			<var name="privacy" value="Public" />
 		</execute>
 
 		<execute macro="PermissionsInline#gotoPagePG">

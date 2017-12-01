@@ -44,7 +44,6 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Site Page Name" />
 			<var name="pageTemplateName" value="Content Display Page" />
-			<var name="privacy" value="Public" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

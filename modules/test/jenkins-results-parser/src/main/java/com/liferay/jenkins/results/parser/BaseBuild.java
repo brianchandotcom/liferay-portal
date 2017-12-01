@@ -1216,9 +1216,7 @@ public abstract class BaseBuild implements Build {
 							getDownstreamBuildCount("completed")) &&
 						(result != null)) {
 
-						if (_isDifferent(_result, result)) {
-							setResult(result);
-						}
+						setResult(result);
 					}
 
 					findDownstreamBuilds();
@@ -2211,18 +2209,16 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected void setResult(String result) {
-		if (_isDifferent(result, _result)) {
-			_result = result;
+		_result = result;
 
-			if ((_result == null) ||
-				(getDownstreamBuildCount("completed") <
-					getDownstreamBuildCount(null))) {
+		if ((_result == null) ||
+			(getDownstreamBuildCount("completed") <
+				getDownstreamBuildCount(null))) {
 
-				setStatus("running");
-			}
-			else {
-				setStatus("completed");
-			}
+			setStatus("running");
+		}
+		else {
+			setStatus("completed");
 		}
 	}
 

@@ -60,7 +60,7 @@ public class CPInstancePricingScreenNavigationEntry
 
 	@Override
 	public String getEntryKey() {
-		return CPInstanceScreenNavigationConstants.CATEGORY_KEY_PRICING;
+		return CPInstanceScreenNavigationConstants.ENTRY_KEY_PRICING;
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class CPInstancePricingScreenNavigationEntry
 
 		return LanguageUtil.get(
 			resourceBundle,
-			CPInstanceScreenNavigationConstants.CATEGORY_KEY_PRICING);
+			CPInstanceScreenNavigationConstants.ENTRY_KEY_PRICING);
 	}
 
 	@Override

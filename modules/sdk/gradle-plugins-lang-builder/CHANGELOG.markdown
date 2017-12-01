@@ -39,7 +39,13 @@ configure which language IDs to exclude in the automatic translation.
 ### Changed
 - [LPS-73725]: Update the [Liferay Lang Builder] dependency to version 1.0.18.
 
+## 2.1.5 - 2017-12-01
+
+### Changed
+- [LPS-76221]: Update the [Liferay Lang Builder] dependency to version 1.0.19.
+
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-71375]: https://issues.liferay.com/browse/LPS-71375
 [LPS-73725]: https://issues.liferay.com/browse/LPS-73725
 [LPS-74250]: https://issues.liferay.com/browse/LPS-74250
+[LPS-76221]: https://issues.liferay.com/browse/LPS-76221

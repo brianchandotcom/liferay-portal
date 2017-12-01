@@ -1,0 +1,135 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<liferay-ui:error exception="<%= KaleoDefinitionValidationException.class %>" message="please-enter-valid-content" />
+
+<liferay-ui:error exception="<%= WorkflowDefinitionTitleException.class %>" message="name-workflow-before-publish" />
+
+<liferay-ui:error exception="<%= KaleoDefinitionValidationException.MultipleInitialStateNodes.class %>">
+
+	<%
+	KaleoDefinitionValidationException.MultipleInitialStateNodes misn = (KaleoDefinitionValidationException.MultipleInitialStateNodes)errorException;
+	%>
+
+	<liferay-ui:message arguments="<%= new Object[] {misn.getState1(), misn.getState2()} %>" key="the-workflow-has-too-many-start-nodes-state-nodes-x-and-x" translateArguments="<%= false %>" />
+</liferay-ui:error>
+
+<liferay-ui:error exception="<%= KaleoDefinitionValidationException.MustNotSetIncomingTransition.class %>">
+
+	<%
+	KaleoDefinitionValidationException.MustNotSetIncomingTransition mnsit = (KaleoDefinitionValidationException.MustNotSetIncomingTransition)errorException;
+	%>
+
+	<liferay-ui:message arguments="<%= mnsit.getNode() %>" key="the-x-node-cannot-have-an-incoming-transition" translateArguments="<%= false %>" />
+</liferay-ui:error>
+
+<liferay-ui:error exception="<%= KaleoDefinitionValidationException.MustPairedForkAndJoinNodes.class %>">
+
+	<%
+	KaleoDefinitionValidationException.MustPairedForkAndJoinNodes mpfajn = (KaleoDefinitionValidationException.MustPairedForkAndJoinNodes)errorException;
+	%>
+
+	<liferay-ui:message arguments="<%= new Object[] {mpfajn.getFork(), mpfajn.getNode()} %>" key="fork-x-and-join-x-nodes-must-be-paired" translateArguments="<%= false %>" />
+</liferay-ui:error>
+
+<liferay-ui:error exception="<%= KaleoDefinitionValidationException.MustSetAssignments.class %>">
+
+	<%
+	KaleoDefinitionValidationException.MustSetAssignments msa = (KaleoDefinitionValidationException.MustSetAssignments)errorException;
+	%>
+
+	<liferay-ui:message arguments="<%= msa.getTask() %>" key="specify-at-least-one-assignment-for-the-x-task-node" translateArguments="<%= false %>" />
+</liferay-ui:error>
+
+<liferay-ui:error exception="<%= KaleoDefinitionValidationException.MustSetIncomingTransition.class %>">
+
+	<%
+	KaleoDefinitionValidationException.MustSetIncomingTransition msit = (KaleoDefinitionValidationException.MustSetIncomingTransition)errorException;
+	%>
+
+	<liferay-ui:message arguments="<%= msit.getNode() %>" key="the-x-node-must-have-an-incoming-transition" translateArguments="<%= false %>" />
+</liferay-ui:error>
+
+<liferay-ui:error exception="<%= KaleoDefinitionValidationException.MustSetInitialStateNode.class %>" message="you-must-define-a-start-node" />
+
+<liferay-ui:error exception="<%= KaleoDefinitionValidationException.MustSetJoinNode.class %>">
+
+	<%
+	KaleoDefinitionValidationException.MustSetJoinNode msjn = (KaleoDefinitionValidationException.MustSetJoinNode)errorException;
+	%>
+
+	<liferay-ui:message arguments="<%= msjn.getFork() %>" key="the-x-fork-node-must-have-a-matching-join-node" translateArguments="<%= false %>" />
+</liferay-ui:error>
+
+<liferay-ui:error exception="<%= KaleoDefinitionValidationException.MustSetMultipleOutgoingTransition.class %>">
+
+	<%
+	KaleoDefinitionValidationException.MustSetMultipleOutgoingTransition msmot = (KaleoDefinitionValidationException.MustSetMultipleOutgoingTransition)errorException;
+	%>
+
+	<liferay-ui:message arguments="<%= msmot.getNode() %>" key="the-x-node-must-have-at-least-two-outgoing-transitions" translateArguments="<%= false %>" />
+</liferay-ui:error>
+
+<liferay-ui:error exception="<%= KaleoDefinitionValidationException.MustSetOutgoingTransition.class %>">
+
+	<%
+	KaleoDefinitionValidationException.MustSetOutgoingTransition msot = (KaleoDefinitionValidationException.MustSetOutgoingTransition)errorException;
+	%>
+
+	<liferay-ui:message arguments="<%= msot.getNode() %>" key="the-x-node-must-have-an-outgoing-transition" translateArguments="<%= false %>" />
+</liferay-ui:error>
+
+<liferay-ui:error exception="<%= KaleoDefinitionValidationException.MustSetSourceNode.class %>">
+
+	<%
+	KaleoDefinitionValidationException.MustSetSourceNode mssn = (KaleoDefinitionValidationException.MustSetSourceNode)errorException;
+	%>
+
+	<liferay-ui:message arguments="<%= mssn.getNode() %>" key="the-x-transition-must-have-a-source-node" translateArguments="<%= false %>" />
+</liferay-ui:error>
+
+<liferay-ui:error exception="<%= KaleoDefinitionValidationException.MustSetTargetNode.class %>">
+
+	<%
+	KaleoDefinitionValidationException.MustSetTargetNode mstn = (KaleoDefinitionValidationException.MustSetTargetNode)errorException;
+	%>
+
+	<liferay-ui:message arguments="<%= mstn.getNode() %>" key="the-x-transition-must-end-at-a-node" translateArguments="<%= false %>" />
+</liferay-ui:error>
+
+<liferay-ui:error exception="<%= KaleoDefinitionValidationException.MustSetTaskFormDefinitionOrReference.class %>">
+
+	<%
+	KaleoDefinitionValidationException.MustSetTaskFormDefinitionOrReference mstfdor = (KaleoDefinitionValidationException.MustSetTaskFormDefinitionOrReference)errorException;
+	%>
+
+	<liferay-ui:message arguments="<%= new Object[] {mstfdor.getTask(), mstfdor.getTaskForm()} %>" key="the-task-form-x-for-task-x-must-specify-a-form-reference-or-form-definition" translateArguments="<%= false %>" />
+</liferay-ui:error>
+
+<liferay-ui:error exception="<%= KaleoDefinitionValidationException.MustSetTerminalStateNode.class %>" message="you-must-define-an-end-node" />
+
+<liferay-ui:error exception="<%= KaleoDefinitionValidationException.UnbalancedForkAndJoinNode.class %>">
+
+	<%
+	KaleoDefinitionValidationException.UnbalancedForkAndJoinNode ufajn = (KaleoDefinitionValidationException.UnbalancedForkAndJoinNode)errorException;
+	%>
+
+	<liferay-ui:message arguments="<%= new Object[] {ufajn.getFork(), ufajn.getJoin()} %>" key="fix-the-errors-between-the-fork-node-x-and-join-node-x" translateArguments="<%= false %>" />
+</liferay-ui:error>
+
+<liferay-ui:error exception="<%= KaleoDefinitionValidationException.UnbalancedForkAndJoinNodes.class %>" message="each-fork-node-requires-a-join-node-make-sure-all-forks-and-joins-are-properly-paired" />
+
+<liferay-ui:error exception="<%= WorkflowException.class %>" message="an-error-occurred-in-the-workflow-engine" />

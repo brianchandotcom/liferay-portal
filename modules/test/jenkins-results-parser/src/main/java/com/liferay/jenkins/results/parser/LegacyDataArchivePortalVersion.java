@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.LegacyDataArchive.Status;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -113,6 +115,91 @@ public class LegacyDataArchivePortalVersion {
 		}
 
 		return false;
+	}
+
+	protected List<Element> getReadMeElements() {
+		ArrayList<Element> readMeElements = new ArrayList<>();
+
+		readMeElements.add(
+			Dom4JUtil.getNewElement("h2", null, getPortalVersion()));
+
+		Element testCommitElement = Dom4JUtil.getNewElement("p", null);
+
+		readMeElements.add(testCommitElement);
+
+		Dom4JUtil.getNewElement("span", testCommitElement, "Last Commit in ");
+
+		File testDirectory = getPortalVersionTestDirectory();
+
+		Dom4JUtil.getNewAnchorElement(
+			_legacyGitWorkingDirectory.getGitHubFileURL(
+				"master", _legacyGitWorkingDirectory.getRemote("upstream"),
+				testDirectory, false),
+			testCommitElement, "Test");
+
+		Dom4JUtil.getNewElement("span", testCommitElement, " Folder:");
+
+		Commit testCommit = getLatestTestCommit();
+
+		Dom4JUtil.getNewAnchorElement(
+			testCommit.getGitHubCommitURL(), testCommitElement,
+			testCommit.getAbbreviatedSHA());
+
+		Dom4JUtil.getNewElement(
+			"span", testCommitElement, testCommit.getMessage());
+
+		List<LegacyDataArchiveGroup> legacyDataArchiveGroups =
+			getLegacyDataArchiveGroups();
+
+		if (hasUpdatedArchives()) {
+			readMeElements.add(
+				Dom4JUtil.getNewElement("h4", null, "Updated Data Archives:"));
+
+			for (LegacyDataArchiveGroup legacyDataArchiveGroup :
+					legacyDataArchiveGroups) {
+
+				if (legacyDataArchiveGroup.getStatus() != Status.UPDATED) {
+					continue;
+				}
+
+				readMeElements.add(
+					legacyDataArchiveGroup.getLegacyDataReadMeSummaryElement());
+			}
+		}
+
+		if (hasStaleArchives()) {
+			readMeElements.add(
+				Dom4JUtil.getNewElement("h4", null, "Stale Data Archives:"));
+
+			for (LegacyDataArchiveGroup legacyDataArchiveGroup :
+					legacyDataArchiveGroups) {
+
+				if (legacyDataArchiveGroup.getStatus() != Status.STALE) {
+					continue;
+				}
+
+				readMeElements.add(
+					legacyDataArchiveGroup.getLegacyDataReadMeSummaryElement());
+			}
+		}
+
+		if (hasMissingArchives()) {
+			readMeElements.add(
+				Dom4JUtil.getNewElement("h4", null, "Missing Data Archives:"));
+
+			for (LegacyDataArchiveGroup legacyDataArchiveGroup :
+					legacyDataArchiveGroups) {
+
+				if (legacyDataArchiveGroup.getStatus() != Status.MISSING) {
+					continue;
+				}
+
+				readMeElements.add(
+					legacyDataArchiveGroup.getLegacyDataReadMeSummaryElement());
+			}
+		}
+
+		return readMeElements;
 	}
 
 	private List<String> _getDataArchiveTypes() {

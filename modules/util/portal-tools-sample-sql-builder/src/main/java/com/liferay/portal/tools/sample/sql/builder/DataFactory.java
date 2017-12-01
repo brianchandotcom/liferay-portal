@@ -23,7 +23,7 @@ import com.liferay.asset.kernel.model.AssetTagModel;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyModel;
 import com.liferay.asset.tag.stats.model.AssetTagStatsModel;
-import com.liferay.asset.tag.stats.model.impl.AssetTagStatsModelImpl;
+import com.liferay.asset.tag.stats.service.AssetTagStatsLocalServiceUtil;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.model.BlogsEntryModel;
@@ -3055,9 +3055,9 @@ public class DataFactory {
 	protected AssetTagStatsModel newAssetTagStatsModel(
 		long tagId, long classNameId) {
 
-		AssetTagStatsModel assetTagStatsModel = new AssetTagStatsModelImpl();
+		AssetTagStatsModel assetTagStatsModel =
+			AssetTagStatsLocalServiceUtil.createAssetTagStats(_counter.get());
 
-		assetTagStatsModel.setTagStatsId(_counter.get());
 		assetTagStatsModel.setTagId(tagId);
 		assetTagStatsModel.setClassNameId(classNameId);
 

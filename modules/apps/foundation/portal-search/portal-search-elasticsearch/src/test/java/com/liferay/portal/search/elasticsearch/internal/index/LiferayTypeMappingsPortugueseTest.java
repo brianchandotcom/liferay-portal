@@ -15,12 +15,9 @@
 package com.liferay.portal.search.elasticsearch.internal.index;
 
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch.internal.connection.Index;
 import com.liferay.portal.search.elasticsearch.internal.connection.IndexName;
 
-import org.elasticsearch.action.index.IndexRequestBuilder;
-import org.elasticsearch.client.Client;
+import java.util.HashMap;
 
 import org.junit.After;
 import org.junit.Before;
@@ -41,10 +38,6 @@ public class LiferayTypeMappingsPortugueseTest {
 			clazz.getSimpleName(), new IndexName(testName.getMethodName()));
 
 		_liferayIndexFixture.setUp();
-
-		_index = _liferayIndexFixture.getIndex();
-
-		_elasticsearchFixture = _liferayIndexFixture.getElasticsearchFixture();
 	}
 
 	@After
@@ -56,41 +49,33 @@ public class LiferayTypeMappingsPortugueseTest {
 	public void testPortugueseDynamicTemplatesMatchAnalyzers()
 		throws Exception {
 
-		Client client = _elasticsearchFixture.getClient();
-
-		IndexRequestBuilder indexRequestBuilder = client.prepareIndex(
-			_index.getName(),
-			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
-
 		String field_pt = RandomTestUtil.randomString() + "_pt";
 		String field_pt_BR = RandomTestUtil.randomString() + "_pt_BR";
 		String field_pt_PT = RandomTestUtil.randomString() + "_pt_PT";
 
-		indexRequestBuilder.setSource(
-			field_pt, RandomTestUtil.randomString(), field_pt_BR,
-			RandomTestUtil.randomString(), field_pt_PT,
-			RandomTestUtil.randomString());
-
-		indexRequestBuilder.get();
+		_liferayIndexFixture.index(
+			new HashMap<String, Object>() {
+				{
+					put(field_pt, RandomTestUtil.randomString());
+					put(field_pt_BR, RandomTestUtil.randomString());
+					put(field_pt_PT, RandomTestUtil.randomString());
+				}
+			});
 
 		assertAnalyzer(field_pt, "portuguese");
 		assertAnalyzer(field_pt_BR, "brazilian");
 		assertAnalyzer(field_pt_PT, "portuguese");
 	}
 
-	@Rule
-	public TestName testName = new TestName();
-
 	protected void assertAnalyzer(String field, String analyzer)
 		throws Exception {
 
-		FieldMappingAssert.assertAnalyzer(
-			analyzer, field, LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
-			_index.getName(), _elasticsearchFixture.getIndicesAdminClient());
+		_liferayIndexFixture.assertAnalyzer(field, analyzer);
 	}
 
-	private ElasticsearchFixture _elasticsearchFixture;
-	private Index _index;
+	@Rule
+	public TestName testName = new TestName();
+
 	private LiferayIndexFixture _liferayIndexFixture;
 
 }

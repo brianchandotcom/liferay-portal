@@ -51,7 +51,9 @@ public class PackageinfoBNDExportPackageCheck extends BaseFileCheck {
 			return;
 		}
 
-		addMessage(fileName, "Please delete this 'packageinfo' file");
+		addMessage(
+			fileName, "Please delete this 'packageinfo' file",
+			"bnd_packageinfo.markdown");
 	}
 
 	private List<String> _getBNDExportPackages(String fileName)

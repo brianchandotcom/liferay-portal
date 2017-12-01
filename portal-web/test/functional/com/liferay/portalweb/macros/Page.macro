@@ -160,9 +160,13 @@
 	</command>
 
 	<command name="addFriendlyURLLocalizedPG">
-		<var name="key_friendlyUrlLocalized" value="${friendlyUrlLocalized}" />
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="General" />
+		</execute>
 
-		<execute function="Click" locator1="SitePagesEditPage#FRIENDLY_URL_LOCALIZED" />
+		<execute function="Click" locator1="SitePagesEditPage#FRIENDLY_URL_LOCALIZED">
+			<var name="key_friendlyUrlLocalized" value="${friendlyUrlLocalized}" />
+		</execute>
 
 		<execute function="Type" locator1="SitePagesEditPage#FRIENDLY_URL_FIELD" value1="${localizedFriendlyURL}" />
 	</command>
@@ -254,7 +258,7 @@
 			<var name="name" value="${pageTranslationName}" />
 		</execute>
 
-		<execute macro="PortletEntry#save" />
+		<execute macro="Button#clickSave" />
 	</command>
 
 	<command name="addPageTypePanelPG">
@@ -353,15 +357,17 @@
 	</command>
 
 	<command name="deleteFriendlyURLPG">
-		<var name="key_friendlyUrlLocalized" value="${friendlyUrlLocalized}" />
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="General" />
+		</execute>
 
-		<execute function="Click#pauseClickAt" locator1="SitePagesEditPage#FRIENDLY_URL_LOCALIZED" />
+		<execute function="Click#pauseClickAt" locator1="SitePagesEditPage#FRIENDLY_URL_LOCALIZED">
+			<var name="key_friendlyUrlLocalized" value="${friendlyUrlLocalized}" />
+		</execute>
 
 		<execute function="Type" locator1="SitePagesEditPage#FRIENDLY_URL_FIELD" value1=" " />
 
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#SAVE" value1="Save" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Button#clickSave" />
 	</command>
 
 	<command name="deleteLivePG">

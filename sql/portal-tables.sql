@@ -169,14 +169,6 @@ create table AssetTag (
 	lastPublishDate DATE null
 );
 
-create table AssetTagStats (
-	tagStatsId LONG not null primary key,
-	companyId LONG,
-	tagId LONG,
-	classNameId LONG,
-	assetCount INTEGER
-);
-
 create table AssetVocabulary (
 	uuid_ VARCHAR(75) null,
 	vocabularyId LONG not null primary key,

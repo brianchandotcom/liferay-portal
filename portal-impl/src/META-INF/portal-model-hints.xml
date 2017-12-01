@@ -159,13 +159,6 @@
 		<field name="assetCount" type="int" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
-	<model name="com.liferay.asset.kernel.model.AssetTagStats">
-		<field name="tagStatsId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="tagId" type="long" />
-		<field name="classNameId" type="long" />
-		<field name="assetCount" type="int" />
-	</model>
 	<model name="com.liferay.asset.kernel.model.AssetVocabulary">
 		<field name="uuid" type="String" />
 		<field name="vocabularyId" type="long" />

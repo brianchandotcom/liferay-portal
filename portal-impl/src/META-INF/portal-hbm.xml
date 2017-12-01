@@ -9,7 +9,6 @@
 	<import class="com.liferay.asset.kernel.model.AssetEntry" />
 	<import class="com.liferay.asset.kernel.model.AssetLink" />
 	<import class="com.liferay.asset.kernel.model.AssetTag" />
-	<import class="com.liferay.asset.kernel.model.AssetTagStats" />
 	<import class="com.liferay.asset.kernel.model.AssetVocabulary" />
 	<import class="com.liferay.counter.kernel.model.Counter" />
 	<import class="com.liferay.document.library.kernel.model.DLFileEntry" />
@@ -1210,15 +1209,6 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="assetCount" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
-	</class>
-	<class name="com.liferay.portlet.asset.model.impl.AssetTagStatsImpl" table="AssetTagStats">
-		<id name="tagStatsId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="tagId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="assetCount" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.portlet.asset.model.impl.AssetVocabularyImpl" table="AssetVocabulary">
 		<id name="vocabularyId" type="long">

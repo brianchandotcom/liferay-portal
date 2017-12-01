@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.asset.tag.stats.model.AssetTagStats">
+		<field name="tagStatsId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="tagId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="assetCount" type="int" />
+	</model>
+</model-hints>

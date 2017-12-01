@@ -79,7 +79,7 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 		"com_liferay_commerce_product_asset_categories_navigation_web_" +
 			"internal_portlet_CPAssetCategoriesNavigationPortlet";
 
-	public static final String DEPENDECY_PATH =
+	public static final String DEPENDENCY_PATH =
 		"com/liferay/commerce/starter/lotus/internal/dependencies/";
 
 	public static final String KEY = "lotus";
@@ -207,7 +207,7 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 
 		Class<?> clazz = getClass();
 
-		String journalArticlePath = DEPENDECY_PATH + "journal-articles.json";
+		String journalArticlePath = DEPENDENCY_PATH + "journal-articles.json";
 
 		String journalArticleJSON = StringUtil.read(
 			clazz.getClassLoader(), journalArticlePath, false);
@@ -216,7 +216,7 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 			journalArticleJSON);
 
 		_cpFileImporter.createJournalArticles(
-			jsonArray, clazz.getClassLoader(), DEPENDECY_PATH, serviceContext,
+			jsonArray, clazz.getClassLoader(), DEPENDENCY_PATH, serviceContext,
 			themeDisplay);
 	}
 
@@ -225,7 +225,7 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 
 		Class<?> clazz = getClass();
 
-		String layoutsPath = DEPENDECY_PATH + "layouts.json";
+		String layoutsPath = DEPENDENCY_PATH + "layouts.json";
 
 		String layoutsJSON = StringUtil.read(
 			clazz.getClassLoader(), layoutsPath, false);
@@ -239,7 +239,7 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 		Class<?> clazz = getClass();
 
 		String themePortletSettingsPath =
-			DEPENDECY_PATH + "theme-portlet-settings.json";
+			DEPENDENCY_PATH + "theme-portlet-settings.json";
 
 		String themePortletSettingsJSON = StringUtil.read(
 			clazz.getClassLoader(), themePortletSettingsPath, false);

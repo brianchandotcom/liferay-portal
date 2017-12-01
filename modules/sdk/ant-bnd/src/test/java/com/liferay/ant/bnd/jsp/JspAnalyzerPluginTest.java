@@ -17,6 +17,7 @@ package com.liferay.ant.bnd.jsp;
 import aQute.bnd.osgi.Builder;
 import aQute.bnd.osgi.Constants;
 import aQute.bnd.osgi.Packages;
+
 import aQute.lib.io.IO;
 
 import java.io.InputStream;
@@ -25,7 +26,6 @@ import java.net.URL;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.regex.Matcher;
 
 import org.junit.Assert;
 import org.junit.Test;

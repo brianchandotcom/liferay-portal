@@ -184,7 +184,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		Collection<String> fileNames = new TreeSet<>();
 
 		String[] excludes = {
-			"**/*_IW.java", "**/counter/service/**", "**/jsp/*",
+			"**/*_IW.java", "**/counter/service/**",
 			"**/model/impl/*Model.java", "**/model/impl/*ModelImpl.java",
 			"**/portal/service/**", "**/portal-client/**",
 			"**/portal-web/test/**/*Test.java", "**/test/*-generated/**"

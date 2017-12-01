@@ -18,9 +18,7 @@ import com.liferay.asset.kernel.exception.AssetCategoryNameException;
 import com.liferay.asset.kernel.exception.DuplicateCategoryException;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
-import com.liferay.asset.kernel.model.AssetCategoryProperty;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -50,7 +48,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.service.base.AssetCategoryLocalServiceBaseImpl;
 import com.liferay.portlet.asset.util.comparator.AssetCategoryLeftCategoryIdComparator;
@@ -60,7 +57,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -137,32 +133,6 @@ public class AssetCategoryLocalServiceImpl
 		else {
 			addCategoryResources(
 				category, serviceContext.getModelPermissions());
-		}
-
-		// Properties
-
-		for (int i = 0; i < categoryProperties.length; i++) {
-			String[] categoryProperty = StringUtil.split(
-				categoryProperties[i],
-				AssetCategoryConstants.PROPERTY_KEY_VALUE_SEPARATOR);
-
-			if (categoryProperty.length <= 1) {
-				categoryProperty = StringUtil.split(
-					categoryProperties[i], CharPool.COLON);
-			}
-
-			String key = StringPool.BLANK;
-			String value = StringPool.BLANK;
-
-			if (categoryProperty.length > 1) {
-				key = GetterUtil.getString(categoryProperty[0]);
-				value = GetterUtil.getString(categoryProperty[1]);
-			}
-
-			if (Validator.isNotNull(key)) {
-				assetCategoryPropertyLocalService.addCategoryProperty(
-					userId, categoryId, key, value);
-			}
 		}
 
 		return category;
@@ -313,11 +283,6 @@ public class AssetCategoryLocalServiceImpl
 		resourceLocalService.deleteResource(
 			category.getCompanyId(), AssetCategory.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, category.getCategoryId());
-
-		// Properties
-
-		assetCategoryPropertyLocalService.deleteCategoryProperties(
-			category.getCategoryId());
 
 		// Indexer
 
@@ -543,21 +508,6 @@ public class AssetCategoryLocalServiceImpl
 
 		assetCategoryPersistence.addAssetEntries(toCategoryId, entries);
 
-		List<AssetCategoryProperty> categoryProperties =
-			assetCategoryPropertyPersistence.findByCategoryId(fromCategoryId);
-
-		for (AssetCategoryProperty fromCategoryProperty : categoryProperties) {
-			AssetCategoryProperty toCategoryProperty =
-				assetCategoryPropertyPersistence.fetchByCA_K(
-					toCategoryId, fromCategoryProperty.getKey());
-
-			if (toCategoryProperty == null) {
-				fromCategoryProperty.setCategoryId(toCategoryId);
-
-				assetCategoryPropertyPersistence.update(fromCategoryProperty);
-			}
-		}
-
 		assetCategoryLocalService.deleteCategory(fromCategoryId);
 
 		return getCategory(toCategoryId);
@@ -707,77 +657,6 @@ public class AssetCategoryLocalServiceImpl
 		category.setDescriptionMap(descriptionMap);
 
 		assetCategoryPersistence.update(category);
-
-		// Properties
-
-		List<AssetCategoryProperty> oldCategoryProperties =
-			assetCategoryPropertyPersistence.findByCategoryId(categoryId);
-
-		oldCategoryProperties = ListUtil.copy(oldCategoryProperties);
-
-		for (int i = 0; i < categoryProperties.length; i++) {
-			String[] categoryProperty = StringUtil.split(
-				categoryProperties[i],
-				AssetCategoryConstants.PROPERTY_KEY_VALUE_SEPARATOR);
-
-			if (categoryProperty.length <= 1) {
-				categoryProperty = StringUtil.split(
-					categoryProperties[i], CharPool.COLON);
-			}
-
-			String key = StringPool.BLANK;
-
-			if (categoryProperty.length > 0) {
-				key = GetterUtil.getString(categoryProperty[0]);
-			}
-
-			String value = StringPool.BLANK;
-
-			if (categoryProperty.length > 1) {
-				value = GetterUtil.getString(categoryProperty[1]);
-			}
-
-			if (Validator.isNotNull(key)) {
-				boolean addCategoryProperty = true;
-
-				AssetCategoryProperty oldCategoryProperty = null;
-
-				Iterator<AssetCategoryProperty> iterator =
-					oldCategoryProperties.iterator();
-
-				while (iterator.hasNext()) {
-					oldCategoryProperty = iterator.next();
-
-					if ((categoryId == oldCategoryProperty.getCategoryId()) &&
-						key.equals(oldCategoryProperty.getKey())) {
-
-						addCategoryProperty = false;
-
-						if (!value.equals(oldCategoryProperty.getValue())) {
-							assetCategoryPropertyLocalService.
-								updateCategoryProperty(
-									userId,
-									oldCategoryProperty.getCategoryPropertyId(),
-									key, value);
-						}
-
-						iterator.remove();
-
-						break;
-					}
-				}
-
-				if (addCategoryProperty) {
-					assetCategoryPropertyLocalService.addCategoryProperty(
-						userId, categoryId, key, value);
-				}
-			}
-		}
-
-		for (AssetCategoryProperty categoryProperty : oldCategoryProperties) {
-			assetCategoryPropertyLocalService.deleteAssetCategoryProperty(
-				categoryProperty);
-		}
 
 		// Indexer
 

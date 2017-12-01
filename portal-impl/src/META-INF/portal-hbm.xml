@@ -6,7 +6,6 @@
 	<import class="com.liferay.announcements.kernel.model.AnnouncementsEntry" />
 	<import class="com.liferay.announcements.kernel.model.AnnouncementsFlag" />
 	<import class="com.liferay.asset.kernel.model.AssetCategory" />
-	<import class="com.liferay.asset.kernel.model.AssetCategoryProperty" />
 	<import class="com.liferay.asset.kernel.model.AssetEntry" />
 	<import class="com.liferay.asset.kernel.model.AssetLink" />
 	<import class="com.liferay.asset.kernel.model.AssetTag" />
@@ -1152,19 +1151,6 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="vocabularyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
-	</class>
-	<class name="com.liferay.portlet.asset.model.impl.AssetCategoryPropertyImpl" table="AssetCategoryProperty">
-		<id name="categoryPropertyId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="categoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property column="key_" name="key" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="value" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portlet.asset.model.impl.AssetEntryImpl" table="AssetEntry">
 		<id name="entryId" type="long">

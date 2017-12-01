@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean class="com.liferay.asset.category.property.service.impl.AssetCategoryPropertyLocalServiceImpl" id="com.liferay.asset.category.property.service.AssetCategoryPropertyLocalService" />
+	<bean class="com.liferay.asset.category.property.service.impl.AssetCategoryPropertyServiceImpl" id="com.liferay.asset.category.property.service.AssetCategoryPropertyService" />
+	<bean class="com.liferay.asset.category.property.service.persistence.impl.AssetCategoryPropertyPersistenceImpl" id="com.liferay.asset.category.property.service.persistence.AssetCategoryPropertyPersistence" parent="basePersistence" />
+	<bean class="com.liferay.asset.category.property.service.persistence.impl.AssetCategoryPropertyFinderImpl" id="com.liferay.asset.category.property.service.persistence.AssetCategoryPropertyFinder" parent="basePersistence" />
+</beans>

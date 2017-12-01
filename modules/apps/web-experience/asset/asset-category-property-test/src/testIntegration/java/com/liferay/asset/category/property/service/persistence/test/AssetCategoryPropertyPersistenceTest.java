@@ -12,13 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.asset.service.persistence.test;
+package com.liferay.asset.category.property.service.persistence.test;
 
-import com.liferay.asset.kernel.exception.NoSuchCategoryPropertyException;
-import com.liferay.asset.kernel.model.AssetCategoryProperty;
-import com.liferay.asset.kernel.service.AssetCategoryPropertyLocalServiceUtil;
-import com.liferay.asset.kernel.service.persistence.AssetCategoryPropertyPersistence;
-import com.liferay.asset.kernel.service.persistence.AssetCategoryPropertyUtil;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
+import com.liferay.asset.category.property.exception.NoSuchCategoryPropertyException;
+import com.liferay.asset.category.property.model.AssetCategoryProperty;
+import com.liferay.asset.category.property.service.AssetCategoryPropertyLocalServiceUtil;
+import com.liferay.asset.category.property.service.persistence.AssetCategoryPropertyPersistence;
+import com.liferay.asset.category.property.service.persistence.AssetCategoryPropertyUtil;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -45,6 +47,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -58,12 +62,14 @@ import java.util.Set;
 /**
  * @generated
  */
+@RunWith(Arquillian.class)
 public class AssetCategoryPropertyPersistenceTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(Propagation.REQUIRED));
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.asset.category.property.service"));
 
 	@Before
 	public void setUp() {

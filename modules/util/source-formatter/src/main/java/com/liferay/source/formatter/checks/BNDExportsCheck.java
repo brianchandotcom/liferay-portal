@@ -117,18 +117,15 @@ public class BNDExportsCheck extends BaseFileCheck {
 		List<String> exportPackages = new ArrayList<>();
 
 		for (String line : StringUtil.splitLines(matcher.group(3))) {
-			String s = StringUtil.trim(line);
+			line = StringUtil.trim(line);
 
-			if (s.endsWith(",\\")) {
-				s = StringUtil.replaceLast(s, ",\\", StringPool.BLANK);
-			}
-			else if (s.equals("\\")) {
-				s = StringPool.BLANK;
+			if (Validator.isNull(line) || line.equals("\\")) {
+				continue;
 			}
 
-			if (Validator.isNotNull(s)) {
-				exportPackages.add(s.replace(CharPool.PERIOD, CharPool.SLASH));
-			}
+			line = StringUtil.removeSubstring(line, ",\\");
+
+			exportPackages.add(line.replace(CharPool.PERIOD, CharPool.SLASH));
 		}
 
 		int i = fileName.lastIndexOf("/");

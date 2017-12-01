@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Commerce Payment Money Order
-Bundle-SymbolicName: com.liferay.commerce.payment.money.order
-Bundle-Version: 1.0.0
-Web-ContextPath: /commerce-payment-money-order

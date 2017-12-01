@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.payment.money.order.internal.constants;
+package com.liferay.commerce.payment.engine.money.order.internal.constants;
 
 /**
  * @author Andrea Di Giorgi
@@ -20,6 +20,6 @@ package com.liferay.commerce.payment.money.order.internal.constants;
 public class MoneyOrderCommercePaymentEngineConstants {
 
 	public static final String SERVICE_NAME =
-		"com.liferay.commerce.payment.money.order";
+		"com.liferay.commerce.payment.engine.money.order";
 
 }

@@ -21,7 +21,7 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.payment.money.order.internal.configuration.MoneyOrderCommercePaymentEngineGroupServiceConfiguration" %><%@
+<%@ page import="com.liferay.commerce.payment.engine.money.order.internal.configuration.MoneyOrderCommercePaymentEngineGroupServiceConfiguration" %><%@
 page import="com.liferay.portal.kernel.settings.LocalizedValuesMap" %><%@
 page import="com.liferay.portal.kernel.util.LocalizationUtil" %>
 

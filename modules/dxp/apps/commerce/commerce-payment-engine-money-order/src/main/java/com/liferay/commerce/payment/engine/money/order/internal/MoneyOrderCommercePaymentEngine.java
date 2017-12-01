@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.commerce.payment.money.order.internal;
+package com.liferay.commerce.payment.engine.money.order.internal;
 
 import com.liferay.commerce.model.CommercePaymentEngine;
-import com.liferay.commerce.payment.money.order.internal.configuration.MoneyOrderCommercePaymentEngineGroupServiceConfiguration;
-import com.liferay.commerce.payment.money.order.internal.constants.MoneyOrderCommercePaymentEngineConstants;
+import com.liferay.commerce.payment.engine.money.order.internal.configuration.MoneyOrderCommercePaymentEngineGroupServiceConfiguration;
+import com.liferay.commerce.payment.engine.money.order.internal.constants.MoneyOrderCommercePaymentEngineConstants;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -138,7 +138,7 @@ public class MoneyOrderCommercePaymentEngine implements CommercePaymentEngine {
 	private Portal _portal;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.payment.money.order)"
+		target = "(osgi.web.symbolicname=com.liferay.commerce.payment.engine.money.order)"
 	)
 	private ServletContext _servletContext;
 

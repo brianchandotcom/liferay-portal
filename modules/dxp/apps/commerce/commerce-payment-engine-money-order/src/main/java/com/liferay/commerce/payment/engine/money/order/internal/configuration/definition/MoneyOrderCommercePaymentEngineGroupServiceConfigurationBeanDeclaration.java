@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.commerce.payment.money.order.internal.configuration.definition;
+package com.liferay.commerce.payment.engine.money.order.internal.configuration.definition;
 
-import com.liferay.commerce.payment.money.order.internal.configuration.MoneyOrderCommercePaymentEngineGroupServiceConfiguration;
+import com.liferay.commerce.payment.engine.money.order.internal.configuration.MoneyOrderCommercePaymentEngineGroupServiceConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;

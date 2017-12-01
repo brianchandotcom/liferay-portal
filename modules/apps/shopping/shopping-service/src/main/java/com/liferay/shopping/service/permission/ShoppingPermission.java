@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"resource.name= " + ShoppingPermission.RESOURCE_NAME},
+	property = {"resource.name=" + ShoppingPermission.RESOURCE_NAME},
 	service = ShoppingPermission.class
 )
 public class ShoppingPermission {

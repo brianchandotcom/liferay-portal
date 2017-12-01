@@ -17,6 +17,8 @@ package com.liferay.commerce.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.model.CommerceWarehouse;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
 import com.liferay.commerce.service.CommerceWarehouseLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -33,6 +35,11 @@ public class CommerceWarehouseItemImpl extends CommerceWarehouseItemBaseImpl {
 	public CommerceWarehouse getCommerceWarehouse() throws PortalException {
 		return CommerceWarehouseLocalServiceUtil.getCommerceWarehouse(
 			getCommerceWarehouseId());
+	}
+
+	@Override
+	public CPInstance getCPInstance() throws PortalException {
+		return CPInstanceLocalServiceUtil.getCPInstance(getClassPK());
 	}
 
 }

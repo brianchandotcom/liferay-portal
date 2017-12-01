@@ -54,6 +54,18 @@ public class AssetTagStatsLocalServiceUtil {
 	}
 
 	/**
+	* Adds an asset tag statistics instance.
+	*
+	* @param tagId the primary key of the tag
+	* @param classNameId the asset entry's class name ID
+	* @return the asset tag statistics instance
+	*/
+	public static com.liferay.asset.tag.stats.model.AssetTagStats addTagStats(
+		long tagId, long classNameId) {
+		return getService().addTagStats(tagId, classNameId);
+	}
+
+	/**
 	* Creates a new asset tag stats with the primary key. Does not add the asset tag stats to the database.
 	*
 	* @param tagStatsId the primary key for the new asset tag stats
@@ -95,6 +107,45 @@ public class AssetTagStatsLocalServiceUtil {
 		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePersistedModel(persistedModel);
+	}
+
+	/**
+	* Deletes the asset tag statistics instance.
+	*
+	* @param tagStats the asset tag statistics instance
+	*/
+	public static void deleteTagStats(
+		com.liferay.asset.tag.stats.model.AssetTagStats tagStats) {
+		getService().deleteTagStats(tagStats);
+	}
+
+	/**
+	* Deletes the asset tag statistics instance matching the tag statistics ID.
+	*
+	* @param tagStatsId the primary key of the asset tag statistics instance
+	*/
+	public static void deleteTagStats(long tagStatsId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteTagStats(tagStatsId);
+	}
+
+	/**
+	* Deletes all asset tag statistics instances associated with the asset
+	* entry matching the class name ID.
+	*
+	* @param classNameId the asset entry's class name ID
+	*/
+	public static void deleteTagStatsByClassNameId(long classNameId) {
+		getService().deleteTagStatsByClassNameId(classNameId);
+	}
+
+	/**
+	* Deletes all asset tag statistics instances associated with the tag.
+	*
+	* @param tagId the primary key of the tag
+	*/
+	public static void deleteTagStatsByTagId(long tagId) {
+		getService().deleteTagStatsByTagId(tagId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -242,6 +293,45 @@ public class AssetTagStatsLocalServiceUtil {
 	}
 
 	/**
+	* Returns a range of all the asset tag statistics instances associated with
+	* the asset entry matching the class name ID.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param classNameId the asset entry's class name ID
+	* @param start the lower bound of the range of results
+	* @param end the upper bound of the range of results (not inclusive)
+	* @return the range of asset tag statistics associated with the asset entry
+	matching the class name ID
+	*/
+	public static java.util.List<com.liferay.asset.tag.stats.model.AssetTagStats> getTagStats(
+		long classNameId, int start, int end) {
+		return getService().getTagStats(classNameId, start, end);
+	}
+
+	/**
+	* Returns the asset tag statistics instance with the tag and asset entry
+	* matching the class name ID
+	*
+	* @param tagId the primary key of the tag
+	* @param classNameId the asset entry's class name ID
+	* @return Returns the asset tag statistics instance with the tag and asset
+	entry  matching the class name ID
+	*/
+	public static com.liferay.asset.tag.stats.model.AssetTagStats getTagStats(
+		long tagId, long classNameId) {
+		return getService().getTagStats(tagId, classNameId);
+	}
+
+	/**
 	* Updates the asset tag stats in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param assetTagStats the asset tag stats
@@ -250,6 +340,19 @@ public class AssetTagStatsLocalServiceUtil {
 	public static com.liferay.asset.tag.stats.model.AssetTagStats updateAssetTagStats(
 		com.liferay.asset.tag.stats.model.AssetTagStats assetTagStats) {
 		return getService().updateAssetTagStats(assetTagStats);
+	}
+
+	/**
+	* Updates the asset tag statistics instance.
+	*
+	* @param tagId the primary key of the tag
+	* @param classNameId the asset entry's class name ID
+	* @return the updated asset tag statistics instance
+	*/
+	public static com.liferay.asset.tag.stats.model.AssetTagStats updateTagStats(
+		long tagId, long classNameId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateTagStats(tagId, classNameId);
 	}
 
 	public static AssetTagStatsLocalService getService() {

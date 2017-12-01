@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"editor.config.key=descriptionEditor",
 		"editor.config.key=subtitleEditor", "editor.config.key=titleEditor",
-		"editor.name = alloyeditor",
+		"editor.name=alloyeditor",
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN
 	},

@@ -66,15 +66,9 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Configure" />
-			<var name="rowEntry" value="Site Page Name" />
-		</execute>
-
-		<execute macro="PageCustomizations#gotoCustomizationSettingsPG" />
-
-		<execute macro="PageCustomizations#enableSectionCustomizablePG">
+		<execute macro="PageCustomizations#enableSectionCustomizableCP">
 			<var name="columnId" value="1" />
+			<var name="pageName" value="Site Page Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -180,15 +174,9 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Configure" />
-			<var name="rowEntry" value="Site Page Name" />
-		</execute>
-
-		<execute macro="PageCustomizations#gotoCustomizationSettingsPG" />
-
-		<execute macro="PageCustomizations#enableSectionCustomizablePG">
+		<execute macro="PageCustomizations#enableSectionCustomizableCP">
 			<var name="columnId" value="1" />
+			<var name="pageName" value="Site Page Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -314,15 +302,9 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Configure" />
-			<var name="rowEntry" value="Site Page Name" />
-		</execute>
-
-		<execute macro="PageCustomizations#gotoCustomizationSettingsPG" />
-
-		<execute macro="PageCustomizations#enableSectionCustomizablePG">
+		<execute macro="PageCustomizations#enableSectionCustomizableCP">
 			<var name="columnId" value="1" />
+			<var name="pageName" value="Site Page Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">

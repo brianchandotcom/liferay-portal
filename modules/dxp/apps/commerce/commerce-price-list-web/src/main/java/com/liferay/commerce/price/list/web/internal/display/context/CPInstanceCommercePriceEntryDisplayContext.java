@@ -19,6 +19,8 @@ import com.liferay.commerce.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.web.internal.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
+import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
+import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPInstanceScreenNavigationConstants;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.service.CommercePriceEntryService;
 import com.liferay.commerce.util.CommerceUtil;
@@ -106,6 +108,23 @@ public class CPInstanceCommercePriceEntryDisplayContext
 		return cpInstanceId;
 	}
 
+	public PortletURL getInstancePriceListURL() throws PortalException {
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter("mvcRenderCommandName", "editProductInstance");
+		portletURL.setParameter(
+			"cpDefinitionId", String.valueOf(getCPDefinitionId()));
+		portletURL.setParameter(
+			"cpInstanceId", String.valueOf(getCPInstanceId()));
+		portletURL.setParameter(
+			"screenNavigationCategoryKey",
+			CPInstanceScreenNavigationConstants.CATEGORY_KEY_DETAILS);
+		portletURL.setParameter(
+			"screenNavigationEntryKey", getScreenNavigationEntryKey());
+
+		return portletURL;
+	}
+
 	public String getItemSelectorUrl() throws PortalException {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest);
@@ -144,6 +163,29 @@ public class CPInstanceCommercePriceEntryDisplayContext
 		portletURL.setParameter("screenNavigationEntryKey", "price-lists");
 
 		return portletURL;
+	}
+
+	public PortletURL getProductSkusURL() throws PortalException {
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "editProductDefinition");
+		portletURL.setParameter(
+			"cpDefinitionId", String.valueOf(getCPDefinitionId()));
+		portletURL.setParameter(
+			"screenNavigationCategoryKey",
+			CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SKUS);
+
+		return portletURL;
+	}
+
+	@Override
+	public String getScreenNavigationCategoryKey() throws PortalException {
+		return "price-lists";
+	}
+
+	public String getScreenNavigationEntryKey() {
+		return "price-lists";
 	}
 
 	@Override

@@ -20,6 +20,8 @@ import com.liferay.commerce.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.web.internal.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
+import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
+import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPInstanceScreenNavigationConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.service.CommerceTierPriceEntryService;
@@ -175,6 +177,43 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 		return cpInstanceId;
 	}
 
+	public PortletURL getInstancePriceListURL() throws PortalException {
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter("mvcRenderCommandName", "editProductInstance");
+		portletURL.setParameter(
+			"cpDefinitionId", String.valueOf(getCPDefinitionId()));
+		portletURL.setParameter(
+			"cpInstanceId", String.valueOf(getCPInstanceId()));
+		portletURL.setParameter(
+			"screenNavigationCategoryKey",
+			CPInstanceScreenNavigationConstants.CATEGORY_KEY_DETAILS);
+		portletURL.setParameter(
+			"screenNavigationEntryKey", getScreenNavigationEntryKey());
+
+		return portletURL;
+	}
+
+	public PortletURL getInstanceTierPriceEntriesURL() throws PortalException {
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "viewCPInstanceCommerceTierPriceEntries");
+		portletURL.setParameter(
+			"commercePriceEntryId", String.valueOf(getCommercePriceEntryId()));
+		portletURL.setParameter(
+			"cpDefinitionId", String.valueOf(getCPDefinitionId()));
+		portletURL.setParameter(
+			"cpInstanceId", String.valueOf(getCPInstanceId()));
+
+		String toolbarItem = ParamUtil.getString(
+			httpServletRequest, "toolbarItem", "view-tier-price-entries");
+
+		portletURL.setParameter("toolbarItem", toolbarItem);
+
+		return portletURL;
+	}
+
 	@Override
 	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = super.getPortletURL();
@@ -194,8 +233,26 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 		return portletURL;
 	}
 
+	public PortletURL getProductSkusURL() throws PortalException {
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "editProductDefinition");
+		portletURL.setParameter(
+			"cpDefinitionId", String.valueOf(getCPDefinitionId()));
+		portletURL.setParameter(
+			"screenNavigationCategoryKey",
+			CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SKUS);
+
+		return portletURL;
+	}
+
 	@Override
 	public String getScreenNavigationCategoryKey() throws PortalException {
+		return "price-lists";
+	}
+
+	public String getScreenNavigationEntryKey() {
 		return "price-lists";
 	}
 

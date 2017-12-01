@@ -15,7 +15,6 @@
 package com.liferay.twitter.internal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -28,16 +27,6 @@ public class TwitterServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		try {
-			TwitterUpgradeServiceModuleRelease upgradeServiceModuleRelease =
-				new TwitterUpgradeServiceModuleRelease();
-
-			upgradeServiceModuleRelease.upgrade();
-		}
-		catch (UpgradeException ue) {
-			throw new RuntimeException(ue);
-		}
-
 		registry.register(
 			"com.liferay.twitter.service", "0.0.1", "1.0.0",
 			new DummyUpgradeStep());

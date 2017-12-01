@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.twitter.internal.upgrade;
+package com.liferay.twitter.internal.activator;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.model.dao.ReleaseDAO;

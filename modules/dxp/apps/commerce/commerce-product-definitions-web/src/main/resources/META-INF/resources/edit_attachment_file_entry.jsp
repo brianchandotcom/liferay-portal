@@ -54,11 +54,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "product
 PortalUtil.addPortletBreadcrumbEntry(request, cpDefinition.getTitle(languageId), String.valueOf(cpAttachmentFileEntriesDisplayContext.getEditProductDefinitionURL()), data);
 PortalUtil.addPortletBreadcrumbEntry(request, screenNavigationCategoryKey, productAttachmentsURL.toString(), data);
 PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(productAttachmentsURL.toString());
-
-renderResponse.setTitle((cpAttachmentFileEntry == null) ? LanguageUtil.get(request, addMenuTitle) : cpDefinition.getTitle(languageId) + " - " + cpAttachmentFileEntry.getTitle(languageId));
 %>
 
 <%@ include file="/breadcrumb.jspf" %>

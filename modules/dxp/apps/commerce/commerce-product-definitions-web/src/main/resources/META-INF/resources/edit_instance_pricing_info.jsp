@@ -30,11 +30,6 @@ PortletURL productSkusURL = renderResponse.createRenderURL();
 productSkusURL.setParameter("mvcRenderCommandName", "editProductDefinition");
 productSkusURL.setParameter("cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
 productSkusURL.setParameter("screenNavigationCategoryKey", cpInstancePricingInfoDisplayContext.getScreenNavigationCategoryKey());
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(productSkusURL.toString());
-
-renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpInstance.getSku());
 %>
 
 <portlet:actionURL name="editProductInstance" var="editProductInstancePricingInfoActionURL" />
@@ -48,11 +43,9 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpInstance.g
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<aui:fieldset>
-				<aui:input name="cost" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" />
+			<aui:input name="cost" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" />
 
-				<aui:input name="price" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" />
-			</aui:fieldset>
+			<aui:input name="price" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" />
 		</aui:fieldset>
 	</aui:fieldset-group>
 

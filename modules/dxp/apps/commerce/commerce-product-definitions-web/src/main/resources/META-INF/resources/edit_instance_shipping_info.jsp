@@ -30,11 +30,6 @@ PortletURL productSkusURL = renderResponse.createRenderURL();
 productSkusURL.setParameter("mvcRenderCommandName", "editProductDefinition");
 productSkusURL.setParameter("cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
 productSkusURL.setParameter("screenNavigationCategoryKey", cpInstanceShippingInfoDisplayContext.getScreenNavigationCategoryKey());
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(productSkusURL.toString());
-
-renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpInstance.getSku());
 %>
 
 <portlet:actionURL name="editProductInstance" var="editProductInstanceShippingInfoActionURL" />

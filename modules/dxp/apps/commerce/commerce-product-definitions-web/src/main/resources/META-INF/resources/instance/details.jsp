@@ -40,11 +40,6 @@ PortletURL productSkusURL = renderResponse.createRenderURL();
 productSkusURL.setParameter("mvcRenderCommandName", "editProductDefinition");
 productSkusURL.setParameter("cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
 productSkusURL.setParameter("screenNavigationCategoryKey", cpInstanceDisplayContext.getScreenNavigationCategoryKey());
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(productSkusURL.toString());
-
-renderResponse.setTitle((cpInstance == null) ? LanguageUtil.get(request, "add-sku") : cpDefinition.getTitle(languageId) + " - " + cpInstance.getSku());
 %>
 
 <portlet:actionURL name="editProductInstance" var="editProductInstanceActionURL" />
@@ -63,59 +58,61 @@ renderResponse.setTitle((cpInstance == null) ? LanguageUtil.get(request, "add-sk
 
 		<liferay-ui:error exception="<%= CPDefinitionIgnoreSKUCombinationsException.class %>" message="only-one-sku-can-be-approved" />
 
-		<aui:fieldset>
-			<aui:input name="sku" />
+		<aui:fieldset-group markupView="lexicon">
+			<aui:fieldset>
+				<aui:input name="sku" />
 
-			<aui:input helpMessage="gtin-help" label="global-trade-item-number" name="gtin" />
+				<aui:input helpMessage="gtin-help" label="global-trade-item-number" name="gtin" />
 
-			<aui:input name="manufacturerPartNumber" />
-		</aui:fieldset>
-
-		<c:if test="<%= !cpDefinition.getIgnoreSKUCombinations() %>">
-			<aui:fieldset collapsible="<%= true %>" label="options">
-				<c:choose>
-					<c:when test="<%= cpInstance != null %>">
-
-						<%
-						for (CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels) {
-							List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = cpDefinitionOptionRelListMap.get(cpDefinitionOptionRel);
-
-							StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
-						%>
-
-							<h6 class="text-default">
-								<strong><%= HtmlUtil.escape(cpDefinitionOptionRel.getTitle(languageId)) %></strong>
-
-								<%
-								for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels) {
-									stringJoiner.add(cpDefinitionOptionValueRel.getTitle(languageId));
-								}
-								%>
-
-								<%= HtmlUtil.escape(stringJoiner.toString()) %>
-							</h6>
-
-						<%
-						}
-						%>
-
-					</c:when>
-					<c:otherwise>
-						<%= cpInstanceDisplayContext.renderOptions(renderRequest, renderResponse) %>
-
-						<aui:input name="ddmFormValues" type="hidden" />
-					</c:otherwise>
-				</c:choose>
+				<aui:input name="manufacturerPartNumber" />
 			</aui:fieldset>
-		</c:if>
 
-		<aui:fieldset collapsible="<%= true %>" label="schedule">
-			<aui:input name="published" type="checkbox" />
+			<c:if test="<%= !cpDefinition.getIgnoreSKUCombinations() %>">
+				<aui:fieldset collapsible="<%= true %>" label="options">
+					<c:choose>
+						<c:when test="<%= cpInstance != null %>">
 
-			<aui:input formName="fm" name="displayDate" />
+							<%
+							for (CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels) {
+								List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = cpDefinitionOptionRelListMap.get(cpDefinitionOptionRel);
 
-			<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" formName="fm" name="expirationDate" />
-		</aui:fieldset>
+								StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
+							%>
+
+								<h6 class="text-default">
+									<strong><%= HtmlUtil.escape(cpDefinitionOptionRel.getTitle(languageId)) %></strong>
+
+									<%
+									for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels) {
+										stringJoiner.add(cpDefinitionOptionValueRel.getTitle(languageId));
+									}
+									%>
+
+									<%= HtmlUtil.escape(stringJoiner.toString()) %>
+								</h6>
+
+							<%
+							}
+							%>
+
+						</c:when>
+						<c:otherwise>
+							<%= cpInstanceDisplayContext.renderOptions(renderRequest, renderResponse) %>
+
+							<aui:input name="ddmFormValues" type="hidden" />
+						</c:otherwise>
+					</c:choose>
+				</aui:fieldset>
+			</c:if>
+
+			<aui:fieldset collapsible="<%= true %>" label="schedule">
+				<aui:input name="published" type="checkbox" />
+
+				<aui:input formName="fm" name="displayDate" />
+
+				<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" formName="fm" name="expirationDate" />
+			</aui:fieldset>
+		</aui:fieldset-group>
 
 		<c:if test="<%= cpInstanceDisplayContext.hasCustomAttributesAvailable() %>">
 			<liferay-expando:custom-attribute-list

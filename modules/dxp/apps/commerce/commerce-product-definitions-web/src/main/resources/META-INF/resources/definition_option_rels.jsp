@@ -22,11 +22,6 @@ CPDefinitionOptionRelDisplayContext cpDefinitionOptionRelDisplayContext = (CPDef
 CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition();
 
 long cpDefinitionId = cpDefinitionOptionRelDisplayContext.getCPDefinitionId();
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(catalogURL);
-
-renderResponse.setTitle(cpDefinition.getTitle(languageId));
 %>
 
 <portlet:resourceURL id="cpDefinitionOptionRels" var="cpDefinitionOptionsURL">

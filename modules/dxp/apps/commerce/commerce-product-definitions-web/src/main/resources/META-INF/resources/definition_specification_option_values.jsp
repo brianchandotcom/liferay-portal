@@ -26,11 +26,6 @@ long cpDefinitionId = cpDefinitionSpecificationOptionValueDisplayContext.getCPDe
 SearchContainer<CPDefinitionSpecificationOptionValue> cpDefinitionSpecificationOptionValueSearchContainer = cpDefinitionSpecificationOptionValueDisplayContext.getSearchContainer();
 
 PortletURL portletURL = cpDefinitionSpecificationOptionValueDisplayContext.getPortletURL();
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(catalogURL);
-
-renderResponse.setTitle(cpDefinition.getTitle(languageId));
 %>
 
 <liferay-frontend:management-bar
@@ -120,6 +115,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 							PortletURL rowURL = renderResponse.createRenderURL();
 
 							rowURL.setParameter("mvcRenderCommandName", "editProductDefinitionSpecificationOptionValue");
+							rowURL.setParameter("cpDefinitionId", String.valueOf(cpDefinitionSpecificationOptionValue.getCPDefinitionId()));
 							rowURL.setParameter("cpDefinitionSpecificationOptionValueId", String.valueOf(cpDefinitionSpecificationOptionValue.getCPDefinitionSpecificationOptionValueId()));
 							%>
 

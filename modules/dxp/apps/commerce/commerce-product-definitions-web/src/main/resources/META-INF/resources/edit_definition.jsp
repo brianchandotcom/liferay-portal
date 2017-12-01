@@ -25,9 +25,6 @@ CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 
 PortletURL portletURL = cpDefinitionsDisplayContext.getEditProductDefinitionURL();
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(catalogURL);
-
 String title = LanguageUtil.get(request, "add-product");
 
 if (cpDefinition != null) {
@@ -38,13 +35,11 @@ Map<String, Object> data = new HashMap<>();
 
 data.put("direction-right", Boolean.TRUE.toString());
 
-String selectedScreenNavigationEntryKey = cpDefinitionsDisplayContext.getSelectedScreenNavigationEntryKey();
+String selectedScreenNavigationCategoryKey = cpDefinitionsDisplayContext.getSelectedScreenNavigationCategoryKey();
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "products"), catalogURL, data);
 PortalUtil.addPortletBreadcrumbEntry(request, title, portletURL.toString(), data);
-PortalUtil.addPortletBreadcrumbEntry(request, selectedScreenNavigationEntryKey, StringPool.BLANK, data);
-
-renderResponse.setTitle(title);
+PortalUtil.addPortletBreadcrumbEntry(request, selectedScreenNavigationCategoryKey, StringPool.BLANK, data);
 
 request.setAttribute("view.jsp-cpDefinition", cpDefinition);
 request.setAttribute("view.jsp-cpType", cpDefinitionsDisplayContext.getCPType());

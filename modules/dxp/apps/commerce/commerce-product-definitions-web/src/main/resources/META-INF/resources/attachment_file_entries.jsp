@@ -19,8 +19,6 @@
 <%
 CPAttachmentFileEntriesDisplayContext cpAttachmentFileEntriesDisplayContext = (CPAttachmentFileEntriesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CPDefinition cpDefinition = cpAttachmentFileEntriesDisplayContext.getCPDefinition();
-
 long cpDefinitionId = cpAttachmentFileEntriesDisplayContext.getCPDefinitionId();
 
 int type = cpAttachmentFileEntriesDisplayContext.getType();
@@ -38,11 +36,6 @@ if (type == CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_OTHER) {
 }
 
 PortletURL portletURL = cpAttachmentFileEntriesDisplayContext.getPortletURL();
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(catalogURL);
-
-renderResponse.setTitle(cpDefinition.getTitle(languageId));
 %>
 
 <liferay-frontend:management-bar

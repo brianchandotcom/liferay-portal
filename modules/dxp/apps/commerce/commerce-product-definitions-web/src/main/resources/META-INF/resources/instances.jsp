@@ -32,11 +32,6 @@ SearchContainer<CPInstance> cpInstanceSearchContainer = cpInstanceDisplayContext
 PortletURL portletURL = cpInstanceDisplayContext.getPortletURL();
 
 String displayStyle = cpInstanceDisplayContext.getDisplayStyle();
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(catalogURL);
-
-renderResponse.setTitle(cpDefinition.getTitle(languageId));
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">

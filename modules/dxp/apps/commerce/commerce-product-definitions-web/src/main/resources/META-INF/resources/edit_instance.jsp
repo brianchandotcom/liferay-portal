@@ -37,13 +37,8 @@ data.put("direction-right", Boolean.TRUE.toString());
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "products"), catalogURL, data);
 PortalUtil.addPortletBreadcrumbEntry(request, cpDefinition.getTitle(languageId), String.valueOf(cpInstanceDisplayContext.getEditProductDefinitionURL()), data);
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "skus"), productSkusURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SKUS), productSkusURL.toString(), data);
 PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(productSkusURL.toString());
-
-renderResponse.setTitle((cpInstance == null) ? LanguageUtil.get(request, "add-sku") : cpDefinition.getTitle(languageId) + " - " + cpInstance.getSku());
 %>
 
 <%@ include file="/breadcrumb.jspf" %>

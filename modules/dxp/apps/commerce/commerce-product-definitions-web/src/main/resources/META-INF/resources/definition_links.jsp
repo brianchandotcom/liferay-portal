@@ -37,11 +37,6 @@ else if (type == CPConstants.DEFINITION_LINK_TYPE_CROSS_SELL) {
 }
 
 PortletURL portletURL = cpDefinitionLinkDisplayContext.getPortletURL();
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(catalogURL);
-
-renderResponse.setTitle(cpDefinition.getTitle(languageId));
 %>
 
 <liferay-frontend:management-bar

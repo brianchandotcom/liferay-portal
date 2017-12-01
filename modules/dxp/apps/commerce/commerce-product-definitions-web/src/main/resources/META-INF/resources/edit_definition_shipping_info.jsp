@@ -26,11 +26,6 @@ long cpDefinitionId = cpDefinitionShippingInfoDisplayContext.getCPDefinitionId()
 boolean shippable = BeanParamUtil.getBoolean(cpDefinition, request, "shippable", true);
 boolean freeShipping = BeanParamUtil.getBoolean(cpDefinition, request, "freeShipping", false);
 boolean shipSeparately = BeanParamUtil.getBoolean(cpDefinition, request, "shipSeparately", false);
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(catalogURL);
-
-renderResponse.setTitle(cpDefinition.getTitle(languageId));
 %>
 
 <portlet:actionURL name="editProductDefinition" var="editProductDefinitionShippingInfoActionURL" />

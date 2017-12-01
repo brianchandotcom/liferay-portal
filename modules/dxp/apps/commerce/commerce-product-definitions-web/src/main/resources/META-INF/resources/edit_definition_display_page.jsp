@@ -38,11 +38,6 @@ if (Validator.isNotNull(layoutUuid)) {
 		layoutBreadcrumb = cpDefinitionsDisplayContext.getLayoutBreadcrumb(selLayout);
 	}
 }
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(catalogURL);
-
-renderResponse.setTitle(cpDefinition.getTitle(languageId));
 %>
 
 <portlet:actionURL name="editProductDefinition" var="editProductDefinitionDisplayPageActionURL" />

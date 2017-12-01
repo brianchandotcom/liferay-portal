@@ -48,13 +48,8 @@ data.put("direction-right", Boolean.TRUE.toString());
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "products"), catalogURL, data);
 PortalUtil.addPortletBreadcrumbEntry(request, cpDefinition.getTitle(languageId), String.valueOf(cpDefinitionLinkDisplayContext.getEditProductDefinitionURL()), data);
-PortalUtil.addPortletBreadcrumbEntry(request, screenNavigationCategoryKey, relatedProductsURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, screenNavigationCategoryKey), relatedProductsURL.toString(), data);
 PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(relatedProductsURL.toString());
-
-renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinition2.getTitle(languageId));
 %>
 
 <%@ include file="/breadcrumb.jspf" %>
@@ -71,9 +66,11 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinition
 	<aui:model-context bean="<%= cpDefinitionLink %>" model="<%= CPDefinitionLink.class %>" />
 
 	<div class="lfr-form-content">
-		<aui:fieldset>
-			<aui:input name="priority" />
-		</aui:fieldset>
+		<aui:fieldset-group markupView="lexicon">
+			<aui:fieldset>
+				<aui:input name="priority" />
+			</aui:fieldset>
+		</aui:fieldset-group>
 
 		<aui:button-row>
 			<aui:button cssClass="btn-lg" name="saveButton" type="submit" value="save" />

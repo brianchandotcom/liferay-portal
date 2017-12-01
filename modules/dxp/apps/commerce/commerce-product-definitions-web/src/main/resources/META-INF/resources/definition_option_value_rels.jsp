@@ -21,8 +21,6 @@ CPDefinitionOptionValueRelDisplayContext cpDefinitionOptionValueRelDisplayContex
 
 CPDefinition cpDefinition = cpDefinitionOptionValueRelDisplayContext.getCPDefinition();
 
-CPDefinitionOptionRel cpDefinitionOptionRel = cpDefinitionOptionValueRelDisplayContext.getCPDefinitionOptionRel();
-
 long cpDefinitionOptionRelId = cpDefinitionOptionValueRelDisplayContext.getCPDefinitionOptionRelId();
 
 SearchContainer<CPDefinitionOptionValueRel> cpDefinitionOptionValueRelSearchContainer = cpDefinitionOptionValueRelDisplayContext.getSearchContainer();
@@ -40,11 +38,6 @@ PortletURL productOptionRelsURL = renderResponse.createRenderURL();
 productOptionRelsURL.setParameter("mvcRenderCommandName", "editProductDefinition");
 productOptionRelsURL.setParameter("cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
 productOptionRelsURL.setParameter("screenNavigationCategoryKey", cpDefinitionOptionValueRelDisplayContext.getScreenNavigationCategoryKey());
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(productOptionRelsURL.toString());
-
-renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinitionOptionRel.getTitle(languageId));
 %>
 
 <%@ include file="/definition_option_rel_navbar.jspf" %>

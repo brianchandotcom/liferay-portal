@@ -29,6 +29,10 @@ public class JSPTaglibVariableCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
+		if (isSubrepository() || isReadOnly(absolutePath)) {
+			return content;
+		}
+
 		content = _formatTaglibVariable(fileName, content);
 
 		return content;
@@ -38,29 +42,43 @@ public class JSPTaglibVariableCheck extends BaseFileCheck {
 		Matcher matcher = _taglibVariablePattern.matcher(content);
 
 		while (matcher.find()) {
+			String nextTag = matcher.group(4);
 			String taglibValue = matcher.group(3);
+			String variableName = matcher.group(2);
 
 			if (taglibValue.contains("\\\"") ||
 				(taglibValue.contains(StringPool.APOSTROPHE) &&
 				 taglibValue.contains(StringPool.QUOTE))) {
 
+				if (!variableName.startsWith("taglib") &&
+					(StringUtil.count(content, variableName) == 2) &&
+					nextTag.contains("=\"<%= " + variableName + " %>\"")) {
+
+					addMessage(
+						fileName,
+						"Variable '" + variableName +
+							"' should start with 'taglib'",
+						getLineCount(content, matcher.start()));
+				}
+
 				continue;
 			}
 
-			String taglibName = matcher.group(2);
-			String nextTag = matcher.group(4);
+			if (!variableName.startsWith("taglib")) {
+				continue;
+			}
 
-			if (!nextTag.contains(taglibName)) {
+			if (!nextTag.contains("=\"<%= " + variableName + " %>\"")) {
 				addMessage(
 					fileName,
-					"No need to specify taglib variable '" + taglibName + "'",
+					"No need to specify taglib variable '" + variableName + "'",
 					getLineCount(content, matcher.start()));
 
 				continue;
 			}
 
 			content = StringUtil.replaceFirst(
-				content, taglibName, taglibValue, matcher.start(4));
+				content, variableName, taglibValue, matcher.start(4));
 
 			return content = StringUtil.replaceFirst(
 				content, matcher.group(1), StringPool.BLANK, matcher.start());
@@ -70,6 +88,6 @@ public class JSPTaglibVariableCheck extends BaseFileCheck {
 	}
 
 	private final Pattern _taglibVariablePattern = Pattern.compile(
-		"(\n\t*String (taglib\\w+) = (.*);)\n\\s*%>\\s+(<[\\S\\s]*?>)\n");
+		"(\t*String (\\w+) = (.*);)\n\\s*%>\\s+(<[\\S\\s]*?>)\n");
 
 }

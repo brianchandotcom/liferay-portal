@@ -44,8 +44,6 @@ page import="java.util.Map" %>
 
 <liferay-theme:defineObjects />
 
-<portlet:defineObjects />
-
 <%
 String lifecycle = (String)request.getAttribute(LiferayPortletRequest.LIFECYCLE_PHASE);
 

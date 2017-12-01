@@ -37,9 +37,13 @@ long cpDefinitionId = cpDefinitionsDisplayContext.getCPDefinitionId();
 
 	<liferay-ui:asset-tags-error />
 
-	<aui:input name="categories" type="assetCategories" />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:input name="categories" type="assetCategories" />
 
-	<aui:input name="tags" type="assetTags" />
+			<aui:input name="tags" type="assetTags" />
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button cssClass="btn-lg" name="saveButton" type="submit" value="save" />
 

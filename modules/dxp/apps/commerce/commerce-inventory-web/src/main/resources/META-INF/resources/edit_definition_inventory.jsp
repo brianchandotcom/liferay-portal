@@ -26,11 +26,6 @@ CPDefinitionAvailabilityRange cpDefinitionAvailabilityRange = cpDefinitionInvent
 CPDefinition cpDefinition = cpDefinitionInventoryDisplayContext.getCPDefinition();
 
 long cpDefinitionId = cpDefinitionInventoryDisplayContext.getCPDefinitionId();
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(catalogURL);
-
-renderResponse.setTitle(cpDefinition.getTitle(languageId));
 %>
 
 <portlet:actionURL name="editProductDefinitionInventory" var="editProductDefinitionInventoryActionURL" />
@@ -45,87 +40,89 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 	<div class="lfr-form-content">
 		<aui:model-context bean="<%= cpDefinitionInventory %>" model="<%= CPDefinitionInventory.class %>" />
 
-		<aui:fieldset>
-			<aui:select label="inventory-engine" name="CPDefinitionInventoryEngine" showEmptyOption="<%= true %>">
+		<aui:fieldset-group markupView="lexicon">
+			<aui:fieldset>
+				<aui:select label="inventory-engine" name="CPDefinitionInventoryEngine" showEmptyOption="<%= true %>">
 
-				<%
-				Map<String, CPDefinitionInventoryEngine> cpDefinitionInventoryEngines = cpDefinitionInventoryDisplayContext.getCPDefinitionInventoryEngines();
+					<%
+					Map<String, CPDefinitionInventoryEngine> cpDefinitionInventoryEngines = cpDefinitionInventoryDisplayContext.getCPDefinitionInventoryEngines();
 
-				for (Map.Entry<String, CPDefinitionInventoryEngine> cpDefinitionInventoryEngineEntry : cpDefinitionInventoryEngines.entrySet()) {
-					CPDefinitionInventoryEngine cpDefinitionInventoryEngine = cpDefinitionInventoryEngineEntry.getValue();
+					for (Map.Entry<String, CPDefinitionInventoryEngine> cpDefinitionInventoryEngineEntry : cpDefinitionInventoryEngines.entrySet()) {
+						CPDefinitionInventoryEngine cpDefinitionInventoryEngine = cpDefinitionInventoryEngineEntry.getValue();
 
-					String cpDefinitionInventoryEngineName = cpDefinitionInventoryEngine.getName();
-				%>
+						String cpDefinitionInventoryEngineName = cpDefinitionInventoryEngine.getName();
+					%>
 
-					<aui:option
-						label="<%= cpDefinitionInventoryEngineName %>"
-						selected="<%= (cpDefinitionInventory != null) && cpDefinitionInventoryEngineName.equals(cpDefinitionInventory.getCPDefinitionInventoryEngine()) %>"
-					/>
+						<aui:option
+							label="<%= cpDefinitionInventoryEngineName %>"
+							selected="<%= (cpDefinitionInventory != null) && cpDefinitionInventoryEngineName.equals(cpDefinitionInventory.getCPDefinitionInventoryEngine()) %>"
+						/>
 
-				<%
-				}
-				%>
+					<%
+					}
+					%>
 
-			</aui:select>
+				</aui:select>
 
-			<aui:select name="lowStockActivity" showEmptyOption="<%= true %>">
+				<aui:select name="lowStockActivity" showEmptyOption="<%= true %>">
 
-				<%
-				Map<String, CommerceLowStockActivity> commerceLowStockActivities = cpDefinitionInventoryDisplayContext.getCommerceLowStockActivities();
+					<%
+					Map<String, CommerceLowStockActivity> commerceLowStockActivities = cpDefinitionInventoryDisplayContext.getCommerceLowStockActivities();
 
-				for (Map.Entry<String, CommerceLowStockActivity> commerceLowStockActivityEntry : commerceLowStockActivities.entrySet()) {
-					CommerceLowStockActivity commerceLowStockActivity = commerceLowStockActivityEntry.getValue();
+					for (Map.Entry<String, CommerceLowStockActivity> commerceLowStockActivityEntry : commerceLowStockActivities.entrySet()) {
+						CommerceLowStockActivity commerceLowStockActivity = commerceLowStockActivityEntry.getValue();
 
-					String commerceLowStockActivityName = commerceLowStockActivity.getName();
-				%>
+						String commerceLowStockActivityName = commerceLowStockActivity.getName();
+					%>
 
-					<aui:option
-						label="<%= commerceLowStockActivityName %>"
-						selected="<%= (cpDefinitionInventory != null) && commerceLowStockActivityName.equals(cpDefinitionInventory.getLowStockActivity()) %>"
-					/>
+						<aui:option
+							label="<%= commerceLowStockActivityName %>"
+							selected="<%= (cpDefinitionInventory != null) && commerceLowStockActivityName.equals(cpDefinitionInventory.getLowStockActivity()) %>"
+						/>
 
-				<%
-				}
-				%>
+					<%
+					}
+					%>
 
-			</aui:select>
+				</aui:select>
 
-			<aui:select label="availability-range" name="commerceAvailabilityRangeId" showEmptyOption="<%= true %>">
+				<aui:select label="availability-range" name="commerceAvailabilityRangeId" showEmptyOption="<%= true %>">
 
-				<%
-				List<CommerceAvailabilityRange> commerceAvailabilityRanges = cpDefinitionInventoryDisplayContext.getCommerceAvailabilityRanges();
+					<%
+					List<CommerceAvailabilityRange> commerceAvailabilityRanges = cpDefinitionInventoryDisplayContext.getCommerceAvailabilityRanges();
 
-				for (CommerceAvailabilityRange commerceAvailabilityRange : commerceAvailabilityRanges) {
-				%>
+					for (CommerceAvailabilityRange commerceAvailabilityRange : commerceAvailabilityRanges) {
+					%>
 
-					<aui:option
-						label="<%= commerceAvailabilityRange.getTitle(languageId) %>"
-						selected="<%= (cpDefinitionAvailabilityRange != null) && (commerceAvailabilityRange.getCommerceAvailabilityRangeId() == cpDefinitionAvailabilityRange.getCommerceAvailabilityRangeId()) %>"
-						value="<%= commerceAvailabilityRange.getCommerceAvailabilityRangeId() %>"
-					/>
+						<aui:option
+							label="<%= commerceAvailabilityRange.getTitle(languageId) %>"
+							selected="<%= (cpDefinitionAvailabilityRange != null) && (commerceAvailabilityRange.getCommerceAvailabilityRangeId() == cpDefinitionAvailabilityRange.getCommerceAvailabilityRangeId()) %>"
+							value="<%= commerceAvailabilityRange.getCommerceAvailabilityRangeId() %>"
+						/>
 
-				<%
-				}
-				%>
+					<%
+					}
+					%>
 
-			</aui:select>
+				</aui:select>
 
-			<aui:input name="displayAvailability" />
+				<aui:input name="displayAvailability" />
 
-			<aui:input name="displayStockQuantity" />
+				<aui:input name="displayStockQuantity" />
 
-			<aui:input name="minStockQuantity" />
+				<aui:input name="minStockQuantity" />
 
-			<aui:input name="backOrders" />
+				<aui:input name="backOrders" />
 
-			<aui:input name="minCartQuantity" />
+				<aui:input name="minCartQuantity" />
 
-			<aui:input name="maxCartQuantity" />
+				<aui:input name="maxCartQuantity" />
 
-			<aui:input name="allowedCartQuantities" />
+				<aui:input name="allowedCartQuantities" />
 
-			<aui:input name="multipleCartQuantity" />
-		</aui:fieldset>
+				<aui:input name="multipleCartQuantity" />
+			</aui:fieldset>
+		</aui:fieldset-group>
 
 		<aui:button-row>
 			<aui:button cssClass="btn-lg" type="submit" />

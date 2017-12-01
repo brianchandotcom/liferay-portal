@@ -185,6 +185,18 @@ public class HtmlPreviewLocalServiceWrapper implements HtmlPreviewLocalService,
 	}
 
 	@Override
+	public com.liferay.html.preview.model.HtmlPreview generateHtmlPreview(
+		long userId, long groupId, long classNameId, long classPK,
+		java.lang.String content, java.lang.String mimeType,
+		boolean asynchronous,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _htmlPreviewLocalService.generateHtmlPreview(userId, groupId,
+			classNameId, classPK, content, mimeType, asynchronous,
+			serviceContext);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _htmlPreviewLocalService.getActionableDynamicQuery();
 	}

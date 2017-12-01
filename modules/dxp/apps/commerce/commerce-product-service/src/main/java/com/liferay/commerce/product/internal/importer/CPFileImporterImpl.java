@@ -262,7 +262,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 		String layoutType = jsonObject.getString("layoutType");
 		String name = jsonObject.getString("name");
 
-		Long parentLayoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
+		long parentLayoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
 
 		if (parentLayout != null) {
 			parentLayoutId = parentLayout.getLayoutId();

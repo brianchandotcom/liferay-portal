@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
+import java.util.properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -57,7 +57,7 @@ public class LocalGitSyncUtil {
 			GitWorkingDirectory.Remote remote = gitWorkingDirectory.getRemote(
 				localGitRemoteName);
 
-			if ((remote == null) || !url.equals(remote.getRemoteURL()) || !remote.isResponsive()) {
+			if ((remote == null) || !url.equals(remote.getRemoteURL())) {
 				remote = gitWorkingDirectory.addRemote(
 					true, localGitRemoteName, url);
 			}
@@ -393,7 +393,10 @@ public class LocalGitSyncUtil {
 					gitWorkingDirectory.getRepositoryName(), ".git"));
 		}
 
-		return localGitRemoteURLs;
+		List<String> validURLs = validateURLs(localGitRemoteURLs,
+			gitWorkingDirectory);
+
+		return validURLs;
 	}
 
 	protected static GitWorkingDirectory.Remote getRandomRemote(
@@ -464,6 +467,58 @@ public class LocalGitSyncUtil {
 		}
 
 		return true;
+	}
+
+	protected static List<String> validateURLs(
+		List<String> localGitRemoteURLs, GitWorkingDirectory gwd) {
+
+		List<String> validatedURLList = new ArrayList<String>();
+
+		List<Callable<String>> callableURLS = new ArrayList<>();
+
+		for (String lgru : localGitRemoteURLs) {
+			Callable<String> callable = new Callable<String>() {
+
+				@Override
+				public String call() {
+					String lgrName = localGitURLToName(lgru, gwd,
+						localGitRemoteURLs.indexOf(lgru));
+
+					String command = JenkinsResultsParserUtil.combine(
+						"git ls-remote -h ", lgrName);
+
+					ExecutionResult er = gwd.executeBashCommands(command);
+
+					if (er.getExitValue() != 0 && er.getStandardError().contains(
+						"port 22: No route to host")) {
+							return null;
+					}
+					else {
+						return lrgName;
+					}
+				}
+			};
+
+			callableURLS.add(callable);
+		}
+
+		ParallelExecutor<String> parallelExecutor = new ParallelExecutor<>(
+			callables, null);
+
+		validatedURLList.addAll(parallelExecutor.execute());
+	}
+
+	protected static String localGitURLToName(String localGitRemoteURL,
+		GitWorkingDirectory gwd, int index) {
+		String transformedURL = localGitRemoteURL.replace(
+			"${username}", gwd.getRepositoryUsername());
+
+		transformedURL = transformedURL.replace(
+			"${repository-name}", gwd.getRepositoryName());
+
+		transformedURL = "local-git-remote-" + Index.toString(index);
+
+		return transformedURL;
 	}
 
 	protected static Map<GitWorkingDirectory.Remote, Boolean> pushToAllRemotes(

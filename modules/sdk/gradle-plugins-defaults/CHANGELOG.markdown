@@ -2526,6 +2526,12 @@ is found in a parent directory.
 - [LPS-76224]: Update the [Liferay Gradle Plugins Baseline] dependency to
 version 1.1.9.
 
+## 5.2.9 - 2017-12-01
+
+### Fixed
+- [LPS-69999]: Prevent the `updateFileVersions` task from changing files in
+read-only sub-repositories.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public

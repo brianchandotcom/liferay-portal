@@ -1135,22 +1135,6 @@ public class GitWorkingDirectory {
 			return _fetchRemoteURL;
 		}
 
-		public boolean isResponsive() {
-			String cmd = JenkinsResultsParserUtil.combine(
-				"git ls-remote -h ", getName());
-
-			ExecutionResult er = executeBashCommands(
-				1, 1000 * 60 * 10, cmd);
-
-			if ((er.getExitValue() != 0) && er.getStandardError().
-				contains("port 22: No route to host")) {
-				return false;
-			}
-			else {
-				return true;
-			}
-		}
-
 		public String toString() {
 			return JenkinsResultsParserUtil.combine(
 				getName(), " (", getRemoteURL(), ")");

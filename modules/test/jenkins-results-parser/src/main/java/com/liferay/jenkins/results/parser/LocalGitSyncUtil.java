@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -393,8 +392,8 @@ public class LocalGitSyncUtil {
 					gitWorkingDirectory.getRepositoryName(), ".git"));
 		}
 
-		List<String> validURLs = validateURLs(localGitRemoteURLs,
-			gitWorkingDirectory);
+		List<String> validURLs = validateURLs(
+			localGitRemoteURLs, gitWorkingDirectory);
 
 		return validURLs;
 	}
@@ -469,52 +468,9 @@ public class LocalGitSyncUtil {
 		return true;
 	}
 
-	protected static List<String> validateURLs(
-		List<String> localGitRemoteURLs, GitWorkingDirectory gwd) {
+	protected static String localGitURLToName(
+		String localGitRemoteURL, GitWorkingDirectory gwd, int index) {
 
-		List<String> validatedURLList = new ArrayList<String>();
-
-		List<Callable<String>> callableURLS = new ArrayList<>();
-
-		for (String lgru : localGitRemoteURLs) {
-			Callable<String> callable = new Callable<String>() {
-
-				@Override
-				public String call() {
-					String lgrName = localGitURLToName(lgru, gwd,
-						localGitRemoteURLs.indexOf(lgru));
-
-					String command = JenkinsResultsParserUtil.combine(
-						"git ls-remote -h ", lgrName);
-
-					ExecutionResult er = gwd.executeBashCommands(command);
-
-					if (er.getExitValue() != 0 && er.getStandardError().contains(
-						"port 22: No route to host")) {
-							return null;
-					}
-					else {
-						return lrgu;
-					}
-				}
-			};
-
-			callableURLS.add(callable);
-		}
-
-		ParallelExecutor<String> parallelExecutor = new ParallelExecutor<>(
-			callables, null);
-
-		for (String lrgu : parallelExecutor.execute()) {
-			if (lrgu != null) {
-				validatedURLList.add(lrgu);
-			}
-		}
-		return validatedURLList;
-	}
-
-	protected static String localGitURLToName(String localGitRemoteURL,
-		GitWorkingDirectory gwd, int index) {
 		String transformedURL = localGitRemoteURL.replace(
 			"${username}", gwd.getRepositoryUsername());
 
@@ -956,6 +912,54 @@ public class LocalGitSyncUtil {
 		}
 
 		return localUpstreamBranch;
+	}
+
+	protected static List<String> validateURLs(
+		List<String> localGitRemoteURLs, GitWorkingDirectory gwd) {
+
+		List<String> validatedURLList = new ArrayList<>();
+
+		List<Callable<String>> callableURLS = new ArrayList<>();
+
+		for (String lgru : localGitRemoteURLs) {
+			Callable<String> callable = new Callable<String>() {
+
+				@Override
+				public String call() {
+					String lgrName = localGitURLToName(
+						lgru, gwd, localGitRemoteURLs.indexOf(lgru));
+
+					String command = JenkinsResultsParserUtil.combine(
+						"git ls-remote -h ", lgrName);
+
+					ExecutionResult er = gwd.executeBashCommands(command);
+
+					if ((er.getExitValue() != 0) &&
+						er.getStandardError().contains(
+							"port 22: No route to host")) {
+
+						return null;
+					}
+					else {
+						return lrgu;
+					}
+				}
+
+			};
+
+			callableURLS.add(callable);
+		}
+
+		ParallelExecutor<String> parallelExecutor = new ParallelExecutor<>(
+			callables, null);
+
+		for (String lrgu : parallelExecutor.execute()) {
+			if (lrgu != null) {
+				validatedURLList.add(lrgu);
+			}
+		}
+
+		return validatedURLList;
 	}
 
 	private static final long _BRANCH_EXPIRE_AGE_MILLIS =

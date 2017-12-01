@@ -180,6 +180,17 @@ public class HtmlPreviewLocalServiceUtil {
 		return getService().fetchHtmlPreview(htmlPreviewId);
 	}
 
+	public static com.liferay.html.preview.model.HtmlPreview generateHtmlPreview(
+		long userId, long groupId, long classNameId, long classPK,
+		java.lang.String content, java.lang.String mimeType,
+		boolean asynchronous,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .generateHtmlPreview(userId, groupId, classNameId, classPK,
+			content, mimeType, asynchronous, serviceContext);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}

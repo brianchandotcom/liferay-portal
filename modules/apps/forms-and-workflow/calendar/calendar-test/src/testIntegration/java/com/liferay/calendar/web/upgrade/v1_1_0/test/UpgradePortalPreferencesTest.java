@@ -32,8 +32,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.impl.PortalPreferencesImpl;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.util.Iterator;
 
@@ -254,8 +252,6 @@ public class UpgradePortalPreferencesTest {
 	}
 
 	protected void setUpUpgradePortalPreferences() {
-		Registry registry = RegistryUtil.getRegistry();
-
 		_upgradeProcess = CalendarUpgradeTestUtil.getWebUpgradeStep(
 			"UpgradePortalPreferences");
 	}

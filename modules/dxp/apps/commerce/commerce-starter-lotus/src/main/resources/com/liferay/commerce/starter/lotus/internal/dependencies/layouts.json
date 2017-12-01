@@ -9,7 +9,7 @@
 				"layoutColumnPos": "0",
 				"portletName": "com_liferay_journal_content_web_portlet_JournalContentPortlet",
 				"portletPreferences": {
-					"articleId": "carousel",
+					"articleId": "CAROUSEL",
 					"assetEntryId": "",
 					"ddmTemplateKey": "BASIC-WEB-CONTENT",
 					"groupId": ""
@@ -20,7 +20,7 @@
 				"layoutColumnPos": "1",
 				"portletName": "com_liferay_journal_content_web_portlet_JournalContentPortlet",
 				"portletPreferences": {
-					"articleId": "features",
+					"articleId": "FEATURES",
 					"assetEntryId": "",
 					"ddmTemplateKey": "BASIC-WEB-CONTENT",
 					"groupId": ""
@@ -31,7 +31,7 @@
 				"layoutColumnPos": "2",
 				"portletName": "com_liferay_journal_content_web_portlet_JournalContentPortlet",
 				"portletPreferences": {
-					"articleId": "categories-and-separator",
+					"articleId": "CATEGORIES-AND-SEPARATOR",
 					"assetEntryId": "",
 					"ddmTemplateKey": "BASIC-WEB-CONTENT",
 					"groupId": ""
@@ -93,7 +93,7 @@
 				"layoutColumnPos": "1",
 				"portletName": "com_liferay_journal_content_web_portlet_JournalContentPortlet",
 				"portletPreferences": {
-					"articleId": "cards-accepted",
+					"articleId": "CARDS-ACCEPTED",
 					"assetEntryId": "",
 					"ddmTemplateKey": "BASIC-WEB-CONTENT",
 					"groupId": ""

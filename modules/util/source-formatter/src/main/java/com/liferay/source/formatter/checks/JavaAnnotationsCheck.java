@@ -263,6 +263,15 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 
 			String parameterProperties = annotation.substring(matcher.end(), x);
 
+			String newParameterProperties = StringUtil.replace(
+				parameterProperties, new String[] {" =", "= "},
+				new String[] {"=", "="});
+
+			if (!parameterProperties.equals(newParameterProperties)) {
+				return StringUtil.replaceFirst(
+					annotation, parameterProperties, newParameterProperties);
+			}
+
 			parameterProperties = StringUtil.replace(
 				parameterProperties,
 				new String[] {

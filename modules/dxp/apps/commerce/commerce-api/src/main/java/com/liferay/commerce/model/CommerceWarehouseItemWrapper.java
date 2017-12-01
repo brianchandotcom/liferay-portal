@@ -220,6 +220,12 @@ public class CommerceWarehouseItemWrapper implements CommerceWarehouseItem,
 		return _commerceWarehouseItem.getCompanyId();
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPInstance getCPInstance()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceWarehouseItem.getCPInstance();
+	}
+
 	/**
 	* Returns the create date of this commerce warehouse item.
 	*

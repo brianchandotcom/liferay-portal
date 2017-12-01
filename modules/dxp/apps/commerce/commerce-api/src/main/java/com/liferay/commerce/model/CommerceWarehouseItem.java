@@ -58,4 +58,7 @@ public interface CommerceWarehouseItem extends CommerceWarehouseItemModel,
 
 	public CommerceWarehouse getCommerceWarehouse()
 		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.commerce.product.model.CPInstance getCPInstance()
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

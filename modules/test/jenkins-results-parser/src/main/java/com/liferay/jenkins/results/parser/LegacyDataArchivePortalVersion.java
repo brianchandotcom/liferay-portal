@@ -173,7 +173,8 @@ public class LegacyDataArchivePortalVersion {
 		String[] gitLogEntities = gitLog.split("\n");
 
 		for (String gitLogEntity : gitLogEntities) {
-			Commit commit = CommitFactory.newCommit(gitLogEntity);
+			Commit commit = CommitFactory.newCommit(
+				gitLogEntity, _legacyGitWorkingDirectory);
 
 			if (commit.getType() != Commit.Type.MANUAL) {
 				continue;

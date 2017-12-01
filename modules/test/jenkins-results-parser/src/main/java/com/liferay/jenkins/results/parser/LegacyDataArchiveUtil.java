@@ -156,7 +156,7 @@ public class LegacyDataArchiveUtil {
 				legacyDataArchivePortalVersion.getLatestTestCommit();
 
 			Dom4JUtil.getNewAnchorElement(
-				_getCommitURL(testCommit), testCommitElement,
+				testCommit.getGitHubCommitURL(), testCommitElement,
 				testCommit.getAbbreviatedSHA());
 
 			Dom4JUtil.getNewElement(
@@ -203,7 +203,7 @@ public class LegacyDataArchiveUtil {
 					Commit commit = legacyDataArchiveGroup.getCommit();
 
 					Dom4JUtil.getNewAnchorElement(
-						_getCommitURL(commit), summaryElement,
+						commit.getGitHubCommitURL(), summaryElement,
 						commit.getAbbreviatedSHA());
 
 					Dom4JUtil.getNewElement(
@@ -280,7 +280,7 @@ public class LegacyDataArchiveUtil {
 						"(" + staleDataArchives.size() + ")");
 
 					Dom4JUtil.getNewAnchorElement(
-						_getCommitURL(commit), summaryElement,
+						commit.getGitHubCommitURL(), summaryElement,
 						commit.getAbbreviatedSHA());
 
 					Dom4JUtil.getNewElement(
@@ -400,12 +400,6 @@ public class LegacyDataArchiveUtil {
 		}
 
 		return buildProperties;
-	}
-
-	private String _getCommitURL(Commit commit) {
-		return JenkinsResultsParserUtil.combine(
-			"https://github.com/liferay/liferay-qa-portal-legacy-ee/commit/",
-			commit.getSHA());
 	}
 
 	private String _getFilePathURL(File file) {

@@ -22,7 +22,9 @@ import java.util.regex.Pattern;
  */
 public class CommitFactory {
 
-	public static Commit newCommit(String gitLogEntity) {
+	public static Commit newCommit(
+		String gitLogEntity, GitWorkingDirectory gitWorkingDirectory) {
+
 		Matcher matcher = _pattern.matcher(gitLogEntity);
 
 		if (!matcher.matches()) {
@@ -37,7 +39,7 @@ public class CommitFactory {
 			type = Commit.Type.LEGACY_ARCHIVE;
 		}
 
-		return new BaseCommit(message, sha, type);
+		return new BaseCommit(gitWorkingDirectory, message, sha, type);
 	}
 
 	private static final Pattern _pattern = Pattern.compile(

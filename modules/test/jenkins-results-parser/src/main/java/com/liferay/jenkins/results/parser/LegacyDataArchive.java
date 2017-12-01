@@ -27,7 +27,7 @@ public class LegacyDataArchive {
 			String gitLog = _legacyGitWorkingDirectory.log(
 				1, _legacyDataArchiveFile);
 
-			return CommitFactory.newCommit(gitLog);
+			return CommitFactory.newCommit(gitLog, _legacyGitWorkingDirectory);
 		}
 
 		return null;

@@ -66,7 +66,8 @@ public class LegacyDataArchiveGroup {
 	}
 
 	public Commit getCommit() {
-		return CommitFactory.newCommit(_legacyGitWorkingDirectory.log(1));
+		return CommitFactory.newCommit(
+			_legacyGitWorkingDirectory.log(1), _legacyGitWorkingDirectory);
 	}
 
 	public String getDataArchiveType() {

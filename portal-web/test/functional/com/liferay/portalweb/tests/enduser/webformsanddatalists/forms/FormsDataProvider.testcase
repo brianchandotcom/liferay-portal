@@ -22,7 +22,7 @@
 	</tear-down>
 
 	<command name="ConfigureAutocompleteWithTextField" priority="5">
-		<property name="test.name.skip.portal.instance" value="Forms#ConfigureAutoCompleteWithTextField" />
+		<property name="test.name.skip.portal.instance" value="FormsDataProvider#ConfigureAutocompleteWithTextField" />
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
@@ -162,7 +162,7 @@
 	</command>
 
 	<command name="ConfigureWithSelectField" priority="5">
-		<property name="test.name.skip.portal.instance" value="Forms#ConfigureDataProviderWithSelectField" />
+		<property name="test.name.skip.portal.instance" value="FormsDataProvider#ConfigureWithSelectField" />
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 

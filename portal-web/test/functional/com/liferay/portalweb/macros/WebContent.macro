@@ -389,8 +389,8 @@
 			<var name="structureName" value="${selectStructureName}" />
 		</execute>
 
-		<execute macro="PortletEntry#inputTitle">
-			<var name="title" value="${webContentTitle}" />
+		<execute macro="WebContent#addCP">
+			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
 		<execute macro="Panel#expandPanel">
@@ -462,8 +462,8 @@
 	</command>
 
 	<command name="addWithStructureAndWorkflowCP">
-		<execute macro="PortletEntry#inputTitle">
-			<var name="title" value="${webContentTitle}" />
+		<execute macro="WebContent#addCP">
+			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
 		<if>
@@ -849,8 +849,8 @@
 	</command>
 
 	<command name="editCP">
-		<execute macro="PortletEntry#inputTitle">
-			<var name="title" value="${webContentTitleEdit}" />
+		<execute macro="WebContent#addCP">
+			<var name="webContentTitle" value="${webContentTitleEdit}" />
 		</execute>
 
 		<if>
@@ -938,8 +938,8 @@
 	</command>
 
 	<command name="editInReview">
-		<execute macro="PortletEntry#inputTitle">
-			<var name="title" value="${webContentTitleEdit}" />
+		<execute macro="WebContent#addCP">
+			<var name="webContentTitle" value="${webContentTitleEdit}" />
 		</execute>
 
 		<if>
@@ -964,8 +964,8 @@
 	</command>
 
 	<command name="editNullCP">
-		<execute macro="PortletEntry#inputTitle">
-			<var name="title" value="" />
+		<execute macro="WebContent#addCP">
+			<var name="webContentTitle" value="" />
 		</execute>
 
 		<if>
@@ -983,8 +983,8 @@
 	</command>
 
 	<command name="editPGViaWCD">
-		<execute macro="PortletEntry#inputTitle">
-			<var name="title" value="${webContentTitleEdit}" />
+		<execute macro="WebContent#addCP">
+			<var name="webContentTitle" value="${webContentTitleEdit}" />
 		</execute>
 
 		<if>

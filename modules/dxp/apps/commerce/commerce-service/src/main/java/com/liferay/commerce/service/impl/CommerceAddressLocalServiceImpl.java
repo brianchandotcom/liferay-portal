@@ -253,7 +253,8 @@ public class CommerceAddressLocalServiceImpl
 			commerceCartLocalService.updateCommerceCart(
 				commerceCart.getCommerceCartId(), billingAddressId,
 				shippingAddressId, commerceCart.getCommerceShippingMethodId(),
-				commerceCart.getShippingOptionName());
+				commerceCart.getShippingOptionName(),
+				commerceCart.getShippingPrice());
 		}
 	}
 

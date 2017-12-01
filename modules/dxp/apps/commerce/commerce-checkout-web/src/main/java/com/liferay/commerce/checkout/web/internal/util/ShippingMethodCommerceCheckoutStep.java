@@ -19,19 +19,26 @@ import com.liferay.commerce.checkout.web.internal.display.context.ShippingMethod
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.exception.CommerceCartShippingMethodException;
 import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.model.CommerceShippingEngine;
+import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.service.CommerceCartService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.util.CommerceCartHelper;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -147,6 +154,44 @@ public class ShippingMethodCommerceCheckoutStep
 		return true;
 	}
 
+	protected double getShippingPrice(
+			CommerceCart commerceCart, long commerceShippingMethodId,
+			String shippingOptionName, Locale locale)
+		throws PortalException {
+
+		CommerceShippingMethod commerceShippingMethod =
+			_commerceShippingMethodService.getCommerceShippingMethod(
+				commerceShippingMethodId);
+
+		if (!commerceShippingMethod.isActive()) {
+			throw new CommerceCartShippingMethodException(
+				"Shipping method " +
+					commerceShippingMethod.getCommerceShippingMethodId() +
+						" is not active");
+		}
+
+		CommerceShippingEngine commerceShippingEngine =
+			_commerceShippingEngineRegistry.getCommerceShippingEngine(
+				commerceShippingMethod.getEngineKey());
+
+		List<CommerceShippingOption> commerceShippingOptions =
+			commerceShippingEngine.getCommerceShippingOptions(
+				commerceCart, locale);
+
+		for (CommerceShippingOption commerceShippingOption :
+				commerceShippingOptions) {
+
+			if (shippingOptionName.equals(commerceShippingOption.getName())) {
+				return commerceShippingOption.getAmount();
+			}
+		}
+
+		throw new CommerceCartShippingMethodException(
+			"Unable to get amount of option \"" + shippingOptionName +
+				"\" for shipping method " +
+					commerceShippingMethod.getCommerceShippingMethodId());
+	}
+
 	protected void updateCommerceCartShippingMethod(ActionRequest actionRequest)
 		throws Exception {
 
@@ -156,6 +201,9 @@ public class ShippingMethodCommerceCheckoutStep
 		if (Validator.isNull(commerceShippingOptionKey)) {
 			throw new CommerceCartShippingMethodException();
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		long commerceCartId = ParamUtil.getLong(
 			actionRequest, "commerceCartId");
@@ -171,11 +219,15 @@ public class ShippingMethodCommerceCheckoutStep
 		String shippingOptionName = commerceShippingOptionKey.substring(
 			pos + 1);
 
+		double shippingPrice = getShippingPrice(
+			commerceCart, commerceShippingMethodId, shippingOptionName,
+			themeDisplay.getLocale());
+
 		_commerceCartService.updateCommerceCart(
 			commerceCart.getCommerceCartId(),
 			commerceCart.getBillingAddressId(),
 			commerceCart.getShippingAddressId(), commerceShippingMethodId,
-			shippingOptionName);
+			shippingOptionName, shippingPrice);
 	}
 
 	@Reference

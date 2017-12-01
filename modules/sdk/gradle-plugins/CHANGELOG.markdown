@@ -3012,7 +3012,7 @@ to version 2.3.35.
 - [LPS-76202]: Update the [Liferay Gradle Plugins Jasper JSPC] dependency to
 version 2.0.3.
 
-## 3.5.56 - 2017-11-30
+## 3.5.56 - 2017-12-01
 
 ### Changed
 - [LPS-76224]: Update the [Liferay Ant BND] dependency to version 2.0.42.

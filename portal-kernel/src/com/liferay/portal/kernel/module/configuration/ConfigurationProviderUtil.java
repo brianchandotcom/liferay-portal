@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.settings.SettingsLocator;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
 
+import java.util.Dictionary;
+
 /**
  * @author Jorge Ferrer
  */
@@ -92,6 +94,51 @@ public class ConfigurationProviderUtil {
 			getConfigurationProvider();
 
 		return configurationProvider.getSystemConfiguration(clazz);
+	}
+
+	public static <T> void saveCompanyConfiguration(
+			Class<T> clazz, long companyId,
+			Dictionary<String, Object> properties)
+		throws ConfigurationException {
+
+		ConfigurationProvider configurationProvider =
+			getConfigurationProvider();
+
+		configurationProvider.saveCompanyConfiguration(
+			clazz, companyId, properties);
+	}
+
+	public static <T> void saveGroupConfiguration(
+			Class<T> clazz, long groupId, Dictionary<String, Object> properties)
+		throws ConfigurationException {
+
+		ConfigurationProvider configurationProvider =
+			getConfigurationProvider();
+
+		configurationProvider.saveGroupConfiguration(
+			clazz, groupId, properties);
+	}
+
+	public static <T> void savePortletInstanceConfiguration(
+			Class<T> clazz, String portletId,
+			Dictionary<String, Object> properties)
+		throws ConfigurationException {
+
+		ConfigurationProvider configurationProvider =
+			getConfigurationProvider();
+
+		configurationProvider.savePortletInstanceConfiguration(
+			clazz, portletId, properties);
+	}
+
+	public static <T> void saveSystemConfiguration(
+			Class<T> clazz, Dictionary<String, Object> properties)
+		throws ConfigurationException {
+
+		ConfigurationProvider configurationProvider =
+			getConfigurationProvider();
+
+		configurationProvider.saveSystemConfiguration(clazz, properties);
 	}
 
 	private static final ServiceTrackerList<ConfigurationProvider>

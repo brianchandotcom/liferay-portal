@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletInstance;
 import com.liferay.portal.kernel.settings.SettingsLocator;
 
+import java.util.Dictionary;
+
 /**
  * @author Jorge Ferrer
  */
@@ -50,6 +52,24 @@ public interface ConfigurationProvider {
 		throws ConfigurationException;
 
 	public <T> T getSystemConfiguration(Class<T> clazz)
+		throws ConfigurationException;
+
+	public <T> void saveCompanyConfiguration(
+			Class<T> clazz, long companyId,
+			Dictionary<String, Object> properties)
+		throws ConfigurationException;
+
+	public <T> void saveGroupConfiguration(
+			Class<T> clazz, long groupId, Dictionary<String, Object> properties)
+		throws ConfigurationException;
+
+	public <T> void savePortletInstanceConfiguration(
+			Class<T> clazz, String portletId,
+			Dictionary<String, Object> properties)
+		throws ConfigurationException;
+
+	public <T> void saveSystemConfiguration(
+			Class<T> clazz, Dictionary<String, Object> properties)
 		throws ConfigurationException;
 
 }

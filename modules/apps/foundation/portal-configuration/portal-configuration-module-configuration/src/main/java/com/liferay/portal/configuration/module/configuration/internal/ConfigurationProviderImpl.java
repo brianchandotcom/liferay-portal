@@ -29,8 +29,17 @@ import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.settings.SettingsLocator;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.settings.TypedSettings;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.IOException;
+
+import java.util.Dictionary;
+
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -129,6 +138,60 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 			clazz, new SystemSettingsLocator(configurationPid));
 	}
 
+	@Override
+	public <T> void saveCompanyConfiguration(
+			Class<T> clazz, long companyId,
+			Dictionary<String, Object> properties)
+		throws ConfigurationException {
+
+		String configurationPid = _getConfigurationPid(clazz);
+
+		String scopedPid = _getConfigurationScopedPid(
+			configurationPid, ExtendedObjectClassDefinition.Scope.COMPANY,
+			String.valueOf(companyId));
+
+		_saveConfiguration(scopedPid, properties);
+	}
+
+	@Override
+	public <T> void saveGroupConfiguration(
+			Class<T> clazz, long groupId, Dictionary<String, Object> properties)
+		throws ConfigurationException {
+
+		String configurationPid = _getConfigurationPid(clazz);
+
+		String scopedPid = _getConfigurationScopedPid(
+			configurationPid, ExtendedObjectClassDefinition.Scope.GROUP,
+			String.valueOf(groupId));
+
+		_saveConfiguration(scopedPid, properties);
+	}
+
+	@Override
+	public <T> void savePortletInstanceConfiguration(
+			Class<T> clazz, String portletId,
+			Dictionary<String, Object> properties)
+		throws ConfigurationException {
+
+		String configurationPid = _getConfigurationPid(clazz);
+
+		String scopedPid = _getConfigurationScopedPid(
+			configurationPid,
+			ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE, portletId);
+
+		_saveConfiguration(scopedPid, properties);
+	}
+
+	@Override
+	public <T> void saveSystemConfiguration(
+			Class<T> clazz, Dictionary<String, Object> properties)
+		throws ConfigurationException {
+
+		String configurationPid = _getConfigurationPid(clazz);
+
+		_saveConfiguration(configurationPid, properties);
+	}
+
 	private String _getConfigurationPid(Class<?> clazz) {
 		Meta.OCD ocd = clazz.getAnnotation(Meta.OCD.class);
 
@@ -137,6 +200,23 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 		}
 
 		return ocd.id();
+	}
+
+	private String _getConfigurationScopedPid(
+		String configurationPid, ExtendedObjectClassDefinition.Scope scope,
+		String scopePrimKey) {
+
+		StringBundler sb = new StringBundler(7);
+
+		sb.append(configurationPid);
+		sb.append(StringPool.UNDERLINE);
+		sb.append(StringPool.UNDERLINE);
+		sb.append(StringUtil.toUpperCase(scope.name()));
+		sb.append(StringPool.UNDERLINE);
+		sb.append(StringPool.UNDERLINE);
+		sb.append(scopePrimKey);
+
+		return sb.toString();
 	}
 
 	private <T> String _getSettingsId(Class<T> clazz) {
@@ -155,6 +235,25 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 
 		return settingsId;
 	}
+
+	private void _saveConfiguration(
+			String pid, Dictionary<String, Object> properties)
+		throws ConfigurationException {
+
+		try {
+			Configuration configuration = _configurationAdmin.getConfiguration(
+				pid, StringPool.QUESTION);
+
+			configuration.update(properties);
+		}
+		catch (IOException ioe) {
+			throw new ConfigurationException(
+				"Unable to save configuration " + pid, ioe);
+		}
+	}
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
 	private SettingsFactory _settingsFactory;

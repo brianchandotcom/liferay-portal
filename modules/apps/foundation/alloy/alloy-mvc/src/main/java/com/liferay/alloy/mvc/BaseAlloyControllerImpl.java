@@ -409,7 +409,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 
 	protected void addOpenerSuccessMessage() {
 		Map<String, String> data = (Map<String, String>)SessionMessages.get(
-			request,
+			request.getSession(),
 			portlet.getPortletId() +
 				SessionMessages.KEY_SUFFIX_REFRESH_PORTLET_DATA);
 
@@ -424,7 +424,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		data.put("addSuccessMessage", StringPool.FALSE);
 
 		SessionMessages.add(
-			request,
+			request.getSession(),
 			portlet.getPortletId() +
 				SessionMessages.KEY_SUFFIX_REFRESH_PORTLET_DATA,
 			data);
@@ -1469,7 +1469,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		data.put("addSuccessMessage", StringPool.TRUE);
 
 		SessionMessages.add(
-			request,
+			request.getSession(),
 			portlet.getPortletId() +
 				SessionMessages.KEY_SUFFIX_REFRESH_PORTLET_DATA,
 			data);

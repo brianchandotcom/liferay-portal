@@ -64,6 +64,15 @@ public class CommerceShippingMethodServiceImpl
 	}
 
 	@Override
+	public CommerceShippingMethod getCommerceShippingMethod(
+			long commerceShippingMethodId)
+		throws PortalException {
+
+		return commerceShippingMethodLocalService.getCommerceShippingMethod(
+			commerceShippingMethodId);
+	}
+
+	@Override
 	public List<CommerceShippingMethod> getCommerceShippingMethods(
 		long groupId, boolean active) {
 

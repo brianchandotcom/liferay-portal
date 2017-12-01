@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 
 import java.io.Externalizable;
@@ -116,7 +115,7 @@ public class KaleoDefinitionVersionCacheModel implements CacheModel<KaleoDefinit
 		kaleoDefinitionVersionImpl.setUserId(userId);
 
 		if (userName == null) {
-			kaleoDefinitionVersionImpl.setUserName(StringPool.BLANK);
+			kaleoDefinitionVersionImpl.setUserName("");
 		}
 		else {
 			kaleoDefinitionVersionImpl.setUserName(userName);
@@ -125,7 +124,7 @@ public class KaleoDefinitionVersionCacheModel implements CacheModel<KaleoDefinit
 		kaleoDefinitionVersionImpl.setStatusByUserId(statusByUserId);
 
 		if (statusByUserName == null) {
-			kaleoDefinitionVersionImpl.setStatusByUserName(StringPool.BLANK);
+			kaleoDefinitionVersionImpl.setStatusByUserName("");
 		}
 		else {
 			kaleoDefinitionVersionImpl.setStatusByUserName(statusByUserName);
@@ -153,35 +152,35 @@ public class KaleoDefinitionVersionCacheModel implements CacheModel<KaleoDefinit
 		}
 
 		if (name == null) {
-			kaleoDefinitionVersionImpl.setName(StringPool.BLANK);
+			kaleoDefinitionVersionImpl.setName("");
 		}
 		else {
 			kaleoDefinitionVersionImpl.setName(name);
 		}
 
 		if (title == null) {
-			kaleoDefinitionVersionImpl.setTitle(StringPool.BLANK);
+			kaleoDefinitionVersionImpl.setTitle("");
 		}
 		else {
 			kaleoDefinitionVersionImpl.setTitle(title);
 		}
 
 		if (description == null) {
-			kaleoDefinitionVersionImpl.setDescription(StringPool.BLANK);
+			kaleoDefinitionVersionImpl.setDescription("");
 		}
 		else {
 			kaleoDefinitionVersionImpl.setDescription(description);
 		}
 
 		if (content == null) {
-			kaleoDefinitionVersionImpl.setContent(StringPool.BLANK);
+			kaleoDefinitionVersionImpl.setContent("");
 		}
 		else {
 			kaleoDefinitionVersionImpl.setContent(content);
 		}
 
 		if (version == null) {
-			kaleoDefinitionVersionImpl.setVersion(StringPool.BLANK);
+			kaleoDefinitionVersionImpl.setVersion("");
 		}
 		else {
 			kaleoDefinitionVersionImpl.setVersion(version);
@@ -234,7 +233,7 @@ public class KaleoDefinitionVersionCacheModel implements CacheModel<KaleoDefinit
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -243,7 +242,7 @@ public class KaleoDefinitionVersionCacheModel implements CacheModel<KaleoDefinit
 		objectOutput.writeLong(statusByUserId);
 
 		if (statusByUserName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(statusByUserName);
@@ -254,35 +253,35 @@ public class KaleoDefinitionVersionCacheModel implements CacheModel<KaleoDefinit
 		objectOutput.writeLong(modifiedDate);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (title == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(title);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);
 		}
 
 		if (content == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(content);
 		}
 
 		if (version == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(version);

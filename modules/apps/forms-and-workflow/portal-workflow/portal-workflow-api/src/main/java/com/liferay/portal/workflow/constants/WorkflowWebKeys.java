@@ -28,7 +28,15 @@ public class WorkflowWebKeys {
 	public static final String WORKFLOW_DEFINITION_LINK_DISPLAY_CONTEXT =
 		"WORKFLOW_DEFINITION_LINK_DISPLAY_CONTEXT";
 
+	public static final String WORKFLOW_JSP_STATE = "jsp_state";
+
 	public static final String WORKFLOW_PORTLET_TABS = "WORKFLOW_PORTLET_TABS";
+
+	public static final String WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE =
+		"previewBeforeRevert";
+
+	public static final String WORKFLOW_SELECTED_PORTLET_TAB =
+		"WORKFLOW_PORTLET_TAB";
 
 	public static final String WORKFLOW_TAB_DEFINITION = "workflows";
 

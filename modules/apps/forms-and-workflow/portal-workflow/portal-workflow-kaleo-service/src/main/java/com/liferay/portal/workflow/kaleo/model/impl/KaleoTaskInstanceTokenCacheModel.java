@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 
 import java.io.Externalizable;
@@ -120,7 +119,7 @@ public class KaleoTaskInstanceTokenCacheModel implements CacheModel<KaleoTaskIns
 		kaleoTaskInstanceTokenImpl.setUserId(userId);
 
 		if (userName == null) {
-			kaleoTaskInstanceTokenImpl.setUserName(StringPool.BLANK);
+			kaleoTaskInstanceTokenImpl.setUserName("");
 		}
 		else {
 			kaleoTaskInstanceTokenImpl.setUserName(userName);
@@ -146,14 +145,14 @@ public class KaleoTaskInstanceTokenCacheModel implements CacheModel<KaleoTaskIns
 		kaleoTaskInstanceTokenImpl.setKaleoTaskId(kaleoTaskId);
 
 		if (kaleoTaskName == null) {
-			kaleoTaskInstanceTokenImpl.setKaleoTaskName(StringPool.BLANK);
+			kaleoTaskInstanceTokenImpl.setKaleoTaskName("");
 		}
 		else {
 			kaleoTaskInstanceTokenImpl.setKaleoTaskName(kaleoTaskName);
 		}
 
 		if (className == null) {
-			kaleoTaskInstanceTokenImpl.setClassName(StringPool.BLANK);
+			kaleoTaskInstanceTokenImpl.setClassName("");
 		}
 		else {
 			kaleoTaskInstanceTokenImpl.setClassName(className);
@@ -179,7 +178,7 @@ public class KaleoTaskInstanceTokenCacheModel implements CacheModel<KaleoTaskIns
 		}
 
 		if (workflowContext == null) {
-			kaleoTaskInstanceTokenImpl.setWorkflowContext(StringPool.BLANK);
+			kaleoTaskInstanceTokenImpl.setWorkflowContext("");
 		}
 		else {
 			kaleoTaskInstanceTokenImpl.setWorkflowContext(workflowContext);
@@ -235,7 +234,7 @@ public class KaleoTaskInstanceTokenCacheModel implements CacheModel<KaleoTaskIns
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -253,14 +252,14 @@ public class KaleoTaskInstanceTokenCacheModel implements CacheModel<KaleoTaskIns
 		objectOutput.writeLong(kaleoTaskId);
 
 		if (kaleoTaskName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(kaleoTaskName);
 		}
 
 		if (className == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(className);
@@ -275,7 +274,7 @@ public class KaleoTaskInstanceTokenCacheModel implements CacheModel<KaleoTaskIns
 		objectOutput.writeLong(dueDate);
 
 		if (workflowContext == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(workflowContext);

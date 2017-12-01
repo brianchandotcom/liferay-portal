@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -231,9 +230,9 @@ public class KaleoTaskAssignmentInstancePersistenceTest {
 
 	@Test
 	public void testCountByassigneeClassName() throws Exception {
-		_persistence.countByassigneeClassName(StringPool.BLANK);
+		_persistence.countByassigneeClassName("");
 
-		_persistence.countByassigneeClassName(StringPool.NULL);
+		_persistence.countByassigneeClassName("null");
 
 		_persistence.countByassigneeClassName((String)null);
 	}
@@ -248,9 +247,9 @@ public class KaleoTaskAssignmentInstancePersistenceTest {
 
 	@Test
 	public void testCountByACN_ACPK() throws Exception {
-		_persistence.countByACN_ACPK(StringPool.BLANK, RandomTestUtil.nextLong());
+		_persistence.countByACN_ACPK("", RandomTestUtil.nextLong());
 
-		_persistence.countByACN_ACPK(StringPool.NULL, 0L);
+		_persistence.countByACN_ACPK("null", 0L);
 
 		_persistence.countByACN_ACPK((String)null, 0L);
 	}

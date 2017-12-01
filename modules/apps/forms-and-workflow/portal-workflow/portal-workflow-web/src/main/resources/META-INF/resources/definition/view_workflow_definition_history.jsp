@@ -24,16 +24,16 @@ WorkflowDefinition currentWorkflowDefinition = (WorkflowDefinition)request.getAt
 	id="workflowDefinitions"
 >
 	<liferay-ui:search-container-results
-		results="<%= workflowDefinitionDisplayContext.getWorkflowDefinitions(currentWorkflowDefinition.getName()) %>"
+		results="<%= workflowDefinitionDisplayContext.getWorkflowDefinitionsOrderByDesc(currentWorkflowDefinition.getName()) %>"
 	/>
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.workflow.WorkflowDefinition"
 		modelVar="workflowDefinition"
 	>
-		<liferay-ui:search-container-column-date
-			name="last-modified"
-			value="<%= workflowDefinitionDisplayContext.getModifiedDate(workflowDefinition) %>"
+		<liferay-ui:search-container-column-jsp
+			cssClass="lfr-version-column"
+			path="/definition/workflow_definition_version_info.jsp"
 		/>
 
 		<liferay-ui:search-container-column-jsp

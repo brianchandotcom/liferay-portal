@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 
 import java.io.Externalizable;
@@ -104,7 +103,7 @@ public class KaleoTaskCacheModel implements CacheModel<KaleoTask>,
 		kaleoTaskImpl.setUserId(userId);
 
 		if (userName == null) {
-			kaleoTaskImpl.setUserName(StringPool.BLANK);
+			kaleoTaskImpl.setUserName("");
 		}
 		else {
 			kaleoTaskImpl.setUserName(userName);
@@ -128,14 +127,14 @@ public class KaleoTaskCacheModel implements CacheModel<KaleoTask>,
 		kaleoTaskImpl.setKaleoNodeId(kaleoNodeId);
 
 		if (name == null) {
-			kaleoTaskImpl.setName(StringPool.BLANK);
+			kaleoTaskImpl.setName("");
 		}
 		else {
 			kaleoTaskImpl.setName(name);
 		}
 
 		if (description == null) {
-			kaleoTaskImpl.setDescription(StringPool.BLANK);
+			kaleoTaskImpl.setDescription("");
 		}
 		else {
 			kaleoTaskImpl.setDescription(description);
@@ -178,7 +177,7 @@ public class KaleoTaskCacheModel implements CacheModel<KaleoTask>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -192,14 +191,14 @@ public class KaleoTaskCacheModel implements CacheModel<KaleoTask>,
 		objectOutput.writeLong(kaleoNodeId);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);

@@ -150,7 +150,7 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 				{
 					dialog: {
 						destroyOnHide: true,
-						height: 210,
+						height: 340,
 						width: 720
 					},
 					id: '<portlet:namespace />assignToDialog',
@@ -170,7 +170,7 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 				{
 					dialog: {
 						destroyOnHide: true,
-						height: 290,
+						height: 430,
 						width: 720
 					},
 					id: '<portlet:namespace />assignToDialog',

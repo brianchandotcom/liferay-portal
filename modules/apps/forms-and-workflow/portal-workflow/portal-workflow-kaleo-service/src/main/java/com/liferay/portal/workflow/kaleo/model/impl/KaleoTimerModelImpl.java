@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimer;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimerModel;
 
@@ -344,7 +343,7 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -355,7 +354,7 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -396,7 +395,7 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 	@Override
 	public String getKaleoClassName() {
 		if (_kaleoClassName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _kaleoClassName;
@@ -453,7 +452,7 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -495,7 +494,7 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 	@Override
 	public String getDescription() {
 		if (_description == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _description;
@@ -520,7 +519,7 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 	@Override
 	public String getScale() {
 		if (_scale == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _scale;
@@ -545,7 +544,7 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 	@Override
 	public String getRecurrenceScale() {
 		if (_recurrenceScale == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _recurrenceScale;

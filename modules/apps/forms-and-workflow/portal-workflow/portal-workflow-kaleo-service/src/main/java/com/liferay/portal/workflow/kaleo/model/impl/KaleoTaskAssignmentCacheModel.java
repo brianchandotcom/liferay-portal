@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 
 import java.io.Externalizable;
@@ -116,7 +115,7 @@ public class KaleoTaskAssignmentCacheModel implements CacheModel<KaleoTaskAssign
 		kaleoTaskAssignmentImpl.setUserId(userId);
 
 		if (userName == null) {
-			kaleoTaskAssignmentImpl.setUserName(StringPool.BLANK);
+			kaleoTaskAssignmentImpl.setUserName("");
 		}
 		else {
 			kaleoTaskAssignmentImpl.setUserName(userName);
@@ -137,7 +136,7 @@ public class KaleoTaskAssignmentCacheModel implements CacheModel<KaleoTaskAssign
 		}
 
 		if (kaleoClassName == null) {
-			kaleoTaskAssignmentImpl.setKaleoClassName(StringPool.BLANK);
+			kaleoTaskAssignmentImpl.setKaleoClassName("");
 		}
 		else {
 			kaleoTaskAssignmentImpl.setKaleoClassName(kaleoClassName);
@@ -148,7 +147,7 @@ public class KaleoTaskAssignmentCacheModel implements CacheModel<KaleoTaskAssign
 		kaleoTaskAssignmentImpl.setKaleoNodeId(kaleoNodeId);
 
 		if (assigneeClassName == null) {
-			kaleoTaskAssignmentImpl.setAssigneeClassName(StringPool.BLANK);
+			kaleoTaskAssignmentImpl.setAssigneeClassName("");
 		}
 		else {
 			kaleoTaskAssignmentImpl.setAssigneeClassName(assigneeClassName);
@@ -157,28 +156,28 @@ public class KaleoTaskAssignmentCacheModel implements CacheModel<KaleoTaskAssign
 		kaleoTaskAssignmentImpl.setAssigneeClassPK(assigneeClassPK);
 
 		if (assigneeActionId == null) {
-			kaleoTaskAssignmentImpl.setAssigneeActionId(StringPool.BLANK);
+			kaleoTaskAssignmentImpl.setAssigneeActionId("");
 		}
 		else {
 			kaleoTaskAssignmentImpl.setAssigneeActionId(assigneeActionId);
 		}
 
 		if (assigneeScript == null) {
-			kaleoTaskAssignmentImpl.setAssigneeScript(StringPool.BLANK);
+			kaleoTaskAssignmentImpl.setAssigneeScript("");
 		}
 		else {
 			kaleoTaskAssignmentImpl.setAssigneeScript(assigneeScript);
 		}
 
 		if (assigneeScriptLanguage == null) {
-			kaleoTaskAssignmentImpl.setAssigneeScriptLanguage(StringPool.BLANK);
+			kaleoTaskAssignmentImpl.setAssigneeScriptLanguage("");
 		}
 		else {
 			kaleoTaskAssignmentImpl.setAssigneeScriptLanguage(assigneeScriptLanguage);
 		}
 
 		if (assigneeScriptRequiredContexts == null) {
-			kaleoTaskAssignmentImpl.setAssigneeScriptRequiredContexts(StringPool.BLANK);
+			kaleoTaskAssignmentImpl.setAssigneeScriptRequiredContexts("");
 		}
 		else {
 			kaleoTaskAssignmentImpl.setAssigneeScriptRequiredContexts(assigneeScriptRequiredContexts);
@@ -229,7 +228,7 @@ public class KaleoTaskAssignmentCacheModel implements CacheModel<KaleoTaskAssign
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -239,7 +238,7 @@ public class KaleoTaskAssignmentCacheModel implements CacheModel<KaleoTaskAssign
 		objectOutput.writeLong(modifiedDate);
 
 		if (kaleoClassName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(kaleoClassName);
@@ -252,7 +251,7 @@ public class KaleoTaskAssignmentCacheModel implements CacheModel<KaleoTaskAssign
 		objectOutput.writeLong(kaleoNodeId);
 
 		if (assigneeClassName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(assigneeClassName);
@@ -261,28 +260,28 @@ public class KaleoTaskAssignmentCacheModel implements CacheModel<KaleoTaskAssign
 		objectOutput.writeLong(assigneeClassPK);
 
 		if (assigneeActionId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(assigneeActionId);
 		}
 
 		if (assigneeScript == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(assigneeScript);
 		}
 
 		if (assigneeScriptLanguage == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(assigneeScriptLanguage);
 		}
 
 		if (assigneeScriptRequiredContexts == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(assigneeScriptRequiredContexts);

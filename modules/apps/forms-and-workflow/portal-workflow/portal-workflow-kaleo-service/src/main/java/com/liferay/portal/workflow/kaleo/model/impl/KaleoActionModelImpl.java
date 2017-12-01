@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.model.KaleoActionModel;
 
@@ -366,7 +365,7 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -377,7 +376,7 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -418,7 +417,7 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 	@Override
 	public String getKaleoClassName() {
 		if (_kaleoClassName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _kaleoClassName;
@@ -487,7 +486,7 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 	@Override
 	public String getKaleoNodeName() {
 		if (_kaleoNodeName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _kaleoNodeName;
@@ -502,7 +501,7 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -517,7 +516,7 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 	@Override
 	public String getDescription() {
 		if (_description == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _description;
@@ -532,7 +531,7 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 	@Override
 	public String getExecutionType() {
 		if (_executionType == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _executionType;
@@ -557,7 +556,7 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 	@Override
 	public String getScript() {
 		if (_script == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _script;
@@ -572,7 +571,7 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 	@Override
 	public String getScriptLanguage() {
 		if (_scriptLanguage == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _scriptLanguage;
@@ -587,7 +586,7 @@ public class KaleoActionModelImpl extends BaseModelImpl<KaleoAction>
 	@Override
 	public String getScriptRequiredContexts() {
 		if (_scriptRequiredContexts == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _scriptRequiredContexts;

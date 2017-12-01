@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -212,19 +211,18 @@ public class KaleoTaskAssignmentPersistenceTest {
 
 	@Test
 	public void testCountByKCN_KCPK() throws Exception {
-		_persistence.countByKCN_KCPK(StringPool.BLANK, RandomTestUtil.nextLong());
+		_persistence.countByKCN_KCPK("", RandomTestUtil.nextLong());
 
-		_persistence.countByKCN_KCPK(StringPool.NULL, 0L);
+		_persistence.countByKCN_KCPK("null", 0L);
 
 		_persistence.countByKCN_KCPK((String)null, 0L);
 	}
 
 	@Test
 	public void testCountByKCN_KCPK_ACN() throws Exception {
-		_persistence.countByKCN_KCPK_ACN(StringPool.BLANK,
-			RandomTestUtil.nextLong(), StringPool.BLANK);
+		_persistence.countByKCN_KCPK_ACN("", RandomTestUtil.nextLong(), "");
 
-		_persistence.countByKCN_KCPK_ACN(StringPool.NULL, 0L, StringPool.NULL);
+		_persistence.countByKCN_KCPK_ACN("null", 0L, "null");
 
 		_persistence.countByKCN_KCPK_ACN((String)null, 0L, (String)null);
 	}

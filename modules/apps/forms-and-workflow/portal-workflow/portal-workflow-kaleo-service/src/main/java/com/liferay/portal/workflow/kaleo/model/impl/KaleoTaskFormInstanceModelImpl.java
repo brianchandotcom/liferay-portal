@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstanceModel;
 
@@ -362,7 +361,7 @@ public class KaleoTaskFormInstanceModelImpl extends BaseModelImpl<KaleoTaskFormI
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -373,7 +372,7 @@ public class KaleoTaskFormInstanceModelImpl extends BaseModelImpl<KaleoTaskFormI
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -524,7 +523,7 @@ public class KaleoTaskFormInstanceModelImpl extends BaseModelImpl<KaleoTaskFormI
 	@Override
 	public String getFormValues() {
 		if (_formValues == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _formValues;
@@ -559,7 +558,7 @@ public class KaleoTaskFormInstanceModelImpl extends BaseModelImpl<KaleoTaskFormI
 	@Override
 	public String getFormValueEntryUuid() {
 		if (_formValueEntryUuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _formValueEntryUuid;
@@ -574,7 +573,7 @@ public class KaleoTaskFormInstanceModelImpl extends BaseModelImpl<KaleoTaskFormI
 	@Override
 	public String getMetadata() {
 		if (_metadata == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _metadata;

@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimerInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimerInstanceTokenModel;
 
@@ -376,7 +375,7 @@ public class KaleoTimerInstanceTokenModelImpl extends BaseModelImpl<KaleoTimerIn
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -387,7 +386,7 @@ public class KaleoTimerInstanceTokenModelImpl extends BaseModelImpl<KaleoTimerIn
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -428,7 +427,7 @@ public class KaleoTimerInstanceTokenModelImpl extends BaseModelImpl<KaleoTimerIn
 	@Override
 	public String getKaleoClassName() {
 		if (_kaleoClassName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _kaleoClassName;
@@ -539,7 +538,7 @@ public class KaleoTimerInstanceTokenModelImpl extends BaseModelImpl<KaleoTimerIn
 	@Override
 	public String getKaleoTimerName() {
 		if (_kaleoTimerName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _kaleoTimerName;
@@ -596,7 +595,7 @@ public class KaleoTimerInstanceTokenModelImpl extends BaseModelImpl<KaleoTimerIn
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -644,7 +643,7 @@ public class KaleoTimerInstanceTokenModelImpl extends BaseModelImpl<KaleoTimerIn
 	@Override
 	public String getWorkflowContext() {
 		if (_workflowContext == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _workflowContext;

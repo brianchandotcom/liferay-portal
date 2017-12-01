@@ -2,6 +2,25 @@ AUI.add(
 	'liferay-workflow-web',
 	function(A) {
 		var WorkflowWeb = {
+			previewBeforeRevert: function(event, renderUrl, namespace, title) {
+				var instance = this;
+
+				Liferay.Util.Window.getWindow(
+					{
+						dialog: {
+							destroyOnHide: true,
+							modal: true
+						},
+						dialogIframe: {
+							bodyCssClass: 'dialog-with-footer'
+						},
+						id: namespace + 'previewBeforeRevert',
+						title: title,
+						uri: renderUrl
+					}
+				);
+			},
+
 			showSuccessMessage: function() {
 				var instance = this;
 
@@ -37,10 +56,11 @@ AUI.add(
 
 			_alert: null
 		};
+
 		Liferay.WorkflowWeb = WorkflowWeb;
 	},
 	'',
 	{
-		requires: ['liferay-alert']
+		requires: ['liferay-alert', 'liferay-util-window']
 	}
 );

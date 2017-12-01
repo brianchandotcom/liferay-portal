@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 
 import java.io.Externalizable;
@@ -114,7 +113,7 @@ public class KaleoInstanceTokenCacheModel implements CacheModel<KaleoInstanceTok
 		kaleoInstanceTokenImpl.setUserId(userId);
 
 		if (userName == null) {
-			kaleoInstanceTokenImpl.setUserName(StringPool.BLANK);
+			kaleoInstanceTokenImpl.setUserName("");
 		}
 		else {
 			kaleoInstanceTokenImpl.setUserName(userName);
@@ -140,14 +139,14 @@ public class KaleoInstanceTokenCacheModel implements CacheModel<KaleoInstanceTok
 		kaleoInstanceTokenImpl.setCurrentKaleoNodeId(currentKaleoNodeId);
 
 		if (currentKaleoNodeName == null) {
-			kaleoInstanceTokenImpl.setCurrentKaleoNodeName(StringPool.BLANK);
+			kaleoInstanceTokenImpl.setCurrentKaleoNodeName("");
 		}
 		else {
 			kaleoInstanceTokenImpl.setCurrentKaleoNodeName(currentKaleoNodeName);
 		}
 
 		if (className == null) {
-			kaleoInstanceTokenImpl.setClassName(StringPool.BLANK);
+			kaleoInstanceTokenImpl.setClassName("");
 		}
 		else {
 			kaleoInstanceTokenImpl.setClassName(className);
@@ -209,7 +208,7 @@ public class KaleoInstanceTokenCacheModel implements CacheModel<KaleoInstanceTok
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -227,14 +226,14 @@ public class KaleoInstanceTokenCacheModel implements CacheModel<KaleoInstanceTok
 		objectOutput.writeLong(currentKaleoNodeId);
 
 		if (currentKaleoNodeName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(currentKaleoNodeName);
 		}
 
 		if (className == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(className);

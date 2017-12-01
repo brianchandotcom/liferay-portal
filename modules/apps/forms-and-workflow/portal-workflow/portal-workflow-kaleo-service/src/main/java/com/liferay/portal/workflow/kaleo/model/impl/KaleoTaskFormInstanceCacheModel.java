@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance;
 
 import java.io.Externalizable;
@@ -116,7 +115,7 @@ public class KaleoTaskFormInstanceCacheModel implements CacheModel<KaleoTaskForm
 		kaleoTaskFormInstanceImpl.setUserId(userId);
 
 		if (userName == null) {
-			kaleoTaskFormInstanceImpl.setUserName(StringPool.BLANK);
+			kaleoTaskFormInstanceImpl.setUserName("");
 		}
 		else {
 			kaleoTaskFormInstanceImpl.setUserName(userName);
@@ -143,7 +142,7 @@ public class KaleoTaskFormInstanceCacheModel implements CacheModel<KaleoTaskForm
 		kaleoTaskFormInstanceImpl.setKaleoTaskFormId(kaleoTaskFormId);
 
 		if (formValues == null) {
-			kaleoTaskFormInstanceImpl.setFormValues(StringPool.BLANK);
+			kaleoTaskFormInstanceImpl.setFormValues("");
 		}
 		else {
 			kaleoTaskFormInstanceImpl.setFormValues(formValues);
@@ -153,14 +152,14 @@ public class KaleoTaskFormInstanceCacheModel implements CacheModel<KaleoTaskForm
 		kaleoTaskFormInstanceImpl.setFormValueEntryId(formValueEntryId);
 
 		if (formValueEntryUuid == null) {
-			kaleoTaskFormInstanceImpl.setFormValueEntryUuid(StringPool.BLANK);
+			kaleoTaskFormInstanceImpl.setFormValueEntryUuid("");
 		}
 		else {
 			kaleoTaskFormInstanceImpl.setFormValueEntryUuid(formValueEntryUuid);
 		}
 
 		if (metadata == null) {
-			kaleoTaskFormInstanceImpl.setMetadata(StringPool.BLANK);
+			kaleoTaskFormInstanceImpl.setMetadata("");
 		}
 		else {
 			kaleoTaskFormInstanceImpl.setMetadata(metadata);
@@ -214,7 +213,7 @@ public class KaleoTaskFormInstanceCacheModel implements CacheModel<KaleoTaskForm
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -234,7 +233,7 @@ public class KaleoTaskFormInstanceCacheModel implements CacheModel<KaleoTaskForm
 		objectOutput.writeLong(kaleoTaskFormId);
 
 		if (formValues == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(formValues);
@@ -245,14 +244,14 @@ public class KaleoTaskFormInstanceCacheModel implements CacheModel<KaleoTaskForm
 		objectOutput.writeLong(formValueEntryId);
 
 		if (formValueEntryUuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(formValueEntryUuid);
 		}
 
 		if (metadata == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(metadata);

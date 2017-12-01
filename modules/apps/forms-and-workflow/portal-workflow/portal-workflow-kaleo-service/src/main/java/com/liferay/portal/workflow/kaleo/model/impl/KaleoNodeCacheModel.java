@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 
 import java.io.Externalizable;
@@ -110,7 +109,7 @@ public class KaleoNodeCacheModel implements CacheModel<KaleoNode>,
 		kaleoNodeImpl.setUserId(userId);
 
 		if (userName == null) {
-			kaleoNodeImpl.setUserName(StringPool.BLANK);
+			kaleoNodeImpl.setUserName("");
 		}
 		else {
 			kaleoNodeImpl.setUserName(userName);
@@ -133,28 +132,28 @@ public class KaleoNodeCacheModel implements CacheModel<KaleoNode>,
 		kaleoNodeImpl.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
 
 		if (name == null) {
-			kaleoNodeImpl.setName(StringPool.BLANK);
+			kaleoNodeImpl.setName("");
 		}
 		else {
 			kaleoNodeImpl.setName(name);
 		}
 
 		if (metadata == null) {
-			kaleoNodeImpl.setMetadata(StringPool.BLANK);
+			kaleoNodeImpl.setMetadata("");
 		}
 		else {
 			kaleoNodeImpl.setMetadata(metadata);
 		}
 
 		if (description == null) {
-			kaleoNodeImpl.setDescription(StringPool.BLANK);
+			kaleoNodeImpl.setDescription("");
 		}
 		else {
 			kaleoNodeImpl.setDescription(description);
 		}
 
 		if (type == null) {
-			kaleoNodeImpl.setType(StringPool.BLANK);
+			kaleoNodeImpl.setType("");
 		}
 		else {
 			kaleoNodeImpl.setType(type);
@@ -204,7 +203,7 @@ public class KaleoNodeCacheModel implements CacheModel<KaleoNode>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -216,28 +215,28 @@ public class KaleoNodeCacheModel implements CacheModel<KaleoNode>,
 		objectOutput.writeLong(kaleoDefinitionVersionId);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (metadata == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(metadata);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);
 		}
 
 		if (type == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(type);

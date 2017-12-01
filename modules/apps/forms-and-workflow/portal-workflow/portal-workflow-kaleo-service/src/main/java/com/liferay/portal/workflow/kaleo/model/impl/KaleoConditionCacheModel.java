@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
 
 import java.io.Externalizable;
@@ -106,7 +105,7 @@ public class KaleoConditionCacheModel implements CacheModel<KaleoCondition>,
 		kaleoConditionImpl.setUserId(userId);
 
 		if (userName == null) {
-			kaleoConditionImpl.setUserName(StringPool.BLANK);
+			kaleoConditionImpl.setUserName("");
 		}
 		else {
 			kaleoConditionImpl.setUserName(userName);
@@ -130,21 +129,21 @@ public class KaleoConditionCacheModel implements CacheModel<KaleoCondition>,
 		kaleoConditionImpl.setKaleoNodeId(kaleoNodeId);
 
 		if (script == null) {
-			kaleoConditionImpl.setScript(StringPool.BLANK);
+			kaleoConditionImpl.setScript("");
 		}
 		else {
 			kaleoConditionImpl.setScript(script);
 		}
 
 		if (scriptLanguage == null) {
-			kaleoConditionImpl.setScriptLanguage(StringPool.BLANK);
+			kaleoConditionImpl.setScriptLanguage("");
 		}
 		else {
 			kaleoConditionImpl.setScriptLanguage(scriptLanguage);
 		}
 
 		if (scriptRequiredContexts == null) {
-			kaleoConditionImpl.setScriptRequiredContexts(StringPool.BLANK);
+			kaleoConditionImpl.setScriptRequiredContexts("");
 		}
 		else {
 			kaleoConditionImpl.setScriptRequiredContexts(scriptRequiredContexts);
@@ -188,7 +187,7 @@ public class KaleoConditionCacheModel implements CacheModel<KaleoCondition>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -202,21 +201,21 @@ public class KaleoConditionCacheModel implements CacheModel<KaleoCondition>,
 		objectOutput.writeLong(kaleoNodeId);
 
 		if (script == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(script);
 		}
 
 		if (scriptLanguage == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(scriptLanguage);
 		}
 
 		if (scriptRequiredContexts == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(scriptRequiredContexts);

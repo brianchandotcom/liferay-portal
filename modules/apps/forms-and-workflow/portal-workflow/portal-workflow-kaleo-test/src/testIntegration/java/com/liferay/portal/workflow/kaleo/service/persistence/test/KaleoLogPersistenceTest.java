@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -279,21 +278,19 @@ public class KaleoLogPersistenceTest {
 
 	@Test
 	public void testCountByKITI_T() throws Exception {
-		_persistence.countByKITI_T(RandomTestUtil.nextLong(), StringPool.BLANK);
+		_persistence.countByKITI_T(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByKITI_T(0L, StringPool.NULL);
+		_persistence.countByKITI_T(0L, "null");
 
 		_persistence.countByKITI_T(0L, (String)null);
 	}
 
 	@Test
 	public void testCountByKCN_KCPK_KITI_T() throws Exception {
-		_persistence.countByKCN_KCPK_KITI_T(StringPool.BLANK,
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			StringPool.BLANK);
+		_persistence.countByKCN_KCPK_KITI_T("", RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), "");
 
-		_persistence.countByKCN_KCPK_KITI_T(StringPool.NULL, 0L, 0L,
-			StringPool.NULL);
+		_persistence.countByKCN_KCPK_KITI_T("null", 0L, 0L, "null");
 
 		_persistence.countByKCN_KCPK_KITI_T((String)null, 0L, 0L, (String)null);
 	}

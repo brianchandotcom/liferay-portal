@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
 
 import java.io.Externalizable;
@@ -117,7 +116,7 @@ public class KaleoTaskAssignmentInstanceCacheModel implements CacheModel<KaleoTa
 		kaleoTaskAssignmentInstanceImpl.setUserId(userId);
 
 		if (userName == null) {
-			kaleoTaskAssignmentInstanceImpl.setUserName(StringPool.BLANK);
+			kaleoTaskAssignmentInstanceImpl.setUserName("");
 		}
 		else {
 			kaleoTaskAssignmentInstanceImpl.setUserName(userName);
@@ -145,14 +144,14 @@ public class KaleoTaskAssignmentInstanceCacheModel implements CacheModel<KaleoTa
 		kaleoTaskAssignmentInstanceImpl.setKaleoTaskId(kaleoTaskId);
 
 		if (kaleoTaskName == null) {
-			kaleoTaskAssignmentInstanceImpl.setKaleoTaskName(StringPool.BLANK);
+			kaleoTaskAssignmentInstanceImpl.setKaleoTaskName("");
 		}
 		else {
 			kaleoTaskAssignmentInstanceImpl.setKaleoTaskName(kaleoTaskName);
 		}
 
 		if (assigneeClassName == null) {
-			kaleoTaskAssignmentInstanceImpl.setAssigneeClassName(StringPool.BLANK);
+			kaleoTaskAssignmentInstanceImpl.setAssigneeClassName("");
 		}
 		else {
 			kaleoTaskAssignmentInstanceImpl.setAssigneeClassName(assigneeClassName);
@@ -217,7 +216,7 @@ public class KaleoTaskAssignmentInstanceCacheModel implements CacheModel<KaleoTa
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -237,14 +236,14 @@ public class KaleoTaskAssignmentInstanceCacheModel implements CacheModel<KaleoTa
 		objectOutput.writeLong(kaleoTaskId);
 
 		if (kaleoTaskName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(kaleoTaskName);
 		}
 
 		if (assigneeClassName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(assigneeClassName);

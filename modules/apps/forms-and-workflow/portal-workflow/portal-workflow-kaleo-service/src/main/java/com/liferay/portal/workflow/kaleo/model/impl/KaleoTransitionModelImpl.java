@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransitionModel;
 
@@ -351,7 +350,7 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -362,7 +361,7 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -447,7 +446,7 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -472,7 +471,7 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 	@Override
 	public String getDescription() {
 		if (_description == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _description;
@@ -497,7 +496,7 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 	@Override
 	public String getSourceKaleoNodeName() {
 		if (_sourceKaleoNodeName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _sourceKaleoNodeName;
@@ -522,7 +521,7 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 	@Override
 	public String getTargetKaleoNodeName() {
 		if (_targetKaleoNodeName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _targetKaleoNodeName;

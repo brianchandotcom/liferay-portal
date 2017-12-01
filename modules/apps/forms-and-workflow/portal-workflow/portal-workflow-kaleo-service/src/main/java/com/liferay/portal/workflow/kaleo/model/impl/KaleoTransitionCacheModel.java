@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 
 import java.io.Externalizable;
@@ -114,7 +113,7 @@ public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition>,
 		kaleoTransitionImpl.setUserId(userId);
 
 		if (userName == null) {
-			kaleoTransitionImpl.setUserName(StringPool.BLANK);
+			kaleoTransitionImpl.setUserName("");
 		}
 		else {
 			kaleoTransitionImpl.setUserName(userName);
@@ -138,14 +137,14 @@ public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition>,
 		kaleoTransitionImpl.setKaleoNodeId(kaleoNodeId);
 
 		if (name == null) {
-			kaleoTransitionImpl.setName(StringPool.BLANK);
+			kaleoTransitionImpl.setName("");
 		}
 		else {
 			kaleoTransitionImpl.setName(name);
 		}
 
 		if (description == null) {
-			kaleoTransitionImpl.setDescription(StringPool.BLANK);
+			kaleoTransitionImpl.setDescription("");
 		}
 		else {
 			kaleoTransitionImpl.setDescription(description);
@@ -154,7 +153,7 @@ public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition>,
 		kaleoTransitionImpl.setSourceKaleoNodeId(sourceKaleoNodeId);
 
 		if (sourceKaleoNodeName == null) {
-			kaleoTransitionImpl.setSourceKaleoNodeName(StringPool.BLANK);
+			kaleoTransitionImpl.setSourceKaleoNodeName("");
 		}
 		else {
 			kaleoTransitionImpl.setSourceKaleoNodeName(sourceKaleoNodeName);
@@ -163,7 +162,7 @@ public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition>,
 		kaleoTransitionImpl.setTargetKaleoNodeId(targetKaleoNodeId);
 
 		if (targetKaleoNodeName == null) {
-			kaleoTransitionImpl.setTargetKaleoNodeName(StringPool.BLANK);
+			kaleoTransitionImpl.setTargetKaleoNodeName("");
 		}
 		else {
 			kaleoTransitionImpl.setTargetKaleoNodeName(targetKaleoNodeName);
@@ -216,7 +215,7 @@ public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -230,14 +229,14 @@ public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition>,
 		objectOutput.writeLong(kaleoNodeId);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);
@@ -246,7 +245,7 @@ public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition>,
 		objectOutput.writeLong(sourceKaleoNodeId);
 
 		if (sourceKaleoNodeName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(sourceKaleoNodeName);
@@ -255,7 +254,7 @@ public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition>,
 		objectOutput.writeLong(targetKaleoNodeId);
 
 		if (targetKaleoNodeName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(targetKaleoNodeName);

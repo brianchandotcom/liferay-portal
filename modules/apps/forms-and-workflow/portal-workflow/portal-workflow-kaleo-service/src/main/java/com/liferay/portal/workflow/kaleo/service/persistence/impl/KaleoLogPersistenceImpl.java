@@ -31,10 +31,8 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchLogException;
 import com.liferay.portal.workflow.kaleo.model.KaleoLog;
@@ -300,7 +298,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 		msg.append("companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLogException(msg.toString());
 	}
@@ -349,7 +347,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 		msg.append("companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLogException(msg.toString());
 	}
@@ -817,7 +815,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 		msg.append("kaleoDefinitionVersionId=");
 		msg.append(kaleoDefinitionVersionId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLogException(msg.toString());
 	}
@@ -870,7 +868,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 		msg.append("kaleoDefinitionVersionId=");
 		msg.append(kaleoDefinitionVersionId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLogException(msg.toString());
 	}
@@ -1334,7 +1332,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 		msg.append("kaleoInstanceId=");
 		msg.append(kaleoInstanceId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLogException(msg.toString());
 	}
@@ -1385,7 +1383,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 		msg.append("kaleoInstanceId=");
 		msg.append(kaleoInstanceId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLogException(msg.toString());
 	}
@@ -1854,7 +1852,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 		msg.append("kaleoTaskInstanceTokenId=");
 		msg.append(kaleoTaskInstanceTokenId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLogException(msg.toString());
 	}
@@ -1907,7 +1905,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 		msg.append("kaleoTaskInstanceTokenId=");
 		msg.append(kaleoTaskInstanceTokenId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLogException(msg.toString());
 	}
@@ -2303,7 +2301,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 			if (type == null) {
 				query.append(_FINDER_COLUMN_KITI_T_TYPE_1);
 			}
-			else if (type.equals(StringPool.BLANK)) {
+			else if (type.equals("")) {
 				query.append(_FINDER_COLUMN_KITI_T_TYPE_3);
 			}
 			else {
@@ -2398,7 +2396,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 		msg.append(", type=");
 		msg.append(type);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLogException(msg.toString());
 	}
@@ -2454,7 +2452,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 		msg.append(", type=");
 		msg.append(type);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLogException(msg.toString());
 	}
@@ -2551,7 +2549,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 		if (type == null) {
 			query.append(_FINDER_COLUMN_KITI_T_TYPE_1);
 		}
-		else if (type.equals(StringPool.BLANK)) {
+		else if (type.equals("")) {
 			query.append(_FINDER_COLUMN_KITI_T_TYPE_3);
 		}
 		else {
@@ -2693,7 +2691,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 			if (type == null) {
 				query.append(_FINDER_COLUMN_KITI_T_TYPE_1);
 			}
-			else if (type.equals(StringPool.BLANK)) {
+			else if (type.equals("")) {
 				query.append(_FINDER_COLUMN_KITI_T_TYPE_3);
 			}
 			else {
@@ -2918,7 +2916,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 			if (kaleoClassName == null) {
 				query.append(_FINDER_COLUMN_KCN_KCPK_KITI_T_KALEOCLASSNAME_1);
 			}
-			else if (kaleoClassName.equals(StringPool.BLANK)) {
+			else if (kaleoClassName.equals("")) {
 				query.append(_FINDER_COLUMN_KCN_KCPK_KITI_T_KALEOCLASSNAME_3);
 			}
 			else {
@@ -2936,7 +2934,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 			if (type == null) {
 				query.append(_FINDER_COLUMN_KCN_KCPK_KITI_T_TYPE_1);
 			}
-			else if (type.equals(StringPool.BLANK)) {
+			else if (type.equals("")) {
 				query.append(_FINDER_COLUMN_KCN_KCPK_KITI_T_TYPE_3);
 			}
 			else {
@@ -3046,7 +3044,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 		msg.append(", type=");
 		msg.append(type);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLogException(msg.toString());
 	}
@@ -3115,7 +3113,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 		msg.append(", type=");
 		msg.append(type);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLogException(msg.toString());
 	}
@@ -3220,7 +3218,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 		if (kaleoClassName == null) {
 			query.append(_FINDER_COLUMN_KCN_KCPK_KITI_T_KALEOCLASSNAME_1);
 		}
-		else if (kaleoClassName.equals(StringPool.BLANK)) {
+		else if (kaleoClassName.equals("")) {
 			query.append(_FINDER_COLUMN_KCN_KCPK_KITI_T_KALEOCLASSNAME_3);
 		}
 		else {
@@ -3238,7 +3236,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 		if (type == null) {
 			query.append(_FINDER_COLUMN_KCN_KCPK_KITI_T_TYPE_1);
 		}
-		else if (type.equals(StringPool.BLANK)) {
+		else if (type.equals("")) {
 			query.append(_FINDER_COLUMN_KCN_KCPK_KITI_T_TYPE_3);
 		}
 		else {
@@ -3393,7 +3391,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 			if (kaleoClassName == null) {
 				query.append(_FINDER_COLUMN_KCN_KCPK_KITI_T_KALEOCLASSNAME_1);
 			}
-			else if (kaleoClassName.equals(StringPool.BLANK)) {
+			else if (kaleoClassName.equals("")) {
 				query.append(_FINDER_COLUMN_KCN_KCPK_KITI_T_KALEOCLASSNAME_3);
 			}
 			else {
@@ -3411,7 +3409,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 			if (type == null) {
 				query.append(_FINDER_COLUMN_KCN_KCPK_KITI_T_TYPE_1);
 			}
-			else if (type.equals(StringPool.BLANK)) {
+			else if (type.equals("")) {
 				query.append(_FINDER_COLUMN_KCN_KCPK_KITI_T_TYPE_3);
 			}
 			else {
@@ -3474,8 +3472,10 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 		setModelClass(KaleoLog.class);
 
 		try {
-			Field field = ReflectionUtil.getDeclaredField(BasePersistenceImpl.class,
+			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
+
+			field.setAccessible(true);
 
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -4104,12 +4104,12 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

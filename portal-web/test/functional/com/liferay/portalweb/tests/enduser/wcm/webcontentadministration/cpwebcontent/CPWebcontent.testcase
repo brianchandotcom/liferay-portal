@@ -1942,7 +1942,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#gotoEntry">
-			<var name="webContentTitle" value="WC WebContent Title" />
+			<var name="rowEntry" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContent#editCP">

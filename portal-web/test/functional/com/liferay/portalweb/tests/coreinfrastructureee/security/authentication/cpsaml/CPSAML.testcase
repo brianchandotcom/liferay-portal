@@ -27,6 +27,7 @@
 		</execute>
 
 		<execute macro="SAML#configureLiferaySAMLAsSP">
+			<var name="nameIdentifierAttributeName" value="emailAddress" />
 			<var name="samlEntityID" value="samlsp" />
 			<var name="spURL" value="http://www.able.com:9080/" />
 		</execute>
@@ -105,6 +106,7 @@
 		</execute>
 
 		<execute macro="SAML#configureLiferaySAMLAsSP">
+			<var name="nameIdentifierAttributeName" value="emailAddress" />
 			<var name="samlEntityID" value="samlsp" />
 			<var name="spURL" value="http://www.able.com:9080/" />
 		</execute>
@@ -153,6 +155,7 @@
 		</execute>
 
 		<execute macro="SAML#configureLiferaySAMLAsSP">
+			<var name="nameIdentifierAttributeName" value="emailAddress" />
 			<var name="samlEntityID" value="samlsp" />
 			<var name="spURL" value="http://www.able.com:9080/" />
 		</execute>
@@ -250,6 +253,7 @@
 		</execute>
 
 		<execute macro="SAML#configureLiferaySAMLAsSP">
+			<var name="nameIdentifierAttributeName" value="emailAddress" />
 			<var name="samlEntityID" value="samlsp" />
 			<var name="spURL" value="http://www.able.com:9080/" />
 		</execute>
@@ -309,6 +313,7 @@
 		</execute>
 
 		<execute macro="SAML#configureLiferaySAMLAsSP">
+			<var name="nameIdentifierAttributeName" value="emailAddress" />
 			<var name="samlEntityID" value="samlsp" />
 			<var name="spURL" value="http://www.able.com:9080/" />
 		</execute>
@@ -368,6 +373,7 @@
 		</execute>
 
 		<execute macro="SAML#configureLiferaySAMLAsSP">
+			<var name="nameIdentifierAttributeName" value="emailAddress" />
 			<var name="samlEntityID" value="samlsp" />
 			<var name="spURL" value="http://www.able.com:9080/" />
 		</execute>
@@ -418,6 +424,7 @@
 		</execute>
 
 		<execute macro="SAML#configureLiferaySAMLAsSP">
+			<var name="nameIdentifierAttributeName" value="emailAddress" />
 			<var name="samlEntityID" value="samlsp" />
 			<var name="spURL" value="http://www.able.com:9080/" />
 		</execute>
@@ -496,6 +503,7 @@
 		</execute>
 
 		<execute macro="SAML#configureLiferaySAMLAsSP">
+			<var name="nameIdentifierAttributeName" value="emailAddress" />
 			<var name="samlEntityID" value="samlsp" />
 			<var name="spURL" value="http://www.able.com:9080/" />
 		</execute>

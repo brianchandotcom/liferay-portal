@@ -1348,12 +1348,7 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Blog Page Template" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="pageName" value="Blog Page Template" />
 			<var name="pageTemplateName" value="Blog" />
-			<var name="privacy" value="Public" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">

@@ -1,13 +1,5 @@
 <definition>
 	<command name="enableSectionCustomizableCP">
-		<var name="key_columnId" value="${columnId}" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Navigation" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Pages" />
-		</execute>
-
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
 			<var name="menuItem" value="Configure" />
 			<var name="rowEntry" value="${pageName}" />
@@ -23,31 +15,11 @@
 
 		<execute function="Check#checkToggleSwitch" locator1="SitePagesEditPage#CUSTOMIZATION_SETTINGS_SHOW_CUSTOMIZABLE_SECTIONS" />
 
-		<execute function="Check#toggleSwitch" locator1="SitePagesEditPage#CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_CHECKBOX" />
-
-		<execute macro="PortletEntry#save" />
-	</command>
-
-	<command name="enableSectionCustomizablePG">
-		<var name="key_columnId" value="${columnId}" />
-
-		<execute function="Check#checkToggleSwitch" locator1="SitePagesEditPage#CUSTOMIZATION_SETTINGS_SHOW_CUSTOMIZABLE_SECTIONS" />
-
-		<execute function="Check#toggleSwitch" locator1="SitePagesEditPage#CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_CHECKBOX" />
-
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#SAVE" value1="Save" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
-	<command name="gotoCustomizationSettingsPG">
-		<execute macro="Navigator#gotoNavTab">
-			<var name="navTab" value="Advanced" />
+		<execute function="Check#toggleSwitch" locator1="SitePagesEditPage#CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_CHECKBOX">
+			<var name="key_columnId" value="${columnId}" />
 		</execute>
 
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Customization Settings" />
-		</execute>
+		<execute macro="Button#clickSave" />
 	</command>
 
 	<command name="gotoCustomizedPageInfo">

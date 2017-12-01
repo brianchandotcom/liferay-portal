@@ -1056,7 +1056,7 @@ information.
 							<replaceregexp
 								file="bnd.bnd"
 								match="\Q/.bnd/ant-baseline-cache/com.liferay.${processed.artifact.name}-\E\d+\.\d+\.\d+\.jar"
-								replace=".bnd/ant-baseline-cache/com.liferay.${processed.artifact.name}-${artifact.version.major.minor}.0.jar"
+								replace="/.bnd/ant-baseline-cache/com.liferay.${processed.artifact.name}-${artifact.version.major.minor}.0.jar"
 							/>
 						</then>
 					</if>

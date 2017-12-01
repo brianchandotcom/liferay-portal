@@ -23,13 +23,45 @@ CommerceWarehouseItemDisplayContext commerceWarehouseItemDisplayContext = (Comme
 
 CommerceWarehouseItem commerceWarehouseItem = commerceWarehouseItemDisplayContext.getCommerceWarehouseItem();
 
+CPInstance cpInstance = commerceWarehouseItem.getCPInstance();
+
+CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+PortletURL editProductDefinitionURL = renderResponse.createRenderURL();
+
+editProductDefinitionURL.setParameter("mvcRenderCommandName", "editProductDefinition");
+editProductDefinitionURL.setParameter("cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
+
+PortletURL productSkusURL = renderResponse.createRenderURL();
+
+productSkusURL.setParameter("mvcRenderCommandName", "editProductDefinition");
+productSkusURL.setParameter("cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
+productSkusURL.setParameter("screenNavigationCategoryKey", CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SKUS);
+
+PortletURL instanceWarehousesURL = renderResponse.createRenderURL();
+
+instanceWarehousesURL.setParameter("mvcRenderCommandName", "editProductInstance");
+instanceWarehousesURL.setParameter("cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
+instanceWarehousesURL.setParameter("cpInstanceId", String.valueOf(cpInstance.getCPInstanceId()));
+instanceWarehousesURL.setParameter("screenNavigationCategoryKey", CPInstanceScreenNavigationConstants.CATEGORY_KEY_DETAILS);
+instanceWarehousesURL.setParameter("screenNavigationEntryKey", "warehouses");
+
 CommerceWarehouse commerceWarehouse = commerceWarehouseItem.getCommerceWarehouse();
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+String title = LanguageUtil.format(request, "edit-x", commerceWarehouse.getName());
 
-renderResponse.setTitle(LanguageUtil.format(request, "edit-x", commerceWarehouse.getName(), false));
+Map<String, Object> data = new HashMap<>();
+
+data.put("direction-right", Boolean.TRUE.toString());
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "products"), catalogURL, data);
+PortalUtil.addPortletBreadcrumbEntry(request, cpDefinition.getTitle(languageId), editProductDefinitionURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SKUS), productSkusURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "warehouses"), instanceWarehousesURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 %>
+
+<%@ include file="/breadcrumb.jspf" %>
 
 <portlet:actionURL name="editCommerceWarehouseItem" var="editCommerceWarehouseItemActionURL" />
 

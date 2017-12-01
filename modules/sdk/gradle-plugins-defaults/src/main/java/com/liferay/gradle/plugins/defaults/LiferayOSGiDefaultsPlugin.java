@@ -1259,6 +1259,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						return content;
 					}
 
+					GitRepo contentGitRepo = _getGitRepo(file.getParentFile());
+
+					if ((contentGitRepo != null) && contentGitRepo.readOnly) {
+						return content;
+					}
+
 					String configuration =
 						ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME() +
 							" ";
@@ -1284,10 +1290,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					GitRepo contentGitRepo = _getGitRepo(
 						contentFile.getParentFile());
 
-					if ((contentGitRepo != null) && contentGitRepo.readOnly &&
-						((gitRepo == null) ||
-						 !contentGitRepo.dir.equals(gitRepo.dir))) {
-
+					if ((contentGitRepo != null) && contentGitRepo.readOnly) {
 						return false;
 					}
 

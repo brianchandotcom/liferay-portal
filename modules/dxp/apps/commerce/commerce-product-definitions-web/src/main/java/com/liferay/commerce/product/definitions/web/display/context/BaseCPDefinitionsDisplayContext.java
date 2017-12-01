@@ -158,19 +158,12 @@ public abstract class BaseCPDefinitionsDisplayContext {
 		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_DETAILS;
 	}
 
-	public String getSelectedScreenNavigationEntryKey() {
-		String selectedScreenNavigationCategoryKey = ParamUtil.getString(
-			httpServletRequest, "screenNavigationCategoryKey");
+	public String getSelectedScreenNavigationCategoryKey()
+		throws PortalException {
 
-		String selectedScreenNavigationEntryKey = ParamUtil.getString(
-			httpServletRequest, "screenNavigationEntryKey");
-
-		if (Validator.isNull(selectedScreenNavigationEntryKey)) {
-			selectedScreenNavigationEntryKey =
-				selectedScreenNavigationCategoryKey;
-		}
-
-		return selectedScreenNavigationEntryKey;
+		return ParamUtil.getString(
+			httpServletRequest, "screenNavigationCategoryKey",
+			getScreenNavigationCategoryKey());
 	}
 
 	protected final ActionHelper actionHelper;

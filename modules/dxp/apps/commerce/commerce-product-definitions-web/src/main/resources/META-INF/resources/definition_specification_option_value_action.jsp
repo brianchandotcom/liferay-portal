@@ -32,6 +32,7 @@ else {
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<portlet:renderURL var="editURL">
 		<portlet:param name="mvcRenderCommandName" value="editProductDefinitionSpecificationOptionValue" />
+		<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionSpecificationOptionValue.getCPDefinitionId()) %>" />
 		<portlet:param name="cpDefinitionSpecificationOptionValueId" value="<%= String.valueOf(cpDefinitionSpecificationOptionValue.getCPDefinitionSpecificationOptionValueId()) %>" />
 	</portlet:renderURL>
 

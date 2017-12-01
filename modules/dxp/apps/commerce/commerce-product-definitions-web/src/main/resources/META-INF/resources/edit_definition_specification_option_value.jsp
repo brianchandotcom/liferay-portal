@@ -21,23 +21,35 @@ CPDefinitionSpecificationOptionValueDisplayContext cpDefinitionSpecificationOpti
 
 CPDefinitionSpecificationOptionValue cpDefinitionSpecificationOptionValue = cpDefinitionSpecificationOptionValueDisplayContext.getCPDefinitionSpecificationOptionValue();
 
+CPSpecificationOption cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
+
+CPDefinition cpDefinition = cpDefinitionSpecificationOptionValueDisplayContext.getCPDefinition();
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "editProductDefinitionSpecificationOptionValue");
+
+String screenNavigationCategoryKey = cpDefinitionSpecificationOptionValueDisplayContext.getScreenNavigationCategoryKey();
 
 PortletURL productSpecificationOptionValueURL = renderResponse.createRenderURL();
 
 productSpecificationOptionValueURL.setParameter("mvcRenderCommandName", "editProductDefinition");
 productSpecificationOptionValueURL.setParameter("cpDefinitionId", String.valueOf(cpDefinitionSpecificationOptionValue.getCPDefinitionId()));
-productSpecificationOptionValueURL.setParameter("screenNavigationCategoryKey", cpDefinitionSpecificationOptionValueDisplayContext.getScreenNavigationCategoryKey());
+productSpecificationOptionValueURL.setParameter("screenNavigationCategoryKey", screenNavigationCategoryKey);
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(productSpecificationOptionValueURL.toString());
+String title = cpSpecificationOption.getTitle(locale);
 
-CPSpecificationOption cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
+Map<String, Object> data = new HashMap<>();
 
-renderResponse.setTitle(cpSpecificationOption.getTitle(locale));
+data.put("direction-right", Boolean.TRUE.toString());
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "products"), catalogURL, data);
+PortalUtil.addPortletBreadcrumbEntry(request, cpDefinition.getTitle(languageId), String.valueOf(cpDefinitionSpecificationOptionValueDisplayContext.getEditProductDefinitionURL()), data);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, screenNavigationCategoryKey), productSpecificationOptionValueURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 %>
+
+<%@ include file="/breadcrumb.jspf" %>
 
 <portlet:actionURL name="editProductDefinitionSpecificationOptionValue" var="editProductDefinitionSpecificationOptionValueActionURL" />
 

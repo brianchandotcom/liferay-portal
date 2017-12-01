@@ -24,6 +24,7 @@ public class IncorrectFileLocationCheck extends BaseFileCheck {
 		String fileName, String absolutePath, String content) {
 
 		if (!fileName.endsWith(".java") &&
+			!absolutePath.contains("/src/main/resources/") &&
 			absolutePath.matches(".*\\/modules\\/.*\\/src\\/.*\\/java\\/.*")) {
 
 			addMessage(

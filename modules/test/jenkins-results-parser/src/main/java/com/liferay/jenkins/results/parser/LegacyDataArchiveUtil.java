@@ -126,6 +126,31 @@ public class LegacyDataArchiveUtil {
 		return _portalVersions;
 	}
 
+	protected String getFilePathURL(File file) {
+		return getFilePathURL(file, "master");
+	}
+
+	protected String getFilePathURL(File file, String ref) {
+		return JenkinsResultsParserUtil.combine(
+			"https://github.com/liferay/liferay-qa-portal-legacy-ee/tree/", ref,
+			"/", getRelativePath(file));
+	}
+
+	protected String getRelativePath(File file) {
+		try {
+			String filePath = file.getCanonicalPath();
+
+			File legacyWorkingDirectory =
+				_legacyGitWorkingDirectory.getWorkingDirectory();
+
+			return filePath.replace(
+				legacyWorkingDirectory.getCanonicalPath() + "/", "");
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
 	private void _commitReadmeFile() {
 		Element rootElement = Dom4JUtil.getNewElement("div");
 
@@ -148,7 +173,7 @@ public class LegacyDataArchiveUtil {
 				legacyDataArchivePortalVersion.getPortalVersionTestDirectory();
 
 			Dom4JUtil.getNewAnchorElement(
-				_getFilePathURL(testDirectory), testCommitElement, "Test");
+				getFilePathURL(testDirectory), testCommitElement, "Test");
 
 			Dom4JUtil.getNewElement("span", testCommitElement, " Folder:");
 
@@ -222,11 +247,11 @@ public class LegacyDataArchiveUtil {
 							"li", dataArchivesElement);
 
 						Dom4JUtil.getNewAnchorElement(
-							_getFilePathURL(
+							getFilePathURL(
 								legacyDataArchiveFile,
 								_dataArchiveBranch.getName()),
 							dataArchiveElement,
-							_getRelativePath(legacyDataArchiveFile));
+							getRelativePath(legacyDataArchiveFile));
 					}
 				}
 			}
@@ -299,9 +324,9 @@ public class LegacyDataArchiveUtil {
 							"li", dataArchivesElement);
 
 						Dom4JUtil.getNewAnchorElement(
-							_getFilePathURL(legacyDataArchiveFile),
+							getFilePathURL(legacyDataArchiveFile),
 							dataArchiveElement,
-							_getRelativePath(legacyDataArchiveFile));
+							getRelativePath(legacyDataArchiveFile));
 					}
 				}
 			}
@@ -353,7 +378,7 @@ public class LegacyDataArchiveUtil {
 
 						Dom4JUtil.getNewElement(
 							"li", dataArchivesElement,
-							_getRelativePath(legacyDataArchiveFile));
+							getRelativePath(legacyDataArchiveFile));
 					}
 				}
 			}
@@ -402,16 +427,6 @@ public class LegacyDataArchiveUtil {
 		return buildProperties;
 	}
 
-	private String _getFilePathURL(File file) {
-		return _getFilePathURL(file, "master");
-	}
-
-	private String _getFilePathURL(File file, String ref) {
-		return JenkinsResultsParserUtil.combine(
-			"https://github.com/liferay/liferay-qa-portal-legacy-ee/tree/", ref,
-			"/", _getRelativePath(file));
-	}
-
 	private List<LegacyDataArchivePortalVersion>
 		_getLegacyDataArchivePortalVersions() {
 
@@ -436,21 +451,6 @@ public class LegacyDataArchiveUtil {
 		Collections.sort(portalVersions);
 
 		return portalVersions;
-	}
-
-	private String _getRelativePath(File file) {
-		try {
-			String filePath = file.getCanonicalPath();
-
-			File legacyWorkingDirectory =
-				_legacyGitWorkingDirectory.getWorkingDirectory();
-
-			return filePath.replace(
-				legacyWorkingDirectory.getCanonicalPath() + "/", "");
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
 	}
 
 	private final Properties _buildProperties;

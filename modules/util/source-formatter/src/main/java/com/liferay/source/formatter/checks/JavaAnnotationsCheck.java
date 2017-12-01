@@ -167,7 +167,7 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 			if (newAnnotation.contains(StringPool.OPEN_PARENTHESIS)) {
 				newAnnotation = _fixAnnotationLineBreaks(newAnnotation, indent);
 				newAnnotation = _fixAnnotationMetaTypeProperties(newAnnotation);
-				newAnnotation = _sortAnnotationParameterProperties(
+				newAnnotation = _formatAnnotationParameterProperties(
 					newAnnotation);
 
 				_checkMetaAnnotationKeys(fileName, content, newAnnotation);
@@ -242,7 +242,7 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 		return sb.toString();
 	}
 
-	private String _sortAnnotationParameterProperties(String annotation) {
+	private String _formatAnnotationParameterProperties(String annotation) {
 		if (!annotation.contains("@Component(")) {
 			return annotation;
 		}

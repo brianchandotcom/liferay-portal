@@ -82,6 +82,22 @@ public class LegacyDataArchiveGroup {
 		return _legacyDataArchives;
 	}
 
+	public LegacyDataArchive.Status getStatus() {
+		if (hasUpdatedArchives()) {
+			return LegacyDataArchive.Status.UPDATED;
+		}
+
+		if (hasMissingArchives()) {
+			return LegacyDataArchive.Status.MISSING;
+		}
+
+		if (hasStaleArchives()) {
+			return LegacyDataArchive.Status.STALE;
+		}
+
+		return LegacyDataArchive.Status.UNCHANGED;
+	}
+
 	public boolean hasMissingArchives() {
 		for (LegacyDataArchive legacyDataArchive : _legacyDataArchives) {
 			if (legacyDataArchive.isMissing()) {

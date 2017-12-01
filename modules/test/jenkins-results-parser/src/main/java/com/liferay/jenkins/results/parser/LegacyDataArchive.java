@@ -37,6 +37,22 @@ public class LegacyDataArchive {
 		return _legacyDataArchiveFile;
 	}
 
+	public Status getStatus() {
+		if (isUpdated()) {
+			return Status.UPDATED;
+		}
+
+		if (isMissing()) {
+			return Status.MISSING;
+		}
+
+		if (isStale()) {
+			return Status.STALE;
+		}
+
+		return Status.UNCHANGED;
+	}
+
 	public boolean isMissing() {
 		if (getCommit() == null) {
 			return true;
@@ -91,6 +107,10 @@ public class LegacyDataArchive {
 			_legacyGitWorkingDirectory.stageFileInCurrentBranch(
 				_legacyDataArchiveFile.getCanonicalPath());
 		}
+	}
+
+	public enum Status {
+		MISSING, STALE, UNCHANGED, UPDATED
 	}
 
 	protected LegacyDataArchive(

@@ -20,9 +20,10 @@ import com.liferay.asset.kernel.model.AssetCategoryModel;
 import com.liferay.asset.kernel.model.AssetEntryModel;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetTagModel;
-import com.liferay.asset.kernel.model.AssetTagStatsModel;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyModel;
+import com.liferay.asset.tag.stats.model.AssetTagStatsModel;
+import com.liferay.asset.tag.stats.service.AssetTagStatsLocalServiceUtil;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.model.BlogsEntryModel;
@@ -192,7 +193,6 @@ import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.asset.model.impl.AssetCategoryModelImpl;
 import com.liferay.portlet.asset.model.impl.AssetEntryModelImpl;
 import com.liferay.portlet.asset.model.impl.AssetTagModelImpl;
-import com.liferay.portlet.asset.model.impl.AssetTagStatsModelImpl;
 import com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryModelImpl;
@@ -3055,9 +3055,9 @@ public class DataFactory {
 	protected AssetTagStatsModel newAssetTagStatsModel(
 		long tagId, long classNameId) {
 
-		AssetTagStatsModel assetTagStatsModel = new AssetTagStatsModelImpl();
+		AssetTagStatsModel assetTagStatsModel =
+			AssetTagStatsLocalServiceUtil.createAssetTagStats(_counter.get());
 
-		assetTagStatsModel.setTagStatsId(_counter.get());
 		assetTagStatsModel.setTagId(tagId);
 		assetTagStatsModel.setClassNameId(classNameId);
 

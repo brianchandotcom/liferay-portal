@@ -106,7 +106,13 @@ lockDependencyVersion {
 
 		boolean commitChanges = false
 
-		FileTree buildGradleFileTree = fileTree(dir: projectDir, excludes: ["**/build/", "**/classes/", "**/node_modules/"], includes: ["apps/**/build.gradle", "core/**/build.gradle"])
+		List<String> buildGradleExcludes = ["**/build/", "**/classes/", "**/node_modules/"]
+
+		if (dependencyName in ["com.liferay.portal.impl", "com.liferay.portal.kernel"]) {
+			buildGradleExcludes = buildGradleExcludes + ["core/portal-bootstrap/", "core/slim-runtime/"]
+		}
+
+		FileTree buildGradleFileTree = fileTree(dir: projectDir, excludes: buildGradleExcludes, includes: ["apps/**/build.gradle", "core/**/build.gradle"])
 
 		buildGradleFileTree.each {
 			File buildGradleFile ->

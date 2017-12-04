@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
  */
 public interface HtmlPreviewProcessor {
 
-	public FileEntry generateHtmlPreviewFileEntry(
+	public FileEntry generateHtmlPreview(
 			long userId, long groupId, String content)
 		throws PortalException;
 

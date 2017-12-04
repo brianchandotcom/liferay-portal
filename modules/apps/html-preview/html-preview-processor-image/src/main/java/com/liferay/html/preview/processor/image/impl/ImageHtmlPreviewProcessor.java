@@ -41,7 +41,7 @@ import org.xhtmlrenderer.util.FSImageWriter;
 public class ImageHtmlPreviewProcessor implements HtmlPreviewProcessor {
 
 	@Override
-	public FileEntry generateHtmlPreviewFileEntry(
+	public FileEntry generateHtmlPreview(
 			long userId, long groupId, String content)
 		throws PortalException {
 

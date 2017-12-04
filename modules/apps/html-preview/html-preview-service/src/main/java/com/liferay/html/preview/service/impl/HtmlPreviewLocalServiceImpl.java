@@ -98,7 +98,7 @@ public class HtmlPreviewLocalServiceImpl
 					mimeType);
 		}
 
-		FileEntry fileEntry = htmlPreviewProcessor.generateHtmlPreviewFileEntry(
+		FileEntry fileEntry = htmlPreviewProcessor.generateHtmlPreview(
 			userId, groupId, content);
 
 		htmlPreview.setFileEntryId(fileEntry.getFileEntryId());

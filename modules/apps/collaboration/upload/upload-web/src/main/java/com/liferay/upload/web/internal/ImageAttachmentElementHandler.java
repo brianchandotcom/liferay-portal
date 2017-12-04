@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.upload.AttachmentElementHandler;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,53 +50,50 @@ public class ImageAttachmentElementHandler implements AttachmentElementHandler {
 			UnsafeFunction<FileEntry, FileEntry, PortalException> saveFile)
 		throws PortalException {
 
-		for (FileEntry tempAttachmentFileEntry :
-				_getAttachmentFileEntries(content)) {
+		Matcher matcher = _TEMP_ATTACHMENT_PATTERN.matcher(content);
+
+		StringBuffer sb = new StringBuffer(content.length());
+
+		while (matcher.find()) {
+			FileEntry tempAttachmentFileEntry = _getFileEntry(matcher);
 
 			FileEntry attachmentFileEntry = saveFile.apply(
 				tempAttachmentFileEntry);
 
-			StringBundler sb = new StringBundler(8);
-
-			sb.append("<\\s*?img");
-			sb.append(_ATTRIBUTE_LIST_REGEXP);
-			sb.append(EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
-			sb.append("\\s*?=\\s*?\"");
-			sb.append(tempAttachmentFileEntry.getFileEntryId());
-			sb.append("\"");
-			sb.append(_ATTRIBUTE_LIST_REGEXP);
-			sb.append("/>");
-
-			content = content.replaceAll(
-				sb.toString(), getElementTag(attachmentFileEntry));
+			matcher.appendReplacement(
+				sb,
+				Matcher.quoteReplacement(getElementTag(attachmentFileEntry)));
 		}
 
-		return content;
+		matcher.appendTail(sb);
+
+		return sb.toString();
 	}
 
-	private List<FileEntry> _getAttachmentFileEntries(String content)
-		throws PortalException {
+	private FileEntry _getFileEntry(Matcher matcher) throws PortalException {
+		long fileEntryId = GetterUtil.getLong(matcher.group(1));
 
-		List<FileEntry> tempAttachmentFileEntries = new ArrayList<>();
-
-		Matcher matcher = _ATTRIBUTE_DATA_IMAGE_ID_PATTERN.matcher(content);
-
-		while (matcher.find()) {
-			long fileEntryId = GetterUtil.getLong(matcher.group(1));
-
-			FileEntry tempFileEntry =
-				PortletFileRepositoryUtil.getPortletFileEntry(fileEntryId);
-
-			tempAttachmentFileEntries.add(tempFileEntry);
-		}
-
-		return tempAttachmentFileEntries;
+		return PortletFileRepositoryUtil.getPortletFileEntry(fileEntryId);
 	}
-
-	private static final Pattern _ATTRIBUTE_DATA_IMAGE_ID_PATTERN =
-		Pattern.compile(EditorConstants.ATTRIBUTE_DATA_IMAGE_ID + "=.(\\d+)");
 
 	private static final String _ATTRIBUTE_LIST_REGEXP =
-		"(\\s*?\\w+\\s*?=\\s*?\"[^\"]*\")*?\\s*?";
+		"(?:\\s*?\\w+\\s*?=\\s*?\"[^\"]*\")*?\\s*?";
+
+	private static final Pattern _TEMP_ATTACHMENT_PATTERN;
+
+	static {
+		StringBundler sb = new StringBundler(8);
+
+		sb.append("<\\s*?img");
+		sb.append(_ATTRIBUTE_LIST_REGEXP);
+		sb.append(EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
+		sb.append("\\s*?=\\s*?\"");
+		sb.append("([^\"]*)");
+		sb.append("\"");
+		sb.append(_ATTRIBUTE_LIST_REGEXP);
+		sb.append("/>");
+
+		_TEMP_ATTACHMENT_PATTERN = Pattern.compile(sb.toString());
+	}
 
 }

@@ -10452,49 +10452,25 @@ jdbc.default.password=${database.password}</echo>
 	</target>
 
 	<target name="wait-for-jboss-war-deploy">
-		<beanshell>
-			<![CDATA[
-				import org.apache.commons.io.FileUtils;
+		<local name="jboss.log.file.name" />
 
-				String fileName = project.getProperty("app.server.portal.dir");
-
-				fileName = fileName.substring(0, fileName.indexOf("deployments"));
-
-				fileName = fileName + "log/server.log";
-
-				boolean found = false;
-
-				long start = System.currentTimeMillis();
-
-				while (System.currentTimeMillis() - start < (1000 * 300)) {
-					try {
-						File logFile = new File(fileName);
-
-						String content = FileUtils.readFileToString(logFile);
-
-						if (content.contains("Deployed \"ROOT.war\" ")) {
-							found = true;
-							break;
-						}
-					}
-					catch (Exception e) {
-						e.printStackTrace();
-					}
-
-					Thread.sleep(1000);
-				}
-
-				if (!found) {
-					project.setProperty("deployed.root.war", "false");
-				}
-				else {
-					project.setProperty("deployed.root.war", "true");
-				}
-			]]>
-		</beanshell>
+		<propertyregex defaultvalue="" input="${app.server.portal.dir}" override="true" property="jboss.log.file.name" regexp="(.*)deployments.*" select="\1log/server.log" />
 
 		<if>
-			<equals arg1="${deployed.root.war}" arg2="false" />
+			<equals arg1="${jboss.log.file.name}" arg2="" />
+			<then>
+				<fail message="Unable to find jboss log file" />
+			</then>
+		</if>
+
+		<local name="jboss.war.deploy.timeout" />
+
+		<waitfor checkevery="1" checkeveryunit="second" maxwait="300" maxwaitunit="second" timeoutproperty="jboss.war.deploy.timeout">
+			<resourcecontains resource="${jboss.log.file.name}" substring="Deployed &quot;ROOT.war&quot;" />
+		</waitfor>
+
+		<if>
+			<isset property="jboss.war.deploy.timeout" />
 			<then>
 				<fail message="Unable to deploy ROOT.war" />
 			</then>

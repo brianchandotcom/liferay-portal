@@ -14,8 +14,6 @@
 
 package com.liferay.html.preview.processor;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -29,10 +27,6 @@ import org.osgi.service.component.annotations.ReferencePolicy;
  */
 @Component(immediate = true, service = HtmlPreviewProcessorTracker.class)
 public class HtmlPreviewProcessorTracker {
-
-	public static List<HtmlPreviewProcessor> getHtmlPreviewProcessors() {
-		return new ArrayList<>(_htmlPreviewProcessors.values());
-	}
 
 	public HtmlPreviewProcessor getHtmlPreviewProcessor(String mimeType) {
 		return _htmlPreviewProcessors.get(mimeType);

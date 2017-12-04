@@ -15,11 +15,14 @@
 package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.service.FragmentEntryService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ActionRequest;
@@ -57,8 +60,36 @@ public class EditFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		_fragmentEntryService.updateFragmentEntry(
-			fragmentEntryId, name, css, html, js, serviceContext);
+		try {
+			_fragmentEntryService.updateFragmentEntry(
+				fragmentEntryId, name, css, html, js, serviceContext);
+		}
+		catch (PortalException pe) {
+			_handleException(
+				actionRequest, actionResponse, fragmentEntryId, css, js, html,
+				pe);
+		}
+	}
+
+	private void _handleException(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			long fragmentEntryId, String css, String js, String html,
+			PortalException exception)
+		throws PortalException {
+
+		if (exception instanceof FragmentEntryContentException) {
+			actionResponse.setRenderParameter(
+				"mvcPath", "/edit_fragment_entry.jsp");
+			actionResponse.setRenderParameter(
+				"fragmentEntryId", String.valueOf(fragmentEntryId));
+			actionResponse.setRenderParameter("cssContent", css);
+			actionResponse.setRenderParameter("jsContent", js);
+			actionResponse.setRenderParameter("htmlContent", html);
+
+			SessionErrors.add(actionRequest, exception.getClass(), exception);
+		}
+
+		throw exception;
 	}
 
 	@Reference

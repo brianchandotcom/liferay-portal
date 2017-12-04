@@ -39,6 +39,8 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentEntryTitle());
 	<portlet:param name="mvcPath" value="/edit_fragment_entry.jsp" />
 </portlet:actionURL>
 
+<liferay-ui:error exception="<%= FragmentEntryContentException.class %>" message="invalid-fragment-html" />
+
 <aui:form action="<%= editFragmentEntryURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="fragmentEntryId" type="hidden" value="<%= fragmentDisplayContext.getFragmentEntryId() %>" />
@@ -73,9 +75,9 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentEntryTitle());
 					jsInput.value = event.js;
 				}
 			},
-			initialCSS: '<%= HtmlUtil.escapeJS((fragmentEntry != null) ? fragmentEntry.getCss() : StringPool.BLANK) %>',
-			initialHTML: '<%= HtmlUtil.escapeJS((fragmentEntry != null) ? fragmentEntry.getHtml() : StringPool.BLANK) %>',
-			initialJS: '<%= HtmlUtil.escapeJS((fragmentEntry != null) ? fragmentEntry.getJs() : StringPool.BLANK) %>',
+			initialCSS: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getCssContent()) %>',
+			initialHTML: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getHtmlContent()) %>',
+			initialJS: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getJsContent()) %>',
 			namespace: '<portlet:namespace />',
 			spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
 		},

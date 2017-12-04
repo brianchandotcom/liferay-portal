@@ -9,7 +9,7 @@
 				AssetCategoryProperty
 			INNER JOIN
 				AssetCategory ON
-					(AssetCategory.categoryId = AssetCategoryProperty.categoryId)
+					AssetCategory.categoryId = AssetCategoryProperty.categoryId
 			WHERE
 				(AssetCategory.groupId = ?) AND
 				(AssetCategoryProperty.key_ = ?)
@@ -23,7 +23,7 @@
 				AssetCategoryProperty
 			INNER JOIN
 				AssetCategory ON
-					(AssetCategory.categoryId = AssetCategoryProperty.categoryId)
+					AssetCategory.categoryId = AssetCategoryProperty.categoryId
 			WHERE
 				(AssetCategory.groupId = ?) AND
 				(AssetCategoryProperty.key_ = ?)

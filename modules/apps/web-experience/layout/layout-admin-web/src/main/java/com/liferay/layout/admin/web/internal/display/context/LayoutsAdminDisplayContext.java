@@ -98,12 +98,13 @@ public class LayoutsAdminDisplayContext {
 	public String getAddLayoutURL(long selPlid, Boolean privateLayout) {
 		PortletURL addLayoutURL = _liferayPortletResponse.createRenderURL();
 
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
-
 		addLayoutURL.setParameter("mvcPath", "/add_layout.jsp");
 		addLayoutURL.setParameter("redirect", _themeDisplay.getURLCurrent());
 		addLayoutURL.setParameter("backURL", _themeDisplay.getURLCurrent());
 		addLayoutURL.setParameter("groupId", String.valueOf(getSelGroupId()));
+
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
 		addLayoutURL.setParameter("portletResource", portletDisplay.getId());
 
 		if (selPlid >= LayoutConstants.DEFAULT_PLID) {
@@ -157,8 +158,6 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public String getConfigureLayoutURL(Layout layout) {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
-
 		PortletURL configureLayoutURL =
 			_liferayPortletResponse.createRenderURL();
 
@@ -173,8 +172,11 @@ public class LayoutsAdminDisplayContext {
 			"selPlid", String.valueOf(layout.getPlid()));
 		configureLayoutURL.setParameter(
 			"privateLayout", String.valueOf(layout.isPrivateLayout()));
-		configureLayoutURL.setParameter("portletResource",
-			portletDisplay.getId());
+
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		configureLayoutURL.setParameter(
+			"portletResource", portletDisplay.getId());
 
 		return configureLayoutURL.toString();
 	}

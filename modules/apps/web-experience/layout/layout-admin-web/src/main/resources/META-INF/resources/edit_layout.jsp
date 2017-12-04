@@ -139,6 +139,7 @@ renderResponse.setTitle(selLayout.getName(locale));
 
 		<aui:form action='<%= HttpUtil.addParameter(editLayoutURL, "refererPlid", plid) %>' cssClass="container-fluid-1280" data-senna-off="true" enctype="multipart/form-data" method="post" name="editLayoutFm">
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+			<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 			<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 			<aui:input name="groupId" type="hidden" value="<%= layoutsAdminDisplayContext.getGroupId() %>" />
 			<aui:input name="liveGroupId" type="hidden" value="<%= layoutsAdminDisplayContext.getLiveGroupId() %>" />
@@ -147,7 +148,6 @@ renderResponse.setTitle(selLayout.getName(locale));
 			<aui:input name="privateLayout" type="hidden" value="<%= layoutsAdminDisplayContext.isPrivateLayout() %>" />
 			<aui:input name="layoutId" type="hidden" value="<%= layoutsAdminDisplayContext.getLayoutId() %>" />
 			<aui:input name="<%= PortletDataHandlerKeys.SELECTED_LAYOUTS %>" type="hidden" />
-			<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 
 			<liferay-ui:error exception="<%= LayoutTypeException.class %>">
 

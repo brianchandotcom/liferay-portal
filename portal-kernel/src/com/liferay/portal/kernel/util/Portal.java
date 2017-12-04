@@ -750,6 +750,8 @@ public interface Portal {
 
 	public String getJsSafePortletId(String portletId);
 
+	public HttpServletRequest getLastForwardRequest(HttpServletRequest request);
+
 	public String getLayoutActualURL(Layout layout);
 
 	public String getLayoutActualURL(Layout layout, String mainPath);

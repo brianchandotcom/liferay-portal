@@ -40,6 +40,9 @@ import com.liferay.upload.AttachmentContentUpdater;
 
 import java.io.InputStream;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -85,6 +88,54 @@ public class EntryAttachmentContentUpdaterTest {
 		_user = UserTestUtil.addUser();
 
 		_attachmentContentUpdater = _serviceTracker.getService();
+	}
+
+	@Test
+	public void testKeepsTheOriginalTagAttributes() throws Exception {
+		FileEntry tempFileEntry = TempFileEntryUtil.addTempFileEntry(
+			_group.getGroupId(), _user.getUserId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			_getInputStream(), ContentTypes.IMAGE_JPEG);
+
+		Map<String, String> attributes = new HashMap<>();
+
+		attributes.put("alt", "A big image");
+		attributes.put("class", "image-big");
+
+		String tempFileEntryImgTag = _getTempEntryAttachmentFileEntryImgTag(
+			tempFileEntry.getFileEntryId(), _TEMP_FILE_ENTRY_IMAGE_URL,
+			attributes);
+
+		String originalContent =
+			"<p>Sample Text</p><a href=\"www.liferay.com\">" +
+				tempFileEntryImgTag + "<span></a>";
+
+		FileEntry newFileEntry = TempFileEntryUtil.addTempFileEntry(
+			_group.getGroupId(), _user.getUserId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			_getInputStream(), ContentTypes.IMAGE_JPEG);
+
+		String content = _attachmentContentUpdater.updateContent(
+			originalContent,
+			fileEntry -> {
+				if (fileEntry.getFileEntryId() ==
+						tempFileEntry.getFileEntryId()) {
+
+					return newFileEntry;
+				}
+
+				return null;
+			});
+
+		String fileEntryURL = PortletFileRepositoryUtil.getPortletFileEntryURL(
+			null, newFileEntry, StringPool.BLANK);
+
+		String expectedContent =
+			"<p>Sample Text</p><a href=\"www.liferay.com\">" +
+				"<img alt=\"A big image\" class=\"image-big\" src=\"" +
+					fileEntryURL + "\" /><span></a>";
+
+		Assert.assertEquals(expectedContent, content);
 	}
 
 	@Test
@@ -234,9 +285,19 @@ public class EntryAttachmentContentUpdaterTest {
 	private String _getTempEntryAttachmentFileEntryImgTag(
 		long dataImageId, String url) {
 
-		StringBundler sb = new StringBundler(7);
+		return _getTempEntryAttachmentFileEntryImgTag(
+			dataImageId, url, new HashMap<>());
+	}
+
+	private String _getTempEntryAttachmentFileEntryImgTag(
+		long dataImageId, String url, Map<String, String> attributes) {
+
+		StringBundler sb = new StringBundler(7 + attributes.size());
 
 		sb.append("<img ");
+		attributes.forEach(
+			(name, value) -> sb.append(
+				String.format("%s=\"%s\" ", name, value)));
 		sb.append(EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
 		sb.append("=\"");
 		sb.append(dataImageId);

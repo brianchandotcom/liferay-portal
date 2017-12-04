@@ -281,6 +281,7 @@
 
 	<command name="ViewDataRetrievedForGuestUser" priority="5">
 		<description message="This is a use case for LPS-75682." />
+		<property name="test.name.skip.portal.instance" value="FormsDataProvider#ConfigureWithSelectField" />
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 

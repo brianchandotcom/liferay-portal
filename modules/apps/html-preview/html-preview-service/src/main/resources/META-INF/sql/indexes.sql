@@ -1,0 +1,1 @@
+create index IX_EAFFDD1C on HtmlPreview (groupId, classNameId, classPK);

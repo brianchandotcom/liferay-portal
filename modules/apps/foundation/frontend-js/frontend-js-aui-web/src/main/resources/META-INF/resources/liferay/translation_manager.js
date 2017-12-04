@@ -285,33 +285,31 @@ AUI.add(
 
 						var availableLocales = instance.get('availableLocales');
 
-						if (availableLocales.length == 0) {
-							return;
-						}
+						if (availableLocales.length != 0) {
+							var deleteLocales = [];
 
-						var deleteLocales = [];
+							for (var i = 0; i < availableLocales.length; i++) {
+								var contains = false;
 
-						for (var i = 0; i < availableLocales.length; i++) {
-							var contains = false;
+								for (var j = 0; j < locales.length; j++) {
+									if (availableLocales[i] == locales[j]) {
+										contains = true;
 
-							for (var j = 0; j < locales.length; j++) {
-								if (availableLocales[i] == locales[j]) {
-									contains = true;
+										break;
+									}
+								}
 
-									break;
+								if (!contains) {
+									deleteLocales.push(availableLocales[i]);
 								}
 							}
 
-							if (!contains) {
-								deleteLocales.push(availableLocales[i]);
+							for (var k = 0; k < deleteLocales.length; k++) {
+								AArray.removeItem(availableLocales, deleteLocales[k]);
 							}
-						}
 
-						for (var k = 0; k < deleteLocales.length; k++) {
-							AArray.removeItem(availableLocales, deleteLocales[k]);
+							instance.set('availableLocales', availableLocales);
 						}
-
-						instance.set('availableLocales', availableLocales);
 					},
 
 					toggleDefaultLocales: function() {

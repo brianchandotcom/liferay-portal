@@ -79,9 +79,8 @@
 		<if>
 			<equals arg1="${editTemplateButton}" arg2="true" />
 			<then>
-				<execute macro="Portlet#gotoPortletOptions">
-					<var name="portletName" value="Web Content Display" />
-					<var name="portletOption" value="Edit Template" />
+				<execute macro="WebContentDisplayPortlet#gotoEditTemplate">
+					<var name="webContentTitle" value="${webContentTitle}" />
 				</execute>
 			</then>
 			<else>

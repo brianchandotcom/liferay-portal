@@ -36,19 +36,17 @@ import org.junit.Test;
 public class ReadingTimeCalculatorImplTest {
 
 	@Test
-	public void testAcceptsLatinHTML() {
+	public void testAcceptsHTMLAndText() {
 		ReadingTimeCalculator readingTimeCalculator =
 			new ReadingTimeCalculatorImpl();
 
-		for (Locale locale : _supportedLocales) {
-			for (String contentType : _supportedContentTypes) {
-				Optional<Duration> readingTimeOptional =
-					readingTimeCalculator.calculate(
-						StringUtil.randomString(), contentType, locale);
+		for (String contentType : _supportedContentTypes) {
+			Optional<Duration> readingTimeOptional =
+				readingTimeCalculator.calculate(
+					StringUtil.randomString(), contentType,
+					Locale.getDefault());
 
-				Assert.assertTrue(
-					locale.getLanguage(), readingTimeOptional.isPresent());
-			}
+			Assert.assertTrue(readingTimeOptional.isPresent());
 		}
 	}
 
@@ -115,36 +113,16 @@ public class ReadingTimeCalculatorImplTest {
 	}
 
 	@Test
-	public void testDoesNotAcceptLatinPDFs() {
+	public void testDoesNotAcceptPDFs() {
 		ReadingTimeCalculator readingTimeCalculator =
 			new ReadingTimeCalculatorImpl();
 
-		for (Locale locale : _supportedLocales) {
-			Optional<Duration> readingTimeOptional =
-				readingTimeCalculator.calculate(
-					StringUtil.randomString(), ContentTypes.APPLICATION_PDF,
-					locale);
+		Optional<Duration> readingTimeOptional =
+			readingTimeCalculator.calculate(
+				StringUtil.randomString(), ContentTypes.APPLICATION_PDF,
+				Locale.getDefault());
 
-			Assert.assertFalse(
-				locale.getLanguage(), readingTimeOptional.isPresent());
-		}
-	}
-
-	@Test
-	public void testDoesNotAcceptNonlatinLanguages() {
-		ReadingTimeCalculator readingTimeCalculator =
-			new ReadingTimeCalculatorImpl();
-
-		for (Locale locale : _unsupportedLocales) {
-			for (String contentType : _supportedContentTypes) {
-				Optional<Duration> readingTimeOptional =
-					readingTimeCalculator.calculate(
-						StringUtil.randomString(), contentType, locale);
-
-				Assert.assertFalse(
-					locale.getLanguage(), readingTimeOptional.isPresent());
-			}
-		}
+		Assert.assertFalse(readingTimeOptional.isPresent());
 	}
 
 	private Duration _calculateReadingTime(
@@ -162,12 +140,5 @@ public class ReadingTimeCalculatorImplTest {
 	private static final List<String> _supportedContentTypes = Arrays.asList(
 		ContentTypes.TEXT_HTML, ContentTypes.TEXT_HTML_UTF8, ContentTypes.TEXT,
 		ContentTypes.TEXT_PLAIN, ContentTypes.TEXT_PLAIN_UTF8);
-	private static final List<Locale> _supportedLocales = Arrays.asList(
-		Locale.ENGLISH, Locale.US, Locale.FRENCH, Locale.GERMAN, Locale.CANADA,
-		Locale.CANADA_FRENCH, Locale.ITALIAN, Locale.ITALY, Locale.UK);
-	private static final List<Locale> _unsupportedLocales = Arrays.asList(
-		Locale.CHINA, Locale.CHINESE, Locale.SIMPLIFIED_CHINESE,
-		Locale.TRADITIONAL_CHINESE, Locale.JAPAN, Locale.JAPANESE, Locale.KOREA,
-		Locale.KOREAN, Locale.TAIWAN);
 
 }

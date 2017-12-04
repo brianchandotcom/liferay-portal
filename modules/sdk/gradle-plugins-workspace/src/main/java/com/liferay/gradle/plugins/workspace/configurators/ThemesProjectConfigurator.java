@@ -195,7 +195,7 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 		String baseTheme = liferayThemeMap.get("baseTheme");
 
-		if (baseTheme.equals("styled") || baseTheme.equals("unsytyled")) {
+		if (baseTheme.equals("styled") || baseTheme.equals("unstyled")) {
 			baseTheme = "_" + baseTheme;
 		}
 

@@ -66,17 +66,16 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 	@Override
 	public void apply(Project project) {
-		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
-			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
-
 		if (isJavaBuild()) {
 			GradleUtil.applyPlugin(project, ThemeBuilderPlugin.class);
 
-			_configureThemeBuilderPlugin(project);
-
-			_configureWarPlugin(project);
+			_configureTaskBuildTheme(project);
+			_configureWar(project);
 		}
 		else {
+			WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
+				(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
+
 			GradleUtil.applyPlugin(project, LiferayThemePlugin.class);
 
 			_configureLiferay(project, workspaceExtension);
@@ -176,37 +175,37 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 			});
 	}
 
-	private void _configureThemeBuilderPlugin(Project project) {
-		File packageJsonFile = new File(
-			project.getProjectDir(), "package.json");
+	private void _configureTaskBuildTheme(Project project) {
+		File packageJsonFile = project.file("package.json");
 
-		if (packageJsonFile.exists()) {
-			JsonSlurper jsonSlurper = new JsonSlurper();
-
-			Map<String, Map<String, String>> packageJsonData =
-				(Map<String, Map<String, String>>)jsonSlurper.parse(
-					packageJsonFile);
-
-			Map<String, String> liferayTheme = packageJsonData.get(
-				"liferayTheme");
-
-			String baseTheme = liferayTheme.get("baseTheme");
-
-			if (baseTheme.equals("styled") || baseTheme.equals("unsytyled")) {
-				baseTheme = "_" + baseTheme;
-			}
-
-			String templateLanguage = liferayTheme.get("templateLanguage");
-
-			BuildThemeTask buildThemeTask = (BuildThemeTask)GradleUtil.getTask(
-				project, ThemeBuilderPlugin.BUILD_THEME_TASK_NAME);
-
-			buildThemeTask.setParentName(baseTheme);
-			buildThemeTask.setTemplateExtension(templateLanguage);
+		if (!packageJsonFile.exists()) {
+			return;
 		}
+
+		BuildThemeTask buildThemeTask = (BuildThemeTask)GradleUtil.getTask(
+			project, ThemeBuilderPlugin.BUILD_THEME_TASK_NAME);
+
+		JsonSlurper jsonSlurper = new JsonSlurper();
+
+		Map<String, Object> packageJsonMap =
+			(Map<String, Object>)jsonSlurper.parse(packageJsonFile);
+
+		Map<String, String> liferayThemeMap =
+			(Map<String, String>)packageJsonMap.get("liferayTheme");
+
+		String baseTheme = liferayThemeMap.get("baseTheme");
+
+		if (baseTheme.equals("styled") || baseTheme.equals("unsytyled")) {
+			baseTheme = "_" + baseTheme;
+		}
+
+		String templateLanguage = liferayThemeMap.get("templateLanguage");
+
+		buildThemeTask.setParentName(baseTheme);
+		buildThemeTask.setTemplateExtension(templateLanguage);
 	}
 
-	private void _configureWarPlugin(Project project) {
+	private void _configureWar(Project project) {
 		WarPluginConvention warPluginConvention = GradleUtil.getConvention(
 			project, WarPluginConvention.class);
 

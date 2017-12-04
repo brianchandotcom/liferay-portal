@@ -60,8 +60,11 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-content"
 			name="name"
-			value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
-		/>
+		>
+			<liferay-staging:descriptive-name
+				group="<%= group %>"
+			/>
+		</liferay-ui:search-container-column-text>
 
 		<%
 		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();

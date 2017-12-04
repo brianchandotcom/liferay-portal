@@ -423,8 +423,11 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-content"
 					name="site"
-					value="<%= HtmlUtil.escape(userGroupRole.getGroup().getDescriptiveName(locale)) %>"
-				/>
+				>
+					<liferay-staging:descriptive-name
+						group="<%= userGroupRole.getGroup() %>"
+					/>
+				</liferay-ui:search-container-column-text>
 
 				<%
 				boolean membershipProtected = false;
@@ -601,8 +604,11 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				name="site"
-				value="<%= HtmlUtil.escape(userGroupGroupRole.getGroup().getDescriptiveName(locale)) %>"
-			/>
+			>
+				<liferay-staging:descriptive-name
+					group="<%= userGroupGroupRole.getGroup() %>"
+				/>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"

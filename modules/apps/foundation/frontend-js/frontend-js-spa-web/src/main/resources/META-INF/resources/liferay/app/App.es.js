@@ -6,6 +6,7 @@ import dom from 'metal-dom/src/dom';
 import LiferaySurface from '../surface/Surface.es';
 import Utils from '../util/Utils.es';
 import {CancellablePromise} from 'metal-promise/src/promise/Promise';
+import Uri from 'metal-uri/src/Uri';
 
 class LiferayApp extends App {
 	constructor() {
@@ -282,6 +283,12 @@ class LiferayApp extends App {
 				Liferay.SPA.userNotification.timeout
 			);
 		}
+	}
+
+	updateHistory_(title, path, state, opt_replaceHistory) {
+		state.path = state.redirectPath
+
+		super.updateHistory_(title, path, state, opt_replaceHistory);
 	}
 }
 

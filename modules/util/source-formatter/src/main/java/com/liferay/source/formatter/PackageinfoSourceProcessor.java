@@ -12,26 +12,25 @@
  * details.
  */
 
-package com.liferay.source.formatter.checks;
+package com.liferay.source.formatter;
+
+import java.util.List;
 
 /**
- * @author Hugo Huijser
+ * @author Peter Shin
  */
-public class IncorrectFileLocationCheck extends BaseFileCheck {
+public class PackageinfoSourceProcessor extends BaseSourceProcessor {
 
 	@Override
-	protected String doProcess(
-		String fileName, String absolutePath, String content) {
-
-		if (!fileName.endsWith(".java") &&
-			!absolutePath.contains("/src/main/resources/") &&
-			absolutePath.matches(".*\\/modules\\/.*\\/src\\/.*\\/java\\/.*")) {
-
-			addMessage(
-				fileName, "Only *.java files are allowed in /src/*/java/");
-		}
-
-		return content;
+	protected List<String> doGetFileNames() throws Exception {
+		return getFileNames(new String[0], getIncludes());
 	}
+
+	@Override
+	protected String[] doGetIncludes() {
+		return _INCLUDES;
+	}
+
+	private static final String[] _INCLUDES = {"**/packageinfo"};
 
 }

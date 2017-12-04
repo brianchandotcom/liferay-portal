@@ -24,6 +24,7 @@ import com.liferay.source.formatter.checks.util.BNDSourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
+import java.io.FileFilter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,6 +126,10 @@ public class BNDExportsCheck extends BaseFileCheck {
 
 			line = StringUtil.removeSubstring(line, ",\\");
 
+			if (line.indexOf(StringPool.SEMICOLON) != -1) {
+				line = line.substring(0, line.indexOf(StringPool.SEMICOLON));
+			}
+
 			exportPackages.add(line.replace(CharPool.PERIOD, CharPool.SLASH));
 		}
 
@@ -137,10 +142,30 @@ public class BNDExportsCheck extends BaseFileCheck {
 
 			File resourcesDir = new File(resourcesPathname);
 
+			File[] resourcesFiles = resourcesDir.listFiles(
+				new FileFilter() {
+
+					@Override
+					public boolean accept(File pathname) {
+						return pathname.isFile();
+					}
+
+				});
+
 			String srcPathname = StringBundler.concat(
 				fileName.substring(0, i), "/src/main/java/", exportPackage);
 
 			File srcDir = new File(srcPathname);
+
+			File[] srcFiles = srcDir.listFiles(
+				new FileFilter() {
+
+					@Override
+					public boolean accept(File pathname) {
+						return pathname.isFile();
+					}
+
+				});
 
 			String packageinfoPathname = StringBundler.concat(
 				fileName.substring(0, i), "/src/main/resources/", exportPackage,
@@ -148,8 +173,8 @@ public class BNDExportsCheck extends BaseFileCheck {
 
 			File packageinfoFile = new File(packageinfoPathname);
 
-			if ((ArrayUtil.isNotEmpty(resourcesDir.listFiles()) ||
-				 ArrayUtil.isNotEmpty(srcDir.listFiles())) &&
+			if ((ArrayUtil.isNotEmpty(resourcesFiles) ||
+				 ArrayUtil.isNotEmpty(srcFiles)) &&
 				!packageinfoFile.exists()) {
 
 				FileUtil.write(packageinfoFile, "version 1.0.0");

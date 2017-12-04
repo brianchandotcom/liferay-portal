@@ -261,6 +261,7 @@ public class SourceFormatter {
 		_sourceProcessors.add(new JSPSourceProcessor());
 		_sourceProcessors.add(new JSSourceProcessor());
 		_sourceProcessors.add(new MarkdownSourceProcessor());
+		_sourceProcessors.add(new PackageinfoSourceProcessor());
 		_sourceProcessors.add(new PropertiesSourceProcessor());
 		_sourceProcessors.add(new SHSourceProcessor());
 		_sourceProcessors.add(new SoySourceProcessor());
@@ -510,7 +511,9 @@ public class SourceFormatter {
 
 		_allFileNames = SourceFormatterUtil.scanForFiles(
 			_sourceFormatterArgs.getBaseDirName(), new String[0],
-			new String[] {"**/*.*", "**/CODEOWNERS", "**/Dockerfile"},
+			new String[] {
+				"**/*.*", "**/CODEOWNERS", "**/Dockerfile", "**/packageinfo"
+			},
 			_sourceFormatterExcludes,
 			_sourceFormatterArgs.isIncludeSubrepositories());
 

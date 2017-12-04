@@ -2923,7 +2923,7 @@ this task.
 
 		<echo append="true" file="${app.server.wildfly.bin.dir}/standalone.conf">
 			<![CDATA[
-				JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true ${java.security.config} -Djboss.as.management.blocking.timeout=480 -Duser.timezone=GMT -Xmx1024m -XX:MaxMetaspaceSize=384m -XX:MetaspaceSize=200m"
+				JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true ${java.security.config} -Djboss.as.management.blocking.timeout=480 -Duser.timezone=GMT -Xmx1024m -XX:MaxMetaspaceSize=512m -XX:MetaspaceSize=200m"
 			]]>
 		</echo>
 
@@ -2937,7 +2937,7 @@ this task.
 			<replacetoken><![CDATA[:JAVA_OPTS_SET]]></replacetoken>
 			<replacevalue>
 				<![CDATA[
-					set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true @java.security.config@ -Djboss.as.management.blocking.timeout=480 -Duser.timezone=GMT -Xmx1024m -XX:MaxMetaspaceSize=384m -XX:MetaspaceSize=200m"
+					set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true @java.security.config@ -Djboss.as.management.blocking.timeout=480 -Duser.timezone=GMT -Xmx1024m -XX:MaxMetaspaceSize=512m -XX:MetaspaceSize=200m"
 
 					:JAVA_OPTS_SET
 				]]>

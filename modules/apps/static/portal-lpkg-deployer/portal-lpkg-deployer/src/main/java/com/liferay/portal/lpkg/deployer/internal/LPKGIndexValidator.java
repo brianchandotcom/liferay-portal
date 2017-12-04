@@ -57,7 +57,6 @@ import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -70,8 +69,6 @@ import java.util.regex.Pattern;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -331,26 +328,6 @@ public class LPKGIndexValidator {
 		additionalJarFiles.add(
 			new File(PropsValues.LIFERAY_LIB_PORTAL_DIR, "util-taglib.jar"));
 
-		Configuration configuration = _configurationAdmin.getConfiguration(
-			"com.liferay.modules.compat.internal.configuration." +
-				"ModuleCompatExtenderConfiguration",
-			StringPool.QUESTION);
-
-		Dictionary<String, Object> properties = configuration.getProperties();
-
-		boolean enabled = true;
-
-		if (properties != null) {
-			enabled = Boolean.valueOf((String)properties.get("enabled"));
-		}
-
-		if (enabled) {
-			additionalJarFiles.add(
-				new File(
-					PropsValues.MODULE_FRAMEWORK_BASE_DIR,
-					"compat/com.liferay.modules.compat.data.jar"));
-		}
-
 		try {
 			ProcessChannel<byte[]> processChannel =
 				localProcessExecutor.execute(
@@ -457,9 +434,6 @@ public class LPKGIndexValidator {
 
 	@Reference
 	private BytesURLProtocolSupport _bytesURLProtocolSupport;
-
-	@Reference
-	private ConfigurationAdmin _configurationAdmin;
 
 	private boolean _enabled;
 

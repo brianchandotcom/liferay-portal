@@ -70,7 +70,7 @@ public class CacheResourceBundleLoader implements ResourceBundleLoader {
 	@Deprecated
 	@Override
 	public ResourceBundle loadResourceBundle(String languageId) {
-		return loadResourceBundle(LocaleUtil.fromLanguageId(languageId));
+		return ResourceBundleLoader.super.loadResourceBundle(languageId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

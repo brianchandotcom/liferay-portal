@@ -22,6 +22,7 @@ import java.util.ResourceBundle;
 /**
  * @author Carlos Sierra Andrés
  */
+@FunctionalInterface
 @ProviderType
 public interface ResourceBundleLoader {
 
@@ -31,6 +32,8 @@ public interface ResourceBundleLoader {
 	 * @deprecated As of 7.0.0, replaced by {@link #loadResourceBundle(Locale)}
 	 */
 	@Deprecated
-	public ResourceBundle loadResourceBundle(String languageId);
+	public default ResourceBundle loadResourceBundle(String languageId) {
+		return loadResourceBundle(LocaleUtil.fromLanguageId(languageId));
+	}
 
 }

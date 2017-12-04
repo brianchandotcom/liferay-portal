@@ -2659,7 +2659,7 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * @see com.liferay.portal.util.PortalImpl#getOriginalServletRequest
+	 * @see PortalImpl#getOriginalServletRequest
 	 */
 	@Override
 	public HttpServletRequest getLastForwardRequest(
@@ -2671,7 +2671,7 @@ public class PortalImpl implements Portal {
 
 		while (request instanceof HttpServletRequestWrapper) {
 			if (request instanceof
-				PersistentHttpServletRequestWrapper) {
+					PersistentHttpServletRequestWrapper) {
 
 				PersistentHttpServletRequestWrapper
 					persistentHttpServletRequestWrapper =
@@ -2700,7 +2700,7 @@ public class PortalImpl implements Portal {
 				(HttpServletRequest)httpServletRequestWrapper.getRequest();
 
 			if ((request.getDispatcherType() ==
-				 DispatcherType.FORWARD) &&
+					DispatcherType.FORWARD) &&
 				(nextRequest.getDispatcherType() == DispatcherType.REQUEST)) {
 
 				break;

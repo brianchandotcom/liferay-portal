@@ -443,6 +443,6 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 	private String _portletProviderClassName;
 	private String _queryString;
 	private String _settingsScope = _SETTINGS_SCOPE_DEFAULT;
-	private boolean _useLastForwardRequest = false;
+	private boolean _useLastForwardRequest;
 
 }

@@ -61,7 +61,7 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 		super(settings);
 
 		_javaBuild = GradleUtil.getProperty(
-			settings, WorkspacePlugin.PROPERTY_PREFIX + _NAME + ".java.build",
+			settings, WorkspacePlugin.PROPERTY_PREFIX + NAME + ".java.build",
 			_JAVA_BUILD);
 	}
 
@@ -96,7 +96,7 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 	@Override
 	public String getName() {
-		return _NAME;
+		return NAME;
 	}
 
 	public boolean isJavaBuild() {
@@ -144,6 +144,8 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 		return projectDirs;
 	}
+
+	protected static final String NAME = "themes";
 
 	private void _configureLiferay(
 		Project project, WorkspaceExtension workspaceExtension) {
@@ -228,8 +230,6 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 	}
 
 	private static final boolean _JAVA_BUILD = false;
-
-	private static final String _NAME = "themes";
 
 	private boolean _javaBuild;
 

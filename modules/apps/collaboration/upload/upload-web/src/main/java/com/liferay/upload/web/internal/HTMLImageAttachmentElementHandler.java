@@ -38,14 +38,17 @@ import org.osgi.service.component.annotations.Component;
  * @author Jürgen Kappler
  */
 @Component(service = AttachmentElementHandler.class)
-public class ImageAttachmentElementHandler implements AttachmentElementHandler {
+public class HTMLImageAttachmentElementHandler
+	implements AttachmentElementHandler {
 
 	@Override
-	public String getElementTag(String originalImgTag, FileEntry fileEntry) {
+	public String getAttachmentElement(
+		String originalImgHtmlElement, FileEntry fileEntry) {
+
 		String fileEntryURL = PortletFileRepositoryUtil.getPortletFileEntryURL(
 			null, fileEntry, StringPool.BLANK);
 
-		Element image = _parseImgTag(originalImgTag);
+		Element image = _parseImgTag(originalImgHtmlElement);
 
 		image.attr("src", fileEntryURL);
 		image.removeAttr(EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
@@ -54,9 +57,9 @@ public class ImageAttachmentElementHandler implements AttachmentElementHandler {
 	}
 
 	@Override
-	public String replaceContentElements(
+	public String replaceAttachmentElements(
 			String content,
-			UnsafeFunction<FileEntry, FileEntry, PortalException> saveFile)
+			UnsafeFunction<FileEntry, FileEntry, PortalException> saveTempFile)
 		throws PortalException {
 
 		Matcher matcher = _TEMP_ATTACHMENT_PATTERN.matcher(content);
@@ -66,13 +69,14 @@ public class ImageAttachmentElementHandler implements AttachmentElementHandler {
 		while (matcher.find()) {
 			FileEntry tempAttachmentFileEntry = _getFileEntry(matcher);
 
-			FileEntry attachmentFileEntry = saveFile.apply(
+			FileEntry attachmentFileEntry = saveTempFile.apply(
 				tempAttachmentFileEntry);
 
 			matcher.appendReplacement(
 				sb,
 				Matcher.quoteReplacement(
-					getElementTag(matcher.group(0), attachmentFileEntry)));
+					getAttachmentElement(
+						matcher.group(0), attachmentFileEntry)));
 		}
 
 		matcher.appendTail(sb);

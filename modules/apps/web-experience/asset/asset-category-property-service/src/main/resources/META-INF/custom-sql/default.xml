@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.asset.category.property.service.persistence.AssetCategoryPropertyFinder.countByG_K">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT AssetCategoryProperty.value) AS COUNT_VALUE
+			FROM
+				AssetCategoryProperty
+			INNER JOIN
+				AssetCategory ON
+					AssetCategory.categoryId = AssetCategoryProperty.categoryId
+			WHERE
+				(AssetCategory.groupId = ?) AND
+				(AssetCategoryProperty.key_ = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.asset.category.property.service.persistence.AssetCategoryPropertyFinder.findByG_K">
+		<![CDATA[
+			SELECT
+				DISTINCT AssetCategoryProperty.value AS categoryPropertyValue
+			FROM
+				AssetCategoryProperty
+			INNER JOIN
+				AssetCategory ON
+					AssetCategory.categoryId = AssetCategoryProperty.categoryId
+			WHERE
+				(AssetCategory.groupId = ?) AND
+				(AssetCategoryProperty.key_ = ?)
+			ORDER BY
+				AssetCategoryProperty.value ASC
+		]]>
+	</sql>
+</custom-sql>

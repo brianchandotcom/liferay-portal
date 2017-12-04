@@ -16,8 +16,12 @@ package com.liferay.gradle.plugins.workspace.configurators;
 
 import com.liferay.gradle.plugins.LiferayThemePlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
+import com.liferay.gradle.plugins.theme.builder.BuildThemeTask;
+import com.liferay.gradle.plugins.theme.builder.ThemeBuilderPlugin;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
+
+import groovy.json.JsonSlurper;
 
 import groovy.lang.Closure;
 
@@ -31,6 +35,7 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.gradle.api.Project;
@@ -41,6 +46,7 @@ import org.gradle.api.initialization.Settings;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.ExtensionAware;
+import org.gradle.api.plugins.WarPluginConvention;
 import org.gradle.api.tasks.Copy;
 
 /**
@@ -58,14 +64,23 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
 			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
 
-		GradleUtil.applyPlugin(project, LiferayThemePlugin.class);
+		if (workspaceExtension.isThemesBuildAdvanced()) {
+			GradleUtil.applyPlugin(project, LiferayThemePlugin.class);
 
-		_configureLiferay(project, workspaceExtension);
+			_configureLiferay(project, workspaceExtension);
 
-		Task assembleTask = GradleUtil.getTask(
-			project, BasePlugin.ASSEMBLE_TASK_NAME);
+			Task assembleTask = GradleUtil.getTask(
+				project, BasePlugin.ASSEMBLE_TASK_NAME);
 
-		_configureRootTaskDistBundle(assembleTask);
+			_configureRootTaskDistBundle(assembleTask);
+		}
+		else {
+			GradleUtil.applyPlugin(project, ThemeBuilderPlugin.class);
+
+			_configureThemeBuilderPlugin(project);
+
+			_configureWarPlugin(project);
+		}
 	}
 
 	@Override
@@ -146,6 +161,43 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 				}
 
 			});
+	}
+
+	private void _configureThemeBuilderPlugin(Project project) {
+		File packageJsonFile = new File(
+			project.getProjectDir(), "package.json");
+
+		if (packageJsonFile.exists()) {
+			JsonSlurper jsonSlurper = new JsonSlurper();
+
+			Map<String, Map<String, String>> packageJsonData =
+				(Map<String, Map<String, String>>)jsonSlurper.parse(
+					packageJsonFile);
+
+			Map<String, String> liferayTheme = packageJsonData.get(
+				"liferayTheme");
+
+			String baseTheme = liferayTheme.get("baseTheme");
+
+			if (baseTheme.equals("styled") || baseTheme.equals("unsytyled")) {
+				baseTheme = "_" + baseTheme;
+			}
+
+			String templateLanguage = liferayTheme.get("templateLanguage");
+
+			BuildThemeTask buildThemeTask = (BuildThemeTask)GradleUtil.getTask(
+				project, ThemeBuilderPlugin.BUILD_THEME_TASK_NAME);
+
+			buildThemeTask.setParentName(baseTheme);
+			buildThemeTask.setTemplateExtension(templateLanguage);
+		}
+	}
+
+	private void _configureWarPlugin(Project project) {
+		WarPluginConvention warPluginConvention = GradleUtil.getConvention(
+			project, WarPluginConvention.class);
+
+		warPluginConvention.setWebAppDirName("src");
 	}
 
 	private File _getWarFile(Project project) {

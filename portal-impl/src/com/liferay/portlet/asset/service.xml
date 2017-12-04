@@ -315,46 +315,6 @@
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
-		<reference entity="AssetTagStats" package-path="com.liferay.portlet.asset" />
-	</entity>
-	<entity local-service="true" name="AssetTagStats" remote-service="false">
-
-		<!-- PK fields -->
-
-		<column name="tagStatsId" primary="true" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-
-		<!-- Other fields -->
-
-		<column name="tagId" type="long" />
-		<column name="classNameId" type="long" />
-		<column name="assetCount" type="int" />
-
-		<!-- Order -->
-
-		<order by="desc">
-			<order-column name="assetCount" />
-		</order>
-
-		<!-- Finder methods -->
-
-		<finder name="TagId" return-type="Collection">
-			<finder-column name="tagId" />
-		</finder>
-		<finder name="ClassNameId" return-type="Collection">
-			<finder-column name="classNameId" />
-		</finder>
-		<finder name="T_C" return-type="AssetTagStats" unique="true">
-			<finder-column name="tagId" />
-			<finder-column name="classNameId" />
-		</finder>
-
-		<!-- References -->
-
-		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
 	</entity>
 	<entity local-service="true" name="AssetVocabulary" remote-service="true" uuid="true">
 

@@ -32,8 +32,11 @@ import java.io.ObjectOutput;
  *
  * @author Brian Wing Shun Chan
  * @see AssetTagStats
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.asset.tags.model.impl.AssetTagStatsImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class AssetTagStatsCacheModel implements CacheModel<AssetTagStats>,
 	Externalizable {

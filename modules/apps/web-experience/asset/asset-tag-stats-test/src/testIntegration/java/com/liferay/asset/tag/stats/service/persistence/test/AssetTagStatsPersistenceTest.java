@@ -12,13 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.asset.service.persistence.test;
+package com.liferay.asset.tag.stats.service.persistence.test;
 
-import com.liferay.asset.kernel.exception.NoSuchTagStatsException;
-import com.liferay.asset.kernel.model.AssetTagStats;
-import com.liferay.asset.kernel.service.AssetTagStatsLocalServiceUtil;
-import com.liferay.asset.kernel.service.persistence.AssetTagStatsPersistence;
-import com.liferay.asset.kernel.service.persistence.AssetTagStatsUtil;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
+import com.liferay.asset.tag.stats.exception.NoSuchTagStatsException;
+import com.liferay.asset.tag.stats.model.AssetTagStats;
+import com.liferay.asset.tag.stats.service.AssetTagStatsLocalServiceUtil;
+import com.liferay.asset.tag.stats.service.persistence.AssetTagStatsPersistence;
+import com.liferay.asset.tag.stats.service.persistence.AssetTagStatsUtil;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -44,6 +46,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -56,12 +60,14 @@ import java.util.Set;
 /**
  * @generated
  */
+@RunWith(Arquillian.class)
 public class AssetTagStatsPersistenceTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(Propagation.REQUIRED));
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.asset.tag.stats.service"));
 
 	@Before
 	public void setUp() {

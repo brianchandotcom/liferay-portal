@@ -27,8 +27,11 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see AssetTagStatsModel
  * @see com.liferay.portlet.asset.model.impl.AssetTagStatsImpl
  * @see com.liferay.portlet.asset.model.impl.AssetTagStatsModelImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.asset.tags.model.impl.AssetTagStatsImpl}
  * @generated
  */
+@Deprecated
 @ImplementationClassName("com.liferay.portlet.asset.model.impl.AssetTagStatsImpl")
 @ProviderType
 public interface AssetTagStats extends AssetTagStatsModel, PersistedModel {

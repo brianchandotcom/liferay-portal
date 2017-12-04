@@ -18,6 +18,7 @@ import com.liferay.gradle.plugins.LiferayThemePlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.theme.builder.BuildThemeTask;
 import com.liferay.gradle.plugins.theme.builder.ThemeBuilderPlugin;
+import com.liferay.gradle.plugins.workspace.ProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
@@ -66,16 +67,22 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 	@Override
 	public void apply(Project project) {
+		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
+			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
+
 		if (isJavaBuild()) {
+			ProjectConfigurator projectConfigurator =
+				workspaceExtension.propertyMissing(
+					WarsProjectConfigurator.NAME);
+
+			projectConfigurator.apply(project);
+
 			GradleUtil.applyPlugin(project, ThemeBuilderPlugin.class);
 
 			_configureTaskBuildTheme(project);
 			_configureWar(project);
 		}
 		else {
-			WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
-				(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
-
 			GradleUtil.applyPlugin(project, LiferayThemePlugin.class);
 
 			_configureLiferay(project, workspaceExtension);

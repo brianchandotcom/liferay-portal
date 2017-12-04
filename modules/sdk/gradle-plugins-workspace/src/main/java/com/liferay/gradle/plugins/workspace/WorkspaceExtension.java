@@ -78,8 +78,6 @@ public class WorkspaceExtension {
 			settings, "home.dir",
 			BundleSupportConstants.DEFAULT_LIFERAY_HOME_DIR_NAME);
 		_rootProjectConfigurator = new RootProjectConfigurator(settings);
-		_themesBuildAdvanced = _getProperty(
-			settings, "themes.build.advanced", _THEMES_BUILD_ADVANCED);
 	}
 
 	public File getBundleCacheDir() {
@@ -133,10 +131,6 @@ public class WorkspaceExtension {
 
 	public boolean isBundleTokenForce() {
 		return GradleUtil.toBoolean(_bundleTokenForce);
-	}
-
-	public boolean isThemesBuildAdvanced() {
-		return GradleUtil.toBoolean(_themesBuildAdvanced);
 	}
 
 	public ProjectConfigurator propertyMissing(String name) {
@@ -193,10 +187,6 @@ public class WorkspaceExtension {
 		_homeDir = homeDir;
 	}
 
-	public void setThemesBuildAdvanced(Object themesBuildAdvanced) {
-		_themesBuildAdvanced = themesBuildAdvanced;
-	}
-
 	private boolean _getProperty(
 		Object object, String keySuffix, boolean defaultValue) {
 
@@ -244,8 +234,6 @@ public class WorkspaceExtension {
 
 	private static final String _BUNDLE_TOKEN_PASSWORD_FILE = null;
 
-	private static final boolean _THEMES_BUILD_ADVANCED = true;
-
 	private Object _bundleCacheDir;
 	private Object _bundleDistRootDirName;
 	private Object _bundleTokenDownload;
@@ -261,6 +249,5 @@ public class WorkspaceExtension {
 	private final Set<ProjectConfigurator> _projectConfigurators =
 		new HashSet<>();
 	private final Plugin<Project> _rootProjectConfigurator;
-	private Object _themesBuildAdvanced;
 
 }

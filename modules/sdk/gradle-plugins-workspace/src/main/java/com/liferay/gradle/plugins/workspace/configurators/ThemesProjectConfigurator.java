@@ -19,6 +19,7 @@ import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.theme.builder.BuildThemeTask;
 import com.liferay.gradle.plugins.theme.builder.ThemeBuilderPlugin;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
+import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 
 import groovy.json.JsonSlurper;
@@ -57,6 +58,10 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 	public ThemesProjectConfigurator(Settings settings) {
 		super(settings);
+
+		_javaBuild = GradleUtil.getProperty(
+			settings, WorkspacePlugin.PROPERTY_PREFIX + _NAME + ".java.build",
+			_JAVA_BUILD);
 	}
 
 	@Override
@@ -64,7 +69,14 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
 			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
 
-		if (workspaceExtension.isThemesBuildAdvanced()) {
+		if (isJavaBuild()) {
+			GradleUtil.applyPlugin(project, ThemeBuilderPlugin.class);
+
+			_configureThemeBuilderPlugin(project);
+
+			_configureWarPlugin(project);
+		}
+		else {
 			GradleUtil.applyPlugin(project, LiferayThemePlugin.class);
 
 			_configureLiferay(project, workspaceExtension);
@@ -74,18 +86,19 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 			_configureRootTaskDistBundle(assembleTask);
 		}
-		else {
-			GradleUtil.applyPlugin(project, ThemeBuilderPlugin.class);
-
-			_configureThemeBuilderPlugin(project);
-
-			_configureWarPlugin(project);
-		}
 	}
 
 	@Override
 	public String getName() {
 		return _NAME;
+	}
+
+	public boolean isJavaBuild() {
+		return _javaBuild;
+	}
+
+	public void setJavaBuild(boolean javaBuild) {
+		_javaBuild = javaBuild;
 	}
 
 	@Override
@@ -208,6 +221,10 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 			"dist/" + basePluginConvention.getArchivesBaseName() + ".war");
 	}
 
+	private static final boolean _JAVA_BUILD = false;
+
 	private static final String _NAME = "themes";
+
+	private boolean _javaBuild;
 
 }

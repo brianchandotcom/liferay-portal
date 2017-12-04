@@ -63,7 +63,7 @@ public class ReadingTimeCalculatorImpl implements ReadingTimeCalculator {
 	public Optional<Duration> calculate(
 		String content, String contentType, Locale locale) {
 
-		if (!_accepts(contentType, locale)) {
+		if (!_supportedContentTypes.contains(contentType)) {
 			return Optional.empty();
 		}
 
@@ -99,21 +99,9 @@ public class ReadingTimeCalculatorImpl implements ReadingTimeCalculator {
 		_serviceTrackerMap.close();
 	}
 
-	private boolean _accepts(String contentType, Locale locale) {
-		if (_supportedContentTypes.contains(contentType) &&
-			_supportedLanguages.contains(locale.getLanguage())) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	private static final List<String> _supportedContentTypes = Arrays.asList(
 		ContentTypes.TEXT_HTML, ContentTypes.TEXT_HTML_UTF8, ContentTypes.TEXT,
 		ContentTypes.TEXT_PLAIN, ContentTypes.TEXT_PLAIN_UTF8);
-	private static final List<String> _supportedLanguages = Arrays.asList(
-		"en", "fr", "de", "it", "es");
 
 	private ServiceTrackerMap<String, ReadingTimeModelInfo> _serviceTrackerMap;
 

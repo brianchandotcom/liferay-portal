@@ -44,10 +44,10 @@ page import="com.liferay.portal.security.service.access.policy.exception.SAPEntr
 page import="com.liferay.portal.security.service.access.policy.model.SAPEntry" %><%@
 page import="com.liferay.portal.security.service.access.policy.model.SAPEntryConstants" %><%@
 page import="com.liferay.portal.security.service.access.policy.service.SAPEntryServiceUtil" %><%@
-page import="com.liferay.portal.security.service.access.policy.service.permission.SAPEntryPermission" %><%@
-page import="com.liferay.portal.security.service.access.policy.service.permission.SAPPermission" %><%@
 page import="com.liferay.portal.security.service.access.policy.util.comparator.SAPEntryNameComparator" %><%@
 page import="com.liferay.portal.security.service.access.policy.web.internal.constants.SAPWebKeys" %><%@
+page import="com.liferay.portal.security.service.access.policy.web.internal.permission.SAPEntryPermission" %><%@
+page import="com.liferay.portal.security.service.access.policy.web.internal.permission.SAPPermission" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="javax.portlet.ActionRequest" %><%@

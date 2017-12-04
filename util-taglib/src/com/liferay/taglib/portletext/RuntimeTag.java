@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
-import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -55,9 +54,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Stack;
 
-import javax.servlet.DispatcherType;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
@@ -312,7 +309,7 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 				(HttpServletRequest)pageContext.getRequest();
 
 			if (_useLastForwardRequest) {
-				request = _getLastForwardRequest(request);
+				request = PortalUtil.getLastForwardRequest(request);
 			}
 
 			Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
@@ -425,64 +422,6 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 		portlet.setStatic(true);
 
 		return portlet;
-	}
-
-	private HttpServletRequest _getLastForwardRequest(
-		HttpServletRequest request) {
-
-		HttpServletRequestWrapper requestWrapper = null;
-		HttpServletRequest originalRequest = null;
-		HttpServletRequest nextRequest = null;
-
-		while (request instanceof HttpServletRequestWrapper) {
-			if (request instanceof
-				PersistentHttpServletRequestWrapper) {
-
-				PersistentHttpServletRequestWrapper
-					persistentHttpServletRequestWrapper =
-						(PersistentHttpServletRequestWrapper)request;
-
-				persistentHttpServletRequestWrapper =
-					persistentHttpServletRequestWrapper.clone();
-
-				if (originalRequest == null) {
-					originalRequest =
-						persistentHttpServletRequestWrapper.clone();
-				}
-
-				if (requestWrapper != null) {
-					requestWrapper.setRequest(
-						persistentHttpServletRequestWrapper);
-				}
-
-				requestWrapper = persistentHttpServletRequestWrapper;
-			}
-
-			HttpServletRequestWrapper httpServletRequestWrapper =
-				(HttpServletRequestWrapper)request;
-
-			nextRequest =
-				(HttpServletRequest)httpServletRequestWrapper.getRequest();
-
-			if ((request.getDispatcherType() ==
-				 DispatcherType.FORWARD) &&
-				(nextRequest.getDispatcherType() == DispatcherType.REQUEST)) {
-
-				break;
-			}
-
-			request = nextRequest;
-		}
-
-		if (requestWrapper != null) {
-			requestWrapper.setRequest(request);
-		}
-
-		if (originalRequest != null) {
-			return originalRequest;
-		}
-
-		return request;
 	}
 
 	private static final String _ERROR_PAGE =

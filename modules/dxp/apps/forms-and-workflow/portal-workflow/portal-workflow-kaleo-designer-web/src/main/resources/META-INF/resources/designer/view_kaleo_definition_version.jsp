@@ -82,6 +82,8 @@ renderResponse.setTitle(workflowDefinition.getName());
 <aui:script use="aui-ace-editor,liferay-xml-formatter">
 	var STR_VALUE = 'value';
 
+	var XMLFormatter = new Liferay.XMLFormatter();
+
 	var contentEditor = new A.AceEditor(
 		{
 			boundingBox: '#<portlet:namespace />contentEditor',
@@ -95,6 +97,6 @@ renderResponse.setTitle(workflowDefinition.getName());
 	var editorContentElement = A.one('#<portlet:namespace />content');
 
 	if (editorContentElement) {
-		contentEditor.set(STR_VALUE, editorContentElement.val());
+		contentEditor.set(STR_VALUE, XMLFormatter.format(editorContentElement.val()));
 	}
 </aui:script>

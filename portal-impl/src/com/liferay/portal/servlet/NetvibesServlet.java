@@ -132,7 +132,7 @@ public class NetvibesServlet extends HttpServlet {
 		sb.append("<body>");
 		sb.append("<iframe frameborder=\"0\" height=\"100%\" src=\"");
 		sb.append(widgetURL);
-		sb.append("\" width="100%">");
+		sb.append("\" width=\"100%\">");
 		sb.append("</iframe>");
 		sb.append("</body>");
 		sb.append("</html>");

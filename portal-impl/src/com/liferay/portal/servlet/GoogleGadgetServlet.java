@@ -113,7 +113,7 @@ public class GoogleGadgetServlet extends HttpServlet {
 		sb.append("<![CDATA[");
 		sb.append("<iframe frameborder=\"0\" height=\"100%\" src=\"");
 		sb.append(widgetURL);
-		sb.append("\" width="100%">");
+		sb.append("\" width=\"100%\">");
 		sb.append("</iframe>");
 		sb.append("]]>");
 		sb.append("</Content>");

@@ -110,7 +110,9 @@
 			<var name="pageName" value="Site Page" />
 		</execute>
 
-		<execute macro="Navigator#gotoEditPageViaControlMenu" />
+		<execute macro="Navigator#gotoEditPageViaControlMenu">
+			<var name="pageName" value="Site Page" />
+		</execute>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
 			<var name="menuItem" value="Configure" />
@@ -134,7 +136,9 @@
 			<var name="pageName" value="Site Page Edit" />
 		</execute>
 
-		<execute macro="Navigator#gotoEditPageViaControlMenu" />
+		<execute macro="Navigator#gotoEditPageViaControlMenu">
+			<var name="pageName" value="Site Page Edit" />
+		</execute>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
 			<var name="menuItem" value="Configure" />
@@ -153,7 +157,9 @@
 			<var name="pageName" value="Site Page Edit" />
 		</execute>
 
-		<execute macro="Navigator#gotoEditPageViaControlMenu" />
+		<execute macro="Navigator#gotoEditPageViaControlMenu">
+			<var name="pageName" value="Site Page Edit" />
+		</execute>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
 			<var name="menuItem" value="Configure" />

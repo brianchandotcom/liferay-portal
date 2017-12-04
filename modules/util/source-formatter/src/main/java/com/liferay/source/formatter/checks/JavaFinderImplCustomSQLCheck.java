@@ -21,6 +21,7 @@ import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaMethod;
 import com.liferay.source.formatter.parser.JavaTerm;
+import com.liferay.source.formatter.parser.JavaVariable;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -69,6 +70,11 @@ public class JavaFinderImplCustomSQLCheck extends BaseJavaTermCheck {
 				_checkCustomSQL(
 					fileName, childJavaTerm.getContent(), fileContent,
 					customSQLDocument, finderName);
+			}
+			else if (childJavaTerm instanceof JavaVariable) {
+				_checkCustomSQLVariable(
+					fileName, childJavaTerm.getName(),
+					childJavaTerm.getContent(), fileContent, customSQLDocument);
 			}
 		}
 
@@ -136,6 +142,44 @@ public class JavaFinderImplCustomSQLCheck extends BaseJavaTermCheck {
 		}
 	}
 
+	private void _checkCustomSQLVariable(
+		String fileName, String variableName, String variableContent,
+		String fileContent, Document customSQLDocument) {
+
+		if (variableContent.contains("@Deprecated") ||
+			fileContent.contains("\n@Deprecated")) {
+
+			return;
+		}
+
+		Matcher matcher = _customQueryVariablePattern.matcher(variableContent);
+
+		if (!matcher.find()) {
+			return;
+		}
+
+		if (customSQLDocument != null) {
+			Element rootElement = customSQLDocument.getRootElement();
+
+			for (Element sqlElement :
+					(List<Element>)rootElement.elements("sql")) {
+
+				String id = sqlElement.attributeValue("id");
+
+				if (id.endsWith(matcher.group(1) + matcher.group(2))) {
+					return;
+				}
+			}
+		}
+
+		int pos = fileContent.indexOf(variableContent);
+
+		addMessage(
+			fileName,
+			"'" + variableName + "' points to non-existing custom query",
+			getLineCount(fileContent, pos));
+	}
+
 	private String _getReplaceSQLValue(String content, String parameterValue) {
 		if (parameterValue.matches("[A-Z_]+")) {
 			Pattern pattern = Pattern.compile(
@@ -181,6 +225,8 @@ public class JavaFinderImplCustomSQLCheck extends BaseJavaTermCheck {
 		return sb.toString();
 	}
 
+	private final Pattern _customQueryVariablePattern = Pattern.compile(
+		"=\\s+(\\w+)\\.class\\.getName\\(\\)\\s+\\+\\s+\"([\\.\\w]+)\";");
 	private Document _portalCustomSQLDocument;
 	private final Pattern _stringUtilReplacePattern = Pattern.compile(
 		"sql = StringUtil.replace\\(.*?\\);\n", Pattern.DOTALL);

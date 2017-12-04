@@ -1,0 +1,10 @@
+.fragment-blog-entry-title {
+  text-align: center;
+  font-family: inherit;
+  font-weight: 300;
+  text-transform: uppercase;
+  font-size: 1.5em;
+  border-top: solid thin black;
+  border-bottom: solid thin black;
+  padding: 1em;
+}

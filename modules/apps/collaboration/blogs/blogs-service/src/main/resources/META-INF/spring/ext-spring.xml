@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+>
+	<bean class="com.liferay.blogs.internal.permission.BlogsEntryPermissionCheckerFactory" factory-method="create" id="com.liferay.blogs.internal.permission.BlogsEntryPermissionChecker" >
+		<constructor-arg ref="com.liferay.blogs.service.BlogsEntryLocalService" />
+		<constructor-arg ref="com.liferay.blogs.internal.permission.BlogsPortletPermissionChecker" />
+	</bean>
+	<bean class="com.liferay.blogs.internal.permission.BlogsPortletPermissionChecker" id="com.liferay.blogs.internal.permission.BlogsPortletPermissionChecker" />
+</beans>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.portlet.asset.service.persistence.AssetCategoryPropertyFinder.countByG_K">
+	<sql id="com.liferay.asset.category.property.service.persistence.AssetCategoryPropertyFinder.countByG_K">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT AssetCategoryProperty.value) AS COUNT_VALUE
@@ -15,7 +15,7 @@
 				(AssetCategoryProperty.key_ = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.asset.service.persistence.AssetCategoryPropertyFinder.findByG_K">
+	<sql id="com.liferay.asset.category.property.service.persistence.AssetCategoryPropertyFinder.findByG_K">
 		<![CDATA[
 			SELECT
 				DISTINCT AssetCategoryProperty.value AS categoryPropertyValue

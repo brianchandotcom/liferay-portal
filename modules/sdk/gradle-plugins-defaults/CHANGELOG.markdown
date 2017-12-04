@@ -2532,6 +2532,11 @@ version 1.1.9.
 - [LPS-69999]: Prevent the `updateFileVersions` task from changing files in
 read-only sub-repositories.
 
+## 5.2.10 - 2017-12-04
+
+### Fixed
+- [LPS-76202]: Fix usages of the `compileJSP.destinationDir` property.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public

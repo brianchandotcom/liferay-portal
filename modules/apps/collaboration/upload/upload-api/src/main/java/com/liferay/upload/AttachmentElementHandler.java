@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
  */
 public interface AttachmentElementHandler {
 
-	public String getElementTag(FileEntry fileEntry);
+	public String getElementTag(String originalTag, FileEntry fileEntry);
 
 	public String replaceContentElements(
 			String content,

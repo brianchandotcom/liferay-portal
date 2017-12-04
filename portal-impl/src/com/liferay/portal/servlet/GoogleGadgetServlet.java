@@ -94,8 +94,6 @@ public class GoogleGadgetServlet extends HttpServlet {
 
 		String title = portlet.getDisplayName();
 
-		String portalURL = PortalUtil.getPortalURL(request);
-
 		String widgetURL = String.valueOf(request.getRequestURL());
 
 		widgetURL = widgetURL.replaceFirst(

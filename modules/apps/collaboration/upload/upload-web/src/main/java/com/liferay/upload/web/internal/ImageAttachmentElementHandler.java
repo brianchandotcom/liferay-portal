@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.upload.AttachmentElementHandler;
-import com.liferay.upload.AttachmentFileEntryReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,8 +52,11 @@ public class ImageAttachmentElementHandler implements AttachmentElementHandler {
 			UnsafeFunction<FileEntry, FileEntry, PortalException> saveFile)
 		throws PortalException {
 
-		for (AttachmentFileEntryReference attachmentFileEntryReference :
-				_addAttachmentFileEntries(content, saveFile)) {
+		for (FileEntry tempAttachmentFileEntry :
+				_getAttachmentFileEntries(content)) {
+
+			FileEntry attachmentFileEntry = saveFile.apply(
+				tempAttachmentFileEntry);
 
 			StringBundler sb = new StringBundler(8);
 
@@ -62,43 +64,16 @@ public class ImageAttachmentElementHandler implements AttachmentElementHandler {
 			sb.append(_ATTRIBUTE_LIST_REGEXP);
 			sb.append(EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
 			sb.append("\\s*?=\\s*?\"");
-			sb.append(
-				attachmentFileEntryReference.getTempAttachmentFileEntryId());
+			sb.append(tempAttachmentFileEntry.getFileEntryId());
 			sb.append("\"");
 			sb.append(_ATTRIBUTE_LIST_REGEXP);
 			sb.append("/>");
 
 			content = content.replaceAll(
-				sb.toString(),
-				getElementTag(
-					attachmentFileEntryReference.getAttachmentFileEntry()));
+				sb.toString(), getElementTag(attachmentFileEntry));
 		}
 
 		return content;
-	}
-
-	private List<AttachmentFileEntryReference> _addAttachmentFileEntries(
-			String content,
-			UnsafeFunction<FileEntry, FileEntry, PortalException> saveFile)
-		throws PortalException {
-
-		List<FileEntry> tempFileEntries = _getAttachmentFileEntries(content);
-
-		List<AttachmentFileEntryReference> attachmentFileEntryReferences =
-			new ArrayList<>();
-
-		for (FileEntry tempFileEntry : tempFileEntries) {
-			FileEntry attachmentFileEntry = saveFile.apply(tempFileEntry);
-
-			PortletFileRepositoryUtil.deletePortletFileEntry(
-				tempFileEntry.getFileEntryId());
-
-			attachmentFileEntryReferences.add(
-				new DefaultAttachmentFileEntryReference(
-					tempFileEntry.getFileEntryId(), attachmentFileEntry));
-		}
-
-		return attachmentFileEntryReferences;
 	}
 
 	private List<FileEntry> _getAttachmentFileEntries(String content)

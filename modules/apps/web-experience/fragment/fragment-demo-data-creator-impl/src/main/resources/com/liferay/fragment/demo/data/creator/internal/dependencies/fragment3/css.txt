@@ -1,0 +1,35 @@
+.fragment-jumbo-cover {
+  position: relative;
+  height: 0;
+  width: 100%;
+  padding-top: 36.25%;
+  overflow: hidden;
+}
+
+.fragment-jumbo-cover video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+}
+
+.fragment-jumbo-cover h1 {
+  position: absolute;
+  top: 1em;
+  left: 1em;
+  z-index: 1;
+  font-weight: bolder;
+  text-transform: uppercase;
+  color: white;
+  font-size: 10vmin;
+}
+
+.fragment-jumbo-cover h1::after {
+  content: '';
+  position: absolute;
+  top: 1.1em;
+  left: 0.05em;
+  border-bottom: solid thin white;
+  width: 3em;
+}

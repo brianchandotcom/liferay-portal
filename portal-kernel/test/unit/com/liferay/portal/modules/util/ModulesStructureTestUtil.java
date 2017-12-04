@@ -47,7 +47,9 @@ import org.junit.Assert;
  */
 public class ModulesStructureTestUtil {
 
-	public static boolean contains(Path path, String s) throws IOException {
+	public static boolean contains(Path path, String... strings)
+		throws IOException {
+
 		try (FileReader fileReader = new FileReader(path.toFile());
 			UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(fileReader)) {
@@ -55,8 +57,10 @@ public class ModulesStructureTestUtil {
 			String line = null;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				if (line.contains(s)) {
-					return true;
+				for (String s : strings) {
+					if (line.contains(s)) {
+						return true;
+					}
 				}
 			}
 		}

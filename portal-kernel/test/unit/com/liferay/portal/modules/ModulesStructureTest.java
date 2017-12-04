@@ -140,8 +140,9 @@ public class ModulesStructureTest {
 							Files.exists(buildGradlePath) &&
 							ModulesStructureTestUtil.contains(
 								buildGradlePath,
+								"apply plugin: \"com.liferay.defaults.plugin\"",
 								"apply plugin: " +
-									"\"com.liferay.defaults.plugin\""));
+									"\"com.liferay.root.defaults.plugin\""));
 					}
 
 					if (Files.exists(dirPath.resolve("bnd.bnd"))) {

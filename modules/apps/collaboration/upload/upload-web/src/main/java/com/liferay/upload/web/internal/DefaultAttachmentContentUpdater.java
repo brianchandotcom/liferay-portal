@@ -41,7 +41,7 @@ public class DefaultAttachmentContentUpdater
 	@Override
 	public String updateContent(
 			String content, String contentType,
-			UnsafeFunction<FileEntry, FileEntry, PortalException> saveFile)
+			UnsafeFunction<FileEntry, FileEntry, PortalException> saveTempFile)
 		throws PortalException {
 
 		if (!ContentTypes.TEXT_HTML.equals(contentType)) {
@@ -52,8 +52,8 @@ public class DefaultAttachmentContentUpdater
 		for (AttachmentElementHandler attachmentElementHandler :
 				_attachmentElementHandlers) {
 
-			content = attachmentElementHandler.replaceContentElements(
-				content, saveFile);
+			content = attachmentElementHandler.replaceAttachmentElements(
+				content, saveTempFile);
 		}
 
 		return content;

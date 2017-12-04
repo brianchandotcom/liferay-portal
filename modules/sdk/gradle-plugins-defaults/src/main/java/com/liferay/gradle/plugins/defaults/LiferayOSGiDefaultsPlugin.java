@@ -851,7 +851,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private Copy _addTaskDownloadCompiledJSP(
-		JavaCompile compileJSPTask, final Jar jarJSPsTask,
+		final JavaCompile compileJSPTask, final Jar jarJSPsTask,
 		Properties artifactProperties) {
 
 		final String artifactJspcURL = artifactProperties.getProperty(
@@ -927,9 +927,18 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 			});
 
+		copy.into(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return compileJSPTask.getDestinationDir();
+				}
+
+			});
+
 		copy.setDescription(
 			"Downloads the latest compiled JSP classes for this project.");
-		copy.setDestinationDir(compileJSPTask.getDestinationDir());
 		copy.setIncludeEmptyDirs(false);
 
 		return copy;

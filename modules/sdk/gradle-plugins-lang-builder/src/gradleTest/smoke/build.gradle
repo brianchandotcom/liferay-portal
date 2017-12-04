@@ -3,10 +3,6 @@ apply plugin: "java"
 
 task runGradleTest
 
-buildLang {
-	translateSubscriptionKey = project.properties["microsoft.translator.subscription.key"]
-}
-
 repositories {
 	maven {
 		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
@@ -17,20 +13,8 @@ runGradleTest {
 	dependsOn buildLang
 
 	doLast {
-		FileTree languagePropertiesFileTree = fileTree(dir: "src/main/resources/content", include: "Language*.properties")
+		FileTree languagePropertiesFileTree = fileTree(dir: "src/main/resources/content", include: "Language_*.properties")
 
 		assert !languagePropertiesFileTree.empty
-
-		languagePropertiesFileTree.each {
-			File languagePropertiesFile ->
-
-			Properties languageProperties = new Properties()
-
-			languagePropertiesFile.withInputStream {
-				languageProperties.load it
-			}
-
-			assert languageProperties.getProperty("hello-lang-builder")
-		}
 	}
 }

@@ -28,10 +28,9 @@ String widgetURL = ParamUtil.getString(request, "widgetURL");
 			<liferay-ui:message key="share-this-application-on-any-website" />
 		</p>
 
-		<textarea class="col-md-12 lfr-textarea" onClick="this.select();" rows="10">&lt;script src=&quot;<%= themeDisplay.getPortalURL() %><%= PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_JS) %>/liferay/widget.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot;&gt;
-Liferay.Widget({ url: &#x27;<%= HtmlUtil.escape(widgetURL) %>&#x27;});
-&lt;/script&gt;</textarea>
+		<textarea class="col-md-12 lfr-textarea" onClick="this.select();" rows="10">
+			<iframe frameborder="0" height="100%" src="<%= HtmlUtil.escapeAttribute(widgetURL) %>" width="100%"></iframe>
+		</textarea>
 	</c:when>
 	<c:when test="<%= Validator.isNotNull(netvibesURL) %>">
 		<p>

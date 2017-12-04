@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Daniel Kocsis
  */
 @Component(
-	property = {"model.class.name=com.liferay.blogs.kernel.model.BlogsEntry"},
+	property = {"model.class.name=com.liferay.blogs.model.BlogsEntry"},
 	service = {
 		BlogsEntryExportImportContentProcessor.class,
 		ExportImportContentProcessor.class

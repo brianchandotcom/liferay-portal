@@ -498,7 +498,7 @@ public class BlogsEntryStagedModelDataHandler
 
 	@Reference(
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(model.class.name=com.liferay.blogs.kernel.model.BlogsEntry)",
+		target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)",
 		unbind = "-"
 	)
 	protected void setExportImportContentProcessor(

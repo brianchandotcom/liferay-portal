@@ -270,6 +270,9 @@ public class ModulesStructureTest {
 		final String themeNpmIgnoreTemplate = StringUtil.read(
 			ModulesStructureTest.class, "dependencies/theme_npmignore.tmpl");
 
+		final Set<String> gitRepoGitIgnoreTemplateLines = SetUtil.fromString(
+			gitRepoGitIgnoreTemplate);
+
 		Files.walkFileTree(
 			_modulesDirPath,
 			new SimpleFileVisitor<Path>() {
@@ -316,7 +319,7 @@ public class ModulesStructureTest {
 					String fileName = String.valueOf(path.getFileName());
 
 					if (fileName.equals(".gitignore")) {
-						_testGitIgnoreFile(path);
+						_testGitIgnoreFile(path, gitRepoGitIgnoreTemplateLines);
 					}
 
 					return FileVisitResult.CONTINUE;
@@ -738,8 +741,14 @@ public class ModulesStructureTest {
 			Files.exists(rootDirPath.resolve(_GIT_REPO_FILE_NAME)));
 	}
 
-	private void _testGitIgnoreFile(Path path) throws IOException {
+	private void _testGitIgnoreFile(
+			Path path, Set<String> gitRepoGitIgnoreTemplateLines)
+		throws IOException {
+
 		Path dirPath = path.getParent();
+
+		boolean gitRepoGitIgnore = Files.exists(
+			dirPath.resolve(_GIT_REPO_FILE_NAME));
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new FileReader(path.toFile()))) {
@@ -748,6 +757,12 @@ public class ModulesStructureTest {
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				line = StringUtil.trim(line);
+
+				if (!gitRepoGitIgnore && !dirPath.equals(_modulesDirPath)) {
+					Assert.assertFalse(
+						"Forbidden \"" + line + "\" in " + path,
+						gitRepoGitIgnoreTemplateLines.contains(line));
+				}
 
 				if (!StringUtil.startsWith(line, "!/")) {
 					continue;

@@ -81,10 +81,7 @@ public class ImageAttachmentElementHandler implements AttachmentElementHandler {
 
 		List<FileEntry> tempAttachmentFileEntries = new ArrayList<>();
 
-		Pattern pattern = Pattern.compile(
-			EditorConstants.ATTRIBUTE_DATA_IMAGE_ID + "=.(\\d+)");
-
-		Matcher matcher = pattern.matcher(content);
+		Matcher matcher = _ATTRIBUTE_DATA_IMAGE_ID_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			long fileEntryId = GetterUtil.getLong(matcher.group(1));
@@ -97,6 +94,9 @@ public class ImageAttachmentElementHandler implements AttachmentElementHandler {
 
 		return tempAttachmentFileEntries;
 	}
+
+	private static final Pattern _ATTRIBUTE_DATA_IMAGE_ID_PATTERN =
+		Pattern.compile(EditorConstants.ATTRIBUTE_DATA_IMAGE_ID + "=.(\\d+)");
 
 	private static final String _ATTRIBUTE_LIST_REGEXP =
 		"(\\s*?\\w+\\s*?=\\s*?\"[^\"]*\")*?\\s*?";

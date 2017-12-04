@@ -1262,12 +1262,12 @@
 		</execute>
 
 		<execute macro="FormFields#viewCheckboxLabel">
-			<var name="fieldLabel" value="Apply versioning" />
+			<var name="fieldLabel" value="Apply Versioning" />
 			<var name="fieldName" value="applyVersioning" />
 		</execute>
 
 		<execute macro="FormFields#viewCheckboxLabel">
-			<var name="fieldLabel" value="Expose global" />
+			<var name="fieldLabel" value="Expose Global" />
 			<var name="fieldName" value="exposeGlobal" />
 		</execute>
 

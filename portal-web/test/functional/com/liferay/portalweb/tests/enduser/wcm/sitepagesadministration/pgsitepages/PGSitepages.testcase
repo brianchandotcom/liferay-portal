@@ -114,11 +114,6 @@
 			<var name="pageName" value="Site Page" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Configure" />
-			<var name="rowEntry" value="Site Page" />
-		</execute>
-
 		<execute macro="Page#editName">
 			<var name="pageNameEdit" value="Site Page Edit" />
 		</execute>
@@ -140,11 +135,6 @@
 			<var name="pageName" value="Site Page Edit" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Configure" />
-			<var name="rowEntry" value="Site Page Edit" />
-		</execute>
-
 		<execute macro="Navigator#gotoSEOPanel" />
 
 		<execute macro="Page#editPageMetadata">
@@ -159,11 +149,6 @@
 
 		<execute macro="Navigator#gotoEditPageViaControlMenu">
 			<var name="pageName" value="Site Page Edit" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Configure" />
-			<var name="rowEntry" value="Site Page Edit" />
 		</execute>
 
 		<execute macro="Navigator#gotoSEOPanel" />

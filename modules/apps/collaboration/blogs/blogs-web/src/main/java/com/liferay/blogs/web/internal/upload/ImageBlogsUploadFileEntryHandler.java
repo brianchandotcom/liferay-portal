@@ -56,7 +56,7 @@ public class ImageBlogsUploadFileEntryHandler
 			(ThemeDisplay)uploadPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		_portletResourcePermission.check(
+		portletResourcePermission.check(
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroup(),
 			ActionKeys.ADD_ENTRY);
 
@@ -97,6 +97,9 @@ public class ImageBlogsUploadFileEntryHandler
 	@Reference
 	protected BlogsEntryLocalService blogsLocalService;
 
+	@Reference(target = "(resource.name=" + BlogsConstants.RESOURCE_NAME + ")")
+	protected PortletResourcePermission portletResourcePermission;
+
 	private void _validateFile(String fileName, long size)
 		throws PortalException {
 
@@ -124,8 +127,5 @@ public class ImageBlogsUploadFileEntryHandler
 	}
 
 	private static final String _PARAMETER_NAME = "imageSelectorFileName";
-
-	@Reference(target = "(resource.name=" + BlogsConstants.RESOURCE_NAME + ")")
-	private PortletResourcePermission _portletResourcePermission;
 
 }

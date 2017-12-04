@@ -143,6 +143,13 @@ public class ModulesStructureTest {
 								"apply plugin: \"com.liferay.defaults.plugin\"",
 								"apply plugin: " +
 									"\"com.liferay.root.defaults.plugin\""));
+
+						Path buildExtGradlePath = dirPath.resolve(
+							"build-ext.gradle");
+
+						Assert.assertFalse(
+							"Forbidden " + buildExtGradlePath,
+							Files.deleteIfExists(buildExtGradlePath));
 					}
 
 					if (Files.exists(dirPath.resolve("bnd.bnd"))) {

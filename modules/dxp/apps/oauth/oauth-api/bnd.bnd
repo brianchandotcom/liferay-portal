@@ -10,6 +10,9 @@ Export-Package:\
 	com.liferay.oauth.service.persistence,\
 	com.liferay.oauth.util,\
 	\
-	net.oauth.*
+	net.oauth,\
+	net.oauth.server,\
+	net.oauth.signature,\
+	net.oauth.signature.pem
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: OAuth Provider

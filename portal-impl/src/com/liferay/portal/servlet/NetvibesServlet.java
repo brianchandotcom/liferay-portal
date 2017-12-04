@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
-import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
-import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -134,7 +132,7 @@ public class NetvibesServlet extends HttpServlet {
 		sb.append("<body>");
 		sb.append("<iframe frameborder=\"0\" height=\"100%\" src=\"");
 		sb.append(widgetURL);
-		sb.append("\" width="100%">");
+		sb.append("\" width=\"100%\">");
 		sb.append("</iframe>");
 		sb.append("</body>");
 		sb.append("</html>");

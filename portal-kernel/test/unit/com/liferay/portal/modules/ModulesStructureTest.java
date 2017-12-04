@@ -284,7 +284,9 @@ public class ModulesStructureTest {
 
 					String dirName = String.valueOf(dirPath.getFileName());
 
-					if (dirName.equals("gradleTest")) {
+					if (dirName.equals("gradleTest") ||
+						dirName.equals("project-templates")) {
+
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 

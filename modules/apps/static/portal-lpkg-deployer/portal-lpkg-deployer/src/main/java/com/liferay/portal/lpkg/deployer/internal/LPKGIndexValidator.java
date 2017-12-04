@@ -345,10 +345,13 @@ public class LPKGIndexValidator {
 		}
 
 		if (enabled) {
-			additionalJarFiles.add(
-				new File(
-					PropsValues.MODULE_FRAMEWORK_BASE_DIR,
-					"compat/com.liferay.modules.compat.data.jar"));
+			File file = new File(
+				PropsValues.MODULE_FRAMEWORK_BASE_DIR,
+				"compat/com.liferay.modules.compat.data.jar");
+
+			if (file.exists()) {
+				additionalJarFiles.add(file);
+			}
 		}
 
 		try {

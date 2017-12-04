@@ -18,6 +18,9 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.source.formatter.parser.JavaClass;
+import com.liferay.source.formatter.parser.JavaMethod;
+import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -29,7 +32,7 @@ import org.dom4j.Element;
 /**
  * @author Hugo Huijser
  */
-public class JavaFinderImplCustomSQLCheck extends BaseFileCheck {
+public class JavaFinderImplCustomSQLCheck extends BaseJavaTermCheck {
 
 	@Override
 	public void init() throws Exception {
@@ -43,24 +46,50 @@ public class JavaFinderImplCustomSQLCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
+			String fileName, String absolutePath, JavaTerm javaTerm,
+			String fileContent)
 		throws Exception {
 
-		if (fileName.endsWith("FinderImpl.java")) {
-			_checkCustomSQL(fileName, absolutePath, content);
+		JavaClass javaClass = (JavaClass)javaTerm;
+
+		String className = javaClass.getName();
+
+		if (!className.endsWith("FinderImpl")) {
+			return javaClass.getContent();
 		}
 
-		return content;
+		Document customSQLDocument = getCustomSQLDocument(
+			fileName, absolutePath, _portalCustomSQLDocument);
+		String finderName = className.substring(0, className.length() - 4);
+
+		List<JavaTerm> childJavaTerms = javaClass.getChildJavaTerms();
+
+		for (JavaTerm childJavaTerm : childJavaTerms) {
+			if (childJavaTerm instanceof JavaMethod) {
+				_checkCustomSQL(
+					fileName, childJavaTerm.getContent(), fileContent,
+					customSQLDocument, finderName);
+			}
+		}
+
+		return javaClass.getContent();
+	}
+
+	@Override
+	protected String[] getCheckableJavaTermNames() {
+		return new String[] {JAVA_CLASS};
 	}
 
 	private void _checkCustomSQL(
-			String fileName, String absolutePath, String content)
+			String fileName, String methodContent, String fileContent,
+			Document customSQLDocument, String finderName)
 		throws Exception {
 
-		Document customSQLDocument = null;
-		String finderName = null;
+		if (customSQLDocument == null) {
+			return;
+		}
 
-		Matcher matcher = _stringUtilReplacePattern.matcher(content);
+		Matcher matcher = _stringUtilReplacePattern.matcher(methodContent);
 
 		outerLoop:
 		while (matcher.find()) {
@@ -72,23 +101,10 @@ public class JavaFinderImplCustomSQLCheck extends BaseFileCheck {
 			}
 
 			String replaceSQLValue = _getReplaceSQLValue(
-				content, parameterList.get(1));
+				fileContent, parameterList.get(1));
 
 			if (replaceSQLValue == null) {
 				continue;
-			}
-
-			if (finderName == null) {
-				String className = JavaSourceUtil.getClassName(fileName);
-
-				finderName = className.substring(0, className.length() - 4);
-
-				customSQLDocument = getCustomSQLDocument(
-					fileName, absolutePath, _portalCustomSQLDocument);
-			}
-
-			if (customSQLDocument == null) {
-				return;
 			}
 
 			Element rootElement = customSQLDocument.getRootElement();
@@ -109,12 +125,14 @@ public class JavaFinderImplCustomSQLCheck extends BaseFileCheck {
 				}
 			}
 
+			int pos = fileContent.indexOf(matcher.group());
+
 			addMessage(
 				fileName,
 				StringBundler.concat(
 					"SQL '", replaceSQLValue,
 					"' does not exist in the custom-sql file"),
-				getLineCount(content, matcher.start()));
+				getLineCount(fileContent, pos));
 		}
 	}
 

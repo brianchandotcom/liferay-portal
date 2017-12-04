@@ -21,6 +21,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL");
 
+String portletResource = ParamUtil.getString(request, "portletResource");
+
 if (Validator.isNull(backURL)) {
 	backURL = PortalUtil.getLayoutFullURL(layoutsAdminDisplayContext.getSelLayout(), themeDisplay);
 }
@@ -137,6 +139,7 @@ renderResponse.setTitle(selLayout.getName(locale));
 
 		<aui:form action='<%= HttpUtil.addParameter(editLayoutURL, "refererPlid", plid) %>' cssClass="container-fluid-1280" data-senna-off="true" enctype="multipart/form-data" method="post" name="editLayoutFm">
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+			<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 			<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 			<aui:input name="groupId" type="hidden" value="<%= layoutsAdminDisplayContext.getGroupId() %>" />
 			<aui:input name="liveGroupId" type="hidden" value="<%= layoutsAdminDisplayContext.getLiveGroupId() %>" />

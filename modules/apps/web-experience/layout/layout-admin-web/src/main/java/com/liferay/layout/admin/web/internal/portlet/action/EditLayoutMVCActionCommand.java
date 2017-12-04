@@ -206,7 +206,11 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			redirect = _portal.getLayoutFullURL(layout, themeDisplay);
 		}
 
-		MultiSessionMessages.add(actionRequest, "layoutUpdated", layout);
+		String portletResource = ParamUtil.getString(
+			actionRequest, "portletResource");
+
+		MultiSessionMessages.add(
+			actionRequest, portletResource + "layoutUpdated", layout);
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}

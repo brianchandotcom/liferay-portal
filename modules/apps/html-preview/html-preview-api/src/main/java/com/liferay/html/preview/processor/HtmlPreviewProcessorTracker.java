@@ -49,7 +49,7 @@ public class HtmlPreviewProcessorTracker {
 		_htmlPreviewProcessors.remove(htmlPreviewProcessor.getMimeType());
 	}
 
-	private static final Map<String, HtmlPreviewProcessor>
-		_htmlPreviewProcessors = new ConcurrentHashMap<>();
+	private final Map<String, HtmlPreviewProcessor> _htmlPreviewProcessors =
+		new ConcurrentHashMap<>();
 
 }

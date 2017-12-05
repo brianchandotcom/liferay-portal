@@ -40,7 +40,7 @@ class OpenStreetMapGeoJSONBase extends GeoJSONBase {
 		const feature = nativeFeature.geometry
 			? nativeFeature
 			: nativeFeature.target.feature;
-		const geometry = nativeFeature.geometry;
+		const geometry = feature.geometry;
 
 		return {
 			getGeometry() {

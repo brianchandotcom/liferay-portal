@@ -1,13 +1,19 @@
 {
 	"dependencies": {
-		"liferay-module-config-generator": "^1.1.10",
 		"metal-dom": "^2.13.2",
 		"metal-state": "^2.13.2"
 	},
 	"devDependencies": {
-		"liferay-module-config-generator": "^1.1.10",
-		"metal-cli": "^4.2.0"
+		"babel-cli": "^6.26.0",
+		"babel-preset-env": "^1.6.1",
+		"babel-preset-liferay-project": "^1.2.3",
+		"liferay-npm-bundler": "^1.2.2",
+		"liferay-npm-bundler-preset-standard": "^1.2.2"
 	},
 	"name": "map-google-maps",
+	"private": true,
+	"scripts": {
+		"build": "babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler"
+	},
 	"version": "1.0.12"
 }

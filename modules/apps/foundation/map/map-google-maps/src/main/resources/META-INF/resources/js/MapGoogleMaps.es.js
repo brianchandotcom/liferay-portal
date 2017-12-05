@@ -53,7 +53,7 @@ class MapGoogleMaps extends MapBase {
 		let bounds = this._map.getBounds() || this._bounds;
 
 		if (!bounds) {
-			bounds = new GoogleMapsDialog.maps.LatLngBounds();
+			bounds = new google.maps.LatLngBounds();
 
 			this._bounds = bounds;
 		}

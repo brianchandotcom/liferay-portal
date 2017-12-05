@@ -77,4 +77,4 @@ class GoogleMapsGeocoder extends State {
 }
 
 export default GoogleMapsGeocoder;
-export {GoogleMapsGeoCoder};
+export {GoogleMapsGeocoder};

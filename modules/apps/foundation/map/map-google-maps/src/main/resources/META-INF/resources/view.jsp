@@ -50,10 +50,7 @@ name = namespace + name;
 	<script src="<%= apiURL %>" type="text/javascript"></script>
 </liferay-util:html-top>
 
-<div class="lfr-map" id="<%= name %>Map"></div>
-
-<aui:script require="map-google-maps/js/MapGoogleMaps.es">
-	var MapGoogleMaps = mapGoogleMapsJsMapGoogleMapsEs.default;
+<aui:script require="map-google-maps@1.0.12/js/MapGoogleMaps.es as MapGoogleMaps">
 	var MapControls = Liferay.MapBase.CONTROLS;
 
 	var mapConfig = {
@@ -95,7 +92,7 @@ name = namespace + name;
 	};
 
 	var createMap = function() {
-		var map = new MapGoogleMaps(mapConfig);
+		var map = new MapGoogleMaps.default(mapConfig);
 
 		Liferay.MapBase.register('<%= name %>', map);
 

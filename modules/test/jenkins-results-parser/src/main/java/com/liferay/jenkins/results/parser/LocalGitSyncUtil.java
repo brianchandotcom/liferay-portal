@@ -46,12 +46,6 @@ public class LocalGitSyncUtil {
 			localGitRemoteURLs.size());
 
 		for (String localGitRemoteURL : localGitRemoteURLs) {
-			String url = localGitRemoteURL.replace(
-				"${username}", gitWorkingDirectory.getRepositoryUsername());
-
-			url = url.replace(
-				"${repository-name}", gitWorkingDirectory.getRepositoryName());
-
 			String localGitRemoteName =
 				"local-git-remote-" +
 					localGitRemoteURLs.indexOf(localGitRemoteURL);
@@ -59,9 +53,11 @@ public class LocalGitSyncUtil {
 			GitWorkingDirectory.Remote remote = gitWorkingDirectory.getRemote(
 				localGitRemoteName);
 
-			if ((remote == null) || !url.equals(remote.getRemoteURL())) {
+			if ((remote == null) ||
+				!localGitRemoteURL.equals(remote.getRemoteURL())) {
+
 				remote = gitWorkingDirectory.addRemote(
-					true, localGitRemoteName, url);
+					true, localGitRemoteName, localGitRemoteURL);
 			}
 
 			localGitRemotes.add(remote);
@@ -380,14 +376,6 @@ public class LocalGitSyncUtil {
 			gitCacheHostnames.length);
 
 		for (String gitCacheHostname : gitCacheHostnames) {
-			if (gitCacheHostname.startsWith("file:") ||
-				gitCacheHostname.startsWith("http:")) {
-
-				localGitRemoteURLs.add(gitCacheHostname);
-
-				continue;
-			}
-
 			localGitRemoteURLs.add(
 				JenkinsResultsParserUtil.combine(
 					"git@", gitCacheHostname, ":",

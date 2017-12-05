@@ -105,11 +105,8 @@
 			<var name="pageName" value="Navigation Test Page2" />
 		</execute>
 
-		<execute macro="Navigator#gotoEditPageViaControlMenu" />
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Configure" />
-			<var name="rowEntry" value="Navigation Test Page2" />
+		<execute macro="Navigator#gotoEditPageViaControlMenu">
+			<var name="pageName" value="Navigation Test Page2" />
 		</execute>
 
 		<execute macro="Page#editName">

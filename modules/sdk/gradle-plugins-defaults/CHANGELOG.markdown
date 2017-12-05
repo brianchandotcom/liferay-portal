@@ -2474,8 +2474,8 @@ the `npmInstall` task.
 ## 5.2.0 - 2017-11-27
 
 ### Added
-- [LPS-76145]: Add new `com.liferay.osgi.portal.compat.defaults.plugin` Gradle
-plugin to properly configure the portal compatibility OSGi modules.
+- [LPS-76145]: Add the new `com.liferay.osgi.portal.compat.defaults.plugin`
+Gradle plugin to properly configure the portal compatibility OSGi modules.
 
 ### Changed
 - [LPS-75778]: Update the [Liferay Gradle Plugins] dependency to version 3.5.49.
@@ -2488,9 +2488,9 @@ plugin to properly configure the portal compatibility OSGi modules.
 ## 5.2.2 - 2017-11-28
 
 ### Added
-- [LPS-76181]: Add property `exactVersion` to the `updateFileVersions`. If set
-to `true`, the task updates all versions to the current one, even if the "major"
-part has not been increased.
+- [LPS-76181]: Add the property `exactVersion` to the `updateFileVersions` task.
+If set to `true`, the task updates all versions to the current one, even if the
+*major* part has not been increased.
 - [LPS-76182]: Ignore a whole subtree if a `.lfrbuild-releng-ignore` marker file
 is found in a parent directory.
 

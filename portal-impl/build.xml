@@ -728,6 +728,7 @@ This target does not format .es.js files. Please run the following command from 
 				<and>
 					<not>
 						<or>
+							<isset property="skip.npm" />
 							<isset property="source.file.extensions" />
 							<isset property="source.files" />
 						</or>

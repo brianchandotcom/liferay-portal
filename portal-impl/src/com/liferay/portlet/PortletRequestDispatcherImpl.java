@@ -324,12 +324,10 @@ public class PortletRequestDispatcherImpl
 				(HttpServletRequest)servletRequest;
 
 			if (_path != null) {
-				String queryString = null;
-
 				int pos = _path.indexOf(CharPool.QUESTION);
 
 				if (pos != -1) {
-					queryString = _path.substring(pos + 1);
+					String queryString = _path.substring(pos + 1);
 
 					httpServletRequest = createDynamicServletRequest(
 						httpServletRequest, portletRequestImpl,
@@ -366,7 +364,7 @@ public class PortletRequestDispatcherImpl
 			throw new ServletException(se);
 		}
 		finally {
-			if (servletRequest instanceof PortletServletRequest) {
+			if (portletRequestImpl != null) {
 				portletRequestImpl.setPortletRequestDispatcherRequest(
 					oldPortletRequestDispatcherRequest);
 			}

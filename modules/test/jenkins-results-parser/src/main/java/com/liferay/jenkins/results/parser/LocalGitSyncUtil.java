@@ -27,7 +27,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -457,19 +456,6 @@ public class LocalGitSyncUtil {
 		}
 
 		return true;
-	}
-
-	protected static String localGitURLToName(
-		String localGitRemoteURL, String username, String reponame, int index) {
-
-		String transformedURL = localGitRemoteURL.replace(
-			"${username}", username);
-
-		transformedURL = transformedURL.replace("${repository-name}", reponame);
-
-		transformedURL = "local-git-remote-" + Integer.toString(index);
-
-		return transformedURL;
 	}
 
 	protected static Map<GitWorkingDirectory.Remote, Boolean> pushToAllRemotes(
@@ -905,10 +891,8 @@ public class LocalGitSyncUtil {
 	}
 
 	protected static List<String> validateLocalGitRemoteURLs(
-		final List<String> localGitRemoteURLs,
+		List<String> localGitRemoteURLs,
 		final GitWorkingDirectory gitWorkingDirectory) {
-
-		List<String> validatedLocalGitRemoteURLs = new ArrayList<>();
 
 		List<Callable<String>> callables = new ArrayList<>();
 
@@ -917,49 +901,13 @@ public class LocalGitSyncUtil {
 
 				@Override
 				public String call() {
-					String localGitRemoteName = localGitURLToName(
-						localGitRemoteURL,
-						gitWorkingDirectory.getRepositoryUsername(),
-						gitWorkingDirectory.getRepositoryName(),
-						localGitRemoteURLs.indexOf(localGitRemoteURL));
+					if (gitWorkingDirectory.isRemoteRepositoryAlive(
+							localGitRemoteURL)) {
 
-					String command = JenkinsResultsParserUtil.combine(
-						"git ls-remote -h ", localGitRemoteName);
-
-					Process bashCommandProcess = null;
-
-					try {
-						bashCommandProcess =
-							JenkinsResultsParserUtil.executeBashCommands(
-								command);
-					}
-					catch (InterruptedException | IOException |
-						   TimeoutException e) {
-
-						throw new RuntimeException(
-							"Unable to execute bash command", e);
-					}
-
-					int exitCode = bashCommandProcess.exitValue();
-
-					String standardErr = "";
-
-					try {
-						standardErr = JenkinsResultsParserUtil.readInputStream(
-							bashCommandProcess.getErrorStream());
-					}
-					catch (IOException ioe) {
-						standardErr = "";
-					}
-
-					if ((exitCode != 0) &&
-						standardErr.contains("port 22: No route to host")) {
-
-						return null;
-					}
-					else {
 						return localGitRemoteURL;
 					}
+
+					return null;
 				}
 
 			};
@@ -970,9 +918,11 @@ public class LocalGitSyncUtil {
 		ParallelExecutor<String> parallelExecutor = new ParallelExecutor<>(
 			callables, null);
 
-		for (String lrgu : parallelExecutor.execute()) {
-			if (lrgu != null) {
-				validatedLocalGitRemoteURLs.add(lrgu);
+		List<String> validatedLocalGitRemoteURLs = new ArrayList<>();
+
+		for (String validatedLocalGitRemoteURL : parallelExecutor.execute()) {
+			if (validatedLocalGitRemoteURL != null) {
+				validatedLocalGitRemoteURLs.add(validatedLocalGitRemoteURL);
 			}
 		}
 

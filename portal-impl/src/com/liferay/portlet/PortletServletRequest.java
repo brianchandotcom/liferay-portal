@@ -385,7 +385,15 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 
 	@Override
 	public RequestDispatcher getRequestDispatcher(String path) {
-		return _request.getRequestDispatcher(path);
+		RequestDispatcher requestDispatcher = _request.getRequestDispatcher(
+			path);
+
+		if (requestDispatcher != null) {
+			requestDispatcher = new PortletRequestDispatcherImpl(
+				requestDispatcher, path);
+		}
+
+		return requestDispatcher;
 	}
 
 	@Override

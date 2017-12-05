@@ -954,6 +954,23 @@ public class CPDefinitionLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
+	public CPDefinition updateCPDefinitionCategorization(
+			long cpDefinitionId, ServiceContext serviceContext)
+		throws PortalException {
+
+		CPDefinition cpDefinition = cpDefinitionPersistence.findByPrimaryKey(
+			cpDefinitionId);
+
+		updateStatus(
+			serviceContext.getUserId(), cpDefinitionId,
+			cpDefinition.getStatus(), serviceContext,
+			new HashMap<String, Serializable>());
+
+		return cpDefinitionPersistence.update(cpDefinition);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public CPDefinition updateCPDefinitionIgnoreSKUCombinations(
 			long cpDefinitionId, boolean ignoreSKUCombinations)
 		throws PortalException {

@@ -17,7 +17,6 @@ package com.liferay.commerce.internal.test.util;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.model.CommerceWarehouseItem;
-import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.service.CommerceCountryLocalServiceUtil;
 import com.liferay.commerce.service.CommerceWarehouseItemLocalServiceUtil;
 import com.liferay.commerce.service.CommerceWarehouseLocalServiceUtil;
@@ -70,8 +69,8 @@ public class CommerceTestUtil {
 				commerceWarehouse.getGroupId());
 
 		return CommerceWarehouseItemLocalServiceUtil.addCommerceWarehouseItem(
-			commerceWarehouse.getCommerceWarehouseId(),
-			CPInstance.class.getName(), cpInstanceId, quantity, serviceContext);
+			commerceWarehouse.getCommerceWarehouseId(), cpInstanceId, quantity,
+			serviceContext);
 	}
 
 }

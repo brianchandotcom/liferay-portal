@@ -16,7 +16,14 @@ package com.liferay.commerce.warehouse.web.internal.display.context;
 
 import com.liferay.commerce.item.selector.criterion.CommerceWarehouseItemSelectorCriterion;
 import com.liferay.commerce.model.CommerceWarehouseItem;
+import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
+import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPInstanceScreenNavigationConstants;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPInstanceService;
+import com.liferay.commerce.product.service.permission.CPDefinitionPermission;
 import com.liferay.commerce.service.CommerceWarehouseItemService;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.item.selector.ItemSelector;
@@ -24,11 +31,14 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -36,27 +46,65 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Marco Leo
  */
-public abstract class CommerceWarehouseItemsDisplayContext
-	<T extends GroupedModel> {
+public class CommerceWarehouseItemsDisplayContext {
 
 	public CommerceWarehouseItemsDisplayContext(
 		CommerceWarehouseItemService commerceWarehouseItemService,
-		ItemSelector itemSelector, HttpServletRequest httpServletRequest) {
+		CPInstanceService cpInstanceService, ItemSelector itemSelector,
+		HttpServletRequest httpServletRequest, Portal portal) {
 
 		_commerceWarehouseItemService = commerceWarehouseItemService;
+		_cpInstanceService = cpInstanceService;
 		_itemSelector = itemSelector;
+		_portal = portal;
 
 		cpRequestHelper = new CPRequestHelper(httpServletRequest);
 	}
 
-	public abstract String getBackURL() throws PortalException;
+	public String getBackURL() throws PortalException {
+		RenderRequest renderRequest = cpRequestHelper.getRenderRequest();
+
+		String lifecycle = (String)renderRequest.getAttribute(
+			LiferayPortletRequest.LIFECYCLE_PHASE);
+
+		PortletURL portletURL = _portal.getControlPanelPortletURL(
+			renderRequest, CPPortletKeys.CP_DEFINITIONS, lifecycle);
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "editProductDefinition");
+
+		CPInstance cpInstance = getCPInstance();
+
+		portletURL.setParameter(
+				"cpDefinitionId",
+				String.valueOf(cpInstance.getCPDefinitionId()));
+
+		portletURL.setParameter(
+				"screenNavigationCategoryKey",
+				CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SKUS);
+
+		return portletURL.toString();
+	}
+
+	public CPInstance getCPInstance() throws PortalException {
+		if (_cpInstance == null) {
+			long cpInstanceId = ParamUtil.getLong(
+				cpRequestHelper.getRenderRequest(), "cpInstanceId");
+
+			_cpInstance = _cpInstanceService.getCPInstance(cpInstanceId);
+		}
+
+		return _cpInstance;
+	}
 
 	public String getItemSelectorUrl() throws PortalException {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
@@ -76,11 +124,11 @@ public abstract class CommerceWarehouseItemsDisplayContext
 			requestBackedPortletURLFactory, "commerceWarehousesSelectItem",
 			commerceWarehouseItemSelectorCriterion);
 
-		T model = getModel();
+		CPInstance cpInstance = getCPInstance();
 
 		List<CommerceWarehouseItem> commerceWarehouseItems =
 			_commerceWarehouseItemService.getCommerceWarehouseItems(
-				model.getModelClassName(), (Long)model.getPrimaryKeyObj());
+				cpInstance.getCPInstanceId());
 
 		long[] commerceWarehouseIds = new long[commerceWarehouseItems.size()];
 
@@ -102,8 +150,6 @@ public abstract class CommerceWarehouseItemsDisplayContext
 
 		return itemSelectorURL.toString();
 	}
-
-	public abstract T getModel() throws PortalException;
 
 	public String getOrderByCol() {
 		return ParamUtil.getString(
@@ -139,6 +185,22 @@ public abstract class CommerceWarehouseItemsDisplayContext
 			portletURL.setParameter("redirect", redirect);
 		}
 
+		portletURL.setParameter("mvcRenderCommandName", "editProductInstance");
+
+		CPInstance cpInstance = getCPInstance();
+
+		portletURL.setParameter(
+				"cpDefinitionId",
+				String.valueOf(cpInstance.getCPDefinitionId()));
+		portletURL.setParameter(
+			"cpInstanceId", String.valueOf(cpInstance.getCPInstanceId()));
+
+		portletURL.setParameter(
+				"screenNavigationCategoryKey",
+				CPInstanceScreenNavigationConstants.CATEGORY_KEY_DETAILS);
+
+		portletURL.setParameter("screenNavigationEntryKey", "warehouses");
+
 		return portletURL;
 	}
 
@@ -169,17 +231,14 @@ public abstract class CommerceWarehouseItemsDisplayContext
 		_searchContainer.setOrderByComparator(orderByComparator);
 		_searchContainer.setOrderByType(orderByType);
 
-		T model = getModel();
-
-		String className = model.getModelClassName();
-		long classPK = (Long)model.getPrimaryKeyObj();
+		CPInstance cpInstance = getCPInstance();
 
 		int total =
 			_commerceWarehouseItemService.getCommerceWarehouseItemsCount(
-				className, classPK);
+				cpInstance.getCPInstanceId());
 		List<CommerceWarehouseItem> results =
 			_commerceWarehouseItemService.getCommerceWarehouseItems(
-				className, classPK, _searchContainer.getStart(),
+				cpInstance.getCPInstanceId(), _searchContainer.getStart(),
 				_searchContainer.getEnd(),
 				_searchContainer.getOrderByComparator());
 
@@ -189,14 +248,32 @@ public abstract class CommerceWarehouseItemsDisplayContext
 		return _searchContainer;
 	}
 
-	public abstract String getTitle() throws PortalException;
+	public String getTitle() throws PortalException {
+		CPInstance cpInstance = getCPInstance();
 
-	public abstract boolean isShowAddButton() throws PortalException;
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		ThemeDisplay themeDisplay = cpRequestHelper.getThemeDisplay();
+
+		return cpDefinition.getTitle(themeDisplay.getLanguageId()) + " - " +
+			cpInstance.getSku();
+	}
+
+	public boolean isShowAddButton() throws PortalException {
+		CPInstance cpInstance = getCPInstance();
+
+		return CPDefinitionPermission.contains(
+				cpRequestHelper.getPermissionChecker(),
+				cpInstance.getCPDefinitionId(), ActionKeys.UPDATE);
+	}
 
 	protected final CPRequestHelper cpRequestHelper;
 
 	private final CommerceWarehouseItemService _commerceWarehouseItemService;
+	private CPInstance _cpInstance;
+	private final CPInstanceService _cpInstanceService;
 	private final ItemSelector _itemSelector;
+	private final Portal _portal;
 	private SearchContainer<CommerceWarehouseItem> _searchContainer;
 
 }

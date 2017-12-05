@@ -18,7 +18,6 @@ import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPInstance
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.service.CommerceWarehouseItemService;
-import com.liferay.commerce.warehouse.web.internal.display.context.CPInstanceWarehouseItemsDisplayContext;
 import com.liferay.commerce.warehouse.web.internal.display.context.CommerceWarehouseItemsDisplayContext;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -93,9 +92,9 @@ public class CPInstanceWarehouseItemsScreenNavigationEntry
 		throws IOException {
 
 		try {
-			CommerceWarehouseItemsDisplayContext<CPInstance>
+			CommerceWarehouseItemsDisplayContext
 				commerceWarehouseItemsDisplayContext =
-					new CPInstanceWarehouseItemsDisplayContext(
+					new CommerceWarehouseItemsDisplayContext(
 						_commerceWarehouseItemService, _cpInstanceService,
 						_itemSelector, httpServletRequest, _portal);
 

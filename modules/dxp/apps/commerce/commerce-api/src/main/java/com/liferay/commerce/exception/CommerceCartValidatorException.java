@@ -11,11 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.commerce.exception;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.cart.CommerceCartValidatorResult;
 import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina
@@ -24,6 +28,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class CommerceCartValidatorException extends PortalException {
 
 	public CommerceCartValidatorException() {
+	}
+
+	public CommerceCartValidatorException(
+		List<CommerceCartValidatorResult> commerceCartValidatorResults) {
+
+		_commerceCartValidatorResults = commerceCartValidatorResults;
 	}
 
 	public CommerceCartValidatorException(String msg) {
@@ -37,5 +47,11 @@ public class CommerceCartValidatorException extends PortalException {
 	public CommerceCartValidatorException(Throwable cause) {
 		super(cause);
 	}
+
+	public List<CommerceCartValidatorResult> getCommerceCartValidatorResults() {
+		return _commerceCartValidatorResults;
+	}
+
+	private List<CommerceCartValidatorResult> _commerceCartValidatorResults;
 
 }

@@ -38,7 +38,7 @@ Map<Long, List<CommerceCartValidatorResult>> commerceCartValidatorResultMap = co
 	CommerceCartValidatorException ccve = (CommerceCartValidatorException)errorException;
 
 	if (ccve != null) {
-		commerceCartValidatorResults = ccve.getCommerceCommerceCartValidatorResults();
+		commerceCartValidatorResults = ccve.getCommerceCartValidatorResults();
 	}
 
 	for (CommerceCartValidatorResult commerceCartValidatorResult : commerceCartValidatorResults) {

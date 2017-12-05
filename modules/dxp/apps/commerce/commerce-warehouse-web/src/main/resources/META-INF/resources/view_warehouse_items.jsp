@@ -17,8 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceWarehouseItemsDisplayContext<?> commerceWarehouseItemsDisplayContext = (CommerceWarehouseItemsDisplayContext<?>)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-GroupedModel groupedModel = commerceWarehouseItemsDisplayContext.getModel();
+CommerceWarehouseItemsDisplayContext commerceWarehouseItemsDisplayContext = (CommerceWarehouseItemsDisplayContext<?>)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CPInstance cpInstance = commerceWarehouseItemsDisplayContext.getCPInstance();
 PortletURL portletURL = commerceWarehouseItemsDisplayContext.getPortletURL();
 String title = commerceWarehouseItemsDisplayContext.getTitle();
 
@@ -108,8 +108,7 @@ renderResponse.setTitle(title);
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD_MULTIPLE %>" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="commerceWarehouseIds" type="hidden" />
-		<aui:input name="className" type="hidden" value="<%= groupedModel.getModelClassName() %>" />
-		<aui:input name="classPK" type="hidden" value="<%= groupedModel.getPrimaryKeyObj() %>" />
+		<aui:input name="cpInstaceId" type="hidden" value="<%= cpInstance.getCPInstanceId() %>" />
 	</aui:form>
 
 	<liferay-frontend:add-menu>

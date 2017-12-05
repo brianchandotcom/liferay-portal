@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -72,8 +71,7 @@ public class CPDefinitionsDisplayContext
 	public CPDefinitionsDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
 			CPDefinitionHelper cpDefinitionHelper,
-			CPDefinitionService cpDefinitionService, GroupService groupService,
-			ItemSelector itemSelector)
+			CPDefinitionService cpDefinitionService, ItemSelector itemSelector)
 		throws PortalException {
 
 		super(
@@ -84,7 +82,6 @@ public class CPDefinitionsDisplayContext
 
 		_cpDefinitionHelper = cpDefinitionHelper;
 		_cpDefinitionService = cpDefinitionService;
-		_groupService = groupService;
 		_itemSelector = itemSelector;
 	}
 
@@ -327,7 +324,6 @@ public class CPDefinitionsDisplayContext
 
 	private final CPDefinitionHelper _cpDefinitionHelper;
 	private final CPDefinitionService _cpDefinitionService;
-	private final GroupService _groupService;
 	private final ItemSelector _itemSelector;
 
 }

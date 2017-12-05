@@ -39,7 +39,7 @@ public class CommerceWarehouseItemImpl extends CommerceWarehouseItemBaseImpl {
 
 	@Override
 	public CPInstance getCPInstance() throws PortalException {
-		return CPInstanceLocalServiceUtil.getCPInstance(getClassPK());
+		return CPInstanceLocalServiceUtil.getCPInstance(getCPInstanceId());
 	}
 
 }

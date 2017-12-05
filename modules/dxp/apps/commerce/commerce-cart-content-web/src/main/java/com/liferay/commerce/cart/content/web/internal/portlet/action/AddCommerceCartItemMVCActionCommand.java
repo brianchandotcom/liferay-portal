@@ -128,7 +128,7 @@ public class AddCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 		}
 		catch (CommerceCartValidatorException ccve) {
 			List<CommerceCartValidatorResult> commerceCartValidatorResults =
-				ccve.getCommerceCommerceCartValidatorResults();
+				ccve.getCommerceCartValidatorResults();
 
 			JSONArray errorArray = _jsonFactory.createJSONArray();
 

@@ -51,3 +51,6 @@ Bundle-SymbolicName: com.liferay.blogs.demo.data.creator.impl
 The package name for all files inside the module should start with
 `com.liferay.blogs.demo.data.creator.impl` or
 `com.liferay.blogs.demo.data.creator.internal`
+
+We should not have package names that contain both `impl` and `internal` like
+`com.liferay.wiki.internal.util.impl`, because `internal` implies `impl`

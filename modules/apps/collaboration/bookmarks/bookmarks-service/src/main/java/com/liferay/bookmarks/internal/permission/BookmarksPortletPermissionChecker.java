@@ -16,18 +16,12 @@ package com.liferay.bookmarks.internal.permission;
 
 import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
-import com.liferay.portal.kernel.security.permission.checker.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.checker.PortletResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.checker.StagedPortletPermissionCheck;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 
 /**
  * @author Preston Crary
  */
-@OSGiBeanProperties(
-	property = {"resource.name=" + BookmarksConstants.RESOURCE_NAME},
-	service = PortletResourcePermission.class
-)
 public class BookmarksPortletPermissionChecker
 	extends PortletResourcePermissionChecker {
 

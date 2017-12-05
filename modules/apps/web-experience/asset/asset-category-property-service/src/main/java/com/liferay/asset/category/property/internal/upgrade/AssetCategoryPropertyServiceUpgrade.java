@@ -15,11 +15,9 @@
 package com.liferay.asset.category.property.internal.upgrade;
 
 import com.liferay.asset.category.property.internal.upgrade.v1_0_0.UpgradeClassNames;
-import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -33,10 +31,6 @@ public class AssetCategoryPropertyServiceUpgrade
 		registry.register(
 			"com.liferay.asset.category.property.service", "0.0.1", "1.0.0",
 			new UpgradeClassNames());
-	}
-
-	@Reference
-	protected void setLockManager(LockManager lockManager) {
 	}
 
 }

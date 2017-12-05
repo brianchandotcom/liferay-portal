@@ -15,11 +15,9 @@
 package com.liferay.asset.tag.stats.internal.upgrade;
 
 import com.liferay.asset.tag.stats.internal.upgrade.v1_0_0.UpgradeClassNames;
-import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -32,10 +30,6 @@ public class AssetTagStatsServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.asset.tag.stats.service", "0.0.1", "1.0.0",
 			new UpgradeClassNames());
-	}
-
-	@Reference
-	protected void setLockManager(LockManager lockManager) {
 	}
 
 }

@@ -14,12 +14,10 @@
 
 package com.liferay.trash.internal.upgrade;
 
-import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.trash.internal.upgrade.v1_0_0.UpgradeClassNames;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -32,10 +30,6 @@ public class TrashServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.trash.service", "0.0.1", "1.0.0",
 			new UpgradeClassNames());
-	}
-
-	@Reference
-	protected void setLockManager(LockManager lockManager) {
 	}
 
 }

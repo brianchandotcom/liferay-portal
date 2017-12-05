@@ -32,7 +32,7 @@ public class PortletIdCodec {
 	public static final int PORTLET_INSTANCE_KEY_MAX_LENGTH =
 		255 - (
 			PortletIdCodec._INSTANCE_SEPARATOR.length() +
-				PortletIdCodec._USER_SEPARATOR.length() + 39);
+				PortletIdCodec._USER_SEPARATOR.length() + 31);
 
 	public static String decodeInstanceId(String portletId) {
 		int index = portletId.indexOf(_INSTANCE_SEPARATOR);

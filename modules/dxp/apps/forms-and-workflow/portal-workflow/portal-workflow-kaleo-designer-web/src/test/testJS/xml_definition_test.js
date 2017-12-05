@@ -39,7 +39,7 @@ describe(
 										var metadata = xmlDefinition.getDefinitionMetadata();
 
 										assert.equal(metadata.description, 'It only has metadata');
-										assert.equal(metadata.name, 'Metadata only');
+										assert.equal(metadata.name, 'Metadata Only');
 										assert.equal(metadata.version, 42);
 
 										done();

@@ -128,7 +128,14 @@
 
 		<execute macro="SitePages#addChildPage">
 			<var name="childPageName" value="${childPageName}" />
+			<var name="columnName" value="${columnName}" />
+			<var name="componentName" value="${componentName}" />
+			<var name="pageTemplateName" value="${pageTemplateName}" />
+			<var name="pageTypeDescription" value="${pageTypeDescription}" />
+			<var name="pageTypeURL" value="${pageTypeURL}" />
 			<var name="parentPageName" value="${parentPageName}" />
+			<var name="portlet" value="${portlet}" />
+			<var name="sitePageType" value="${sitePageType}" />
 		</execute>
 	</command>
 
@@ -153,7 +160,14 @@
 
 		<execute macro="SitePages#addChildPage">
 			<var name="childPageName" value="${childPageName}" />
+			<var name="columnName" value="${columnName}" />
+			<var name="componentName" value="${componentName}" />
+			<var name="pageTemplateName" value="${pageTemplateName}" />
+			<var name="pageTypeDescription" value="${pageTypeDescription}" />
+			<var name="pageTypeURL" value="${pageTypeURL}" />
 			<var name="parentPageName" value="${parentPageName}" />
+			<var name="portlet" value="${portlet}" />
+			<var name="sitePageType" value="${sitePageType}" />
 		</execute>
 	</command>
 

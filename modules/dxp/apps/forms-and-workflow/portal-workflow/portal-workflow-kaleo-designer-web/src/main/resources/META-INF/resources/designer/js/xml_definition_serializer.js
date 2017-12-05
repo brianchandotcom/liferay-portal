@@ -316,7 +316,11 @@ AUI.add(
 
 						var recipientsAttrs = {};
 
-						if (recipients[index].receptionType && AArray.some(recipients[index].receptionType, isValue)) {
+						var isNotEmptyValue = function(item) {
+							return isValue(item) && (item !== "");
+						};
+
+						if (recipients[index].receptionType && AArray.some(recipients[index].receptionType, isNotEmptyValue)) {
 							recipientsAttrs.receptionType = recipients[index].receptionType;
 						}
 

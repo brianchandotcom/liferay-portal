@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
@@ -852,7 +853,9 @@ public class DDLFormAdminDisplayContext {
 
 		ServletContext servletContext = servletConfig.getServletContext();
 
-		return servletContext.getContextPath();
+		String proxyPath = _portal.getPathProxy();
+
+		return proxyPath.concat(servletContext.getContextPath());
 	}
 
 	protected Locale getSiteDefaultLocale() {
@@ -953,6 +956,7 @@ public class DDLFormAdminDisplayContext {
 	private final DDMStructureService _ddmStructureService;
 	private String _displayStyle;
 	private final JSONFactory _jsonFactory;
+	private Portal _portal;
 	private DDLRecordSet _recordSet;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

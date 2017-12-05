@@ -306,6 +306,9 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	private PortletPreferencesFactory _portletPreferencesFactory;
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
+	@Reference
+	private ScopedConfigurationBeanProvider _scopedConfigurationBeanProvider;
+
 	private class ConfigurationBeanDeclarationServiceTracker
 		extends ServiceTracker
 			<ConfigurationBeanDeclaration, ConfigurationBeanManagedService> {

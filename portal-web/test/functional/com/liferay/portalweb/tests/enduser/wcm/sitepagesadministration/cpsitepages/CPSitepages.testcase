@@ -69,6 +69,8 @@
 
 			<execute macro="SitePages#addPublicPage">
 				<var name="pageName" value="${portlet} Full Page Application" />
+				<var name="portlet" value="${portlet}" />
+				<var name="sitePageType" value="Full Page Application" />
 			</execute>
 
 			<execute macro="Navigator#gotoPage">

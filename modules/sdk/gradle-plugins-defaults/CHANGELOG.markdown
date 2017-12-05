@@ -2547,6 +2547,11 @@ read-only sub-repositories.
 ### Fixed
 - [LPS-76202]: Fix usages of the `compileJSP.destinationDir` property.
 
+## 5.2.12 - 2017-12-05
+
+### Changed
+- [LPS-76256]: Update the [Liferay Gradle Plugins] dependency to version 3.5.59.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -2838,6 +2843,7 @@ read-only sub-repositories.
 [LPS-76202]: https://issues.liferay.com/browse/LPS-76202
 [LPS-76221]: https://issues.liferay.com/browse/LPS-76221
 [LPS-76224]: https://issues.liferay.com/browse/LPS-76224
+[LPS-76256]: https://issues.liferay.com/browse/LPS-76256
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

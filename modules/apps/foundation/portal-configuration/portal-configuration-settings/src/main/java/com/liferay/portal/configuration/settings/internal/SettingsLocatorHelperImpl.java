@@ -14,6 +14,7 @@
 
 package com.liferay.portal.configuration.settings.internal;
 
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -67,6 +68,29 @@ import org.osgi.util.tracker.ServiceTracker;
 @Component(immediate = true, service = SettingsLocatorHelper.class)
 @DoPrivileged
 public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
+
+	@Override
+	public Settings getCompanyConfigurationBeanSettings(
+		long companyId, String configurationPid, Settings parentSettings) {
+
+		if (!_configurationBeanClasses.containsKey(configurationPid)) {
+			return parentSettings;
+		}
+
+		ScopeKey scopeKey = new ScopeKey(
+			_configurationBeanClasses.get(configurationPid),
+			ExtendedObjectClassDefinition.Scope.COMPANY,
+			String.valueOf(companyId));
+
+		if (!_scopedConfigurationBeanProvider.has(scopeKey)) {
+			return parentSettings;
+		}
+
+		return new ConfigurationBeanSettings(
+			_configurationBeanLocationVariableResolvers.get(
+				scopeKey.getObjectClass()),
+			_scopedConfigurationBeanProvider.get(scopeKey), parentSettings);
+	}
 
 	public PortletPreferences getCompanyPortletPreferences(
 		long companyId, String settingsId) {

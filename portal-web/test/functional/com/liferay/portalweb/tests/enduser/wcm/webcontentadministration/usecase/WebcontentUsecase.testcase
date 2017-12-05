@@ -439,7 +439,7 @@
 		</execute>
 	</command>
 
-	<command name="AddAudioViaWebContent" priority="5">
+	<command ignore="true" name="AddAudioViaWebContent" priority="5">
 		<property name="custom.properties" value="editor.wysiwyg.portal-impl.portlet.ddm.text_html.ftl=ckeditor" />
 		<property name="portal.acceptance" value="pending" />
 		<property name="test.name.skip.portal.instance" value="WebcontentUsecase#AddAudioViaWebContent" />
@@ -1080,7 +1080,7 @@
 		<execute function="AssertTextNotPresent" locator1="WCD#WEB_CONTENT_CONTENT" value1="Space Program Academy of Continuing Education Dare to Dream out of this world Space Program 大学生涯教育 地球から、宇宙の果てへ" />
 	</command>
 
-	<command name="AddVideoViaWebContent" priority="4">
+	<command ignore="true" name="AddVideoViaWebContent" priority="4">
 		<property name="custom.properties" value="editor.wysiwyg.portal-impl.portlet.ddm.text_html.ftl=ckeditor" />
 		<property name="test.name.skip.portal.instance" value="WebcontentUsecase#AddVideoViaWebContent" />
 		<property name="testray.component.names" value="Web Content Administration" />

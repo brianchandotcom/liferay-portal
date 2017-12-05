@@ -498,7 +498,7 @@
 		</execute>
 	</command>
 
-	<command name="DemoTrackbackURL" priority="4">
+	<command ignore="true" name="DemoTrackbackURL" priority="4">
 		<property name="custom.properties" value="blogs.trackback.enabled=true" />
 		<property name="test.name.skip.portal.instance" value="BlogsUsecase#DemoTrackbackURL" />
 

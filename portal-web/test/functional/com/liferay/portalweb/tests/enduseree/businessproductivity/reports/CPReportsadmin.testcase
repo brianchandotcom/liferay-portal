@@ -610,7 +610,7 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
-	<command name="ViewEmailNotificationDelivery" priority="4">
+	<command ignore="true" name="ViewEmailNotificationDelivery" priority="4">
 		<property name="test.assert.javascript.errors" value="false" />
 		<property name="test.name.skip.portal.instance" value="CPReportsadmin#ViewEmailNotificationDelivery" />
 

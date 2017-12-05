@@ -143,7 +143,7 @@
 		<execute function="AssertElementNotPresent" locator1="ReportsAdmin#DEFINITIONS_DEFINITION_TABLE_DEFINITION_NAME" />
 	</command>
 
-	<command name="ViewReportEmailNewConfiguration" priority="4">
+	<command ignore="true" name="ViewReportEmailNewConfiguration" priority="4">
 		<description message="This is a use case for LPS-51009." />
 		<property name="test.name.skip.portal.instance" value="ReportsUsecase#ViewReportEmailNewConfiguration" />
 

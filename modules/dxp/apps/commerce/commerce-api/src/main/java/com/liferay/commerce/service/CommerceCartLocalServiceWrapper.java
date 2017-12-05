@@ -394,12 +394,12 @@ public class CommerceCartLocalServiceWrapper implements CommerceCartLocalService
 	@Override
 	public com.liferay.commerce.model.CommerceCart updateCommerceCart(
 		long commerceCartId, long billingAddressId, long shippingAddressId,
-		long commerceShippingMethodId, java.lang.String shippingOptionName,
-		double shippingPrice)
+		long commercePaymentMethodId, long commerceShippingMethodId,
+		java.lang.String shippingOptionName, double shippingPrice)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceCartLocalService.updateCommerceCart(commerceCartId,
-			billingAddressId, shippingAddressId, commerceShippingMethodId,
-			shippingOptionName, shippingPrice);
+			billingAddressId, shippingAddressId, commercePaymentMethodId,
+			commerceShippingMethodId, shippingOptionName, shippingPrice);
 	}
 
 	@Override

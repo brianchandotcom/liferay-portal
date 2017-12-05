@@ -85,6 +85,7 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 			{ "type_", Types.INTEGER },
 			{ "billingAddressId", Types.BIGINT },
 			{ "shippingAddressId", Types.BIGINT },
+			{ "commercePaymentMethodId", Types.BIGINT },
 			{ "commerceShippingMethodId", Types.BIGINT },
 			{ "shippingOptionName", Types.VARCHAR },
 			{ "shippingPrice", Types.DOUBLE }
@@ -104,12 +105,13 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("billingAddressId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("shippingAddressId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("commercePaymentMethodId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceShippingMethodId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("shippingOptionName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("shippingPrice", Types.DOUBLE);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceCart (uuid_ VARCHAR(75) null,commerceCartId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,type_ INTEGER,billingAddressId LONG,shippingAddressId LONG,commerceShippingMethodId LONG,shippingOptionName VARCHAR(75) null,shippingPrice DOUBLE)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceCart (uuid_ VARCHAR(75) null,commerceCartId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,type_ INTEGER,billingAddressId LONG,shippingAddressId LONG,commercePaymentMethodId LONG,commerceShippingMethodId LONG,shippingOptionName VARCHAR(75) null,shippingPrice DOUBLE)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceCart";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceCart.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceCart.createDate ASC";
@@ -160,6 +162,7 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 		model.setType(soapModel.getType());
 		model.setBillingAddressId(soapModel.getBillingAddressId());
 		model.setShippingAddressId(soapModel.getShippingAddressId());
+		model.setCommercePaymentMethodId(soapModel.getCommercePaymentMethodId());
 		model.setCommerceShippingMethodId(soapModel.getCommerceShippingMethodId());
 		model.setShippingOptionName(soapModel.getShippingOptionName());
 		model.setShippingPrice(soapModel.getShippingPrice());
@@ -239,6 +242,7 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 		attributes.put("type", getType());
 		attributes.put("billingAddressId", getBillingAddressId());
 		attributes.put("shippingAddressId", getShippingAddressId());
+		attributes.put("commercePaymentMethodId", getCommercePaymentMethodId());
 		attributes.put("commerceShippingMethodId", getCommerceShippingMethodId());
 		attributes.put("shippingOptionName", getShippingOptionName());
 		attributes.put("shippingPrice", getShippingPrice());
@@ -321,6 +325,13 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 
 		if (shippingAddressId != null) {
 			setShippingAddressId(shippingAddressId);
+		}
+
+		Long commercePaymentMethodId = (Long)attributes.get(
+				"commercePaymentMethodId");
+
+		if (commercePaymentMethodId != null) {
+			setCommercePaymentMethodId(commercePaymentMethodId);
 		}
 
 		Long commerceShippingMethodId = (Long)attributes.get(
@@ -606,6 +617,17 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 
 	@JSON
 	@Override
+	public long getCommercePaymentMethodId() {
+		return _commercePaymentMethodId;
+	}
+
+	@Override
+	public void setCommercePaymentMethodId(long commercePaymentMethodId) {
+		_commercePaymentMethodId = commercePaymentMethodId;
+	}
+
+	@JSON
+	@Override
 	public long getCommerceShippingMethodId() {
 		return _commerceShippingMethodId;
 	}
@@ -691,6 +713,7 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 		commerceCartImpl.setType(getType());
 		commerceCartImpl.setBillingAddressId(getBillingAddressId());
 		commerceCartImpl.setShippingAddressId(getShippingAddressId());
+		commerceCartImpl.setCommercePaymentMethodId(getCommercePaymentMethodId());
 		commerceCartImpl.setCommerceShippingMethodId(getCommerceShippingMethodId());
 		commerceCartImpl.setShippingOptionName(getShippingOptionName());
 		commerceCartImpl.setShippingPrice(getShippingPrice());
@@ -847,6 +870,8 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 
 		commerceCartCacheModel.shippingAddressId = getShippingAddressId();
 
+		commerceCartCacheModel.commercePaymentMethodId = getCommercePaymentMethodId();
+
 		commerceCartCacheModel.commerceShippingMethodId = getCommerceShippingMethodId();
 
 		commerceCartCacheModel.shippingOptionName = getShippingOptionName();
@@ -864,7 +889,7 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -890,6 +915,8 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 		sb.append(getBillingAddressId());
 		sb.append(", shippingAddressId=");
 		sb.append(getShippingAddressId());
+		sb.append(", commercePaymentMethodId=");
+		sb.append(getCommercePaymentMethodId());
 		sb.append(", commerceShippingMethodId=");
 		sb.append(getCommerceShippingMethodId());
 		sb.append(", shippingOptionName=");
@@ -903,7 +930,7 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.model.CommerceCart");
@@ -958,6 +985,10 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 		sb.append(getShippingAddressId());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>commercePaymentMethodId</column-name><column-value><![CDATA[");
+		sb.append(getCommercePaymentMethodId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>commerceShippingMethodId</column-name><column-value><![CDATA[");
 		sb.append(getCommerceShippingMethodId());
 		sb.append("]]></column-value></column>");
@@ -1006,6 +1037,7 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 	private long _shippingAddressId;
 	private long _originalShippingAddressId;
 	private boolean _setOriginalShippingAddressId;
+	private long _commercePaymentMethodId;
 	private long _commerceShippingMethodId;
 	private String _shippingOptionName;
 	private double _shippingPrice;

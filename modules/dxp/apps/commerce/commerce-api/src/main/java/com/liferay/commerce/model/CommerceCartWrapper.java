@@ -72,6 +72,7 @@ public class CommerceCartWrapper implements CommerceCart,
 		attributes.put("type", getType());
 		attributes.put("billingAddressId", getBillingAddressId());
 		attributes.put("shippingAddressId", getShippingAddressId());
+		attributes.put("commercePaymentMethodId", getCommercePaymentMethodId());
 		attributes.put("commerceShippingMethodId", getCommerceShippingMethodId());
 		attributes.put("shippingOptionName", getShippingOptionName());
 		attributes.put("shippingPrice", getShippingPrice());
@@ -153,6 +154,13 @@ public class CommerceCartWrapper implements CommerceCart,
 			setShippingAddressId(shippingAddressId);
 		}
 
+		Long commercePaymentMethodId = (Long)attributes.get(
+				"commercePaymentMethodId");
+
+		if (commercePaymentMethodId != null) {
+			setCommercePaymentMethodId(commercePaymentMethodId);
+		}
+
 		Long commerceShippingMethodId = (Long)attributes.get(
 				"commerceShippingMethodId");
 
@@ -212,6 +220,16 @@ public class CommerceCartWrapper implements CommerceCart,
 	@Override
 	public java.util.List<CommerceCartItem> getCommerceCartItems() {
 		return _commerceCart.getCommerceCartItems();
+	}
+
+	/**
+	* Returns the commerce payment method ID of this commerce cart.
+	*
+	* @return the commerce payment method ID of this commerce cart
+	*/
+	@Override
+	public long getCommercePaymentMethodId() {
+		return _commerceCart.getCommercePaymentMethodId();
 	}
 
 	/**
@@ -434,6 +452,16 @@ public class CommerceCartWrapper implements CommerceCart,
 	@Override
 	public void setCommerceCartId(long commerceCartId) {
 		_commerceCart.setCommerceCartId(commerceCartId);
+	}
+
+	/**
+	* Sets the commerce payment method ID of this commerce cart.
+	*
+	* @param commercePaymentMethodId the commerce payment method ID of this commerce cart
+	*/
+	@Override
+	public void setCommercePaymentMethodId(long commercePaymentMethodId) {
+		_commerceCart.setCommercePaymentMethodId(commercePaymentMethodId);
 	}
 
 	/**

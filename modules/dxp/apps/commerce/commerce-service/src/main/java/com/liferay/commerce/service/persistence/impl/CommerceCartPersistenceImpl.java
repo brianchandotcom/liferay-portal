@@ -4234,6 +4234,7 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 		commerceCartImpl.setType(commerceCart.getType());
 		commerceCartImpl.setBillingAddressId(commerceCart.getBillingAddressId());
 		commerceCartImpl.setShippingAddressId(commerceCart.getShippingAddressId());
+		commerceCartImpl.setCommercePaymentMethodId(commerceCart.getCommercePaymentMethodId());
 		commerceCartImpl.setCommerceShippingMethodId(commerceCart.getCommerceShippingMethodId());
 		commerceCartImpl.setShippingOptionName(commerceCart.getShippingOptionName());
 		commerceCartImpl.setShippingPrice(commerceCart.getShippingPrice());

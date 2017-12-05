@@ -59,6 +59,11 @@ public class CommercePaymentMethodServiceUtil {
 		getService().deleteCommercePaymentMethod(commercePaymentMethodId);
 	}
 
+	public static java.util.List<com.liferay.commerce.model.CommercePaymentMethod> getCommercePaymentMethods(
+		long groupId, boolean active) {
+		return getService().getCommercePaymentMethods(groupId, active);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

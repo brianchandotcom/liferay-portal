@@ -54,6 +54,13 @@ public class CommercePaymentMethodServiceWrapper
 		_commercePaymentMethodService.deleteCommercePaymentMethod(commercePaymentMethodId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommercePaymentMethod> getCommercePaymentMethods(
+		long groupId, boolean active) {
+		return _commercePaymentMethodService.getCommercePaymentMethods(groupId,
+			active);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

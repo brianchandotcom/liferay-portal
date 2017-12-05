@@ -65,6 +65,7 @@
 		<field name="type" type="int" />
 		<field name="billingAddressId" type="long" />
 		<field name="shippingAddressId" type="long" />
+		<field name="commercePaymentMethodId" type="long" />
 		<field name="commerceShippingMethodId" type="long" />
 		<field name="shippingOptionName" type="String" />
 		<field name="shippingPrice" type="double" />

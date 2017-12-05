@@ -65,7 +65,7 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -91,6 +91,8 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 		sb.append(billingAddressId);
 		sb.append(", shippingAddressId=");
 		sb.append(shippingAddressId);
+		sb.append(", commercePaymentMethodId=");
+		sb.append(commercePaymentMethodId);
 		sb.append(", commerceShippingMethodId=");
 		sb.append(commerceShippingMethodId);
 		sb.append(", shippingOptionName=");
@@ -149,6 +151,7 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 		commerceCartImpl.setType(type);
 		commerceCartImpl.setBillingAddressId(billingAddressId);
 		commerceCartImpl.setShippingAddressId(shippingAddressId);
+		commerceCartImpl.setCommercePaymentMethodId(commercePaymentMethodId);
 		commerceCartImpl.setCommerceShippingMethodId(commerceShippingMethodId);
 
 		if (shippingOptionName == null) {
@@ -186,6 +189,8 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 		billingAddressId = objectInput.readLong();
 
 		shippingAddressId = objectInput.readLong();
+
+		commercePaymentMethodId = objectInput.readLong();
 
 		commerceShippingMethodId = objectInput.readLong();
 		shippingOptionName = objectInput.readUTF();
@@ -234,6 +239,8 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 
 		objectOutput.writeLong(shippingAddressId);
 
+		objectOutput.writeLong(commercePaymentMethodId);
+
 		objectOutput.writeLong(commerceShippingMethodId);
 
 		if (shippingOptionName == null) {
@@ -258,6 +265,7 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 	public int type;
 	public long billingAddressId;
 	public long shippingAddressId;
+	public long commercePaymentMethodId;
 	public long commerceShippingMethodId;
 	public String shippingOptionName;
 	public double shippingPrice;

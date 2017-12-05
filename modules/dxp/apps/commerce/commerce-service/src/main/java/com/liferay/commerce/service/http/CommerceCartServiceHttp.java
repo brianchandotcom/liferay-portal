@@ -321,8 +321,8 @@ public class CommerceCartServiceHttp {
 	public static com.liferay.commerce.model.CommerceCart updateCommerceCart(
 		HttpPrincipal httpPrincipal, long commerceCartId,
 		long billingAddressId, long shippingAddressId,
-		long commerceShippingMethodId, java.lang.String shippingOptionName,
-		double shippingPrice)
+		long commercePaymentMethodId, long commerceShippingMethodId,
+		java.lang.String shippingOptionName, double shippingPrice)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceCartServiceUtil.class,
@@ -330,7 +330,8 @@ public class CommerceCartServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceCartId, billingAddressId, shippingAddressId,
-					commerceShippingMethodId, shippingOptionName, shippingPrice);
+					commercePaymentMethodId, commerceShippingMethodId,
+					shippingOptionName, shippingPrice);
 
 			Object returnObj = null;
 
@@ -418,7 +419,7 @@ public class CommerceCartServiceHttp {
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateCommerceCartParameterTypes9 = new Class[] {
-			long.class, long.class, long.class, long.class,
+			long.class, long.class, long.class, long.class, long.class,
 			java.lang.String.class, double.class
 		};
 	private static final Class<?>[] _updateUserParameterTypes10 = new Class[] {

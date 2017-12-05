@@ -268,6 +268,20 @@ public interface CommerceCartModel extends BaseModel<CommerceCart>, GroupedModel
 	public void setShippingAddressId(long shippingAddressId);
 
 	/**
+	 * Returns the commerce payment method ID of this commerce cart.
+	 *
+	 * @return the commerce payment method ID of this commerce cart
+	 */
+	public long getCommercePaymentMethodId();
+
+	/**
+	 * Sets the commerce payment method ID of this commerce cart.
+	 *
+	 * @param commercePaymentMethodId the commerce payment method ID of this commerce cart
+	 */
+	public void setCommercePaymentMethodId(long commercePaymentMethodId);
+
+	/**
 	 * Returns the commerce shipping method ID of this commerce cart.
 	 *
 	 * @return the commerce shipping method ID of this commerce cart

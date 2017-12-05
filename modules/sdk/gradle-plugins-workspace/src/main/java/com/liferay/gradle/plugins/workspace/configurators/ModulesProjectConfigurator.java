@@ -62,12 +62,12 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 		_defaultRepositoryEnabled = GradleUtil.getProperty(
 			settings,
-			WorkspacePlugin.PROPERTY_PREFIX + _NAME +
+			WorkspacePlugin.PROPERTY_PREFIX + NAME +
 				".default.repository.enabled",
 			_DEFAULT_REPOSITORY_ENABLED);
 		_jspPrecompileEnabled = GradleUtil.getProperty(
 			settings,
-			WorkspacePlugin.PROPERTY_PREFIX + _NAME + ".jsp.precompile.enabled",
+			WorkspacePlugin.PROPERTY_PREFIX + NAME + ".jsp.precompile.enabled",
 			_DEFAULT_JSP_PRECOMPILE_ENABLED);
 	}
 
@@ -105,7 +105,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 	@Override
 	public String getName() {
-		return _NAME;
+		return NAME;
 	}
 
 	public boolean isDefaultRepositoryEnabled() {
@@ -150,6 +150,8 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 		return projectDirs;
 	}
+
+	protected static final String NAME = "modules";
 
 	private void _applyPlugins(Project project) {
 		GradleUtil.applyPlugin(project, LiferayOSGiPlugin.class);
@@ -242,8 +244,6 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 	private static final boolean _DEFAULT_JSP_PRECOMPILE_ENABLED = false;
 
 	private static final boolean _DEFAULT_REPOSITORY_ENABLED = true;
-
-	private static final String _NAME = "modules";
 
 	private boolean _defaultRepositoryEnabled;
 	private boolean _jspPrecompileEnabled;

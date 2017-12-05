@@ -158,9 +158,18 @@ Liferay bundles by setting the `liferay.workspace.bundle.cache.dir` property in
 version 3.2.1.
 - [LPS-75479]: Use Liferay 7.0.4 GA5 as the default bundle in a workspace.
 
+## 1.8.0 - 2017-12-04
+
+### Added
+- [LPS-76271]: Add the ability to build the theme projects with the
+[Liferay Portal Tools Theme Builder]. This behavior can be enabled by setting
+the `liferay.workspace.themes.java.build` property to `true` in
+`gradle.properties`.
+
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Portal Tools Bundle Support]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-bundle-support
+[Liferay Portal Tools Theme Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-theme-builder
 [LPS-66853]: https://issues.liferay.com/browse/LPS-66853
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67352]: https://issues.liferay.com/browse/LPS-67352
@@ -193,3 +202,4 @@ version 3.2.1.
 [LPS-74818]: https://issues.liferay.com/browse/LPS-74818
 [LPS-75323]: https://issues.liferay.com/browse/LPS-75323
 [LPS-75479]: https://issues.liferay.com/browse/LPS-75479
+[LPS-76271]: https://issues.liferay.com/browse/LPS-76271

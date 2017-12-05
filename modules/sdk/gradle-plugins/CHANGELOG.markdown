@@ -3015,6 +3015,10 @@ version 2.0.3.
 ## 3.5.56 - 2017-12-01
 
 ### Changed
+- [LPS-75798]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.37.
+- [LPS-75798]: Update the [Liferay Source Formatter] dependency to version
+1.0.508.
 - [LPS-76224]: Update the [Liferay Ant BND] dependency to version 2.0.42.
 
 ## 3.5.57 - 2017-12-04

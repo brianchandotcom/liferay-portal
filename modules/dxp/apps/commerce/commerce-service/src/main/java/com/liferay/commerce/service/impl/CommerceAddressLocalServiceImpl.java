@@ -205,6 +205,8 @@ public class CommerceAddressLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		// Commerce address
+
 		CommerceAddress commerceAddress =
 			commerceAddressPersistence.findByPrimaryKey(commerceAddressId);
 
@@ -231,6 +233,17 @@ public class CommerceAddressLocalServiceImpl
 
 		commerceAddressPersistence.update(commerceAddress);
 
+		// Commerce carts
+
+		List<CommerceCart> commerceCarts =
+			commerceCartLocalService.getCommerceCartsByShippingAddress(
+				commerceAddressId);
+
+		for (CommerceCart commerceCart : commerceCarts) {
+			commerceCartLocalService.resetCommerceCartShipping(
+				commerceCart.getCommerceCartId());
+		}
+
 		return commerceAddress;
 	}
 
@@ -242,19 +255,27 @@ public class CommerceAddressLocalServiceImpl
 			long billingAddressId = commerceCart.getBillingAddressId();
 			long shippingAddressId = commerceCart.getShippingAddressId();
 
+			long commerceShippingMethodId =
+				commerceCart.getCommerceShippingMethodId();
+			String shippingOptionName = commerceCart.getShippingOptionName();
+			double shippingPrice = commerceCart.getShippingPrice();
+
 			if (billingAddressId == commerceAddressId) {
 				billingAddressId = 0;
 			}
 
 			if (shippingAddressId == commerceAddressId) {
 				shippingAddressId = 0;
+
+				commerceShippingMethodId = 0;
+				shippingOptionName = null;
+				shippingPrice = 0;
 			}
 
 			commerceCartLocalService.updateCommerceCart(
 				commerceCart.getCommerceCartId(), billingAddressId,
-				shippingAddressId, commerceCart.getCommerceShippingMethodId(),
-				commerceCart.getShippingOptionName(),
-				commerceCart.getShippingPrice());
+				shippingAddressId, commerceShippingMethodId, shippingOptionName,
+				shippingPrice);
 		}
 	}
 

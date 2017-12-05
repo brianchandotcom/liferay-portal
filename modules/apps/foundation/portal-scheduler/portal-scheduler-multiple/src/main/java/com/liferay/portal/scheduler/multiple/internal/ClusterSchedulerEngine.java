@@ -308,6 +308,9 @@ public class ClusterSchedulerEngine
 
 		try {
 			if (storageType == StorageType.MEMORY_CLUSTERED) {
+				String groupName = trigger.getGroupName();
+				String jobName = trigger.getJobName();
+
 				if (_clusterMasterExecutor.isMaster()) {
 					_schedulerEngine.schedule(
 						trigger, description, destinationName, message,
@@ -319,8 +322,8 @@ public class ClusterSchedulerEngine
 
 						schedulerResponse.setDescription(description);
 						schedulerResponse.setDestinationName(destinationName);
-						schedulerResponse.setGroupName(trigger.getGroupName());
-						schedulerResponse.setJobName(trigger.getJobName());
+						schedulerResponse.setGroupName(groupName);
+						schedulerResponse.setJobName(jobName);
 						schedulerResponse.setMessage(message);
 						schedulerResponse.setStorageType(storageType);
 						schedulerResponse.setTrigger(trigger);
@@ -328,6 +331,40 @@ public class ClusterSchedulerEngine
 						_notifySlave(
 							_addMemoryClusteredJobMethodKey, schedulerResponse,
 							getOSGiServiceIdentifier());
+					}
+				}
+				else {
+					ObjectValuePair<SchedulerResponse, TriggerState> value =
+						_memoryClusteredJobs.get(
+							getFullName(jobName, groupName));
+
+					if (value == null) {
+						MethodHandler methodHandler = new MethodHandler(
+							_getScheduledJobMethodKey, jobName, groupName,
+							StorageType.MEMORY_CLUSTERED);
+
+						Future<SchedulerResponse> future =
+							_clusterMasterExecutor.executeOnMaster(
+								methodHandler);
+
+						try {
+							SchedulerResponse schedulerResponse = future.get(
+								_callMasterTimeout, TimeUnit.SECONDS);
+
+							if (schedulerResponse == null) {
+								if (_log.isInfoEnabled()) {
+									_log.info(
+										"memory clustered job hasn't been " +
+											"deployed in master yet");
+								}
+							}
+							else {
+								addMemoryClusteredJob(schedulerResponse);
+							}
+						}
+						catch (Exception e) {
+							_log.error("Unable to get response from master", e);
+						}
 					}
 				}
 			}

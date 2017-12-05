@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>PROGRESS</td>
-	<td>//td[contains(.,'${key_imageName}')]/../..//div[contains(@class,'progress')]/div[@aria-valuenow='${key_percentAdapted}']</td>
+	<td>//tr/td[contains(.,'${key_imageName}')]//following-sibling::td[2]/div[contains(.,'${key_percentAdapted}')]</td>
 	<td></td>
 </tr>
 <tr>

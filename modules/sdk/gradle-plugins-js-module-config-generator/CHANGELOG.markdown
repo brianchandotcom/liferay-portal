@@ -183,7 +183,7 @@ as required.
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
-[LPS-68405]: https://issues.liferay.com/browse/LPS-68485
+[LPS-68405]: https://issues.liferay.com/browse/LPS-68405
 [LPS-68485]: https://issues.liferay.com/browse/LPS-68485
 [LPS-68564]: https://issues.liferay.com/browse/LPS-68564
 [LPS-68618]: https://issues.liferay.com/browse/LPS-68618

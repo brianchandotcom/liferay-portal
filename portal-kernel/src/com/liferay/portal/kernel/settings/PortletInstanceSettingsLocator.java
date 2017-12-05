@@ -44,6 +44,10 @@ public class PortletInstanceSettingsLocator implements SettingsLocator {
 		_configurationPid = configurationPid;
 	}
 
+	public String getConfigurationPid() {
+		return _configurationPid;
+	}
+
 	public long getOwnerId() {
 		if (isEmbeddedPortlet()) {
 			return _layout.getGroupId();

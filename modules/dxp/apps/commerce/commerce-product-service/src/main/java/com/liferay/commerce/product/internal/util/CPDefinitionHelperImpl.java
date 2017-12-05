@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.internal.util;
 
 import com.liferay.commerce.product.constants.CPConstants;
+import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPFriendlyURLEntry;
 import com.liferay.commerce.product.search.FacetImpl;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.util.FacetFactory;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -198,6 +200,24 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 			cpFriendlyURLEntry.getUrlTitle();
 	}
 
+	@Override
+	public Layout getProductLayout(
+			long groupId, boolean privateLayout, long cpDefinitionId)
+		throws PortalException {
+
+		String layoutUuid = _cpDefinitionService.getLayoutUuid(cpDefinitionId);
+
+		if (Validator.isNotNull(layoutUuid)) {
+			return _layoutLocalService.getLayoutByUuidAndGroupId(
+				layoutUuid, groupId, privateLayout);
+		}
+
+		long plid = _portal.getPlidFromPortletId(
+			groupId, CPPortletKeys.CP_CONTENT_WEB);
+
+		return _layoutLocalService.getLayout(plid);
+	}
+
 	protected SearchContext buildSearchContext(
 		long companyId, long groupId, String keywords, int start, int end,
 		Sort sort) {
@@ -260,6 +280,9 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 
 	@Reference
 	private FacetFactory _facetFactory;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

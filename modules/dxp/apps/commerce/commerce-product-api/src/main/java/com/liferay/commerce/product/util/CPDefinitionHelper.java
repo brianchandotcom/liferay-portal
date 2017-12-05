@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
@@ -41,6 +42,10 @@ public interface CPDefinitionHelper {
 		String filterFields, String filterValues, SearchContext searchContext);
 
 	public String getFriendlyURL(long cpDefinitionId, ThemeDisplay themeDisplay)
+		throws PortalException;
+
+	public Layout getProductLayout(
+			long groupId, boolean privateLayout, long cpDefinitionId)
 		throws PortalException;
 
 }

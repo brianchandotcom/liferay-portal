@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -93,7 +94,7 @@ public class CPDefinitionShippingScreenNavigationEntry
 				cpDefinitionShippingInfoDisplayContext =
 					new CPDefinitionShippingInfoDisplayContext(
 						_actionHelper, httpServletRequest, _cpDefinitionHelper,
-						_cpDefinitionService, _itemSelector,
+						_cpDefinitionService, _groupService, _itemSelector,
 						_cpMeasurementUnitService);
 
 			httpServletRequest.setAttribute(
@@ -123,6 +124,9 @@ public class CPDefinitionShippingScreenNavigationEntry
 
 	@Reference
 	private CPMeasurementUnitService _cpMeasurementUnitService;
+
+	@Reference
+	private GroupService _groupService;
 
 	@Reference
 	private ItemSelector _itemSelector;

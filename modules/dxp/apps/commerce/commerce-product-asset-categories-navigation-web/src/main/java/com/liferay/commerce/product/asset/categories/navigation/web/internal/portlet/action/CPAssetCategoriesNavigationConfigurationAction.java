@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -52,7 +53,8 @@ public class CPAssetCategoriesNavigationConfigurationAction
 					new CPAssetCategoriesNavigationDisplayContext(
 						request, _assetCategoryService, _assetVocabularyService,
 						_cpAttachmentFileEntryService,
-						_cpFriendlyURLEntryLocalService, _portal);
+						_cpFriendlyURLEntryLocalService, _groupService,
+						_portal);
 
 			request.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -88,6 +90,9 @@ public class CPAssetCategoriesNavigationConfigurationAction
 
 	@Reference
 	private CPFriendlyURLEntryLocalService _cpFriendlyURLEntryLocalService;
+
+	@Reference
+	private GroupService _groupService;
 
 	@Reference
 	private Portal _portal;

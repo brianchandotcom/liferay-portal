@@ -184,6 +184,19 @@ public class CommerceCartLocalServiceImpl
 	}
 
 	@Override
+	public CommerceCart resetCommerceCartShipping(long commerceCartId)
+		throws PortalException {
+
+		CommerceCart commerceCart = commerceCartLocalService.getCommerceCart(
+			commerceCartId);
+
+		return commerceCartLocalService.updateCommerceCart(
+			commerceCart.getCommerceCartId(),
+			commerceCart.getBillingAddressId(),
+			commerceCart.getShippingAddressId(), 0, null, 0);
+	}
+
+	@Override
 	public CommerceCart updateCommerceCart(
 			long commerceCartId, long billingAddressId, long shippingAddressId,
 			long commerceShippingMethodId, String shippingOptionName,

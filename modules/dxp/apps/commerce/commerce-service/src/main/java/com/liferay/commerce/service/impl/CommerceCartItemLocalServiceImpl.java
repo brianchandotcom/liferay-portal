@@ -32,6 +32,7 @@ import java.util.List;
 
 /**
  * @author Marco Leo
+ * @author Andrea Di Giorgi
  */
 public class CommerceCartItemLocalServiceImpl
 	extends CommerceCartItemLocalServiceBaseImpl {
@@ -41,6 +42,8 @@ public class CommerceCartItemLocalServiceImpl
 			long commerceCartId, long cpDefinitionId, long cpInstanceId,
 			int quantity, String json, ServiceContext serviceContext)
 		throws PortalException {
+
+		// Commerce cart item
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
@@ -65,6 +68,10 @@ public class CommerceCartItemLocalServiceImpl
 
 		commerceCartItemPersistence.update(commerceCartItem);
 
+		// Commerce cart
+
+		commerceCartLocalService.resetCommerceCartShipping(commerceCartId);
+
 		return commerceCartItem;
 	}
 
@@ -76,6 +83,11 @@ public class CommerceCartItemLocalServiceImpl
 		// Commerce cart item
 
 		commerceCartItemPersistence.remove(commerceCartItem);
+
+		// Commerce cart
+
+		commerceCartLocalService.resetCommerceCartShipping(
+			commerceCartItem.getCommerceCartId());
 
 		// Expando
 
@@ -161,6 +173,8 @@ public class CommerceCartItemLocalServiceImpl
 			long commerceCartItemId, int quantity, String json)
 		throws PortalException {
 
+		// Commerce cart item
+
 		CommerceCartItem commerceCartItem =
 			commerceCartItemPersistence.findByPrimaryKey(commerceCartItemId);
 
@@ -168,6 +182,11 @@ public class CommerceCartItemLocalServiceImpl
 		commerceCartItem.setJson(json);
 
 		commerceCartItemPersistence.update(commerceCartItem);
+
+		// Commerce cart
+
+		commerceCartLocalService.resetCommerceCartShipping(
+			commerceCartItem.getCommerceCartId());
 
 		return commerceCartItem;
 	}

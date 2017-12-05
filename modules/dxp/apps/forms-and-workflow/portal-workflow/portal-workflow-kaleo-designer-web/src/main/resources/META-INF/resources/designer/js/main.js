@@ -81,6 +81,26 @@ AUI.add(
 						instance.after(instance._renderContentTabs, instance, '_renderTabs');
 
 						instance.after(instance._afterRenderSettings, instance, '_renderSettings');
+
+						instance.destroyPortletHandler = Liferay.on('destroyPortlet', A.bind(instance._onDestroyPortlet, instance));
+					},
+
+					destructor: function() {
+						var instance = this;
+
+						var dataTable = instance.propertyList;
+
+						if (dataTable) {
+							var data = dataTable.get('data');
+
+							for (var i = 0; i < data.size(); i++) {
+								var editor = data.item(i).get('editor');
+
+								if (editor) {
+									editor.destroy();
+								}
+							}
+						}
 					},
 
 					connectDefinitionFields: function() {
@@ -171,6 +191,12 @@ AUI.add(
 						var instance = this;
 
 						instance.propertyList._tableNode.setStyle('width', '100%');
+					},
+
+					_onDestroyPortlet: function() {
+						var instance = this;
+
+						instance.destroy(true);
 					},
 
 					_renderContentTabs: function() {

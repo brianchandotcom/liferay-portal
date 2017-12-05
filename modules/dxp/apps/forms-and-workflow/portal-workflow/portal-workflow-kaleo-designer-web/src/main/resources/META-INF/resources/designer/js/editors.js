@@ -258,13 +258,6 @@ AUI.add(
 						var instance = this;
 
 						instance.bodyNode.remove(true);
-
-						var cellEditor = AUI.$('.basecelleditor');
-
-						if (cellEditor) {
-							cellEditor.remove();
-						}
-
 					},
 
 					addDynamicViews: emptyFn,

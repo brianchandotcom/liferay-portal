@@ -53,6 +53,9 @@ public interface SettingsLocatorHelper {
 	@Deprecated
 	public Settings getPortalPropertiesSettings();
 
+	public Settings getPortletInstanceConfigurationBeanSettings(
+		String portletId, String configurationPid, Settings parentSettings);
+
 	public Settings getPortletInstancePortletPreferencesSettings(
 		long companyId, long ownerId, int ownerType, long plid,
 		String portletId, Settings parentSettings);

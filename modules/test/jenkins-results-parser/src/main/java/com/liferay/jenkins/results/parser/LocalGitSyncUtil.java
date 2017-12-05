@@ -946,7 +946,9 @@ public class LocalGitSyncUtil {
 							JenkinsResultsParserUtil.executeBashCommands(
 								command);
 					}
-					catch (InterruptedException | IOException | TimeoutException e) {
+					catch (InterruptedException | IOException |
+						   TimeoutException e) {
+
 						throw new RuntimeException(
 							"Unable to execute bash command", e);
 					}
@@ -963,8 +965,8 @@ public class LocalGitSyncUtil {
 						standardErr = "";
 					}
 
-					if ((exitCode != 0) && standardErr.contains(
-							"port 22: No route to host")) {
+					if ((exitCode != 0) &&
+						standardErr.contains("port 22: No route to host")) {
 
 						return null;
 					}

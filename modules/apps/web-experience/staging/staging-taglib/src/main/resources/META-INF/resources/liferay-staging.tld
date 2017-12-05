@@ -107,6 +107,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a "(Staging)" suffixed descriptive name for a given Group.</description>
 		<name>descriptive-name</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.DescriptiveNameTag</tag-class>
 		<body-content>JSP</body-content>

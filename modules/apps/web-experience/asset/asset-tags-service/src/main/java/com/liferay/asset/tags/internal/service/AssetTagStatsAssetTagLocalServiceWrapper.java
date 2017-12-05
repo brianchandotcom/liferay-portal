@@ -19,12 +19,15 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceWrapper;
 import com.liferay.asset.tag.stats.service.AssetTagStatsLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
+@Component(immediate = true, service = ServiceWrapper.class)
 public class AssetTagStatsAssetTagLocalServiceWrapper
 	extends AssetTagLocalServiceWrapper {
 

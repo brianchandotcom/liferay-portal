@@ -31,7 +31,6 @@ import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
@@ -59,17 +58,19 @@ public abstract class BaseHighlightTestCase extends BaseIndexingTestCase {
 
 	@Test
 	public void testEllipsis() throws Exception {
+		String fieldName = Field.TITLE;
+
 		addDocuments(
-			Field.TITLE,
+			value -> DocumentCreationHelpers.singleText(fieldName, value),
 			Arrays.asList(
 				"alpha", "alpha beta", "alpha beta alpha",
 				"alpha beta gamma alpha eta theta alpha zeta eta alpha iota",
 				"alpha beta gamma delta epsilon zeta eta theta iota alpha"));
 
-		Query query = new StringQuery(Field.TITLE.concat(":alpha"));
+		Query query = new StringQuery(fieldName.concat(":alpha"));
 
 		assertSearch(
-			Field.TITLE, query,
+			fieldName, query,
 			queryConfig -> queryConfig.setHighlightFragmentSize(20),
 			toFullHighlights(
 				"[H]alpha[/H]", "[H]alpha[/H] beta",
@@ -79,17 +80,31 @@ public abstract class BaseHighlightTestCase extends BaseIndexingTestCase {
 				"[H]alpha[/H] beta gamma...theta iota [H]alpha[/H]"));
 	}
 
-	protected void addDocuments(
-			String fieldName, Collection<String> fieldValues)
+	protected void assertSearch(
+			String fieldName, Query query, Consumer<QueryConfig> consumer,
+			List<String> expectedValues)
 		throws Exception {
 
-		for (String fieldValue : fieldValues) {
-			addDocument(
-				DocumentCreationHelpers.singleText(fieldName, fieldValue));
-		}
+		IdempotentRetryAssert.retryAssert(
+			5, TimeUnit.SECONDS,
+			() -> doAssertSearch(fieldName, query, consumer, expectedValues));
 	}
 
-	protected void assertSearch(
+	protected Localization createLocalization() {
+		Localization localization = Mockito.mock(Localization.class);
+
+		Mockito.doReturn(
+			StringPool.BLANK
+		).when(
+			localization
+		).getLocalizedName(
+			Mockito.anyString(), Mockito.anyString()
+		);
+
+		return localization;
+	}
+
+	protected Void doAssertSearch(
 			String fieldName, Query query, Consumer<QueryConfig> consumer,
 			List<String> expectedValues)
 		throws Exception {
@@ -107,33 +122,15 @@ public abstract class BaseHighlightTestCase extends BaseIndexingTestCase {
 
 		query.setQueryConfig(queryConfig);
 
-		IdempotentRetryAssert.retryAssert(
-			5, TimeUnit.SECONDS,
-			() -> {
-				Hits hits = search(searchContext, query);
+		Hits hits = search(searchContext, query);
 
-				String snippetFieldName = "snippet_".concat(fieldName);
+		String snippetFieldName = "snippet_".concat(fieldName);
 
-				DocumentsAssert.assertValuesIgnoreRelevance(
-					(String)searchContext.getAttribute("queryString"),
-					hits.getDocs(), snippetFieldName, expectedValues);
+		DocumentsAssert.assertValuesIgnoreRelevance(
+			(String)searchContext.getAttribute("queryString"), hits.getDocs(),
+			snippetFieldName, expectedValues);
 
-				return null;
-			});
-	}
-
-	protected Localization createLocalization() {
-		Localization localization = Mockito.mock(Localization.class);
-
-		Mockito.doReturn(
-			StringPool.BLANK
-		).when(
-			localization
-		).getLocalizedName(
-			Mockito.anyString(), Mockito.anyString()
-		);
-
-		return localization;
+		return null;
 	}
 
 	protected String toFullHighlight(String s) {

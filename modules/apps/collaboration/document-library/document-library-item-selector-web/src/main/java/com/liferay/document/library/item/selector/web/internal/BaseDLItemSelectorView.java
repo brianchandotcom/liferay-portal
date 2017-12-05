@@ -14,11 +14,13 @@
 
 package com.liferay.document.library.item.selector.web.internal;
 
+import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.document.library.item.selector.web.internal.constants.DLItemSelectorWebKeys;
 import com.liferay.document.library.item.selector.web.internal.display.context.DLItemSelectorViewDisplayContext;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -97,7 +99,8 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 		DLItemSelectorViewDisplayContext dlItemSelectorViewDisplayContext =
 			new DLItemSelectorViewDisplayContext(
 				t, this, _itemSelectorReturnTypeResolverHandler,
-				itemSelectedEventName, search, portletURL);
+				itemSelectedEventName, search, portletURL,
+				_assetVocabularyService, _classNameLocalService);
 
 		request.setAttribute(
 			DLItemSelectorWebKeys.DL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
@@ -108,6 +111,20 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 			_dlMimeTypeDisplayContext);
 
 		requestDispatcher.include(request, response);
+	}
+
+	@Reference(unbind = "-")
+	public void setAssetVocabularyService(
+		AssetVocabularyService assetVocabularyService) {
+
+		_assetVocabularyService = assetVocabularyService;
+	}
+
+	@Reference(unbind = "-")
+	public void setClassNameLocalService(
+		ClassNameLocalService classNameLocalService) {
+
+		_classNameLocalService = classNameLocalService;
 	}
 
 	@Reference(
@@ -148,6 +165,8 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 		return LanguageResources.RESOURCE_BUNDLE_LOADER;
 	}
 
+	private AssetVocabularyService _assetVocabularyService;
+	private ClassNameLocalService _classNameLocalService;
 	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 	private ItemSelectorReturnTypeResolverHandler
 		_itemSelectorReturnTypeResolverHandler;

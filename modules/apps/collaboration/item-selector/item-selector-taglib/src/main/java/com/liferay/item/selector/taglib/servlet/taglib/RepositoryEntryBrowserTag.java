@@ -234,7 +234,7 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-item-selector:repository-entry-browser:" +
 				"showDragAndDropZone",
-			_showDragAndDropZone);
+			_isShownDragAndDropZone());
 		request.setAttribute(
 			"liferay-item-selector:repository-entry-browser:tabName", _tabName);
 		request.setAttribute(
@@ -248,6 +248,14 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		}
 
 		return LanguageUtil.get(request, "no-results-were-found");
+	}
+
+	private boolean _isShownDragAndDropZone() {
+		if (_uploadURL == null) {
+			return false;
+		}
+
+		return _showDragAndDropZone;
 	}
 
 	private List<ItemSelectorReturnType> _desiredItemSelectorReturnTypes;

@@ -14,17 +14,26 @@
 
 package com.liferay.document.library.item.selector.web.internal.display.context;
 
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.document.library.item.selector.web.internal.DLItemSelectorView;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.ActionRequest;
@@ -42,7 +51,9 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		T itemSelectorCriterion, DLItemSelectorView<T> dlItemSelectorView,
 		ItemSelectorReturnTypeResolverHandler
 			itemSelectorReturnTypeResolverHandler,
-		String itemSelectedEventName, boolean search, PortletURL portletURL) {
+		String itemSelectedEventName, boolean search, PortletURL portletURL,
+		AssetVocabularyService assetVocabularyService,
+		ClassNameLocalService classNameLocalService) {
 
 		_itemSelectorCriterion = itemSelectorCriterion;
 		_dlItemSelectorView = dlItemSelectorView;
@@ -51,6 +62,8 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		_itemSelectedEventName = itemSelectedEventName;
 		_search = search;
 		_portletURL = portletURL;
+		_assetVocabularyService = assetVocabularyService;
+		_classNameLocalService = classNameLocalService;
 	}
 
 	public String[] getExtensions() {
@@ -101,8 +114,31 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 	}
 
 	public PortletURL getUploadURL(
-		HttpServletRequest request,
-		LiferayPortletResponse liferayPortletResponse) {
+			HttpServletRequest request,
+			LiferayPortletResponse liferayPortletResponse)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<AssetVocabulary> assetVocabularies =
+			_assetVocabularyService.getGroupVocabularies(
+				themeDisplay.getScopeGroupId());
+
+		if (!assetVocabularies.isEmpty()) {
+			long classNameId = _classNameLocalService.getClassNameId(
+				DLFileEntryConstants.getClassName());
+
+			for (AssetVocabulary assetVocabulary : assetVocabularies) {
+				if (assetVocabulary.isRequired(
+						classNameId,
+						DLFileEntryTypeConstants.
+							FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)) {
+
+					return null;
+				}
+			}
+		}
 
 		PortletURL portletURL = liferayPortletResponse.createActionURL(
 			PortletKeys.DOCUMENT_LIBRARY);
@@ -119,6 +155,8 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		return _search;
 	}
 
+	private final AssetVocabularyService _assetVocabularyService;
+	private final ClassNameLocalService _classNameLocalService;
 	private final DLItemSelectorView<T> _dlItemSelectorView;
 	private final String _itemSelectedEventName;
 	private final T _itemSelectorCriterion;

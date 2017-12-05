@@ -490,7 +490,7 @@ if (Validator.isNotNull(keywords)) {
 			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" resultRowSplitter="<%= new RepositoryEntryResultRowSplitter() %>" searchContainer="<%= searchContainer %>" />
 		</liferay-ui:search-container>
 
-		<c:if test="<%= !showSearchInfo %>">
+		<c:if test="<%= !showSearchInfo && (uploadURL != null) %>">
 			<liferay-ui:drop-here-info message="drop-files-here" />
 		</c:if>
 	</c:if>

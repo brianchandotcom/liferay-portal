@@ -635,22 +635,40 @@ public class LiferayRepository
 
 	@Override
 	public List<RepositoryEntry> getFoldersAndFileEntriesAndFileShortcuts(
+			long folderId, int status, String[] mimetypes,
+			boolean includeMountFolders, boolean includeOwner, int start,
+			int end, OrderByComparator<?> obc)
+		throws PortalException {
+
+		long userId = 0;
+
+		if (includeOwner) {
+			userId = PrincipalThreadLocal.getUserId();
+		}
+
+		QueryDefinition<Object> queryDefinition = new QueryDefinition<>(
+			status, userId, includeOwner, start, end,
+			(OrderByComparator<Object>)obc);
+
+		List<Object> dlFoldersAndDLFileEntriesAndDLFileShortcuts =
+			dlFolderService.getFoldersAndFileEntriesAndFileShortcuts(
+				getGroupId(), toFolderId(folderId), mimetypes,
+				includeMountFolders, queryDefinition);
+
+		return RepositoryModelUtil.toRepositoryEntries(
+			dlFoldersAndDLFileEntriesAndDLFileShortcuts);
+	}
+
+	@Override
+	public List<RepositoryEntry> getFoldersAndFileEntriesAndFileShortcuts(
 			long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders, int start, int end,
 			OrderByComparator<?> obc)
 		throws PortalException {
 
-		QueryDefinition<Object> queryDefinition = new QueryDefinition<>(
-			status, PrincipalThreadLocal.getUserId(), true, start, end,
-			(OrderByComparator<Object>)obc);
-
-		List<Object> dlFoldersAndDLFileEntriesAndDLFileShortcuts =
-			dlFolderService.getFoldersAndFileEntriesAndFileShortcuts(
-				getGroupId(), toFolderId(folderId), mimeTypes,
-				includeMountFolders, queryDefinition);
-
-		return RepositoryModelUtil.toRepositoryEntries(
-			dlFoldersAndDLFileEntriesAndDLFileShortcuts);
+		return getFoldersAndFileEntriesAndFileShortcuts(
+			folderId, status, mimeTypes, includeMountFolders, true, start, end,
+			obc);
 	}
 
 	@Override
@@ -668,8 +686,24 @@ public class LiferayRepository
 			boolean includeMountFolders)
 		throws PortalException {
 
+		return getFoldersAndFileEntriesAndFileShortcutsCount(
+			folderId, status, mimeTypes, includeMountFolders, true);
+	}
+
+	@Override
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long folderId, int status, String[] mimeTypes,
+			boolean includeMountFolders, boolean includeOwner)
+		throws PortalException {
+
+		long userId = 0;
+
+		if (includeOwner) {
+			userId = PrincipalThreadLocal.getUserId();
+		}
+
 		QueryDefinition<Object> queryDefinition = new QueryDefinition<>(
-			status, PrincipalThreadLocal.getUserId(), true);
+			status, userId, includeOwner);
 
 		return dlFolderService.getFoldersAndFileEntriesAndFileShortcutsCount(
 			getGroupId(), toFolderId(folderId), mimeTypes, includeMountFolders,

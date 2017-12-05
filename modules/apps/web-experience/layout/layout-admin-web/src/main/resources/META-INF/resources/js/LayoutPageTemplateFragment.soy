@@ -7,22 +7,36 @@
 	{@param name: string}
 	{@param spritemap: string}
 	{@param? _handleFragmentRemoveButtonClick: any}
+	{@param? _html: html}
+	{@param? _loading: bool}
 
-	<div class="card card-horizontal">
-		<div class="card-body">
-			<div class="card-row">
-				<div class="flex-col flex-col-expand">
+	<div class="layout-page-template-fragment-wrapper">
+		<div class="layout-page-template-fragment-control subnav subnav-primary">
+			<div class="container">
+				<span class="subnav-item">
 					{$name}
-				</div>
+				</span>
 
-				<div class="flex-col">
-					<button class="btn btn-link" data-onclick="{$_handleFragmentRemoveButtonClick}">
+				<span class="subnav-item">
+					<button class="btn btn-small btn-unstyled" data-onclick="{$_handleFragmentRemoveButtonClick}">
 						<svg class="lexicon-icon collapse-icon-open">
-							<use xlink:href="{$spritemap}#times-circle"></use>
+							<use xlink:href="{$spritemap}#times"></use>
 						</svg>
 					</button>
-				</div>
+				</span>
 			</div>
 		</div>
+
+		{if $_loading}
+			<div class="loading-icon linear loading-icon-lg"></div>
+		{else}
+			<style ref="style"></style>
+
+			<div>
+				{$_html ?: ''}
+			</div>
+
+			<script ref="script"></script>
+		{/if}
 	</div>
 {/template}

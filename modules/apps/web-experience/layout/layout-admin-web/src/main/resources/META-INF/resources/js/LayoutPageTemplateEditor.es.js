@@ -151,6 +151,15 @@ LayoutPageTemplateEditor.STATE = {
 	).value([]),
 
 	/**
+	 * URL for getting a fragment entry information.
+	 * @default undefined
+	 * @instance
+	 * @memberOf LayoutPageTemplateEditor
+	 * @type {!string}
+	 */
+	fragmentEntryURL: Config.string().required(),
+
+	/**
 	 * Layout page template entry id used for storing changes.
 	 * @default undefined
 	 * @instance

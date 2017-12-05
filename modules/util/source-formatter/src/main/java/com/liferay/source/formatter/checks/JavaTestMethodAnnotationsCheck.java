@@ -83,15 +83,13 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 		if (javaTerm.hasAnnotation(annotation)) {
 			if (!matcher.find()) {
 				addMessage(
-					fileName,
-					"Incorrect method name '" + methodName +
-						"', see LPS-36303");
+					fileName, "Incorrect method name '" + methodName + "'",
+					"test_method_naming.markdown");
 			}
 			else if (javaTerm.isStatic() != staticRequired) {
 				addMessage(
-					fileName,
-					"Incorrect method type for '" + methodName +
-						"', see LPS-36303");
+					fileName, "Incorrect method type for '" + methodName + "'",
+					"test_method_naming.markdown");
 			}
 		}
 		else if (matcher.find() && !javaTerm.hasAnnotation("Override")) {
@@ -99,7 +97,8 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 				fileName,
 				StringBundler.concat(
 					"Annotation @", annotation, " required for '", methodName,
-					"', see LPS-36303"));
+					"'"),
+				"test_method_naming.markdown");
 		}
 	}
 

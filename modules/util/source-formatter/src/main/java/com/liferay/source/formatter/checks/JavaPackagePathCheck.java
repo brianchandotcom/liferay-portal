@@ -106,7 +106,8 @@ public class JavaPackagePathCheck extends BaseFileCheck {
 
 		if (packageName.matches(".*\\.internal\\.([\\w.]+\\.)?impl")) {
 			addMessage(
-				fileName, "Do not use 'impl' inside 'internal', see LPS-70113");
+				fileName, "Do not use 'impl' inside 'internal'",
+				"package.markdown");
 		}
 	}
 

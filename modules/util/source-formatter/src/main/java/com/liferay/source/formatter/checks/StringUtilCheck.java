@@ -91,7 +91,7 @@ public class StringUtilCheck extends BaseFileCheck {
 			sb.append("(String, char, String) instead");
 
 			addMessage(
-				fileName, sb.toString(),
+				fileName, sb.toString(), "string_methods.markdown",
 				getLineCount(content, matcher.start()));
 		}
 	}

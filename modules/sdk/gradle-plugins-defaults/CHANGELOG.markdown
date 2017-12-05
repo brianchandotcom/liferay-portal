@@ -2532,7 +2532,7 @@ version 1.1.9.
 - [LPS-69999]: Prevent the `updateFileVersions` task from changing files in
 read-only sub-repositories.
 
-## 5.2.10 - 2017-12-01
+## 5.2.10 - 2017-12-04
 
 ### Changed
 - [LPS-76221]: Set the `translate` property of all `BuildLangTask` instances to
@@ -2542,7 +2542,7 @@ read-only sub-repositories.
 ## 5.2.11 - 2017-12-05
 
 ### Changed
-- [LPS-75554]: Update the [Liferay Gradle Plugins] dependency to version 3.5.58.
+- [LPS-76221]: Update the [Liferay Gradle Plugins] dependency to version 3.5.58.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -2814,7 +2814,6 @@ read-only sub-repositories.
 [LPS-75399]: https://issues.liferay.com/browse/LPS-75399
 [LPS-75430]: https://issues.liferay.com/browse/LPS-75430
 [LPS-75488]: https://issues.liferay.com/browse/LPS-75488
-[LPS-75554]: https://issues.liferay.com/browse/LPS-75554
 [LPS-75610]: https://issues.liferay.com/browse/LPS-75610
 [LPS-75624]: https://issues.liferay.com/browse/LPS-75624
 [LPS-75633]: https://issues.liferay.com/browse/LPS-75633

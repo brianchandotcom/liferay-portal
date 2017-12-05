@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.Date;
@@ -64,17 +65,25 @@ public class HtmlPreviewLocalServiceImpl
 	}
 
 	@Override
-	public HtmlPreview deleteHtmlPreview(HtmlPreview htmlPreview) {
+	public HtmlPreview deleteHtmlPreview(HtmlPreview htmlPreview)
+		throws PortalException {
 
 		// HTML Preview
 
 		htmlPreviewPersistence.remove(htmlPreview);
 
+		// Portlet File Entry
+
+		PortletFileRepositoryUtil.deletePortletFileEntry(
+			htmlPreview.getFileEntryId());
+
 		return htmlPreview;
 	}
 
 	@Override
-	public HtmlPreview deleteHtmlPreview(long htmlPreviewId) {
+	public HtmlPreview deleteHtmlPreview(long htmlPreviewId)
+		throws PortalException {
+
 		HtmlPreview htmlPreview = htmlPreviewPersistence.fetchByPrimaryKey(
 			htmlPreviewId);
 

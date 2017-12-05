@@ -141,20 +141,10 @@ public class AssetPublisherConfigurationAction
 
 		request.setAttribute(AssetPublisherWebKeys.ITEM_SELECTOR, itemSelector);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		AssetPublisherPortletInstanceConfiguration
-			assetPublisherPortletInstanceConfiguration =
-				portletDisplay.getPortletInstanceConfiguration(
-					AssetPublisherPortletInstanceConfiguration.class);
-
 		request.setAttribute(
 			AssetPublisherWebKeys.
 				ASSET_PUBLISHER_PORTLET_INSTANCE_CONFIGURATION,
-			assetPublisherPortletInstanceConfiguration);
+			_getAssetPublisherPortletInstanceConfiguration(request));
 
 		super.include(portletConfig, request, response);
 	}
@@ -209,8 +199,22 @@ public class AssetPublisherConfigurationAction
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
 			try {
-				validateEmail(actionRequest, "emailAssetEntryAdded");
-				validateEmailFrom(actionRequest);
+				HttpServletRequest request = portal.getHttpServletRequest(
+					actionRequest);
+
+				AssetPublisherPortletInstanceConfiguration
+					assetPublisherPortletInstanceConfiguration =
+						_getAssetPublisherPortletInstanceConfiguration(request);
+
+				boolean emailAssetEntryAddedEnabled = GetterUtil.getBoolean(
+					getParameter(actionRequest, "emailAssetEntryAddedEnabled"),
+					assetPublisherPortletInstanceConfiguration.
+						emailAssetEntryAddedEnabled());
+
+				if (emailAssetEntryAddedEnabled) {
+					validateEmail(actionRequest, "emailAssetEntryAdded");
+					validateEmailFrom(actionRequest);
+				}
 
 				updateDisplaySettings(actionRequest);
 
@@ -810,5 +814,19 @@ public class AssetPublisherConfigurationAction
 
 	@Reference
 	protected Staging staging;
+
+	private AssetPublisherPortletInstanceConfiguration
+			_getAssetPublisherPortletInstanceConfiguration(
+				HttpServletRequest request)
+		throws ConfigurationException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		return portletDisplay.getPortletInstanceConfiguration(
+			AssetPublisherPortletInstanceConfiguration.class);
+	}
 
 }

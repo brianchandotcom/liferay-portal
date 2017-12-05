@@ -140,8 +140,16 @@ public class ModulesStructureTest {
 							Files.exists(buildGradlePath) &&
 							ModulesStructureTestUtil.contains(
 								buildGradlePath,
+								"apply plugin: \"com.liferay.defaults.plugin\"",
 								"apply plugin: " +
-									"\"com.liferay.defaults.plugin\""));
+									"\"com.liferay.root.defaults.plugin\""));
+
+						Path buildExtGradlePath = dirPath.resolve(
+							"build-ext.gradle");
+
+						Assert.assertFalse(
+							"Forbidden " + buildExtGradlePath,
+							Files.deleteIfExists(buildExtGradlePath));
 					}
 
 					if (Files.exists(dirPath.resolve("bnd.bnd"))) {
@@ -262,6 +270,9 @@ public class ModulesStructureTest {
 		final String themeNpmIgnoreTemplate = StringUtil.read(
 			ModulesStructureTest.class, "dependencies/theme_npmignore.tmpl");
 
+		final Set<String> gitRepoGitIgnoreTemplateLines = SetUtil.fromString(
+			gitRepoGitIgnoreTemplate);
+
 		Files.walkFileTree(
 			_modulesDirPath,
 			new SimpleFileVisitor<Path>() {
@@ -273,7 +284,9 @@ public class ModulesStructureTest {
 
 					String dirName = String.valueOf(dirPath.getFileName());
 
-					if (dirName.equals("gradleTest")) {
+					if (dirName.equals("gradleTest") ||
+						dirName.equals("project-templates")) {
+
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
@@ -308,7 +321,7 @@ public class ModulesStructureTest {
 					String fileName = String.valueOf(path.getFileName());
 
 					if (fileName.equals(".gitignore")) {
-						_testGitIgnoreFile(path);
+						_testGitIgnoreFile(path, gitRepoGitIgnoreTemplateLines);
 					}
 
 					return FileVisitResult.CONTINUE;
@@ -730,8 +743,14 @@ public class ModulesStructureTest {
 			Files.exists(rootDirPath.resolve(_GIT_REPO_FILE_NAME)));
 	}
 
-	private void _testGitIgnoreFile(Path path) throws IOException {
+	private void _testGitIgnoreFile(
+			Path path, Set<String> gitRepoGitIgnoreTemplateLines)
+		throws IOException {
+
 		Path dirPath = path.getParent();
+
+		boolean gitRepoGitIgnore = Files.exists(
+			dirPath.resolve(_GIT_REPO_FILE_NAME));
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new FileReader(path.toFile()))) {
@@ -740,6 +759,12 @@ public class ModulesStructureTest {
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				line = StringUtil.trim(line);
+
+				if (!gitRepoGitIgnore && !dirPath.equals(_modulesDirPath)) {
+					Assert.assertFalse(
+						"Forbidden \"" + line + "\" in " + path,
+						gitRepoGitIgnoreTemplateLines.contains(line));
+				}
 
 				if (!StringUtil.startsWith(line, "!/")) {
 					continue;

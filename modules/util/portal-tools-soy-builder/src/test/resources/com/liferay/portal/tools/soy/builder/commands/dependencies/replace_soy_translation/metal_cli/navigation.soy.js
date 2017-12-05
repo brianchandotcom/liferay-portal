@@ -92,7 +92,7 @@ Liferay.Loader.define("hello-soy-web@1.0.4/Navigation.soy", ['exports', 'metal-c
       var MSG_EXTERNAL_8532436723280155945 = goog.getMsg('this-is-another-view');
       var msg_s140 = MSG_EXTERNAL_8532436723280155945;
       /** @desc  */
-      var MSG_EXTERNAL_4596791579122762316 = goog.getMsg('click-here-to-navigate-back');
+      var MSG_EXTERNAL_4596791579122762316 = goog.getMsg('click-here,-and-you-will-navigate-back.-(be-careful)');
       var msg_s142 = MSG_EXTERNAL_4596791579122762316;
       ie_open('div', null, null, 'id', opt_data.id);
       $templateAlias1(opt_data, null, opt_ijData);

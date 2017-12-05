@@ -100,7 +100,7 @@ MSG_EXTERNAL_8532436723280155945 = MSG_EXTERNAL_8532436723280155945.replace(/{(\
       ie_close('p');
       ie_open('a', null, null, 'href', opt_data.navigationURL);
       /** @desc  */
-      var MSG_EXTERNAL_4596791579122762316 = Liferay.Language.get('click-here-to-navigate-back');
+      var MSG_EXTERNAL_4596791579122762316 = Liferay.Language.get('click-here,-and-you-will-navigate-back.-(be-careful)');
 MSG_EXTERNAL_4596791579122762316 = MSG_EXTERNAL_4596791579122762316.replace(/{(\d+)}/g, '\x01$1\x01')
       itext(goog.string.unescapeEntities(MSG_EXTERNAL_4596791579122762316));
       ie_close('a');

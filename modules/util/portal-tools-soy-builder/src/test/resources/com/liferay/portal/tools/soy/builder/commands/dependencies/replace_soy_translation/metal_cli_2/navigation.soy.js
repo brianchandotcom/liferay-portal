@@ -99,7 +99,7 @@ Liferay.Loader.define("hello-soy-web@1.0.4/Navigation.soy", ['exports', 'metal-c
       ie_close('p');
       ie_open('a', null, null, 'href', opt_data.navigationURL);
       /** @desc  */
-      var MSG_EXTERNAL_4596791579122762316 = goog.getMsg('click-here-to-navigate-back');
+      var MSG_EXTERNAL_4596791579122762316 = goog.getMsg('click-here,-and-you-will-navigate-back.-(be-careful)');
       itext(goog.string.unescapeEntities(MSG_EXTERNAL_4596791579122762316));
       ie_close('a');
       $templateAlias2(opt_data, null, opt_ijData);

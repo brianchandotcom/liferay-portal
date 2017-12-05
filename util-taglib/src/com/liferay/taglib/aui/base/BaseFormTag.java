@@ -69,6 +69,10 @@ public abstract class BaseFormTag extends com.liferay.taglib.util.IncludeTag {
 		return _useNamespace;
 	}
 
+	public boolean getValidateOnBlur() {
+		return _validateOnBlur;
+	}
+
 	public void setAction(java.lang.String action) {
 		_action = action;
 	}
@@ -105,6 +109,10 @@ public abstract class BaseFormTag extends com.liferay.taglib.util.IncludeTag {
 		_useNamespace = useNamespace;
 	}
 
+	public void setValidateOnBlur(boolean validateOnBlur) {
+		_validateOnBlur = validateOnBlur;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -118,6 +126,8 @@ public abstract class BaseFormTag extends com.liferay.taglib.util.IncludeTag {
 		_onSubmit = null;
 		_portletNamespace = null;
 		_useNamespace = true;
+		_validateOnBlur = true;
+
 	}
 
 	@Override
@@ -141,6 +151,7 @@ public abstract class BaseFormTag extends com.liferay.taglib.util.IncludeTag {
 		request.setAttribute("aui:form:onSubmit", _onSubmit);
 		request.setAttribute("aui:form:portletNamespace", _portletNamespace);
 		request.setAttribute("aui:form:useNamespace", String.valueOf(_useNamespace));
+		request.setAttribute("aui:form:validateOnBlur", String.valueOf(_validateOnBlur));
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:form:";
@@ -160,5 +171,6 @@ public abstract class BaseFormTag extends com.liferay.taglib.util.IncludeTag {
 	private java.lang.String _onSubmit = null;
 	private java.lang.String _portletNamespace = null;
 	private boolean _useNamespace = true;
+	private boolean _validateOnBlur = true;
 
 }

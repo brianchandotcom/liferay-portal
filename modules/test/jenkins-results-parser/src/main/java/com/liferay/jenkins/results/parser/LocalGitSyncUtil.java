@@ -24,9 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -109,9 +107,6 @@ public class LocalGitSyncUtil {
 
 		final long start = System.currentTimeMillis();
 
-		ExecutorService executorService = Executors.newFixedThreadPool(
-			_MAX_THREAD_POOL_SIZE);
-
 		final GitWorkingDirectory.Branch upstreamBranch =
 			gitWorkingDirectory.getBranch(
 				gitWorkingDirectory.getUpstreamBranchName(),
@@ -120,7 +115,7 @@ public class LocalGitSyncUtil {
 		for (final GitWorkingDirectory.Remote localGitRemote :
 				localGitRemotes) {
 
-			executorService.execute(
+			_threadPoolExecutor.execute(
 				new Runnable() {
 
 					@Override
@@ -141,15 +136,6 @@ public class LocalGitSyncUtil {
 					}
 
 				});
-		}
-
-		executorService.shutdown();
-
-		try {
-			executorService.awaitTermination(30, TimeUnit.MINUTES);
-		}
-		catch (InterruptedException ie) {
-			throw new RuntimeException(ie);
 		}
 
 		long duration = System.currentTimeMillis() - start;
@@ -256,13 +242,10 @@ public class LocalGitSyncUtil {
 
 		final long start = System.currentTimeMillis();
 
-		ExecutorService executorService = Executors.newFixedThreadPool(
-			_MAX_THREAD_POOL_SIZE);
-
 		for (final GitWorkingDirectory.Remote localGitRemote :
 				localGitRemotes) {
 
-			executorService.execute(
+			_threadPoolExecutor.execute(
 				new Runnable() {
 
 					@Override
@@ -272,15 +255,6 @@ public class LocalGitSyncUtil {
 					}
 
 				});
-		}
-
-		executorService.shutdown();
-
-		try {
-			executorService.awaitTermination(15, TimeUnit.MINUTES);
-		}
-		catch (InterruptedException ie) {
-			throw new RuntimeException(ie);
 		}
 
 		long duration = System.currentTimeMillis() - start;
@@ -483,11 +457,8 @@ public class LocalGitSyncUtil {
 				new HashMap<GitWorkingDirectory.Remote, Boolean>(
 					remotes.size()));
 
-		ExecutorService executorService = Executors.newFixedThreadPool(
-			_MAX_THREAD_POOL_SIZE);
-
 		for (final GitWorkingDirectory.Remote remote : remotes) {
-			executorService.execute(
+			_threadPoolExecutor.execute(
 				new Runnable() {
 
 					@Override
@@ -499,15 +470,6 @@ public class LocalGitSyncUtil {
 					}
 
 				});
-		}
-
-		executorService.shutdown();
-
-		try {
-			executorService.awaitTermination(30, TimeUnit.MINUTES);
-		}
-		catch (InterruptedException ie) {
-			throw new RuntimeException(ie);
 		}
 
 		long duration = System.currentTimeMillis() - start;
@@ -916,7 +878,7 @@ public class LocalGitSyncUtil {
 		}
 
 		ParallelExecutor<String> parallelExecutor = new ParallelExecutor<>(
-			callables, null);
+			callables, _threadPoolExecutor);
 
 		List<String> validatedLocalGitRemoteURLs = new ArrayList<>();
 
@@ -932,10 +894,10 @@ public class LocalGitSyncUtil {
 	private static final long _BRANCH_EXPIRE_AGE_MILLIS =
 		1000 * 60 * 60 * 24 * 2;
 
-	private static final int _MAX_THREAD_POOL_SIZE = 5;
-
 	private static final String _cacheBranchRegex = ".*cache-.+-.+-.+-[^-]+";
 	private static final Pattern _cacheTimestampBranchPattern = Pattern.compile(
 		"(?<name>cache-[^-]+-[^-]+-[^-]+-[^-]+)-(?<timestamp>\\d+)");
+	private static final ThreadPoolExecutor _threadPoolExecutor =
+		JenkinsResultsParserUtil.getNewThreadPoolExecutor(5, true);
 
 }

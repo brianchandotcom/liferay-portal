@@ -43,13 +43,11 @@ public class ImageHtmlPreviewProcessor implements HtmlPreviewProcessor {
 
 		renderer.setBufferedImageType(BufferedImage.TYPE_INT_RGB);
 
-		BufferedImage image = renderer.getImage();
+		File outputFile = FileUtil.createTempFile("png");
 
 		FSImageWriter imageWriter = new FSImageWriter();
 
-		File outputFile = FileUtil.createTempFile("png");
-
-		imageWriter.write(image, outputFile.getAbsolutePath());
+		imageWriter.write(renderer.getImage(), outputFile.getAbsolutePath());
 
 		return outputFile;
 	}

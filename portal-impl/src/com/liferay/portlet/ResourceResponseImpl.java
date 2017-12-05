@@ -63,7 +63,8 @@ public class ResourceResponseImpl
 
 	@Override
 	public LiferayPortletURL createLiferayPortletURL(
-		String portletName, String lifecycle) {
+		long plid, String portletName, String lifecycle,
+		boolean includeLinkToLayoutUuid) {
 
 		ResourceRequest resourceRequest = (ResourceRequest)getPortletRequest();
 
@@ -82,7 +83,8 @@ public class ResourceResponseImpl
 					"the cacheability is not set to PAGE");
 		}
 
-		return super.createLiferayPortletURL(portletName, lifecycle);
+		return super.createLiferayPortletURL(
+			plid, portletName, lifecycle, includeLinkToLayoutUuid);
 	}
 
 	@Override

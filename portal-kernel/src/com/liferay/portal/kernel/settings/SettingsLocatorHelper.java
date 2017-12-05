@@ -22,6 +22,9 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public interface SettingsLocatorHelper {
 
+	public Settings getCompanyConfigurationBeanSettings(
+		long companyId, String configurationPid, Settings parentSettings);
+
 	public Settings getCompanyPortletPreferencesSettings(
 		long companyId, String settingsId, Settings parentSettings);
 

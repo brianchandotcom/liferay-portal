@@ -20,9 +20,9 @@ import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.recurrence.Recurrence;
 import com.liferay.calendar.recurrence.RecurrenceSerializer;
-import com.liferay.calendar.service.CalendarBookingServiceUtil;
-import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
-import com.liferay.calendar.service.CalendarServiceUtil;
+import com.liferay.calendar.service.CalendarBookingService;
+import com.liferay.calendar.service.CalendarResourceLocalService;
+import com.liferay.calendar.service.CalendarService;
 import com.liferay.calendar.util.comparator.CalendarNameComparator;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -33,8 +33,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
-import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalServiceUtil;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -78,11 +78,10 @@ public class CalendarUtil {
 			long startTime, long endTime, String ruleName, TimeZone timeZone)
 		throws PortalException {
 
-		List<CalendarBooking> calendarBookings =
-			CalendarBookingServiceUtil.search(
-				themeDisplay.getCompanyId(), null, calendarIds, new long[0], -1,
-				null, startTime, endTime, true, statuses, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+		List<CalendarBooking> calendarBookings = _calendarBookingService.search(
+			themeDisplay.getCompanyId(), null, calendarIds, new long[0], -1,
+			null, startTime, endTime, true, statuses, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 
 		Map<Integer, Map<Integer, List<Integer>>> rulesMap = new HashMap<>();
 
@@ -278,7 +277,7 @@ public class CalendarUtil {
 
 		jsonObject.put(
 			"hasWorkflowInstanceLink",
-			WorkflowInstanceLinkLocalServiceUtil.hasWorkflowInstanceLink(
+			_workflowInstanceLinkLocalService.hasWorkflowInstanceLink(
 				themeDisplay.getCompanyId(), calendarBooking.getGroupId(),
 				CalendarBooking.class.getName(),
 				calendarBooking.getCalendarBookingId()));
@@ -289,7 +288,7 @@ public class CalendarUtil {
 			calendarBooking.getParentCalendarBookingId());
 
 		CalendarBooking lastInstanceCalendarBooking =
-			CalendarBookingServiceUtil.getLastInstanceCalendarBooking(
+			_calendarBookingService.getLastInstanceCalendarBooking(
 				calendarBooking.getCalendarBookingId());
 
 		String recurrence = lastInstanceCalendarBooking.getRecurrence();
@@ -376,7 +375,7 @@ public class CalendarUtil {
 		jsonObject.put("calendarId", calendar.getCalendarId());
 
 		CalendarResource calendarResource =
-			CalendarResourceLocalServiceUtil.fetchCalendarResource(
+			_calendarResourceLocalService.fetchCalendarResource(
 				calendar.getCalendarResourceId());
 
 		jsonObject.put(
@@ -392,13 +391,13 @@ public class CalendarUtil {
 		jsonObject.put("groupId", calendar.getGroupId());
 		jsonObject.put(
 			"hasWorkflowDefinitionLink",
-			WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(
+			_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
 				themeDisplay.getCompanyId(), calendarResource.getGroupId(),
 				CalendarBooking.class.getName()));
 
 		jsonObject.put(
 			"manageable",
-			CalendarServiceUtil.isManageableFromGroup(
+			_calendarService.isManageableFromGroup(
 				calendar.getCalendarId(), themeDisplay.getScopeGroupId()));
 
 		jsonObject.put("name", calendar.getName(themeDisplay.getLocale()));
@@ -450,6 +449,25 @@ public class CalendarUtil {
 		return jsonArray;
 	}
 
+	@Reference(unbind = "-")
+	protected void setCalendarBookingService(
+		CalendarBookingService calendarBookingService) {
+
+		_calendarBookingService = calendarBookingService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setCalendarResourceLocalService(
+		CalendarResourceLocalService calendarResourceLocalService) {
+
+		_calendarResourceLocalService = calendarResourceLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setCalendarService(CalendarService calendarService) {
+		_calendarService = calendarService;
+	}
+
 	@Reference(
 		target = "(model.class.name=com.liferay.calendar.model.Calendar)",
 		unbind = "-"
@@ -458,6 +476,21 @@ public class CalendarUtil {
 		ModelResourcePermission<Calendar> modelResourcePermission) {
 
 		_calendarModelResourcePermission = modelResourcePermission;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWorkflowDefinitionLinkLocalService(
+		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
+
+		_workflowDefinitionLinkLocalService =
+			workflowDefinitionLinkLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWorkflowInstanceLinkLocalService(
+		WorkflowInstanceLinkLocalService workflowInstanceLinkLocalService) {
+
+		_workflowInstanceLinkLocalService = workflowInstanceLinkLocalService;
 	}
 
 	private static void _addTimeProperties(
@@ -516,9 +549,16 @@ public class CalendarUtil {
 		return jsonObject;
 	}
 
+	private static CalendarBookingService _calendarBookingService;
 	private static ModelResourcePermission<Calendar>
 		_calendarModelResourcePermission;
+	private static CalendarResourceLocalService _calendarResourceLocalService;
+	private static CalendarService _calendarService;
 	private static final TimeZone _utcTimeZone = TimeZone.getTimeZone(
 		StringPool.UTC);
+	private static WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
+	private static WorkflowInstanceLinkLocalService
+		_workflowInstanceLinkLocalService;
 
 }

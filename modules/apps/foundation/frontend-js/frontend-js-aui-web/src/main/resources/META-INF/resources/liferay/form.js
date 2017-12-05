@@ -3,6 +3,8 @@ AUI.add(
 	function(A) {
 		var AArray = A.Array;
 
+		var formConfig;
+
 		var DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
 
 		var defaultAcceptFiles = DEFAULTS_FORM_VALIDATOR.RULES.acceptFiles;
@@ -76,7 +78,8 @@ AUI.add(
 
 							return instance._onSubmit;
 						}
-					}
+					},
+					validateOnBlur: {}
 				},
 
 				EXTENDS: A.Base,
@@ -173,6 +176,8 @@ AUI.add(
 
 						formValidator.on('submit', A.bind('_onValidatorSubmit', instance));
 						formValidator.on('submitError', A.bind('_onSubmitError', instance));
+
+						formValidator.set('validateOnBlur', formConfig.validateOnBlur == "true");
 
 						formNode.delegate(['blur', 'focus'], A.bind('_onFieldFocusChange', instance), 'button,input,select,textarea');
 						formNode.delegate(['blur', 'input'], A.bind('_onEditorBlur', instance), 'div[contenteditable="true"]');
@@ -372,6 +377,8 @@ AUI.add(
 
 				register: function(config) {
 					var instance = this;
+
+					formConfig = config;
 
 					var form = new Liferay.Form(config);
 

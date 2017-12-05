@@ -31,8 +31,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -58,7 +60,7 @@ public class CPAssetCategoriesNavigationDisplayContext {
 			AssetVocabularyService assetVocabularyService,
 			CPAttachmentFileEntryService cpAttachmentFileEntryService,
 			CPFriendlyURLEntryLocalService cpFriendlyURLEntryLocalService,
-			Portal portal)
+			GroupService groupService, Portal portal)
 		throws ConfigurationException {
 
 		_httpServletRequest = httpServletRequest;
@@ -66,6 +68,7 @@ public class CPAssetCategoriesNavigationDisplayContext {
 		_assetVocabularyService = assetVocabularyService;
 		_cpAttachmentFileEntryService = cpAttachmentFileEntryService;
 		_cpFriendlyURLEntryLocalService = cpFriendlyURLEntryLocalService;
+		_groupService = groupService;
 		_portal = portal;
 
 		ThemeDisplay themeDisplay =
@@ -208,10 +211,16 @@ public class CPAssetCategoriesNavigationDisplayContext {
 			return StringPool.BLANK;
 		}
 
+		Group group = _groupService.getGroup(themeDisplay.getScopeGroupId());
+
+		String currentSiteURL =
+			_portal.getPortalURL(themeDisplay) +
+				themeDisplay.getPathFriendlyURLPublic() +
+					group.getFriendlyURL();
+
 		String url =
-			themeDisplay.getPortalURL() +
-				CPConstants.SEPARATOR_ASSET_CATEGORY_URL +
-					cpFriendlyURLEntry.getUrlTitle();
+			currentSiteURL + CPConstants.SEPARATOR_ASSET_CATEGORY_URL +
+				cpFriendlyURLEntry.getUrlTitle();
 
 		return url;
 	}
@@ -229,6 +238,7 @@ public class CPAssetCategoriesNavigationDisplayContext {
 	private final CPAttachmentFileEntryService _cpAttachmentFileEntryService;
 	private final CPFriendlyURLEntryLocalService
 		_cpFriendlyURLEntryLocalService;
+	private final GroupService _groupService;
 	private final HttpServletRequest _httpServletRequest;
 	private final Portal _portal;
 

@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -161,6 +162,25 @@ public class UpstreamFailureUtil {
 		loadUpstreamJobFailuresJSONObject(jobName);
 	}
 
+	public static void loadUpstreamJobFailuresJSONObject(File file) {
+		String fileContent = null;
+
+		try {
+			fileContent = JenkinsResultsParserUtil.read(file);
+		}
+		catch (IOException ioe) {
+			System.out.println(
+				"Unable to load upstream acceptance failure data from file: " +
+					file.getAbsolutePath());
+
+			ioe.printStackTrace();
+		}
+
+		if (fileContent != null) {
+			upstreamFailuresJobJSONObject = new JSONObject(fileContent);
+		}
+	}
+
 	public static void loadUpstreamJobFailuresJSONObject(String jobName) {
 		try {
 			if (jobName.contains("pullrequest")) {
@@ -177,7 +197,7 @@ public class UpstreamFailureUtil {
 		}
 		catch (IOException ioe) {
 			System.out.println(
-				"Unable to set upstream acceptance failure data.");
+				"Unable to load upstream acceptance failure data from url.");
 
 			ioe.printStackTrace();
 		}

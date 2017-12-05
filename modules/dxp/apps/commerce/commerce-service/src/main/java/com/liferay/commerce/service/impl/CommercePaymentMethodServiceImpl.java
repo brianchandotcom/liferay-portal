@@ -21,6 +21,7 @@ import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -60,6 +61,14 @@ public class CommercePaymentMethodServiceImpl
 
 		commercePaymentMethodLocalService.deleteCommercePaymentMethod(
 			commercePaymentMethod);
+	}
+
+	@Override
+	public List<CommercePaymentMethod> getCommercePaymentMethods(
+		long groupId, boolean active) {
+
+		return commercePaymentMethodLocalService.getCommercePaymentMethods(
+			groupId, active);
 	}
 
 	@Override

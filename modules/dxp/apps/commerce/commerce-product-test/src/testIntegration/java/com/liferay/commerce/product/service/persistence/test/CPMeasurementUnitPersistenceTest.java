@@ -245,23 +245,6 @@ public class CPMeasurementUnitPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_OrK_T() throws Exception {
-		_persistence.countByG_OrK_T(RandomTestUtil.nextLong(), "",
-			RandomTestUtil.nextInt());
-
-		_persistence.countByG_OrK_T(0L, "null", 0);
-
-		_persistence.countByG_OrK_T(0L, (String)null, 0);
-	}
-
-	@Test
-	public void testCountByG_OrK_TArrayable() throws Exception {
-		_persistence.countByG_OrK_T(RandomTestUtil.nextLong(),
-			new String[] { RandomTestUtil.randomString(), "", "null", null, null },
-			RandomTestUtil.nextInt());
-	}
-
-	@Test
 	public void testCountByG_P_T() throws Exception {
 		_persistence.countByG_P_T(RandomTestUtil.nextLong(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.nextInt());

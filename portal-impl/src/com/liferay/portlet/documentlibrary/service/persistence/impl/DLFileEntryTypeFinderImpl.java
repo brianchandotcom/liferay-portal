@@ -48,6 +48,10 @@ public class DLFileEntryTypeFinderImpl
 	public static final String FIND_BY_C_G_N_D_S =
 		DLFileEntryTypeFinder.class.getName() + ".findByC_G_N_D_S";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String JOIN_BY_FILE_ENTRY_TYPE =
 		DLFileEntryTypeFinder.class.getName() + ".joinByFileEntryType";
 

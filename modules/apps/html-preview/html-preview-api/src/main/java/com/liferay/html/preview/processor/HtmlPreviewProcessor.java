@@ -14,17 +14,14 @@
 
 package com.liferay.html.preview.processor;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.model.FileEntry;
+import java.io.File;
 
 /**
  * @author Pavel Savinov
  */
 public interface HtmlPreviewProcessor {
 
-	public FileEntry generateHtmlPreview(
-			long userId, long groupId, String content)
-		throws PortalException;
+	public File generateHtmlPreview(String content) throws Exception;
 
 	public String getMimeType();
 

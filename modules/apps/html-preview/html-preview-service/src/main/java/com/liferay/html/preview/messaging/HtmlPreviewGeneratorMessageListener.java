@@ -14,6 +14,7 @@
 
 package com.liferay.html.preview.messaging;
 
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.html.preview.constants.HtmlPreviewConstants;
 import com.liferay.html.preview.exception.InvalidMimeTypeException;
 import com.liferay.html.preview.model.HtmlPreview;
@@ -27,8 +28,11 @@ import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.GetterUtil;
+
+import java.io.File;
 
 import java.util.Map;
 
@@ -80,8 +84,13 @@ public class HtmlPreviewGeneratorMessageListener extends BaseMessageListener {
 					mimeType);
 		}
 
-		FileEntry fileEntry = htmlPreviewProcessor.generateHtmlPreview(
-			userId, groupId, content);
+		File file = htmlPreviewProcessor.generateHtmlPreview(content);
+
+		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
+			groupId, userId, HtmlPreview.class.getName(), 0,
+			HtmlPreview.class.getName(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, file, file.getName(),
+			mimeType, false);
 
 		HtmlPreview htmlPreview = _htmlPreviewLocalService.fetchHtmlPreview(
 			htmlPreviewId);

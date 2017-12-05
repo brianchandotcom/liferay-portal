@@ -552,3 +552,27 @@ The removal of Velocity support for Liferay Portal 7.1 themes allows for an
 increased focus on existing and new template engines.
 
 ---------------------------------------
+
+### Removed Liferay.Widget utility
+- **Date:** 2017-Dec-1
+- **JIRA Ticket:** LPS-75743
+
+#### What changed?
+
+- The `Liferay.Widget` utility method has been removed and is no longer available.
+
+#### Who is affected?
+
+This affects anyone who was using this utility to inject a Liferay Widget.
+
+#### How should I update my code?
+
+Replace the snippet of code using it with an <iframe> with the url to be embedded.
+
+#### Why was this change made?
+
+The `Liferay.Widget` utility was calling `document.write` to inject a generated
+iframe string into de document writing flow. This can cause a whole page to rewrite
+in SPA scenarios.
+
+---------------------------------------

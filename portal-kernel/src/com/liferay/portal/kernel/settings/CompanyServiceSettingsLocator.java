@@ -21,10 +21,7 @@ package com.liferay.portal.kernel.settings;
 public class CompanyServiceSettingsLocator implements SettingsLocator {
 
 	public CompanyServiceSettingsLocator(long companyId, String settingsId) {
-		_companyId = companyId;
-		_settingsId = settingsId;
-
-		_configurationPid = settingsId;
+		this(companyId, settingsId, settingsId);
 	}
 
 	public CompanyServiceSettingsLocator(

@@ -75,6 +75,24 @@ public class HtmlPreviewLocalServiceImpl
 	}
 
 	@Override
+	public HtmlPreview deleteHtmlPreview(HtmlPreview htmlPreview) {
+
+		// HTML Preview
+
+		htmlPreviewPersistence.remove(htmlPreview);
+
+		return htmlPreview;
+	}
+
+	@Override
+	public HtmlPreview deleteHtmlPreview(long htmlPreviewId) {
+		HtmlPreview htmlPreview = htmlPreviewPersistence.fetchByPrimaryKey(
+			htmlPreviewId);
+
+		return deleteHtmlPreview(htmlPreview);
+	}
+
+	@Override
 	public HtmlPreview updateHtmlPreview(
 			long htmlPreviewId, String content, String mimeType,
 			ServiceContext serviceContext)

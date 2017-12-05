@@ -239,7 +239,6 @@
 		<check name="JavaPackagePathCheck" />
 		<check name="JavaParameterAnnotationsCheck" />
 		<check name="JavaProcessCallableCheck" />
-		<check name="JavaProviderTypeAnnotationCheck" />
 		<check name="JavaRedundantConstructorCheck" />
 		<check name="JavaResultSetCheck" />
 		<check name="JavaReturnStatementCheck" />
@@ -298,6 +297,7 @@
 		<check name="JavaFinderCacheCheck" />
 		<check name="JavaFinderImplCustomSQLCheck" />
 		<check name="JavaMultiPlusConcatCheck" />
+		<check name="JavaProviderTypeAnnotationCheck" />
 		<check name="JavaServiceUtilCheck" />
 		<check name="JavaSystemEventAnnotationCheck" />
 		<check name="JavaTestMethodAnnotationsCheck" />
@@ -338,7 +338,6 @@
 		<check name="JSPLineBreakCheck" />
 		<check name="JSPLogFileNameCheck" />
 		<check name="JSPRedirectBackURLCheck" />
-		<check name="JSPSendRedirectCheck" />
 		<check name="JSPSessionKeysCheck" />
 		<check name="JSPStringBundlerCheck" />
 		<check name="JSPStylingCheck" />
@@ -366,6 +365,7 @@
 		<!-- Portal checks -->
 
 		<check name="JSPLanguageKeysCheck" />
+		<check name="JSPSendRedirectCheck" />
 		<check name="JSPStringMethodsCheck" />
 		<check name="ResourceBundleCheck" />
 	</source-processor>
@@ -392,12 +392,15 @@
 		<check name="PropertiesLongLinesCheck" />
 		<check name="PropertiesPortalFileCheck" />
 		<check name="PropertiesPortletFileCheck" />
-		<check name="PropertiesServiceKeysCheck" />
 		<check name="PropertiesSourceFormatterContentCheck" />
 		<check name="PropertiesSourceFormatterFileCheck" />
 		<check name="PropertiesWhitespaceCheck">
 			<property name="allowLeadingSpaces" value="true" />
 		</check>
+
+		<!-- Portal checks -->
+
+		<check name="PropertiesServiceKeysCheck" />
 	</source-processor>
 	<source-processor name="SoySourceProcessor">
 		<check name="WhitespaceCheck" />
@@ -424,7 +427,6 @@
 		<check name="XMLFSBExcludeFileCheck" />
 		<check name="XMLHBMFileCheck" />
 		<check name="XMLIndentationCheck" />
-		<check name="XMLIvyFileCheck" />
 		<check name="XMLLog4jFileCheck" />
 		<check name="XMLLookAndFeelFileCheck" />
 		<check name="XMLModelHintsFileCheck" />
@@ -434,7 +436,6 @@
 		<check name="XMLResourceActionsFileCheck" />
 		<check name="XMLServiceFileCheck" />
 		<check name="XMLSolrSchemaFileCheck" />
-		<check name="XMLSpringFileCheck" />
 		<check name="XMLTagAttributesCheck" />
 		<check name="XMLToggleFileCheck" />
 		<check name="XMLWhitespaceCheck" />
@@ -442,6 +443,8 @@
 		<!-- Portal checks -->
 
 		<check name="XMLEmptyLinesCheck" />
+		<check name="XMLIvyFileCheck" />
+		<check name="XMLSpringFileCheck" />
 		<check name="XMLStrutsConfigFileCheck" />
 		<check name="XMLTestIgnorableErrorLinesFileCheck" />
 		<check name="XMLTilesDefsFileCheck" />

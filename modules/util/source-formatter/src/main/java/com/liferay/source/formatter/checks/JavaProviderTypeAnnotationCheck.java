@@ -22,6 +22,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class JavaProviderTypeAnnotationCheck extends BaseFileCheck {
 
 	@Override
+	public boolean isPortalCheck() {
+		return true;
+	}
+
+	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 

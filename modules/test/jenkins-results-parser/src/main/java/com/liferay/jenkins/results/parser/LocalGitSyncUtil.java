@@ -395,7 +395,7 @@ public class LocalGitSyncUtil {
 					gitWorkingDirectory.getRepositoryName(), ".git"));
 		}
 
-		List<String> validURLs = validateURLs(
+		List<String> validURLs = validateLocalGitRemoteURLs(
 			localGitRemoteURLs, gitWorkingDirectory);
 
 		return validURLs;
@@ -916,18 +916,19 @@ public class LocalGitSyncUtil {
 		return localUpstreamBranch;
 	}
 
-	protected static List<String> validateURLs(
-		List<String> localGitRemoteURLs, GitWorkingDirectory gwd) {
+	protected static List<String> validateLocalGitRemoteURLs(
+		List<String> localGitRemoteURLs,
+		GitWorkingDirectory gitWorkingDirectory) {
 
-		List<String> validatedURLList = new ArrayList<>();
+		List<String> validatedLocalGitRemoteURLs = new ArrayList<>();
 
-		List<Callable<String>> callableURLS = new ArrayList<>();
+		List<Callable<String>> callables = new ArrayList<>();
 
-		for (String localGitRemoteURL : localGitRemoteURLs) {
+		for (final String localGitRemoteURL : localGitRemoteURLs) {
 			final String lgru = localGitRemoteURL;
-			final String reponame = gwd.getRepositoryName();
+			final String reponame = gitWorkingDirectory.getRepositoryName();
 			final int urlIndex = localGitRemoteURLs.indexOf(localGitRemoteURL);
-			final String username = gwd.getRepositoryUsername();
+			final String username = gitWorkingDirectory.getRepositoryUsername();
 
 			Callable<String> callable = new Callable<String>() {
 
@@ -977,19 +978,19 @@ public class LocalGitSyncUtil {
 
 			};
 
-			callableURLS.add(callable);
+			callables.add(callable);
 		}
 
 		ParallelExecutor<String> parallelExecutor = new ParallelExecutor<>(
-			callableURLS, null);
+			callables, null);
 
 		for (String lrgu : parallelExecutor.execute()) {
 			if (lrgu != null) {
-				validatedURLList.add(lrgu);
+				validatedLocalGitRemoteURLs.add(lrgu);
 			}
 		}
 
-		return validatedURLList;
+		return validatedLocalGitRemoteURLs;
 	}
 
 	private static final long _BRANCH_EXPIRE_AGE_MILLIS =

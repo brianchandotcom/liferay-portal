@@ -917,28 +917,26 @@ public class LocalGitSyncUtil {
 	}
 
 	protected static List<String> validateLocalGitRemoteURLs(
-		List<String> localGitRemoteURLs,
-		GitWorkingDirectory gitWorkingDirectory) {
+		final List<String> localGitRemoteURLs,
+		final GitWorkingDirectory gitWorkingDirectory) {
 
 		List<String> validatedLocalGitRemoteURLs = new ArrayList<>();
 
 		List<Callable<String>> callables = new ArrayList<>();
 
 		for (final String localGitRemoteURL : localGitRemoteURLs) {
-			final String lgru = localGitRemoteURL;
-			final String reponame = gitWorkingDirectory.getRepositoryName();
-			final int urlIndex = localGitRemoteURLs.indexOf(localGitRemoteURL);
-			final String username = gitWorkingDirectory.getRepositoryUsername();
-
 			Callable<String> callable = new Callable<String>() {
 
 				@Override
 				public String call() {
-					String lgrName = localGitURLToName(
-						lgru, username, reponame, urlIndex);
+					String localGitRemoteName = localGitURLToName(
+						localGitRemoteURL,
+						gitWorkingDirectory.getRepositoryUsername(),
+						gitWorkingDirectory.getRepositoryName(),
+						localGitRemoteURLs.indexOf(localGitRemoteURL));
 
 					String command = JenkinsResultsParserUtil.combine(
-						"git ls-remote -h ", lgrName);
+						"git ls-remote -h ", localGitRemoteName);
 
 					Process bashCommandProcess = null;
 
@@ -972,7 +970,7 @@ public class LocalGitSyncUtil {
 						return null;
 					}
 					else {
-						return lgru;
+						return localGitRemoteURL;
 					}
 				}
 

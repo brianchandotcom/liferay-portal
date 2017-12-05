@@ -25,7 +25,8 @@ import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -194,9 +195,12 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 			return StringPool.BLANK;
 		}
 
-		Group group = themeDisplay.getScopeGroup();
+		LayoutSet layoutSet = themeDisplay.getLayoutSet();
 
-		return themeDisplay.getPortalURL() + CPConstants.SEPARATOR_PRODUCT_URL +
+		String groupFriendlyUrl = _portal.getGroupFriendlyURL(
+			layoutSet, themeDisplay);
+
+		return groupFriendlyUrl + CPConstants.SEPARATOR_PRODUCT_URL +
 			cpFriendlyURLEntry.getUrlTitle();
 	}
 

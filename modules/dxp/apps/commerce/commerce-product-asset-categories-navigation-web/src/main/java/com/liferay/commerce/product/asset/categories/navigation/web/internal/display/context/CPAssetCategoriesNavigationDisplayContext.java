@@ -31,15 +31,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -111,7 +109,7 @@ public class CPAssetCategoriesNavigationDisplayContext {
 		long[] groupIds = new long[0];
 
 		try {
-			groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(
+			groupIds = _portal.getCurrentAndAncestorSiteGroupIds(
 				themeDisplay.getScopeGroupId());
 		}
 		catch (PortalException pe) {
@@ -210,15 +208,13 @@ public class CPAssetCategoriesNavigationDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		Group group = themeDisplay.getScopeGroup();
+		LayoutSet layoutSet = themeDisplay.getLayoutSet();
 
-		String currentSiteURL =
-			_portal.getPortalURL(themeDisplay) +
-				themeDisplay.getPathFriendlyURLPublic() +
-					group.getFriendlyURL();
+		String groupFriendlyUrl = _portal.getGroupFriendlyURL(
+			layoutSet, themeDisplay);
 
 		String url =
-			currentSiteURL + CPConstants.SEPARATOR_ASSET_CATEGORY_URL +
+			groupFriendlyUrl + CPConstants.SEPARATOR_ASSET_CATEGORY_URL +
 				cpFriendlyURLEntry.getUrlTitle();
 
 		return url;

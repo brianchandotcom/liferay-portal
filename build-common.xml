@@ -1035,6 +1035,17 @@ Error-Prone was automatically installed. Please rerun your task.
 								match="\Q/.bnd/ant-baseline-cache/com.liferay.${processed.artifact.name}-\E\d+\.\d+\.\d+\.jar"
 								replace="/.bnd/ant-baseline-cache/com.liferay.${processed.artifact.name}-${artifact.version.major.minor}.0.jar"
 							/>
+
+							<exec executable="git" failonerror="true">
+								<arg value="add" />
+								<arg value="bnd.bnd" />
+							</exec>
+
+							<exec executable="git" failonerror="true">
+								<arg value="commit" />
+								<arg value="-m" />
+								<arg value="artifact:ignore ${artifact.name} ${artifact.version} prep next" />
+							</exec>
 						</then>
 					</if>
 
@@ -1052,6 +1063,17 @@ Error-Prone was automatically installed. Please rerun your task.
 
 							<echo file="${project.dir}/modules/.releng/${artifact.name}.properties">artifact.git.id=${artifact.git.id}
 artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed.artifact.name}/${artifact.version}/com.liferay.${processed.artifact.name}-${artifact.version}.@{packaging}</echo>
+
+							<exec dir="${project.dir}/modules/.releng" executable="git" failonerror="true">
+								<arg value="add" />
+								<arg value="${artifact.name}.properties" />
+							</exec>
+
+							<exec executable="git" failonerror="true">
+								<arg value="commit" />
+								<arg value="-m" />
+								<arg value="artifact:ignore ${artifact.name} ${artifact.version} releng" />
+							</exec>
 
 							<gradle-execute dir="${project.dir}/modules" task="lockDependencyVersion">
 								<arg value="--build-file=releng.gradle" />

@@ -54,7 +54,7 @@ class LayoutPageTemplateFragment extends Component {
 		this._js = '';
 		this._loading = true;
 
-		fetch(this.getFragmentEntryURL, {
+		fetch(this.fragmentEntryURL, {
 			body: formData,
 			credentials: 'include',
 			method: 'POST',
@@ -87,15 +87,6 @@ class LayoutPageTemplateFragment extends Component {
  */
 LayoutPageTemplateFragment.STATE = {
 	/**
-	 * URL for getting a fragment entry information.
-	 * @default undefined
-	 * @instance
-	 * @memberOf LayoutPageTemplateEditor
-	 * @type {!string}
-	 */
-	getFragmentEntryURL: Config.string().required(),
-
-	/**
 	 * Fragment entry ID
 	 * @default undefined
 	 * @instance
@@ -103,6 +94,15 @@ LayoutPageTemplateFragment.STATE = {
 	 * @type {!string}
 	 */
 	fragmentEntryId: Config.string().required(),
+
+	/**
+	 * URL for getting a fragment entry information.
+	 * @default undefined
+	 * @instance
+	 * @memberOf LayoutPageTemplateEditor
+	 * @type {!string}
+	 */
+	fragmentEntryURL: Config.string().required(),
 
 	/**
 	 * Fragment index

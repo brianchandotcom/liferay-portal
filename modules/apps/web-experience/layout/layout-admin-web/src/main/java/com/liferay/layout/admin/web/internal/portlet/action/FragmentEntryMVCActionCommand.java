@@ -37,11 +37,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
-		"mvc.command.name=/layout/get_fragment_entry"
+		"mvc.command.name=/layout/fragment_entry"
 	},
 	service = MVCActionCommand.class
 )
-public class GetFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
+public class FragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

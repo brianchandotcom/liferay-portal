@@ -18,17 +18,14 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch.index.IndexFactory;
 import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
 import com.liferay.portal.search.elasticsearch.internal.util.LogUtil;
-import com.liferay.portal.search.elasticsearch.internal.util.ResourceUtil;
 import com.liferay.portal.search.elasticsearch.settings.IndexSettingsContributor;
 import com.liferay.portal.search.elasticsearch.settings.IndexSettingsHelper;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
@@ -57,11 +54,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration",
-	immediate = true,
-	property = {
-		"typeMappings.KeywordQueryDocumentType=/META-INF/mappings/keyword-query-type-mappings.json",
-		"typeMappings.SpellCheckDocumentType=/META-INF/mappings/spellcheck-type-mappings.json"
-	}
+	immediate = true
 )
 public class CompanyIndexFactory implements IndexFactory {
 
@@ -101,10 +94,6 @@ public class CompanyIndexFactory implements IndexFactory {
 		LogUtil.logActionResponse(_log, deleteIndexResponse);
 	}
 
-	public void setTypeMappings(Map<String, String> typeMappings) {
-		_typeMappings = typeMappings;
-	}
-
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
@@ -118,10 +107,6 @@ public class CompanyIndexFactory implements IndexFactory {
 			elasticsearchConfiguration.additionalTypeMappings());
 		setOverrideTypeMappings(
 			elasticsearchConfiguration.overrideTypeMappings());
-
-		Map<String, String> typeMappings = getTypeMappings(properties);
-
-		setTypeMappings(typeMappings);
 	}
 
 	@Reference(
@@ -150,19 +135,6 @@ public class CompanyIndexFactory implements IndexFactory {
 		}
 	}
 
-	protected void addTypeMappings(
-			CreateIndexRequestBuilder createIndexRequestBuilder)
-		throws Exception {
-
-		for (Map.Entry<String, String> entry : _typeMappings.entrySet()) {
-			String mappingDefinition = ResourceUtil.getResourceAsString(
-				getClass(), entry.getValue());
-
-			createIndexRequestBuilder.addMapping(
-				entry.getKey(), mappingDefinition);
-		}
-	}
-
 	protected void createIndex(
 			String indexName, IndicesAdminClient indicesAdminClient)
 		throws Exception {
@@ -173,7 +145,6 @@ public class CompanyIndexFactory implements IndexFactory {
 		LiferayDocumentTypeFactory liferayDocumentTypeFactory =
 			new LiferayDocumentTypeFactory(indicesAdminClient, jsonFactory);
 
-		addTypeMappings(createIndexRequestBuilder);
 		setSettings(createIndexRequestBuilder, liferayDocumentTypeFactory);
 
 		addLiferayDocumentTypeMappings(
@@ -189,23 +160,6 @@ public class CompanyIndexFactory implements IndexFactory {
 
 	protected String getIndexName(long companyId) {
 		return indexNameBuilder.getIndexName(companyId);
-	}
-
-	protected Map<String, String> getTypeMappings(
-		Map<String, Object> properties) {
-
-		Map<String, String> typeMappings = new HashMap<>();
-
-		for (String key : properties.keySet()) {
-			if (key.startsWith(_TYPE_MAPPINGS_PREFIX)) {
-				String value = MapUtil.getString(properties, key);
-
-				typeMappings.put(
-					key.substring(_TYPE_MAPPINGS_PREFIX.length()), value);
-			}
-		}
-
-		return typeMappings;
 	}
 
 	protected boolean hasIndex(
@@ -330,8 +284,6 @@ public class CompanyIndexFactory implements IndexFactory {
 	@Reference
 	protected JSONFactory jsonFactory;
 
-	private static final String _TYPE_MAPPINGS_PREFIX = "typeMappings.";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompanyIndexFactory.class);
 
@@ -340,6 +292,5 @@ public class CompanyIndexFactory implements IndexFactory {
 	private final Set<IndexSettingsContributor> _indexSettingsContributors =
 		new ConcurrentSkipListSet<>();
 	private String _overrideTypeMappings;
-	private Map<String, String> _typeMappings = new HashMap<>();
 
 }

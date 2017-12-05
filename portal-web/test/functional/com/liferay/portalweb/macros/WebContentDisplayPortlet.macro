@@ -79,9 +79,8 @@
 		<if>
 			<equals arg1="${editTemplateButton}" arg2="true" />
 			<then>
-				<execute macro="Portlet#gotoPortletOptions">
-					<var name="portletName" value="Web Content Display" />
-					<var name="portletOption" value="Edit Template" />
+				<execute macro="WebContentDisplayPortlet#gotoEditTemplate">
+					<var name="webContentTitle" value="${webContentTitle}" />
 				</execute>
 			</then>
 			<else>
@@ -152,6 +151,16 @@
 				<execute function="AssertTextEquals" locator1="WCD#WEB_CONTENT_CONTENT" value1="${webContentContent}" />
 			</else>
 		</if>
+	</command>
+
+	<command name="gotoEditTemplate">
+		<execute macro="WebContentNavigator#gotoArticleMenuPGViaWCD">
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit Template">
+			<var name="key_menuItem" value="Edit Template" />
+		</execute>
 	</command>
 
 	<command name="removeWebContent">

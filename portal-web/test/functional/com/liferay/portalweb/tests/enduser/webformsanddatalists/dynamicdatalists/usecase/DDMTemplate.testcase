@@ -1,5 +1,6 @@
 <definition component-name="portal-web-forms-and-data-lists">
 	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
 	<property name="testray.main.component.name" value="Dynamic Data Lists" />
 
 	<set-up>
@@ -143,9 +144,8 @@
 			<var name="pageName" value="Test Page" />
 		</execute>
 
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Web Content Display" />
-			<var name="portletOption" value="Edit Template" />
+		<execute macro="WebContentDisplayPortlet#gotoEditTemplate">
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />

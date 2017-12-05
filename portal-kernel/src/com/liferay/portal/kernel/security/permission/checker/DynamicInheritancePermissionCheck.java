@@ -34,7 +34,8 @@ public class DynamicInheritancePermissionCheck
 		UnsafeFunction<C, P, ? extends PortalException> fetchParentFunction,
 		boolean checkParentAccess) {
 
-		_parentModelResourcePermission = parentModelResourcePermission;
+		_parentModelResourcePermission = Objects.requireNonNull(
+			parentModelResourcePermission);
 		_portletResourcePermission = Objects.requireNonNull(
 			parentModelResourcePermission.getPortletResourcePermission());
 		_fetchParentFunction = Objects.requireNonNull(fetchParentFunction);

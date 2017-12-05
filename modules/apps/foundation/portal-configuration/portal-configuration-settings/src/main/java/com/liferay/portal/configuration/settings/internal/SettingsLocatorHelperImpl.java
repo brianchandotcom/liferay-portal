@@ -296,6 +296,8 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	private ServiceTracker
 		<ConfigurationBeanDeclaration, ConfigurationBeanManagedService>
 			_configurationBeanDeclarationServiceTracker;
+	private final Map<Class<?>, LocationVariableResolver>
+		_configurationBeanLocationVariableResolvers = new ConcurrentHashMap<>();
 	private final Map<Class<?>, Settings> _configurationBeanSettings =
 		new ConcurrentHashMap<>();
 	private GroupLocalService _groupLocalService;
@@ -330,6 +332,9 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 								new ClassLoaderResourceManager(classLoader),
 								SettingsLocatorHelperImpl.this);
 
+						_configurationBeanLocationVariableResolvers.put(
+							configurationBeanClass, locationVariableResolver);
+
 						_configurationBeanSettings.put(
 							configurationBeanClass,
 							new ConfigurationBeanSettings(
@@ -355,8 +360,11 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 			configurationBeanManagedService.unregister();
 
-			_configurationBeanClasses.remove(
+			Class<?> configurationBeanClass = _configurationBeanClasses.remove(
 				configurationBeanManagedService.getConfigurationPid());
+
+			_configurationBeanLocationVariableResolvers.remove(
+				configurationBeanClass);
 
 			_configurationBeanSettings.remove(
 				configurationBeanManagedService.getConfigurationPid());

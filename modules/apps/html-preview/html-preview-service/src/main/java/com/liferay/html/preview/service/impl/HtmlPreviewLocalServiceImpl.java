@@ -56,20 +56,9 @@ public class HtmlPreviewLocalServiceImpl
 
 		htmlPreviewPersistence.update(htmlPreview);
 
-		Message message = new Message();
+		// Preview
 
-		Map<String, Object> payload = new HashMap<>();
-
-		payload.put("content", content);
-		payload.put("groupId", groupId);
-		payload.put("htmlPreviewId", htmlPreview.getHtmlPreviewId());
-		payload.put("mimeType", mimeType);
-		payload.put("userId", userId);
-
-		message.setPayload(payload);
-
-		MessageBusUtil.sendMessage(
-			HtmlPreviewConstants.HTML_PREVIEW_GENERATOR, message);
+		_sendMessage(userId, groupId, htmlPreviewId, content, mimeType);
 
 		return htmlPreview;
 	}
@@ -105,22 +94,33 @@ public class HtmlPreviewLocalServiceImpl
 
 		htmlPreviewPersistence.update(htmlPreview);
 
+		// Preview
+
+		_sendMessage(
+			htmlPreview.getUserId(), htmlPreview.getGroupId(), htmlPreviewId,
+			content, mimeType);
+
+		return htmlPreview;
+	}
+
+	private void _sendMessage(
+		long userId, long groupId, long htmlPreviewId, String content,
+		String mimeType) {
+
 		Message message = new Message();
 
 		Map<String, Object> payload = new HashMap<>();
 
 		payload.put("content", content);
-		payload.put("groupId", htmlPreview.getGroupId());
-		payload.put("htmlPreviewId", htmlPreview.getHtmlPreviewId());
+		payload.put("groupId", groupId);
+		payload.put("htmlPreviewId", htmlPreviewId);
 		payload.put("mimeType", mimeType);
-		payload.put("userId", htmlPreview.getUserId());
+		payload.put("userId", userId);
 
 		message.setPayload(payload);
 
 		MessageBusUtil.sendMessage(
 			HtmlPreviewConstants.HTML_PREVIEW_GENERATOR, message);
-
-		return htmlPreview;
 	}
 
 }

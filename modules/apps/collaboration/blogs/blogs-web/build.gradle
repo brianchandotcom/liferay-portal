@@ -12,13 +12,13 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.frontend.taglib.soy", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.item.selector.api", version: "2.3.0"
 	provided group: "com.liferay", name: "com.liferay.item.selector.taglib", version: "1.0.0"
+	provided group: "com.liferay", name: "com.liferay.petra.function", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portlet.display.template", version: "2.1.0"
 	provided group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.upload.api", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "2.0.0"
@@ -33,6 +33,7 @@ dependencies {
 	provided project(":apps:collaboration:item-selector:item-selector-criteria-api")
 	provided project(":apps:collaboration:reading-time:reading-time-taglib")
 	provided project(":apps:collaboration:subscription:subscription-api")
+	provided project(":apps:collaboration:upload:upload-api")
 	provided project(":apps:foundation:friendly-url:friendly-url-api")
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib")
 	provided project(":apps:web-experience:asset:asset-api")

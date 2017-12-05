@@ -73,7 +73,7 @@ public class CPSpecificationOptionItemSelectorView
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "specification-options");
+		return LanguageUtil.get(resourceBundle, "specifications");
 	}
 
 	@Override

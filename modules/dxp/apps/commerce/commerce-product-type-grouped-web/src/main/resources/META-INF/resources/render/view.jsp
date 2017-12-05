@@ -158,7 +158,7 @@ request.setAttribute("cpDefinition", cpDefinition);
 						<c:if test="<%= !cpDefinitionSpecificationOptionValues.isEmpty() %>">
 							<li role="presentation">
 								<a aria-controls="<portlet:namespace />specification" aria-expanded="false" data-toggle="tab" href="#<portlet:namespace />specification" role="tab">
-									<%= LanguageUtil.get(resourceBundle, "specification-options") %>
+									<%= LanguageUtil.get(resourceBundle, "specifications") %>
 								</a>
 							</li>
 						</c:if>

@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.scopeable=true",
-		"javax.portlet.display-name=Product Specification Options",
+		"javax.portlet.display-name=Product Specifications",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.view-template=/view_specification_options.jsp",
 		"javax.portlet.name=" + CPPortletKeys.CP_SPECIFICATION_OPTIONS,

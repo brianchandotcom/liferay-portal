@@ -54,7 +54,7 @@
 
 		<aui:nav-item
 			href="<%= viewProductSpecificationOptionsURL.toString() %>"
-			label="specification-options"
+			label="specifications"
 			selected='<%= toolbarItem.equals("view-all-product-specification-options") %>'
 		/>
 	</aui:nav>

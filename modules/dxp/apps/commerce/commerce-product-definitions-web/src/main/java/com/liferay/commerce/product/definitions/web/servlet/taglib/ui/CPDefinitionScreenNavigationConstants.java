@@ -37,7 +37,7 @@ public class CPDefinitionScreenNavigationConstants {
 	public static final String CATEGORY_KEY_SKUS = "skus";
 
 	public static final String CATEGORY_KEY_SPECIFICATION_OPTIONS =
-		"specification-options";
+		"specifications";
 
 	public static final String ENTRY_KEY_CROSS_SELL_PRODUCTS =
 		"cross-sell-products";

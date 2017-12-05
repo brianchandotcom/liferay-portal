@@ -90,7 +90,7 @@ public class CPPortletDataHandler extends BasePortletDataHandler {
 				NAMESPACE, "option-categories", true, false, null,
 				CPOptionCategory.class.getName()),
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "specification-options", true, false, null,
+				NAMESPACE, "specifications", true, false, null,
 				CPSpecificationOption.class.getName()),
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "option-values", true, false, null,
@@ -179,7 +179,7 @@ public class CPPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		if (portletDataContext.getBooleanParameter(
-				NAMESPACE, "specification-options")) {
+				NAMESPACE, "specifications")) {
 
 			exportModels(
 				portletDataContext,
@@ -234,7 +234,7 @@ public class CPPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		if (portletDataContext.getBooleanParameter(
-				NAMESPACE, "specification-options")) {
+				NAMESPACE, "specifications")) {
 
 			importModels(portletDataContext, CPSpecificationOption.class);
 		}

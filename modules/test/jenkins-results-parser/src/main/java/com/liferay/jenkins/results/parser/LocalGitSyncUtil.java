@@ -939,7 +939,7 @@ public class LocalGitSyncUtil {
 					String command = JenkinsResultsParserUtil.combine(
 						"git ls-remote -h ", lgrName);
 
-					Process bashCommandProcess = null
+					Process bashCommandProcess = null;
 
 					try {
 						bashCommandProcess =

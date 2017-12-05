@@ -1,0 +1,33 @@
+{
+	"dependencies": {
+		"metal": "^2.13.2",
+		"metal-dom": "^2.13.2",
+		"metal-state": "^2.13.2"
+	},
+	"devDependencies": {
+		"babel-plugin-transform-node-env-inline": "^0.1.1",
+		"babel-preset-es2015": "^6.24.1",
+		"jest": "^20.0.4",
+		"liferay-jest-junit-reporter": "0.0.2",
+		"liferay-module-config-generator": "^1.1.10",
+		"metal-cli": "^4.2.0",
+		"metal-jest-serializer": "^1.0.1"
+	},
+	"jest": {
+		"globals": {
+			"Liferay": {}
+		},
+		"testMatch": [
+			"**/test/**/*.js"
+		],
+		"testResultsProcessor": "./node_modules/liferay-jest-junit-reporter",
+		"transformIgnorePatterns": [
+			"<rootDir>.*(node_modules)(?!.*clay.*).*$"
+		]
+	},
+	"name": "map-common",
+	"scripts": {
+		"test": "jest"
+	},
+	"version": "2.0.2"
+}

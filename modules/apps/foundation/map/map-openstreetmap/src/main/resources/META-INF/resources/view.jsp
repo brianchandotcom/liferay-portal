@@ -31,12 +31,12 @@ name = namespace + name;
 %>
 
 <liferay-util:html-top outputKey="js_maps_openstreet_skip_loading">
-	<link href="<%= protocol %>://npmcdn.com/leaflet@0.7.3/dist/leaflet.css" rel="stylesheet" />
+	<link href="<%= protocol %>://npmcdn.com/leaflet@1.2.0/dist/leaflet.css" rel="stylesheet" />
 
-	<script src="<%= protocol %>://npmcdn.com/leaflet@0.7.3/dist/leaflet.js" type="text/javascript"></script>
+	<script src="<%= protocol %>://npmcdn.com/leaflet@1.2.0/dist/leaflet.js" type="text/javascript"></script>
 </liferay-util:html-top>
 
-<aui:script use="liferay-map-openstreetmap">
+<aui:script require="map-openstreetmap@2.0.10/js/MapOpenStreetMap.es as MapOpenStreetMap">
 	var MapControls = Liferay.MapBase.CONTROLS;
 
 	var mapConfig = {
@@ -71,18 +71,23 @@ name = namespace + name;
 
 	var destroyMap = function(event, map) {
 		if (event.portletId === '<%= portletDisplay.getId() %>') {
-			map.destroy();
+			map.destructor();
 
 			Liferay.detach('destroyPortlet', destroyMap);
 		}
 	};
 
 	var createMap = function() {
-		var map = new Liferay['OpenStreetMap'](mapConfig).render();
+		var map = new MapOpenStreetMap.default(mapConfig);
 
 		Liferay.MapBase.register('<%= name %>', map);
 
-		Liferay.on('destroyPortlet', A.rbind(destroyMap, destroyMap, map));
+		Liferay.on(
+			'destroyPortlet',
+			function(event) {
+				destroyMap(event, map);
+			}
+		);
 	};
 
 	createMap();

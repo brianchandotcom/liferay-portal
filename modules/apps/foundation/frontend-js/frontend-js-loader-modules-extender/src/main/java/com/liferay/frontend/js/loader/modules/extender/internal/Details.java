@@ -39,7 +39,7 @@ public @interface Details {
 	@Meta.AD(deflt = "true", name = "apply-versioning", required = false)
 	public boolean applyVersioning();
 
-	@Meta.AD(deflt = "true", name = "expose-global", required = false)
+	@Meta.AD(deflt = "false", name = "expose-global", required = false)
 	public boolean exposeGlobal();
 
 }

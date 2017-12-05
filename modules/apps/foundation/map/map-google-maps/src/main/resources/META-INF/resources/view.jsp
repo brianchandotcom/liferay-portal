@@ -50,55 +50,58 @@ name = namespace + name;
 	<script src="<%= apiURL %>" type="text/javascript"></script>
 </liferay-util:html-top>
 
-<div class="lfr-map" id="<%= name %>Map"></div>
-
-<aui:script use="liferay-map-google-maps">
+<aui:script require="map-google-maps@1.0.12/js/MapGoogleMaps.es as MapGoogleMaps">
 	var MapControls = Liferay.MapBase.CONTROLS;
 
 	var mapConfig = {
-	boundingBox: '#<%= name %>Map',
+		boundingBox: '#<%= name %>Map',
 
-	<c:if test="<%= geolocation %>">
-		<c:choose>
-			<c:when test="<%= BrowserSnifferUtil.isMobile(request) %>">
-				controls: [MapControls.HOME, MapControls.SEARCH],
-			</c:when>
-			<c:otherwise>
-				controls: [MapControls.HOME, MapControls.PAN, MapControls.SEARCH, MapControls.TYPE, MapControls.ZOOM],
-			</c:otherwise>
-		</c:choose>
-	</c:if>
+		<c:if test="<%= geolocation %>">
+			<c:choose>
+				<c:when test="<%= BrowserSnifferUtil.isMobile(request) %>">
+					controls: [MapControls.HOME, MapControls.SEARCH],
+				</c:when>
+				<c:otherwise>
+					controls: [MapControls.HOME, MapControls.PAN, MapControls.SEARCH, MapControls.TYPE, MapControls.ZOOM],
+				</c:otherwise>
+			</c:choose>
+		</c:if>
 
-	<c:if test="<%= Validator.isNotNull(points) %>">
-		data: <%= points %>,
-	</c:if>
+		<c:if test="<%= Validator.isNotNull(points) %>">
+			data: <%= points %>,
+		</c:if>
 
-	geolocation: <%= geolocation %>
+		geolocation: <%= geolocation %>
 
-	<c:if test="<%= Validator.isNotNull(latitude) && Validator.isNotNull(longitude) %>">
-		, position: {
-			location: {
-				lat: <%= latitude %>,
-				lng: <%= longitude %>
+		<c:if test="<%= Validator.isNotNull(latitude) && Validator.isNotNull(longitude) %>">
+			,position: {
+				location: {
+					lat: <%= latitude %>,
+					lng: <%= longitude %>
+				}
 			}
-		}
-	</c:if>
+		</c:if>
 	};
 
 	var destroyMap = function(event, map) {
 		if (event.portletId === '<%= portletDisplay.getId() %>') {
-			map.destroy();
+			map.destructor();
 
 			Liferay.detach('destroyPortlet', destroyMap);
 		}
 	};
 
 	var createMap = function() {
-		var map = new Liferay['GoogleMap'](mapConfig).render();
+		var map = new MapGoogleMaps.default(mapConfig);
 
 		Liferay.MapBase.register('<%= name %>', map);
 
-		Liferay.on('destroyPortlet', A.rbind(destroyMap, destroyMap, map));
+		Liferay.on(
+			'destroyPortlet',
+			function(event) {
+				destroyMap(event, map);
+			}
+		);
 	};
 
 	if (Liferay.Maps.gmapsReady) {

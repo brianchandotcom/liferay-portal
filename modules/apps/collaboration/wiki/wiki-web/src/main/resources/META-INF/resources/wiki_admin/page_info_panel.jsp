@@ -46,7 +46,7 @@ request.setAttribute("page_info_panel.jsp-wikiPage", wikiPageInfoPanelDisplayCon
 						<%= HtmlUtil.escape(wikiPage.getTitle()) %>
 					</h4>
 
-					<h5>
+					<h5 class="sidebar-subtitle">
 						<liferay-ui:message key="page" />
 					</h5>
 				</c:when>
@@ -93,52 +93,52 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 
 					<dl class="sidebar-block">
 						<c:if test="<%= Validator.isNotNull(wikiPage.getSummary()) %>">
-							<dt class="h5">
+							<dt class="sidebar-dt">
 								<liferay-ui:message key="summary" />
 							</dt>
-							<dd class="h6 sidebar-caption">
+							<dd class="sidebar-dd">
 								<%= HtmlUtil.escape(wikiPage.getSummary()) %>
 							</dd>
 						</c:if>
 
-						<dt class="h5">
+						<dt class="sidebar-dt">
 							<liferay-ui:message key="format" />
 						</dt>
-						<dd class="h6 sidebar-caption">
+						<dd class="sidebar-dd">
 							<liferay-ui:message key="<%= wikiEngineRenderer.getFormatLabel(wikiPage.getFormat(), locale) %>" />
 						</dd>
-						<dt class="h5">
+						<dt class="sidebar-dt">
 							<liferay-ui:message key="latest-version" />
 						</dt>
-						<dd class="h6 sidebar-caption">
+						<dd class="sidebar-dd">
 							<%= wikiPage.getVersion() %>
 
 							<c:if test="<%= wikiPage.isMinorEdit() %>">
 								(<liferay-ui:message key="minor-edit" />)
 							</c:if>
 						</dd>
-						<dt class="h5">
+						<dt class="sidebar-dt">
 							<liferay-ui:message key="create-date" />
 						</dt>
-						<dd class="h6 sidebar-caption">
+						<dd class="sidebar-dd">
 							<%= dateFormatDateTime.format(wikiPage.getCreateDate()) %>
 						</dd>
-						<dt class="h5">
+						<dt class="sidebar-dt">
 							<liferay-ui:message key="last-modified" />
 						</dt>
-						<dd class="h6 sidebar-caption">
+						<dd class="sidebar-dd">
 							<%= dateFormatDateTime.format(wikiPage.getModifiedDate()) %>
 						</dd>
-						<dt class="h5">
+						<dt class="sidebar-dt">
 							<liferay-ui:message key="attachments" />
 						</dt>
-						<dd class="h6 sidebar-caption">
+						<dd class="sidebar-dd">
 							<%= wikiPage.getAttachmentsFileEntriesCount() %>
 						</dd>
-						<dt class="h5">
+						<dt class="sidebar-dt">
 							<liferay-ui:message key="rss" />
 						</dt>
-						<dd class="h6 sidebar-caption">
+						<dd class="sidebar-dd">
 							<aui:a href="<%= wikiPageInfoPanelDisplayContext.getPageRSSURL(wikiPage) %>" target="_blank">
 								<liferay-ui:message key="feed" />
 							</aui:a>
@@ -195,10 +195,10 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 				</c:when>
 				<c:otherwise>
 					<dl class="sidebar-block">
-						<dt class="h5">
+						<dt class="sidebar-dt">
 							<liferay-ui:message key="num-of-items" />
 						</dt>
-						<dd class="h6 sidebar-caption">
+						<dd class="h6 sidebar-dd">
 							<%= wikiPageInfoPanelDisplayContext.getPagesCount() %>
 						</dd>
 					</dl>

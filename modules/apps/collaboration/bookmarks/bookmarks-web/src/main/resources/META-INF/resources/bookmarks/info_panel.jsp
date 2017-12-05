@@ -60,7 +60,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 
 			<h4 class="sidebar-title"><%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %></h4>
 
-			<h5>
+			<h5 class="sidebar-subtitle">
 				<liferay-ui:message key="folder" />
 			</h5>
 		</div>
@@ -73,7 +73,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 
 		<div class="sidebar-body">
 			<dl class="sidebar-block">
-				<dt class="h5">
+				<dt class="sidebar-dt">
 					<liferay-ui:message key="num-of-items" />
 				</dt>
 
@@ -85,15 +85,15 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 				}
 				%>
 
-				<dd class="h6 sidebar-caption">
+				<dd class="sidebar-dd">
 					<%= BookmarksFolderServiceUtil.getFoldersAndEntriesCount(scopeGroupId, folderId, WorkflowConstants.STATUS_APPROVED) %>
 				</dd>
 
 				<c:if test="<%= folder != null %>">
-					<dt class="h5">
+					<dt class="sidebar-dt">
 						<liferay-ui:message key="created" />
 					</dt>
-					<dd class="h6 sidebar-caption">
+					<dd class="sidebar-dd">
 						<%= HtmlUtil.escape(folder.getUserName()) %>
 					</dd>
 				</c:if>
@@ -133,32 +133,32 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 
 		<div class="sidebar-body">
 			<dl class="sidebar-block">
-				<dt class="h5">
+				<dt class="sidebar-dt">
 					<liferay-ui:message key="created" />
 				</dt>
-				<dd class="h6 sidebar-caption">
+				<dd class="sidebar-dd">
 					<%= HtmlUtil.escape(entry.getUserName()) %>
 				</dd>
 
 				<c:if test="<%= Validator.isNotNull(entry.getDescription()) %>">
-					<dt class="h5">
+					<dt class="sidebar-dt">
 						<liferay-ui:message key="description" />
 					</dt>
-					<dd class="h6 sidebar-caption">
+					<dd class="sidebar-dd">
 						<%= HtmlUtil.escape(entry.getDescription()) %>
 					</dd>
 				</c:if>
 
-				<dt class="h5">
+				<dt class="sidebar-dt">
 					<liferay-ui:message key="url" />
 				</dt>
-				<dd class="h6 sidebar-caption">
+				<dd class="sidebar-dd">
 					<%= HtmlUtil.escape(entry.getUrl()) %>
 				</dd>
-				<dt class="h5">
+				<dt class="sidebar-dt">
 					<liferay-ui:message key="visits" />
 				</dt>
-				<dd class="h6 sidebar-caption">
+				<dd class="sidebar-dd">
 					<%= entry.getVisits() %>
 				</dd>
 			</dl>

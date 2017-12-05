@@ -22,9 +22,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -469,15 +472,14 @@ public class LocalGitSyncUtil {
 	}
 
 	protected static String localGitURLToName(
-		String localGitRemoteURL, GitWorkingDirectory gwd, int index) {
+		String localGitRemoteURL, String username, String reponame, int index) {
 
 		String transformedURL = localGitRemoteURL.replace(
-			"${username}", gwd.getRepositoryUsername());
+			"${username}", username);
 
-		transformedURL = transformedURL.replace(
-			"${repository-name}", gwd.getRepositoryName());
+		transformedURL = transformedURL.replace("${repository-name}", reponame);
 
-		transformedURL = "local-git-remote-" + Index.toString(index);
+		transformedURL = "local-git-remote-" + Integer.toString(index);
 
 		return transformedURL;
 	}
@@ -921,27 +923,53 @@ public class LocalGitSyncUtil {
 
 		List<Callable<String>> callableURLS = new ArrayList<>();
 
-		for (String lgru : localGitRemoteURLs) {
+		for (String localGitRemoteURL : localGitRemoteURLs) {
+			final String lgru = localGitRemoteURL;
+			final String reponame = gwd.getRepositoryName();
+			final int urlIndex = localGitRemoteURLs.indexOf(localGitRemoteURL);
+			final String username = gwd.getRepositoryUsername();
+
 			Callable<String> callable = new Callable<String>() {
 
 				@Override
 				public String call() {
 					String lgrName = localGitURLToName(
-						lgru, gwd, localGitRemoteURLs.indexOf(lgru));
+						lgru, username, reponame, urlIndex);
 
 					String command = JenkinsResultsParserUtil.combine(
 						"git ls-remote -h ", lgrName);
 
-					ExecutionResult er = gwd.executeBashCommands(command);
+					Process bashCommandProcess = null
 
-					if ((er.getExitValue() != 0) &&
-						er.getStandardError().contains(
+					try {
+						bashCommandProcess =
+							JenkinsResultsParserUtil.executeBashCommands(
+								command);
+					}
+					catch (InterruptedException | IOException | TimeoutException e) {
+						throw new RuntimeException(
+							"Unable to execute bash command", e);
+					}
+
+					int exitCode = bashCommandProcess.exitValue();
+
+					String standardErr = "";
+
+					try {
+						standardErr = JenkinsResultsParserUtil.readInputStream(
+							bashCommandProcess.getErrorStream());
+					}
+					catch (IOException ioe) {
+						standardErr = "";
+					}
+
+					if ((exitCode != 0) && standardErr.contains(
 							"port 22: No route to host")) {
 
 						return null;
 					}
 					else {
-						return lrgu;
+						return lgru;
 					}
 				}
 
@@ -951,7 +979,7 @@ public class LocalGitSyncUtil {
 		}
 
 		ParallelExecutor<String> parallelExecutor = new ParallelExecutor<>(
-			callables, null);
+			callableURLS, null);
 
 		for (String lrgu : parallelExecutor.execute()) {
 			if (lrgu != null) {

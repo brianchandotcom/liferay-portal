@@ -234,7 +234,8 @@ public class ShippingMethodCommerceCheckoutStep
 		_commerceCartService.updateCommerceCart(
 			commerceCart.getCommerceCartId(),
 			commerceCart.getBillingAddressId(),
-			commerceCart.getShippingAddressId(), commerceShippingMethodId,
+			commerceCart.getShippingAddressId(),
+			commerceCart.getCommercePaymentMethodId(), commerceShippingMethodId,
 			shippingOptionName, shippingPrice);
 	}
 

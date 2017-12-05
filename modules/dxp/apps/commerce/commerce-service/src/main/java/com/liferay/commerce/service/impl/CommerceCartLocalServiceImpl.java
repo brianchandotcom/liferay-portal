@@ -193,14 +193,15 @@ public class CommerceCartLocalServiceImpl
 		return commerceCartLocalService.updateCommerceCart(
 			commerceCart.getCommerceCartId(),
 			commerceCart.getBillingAddressId(),
-			commerceCart.getShippingAddressId(), 0, null, 0);
+			commerceCart.getShippingAddressId(),
+			commerceCart.getCommercePaymentMethodId(), 0, null, 0);
 	}
 
 	@Override
 	public CommerceCart updateCommerceCart(
 			long commerceCartId, long billingAddressId, long shippingAddressId,
-			long commerceShippingMethodId, String shippingOptionName,
-			double shippingPrice)
+			long commercePaymentMethodId, long commerceShippingMethodId,
+			String shippingOptionName, double shippingPrice)
 		throws PortalException {
 
 		CommerceCart commerceCart = commerceCartPersistence.findByPrimaryKey(
@@ -208,6 +209,7 @@ public class CommerceCartLocalServiceImpl
 
 		commerceCart.setBillingAddressId(billingAddressId);
 		commerceCart.setShippingAddressId(shippingAddressId);
+		commerceCart.setCommercePaymentMethodId(commercePaymentMethodId);
 		commerceCart.setCommerceShippingMethodId(commerceShippingMethodId);
 		commerceCart.setShippingOptionName(shippingOptionName);
 		commerceCart.setShippingPrice(shippingPrice);

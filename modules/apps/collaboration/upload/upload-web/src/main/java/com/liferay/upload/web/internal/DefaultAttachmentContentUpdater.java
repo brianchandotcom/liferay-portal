@@ -17,6 +17,7 @@ package com.liferay.upload.web.internal;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.upload.AttachmentContentUpdater;
 import com.liferay.upload.AttachmentElementHandler;
 
@@ -39,9 +40,14 @@ public class DefaultAttachmentContentUpdater
 
 	@Override
 	public String updateContent(
-			String content,
+			String content, String contentType,
 			UnsafeFunction<FileEntry, FileEntry, PortalException> saveFile)
 		throws PortalException {
+
+		if (!ContentTypes.TEXT_HTML.equals(contentType)) {
+			throw new IllegalArgumentException(
+				"Unsupported content type: " + contentType);
+		}
 
 		for (AttachmentElementHandler attachmentElementHandler :
 				_attachmentElementHandlers) {

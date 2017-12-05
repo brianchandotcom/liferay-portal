@@ -62,6 +62,7 @@ import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -550,7 +551,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			themeDisplay.getUserId(), entry.getGroupId());
 
 		content = _attachmentContentUpdater.updateContent(
-			content,
+			content, ContentTypes.TEXT_HTML,
 			tempFileEntry ->
 				BlogsEntryAttachmentFileEntryUtil.
 					addBlogsEntryAttachmentFileEntry(

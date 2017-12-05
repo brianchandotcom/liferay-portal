@@ -79,8 +79,8 @@
 	</pre>
 
 	<%
-	BaseInputEditorWikiEngine baseInputEditorWikiEngine = BaseInputEditorWikiEngine.getBaseInputEditorWikiEngine(request);
+	BaseWikiEngine baseWikiEngine = BaseWikiEngine.getBaseWikiEngine(request);
 	%>
 
-	<aui:a href="<%= baseInputEditorWikiEngine.getHelpURL() %>" target="_blank"><liferay-ui:message key="learn-more" /> &raquo;</aui:a>
+	<aui:a href="<%= baseWikiEngine.getHelpURL() %>" target="_blank"><liferay-ui:message key="learn-more" /> &raquo;</aui:a>
 </div>

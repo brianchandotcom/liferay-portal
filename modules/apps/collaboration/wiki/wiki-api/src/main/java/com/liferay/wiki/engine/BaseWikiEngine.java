@@ -14,9 +14,15 @@
 
 package com.liferay.wiki.engine;
 
+import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.language.LanguageResources;
+import com.liferay.taglib.servlet.PipingServletResponse;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
@@ -35,11 +41,20 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Iván Zaera
  */
 public abstract class BaseWikiEngine implements WikiEngine {
+
+	public static BaseWikiEngine getBaseWikiEngine(
+		ServletRequest servletRequest) {
+
+		return (BaseWikiEngine)servletRequest.getAttribute(_BASE_WIKI_ENGINE);
+	}
 
 	public static WikiNode getWikiNode(ServletRequest servletRequest) {
 		return (WikiNode)servletRequest.getAttribute(_WIKI_NODE);
@@ -57,6 +72,8 @@ public abstract class BaseWikiEngine implements WikiEngine {
 
 		return page.getContent();
 	}
+
+	public abstract String getEditorName();
 
 	@Override
 	public String getFormatLabel(Locale locale) {
@@ -77,6 +94,42 @@ public abstract class BaseWikiEngine implements WikiEngine {
 		return format;
 	}
 
+	public String getHelpPageHTML(PageContext pageContext)
+		throws IOException, ServletException {
+
+		if (!isHelpPageDefined()) {
+			return StringPool.BLANK;
+		}
+
+		HttpServletResponse response =
+			(HttpServletResponse)pageContext.getResponse();
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		PipingServletResponse pipingServletResponse = new PipingServletResponse(
+			response, unsyncStringWriter);
+
+		ServletContext servletContext = getHelpPageServletContext();
+
+		RequestDispatcher requestDispatcher =
+			servletContext.getRequestDispatcher(getHelpPageJSP());
+
+		requestDispatcher.include(
+			pageContext.getRequest(), pipingServletResponse);
+
+		StringBundler sb = unsyncStringWriter.getStringBundler();
+
+		return sb.toString();
+	}
+
+	public String getHelpPageTitle(HttpServletRequest request) {
+		return LanguageUtil.format(
+			request, "x-syntax-help", getFormatLabel(request.getLocale()),
+			false);
+	}
+
+	public abstract String getHelpURL();
+
 	@Override
 	public Map<String, Boolean> getOutgoingLinks(WikiPage page)
 		throws PageContentException {
@@ -87,6 +140,16 @@ public abstract class BaseWikiEngine implements WikiEngine {
 	@Override
 	public String getToolbarSet() {
 		return "creole";
+	}
+
+	public boolean isHelpPageDefined() {
+		if ((getHelpPageServletContext() == null) ||
+			Validator.isNull(getHelpPageJSP())) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
@@ -100,6 +163,7 @@ public abstract class BaseWikiEngine implements WikiEngine {
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher(getEditPageJSP());
 
+		servletRequest.setAttribute(_BASE_WIKI_ENGINE, this);
 		servletRequest.setAttribute(_WIKI_NODE, node);
 		servletRequest.setAttribute(_WIKI_PAGE, page);
 
@@ -117,9 +181,18 @@ public abstract class BaseWikiEngine implements WikiEngine {
 
 	protected abstract ServletContext getEditPageServletContext();
 
+	protected String getHelpPageJSP() {
+		return "/help_page.jsp";
+	}
+
+	protected abstract ServletContext getHelpPageServletContext();
+
 	protected ResourceBundleLoader getResourceBundleLoader() {
 		return LanguageResources.RESOURCE_BUNDLE_LOADER;
 	}
+
+	private static final String _BASE_WIKI_ENGINE =
+		BaseWikiEngine.class.getName() + "#BASE_WIKI_ENGINE";
 
 	private static final String _WIKI_NODE =
 		BaseWikiEngine.class.getName() + "#WIKI_NODE";

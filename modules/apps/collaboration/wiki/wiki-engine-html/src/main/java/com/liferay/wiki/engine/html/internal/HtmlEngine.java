@@ -27,8 +27,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.engine.BaseWikiEngine;
 import com.liferay.wiki.engine.WikiEngine;
-import com.liferay.wiki.engine.input.editor.common.BaseInputEditorWikiEngine;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.model.WikiPage;
@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Zsigmond Rab
  */
 @Component(service = WikiEngine.class)
-public class HtmlEngine extends BaseInputEditorWikiEngine {
+public class HtmlEngine extends BaseWikiEngine {
 
 	@Override
 	public String getEditorName() {
@@ -90,6 +90,11 @@ public class HtmlEngine extends BaseInputEditorWikiEngine {
 	@Override
 	public String getToolbarSet() {
 		return null;
+	}
+
+	@Override
+	protected ServletContext getEditPageServletContext() {
+		return _servletContext;
 	}
 
 	@Override
@@ -204,6 +209,12 @@ public class HtmlEngine extends BaseInputEditorWikiEngine {
 
 	private String _friendlyURLMapping;
 	private Router _router;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.wiki.engine.input.editor.common)"
+	)
+	private ServletContext _servletContext;
+
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 	private WikiNodeLocalService _wikiNodeLocalService;
 

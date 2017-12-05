@@ -36,10 +36,9 @@ public class PortletResourcePermissionChecker
 		String resourceName,
 		PortletResourcePermissionCheck... portletResourcePermissionChecks) {
 
-		Objects.requireNonNull(resourceName);
-
-		_resourceName = resourceName;
-		_portletResourcePermissionChecks = portletResourcePermissionChecks;
+		_resourceName = Objects.requireNonNull(resourceName);
+		_portletResourcePermissionChecks = Objects.requireNonNull(
+			portletResourcePermissionChecks);
 	}
 
 	@Override
@@ -82,10 +81,10 @@ public class PortletResourcePermissionChecker
 			groupId = group.getGroupId();
 		}
 
-		final long finalGroupId = groupId;
-
 		PermissionCacheKey permissionCacheKey = new PermissionCacheKey(
 			_resourceName, groupId, actionId);
+
+		final long finalGroupId = groupId;
 
 		return (Boolean)permissionChecksMap.computeIfAbsent(
 			permissionCacheKey,

@@ -1216,15 +1216,14 @@
 		</execute>
 
 		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Panel Test Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
 			<var name="componentName" value="Collaboration" />
 			<var name="pageName" value="Panel Test Page" />
 			<var name="portletNameList" value="Blogs,Message Boards" />
-			<var name="privacy" value="Public" />
 			<var name="sitePageType" value="Panel" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Panel Test Page" />
 		</execute>
 
 		<execute macro="Page#viewPanelPortletListPG">
@@ -1314,12 +1313,7 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Link to URL Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
-			<var name="pageName" value="Link to URL Page" />
 			<var name="pageTypeURL" value="https://www.google.com/" />
-			<var name="privacy" value="Public" />
 			<var name="sitePageType" value="Link to URL" />
 		</execute>
 
@@ -1351,13 +1345,8 @@
 		</execute>
 
 		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Panel Page" />
-		</execute>
-
-		<execute macro="SitePages#configurePage">
 			<var name="componentName" value="Community" />
 			<var name="pageName" value="Panel Page" />
-			<var name="privacy" value="Public" />
 			<var name="sitePageType" value="Panel" />
 		</execute>
 
@@ -1485,7 +1474,7 @@
 		</execute>
 
 		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Page Set Type" />
+			<var name="pageName" value="Page Set Page" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
@@ -1499,17 +1488,15 @@
 		<execute function="AssertElementNotPresent" locator1="Home#PAGE" value1="Page Set Page" />
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="Page#addChild">
-			<var name="page" value="Public Pages" />
-			<var name="pageName" value="Page Set Page" />
+		<execute macro="SitePages#addChildPage">
+			<var name="childPageName" value="United States" />
 			<var name="pageTypeURL" value="/web/united-states" />
-			<var name="siteChildPageName" value="United States" />
-			<var name="siteName" value="Page Type Test Site Name" />
+			<var name="parentPageName" value="Page Set Page" />
 			<var name="sitePageType" value="Link to URL" />
 		</execute>
 
@@ -1522,17 +1509,15 @@
 		<execute function="AssertElementPresent" locator1="Home#PAGE" value1="Page Set Page" />
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="Page#addChild">
-			<var name="page" value="Public Pages" />
-			<var name="pageName" value="Page Set Page" />
+		<execute macro="SitePages#addChildPage">
+			<var name="childPageName" value="Canada" />
 			<var name="pageTypeURL" value="/web/canada" />
-			<var name="siteChildPageName" value="Canada" />
-			<var name="siteName" value="Page Type Test Site Name" />
+			<var name="parentPageName" value="Page Set Page" />
 			<var name="sitePageType" value="Link to URL" />
 		</execute>
 

@@ -58,7 +58,7 @@
 	</tear-down>
 
 	<command name="DeleteLivePage" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="quarantine" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />

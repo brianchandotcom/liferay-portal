@@ -140,6 +140,28 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 		return getConfigurationBeanSettings(configurationPid);
 	}
 
+	@Override
+	public Settings getGroupConfigurationBeanSettings(
+		long groupId, String configurationPid, Settings parentSettings) {
+
+		if (!_configurationBeanClasses.containsKey(configurationPid)) {
+			return parentSettings;
+		}
+
+		ScopeKey scopeKey = new ScopeKey(
+			_configurationBeanClasses.get(configurationPid),
+			ExtendedObjectClassDefinition.Scope.GROUP, String.valueOf(groupId));
+
+		if (!_scopedConfigurationBeanProvider.has(scopeKey)) {
+			return parentSettings;
+		}
+
+		return new ConfigurationBeanSettings(
+			_configurationBeanLocationVariableResolvers.get(
+				scopeKey.getObjectClass()),
+			_scopedConfigurationBeanProvider.get(scopeKey), parentSettings);
+	}
+
 	public PortletPreferences getGroupPortletPreferences(
 		long groupId, String settingsId) {
 

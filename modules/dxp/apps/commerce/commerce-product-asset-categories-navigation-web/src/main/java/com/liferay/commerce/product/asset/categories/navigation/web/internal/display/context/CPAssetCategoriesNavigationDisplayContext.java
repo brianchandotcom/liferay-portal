@@ -60,7 +60,7 @@ public class CPAssetCategoriesNavigationDisplayContext {
 			AssetVocabularyService assetVocabularyService,
 			CPAttachmentFileEntryService cpAttachmentFileEntryService,
 			CPFriendlyURLEntryLocalService cpFriendlyURLEntryLocalService,
-			GroupService groupService, Portal portal)
+			Portal portal)
 		throws ConfigurationException {
 
 		_httpServletRequest = httpServletRequest;
@@ -68,7 +68,6 @@ public class CPAssetCategoriesNavigationDisplayContext {
 		_assetVocabularyService = assetVocabularyService;
 		_cpAttachmentFileEntryService = cpAttachmentFileEntryService;
 		_cpFriendlyURLEntryLocalService = cpFriendlyURLEntryLocalService;
-		_groupService = groupService;
 		_portal = portal;
 
 		ThemeDisplay themeDisplay =
@@ -211,7 +210,7 @@ public class CPAssetCategoriesNavigationDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		Group group = _groupService.getGroup(themeDisplay.getScopeGroupId());
+		Group group = themeDisplay.getScopeGroup();
 
 		String currentSiteURL =
 			_portal.getPortalURL(themeDisplay) +
@@ -238,7 +237,6 @@ public class CPAssetCategoriesNavigationDisplayContext {
 	private final CPAttachmentFileEntryService _cpAttachmentFileEntryService;
 	private final CPFriendlyURLEntryLocalService
 		_cpFriendlyURLEntryLocalService;
-	private final GroupService _groupService;
 	private final HttpServletRequest _httpServletRequest;
 	private final Portal _portal;
 

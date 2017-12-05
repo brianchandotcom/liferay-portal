@@ -36,17 +36,20 @@ public class CompanyServiceSettingsLocator implements SettingsLocator {
 	}
 
 	@Override
-	public Settings getSettings() {
-		Settings configurationBeanSettings =
-			_settingsLocatorHelper.getConfigurationBeanSettings(
-				_configurationPid);
+	public Settings getSettings() throws SettingsException {
+		SystemSettingsLocator systemSettingsLocator = new SystemSettingsLocator(
+			_configurationPid);
 
 		Settings portalPreferencesSettings =
 			_settingsLocatorHelper.getPortalPreferencesSettings(
-				_companyId, configurationBeanSettings);
+				_companyId, systemSettingsLocator.getSettings());
+
+		Settings companyConfigurationBeanSettings =
+			_settingsLocatorHelper.getCompanyConfigurationBeanSettings(
+				_companyId, _configurationPid, portalPreferencesSettings);
 
 		return _settingsLocatorHelper.getCompanyPortletPreferencesSettings(
-			_companyId, _settingsId, portalPreferencesSettings);
+			_companyId, _settingsId, companyConfigurationBeanSettings);
 	}
 
 	@Override

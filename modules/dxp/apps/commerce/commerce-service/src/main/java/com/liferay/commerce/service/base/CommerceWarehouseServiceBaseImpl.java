@@ -20,6 +20,7 @@ import com.liferay.commerce.service.persistence.CPDefinitionAvailabilityRangePer
 import com.liferay.commerce.service.persistence.CPDefinitionInventoryPersistence;
 import com.liferay.commerce.service.persistence.CommerceAddressPersistence;
 import com.liferay.commerce.service.persistence.CommerceAvailabilityRangePersistence;
+import com.liferay.commerce.service.persistence.CommerceCartItemFinder;
 import com.liferay.commerce.service.persistence.CommerceCartItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceCartPersistence;
 import com.liferay.commerce.service.persistence.CommerceCountryFinder;
@@ -299,6 +300,25 @@ public abstract class CommerceWarehouseServiceBaseImpl extends BaseServiceImpl
 	public void setCommerceCartItemPersistence(
 		CommerceCartItemPersistence commerceCartItemPersistence) {
 		this.commerceCartItemPersistence = commerceCartItemPersistence;
+	}
+
+	/**
+	 * Returns the commerce cart item finder.
+	 *
+	 * @return the commerce cart item finder
+	 */
+	public CommerceCartItemFinder getCommerceCartItemFinder() {
+		return commerceCartItemFinder;
+	}
+
+	/**
+	 * Sets the commerce cart item finder.
+	 *
+	 * @param commerceCartItemFinder the commerce cart item finder
+	 */
+	public void setCommerceCartItemFinder(
+		CommerceCartItemFinder commerceCartItemFinder) {
+		this.commerceCartItemFinder = commerceCartItemFinder;
 	}
 
 	/**
@@ -1341,6 +1361,8 @@ public abstract class CommerceWarehouseServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.commerce.service.CommerceCartItemService commerceCartItemService;
 	@BeanReference(type = CommerceCartItemPersistence.class)
 	protected CommerceCartItemPersistence commerceCartItemPersistence;
+	@BeanReference(type = CommerceCartItemFinder.class)
+	protected CommerceCartItemFinder commerceCartItemFinder;
 	@BeanReference(type = com.liferay.commerce.service.CommerceCountryLocalService.class)
 	protected com.liferay.commerce.service.CommerceCountryLocalService commerceCountryLocalService;
 	@BeanReference(type = com.liferay.commerce.service.CommerceCountryService.class)

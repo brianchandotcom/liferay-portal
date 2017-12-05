@@ -85,6 +85,11 @@ public class CommerceCartItemServiceUtil {
 		return getService().getCommerceCartItemsCount(commerceCartId);
 	}
 
+	public static int getCPInstanceQuantity(long cpInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPInstanceQuantity(cpInstanceId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

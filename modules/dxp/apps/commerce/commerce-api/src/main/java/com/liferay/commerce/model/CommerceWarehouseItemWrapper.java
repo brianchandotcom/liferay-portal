@@ -67,8 +67,7 @@ public class CommerceWarehouseItemWrapper implements CommerceWarehouseItem,
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("commerceWarehouseId", getCommerceWarehouseId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
+		attributes.put("CPInstanceId", getCPInstanceId());
 		attributes.put("quantity", getQuantity());
 
 		return attributes;
@@ -125,16 +124,10 @@ public class CommerceWarehouseItemWrapper implements CommerceWarehouseItem,
 			setCommerceWarehouseId(commerceWarehouseId);
 		}
 
-		Long classNameId = (Long)attributes.get("classNameId");
+		Long CPInstanceId = (Long)attributes.get("CPInstanceId");
 
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
+		if (CPInstanceId != null) {
+			setCPInstanceId(CPInstanceId);
 		}
 
 		Integer quantity = (Integer)attributes.get("quantity");
@@ -152,36 +145,6 @@ public class CommerceWarehouseItemWrapper implements CommerceWarehouseItem,
 	@Override
 	public int compareTo(CommerceWarehouseItem commerceWarehouseItem) {
 		return _commerceWarehouseItem.compareTo(commerceWarehouseItem);
-	}
-
-	/**
-	* Returns the fully qualified class name of this commerce warehouse item.
-	*
-	* @return the fully qualified class name of this commerce warehouse item
-	*/
-	@Override
-	public java.lang.String getClassName() {
-		return _commerceWarehouseItem.getClassName();
-	}
-
-	/**
-	* Returns the class name ID of this commerce warehouse item.
-	*
-	* @return the class name ID of this commerce warehouse item
-	*/
-	@Override
-	public long getClassNameId() {
-		return _commerceWarehouseItem.getClassNameId();
-	}
-
-	/**
-	* Returns the class pk of this commerce warehouse item.
-	*
-	* @return the class pk of this commerce warehouse item
-	*/
-	@Override
-	public long getClassPK() {
-		return _commerceWarehouseItem.getClassPK();
 	}
 
 	@Override
@@ -224,6 +187,16 @@ public class CommerceWarehouseItemWrapper implements CommerceWarehouseItem,
 	public com.liferay.commerce.product.model.CPInstance getCPInstance()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceWarehouseItem.getCPInstance();
+	}
+
+	/**
+	* Returns the cp instance ID of this commerce warehouse item.
+	*
+	* @return the cp instance ID of this commerce warehouse item
+	*/
+	@Override
+	public long getCPInstanceId() {
+		return _commerceWarehouseItem.getCPInstanceId();
 	}
 
 	/**
@@ -346,31 +319,6 @@ public class CommerceWarehouseItemWrapper implements CommerceWarehouseItem,
 		_commerceWarehouseItem.setCachedModel(cachedModel);
 	}
 
-	@Override
-	public void setClassName(java.lang.String className) {
-		_commerceWarehouseItem.setClassName(className);
-	}
-
-	/**
-	* Sets the class name ID of this commerce warehouse item.
-	*
-	* @param classNameId the class name ID of this commerce warehouse item
-	*/
-	@Override
-	public void setClassNameId(long classNameId) {
-		_commerceWarehouseItem.setClassNameId(classNameId);
-	}
-
-	/**
-	* Sets the class pk of this commerce warehouse item.
-	*
-	* @param classPK the class pk of this commerce warehouse item
-	*/
-	@Override
-	public void setClassPK(long classPK) {
-		_commerceWarehouseItem.setClassPK(classPK);
-	}
-
 	/**
 	* Sets the commerce warehouse ID of this commerce warehouse item.
 	*
@@ -399,6 +347,16 @@ public class CommerceWarehouseItemWrapper implements CommerceWarehouseItem,
 	@Override
 	public void setCompanyId(long companyId) {
 		_commerceWarehouseItem.setCompanyId(companyId);
+	}
+
+	/**
+	* Sets the cp instance ID of this commerce warehouse item.
+	*
+	* @param CPInstanceId the cp instance ID of this commerce warehouse item
+	*/
+	@Override
+	public void setCPInstanceId(long CPInstanceId) {
+		_commerceWarehouseItem.setCPInstanceId(CPInstanceId);
 	}
 
 	/**

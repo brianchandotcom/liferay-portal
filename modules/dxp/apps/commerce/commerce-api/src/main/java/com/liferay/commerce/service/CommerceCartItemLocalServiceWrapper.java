@@ -283,6 +283,11 @@ public class CommerceCartItemLocalServiceWrapper
 	}
 
 	@Override
+	public int getCPInstanceQuantity(long cpInstanceId) {
+		return _commerceCartItemLocalService.getCPInstanceQuantity(cpInstanceId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		return _commerceCartItemLocalService.getIndexableActionableDynamicQuery();
 	}
@@ -325,9 +330,11 @@ public class CommerceCartItemLocalServiceWrapper
 	}
 
 	@Override
-	public void validate(long cpDefinitionId, long cpInstanceId)
+	public void validate(long cpDefinitionId, long cpInstanceId,
+		long commerceCartId, int quantity)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_commerceCartItemLocalService.validate(cpDefinitionId, cpInstanceId);
+		_commerceCartItemLocalService.validate(cpDefinitionId, cpInstanceId,
+			commerceCartId, quantity);
 	}
 
 	@Override

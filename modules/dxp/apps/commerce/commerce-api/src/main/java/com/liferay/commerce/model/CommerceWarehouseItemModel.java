@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -44,8 +43,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface CommerceWarehouseItemModel extends AttachedModel,
-	BaseModel<CommerceWarehouseItem>, GroupedModel, ShardedModel {
+public interface CommerceWarehouseItemModel extends BaseModel<CommerceWarehouseItem>,
+	GroupedModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -208,46 +207,18 @@ public interface CommerceWarehouseItemModel extends AttachedModel,
 	public void setCommerceWarehouseId(long commerceWarehouseId);
 
 	/**
-	 * Returns the fully qualified class name of this commerce warehouse item.
+	 * Returns the cp instance ID of this commerce warehouse item.
 	 *
-	 * @return the fully qualified class name of this commerce warehouse item
+	 * @return the cp instance ID of this commerce warehouse item
 	 */
-	@Override
-	public String getClassName();
-
-	public void setClassName(String className);
+	public long getCPInstanceId();
 
 	/**
-	 * Returns the class name ID of this commerce warehouse item.
+	 * Sets the cp instance ID of this commerce warehouse item.
 	 *
-	 * @return the class name ID of this commerce warehouse item
+	 * @param CPInstanceId the cp instance ID of this commerce warehouse item
 	 */
-	@Override
-	public long getClassNameId();
-
-	/**
-	 * Sets the class name ID of this commerce warehouse item.
-	 *
-	 * @param classNameId the class name ID of this commerce warehouse item
-	 */
-	@Override
-	public void setClassNameId(long classNameId);
-
-	/**
-	 * Returns the class pk of this commerce warehouse item.
-	 *
-	 * @return the class pk of this commerce warehouse item
-	 */
-	@Override
-	public long getClassPK();
-
-	/**
-	 * Sets the class pk of this commerce warehouse item.
-	 *
-	 * @param classPK the class pk of this commerce warehouse item
-	 */
-	@Override
-	public void setClassPK(long classPK);
+	public void setCPInstanceId(long CPInstanceId);
 
 	/**
 	 * Returns the quantity of this commerce warehouse item.

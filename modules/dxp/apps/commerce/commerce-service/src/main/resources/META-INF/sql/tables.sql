@@ -127,28 +127,6 @@ create table CommerceCountry (
 	lastPublishDate DATE null
 );
 
-create table CommerceInventory (
-	uuid_ VARCHAR(75) null,
-	commerceInventoryId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	CPDefinitionId LONG,
-	commerceInventoryEngine VARCHAR(75) null,
-	lowStockActivity VARCHAR(75) null,
-	displayAvailability BOOLEAN,
-	displayStockQuantity BOOLEAN,
-	minStockQuantity INTEGER,
-	backOrders BOOLEAN,
-	minCartQuantity INTEGER,
-	maxCartQuantity INTEGER,
-	allowedCartQuantities VARCHAR(75) null,
-	multipleCartQuantity INTEGER
-);
-
 create table CommerceOrder (
 	commerceOrderId LONG not null primary key,
 	groupId LONG,
@@ -308,7 +286,6 @@ create table CommerceWarehouseItem (
 	createDate DATE null,
 	modifiedDate DATE null,
 	commerceWarehouseId LONG,
-	classNameId LONG,
-	classPK LONG,
+	CPInstanceId LONG,
 	quantity INTEGER
 );

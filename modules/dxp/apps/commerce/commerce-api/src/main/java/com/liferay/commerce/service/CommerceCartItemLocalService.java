@@ -234,6 +234,9 @@ public interface CommerceCartItemLocalService extends BaseLocalService,
 	public int getCommerceCartItemsCount(long commerceCartId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPInstanceQuantity(long cpInstanceId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
@@ -261,6 +264,6 @@ public interface CommerceCartItemLocalService extends BaseLocalService,
 	public CommerceCartItem updateCommerceCartItem(long commerceCartItemId,
 		int quantity, java.lang.String json) throws PortalException;
 
-	public void validate(long cpDefinitionId, long cpInstanceId)
-		throws PortalException;
+	public void validate(long cpDefinitionId, long cpInstanceId,
+		long commerceCartId, int quantity) throws PortalException;
 }

@@ -84,6 +84,10 @@ public interface CommerceCartItemService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceCartItemsCount(long commerceCartId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPInstanceQuantity(long cpInstanceId)
+		throws PortalException;
+
 	/**
 	* Returns the OSGi service identifier.
 	*

@@ -19,7 +19,6 @@ import com.liferay.commerce.checkout.web.util.CommerceCheckoutStepServicesTracke
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.util.CommerceCartHelper;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.List;

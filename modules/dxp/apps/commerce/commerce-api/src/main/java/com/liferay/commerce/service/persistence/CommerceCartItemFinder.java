@@ -21,10 +21,6 @@ import aQute.bnd.annotation.ProviderType;
  * @generated
  */
 @ProviderType
-public interface CommerceWarehouseItemFinder {
-	public java.util.List<com.liferay.commerce.model.CommerceWarehouseItem> findByCPInstanceId(
-		long cpInstanceId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouseItem> orderByComparator);
-
+public interface CommerceCartItemFinder {
 	public int getCPInstanceQuantity(long cpInstanceId);
 }

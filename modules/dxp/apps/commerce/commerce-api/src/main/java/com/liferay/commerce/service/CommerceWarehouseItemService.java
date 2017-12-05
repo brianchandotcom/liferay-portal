@@ -57,8 +57,8 @@ public interface CommerceWarehouseItemService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CommerceWarehouseItemServiceUtil} to access the commerce warehouse item remote service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceWarehouseItemServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CommerceWarehouseItem addCommerceWarehouseItem(
-		long commerceWarehouseId, java.lang.String className, long classPK,
-		int quantity, ServiceContext serviceContext) throws PortalException;
+		long commerceWarehouseId, long cpInstanceId, int quantity,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteCommerceWarehouseItem(long commerceWarehouseItemId)
 		throws PortalException;
@@ -69,17 +69,21 @@ public interface CommerceWarehouseItemService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceWarehouseItem> getCommerceWarehouseItems(
-		java.lang.String className, long classPK) throws PortalException;
+		long cpInstanceId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceWarehouseItem> getCommerceWarehouseItems(
-		java.lang.String className, long classPK, int start, int end,
+		long cpInstanceId, int start, int end,
 		OrderByComparator<CommerceWarehouseItem> orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceWarehouseItemsCount(java.lang.String className,
-		long classPK) throws PortalException;
+	public int getCommerceWarehouseItemsCount(long cpInstanceId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPInstanceQuantity(long cpInstanceId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

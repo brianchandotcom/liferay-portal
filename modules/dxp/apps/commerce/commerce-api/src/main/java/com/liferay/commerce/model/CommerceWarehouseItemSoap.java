@@ -43,8 +43,7 @@ public class CommerceWarehouseItemSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setCommerceWarehouseId(model.getCommerceWarehouseId());
-		soapModel.setClassNameId(model.getClassNameId());
-		soapModel.setClassPK(model.getClassPK());
+		soapModel.setCPInstanceId(model.getCPInstanceId());
 		soapModel.setQuantity(model.getQuantity());
 
 		return soapModel;
@@ -165,20 +164,12 @@ public class CommerceWarehouseItemSoap implements Serializable {
 		_commerceWarehouseId = commerceWarehouseId;
 	}
 
-	public long getClassNameId() {
-		return _classNameId;
+	public long getCPInstanceId() {
+		return _CPInstanceId;
 	}
 
-	public void setClassNameId(long classNameId) {
-		_classNameId = classNameId;
-	}
-
-	public long getClassPK() {
-		return _classPK;
-	}
-
-	public void setClassPK(long classPK) {
-		_classPK = classPK;
+	public void setCPInstanceId(long CPInstanceId) {
+		_CPInstanceId = CPInstanceId;
 	}
 
 	public int getQuantity() {
@@ -197,7 +188,6 @@ public class CommerceWarehouseItemSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _commerceWarehouseId;
-	private long _classNameId;
-	private long _classPK;
+	private long _CPInstanceId;
 	private int _quantity;
 }

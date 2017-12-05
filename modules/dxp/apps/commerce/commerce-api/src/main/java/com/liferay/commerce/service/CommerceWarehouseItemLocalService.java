@@ -73,8 +73,8 @@ public interface CommerceWarehouseItemLocalService extends BaseLocalService,
 		CommerceWarehouseItem commerceWarehouseItem);
 
 	public CommerceWarehouseItem addCommerceWarehouseItem(
-		long commerceWarehouseId, java.lang.String className, long classPK,
-		int quantity, ServiceContext serviceContext) throws PortalException;
+		long commerceWarehouseId, long cpInstanceId, int quantity,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new commerce warehouse item with the primary key. Does not add the commerce warehouse item to the database.
@@ -108,8 +108,7 @@ public interface CommerceWarehouseItemLocalService extends BaseLocalService,
 
 	public void deleteCommerceWarehouseItems(long commerceWarehouseId);
 
-	public void deleteCommerceWarehouseItems(java.lang.String className,
-		long classPK);
+	public void deleteCommerceWarehouseItemsByCPInstanceId(long cpInstanceId);
 
 	/**
 	* @throws PortalException
@@ -212,11 +211,11 @@ public interface CommerceWarehouseItemLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceWarehouseItem> getCommerceWarehouseItems(
-		java.lang.String className, long classPK);
+		long cpInstanceId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceWarehouseItem> getCommerceWarehouseItems(
-		java.lang.String className, long classPK, int start, int end,
+		long cpInstanceId, int start, int end,
 		OrderByComparator<CommerceWarehouseItem> orderByComparator);
 
 	/**
@@ -228,8 +227,10 @@ public interface CommerceWarehouseItemLocalService extends BaseLocalService,
 	public int getCommerceWarehouseItemsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceWarehouseItemsCount(java.lang.String className,
-		long classPK);
+	public int getCommerceWarehouseItemsCount(long cpInstanceId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPInstanceQuantity(long cpInstanceId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

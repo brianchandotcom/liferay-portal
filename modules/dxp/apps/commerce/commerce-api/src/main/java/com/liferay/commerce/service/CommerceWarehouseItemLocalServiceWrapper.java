@@ -48,12 +48,11 @@ public class CommerceWarehouseItemLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceWarehouseItem addCommerceWarehouseItem(
-		long commerceWarehouseId, java.lang.String className, long classPK,
-		int quantity,
+		long commerceWarehouseId, long cpInstanceId, int quantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceWarehouseItemLocalService.addCommerceWarehouseItem(commerceWarehouseId,
-			className, classPK, quantity, serviceContext);
+			cpInstanceId, quantity, serviceContext);
 	}
 
 	/**
@@ -100,10 +99,8 @@ public class CommerceWarehouseItemLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCommerceWarehouseItems(java.lang.String className,
-		long classPK) {
-		_commerceWarehouseItemLocalService.deleteCommerceWarehouseItems(className,
-			classPK);
+	public void deleteCommerceWarehouseItemsByCPInstanceId(long cpInstanceId) {
+		_commerceWarehouseItemLocalService.deleteCommerceWarehouseItemsByCPInstanceId(cpInstanceId);
 	}
 
 	/**
@@ -247,17 +244,16 @@ public class CommerceWarehouseItemLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceWarehouseItem> getCommerceWarehouseItems(
-		java.lang.String className, long classPK) {
-		return _commerceWarehouseItemLocalService.getCommerceWarehouseItems(className,
-			classPK);
+		long cpInstanceId) {
+		return _commerceWarehouseItemLocalService.getCommerceWarehouseItems(cpInstanceId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceWarehouseItem> getCommerceWarehouseItems(
-		java.lang.String className, long classPK, int start, int end,
+		long cpInstanceId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouseItem> orderByComparator) {
-		return _commerceWarehouseItemLocalService.getCommerceWarehouseItems(className,
-			classPK, start, end, orderByComparator);
+		return _commerceWarehouseItemLocalService.getCommerceWarehouseItems(cpInstanceId,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -271,10 +267,13 @@ public class CommerceWarehouseItemLocalServiceWrapper
 	}
 
 	@Override
-	public int getCommerceWarehouseItemsCount(java.lang.String className,
-		long classPK) {
-		return _commerceWarehouseItemLocalService.getCommerceWarehouseItemsCount(className,
-			classPK);
+	public int getCommerceWarehouseItemsCount(long cpInstanceId) {
+		return _commerceWarehouseItemLocalService.getCommerceWarehouseItemsCount(cpInstanceId);
+	}
+
+	@Override
+	public int getCPInstanceQuantity(long cpInstanceId) {
+		return _commerceWarehouseItemLocalService.getCPInstanceQuantity(cpInstanceId);
 	}
 
 	@Override

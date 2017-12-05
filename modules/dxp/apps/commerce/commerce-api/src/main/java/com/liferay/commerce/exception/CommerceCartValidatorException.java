@@ -11,20 +11,31 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
-package com.liferay.commerce.service.persistence;
+package com.liferay.commerce.exception;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * @author Alessio Antonio Rendina
- * @generated
  */
 @ProviderType
-public interface CommerceWarehouseItemFinder {
-	public java.util.List<com.liferay.commerce.model.CommerceWarehouseItem> findByCPInstanceId(
-		long cpInstanceId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouseItem> orderByComparator);
+public class CommerceCartValidatorException extends PortalException {
 
-	public int getCPInstanceQuantity(long cpInstanceId);
+	public CommerceCartValidatorException() {
+	}
+
+	public CommerceCartValidatorException(String msg) {
+		super(msg);
+	}
+
+	public CommerceCartValidatorException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public CommerceCartValidatorException(Throwable cause) {
+		super(cause);
+	}
+
 }

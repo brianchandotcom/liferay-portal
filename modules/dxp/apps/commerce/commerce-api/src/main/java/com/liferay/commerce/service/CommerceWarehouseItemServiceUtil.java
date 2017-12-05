@@ -42,13 +42,12 @@ public class CommerceWarehouseItemServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceWarehouseItemServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.model.CommerceWarehouseItem addCommerceWarehouseItem(
-		long commerceWarehouseId, java.lang.String className, long classPK,
-		int quantity,
+		long commerceWarehouseId, long cpInstanceId, int quantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addCommerceWarehouseItem(commerceWarehouseId, className,
-			classPK, quantity, serviceContext);
+				   .addCommerceWarehouseItem(commerceWarehouseId, cpInstanceId,
+			quantity, serviceContext);
 	}
 
 	public static void deleteCommerceWarehouseItem(long commerceWarehouseItemId)
@@ -63,24 +62,28 @@ public class CommerceWarehouseItemServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceWarehouseItem> getCommerceWarehouseItems(
-		java.lang.String className, long classPK)
+		long cpInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCommerceWarehouseItems(className, classPK);
+		return getService().getCommerceWarehouseItems(cpInstanceId);
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceWarehouseItem> getCommerceWarehouseItems(
-		java.lang.String className, long classPK, int start, int end,
+		long cpInstanceId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouseItem> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .getCommerceWarehouseItems(className, classPK, start, end,
+				   .getCommerceWarehouseItems(cpInstanceId, start, end,
 			orderByComparator);
 	}
 
-	public static int getCommerceWarehouseItemsCount(
-		java.lang.String className, long classPK)
+	public static int getCommerceWarehouseItemsCount(long cpInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCommerceWarehouseItemsCount(className, classPK);
+		return getService().getCommerceWarehouseItemsCount(cpInstanceId);
+	}
+
+	public static int getCPInstanceQuantity(long cpInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPInstanceQuantity(cpInstanceId);
 	}
 
 	/**

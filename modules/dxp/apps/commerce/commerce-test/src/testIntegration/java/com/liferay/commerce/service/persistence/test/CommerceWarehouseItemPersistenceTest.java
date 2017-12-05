@@ -137,9 +137,7 @@ public class CommerceWarehouseItemPersistenceTest {
 
 		newCommerceWarehouseItem.setCommerceWarehouseId(RandomTestUtil.nextLong());
 
-		newCommerceWarehouseItem.setClassNameId(RandomTestUtil.nextLong());
-
-		newCommerceWarehouseItem.setClassPK(RandomTestUtil.nextLong());
+		newCommerceWarehouseItem.setCPInstanceId(RandomTestUtil.nextLong());
 
 		newCommerceWarehouseItem.setQuantity(RandomTestUtil.nextInt());
 
@@ -166,12 +164,17 @@ public class CommerceWarehouseItemPersistenceTest {
 			Time.getShortTimestamp(newCommerceWarehouseItem.getModifiedDate()));
 		Assert.assertEquals(existingCommerceWarehouseItem.getCommerceWarehouseId(),
 			newCommerceWarehouseItem.getCommerceWarehouseId());
-		Assert.assertEquals(existingCommerceWarehouseItem.getClassNameId(),
-			newCommerceWarehouseItem.getClassNameId());
-		Assert.assertEquals(existingCommerceWarehouseItem.getClassPK(),
-			newCommerceWarehouseItem.getClassPK());
+		Assert.assertEquals(existingCommerceWarehouseItem.getCPInstanceId(),
+			newCommerceWarehouseItem.getCPInstanceId());
 		Assert.assertEquals(existingCommerceWarehouseItem.getQuantity(),
 			newCommerceWarehouseItem.getQuantity());
+	}
+
+	@Test
+	public void testCountByCPInstanceId() throws Exception {
+		_persistence.countByCPInstanceId(RandomTestUtil.nextLong());
+
+		_persistence.countByCPInstanceId(0L);
 	}
 
 	@Test
@@ -187,14 +190,6 @@ public class CommerceWarehouseItemPersistenceTest {
 			RandomTestUtil.nextLong());
 
 		_persistence.countByC_C(0L, 0L);
-	}
-
-	@Test
-	public void testCountByC_C_C() throws Exception {
-		_persistence.countByC_C_C(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
-
-		_persistence.countByC_C_C(0L, 0L, 0L);
 	}
 
 	@Test
@@ -224,8 +219,8 @@ public class CommerceWarehouseItemPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CommerceWarehouseItem",
 			"commerceWarehouseItemId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "commerceWarehouseId", true, "classNameId",
-			true, "classPK", true, "quantity", true);
+			"modifiedDate", true, "commerceWarehouseId", true, "CPInstanceId",
+			true, "quantity", true);
 	}
 
 	@Test
@@ -437,17 +432,13 @@ public class CommerceWarehouseItemPersistenceTest {
 		CommerceWarehouseItem existingCommerceWarehouseItem = _persistence.findByPrimaryKey(newCommerceWarehouseItem.getPrimaryKey());
 
 		Assert.assertEquals(Long.valueOf(
+				existingCommerceWarehouseItem.getCPInstanceId()),
+			ReflectionTestUtil.<Long>invoke(existingCommerceWarehouseItem,
+				"getOriginalCPInstanceId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(
 				existingCommerceWarehouseItem.getCommerceWarehouseId()),
 			ReflectionTestUtil.<Long>invoke(existingCommerceWarehouseItem,
 				"getOriginalCommerceWarehouseId", new Class<?>[0]));
-		Assert.assertEquals(Long.valueOf(
-				existingCommerceWarehouseItem.getClassNameId()),
-			ReflectionTestUtil.<Long>invoke(existingCommerceWarehouseItem,
-				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertEquals(Long.valueOf(
-				existingCommerceWarehouseItem.getClassPK()),
-			ReflectionTestUtil.<Long>invoke(existingCommerceWarehouseItem,
-				"getOriginalClassPK", new Class<?>[0]));
 	}
 
 	protected CommerceWarehouseItem addCommerceWarehouseItem()
@@ -470,9 +461,7 @@ public class CommerceWarehouseItemPersistenceTest {
 
 		commerceWarehouseItem.setCommerceWarehouseId(RandomTestUtil.nextLong());
 
-		commerceWarehouseItem.setClassNameId(RandomTestUtil.nextLong());
-
-		commerceWarehouseItem.setClassPK(RandomTestUtil.nextLong());
+		commerceWarehouseItem.setCPInstanceId(RandomTestUtil.nextLong());
 
 		commerceWarehouseItem.setQuantity(RandomTestUtil.nextInt());
 

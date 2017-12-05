@@ -65,7 +65,7 @@ public class CommerceWarehouseItemCacheModel implements CacheModel<CommerceWareh
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{commerceWarehouseItemId=");
 		sb.append(commerceWarehouseItemId);
@@ -83,10 +83,8 @@ public class CommerceWarehouseItemCacheModel implements CacheModel<CommerceWareh
 		sb.append(modifiedDate);
 		sb.append(", commerceWarehouseId=");
 		sb.append(commerceWarehouseId);
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-		sb.append(", classPK=");
-		sb.append(classPK);
+		sb.append(", CPInstanceId=");
+		sb.append(CPInstanceId);
 		sb.append(", quantity=");
 		sb.append(quantity);
 		sb.append("}");
@@ -125,8 +123,7 @@ public class CommerceWarehouseItemCacheModel implements CacheModel<CommerceWareh
 		}
 
 		commerceWarehouseItemImpl.setCommerceWarehouseId(commerceWarehouseId);
-		commerceWarehouseItemImpl.setClassNameId(classNameId);
-		commerceWarehouseItemImpl.setClassPK(classPK);
+		commerceWarehouseItemImpl.setCPInstanceId(CPInstanceId);
 		commerceWarehouseItemImpl.setQuantity(quantity);
 
 		commerceWarehouseItemImpl.resetOriginalValues();
@@ -149,9 +146,7 @@ public class CommerceWarehouseItemCacheModel implements CacheModel<CommerceWareh
 
 		commerceWarehouseId = objectInput.readLong();
 
-		classNameId = objectInput.readLong();
-
-		classPK = objectInput.readLong();
+		CPInstanceId = objectInput.readLong();
 
 		quantity = objectInput.readInt();
 	}
@@ -179,9 +174,7 @@ public class CommerceWarehouseItemCacheModel implements CacheModel<CommerceWareh
 
 		objectOutput.writeLong(commerceWarehouseId);
 
-		objectOutput.writeLong(classNameId);
-
-		objectOutput.writeLong(classPK);
+		objectOutput.writeLong(CPInstanceId);
 
 		objectOutput.writeInt(quantity);
 	}
@@ -194,7 +187,6 @@ public class CommerceWarehouseItemCacheModel implements CacheModel<CommerceWareh
 	public long createDate;
 	public long modifiedDate;
 	public long commerceWarehouseId;
-	public long classNameId;
-	public long classPK;
+	public long CPInstanceId;
 	public int quantity;
 }

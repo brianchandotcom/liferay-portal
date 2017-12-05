@@ -54,13 +54,12 @@ public class CommerceWarehouseItemLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommerceWarehouseItem addCommerceWarehouseItem(
-		long commerceWarehouseId, java.lang.String className, long classPK,
-		int quantity,
+		long commerceWarehouseId, long cpInstanceId, int quantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addCommerceWarehouseItem(commerceWarehouseId, className,
-			classPK, quantity, serviceContext);
+				   .addCommerceWarehouseItem(commerceWarehouseId, cpInstanceId,
+			quantity, serviceContext);
 	}
 
 	/**
@@ -102,9 +101,9 @@ public class CommerceWarehouseItemLocalServiceUtil {
 		getService().deleteCommerceWarehouseItems(commerceWarehouseId);
 	}
 
-	public static void deleteCommerceWarehouseItems(
-		java.lang.String className, long classPK) {
-		getService().deleteCommerceWarehouseItems(className, classPK);
+	public static void deleteCommerceWarehouseItemsByCPInstanceId(
+		long cpInstanceId) {
+		getService().deleteCommerceWarehouseItemsByCPInstanceId(cpInstanceId);
 	}
 
 	/**
@@ -233,15 +232,15 @@ public class CommerceWarehouseItemLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceWarehouseItem> getCommerceWarehouseItems(
-		java.lang.String className, long classPK) {
-		return getService().getCommerceWarehouseItems(className, classPK);
+		long cpInstanceId) {
+		return getService().getCommerceWarehouseItems(cpInstanceId);
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceWarehouseItem> getCommerceWarehouseItems(
-		java.lang.String className, long classPK, int start, int end,
+		long cpInstanceId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouseItem> orderByComparator) {
 		return getService()
-				   .getCommerceWarehouseItems(className, classPK, start, end,
+				   .getCommerceWarehouseItems(cpInstanceId, start, end,
 			orderByComparator);
 	}
 
@@ -254,9 +253,12 @@ public class CommerceWarehouseItemLocalServiceUtil {
 		return getService().getCommerceWarehouseItemsCount();
 	}
 
-	public static int getCommerceWarehouseItemsCount(
-		java.lang.String className, long classPK) {
-		return getService().getCommerceWarehouseItemsCount(className, classPK);
+	public static int getCommerceWarehouseItemsCount(long cpInstanceId) {
+		return getService().getCommerceWarehouseItemsCount(cpInstanceId);
+	}
+
+	public static int getCPInstanceQuantity(long cpInstanceId) {
+		return getService().getCPInstanceQuantity(cpInstanceId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {

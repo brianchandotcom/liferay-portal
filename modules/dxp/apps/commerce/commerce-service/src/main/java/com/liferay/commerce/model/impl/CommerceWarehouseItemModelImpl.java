@@ -32,10 +32,8 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -79,8 +77,7 @@ public class CommerceWarehouseItemModelImpl extends BaseModelImpl<CommerceWareho
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "commerceWarehouseId", Types.BIGINT },
-			{ "classNameId", Types.BIGINT },
-			{ "classPK", Types.BIGINT },
+			{ "CPInstanceId", Types.BIGINT },
 			{ "quantity", Types.INTEGER }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -94,12 +91,11 @@ public class CommerceWarehouseItemModelImpl extends BaseModelImpl<CommerceWareho
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("commerceWarehouseId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("CPInstanceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("quantity", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceWarehouseItem (commerceWarehouseItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceWarehouseId LONG,classNameId LONG,classPK LONG,quantity INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceWarehouseItem (commerceWarehouseItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceWarehouseId LONG,CPInstanceId LONG,quantity INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceWarehouseItem";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceWarehouseItem.commerceWarehouseItemId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceWarehouseItem.commerceWarehouseItemId ASC";
@@ -115,10 +111,9 @@ public class CommerceWarehouseItemModelImpl extends BaseModelImpl<CommerceWareho
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.commerce.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.commerce.model.CommerceWarehouseItem"),
 			true);
-	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
-	public static final long CLASSPK_COLUMN_BITMASK = 2L;
-	public static final long COMMERCEWAREHOUSEID_COLUMN_BITMASK = 4L;
-	public static final long COMMERCEWAREHOUSEITEMID_COLUMN_BITMASK = 8L;
+	public static final long CPINSTANCEID_COLUMN_BITMASK = 1L;
+	public static final long COMMERCEWAREHOUSEID_COLUMN_BITMASK = 2L;
+	public static final long COMMERCEWAREHOUSEITEMID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -142,8 +137,7 @@ public class CommerceWarehouseItemModelImpl extends BaseModelImpl<CommerceWareho
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setCommerceWarehouseId(soapModel.getCommerceWarehouseId());
-		model.setClassNameId(soapModel.getClassNameId());
-		model.setClassPK(soapModel.getClassPK());
+		model.setCPInstanceId(soapModel.getCPInstanceId());
 		model.setQuantity(soapModel.getQuantity());
 
 		return model;
@@ -218,8 +212,7 @@ public class CommerceWarehouseItemModelImpl extends BaseModelImpl<CommerceWareho
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("commerceWarehouseId", getCommerceWarehouseId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
+		attributes.put("CPInstanceId", getCPInstanceId());
 		attributes.put("quantity", getQuantity());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -279,16 +272,10 @@ public class CommerceWarehouseItemModelImpl extends BaseModelImpl<CommerceWareho
 			setCommerceWarehouseId(commerceWarehouseId);
 		}
 
-		Long classNameId = (Long)attributes.get("classNameId");
+		Long CPInstanceId = (Long)attributes.get("CPInstanceId");
 
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
+		if (CPInstanceId != null) {
+			setCPInstanceId(CPInstanceId);
 		}
 
 		Integer quantity = (Integer)attributes.get("quantity");
@@ -425,70 +412,27 @@ public class CommerceWarehouseItemModelImpl extends BaseModelImpl<CommerceWareho
 		return _originalCommerceWarehouseId;
 	}
 
-	@Override
-	public String getClassName() {
-		if (getClassNameId() <= 0) {
-			return "";
-		}
-
-		return PortalUtil.getClassName(getClassNameId());
-	}
-
-	@Override
-	public void setClassName(String className) {
-		long classNameId = 0;
-
-		if (Validator.isNotNull(className)) {
-			classNameId = PortalUtil.getClassNameId(className);
-		}
-
-		setClassNameId(classNameId);
-	}
-
 	@JSON
 	@Override
-	public long getClassNameId() {
-		return _classNameId;
+	public long getCPInstanceId() {
+		return _CPInstanceId;
 	}
 
 	@Override
-	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+	public void setCPInstanceId(long CPInstanceId) {
+		_columnBitmask |= CPINSTANCEID_COLUMN_BITMASK;
 
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
+		if (!_setOriginalCPInstanceId) {
+			_setOriginalCPInstanceId = true;
 
-			_originalClassNameId = _classNameId;
+			_originalCPInstanceId = _CPInstanceId;
 		}
 
-		_classNameId = classNameId;
+		_CPInstanceId = CPInstanceId;
 	}
 
-	public long getOriginalClassNameId() {
-		return _originalClassNameId;
-	}
-
-	@JSON
-	@Override
-	public long getClassPK() {
-		return _classPK;
-	}
-
-	@Override
-	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
-
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
-		}
-
-		_classPK = classPK;
-	}
-
-	public long getOriginalClassPK() {
-		return _originalClassPK;
+	public long getOriginalCPInstanceId() {
+		return _originalCPInstanceId;
 	}
 
 	@JSON
@@ -541,8 +485,7 @@ public class CommerceWarehouseItemModelImpl extends BaseModelImpl<CommerceWareho
 		commerceWarehouseItemImpl.setCreateDate(getCreateDate());
 		commerceWarehouseItemImpl.setModifiedDate(getModifiedDate());
 		commerceWarehouseItemImpl.setCommerceWarehouseId(getCommerceWarehouseId());
-		commerceWarehouseItemImpl.setClassNameId(getClassNameId());
-		commerceWarehouseItemImpl.setClassPK(getClassPK());
+		commerceWarehouseItemImpl.setCPInstanceId(getCPInstanceId());
 		commerceWarehouseItemImpl.setQuantity(getQuantity());
 
 		commerceWarehouseItemImpl.resetOriginalValues();
@@ -612,13 +555,9 @@ public class CommerceWarehouseItemModelImpl extends BaseModelImpl<CommerceWareho
 
 		commerceWarehouseItemModelImpl._setOriginalCommerceWarehouseId = false;
 
-		commerceWarehouseItemModelImpl._originalClassNameId = commerceWarehouseItemModelImpl._classNameId;
+		commerceWarehouseItemModelImpl._originalCPInstanceId = commerceWarehouseItemModelImpl._CPInstanceId;
 
-		commerceWarehouseItemModelImpl._setOriginalClassNameId = false;
-
-		commerceWarehouseItemModelImpl._originalClassPK = commerceWarehouseItemModelImpl._classPK;
-
-		commerceWarehouseItemModelImpl._setOriginalClassPK = false;
+		commerceWarehouseItemModelImpl._setOriginalCPInstanceId = false;
 
 		commerceWarehouseItemModelImpl._columnBitmask = 0;
 	}
@@ -663,9 +602,7 @@ public class CommerceWarehouseItemModelImpl extends BaseModelImpl<CommerceWareho
 
 		commerceWarehouseItemCacheModel.commerceWarehouseId = getCommerceWarehouseId();
 
-		commerceWarehouseItemCacheModel.classNameId = getClassNameId();
-
-		commerceWarehouseItemCacheModel.classPK = getClassPK();
+		commerceWarehouseItemCacheModel.CPInstanceId = getCPInstanceId();
 
 		commerceWarehouseItemCacheModel.quantity = getQuantity();
 
@@ -674,7 +611,7 @@ public class CommerceWarehouseItemModelImpl extends BaseModelImpl<CommerceWareho
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{commerceWarehouseItemId=");
 		sb.append(getCommerceWarehouseItemId());
@@ -692,10 +629,8 @@ public class CommerceWarehouseItemModelImpl extends BaseModelImpl<CommerceWareho
 		sb.append(getModifiedDate());
 		sb.append(", commerceWarehouseId=");
 		sb.append(getCommerceWarehouseId());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
+		sb.append(", CPInstanceId=");
+		sb.append(getCPInstanceId());
 		sb.append(", quantity=");
 		sb.append(getQuantity());
 		sb.append("}");
@@ -705,7 +640,7 @@ public class CommerceWarehouseItemModelImpl extends BaseModelImpl<CommerceWareho
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.model.CommerceWarehouseItem");
@@ -744,12 +679,8 @@ public class CommerceWarehouseItemModelImpl extends BaseModelImpl<CommerceWareho
 		sb.append(getCommerceWarehouseId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
+			"<column><column-name>CPInstanceId</column-name><column-value><![CDATA[");
+		sb.append(getCPInstanceId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>quantity</column-name><column-value><![CDATA[");
@@ -776,12 +707,9 @@ public class CommerceWarehouseItemModelImpl extends BaseModelImpl<CommerceWareho
 	private long _commerceWarehouseId;
 	private long _originalCommerceWarehouseId;
 	private boolean _setOriginalCommerceWarehouseId;
-	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
-	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
+	private long _CPInstanceId;
+	private long _originalCPInstanceId;
+	private boolean _setOriginalCPInstanceId;
 	private int _quantity;
 	private long _columnBitmask;
 	private CommerceWarehouseItem _escapedModel;

@@ -42,6 +42,139 @@ public interface CommerceWarehouseItemPersistence extends BasePersistence<Commer
 	 */
 
 	/**
+	* Returns all the commerce warehouse items where CPInstanceId = &#63;.
+	*
+	* @param CPInstanceId the cp instance ID
+	* @return the matching commerce warehouse items
+	*/
+	public java.util.List<CommerceWarehouseItem> findByCPInstanceId(
+		long CPInstanceId);
+
+	/**
+	* Returns a range of all the commerce warehouse items where CPInstanceId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceWarehouseItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPInstanceId the cp instance ID
+	* @param start the lower bound of the range of commerce warehouse items
+	* @param end the upper bound of the range of commerce warehouse items (not inclusive)
+	* @return the range of matching commerce warehouse items
+	*/
+	public java.util.List<CommerceWarehouseItem> findByCPInstanceId(
+		long CPInstanceId, int start, int end);
+
+	/**
+	* Returns an ordered range of all the commerce warehouse items where CPInstanceId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceWarehouseItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPInstanceId the cp instance ID
+	* @param start the lower bound of the range of commerce warehouse items
+	* @param end the upper bound of the range of commerce warehouse items (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching commerce warehouse items
+	*/
+	public java.util.List<CommerceWarehouseItem> findByCPInstanceId(
+		long CPInstanceId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceWarehouseItem> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the commerce warehouse items where CPInstanceId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceWarehouseItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPInstanceId the cp instance ID
+	* @param start the lower bound of the range of commerce warehouse items
+	* @param end the upper bound of the range of commerce warehouse items (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching commerce warehouse items
+	*/
+	public java.util.List<CommerceWarehouseItem> findByCPInstanceId(
+		long CPInstanceId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceWarehouseItem> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first commerce warehouse item in the ordered set where CPInstanceId = &#63;.
+	*
+	* @param CPInstanceId the cp instance ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce warehouse item
+	* @throws NoSuchWarehouseItemException if a matching commerce warehouse item could not be found
+	*/
+	public CommerceWarehouseItem findByCPInstanceId_First(long CPInstanceId,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceWarehouseItem> orderByComparator)
+		throws NoSuchWarehouseItemException;
+
+	/**
+	* Returns the first commerce warehouse item in the ordered set where CPInstanceId = &#63;.
+	*
+	* @param CPInstanceId the cp instance ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce warehouse item, or <code>null</code> if a matching commerce warehouse item could not be found
+	*/
+	public CommerceWarehouseItem fetchByCPInstanceId_First(long CPInstanceId,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceWarehouseItem> orderByComparator);
+
+	/**
+	* Returns the last commerce warehouse item in the ordered set where CPInstanceId = &#63;.
+	*
+	* @param CPInstanceId the cp instance ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce warehouse item
+	* @throws NoSuchWarehouseItemException if a matching commerce warehouse item could not be found
+	*/
+	public CommerceWarehouseItem findByCPInstanceId_Last(long CPInstanceId,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceWarehouseItem> orderByComparator)
+		throws NoSuchWarehouseItemException;
+
+	/**
+	* Returns the last commerce warehouse item in the ordered set where CPInstanceId = &#63;.
+	*
+	* @param CPInstanceId the cp instance ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce warehouse item, or <code>null</code> if a matching commerce warehouse item could not be found
+	*/
+	public CommerceWarehouseItem fetchByCPInstanceId_Last(long CPInstanceId,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceWarehouseItem> orderByComparator);
+
+	/**
+	* Returns the commerce warehouse items before and after the current commerce warehouse item in the ordered set where CPInstanceId = &#63;.
+	*
+	* @param commerceWarehouseItemId the primary key of the current commerce warehouse item
+	* @param CPInstanceId the cp instance ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next commerce warehouse item
+	* @throws NoSuchWarehouseItemException if a commerce warehouse item with the primary key could not be found
+	*/
+	public CommerceWarehouseItem[] findByCPInstanceId_PrevAndNext(
+		long commerceWarehouseItemId, long CPInstanceId,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceWarehouseItem> orderByComparator)
+		throws NoSuchWarehouseItemException;
+
+	/**
+	* Removes all the commerce warehouse items where CPInstanceId = &#63; from the database.
+	*
+	* @param CPInstanceId the cp instance ID
+	*/
+	public void removeByCPInstanceId(long CPInstanceId);
+
+	/**
+	* Returns the number of commerce warehouse items where CPInstanceId = &#63;.
+	*
+	* @param CPInstanceId the cp instance ID
+	* @return the number of matching commerce warehouse items
+	*/
+	public int countByCPInstanceId(long CPInstanceId);
+
+	/**
 	* Returns all the commerce warehouse items where commerceWarehouseId = &#63;.
 	*
 	* @param commerceWarehouseId the commerce warehouse ID
@@ -179,208 +312,55 @@ public interface CommerceWarehouseItemPersistence extends BasePersistence<Commer
 	public int countByCommerceWarehouseId(long commerceWarehouseId);
 
 	/**
-	* Returns all the commerce warehouse items where classNameId = &#63; and classPK = &#63;.
+	* Returns the commerce warehouse item where CPInstanceId = &#63; and commerceWarehouseId = &#63; or throws a {@link NoSuchWarehouseItemException} if it could not be found.
 	*
-	* @param classNameId the class name ID
-	* @param classPK the class pk
-	* @return the matching commerce warehouse items
-	*/
-	public java.util.List<CommerceWarehouseItem> findByC_C(long classNameId,
-		long classPK);
-
-	/**
-	* Returns a range of all the commerce warehouse items where classNameId = &#63; and classPK = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceWarehouseItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class pk
-	* @param start the lower bound of the range of commerce warehouse items
-	* @param end the upper bound of the range of commerce warehouse items (not inclusive)
-	* @return the range of matching commerce warehouse items
-	*/
-	public java.util.List<CommerceWarehouseItem> findByC_C(long classNameId,
-		long classPK, int start, int end);
-
-	/**
-	* Returns an ordered range of all the commerce warehouse items where classNameId = &#63; and classPK = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceWarehouseItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class pk
-	* @param start the lower bound of the range of commerce warehouse items
-	* @param end the upper bound of the range of commerce warehouse items (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching commerce warehouse items
-	*/
-	public java.util.List<CommerceWarehouseItem> findByC_C(long classNameId,
-		long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceWarehouseItem> orderByComparator);
-
-	/**
-	* Returns an ordered range of all the commerce warehouse items where classNameId = &#63; and classPK = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceWarehouseItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class pk
-	* @param start the lower bound of the range of commerce warehouse items
-	* @param end the upper bound of the range of commerce warehouse items (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching commerce warehouse items
-	*/
-	public java.util.List<CommerceWarehouseItem> findByC_C(long classNameId,
-		long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceWarehouseItem> orderByComparator,
-		boolean retrieveFromCache);
-
-	/**
-	* Returns the first commerce warehouse item in the ordered set where classNameId = &#63; and classPK = &#63;.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class pk
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching commerce warehouse item
-	* @throws NoSuchWarehouseItemException if a matching commerce warehouse item could not be found
-	*/
-	public CommerceWarehouseItem findByC_C_First(long classNameId,
-		long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceWarehouseItem> orderByComparator)
-		throws NoSuchWarehouseItemException;
-
-	/**
-	* Returns the first commerce warehouse item in the ordered set where classNameId = &#63; and classPK = &#63;.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class pk
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching commerce warehouse item, or <code>null</code> if a matching commerce warehouse item could not be found
-	*/
-	public CommerceWarehouseItem fetchByC_C_First(long classNameId,
-		long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceWarehouseItem> orderByComparator);
-
-	/**
-	* Returns the last commerce warehouse item in the ordered set where classNameId = &#63; and classPK = &#63;.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class pk
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching commerce warehouse item
-	* @throws NoSuchWarehouseItemException if a matching commerce warehouse item could not be found
-	*/
-	public CommerceWarehouseItem findByC_C_Last(long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceWarehouseItem> orderByComparator)
-		throws NoSuchWarehouseItemException;
-
-	/**
-	* Returns the last commerce warehouse item in the ordered set where classNameId = &#63; and classPK = &#63;.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class pk
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching commerce warehouse item, or <code>null</code> if a matching commerce warehouse item could not be found
-	*/
-	public CommerceWarehouseItem fetchByC_C_Last(long classNameId,
-		long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceWarehouseItem> orderByComparator);
-
-	/**
-	* Returns the commerce warehouse items before and after the current commerce warehouse item in the ordered set where classNameId = &#63; and classPK = &#63;.
-	*
-	* @param commerceWarehouseItemId the primary key of the current commerce warehouse item
-	* @param classNameId the class name ID
-	* @param classPK the class pk
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next commerce warehouse item
-	* @throws NoSuchWarehouseItemException if a commerce warehouse item with the primary key could not be found
-	*/
-	public CommerceWarehouseItem[] findByC_C_PrevAndNext(
-		long commerceWarehouseItemId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceWarehouseItem> orderByComparator)
-		throws NoSuchWarehouseItemException;
-
-	/**
-	* Removes all the commerce warehouse items where classNameId = &#63; and classPK = &#63; from the database.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class pk
-	*/
-	public void removeByC_C(long classNameId, long classPK);
-
-	/**
-	* Returns the number of commerce warehouse items where classNameId = &#63; and classPK = &#63;.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class pk
-	* @return the number of matching commerce warehouse items
-	*/
-	public int countByC_C(long classNameId, long classPK);
-
-	/**
-	* Returns the commerce warehouse item where commerceWarehouseId = &#63; and classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchWarehouseItemException} if it could not be found.
-	*
+	* @param CPInstanceId the cp instance ID
 	* @param commerceWarehouseId the commerce warehouse ID
-	* @param classNameId the class name ID
-	* @param classPK the class pk
 	* @return the matching commerce warehouse item
 	* @throws NoSuchWarehouseItemException if a matching commerce warehouse item could not be found
 	*/
-	public CommerceWarehouseItem findByC_C_C(long commerceWarehouseId,
-		long classNameId, long classPK) throws NoSuchWarehouseItemException;
+	public CommerceWarehouseItem findByC_C(long CPInstanceId,
+		long commerceWarehouseId) throws NoSuchWarehouseItemException;
 
 	/**
-	* Returns the commerce warehouse item where commerceWarehouseId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the commerce warehouse item where CPInstanceId = &#63; and commerceWarehouseId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
+	* @param CPInstanceId the cp instance ID
 	* @param commerceWarehouseId the commerce warehouse ID
-	* @param classNameId the class name ID
-	* @param classPK the class pk
 	* @return the matching commerce warehouse item, or <code>null</code> if a matching commerce warehouse item could not be found
 	*/
-	public CommerceWarehouseItem fetchByC_C_C(long commerceWarehouseId,
-		long classNameId, long classPK);
+	public CommerceWarehouseItem fetchByC_C(long CPInstanceId,
+		long commerceWarehouseId);
 
 	/**
-	* Returns the commerce warehouse item where commerceWarehouseId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the commerce warehouse item where CPInstanceId = &#63; and commerceWarehouseId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
+	* @param CPInstanceId the cp instance ID
 	* @param commerceWarehouseId the commerce warehouse ID
-	* @param classNameId the class name ID
-	* @param classPK the class pk
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching commerce warehouse item, or <code>null</code> if a matching commerce warehouse item could not be found
 	*/
-	public CommerceWarehouseItem fetchByC_C_C(long commerceWarehouseId,
-		long classNameId, long classPK, boolean retrieveFromCache);
+	public CommerceWarehouseItem fetchByC_C(long CPInstanceId,
+		long commerceWarehouseId, boolean retrieveFromCache);
 
 	/**
-	* Removes the commerce warehouse item where commerceWarehouseId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	* Removes the commerce warehouse item where CPInstanceId = &#63; and commerceWarehouseId = &#63; from the database.
 	*
+	* @param CPInstanceId the cp instance ID
 	* @param commerceWarehouseId the commerce warehouse ID
-	* @param classNameId the class name ID
-	* @param classPK the class pk
 	* @return the commerce warehouse item that was removed
 	*/
-	public CommerceWarehouseItem removeByC_C_C(long commerceWarehouseId,
-		long classNameId, long classPK) throws NoSuchWarehouseItemException;
+	public CommerceWarehouseItem removeByC_C(long CPInstanceId,
+		long commerceWarehouseId) throws NoSuchWarehouseItemException;
 
 	/**
-	* Returns the number of commerce warehouse items where commerceWarehouseId = &#63; and classNameId = &#63; and classPK = &#63;.
+	* Returns the number of commerce warehouse items where CPInstanceId = &#63; and commerceWarehouseId = &#63;.
 	*
+	* @param CPInstanceId the cp instance ID
 	* @param commerceWarehouseId the commerce warehouse ID
-	* @param classNameId the class name ID
-	* @param classPK the class pk
 	* @return the number of matching commerce warehouse items
 	*/
-	public int countByC_C_C(long commerceWarehouseId, long classNameId,
-		long classPK);
+	public int countByC_C(long CPInstanceId, long commerceWarehouseId);
 
 	/**
 	* Caches the commerce warehouse item in the entity cache if it is enabled.

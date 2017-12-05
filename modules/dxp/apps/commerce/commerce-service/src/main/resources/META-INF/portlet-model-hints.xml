@@ -277,8 +277,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="commerceWarehouseId" type="long" />
-		<field name="classNameId" type="long" />
-		<field name="classPK" type="long" />
+		<field name="CPInstanceId" type="long" />
 		<field name="quantity" type="int" />
 	</model>
 	<model name="com.liferay.commerce.model.CPDefinitionAvailabilityRange">

@@ -66,13 +66,12 @@ import java.rmi.RemoteException;
 @ProviderType
 public class CommerceWarehouseItemServiceSoap {
 	public static com.liferay.commerce.model.CommerceWarehouseItemSoap addCommerceWarehouseItem(
-		long commerceWarehouseId, java.lang.String className, long classPK,
-		int quantity,
+		long commerceWarehouseId, long cpInstanceId, int quantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.model.CommerceWarehouseItem returnValue = CommerceWarehouseItemServiceUtil.addCommerceWarehouseItem(commerceWarehouseId,
-					className, classPK, quantity, serviceContext);
+					cpInstanceId, quantity, serviceContext);
 
 			return com.liferay.commerce.model.CommerceWarehouseItemSoap.toSoapModel(returnValue);
 		}
@@ -110,11 +109,10 @@ public class CommerceWarehouseItemServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceWarehouseItemSoap[] getCommerceWarehouseItems(
-		java.lang.String className, long classPK) throws RemoteException {
+		long cpInstanceId) throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.model.CommerceWarehouseItem> returnValue =
-				CommerceWarehouseItemServiceUtil.getCommerceWarehouseItems(className,
-					classPK);
+				CommerceWarehouseItemServiceUtil.getCommerceWarehouseItems(cpInstanceId);
 
 			return com.liferay.commerce.model.CommerceWarehouseItemSoap.toSoapModels(returnValue);
 		}
@@ -126,13 +124,13 @@ public class CommerceWarehouseItemServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceWarehouseItemSoap[] getCommerceWarehouseItems(
-		java.lang.String className, long classPK, int start, int end,
+		long cpInstanceId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouseItem> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.model.CommerceWarehouseItem> returnValue =
-				CommerceWarehouseItemServiceUtil.getCommerceWarehouseItems(className,
-					classPK, start, end, orderByComparator);
+				CommerceWarehouseItemServiceUtil.getCommerceWarehouseItems(cpInstanceId,
+					start, end, orderByComparator);
 
 			return com.liferay.commerce.model.CommerceWarehouseItemSoap.toSoapModels(returnValue);
 		}
@@ -143,11 +141,24 @@ public class CommerceWarehouseItemServiceSoap {
 		}
 	}
 
-	public static int getCommerceWarehouseItemsCount(
-		java.lang.String className, long classPK) throws RemoteException {
+	public static int getCommerceWarehouseItemsCount(long cpInstanceId)
+		throws RemoteException {
 		try {
-			int returnValue = CommerceWarehouseItemServiceUtil.getCommerceWarehouseItemsCount(className,
-					classPK);
+			int returnValue = CommerceWarehouseItemServiceUtil.getCommerceWarehouseItemsCount(cpInstanceId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCPInstanceQuantity(long cpInstanceId)
+		throws RemoteException {
+		try {
+			int returnValue = CommerceWarehouseItemServiceUtil.getCPInstanceQuantity(cpInstanceId);
 
 			return returnValue;
 		}

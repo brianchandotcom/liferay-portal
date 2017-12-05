@@ -171,6 +171,20 @@ public class CommerceCartItemServiceSoap {
 		}
 	}
 
+	public static int getCPInstanceQuantity(long cpInstanceId)
+		throws RemoteException {
+		try {
+			int returnValue = CommerceCartItemServiceUtil.getCPInstanceQuantity(cpInstanceId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceCartItemSoap updateCommerceCartItem(
 		long commerceCartItemId, int quantity, java.lang.String json)
 		throws RemoteException {

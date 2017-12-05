@@ -267,6 +267,39 @@ public class CommerceCartItemServiceHttp {
 		}
 	}
 
+	public static int getCPInstanceQuantity(HttpPrincipal httpPrincipal,
+		long cpInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceCartItemServiceUtil.class,
+					"getCPInstanceQuantity",
+					_getCPInstanceQuantityParameterTypes7);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					cpInstanceId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceCartItem updateCommerceCartItem(
 		HttpPrincipal httpPrincipal, long commerceCartItemId, int quantity,
 		java.lang.String json)
@@ -274,7 +307,7 @@ public class CommerceCartItemServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceCartItemServiceUtil.class,
 					"updateCommerceCartItem",
-					_updateCommerceCartItemParameterTypes7);
+					_updateCommerceCartItemParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceCartItemId, quantity, json);
@@ -326,7 +359,10 @@ public class CommerceCartItemServiceHttp {
 	private static final Class<?>[] _getCommerceCartItemsCountParameterTypes6 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _updateCommerceCartItemParameterTypes7 = new Class[] {
+	private static final Class<?>[] _getCPInstanceQuantityParameterTypes7 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _updateCommerceCartItemParameterTypes8 = new Class[] {
 			long.class, int.class, java.lang.String.class
 		};
 }

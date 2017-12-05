@@ -287,8 +287,7 @@
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="commerceWarehouseId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="CPInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="quantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.commerce.model.impl.CPDefinitionAvailabilityRangeImpl" table="CPDefinitionAvailabilityRange">

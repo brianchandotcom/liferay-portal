@@ -26,7 +26,6 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -66,7 +65,7 @@ public class EditCPDefinitionMVCRenderCommand implements MVCRenderCommand {
 			CPDefinitionsDisplayContext cpDefinitionsDisplayContext =
 				new CPDefinitionsDisplayContext(
 					_actionHelper, httpServletRequest, _cpDefinitionHelper,
-					_cpDefinitionService, _groupService, _itemSelector);
+					_cpDefinitionService, _itemSelector);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, cpDefinitionsDisplayContext);
@@ -107,9 +106,6 @@ public class EditCPDefinitionMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
-
-	@Reference
-	private GroupService _groupService;
 
 	@Reference
 	private ItemSelector _itemSelector;

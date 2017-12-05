@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -104,7 +103,7 @@ public class CPDefinitionCategorizationScreenNavigationEntry
 			CPDefinitionsDisplayContext cpDefinitionsDisplayContext =
 				new CPDefinitionsDisplayContext(
 					_actionHelper, httpServletRequest, _cpDefinitionHelper,
-					_cpDefinitionService, _groupService, _itemSelector);
+					_cpDefinitionService, _itemSelector);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, cpDefinitionsDisplayContext);
@@ -129,9 +128,6 @@ public class CPDefinitionCategorizationScreenNavigationEntry
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
-
-	@Reference
-	private GroupService _groupService;
 
 	@Reference
 	private ItemSelector _itemSelector;

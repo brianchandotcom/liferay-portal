@@ -206,12 +206,12 @@ public class AssetPublisherConfigurationAction
 					assetPublisherPortletInstanceConfiguration =
 						_getAssetPublisherPortletInstanceConfiguration(request);
 
-				boolean emailSubscriptionEnabled = GetterUtil.getBoolean(
+				boolean emailAssetEntryAddedEnabled = GetterUtil.getBoolean(
 					getParameter(actionRequest, "emailAssetEntryAddedEnabled"),
 					assetPublisherPortletInstanceConfiguration.
 						emailAssetEntryAddedEnabled());
 
-				if (emailSubscriptionEnabled) {
+				if (emailAssetEntryAddedEnabled) {
 					validateEmail(actionRequest, "emailAssetEntryAdded");
 					validateEmailFrom(actionRequest);
 				}

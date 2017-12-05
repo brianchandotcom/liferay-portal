@@ -84,6 +84,20 @@
 			<var name="name" value="${childPageName}" />
 		</execute>
 
+		<if>
+			<isset var="sitePageType" />
+			<then>
+				<execute macro="Page#_selectPageTypeRadio">
+					<var name="columnName" value="${columnName}" />
+					<var name="componentName" value="${componentName}" />
+					<var name="pageTypeDescription" value="${pageTypeDescription}" />
+					<var name="pageTypeURL" value="${pageTypeURL}" />
+					<var name="portlet" value="${portlet}" />
+					<var name="sitePageType" value="${sitePageType}" />
+				</execute>
+			</then>
+		</if>
+
 		<execute macro="SitePages#_addPage" />
 	</command>
 

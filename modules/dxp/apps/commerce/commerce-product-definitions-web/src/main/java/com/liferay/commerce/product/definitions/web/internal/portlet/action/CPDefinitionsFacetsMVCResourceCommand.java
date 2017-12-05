@@ -81,7 +81,7 @@ public class CPDefinitionsFacetsMVCResourceCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long[] groupIds = new long[]{themeDisplay.getScopeGroupId()};
+		long[] groupIds = {themeDisplay.getScopeGroupId()};
 
 		SearchContext searchContext = new SearchContext();
 

@@ -15,6 +15,10 @@
 package com.liferay.html.preview.messaging;
 
 import com.liferay.html.preview.constants.HtmlPreviewConstants;
+import com.liferay.html.preview.exception.InvalidMimeTypeException;
+import com.liferay.html.preview.model.HtmlPreview;
+import com.liferay.html.preview.processor.HtmlPreviewProcessor;
+import com.liferay.html.preview.processor.HtmlPreviewProcessorTracker;
 import com.liferay.html.preview.service.HtmlPreviewLocalService;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Destination;
@@ -23,7 +27,7 @@ import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Map;
@@ -63,16 +67,28 @@ public class HtmlPreviewGeneratorMessageListener extends BaseMessageListener {
 
 		long userId = GetterUtil.getLong(payload.get("userId"));
 		long groupId = GetterUtil.getLong(payload.get("groupId"));
-		long classNameId = GetterUtil.getLong(payload.get("classNameId"));
-		long classPK = GetterUtil.getLong(payload.get("classPK"));
+		long htmlPreviewId = GetterUtil.getLong(payload.get("htmlPreviewId"));
 		String content = GetterUtil.getString(payload.get("content"));
 		String mimeType = GetterUtil.getString(payload.get("mimeType"));
 
-		ServiceContext serviceContext = new ServiceContext();
+		HtmlPreviewProcessor htmlPreviewProcessor =
+			_htmlPreviewProcessorTracker.getHtmlPreviewProcessor(mimeType);
 
-		_htmlPreviewLocalService.generateHtmlPreview(
-			userId, groupId, classNameId, classPK, content, mimeType, false,
-			serviceContext);
+		if (htmlPreviewProcessor == null) {
+			throw new InvalidMimeTypeException(
+				"No HTML preview processor available for MIME type " +
+					mimeType);
+		}
+
+		FileEntry fileEntry = htmlPreviewProcessor.generateHtmlPreview(
+			userId, groupId, content);
+
+		HtmlPreview htmlPreview = _htmlPreviewLocalService.fetchHtmlPreview(
+			htmlPreviewId);
+
+		htmlPreview.setFileEntryId(fileEntry.getFileEntryId());
+
+		_htmlPreviewLocalService.updateHtmlPreview(htmlPreview);
 	}
 
 	@Reference
@@ -80,6 +96,9 @@ public class HtmlPreviewGeneratorMessageListener extends BaseMessageListener {
 
 	@Reference
 	private HtmlPreviewLocalService _htmlPreviewLocalService;
+
+	@Reference
+	private HtmlPreviewProcessorTracker _htmlPreviewProcessorTracker;
 
 	@Reference
 	private MessageBus _messageBus;

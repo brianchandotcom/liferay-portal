@@ -15,18 +15,13 @@
 package com.liferay.html.preview.service.impl;
 
 import com.liferay.html.preview.constants.HtmlPreviewConstants;
-import com.liferay.html.preview.exception.InvalidMimeTypeException;
 import com.liferay.html.preview.model.HtmlPreview;
-import com.liferay.html.preview.processor.HtmlPreviewProcessor;
-import com.liferay.html.preview.processor.HtmlPreviewProcessorTracker;
 import com.liferay.html.preview.service.base.HtmlPreviewLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -41,8 +36,7 @@ public class HtmlPreviewLocalServiceImpl
 	@Override
 	public HtmlPreview generateHtmlPreview(
 			long userId, long groupId, long classNameId, long classPK,
-			String content, String mimeType, boolean asynchronous,
-			ServiceContext serviceContext)
+			String content, String mimeType, ServiceContext serviceContext)
 		throws PortalException {
 
 		HtmlPreview htmlPreview = htmlPreviewPersistence.fetchByG_C_C(
@@ -69,46 +63,22 @@ public class HtmlPreviewLocalServiceImpl
 			htmlPreviewPersistence.update(htmlPreview);
 		}
 
-		if (asynchronous) {
-			Message message = new Message();
+		Message message = new Message();
 
-			Map<String, Object> payload = new HashMap<>();
+		Map<String, Object> payload = new HashMap<>();
 
-			payload.put("classNameId", classNameId);
-			payload.put("classPK", classPK);
-			payload.put("content", content);
-			payload.put("groupId", groupId);
-			payload.put("mimeType", mimeType);
-			payload.put("userId", userId);
+		payload.put("content", content);
+		payload.put("groupId", groupId);
+		payload.put("htmlPreviewId", htmlPreview.getHtmlPreviewId());
+		payload.put("mimeType", mimeType);
+		payload.put("userId", userId);
 
-			message.setPayload(payload);
+		message.setPayload(payload);
 
-			MessageBusUtil.sendMessage(
-				HtmlPreviewConstants.HTML_PREVIEW_GENERATOR, message);
-
-			return htmlPreview;
-		}
-
-		HtmlPreviewProcessor htmlPreviewProcessor =
-			_htmlPreviewProcessorTracker.getHtmlPreviewProcessor(mimeType);
-
-		if (htmlPreviewProcessor == null) {
-			throw new InvalidMimeTypeException(
-				"No HTML preview processor available for MIME type " +
-					mimeType);
-		}
-
-		FileEntry fileEntry = htmlPreviewProcessor.generateHtmlPreview(
-			userId, groupId, content);
-
-		htmlPreview.setFileEntryId(fileEntry.getFileEntryId());
-
-		htmlPreviewPersistence.update(htmlPreview);
+		MessageBusUtil.sendMessage(
+			HtmlPreviewConstants.HTML_PREVIEW_GENERATOR, message);
 
 		return htmlPreview;
 	}
-
-	@ServiceReference(type = HtmlPreviewProcessorTracker.class)
-	private HtmlPreviewProcessorTracker _htmlPreviewProcessorTracker;
 
 }

@@ -14,10 +14,10 @@
 
 package com.liferay.bookmarks.internal.exportimport.data.handler;
 
+import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
-import com.liferay.bookmarks.service.permission.BookmarksResourcePermissionChecker;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
@@ -118,7 +118,7 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		portletDataContext.addPortletPermissions(
-			BookmarksResourcePermissionChecker.RESOURCE_NAME);
+			BookmarksConstants.RESOURCE_NAME);
 
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
@@ -149,7 +149,7 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		portletDataContext.importPortletPermissions(
-			BookmarksResourcePermissionChecker.RESOURCE_NAME);
+			BookmarksConstants.RESOURCE_NAME);
 
 		Element foldersElement = portletDataContext.getImportDataGroupElement(
 			BookmarksFolder.class);

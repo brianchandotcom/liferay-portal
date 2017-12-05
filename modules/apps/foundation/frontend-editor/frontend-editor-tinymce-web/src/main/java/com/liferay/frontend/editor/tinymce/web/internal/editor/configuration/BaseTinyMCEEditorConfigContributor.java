@@ -57,7 +57,7 @@ public abstract class BaseTinyMCEEditorConfigContributor
 			HtmlUtil.escape(
 				PortalUtil.getStaticResourceURL(
 					themeDisplay.getRequest(),
-					themeDisplay.getPathThemeCss() + "/aui.css")));
+					themeDisplay.getPathThemeCss() + "/clay.css")));
 		sb.append(StringPool.COMMA);
 		sb.append(
 			HtmlUtil.escape(

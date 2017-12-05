@@ -29,11 +29,9 @@ public class PortletInstanceSettingsLocator implements SettingsLocator {
 	public PortletInstanceSettingsLocator(
 		Layout layout, String portletInstanceKey) {
 
-		_layout = layout;
-		_portletInstanceKey = portletInstanceKey;
-
-		_configurationPid = PortletIdCodec.decodePortletName(
-			portletInstanceKey);
+		this(
+			layout, portletInstanceKey,
+			PortletIdCodec.decodePortletName(portletInstanceKey));
 	}
 
 	public PortletInstanceSettingsLocator(

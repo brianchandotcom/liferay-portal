@@ -86,11 +86,21 @@ public class HtmlPreviewGeneratorMessageListener extends BaseMessageListener {
 
 		File file = htmlPreviewProcessor.generateHtmlPreview(content);
 
-		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
+		FileEntry fileEntry = PortletFileRepositoryUtil.fetchPortletFileEntry(
+			groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			String.valueOf(htmlPreviewId));
+
+		if (fileEntry != null) {
+			PortletFileRepositoryUtil.deletePortletFileEntry(
+				groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				String.valueOf(htmlPreviewId));
+		}
+
+		fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
 			groupId, userId, HtmlPreview.class.getName(), 0,
 			HtmlPreview.class.getName(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, file, file.getName(),
-			mimeType, false);
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, file,
+			String.valueOf(htmlPreviewId), mimeType, false);
 
 		HtmlPreview htmlPreview = _htmlPreviewLocalService.fetchHtmlPreview(
 			htmlPreviewId);

@@ -739,15 +739,15 @@
 
 		<!-- Finder methods -->
 
-		<finder name="CPInstanceId" return-type="Collection">
-			<finder-column name="CPInstanceId" />
-		</finder>
 		<finder name="CommerceWarehouseId" return-type="Collection">
 			<finder-column name="commerceWarehouseId" />
 		</finder>
-		<finder name="C_C" return-type="CommerceWarehouseItem" unique="true">
+		<finder name="CPInstanceId" return-type="Collection">
 			<finder-column name="CPInstanceId" />
+		</finder>
+		<finder name="C_C" return-type="CommerceWarehouseItem" unique="true">
 			<finder-column name="commerceWarehouseId" />
+			<finder-column name="CPInstanceId" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="CPDefinitionAvailabilityRange" remote-service="true" uuid="true">

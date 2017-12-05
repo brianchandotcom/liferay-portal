@@ -85,12 +85,11 @@ public class CommerceWarehouseItemsDisplayContext {
 		CPInstance cpInstance = getCPInstance();
 
 		portletURL.setParameter(
-				"cpDefinitionId",
-				String.valueOf(cpInstance.getCPDefinitionId()));
+			"cpDefinitionId", String.valueOf(cpInstance.getCPDefinitionId()));
 
 		portletURL.setParameter(
-				"screenNavigationCategoryKey",
-				CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SKUS);
+			"screenNavigationCategoryKey",
+			CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SKUS);
 
 		return portletURL.toString();
 	}
@@ -190,14 +189,13 @@ public class CommerceWarehouseItemsDisplayContext {
 		CPInstance cpInstance = getCPInstance();
 
 		portletURL.setParameter(
-				"cpDefinitionId",
-				String.valueOf(cpInstance.getCPDefinitionId()));
+			"cpDefinitionId", String.valueOf(cpInstance.getCPDefinitionId()));
 		portletURL.setParameter(
 			"cpInstanceId", String.valueOf(cpInstance.getCPInstanceId()));
 
 		portletURL.setParameter(
-				"screenNavigationCategoryKey",
-				CPInstanceScreenNavigationConstants.CATEGORY_KEY_DETAILS);
+			"screenNavigationCategoryKey",
+			CPInstanceScreenNavigationConstants.CATEGORY_KEY_DETAILS);
 
 		portletURL.setParameter("screenNavigationEntryKey", "warehouses");
 
@@ -263,8 +261,8 @@ public class CommerceWarehouseItemsDisplayContext {
 		CPInstance cpInstance = getCPInstance();
 
 		return CPDefinitionPermission.contains(
-				cpRequestHelper.getPermissionChecker(),
-				cpInstance.getCPDefinitionId(), ActionKeys.UPDATE);
+			cpRequestHelper.getPermissionChecker(),
+			cpInstance.getCPDefinitionId(), ActionKeys.UPDATE);
 	}
 
 	protected final CPRequestHelper cpRequestHelper;

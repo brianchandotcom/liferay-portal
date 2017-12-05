@@ -34,34 +34,27 @@ public class HtmlPreviewLocalServiceImpl
 	extends HtmlPreviewLocalServiceBaseImpl {
 
 	@Override
-	public HtmlPreview generateHtmlPreview(
+	public HtmlPreview addHtmlPreview(
 			long userId, long groupId, long classNameId, long classPK,
 			String content, String mimeType, ServiceContext serviceContext)
 		throws PortalException {
 
-		HtmlPreview htmlPreview = htmlPreviewPersistence.fetchByG_C_C(
-			groupId, classNameId, classPK);
+		User user = userLocalService.getUser(userId);
 
-		if (htmlPreview == null) {
-			User user = userLocalService.getUser(userId);
+		long htmlPreviewId = counterLocalService.increment();
 
-			long htmlPreviewId = counterLocalService.increment();
+		HtmlPreview htmlPreview = htmlPreviewPersistence.create(htmlPreviewId);
 
-			htmlPreview = htmlPreviewPersistence.create(htmlPreviewId);
+		htmlPreview.setGroupId(groupId);
+		htmlPreview.setCompanyId(user.getCompanyId());
+		htmlPreview.setUserId(user.getUserId());
+		htmlPreview.setUserName(user.getFullName());
+		htmlPreview.setCreateDate(serviceContext.getCreateDate(new Date()));
+		htmlPreview.setModifiedDate(serviceContext.getModifiedDate(new Date()));
+		htmlPreview.setClassNameId(classNameId);
+		htmlPreview.setClassPK(classPK);
 
-			htmlPreview.setGroupId(groupId);
-			htmlPreview.setCompanyId(user.getCompanyId());
-			htmlPreview.setUserId(user.getUserId());
-			htmlPreview.setUserName(user.getFullName());
-			htmlPreview.setCreateDate(serviceContext.getCreateDate(new Date()));
-			htmlPreview.setModifiedDate(
-				serviceContext.getModifiedDate(new Date()));
-
-			htmlPreview.setClassNameId(classNameId);
-			htmlPreview.setClassPK(classPK);
-
-			htmlPreviewPersistence.update(htmlPreview);
-		}
+		htmlPreviewPersistence.update(htmlPreview);
 
 		Message message = new Message();
 
@@ -72,6 +65,37 @@ public class HtmlPreviewLocalServiceImpl
 		payload.put("htmlPreviewId", htmlPreview.getHtmlPreviewId());
 		payload.put("mimeType", mimeType);
 		payload.put("userId", userId);
+
+		message.setPayload(payload);
+
+		MessageBusUtil.sendMessage(
+			HtmlPreviewConstants.HTML_PREVIEW_GENERATOR, message);
+
+		return htmlPreview;
+	}
+
+	@Override
+	public HtmlPreview updateHtmlPreview(
+			long htmlPreviewId, String content, String mimeType,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		HtmlPreview htmlPreview = htmlPreviewPersistence.fetchByPrimaryKey(
+			htmlPreviewId);
+
+		htmlPreview.setModifiedDate(serviceContext.getModifiedDate(new Date()));
+
+		htmlPreviewPersistence.update(htmlPreview);
+
+		Message message = new Message();
+
+		Map<String, Object> payload = new HashMap<>();
+
+		payload.put("content", content);
+		payload.put("groupId", htmlPreview.getGroupId());
+		payload.put("htmlPreviewId", htmlPreview.getHtmlPreviewId());
+		payload.put("mimeType", mimeType);
+		payload.put("userId", htmlPreview.getUserId());
 
 		message.setPayload(payload);
 

@@ -468,7 +468,7 @@ public class BatchBuild extends BaseBuild {
 	protected final Pattern majorVersionPattern = Pattern.compile(
 		"((\\d+)\\.?(\\d+?)).*");
 
-	private static ExecutorService _executorService = getNewThreadPoolExecutor(
-		20);
+	private static ExecutorService _executorService =
+		JenkinsResultsParserUtil.getNewThreadPoolExecutor(20, true);
 
 }

@@ -960,6 +960,7 @@
 		<exception>CommerceAddressName</exception>
 		<exception>CommerceAddressStreet</exception>
 		<exception>CommerceCartBillingAddress</exception>
+		<exception>CommerceCartPaymentMethod</exception>
 		<exception>CommerceCartShippingAddress</exception>
 		<exception>CommerceCartShippingMethod</exception>
 		<exception>CommerceCartValidator</exception>

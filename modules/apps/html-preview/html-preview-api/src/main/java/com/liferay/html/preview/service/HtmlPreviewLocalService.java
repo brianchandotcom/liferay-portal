@@ -71,6 +71,11 @@ public interface HtmlPreviewLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public HtmlPreview addHtmlPreview(HtmlPreview htmlPreview);
 
+	public HtmlPreview addHtmlPreview(long userId, long groupId,
+		long classNameId, long classPK, java.lang.String content,
+		java.lang.String mimeType, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Creates a new html preview with the primary key. Does not add the html preview to the database.
 	*
@@ -84,9 +89,11 @@ public interface HtmlPreviewLocalService extends BaseLocalService,
 	*
 	* @param htmlPreview the html preview
 	* @return the html preview that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
-	public HtmlPreview deleteHtmlPreview(HtmlPreview htmlPreview);
+	public HtmlPreview deleteHtmlPreview(HtmlPreview htmlPreview)
+		throws PortalException;
 
 	/**
 	* Deletes the html preview with the primary key from the database. Also notifies the appropriate model listeners.
@@ -168,11 +175,6 @@ public interface HtmlPreviewLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public HtmlPreview fetchHtmlPreview(long htmlPreviewId);
 
-	public HtmlPreview generateHtmlPreview(long userId, long groupId,
-		long classNameId, long classPK, java.lang.String content,
-		java.lang.String mimeType, boolean asynchronous,
-		ServiceContext serviceContext) throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -232,4 +234,8 @@ public interface HtmlPreviewLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public HtmlPreview updateHtmlPreview(HtmlPreview htmlPreview);
+
+	public HtmlPreview updateHtmlPreview(long htmlPreviewId,
+		java.lang.String content, java.lang.String mimeType,
+		ServiceContext serviceContext) throws PortalException;
 }

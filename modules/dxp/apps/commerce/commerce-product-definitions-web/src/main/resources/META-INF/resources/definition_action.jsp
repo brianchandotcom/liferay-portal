@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 CPDefinition cpDefinition = null;
@@ -42,9 +44,7 @@ else {
 	/>
 
 	<%
-	Map<Locale, String> urlTitleMap = cpDefinition.getUrlTitleMap();
-
-	String productURL = themeDisplay.getPortalURL() + CPConstants.SEPARATOR_PRODUCT_URL + urlTitleMap.get(themeDisplay.getSiteDefaultLocale());
+	String productURL = cpDefinitionsDisplayContext.getProductURL(cpDefinition);
 	%>
 
 	<liferay-ui:icon

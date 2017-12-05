@@ -121,9 +121,7 @@ Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLoca
 					<c:if test="<%= cpDefinition != null %>">
 
 						<%
-						Map<Locale, String> urlTitleMap = cpDefinition.getUrlTitleMap();
-
-						String productURL = friendlyURLBase + urlTitleMap.get(themeDisplay.getSiteDefaultLocale());
+						String productURL = cpDefinitionsDisplayContext.getProductURL(cpDefinition);
 						%>
 
 						<span class="input-group-addon" id="<portlet:namespace />urlIcon">

@@ -17,6 +17,7 @@ package com.liferay.commerce.product.definitions.web.internal.display.context;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
 import com.liferay.commerce.product.definitions.web.internal.util.CPDefinitionsPortletUtil;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
@@ -31,6 +32,7 @@ import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -39,12 +41,14 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -55,6 +59,7 @@ import com.liferay.taglib.util.CustomAttributesUtil;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -71,7 +76,8 @@ public class CPDefinitionsDisplayContext
 	public CPDefinitionsDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
 			CPDefinitionHelper cpDefinitionHelper,
-			CPDefinitionService cpDefinitionService, ItemSelector itemSelector)
+			CPDefinitionService cpDefinitionService, GroupService groupService,
+			ItemSelector itemSelector)
 		throws PortalException {
 
 		super(
@@ -82,6 +88,7 @@ public class CPDefinitionsDisplayContext
 
 		_cpDefinitionHelper = cpDefinitionHelper;
 		_cpDefinitionService = cpDefinitionService;
+		_groupService = groupService;
 		_itemSelector = itemSelector;
 	}
 
@@ -232,6 +239,26 @@ public class CPDefinitionsDisplayContext
 		return portletURL;
 	}
 
+	public String getProductURL(CPDefinition cpDefinition)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Group group = _groupService.getGroup(themeDisplay.getScopeGroupId());
+
+		String currentSiteURL =
+			PortalUtil.getPortalURL(themeDisplay) +
+				themeDisplay.getPathFriendlyURLPublic() +
+					group.getFriendlyURL();
+
+		Map<Locale, String> urlTitleMap = cpDefinition.getUrlTitleMap();
+
+		return currentSiteURL + CPConstants.SEPARATOR_PRODUCT_URL +
+			urlTitleMap.get(themeDisplay.getSiteDefaultLocale());
+	}
+
 	@Override
 	public SearchContainer<CPDefinition> getSearchContainer()
 		throws PortalException {
@@ -313,6 +340,7 @@ public class CPDefinitionsDisplayContext
 
 	private final CPDefinitionHelper _cpDefinitionHelper;
 	private final CPDefinitionService _cpDefinitionService;
+	private final GroupService _groupService;
 	private final ItemSelector _itemSelector;
 
 }

@@ -3024,6 +3024,12 @@ version 2.0.3.
 version 2.1.5.
 - [LPS-76221]: Update the [Liferay Lang Builder] dependency to version 1.0.19.
 
+## 3.5.58 - 2017-12-05
+
+### Changed
+- [LPS-75554]: Update the [Liferay Gradle Plugins Soy] dependency to version
+3.1.4.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -3278,6 +3284,7 @@ version 2.1.5.
 [LPS-75427]: https://issues.liferay.com/browse/LPS-75427
 [LPS-75430]: https://issues.liferay.com/browse/LPS-75430
 [LPS-75488]: https://issues.liferay.com/browse/LPS-75488
+[LPS-75554]: https://issues.liferay.com/browse/LPS-75554
 [LPS-75589]: https://issues.liferay.com/browse/LPS-75589
 [LPS-75610]: https://issues.liferay.com/browse/LPS-75610
 [LPS-75613]: https://issues.liferay.com/browse/LPS-75613

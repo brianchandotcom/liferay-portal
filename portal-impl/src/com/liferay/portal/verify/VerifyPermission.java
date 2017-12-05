@@ -327,44 +327,173 @@ public class VerifyPermission extends VerifyProcess {
 			long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 
 			for (long companyId : companyIds) {
-				Role powerUserRole = RoleLocalServiceUtil.getRole(
-					companyId, RoleConstants.POWER_USER);
-				Role userRole = RoleLocalServiceUtil.getRole(
-					companyId, RoleConstants.USER);
-
-				deleteConflictingUserDefaultRolePermissions(
-					companyId, powerUserRole.getRoleId(), userRole.getRoleId(),
-					userClassNameId, userGroupClassNameId);
-
-				StringBundler sb = new StringBundler(20);
-
-				sb.append("update ResourcePermission set roleId = ");
-				sb.append(userRole.getRoleId());
-				sb.append(" where resourcePermissionId in (select ");
-				sb.append("resourcePermissionId from ResourcePermission ");
-				sb.append("inner join Layout on ResourcePermission.companyId ");
-				sb.append("= Layout.companyId and ResourcePermission.primKey ");
-				sb.append("like replace('[$PLID$]_LAYOUT_%', '[$PLID$]', ");
-				sb.append("cast_text(Layout.plid)) inner join Group_ on ");
-				sb.append("Layout.groupId = Group_.groupId where ");
-				sb.append("ResourcePermission.scope = ");
-				sb.append(ResourceConstants.SCOPE_INDIVIDUAL);
-				sb.append(" and ResourcePermission.roleId = ");
-				sb.append(powerUserRole.getRoleId());
-				sb.append(" and (Group_.classNameId = ");
-				sb.append(userClassNameId);
-				sb.append(" or Group_.classNameId = ");
-				sb.append(userGroupClassNameId);
-				sb.append(") and Layout.type_ = '");
-				sb.append(LayoutConstants.TYPE_PORTLET);
-				sb.append("')");
-
-				runSQL(sb.toString());
+				fixUserDefaultRolePermissions(
+					userClassNameId, userGroupClassNameId, companyId);
 			}
 		}
 		finally {
 			EntityCacheUtil.clearCache();
 			FinderCacheUtil.clearCache();
+		}
+	}
+
+	protected void fixUserDefaultRolePermissions(
+			long userClassNameId, long userGroupClassNameId, long companyId)
+		throws Exception {
+
+		Role powerUserRole = RoleLocalServiceUtil.getRole(
+			companyId, RoleConstants.POWER_USER);
+
+		long powerUserRoleId = powerUserRole.getRoleId();
+
+		Role userRole = RoleLocalServiceUtil.getRole(
+			companyId, RoleConstants.USER);
+
+		long userRoleId = userRole.getRoleId();
+
+		String userPagePermissionsTableName = "TMP_VERIFY_1";
+		String userPagePermissionsConflictsTableName = "TMP_VERIFY_2";
+
+		try (AutoCloseable dropUserPagePermissionsTable = () -> runSQL(
+				"drop table " + userPagePermissionsTableName);
+			AutoCloseable dropUserPagePermissionsConflictsTable = () -> runSQL(
+				"drop table " + userPagePermissionsConflictsTableName)) {
+
+			runSQL(
+				StringBundler.concat(
+					"create table ", userPagePermissionsTableName,
+					" (resourcePermissionId LONG not null primary key, ",
+					"primKey VARCHAR(255), plidLength INTEGER, plidString ",
+					"VARCHAR(255), plid LONG, roleId LONG, conflict BOOLEAN)"));
+
+			runSQL(
+				StringBundler.concat(
+					"create index IX_VERIFY_1 on ",
+					userPagePermissionsTableName, " (plid)"));
+
+			runSQL(
+				StringBundler.concat(
+					"create index IX_VERIFY_2 on ",
+					userPagePermissionsTableName,
+					" (primKey[$COLUMN_LENGTH:255$])"));
+
+			runSQL(
+				StringBundler.concat(
+					"create table ", userPagePermissionsConflictsTableName,
+					" (primKey VARCHAR(255) not null)"));
+
+			runSQL(
+				StringBundler.concat(
+					"create index IX_VERIFY_3 on ",
+					userPagePermissionsConflictsTableName,
+					" (primKey[$COLUMN_LENGTH:255$])"));
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Populating temporary table of portlet permissions");
+			}
+
+			runSQL(
+				StringBundler.concat(
+					"insert into ", userPagePermissionsTableName,
+					" select resourcePermissionId, primKey, 0 as plidLength, ",
+					"NULL as plidString, 0 as plid, roleId, FALSE as conflict ",
+					"from ResourcePermission where companyId = ",
+					String.valueOf(companyId),
+					" and primKey LIKE '%_LAYOUT_%' and scope = ",
+					String.valueOf(ResourceConstants.SCOPE_INDIVIDUAL),
+					" and roleId in (", String.valueOf(powerUserRoleId), ", ",
+					String.valueOf(userRoleId), ")"));
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Deriving plid for portlet permissions");
+			}
+
+			runSQL(
+				StringBundler.concat(
+					"update ", userPagePermissionsTableName,
+					" set plidLength = INSTR(primKey, '",
+					PortletConstants.LAYOUT_SEPARATOR, "') - 1"));
+
+			runSQL(
+				StringBundler.concat(
+					"update ", userPagePermissionsTableName,
+					" set plidString = SUBSTR(primKey, 1, plidLength)"));
+
+			runSQL(
+				StringBundler.concat(
+					"update ", userPagePermissionsTableName,
+					" set plid = CAST_LONG(plidString)"));
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Identifying portlets on user personal pages");
+			}
+
+			runSQL(
+				StringBundler.concat(
+					"delete from ", userPagePermissionsTableName,
+					" where not exists (select 1 from Layout inner join ",
+					"Group_ on Layout.groupId = Group_.groupId where ",
+					userPagePermissionsTableName,
+					".plid = Layout.plid and Group_.classNameId in (",
+					String.valueOf(userClassNameId), ", ",
+					String.valueOf(userGroupClassNameId),
+					") and Layout.type_ = '", LayoutConstants.TYPE_PORTLET,
+					"')"));
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Identifying portlets that have both user and power ",
+						"user permissions"));
+			}
+
+			runSQL(
+				StringBundler.concat(
+					"insert into ",
+					userPagePermissionsConflictsTableName,
+					" select primKey from ", userPagePermissionsTableName,
+					" group by primKey having COUNT(*) > 1"));
+
+			runSQL(
+				StringBundler.concat(
+					"delete from ", userPagePermissionsTableName,
+					" where roleId = ", String.valueOf(userRoleId)));
+
+			runSQL(
+				StringBundler.concat(
+					"update ", userPagePermissionsTableName,
+					" set conflict = TRUE where exists (select 1 from ",
+					userPagePermissionsConflictsTableName, " where ",
+					userPagePermissionsTableName, ".primKey = ",
+					userPagePermissionsConflictsTableName, ".primKey)"));
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Deleting power user permissions where the portlet ",
+						"has both user and power user permissions"));
+			}
+
+			runSQL(
+				StringBundler.concat(
+					"delete from ResourcePermission where ",
+					"resourcePermissionId in (select resourcePermissionId ",
+					"from ", userPagePermissionsTableName,
+					" where conflict = TRUE)"));
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Switching remaining portlet power user permissions ",
+						"to user permissions"));
+			}
+
+			runSQL(
+				StringBundler.concat(
+					"update ResourcePermission set roleId = ",
+					String.valueOf(userRoleId), " where resourcePermissionId ",
+					"in (select resourcePermissionId from ",
+					userPagePermissionsTableName, " where conflict = FALSE)"));
 		}
 	}
 

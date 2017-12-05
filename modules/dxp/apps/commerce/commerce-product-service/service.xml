@@ -653,11 +653,6 @@
 			<finder-column name="key" />
 			<finder-column name="type" />
 		</finder>
-		<finder name="G_OrK_T" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column arrayable-operator="OR" case-sensitive="false" name="key" />
-			<finder-column name="type" />
-		</finder>
 		<finder name="G_P_T" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="primary" />

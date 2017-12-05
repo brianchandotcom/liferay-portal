@@ -264,6 +264,15 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 	}
 
 	@Override
+	public com.liferay.commerce.product.model.CPDefinition updateCPDefinitionCategorization(
+		long cpDefinitionId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionService.updateCPDefinitionCategorization(cpDefinitionId,
+			serviceContext);
+	}
+
+	@Override
 	public com.liferay.commerce.product.model.CPDefinition updateCPDefinitionIgnoreSKUCombinations(
 		long cpDefinitionId, boolean ignoreSKUCombinations)
 		throws com.liferay.portal.kernel.exception.PortalException {

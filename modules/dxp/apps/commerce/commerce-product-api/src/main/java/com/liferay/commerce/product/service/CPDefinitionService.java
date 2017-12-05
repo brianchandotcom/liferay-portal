@@ -198,6 +198,9 @@ public interface CPDefinitionService extends BaseService {
 		int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
+	public CPDefinition updateCPDefinitionCategorization(long cpDefinitionId,
+		ServiceContext serviceContext) throws PortalException;
+
 	public CPDefinition updateCPDefinitionIgnoreSKUCombinations(
 		long cpDefinitionId, boolean ignoreSKUCombinations)
 		throws PortalException;

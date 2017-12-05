@@ -255,6 +255,15 @@ public class CPDefinitionServiceUtil {
 			expirationDateMinute, neverExpire, serviceContext);
 	}
 
+	public static com.liferay.commerce.product.model.CPDefinition updateCPDefinitionCategorization(
+		long cpDefinitionId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCPDefinitionCategorization(cpDefinitionId,
+			serviceContext);
+	}
+
 	public static com.liferay.commerce.product.model.CPDefinition updateCPDefinitionIgnoreSKUCombinations(
 		long cpDefinitionId, boolean ignoreSKUCombinations)
 		throws com.liferay.portal.kernel.exception.PortalException {

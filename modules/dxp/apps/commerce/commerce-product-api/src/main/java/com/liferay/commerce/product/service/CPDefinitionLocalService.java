@@ -503,6 +503,10 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		ServiceContext serviceContext) throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
+	public CPDefinition updateCPDefinitionCategorization(long cpDefinitionId,
+		ServiceContext serviceContext) throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinition updateCPDefinitionIgnoreSKUCombinations(
 		long cpDefinitionId, boolean ignoreSKUCombinations)
 		throws PortalException;

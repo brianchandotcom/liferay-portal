@@ -53,6 +53,16 @@ public class HtmlPreviewLocalServiceUtil {
 		return getService().addHtmlPreview(htmlPreview);
 	}
 
+	public static com.liferay.html.preview.model.HtmlPreview addHtmlPreview(
+		long userId, long groupId, long classNameId, long classPK,
+		java.lang.String content, java.lang.String mimeType,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addHtmlPreview(userId, groupId, classNameId, classPK,
+			content, mimeType, serviceContext);
+	}
+
 	/**
 	* Creates a new html preview with the primary key. Does not add the html preview to the database.
 	*
@@ -69,9 +79,11 @@ public class HtmlPreviewLocalServiceUtil {
 	*
 	* @param htmlPreview the html preview
 	* @return the html preview that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.html.preview.model.HtmlPreview deleteHtmlPreview(
-		com.liferay.html.preview.model.HtmlPreview htmlPreview) {
+		com.liferay.html.preview.model.HtmlPreview htmlPreview)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteHtmlPreview(htmlPreview);
 	}
 
@@ -180,17 +192,6 @@ public class HtmlPreviewLocalServiceUtil {
 		return getService().fetchHtmlPreview(htmlPreviewId);
 	}
 
-	public static com.liferay.html.preview.model.HtmlPreview generateHtmlPreview(
-		long userId, long groupId, long classNameId, long classPK,
-		java.lang.String content, java.lang.String mimeType,
-		boolean asynchronous,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .generateHtmlPreview(userId, groupId, classNameId, classPK,
-			content, mimeType, asynchronous, serviceContext);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -261,6 +262,16 @@ public class HtmlPreviewLocalServiceUtil {
 	public static com.liferay.html.preview.model.HtmlPreview updateHtmlPreview(
 		com.liferay.html.preview.model.HtmlPreview htmlPreview) {
 		return getService().updateHtmlPreview(htmlPreview);
+	}
+
+	public static com.liferay.html.preview.model.HtmlPreview updateHtmlPreview(
+		long htmlPreviewId, java.lang.String content,
+		java.lang.String mimeType,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateHtmlPreview(htmlPreviewId, content, mimeType,
+			serviceContext);
 	}
 
 	public static HtmlPreviewLocalService getService() {

@@ -116,10 +116,12 @@ public abstract class HtmlPreviewLocalServiceBaseImpl
 	 *
 	 * @param htmlPreview the html preview
 	 * @return the html preview that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public HtmlPreview deleteHtmlPreview(HtmlPreview htmlPreview) {
+	public HtmlPreview deleteHtmlPreview(HtmlPreview htmlPreview)
+		throws PortalException {
 		return htmlPreviewPersistence.remove(htmlPreview);
 	}
 

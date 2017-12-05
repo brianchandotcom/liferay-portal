@@ -1,5 +1,3 @@
-/* global google */
-
 import MarkerBase from 'map-common/js/MarkerBase.es';
 
 /**
@@ -16,50 +14,61 @@ class GoogleMapsMarker extends MarkerBase {
 		}
 	}
 
-	/** @inheritdoc */
+	/**
+	 * @inheritDoc
+	 */
 	_getNativeMarker(location, map) {
 		if (!this._nativeMarker) {
-			this._nativeMarker = new google.maps.Marker({
-				draggable: true,
-				map: map,
-				position: location,
-			});
+			this._nativeMarker = new google.maps.Marker(
+				{
+					draggable: true,
+					map: map,
+					position: location,
+				}
+			);
 
 			google.maps.event.addListener(
 				this._nativeMarker,
 				'click',
 				this._getNativeEventFunction('click')
 			);
+
 			google.maps.event.addListener(
 				this._nativeMarker,
 				'dblclick',
 				this._getNativeEventFunction('dblclick')
 			);
+
 			google.maps.event.addListener(
 				this._nativeMarker,
 				'drag',
 				this._getNativeEventFunction('drag')
 			);
+
 			google.maps.event.addListener(
 				this._nativeMarker,
 				'dragend',
 				this._getNativeEventFunction('dragend')
 			);
+
 			google.maps.event.addListener(
 				this._nativeMarker,
 				'dragstart',
 				this._getNativeEventFunction('dragstart')
 			);
+
 			google.maps.event.addListener(
 				this._nativeMarker,
 				'mousedown',
 				this._getNativeEventFunction('mousedown')
 			);
+
 			google.maps.event.addListener(
 				this._nativeMarker,
 				'mouseout',
 				this._getNativeEventFunction('mouseout')
 			);
+
 			google.maps.event.addListener(
 				this._nativeMarker,
 				'mouseover',
@@ -70,7 +79,9 @@ class GoogleMapsMarker extends MarkerBase {
 		return this._nativeMarker;
 	}
 
-	/** @inheritdoc */
+	/**
+	 * @inheritDoc
+	 */
 	_getNormalizedEventData(nativeEvent) {
 		return {
 			location: {
@@ -82,3 +93,4 @@ class GoogleMapsMarker extends MarkerBase {
 }
 
 export default GoogleMapsMarker;
+export {GoogleMapsMarker};

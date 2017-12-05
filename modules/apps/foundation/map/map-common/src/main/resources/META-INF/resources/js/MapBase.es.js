@@ -1,9 +1,5 @@
-/* global Liferay */
-
-'use strict';
-
-import {buildFragment} from 'metal-dom';
 import State, {Config} from 'metal-state';
+import {buildFragment} from 'metal-dom';
 
 import GeoJSONBase from './GeoJSONBase.es';
 import MarkerBase from './MarkerBase.es';
@@ -55,98 +51,37 @@ class MapBase extends State {
 	 */
 	constructor(...args) {
 		super(...args);
+
 		this._customControls = {};
 		this._dialog = null;
 		this._eventHandlers = [];
-		this._geocoder = null;
 		this._geoJSONLayer = null;
+		this._geocoder = null;
 		this._geolocationMarker = null;
 		this._map = null;
 		this._originalPosition = null;
 
-		this._handleGeoJSONLayerFeaturesAdded = this._handleGeoJSONLayerFeaturesAdded.bind(
-			this
-		);
-		this._handleGeoJSONLayerFeatureClicked = this._handleGeoJSONLayerFeatureClicked.bind(
-			this
-		);
-		this._handleGeoLocationMarkerDragended = this._handleGeoLocationMarkerDragended.bind(
-			this
-		);
+		this._handleGeoJSONLayerFeatureClicked = this._handleGeoJSONLayerFeatureClicked.bind(this);
+		this._handleGeoJSONLayerFeaturesAdded = this._handleGeoJSONLayerFeaturesAdded.bind(this);
+		this._handleGeoLocationMarkerDragended = this._handleGeoLocationMarkerDragended.bind(this);
 		this._handleHomeButtonClicked = this._handleHomeButtonClicked.bind(this);
 		this._handlePositionChanged = this._handlePositionChanged.bind(this);
-		this._handleSearchButtonClicked = this._handleSearchButtonClicked.bind(
-			this
-		);
+		this._handleSearchButtonClicked = this._handleSearchButtonClicked.bind(this);
 
 		this.on('positionChange', this._handlePositionChanged);
 
-		const location =
-			this.position && this.position.location ? this.position.location : {};
+		const location = this.position && this.position.location ? this.position.location : {};
 
 		if (!location.lat || !location.lng) {
-			Liferay.Util.getGeolocation((lat, lng) =>
-				this._initializeLocation({lat, lng})
+			Liferay.Util.getGeolocation(
+				(lat, lng) => {
+					this._initializeLocation({lat, lng})
+				}
 			);
-		} else {
+		}
+		else {
 			this._initializeLocation(location);
 		}
-	}
-
-	/**
-	 * If the class MapBase.MarkerImpl has been specified, creates an instance
-	 * of this class with the given location and the existing this._map object
-	 * and returns it.
-	 * @param {Object} location Location object used for the marker position
-	 * @return {MapBase.MarkerImpl}
-	 */
-	addMarker(location) {
-		if (
-			this.constructor.MarkerImpl &&
-			this.constructor.MarkerImpl !== MarkerBase
-		) {
-			return new this.constructor.MarkerImpl({
-				location,
-				map: this._map,
-			});
-		}
-	}
-
-	/**
-	 * Adds a listener for the given event using the given context. This
-	 * methods uses MetalJS' functionality, but overrides the context binding
-	 * in order to avoid breaking changes with the old implementation.
-	 *
-	 * @param {string} eventName Event name that will be listened.
-	 * @param {function} callback Callback executed when the event fires.
-	 * @param {Object} [context] Optional context that will be used for binding
-	 *  the callback when specified.
-	 * @return {*} Result of the State.on method.
-	 * @see State.on
-	 */
-	on(eventName, callback, context) {
-		let bindedCallback = callback;
-
-		if (context) {
-			bindedCallback = callback.bind(context);
-		}
-
-		return super.on(eventName, bindedCallback);
-	}
-
-	/**
-	 * Setter called everytime the position attribute is changed.
-	 * @param {Object} position New position
-	 * @return {Object} The given position object
-	 */
-	setPosition(position) {
-		this.emit('positionChange', {
-			newVal: {
-				location: position.location,
-				address: position.address,
-			},
-		});
-		return position;
 	}
 
 	/**
@@ -157,38 +92,14 @@ class MapBase extends State {
 	destructor() {
 		if (this._geoJSONLayer) {
 			this._geoJSONLayer.dispose();
+
 			this._geoJSONLayer = null;
 		}
 
-		if (
-			this._customControls &&
-			this._customControls[this.constructor.CONTROLS.SEARCH]
-		) {
+		if (this._customControls && this._customControls[this.constructor.CONTROLS.SEARCH]) {
 			this._customControls[this.constructor.CONTROLS.SEARCH].dispose();
+
 			this._customControls[this.constructor.CONTROLS.SEARCH] = null;
-		}
-	}
-
-	/**
-	 * Returns the stored map
-	 * @return {Object}
-	 * @see MapBase._initializeMap()
-	 */
-	getNativeMap() {
-		return this._map;
-	}
-
-	/**
-	 * Opens a dialog if this_getDialog() returns a valid object.
-	 * @param {*} dialogConfig Dialog configuration that will be sent to the
-	 *  dialog.open() method.
-	 * @see MapBase._getDialog()
-	 */
-	openDialog(dialogConfig) {
-		const dialog = this._getDialog();
-
-		if (dialog) {
-			dialog.open(dialogConfig);
 		}
 	}
 
@@ -204,6 +115,8 @@ class MapBase extends State {
 	 * @see this._handleGeoLocationMarkerDragended
 	 * @see this._handleHomeButtonClicked
 	 * @see this._handleSearchButtonClicked
+	 *
+	 * @protected
 	 */
 	_bindUIMB() {
 		if (this._geoJSONLayer) {
@@ -211,6 +124,7 @@ class MapBase extends State {
 				'featuresAdded',
 				this._handleGeoJSONLayerFeaturesAdded
 			);
+
 			this._geoJSONLayer.on(
 				'featureClick',
 				this._handleGeoJSONLayerFeatureClicked
@@ -226,9 +140,7 @@ class MapBase extends State {
 
 		if (this._customControls) {
 			const homeControl = this._customControls[this.constructor.CONTROLS.HOME];
-			const searchControl = this._customControls[
-				this.constructor.CONTROLS.SEARCH
-			];
+			const searchControl = this._customControls[this.constructor.CONTROLS.SEARCH];
 
 			if (homeControl) {
 				homeControl.addEventListener('click', this._handleHomeButtonClicked);
@@ -244,6 +156,7 @@ class MapBase extends State {
 	 * Creates existing custom controls and stores them inside _customControls.
 	 * It only adds the home button and the search box if the corresponding
 	 * flags are activated inside MapBase.controls.
+	 * @protected
 	 */
 	_createCustomControls() {
 		const controls = this.controls || [];
@@ -272,8 +185,21 @@ class MapBase extends State {
 	}
 
 	/**
+	 * Creates a new map for the given location and controlsConfig.
+	 * @abstract
+	 * @param {Object} location
+	 * @param {Object} controlsConfig
+	 * @protected
+	 * @return {Object} Created map
+	 */
+	_createMap(location, controlsConfig) {
+		throw new Error('This method must be implemented');
+	}
+
+	/**
 	 * Returns an object with the control configuration associated to the
 	 * existing controls (MapBase.controls).
+	 * @protected
 	 * @return {Object} Object with the control options with the following shape:
 	 *  for each control, there is a corresponding [control] attribute with a
 	 *  boolean value indicating if there is a configuration for the control. If
@@ -283,27 +209,31 @@ class MapBase extends State {
 	_getControlsConfig() {
 		const config = {};
 		const availableControls = this.controls.map(
-			item => (typeof item === 'string' ? item : item.name)
+			item => {
+				return typeof item === 'string' ? item : item.name;
+			}
 		);
 
-		Object.keys(this.constructor.CONTROLS_MAP).forEach(key => {
-			const value = this.constructor.CONTROLS_MAP[key];
-			const controlIndex = availableControls.indexOf(key);
+		Object.keys(this.constructor.CONTROLS_MAP).forEach(
+			key => {
+				const controlIndex = availableControls.indexOf(key);
+				const value = this.constructor.CONTROLS_MAP[key];
 
-			if (controlIndex > -1) {
-				const controlConfig = this.controls[controlIndex];
+				if (controlIndex > -1) {
+					const controlConfig = this.controls[controlIndex];
 
-				if (
-					controlConfig &&
-					typeof controlConfig === 'object' &&
-					controlConfig.cfg
-				) {
-					config[`${value}Options`] = controlConfig.cfg;
+					if (
+						controlConfig &&
+						typeof controlConfig === 'object' &&
+						controlConfig.cfg
+					) {
+						config[`${value}Options`] = controlConfig.cfg;
+					}
+
+					config[value] = controlIndex !== -1;
 				}
-
-				config[value] = controlIndex !== -1;
 			}
-		});
+		);
 
 		return config;
 	}
@@ -312,13 +242,16 @@ class MapBase extends State {
 	 * If there is an existing this._dialog, it returns it.
 	 * Otherwise, if the MapBase.DialogImpl class has been set, it creates
 	 * a new instance with the existing map and returns it.
+	 * @protected
 	 * @return {MapBase.DialogImpl|null}
 	 */
 	_getDialog() {
 		if (!this._dialog && this.constructor.DialogImpl) {
-			this._dialog = new this.constructor.DialogImpl({
-				map: this._map,
-			});
+			this._dialog = new this.constructor.DialogImpl(
+				{
+					map: this._map,
+				}
+			);
 		}
 
 		return this._dialog;
@@ -328,6 +261,7 @@ class MapBase extends State {
 	 * If there is an existing this._geocoder, it returns it.
 	 * Otherwise, if the MapBase.GeocoderImpl class has been set, it creates
 	 * a new instance and returns it.
+	 * @protected
 	 * @return {MapBase.GeocoderImpl|null}
 	 */
 	_getGeocoder() {
@@ -339,89 +273,27 @@ class MapBase extends State {
 	}
 
 	/**
-	 * If this.data has a truthy value and this._geoJSONLayer has been
-	 * set, it tries to parse geoJSON information with _geoJSONLayer.addData()
-	 * @see this._geoJSONLayer
-	 * @see this.data
-	 */
-	_initializeGeoJSONData() {
-		if (this.data && this._geoJSONLayer) {
-			this._geoJSONLayer.addData(this.data);
-		}
-	}
-
-	/**
-	 * Initializes the instance map using the given location and, if
-	 * this.geolocation property is true, tries to get the location using
-	 * the geocoder.
-	 * @param {Object} location Location object user for map initialization.
-	 * @see this._initializeMap()
-	 * @see this._getGeocoder()
-	 */
-	_initializeLocation(location) {
-		const geocoder = this._getGeocoder();
-
-		if (this.geolocation && geocoder) {
-			geocoder.reverse(location, ({data}) => this._initializeMap(data));
-		} else {
-			this._initializeMap({location});
-		}
-	}
-
-	/**
-	 * Creates a new map with the given position and initialize the map
-	 * controls, loads the geoJSONData and, if geolocation is active, creates
-	 * a marker for it.
-	 * @param {Object} position Initial position added to the map.
-	 * @see MapBase._getControlsConfig()
-	 * @see MapBase._createMap()
-	 * @see MapBase.GeoJSONImpl
-	 * @see MapBase.addMarker()
-	 * @see MapBase._createCustomControls()
-	 * @see MapBase._bindUIMB()
-	 * @see MapBase._initializeGeoJSONData()
-	 */
-	_initializeMap(position) {
-		const location = position.location;
-		const controlsConfig = this._getControlsConfig();
-
-		this._originalPosition = position;
-		this._map = this._createMap(location, controlsConfig);
-
-		if (
-			this.constructor.GeoJSONImpl &&
-			this.constructor.GeoJSONImpl !== GeoJSONBase
-		) {
-			this._geoJSONLayer = new this.constructor.GeoJSONImpl({
-				map: this._map,
-			});
-		}
-
-		if (this.geolocation) {
-			this._geolocationMarker = this.addMarker(location);
-		}
-
-		this.position = position;
-		this._createCustomControls();
-		this._bindUIMB();
-		this._initializeGeoJSONData();
-	}
-
-	/**
 	 * Event handler executed when any feature is added to the existing.
 	 * GeoJSONLayer. It will update the current position if necesary.
 	 * @param {{ features: Array<Object> }} param0 Array of features that
 	 *  will be processed.
+	 * @protected
 	 * @see MapBase.getBounds()
 	 * @see MapBase.position
 	 */
 	_handleGeoJSONLayerFeaturesAdded({features}) {
 		const bounds = this.getBounds();
-		const locations = features.map(feature => feature.getGeometry().get());
+
+		const locations = features.map(
+			feature => feature.getGeometry().get()
+		);
 
 		if (locations.length > 1) {
-			locations.forEach(location => bounds.extend(location));
-		} else {
+			locations.forEach(
+				location => bounds.extend(location)
+			);
+		}
+		else {
 			this.position = {location: locations[0]};
 		}
 	}
@@ -430,6 +302,7 @@ class MapBase extends State {
 	 * Event handler executed when a GeoJSONLayer feature is clicked. It
 	 * simple propagates the event with the given feature.
 	 * @param {{ feature: Object }} param0 Feature to be propagated.
+	 * @protected
 	 */
 	_handleGeoJSONLayerFeatureClicked({feature}) {
 		this.emit('featureClick', {feature});
@@ -439,13 +312,17 @@ class MapBase extends State {
 	 * Event handler executed when the geolocation marker has been dragged to
 	 * a new position. It updates the instance position.
 	 * @param {{ location: Object }} param0 New marker location.
+	 * @protected
 	 * @see MapBase._getGeoCoder()
 	 * @see MapBase.position
 	 */
 	_handleGeoLocationMarkerDragended({location}) {
-		this._getGeocoder().reverse(location, ({data}) => {
-			this.position = data;
-		});
+		this._getGeocoder().reverse(
+			location,
+			({data}) => {
+				this.position = data;
+			}
+		);
 	}
 
 	/**
@@ -458,6 +335,7 @@ class MapBase extends State {
 	 */
 	_handleHomeButtonClicked(event) {
 		event.preventDefault();
+
 		this.position = this._originalPosition;
 	}
 
@@ -484,6 +362,85 @@ class MapBase extends State {
 	 */
 	_handleSearchButtonClicked({position}) {
 		this.position = position;
+	}
+
+	/**
+	 * If this.data has a truthy value and this._geoJSONLayer has been
+	 * set, it tries to parse geoJSON information with _geoJSONLayer.addData()
+	 * @protected
+	 * @see this._geoJSONLayer
+	 * @see this.data
+	 */
+	_initializeGeoJSONData() {
+		if (this.data && this._geoJSONLayer) {
+			this._geoJSONLayer.addData(this.data);
+		}
+	}
+
+	/**
+	 * Initializes the instance map using the given location and, if
+	 * this.geolocation property is true, tries to get the location using
+	 * the geocoder.
+	 * @param {Object} location Location object user for map initialization.
+	 * @protected
+	 * @see this._initializeMap()
+	 * @see this._getGeocoder()
+	 */
+	_initializeLocation(location) {
+		const geocoder = this._getGeocoder();
+
+		if (this.geolocation && geocoder) {
+			geocoder.reverse(
+				location,
+				({data}) => this._initializeMap(data)
+			);
+		}
+		else {
+			this._initializeMap({location});
+		}
+	}
+
+	/**
+	 * Creates a new map with the given position and initialize the map
+	 * controls, loads the geoJSONData and, if geolocation is active, creates
+	 * a marker for it.
+	 * @param {Object} position Initial position added to the map.
+	 * @protected
+	 * @see MapBase._getControlsConfig()
+	 * @see MapBase._createMap()
+	 * @see MapBase.GeoJSONImpl
+	 * @see MapBase.addMarker()
+	 * @see MapBase._createCustomControls()
+	 * @see MapBase._bindUIMB()
+	 * @see MapBase._initializeGeoJSONData()
+	 */
+	_initializeMap(position) {
+		const controlsConfig = this._getControlsConfig();
+		const location = position.location;
+
+		this._originalPosition = position;
+		this._map = this._createMap(location, controlsConfig);
+
+		if (
+			this.constructor.GeoJSONImpl &&
+			this.constructor.GeoJSONImpl !== GeoJSONBase
+		) {
+			this._geoJSONLayer = new this.constructor.GeoJSONImpl(
+				{
+					map: this._map,
+				}
+			);
+		}
+
+		if (this.geolocation) {
+			this._geolocationMarker = this.addMarker(location);
+		}
+
+		this.position = position;
+
+		this._createCustomControls();
+		this._bindUIMB();
+		this._initializeGeoJSONData();
 	}
 
 	/**
@@ -514,14 +471,89 @@ class MapBase extends State {
 	}
 
 	/**
-	 * Creates a new map for the given location and controlsConfig.
-	 * @abstract
-	 * @params {Object} location
-	 * @params {Object} controlsConfig
-	 * @return {Object} Created map
+	 * If the class MapBase.MarkerImpl has been specified, creates an instance
+	 * of this class with the given location and the existing this._map object
+	 * and returns it.
+	 * @param {Object} location Location object used for the marker position
+	 * @return {MapBase.MarkerImpl}
 	 */
-	_createMap(/* location, controlsConfig */) {
-		throw new Error('This method must be implemented');
+	addMarker(location) {
+		let marker;
+
+		if (this.constructor.MarkerImpl && this.constructor.MarkerImpl !== MarkerBase) {
+			marker = new this.constructor.MarkerImpl(
+				{
+					location,
+					map: this._map,
+				}
+			);
+		}
+
+		return marker;
+	}
+
+	/**
+	 * Returns the stored map
+	 * @return {Object}
+	 * @see MapBase._initializeMap()
+	 */
+	getNativeMap() {
+		return this._map;
+	}
+
+	/**
+	 * Adds a listener for the given event using the given context. This
+	 * methods uses MetalJS' functionality, but overrides the context binding
+	 * in order to avoid breaking changes with the old implementation.
+	 *
+	 * @param {string} eventName Event name that will be listened.
+	 * @param {function} callback Callback executed when the event fires.
+	 * @param {Object} [context] Optional context that will be used for binding
+	 *  the callback when specified.
+	 * @return {*} Result of the State.on method.
+	 * @see State.on
+	 */
+	on(eventName, callback, context) {
+		let boundCallback = callback;
+
+		if (context) {
+			boundCallback = callback.bind(context);
+		}
+
+		return super.on(eventName, boundCallback);
+	}
+
+	/**
+	 * Opens a dialog if this_getDialog() returns a valid object.
+	 * @param {*} dialogConfig Dialog configuration that will be sent to the
+	 *  dialog.open() method.
+	 * @see MapBase._getDialog()
+	 */
+	openDialog(dialogConfig) {
+		const dialog = this._getDialog();
+
+		if (dialog) {
+			dialog.open(dialogConfig);
+		}
+	}
+
+	/**
+	 * Setter called everytime the position attribute is changed.
+	 * @param {Object} position New position
+	 * @return {Object} The given position object
+	 */
+	setPosition(position) {
+		this.emit(
+			'positionChange',
+			{
+				newVal: {
+					location: position.location,
+					address: position.address,
+				},
+			}
+		);
+
+		return position;
 	}
 }
 
@@ -537,9 +569,12 @@ MapBase.get = function(id, callback) {
 
 	if (map) {
 		callback(map);
-	} else {
+	}
+	else {
 		const idPendingCallbacks = pendingCallbacks[id] || [];
+
 		idPendingCallbacks.push(callback);
+
 		pendingCallbacks[id] = idPendingCallbacks;
 	}
 };
@@ -552,10 +587,14 @@ MapBase.get = function(id, callback) {
  */
 MapBase.register = function(id, map) {
 	Liferay.component(id, map);
+
 	const idPendingCallbacks = pendingCallbacks[id];
 
 	if (idPendingCallbacks) {
-		idPendingCallbacks.forEach(callback => callback(map));
+		idPendingCallbacks.forEach(
+			callback => callback(map)
+		);
+
 		idPendingCallbacks.length = 0;
 	}
 };
@@ -638,6 +677,11 @@ MapBase.POSITION = {
  */
 MapBase.POSITION_MAP = {};
 
+/**
+ * State definition.
+ * @type {!Object}
+ * @static
+ */
 MapBase.STATE = {
 	/**
 	 * DOM node selector identifying the element that will be used
@@ -691,4 +735,6 @@ MapBase.STATE = {
 };
 
 Liferay.MapBase = MapBase;
+
 export default MapBase;
+export {MapBase}

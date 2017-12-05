@@ -1,5 +1,3 @@
-/* global L */
-
 import State, {Config} from 'metal-state';
 
 /**
@@ -12,10 +10,13 @@ class OpenStreetMapDialog extends State {
 	 */
 	constructor(...args) {
 		super(...args);
-		this._dialog = L.popup({
-			className: 'leaflet-popup',
-			minWidth: 400,
-		});
+
+		this._dialog = L.popup(
+			{
+				className: 'leaflet-popup',
+				minWidth: 400,
+			}
+		);
 	}
 
 	/**
@@ -26,12 +27,18 @@ class OpenStreetMapDialog extends State {
 	open(cfg) {
 		this._dialog.setContent(cfg.content);
 		this._dialog.setLatLng(cfg.position);
-		this._dialog.options.offset = cfg.marker.options.icon.options
-			.popupAnchor || [0, 0];
+
+		this._dialog.options.offset = cfg.marker.options.icon.options.popupAnchor || [0, 0];
+
 		this._dialog.openOn(this.map);
 	}
 }
 
+/**
+ * State definition.
+ * @type {!Object}
+ * @static
+ */
 OpenStreetMapDialog.STATE = {
 	/**
 	 * Map used for creating the dialog content
@@ -39,3 +46,6 @@ OpenStreetMapDialog.STATE = {
 	 */
 	map: Config.object(),
 };
+
+export default OpenStreetMapDialog;
+export {OpenStreetMapDialog};

@@ -1,5 +1,3 @@
-/* global AUI */
-
 import State from 'metal-state';
 
 /**
@@ -7,53 +5,10 @@ import State from 'metal-state';
  */
 class OpenStreetMapGeocoder extends State {
 	/**
-	 * Transforms a given address into valid latitude and longitude
-	 * @param {string} query Address to be transformed into latitude and longitude
-	 * @param {function} callback Callback that will be executed on success
-	 */
-	forward(query, callback) {
-		// eslint-disable-next-line new-cap
-		AUI().use('jsonp', A => {
-			const forwardUrl = OpenStreetMapGeocoder.TPL_FORWARD_GEOCODING_URL.replace(
-				'{query}',
-				query
-			);
-
-			A.jsonp(forwardUrl, {
-				context: this,
-				on: {
-					success: A.rbind('_handleForwardJSONP', this, callback),
-				},
-			});
-		});
-	}
-
-	/**
-	 * Transforms a given location object (lat, lng) into a valid address
-	 * @param {string} location Location information to be sent to the server
-	 * @param {function} callback Callback that will be executed on success
-	 */
-	reverse(location, callback) {
-		// eslint-disable-next-line new-cap
-		AUI().use('jsonp', A => {
-			const reverseUrl = OpenStreetMapGeocoder.TPL_REVERSE_GEOCODING_URL.replace(
-				'{lat}',
-				location.lat
-			).replace('{lng}', location.lng);
-
-			A.jsonp(reverseUrl, {
-				context: this,
-				on: {
-					success: A.rbind('_handleReverseJSONP', this, callback),
-				},
-			});
-		});
-	}
-
-	/**
 	 * Handles the server response of a successfull address forward
 	 * @param {Object} response Server response
 	 * @param {function} callback Callback that will be executed on success
+	 * @protected
 	 */
 	_handleForwardJSONP(response, callback) {
 		callback(response);
@@ -63,6 +18,7 @@ class OpenStreetMapGeocoder extends State {
 	 * Handles the server response of a successfull location reverse
 	 * @param {Object} response Server response
 	 * @param {function} callback Callback that will be executed on success
+	 * @protected
 	 */
 	_handleReverseJSONP({error, display_name, lat, lon}, callback) {
 		const result = {
@@ -82,6 +38,58 @@ class OpenStreetMapGeocoder extends State {
 
 		callback(result);
 	}
+
+	/**
+	 * Transforms a given address into valid latitude and longitude
+	 * @param {string} query Address to be transformed into latitude and longitude
+	 * @param {function} callback Callback that will be executed on success
+	 */
+	forward(query, callback) {
+		AUI().use(
+			'jsonp',
+			A => {
+				const forwardUrl = OpenStreetMapGeocoder.TPL_FORWARD_GEOCODING_URL.replace(
+					'{query}',
+					query
+				);
+
+				A.jsonp(
+					forwardUrl, {
+						context: this,
+						on: {
+							success: A.rbind('_handleForwardJSONP', this, callback),
+						},
+					}
+				);
+			}
+		);
+	}
+
+	/**
+	 * Transforms a given location object (lat, lng) into a valid address
+	 * @param {string} location Location information to be sent to the server
+	 * @param {function} callback Callback that will be executed on success
+	 */
+	reverse(location, callback) {
+		AUI().use(
+			'jsonp',
+			A => {
+				const reverseUrl = OpenStreetMapGeocoder.TPL_REVERSE_GEOCODING_URL.replace(
+					'{lat}',
+					location.lat
+				).replace('{lng}', location.lng);
+
+				A.jsonp(
+					reverseUrl, {
+						context: this,
+						on: {
+							success: A.rbind('_handleReverseJSONP', this, callback),
+						},
+					}
+				);
+			}
+		);
+	}
 }
 
 /**
@@ -89,7 +97,6 @@ class OpenStreetMapGeocoder extends State {
  * @type {string}
  * @see OpenStreetMapGeocoder.forward()
  */
-// eslint-disable-next-line max-len
 OpenStreetMapGeocoder.TPL_FORWARD_GEOCODING_URL =
 	'//nominatim.openstreetmap.org/search?format=json&json_callback={callback}&q={query}';
 
@@ -98,8 +105,8 @@ OpenStreetMapGeocoder.TPL_FORWARD_GEOCODING_URL =
  * @type {string}
  * @see OpenStreetMapGeocoder.reverse()
  */
-// eslint-disable-next-line max-len
 OpenStreetMapGeocoder.TPL_REVERSE_GEOCODING_URL =
 	'//nominatim.openstreetmap.org/reverse?format=json&json_callback={callback}&lat={lat}&lon={lng}';
 
 export default OpenStreetMapGeocoder;
+export {OpenStreetMapGeocoder};

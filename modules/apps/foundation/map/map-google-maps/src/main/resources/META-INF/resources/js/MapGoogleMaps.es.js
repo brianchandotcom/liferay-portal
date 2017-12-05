@@ -1,11 +1,9 @@
-/* global google, Liferay */
-
-import {toElement} from 'metal-dom';
 import MapBase from 'map-common/js/MapBase.es';
+import {toElement} from 'metal-dom';
 
 import GoogleMapsDialog from './GoogleMapsDialog.es';
-import GoogleMapsGeocoder from './GoogleMapsGeocoder.es';
 import GoogleMapsGeoJSON from './GoogleMapsGeoJSON.es';
+import GoogleMapsGeocoder from './GoogleMapsGeocoder.es';
 import GoogleMapsMarker from './GoogleMapsMarker.es';
 import GoogleMapsSearch from './GoogleMapsSearch.es';
 
@@ -19,36 +17,13 @@ class MapGoogleMaps extends MapBase {
 	 */
 	constructor(...args) {
 		super(...args);
+
 		this._bounds = null;
 	}
 
-	/** @inheritdoc */
-	addControl(control, position) {
-		if (this._map.controls[position]) {
-			this._map.controls[position].push(toElement(control));
-		}
-	}
-
-	/** @inheritdoc */
-	getBounds() {
-		let bounds = this._map.getBounds() || this._bounds;
-
-		if (!bounds) {
-			bounds = new GoogleMapsDialog.maps.LatLngBounds();
-			this._bounds = bounds;
-		}
-
-		return bounds;
-	}
-
-	/** @inheritdoc */
-	setCenter(location) {
-		if (this._map) {
-			this._map.setCenter(location);
-		}
-	}
-
-	/** @inheritdoc */
+	/**
+	 * @inheritDoc
+	 */
 	_createMap(location, controlsConfig) {
 		const mapConfig = {
 			center: location,
@@ -61,24 +36,51 @@ class MapGoogleMaps extends MapBase {
 			Object.assign(mapConfig, controlsConfig)
 		);
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	addControl(control, position) {
+		if (this._map.controls[position]) {
+			this._map.controls[position].push(toElement(control));
+		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	getBounds() {
+		let bounds = this._map.getBounds() || this._bounds;
+
+		if (!bounds) {
+			bounds = new GoogleMapsDialog.maps.LatLngBounds();
+
+			this._bounds = bounds;
+		}
+
+		return bounds;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	setCenter(location) {
+		if (this._map) {
+			this._map.setCenter(location);
+		}
+	}
 }
 
-/** @inheritdoc */
 MapBase.DialogImpl = GoogleMapsDialog;
 
-/** @inheritdoc */
 MapBase.GeocoderImpl = GoogleMapsGeocoder;
 
-/** @inheritdoc */
 MapBase.GeoJSONImpl = GoogleMapsGeoJSON;
 
-/** @inheritdoc */
 MapBase.MarkerImpl = GoogleMapsMarker;
 
-/** @inheritdoc */
 MapBase.SearchImpl = GoogleMapsSearch;
 
-/** @inheritdoc */
 MapGoogleMaps.CONTROLS_MAP = {
 	[MapBase.CONTROLS.OVERVIEW]: 'overviewMapControl',
 	[MapBase.CONTROLS.PAN]: 'panControl',
@@ -89,5 +91,8 @@ MapGoogleMaps.CONTROLS_MAP = {
 	[MapBase.CONTROLS.ZOOM]: 'zoomControl',
 };
 
-Liferay.GoogleMap = MapGoogleMaps;
+window.Liferay = window.Liferay || {};
+window.Liferay.GoogleMap = MapGoogleMaps;
+
 export default MapGoogleMaps;
+export {MapGoogleMaps};

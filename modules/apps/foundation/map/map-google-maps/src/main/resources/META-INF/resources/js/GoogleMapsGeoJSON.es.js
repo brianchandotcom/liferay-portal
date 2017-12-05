@@ -1,5 +1,3 @@
-/* global google */
-
 import GeoJSONBase from 'map-common/js/GeoJSONBase.es';
 
 /**
@@ -12,11 +10,14 @@ class GoogleMapsGeoJSON extends GeoJSONBase {
 	 */
 	constructor(...args) {
 		super(...args);
+
 		this.eventHandlers = [];
+
 		this._getFeatureStyle = this._getFeatureStyle.bind(this);
 		this._handleFeatureClicked = this._handleFeatureClicked.bind(this);
 
 		this.map.data.setStyle(this._getFeatureStyle);
+
 		this._bindUI();
 	}
 
@@ -24,15 +25,18 @@ class GoogleMapsGeoJSON extends GeoJSONBase {
 	 * Removes the listeners that have been added to the map object.
 	 */
 	destructor() {
-		this._eventHandlers.forEach(item => {
-			google.maps.event.removeListener(item);
-		});
+		this._eventHandlers.forEach(
+			item => {
+				google.maps.event.removeListener(item);
+			}
+		);
 	}
 
 	/**
 	 * Adds listeners for the created map object.
 	 * It listens for click events and executes
 	 * GoogleMapsGeoJSON._handleFeatureClicked.
+	 * @protected
 	 */
 	_bindUI() {
 		this._eventHandlers = [
@@ -48,6 +52,7 @@ class GoogleMapsGeoJSON extends GeoJSONBase {
 	 * Gets the internal style of the given feature. Both the feature and the
 	 * style are native Google Maps objects.
 	 * @param {Object} feature Google Maps native feature to be parsed.
+	 * @protected
 	 * @return {Object} Obtained style
 	 */
 	_getFeatureStyle(feature) {
@@ -56,12 +61,16 @@ class GoogleMapsGeoJSON extends GeoJSONBase {
 		};
 	}
 
-	/** @inheritdoc */
+	/**
+	 * @inheritDoc
+	 */
 	_getNativeFeatures(geoJSONData) {
 		return this.map.data.addGeoJson(geoJSONData);
 	}
 
-	/** @inheritdoc */
+	/**
+	 * @inheritDoc
+	 */
 	_wrapNativeFeature(nativeFeature) {
 		const feature = nativeFeature.getGeometry
 			? nativeFeature
@@ -69,16 +78,19 @@ class GoogleMapsGeoJSON extends GeoJSONBase {
 
 		feature.getMarker = () => {
 			if (!feature._marker) {
-				const marker = new google.maps.Marker({
-					icon: feature.getProperty('icon'),
-					map: this.map,
-					opacity: 0,
-					position: feature.getGeometry().get('location'),
-					zIndex: -1,
-				});
+				const marker = new google.maps.Marker(
+					{
+						icon: feature.getProperty('icon'),
+						map: this.map,
+						opacity: 0,
+						position: feature.getGeometry().get('location'),
+						zIndex: -1,
+					}
+				);
 
 				feature._marker = marker;
 			}
+
 			return feature.marker;
 		};
 
@@ -87,3 +99,4 @@ class GoogleMapsGeoJSON extends GeoJSONBase {
 }
 
 export default GoogleMapsGeoJSON;
+export {GoogleMapsGeoJSON};

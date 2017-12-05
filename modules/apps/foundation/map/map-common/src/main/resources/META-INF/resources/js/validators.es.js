@@ -1,7 +1,3 @@
-/* global HTMLInputElement */
-
-'use strict';
-
 import core from 'metal';
 
 /**
@@ -25,6 +21,7 @@ function isSubsetOf(superset) {
 				return false;
 			}
 		}
+
 		return true;
 	};
 }

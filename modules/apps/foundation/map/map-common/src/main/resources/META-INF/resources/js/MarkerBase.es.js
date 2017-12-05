@@ -1,5 +1,3 @@
-/* global Liferay */
-
 import State, {Config} from 'metal-state';
 
 /**
@@ -17,17 +15,8 @@ class MarkerBase extends State {
 	 */
 	constructor(...args) {
 		super(...args);
-		this._nativeMarker = this._getNativeMarker(this.location, this.map);
-	}
 
-	/**
-	 * Parses the given nativeEvent and emits a new event with the given
-	 * event type.
-	 * @param {Event} nativeEvent Native event that will be parsed.
-	 * @param {string} externalEventType Event type that will be emitted.
-	 */
-	_handleNativeEvent(nativeEvent, externalEventType) {
-		this.emit(externalEventType, this._getNormalizedEventData(nativeEvent));
+		this._nativeMarker = this._getNativeMarker(this.location, this.map);
 	}
 
 	/**
@@ -58,7 +47,7 @@ class MarkerBase extends State {
 	 * @param {Object} map
 	 * @return {Object} Generated native marker
 	 */
-	_getNativeMarker(/* location, map */) {
+	_getNativeMarker(location, map) {
 		throw new Error('Must be implemented');
 	}
 
@@ -69,8 +58,18 @@ class MarkerBase extends State {
 	 * @param {Event} nativeEvent
 	 * @return {{ lat: number, lng: number }}
 	 */
-	_getNormalizedEventData(/* nativeEvent */) {
+	_getNormalizedEventData(nativeEvent) {
 		throw new Error('Must be implemented');
+	}
+
+	/**
+	 * Parses the given nativeEvent and emits a new event with the given
+	 * event type.
+	 * @param {Event} nativeEvent Native event that will be parsed.
+	 * @param {string} externalEventType Event type that will be emitted.
+	 */
+	_handleNativeEvent(nativeEvent, externalEventType) {
+		this.emit(externalEventType, this._getNormalizedEventData(nativeEvent));
 	}
 }
 
@@ -90,11 +89,17 @@ MarkerBase.STATE = {
 	 * Location to be used
 	 * @type {Object}
 	 */
-	location: Config.shapeOf({
-		lat: Config.number().required(),
-		lng: Config.number().required(),
-	}).value({lat: 0, lng: 0}),
+	location: Config.shapeOf(
+		{
+			lat: Config.number().required(),
+			lng: Config.number().required(),
+		}
+	).value({lat: 0, lng: 0}),
 };
 
-Liferay.MapMarkerBase = MarkerBase;
+window.Liferay = window.Liferay || {};
+
+window.Liferay.MapMarkerBase = MarkerBase;
+
 export default MarkerBase;
+export {MarkerBase};

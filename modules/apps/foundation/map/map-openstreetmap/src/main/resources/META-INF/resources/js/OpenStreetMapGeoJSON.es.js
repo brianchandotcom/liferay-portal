@@ -1,5 +1,3 @@
-/* global L */
-
 import GeoJSONBase from 'map-common/js/GeoJSONBase.es';
 
 /**
@@ -12,24 +10,32 @@ class OpenStreetMapGeoJSONBase extends GeoJSONBase {
 	 */
 	constructor(...args) {
 		super(...args);
+
 		this._handleFeatureClicked = this._handleFeatureClicked.bind(this);
 	}
 
-	/** @inheritdoc */
+	/**
+	 * @inheritDoc
+	 */
 	_getNativeFeatures(geoJSONData) {
 		const features = [];
 
-		L.geoJson(geoJSONData, {
-			onEachFeature: (feature, layer) => {
-				layer.on('click', this._handleFeatureClicked);
-				features.push(feature);
-			},
-		}).addTo(this.map);
+		L.geoJson(
+			geoJSONData, {
+				onEachFeature: (feature, layer) => {
+					layer.on('click', this._handleFeatureClicked);
+
+					features.push(feature);
+				},
+			}
+		).addTo(this.map);
 
 		return features;
 	}
 
-	/** @inheritdoc */
+	/**
+	 * @inheritDoc
+	 */
 	_wrapNativeFeature(nativeFeature) {
 		const feature = nativeFeature.geometry
 			? nativeFeature
@@ -57,3 +63,4 @@ class OpenStreetMapGeoJSONBase extends GeoJSONBase {
 }
 
 export default OpenStreetMapGeoJSONBase;
+export {OpenStreetMapGeoJSONBase};

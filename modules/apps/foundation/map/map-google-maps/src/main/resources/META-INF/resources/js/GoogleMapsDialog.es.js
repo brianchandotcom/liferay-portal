@@ -1,5 +1,3 @@
-/* global google */
-
 import State, {Config} from 'metal-state';
 
 /**
@@ -12,7 +10,7 @@ class GoogleMapsDialog extends State {
 	 */
 	constructor(...args) {
 		super(...args);
-		// eslint-disable-next-line new-cap
+
 		this._dialog = google.maps.InfoWindow();
 	}
 
@@ -23,10 +21,16 @@ class GoogleMapsDialog extends State {
 	 */
 	open(cfg) {
 		this._dialog.setOptions(cfg);
+
 		this._dialog.open(this.map, cfg.marker);
 	}
 }
 
+/**
+ * State definition.
+ * @type {!Object}
+ * @static
+ */
 GoogleMapsDialog.STATE = {
 	/**
 	 * Map used for creating the dialog content
@@ -34,3 +38,6 @@ GoogleMapsDialog.STATE = {
 	 */
 	map: Config.object(),
 };
+
+export default GoogleMapsDialog;
+export {GoogleMapsDialog};

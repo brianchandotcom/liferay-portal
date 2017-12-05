@@ -9,5 +9,5 @@
 		"metal-cli": "^4.2.0"
 	},
 	"name": "map-openstreetmap",
-	"version": "2.0.9"
+	"version": "2.0.10"
 }

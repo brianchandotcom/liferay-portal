@@ -1,5 +1,3 @@
-/* global google */
-
 import State from 'metal-state';
 
 /**
@@ -12,7 +10,37 @@ class GoogleMapsGeocoder extends State {
 	 */
 	constructor(...args) {
 		super(...args);
+
 		this._geocoder = new google.maps.Geocoder();
+	}
+
+	/**
+	 * Handles the server response of a successfull address/location resolution
+	 * @param {function} callback Callback that will be executed on success
+	 * @param {Object} response Server response
+	 * @param {Object} status Server response status
+	 * @protected
+	 */
+	_handleGeocoderResponse(callback, response, status) {
+		const result = {
+			data: {},
+			err: status === google.maps.GeocoderStatus.OK ? null : status,
+		};
+
+		if (!result.err) {
+			const geocoderResult = response[0];
+			const location = geocoderResult.geometry.location;
+
+			result.data = {
+				address: geocoderResult.formatted_address,
+				location: {
+					lat: location.lat(),
+					lng: location.lng(),
+				},
+			};
+		}
+
+		callback(result);
 	}
 
 	/**
@@ -46,34 +74,7 @@ class GoogleMapsGeocoder extends State {
 			this._handleGeocoderResponse.bind(this, callback)
 		);
 	}
-
-	/**
-	 * Handles the server response of a successfull address/location resolution
-	 * @param {function} callback Callback that will be executed on success
-	 * @param {Object} response Server response
-	 * @param {Object} status Server response status
-	 */
-	_handleGeocoderResponse(callback, response, status) {
-		const result = {
-			data: {},
-			err: status === google.maps.GeocoderStatus.OK ? null : status,
-		};
-
-		if (!result.err) {
-			const geocoderResult = response[0];
-			const location = geocoderResult.geometry.location;
-
-			result.data = {
-				address: geocoderResult.formatted_address,
-				location: {
-					lat: location.lat(),
-					lng: location.lng(),
-				},
-			};
-		}
-
-		callback(result);
-	}
 }
 
 export default GoogleMapsGeocoder;
+export {GoogleMapsGeoCoder};

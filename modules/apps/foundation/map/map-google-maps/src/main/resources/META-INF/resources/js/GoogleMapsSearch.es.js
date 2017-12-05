@@ -1,7 +1,5 @@
-/* global google */
-
-import {toElement} from 'metal-dom';
 import State, {Config} from 'metal-state';
+import {toElement} from 'metal-dom';
 
 import {isInputNode} from 'map-common/js/validators.es';
 
@@ -26,15 +24,18 @@ class GoogleMapsSearch extends State {
 	 * Removes the listeners that have been added to the search input.
 	 */
 	destructor() {
-		this._eventHandlers.forEach(item => {
-			google.maps.event.removeListener(item);
-		});
+		this._eventHandlers.forEach(
+			item => {
+				google.maps.event.removeListener(item);
+			}
+		);
 	}
 
 	/**
 	 * Adds listeners for the created map object.
 	 * It listens for a custom 'place_changed' event and executes
 	 * GoogleMapsSearch._handlePlaceChanged.
+	 * @protected
 	 */
 	_bindUI() {
 		this._eventHandlers = [
@@ -49,6 +50,7 @@ class GoogleMapsSearch extends State {
 	/**
 	 * Gets the new place that has been processed by Google Maps and emits a
 	 * 'search' event with the location information and the address.
+	 * @protected
 	 */
 	_handlePlaceChanged() {
 		const place = this._autocomplete.getPlace();
@@ -56,19 +58,27 @@ class GoogleMapsSearch extends State {
 		if (place && typeof place === 'object' && place.geometry) {
 			const location = place.geometry.location;
 
-			this.emit('search', {
-				position: {
-					address: place.formatted_address,
-					location: {
-						lat: location.lat(),
-						lng: location.lng(),
+			this.emit(
+				'search',
+				{
+					position: {
+						address: place.formatted_address,
+						location: {
+							lat: location.lat(),
+							lng: location.lng(),
+						},
 					},
-				},
-			});
+				}
+			);
 		}
 	}
 }
 
+/**
+ * State definition.
+ * @type {!Object}
+ * @static
+ */
 GoogleMapsSearch.STATE = {
 	/**
 	 * Input element that will be used for searching addresses.
@@ -78,3 +88,4 @@ GoogleMapsSearch.STATE = {
 };
 
 export default GoogleMapsSearch;
+export {GoogleMapsSearch};

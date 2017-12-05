@@ -19,9 +19,12 @@ class GeoJSONBase extends State {
 		const nativeFeatures = this._getNativeFeatures(nativeFeaturesData);
 
 		if (nativeFeatures.length > 0) {
-			this.emit('featuresAdded', {
-				features: nativeFeatures.map(this._wrapNativeFeature),
-			});
+			this.emit(
+				'featuresAdded',
+				{
+					features: nativeFeatures.map(this._wrapNativeFeature),
+				}
+			);
 		}
 	}
 
@@ -30,35 +33,38 @@ class GeoJSONBase extends State {
 	 * It receives the feature as parameter, and emits a 'featureClick'
 	 * event with the wrapped feature as event data.
 	 * @param {Object} nativeFeature Feature to be wrapped and sent
-	 * @private
+	 * @protected
 	 */
 	_handleFeatureClicked(nativeFeature) {
-		this.emit('featureClick', {
-			feature: this._wrapNativeFeature(nativeFeature),
-		});
+		this.emit(
+			'featureClick',
+			{
+				feature: this._wrapNativeFeature(nativeFeature),
+			}
+		);
 	}
 
 	/**
 	 * Parses a nativeFeaturesData object and return an array of the
 	 * parsed features. If no feature has been parsed it may return an
 	 * empty array.
-	 * @private
+	 * @protected
 	 * @abstract
 	 * @param {Object} nativeFeaturesData
 	 * @return {Object[]} List of native features to be added
 	 */
-	_getNativeFeatures(/* nativeFeaturesData */) {
+	_getNativeFeatures(nativeFeaturesData) {
 		throw new Error('Must be implemented');
 	}
 
 	/**
 	 * Wraps a native feature.
-	 * @private
+	 * @protected
 	 * @abstract
 	 * @param {Object} nativeFeature
 	 * @return {Object} Wrapped native feature
 	 */
-	_wrapNativeFeature(/* nativeFeature */) {
+	_wrapNativeFeature(nativeFeature) {
 		throw new Error('Must be implemented');
 	}
 }
@@ -77,5 +83,8 @@ GeoJSONBase.STATE = {
 };
 
 window.Liferay = window.Liferay || {};
+
 window.Liferay.MapGeojsonBase = GeoJSONBase;
+
 export default GeoJSONBase;
+export {GeoJSONBase};

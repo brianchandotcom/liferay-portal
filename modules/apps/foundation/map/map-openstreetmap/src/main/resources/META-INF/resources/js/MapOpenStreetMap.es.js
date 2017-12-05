@@ -1,12 +1,10 @@
-/* global L */
-
+import MapBase from 'map-common/js/MapBase.es';
 import {Config} from 'metal-state';
 import {toElement} from 'metal-dom';
-import MapBase from 'map-common/js/MapBase.es';
 
 import OpenStreetMapDialog from './OpenStreetMapDialog.es';
-import OpenStreetMapGeocoder from './OpenStreetMapGeocoder.es';
 import OpenStreetMapGeoJSON from './OpenStreetMapGeoJSON.es';
+import OpenStreetMapGeocoder from './OpenStreetMapGeocoder.es';
 import OpenStreetMapMarker from './OpenStreetMapMarker.es';
 
 /**
@@ -19,41 +17,13 @@ class MapOpenStreetMap extends MapBase {
 	 */
 	constructor(...args) {
 		super(...args);
+
 		this._map = null;
 	}
 
-	/** @inheritdoc */
-	addControl(control, position) {
-		const LeafLetControl = L.Control.extend({
-			onAdd() {
-				return toElement(control);
-			},
-
-			options: {
-				position: MapOpenStreetMap.POSITION_MAP[position],
-			},
-		});
-
-		this._map.addControl(new LeafLetControl());
-	}
-
-	/** @inheritdoc */
-	getBounds() {
-		return this._map.getBounds();
-	}
-
-	/** @inheritdoc */
-	setCenter(location) {
-		if (this._map) {
-			this._map.panTo(location);
-		}
-
-		if (this._geolocationMarker) {
-			this._geolocationMarker.setPosition(location);
-		}
-	}
-
-	/** @inheritdoc */
+	/**
+	 * @inheritDoc
+	 */
 	_createMap(location, controlsConfig) {
 		const mapConfig = {
 			center: location,
@@ -66,30 +36,62 @@ class MapOpenStreetMap extends MapBase {
 			Object.assign(mapConfig, controlsConfig)
 		);
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	addControl(control, position) {
+		const LeafLetControl = L.Control.extend(
+			{
+				onAdd() {
+					return toElement(control);
+				},
+
+				options: {
+					position: MapOpenStreetMap.POSITION_MAP[position],
+				},
+			}
+		);
+
+		this._map.addControl(new LeafLetControl());
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	getBounds() {
+		return this._map.getBounds();
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	setCenter(location) {
+		if (this._map) {
+			this._map.panTo(location);
+		}
+
+		if (this._geolocationMarker) {
+			this._geolocationMarker.setPosition(location);
+		}
+	}
 }
 
-/** @inheritdoc */
 MapBase.DialogImpl = OpenStreetMapDialog;
 
-/** @inheritdoc */
 MapBase.GeocoderImpl = OpenStreetMapGeocoder;
 
-/** @inheritdoc */
 MapBase.GeoJSONImpl = OpenStreetMapGeoJSON;
 
-/** @inheritdoc */
 MapBase.MarkerImpl = OpenStreetMapMarker;
 
-/** @inheritdoc */
 MapBase.SearchImpl = null;
 
-/** @inheritdoc */
 MapOpenStreetMap.CONTROLS_MAP = {
 	[MapBase.CONTROLS.ATTRIBUTION]: 'attributionControl',
 	[MapBase.CONTROLS.ZOOM]: 'zoomControl',
 };
 
-/** @inheritdoc */
 MapOpenStreetMap.POSITION_MAP = {
 	[MapBase.POSITION.BOTTOM]: 'bottomleft',
 	[MapBase.POSITION.BOTTOM_CENTER]: 'bottomleft',
@@ -110,6 +112,11 @@ MapOpenStreetMap.POSITION_MAP = {
 	[MapBase.POSITION.TOP_RIGHT]: 'topright',
 };
 
+/**
+ * State definition.
+ * @type {!Object}
+ * @static
+ */
 MapOpenStreetMap.STATE = Object.assign({}, MapBase.STATE, {
 	/**
 	 * Url used for fetching map tile information
@@ -119,3 +126,4 @@ MapOpenStreetMap.STATE = Object.assign({}, MapBase.STATE, {
 });
 
 export default MapOpenStreetMap;
+export {MapOpenStreetMap};

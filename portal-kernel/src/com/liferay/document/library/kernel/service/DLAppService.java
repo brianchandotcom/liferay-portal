@@ -956,6 +956,13 @@ public interface DLAppService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long repositoryId, long folderId, int status,
+		java.lang.String[] mimeTypes, boolean includeMountFolders,
+		boolean includeOwner, int start, int end, OrderByComparator<?> obc)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
+		long repositoryId, long folderId, int status,
 		java.lang.String[] mimeTypes, boolean includeMountFolders, int start,
 		int end, OrderByComparator<?> obc) throws PortalException;
 
@@ -981,6 +988,12 @@ public interface DLAppService extends BaseService {
 		long repositoryId, long folderId, int status,
 		java.lang.String[] mimeTypes, boolean includeMountFolders)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+		long repositoryId, long folderId, int status,
+		java.lang.String[] mimeTypes, boolean includeMountFolders,
+		boolean includeOwner) throws PortalException;
 
 	/**
 	* Returns the number of immediate subfolders of the parent folder.

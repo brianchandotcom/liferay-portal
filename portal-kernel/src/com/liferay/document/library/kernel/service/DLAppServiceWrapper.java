@@ -1127,6 +1127,18 @@ public class DLAppServiceWrapper implements DLAppService,
 	@Override
 	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long repositoryId, long folderId, int status,
+		java.lang.String[] mimeTypes, boolean includeMountFolders,
+		boolean includeOwner, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<?> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlAppService.getFoldersAndFileEntriesAndFileShortcuts(repositoryId,
+			folderId, status, mimeTypes, includeMountFolders, includeOwner,
+			start, end, obc);
+	}
+
+	@Override
+	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
+		long repositoryId, long folderId, int status,
 		java.lang.String[] mimeTypes, boolean includeMountFolders, int start,
 		int end, com.liferay.portal.kernel.util.OrderByComparator<?> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1162,6 +1174,16 @@ public class DLAppServiceWrapper implements DLAppService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId,
 			folderId, status, mimeTypes, includeMountFolders);
+	}
+
+	@Override
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+		long repositoryId, long folderId, int status,
+		java.lang.String[] mimeTypes, boolean includeMountFolders,
+		boolean includeOwner)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlAppService.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId,
+			folderId, status, mimeTypes, includeMountFolders, includeOwner);
 	}
 
 	/**

@@ -28,6 +28,19 @@ import java.util.Dictionary;
 @ProviderType
 public interface ConfigurationProvider {
 
+	public <T> void deleteCompanyConfiguration(Class<T> clazz, long companyId)
+		throws ConfigurationException;
+
+	public <T> void deleteGroupConfiguration(Class<T> clazz, long groupId)
+		throws ConfigurationException;
+
+	public <T> void deletePortletInstanceConfiguration(
+			Class<T> clazz, String portletId)
+		throws ConfigurationException;
+
+	public <T> void deleteSystemConfiguration(Class<T> clazz)
+		throws ConfigurationException;
+
 	public <T> T getCompanyConfiguration(Class<T> clazz, long companyId)
 		throws ConfigurationException;
 

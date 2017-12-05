@@ -38,6 +38,8 @@ import java.io.IOException;
 
 import java.util.Dictionary;
 
+import org.osgi.framework.Constants;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
@@ -49,6 +51,55 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = ConfigurationProvider.class)
 public class ConfigurationProviderImpl implements ConfigurationProvider {
+
+	@Override
+	public <T> void deleteCompanyConfiguration(Class<T> clazz, long companyId)
+		throws ConfigurationException {
+
+		String configurationPid = _getConfigurationPid(clazz);
+
+		String scopedPid = _getConfigurationScopedPid(
+			configurationPid, ExtendedObjectClassDefinition.Scope.COMPANY,
+			String.valueOf(companyId));
+
+		_deleteConfiguration(scopedPid);
+	}
+
+	@Override
+	public <T> void deleteGroupConfiguration(Class<T> clazz, long groupId)
+		throws ConfigurationException {
+
+		String configurationPid = _getConfigurationPid(clazz);
+
+		String scopedPid = _getConfigurationScopedPid(
+			configurationPid, ExtendedObjectClassDefinition.Scope.GROUP,
+			String.valueOf(groupId));
+
+		_deleteConfiguration(scopedPid);
+	}
+
+	@Override
+	public <T> void deletePortletInstanceConfiguration(
+			Class<T> clazz, String portletId)
+		throws ConfigurationException {
+
+		String configurationPid = _getConfigurationPid(clazz);
+
+		String scopedPid = _getConfigurationScopedPid(
+			configurationPid,
+			ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE, portletId);
+
+		_deleteConfiguration(scopedPid);
+	}
+
+	@Override
+	public <T> void deleteSystemConfiguration(Class<T> clazz)
+		throws ConfigurationException {
+
+		String configurationPid = _getConfigurationPid(clazz);
+
+		_deleteConfiguration(configurationPid);
+	}
 
 	@Override
 	public <T> T getCompanyConfiguration(Class<T> clazz, long companyId)
@@ -190,6 +241,31 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 		String configurationPid = _getConfigurationPid(clazz);
 
 		_saveConfiguration(configurationPid, properties);
+	}
+
+	private void _deleteConfiguration(String pid)
+		throws ConfigurationException {
+
+		try {
+			StringBundler pidFilter = new StringBundler(5);
+
+			pidFilter.append(StringPool.OPEN_PARENTHESIS);
+			pidFilter.append(Constants.SERVICE_PID);
+			pidFilter.append(StringPool.EQUAL);
+			pidFilter.append(pid);
+			pidFilter.append(StringPool.CLOSE_PARENTHESIS);
+
+			Configuration[] configurations =
+				_configurationAdmin.listConfigurations(pidFilter.toString());
+
+			if (configurations != null) {
+				configurations[0].delete();
+			}
+		}
+		catch (InvalidSyntaxException | IOException e) {
+			throw new ConfigurationException(
+				"Unable to delete configuration " + pid, e);
+		}
 	}
 
 	private String _getConfigurationPid(Class<?> clazz) {

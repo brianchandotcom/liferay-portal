@@ -28,6 +28,46 @@ import java.util.Dictionary;
  */
 public class ConfigurationProviderUtil {
 
+	public static <T> void deleteCompanyConfiguration(
+			Class<T> clazz, long companyId)
+		throws ConfigurationException {
+
+		ConfigurationProvider configurationProvider =
+			getConfigurationProvider();
+
+		configurationProvider.deleteCompanyConfiguration(clazz, companyId);
+	}
+
+	public static <T> void deleteGroupConfiguration(
+			Class<T> clazz, long groupId)
+		throws ConfigurationException {
+
+		ConfigurationProvider configurationProvider =
+			getConfigurationProvider();
+
+		configurationProvider.deleteGroupConfiguration(clazz, groupId);
+	}
+
+	public static <T> void deletePortletInstanceConfiguration(
+			Class<T> clazz, String portletId)
+		throws ConfigurationException {
+
+		ConfigurationProvider configurationProvider =
+			getConfigurationProvider();
+
+		configurationProvider.deletePortletInstanceConfiguration(
+			clazz, portletId);
+	}
+
+	public static <T> void deleteSystemConfiguration(Class<T> clazz)
+		throws ConfigurationException {
+
+		ConfigurationProvider configurationProvider =
+			getConfigurationProvider();
+
+		configurationProvider.deleteSystemConfiguration(clazz);
+	}
+
 	public static <T> T getCompanyConfiguration(Class<T> clazz, long companyId)
 		throws ConfigurationException {
 

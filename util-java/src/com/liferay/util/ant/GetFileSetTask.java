@@ -65,8 +65,8 @@ public class GetFileSetTask extends Task {
 			return;
 		}
 
-		List<Path> classResultList = new ArrayList();
-		List<Path> srcResultList = new ArrayList();
+		List<Path> classResultList = new ArrayList<>();
+		List<Path> srcResultList = new ArrayList<>();
 
 		Set<String> notFoundClassNames = _findFiles(
 			baseDir, classNames, classResultList, srcResultList);

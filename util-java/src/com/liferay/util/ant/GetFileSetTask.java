@@ -46,10 +46,6 @@ public class GetFileSetTask extends Task {
 
 	@Override
 	public void execute() throws BuildException {
-		File baseDir = new File(_rootDir);
-
-		Project project = getProject();
-
 		List<String> classNames = new ArrayList<>();
 
 		Collections.addAll(classNames, _classNames.split(","));
@@ -62,11 +58,14 @@ public class GetFileSetTask extends Task {
 				"Please input class names instead of test class names!" +
 					"Please check:{0}",
 				improperClassName.toString());
+
 			return;
 		}
 
 		List<Path> classResultList = new ArrayList<>();
 		List<Path> srcResultList = new ArrayList<>();
+
+		File baseDir = new File(_rootDir);
 
 		Set<String> notFoundClassNames = _findFiles(
 			baseDir, classNames, classResultList, srcResultList);
@@ -81,9 +80,11 @@ public class GetFileSetTask extends Task {
 			}
 		}
 
+		Project project = getProject();
+
 		DirSet srcDirSet = new DirSet();
 
-		srcDirSet.setProject(getProject());
+		srcDirSet.setProject(project);
 		srcDirSet.setDir(baseDir);
 
 		for (Path srcFilePath : srcResultList) {
@@ -94,13 +95,16 @@ public class GetFileSetTask extends Task {
 					Level.WARNING,
 					"Input incorrect class name! Please check:{0}",
 					improperClassName.toString());
+
 				return;
 			}
 
 			int srcDirIndex = srcResult.indexOf("src") + 3;
 
 			if (srcResult.contains(_MODULE_SRC_PARAMETER)) {
-				srcDirIndex = srcResult.indexOf(_MODULE_SRC_PARAMETER) + 13;
+				srcDirIndex =
+					srcResult.indexOf(_MODULE_SRC_PARAMETER) +
+						_MODULE_SRC_PARAMETER.length();
 			}
 
 			srcResult = srcResult.substring(_rootDir.length() + 1, srcDirIndex);
@@ -185,40 +189,39 @@ public class GetFileSetTask extends Task {
 
 					@Override
 					public FileVisitResult preVisitDirectory(
-							Path file, BasicFileAttributes attrs)
+							Path path, BasicFileAttributes basicFileAttributes)
 						throws IOException {
 
-						Path fileNamePath = file.getFileName();
+						Path fileNamePath = path.getFileName();
 
 						String fileName = fileNamePath.toString();
 
 						if (_skipDirectory(fileName)) {
 							return FileVisitResult.SKIP_SUBTREE;
 						}
-						else {
-							return FileVisitResult.CONTINUE;
-						}
+
+						return FileVisitResult.CONTINUE;
 					}
 
 					@Override
 					public FileVisitResult visitFile(
-							Path file, BasicFileAttributes attrs)
+							Path path, BasicFileAttributes basicFileAttributes)
 						throws IOException {
 
-						Path fileNamePath = file.getFileName();
+						Path fileNamePath = path.getFileName();
 
 						String fileName = fileNamePath.toString();
 
 						for (String className : classNames) {
-							String targetSrcName = className.concat(".java");
-
 							if (_matchClassName(className, fileName)) {
-								classFileList.add(file);
+								classFileList.add(path);
 
 								notFoundClassNames.remove(className);
 							}
-							else if (fileName.equals(targetSrcName)) {
-								srcFileList.add(file);
+							else if (fileName.equals(
+										className.concat(".java"))) {
+
+								srcFileList.add(path);
 							}
 						}
 

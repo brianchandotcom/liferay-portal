@@ -1,6 +1,6 @@
 Bundle-Name: Liferay SAML API
 Bundle-SymbolicName: com.liferay.saml.api
-Bundle-Version: 1.1.2
+Bundle-Version: 1.1.3
 Export-Package:\
 	com.liferay.saml.constants,\
 	com.liferay.saml.runtime,\

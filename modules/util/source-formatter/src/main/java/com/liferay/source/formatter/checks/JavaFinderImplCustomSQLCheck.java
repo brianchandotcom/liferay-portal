@@ -72,12 +72,9 @@ public class JavaFinderImplCustomSQLCheck extends BaseJavaTermCheck {
 					customSQLDocument, finderName);
 			}
 			else if (childJavaTerm instanceof JavaVariable) {
-				if (!isSubrepository() && !isReadOnly(absolutePath)) {
-					_checkCustomSQLVariable(
-						fileName, childJavaTerm.getName(),
-						childJavaTerm.getContent(), fileContent,
-						customSQLDocument);
-				}
+				_checkCustomSQLVariable(
+					fileName, childJavaTerm.getName(),
+					childJavaTerm.getContent(), fileContent, customSQLDocument);
 			}
 		}
 

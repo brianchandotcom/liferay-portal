@@ -104,8 +104,9 @@ public class SpringHibernateThreadLocalUtil {
 
 			ThreadLocal<?> resourcesThreadLocal = null;
 
-			for (Field field : ReflectionUtil.getDeclaredFields(
-					TransactionSynchronizationManager.class)) {
+			for (Field field :
+					ReflectionUtil.getDeclaredFields(
+						TransactionSynchronizationManager.class)) {
 
 				if (Modifier.isStatic(field.getModifiers()) &&
 					ThreadLocal.class.isAssignableFrom(field.getType())) {

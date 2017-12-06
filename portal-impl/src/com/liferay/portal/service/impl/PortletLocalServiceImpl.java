@@ -2213,8 +2213,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		//supportedLocales.add(
 		//	LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
 
-		for (Element supportedLocaleElement : portletElement.elements(
-				"supported-locale")) {
+		for (Element supportedLocaleElement :
+				portletElement.elements("supported-locale")) {
 
 			String supportedLocale = supportedLocaleElement.getText();
 

@@ -128,8 +128,9 @@ public class RatingsEntryLocalServiceImpl
 
 		Map<Long, RatingsEntry> ratingsEntries = new HashMap<>();
 
-		for (RatingsEntry entry : ratingsEntryPersistence.findByU_C_C(
-				userId, classNameId, classPKs)) {
+		for (RatingsEntry entry :
+				ratingsEntryPersistence.findByU_C_C(
+					userId, classNameId, classPKs)) {
 
 			ratingsEntries.put(entry.getClassPK(), entry);
 		}

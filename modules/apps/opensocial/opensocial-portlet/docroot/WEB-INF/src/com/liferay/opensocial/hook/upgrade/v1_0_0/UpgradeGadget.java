@@ -27,8 +27,9 @@ public class UpgradeGadget extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		for (Gadget gadget : GadgetLocalServiceUtil.getGadgets(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+		for (Gadget gadget :
+				GadgetLocalServiceUtil.getGadgets(
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
 
 			ResourceLocalServiceUtil.addResources(
 				gadget.getCompanyId(), 0, 0, Gadget.class.getName(),

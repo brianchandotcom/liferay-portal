@@ -81,8 +81,8 @@ public class JSTranspilerPluginUtil {
 
 		DependencySet dependencySet = configuration.getAllDependencies();
 
-		for (ProjectDependency projectDependency : dependencySet.withType(
-				ProjectDependency.class)) {
+		for (ProjectDependency projectDependency :
+				dependencySet.withType(ProjectDependency.class)) {
 
 			taskDependencies.add(projectDependency.getBuildDependencies());
 		}

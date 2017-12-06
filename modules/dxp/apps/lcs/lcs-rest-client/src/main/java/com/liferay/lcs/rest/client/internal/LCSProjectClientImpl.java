@@ -19,6 +19,7 @@ import com.liferay.lcs.rest.client.LCSProjectClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,8 @@ public class LCSProjectClientImpl implements LCSProjectClient {
 	@Override
 	public List<LCSProject> getUserManageableLCSProjects()
 		throws JSONWebServiceInvocationException,
-			   JSONWebServiceSerializeException {
+			   JSONWebServiceSerializeException,
+			   JSONWebServiceTransportException {
 
 		List<LCSProject> remoteLCSProjects = null;
 

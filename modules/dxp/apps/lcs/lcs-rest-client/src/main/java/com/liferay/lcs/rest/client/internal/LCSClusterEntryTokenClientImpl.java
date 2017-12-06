@@ -19,6 +19,7 @@ import com.liferay.lcs.rest.client.LCSClusterEntryTokenClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -36,7 +37,8 @@ public class LCSClusterEntryTokenClientImpl
 	public LCSClusterEntryToken fetchLCSClusterEntryToken(
 			long lcsClusterEntryTokenId)
 		throws JSONWebServiceInvocationException,
-			   JSONWebServiceSerializeException {
+			   JSONWebServiceSerializeException,
+			   JSONWebServiceTransportException {
 
 		try {
 			LCSClusterEntryToken lcsClusterEntryToken =

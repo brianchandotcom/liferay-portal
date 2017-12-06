@@ -16,6 +16,7 @@ package com.liferay.lcs.rest.client;
 
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 
 /**
  * @author Igor Beslic
@@ -24,6 +25,7 @@ public interface LCSSubscriptionEntryClient {
 
 	public LCSSubscriptionEntry fetchLCSSubscriptionEntry(String key)
 		throws JSONWebServiceInvocationException,
-			   JSONWebServiceSerializeException;
+			   JSONWebServiceSerializeException,
+			   JSONWebServiceTransportException;
 
 }

@@ -19,6 +19,7 @@ import com.liferay.lcs.rest.client.LCSClusterEntryClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -33,7 +34,8 @@ public class LCSClusterEntryClientImpl implements LCSClusterEntryClient {
 	@Override
 	public LCSClusterEntry getLCSClusterEntry(long lcsClusterEntryId)
 		throws JSONWebServiceInvocationException,
-			   JSONWebServiceSerializeException {
+			   JSONWebServiceSerializeException,
+			   JSONWebServiceTransportException {
 
 		return _jsonWebServiceClient.doGetToObject(
 			LCSClusterEntry.class,

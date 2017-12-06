@@ -36,6 +36,7 @@ public interface LCSClusterNodeClient {
 		throws DuplicateLCSClusterNodeNameException,
 			   JSONWebServiceInvocationException,
 			   JSONWebServiceSerializeException,
+			   JSONWebServiceTransportException,
 			   NoSuchLCSSubscriptionEntryException,
 			   RequiredLCSClusterNodeNameException;
 
@@ -47,6 +48,7 @@ public interface LCSClusterNodeClient {
 	public List<LCSClusterNode> getLCSClusterEntryLCSClusterNodes(
 			long lcsClusterEntryId)
 		throws JSONWebServiceInvocationException,
-			   JSONWebServiceSerializeException;
+			   JSONWebServiceSerializeException,
+			   JSONWebServiceTransportException;
 
 }

@@ -48,6 +48,7 @@ public class LCSClusterNodeClientImpl implements LCSClusterNodeClient {
 		throws DuplicateLCSClusterNodeNameException,
 			   JSONWebServiceInvocationException,
 			   JSONWebServiceSerializeException,
+			   JSONWebServiceTransportException,
 			   NoSuchLCSSubscriptionEntryException,
 			   RequiredLCSClusterNodeNameException {
 
@@ -104,7 +105,8 @@ public class LCSClusterNodeClientImpl implements LCSClusterNodeClient {
 	public List<LCSClusterNode> getLCSClusterEntryLCSClusterNodes(
 			long lcsClusterEntryId)
 		throws JSONWebServiceInvocationException,
-			   JSONWebServiceSerializeException {
+			   JSONWebServiceSerializeException,
+			   JSONWebServiceTransportException {
 
 		List<LCSClusterNode> remoteLCSClusterNodes = null;
 
@@ -139,6 +141,7 @@ public class LCSClusterNodeClientImpl implements LCSClusterNodeClient {
 		throws DuplicateLCSClusterNodeNameException,
 			   JSONWebServiceInvocationException,
 			   JSONWebServiceSerializeException,
+			   JSONWebServiceTransportException,
 			   RequiredLCSClusterNodeNameException {
 
 		if ((lcsClusterNodeName == null) || lcsClusterNodeName.equals("")) {

@@ -16,6 +16,7 @@ package com.liferay.commerce.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.exception.CommercePaymentEngineException;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.Locale;
@@ -33,6 +34,11 @@ public interface CommercePaymentEngine {
 	public String getDescription(Locale locale);
 
 	public String getName(Locale locale);
+
+	public String getPaymentURL(
+			CommerceOrder commerceOrder, String cancelURL, String returnURL,
+			Locale locale)
+		throws CommercePaymentEngineException;
 
 	public void renderConfiguration(
 			RenderRequest renderRequest, RenderResponse renderResponse)

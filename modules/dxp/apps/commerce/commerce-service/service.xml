@@ -977,6 +977,7 @@
 		<exception>CommerceCountryThreeLettersISOCode</exception>
 		<exception>CommerceCountryTwoLettersISOCode</exception>
 		<exception>CommerceGeocoder</exception>
+		<exception>CommercePaymentEngine</exception>
 		<exception>CommercePaymentMethodEngineKey</exception>
 		<exception>CommercePaymentMethodName</exception>
 		<exception>CommercePriceListDisplayDate</exception>

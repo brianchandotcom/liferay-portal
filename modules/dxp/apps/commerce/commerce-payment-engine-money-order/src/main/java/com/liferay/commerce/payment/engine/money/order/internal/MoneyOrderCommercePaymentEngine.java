@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.payment.engine.money.order.internal;
 
+import com.liferay.commerce.exception.CommercePaymentEngineException;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommercePaymentEngine;
 import com.liferay.commerce.payment.engine.money.order.internal.configuration.MoneyOrderCommercePaymentEngineGroupServiceConfiguration;
 import com.liferay.commerce.payment.engine.money.order.internal.constants.MoneyOrderCommercePaymentEngineConstants;
@@ -66,6 +68,15 @@ public class MoneyOrderCommercePaymentEngine implements CommercePaymentEngine {
 		ResourceBundle resourceBundle = _getResourceBundle(locale);
 
 		return LanguageUtil.get(resourceBundle, "money-order");
+	}
+
+	@Override
+	public String getPaymentURL(
+			CommerceOrder commerceOrder, String cancelURL, String returnURL,
+			Locale locale)
+		throws CommercePaymentEngineException {
+
+		return null;
 	}
 
 	@Override

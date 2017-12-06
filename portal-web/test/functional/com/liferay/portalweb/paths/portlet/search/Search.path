@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>SEARCH_PORTLET_OPTIONS_WRENCH</td>
-	<td>//div[contains(@class,'portlet-options')]/a[@title='Options']</td>
+	<td>//div[contains(@class,'portlet-options')]/a[contains(@id,'_SearchPortlet') and @title='Options']</td>
 	<td></td>
 </tr>
 <!--The title attribute for the search comment changes depending on language.-->

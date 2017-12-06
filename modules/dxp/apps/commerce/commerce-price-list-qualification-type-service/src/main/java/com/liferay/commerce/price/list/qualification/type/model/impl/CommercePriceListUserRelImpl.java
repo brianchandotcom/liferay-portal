@@ -30,6 +30,7 @@ public class CommercePriceListUserRelImpl
 	public CommercePriceListUserRelImpl() {
 	}
 
+	@Override
 	public CommercePriceListQualificationTypeRel
 			getCommercePriceListQualificationTypeRel()
 		throws PortalException {

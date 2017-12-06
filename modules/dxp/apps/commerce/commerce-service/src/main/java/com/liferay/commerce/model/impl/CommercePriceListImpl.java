@@ -28,6 +28,7 @@ public class CommercePriceListImpl extends CommercePriceListBaseImpl {
 	public CommercePriceListImpl() {
 	}
 
+	@Override
 	public CommercePriceListQualificationTypeRel
 		fetchCommercePriceListQualificationTypeRel(String key) {
 

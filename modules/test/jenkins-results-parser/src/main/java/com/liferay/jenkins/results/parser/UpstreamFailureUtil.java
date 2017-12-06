@@ -66,6 +66,10 @@ public class UpstreamFailureUtil {
 		return upstreamFailures;
 	}
 
+	public static JSONObject getUpstreamJobFailuresJSONObject() {
+		return upstreamFailuresJobJSONObject;
+	}
+
 	public static String getUpstreamJobFailuresSHA() {
 		try {
 			return upstreamFailuresJobJSONObject.getString("SHA");

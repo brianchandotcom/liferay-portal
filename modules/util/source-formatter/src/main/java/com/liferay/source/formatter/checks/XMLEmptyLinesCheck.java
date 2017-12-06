@@ -57,7 +57,8 @@ public class XMLEmptyLinesCheck extends EmptyLinesCheck {
 			return content;
 		}
 
-		if (fileName.endsWith("-log4j.xml") ||
+		if (fileName.endsWith("-log4j-ext.xml") ||
+			fileName.endsWith("-log4j.xml") ||
 			fileName.endsWith("-logback.xml") ||
 			fileName.endsWith("/ivy.xml") ||
 			fileName.endsWith("/struts-config.xml") ||

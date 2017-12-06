@@ -212,7 +212,7 @@
 		<execute macro="DMPortlet#viewDefaultConfigurationDisplaySettingsPG" />
 	</command>
 
-	<command name="AssertFileSizeValidation">
+	<command name="AssertFileSizeValidation" priority="4">
 		<description message="This is a use case for LPS-50760." />
 
 		<property name="test.name.skip.portal.instance" value="DocumentsadministrationUsecase#AssertFileSizeValidation" />

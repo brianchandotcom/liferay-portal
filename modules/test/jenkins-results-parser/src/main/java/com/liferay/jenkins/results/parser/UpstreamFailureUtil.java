@@ -182,6 +182,9 @@ public class UpstreamFailureUtil {
 
 		if (fileContent != null) {
 			_upstreamFailuresJobJSONObject = new JSONObject(fileContent);
+
+			System.out.println(
+				"Using upstream failures at: " + getUpstreamJobFailuresSHA());
 		}
 	}
 
@@ -197,6 +200,10 @@ public class UpstreamFailureUtil {
 
 				_upstreamFailuresJobJSONObject =
 					JenkinsResultsParserUtil.toJSONObject(url);
+
+				System.out.println(
+					"Using upstream failures at: " +
+						getUpstreamJobFailuresSHA());
 			}
 		}
 		catch (IOException ioe) {

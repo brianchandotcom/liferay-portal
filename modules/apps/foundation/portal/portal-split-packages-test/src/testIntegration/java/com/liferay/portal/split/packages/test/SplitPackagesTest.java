@@ -90,11 +90,12 @@ public class SplitPackagesTest {
 		Map<ExportPackage, Set<String>> allowedSplitPackageNames =
 			new HashMap<>();
 
-		for (String line : StringUtil.splitLines(
-				StringUtil.read(
-					SplitPackagesTest.class.getResourceAsStream(
-						"dependencies/allowed_split_packages.txt")))) {
+		String[] lines = StringUtil.splitLines(
+			StringUtil.read(
+				SplitPackagesTest.class.getResourceAsStream(
+					"dependencies/allowed_split_packages.txt")));
 
+		for (String line : lines) {
 			String[] lineParts = StringUtil.split(line, StringPool.SEMICOLON);
 
 			allowedSplitPackageNames.put(

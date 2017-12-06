@@ -1010,9 +1010,10 @@ public class DataFactory {
 
 		outputDir.mkdirs();
 
-		for (String csvFileName : StringUtil.split(
-				properties.getProperty("sample.sql.output.csv.file.names"))) {
+		String[] csvFileNames = StringUtil.split(
+			properties.getProperty("sample.sql.output.csv.file.names"));
 
+		for (String csvFileName : csvFileNames) {
 			_csvWriters.put(
 				csvFileName,
 				new UnsyncBufferedWriter(

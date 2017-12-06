@@ -45,7 +45,9 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Eudaldo Alonso
  * @author Alexander Chow
+ * @deprecated As of 1.2.0, with no direct replacement
  */
+@Deprecated
 public class BookmarksFolderAssetRenderer
 	extends BaseJSPAssetRenderer<BookmarksFolder> implements TrashRenderer {
 

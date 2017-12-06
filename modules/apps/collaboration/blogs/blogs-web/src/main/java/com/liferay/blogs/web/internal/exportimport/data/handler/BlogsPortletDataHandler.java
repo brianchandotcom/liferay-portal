@@ -19,7 +19,6 @@ import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.service.BlogsStatsUserLocalService;
-import com.liferay.blogs.service.permission.BlogsPermission;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
@@ -116,7 +115,7 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 			return getExportDataRootElementString(rootElement);
 		}
 
-		portletDataContext.addPortletPermissions(BlogsPermission.RESOURCE_NAME);
+		portletDataContext.addPortletPermissions(BlogsConstants.RESOURCE_NAME);
 
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
@@ -141,7 +140,7 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		portletDataContext.importPortletPermissions(
-			BlogsPermission.RESOURCE_NAME);
+			BlogsConstants.RESOURCE_NAME);
 
 		Element entriesElement = portletDataContext.getImportDataGroupElement(
 			BlogsEntry.class);

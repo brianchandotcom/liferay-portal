@@ -46,8 +46,9 @@ public class CPSearchResultsConfigurationAction
 	extends DefaultConfigurationAction {
 
 	@Override
-	public String getJspPath(HttpServletRequest request) {
-		CPRequestHelper cpRequestHelper = new CPRequestHelper(request);
+	public String getJspPath(HttpServletRequest httpServletRequest) {
+		CPRequestHelper cpRequestHelper = new CPRequestHelper(
+			httpServletRequest);
 
 		RenderRequest renderRequest = cpRequestHelper.getRenderRequest();
 
@@ -57,9 +58,10 @@ public class CPSearchResultsConfigurationAction
 		try {
 			CPSearchResultsDisplayContext cpSearchResultsDisplayContext =
 				new CPSearchResultsDisplayContext(
-					_dlAppService, request, portletSharedSearchResponse);
+					_dlAppService, httpServletRequest,
+					portletSharedSearchResponse);
 
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, cpSearchResultsDisplayContext);
 		}
 		catch (Exception e) {

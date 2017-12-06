@@ -117,7 +117,7 @@ public class QuantityInputTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		request.setAttribute(
 			"liferay-commerce:quantity-input:allowedCartQuantity",
 			_allowedCartQuantity);

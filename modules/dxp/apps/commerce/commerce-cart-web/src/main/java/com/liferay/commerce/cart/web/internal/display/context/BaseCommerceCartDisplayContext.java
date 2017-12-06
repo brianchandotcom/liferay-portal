@@ -227,9 +227,11 @@ public abstract class BaseCommerceCartDisplayContext<T> {
 	}
 
 	protected String getDisplayStyle(
-		HttpServletRequest request, PortalPreferences portalPreferences) {
+		HttpServletRequest httpServletRequest,
+		PortalPreferences portalPreferences) {
 
-		String displayStyle = ParamUtil.getString(request, "displayStyle");
+		String displayStyle = ParamUtil.getString(
+			httpServletRequest, "displayStyle");
 
 		if (Validator.isNull(displayStyle)) {
 			displayStyle = portalPreferences.getValue(
@@ -239,7 +241,7 @@ public abstract class BaseCommerceCartDisplayContext<T> {
 			portalPreferences.setValue(
 				_portalPreferenceNamespace, "display-style", displayStyle);
 
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 		}
 

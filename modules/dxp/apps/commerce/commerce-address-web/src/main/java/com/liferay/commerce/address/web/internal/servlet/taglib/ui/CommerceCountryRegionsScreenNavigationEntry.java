@@ -90,13 +90,17 @@ public class CommerceCountryRegionsScreenNavigationEntry
 	}
 
 	@Override
-	public void render(HttpServletRequest request, HttpServletResponse response)
+	public void render(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		RenderRequest renderRequest = (RenderRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-		RenderResponse renderResponse = (RenderResponse)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
+		RenderRequest renderRequest =
+			(RenderRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+		RenderResponse renderResponse =
+			(RenderResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		CommerceRegionsDisplayContext commerceRegionsDisplayContext =
 			new CommerceRegionsDisplayContext(
@@ -107,7 +111,8 @@ public class CommerceCountryRegionsScreenNavigationEntry
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceRegionsDisplayContext);
 
 		_jspRenderer.renderJSP(
-			_servletContext, request, response, "/country/regions.jsp");
+			_servletContext, httpServletRequest, httpServletResponse,
+			"/country/regions.jsp");
 	}
 
 	@Reference

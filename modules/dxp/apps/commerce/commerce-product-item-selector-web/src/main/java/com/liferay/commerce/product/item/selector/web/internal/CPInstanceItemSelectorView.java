@@ -88,12 +88,13 @@ public class CPInstanceItemSelectorView
 
 	@Override
 	public void renderHTML(
-			ServletRequest request, ServletResponse response,
+			ServletRequest servletRequest, ServletResponse servletResponse,
 			CPInstanceItemSelectorCriterion cpInstanceItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		HttpServletRequest httpServletRequest = (HttpServletRequest)request;
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)servletRequest;
 
 		CPInstanceItemSelectorViewDisplayContext
 			cpInstanceItemSelectorViewDisplayContext =
@@ -101,7 +102,7 @@ public class CPInstanceItemSelectorView
 					httpServletRequest, portletURL, itemSelectedEventName,
 					_cpInstanceService);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			cpInstanceItemSelectorViewDisplayContext);
 
@@ -110,7 +111,7 @@ public class CPInstanceItemSelectorView
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher("/instance_item_selector.jsp");
 
-		requestDispatcher.include(request, response);
+		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
 	private static final List<ItemSelectorReturnType>

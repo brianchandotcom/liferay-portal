@@ -88,13 +88,14 @@ public class CommercePriceListItemSelectorView
 
 	@Override
 	public void renderHTML(
-			ServletRequest request, ServletResponse response,
+			ServletRequest servletRequest, ServletResponse servletResponse,
 			CommercePriceListItemSelectorCriterion
 				commercePriceListItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		HttpServletRequest httpServletRequest = (HttpServletRequest)request;
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)servletRequest;
 
 		CommercePriceListItemSelectorViewDisplayContext
 			commercePriceListItemSelectorViewDisplayContext =
@@ -102,7 +103,7 @@ public class CommercePriceListItemSelectorView
 					_commercePriceListService, httpServletRequest, portletURL,
 					itemSelectedEventName);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			commercePriceListItemSelectorViewDisplayContext);
 
@@ -112,7 +113,7 @@ public class CommercePriceListItemSelectorView
 			servletContext.getRequestDispatcher(
 				"/price_list_item_selector.jsp");
 
-		requestDispatcher.include(request, response);
+		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
 	private static final List<ItemSelectorReturnType>

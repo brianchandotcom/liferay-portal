@@ -43,14 +43,14 @@ public class CPCategoryContentConfigurationAction
 	extends DefaultConfigurationAction {
 
 	@Override
-	public String getJspPath(HttpServletRequest request) {
+	public String getJspPath(HttpServletRequest httpServletRequest) {
 		try {
 			CPCategoryContentDisplayContext cpCategoryContentDisplayContext =
 				new CPCategoryContentDisplayContext(
-					request, _assetCategoryService,
+					httpServletRequest, _assetCategoryService,
 					_cpAttachmentFileEntryService, _portal);
 
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				cpCategoryContentDisplayContext);
 		}

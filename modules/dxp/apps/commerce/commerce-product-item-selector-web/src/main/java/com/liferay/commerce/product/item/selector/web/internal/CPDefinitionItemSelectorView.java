@@ -90,17 +90,19 @@ public class CPDefinitionItemSelectorView
 
 	@Override
 	public void renderHTML(
-			ServletRequest request, ServletResponse response,
+			ServletRequest servletRequest, ServletResponse servletResponse,
 			CPDefinitionItemSelectorCriterion cpDefinitionItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		HttpServletRequest httpServletRequest = (HttpServletRequest)request;
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)servletRequest;
 
 		long cpDefinitionId = ParamUtil.getLong(
 			httpServletRequest, "cpDefinitionId");
 
-		request.setAttribute("cpDefinitionId", String.valueOf(cpDefinitionId));
+		httpServletRequest.setAttribute(
+			"cpDefinitionId", String.valueOf(cpDefinitionId));
 
 		CPDefinitionItemSelectorViewDisplayContext
 			cpDefinitionItemSelectorViewDisplayContext =
@@ -108,7 +110,7 @@ public class CPDefinitionItemSelectorView
 					httpServletRequest, portletURL, itemSelectedEventName,
 					_cpDefinitionService, _cpTypeServicesTracker);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			cpDefinitionItemSelectorViewDisplayContext);
 
@@ -118,7 +120,7 @@ public class CPDefinitionItemSelectorView
 			servletContext.getRequestDispatcher(
 				"/definition_item_selector.jsp");
 
-		requestDispatcher.include(request, response);
+		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
 	private static final List<ItemSelectorReturnType>

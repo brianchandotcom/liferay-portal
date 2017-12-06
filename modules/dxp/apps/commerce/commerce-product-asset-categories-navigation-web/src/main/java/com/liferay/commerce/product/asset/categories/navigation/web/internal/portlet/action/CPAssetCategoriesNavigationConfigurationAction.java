@@ -45,16 +45,16 @@ public class CPAssetCategoriesNavigationConfigurationAction
 	extends DefaultConfigurationAction {
 
 	@Override
-	public String getJspPath(HttpServletRequest request) {
+	public String getJspPath(HttpServletRequest httpServletRequest) {
 		try {
 			CPAssetCategoriesNavigationDisplayContext
 				cpAssetCategoryNavigationDisplayContext =
 					new CPAssetCategoriesNavigationDisplayContext(
-						request, _assetCategoryService, _assetVocabularyService,
-						_cpAttachmentFileEntryService,
+						httpServletRequest, _assetCategoryService,
+						_assetVocabularyService, _cpAttachmentFileEntryService,
 						_cpFriendlyURLEntryLocalService, _portal);
 
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				cpAssetCategoryNavigationDisplayContext);
 		}

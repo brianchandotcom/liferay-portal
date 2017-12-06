@@ -86,12 +86,12 @@ public class CPDefinitionOptionValueRelsMVCResourceCommand
 			jsonArray.put(jsonObject);
 		}
 
-		HttpServletResponse response = _portal.getHttpServletResponse(
-			resourceResponse);
+		HttpServletResponse httpServletResponse =
+			_portal.getHttpServletResponse(resourceResponse);
 
-		response.setContentType(ContentTypes.APPLICATION_JSON);
+		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
-		ServletResponseUtil.write(response, jsonArray.toString());
+		ServletResponseUtil.write(httpServletResponse, jsonArray.toString());
 	}
 
 	@Reference

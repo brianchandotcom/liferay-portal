@@ -37,7 +37,8 @@ public class CommerceCartTemplateContextContributor
 
 	@Override
 	public void prepare(
-		Map<String, Object> contextObjects, HttpServletRequest request) {
+		Map<String, Object> contextObjects,
+		HttpServletRequest httpServletRequest) {
 
 		contextObjects.put("commerceCartHelper", _commerceCartHelper);
 	}

@@ -59,10 +59,10 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 			Map<String, Object> requestContext)
 		throws PortalException {
 
-		HttpServletRequest request = (HttpServletRequest)requestContext.get(
-			"request");
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)requestContext.get("request");
 
-		Locale locale = _portal.getLocale(request);
+		Locale locale = _portal.getLocale(httpServletRequest);
 
 		String languageId = LanguageUtil.getLanguageId(locale);
 
@@ -104,7 +104,7 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 		actualParams.put("p_p_lifecycle", new String[] {"0"});
 		actualParams.put("p_p_mode", new String[] {"view"});
 
-		request.setAttribute(CPWebKeys.CP_DEFINITION, cpDefinition);
+		httpServletRequest.setAttribute(CPWebKeys.CP_DEFINITION, cpDefinition);
 
 		String queryString = _http.parameterMapToString(actualParams, false);
 
@@ -117,16 +117,18 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 				layoutActualURL + StringPool.QUESTION + queryString;
 		}
 
-		_portal.addPageSubtitle(cpDefinition.getTitle(languageId), request);
+		_portal.addPageSubtitle(
+			cpDefinition.getTitle(languageId), httpServletRequest);
 		_portal.addPageDescription(
-			cpDefinition.getShortDescription(languageId), request);
+			cpDefinition.getShortDescription(languageId), httpServletRequest);
 
 		List<AssetTag> assetTags = _assetTagLocalService.getTags(
 			CPDefinition.class.getName(), cpDefinition.getPrimaryKey());
 
 		if (!assetTags.isEmpty()) {
 			_portal.addPageKeywords(
-				ListUtil.toString(assetTags, AssetTag.NAME_ACCESSOR), request);
+				ListUtil.toString(assetTags, AssetTag.NAME_ACCESSOR),
+				httpServletRequest);
 		}
 
 		return layoutActualURL;
@@ -139,10 +141,10 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 			Map<String, Object> requestContext)
 		throws PortalException {
 
-		HttpServletRequest request = (HttpServletRequest)requestContext.get(
-			"request");
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)requestContext.get("request");
 
-		Locale locale = _portal.getLocale(request);
+		Locale locale = _portal.getLocale(httpServletRequest);
 
 		String languageId = LanguageUtil.getLanguageId(locale);
 

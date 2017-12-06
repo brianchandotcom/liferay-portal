@@ -41,15 +41,15 @@ import org.osgi.service.component.annotations.Reference;
 public class CPContentConfigurationAction extends DefaultConfigurationAction {
 
 	@Override
-	public String getJspPath(HttpServletRequest request) {
+	public String getJspPath(HttpServletRequest httpServletRequest) {
 		try {
 			CPContentConfigurationDisplayContext
 				cpContentConfigurationDisplayContext =
 					new CPContentConfigurationDisplayContext(
 						_cpContentConfigurationHelper, _cpTypeServicesTracker,
-						request);
+						httpServletRequest);
 
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				cpContentConfigurationDisplayContext);
 		}

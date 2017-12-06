@@ -67,11 +67,14 @@ public class CommerceCountryDetailsScreenNavigationEntry
 	}
 
 	@Override
-	public void render(HttpServletRequest request, HttpServletResponse response)
+	public void render(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
 		_jspRenderer.renderJSP(
-			_servletContext, request, response, "/country/details.jsp");
+			_servletContext, httpServletRequest, httpServletResponse,
+			"/country/details.jsp");
 	}
 
 	@Reference

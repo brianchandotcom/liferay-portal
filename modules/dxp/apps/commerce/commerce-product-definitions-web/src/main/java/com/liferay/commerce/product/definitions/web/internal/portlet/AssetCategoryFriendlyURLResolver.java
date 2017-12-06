@@ -59,10 +59,10 @@ public class AssetCategoryFriendlyURLResolver implements FriendlyURLResolver {
 			Map<String, Object> requestContext)
 		throws PortalException {
 
-		HttpServletRequest request = (HttpServletRequest)requestContext.get(
-			"request");
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)requestContext.get("request");
 
-		Locale locale = _portal.getLocale(request);
+		Locale locale = _portal.getLocale(httpServletRequest);
 
 		String languageId = LanguageUtil.getLanguageId(locale);
 
@@ -105,7 +105,7 @@ public class AssetCategoryFriendlyURLResolver implements FriendlyURLResolver {
 		actualParams.put("p_p_lifecycle", new String[] {"0"});
 		actualParams.put("p_p_mode", new String[] {"view"});
 
-		request.setAttribute(WebKeys.ASSET_CATEGORY, assetCategory);
+		httpServletRequest.setAttribute(WebKeys.ASSET_CATEGORY, assetCategory);
 
 		String queryString = _http.parameterMapToString(actualParams, false);
 
@@ -118,16 +118,18 @@ public class AssetCategoryFriendlyURLResolver implements FriendlyURLResolver {
 				layoutActualURL + StringPool.QUESTION + queryString;
 		}
 
-		_portal.addPageSubtitle(assetCategory.getTitle(languageId), request);
+		_portal.addPageSubtitle(
+			assetCategory.getTitle(languageId), httpServletRequest);
 		_portal.addPageDescription(
-			assetCategory.getDescription(languageId), request);
+			assetCategory.getDescription(languageId), httpServletRequest);
 
 		List<AssetTag> assetTags = _assetTagLocalService.getTags(
 			AssetCategory.class.getName(), assetCategory.getPrimaryKey());
 
 		if (!assetTags.isEmpty()) {
 			_portal.addPageKeywords(
-				ListUtil.toString(assetTags, AssetTag.NAME_ACCESSOR), request);
+				ListUtil.toString(assetTags, AssetTag.NAME_ACCESSOR),
+				httpServletRequest);
 		}
 
 		return layoutActualURL;
@@ -140,10 +142,10 @@ public class AssetCategoryFriendlyURLResolver implements FriendlyURLResolver {
 			Map<String, Object> requestContext)
 		throws PortalException {
 
-		HttpServletRequest request = (HttpServletRequest)requestContext.get(
-			"request");
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)requestContext.get("request");
 
-		Locale locale = _portal.getLocale(request);
+		Locale locale = _portal.getLocale(httpServletRequest);
 
 		String languageId = LanguageUtil.getLanguageId(locale);
 

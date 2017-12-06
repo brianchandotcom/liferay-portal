@@ -66,7 +66,8 @@ public class CPDefinitionVirtualSettingDetailsFormNavigatorEntry
 
 	@Override
 	public void include(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
 		RequestDispatcher requestDispatcher =
@@ -74,7 +75,7 @@ public class CPDefinitionVirtualSettingDetailsFormNavigatorEntry
 				getJspPath());
 
 		try {
-			requestDispatcher.include(request, response);
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (ServletException se) {
 			throw new IOException("Unable to include " + getJspPath(), se);

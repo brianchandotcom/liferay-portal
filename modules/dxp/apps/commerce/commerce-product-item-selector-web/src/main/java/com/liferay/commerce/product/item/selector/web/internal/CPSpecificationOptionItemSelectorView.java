@@ -88,13 +88,14 @@ public class CPSpecificationOptionItemSelectorView
 
 	@Override
 	public void renderHTML(
-			ServletRequest request, ServletResponse response,
+			ServletRequest servletRequest, ServletResponse servletResponse,
 			CPSpecificationOptionItemSelectorCriterion
 				cpSpecificationOptionItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		HttpServletRequest httpServletRequest = (HttpServletRequest)request;
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)servletRequest;
 
 		CPSpecificationOptionItemSelectorViewDisplayContext
 			cpSpecificationOptionItemSelectorViewDisplayContext =
@@ -102,7 +103,7 @@ public class CPSpecificationOptionItemSelectorView
 					httpServletRequest, portletURL, itemSelectedEventName,
 					_cpSpecificationOptionService);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			cpSpecificationOptionItemSelectorViewDisplayContext);
 
@@ -112,7 +113,7 @@ public class CPSpecificationOptionItemSelectorView
 			servletContext.getRequestDispatcher(
 				"/specification_option_item_selector.jsp");
 
-		requestDispatcher.include(request, response);
+		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
 	private static final List<ItemSelectorReturnType>

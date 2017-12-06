@@ -51,27 +51,27 @@ public class CommerceCartContentTotalConfigurationAction
 	extends DefaultConfigurationAction {
 
 	@Override
-	public String getJspPath(HttpServletRequest request) {
+	public String getJspPath(HttpServletRequest httpServletRequest) {
 		return "/cart_total/configuration.jsp";
 	}
 
 	@Override
 	public void include(
-			PortletConfig portletConfig, HttpServletRequest request,
-			HttpServletResponse response)
+			PortletConfig portletConfig, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		try {
 			CommerceCartContentTotalDisplayContext
 				commerceCartContentTotalDisplayContext =
 					new CommerceCartContentTotalDisplayContext(
-						request, response, _commerceCartHelper,
-						_commerceCartItemService,
+						httpServletRequest, httpServletResponse,
+						_commerceCartHelper, _commerceCartItemService,
 						_commerceCartValidatorRegistry,
 						_commercePriceCalculator, _commercePriceFormatter,
 						_cpDefinitionHelper, _cpInstanceHelper, _portal);
 
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				commerceCartContentTotalDisplayContext);
 		}
@@ -79,7 +79,7 @@ public class CommerceCartContentTotalConfigurationAction
 			_log.error(e, e);
 		}
 
-		super.include(portletConfig, request, response);
+		super.include(portletConfig, httpServletRequest, httpServletResponse);
 	}
 
 	@Override

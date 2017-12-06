@@ -88,12 +88,13 @@ public class CPOptionItemSelectorView
 
 	@Override
 	public void renderHTML(
-			ServletRequest request, ServletResponse response,
+			ServletRequest servletRequest, ServletResponse servletResponse,
 			CPOptionItemSelectorCriterion cpOptionItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		HttpServletRequest httpServletRequest = (HttpServletRequest)request;
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)servletRequest;
 
 		CPOptionItemSelectorViewDisplayContext
 			cpOptionItemSelectorViewDisplayContext =
@@ -101,7 +102,7 @@ public class CPOptionItemSelectorView
 					httpServletRequest, portletURL, itemSelectedEventName,
 					_cpOptionService);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			cpOptionItemSelectorViewDisplayContext);
 
@@ -110,7 +111,7 @@ public class CPOptionItemSelectorView
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher("/option_item_selector.jsp");
 
-		requestDispatcher.include(request, response);
+		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
 	private static final List<ItemSelectorReturnType>

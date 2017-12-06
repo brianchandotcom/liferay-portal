@@ -105,33 +105,33 @@ List<CommercePriceListQualificationTypeRel> commercePriceListQualificationTypeRe
 	$('#<portlet:namespace />selectCommercePriceListQualificationType').on(
 		'click',
 		function(event) {
-		event.preventDefault();
+			event.preventDefault();
 
-		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-			{
-				eventName: 'qualificationTypesSelectItem',
-				on: {
-					selectedItemChange: function(event) {
-						var selectedItems = event.newVal;
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+				{
+					eventName: 'qualificationTypesSelectItem',
+					on: {
+						selectedItemChange: function(event) {
+							var selectedItems = event.newVal;
 
-						if (selectedItems) {
-							var A = AUI();
+							if (selectedItems) {
+								var A = AUI();
 
-							A.Array.each(
-								selectedItems,
-								function(item, index, selectedItems) {
-									<portlet:namespace />addCommercePriceListQualificationTypeRel(item);
-								}
-							);
+								A.Array.each(
+									selectedItems,
+									function(item, index, selectedItems) {
+										<portlet:namespace />addCommercePriceListQualificationTypeRel(item);
+									}
+								);
+							}
 						}
-					}
-				},
-				title: '<liferay-ui:message arguments="qualification-type" key="select-x" />',
-				url: '<%= commercePriceListDisplayContext.getItemSelectorUrl() %>'
-			}
-		);
+					},
+					title: '<liferay-ui:message arguments="qualification-type" key="select-x" />',
+					url: '<%= commercePriceListDisplayContext.getItemSelectorUrl() %>'
+				}
+			);
 
-		itemSelectorDialog.open();
+			itemSelectorDialog.open();
 		}
 	);
 </aui:script>

@@ -11,6 +11,10 @@
 		margin-top: 81px;
 		padding: 0;
 		.commerce-starter {
+			.col-md-3 > img {
+				width:100%;
+			}
+
 			.col-md-9>a,
 			.col-md-9>a:hover,
 			.col-md-9>a:focus {

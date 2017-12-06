@@ -100,6 +100,62 @@ public class CommerceStarterRegistryImpl implements CommerceStarterRegistry {
 		return getCommerceStarters(false, httpServletRequest);
 	}
 
+	@Override
+	public CommerceStarter getNextCommerceStarter(
+		String commerceStarterKey, boolean active,
+		HttpServletRequest httpServletRequest) {
+
+		if (Validator.isNull(commerceStarterKey)) {
+			return null;
+		}
+
+		List<CommerceStarter> commerceStarters = getCommerceStarters(
+			active, httpServletRequest);
+
+		CommerceStarter commerceStarter = getCommerceStarter(
+			commerceStarterKey);
+
+		int commerceStarterIndex = commerceStarters.indexOf(commerceStarter);
+
+		if (commerceStarterIndex >= 0) {
+			if (commerceStarterIndex >= (commerceStarters.size() - 1)) {
+				return commerceStarters.get(0);
+			}
+
+			return commerceStarters.get(commerceStarterIndex + 1);
+		}
+
+		return null;
+	}
+
+	@Override
+	public CommerceStarter getPreviousCommerceStarter(
+		String commerceStarterKey, boolean active,
+		HttpServletRequest httpServletRequest) {
+
+		if (Validator.isNull(commerceStarterKey)) {
+			return null;
+		}
+
+		List<CommerceStarter> commerceStarters = getCommerceStarters(
+			active, httpServletRequest);
+
+		CommerceStarter commerceStarter = getCommerceStarter(
+			commerceStarterKey);
+
+		int commerceStarterIndex = commerceStarters.indexOf(commerceStarter);
+
+		if (commerceStarterIndex > 0) {
+			return commerceStarters.get(commerceStarterIndex - 1);
+		}
+
+		if (commerceStarterIndex == 0) {
+			return commerceStarters.get(commerceStarters.size() - 1);
+		}
+
+		return null;
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(

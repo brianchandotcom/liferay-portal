@@ -31,4 +31,12 @@ public interface CommerceStarterRegistry {
 	public List<CommerceStarter> getCommerceStarters(
 		HttpServletRequest httpServletRequest);
 
+	public CommerceStarter getNextCommerceStarter(
+		String commerceStarterKey, boolean active,
+		HttpServletRequest httpServletRequest);
+
+	public CommerceStarter getPreviousCommerceStarter(
+		String commerceStarterKey, boolean active,
+		HttpServletRequest httpServletRequest);
+
 }

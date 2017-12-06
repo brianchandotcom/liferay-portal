@@ -59,7 +59,7 @@ public class PermissionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(PermissionServiceUtil.class,
-					"checkPermission", _checkPermissionParameterTypes1);
+					"checkPermission", _checkPermissionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					name, primKey);
@@ -87,7 +87,7 @@ public class PermissionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(PermissionServiceUtil.class,
-					"checkPermission", _checkPermissionParameterTypes2);
+					"checkPermission", _checkPermissionParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					name, primKey);
@@ -111,10 +111,10 @@ public class PermissionServiceHttp {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(PermissionServiceHttp.class);
-	private static final Class<?>[] _checkPermissionParameterTypes1 = new Class[] {
+	private static final Class<?>[] _checkPermissionParameterTypes0 = new Class[] {
 			long.class, java.lang.String.class, long.class
 		};
-	private static final Class<?>[] _checkPermissionParameterTypes2 = new Class[] {
+	private static final Class<?>[] _checkPermissionParameterTypes1 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class
 		};
 }

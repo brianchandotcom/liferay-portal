@@ -16,10 +16,9 @@ package com.liferay.bookmarks.social.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
-import com.liferay.bookmarks.service.BookmarksEntryServiceUtil;
+import com.liferay.bookmarks.service.BookmarksEntryLocalService;
+import com.liferay.bookmarks.service.BookmarksEntryService;
 import com.liferay.bookmarks.social.BookmarksActivityKeys;
-import com.liferay.bookmarks.social.BookmarksEntryActivityInterpreter;
 import com.liferay.bookmarks.util.test.BookmarksTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -28,6 +27,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.service.test.ServiceTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.social.activity.test.util.BaseSocialActivityInterpreterTestCase;
 import com.liferay.social.kernel.model.SocialActivityConstants;
@@ -68,7 +68,7 @@ public class BookmarksEntryActivityInterpreterTest
 
 	@Override
 	protected SocialActivityInterpreter getActivityInterpreter() {
-		return new BookmarksEntryActivityInterpreter();
+		return _socialActivityInterpreter;
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class BookmarksEntryActivityInterpreterTest
 
 	@Override
 	protected void moveModelsToTrash() throws Exception {
-		BookmarksEntryLocalServiceUtil.moveEntryToTrash(
+		_bookmarksEntryLocalService.moveEntryToTrash(
 			TestPropsValues.getUserId(), _entry.getEntryId());
 	}
 
@@ -92,7 +92,7 @@ public class BookmarksEntryActivityInterpreterTest
 
 		serviceContext.setCommand(Constants.UPDATE);
 
-		BookmarksEntryServiceUtil.updateEntry(
+		_bookmarksEntryService.updateEntry(
 			_entry.getEntryId(), serviceContext.getScopeGroupId(),
 			_entry.getFolderId(), _entry.getName(), _entry.getUrl(),
 			_entry.getUrl(), serviceContext);
@@ -100,9 +100,20 @@ public class BookmarksEntryActivityInterpreterTest
 
 	@Override
 	protected void restoreModelsFromTrash() throws Exception {
-		BookmarksEntryLocalServiceUtil.restoreEntryFromTrash(
+		_bookmarksEntryLocalService.restoreEntryFromTrash(
 			TestPropsValues.getUserId(), _entry.getEntryId());
 	}
+
+	@Inject
+	private static BookmarksEntryLocalService _bookmarksEntryLocalService;
+
+	@Inject
+	private static BookmarksEntryService _bookmarksEntryService;
+
+	@Inject(
+		filter = "model.class.name=com.liferay.bookmarks.model.BookmarksEntry"
+	)
+	private static SocialActivityInterpreter _socialActivityInterpreter;
 
 	private BookmarksEntry _entry;
 

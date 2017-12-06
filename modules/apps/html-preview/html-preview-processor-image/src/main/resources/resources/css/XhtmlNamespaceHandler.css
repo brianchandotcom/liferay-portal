@@ -1,0 +1,208 @@
+html, address,
+blockquote,
+body, dd, div,
+dl, dt, fieldset, form,
+frame, frameset,
+h1, h2, h3, h4,
+h5, h6, noframes,
+ol, p, ul, center,
+dir, hr, menu, pre, object { display: block }
+li { display: list-item }
+head, script { display: none }
+body { margin: 8px }
+h1 { font-size: 2em; margin: .67em 0 }
+h2 { font-size: 1.5em; margin: .75em 0 }
+h3 { font-size: 1.17em; margin: .83em 0 }
+h4, p,
+blockquote, ul,
+fieldset,
+ol, dl, dir,
+menu { margin: 1.12em 0 }
+h5 { font-size: .83em; margin: 1.5em 0 }
+h6 { font-size: .75em; margin: 1.67em 0 }
+h1, h2, h3, h4,
+h5, h6, b,
+strong { font-weight: bold; }
+blockquote { margin-left: 40px; margin-right: 40px }
+i, cite, em,
+var, address { font-style: italic }
+pre, tt, code,
+kbd, samp { font-family: monospace }
+pre { white-space: pre }
+button, textarea,
+input, select { display: inline-block; font-family: sans-serif; font-size: 10pt; }
+
+/* ---------- input[type=hidden] { display: none } ---------- */ /* don't generate boxes for hidden inputs.*/
+big { font-size: 1.17em }
+small { font-size: .83em }
+s, strike, del { text-decoration: line-through }
+ol, ul, dir,
+menu { padding-left: 40px }
+dd { margin-left: 40px }
+ul { list-style-type: disc }
+ol { list-style-type: decimal }
+ol ul, ul ol,
+ul ul, ol ol { margin-top: 0; margin-bottom: 0 }
+u, ins { text-decoration: underline }
+br:before { content: "\A"; white-space: pre-line; }
+
+/* ---------- :before, :after { white-space: pre-line } ---------- */
+
+center { text-align: center }
+a:link { cursor: pointer }
+a:link, a:visited { text-decoration: underline }
+
+/* ---------- :focus { outline: thin dotted invert } ---------- */
+
+/*
+@media print {
+h1 { page-break-before: always }
+h1, h2, h3,
+h4, h5, h6 { page-break-after: avoid }
+ul, ol, dl { page-break-before: avoid }
+}
+*/
+
+@page {
+margin: 0.5in;
+}
+
+/* ---------- Flying saucer overrides, usually compensate for unimplemented stuff ---------- */
+
+/* don't handle all replaced things yet, besides xml should do this via entities!*/
+img {
+border-width: 1px 1px 1px 1px;
+display: inline-block;
+margin: 0px;
+padding: 0px;
+}
+
+a {
+color: #0000FF;
+}
+
+h5, h6, b, strong {
+font-weight: bold;
+}
+
+/* ---------- Match default behavior of firefox and opera ---------- */
+
+pre {
+margin: 1em 0;
+}
+
+/* ---------- Various table related rules taken from firefox's html.css ---------- */
+
+table {
+border-collapse: separate;
+border-spacing: 2px;
+display: table;
+margin-bottom: 0;
+margin-top: 0;
+text-indent: 0;
+}
+
+/*
+table[rules]:not([rules="none"]) {
+border-collapse: collapse;
+}
+*/
+
+/* ---------- caption inherits from table not table-outer ---------- */
+
+caption {
+display: table-caption;
+text-align: center;
+}
+
+table[align="center"] > caption {
+margin-left: auto;
+margin-right: auto;
+}
+
+table[align="center"] > caption[align="left"] {
+margin-right: 0;
+}
+
+table[align="center"] > caption[align="right"] {
+margin-left: 0;
+}
+
+tr {
+display: table-row;
+vertical-align: inherit;
+}
+
+col {
+display: table-column;
+}
+
+colgroup {
+display: table-column-group;
+}
+
+tbody {
+display: table-row-group;
+vertical-align: middle;
+}
+
+thead {
+display: table-header-group;
+vertical-align: middle;
+}
+
+tfoot {
+display: table-footer-group;
+vertical-align: middle;
+}
+
+/* ---------- for XHTML tables without tbody ---------- */
+
+table > tr {
+vertical-align: middle;
+}
+
+td {
+display: table-cell;
+padding: 1px;
+text-align: inherit;
+vertical-align: inherit;
+}
+
+th {
+display: table-cell;
+font-weight: bold;
+padding: 1px;
+vertical-align: inherit;
+}
+
+/* ---------- Modified version of equivalent FF definitions ---------- */
+
+sub {
+font-size: 0.83em;
+line-height: normal;
+vertical-align: sub;
+}
+
+sup {
+font-size: 0.83em;
+line-height: normal;
+vertical-align: super;
+}
+
+hr {
+border: 1px inset;
+display: block;
+margin: 0.5em auto 0.5em auto;
+}
+
+hr[size="1"] {
+border-style: solid none none none;
+border-width: 1px 0 0 0;
+}
+
+/* ---------- Quirk: give form margin for compat (b=41806) (from firefox) ---------- */
+
+form{
+margin: 0 0 1em 0;
+}

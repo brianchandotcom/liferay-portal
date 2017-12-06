@@ -1,6 +1,6 @@
 Bundle-Name: Liferay SAML Addon Keep Alive Web
 Bundle-SymbolicName: com.liferay.saml.addon.keep.alive.web
-Bundle-Version: 1.0.4
+Bundle-Version: 1.0.5
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Provide-Capability:\

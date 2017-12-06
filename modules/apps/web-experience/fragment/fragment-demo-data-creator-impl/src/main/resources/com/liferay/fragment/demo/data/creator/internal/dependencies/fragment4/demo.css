@@ -1,70 +1,79 @@
 #container a {
-    color: #FFF;
+	color: #FFF;
 }
 
 #container {
-    margin: 0 auto;
+	margin: 0 auto;
 }
 
 #container nav {
-    margin: 0;
-    background-color: #E64A19;
+	background-color: #E64A19;
+	margin: 0;
 }
 
 #container nav ul {
-    padding: 0;
-  margin: 0;
-    list-style: none;
-    position: relative;
-    }
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	position: relative;
+}
 
 #container nav ul li {
-    display:inline-block;
-    background-color: #E64A19;
-    }
+	background-color: #E64A19;
+	display: inline-block;
+}
 
 #container nav a {
-    display:block;
-    padding: 0.5em 1em;
-    color:#FFF;
-    font-size:20px;
-    line-height: 60px;
-    text-decoration:none;
+	color: #FFF;
+	display: block;
+	font-size: 20px;
+	line-height: 60px;
+	padding: 0.5em 1em;
+	text-decoration: none;
 }
 
 #container nav a:hover {
-    background-color: #000000;
+	background-color: #000000;
 }
 
-/* Hide Dropdowns by Default */
+/* ---------- Hide dropdowns by default ---------- */
+
 #container nav ul ul {
-    display: none;
-    position: absolute;
-    top: 80px; /* the height of the main nav */
-    z-index: 99999;
+	display: none;
+	position: absolute;
+	top: 80px;
+	z-index: 99999;
 }
 
-/* Display Dropdowns on Hover */
+/* ---------- Display dropdowns on hover ---------- */
+
 #container nav ul li:hover > ul {
-    display:inherit;
+	display: inherit;
 }
 
-/* Fisrt Tier Dropdown */
+/* ---------- Fisrt tier dropdown ---------- */
+
 #container nav ul ul li {
-    width:170px;
-    float:none;
-    display:list-item;
-    position: relative;
+	display: list-item;
+	float: none;
+	position: relative;
+	width: 170px;
 }
 
-/* Second, Third and more Tiers    */
+/* ---------- Second, third and more tiers ---------- */
+
 #container nav ul ul ul li {
-    position: relative;
-    top:-60px;
-    left:170px;
+	left: 170px;
+	position: relative;
+	top: -60px;
 }
 
+/* ---------- Change this in order to change the dropdown symbol ---------- */
 
-/* Change this in order to change the Dropdown symbol */
-#container li > a:after { content:  ' +'; }
-#container li > a:only-child:after { content: ''; }
+#container li > a:after {
+	content: ' +';
+}
+
+#container li > a:only-child:after {
+	content: '';
+}

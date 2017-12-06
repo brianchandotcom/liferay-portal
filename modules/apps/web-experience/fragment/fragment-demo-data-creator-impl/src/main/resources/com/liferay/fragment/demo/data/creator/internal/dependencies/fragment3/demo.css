@@ -1,35 +1,35 @@
 .fragment-jumbo-cover {
-  position: relative;
-  height: 0;
-  width: 100%;
-  padding-top: 36.25%;
-  overflow: hidden;
+	height: 0;
+	overflow: hidden;
+	padding-top: 36.25%;
+	position: relative;
+	width: 100%;
 }
 
 .fragment-jumbo-cover video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: auto;
+	height: auto;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
 }
 
 .fragment-jumbo-cover h1 {
-  position: absolute;
-  top: 1em;
-  left: 1em;
-  z-index: 1;
-  font-weight: bolder;
-  text-transform: uppercase;
-  color: white;
-  font-size: 10vmin;
+	color: white;
+	font-size: 10vmin;
+	font-weight: bolder;
+	left: 1em;
+	position: absolute;
+	text-transform: uppercase;
+	top: 1em;
+	z-index: 1;
 }
 
 .fragment-jumbo-cover h1::after {
-  content: '';
-  position: absolute;
-  top: 1.1em;
-  left: 0.05em;
-  border-bottom: solid thin white;
-  width: 3em;
+	border-bottom: solid thin white;
+	content: '';
+	left: 0.05em;
+	position: absolute;
+	top: 1.1em;
+	width: 3em;
 }

@@ -58,10 +58,10 @@ public class FragmentEntryDemoDataCreatorImpl
 
 		int index = _getNextIndex();
 
-		String name = _getFieldValue(index, "name");
-		String css = _getFieldValue(index, "css");
-		String html = _getFieldValue(index, "html");
-		String js = _getFieldValue(index, "js");
+		String name = _getFieldValue(index, "name.txt");
+		String css = _getFieldValue(index, "demo.css");
+		String html = _getFieldValue(index, "demo.html");
+		String js = _getFieldValue(index, "demo.js");
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -93,12 +93,14 @@ public class FragmentEntryDemoDataCreatorImpl
 		}
 	}
 
-	private String _getFieldValue(int index, String field) throws IOException {
+	private String _getFieldValue(int index, String fileName)
+		throws IOException {
+
 		Class<?> clazz = getClass();
 
 		String contentPath = StringBundler.concat(
 			"com/liferay/fragment/demo/data/creator/internal/dependencies",
-			"/fragment", String.valueOf(index), "/", field, ".txt");
+			"/fragment", String.valueOf(index), "/", fileName);
 
 		return StringUtil.read(clazz.getClassLoader(), contentPath, false);
 	}

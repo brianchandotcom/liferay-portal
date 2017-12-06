@@ -71,7 +71,7 @@ public class CommercePriceListOrganizationsScreenNavigationEntry
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(locale, "organizations");
+		return LanguageUtil.get(resourceBundle, "organizations");
 	}
 
 	@Override

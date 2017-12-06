@@ -144,13 +144,12 @@ public class CommercePriceListUserRelServiceSoap {
 
 	public static com.liferay.commerce.price.list.qualification.type.model.CommercePriceListUserRelSoap[] getCommercePriceListUserRels(
 		long commercePriceListQualificationTypeRelId,
-		java.lang.String className, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.price.list.qualification.type.model.CommercePriceListUserRel> orderByComparator)
+		java.lang.String className, int start, int end)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.price.list.qualification.type.model.CommercePriceListUserRel> returnValue =
 				CommercePriceListUserRelServiceUtil.getCommercePriceListUserRels(commercePriceListQualificationTypeRelId,
-					className, start, end, orderByComparator);
+					className, start, end);
 
 			return com.liferay.commerce.price.list.qualification.type.model.CommercePriceListUserRelSoap.toSoapModels(returnValue);
 		}
@@ -163,12 +162,13 @@ public class CommercePriceListUserRelServiceSoap {
 
 	public static com.liferay.commerce.price.list.qualification.type.model.CommercePriceListUserRelSoap[] getCommercePriceListUserRels(
 		long commercePriceListQualificationTypeRelId,
-		java.lang.String className, int start, int end)
+		java.lang.String className, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.price.list.qualification.type.model.CommercePriceListUserRel> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.price.list.qualification.type.model.CommercePriceListUserRel> returnValue =
 				CommercePriceListUserRelServiceUtil.getCommercePriceListUserRels(commercePriceListQualificationTypeRelId,
-					className, start, end);
+					className, start, end, orderByComparator);
 
 			return com.liferay.commerce.price.list.qualification.type.model.CommercePriceListUserRelSoap.toSoapModels(returnValue);
 		}

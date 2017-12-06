@@ -69,23 +69,6 @@ import java.util.Map;
  */
 @ProviderType
 public class CPDefinitionServiceSoap {
-	public static com.liferay.commerce.product.model.CPDefinitionSoap updateCPDefinitionCategorization(
-		long cpDefinitionId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.updateCPDefinitionCategorization(cpDefinitionId,
-					serviceContext);
-
-			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static com.liferay.commerce.product.model.CPDefinitionSoap addCPDefinition(
 		java.lang.String[] titleMapLanguageIds,
 		java.lang.String[] titleMapValues,
@@ -501,6 +484,23 @@ public class CPDefinitionServiceSoap {
 					displayDateMinute, expirationDateMonth, expirationDateDay,
 					expirationDateYear, expirationDateHour,
 					expirationDateMinute, neverExpire, serviceContext);
+
+			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionSoap updateCPDefinitionCategorization(
+		long cpDefinitionId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.updateCPDefinitionCategorization(cpDefinitionId,
+					serviceContext);
 
 			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);
 		}

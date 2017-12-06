@@ -257,6 +257,10 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public CommerceOrderItem incrementShippedQuantity(
+		long commerceOrderItemId, int shippedQuantity)
+		throws PortalException;
+
 	/**
 	* Updates the commerce order item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -269,10 +273,6 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 
 	public CommerceOrderItem updateCommerceOrderItem(long commerceOrderItemId,
 		int quantity, java.lang.String json, double price)
-		throws PortalException;
-
-	public CommerceOrderItem updateCommerceOrderItemShippedQuantity(
-		long commerceOrderItemId, int shippedQuantity)
 		throws PortalException;
 
 	public void validate(long cpDefinitionId, long cpInstanceId)

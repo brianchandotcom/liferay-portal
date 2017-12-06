@@ -322,6 +322,14 @@ public class CommerceOrderItemLocalServiceWrapper
 		return _commerceOrderItemLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommerceOrderItem incrementShippedQuantity(
+		long commerceOrderItemId, int shippedQuantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderItemLocalService.incrementShippedQuantity(commerceOrderItemId,
+			shippedQuantity);
+	}
+
 	/**
 	* Updates the commerce order item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -341,14 +349,6 @@ public class CommerceOrderItemLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderItemLocalService.updateCommerceOrderItem(commerceOrderItemId,
 			quantity, json, price);
-	}
-
-	@Override
-	public com.liferay.commerce.model.CommerceOrderItem updateCommerceOrderItemShippedQuantity(
-		long commerceOrderItemId, int shippedQuantity)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceOrderItemLocalService.updateCommerceOrderItemShippedQuantity(commerceOrderItemId,
-			shippedQuantity);
 	}
 
 	@Override

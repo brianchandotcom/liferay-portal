@@ -212,8 +212,7 @@ public class CommercePriceListUserRelServiceHttp {
 	public static java.util.List<com.liferay.commerce.price.list.qualification.type.model.CommercePriceListUserRel> getCommercePriceListUserRels(
 		HttpPrincipal httpPrincipal,
 		long commercePriceListQualificationTypeRelId,
-		java.lang.String className, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.price.list.qualification.type.model.CommercePriceListUserRel> orderByComparator) {
+		java.lang.String className, int start, int end) {
 		try {
 			MethodKey methodKey = new MethodKey(CommercePriceListUserRelServiceUtil.class,
 					"getCommercePriceListUserRels",
@@ -221,7 +220,7 @@ public class CommercePriceListUserRelServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commercePriceListQualificationTypeRelId, className, start,
-					end, orderByComparator);
+					end);
 
 			Object returnObj = null;
 
@@ -244,7 +243,8 @@ public class CommercePriceListUserRelServiceHttp {
 	public static java.util.List<com.liferay.commerce.price.list.qualification.type.model.CommercePriceListUserRel> getCommercePriceListUserRels(
 		HttpPrincipal httpPrincipal,
 		long commercePriceListQualificationTypeRelId,
-		java.lang.String className, int start, int end) {
+		java.lang.String className, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.price.list.qualification.type.model.CommercePriceListUserRel> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(CommercePriceListUserRelServiceUtil.class,
 					"getCommercePriceListUserRels",
@@ -252,7 +252,7 @@ public class CommercePriceListUserRelServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commercePriceListQualificationTypeRelId, className, start,
-					end);
+					end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -352,12 +352,12 @@ public class CommercePriceListUserRelServiceHttp {
 	private static final Class<?>[] _getCommercePriceListUserRelsParameterTypes4 =
 		new Class[] { long.class, java.lang.String.class };
 	private static final Class<?>[] _getCommercePriceListUserRelsParameterTypes5 =
+		new Class[] { long.class, java.lang.String.class, int.class, int.class };
+	private static final Class<?>[] _getCommercePriceListUserRelsParameterTypes6 =
 		new Class[] {
 			long.class, java.lang.String.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCommercePriceListUserRelsParameterTypes6 =
-		new Class[] { long.class, java.lang.String.class, int.class, int.class };
 	private static final Class<?>[] _getCommercePriceListUserRelsCountParameterTypes7 =
 		new Class[] { long.class, java.lang.String.class };
 	private static final Class<?>[] _updateCommercePriceListUserRelParameterTypes8 =

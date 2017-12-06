@@ -302,6 +302,14 @@ public class CommerceOrderItemLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static com.liferay.commerce.model.CommerceOrderItem incrementShippedQuantity(
+		long commerceOrderItemId, int shippedQuantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .incrementShippedQuantity(commerceOrderItemId,
+			shippedQuantity);
+	}
+
 	/**
 	* Updates the commerce order item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -320,14 +328,6 @@ public class CommerceOrderItemLocalServiceUtil {
 		return getService()
 				   .updateCommerceOrderItem(commerceOrderItemId, quantity,
 			json, price);
-	}
-
-	public static com.liferay.commerce.model.CommerceOrderItem updateCommerceOrderItemShippedQuantity(
-		long commerceOrderItemId, int shippedQuantity)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateCommerceOrderItemShippedQuantity(commerceOrderItemId,
-			shippedQuantity);
 	}
 
 	public static void validate(long cpDefinitionId, long cpInstanceId)

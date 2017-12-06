@@ -82,15 +82,14 @@ public class CPDefinitionCPTypeGroupedScreenNavigationEntry
 		if (cpDefinition == null) {
 			return false;
 		}
-		else {
-			String productTypeName = cpDefinition.getProductTypeName();
 
-			if (productTypeName.equals(getCategoryKey())) {
-				return true;
-			}
+		String productTypeName = cpDefinition.getProductTypeName();
 
-			return false;
+		if (productTypeName.equals(getCategoryKey())) {
+			return true;
 		}
+
+		return false;
 	}
 
 	@Override

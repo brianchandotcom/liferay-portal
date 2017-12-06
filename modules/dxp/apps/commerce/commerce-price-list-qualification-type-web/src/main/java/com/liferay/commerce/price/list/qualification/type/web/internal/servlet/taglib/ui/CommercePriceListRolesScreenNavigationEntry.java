@@ -84,19 +84,17 @@ public class CommercePriceListRolesScreenNavigationEntry
 		if (commercePriceList == null) {
 			return false;
 		}
-		else {
-			CommercePriceListQualificationTypeRel
-				commercePriceListQualificationTypeRel =
-					commercePriceList.
-						fetchCommercePriceListQualificationTypeRel(
-							RoleCommercePriceListQualificationTypeImpl.KEY);
 
-			if (commercePriceListQualificationTypeRel != null) {
-				return true;
-			}
+		CommercePriceListQualificationTypeRel
+			commercePriceListQualificationTypeRel =
+				commercePriceList.fetchCommercePriceListQualificationTypeRel(
+					RoleCommercePriceListQualificationTypeImpl.KEY);
 
-			return false;
+		if (commercePriceListQualificationTypeRel != null) {
+			return true;
 		}
+
+		return false;
 	}
 
 	@Override

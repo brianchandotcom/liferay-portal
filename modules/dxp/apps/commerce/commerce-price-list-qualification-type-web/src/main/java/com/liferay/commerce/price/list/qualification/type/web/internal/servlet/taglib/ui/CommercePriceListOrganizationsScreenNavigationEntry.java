@@ -84,20 +84,17 @@ public class CommercePriceListOrganizationsScreenNavigationEntry
 		if (commercePriceList == null) {
 			return false;
 		}
-		else {
-			CommercePriceListQualificationTypeRel
-				commercePriceListQualificationTypeRel =
-					commercePriceList.
-						fetchCommercePriceListQualificationTypeRel(
-							OrganizationCommercePriceListQualificationTypeImpl.
-								KEY);
 
-			if (commercePriceListQualificationTypeRel != null) {
-				return true;
-			}
+		CommercePriceListQualificationTypeRel
+			commercePriceListQualificationTypeRel =
+				commercePriceList.fetchCommercePriceListQualificationTypeRel(
+					OrganizationCommercePriceListQualificationTypeImpl.KEY);
 
-			return false;
+		if (commercePriceListQualificationTypeRel != null) {
+			return true;
 		}
+
+		return false;
 	}
 
 	@Override

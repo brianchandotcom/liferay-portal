@@ -99,9 +99,8 @@ public abstract class BaseAddressCommerceCheckoutStep
 
 				return false;
 			}
-			else {
-				throw e;
-			}
+
+			throw e;
 		}
 
 		return true;

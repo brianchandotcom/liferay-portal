@@ -123,9 +123,8 @@ public class ShippingMethodCommerceCheckoutStep
 
 				return false;
 			}
-			else {
-				throw e;
-			}
+
+			throw e;
 		}
 
 		return true;

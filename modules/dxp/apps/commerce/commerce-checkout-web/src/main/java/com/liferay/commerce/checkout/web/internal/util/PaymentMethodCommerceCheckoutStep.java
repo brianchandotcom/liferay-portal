@@ -100,9 +100,8 @@ public class PaymentMethodCommerceCheckoutStep implements CommerceCheckoutStep {
 
 				return false;
 			}
-			else {
-				throw e;
-			}
+
+			throw e;
 		}
 
 		return true;

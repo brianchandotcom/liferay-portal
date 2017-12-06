@@ -715,12 +715,23 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Server Administration" />
+			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute function="AssertClick" locator1="NavBar#FILE_UPLOADS" value1="File Uploads" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Collaboration" />
+		</execute>
 
-		<execute function="Type" locator1="ServerAdministrationFileUploads#DOCS_AND_MEDIA_MAX_FILE_SIZE_FIELD" value1="30000000" />
+		<execute macro="SystemSettings#editConfiguration">
+			<var name="configurationName" value="Documents & Media Service" />
+		</execute>
+
+		<execute function="Type" locator1="TextInput#GENERIC_TEXT_INPUT" value1="30000000">
+			<var name="key_fieldLabel" value="Maximum File Size" />
+		</execute>
+
+		<execute function="ScrollWebElementIntoView" locator1="Button#SAVE" />
+
 		<execute macro="PortletEntry#save" />
 
 		<execute macro="Navigator#gotoSitePage">

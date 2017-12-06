@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocalManager;
 import com.liferay.portal.kernel.cluster.Clusterable;
+import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -643,14 +644,19 @@ public class BackgroundTaskLocalServiceImpl
 
 		User user = null;
 
-		if (userId != UserConstants.USER_ID_DEFAULT) {
-			user = userLocalService.getUser(userId);
-		}
-
 		final long backgroundTaskId = counterLocalService.increment();
 
 		BackgroundTask backgroundTask = backgroundTaskPersistence.create(
 			backgroundTaskId);
+
+		if (userId != UserConstants.USER_ID_DEFAULT) {
+			try {
+				user = userLocalService.getUser(userId);
+			}
+			catch (NoSuchUserException nsue) {
+				user = null;
+			}
+		}
 
 		if (user != null) {
 			backgroundTask.setCompanyId(user.getCompanyId());

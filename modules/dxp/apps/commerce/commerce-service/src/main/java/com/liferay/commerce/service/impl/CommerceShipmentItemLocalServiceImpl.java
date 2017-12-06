@@ -67,7 +67,7 @@ public class CommerceShipmentItemLocalServiceImpl
 
 		// Commerce order item
 
-		commerceOrderItemLocalService.updateCommerceOrderItemShippedQuantity(
+		commerceOrderItemLocalService.incrementShippedQuantity(
 			commerceOrderItemId, quantity);
 
 		return commerceShipmentItem;
@@ -88,10 +88,8 @@ public class CommerceShipmentItemLocalServiceImpl
 		try {
 			int shippedQuantity = commerceShipmentItem.getQuantity() * -1;
 
-			commerceOrderItemLocalService.
-				updateCommerceOrderItemShippedQuantity(
-					commerceShipmentItem.getCommerceOrderItemId(),
-					shippedQuantity);
+			commerceOrderItemLocalService.incrementShippedQuantity(
+				commerceShipmentItem.getCommerceOrderItemId(), shippedQuantity);
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);
@@ -173,7 +171,7 @@ public class CommerceShipmentItemLocalServiceImpl
 
 		validate(commerceOrderItem, quantity, newQuantity);
 
-		commerceOrderItemLocalService.updateCommerceOrderItemShippedQuantity(
+		commerceOrderItemLocalService.incrementShippedQuantity(
 			commerceOrderItem.getCommerceOrderItemId(), newQuantity);
 
 		return commerceShipmentItem;

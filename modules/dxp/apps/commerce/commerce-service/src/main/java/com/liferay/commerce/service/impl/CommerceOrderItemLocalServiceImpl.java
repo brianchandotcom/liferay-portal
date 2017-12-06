@@ -190,6 +190,22 @@ public class CommerceOrderItemLocalServiceImpl
 	}
 
 	@Override
+	public CommerceOrderItem incrementShippedQuantity(
+			long commerceOrderItemId, int shippedQuantity)
+		throws PortalException {
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
+
+		shippedQuantity =
+			commerceOrderItem.getShippedQuantity() + shippedQuantity;
+
+		commerceOrderItem.setShippedQuantity(shippedQuantity);
+
+		return commerceOrderItemPersistence.update(commerceOrderItem);
+	}
+
+	@Override
 	public CommerceOrderItem updateCommerceOrderItem(
 			long commerceOrderItemId, int quantity, String json, double price)
 		throws PortalException {
@@ -204,22 +220,6 @@ public class CommerceOrderItemLocalServiceImpl
 		commerceOrderItemPersistence.update(commerceOrderItem);
 
 		return commerceOrderItem;
-	}
-
-	@Override
-	public CommerceOrderItem updateCommerceOrderItemShippedQuantity(
-			long commerceOrderItemId, int shippedQuantity)
-		throws PortalException {
-
-		CommerceOrderItem commerceOrderItem =
-			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
-
-		shippedQuantity =
-			commerceOrderItem.getShippedQuantity() + shippedQuantity;
-
-		commerceOrderItem.setShippedQuantity(shippedQuantity);
-
-		return commerceOrderItemPersistence.update(commerceOrderItem);
 	}
 
 	@Override

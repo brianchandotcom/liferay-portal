@@ -15,6 +15,24 @@
 				</execute>
 			</then>
 			<elseif>
+				<equals arg1="${pageType}" arg2="Link to a Page of This Site" />
+				<then>
+					<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
+
+					<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+					<execute macro="Portlet#expandTree" />
+
+					<execute macro="Portlet#selectTreeNode">
+						<var name="nodeName" value="${pageLinkName}" />
+					</execute>
+
+					<execute function="SelectFrameTop" />
+
+					<execute macro="Button#clickDone" />
+				</then>
+			</elseif>
+			<elseif>
 				<equals arg1="${sitePageType}" arg2="Link to URL" />
 				<then>
 					<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" value1="Link to URL" />

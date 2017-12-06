@@ -90,8 +90,8 @@ public class MentionsBlogsEntryServiceWrapper
 				MentionsGroupServiceConfiguration.class, entry.getCompanyId());
 
 		_mentionsNotifier.notify(
-			userId, entry.getGroupId(), entry.getTitle(),
-			entry.getContent(), BlogsEntry.class.getName(), entry.getEntryId(),
+			userId, entry.getGroupId(), entry.getTitle(), entry.getContent(),
+			BlogsEntry.class.getName(), entry.getEntryId(),
 			mentionsGroupServiceConfiguration.assetEntryMentionEmailSubject(),
 			mentionsGroupServiceConfiguration.assetEntryMentionEmailBody(),
 			serviceContext);

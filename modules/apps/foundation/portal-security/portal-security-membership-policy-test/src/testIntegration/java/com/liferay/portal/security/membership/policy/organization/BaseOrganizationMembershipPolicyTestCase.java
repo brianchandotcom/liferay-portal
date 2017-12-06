@@ -168,8 +168,8 @@ public abstract class BaseOrganizationMembershipPolicyTestCase
 				continue;
 			}
 
-			for (User user : UserLocalServiceUtil.getOrganizationUsers(
-					organizationId)) {
+			for (User user :
+					UserLocalServiceUtil.getOrganizationUsers(organizationId)) {
 
 				UserLocalServiceUtil.deleteUser(user);
 			}

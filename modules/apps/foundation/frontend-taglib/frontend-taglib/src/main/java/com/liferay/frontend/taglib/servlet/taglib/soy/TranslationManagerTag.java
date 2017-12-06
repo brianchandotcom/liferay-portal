@@ -70,7 +70,7 @@ public class TranslationManagerTag extends TemplateRendererTag {
 
 		putValue("pathThemeImages", themeDisplay.getPathThemeImages());
 
-		setTemplateNamespace("TranslationManager.render");
+		setTemplateNamespace("liferay.frontend.TranslationManager.render");
 
 		return super.doStartTag();
 	}

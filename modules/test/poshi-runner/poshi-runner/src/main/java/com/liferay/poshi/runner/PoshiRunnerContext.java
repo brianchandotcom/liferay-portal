@@ -919,8 +919,8 @@ public class PoshiRunnerContext {
 		throws Exception {
 
 		for (String baseDirName : baseDirNames) {
-			for (URL url : _getPoshiURLs(
-					includes, baseDirName, _defaultNamespace)) {
+			for (URL url :
+					_getPoshiURLs(includes, baseDirName, _defaultNamespace)) {
 
 				_storeRootElement(
 					PoshiRunnerGetterUtil.getRootElementFromURL(url),
@@ -971,10 +971,11 @@ public class PoshiRunnerContext {
 
 					_namespaces.add(namespace);
 
-					for (URL poshiURL : _getPoshiURLs(
-							fileSystem, includes,
-							resourceURLString.substring(x + 1), namespace)) {
+					List<URL> poshiURLs = _getPoshiURLs(
+						fileSystem, includes,
+						resourceURLString.substring(x + 1), namespace);
 
+					for (URL poshiURL : poshiURLs) {
 						_storeRootElement(
 							PoshiRunnerGetterUtil.getRootElementFromURL(
 								poshiURL),

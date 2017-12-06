@@ -122,8 +122,8 @@ public class RatingsStatsLocalServiceImpl
 
 		Map<Long, RatingsStats> ratingsStats = new HashMap<>();
 
-		for (RatingsStats stats : ratingsStatsPersistence.findByC_C(
-				classNameId, classPKs)) {
+		for (RatingsStats stats :
+				ratingsStatsPersistence.findByC_C(classNameId, classPKs)) {
 
 			ratingsStats.put(stats.getClassPK(), stats);
 		}

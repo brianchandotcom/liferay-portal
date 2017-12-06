@@ -54,8 +54,8 @@ public enum CompressionLevel {
 		new HashMap<>();
 
 	static {
-		for (CompressionLevel compressionLevel : EnumSet.allOf(
-				CompressionLevel.class)) {
+		for (CompressionLevel compressionLevel :
+				EnumSet.allOf(CompressionLevel.class)) {
 
 			_compressionLevels.put(compressionLevel._level, compressionLevel);
 		}

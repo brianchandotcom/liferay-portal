@@ -126,10 +126,10 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 	}
 
 	public BaseDeployer() {
-		for (DeploymentExtension deploymentExtension : ServiceLoader.load(
-				DeploymentExtension.class,
-				BaseDeployer.class.getClassLoader())) {
+		ServiceLoader<DeploymentExtension> serviceLoader = ServiceLoader.load(
+			DeploymentExtension.class, BaseDeployer.class.getClassLoader());
 
+		for (DeploymentExtension deploymentExtension : serviceLoader) {
 			_deploymentExtensions.add(deploymentExtension);
 		}
 	}

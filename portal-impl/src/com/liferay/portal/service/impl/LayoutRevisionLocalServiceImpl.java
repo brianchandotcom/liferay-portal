@@ -205,8 +205,8 @@ public class LayoutRevisionLocalServiceImpl
 	public void deleteLayoutRevisions(long layoutSetBranchId, long plid)
 		throws PortalException {
 
-		for (LayoutRevision layoutRevision : getLayoutRevisions(
-				layoutSetBranchId, plid)) {
+		for (LayoutRevision layoutRevision :
+				getLayoutRevisions(layoutSetBranchId, plid)) {
 
 			layoutRevisionLocalService.deleteLayoutRevision(layoutRevision);
 		}

@@ -90,8 +90,9 @@ public class MBAdminConfigurationAction
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		for (Locale locale : LanguageUtil.getAvailableLocales(
-				themeDisplay.getSiteGroupId())) {
+		for (Locale locale :
+				LanguageUtil.getAvailableLocales(
+					themeDisplay.getSiteGroupId())) {
 
 			String languageId = LocaleUtil.toLanguageId(locale);
 
@@ -134,8 +135,9 @@ public class MBAdminConfigurationAction
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		for (Locale locale : LanguageUtil.getAvailableLocales(
-				themeDisplay.getSiteGroupId())) {
+		for (Locale locale :
+				LanguageUtil.getAvailableLocales(
+					themeDisplay.getSiteGroupId())) {
 
 			String languageId = LocaleUtil.toLanguageId(locale);
 

@@ -21,6 +21,7 @@ import com.liferay.jenkins.results.parser.failure.message.generator.PoshiTestFai
 import com.liferay.jenkins.results.parser.failure.message.generator.PoshiValidationFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.RebaseFailureMessageGenerator;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 
@@ -1124,7 +1125,31 @@ public class TopLevelBuild extends BaseBuild {
 
 		if (!result.equals("SUCCESS")) {
 			if (isCompareToUpstream()) {
-				UpstreamFailureUtil.loadUpstreamJobFailuresJSONObject(this);
+				File upstreamJobFailuresJSONFile = null;
+
+				try {
+					Properties buildProperties =
+						JenkinsResultsParserUtil.getBuildProperties();
+
+					String jenkinsDir = buildProperties.getProperty(
+						"jenkins.dir[master]");
+
+					upstreamJobFailuresJSONFile = new File(
+						jenkinsDir, "upstream-failures.json");
+				}
+				catch (IOException ioe) {
+					ioe.printStackTrace();
+				}
+
+				if ((upstreamJobFailuresJSONFile != null) &&
+					upstreamJobFailuresJSONFile.exists()) {
+
+					UpstreamFailureUtil.loadUpstreamJobFailuresJSONObject(
+						upstreamJobFailuresJSONFile);
+				}
+				else {
+					UpstreamFailureUtil.loadUpstreamJobFailuresJSONObject(this);
+				}
 			}
 
 			Map<Build, Element> downstreamBuildFailureMessages =

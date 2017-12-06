@@ -15,6 +15,7 @@
 package com.liferay.portal.search.internal;
 
 import com.liferay.petra.executor.PortalExecutorManager;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
@@ -108,6 +109,9 @@ public class SearchEngineInitializer implements Runnable {
 			List<FutureTask<Void>> futureTasks = new ArrayList<>();
 			Set<String> searchEngineIds = new HashSet<>();
 
+			long backgroundTaskId =
+				BackgroundTaskThreadLocal.getBackgroundTaskId();
+
 			for (Indexer<?> indexer : IndexerRegistryUtil.getIndexers()) {
 				String searchEngineId = indexer.getSearchEngineId();
 
@@ -122,6 +126,9 @@ public class SearchEngineInitializer implements Runnable {
 
 						@Override
 						public Void call() throws Exception {
+							BackgroundTaskThreadLocal.setBackgroundTaskId(
+								backgroundTaskId);
+
 							reindex(indexer);
 
 							return null;

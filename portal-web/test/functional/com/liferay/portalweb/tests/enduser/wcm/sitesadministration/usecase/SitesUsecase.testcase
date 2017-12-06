@@ -217,12 +217,12 @@
 			<var name="parentPageName" value="Home" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoPages">
-			<var name="page" value="Public Pages" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Configure" />
+			<var name="rowEntry" value="Blog Page" />
 		</execute>
 
 		<execute macro="Page#addPageTranslations">
-			<var name="page" value="Blog Page" />
 			<var name="pageTranslation" value="es_ES" />
 			<var name="pageTranslationName" value="Blog Página" />
 		</execute>

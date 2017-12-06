@@ -129,7 +129,6 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/export-import/export-import-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/export-import/export-import-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/layout/layout-item-selector-web" />
-			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/layout/layout-page-template-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/portlet-display-template/portlet-display-template" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/product-navigation/product-navigation-product-menu-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/rss/rss-util" />

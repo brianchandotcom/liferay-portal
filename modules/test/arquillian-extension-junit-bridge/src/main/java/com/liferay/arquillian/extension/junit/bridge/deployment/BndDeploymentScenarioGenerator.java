@@ -102,10 +102,10 @@ public class BndDeploymentScenarioGenerator
 	private List<File> _getClassPathFiles() {
 		List<File> files = new ArrayList<>();
 
-		for (String fileName : StringUtil.split(
-				System.getProperty("java.class.path"),
-				File.pathSeparatorChar)) {
+		String[] fileNames = StringUtil.split(
+			System.getProperty("java.class.path"), File.pathSeparatorChar);
 
+		for (String fileName : fileNames) {
 			File file = new File(fileName);
 
 			if (file.isDirectory() || StringUtil.endsWith(fileName, ".zip") ||

@@ -80,7 +80,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 
 		content = _fixIncorrectLineBreaksInsideChains(content, fileName);
 
-		content = _fixIncorrectLineBreaks(content, fileName);
+		content = _fixIncorrectLineBreaks(content, fileName, absolutePath);
 
 		content = _fixLineStartingWithCloseParenthesis(content, fileName);
 
@@ -443,82 +443,105 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 		return content;
 	}
 
-	private String _fixIncorrectLineBreaks(String content, String fileName) {
-		while (true) {
-			Matcher matcher = _incorrectLineBreakPattern1.matcher(content);
+	private String _fixIncorrectLineBreaks(
+		String content, String fileName, String absolutePath) {
 
-			while (matcher.find()) {
-				String matchingLine = matcher.group(2);
+		Matcher matcher = _incorrectLineBreakPattern1.matcher(content);
 
-				if (!matchingLine.startsWith(StringPool.DOUBLE_SLASH) &&
-					!matchingLine.startsWith(StringPool.STAR)) {
+		while (matcher.find()) {
+			String matchingLine = matcher.group(2);
 
-					content = StringUtil.replaceFirst(
-						content, matcher.group(3),
-						"\n" + matcher.group(1) + "}\n", matcher.start(3) - 1);
+			if (!matchingLine.startsWith(StringPool.DOUBLE_SLASH) &&
+				!matchingLine.startsWith(StringPool.STAR)) {
 
-					break;
+				return StringUtil.replaceFirst(
+					content, matcher.group(3), "\n" + matcher.group(1) + "}\n",
+					matcher.start(3) - 1);
+			}
+		}
+
+		matcher = _incorrectLineBreakPattern2.matcher(content);
+
+		while (matcher.find()) {
+			String tabs = matcher.group(2);
+
+			Pattern pattern = Pattern.compile(
+				StringBundler.concat(
+					"\n", tabs, "([^\t]{2})(?!.*\n", tabs, "[^\t])"),
+				Pattern.DOTALL);
+
+			Matcher matcher2 = pattern.matcher(
+				content.substring(0, matcher.start(2)));
+
+			if (matcher2.find()) {
+				String match = matcher2.group(1);
+
+				if (!match.equals(").")) {
+					return StringUtil.replaceFirst(
+						content, "\n" + matcher.group(2), StringPool.BLANK,
+						matcher.end(1));
 				}
 			}
+		}
 
-			matcher = _incorrectLineBreakPattern2.matcher(content);
+		matcher = _incorrectLineBreakPattern3.matcher(content);
 
-			while (matcher.find()) {
-				String tabs = matcher.group(2);
+		if (matcher.find()) {
+			return StringUtil.replaceFirst(
+				content, "{", "{\n" + matcher.group(1) + "\t", matcher.start());
+		}
 
-				Pattern pattern = Pattern.compile(
-					StringBundler.concat(
-						"\n", tabs, "([^\t]{2})(?!.*\n", tabs, "[^\t])"),
-					Pattern.DOTALL);
+		matcher = _incorrectLineBreakPattern4.matcher(content);
 
-				Matcher matcher2 = pattern.matcher(
-					content.substring(0, matcher.start(2)));
-
-				if (matcher2.find()) {
-					String match = matcher2.group(1);
-
-					if (!match.equals(").")) {
-						content = StringUtil.replaceFirst(
-							content, "\n" + matcher.group(2), StringPool.BLANK,
-							matcher.end(1));
-
-						break;
-					}
-				}
+		while (matcher.find()) {
+			if (content.charAt(matcher.end()) != CharPool.NEW_LINE) {
+				continue;
 			}
 
-			matcher = _incorrectLineBreakPattern3.matcher(content);
+			String singleLine =
+				matcher.group(1) + StringUtil.trimLeading(matcher.group(2)) +
+					matcher.group(3);
 
-			if (matcher.find()) {
-				content = StringUtil.replaceFirst(
-					content, "{", "{\n" + matcher.group(1) + "\t",
-					matcher.start());
+			if (getLineLength(singleLine) <= getMaxLineLength()) {
+				return StringUtil.replace(
+					content, matcher.group(), "\n" + singleLine);
 			}
+		}
 
-			matcher = _incorrectLineBreakPattern4.matcher(content);
+		if (!isSubrepository() && !isReadOnly(absolutePath)) {
+			matcher = _incorrectLineBreakPattern7.matcher(content);
 
 			while (matcher.find()) {
-				if (content.charAt(matcher.end()) != CharPool.NEW_LINE) {
+				String linePart = matcher.group(2);
+
+				if (getLevel(linePart) != 1) {
 					continue;
 				}
 
-				String singleLine =
-					matcher.group(1) +
-						StringUtil.trimLeading(matcher.group(2)) +
-							matcher.group(3);
+				if (StringUtil.count(matcher.group(), CharPool.NEW_LINE) > 2) {
+					addMessage(
+						fileName,
+						"For better readability, create new var for the " +
+							"array in the 'for' statement",
+						getLineCount(content, matcher.start()));
 
-				if (getLineLength(singleLine) <= getMaxLineLength()) {
-					content = StringUtil.replace(
-						content, matcher.group(), "\n" + singleLine);
-
-					break;
+					continue;
 				}
-			}
 
-			break;
+				String match = matcher.group();
+
+				String replacement = StringUtil.replace(
+					match, "\n\t", "\n\t\t");
+
+				replacement = StringUtil.replaceFirst(
+					replacement, linePart,
+					"\n\t\t" + matcher.group(1) + StringUtil.trim(linePart));
+
+				return StringUtil.replace(content, match, replacement);
+			}
 		}
 
-		Matcher matcher = _incorrectLineBreakPattern5.matcher(content);
+		matcher = _incorrectLineBreakPattern5.matcher(content);
 
 		while (matcher.find()) {
 			if (getLevel(matcher.group()) == 0) {
@@ -823,6 +846,8 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 		", (new .*\\(.*\\) \\{)\n");
 	private final Pattern _incorrectLineBreakPattern6 = Pattern.compile(
 		"^(((else )?if|for|try|while) \\()?\\(*(.*\\()$");
+	private final Pattern _incorrectLineBreakPattern7 = Pattern.compile(
+		"(\t+)for \\(.*:(.+\\()\n[\\s\\S]+?\\) \\{\n");
 	private final Pattern _incorrectMultiLineCommentPattern = Pattern.compile(
 		"(\n\t*/\\*)\n\t*(.*?)\n\t*(\\*/\n)", Pattern.DOTALL);
 	private final Pattern _lineStartingWithCloseParenthesisPattern =

@@ -332,7 +332,7 @@
 	</command>
 
 	<command name="ADTCategoriesNavigation" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="quarantine" />
 		<property name="testray.component.names" value="Categories,Content and Application Templates" />
 
 		<execute macro="ProductMenu#gotoSite">

@@ -452,11 +452,9 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 			if (!matchingLine.startsWith(StringPool.DOUBLE_SLASH) &&
 				!matchingLine.startsWith(StringPool.STAR)) {
 
-				content = StringUtil.replaceFirst(
+				return StringUtil.replaceFirst(
 					content, matcher.group(3), "\n" + matcher.group(1) + "}\n",
 					matcher.start(3) - 1);
-
-				break;
 			}
 		}
 
@@ -477,11 +475,9 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 				String match = matcher2.group(1);
 
 				if (!match.equals(").")) {
-					content = StringUtil.replaceFirst(
+					return StringUtil.replaceFirst(
 						content, "\n" + matcher.group(2), StringPool.BLANK,
 						matcher.end(1));
-
-					break;
 				}
 			}
 		}
@@ -489,7 +485,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 		matcher = _incorrectLineBreakPattern3.matcher(content);
 
 		if (matcher.find()) {
-			content = StringUtil.replaceFirst(
+			return StringUtil.replaceFirst(
 				content, "{", "{\n" + matcher.group(1) + "\t", matcher.start());
 		}
 
@@ -505,10 +501,8 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 					matcher.group(3);
 
 			if (getLineLength(singleLine) <= getMaxLineLength()) {
-				content = StringUtil.replace(
+				return StringUtil.replace(
 					content, matcher.group(), "\n" + singleLine);
-
-				break;
 			}
 		}
 
@@ -539,9 +533,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 				replacement, linePart,
 				"\n\t\t" + matcher.group(1) + StringUtil.trim(linePart));
 
-			content = StringUtil.replace(content, match, replacement);
-
-			break;
+			return StringUtil.replace(content, match, replacement);
 		}
 
 		matcher = _incorrectLineBreakPattern5.matcher(content);

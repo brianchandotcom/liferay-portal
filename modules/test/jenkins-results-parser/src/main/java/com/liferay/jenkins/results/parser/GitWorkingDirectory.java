@@ -842,6 +842,24 @@ public class GitWorkingDirectory {
 		return _workingDirectory;
 	}
 
+	public boolean isRemoteRepositoryAlive(String remoteURL) {
+		String command = JenkinsResultsParserUtil.combine(
+			"git ls-remote -h ", remoteURL, " HEAD");
+
+		ExecutionResult executionResult = executeBashCommands(
+			1, 1000 * 60 * 10, command);
+
+		if (executionResult.getExitValue() != 0) {
+			System.out.println("Unable to connect to " + remoteURL);
+
+			return false;
+		}
+
+		System.out.println(remoteURL + " is alive");
+
+		return true;
+	}
+
 	public boolean localSHAExists(String sha) {
 		String command = "git cat-file -t " + sha;
 

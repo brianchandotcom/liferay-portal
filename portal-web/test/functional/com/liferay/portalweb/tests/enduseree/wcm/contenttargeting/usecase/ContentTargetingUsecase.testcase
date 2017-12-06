@@ -1864,9 +1864,8 @@
 		<execute function="DownloadTempFile" />
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute macro="SitePageNavigator#gotoPages">
-			<var name="page" value="Public Pages" />
-			<var name="siteName" value="Import Site" />
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Import Site" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">

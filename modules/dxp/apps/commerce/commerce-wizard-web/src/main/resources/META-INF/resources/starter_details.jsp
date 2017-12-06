@@ -21,6 +21,8 @@ String commerceStarterKey = ParamUtil.getString(request, "commerceStarterKey");
 
 CommerceStarterDisplayContext commerceStarterDisplayContext = (CommerceStarterDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
+List<CommerceStarter> commerceStarters = commerceStarterDisplayContext.getCommerStarters();
+
 CommerceStarter commerceStarter = commerceStarterDisplayContext.getCommerceStarter(commerceStarterKey);
 %>
 
@@ -40,21 +42,35 @@ CommerceStarter commerceStarter = commerceStarterDisplayContext.getCommerceStart
 				<div class="col-md-6 commerce-starter-controls">
 					<aui:button name="applyButton" primary="<%= true %>" type="submit" value="apply" />
 
-					<a class="btn btn-left btn-secondary" id="previousStarterButton">
-						<liferay-ui:icon
-							cssClass="commerce-wizard-icon-angle-left"
-							icon="angle-left"
-							markupView="lexicon"
-						/>
-					</a>
+					<c:if test="<%= commerceStarters.size() > 1 %>">
+						<portlet:actionURL name="selectCommerceStarter" var="selectCommerceStarterActionURL">
+							<portlet:param name="<%= Constants.CMD %>" value="previousCommerceStarter" />
+							<portlet:param name="redirect" value="<%= redirect %>" />
+							<portlet:param name="commerceStarterKey" value="<%= commerceStarterKey %>" />
+						</portlet:actionURL>
 
-					<a class="btn btn-right btn-secondary" id="nextStarterButton">
-						<liferay-ui:icon
-							cssClass="commerce-wizard-icon-angle-right"
-							icon="angle-right"
-							markupView="lexicon"
-						/>
-					</a>
+						<a class="btn btn-left btn-secondary" href="<%= selectCommerceStarterActionURL.toString() %>" id="previousStarterButton">
+							<liferay-ui:icon
+								cssClass="commerce-wizard-icon-angle-left"
+								icon="angle-left"
+								markupView="lexicon"
+							/>
+						</a>
+
+						<portlet:actionURL name="selectCommerceStarter" var="selectCommerceStarterActionURL">
+							<portlet:param name="<%= Constants.CMD %>" value="nextCommerceStarter" />
+							<portlet:param name="redirect" value="<%= redirect %>" />
+							<portlet:param name="commerceStarterKey" value="<%= commerceStarterKey %>" />
+						</portlet:actionURL>
+
+						<a class="btn btn-right btn-secondary" href="<%= selectCommerceStarterActionURL.toString() %>" id="nextStarterButton">
+							<liferay-ui:icon
+								cssClass="commerce-wizard-icon-angle-right"
+								icon="angle-right"
+								markupView="lexicon"
+							/>
+						</a>
+					</c:if>
 				</div>
 			</div>
 

@@ -161,10 +161,9 @@ version 3.2.1.
 ## 1.8.0 - 2017-12-05
 
 ### Added
-- [LPS-76271]: Add the ability to build the theme projects with the
-[Liferay Portal Tools Theme Builder]. This behavior can be enabled by setting
-the `liferay.workspace.themes.java.build` property to `true` in
-`gradle.properties`.
+- [LPS-76271]: Add the ability to build theme projects with the
+[Liferay Portal Tools Theme Builder]. To enable this, set the
+`liferay.workspace.themes.java.build` property to `true` in `gradle.properties`.
 
 ### Changed
 - [LPS-76221]: Update the [Liferay Gradle Plugins] dependency to version 3.5.57.

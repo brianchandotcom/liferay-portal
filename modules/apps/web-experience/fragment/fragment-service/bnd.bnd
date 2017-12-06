@@ -1,7 +1,6 @@
 Bundle-Name: Liferay Fragment Service
 Bundle-SymbolicName: com.liferay.fragment.service
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.fragment.service.permission
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Fragment
 Liferay-Require-SchemaVersion: 1.0.0

@@ -516,6 +516,10 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
 		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>

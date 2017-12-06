@@ -212,7 +212,7 @@
 		<execute macro="DMPortlet#viewDefaultConfigurationDisplaySettingsPG" />
 	</command>
 
-	<command name="AssertFileSizeValidation">
+	<command name="AssertFileSizeValidation" priority="4">
 		<description message="This is a use case for LPS-50760." />
 
 		<property name="test.name.skip.portal.instance" value="DocumentsadministrationUsecase#AssertFileSizeValidation" />
@@ -253,12 +253,20 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Server Administration" />
+			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute function="AssertClick" locator1="NavBar#FILE_UPLOADS" value1="File Uploads" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Collaboration" />
+		</execute>
 
-		<execute function="Type" locator1="ServerAdministrationFileUploads#DOCS_AND_MEDIA_MAX_FILE_SIZE_FIELD" value1="300000" />
+		<execute macro="SystemSettings#editConfiguration">
+			<var name="configurationName" value="Documents & Media Service" />
+		</execute>
+
+		<execute function="Type" locator1="TextInput#GENERIC_TEXT_INPUT" value1="30000000">
+			<var name="key_fieldLabel" value="Maximum File Size" />
+		</execute>
 
 		<execute function="ScrollWebElementIntoView" locator1="Button#SAVE" />
 

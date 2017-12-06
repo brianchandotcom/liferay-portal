@@ -515,6 +515,39 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 				}
 			}
 
+			matcher = _incorrectLineBreakPattern7.matcher(content);
+
+			while (matcher.find()) {
+				String linePart = matcher.group(2);
+
+				if (getLevel(linePart) != 1) {
+					continue;
+				}
+
+				if (StringUtil.count(matcher.group(), CharPool.NEW_LINE) > 2) {
+					addMessage(
+						fileName,
+						"For better readability, create new var for the " +
+							"array in the 'for' statement",
+						getLineCount(content, matcher.start()));
+
+					continue;
+				}
+
+				String match = matcher.group();
+
+				String replacement = StringUtil.replace(
+					match, "\n\t", "\n\t\t");
+
+				replacement = StringUtil.replaceFirst(
+					replacement, linePart,
+					"\n\t\t" + matcher.group(1) + StringUtil.trim(linePart));
+
+				content = StringUtil.replace(content, match, replacement);
+
+				break;
+			}
+
 			break;
 		}
 
@@ -823,6 +856,8 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 		", (new .*\\(.*\\) \\{)\n");
 	private final Pattern _incorrectLineBreakPattern6 = Pattern.compile(
 		"^(((else )?if|for|try|while) \\()?\\(*(.*\\()$");
+	private final Pattern _incorrectLineBreakPattern7 = Pattern.compile(
+		"(\t+)for \\(.*:(.+\\()\n[\\s\\S]+?\\) \\{\n");
 	private final Pattern _incorrectMultiLineCommentPattern = Pattern.compile(
 		"(\n\t*/\\*)\n\t*(.*?)\n\t*(\\*/\n)", Pattern.DOTALL);
 	private final Pattern _lineStartingWithCloseParenthesisPattern =

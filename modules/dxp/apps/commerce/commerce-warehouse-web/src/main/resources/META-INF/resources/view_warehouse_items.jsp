@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceWarehouseItemsDisplayContext commerceWarehouseItemsDisplayContext = (CommerceWarehouseItemsDisplayContext<?>)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CommerceWarehouseItemsDisplayContext commerceWarehouseItemsDisplayContext = (CommerceWarehouseItemsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 CPInstance cpInstance = commerceWarehouseItemsDisplayContext.getCPInstance();
 PortletURL portletURL = commerceWarehouseItemsDisplayContext.getPortletURL();
 String title = commerceWarehouseItemsDisplayContext.getTitle();

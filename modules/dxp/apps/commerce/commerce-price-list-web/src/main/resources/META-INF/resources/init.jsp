@@ -36,6 +36,7 @@ page import="com.liferay.commerce.model.CommercePriceEntry" %><%@
 page import="com.liferay.commerce.model.CommercePriceList" %><%@
 page import="com.liferay.commerce.model.CommercePriceListQualificationTypeRel" %><%@
 page import="com.liferay.commerce.model.CommerceTierPriceEntry" %><%@
+page import="com.liferay.commerce.price.CommercePriceListQualificationType" %><%@
 page import="com.liferay.commerce.price.list.web.internal.display.context.CPInstanceCommercePriceEntryDisplayContext" %><%@
 page import="com.liferay.commerce.price.list.web.internal.display.context.CPInstanceCommerceTierPriceEntryDisplayContext" %><%@
 page import="com.liferay.commerce.price.list.web.internal.display.context.CommercePriceEntryDisplayContext" %><%@

@@ -383,6 +383,10 @@
 			<property name="allowLeadingSpaces" value="true" />
 		</check>
 	</source-processor>
+	<source-processor name="PackageinfoSourceProcessor">
+		<check name="PackageinfoBNDExportPackageCheck" />
+		<check name="WhitespaceCheck" />
+	</source-processor>
 	<source-processor name="PropertiesSourceProcessor">
 		<check name="PropertiesDefinitionKeysCheck" />
 		<check name="PropertiesDependenciesFileCheck" />

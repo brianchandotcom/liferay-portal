@@ -123,7 +123,6 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/static/" />
 			<property name="allowedExportPackageDirName" value="modules/apps/sync/sync-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/asset/asset-categories-admin-web" />
-			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/asset/asset-display-template-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/asset/asset-publisher-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/asset/asset-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/export-import/export-import-resources-importer" />

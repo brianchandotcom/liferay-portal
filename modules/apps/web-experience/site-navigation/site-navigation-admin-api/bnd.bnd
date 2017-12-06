@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Site Navigation Admin API
+Bundle-SymbolicName: com.liferay.site.navigation.admin.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.site.navigation.admin.constants
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Site Management

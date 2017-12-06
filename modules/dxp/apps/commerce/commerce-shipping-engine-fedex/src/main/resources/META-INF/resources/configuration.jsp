@@ -33,7 +33,7 @@ String[] serviceTypes = StringUtil.split(fedExCommerceShippingEngineGroupService
 
 	<aui:input label="meter-number" name="settings--meterNumber--" value="<%= fedExCommerceShippingEngineGroupServiceConfiguration.meterNumber() %>" />
 
-	<aui:select name="dropoff-type" name="settings--dropoffType--">
+	<aui:select label="dropoff-type" name="settings--dropoffType--">
 
 		<%
 		for (String dropoffType : FedExCommerceShippingEngineConstants.DROPOFF_TYPES) {

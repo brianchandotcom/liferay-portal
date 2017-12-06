@@ -650,12 +650,7 @@ public class BackgroundTaskLocalServiceImpl
 			backgroundTaskId);
 
 		if (userId != UserConstants.USER_ID_DEFAULT) {
-			try {
-				user = userLocalService.getUser(userId);
-			}
-			catch (NoSuchUserException nsue) {
-				user = null;
-			}
+			user = userLocalService.fetchUser(userId);
 		}
 
 		if (user != null) {

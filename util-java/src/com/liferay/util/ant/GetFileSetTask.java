@@ -68,7 +68,7 @@ public class GetFileSetTask extends Task {
 		List<Path> classResultList = new ArrayList();
 		List<Path> srcResultList = new ArrayList();
 
-		Set<String> notFoundClassNames = findFiles(
+		Set<String> notFoundClassNames = _findFiles(
 			baseDir, classNames, classResultList, srcResultList);
 
 		if (!notFoundClassNames.isEmpty()) {
@@ -126,7 +126,47 @@ public class GetFileSetTask extends Task {
 		project.addReference("classSet", classFileSet);
 	}
 
-	public Set<String> findFiles(
+	public void setClassNames(String classNames) {
+		_classNames = classNames;
+	}
+
+	public void setRootDir(String rootDir) {
+		_rootDir = rootDir;
+	}
+
+	private boolean _checkClassNames(
+		List<String> classNames, Set<String> improperClassName) {
+
+		for (String className : classNames) {
+			if (className.endsWith("Test")) {
+				improperClassName.add(className);
+			}
+		}
+
+		if (!improperClassName.isEmpty()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _checkSrcPath(
+		String absoluteFileName, Set<String> improperClassName) {
+
+		if (!absoluteFileName.contains("src")) {
+			int startIndex = absoluteFileName.lastIndexOf(File.separator);
+			int endIndex = absoluteFileName.lastIndexOf(".");
+
+			improperClassName.add(
+				absoluteFileName.substring(startIndex + 1, endIndex));
+
+			return false;
+		}
+
+		return true;
+	}
+
+	private Set<String> _findFiles(
 		File baseDir, List<String> classNames, List<Path> classFileList,
 		List<Path> srcFileList) {
 
@@ -192,46 +232,6 @@ public class GetFileSetTask extends Task {
 		}
 
 		return notFoundClassNames;
-	}
-
-	public void setClassNames(String classNames) {
-		_classNames = classNames;
-	}
-
-	public void setRootDir(String rootDir) {
-		_rootDir = rootDir;
-	}
-
-	private boolean _checkClassNames(
-		List<String> classNames, Set<String> improperClassName) {
-
-		for (String className : classNames) {
-			if (className.endsWith("Test")) {
-				improperClassName.add(className);
-			}
-		}
-
-		if (!improperClassName.isEmpty()) {
-			return false;
-		}
-
-		return true;
-	}
-
-	private boolean _checkSrcPath(
-		String absoluteFileName, Set<String> improperClassName) {
-
-		if (!absoluteFileName.contains("src")) {
-			int startIndex = absoluteFileName.lastIndexOf(File.separator);
-			int endIndex = absoluteFileName.lastIndexOf(".");
-
-			improperClassName.add(
-				absoluteFileName.substring(startIndex + 1, endIndex));
-
-			return false;
-		}
-
-		return true;
 	}
 
 	private boolean _matchClassName(String className, String fileName) {

@@ -21,7 +21,6 @@ import com.liferay.commerce.model.CommercePriceListQualificationTypeRel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -105,7 +104,7 @@ public class CommercePriceListQualificationTypeRelCacheModel
 			new CommercePriceListQualificationTypeRelImpl();
 
 		if (uuid == null) {
-			commercePriceListQualificationTypeRelImpl.setUuid(StringPool.BLANK);
+			commercePriceListQualificationTypeRelImpl.setUuid("");
 		}
 		else {
 			commercePriceListQualificationTypeRelImpl.setUuid(uuid);
@@ -117,7 +116,7 @@ public class CommercePriceListQualificationTypeRelCacheModel
 		commercePriceListQualificationTypeRelImpl.setUserId(userId);
 
 		if (userName == null) {
-			commercePriceListQualificationTypeRelImpl.setUserName(StringPool.BLANK);
+			commercePriceListQualificationTypeRelImpl.setUserName("");
 		}
 		else {
 			commercePriceListQualificationTypeRelImpl.setUserName(userName);
@@ -142,7 +141,8 @@ public class CommercePriceListQualificationTypeRelCacheModel
 		commercePriceListQualificationTypeRelImpl.setCommercePriceListId(commercePriceListId);
 
 		if (commercePriceListQualificationType == null) {
-			commercePriceListQualificationTypeRelImpl.setCommercePriceListQualificationType(StringPool.BLANK);
+			commercePriceListQualificationTypeRelImpl.setCommercePriceListQualificationType(
+				"");
 		}
 		else {
 			commercePriceListQualificationTypeRelImpl.setCommercePriceListQualificationType(commercePriceListQualificationType);
@@ -189,7 +189,7 @@ public class CommercePriceListQualificationTypeRelCacheModel
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -204,7 +204,7 @@ public class CommercePriceListQualificationTypeRelCacheModel
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -216,7 +216,7 @@ public class CommercePriceListQualificationTypeRelCacheModel
 		objectOutput.writeLong(commercePriceListId);
 
 		if (commercePriceListQualificationType == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(commercePriceListQualificationType);

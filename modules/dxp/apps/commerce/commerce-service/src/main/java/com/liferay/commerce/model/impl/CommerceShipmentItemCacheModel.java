@@ -21,7 +21,6 @@ import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -103,7 +102,7 @@ public class CommerceShipmentItemCacheModel implements CacheModel<CommerceShipme
 		commerceShipmentItemImpl.setUserId(userId);
 
 		if (userName == null) {
-			commerceShipmentItemImpl.setUserName(StringPool.BLANK);
+			commerceShipmentItemImpl.setUserName("");
 		}
 		else {
 			commerceShipmentItemImpl.setUserName(userName);
@@ -164,7 +163,7 @@ public class CommerceShipmentItemCacheModel implements CacheModel<CommerceShipme
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);

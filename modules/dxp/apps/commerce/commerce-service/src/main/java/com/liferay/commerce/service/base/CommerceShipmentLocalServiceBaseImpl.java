@@ -22,6 +22,7 @@ import com.liferay.commerce.service.persistence.CPDefinitionAvailabilityRangePer
 import com.liferay.commerce.service.persistence.CPDefinitionInventoryPersistence;
 import com.liferay.commerce.service.persistence.CommerceAddressPersistence;
 import com.liferay.commerce.service.persistence.CommerceAvailabilityRangePersistence;
+import com.liferay.commerce.service.persistence.CommerceCartItemFinder;
 import com.liferay.commerce.service.persistence.CommerceCartItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceCartPersistence;
 import com.liferay.commerce.service.persistence.CommerceCountryFinder;
@@ -33,6 +34,7 @@ import com.liferay.commerce.service.persistence.CommercePaymentMethodPersistence
 import com.liferay.commerce.service.persistence.CommercePriceEntryPersistence;
 import com.liferay.commerce.service.persistence.CommercePriceListFinder;
 import com.liferay.commerce.service.persistence.CommercePriceListPersistence;
+import com.liferay.commerce.service.persistence.CommercePriceListQualificationTypeRelPersistence;
 import com.liferay.commerce.service.persistence.CommerceRegionPersistence;
 import com.liferay.commerce.service.persistence.CommerceShipmentItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceShipmentPersistence;
@@ -493,6 +495,25 @@ public abstract class CommerceShipmentLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the commerce cart item finder.
+	 *
+	 * @return the commerce cart item finder
+	 */
+	public CommerceCartItemFinder getCommerceCartItemFinder() {
+		return commerceCartItemFinder;
+	}
+
+	/**
+	 * Sets the commerce cart item finder.
+	 *
+	 * @param commerceCartItemFinder the commerce cart item finder
+	 */
+	public void setCommerceCartItemFinder(
+		CommerceCartItemFinder commerceCartItemFinder) {
+		this.commerceCartItemFinder = commerceCartItemFinder;
+	}
+
+	/**
 	 * Returns the commerce country local service.
 	 *
 	 * @return the commerce country local service
@@ -775,6 +796,44 @@ public abstract class CommerceShipmentLocalServiceBaseImpl
 	public void setCommercePriceListFinder(
 		CommercePriceListFinder commercePriceListFinder) {
 		this.commercePriceListFinder = commercePriceListFinder;
+	}
+
+	/**
+	 * Returns the commerce price list qualification type rel local service.
+	 *
+	 * @return the commerce price list qualification type rel local service
+	 */
+	public com.liferay.commerce.service.CommercePriceListQualificationTypeRelLocalService getCommercePriceListQualificationTypeRelLocalService() {
+		return commercePriceListQualificationTypeRelLocalService;
+	}
+
+	/**
+	 * Sets the commerce price list qualification type rel local service.
+	 *
+	 * @param commercePriceListQualificationTypeRelLocalService the commerce price list qualification type rel local service
+	 */
+	public void setCommercePriceListQualificationTypeRelLocalService(
+		com.liferay.commerce.service.CommercePriceListQualificationTypeRelLocalService commercePriceListQualificationTypeRelLocalService) {
+		this.commercePriceListQualificationTypeRelLocalService = commercePriceListQualificationTypeRelLocalService;
+	}
+
+	/**
+	 * Returns the commerce price list qualification type rel persistence.
+	 *
+	 * @return the commerce price list qualification type rel persistence
+	 */
+	public CommercePriceListQualificationTypeRelPersistence getCommercePriceListQualificationTypeRelPersistence() {
+		return commercePriceListQualificationTypeRelPersistence;
+	}
+
+	/**
+	 * Sets the commerce price list qualification type rel persistence.
+	 *
+	 * @param commercePriceListQualificationTypeRelPersistence the commerce price list qualification type rel persistence
+	 */
+	public void setCommercePriceListQualificationTypeRelPersistence(
+		CommercePriceListQualificationTypeRelPersistence commercePriceListQualificationTypeRelPersistence) {
+		this.commercePriceListQualificationTypeRelPersistence = commercePriceListQualificationTypeRelPersistence;
 	}
 
 	/**
@@ -1338,6 +1397,8 @@ public abstract class CommerceShipmentLocalServiceBaseImpl
 	protected com.liferay.commerce.service.CommerceCartItemLocalService commerceCartItemLocalService;
 	@BeanReference(type = CommerceCartItemPersistence.class)
 	protected CommerceCartItemPersistence commerceCartItemPersistence;
+	@BeanReference(type = CommerceCartItemFinder.class)
+	protected CommerceCartItemFinder commerceCartItemFinder;
 	@BeanReference(type = com.liferay.commerce.service.CommerceCountryLocalService.class)
 	protected com.liferay.commerce.service.CommerceCountryLocalService commerceCountryLocalService;
 	@BeanReference(type = CommerceCountryPersistence.class)
@@ -1368,6 +1429,10 @@ public abstract class CommerceShipmentLocalServiceBaseImpl
 	protected CommercePriceListPersistence commercePriceListPersistence;
 	@BeanReference(type = CommercePriceListFinder.class)
 	protected CommercePriceListFinder commercePriceListFinder;
+	@BeanReference(type = com.liferay.commerce.service.CommercePriceListQualificationTypeRelLocalService.class)
+	protected com.liferay.commerce.service.CommercePriceListQualificationTypeRelLocalService commercePriceListQualificationTypeRelLocalService;
+	@BeanReference(type = CommercePriceListQualificationTypeRelPersistence.class)
+	protected CommercePriceListQualificationTypeRelPersistence commercePriceListQualificationTypeRelPersistence;
 	@BeanReference(type = com.liferay.commerce.service.CommerceRegionLocalService.class)
 	protected com.liferay.commerce.service.CommerceRegionLocalService commerceRegionLocalService;
 	@BeanReference(type = CommerceRegionPersistence.class)

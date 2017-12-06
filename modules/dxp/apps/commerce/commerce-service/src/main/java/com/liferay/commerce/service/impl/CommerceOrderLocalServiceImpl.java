@@ -92,7 +92,7 @@ public class CommerceOrderLocalServiceImpl
 
 		for (CommerceCartItem commerceCartItem : commerceCartItems) {
 			double price = _commercePriceCalculator.getPrice(
-				commerceCartItem.getCPInstance(),
+				commerceCartItem.fetchCPInstance(),
 				commerceCartItem.getQuantity());
 
 			commerceOrderItemLocalService.addCommerceOrderItem(

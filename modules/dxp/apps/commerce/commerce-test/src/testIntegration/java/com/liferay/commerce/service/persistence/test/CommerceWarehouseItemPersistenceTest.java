@@ -171,17 +171,17 @@ public class CommerceWarehouseItemPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCPInstanceId() throws Exception {
-		_persistence.countByCPInstanceId(RandomTestUtil.nextLong());
-
-		_persistence.countByCPInstanceId(0L);
-	}
-
-	@Test
 	public void testCountByCommerceWarehouseId() throws Exception {
 		_persistence.countByCommerceWarehouseId(RandomTestUtil.nextLong());
 
 		_persistence.countByCommerceWarehouseId(0L);
+	}
+
+	@Test
+	public void testCountByCPInstanceId() throws Exception {
+		_persistence.countByCPInstanceId(RandomTestUtil.nextLong());
+
+		_persistence.countByCPInstanceId(0L);
 	}
 
 	@Test
@@ -432,13 +432,13 @@ public class CommerceWarehouseItemPersistenceTest {
 		CommerceWarehouseItem existingCommerceWarehouseItem = _persistence.findByPrimaryKey(newCommerceWarehouseItem.getPrimaryKey());
 
 		Assert.assertEquals(Long.valueOf(
-				existingCommerceWarehouseItem.getCPInstanceId()),
-			ReflectionTestUtil.<Long>invoke(existingCommerceWarehouseItem,
-				"getOriginalCPInstanceId", new Class<?>[0]));
-		Assert.assertEquals(Long.valueOf(
 				existingCommerceWarehouseItem.getCommerceWarehouseId()),
 			ReflectionTestUtil.<Long>invoke(existingCommerceWarehouseItem,
 				"getOriginalCommerceWarehouseId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(
+				existingCommerceWarehouseItem.getCPInstanceId()),
+			ReflectionTestUtil.<Long>invoke(existingCommerceWarehouseItem,
+				"getOriginalCPInstanceId", new Class<?>[0]));
 	}
 
 	protected CommerceWarehouseItem addCommerceWarehouseItem()

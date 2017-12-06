@@ -21,7 +21,6 @@ import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -115,7 +114,7 @@ public class CommerceShipmentCacheModel implements CacheModel<CommerceShipment>,
 		commerceShipmentImpl.setUserId(userId);
 
 		if (userName == null) {
-			commerceShipmentImpl.setUserName(StringPool.BLANK);
+			commerceShipmentImpl.setUserName("");
 		}
 		else {
 			commerceShipmentImpl.setUserName(userName);
@@ -140,14 +139,14 @@ public class CommerceShipmentCacheModel implements CacheModel<CommerceShipment>,
 		commerceShipmentImpl.setCommerceShippingMethodId(commerceShippingMethodId);
 
 		if (carrier == null) {
-			commerceShipmentImpl.setCarrier(StringPool.BLANK);
+			commerceShipmentImpl.setCarrier("");
 		}
 		else {
 			commerceShipmentImpl.setCarrier(carrier);
 		}
 
 		if (trackingNumber == null) {
-			commerceShipmentImpl.setTrackingNumber(StringPool.BLANK);
+			commerceShipmentImpl.setTrackingNumber("");
 		}
 		else {
 			commerceShipmentImpl.setTrackingNumber(trackingNumber);
@@ -215,7 +214,7 @@ public class CommerceShipmentCacheModel implements CacheModel<CommerceShipment>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -231,14 +230,14 @@ public class CommerceShipmentCacheModel implements CacheModel<CommerceShipment>,
 		objectOutput.writeLong(commerceShippingMethodId);
 
 		if (carrier == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(carrier);
 		}
 
 		if (trackingNumber == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(trackingNumber);

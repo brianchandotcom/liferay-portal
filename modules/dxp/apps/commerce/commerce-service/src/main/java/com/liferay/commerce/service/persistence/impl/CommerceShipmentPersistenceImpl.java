@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -301,7 +300,7 @@ public class CommerceShipmentPersistenceImpl extends BasePersistenceImpl<Commerc
 		msg.append("groupId=");
 		msg.append(groupId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchShipmentException(msg.toString());
 	}
@@ -352,7 +351,7 @@ public class CommerceShipmentPersistenceImpl extends BasePersistenceImpl<Commerc
 		msg.append("groupId=");
 		msg.append(groupId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchShipmentException(msg.toString());
 	}
@@ -1060,12 +1059,12 @@ public class CommerceShipmentPersistenceImpl extends BasePersistenceImpl<Commerc
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

@@ -82,4 +82,4 @@ create unique index IX_5D3847C2 on CommerceTierPriceEntry (uuid_[$COLUMN_LENGTH:
 create index IX_4500A0CA on CommerceWarehouse (groupId, commerceCountryId);
 
 create unique index IX_A8811A01 on CommerceWarehouseItem (CPInstanceId, commerceWarehouseId);
-create index IX_DA958B32 on CommerceWarehouseItem (commerceWarehouseId);
+create unique index IX_8FBE7F43 on CommerceWarehouseItem (commerceWarehouseId, CPInstanceId);

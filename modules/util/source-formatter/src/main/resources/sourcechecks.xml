@@ -128,7 +128,6 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/export-import/export-import-resources-importer" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/export-import/export-import-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/export-import/export-import-web" />
-			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/fragment/fragment-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/layout/layout-item-selector-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/layout/layout-page-template-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/portlet-display-template/portlet-display-template" />

@@ -764,9 +764,10 @@ public class JenkinsResultsParserUtil {
 			(ThreadPoolExecutor)Executors.newFixedThreadPool(maximumPoolSize);
 
 		if (autoShutDown) {
+			threadPoolExecutor.setKeepAliveTime(5, TimeUnit.SECONDS);
+
 			threadPoolExecutor.allowCoreThreadTimeOut(true);
 			threadPoolExecutor.setCorePoolSize(maximumPoolSize);
-			threadPoolExecutor.setKeepAliveTime(5, TimeUnit.SECONDS);
 			threadPoolExecutor.setMaximumPoolSize(maximumPoolSize);
 		}
 

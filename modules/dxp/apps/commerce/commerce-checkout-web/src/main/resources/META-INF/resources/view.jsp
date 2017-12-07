@@ -61,7 +61,7 @@ int step = 1;
 	<portlet:param name="commerceCartId" value="<%= String.valueOf(checkoutDisplayContext.getCommerceCartId()) %>" />
 </portlet:renderURL>
 
-<aui:form action="<%= saveStepURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCheckoutStep();" %>'>
+<aui:form action="<%= saveStepURL %>" data-senna-off="<%= checkoutDisplayContext.isSennaDisabled() %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCheckoutStep();" %>'>
 	<aui:input name="checkoutStepName" type="hidden" value="<%= checkoutDisplayContext.getCurrentCheckoutStepName() %>" />
 	<aui:input name="commerceCartId" type="hidden" value="<%= checkoutDisplayContext.getCommerceCartId() %>" />
 	<aui:input name="redirect" type="hidden" value="<%= nextStepURL.toString() %>" />

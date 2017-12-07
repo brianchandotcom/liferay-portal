@@ -78,6 +78,11 @@ public class PaymentMethodCommerceCheckoutStep implements CommerceCheckoutStep {
 	}
 
 	@Override
+	public boolean isSennaDisabled() {
+		return false;
+	}
+
+	@Override
 	public boolean isVisible(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)

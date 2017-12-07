@@ -90,6 +90,11 @@ public class OrderSummaryCommerceCheckoutStep implements CommerceCheckoutStep {
 	}
 
 	@Override
+	public boolean isSennaDisabled() {
+		return true;
+	}
+
+	@Override
 	public boolean isVisible(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)

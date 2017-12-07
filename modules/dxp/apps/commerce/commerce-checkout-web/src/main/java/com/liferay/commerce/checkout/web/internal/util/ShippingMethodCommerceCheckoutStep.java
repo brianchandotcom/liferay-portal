@@ -101,6 +101,11 @@ public class ShippingMethodCommerceCheckoutStep
 	}
 
 	@Override
+	public boolean isSennaDisabled() {
+		return false;
+	}
+
+	@Override
 	public boolean isVisible(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)

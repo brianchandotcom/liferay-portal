@@ -125,6 +125,10 @@ public class CheckoutDisplayContext {
 		return false;
 	}
 
+	public boolean isSennaDisabled() {
+		return _currentCheckoutStep.isSennaDisabled();
+	}
+
 	public void renderCurrentCheckoutStep() throws Exception {
 		_currentCheckoutStep.render(_httpServletRequest, _httpServletResponse);
 	}

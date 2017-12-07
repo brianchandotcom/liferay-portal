@@ -36,6 +36,8 @@ public interface CommerceCheckoutStep {
 			HttpServletResponse httpServletResponse)
 		throws Exception;
 
+	public boolean isSennaDisabled();
+
 	public boolean isVisible(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)

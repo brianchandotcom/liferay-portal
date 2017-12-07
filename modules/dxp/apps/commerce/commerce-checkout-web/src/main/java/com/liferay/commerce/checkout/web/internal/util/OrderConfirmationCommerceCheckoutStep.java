@@ -74,6 +74,11 @@ public class OrderConfirmationCommerceCheckoutStep
 	}
 
 	@Override
+	public boolean isSennaDisabled() {
+		return false;
+	}
+
+	@Override
 	public boolean isVisible(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)

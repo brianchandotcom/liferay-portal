@@ -40,6 +40,8 @@ $compat-utilities: true !default;
 
 @import "clay/variables/icons";
 
+$nav-link-color: $navbar-light-color !default;
+
 // Navbar
 
 $navbar-border-bottom-width: 0.0625rem !default;

@@ -255,6 +255,15 @@ public interface AnnouncementsDeliveryLocalService extends BaseLocalService,
 		AnnouncementsDelivery announcementsDelivery);
 
 	public AnnouncementsDelivery updateDelivery(long userId,
+		java.lang.String type, boolean email, boolean sms)
+		throws PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	#updateDelivery(long, String, boolean, boolean)}
+	*/
+	@java.lang.Deprecated
+	public AnnouncementsDelivery updateDelivery(long userId,
 		java.lang.String type, boolean email, boolean sms, boolean website)
 		throws PortalException;
 }

@@ -19,6 +19,8 @@ package com.liferay.wiki.constants;
  */
 public class WikiConstants {
 
+	public static final String RESOURCE_NAME = "com.liferay.wiki";
+
 	public static final String SERVICE_NAME = "com.liferay.wiki";
 
 }

@@ -36,6 +36,12 @@ import com.liferay.calendar.recurrence.Weekday;
 import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.CalendarResourceLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.expando.kernel.model.ExpandoRow;
+import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.model.ExpandoValue;
+import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.message.boards.kernel.model.MBDiscussion;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageConstants;
@@ -842,8 +848,9 @@ public class CalEventImporter {
 
 		_resourcePermissionLocalService.setResourcePermissions(
 			calendarBooking.getCompanyId(), CalendarBooking.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(calendarBooking),
-			resourcePermission.getRoleId(), actionIds);
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(calendarBookingId), resourcePermission.getRoleId(),
+			actionIds);
 	}
 
 	protected void importCalendarBookingResourcePermissions(
@@ -992,6 +999,10 @@ public class CalEventImporter {
 
 		importSocialActivities(eventId, calendarBookingId);
 
+		// Expando custom fileds
+
+		importExpandoAttributes(companyId, eventId, calendarBookingId);
+
 		return calendarBooking;
 	}
 
@@ -1045,6 +1056,41 @@ public class CalEventImporter {
 				}
 			}
 		}
+	}
+
+	protected void importExpandoAttributes(
+			long companyId, long eventId, long calendarBookingId)
+		throws PortalException {
+
+		long oldClassNameId = _classNameLocalService.getClassNameId(
+			_CLASS_NAME);
+
+		long calendarBookingClassNameId = _classNameLocalService.getClassNameId(
+			CalendarBooking.class);
+
+		ExpandoTable expandoTable = _expandoTableLocalService.getTable(
+			companyId, oldClassNameId, "CUSTOM_FIELDS");
+
+		ExpandoRow expandoRow = _expandoRowLocalService.fetchRow(
+			expandoTable.getTableId(), eventId);
+
+		List<ExpandoValue> expandoValueList =
+			_expandoValueLocalService.getRowValues(expandoRow.getRowId());
+
+		for (ExpandoValue expandoValue : expandoValueList) {
+			expandoValue.setClassNameId(calendarBookingClassNameId);
+			expandoValue.setClassPK(calendarBookingId);
+
+			_expandoValueLocalService.updateExpandoValue(expandoValue);
+		}
+
+		expandoRow.setClassPK(calendarBookingId);
+
+		_expandoRowLocalService.updateExpandoRow(expandoRow);
+
+		expandoTable.setClassNameId(calendarBookingClassNameId);
+
+		_expandoTableLocalService.updateExpandoTable(expandoTable);
 	}
 
 	protected void importMBDiscussion(long eventId, long calendarBookingId)
@@ -1459,6 +1505,16 @@ public class CalEventImporter {
 	private CalendarResourceLocalService _calendarResourceLocalService;
 	private ClassNameLocalService _classNameLocalService;
 	private CounterLocalService _counterLocalService;
+
+	@Reference(unbind = "-")
+	private ExpandoRowLocalService _expandoRowLocalService;
+
+	@Reference(unbind = "-")
+	private ExpandoTableLocalService _expandoTableLocalService;
+
+	@Reference(unbind = "-")
+	private ExpandoValueLocalService _expandoValueLocalService;
+
 	private GroupLocalService _groupLocalService;
 	private JSONSerializer _jsonSerializer;
 	private MBDiscussionLocalService _mbDiscussionLocalService;

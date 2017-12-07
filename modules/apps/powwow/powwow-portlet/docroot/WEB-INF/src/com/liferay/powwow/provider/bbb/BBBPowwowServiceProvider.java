@@ -14,7 +14,6 @@
 
 package com.liferay.powwow.provider.bbb;
 
-import com.liferay.petra.content.ContentUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,6 +25,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -34,6 +34,7 @@ import com.liferay.powwow.model.PowwowParticipantConstants;
 import com.liferay.powwow.model.PowwowServer;
 import com.liferay.powwow.provider.BasePowwowServiceProvider;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -138,12 +139,7 @@ public class BBBPowwowServiceProvider extends BasePowwowServiceProvider {
 		sb.append("&name=");
 		sb.append(HtmlUtil.escapeURL(name));
 		sb.append("&welcome=");
-
-		String welcomeMessage = ContentUtil.get(
-			BBBPowwowServiceProvider.class.getClassLoader(),
-			"com/liferay/powwow/dependencies/meeting_welcome_message.tmpl");
-
-		sb.append(HtmlUtil.escapeURL(welcomeMessage));
+		sb.append(_WELCOME_MESSAGE_TEMPLATE);
 
 		Document document = execute(powwowServer, "create", sb.toString());
 
@@ -403,8 +399,24 @@ public class BBBPowwowServiceProvider extends BasePowwowServiceProvider {
 		return providerTypeMetadataMap;
 	}
 
+	private static final String _WELCOME_MESSAGE_TEMPLATE;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BBBPowwowServiceProvider.class);
+
+	static {
+		try {
+			String welcomeMessageTemplate = StringUtil.read(
+				BBBPowwowServiceProvider.class.getClassLoader(),
+				"com/liferay/powwow/dependencies/meeting_welcome_message.tmpl");
+
+			_WELCOME_MESSAGE_TEMPLATE = HtmlUtil.escapeURL(
+				welcomeMessageTemplate);
+		}
+		catch (IOException ioe) {
+			throw new ExceptionInInitializerError(ioe);
+		}
+	}
 
 	private List<String> _brandingFeatures;
 

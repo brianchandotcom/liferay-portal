@@ -24,7 +24,6 @@ import com.liferay.calendar.notification.NotificationType;
 import com.liferay.calendar.service.configuration.CalendarServiceConfigurationKeys;
 import com.liferay.calendar.service.configuration.CalendarServiceConfigurationUtil;
 import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
-import com.liferay.petra.content.ContentUtil;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
@@ -35,8 +34,11 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -85,8 +87,15 @@ public class NotificationUtil {
 		String templatePath = CalendarServiceConfigurationUtil.get(
 			propertyName, filter);
 
-		return ContentUtil.get(
-			NotificationUtil.class.getClassLoader(), templatePath);
+		try {
+			return StringUtil.read(
+				NotificationUtil.class.getClassLoader(), templatePath);
+		}
+		catch (IOException ioe) {
+			_log.error(ioe, ioe);
+		}
+
+		return null;
 	}
 
 	public static String getTemplate(

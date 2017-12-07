@@ -16,7 +16,6 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
 import com.liferay.expando.kernel.model.CustomAttributesDisplay;
-import com.liferay.petra.content.ContentUtil;
 import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.application.type.ApplicationType;
@@ -101,6 +100,8 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
+
+import java.io.IOException;
 
 import java.net.URL;
 
@@ -1395,11 +1396,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		PortletCategory portletCategory = new PortletCategory();
 
 		if (xml == null) {
-			Class<?> clazz = getClass();
-
-			xml = ContentUtil.get(
-				clazz.getClassLoader(),
-				"com/liferay/portal/deploy/dependencies/liferay-display.xml");
+			xml = _LIFERAY_DISPLAY_XML;
 		}
 
 		Document document = UnsecureSAXReaderUtil.read(xml, true);
@@ -2688,6 +2685,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		}
 	}
 
+	private static final String _LIFERAY_DISPLAY_XML;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletLocalServiceImpl.class);
 
@@ -2700,6 +2699,17 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		new ConcurrentHashMap<>();
 	private static final Map<ClassLoader, Configuration>
 		_propertiesConfigurations = new ConcurrentHashMap<>();
+
+	static {
+		try {
+			_LIFERAY_DISPLAY_XML = StringUtil.read(
+				PortletLocalServiceImpl.class.getClassLoader(),
+				"com/liferay/portal/deploy/dependencies/liferay-display.xml");
+		}
+		catch (IOException ioe) {
+			throw new ExceptionInInitializerError(ioe);
+		}
+	}
 
 	private final AtomicReference<String[]> _friendlyURLMapperRootPortletIds =
 		new AtomicReference<>(new String[0]);

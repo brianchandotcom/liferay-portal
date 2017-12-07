@@ -26,7 +26,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.map.constants.MapProviderWebKeys" %><%@
-page import="com.liferay.petra.content.ContentUtil" %><%@
 page import="com.liferay.portal.kernel.exception.AccountNameException" %><%@
 page import="com.liferay.portal.kernel.exception.CompanyMxException" %><%@
 page import="com.liferay.portal.kernel.exception.CompanyVirtualHostException" %><%@
@@ -74,6 +73,8 @@ page import="com.liferay.ratings.kernel.display.context.CompanyPortletRatingsDef
 page import="com.liferay.ratings.kernel.transformer.RatingsDataTransformerUtil" %><%@
 page import="com.liferay.sites.kernel.util.Sites" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponse" %>
+
+<%@ page import="java.io.IOException" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Collection" %><%@

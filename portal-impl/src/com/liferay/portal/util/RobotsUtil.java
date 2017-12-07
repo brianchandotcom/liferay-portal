@@ -14,7 +14,6 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.petra.content.ContentUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -22,6 +21,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.io.IOException;
 
 /**
  * @author David Truong
@@ -34,18 +35,11 @@ public class RobotsUtil {
 
 	public static String getDefaultRobots(String virtualHost) {
 		if (Validator.isNotNull(virtualHost)) {
-			String content = ContentUtil.get(
-				RobotsUtil.class.getClassLoader(),
-				PropsValues.ROBOTS_TXT_WITH_SITEMAP);
-
-			content = StringUtil.replace(content, "[$HOST$]", virtualHost);
-
-			return content;
+			return StringUtil.replace(
+				_ROBOTS_TXT_WITH_SITEMAP, "[$HOST$]", virtualHost);
 		}
 
-		return ContentUtil.get(
-			RobotsUtil.class.getClassLoader(),
-			PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP);
+		return _ROBOTS_TXT_WITHOUT_SITEMAP;
 	}
 
 	public static String getRobots(LayoutSet layoutSet) throws PortalException {
@@ -59,6 +53,24 @@ public class RobotsUtil {
 			group.getTypeSettingsProperty(
 				layoutSet.isPrivateLayout() + "-robots.txt"),
 			getDefaultRobots(PortalUtil.getVirtualHostname(layoutSet)));
+	}
+
+	private static final String _ROBOTS_TXT_WITH_SITEMAP;
+
+	private static final String _ROBOTS_TXT_WITHOUT_SITEMAP;
+
+	static {
+		try {
+			_ROBOTS_TXT_WITH_SITEMAP = StringUtil.read(
+				RobotsUtil.class.getClassLoader(),
+				PropsValues.ROBOTS_TXT_WITH_SITEMAP);
+			_ROBOTS_TXT_WITHOUT_SITEMAP = StringUtil.read(
+				RobotsUtil.class.getClassLoader(),
+				PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP);
+		}
+		catch (IOException ioe) {
+			throw new ExceptionInInitializerError(ioe);
+		}
 	}
 
 }

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.petra.content.ContentUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -41,6 +40,8 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.util.xml.XMLUtil;
+
+import java.io.IOException;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -456,8 +457,14 @@ public class LocalizationImpl implements Localization {
 			return map;
 		}
 
-		map.put(
-			defaultLocale, ContentUtil.get(classLoader, defaultPropertyValue));
+		try {
+			map.put(
+				defaultLocale,
+				StringUtil.read(classLoader, defaultPropertyValue));
+		}
+		catch (IOException ioe) {
+			_log.error(ioe, ioe);
+		}
 
 		return map;
 	}

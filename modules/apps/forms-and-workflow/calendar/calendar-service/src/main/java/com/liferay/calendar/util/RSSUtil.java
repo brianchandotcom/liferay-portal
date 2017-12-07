@@ -16,11 +16,12 @@ package com.liferay.calendar.util;
 
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
-import com.liferay.petra.content.ContentUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+
+import java.io.IOException;
 
 import java.text.Format;
 
@@ -44,17 +45,13 @@ public class RSSUtil extends com.liferay.rss.util.RSSUtil {
 			return calendarBooking.getTitle(themeDisplay.getLocale());
 		}
 
-		String content = ContentUtil.get(
-			RSSUtil.class.getClassLoader(),
-			CalendarServiceConfigurationValues.CALENDAR_RSS_TEMPLATE);
-
 		Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
 			themeDisplay.getLocale(),
 			CalendarUtil.getCalendarBookingDisplayTimeZone(
 				calendarBooking, themeDisplay.getTimeZone()));
 
-		content = StringUtil.replace(
-			content,
+		return StringUtil.replace(
+			_CALENDAR_RSS_TEMPLATE,
 			new String[] {
 				"[$EVENT_DESCRIPTION$]", "[$EVENT_END_DATE$]",
 				"[$EVENT_LOCATION$]", "[$EVENT_START_DATE$]", "[$EVENT_TITLE$]"
@@ -66,8 +63,19 @@ public class RSSUtil extends com.liferay.rss.util.RSSUtil {
 				dateFormatDateTime.format(calendarBooking.getStartTime()),
 				calendarBooking.getTitle(themeDisplay.getLocale())
 			});
+	}
 
-		return content;
+	private static final String _CALENDAR_RSS_TEMPLATE;
+
+	static {
+		try {
+			_CALENDAR_RSS_TEMPLATE = StringUtil.read(
+				RSSUtil.class.getClassLoader(),
+				CalendarServiceConfigurationValues.CALENDAR_RSS_TEMPLATE);
+		}
+		catch (IOException ioe) {
+			throw new ExceptionInInitializerError(ioe);
+		}
 	}
 
 }

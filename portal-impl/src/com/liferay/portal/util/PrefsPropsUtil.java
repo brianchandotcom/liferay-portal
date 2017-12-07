@@ -14,8 +14,9 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.petra.content.ContentUtil;
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -24,6 +25,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.PortalPreferencesWrapper;
 import com.liferay.portlet.PortalPreferencesWrapperCacheUtil;
+
+import java.io.IOException;
 
 import java.util.Enumeration;
 import java.util.Properties;
@@ -123,8 +126,15 @@ public class PrefsPropsUtil {
 			return value;
 		}
 
-		return ContentUtil.get(
-			PrefsPropsUtil.class.getClassLoader(), PropsUtil.get(name));
+		try {
+			return StringUtil.read(
+				PrefsPropsUtil.class.getClassLoader(), PropsUtil.get(name));
+		}
+		catch (IOException ioe) {
+			_log.error(ioe, ioe);
+		}
+
+		return null;
 	}
 
 	public static String getContent(String name) {
@@ -740,6 +750,8 @@ public class PrefsPropsUtil {
 
 		return null;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(PrefsPropsUtil.class);
 
 	@BeanReference(type = PortalPreferencesLocalService.class)
 	private static PortalPreferencesLocalService _portalPreferencesLocalService;

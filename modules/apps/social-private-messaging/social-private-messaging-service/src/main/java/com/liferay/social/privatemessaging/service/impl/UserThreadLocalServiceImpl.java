@@ -18,7 +18,6 @@ import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageConstants;
-import com.liferay.petra.content.ContentUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
@@ -467,7 +466,7 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 		PrivateMessagingConfiguration privateMessagingConfiguration =
 			getPrivateMessagingConfiguration(themeDisplay.getCompanyId());
 
-		String subject = ContentUtil.get(
+		String subject = StringUtil.read(
 			UserThreadLocalServiceImpl.class.getClassLoader(),
 			privateMessagingConfiguration.emailSubject());
 
@@ -475,7 +474,7 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 			subject, new String[] {"[$COMPANY_NAME$]", "[$FROM_NAME$]"},
 			new String[] {company.getName(), sender.getFullName()});
 
-		String body = ContentUtil.get(
+		String body = StringUtil.read(
 			UserThreadLocalServiceImpl.class.getClassLoader(),
 			privateMessagingConfiguration.emailBody());
 

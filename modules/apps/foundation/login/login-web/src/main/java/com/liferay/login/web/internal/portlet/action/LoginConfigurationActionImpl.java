@@ -15,11 +15,14 @@
 package com.liferay.login.web.internal.portlet.action;
 
 import com.liferay.login.web.internal.constants.LoginPortletKeys;
-import com.liferay.petra.content.ContentUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
+
+import java.io.IOException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -53,27 +56,19 @@ public class LoginConfigurationActionImpl extends DefaultConfigurationAction {
 		removeDefaultValue(
 			portletRequest, portletPreferences,
 			"emailPasswordResetBody_" + languageId,
-			ContentUtil.get(
-				LoginConfigurationActionImpl.class.getClassLoader(),
-				PropsValues.ADMIN_EMAIL_PASSWORD_RESET_BODY));
+			_ADMIN_EMAIL_PASSWORD_RESET_BODY);
 		removeDefaultValue(
 			portletRequest, portletPreferences,
 			"emailPasswordResetSubject_" + languageId,
-			ContentUtil.get(
-				LoginConfigurationActionImpl.class.getClassLoader(),
-				PropsValues.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT));
+			_ADMIN_EMAIL_PASSWORD_RESET_SUBJECT);
 		removeDefaultValue(
 			portletRequest, portletPreferences,
 			"emailPasswordSentBody_" + languageId,
-			ContentUtil.get(
-				LoginConfigurationActionImpl.class.getClassLoader(),
-				PropsValues.ADMIN_EMAIL_PASSWORD_SENT_BODY));
+			_ADMIN_EMAIL_PASSWORD_SENT_BODY);
 		removeDefaultValue(
 			portletRequest, portletPreferences,
 			"emailPasswordSentSubject_" + languageId,
-			ContentUtil.get(
-				LoginConfigurationActionImpl.class.getClassLoader(),
-				PropsValues.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT));
+			_ADMIN_EMAIL_PASSWORD_SENT_SUBJECT);
 	}
 
 	@Override
@@ -85,6 +80,34 @@ public class LoginConfigurationActionImpl extends DefaultConfigurationAction {
 		validateEmailFrom(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
+	}
+
+	private static final String _ADMIN_EMAIL_PASSWORD_RESET_BODY;
+
+	private static final String _ADMIN_EMAIL_PASSWORD_RESET_SUBJECT;
+
+	private static final String _ADMIN_EMAIL_PASSWORD_SENT_BODY;
+
+	private static final String _ADMIN_EMAIL_PASSWORD_SENT_SUBJECT;
+
+	static {
+		try {
+			_ADMIN_EMAIL_PASSWORD_RESET_BODY = StringUtil.read(
+				PortalClassLoaderUtil.getClassLoader(),
+				PropsValues.ADMIN_EMAIL_PASSWORD_RESET_BODY);
+			_ADMIN_EMAIL_PASSWORD_RESET_SUBJECT = StringUtil.read(
+				PortalClassLoaderUtil.getClassLoader(),
+				PropsValues.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT);
+			_ADMIN_EMAIL_PASSWORD_SENT_BODY = StringUtil.read(
+				PortalClassLoaderUtil.getClassLoader(),
+				PropsValues.ADMIN_EMAIL_PASSWORD_SENT_BODY);
+			_ADMIN_EMAIL_PASSWORD_SENT_SUBJECT = StringUtil.read(
+				PortalClassLoaderUtil.getClassLoader(),
+				PropsValues.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT);
+		}
+		catch (IOException ioe) {
+			throw new ExceptionInInitializerError(ioe);
+		}
 	}
 
 }

@@ -22,6 +22,7 @@
 		<orderEntry type="module" module-name="petra-process" scope="PROVIDED" />
 		<orderEntry type="module" module-name="petra-reflect" scope="PROVIDED" />
 		<orderEntry type="module" module-name="petra-string" scope="PROVIDED" />
+		<orderEntry type="module" module-name="petra-xml" scope="PROVIDED" />
 		<orderEntry type="module" module-name="portal-kernel" />
 		<orderEntry type="module" module-name="portal-impl" />
 		<orderEntry type="module" module-name="portal-test" />

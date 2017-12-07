@@ -15,6 +15,7 @@
 package com.liferay.util.xml;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.xml.DocUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;

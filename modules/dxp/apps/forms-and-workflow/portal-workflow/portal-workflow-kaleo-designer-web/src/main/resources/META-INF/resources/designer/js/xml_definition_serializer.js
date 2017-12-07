@@ -17,6 +17,10 @@ AUI.add(
 
 		var STR_BLANK = '';
 
+		var isNotEmptyValue = function(item) {
+			return isValue(item) && (item !== STR_BLANK);
+		};
+
 		var serializeDefinition = function(xmlNamespace, metadata, json) {
 			var xml = toXML(xmlNamespace, metadata, json);
 
@@ -315,10 +319,6 @@ AUI.add(
 						}
 
 						var recipientsAttrs = {};
-
-						var isNotEmptyValue = function(item) {
-							return isValue(item) && (item !== "");
-						};
 
 						if (recipients[index].receptionType && AArray.some(recipients[index].receptionType, isNotEmptyValue)) {
 							recipientsAttrs.receptionType = recipients[index].receptionType;

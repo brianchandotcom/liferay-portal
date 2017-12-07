@@ -1876,6 +1876,93 @@
 		<execute macro="FormsAdmin#viewNoFormEntries" />
 	</command>
 
+	<command name="SelectAndRemoveMultipleOptionsInSelectFromListField" priority="4">
+		<description message="This is a use case for LPS-76079." />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoAddForm" />
+
+		<execute macro="Form#editName" />
+
+		<execute macro="Form#gotoAddField">
+			<var name="fieldType" value="Select from List" />
+		</execute>
+
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="Select" />
+		</execute>
+
+		<for list="1,2,3,4" param="number">
+			<execute macro="FormFields#editOptionsRow">
+				<var name="optionName" value="Select${number}" />
+				<var name="optionValue" value="Select ${number}" />
+				<var name="rowNumber" value="${number}" />
+			</execute>
+
+			<execute macro="FormFields#viewOptionsRowFieldName">
+				<var name="fieldName" value="Select${number}" />
+				<var name="rowNumber" value="${number}" />
+			</execute>
+		</for>
+
+		<execute macro="Form#gotoAdvancedTab" />
+
+		<execute macro="FormFields#enableSwitcher">
+			<var name="fieldName" value="multiple" />
+		</execute>
+
+		<execute macro="Form#closeSidebar" />
+
+		<execute macro="Form#publishForm" />
+
+		<execute macro="FormsAdminNavigator#gotoPublishedForm" />
+
+		<execute macro="FormFields#selectSelectWithMultipleOptions">
+			<var name="fieldName" value="Select" />
+			<var name="selectOptionsList" value="Select 1,Select 2,Select 3" />
+		</execute>
+
+		<execute macro="FormFields#removeSelectOption">
+			<var name="fieldName" value="Select" />
+			<var name="selectOption" value="Select 1" />
+		</execute>
+
+		<execute macro="FormFields#removeSelectOptionViaDropdown">
+			<var name="fieldName" value="Select" />
+			<var name="selectOption" value="Select 2" />
+		</execute>
+
+		<execute macro="FormFields#selectSelectWithMultipleOptions">
+			<var name="fieldName" value="Select" />
+			<var name="selectOptionsList" value="Select 4" />
+		</execute>
+
+		<execute macro="FormFields#viewSelectMultipleOptions">
+			<var name="fieldName" value="Select" />
+			<var name="selectOptionsList" value="Select 3,Select 4" />
+		</execute>
+
+		<execute macro="FormPortlet#submitSuccessfully" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoViewEntries" />
+
+		<execute macro="FormsAdmin#viewFormTableEntry">
+			<var name="fieldLabel" value="Select" />
+			<var name="fieldValue" value="Select 3, Select 4" />
+		</execute>
+	</command>
+
 	<command name="SubmitForm3x3Layout" priority="4">
 		<execute macro="Navigator#openURL" />
 
@@ -4074,16 +4161,7 @@
 
 		<execute macro="Form#publishForm" />
 
-		<execute macro="FormsAdminNavigator#gotoPublishCopyURLLink" />
-
-		<execute macro="Form#getPublishedFormPublicURL">
-			<return from="publicURL" name="publishedFormPublicURL" />
-			<var name="publishedFormPublicURL" value="${publishedFormPublicURL}" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${publishedFormPublicURL}" />
-		</execute>
+		<execute macro="FormsAdminNavigator#gotoPublishedForm" />
 
 		<execute macro="FormFields#viewUploadField">
 			<var name="fieldLabel" value="Upload Field" />
@@ -4149,16 +4227,7 @@
 
 		<execute macro="Form#publishForm" />
 
-		<execute macro="FormsAdminNavigator#gotoPublishCopyURLLink" />
-
-		<execute macro="Form#getPublishedFormPublicURL">
-			<return from="publicURL" name="publishedFormPublicURL" />
-			<var name="publishedFormPublicURL" value="${publishedFormPublicURL}" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${publishedFormPublicURL}" />
-		</execute>
+		<execute macro="FormsAdminNavigator#gotoPublishedForm" />
 
 		<execute macro="FormFields#viewDateField">
 			<var name="fieldLabel" value="Date Field" />
@@ -4539,16 +4608,7 @@
 
 		<execute macro="Form#publishForm" />
 
-		<execute macro="FormsAdminNavigator#gotoPublishCopyURLLink" />
-
-		<execute macro="Form#getPublishedFormPublicURL">
-			<return from="publicURL" name="publishedFormPublicURL" />
-			<var name="publishedFormPublicURL" value="${publishedFormPublicURL}" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${publishedFormPublicURL}" />
-		</execute>
+		<execute macro="FormsAdminNavigator#gotoPublishedForm" />
 
 		<execute macro="FormFields#editText">
 			<var name="fieldName" value="TextField" />

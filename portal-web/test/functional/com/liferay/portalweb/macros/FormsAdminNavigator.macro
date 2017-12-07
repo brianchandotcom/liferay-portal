@@ -95,6 +95,19 @@
 		<execute function="Click" locator1="Form#PUBLISH_ICON" />
 	</command>
 
+	<command name="gotoPublishedForm">
+		<execute macro="FormsAdminNavigator#gotoPublishCopyURLLink" />
+
+		<execute macro="Form#getPublishedFormPublicURL">
+			<return from="publicURL" name="publishedFormPublicURL" />
+			<var name="publishedFormPublicURL" value="${publishedFormPublicURL}" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${publishedFormPublicURL}" />
+		</execute>
+	</command>
+
 	<command name="gotoRules">
 		<var name="key_assetTitle" value="Rules" />
 

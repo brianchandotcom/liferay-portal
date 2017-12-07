@@ -39,6 +39,7 @@
 			</then>
 			<else>
 				<execute function="Click" locator1="Form#PUBLISH_URL_FORM_PAGE" />
+				<execute function="Click" locator1="Form#PUBLISH_URL_FORM_PAGE" />
 			</else>
 		</if>
 

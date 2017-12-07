@@ -355,16 +355,7 @@
 
 		<execute macro="Form#publishForm" />
 
-		<execute macro="FormsAdminNavigator#gotoPublishCopyURLLink" />
-
-		<execute macro="Form#getPublishedFormPublicURL">
-			<return from="publicURL" name="publishedFormPublicURL" />
-			<var name="publishedFormPublicURL" value="${publishedFormPublicURL}" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${publishedFormPublicURL}" />
-		</execute>
+		<execute macro="FormsAdminNavigator#gotoPublishedForm" />
 
 		<execute macro="FormFields#viewSelectOptionsList">
 			<var name="fieldName" value="Countries" />

@@ -120,7 +120,8 @@ public class CPMeasurementUnitLocalServiceImpl
 	public List<CPMeasurementUnit> getCPMeasurementUnits(
 		long groupId, String[] keys, int type) {
 
-		List<CPMeasurementUnit> cpMeasurementUnits = new ArrayList<>();
+		List<CPMeasurementUnit> cpMeasurementUnits = new ArrayList<>(
+			keys.length);
 
 		for (String key : keys) {
 			CPMeasurementUnit cpMeasurementUnit =

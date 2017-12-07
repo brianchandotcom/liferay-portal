@@ -50,7 +50,8 @@ public class FragmentCollectionDemoDataCreatorImpl
 			_fragmentCollectionLocalService.addFragmentCollection(
 				userId, groupId, name, null, serviceContext);
 
-		_fragmentCollectionIds.add(fragmentCollection.getFragmentCollectionId());
+		_fragmentCollectionIds.add(
+			fragmentCollection.getFragmentCollectionId());
 
 		return fragmentCollection;
 	}

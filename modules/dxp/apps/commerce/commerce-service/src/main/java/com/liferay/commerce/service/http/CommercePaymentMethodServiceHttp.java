@@ -124,12 +124,45 @@ public class CommercePaymentMethodServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommercePaymentMethod getCommercePaymentMethod(
+		HttpPrincipal httpPrincipal, long commercePaymentMethodId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommercePaymentMethodServiceUtil.class,
+					"getCommercePaymentMethod",
+					_getCommercePaymentMethodParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commercePaymentMethodId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.model.CommercePaymentMethod)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.util.List<com.liferay.commerce.model.CommercePaymentMethod> getCommercePaymentMethods(
 		HttpPrincipal httpPrincipal, long groupId, boolean active) {
 		try {
 			MethodKey methodKey = new MethodKey(CommercePaymentMethodServiceUtil.class,
 					"getCommercePaymentMethods",
-					_getCommercePaymentMethodsParameterTypes2);
+					_getCommercePaymentMethodsParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					active);
@@ -163,7 +196,7 @@ public class CommercePaymentMethodServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommercePaymentMethodServiceUtil.class,
 					"updateCommercePaymentMethod",
-					_updateCommercePaymentMethodParameterTypes3);
+					_updateCommercePaymentMethodParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commercePaymentMethodId, nameMap, descriptionMap,
@@ -200,10 +233,13 @@ public class CommercePaymentMethodServiceHttp {
 	private static final Class<?>[] _deleteCommercePaymentMethodParameterTypes1 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCommercePaymentMethodsParameterTypes2 = new Class[] {
+	private static final Class<?>[] _getCommercePaymentMethodParameterTypes2 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _getCommercePaymentMethodsParameterTypes3 = new Class[] {
 			long.class, boolean.class
 		};
-	private static final Class<?>[] _updateCommercePaymentMethodParameterTypes3 = new Class[] {
+	private static final Class<?>[] _updateCommercePaymentMethodParameterTypes4 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
 			java.util.Map.class, double.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class

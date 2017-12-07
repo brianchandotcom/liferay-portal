@@ -59,6 +59,12 @@ public class CommercePaymentMethodServiceUtil {
 		getService().deleteCommercePaymentMethod(commercePaymentMethodId);
 	}
 
+	public static com.liferay.commerce.model.CommercePaymentMethod getCommercePaymentMethod(
+		long commercePaymentMethodId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommercePaymentMethod(commercePaymentMethodId);
+	}
+
 	public static java.util.List<com.liferay.commerce.model.CommercePaymentMethod> getCommercePaymentMethods(
 		long groupId, boolean active) {
 		return getService().getCommercePaymentMethods(groupId, active);

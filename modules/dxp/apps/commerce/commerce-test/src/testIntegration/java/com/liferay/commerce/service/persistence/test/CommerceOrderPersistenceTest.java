@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -56,6 +57,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -123,6 +125,8 @@ public class CommerceOrderPersistenceTest {
 
 		CommerceOrder newCommerceOrder = _persistence.create(pk);
 
+		newCommerceOrder.setUuid(RandomTestUtil.randomString());
+
 		newCommerceOrder.setGroupId(RandomTestUtil.nextLong());
 
 		newCommerceOrder.setCompanyId(RandomTestUtil.nextLong());
@@ -153,12 +157,18 @@ public class CommerceOrderPersistenceTest {
 
 		newCommerceOrder.setTotal(RandomTestUtil.nextDouble());
 
+		newCommerceOrder.setPaymentStatus(RandomTestUtil.nextInt());
+
+		newCommerceOrder.setShippingStatus(RandomTestUtil.nextInt());
+
 		newCommerceOrder.setStatus(RandomTestUtil.nextInt());
 
 		_commerceOrders.add(_persistence.update(newCommerceOrder));
 
 		CommerceOrder existingCommerceOrder = _persistence.findByPrimaryKey(newCommerceOrder.getPrimaryKey());
 
+		Assert.assertEquals(existingCommerceOrder.getUuid(),
+			newCommerceOrder.getUuid());
 		Assert.assertEquals(existingCommerceOrder.getCommerceOrderId(),
 			newCommerceOrder.getCommerceOrderId());
 		Assert.assertEquals(existingCommerceOrder.getGroupId(),
@@ -193,8 +203,39 @@ public class CommerceOrderPersistenceTest {
 			newCommerceOrder.getShippingPrice());
 		AssertUtils.assertEquals(existingCommerceOrder.getTotal(),
 			newCommerceOrder.getTotal());
+		Assert.assertEquals(existingCommerceOrder.getPaymentStatus(),
+			newCommerceOrder.getPaymentStatus());
+		Assert.assertEquals(existingCommerceOrder.getShippingStatus(),
+			newCommerceOrder.getShippingStatus());
 		Assert.assertEquals(existingCommerceOrder.getStatus(),
 			newCommerceOrder.getStatus());
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid("");
+
+		_persistence.countByUuid("null");
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUUID_G() throws Exception {
+		_persistence.countByUUID_G("", RandomTestUtil.nextLong());
+
+		_persistence.countByUUID_G("null", 0L);
+
+		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C("null", 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -227,14 +268,14 @@ public class CommerceOrderPersistenceTest {
 	}
 
 	protected OrderByComparator<CommerceOrder> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("CommerceOrder",
-			"commerceOrderId", true, "groupId", true, "companyId", true,
+		return OrderByComparatorFactoryUtil.create("CommerceOrder", "uuid",
+			true, "commerceOrderId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "orderUserId", true, "billingAddressId",
 			true, "shippingAddressId", true, "commercePaymentMethodId", true,
 			"commerceShippingMethodId", true, "shippingOptionName", true,
-			"subtotal", true, "shippingPrice", true, "total", true, "status",
-			true);
+			"subtotal", true, "shippingPrice", true, "total", true,
+			"paymentStatus", true, "shippingStatus", true, "status", true);
 	}
 
 	@Test
@@ -431,10 +472,28 @@ public class CommerceOrderPersistenceTest {
 		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		CommerceOrder newCommerceOrder = addCommerceOrder();
+
+		_persistence.clearCache();
+
+		CommerceOrder existingCommerceOrder = _persistence.findByPrimaryKey(newCommerceOrder.getPrimaryKey());
+
+		Assert.assertTrue(Objects.equals(existingCommerceOrder.getUuid(),
+				ReflectionTestUtil.invoke(existingCommerceOrder,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingCommerceOrder.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingCommerceOrder,
+				"getOriginalGroupId", new Class<?>[0]));
+	}
+
 	protected CommerceOrder addCommerceOrder() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		CommerceOrder commerceOrder = _persistence.create(pk);
+
+		commerceOrder.setUuid(RandomTestUtil.randomString());
 
 		commerceOrder.setGroupId(RandomTestUtil.nextLong());
 
@@ -465,6 +524,10 @@ public class CommerceOrderPersistenceTest {
 		commerceOrder.setShippingPrice(RandomTestUtil.nextDouble());
 
 		commerceOrder.setTotal(RandomTestUtil.nextDouble());
+
+		commerceOrder.setPaymentStatus(RandomTestUtil.nextInt());
+
+		commerceOrder.setShippingStatus(RandomTestUtil.nextInt());
 
 		commerceOrder.setStatus(RandomTestUtil.nextInt());
 

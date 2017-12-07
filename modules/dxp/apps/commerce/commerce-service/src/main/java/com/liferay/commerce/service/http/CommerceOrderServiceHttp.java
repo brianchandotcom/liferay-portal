@@ -121,6 +121,39 @@ public class CommerceOrderServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceOrder getCommerceOrderByUuidAndGroupId(
+		HttpPrincipal httpPrincipal, java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceOrderServiceUtil.class,
+					"getCommerceOrderByUuidAndGroupId",
+					_getCommerceOrderByUuidAndGroupIdParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, uuid,
+					groupId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.model.CommerceOrder)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(CommerceOrderServiceHttp.class);
 	private static final Class<?>[] _addCommerceOrderFromCartParameterTypes0 = new Class[] {
 			long.class, com.liferay.portal.kernel.service.ServiceContext.class
@@ -128,4 +161,6 @@ public class CommerceOrderServiceHttp {
 	private static final Class<?>[] _getCommerceOrderParameterTypes1 = new Class[] {
 			long.class
 		};
+	private static final Class<?>[] _getCommerceOrderByUuidAndGroupIdParameterTypes2 =
+		new Class[] { java.lang.String.class, long.class };
 }

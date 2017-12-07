@@ -77,6 +77,20 @@ public class CommercePaymentMethodServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommercePaymentMethodSoap getCommercePaymentMethod(
+		long commercePaymentMethodId) throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommercePaymentMethod returnValue = CommercePaymentMethodServiceUtil.getCommercePaymentMethod(commercePaymentMethodId);
+
+			return com.liferay.commerce.model.CommercePaymentMethodSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.model.CommercePaymentMethodSoap[] getCommercePaymentMethods(
 		long groupId, boolean active) throws RemoteException {
 		try {

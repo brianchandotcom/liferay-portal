@@ -18,8 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.model.CommerceOrder;
 
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -75,8 +78,9 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 		long billingAddressId, long shippingAddressId,
 		long commercePaymentMethodId, long commerceShippingMethodId,
 		java.lang.String shippingOptionName, double subtotal,
-		double shippingPrice, double total, int status,
-		ServiceContext serviceContext) throws PortalException;
+		double shippingPrice, double total, int paymentStatus,
+		int shippingStatus, int status, ServiceContext serviceContext)
+		throws PortalException;
 
 	public CommerceOrder addCommerceOrderFromCart(long commerceCartId,
 		ServiceContext serviceContext) throws PortalException;
@@ -180,6 +184,17 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceOrder fetchCommerceOrder(long commerceOrderId);
 
+	/**
+	* Returns the commerce order matching the UUID and group.
+	*
+	* @param uuid the commerce order's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce order, or <code>null</code> if a matching commerce order could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceOrder fetchCommerceOrderByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -193,6 +208,18 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceOrder getCommerceOrder(long commerceOrderId)
 		throws PortalException;
+
+	/**
+	* Returns the commerce order matching the UUID and group.
+	*
+	* @param uuid the commerce order's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce order
+	* @throws PortalException if a matching commerce order could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceOrder getCommerceOrderByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the commerce orders.
@@ -217,6 +244,32 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 		int end, OrderByComparator<CommerceOrder> orderByComparator);
 
 	/**
+	* Returns all the commerce orders matching the UUID and company.
+	*
+	* @param uuid the UUID of the commerce orders
+	* @param companyId the primary key of the company
+	* @return the matching commerce orders, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrder> getCommerceOrdersByUuidAndCompanyId(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns a range of commerce orders matching the UUID and company.
+	*
+	* @param uuid the UUID of the commerce orders
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of commerce orders
+	* @param end the upper bound of the range of commerce orders (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching commerce orders, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrder> getCommerceOrdersByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		OrderByComparator<CommerceOrder> orderByComparator);
+
+	/**
 	* Returns the number of commerce orders.
 	*
 	* @return the number of commerce orders
@@ -226,6 +279,10 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceOrdersCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -250,4 +307,7 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updateCommerceOrder(CommerceOrder commerceOrder);
+
+	public CommerceOrder updatePaymentStatus(long commerceOrderId,
+		int paymentStatus, int status) throws PortalException;
 }

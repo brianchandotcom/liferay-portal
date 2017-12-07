@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedAuditedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -44,7 +45,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface CommerceOrderModel extends BaseModel<CommerceOrder>,
-	GroupedModel, ShardedModel {
+	GroupedModel, ShardedModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -64,6 +65,23 @@ public interface CommerceOrderModel extends BaseModel<CommerceOrder>,
 	 * @param primaryKey the primary key of this commerce order
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the uuid of this commerce order.
+	 *
+	 * @return the uuid of this commerce order
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this commerce order.
+	 *
+	 * @param uuid the uuid of this commerce order
+	 */
+	@Override
+	public void setUuid(String uuid);
 
 	/**
 	 * Returns the commerce order ID of this commerce order.
@@ -332,6 +350,34 @@ public interface CommerceOrderModel extends BaseModel<CommerceOrder>,
 	 * @param total the total of this commerce order
 	 */
 	public void setTotal(double total);
+
+	/**
+	 * Returns the payment status of this commerce order.
+	 *
+	 * @return the payment status of this commerce order
+	 */
+	public int getPaymentStatus();
+
+	/**
+	 * Sets the payment status of this commerce order.
+	 *
+	 * @param paymentStatus the payment status of this commerce order
+	 */
+	public void setPaymentStatus(int paymentStatus);
+
+	/**
+	 * Returns the shipping status of this commerce order.
+	 *
+	 * @return the shipping status of this commerce order
+	 */
+	public int getShippingStatus();
+
+	/**
+	 * Sets the shipping status of this commerce order.
+	 *
+	 * @param shippingStatus the shipping status of this commerce order
+	 */
+	public void setShippingStatus(int shippingStatus);
 
 	/**
 	 * Returns the status of this commerce order.

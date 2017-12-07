@@ -60,6 +60,10 @@ public interface CommerceOrderService extends BaseService {
 	public CommerceOrder getCommerceOrder(long commerceOrderId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceOrder getCommerceOrderByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
+
 	/**
 	* Returns the OSGi service identifier.
 	*

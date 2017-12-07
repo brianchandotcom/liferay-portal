@@ -129,6 +129,7 @@ create table CommerceCountry (
 );
 
 create table CommerceOrder (
+	uuid_ VARCHAR(75) null,
 	commerceOrderId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -145,6 +146,8 @@ create table CommerceOrder (
 	subtotal DOUBLE,
 	shippingPrice DOUBLE,
 	total DOUBLE,
+	paymentStatus INTEGER,
+	shippingStatus INTEGER,
 	status INTEGER
 );
 

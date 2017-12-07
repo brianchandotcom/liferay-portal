@@ -1992,6 +1992,229 @@ public class CommerceCountryPersistenceImpl extends BasePersistenceImpl<Commerce
 	}
 
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "commerceCountry.groupId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_G_N = new FinderPath(CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceCountryModelImpl.FINDER_CACHE_ENABLED,
+			CommerceCountryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_N",
+			new String[] { Long.class.getName(), Integer.class.getName() },
+			CommerceCountryModelImpl.GROUPID_COLUMN_BITMASK |
+			CommerceCountryModelImpl.NUMERICISOCODE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_N = new FinderPath(CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceCountryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N",
+			new String[] { Long.class.getName(), Integer.class.getName() });
+
+	/**
+	 * Returns the commerce country where groupId = &#63; and numericISOCode = &#63; or throws a {@link NoSuchCountryException} if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param numericISOCode the numeric iso code
+	 * @return the matching commerce country
+	 * @throws NoSuchCountryException if a matching commerce country could not be found
+	 */
+	@Override
+	public CommerceCountry findByG_N(long groupId, int numericISOCode)
+		throws NoSuchCountryException {
+		CommerceCountry commerceCountry = fetchByG_N(groupId, numericISOCode);
+
+		if (commerceCountry == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("groupId=");
+			msg.append(groupId);
+
+			msg.append(", numericISOCode=");
+			msg.append(numericISOCode);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchCountryException(msg.toString());
+		}
+
+		return commerceCountry;
+	}
+
+	/**
+	 * Returns the commerce country where groupId = &#63; and numericISOCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param numericISOCode the numeric iso code
+	 * @return the matching commerce country, or <code>null</code> if a matching commerce country could not be found
+	 */
+	@Override
+	public CommerceCountry fetchByG_N(long groupId, int numericISOCode) {
+		return fetchByG_N(groupId, numericISOCode, true);
+	}
+
+	/**
+	 * Returns the commerce country where groupId = &#63; and numericISOCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param numericISOCode the numeric iso code
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching commerce country, or <code>null</code> if a matching commerce country could not be found
+	 */
+	@Override
+	public CommerceCountry fetchByG_N(long groupId, int numericISOCode,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { groupId, numericISOCode };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_G_N,
+					finderArgs, this);
+		}
+
+		if (result instanceof CommerceCountry) {
+			CommerceCountry commerceCountry = (CommerceCountry)result;
+
+			if ((groupId != commerceCountry.getGroupId()) ||
+					(numericISOCode != commerceCountry.getNumericISOCode())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_COMMERCECOUNTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_N_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_N_NUMERICISOCODE_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(numericISOCode);
+
+				List<CommerceCountry> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_G_N, finderArgs,
+						list);
+				}
+				else {
+					CommerceCountry commerceCountry = list.get(0);
+
+					result = commerceCountry;
+
+					cacheResult(commerceCountry);
+
+					if ((commerceCountry.getGroupId() != groupId) ||
+							(commerceCountry.getNumericISOCode() != numericISOCode)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_G_N,
+							finderArgs, commerceCountry);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_G_N, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (CommerceCountry)result;
+		}
+	}
+
+	/**
+	 * Removes the commerce country where groupId = &#63; and numericISOCode = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param numericISOCode the numeric iso code
+	 * @return the commerce country that was removed
+	 */
+	@Override
+	public CommerceCountry removeByG_N(long groupId, int numericISOCode)
+		throws NoSuchCountryException {
+		CommerceCountry commerceCountry = findByG_N(groupId, numericISOCode);
+
+		return remove(commerceCountry);
+	}
+
+	/**
+	 * Returns the number of commerce countries where groupId = &#63; and numericISOCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param numericISOCode the numeric iso code
+	 * @return the number of matching commerce countries
+	 */
+	@Override
+	public int countByG_N(long groupId, int numericISOCode) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_N;
+
+		Object[] finderArgs = new Object[] { groupId, numericISOCode };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_COMMERCECOUNTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_N_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_N_NUMERICISOCODE_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(numericISOCode);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_N_GROUPID_2 = "commerceCountry.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_N_NUMERICISOCODE_2 = "commerceCountry.numericISOCode = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_A = new FinderPath(CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceCountryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceCountryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -3726,229 +3949,6 @@ public class CommerceCountryPersistenceImpl extends BasePersistenceImpl<Commerce
 	private static final String _FINDER_COLUMN_G_S_A_GROUPID_2 = "commerceCountry.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_S_A_SHIPPINGALLOWED_2 = "commerceCountry.shippingAllowed = ? AND ";
 	private static final String _FINDER_COLUMN_G_S_A_ACTIVE_2 = "commerceCountry.active = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_G_N = new FinderPath(CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCountryModelImpl.FINDER_CACHE_ENABLED,
-			CommerceCountryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_N",
-			new String[] { Long.class.getName(), Integer.class.getName() },
-			CommerceCountryModelImpl.GROUPID_COLUMN_BITMASK |
-			CommerceCountryModelImpl.NUMERICISOCODE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_G_N = new FinderPath(CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceCountryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N",
-			new String[] { Long.class.getName(), Integer.class.getName() });
-
-	/**
-	 * Returns the commerce country where groupId = &#63; and numericISOCode = &#63; or throws a {@link NoSuchCountryException} if it could not be found.
-	 *
-	 * @param groupId the group ID
-	 * @param numericISOCode the numeric iso code
-	 * @return the matching commerce country
-	 * @throws NoSuchCountryException if a matching commerce country could not be found
-	 */
-	@Override
-	public CommerceCountry findByG_N(long groupId, int numericISOCode)
-		throws NoSuchCountryException {
-		CommerceCountry commerceCountry = fetchByG_N(groupId, numericISOCode);
-
-		if (commerceCountry == null) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", numericISOCode=");
-			msg.append(numericISOCode);
-
-			msg.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(msg.toString());
-			}
-
-			throw new NoSuchCountryException(msg.toString());
-		}
-
-		return commerceCountry;
-	}
-
-	/**
-	 * Returns the commerce country where groupId = &#63; and numericISOCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param numericISOCode the numeric iso code
-	 * @return the matching commerce country, or <code>null</code> if a matching commerce country could not be found
-	 */
-	@Override
-	public CommerceCountry fetchByG_N(long groupId, int numericISOCode) {
-		return fetchByG_N(groupId, numericISOCode, true);
-	}
-
-	/**
-	 * Returns the commerce country where groupId = &#63; and numericISOCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param numericISOCode the numeric iso code
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching commerce country, or <code>null</code> if a matching commerce country could not be found
-	 */
-	@Override
-	public CommerceCountry fetchByG_N(long groupId, int numericISOCode,
-		boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { groupId, numericISOCode };
-
-		Object result = null;
-
-		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_G_N,
-					finderArgs, this);
-		}
-
-		if (result instanceof CommerceCountry) {
-			CommerceCountry commerceCountry = (CommerceCountry)result;
-
-			if ((groupId != commerceCountry.getGroupId()) ||
-					(numericISOCode != commerceCountry.getNumericISOCode())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler query = new StringBundler(4);
-
-			query.append(_SQL_SELECT_COMMERCECOUNTRY_WHERE);
-
-			query.append(_FINDER_COLUMN_G_N_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_N_NUMERICISOCODE_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				qPos.add(numericISOCode);
-
-				List<CommerceCountry> list = q.list();
-
-				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_G_N, finderArgs,
-						list);
-				}
-				else {
-					CommerceCountry commerceCountry = list.get(0);
-
-					result = commerceCountry;
-
-					cacheResult(commerceCountry);
-
-					if ((commerceCountry.getGroupId() != groupId) ||
-							(commerceCountry.getNumericISOCode() != numericISOCode)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_N,
-							finderArgs, commerceCountry);
-					}
-				}
-			}
-			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_G_N, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (CommerceCountry)result;
-		}
-	}
-
-	/**
-	 * Removes the commerce country where groupId = &#63; and numericISOCode = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param numericISOCode the numeric iso code
-	 * @return the commerce country that was removed
-	 */
-	@Override
-	public CommerceCountry removeByG_N(long groupId, int numericISOCode)
-		throws NoSuchCountryException {
-		CommerceCountry commerceCountry = findByG_N(groupId, numericISOCode);
-
-		return remove(commerceCountry);
-	}
-
-	/**
-	 * Returns the number of commerce countries where groupId = &#63; and numericISOCode = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param numericISOCode the numeric iso code
-	 * @return the number of matching commerce countries
-	 */
-	@Override
-	public int countByG_N(long groupId, int numericISOCode) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_N;
-
-		Object[] finderArgs = new Object[] { groupId, numericISOCode };
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_COUNT_COMMERCECOUNTRY_WHERE);
-
-			query.append(_FINDER_COLUMN_G_N_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_N_NUMERICISOCODE_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				qPos.add(numericISOCode);
-
-				count = (Long)q.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_G_N_GROUPID_2 = "commerceCountry.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_N_NUMERICISOCODE_2 = "commerceCountry.numericISOCode = ?";
 
 	public CommerceCountryPersistenceImpl() {
 		setModelClass(CommerceCountry.class);

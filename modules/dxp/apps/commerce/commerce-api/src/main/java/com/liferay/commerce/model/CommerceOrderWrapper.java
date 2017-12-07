@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -58,6 +60,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("commerceOrderId", getCommerceOrderId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -74,6 +77,8 @@ public class CommerceOrderWrapper implements CommerceOrder,
 		attributes.put("subtotal", getSubtotal());
 		attributes.put("shippingPrice", getShippingPrice());
 		attributes.put("total", getTotal());
+		attributes.put("paymentStatus", getPaymentStatus());
+		attributes.put("shippingStatus", getShippingStatus());
 		attributes.put("status", getStatus());
 
 		return attributes;
@@ -81,6 +86,12 @@ public class CommerceOrderWrapper implements CommerceOrder,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long commerceOrderId = (Long)attributes.get("commerceOrderId");
 
 		if (commerceOrderId != null) {
@@ -179,6 +190,18 @@ public class CommerceOrderWrapper implements CommerceOrder,
 			setTotal(total);
 		}
 
+		Integer paymentStatus = (Integer)attributes.get("paymentStatus");
+
+		if (paymentStatus != null) {
+			setPaymentStatus(paymentStatus);
+		}
+
+		Integer shippingStatus = (Integer)attributes.get("shippingStatus");
+
+		if (shippingStatus != null) {
+			setShippingStatus(shippingStatus);
+		}
+
 		Integer status = (Integer)attributes.get("status");
 
 		if (status != null) {
@@ -221,6 +244,12 @@ public class CommerceOrderWrapper implements CommerceOrder,
 		return _commerceOrder.getCommerceOrderItems();
 	}
 
+	@Override
+	public CommercePaymentMethod getCommercePaymentMethod()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrder.getCommercePaymentMethod();
+	}
+
 	/**
 	* Returns the commerce payment method ID of this commerce order.
 	*
@@ -229,6 +258,12 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public long getCommercePaymentMethodId() {
 		return _commerceOrder.getCommercePaymentMethodId();
+	}
+
+	@Override
+	public CommerceShippingMethod getCommerceShippingMethod()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrder.getCommerceShippingMethod();
 	}
 
 	/**
@@ -307,6 +342,16 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	}
 
 	/**
+	* Returns the payment status of this commerce order.
+	*
+	* @return the payment status of this commerce order
+	*/
+	@Override
+	public int getPaymentStatus() {
+		return _commerceOrder.getPaymentStatus();
+	}
+
+	/**
 	* Returns the primary key of this commerce order.
 	*
 	* @return the primary key of this commerce order
@@ -319,6 +364,12 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _commerceOrder.getPrimaryKeyObj();
+	}
+
+	@Override
+	public CommerceAddress getShippingAddress()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrder.getShippingAddress();
 	}
 
 	/**
@@ -349,6 +400,16 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public double getShippingPrice() {
 		return _commerceOrder.getShippingPrice();
+	}
+
+	/**
+	* Returns the shipping status of this commerce order.
+	*
+	* @return the shipping status of this commerce order
+	*/
+	@Override
+	public int getShippingStatus() {
+		return _commerceOrder.getShippingStatus();
 	}
 
 	/**
@@ -409,6 +470,16 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public java.lang.String getUserUuid() {
 		return _commerceOrder.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this commerce order.
+	*
+	* @return the uuid of this commerce order
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _commerceOrder.getUuid();
 	}
 
 	@Override
@@ -563,6 +634,16 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	}
 
 	/**
+	* Sets the payment status of this commerce order.
+	*
+	* @param paymentStatus the payment status of this commerce order
+	*/
+	@Override
+	public void setPaymentStatus(int paymentStatus) {
+		_commerceOrder.setPaymentStatus(paymentStatus);
+	}
+
+	/**
 	* Sets the primary key of this commerce order.
 	*
 	* @param primaryKey the primary key of this commerce order
@@ -605,6 +686,16 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public void setShippingPrice(double shippingPrice) {
 		_commerceOrder.setShippingPrice(shippingPrice);
+	}
+
+	/**
+	* Sets the shipping status of this commerce order.
+	*
+	* @param shippingStatus the shipping status of this commerce order
+	*/
+	@Override
+	public void setShippingStatus(int shippingStatus) {
+		_commerceOrder.setShippingStatus(shippingStatus);
 	}
 
 	/**
@@ -667,6 +758,16 @@ public class CommerceOrderWrapper implements CommerceOrder,
 		_commerceOrder.setUserUuid(userUuid);
 	}
 
+	/**
+	* Sets the uuid of this commerce order.
+	*
+	* @param uuid the uuid of this commerce order
+	*/
+	@Override
+	public void setUuid(java.lang.String uuid) {
+		_commerceOrder.setUuid(uuid);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.model.CacheModel<CommerceOrder> toCacheModel() {
 		return _commerceOrder.toCacheModel();
@@ -709,6 +810,11 @@ public class CommerceOrderWrapper implements CommerceOrder,
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _commerceOrder.getStagedModelType();
 	}
 
 	@Override

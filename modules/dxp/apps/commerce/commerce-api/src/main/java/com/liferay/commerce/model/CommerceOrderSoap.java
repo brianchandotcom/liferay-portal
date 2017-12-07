@@ -34,6 +34,7 @@ public class CommerceOrderSoap implements Serializable {
 	public static CommerceOrderSoap toSoapModel(CommerceOrder model) {
 		CommerceOrderSoap soapModel = new CommerceOrderSoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setCommerceOrderId(model.getCommerceOrderId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -50,6 +51,8 @@ public class CommerceOrderSoap implements Serializable {
 		soapModel.setSubtotal(model.getSubtotal());
 		soapModel.setShippingPrice(model.getShippingPrice());
 		soapModel.setTotal(model.getTotal());
+		soapModel.setPaymentStatus(model.getPaymentStatus());
+		soapModel.setShippingStatus(model.getShippingStatus());
 		soapModel.setStatus(model.getStatus());
 
 		return soapModel;
@@ -101,6 +104,14 @@ public class CommerceOrderSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceOrderId(pk);
+	}
+
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
 	}
 
 	public long getCommerceOrderId() {
@@ -231,6 +242,22 @@ public class CommerceOrderSoap implements Serializable {
 		_total = total;
 	}
 
+	public int getPaymentStatus() {
+		return _paymentStatus;
+	}
+
+	public void setPaymentStatus(int paymentStatus) {
+		_paymentStatus = paymentStatus;
+	}
+
+	public int getShippingStatus() {
+		return _shippingStatus;
+	}
+
+	public void setShippingStatus(int shippingStatus) {
+		_shippingStatus = shippingStatus;
+	}
+
 	public int getStatus() {
 		return _status;
 	}
@@ -239,6 +266,7 @@ public class CommerceOrderSoap implements Serializable {
 		_status = status;
 	}
 
+	private String _uuid;
 	private long _commerceOrderId;
 	private long _groupId;
 	private long _companyId;
@@ -255,5 +283,7 @@ public class CommerceOrderSoap implements Serializable {
 	private double _subtotal;
 	private double _shippingPrice;
 	private double _total;
+	private int _paymentStatus;
+	private int _shippingStatus;
 	private int _status;
 }

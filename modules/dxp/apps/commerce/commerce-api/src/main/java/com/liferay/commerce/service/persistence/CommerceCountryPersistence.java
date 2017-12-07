@@ -504,6 +504,56 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	public int countByGroupId(long groupId);
 
 	/**
+	* Returns the commerce country where groupId = &#63; and numericISOCode = &#63; or throws a {@link NoSuchCountryException} if it could not be found.
+	*
+	* @param groupId the group ID
+	* @param numericISOCode the numeric iso code
+	* @return the matching commerce country
+	* @throws NoSuchCountryException if a matching commerce country could not be found
+	*/
+	public CommerceCountry findByG_N(long groupId, int numericISOCode)
+		throws NoSuchCountryException;
+
+	/**
+	* Returns the commerce country where groupId = &#63; and numericISOCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param numericISOCode the numeric iso code
+	* @return the matching commerce country, or <code>null</code> if a matching commerce country could not be found
+	*/
+	public CommerceCountry fetchByG_N(long groupId, int numericISOCode);
+
+	/**
+	* Returns the commerce country where groupId = &#63; and numericISOCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param numericISOCode the numeric iso code
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching commerce country, or <code>null</code> if a matching commerce country could not be found
+	*/
+	public CommerceCountry fetchByG_N(long groupId, int numericISOCode,
+		boolean retrieveFromCache);
+
+	/**
+	* Removes the commerce country where groupId = &#63; and numericISOCode = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param numericISOCode the numeric iso code
+	* @return the commerce country that was removed
+	*/
+	public CommerceCountry removeByG_N(long groupId, int numericISOCode)
+		throws NoSuchCountryException;
+
+	/**
+	* Returns the number of commerce countries where groupId = &#63; and numericISOCode = &#63;.
+	*
+	* @param groupId the group ID
+	* @param numericISOCode the numeric iso code
+	* @return the number of matching commerce countries
+	*/
+	public int countByG_N(long groupId, int numericISOCode);
+
+	/**
 	* Returns all the commerce countries where groupId = &#63; and active = &#63;.
 	*
 	* @param groupId the group ID
@@ -967,56 +1017,6 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	*/
 	public int countByG_S_A(long groupId, boolean shippingAllowed,
 		boolean active);
-
-	/**
-	* Returns the commerce country where groupId = &#63; and numericISOCode = &#63; or throws a {@link NoSuchCountryException} if it could not be found.
-	*
-	* @param groupId the group ID
-	* @param numericISOCode the numeric iso code
-	* @return the matching commerce country
-	* @throws NoSuchCountryException if a matching commerce country could not be found
-	*/
-	public CommerceCountry findByG_N(long groupId, int numericISOCode)
-		throws NoSuchCountryException;
-
-	/**
-	* Returns the commerce country where groupId = &#63; and numericISOCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param groupId the group ID
-	* @param numericISOCode the numeric iso code
-	* @return the matching commerce country, or <code>null</code> if a matching commerce country could not be found
-	*/
-	public CommerceCountry fetchByG_N(long groupId, int numericISOCode);
-
-	/**
-	* Returns the commerce country where groupId = &#63; and numericISOCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param groupId the group ID
-	* @param numericISOCode the numeric iso code
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching commerce country, or <code>null</code> if a matching commerce country could not be found
-	*/
-	public CommerceCountry fetchByG_N(long groupId, int numericISOCode,
-		boolean retrieveFromCache);
-
-	/**
-	* Removes the commerce country where groupId = &#63; and numericISOCode = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param numericISOCode the numeric iso code
-	* @return the commerce country that was removed
-	*/
-	public CommerceCountry removeByG_N(long groupId, int numericISOCode)
-		throws NoSuchCountryException;
-
-	/**
-	* Returns the number of commerce countries where groupId = &#63; and numericISOCode = &#63;.
-	*
-	* @param groupId the group ID
-	* @param numericISOCode the numeric iso code
-	* @return the number of matching commerce countries
-	*/
-	public int countByG_N(long groupId, int numericISOCode);
 
 	/**
 	* Caches the commerce country in the entity cache if it is enabled.

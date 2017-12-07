@@ -111,6 +111,7 @@
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.model.CommerceOrder">
+		<field name="uuid" type="String" />
 		<field name="commerceOrderId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -127,6 +128,8 @@
 		<field name="subtotal" type="double" />
 		<field name="shippingPrice" type="double" />
 		<field name="total" type="double" />
+		<field name="paymentStatus" type="int" />
+		<field name="shippingStatus" type="int" />
 		<field name="status" type="int" />
 	</model>
 	<model name="com.liferay.commerce.model.CommerceOrderItem">

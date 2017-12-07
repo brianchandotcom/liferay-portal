@@ -55,6 +55,12 @@ public class CommerceOrderServiceUtil {
 		return getService().getCommerceOrder(commerceOrderId);
 	}
 
+	public static com.liferay.commerce.model.CommerceOrder getCommerceOrderByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceOrderByUuidAndGroupId(uuid, groupId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

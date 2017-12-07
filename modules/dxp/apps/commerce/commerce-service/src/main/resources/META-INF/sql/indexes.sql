@@ -36,6 +36,8 @@ create index IX_91EA24D5 on CommerceCountry (uuid_[$COLUMN_LENGTH:75$], companyI
 create unique index IX_7EFDC97 on CommerceCountry (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create index IX_64F208B1 on CommerceOrder (groupId);
+create index IX_5AF685CD on CommerceOrder (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_58101B8F on CommerceOrder (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create index IX_FD99BA9B on CommerceOrderItem (CPDefinitionId);
 create index IX_2E1BB39D on CommerceOrderItem (CPInstanceId);

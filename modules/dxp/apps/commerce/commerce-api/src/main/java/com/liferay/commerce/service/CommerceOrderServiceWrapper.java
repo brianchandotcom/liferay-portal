@@ -49,6 +49,14 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 		return _commerceOrderService.getCommerceOrder(commerceOrderId);
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommerceOrder getCommerceOrderByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderService.getCommerceOrderByUuidAndGroupId(uuid,
+			groupId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

@@ -55,6 +55,13 @@ public class CommercePaymentMethodServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommercePaymentMethod getCommercePaymentMethod(
+		long commercePaymentMethodId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commercePaymentMethodService.getCommercePaymentMethod(commercePaymentMethodId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.commerce.model.CommercePaymentMethod> getCommercePaymentMethods(
 		long groupId, boolean active) {
 		return _commercePaymentMethodService.getCommercePaymentMethods(groupId,

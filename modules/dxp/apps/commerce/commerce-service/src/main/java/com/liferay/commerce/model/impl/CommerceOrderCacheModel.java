@@ -65,9 +65,11 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(41);
 
-		sb.append("{commerceOrderId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", commerceOrderId=");
 		sb.append(commerceOrderId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -99,6 +101,10 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		sb.append(shippingPrice);
 		sb.append(", total=");
 		sb.append(total);
+		sb.append(", paymentStatus=");
+		sb.append(paymentStatus);
+		sb.append(", shippingStatus=");
+		sb.append(shippingStatus);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append("}");
@@ -109,6 +115,13 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 	@Override
 	public CommerceOrder toEntityModel() {
 		CommerceOrderImpl commerceOrderImpl = new CommerceOrderImpl();
+
+		if (uuid == null) {
+			commerceOrderImpl.setUuid("");
+		}
+		else {
+			commerceOrderImpl.setUuid(uuid);
+		}
 
 		commerceOrderImpl.setCommerceOrderId(commerceOrderId);
 		commerceOrderImpl.setGroupId(groupId);
@@ -152,6 +165,8 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		commerceOrderImpl.setSubtotal(subtotal);
 		commerceOrderImpl.setShippingPrice(shippingPrice);
 		commerceOrderImpl.setTotal(total);
+		commerceOrderImpl.setPaymentStatus(paymentStatus);
+		commerceOrderImpl.setShippingStatus(shippingStatus);
 		commerceOrderImpl.setStatus(status);
 
 		commerceOrderImpl.resetOriginalValues();
@@ -161,6 +176,8 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
+
 		commerceOrderId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -189,12 +206,23 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 
 		total = objectInput.readDouble();
 
+		paymentStatus = objectInput.readInt();
+
+		shippingStatus = objectInput.readInt();
+
 		status = objectInput.readInt();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(commerceOrderId);
 
 		objectOutput.writeLong(groupId);
@@ -236,9 +264,14 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 
 		objectOutput.writeDouble(total);
 
+		objectOutput.writeInt(paymentStatus);
+
+		objectOutput.writeInt(shippingStatus);
+
 		objectOutput.writeInt(status);
 	}
 
+	public String uuid;
 	public long commerceOrderId;
 	public long groupId;
 	public long companyId;
@@ -255,5 +288,7 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 	public double subtotal;
 	public double shippingPrice;
 	public double total;
+	public int paymentStatus;
+	public int shippingStatus;
 	public int status;
 }

@@ -69,6 +69,10 @@ public interface CommercePaymentMethodService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommercePaymentMethod getCommercePaymentMethod(
+		long commercePaymentMethodId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePaymentMethod> getCommercePaymentMethods(long groupId,
 		boolean active);
 

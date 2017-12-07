@@ -239,6 +239,14 @@ public class CommerceCountryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_N() throws Exception {
+		_persistence.countByG_N(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByG_N(0L, 0);
+	}
+
+	@Test
 	public void testCountByG_A() throws Exception {
 		_persistence.countByG_A(RandomTestUtil.nextLong(),
 			RandomTestUtil.randomBoolean());
@@ -262,14 +270,6 @@ public class CommerceCountryPersistenceTest {
 
 		_persistence.countByG_S_A(0L, RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomBoolean());
-	}
-
-	@Test
-	public void testCountByG_N() throws Exception {
-		_persistence.countByG_N(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
-
-		_persistence.countByG_N(0L, 0);
 	}
 
 	@Test

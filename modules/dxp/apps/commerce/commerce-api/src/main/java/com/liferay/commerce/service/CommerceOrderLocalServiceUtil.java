@@ -57,14 +57,16 @@ public class CommerceOrderLocalServiceUtil {
 		long orderUserId, long billingAddressId, long shippingAddressId,
 		long commercePaymentMethodId, long commerceShippingMethodId,
 		java.lang.String shippingOptionName, double subtotal,
-		double shippingPrice, double total, int status,
+		double shippingPrice, double total, int paymentStatus,
+		int shippingStatus, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCommerceOrder(orderUserId, billingAddressId,
 			shippingAddressId, commercePaymentMethodId,
 			commerceShippingMethodId, shippingOptionName, subtotal,
-			shippingPrice, total, status, serviceContext);
+			shippingPrice, total, paymentStatus, shippingStatus, status,
+			serviceContext);
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder addCommerceOrderFromCart(
@@ -204,6 +206,18 @@ public class CommerceOrderLocalServiceUtil {
 		return getService().fetchCommerceOrder(commerceOrderId);
 	}
 
+	/**
+	* Returns the commerce order matching the UUID and group.
+	*
+	* @param uuid the commerce order's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce order, or <code>null</code> if a matching commerce order could not be found
+	*/
+	public static com.liferay.commerce.model.CommerceOrder fetchCommerceOrderByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService().fetchCommerceOrderByUuidAndGroupId(uuid, groupId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -219,6 +233,20 @@ public class CommerceOrderLocalServiceUtil {
 		long commerceOrderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCommerceOrder(commerceOrderId);
+	}
+
+	/**
+	* Returns the commerce order matching the UUID and group.
+	*
+	* @param uuid the commerce order's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce order
+	* @throws PortalException if a matching commerce order could not be found
+	*/
+	public static com.liferay.commerce.model.CommerceOrder getCommerceOrderByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceOrderByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -250,6 +278,36 @@ public class CommerceOrderLocalServiceUtil {
 	}
 
 	/**
+	* Returns all the commerce orders matching the UUID and company.
+	*
+	* @param uuid the UUID of the commerce orders
+	* @param companyId the primary key of the company
+	* @return the matching commerce orders, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrdersByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService().getCommerceOrdersByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of commerce orders matching the UUID and company.
+	*
+	* @param uuid the UUID of the commerce orders
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of commerce orders
+	* @param end the upper bound of the range of commerce orders (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching commerce orders, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrdersByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceOrder> orderByComparator) {
+		return getService()
+				   .getCommerceOrdersByUuidAndCompanyId(uuid, companyId, start,
+			end, orderByComparator);
+	}
+
+	/**
 	* Returns the number of commerce orders.
 	*
 	* @return the number of commerce orders
@@ -260,6 +318,11 @@ public class CommerceOrderLocalServiceUtil {
 
 	public static int getCommerceOrdersCount(long groupId) {
 		return getService().getCommerceOrdersCount(groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
@@ -290,6 +353,13 @@ public class CommerceOrderLocalServiceUtil {
 	public static com.liferay.commerce.model.CommerceOrder updateCommerceOrder(
 		com.liferay.commerce.model.CommerceOrder commerceOrder) {
 		return getService().updateCommerceOrder(commerceOrder);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrder updatePaymentStatus(
+		long commerceOrderId, int paymentStatus, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updatePaymentStatus(commerceOrderId, paymentStatus, status);
 	}
 
 	public static CommerceOrderLocalService getService() {

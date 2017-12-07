@@ -10,48 +10,6 @@
 		</and>
 	</condition>
 
-	<target name="check-stale-release">
-		<if>
-			<and>
-				<isfalse value="${publish.portal.release.force}" />
-				<available file="${project.dir}/modules/.releng/${ant.project.name}.properties" />
-			</and>
-			<then>
-				<loadproperties prefix="latest" srcFile="${project.dir}/modules/.releng/${ant.project.name}.properties">
-					<filterchain>
-						<linecontains>
-							<contains value="artifact.git.id" />
-						</linecontains>
-					</filterchain>
-				</loadproperties>
-
-				<exec executable="git" failonerror="true" outputproperty="artifact.git.log">
-					<arg value="log" />
-					<arg value="--format=%s" />
-					<arg value="${latest.artifact.git.id}..HEAD" />
-					<arg value="." />
-				</exec>
-
-				<loadresource property="artifact.git.log.changes" quiet="true" unless:blank="${artifact.git.log}">
-					<propertyresource name="artifact.git.log" />
-					<filterchain>
-						<linecontains negate="true">
-							<contains value="artifact:ignore" />
-						</linecontains>
-					</filterchain>
-				</loadresource>
-
-				<fail message="${ant.project.name} is not stale and does not need to be published." status="0">
-					<condition>
-						<not>
-							<isset property="artifact.git.log.changes" />
-						</not>
-					</condition>
-				</fail>
-			</then>
-		</if>
-	</target>
-
 	<target name="clean">
 		<delete dir="classes" />
 		<delete dir="test-classes" />

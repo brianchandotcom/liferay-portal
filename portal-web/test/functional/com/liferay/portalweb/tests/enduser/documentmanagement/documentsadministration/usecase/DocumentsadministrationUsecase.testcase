@@ -261,7 +261,7 @@
 		</execute>
 
 		<execute macro="SystemSettings#editConfiguration">
-			<var name="configurationName" value="Documents & Media Service" />
+			<var name="configurationName" value="Documents &amp; Media Service" />
 		</execute>
 
 		<execute function="Type" locator1="TextInput#GENERIC_TEXT_INPUT" value1="30000000">

@@ -35,6 +35,18 @@ public class LiferayIndexFixture {
 		_indexName = indexName;
 	}
 
+	public void assertAnalyzer(String field, String analyzer) throws Exception {
+		FieldMappingAssert.assertAnalyzer(
+			analyzer, field, LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
+			_index.getName(), _elasticsearchFixture.getIndicesAdminClient());
+	}
+
+	public void assertType(String field, String type) throws Exception {
+		FieldMappingAssert.assertType(
+			type, field, LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
+			_index.getName(), _elasticsearchFixture.getIndicesAdminClient());
+	}
+
 	public Client getClient() {
 		return _elasticsearchFixture.getClient();
 	}
@@ -57,16 +69,11 @@ public class LiferayIndexFixture {
 		_elasticsearchFixture.tearDown();
 	}
 
-	public void assertAnalyzer(String field, String analyzer) throws Exception {
-		FieldMappingAssert.assertAnalyzer(
-			analyzer, field, LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
-			_index.getName(), _elasticsearchFixture.getIndicesAdminClient());
-	}
+	protected Index createIndex() {
+		IndexCreator indexCreator = new LiferayIndexCreator(
+			_elasticsearchFixture);
 
-	public void assertType(String field, String type) throws Exception {
-		FieldMappingAssert.assertType(
-			type, field, LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
-			_index.getName(), _elasticsearchFixture.getIndicesAdminClient());
+		return indexCreator.createIndex(_indexName);
 	}
 
 	protected IndexRequestBuilder getIndexRequestBuilder() {
@@ -75,13 +82,6 @@ public class LiferayIndexFixture {
 		return client.prepareIndex(
 			_index.getName(),
 			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
-	}
-
-	protected Index createIndex() {
-		IndexCreator indexCreator = new LiferayIndexCreator(
-			_elasticsearchFixture);
-
-		return indexCreator.createIndex(_indexName);
 	}
 
 	protected void index(Map<String, Object> map) {

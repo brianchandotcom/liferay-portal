@@ -121,7 +121,7 @@ public class AssetCategoryDemoDataCreatorHelper
 
 		assetCategory = _assetCategoryLocalService.addCategory(
 			userId, groupId, parentCategoryId, titleMap, null, vocabularyId,
-			null, serviceContext);
+			new String[0], serviceContext);
 
 		_assetCategories.put(key, assetCategory);
 

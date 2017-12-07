@@ -42,7 +42,7 @@ SearchContainer searchContainer = cpSearchResultsDisplayContext.getSearchContain
 
 		<div class="col-md-4">
 			<div class="card">
-				<a class="aspect-ratio" href="<%= cpSearchResultsDisplayContext.getProductFriendlyURL(themeDisplay.getPortalURL(), document) %>">
+				<a class="aspect-ratio" href="<%= cpSearchResultsDisplayContext.getProductFriendlyURL(document) %>">
 
 					<%
 					String img = cpSearchResultsDisplayContext.getProductDefaultImage(document, themeDisplay);
@@ -55,7 +55,7 @@ SearchContainer searchContainer = cpSearchResultsDisplayContext.getSearchContain
 
 				<div class="card-row card-row-padded card-row-valign-top">
 					<div class="card-col-content">
-						<a class="truncate-text" href="<%= cpSearchResultsDisplayContext.getProductFriendlyURL(themeDisplay.getPortalURL(), document) %>">
+						<a class="truncate-text" href="<%= cpSearchResultsDisplayContext.getProductFriendlyURL(document) %>">
 							<%= cpSearchResultsDisplayContext.getTitle(document) %>
 						</a>
 					</div>

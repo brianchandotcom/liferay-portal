@@ -17,6 +17,7 @@ package com.liferay.commerce.product.content.search.web.internal.portlet.action;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPSearchResultsDisplayContext;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
+import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -58,7 +59,7 @@ public class CPSearchResultsConfigurationAction
 		try {
 			CPSearchResultsDisplayContext cpSearchResultsDisplayContext =
 				new CPSearchResultsDisplayContext(
-					_dlAppService, httpServletRequest,
+					_cpDefinitionHelper, _dlAppService, httpServletRequest,
 					portletSharedSearchResponse);
 
 			httpServletRequest.setAttribute(
@@ -82,6 +83,9 @@ public class CPSearchResultsConfigurationAction
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPSearchResultsConfigurationAction.class);
+
+	@Reference
+	private CPDefinitionHelper _cpDefinitionHelper;
 
 	@Reference
 	private DLAppService _dlAppService;

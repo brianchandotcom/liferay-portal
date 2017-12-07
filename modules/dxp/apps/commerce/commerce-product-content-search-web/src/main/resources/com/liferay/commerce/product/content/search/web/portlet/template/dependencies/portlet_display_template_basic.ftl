@@ -6,7 +6,7 @@
 			<#assign
 				image = cpSearchResultsDisplayContext.getProductDefaultImage(curDocument, themeDisplay)
 
-				friendlyURL = cpSearchResultsDisplayContext.getProductFriendlyURL(themeDisplay.getPortalURL(), curDocument)
+				friendlyURL = cpSearchResultsDisplayContext.getProductFriendlyURL(curDocument)
 
 				title = cpSearchResultsDisplayContext.getTitle(curDocument)
 			/>

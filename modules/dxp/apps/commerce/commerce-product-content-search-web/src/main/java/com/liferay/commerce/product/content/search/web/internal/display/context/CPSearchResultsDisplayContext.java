@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.product.content.search.web.internal.display.context;
 
-import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.content.search.web.internal.configuration.CPSearchResultsPortletInstanceConfiguration;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.search.CPDefinitionIndexer;
+import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.util.DLUtil;
@@ -50,10 +50,12 @@ import javax.servlet.http.HttpServletRequest;
 public class CPSearchResultsDisplayContext {
 
 	public CPSearchResultsDisplayContext(
-			DLAppService dlAppService, HttpServletRequest httpServletRequest,
+			CPDefinitionHelper cpDefinitionHelper, DLAppService dlAppService,
+			HttpServletRequest httpServletRequest,
 			PortletSharedSearchResponse portletSharedSearchResponse)
 		throws ConfigurationException {
 
+		_cpDefinitionHelper = cpDefinitionHelper;
 		_dlAppService = dlAppService;
 		_httpServletRequest = httpServletRequest;
 		_portletSharedSearchResponse = portletSharedSearchResponse;
@@ -131,10 +133,18 @@ public class CPSearchResultsDisplayContext {
 		return StringPool.BLANK;
 	}
 
-	public String getProductFriendlyURL(String baseUrl, Document document) {
-		String url = document.get(_locale, Field.URL);
+	public String getProductFriendlyURL(Document document)
+		throws PortalException {
 
-		return baseUrl + CPConstants.SEPARATOR_PRODUCT_URL + url;
+		String entryClassPK = document.get(_locale, Field.ENTRY_CLASS_PK);
+
+		long cpDefinitionId = GetterUtil.getLong(entryClassPK);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return _cpDefinitionHelper.getFriendlyURL(cpDefinitionId, themeDisplay);
 	}
 
 	public SearchContainer<Document> getSearchContainer()
@@ -173,6 +183,7 @@ public class CPSearchResultsDisplayContext {
 			_cpSearchResultsPortletInstanceConfiguration.useAssetCategories();
 	}
 
+	private final CPDefinitionHelper _cpDefinitionHelper;
 	private final CPSearchResultsPortletInstanceConfiguration
 		_cpSearchResultsPortletInstanceConfiguration;
 	private long _displayStyleGroupId;

@@ -95,9 +95,12 @@
 
 .portlet-topper-toolbar {
 	margin-bottom: 0;
-	margin-right: -10px;
 	margin-top: 0;
 	padding-left: 0;
+
+	&:last-of-type {
+		margin-right: -10px;
+	}
 
 	> a, > span > a, .lfr-icon-menu > a {
 		color: $portlet-topper-link-color;

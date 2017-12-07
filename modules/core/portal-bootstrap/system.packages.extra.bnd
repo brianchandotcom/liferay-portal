@@ -361,6 +361,7 @@ Import-Package: !*
 	@lib/com.liferay.petra.process.jar,\
 	@lib/com.liferay.petra.reflect.jar,\
 	@lib/com.liferay.petra.string.jar,\
+	@lib/com.liferay.petra.xml.jar,\
 	@lib/com.liferay.registry.api.jar
 -removeheaders:\
 	Private-Package,\

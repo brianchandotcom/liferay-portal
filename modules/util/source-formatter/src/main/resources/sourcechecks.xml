@@ -23,6 +23,9 @@
 			<property name="allowedExportPackageDirName" value="adaptive-media-image-service" />
 			<property name="allowedExportPackageDirName" value="adaptive-media-web" />
 			<property name="allowedExportPackageDirName" value="analytics-java-client" />
+			<property name="allowedExportPackageDirName" value="apio-architect-liferay-portal" />
+			<property name="allowedExportPackageDirName" value="apio-architect-sample-liferay-portal" />
+			<property name="allowedExportPackageDirName" value="apio-architect-wiring-osgi" />
 			<property name="allowedExportPackageDirName" value="dynamic-data-mapping-data-provider" />
 			<property name="allowedExportPackageDirName" value="dynamic-data-mapping-expression" />
 			<property name="allowedExportPackageDirName" value="dynamic-data-mapping-form-builder" />

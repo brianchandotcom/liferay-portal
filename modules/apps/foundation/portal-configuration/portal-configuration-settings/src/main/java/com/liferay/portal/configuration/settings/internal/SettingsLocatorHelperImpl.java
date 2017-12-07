@@ -73,23 +73,9 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	public Settings getCompanyConfigurationBeanSettings(
 		long companyId, String configurationPid, Settings parentSettings) {
 
-		if (!_configurationBeanClasses.containsKey(configurationPid)) {
-			return parentSettings;
-		}
-
-		ScopeKey scopeKey = new ScopeKey(
-			_configurationBeanClasses.get(configurationPid),
+		return _getScopedConfigurationBeanSettings(
 			ExtendedObjectClassDefinition.Scope.COMPANY,
-			String.valueOf(companyId));
-
-		if (!_scopedConfigurationBeanProvider.has(scopeKey)) {
-			return parentSettings;
-		}
-
-		return new ConfigurationBeanSettings(
-			_configurationBeanLocationVariableResolvers.get(
-				scopeKey.getObjectClass()),
-			_scopedConfigurationBeanProvider.get(scopeKey), parentSettings);
+			String.valueOf(companyId), configurationPid, parentSettings);
 	}
 
 	public PortletPreferences getCompanyPortletPreferences(
@@ -144,22 +130,9 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	public Settings getGroupConfigurationBeanSettings(
 		long groupId, String configurationPid, Settings parentSettings) {
 
-		if (!_configurationBeanClasses.containsKey(configurationPid)) {
-			return parentSettings;
-		}
-
-		ScopeKey scopeKey = new ScopeKey(
-			_configurationBeanClasses.get(configurationPid),
-			ExtendedObjectClassDefinition.Scope.GROUP, String.valueOf(groupId));
-
-		if (!_scopedConfigurationBeanProvider.has(scopeKey)) {
-			return parentSettings;
-		}
-
-		return new ConfigurationBeanSettings(
-			_configurationBeanLocationVariableResolvers.get(
-				scopeKey.getObjectClass()),
-			_scopedConfigurationBeanProvider.get(scopeKey), parentSettings);
+		return _getScopedConfigurationBeanSettings(
+			ExtendedObjectClassDefinition.Scope.GROUP, String.valueOf(groupId),
+			configurationPid, parentSettings);
 	}
 
 	public PortletPreferences getGroupPortletPreferences(
@@ -206,22 +179,9 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	public Settings getPortletInstanceConfigurationBeanSettings(
 		String portletId, String configurationPid, Settings parentSettings) {
 
-		if (!_configurationBeanClasses.containsKey(configurationPid)) {
-			return parentSettings;
-		}
-
-		ScopeKey scopeKey = new ScopeKey(
-			_configurationBeanClasses.get(configurationPid),
-			ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE, portletId);
-
-		if (!_scopedConfigurationBeanProvider.has(scopeKey)) {
-			return parentSettings;
-		}
-
-		return new ConfigurationBeanSettings(
-			_configurationBeanLocationVariableResolvers.get(
-				scopeKey.getObjectClass()),
-			_scopedConfigurationBeanProvider.get(scopeKey), parentSettings);
+		return _getScopedConfigurationBeanSettings(
+			ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE, portletId,
+			configurationPid, parentSettings);
 	}
 
 	public PortletPreferences getPortletInstancePortletPreferences(
@@ -354,6 +314,28 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 		_configurationBeanClasses.remove(
 			configurationPidMapping.getConfigurationPid());
+	}
+
+	private Settings _getScopedConfigurationBeanSettings(
+		ExtendedObjectClassDefinition.Scope scope, String scopePrimKey,
+		String configurationPid, Settings parentSettings) {
+
+		if (!_configurationBeanClasses.containsKey(configurationPid)) {
+			return parentSettings;
+		}
+
+		ScopeKey scopeKey = new ScopeKey(
+			_configurationBeanClasses.get(configurationPid), scope,
+			scopePrimKey);
+
+		if (!_scopedConfigurationBeanProvider.has(scopeKey)) {
+			return parentSettings;
+		}
+
+		return new ConfigurationBeanSettings(
+			_configurationBeanLocationVariableResolvers.get(
+				scopeKey.getObjectClass()),
+			_scopedConfigurationBeanProvider.get(scopeKey), parentSettings);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

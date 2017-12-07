@@ -14,10 +14,10 @@
 
 package com.liferay.portal.upload;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.servlet.filters.uploadservletrequest.UploadServletRequestFilter;
 
 import java.io.InputStream;

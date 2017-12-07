@@ -80,7 +80,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 
 		content = _fixIncorrectLineBreaksInsideChains(content, fileName);
 
-		content = _fixIncorrectLineBreaks(content, fileName, absolutePath);
+		content = _fixIncorrectLineBreaks(content, fileName);
 
 		content = _fixLineStartingWithCloseParenthesis(content, fileName);
 
@@ -443,9 +443,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 		return content;
 	}
 
-	private String _fixIncorrectLineBreaks(
-		String content, String fileName, String absolutePath) {
-
+	private String _fixIncorrectLineBreaks(String content, String fileName) {
 		Matcher matcher = _incorrectLineBreakPattern1.matcher(content);
 
 		while (matcher.find()) {
@@ -508,37 +506,34 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 			}
 		}
 
-		if (!isSubrepository() && !isReadOnly(absolutePath)) {
-			matcher = _incorrectLineBreakPattern7.matcher(content);
+		matcher = _incorrectLineBreakPattern7.matcher(content);
 
-			while (matcher.find()) {
-				String linePart = matcher.group(2);
+		while (matcher.find()) {
+			String linePart = matcher.group(2);
 
-				if (getLevel(linePart) != 1) {
-					continue;
-				}
-
-				if (StringUtil.count(matcher.group(), CharPool.NEW_LINE) > 2) {
-					addMessage(
-						fileName,
-						"For better readability, create new var for the " +
-							"array in the 'for' statement",
-						getLineCount(content, matcher.start()));
-
-					continue;
-				}
-
-				String match = matcher.group();
-
-				String replacement = StringUtil.replace(
-					match, "\n\t", "\n\t\t");
-
-				replacement = StringUtil.replaceFirst(
-					replacement, linePart,
-					"\n\t\t" + matcher.group(1) + StringUtil.trim(linePart));
-
-				return StringUtil.replace(content, match, replacement);
+			if (getLevel(linePart) != 1) {
+				continue;
 			}
+
+			if (StringUtil.count(matcher.group(), CharPool.NEW_LINE) > 2) {
+				addMessage(
+					fileName,
+					"For better readability, create new var for the array in " +
+						"the 'for' statement",
+					getLineCount(content, matcher.start()));
+
+				continue;
+			}
+
+			String match = matcher.group();
+
+			String replacement = StringUtil.replace(match, "\n\t", "\n\t\t");
+
+			replacement = StringUtil.replaceFirst(
+				replacement, linePart,
+				"\n\t\t" + matcher.group(1) + StringUtil.trim(linePart));
+
+			return StringUtil.replace(content, match, replacement);
 		}
 
 		matcher = _incorrectLineBreakPattern5.matcher(content);

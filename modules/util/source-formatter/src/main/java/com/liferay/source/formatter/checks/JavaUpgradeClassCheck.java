@@ -75,9 +75,6 @@ public class JavaUpgradeClassCheck extends BaseFileCheck {
 	}
 
 	private void _checkLocaleUtil(String fileName, String content) {
-
-		// LPS-41205
-
 		int pos = content.indexOf("LocaleUtil.getDefault()");
 
 		if (pos != -1) {
@@ -85,14 +82,11 @@ public class JavaUpgradeClassCheck extends BaseFileCheck {
 				fileName,
 				"Use UpgradeProcessUtil.getDefaultLanguageId(companyId) " +
 					"instead of LocaleUtil.getDefault()",
-				getLineCount(content, pos));
+				"upgrade_locale_util.markdown", getLineCount(content, pos));
 		}
 	}
 
 	private void _checkRegistryVersion(String fileName, String content) {
-
-		// LPS-65685
-
 		Matcher matcher1 = _registryRegisterPattern.matcher(content);
 
 		while (matcher1.find()) {
@@ -127,7 +121,8 @@ public class JavaUpgradeClassCheck extends BaseFileCheck {
 					addMessage(
 						fileName,
 						"Break up Upgrade classes with a minor version " +
-							"increment or order alphabetically, see LPS-65685",
+							"increment or order alphabetically",
+						"upgrade_register.markdown",
 						getLineCount(content, matcher1.start()));
 
 					break;
@@ -141,8 +136,6 @@ public class JavaUpgradeClassCheck extends BaseFileCheck {
 	private void _checkServiceUtil(
 		String fileName, String absolutePath, String content) {
 
-		// LPS-34911
-
 		if (!isExcludedPath(_UPGRADE_SERVICE_UTIL_EXCLUDES, absolutePath) &&
 			fileName.contains("/portal/upgrade/") &&
 			!fileName.contains("/test/") &&
@@ -153,23 +146,20 @@ public class JavaUpgradeClassCheck extends BaseFileCheck {
 			if (pos != -1) {
 				addMessage(
 					fileName,
-					"Do not use *ServiceUtil classes in upgrade classes, see " +
-						"LPS-34911",
+					"Do not use *ServiceUtil classes in upgrade classes",
+					"upgrade_service_util.markdown",
 					getLineCount(content, pos));
 			}
 		}
 	}
 
 	private void _checkTimestamp(String fileName, String content) {
-
-		// LPS-41205
-
 		int pos = content.indexOf("rs.getDate(");
 
 		if (pos != -1) {
 			addMessage(
 				fileName, "Use rs.getTimestamp instead of rs.getDate",
-				getLineCount(content, pos));
+				"upgrade_timestamp.markdown", getLineCount(content, pos));
 		}
 	}
 

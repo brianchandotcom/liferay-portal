@@ -112,31 +112,41 @@ public class LocalGitSyncUtil {
 				gitWorkingDirectory.getUpstreamBranchName(),
 				gitWorkingDirectory.getRemote("upstream"));
 
+		List<Callable<Object>> callables = new ArrayList<>();
+
 		for (final GitWorkingDirectory.Remote localGitRemote :
 				localGitRemotes) {
 
-			_threadPoolExecutor.execute(
-				new Runnable() {
+			Callable<Object> callable = new Callable<Object>() {
 
-					@Override
-					public void run() {
-						cacheBranch(
-							gitWorkingDirectory, localBranch, localGitRemote,
-							start);
+				@Override
+				public Object call() {
+					cacheBranch(
+						gitWorkingDirectory, localBranch, localGitRemote,
+						start);
 
-						if (upstreamUsername.equals("liferay")) {
-							GitWorkingDirectory.Branch localUpstreamBranch =
-								gitWorkingDirectory.getBranch(
-									upstreamBranch.getName(), null);
+					if (upstreamUsername.equals("liferay")) {
+						GitWorkingDirectory.Branch localUpstreamBranch =
+							gitWorkingDirectory.getBranch(
+								upstreamBranch.getName(), null);
 
-							gitWorkingDirectory.pushToRemote(
-								true, localUpstreamBranch,
-								upstreamBranch.getName(), localGitRemote);
-						}
+						gitWorkingDirectory.pushToRemote(
+							true, localUpstreamBranch, upstreamBranch.getName(),
+							localGitRemote);
 					}
 
-				});
+					return null;
+				}
+
+			};
+
+			callables.add(callable);
 		}
+
+		ParallelExecutor<Object> parallelExecutor = new ParallelExecutor<>(
+			callables, _threadPoolExecutor);
+
+		parallelExecutor.execute();
 
 		long duration = System.currentTimeMillis() - start;
 
@@ -242,20 +252,30 @@ public class LocalGitSyncUtil {
 
 		final long start = System.currentTimeMillis();
 
+		List<Callable<Object>> callables = new ArrayList<>();
+
 		for (final GitWorkingDirectory.Remote localGitRemote :
 				localGitRemotes) {
 
-			_threadPoolExecutor.execute(
-				new Runnable() {
+			Callable<Object> callable = new Callable<Object>() {
 
-					@Override
-					public void run() {
-						deleteExpiredCacheBranches(
-							gitWorkingDirectory, localGitRemote, start);
-					}
+				@Override
+				public Object call() {
+					deleteExpiredCacheBranches(
+						gitWorkingDirectory, localGitRemote, start);
 
-				});
+					return null;
+				}
+
+			};
+
+			callables.add(callable);
 		}
+
+		ParallelExecutor<Object> parallelExecutor = new ParallelExecutor<>(
+			callables, _threadPoolExecutor);
+
+		parallelExecutor.execute();
 
 		long duration = System.currentTimeMillis() - start;
 
@@ -455,20 +475,30 @@ public class LocalGitSyncUtil {
 				new HashMap<GitWorkingDirectory.Remote, Boolean>(
 					remotes.size()));
 
+		List<Callable<Boolean>> callables = new ArrayList<>();
+
 		for (final GitWorkingDirectory.Remote remote : remotes) {
-			_threadPoolExecutor.execute(
-				new Runnable() {
+			Callable<Boolean> callable = new Callable<Boolean>() {
 
-					@Override
-					public void run() {
-						resultsMap.put(
-							remote,
-							gitWorkingDirectory.pushToRemote(
-								force, localBranch, remoteBranchName, remote));
-					}
+				@Override
+				public Boolean call() {
+					Boolean result = gitWorkingDirectory.pushToRemote(
+						force, localBranch, remoteBranchName, remote);
 
-				});
+					resultsMap.put(remote, result);
+
+					return result;
+				}
+
+			};
+
+			callables.add(callable);
 		}
+
+		ParallelExecutor<Boolean> parallelExecutor = new ParallelExecutor<>(
+			callables, _threadPoolExecutor);
+
+		parallelExecutor.execute();
 
 		long duration = System.currentTimeMillis() - start;
 

@@ -154,7 +154,7 @@ public class WikiPagePermissionChecker implements BaseModelPermissionChecker {
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, page.getGroupId(), WikiPage.class.getName(),
-			page.getPageId(), WikiPortletKeys.WIKI, actionId);
+			page.getResourcePrimKey(), WikiPortletKeys.WIKI, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();

@@ -64,6 +64,15 @@ public class CommercePaymentMethodServiceImpl
 	}
 
 	@Override
+	public CommercePaymentMethod getCommercePaymentMethod(
+			long commercePaymentMethodId)
+		throws PortalException {
+
+		return commercePaymentMethodLocalService.getCommercePaymentMethod(
+			commercePaymentMethodId);
+	}
+
+	@Override
 	public List<CommercePaymentMethod> getCommercePaymentMethods(
 		long groupId, boolean active) {
 

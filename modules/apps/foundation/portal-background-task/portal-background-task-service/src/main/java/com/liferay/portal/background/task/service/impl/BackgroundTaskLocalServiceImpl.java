@@ -643,14 +643,14 @@ public class BackgroundTaskLocalServiceImpl
 
 		User user = null;
 
-		if (userId != UserConstants.USER_ID_DEFAULT) {
-			user = userLocalService.getUser(userId);
-		}
-
 		final long backgroundTaskId = counterLocalService.increment();
 
 		BackgroundTask backgroundTask = backgroundTaskPersistence.create(
 			backgroundTaskId);
+
+		if (userId != UserConstants.USER_ID_DEFAULT) {
+			user = userLocalService.fetchUser(userId);
+		}
 
 		if (user != null) {
 			backgroundTask.setCompanyId(user.getCompanyId());

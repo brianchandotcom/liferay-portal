@@ -1,18 +1,6 @@
 Bundle-Name: Liferay Portal Search
 Bundle-SymbolicName: com.liferay.portal.search
-Bundle-Version: 3.10.0
-Export-Package:\
-	com.liferay.portal.search.analysis,\
-	com.liferay.portal.search.buffer,\
-	com.liferay.portal.search.configuration,\
-	com.liferay.portal.search.contributor,\
-	com.liferay.portal.search.contributor.sort,\
-	com.liferay.portal.search.facet,\
-	com.liferay.portal.search.facet.tag,\
-	com.liferay.portal.search.facet.type,\
-	com.liferay.portal.search.index,\
-	com.liferay.portal.search.permission,\
-	com.liferay.portal.search.summary
+Bundle-Version: 4.0.0
 Import-Package:\
 	com.liferay.portal.kernel.search;version="[7.1.0,8)",\
 	\

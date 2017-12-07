@@ -1,7 +1,5 @@
 'use strict';
 
-var isValue;
-
 describe(
 	'Liferay.KaleoDesignerXMLDefinition',
 	function() {
@@ -10,8 +8,6 @@ describe(
 				AUI().use(
 					'liferay-kaleo-designer-xml-definition',
 					function(A) {
-						isValue = A.Lang.isValue;
-
 						done();
 					}
 				);
@@ -108,7 +104,7 @@ describe(
 
 													var recipient = notification.recipients[0];
 
-													assert(!isValue(recipient.receptionType));
+													Liferay.Test.assertIsNotValue(recipient.receptionType);
 												}
 											);
 
@@ -168,7 +164,7 @@ describe(
 
 													var recipient = notification.recipients[0];
 
-													assert(isValue(recipient.taskAssignees));
+													Liferay.Test.assertIsValue(recipient.taskAssignees);
 												}
 											);
 

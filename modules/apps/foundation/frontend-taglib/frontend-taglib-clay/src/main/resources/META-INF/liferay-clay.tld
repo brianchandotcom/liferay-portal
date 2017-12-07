@@ -340,6 +340,12 @@
 		</attribute>
 		<attribute>
 			<description></description>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>searchable</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -352,13 +358,7 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>triggerLabel</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description></description>
-			<name>triggerStyle</name>
+			<name>style</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -527,8 +527,8 @@
 	</tag>
 	<tag>
 		<description></description>
-		<name>navbar</name>
-		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.soy.NavbarTag</tag-class>
+		<name>navigation-bar</name>
+		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.soy.NavigationBarTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
@@ -540,6 +540,12 @@
 			<description></description>
 			<name>items</name>
 			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>spritemap</name>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>

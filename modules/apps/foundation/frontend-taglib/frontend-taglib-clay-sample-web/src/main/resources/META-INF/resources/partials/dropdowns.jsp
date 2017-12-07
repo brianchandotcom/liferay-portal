@@ -45,7 +45,7 @@
 	<div class="col-md-2">
 		<clay:dropdown-menu
 			items="<%= defaultItems %>"
-			triggerLabel="Default"
+			label="Default"
 		/>
 	</div>
 
@@ -103,7 +103,7 @@
 	<div class="col-md-2">
 		<clay:dropdown-menu
 			items="<%= dividerItems %>"
-			triggerLabel="Dividers"
+			label="Dividers"
 		/>
 	</div>
 
@@ -157,7 +157,7 @@
 			buttonLabel="Done"
 			items="<%= inputItems %>"
 			searchable="<%= true %>"
-			triggerLabel="Inputs"
+			label="Inputs"
 		/>
 	</div>
 
@@ -185,7 +185,7 @@
 		<clay:dropdown-menu
 			indicatorsPosition="left"
 			items="<%= iconItems %>"
-			triggerLabel="Icons"
+			label="Icons"
 		/>
 	</div>
 

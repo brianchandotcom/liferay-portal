@@ -19,12 +19,7 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
  */
 public class StripeTag extends AlertTag {
 
-	@Override
-	public int doStartTag() {
-		putValue("closeable", true);
-		putValue("type", "fluid");
-
-		return super.doStartTag();
+	public StripeTag() {
+		super("ClayStripe");
 	}
-
 }

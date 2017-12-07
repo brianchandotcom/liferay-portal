@@ -28,13 +28,13 @@ for (int i = 0; i < 8; i++) {
 		item.put("active", true);
 	}
 
-	item.put("title", "Page " + i);
+	item.put("label", "Page " + i);
 	item.put("url", "#" + i);
 
 	items.add(item);
 }
 %>
 
-<clay:navbar items="<%= items %>" />
+<clay:navigation-bar items="<%= items %>" />
 
-<clay:navbar inverted="<%= true %>" items="<%= items %>" />
+<clay:navigation-bar inverted="<%= true %>" items="<%= items %>" />

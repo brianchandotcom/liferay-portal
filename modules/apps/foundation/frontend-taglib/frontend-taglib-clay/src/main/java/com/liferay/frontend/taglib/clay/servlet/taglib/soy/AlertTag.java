@@ -27,7 +27,11 @@ import java.util.Map;
 public class AlertTag extends BaseClayTag {
 
 	public AlertTag() {
-		super("alert", "ClayAlert", true);
+		this("ClayAlert");
+	}
+
+	public AlertTag(String template) {
+		super("alert", template, true);
 	}
 
 	@Override

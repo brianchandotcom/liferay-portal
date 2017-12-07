@@ -109,6 +109,41 @@ describe(
 				);
 
 				it(
+					'should not serialize "receptionType" attribute if it has an empty string value.',
+					function(done) {
+						var jsonDefinition = {
+							nodes: [
+								{
+									name: 'task1',
+									notifications: {
+										name: ['notification1'],
+										recipients: [
+											{
+												receptionType: [""]
+											}
+										]
+									},
+									xmlType: 'task'
+								}
+							]
+						};
+
+						var definition = serializeDefinition(
+							XML_NAMESPACE,
+							METADATA,
+							jsonDefinition
+						);
+
+						assert(
+							definition.indexOf('receptionType="') < 0,
+							'Empty receptionType attribute is serialized.'
+						);
+
+						done();
+					}
+				);
+
+				it(
 					'should serialize <user> element if given.',
 					function(done) {
 						var jsonDefinition = {

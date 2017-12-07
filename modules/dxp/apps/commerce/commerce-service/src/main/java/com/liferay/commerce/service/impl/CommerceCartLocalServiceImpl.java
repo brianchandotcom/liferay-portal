@@ -67,14 +67,14 @@ public class CommerceCartLocalServiceImpl
 	public CommerceCart deleteCommerceCart(CommerceCart commerceCart)
 		throws PortalException {
 
-		// Commerce cart
-
-		commerceCartPersistence.remove(commerceCart);
-
 		// Commerce cart items
 
 		commerceCartItemLocalService.deleteCommerceCartItems(
 			commerceCart.getCommerceCartId());
+
+		// Commerce cart
+
+		commerceCartPersistence.remove(commerceCart);
 
 		// Expando
 

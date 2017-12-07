@@ -12,16 +12,28 @@
  * details.
  */
 
-package com.liferay.commerce.constants;
+package com.liferay.commerce.util;
+
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
+
+import java.util.Map;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class CommerceConstants {
+@ProviderType
+public interface CommercePaymentHelper {
 
-	public static final String PAYMENT_SERVLET_PATH = "commerce-payment";
+	public void completePayment(
+			CommerceOrder commerceOrder, Map<String, String[]> parameterMap)
+		throws PortalException;
 
-	public static final String SHIPPING_SERVICE_NAME =
-		"com.liferay.commerce.shipping";
+	public String getPaymentURL(
+			CommerceOrder commerceOrder, ServiceContext serviceContext)
+		throws PortalException;
 
 }

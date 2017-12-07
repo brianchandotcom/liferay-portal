@@ -15,23 +15,44 @@
 package com.liferay.portal.search.test.util.indexing;
 
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
+import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 
 /**
  * @author André de Oliveira
  */
 public class QueryContributors {
 
-	public static QueryContributor mustMatch(String field, String value) {
+	public static QueryContributor dummy() {
+		return booleanQuery -> {
+		};
+	}
+
+	public static QueryContributor must(Query query) {
 		return booleanQuery -> QueryContributor.add(
-			booleanQuery, new MatchQuery(field, value),
-			BooleanClauseOccur.MUST);
+			booleanQuery, query, BooleanClauseOccur.MUST);
+	}
+
+	public static QueryContributor mustMatch(String field, String value) {
+		return must(new MatchQuery(field, value));
+	}
+
+	public static QueryContributor mustNot(Query query) {
+		return booleanQuery -> QueryContributor.add(
+			booleanQuery, query, BooleanClauseOccur.MUST_NOT);
 	}
 
 	public static QueryContributor mustNotMatch(String field, String value) {
-		return booleanQuery -> QueryContributor.add(
-			booleanQuery, new MatchQuery(field, value),
-			BooleanClauseOccur.MUST_NOT);
+		return mustNot(new MatchQuery(field, value));
+	}
+
+	public static QueryContributor mustNotTerm(String field, String value) {
+		return mustNot(new TermQueryImpl(field, value));
+	}
+
+	public static QueryContributor mustTerm(String field, String value) {
+		return must(new TermQueryImpl(field, value));
 	}
 
 }

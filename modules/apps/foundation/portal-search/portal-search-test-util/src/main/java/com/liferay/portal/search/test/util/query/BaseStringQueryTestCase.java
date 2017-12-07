@@ -138,30 +138,32 @@ public abstract class BaseStringQueryTestCase extends BaseIndexingTestCase {
 		assertSearch("-bravo OR alpha", Arrays.asList("alpha charlie"));
 	}
 
-	protected void addDocuments(String... fieldValues) throws Exception {
-		for (String fieldValue : fieldValues) {
-			addDocument(
-				DocumentCreationHelpers.singleText(_FIELD_NAME, fieldValue));
-		}
+	protected void addDocuments(String... values) throws Exception {
+		addDocuments(
+			value -> DocumentCreationHelpers.singleText(_FIELD_NAME, value),
+			Arrays.asList(values));
 	}
 
 	protected void assertSearch(String query, List<String> expectedValues)
+		throws Exception {
+
+		IdempotentRetryAssert.retryAssert(
+			5, TimeUnit.SECONDS, () -> doAssertSearch(query, expectedValues));
+	}
+
+	protected Void doAssertSearch(String query, List<String> expectedValues)
 		throws Exception {
 
 		SearchContext searchContext = createSearchContext();
 
 		StringQuery stringQuery = _createStringQuery(query, searchContext);
 
-		IdempotentRetryAssert.retryAssert(
-			5, TimeUnit.SECONDS,
-			() -> {
-				Hits hits = search(searchContext, stringQuery);
+		Hits hits = search(searchContext, stringQuery);
 
-				DocumentsAssert.assertValues(
-					query, hits.getDocs(), _FIELD_NAME, expectedValues);
+		DocumentsAssert.assertValues(
+			query, hits.getDocs(), _FIELD_NAME, expectedValues);
 
-				return null;
-			});
+		return null;
 	}
 
 	private StringQuery _createStringQuery(

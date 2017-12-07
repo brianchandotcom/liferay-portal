@@ -16,16 +16,11 @@ package com.liferay.portal.search.elasticsearch.internal.index;
 
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch.internal.connection.Index;
 import com.liferay.portal.search.elasticsearch.internal.connection.IndexName;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.elasticsearch.action.index.IndexRequestBuilder;
-import org.elasticsearch.client.Client;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -46,10 +41,6 @@ public class LiferayTypeMappingsDDMKeywordEmptyStringTest {
 			clazz.getSimpleName(), new IndexName(testName.getMethodName()));
 
 		_liferayIndexFixture.setUp();
-
-		_index = _liferayIndexFixture.getIndex();
-
-		_elasticsearchFixture = _liferayIndexFixture.getElasticsearchFixture();
 	}
 
 	@Test
@@ -128,31 +119,13 @@ public class LiferayTypeMappingsDDMKeywordEmptyStringTest {
 	}
 
 	protected void assertType(String field, String type) throws Exception {
-		FieldMappingAssert.assertType(
-			type, field, LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
-			_index.getName(), _elasticsearchFixture.getIndicesAdminClient());
-	}
-
-	protected IndexRequestBuilder getIndexRequestBuilder() {
-		Client client = _elasticsearchFixture.getClient();
-
-		IndexRequestBuilder indexRequestBuilder = client.prepareIndex(
-			_index.getName(),
-			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
-
-		return indexRequestBuilder;
+		_liferayIndexFixture.assertType(field, type);
 	}
 
 	protected void index(Map<String, Object> map) {
-		IndexRequestBuilder indexRequestBuilder = getIndexRequestBuilder();
-
-		indexRequestBuilder.setSource(map);
-
-		indexRequestBuilder.get();
+		_liferayIndexFixture.index(map);
 	}
 
-	private ElasticsearchFixture _elasticsearchFixture;
-	private Index _index;
 	private LiferayIndexFixture _liferayIndexFixture;
 
 }

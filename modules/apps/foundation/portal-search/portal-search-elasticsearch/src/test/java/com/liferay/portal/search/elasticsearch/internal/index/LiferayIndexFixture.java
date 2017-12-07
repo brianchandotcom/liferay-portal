@@ -20,6 +20,9 @@ import com.liferay.portal.search.elasticsearch.internal.connection.IndexCreator;
 import com.liferay.portal.search.elasticsearch.internal.connection.IndexName;
 import com.liferay.portal.search.elasticsearch.internal.connection.LiferayIndexCreator;
 
+import java.util.Map;
+
+import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.client.Client;
 
 /**
@@ -54,11 +57,39 @@ public class LiferayIndexFixture {
 		_elasticsearchFixture.tearDown();
 	}
 
+	public void assertAnalyzer(String field, String analyzer) throws Exception {
+		FieldMappingAssert.assertAnalyzer(
+			analyzer, field, LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
+			_index.getName(), _elasticsearchFixture.getIndicesAdminClient());
+	}
+
+	public void assertType(String field, String type) throws Exception {
+		FieldMappingAssert.assertType(
+			type, field, LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
+			_index.getName(), _elasticsearchFixture.getIndicesAdminClient());
+	}
+
+	protected IndexRequestBuilder getIndexRequestBuilder() {
+		Client client = _elasticsearchFixture.getClient();
+
+		return client.prepareIndex(
+			_index.getName(),
+			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
+	}
+
 	protected Index createIndex() {
 		IndexCreator indexCreator = new LiferayIndexCreator(
 			_elasticsearchFixture);
 
 		return indexCreator.createIndex(_indexName);
+	}
+
+	protected void index(Map<String, Object> map) {
+		IndexRequestBuilder indexRequestBuilder = getIndexRequestBuilder();
+
+		indexRequestBuilder.setSource(map);
+
+		indexRequestBuilder.get();
 	}
 
 	private final ElasticsearchFixture _elasticsearchFixture;

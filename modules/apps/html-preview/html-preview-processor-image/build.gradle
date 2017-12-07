@@ -9,3 +9,16 @@ dependencies {
 	provided group: "org.xhtmlrenderer", name: "flying-saucer-core", version: "9.1.7"
 	provided project(":apps:html-preview:html-preview-api")
 }
+
+task extractResources(type: Copy) {
+	from zipTree(
+		configurations.provided.files(
+			{
+				file -> file.name.equals('flying-saucer-core')
+			}
+		).first())
+	into 'classes'
+	include 'resources/**'
+}
+
+classes.dependsOn(extractResources)

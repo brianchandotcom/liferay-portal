@@ -14,7 +14,7 @@
 
 package com.liferay.petra.nio;
 
-import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
 
 import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;

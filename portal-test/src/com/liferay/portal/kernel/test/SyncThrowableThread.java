@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.test;
 
-import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;

@@ -67,14 +67,14 @@ public class LiferayTypeMappingsPortugueseTest {
 		assertAnalyzer(field_pt_PT, "portuguese");
 	}
 
+	@Rule
+	public TestName testName = new TestName();
+
 	protected void assertAnalyzer(String field, String analyzer)
 		throws Exception {
 
 		_liferayIndexFixture.assertAnalyzer(field, analyzer);
 	}
-
-	@Rule
-	public TestName testName = new TestName();
 
 	private LiferayIndexFixture _liferayIndexFixture;
 

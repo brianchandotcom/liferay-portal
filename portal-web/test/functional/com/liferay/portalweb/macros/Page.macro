@@ -414,15 +414,23 @@
 	</command>
 
 	<command name="gotoChildPagePG">
-		<var name="key_pageName" value="${pageName}" />
+		<execute function="MouseOver" locator1="Home#PAGE">
+			<var name="key_pageName" value="${pageName}" />
+		</execute>
 
-		<execute function="MouseOver" locator1="Home#PAGE" />
+		<execute function="MouseOver" locator1="Home#SITE_NAME" />
 
-		<var name="key_childPageName" value="${childPageName}" />
+		<execute function="MouseOver" locator1="Home#PAGE">
+			<var name="key_pageName" value="${pageName}" />
+		</execute>
 
-		<execute function="AssertVisible" locator1="Home#PAGE_CHILD_PAGE" />
+		<execute function="AssertVisible" locator1="Home#PAGE_CHILD_PAGE">
+			<var name="key_childPageName" value="${childPageName}" />
+		</execute>
 
-		<execute function="Click" locator1="Home#PAGE_CHILD_PAGE" />
+		<execute function="Click" locator1="Home#PAGE_CHILD_PAGE">
+			<var name="key_childPageName" value="${childPageName}" />
+		</execute>
 	</command>
 
 	<command name="gotoEditTemplatePages">

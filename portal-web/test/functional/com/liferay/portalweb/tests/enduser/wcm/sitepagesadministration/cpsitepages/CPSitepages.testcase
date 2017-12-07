@@ -926,6 +926,7 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Site Page" />
+			<var name="pageTemplateName" value="Blog" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">

@@ -41,9 +41,7 @@ public class PackageinfoBNDExportPackageCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (!isSubrepository() && !isReadOnly(absolutePath)) {
-			_checkBNDExportPackage(fileName);
-		}
+		_checkBNDExportPackage(fileName);
 
 		return content;
 	}

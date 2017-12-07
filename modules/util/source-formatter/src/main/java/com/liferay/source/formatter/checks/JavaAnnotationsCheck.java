@@ -39,13 +39,7 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (isSubrepository() || isReadOnly(absolutePath)) {
-			return content;
-		}
-
-		content = _formatAnnotations(fileName, content);
-
-		return content;
+		return _formatAnnotations(fileName, content);
 	}
 
 	private void _checkDelimeter(

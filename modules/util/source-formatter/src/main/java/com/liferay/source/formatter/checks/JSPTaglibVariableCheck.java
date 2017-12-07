@@ -29,13 +29,7 @@ public class JSPTaglibVariableCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (isSubrepository() || isReadOnly(absolutePath)) {
-			return content;
-		}
-
-		content = _formatTaglibVariable(fileName, content);
-
-		return content;
+		return _formatTaglibVariable(fileName, content);
 	}
 
 	private String _formatTaglibVariable(String fileName, String content) {

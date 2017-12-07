@@ -302,15 +302,19 @@
 		<property name="portal.acceptance" value="false" />
 		<property name="testray.component.names" value="Training" />
 
-		<execute macro="SitePageNavigator#gotoAddPage">
-			<var name="sitePagePrivacy" value="Private" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="Page#addPageTitle">
+		<execute macro="SitePages#addPrivatePage">
 			<var name="pageName" value="Research Projects" />
 		</execute>
 
-		<execute macro="Page#saveAddPage" />
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Research Projects" />
+		</execute>
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Wiki" />

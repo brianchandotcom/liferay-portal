@@ -814,10 +814,6 @@
 			<var name="pageNameEdit" value="Site Page Edit" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoPages" >
-			<var name="page" value="Public Pages" />
-		</execute>
-
 		<execute macro="Page#view">
 			<var name="pageName" value="Site Page Edit" />
 			<var name="privacy" value="Public" />

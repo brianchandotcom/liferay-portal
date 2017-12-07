@@ -373,7 +373,7 @@
 			<var name="sitePageType" value="Empty Page" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoPages">
+		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Community Site Name" />
 		</execute>
 

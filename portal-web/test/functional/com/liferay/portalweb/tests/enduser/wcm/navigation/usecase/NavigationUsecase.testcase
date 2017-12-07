@@ -243,11 +243,19 @@
 
 		<execute macro="UserBar#gotoDashboard" />
 
-		<execute macro="SitePageNavigator#gotoPages" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
 
-		<var name="key_pageName" value="Test User Group Private Page" />
+		<execute macro="SitePages#togglePrivacy">
+			<var name="privacy" value="Private" />
+		</execute>
 
-		<execute function="AssertTextEquals" locator1="ProductMenu#PRIVATE_PAGE_LINK" value1="Test User Group Private Page" />
+		<execute macro="LexiconEntry#viewEntryName">
+			<var name="rowEntry" value="Test User Group Private Page" />
+		</execute>
 
 		<execute macro="User#logoutUserPG" />
 

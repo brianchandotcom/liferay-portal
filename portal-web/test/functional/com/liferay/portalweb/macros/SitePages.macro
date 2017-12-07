@@ -15,6 +15,24 @@
 				</execute>
 			</then>
 			<elseif>
+				<equals arg1="${pageType}" arg2="Link to a Page of This Site" />
+				<then>
+					<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
+
+					<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+					<execute macro="Portlet#expandTree" />
+
+					<execute macro="Portlet#selectTreeNode">
+						<var name="nodeName" value="${pageLinkName}" />
+					</execute>
+
+					<execute function="SelectFrameTop" />
+
+					<execute macro="Button#clickDone" />
+				</then>
+			</elseif>
+			<elseif>
 				<equals arg1="${sitePageType}" arg2="Link to URL" />
 				<then>
 					<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" value1="Link to URL" />
@@ -87,6 +105,7 @@
 		<execute macro="SitePages#_configurePage">
 			<var name="columnName" value="${columnName}" />
 			<var name="componentName" value="${componentName}" />
+			<var name="pageLinkName" value="${pageLinkName}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
 			<var name="pageTypeDescription" value="${pageTypeDescription}" />
 			<var name="pageTypeURL" value="${pageTypeURL}" />
@@ -111,6 +130,7 @@
 		<execute macro="SitePages#_configurePage">
 			<var name="columnName" value="${columnName}" />
 			<var name="componentName" value="${componentName}" />
+			<var name="pageLinkName" value="${pageLinkName}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
 			<var name="pageTypeDescription" value="${pageTypeDescription}" />
 			<var name="pageTypeURL" value="${pageTypeURL}" />
@@ -130,6 +150,7 @@
 			<var name="childPageName" value="${childPageName}" />
 			<var name="columnName" value="${columnName}" />
 			<var name="componentName" value="${componentName}" />
+			<var name="pageLinkName" value="${pageLinkName}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
 			<var name="pageTypeDescription" value="${pageTypeDescription}" />
 			<var name="pageTypeURL" value="${pageTypeURL}" />
@@ -143,6 +164,7 @@
 		<execute macro="SitePages#addPage">
 			<var name="columnName" value="${columnName}" />
 			<var name="componentName" value="${componentName}" />
+			<var name="pageLinkName" value="${pageLinkName}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
 			<var name="pageTypeDescription" value="${pageTypeDescription}" />
@@ -162,6 +184,7 @@
 			<var name="childPageName" value="${childPageName}" />
 			<var name="columnName" value="${columnName}" />
 			<var name="componentName" value="${componentName}" />
+			<var name="pageLinkName" value="${pageLinkName}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
 			<var name="pageTypeDescription" value="${pageTypeDescription}" />
 			<var name="pageTypeURL" value="${pageTypeURL}" />
@@ -175,6 +198,7 @@
 		<execute macro="SitePages#addPage">
 			<var name="columnName" value="${columnName}" />
 			<var name="componentName" value="${componentName}" />
+			<var name="pageLinkName" value="${pageLinkName}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
 			<var name="pageTypeDescription" value="${pageTypeDescription}" />
@@ -198,6 +222,7 @@
 		<execute macro="SitePages#_configurePage">
 			<var name="columnName" value="${columnName}" />
 			<var name="componentName" value="${componentName}" />
+			<var name="pageLinkName" value="${pageLinkName}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
 			<var name="pageTypeDescription" value="${pageTypeDescription}" />
 			<var name="pageTypeURL" value="${pageTypeURL}" />

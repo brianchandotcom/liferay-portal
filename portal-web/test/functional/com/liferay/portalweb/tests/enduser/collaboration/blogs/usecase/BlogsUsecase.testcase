@@ -1079,9 +1079,9 @@
 
 		<execute function="AssertElementNotPresent" locator1="BlogsEntry#TITLE" value1="Blogs Entry Title 2" />
 
-		<execute macro="SitePageNavigator#gotoPages">
-			<var name="page" value="Public Pages" />
-			<var name="site" value="Site Name" />
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Blogs Page 1" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Staging#gotoPublishToLive" />

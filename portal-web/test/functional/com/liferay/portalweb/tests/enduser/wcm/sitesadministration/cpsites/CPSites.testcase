@@ -555,12 +555,18 @@
 			<var name="siteFriendlyURLEdit" value="/alpha/alpha" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoPages">
-			<var name="page" value="Public Pages" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Configure" />
+			<var name="rowEntry" value="Site Page" />
 		</execute>
 
 		<execute macro="Page#viewFriendlyURL">
-			<var name="pageName" value="Site Page" />
 			<var name="siteFriendlyURL" value="/site-name" />
 		</execute>
 	</command>

@@ -454,7 +454,7 @@
 		<check name="XMLWebFileCheck" />
 	</source-processor>
 	<source-processor name="YMLSourceProcessor">
-		<check name="WhitespaceCheck">
+		<check name="YMLWhitespaceCheck">
 			<property name="allowLeadingSpaces" value="true" />
 		</check>
 		<check name="YMLDefintionOrderCheck" />

@@ -944,6 +944,26 @@ message.
 		</if>
 
 		<if>
+			<and>
+				<equals arg1="${app.server.type}" arg2="jboss" />
+				<isset property="portal.war.url" />
+			</and>
+			<then>
+				<local name="petra.version" />
+
+				<propertyregex defaultValue="0" input="${portal.war.url}" property="petra.version" regexp="http://mirrors/releases\.liferay\.com/portal/[^/]+/.+-(\d+)\.(\d+)-ga(\d+)-\d+\.war" select="\1\2\3" />
+
+				<antelope:if>
+					<bool>
+						<islessthan arg1="${petra.version}" arg2="706" />
+					</bool>
+
+					<replaceregexp file="${app.server.lib.global.dir}/module.xml" flags="g" match="\s*&lt;resource-root path=&quot;com.liferay.petra[^\n^\r]*[\n\r]" replace="" />
+				</antelope:if>
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${app.server.type}" arg2="jetty" />
 			<then>
 				<if>

@@ -214,8 +214,8 @@ AUI.add(
 					bodyNodeTemplate: {
 						value: [
 							'<div class="celleditor-view-full-view">',
-								'<div class="celleditor-view-static-view"></div>',
-								'<div class="celleditor-view-dynamic-views"></div>',
+							'<div class="celleditor-view-static-view"></div>',
+							'<div class="celleditor-view-dynamic-views"></div>',
 							'</div>'
 						].join(STR_BLANK)
 					},
@@ -435,15 +435,15 @@ AUI.add(
 							var strings = instance.get('strings');
 
 							var addSectionButton = new A.Button(
-									{
-										disabled: true,
-										icon: 'icon-plus-sign',
-										id: 'addSectionButton',
-										label: strings.addSection,
-										on: {
-											click: A.bind(instance._onClickAddSectionButton, instance)
-										}
+								{
+									disabled: true,
+									icon: 'icon-plus-sign',
+									id: 'addSectionButton',
+									label: strings.addSection,
+									on: {
+										click: A.bind(instance._onClickAddSectionButton, instance)
 									}
+								}
 							).render();
 
 							var bodyNode = instance.get('bodyNode');
@@ -596,7 +596,7 @@ AUI.add(
 					viewTemplate: {
 						value: [
 							'<div class="{$ans}celleditor-assignment-view {$ans}celleditor-view {$ans}celleditor-view-type-{viewId} {$ans}hide">',
-								'{content}',
+							'{content}',
 							'</div>'
 						]
 					}
@@ -1431,8 +1431,8 @@ AUI.add(
 					viewTemplate: {
 						value: [
 							'<div class="{$ans}celleditor-notifications-view {$ans}celleditor-view {$ans}celleditor-view-type-{viewId}">',
-								'{content}',
-								'<div class="recipients-editor-container"></div>',
+							'{content}',
+							'<div class="recipients-editor-container"></div>',
 							'</div>'
 						]
 					}
@@ -1749,7 +1749,7 @@ AUI.add(
 					viewTemplate: {
 						value: [
 							'<div class="{$ans}celleditor-actions-view {$ans}celleditor-view {$ans}celleditor-view-type-{viewId}">',
-								'{content}',
+							'{content}',
 							'</div>'
 						]
 					}
@@ -1901,7 +1901,7 @@ AUI.add(
 						var count = 0;
 
 						if (val) {
-							return val.name ? val.name.filter(isValue).length : 1;
+							count = val.name ? val.name.filter(isValue).length : 1;
 						}
 
 						return count;
@@ -1969,10 +1969,10 @@ AUI.add(
 					viewTemplate: {
 						value: [
 							'<div class="{$ans}celleditor-task-timer-actions-view {$ans}celleditor-view {$ans}celleditor-view-type-{viewId}">',
-								'{content}',
-								'<div class="editor-container editor-container-action"></div>',
-								'<div class="editor-container editor-container-notification"></div>',
-								'<div class="editor-container editor-container-reassignment"></div>',
+							'{content}',
+							'<div class="editor-container editor-container-action"></div>',
+							'<div class="editor-container editor-container-notification"></div>',
+							'<div class="editor-container editor-container-reassignment"></div>',
 							'</div>'
 						]
 					}
@@ -2254,7 +2254,7 @@ AUI.add(
 					viewTemplate: {
 						value: [
 							'<div class="{$ans}celleditor-task-timer-delays-view {$ans}celleditor-view {$ans}celleditor-view-type-{viewId}">',
-								'{content}',
+							'{content}',
 							'</div>'
 						]
 					}
@@ -2389,7 +2389,7 @@ AUI.add(
 					viewTemplate: {
 						value: [
 							'<div class="{$ans}celleditor-task-timers-view {$ans}celleditor-view {$ans}celleditor-view-type-{viewId}">',
-								'{content}',
+							'{content}',
 							'</div>'
 						]
 					}
@@ -2631,7 +2631,7 @@ AUI.add(
 						var count = 0;
 
 						if (val) {
-							return val.name ? val.name.filter(isValue).length : 1;
+							count = val.name ? val.name.filter(isValue).length : 1;
 						}
 
 						return count;
@@ -2641,7 +2641,6 @@ AUI.add(
 						var instance = this;
 
 						return instance.get('value.delay') || val;
-
 					},
 
 					_getTimerActions: function(val) {

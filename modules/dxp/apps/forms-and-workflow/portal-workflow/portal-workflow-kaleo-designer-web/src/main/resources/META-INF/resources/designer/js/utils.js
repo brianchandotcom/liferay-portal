@@ -118,7 +118,11 @@ AUI.add(
 
 								item.all('option:selected').each(
 									function(option) {
-										value.push({ notificationType: option.val() });
+										value.push(
+											{
+												notificationType: option.val()
+											}
+										);
 									}
 								);
 							}

@@ -20,13 +20,13 @@ AUI.add(
 				var instance = this;
 
 				instance._invokeResourceURL(
-						{
-							callback: callback,
-							queryParameters: {
-								userIds: userId
-							},
-							resourceId: 'users'
-						}
+					{
+						callback: callback,
+						queryParameters: {
+							userIds: userId
+						},
+						resourceId: 'users'
+					}
 				);
 			},
 

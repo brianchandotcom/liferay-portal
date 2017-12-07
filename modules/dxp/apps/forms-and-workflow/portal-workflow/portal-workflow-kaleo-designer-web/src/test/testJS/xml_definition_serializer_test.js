@@ -222,8 +222,8 @@ describe(
 						var jsonDefinition = {
 							nodes: [
 								{
-									name: 'task1',
 									assignments: {},
+									name: 'task1',
 									xmlType: 'task'
 								}
 							]

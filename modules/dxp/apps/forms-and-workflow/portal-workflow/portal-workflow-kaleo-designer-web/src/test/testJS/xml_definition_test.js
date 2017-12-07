@@ -28,23 +28,23 @@ describe(
 							'should have name',
 							function(done) {
 								Liferay.Test.loadResource('metadata-only-definition.xml')
-								.then(
-									function(definition) {
-										var xmlDefinition = new Liferay.KaleoDesignerXMLDefinition(
-											{
-												value: definition
-											}
-										);
+									.then(
+										function(definition) {
+											var xmlDefinition = new Liferay.KaleoDesignerXMLDefinition(
+												{
+													value: definition
+												}
+											);
 
-										var metadata = xmlDefinition.getDefinitionMetadata();
+											var metadata = xmlDefinition.getDefinitionMetadata();
 
-										assert.equal(metadata.description, 'It only has metadata');
-										assert.equal(metadata.name, 'Metadata Only');
-										assert.equal(metadata.version, 42);
+											assert.equal(metadata.description, 'It only has metadata');
+											assert.equal(metadata.name, 'Metadata Only');
+											assert.equal(metadata.version, 42);
 
-										done();
-									}
-								);
+											done();
+										}
+									);
 							}
 						);
 					}
@@ -62,29 +62,29 @@ describe(
 							'should retrieve "receptionType" attribute value',
 							function(done) {
 								Liferay.Test.loadResource('recipients-with-reception-type-bcc-definition.xml')
-								.then(
-									function(definition) {
-										var xmlDefinition = new Liferay.KaleoDesignerXMLDefinition(
-											{
-												value: definition
-											}
-										);
+									.then(
+										function(definition) {
+											var xmlDefinition = new Liferay.KaleoDesignerXMLDefinition(
+												{
+													value: definition
+												}
+											);
 
-										xmlDefinition.forEachField(
-											function(tagName, fieldData) {
-												var result = fieldData.results[0];
+											xmlDefinition.forEachField(
+												function(tagName, fieldData) {
+													var result = fieldData.results[0];
 
-												var notification = result.notifications[0];
+													var notification = result.notifications[0];
 
-												var recipient = notification.recipients[0];
+													var recipient = notification.recipients[0];
 
-												assert.equal(recipient.receptionType, 'bcc');
-											}
-										);
+													assert.equal(recipient.receptionType, 'bcc');
+												}
+											);
 
-										done();
-									}
-								);
+											done();
+										}
+									);
 							}
 						);
 
@@ -92,29 +92,29 @@ describe(
 							'should not have a "receptionType" attribute if not present in definition',
 							function(done) {
 								Liferay.Test.loadResource('recipients-with-no-reception-type-definition.xml')
-								.then(
-									function(definition) {
-										var xmlDefinition = new Liferay.KaleoDesignerXMLDefinition(
-											{
-												value: definition
-											}
-										);
+									.then(
+										function(definition) {
+											var xmlDefinition = new Liferay.KaleoDesignerXMLDefinition(
+												{
+													value: definition
+												}
+											);
 
-										xmlDefinition.forEachField(
-											function(tagName, fieldData) {
-												var result = fieldData.results[0];
+											xmlDefinition.forEachField(
+												function(tagName, fieldData) {
+													var result = fieldData.results[0];
 
-												var notification = result.notifications[0];
+													var notification = result.notifications[0];
 
-												var recipient = notification.recipients[0];
+													var recipient = notification.recipients[0];
 
-												assert(!isValue(recipient.receptionType));
-											}
-										);
+													assert(!isValue(recipient.receptionType));
+												}
+											);
 
-										done();
-									}
-								);
+											done();
+										}
+									);
 							}
 						);
 
@@ -122,29 +122,29 @@ describe(
 							'should have "users" as recipient.',
 							function(done) {
 								Liferay.Test.loadResource('recipients-with-user-definition.xml')
-								.then(
-									function(definition) {
-										var xmlDefinition = new Liferay.KaleoDesignerXMLDefinition(
-											{
-												value: definition
-											}
-										);
+									.then(
+										function(definition) {
+											var xmlDefinition = new Liferay.KaleoDesignerXMLDefinition(
+												{
+													value: definition
+												}
+											);
 
-										xmlDefinition.forEachField(
-											function(tagName, fieldData) {
-												var result = fieldData.results[0];
+											xmlDefinition.forEachField(
+												function(tagName, fieldData) {
+													var result = fieldData.results[0];
 
-												var notification = result.notifications[0];
+													var notification = result.notifications[0];
 
-												var recipient = notification.recipients[0];
+													var recipient = notification.recipients[0];
 
-												assert.equal(recipient.user.length, 1);
-											}
-										);
+													assert.equal(recipient.user.length, 1);
+												}
+											);
 
-										done();
-									}
-								);
+											done();
+										}
+									);
 							}
 						);
 
@@ -152,29 +152,29 @@ describe(
 							'should have "assignees" as recipient.',
 							function(done) {
 								Liferay.Test.loadResource('recipients-with-assignees-definition.xml')
-								.then(
-									function(definition) {
-										var xmlDefinition = new Liferay.KaleoDesignerXMLDefinition(
-											{
-												value: definition
-											}
-										);
+									.then(
+										function(definition) {
+											var xmlDefinition = new Liferay.KaleoDesignerXMLDefinition(
+												{
+													value: definition
+												}
+											);
 
-										xmlDefinition.forEachField(
-											function(tagName, fieldData) {
-												var result = fieldData.results[0];
+											xmlDefinition.forEachField(
+												function(tagName, fieldData) {
+													var result = fieldData.results[0];
 
-												var notification = result.notifications[0];
+													var notification = result.notifications[0];
 
-												var recipient = notification.recipients[0];
+													var recipient = notification.recipients[0];
 
-												assert(isValue(recipient.taskAssignees));
-											}
-										);
+													assert(isValue(recipient.taskAssignees));
+												}
+											);
 
-										done();
-									}
-								);
+											done();
+										}
+									);
 							}
 						);
 					}

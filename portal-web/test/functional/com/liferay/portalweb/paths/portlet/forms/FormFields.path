@@ -304,6 +304,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_FIELD_OPTIONS_LIST_CHECKBOX</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//div[contains(@class,'form-builder-select-field')]//ul[@class='results-chosen']//li[contains(.,'${key_selectOption}')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FIELD_MULTIPLE_OPTION</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//span[contains(.,'${key_selectOption}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FIELD_MULTIPLE_OPTION_REMOVE</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//span[contains(.,'${key_selectOption}')]//a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_OPTION</td>
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//select/option[contains(.,'${key_selectOption}')]</td>
 	<td></td>

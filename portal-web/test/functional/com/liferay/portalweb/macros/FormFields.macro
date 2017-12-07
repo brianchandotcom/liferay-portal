@@ -160,6 +160,31 @@
 		<execute function="Click" locator1="FormFields#FIELD_REMOVE" />
 	</command>
 
+	<command name="removeSelectOption">
+		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_selectOption" value="${selectOption}" />
+
+		<execute function="MouseOver" locator1="FormFields#SELECT_FIELD_MULTIPLE_OPTION" />
+
+		<execute function="Click" locator1="FormFields#SELECT_FIELD_MULTIPLE_OPTION_REMOVE" />
+
+		<execute function="AssertNotVisible" locator1="FormFields#SELECT_FIELD_MULTIPLE_OPTION" value1="${selectOption}" />
+	</command>
+
+	<command name="removeSelectOptionViaDropdown">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="Click" locator1="FormFields#SELECT_FIELD" />
+
+		<var name="key_selectOption" value="${selectOption}" />
+
+		<execute function="Uncheck" locator1="FormFields#SELECT_FIELD_OPTIONS_LIST_CHECKBOX" />
+
+		<execute function="Click" locator1="FormFields#SELECT_FIELD" />
+
+		<execute function="AssertNotVisible" locator1="FormFields#SELECT_FIELD_MULTIPLE_OPTION" value1="${selectOption}" />
+	</command>
+
 	<command name="selectAutoCompleteOption">
 		<var name="key_autocompleteOption" value="${autocompleteOption}" />
 
@@ -228,6 +253,25 @@
 				<execute function="AssertClick" locator1="FormFields#SELECT_FIELD_OPTIONS_LIST" value1="${selectOption}" />
 			</else>
 		</if>
+	</command>
+
+	<command name="selectSelectWithMultipleOptions">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="Click" locator1="FormFields#SELECT_FIELD" />
+
+		<for list="${selectOptionsList}" param="selectOption">
+			<var name="key_selectOption" value="${selectOption}" />
+
+			<execute function="Check" locator1="FormFields#SELECT_FIELD_OPTIONS_LIST_CHECKBOX" />
+		</for>
+
+		<execute macro="FormFields#viewSelectMultipleOptions">
+			<var name="fieldName" value="Select" />
+			<var name="selectOptionsList" value="${selectOptionsList}" />
+		</execute>
+
+		<execute function="Click" locator1="FormFields#SELECT_FIELD" />
 	</command>
 
 	<command name="selectSwitcherOption">
@@ -502,6 +546,14 @@
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#SELECT_LABEL" value1="${fieldLabel}">
 			<var name="key_fieldName" value="${fieldName}" />
 		</execute>
+	</command>
+
+	<command name="viewSelectMultipleOptions">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<for list="${selectOptionsList}" param="selectOption">
+			<execute function="AssertTextEquals#assertPartialText" locator1="FormFields#SELECT_FIELD" value1="${selectOption}" />
+		</for>
 	</command>
 
 	<command name="viewSelectOption">

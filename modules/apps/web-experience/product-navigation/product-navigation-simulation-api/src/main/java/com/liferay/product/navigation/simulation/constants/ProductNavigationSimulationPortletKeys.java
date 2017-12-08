@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.product.navigation.simulation.web.constants;
+package com.liferay.product.navigation.simulation.constants;
 
 /**
  * @author Eduardo Garcia

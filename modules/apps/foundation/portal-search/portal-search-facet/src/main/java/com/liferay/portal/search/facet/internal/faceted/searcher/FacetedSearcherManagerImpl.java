@@ -26,7 +26,6 @@ import com.liferay.portal.search.permission.SearchPermissionFilterContributor;
 import java.util.Collection;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -35,7 +34,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author André de Oliveira
  */
-@Component(immediate = true, service = FacetedSearcherManager.class)
 public class FacetedSearcherManagerImpl implements FacetedSearcherManager {
 
 	@Override

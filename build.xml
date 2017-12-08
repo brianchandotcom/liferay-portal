@@ -356,6 +356,11 @@ message.
 				</gradle-execute>
 			</then>
 			<else>
+				<gradle-execute dir="${project.dir}/modules/apps/static/modules-compat/modules-compat-data" task="deploy">
+					<arg value="--parallel" />
+					<arg value="-Dbuild.profile=portal" />
+				</gradle-execute>
+
 				<gradle-execute dir="${project.dir}/modules/core" task="deploy">
 					<arg value="--parallel" />
 					<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />

@@ -1,0 +1,19 @@
+dependencies {
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.4.0"
+	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+	provided group: "org.xhtmlrenderer", name: "flying-saucer-core", version: "9.1.7"
+	provided project(":apps:html-preview:html-preview-api")
+}
+
+task extractResources(type: Copy) {
+	from zipTree(
+		configurations.provided.files(
+			{
+				file -> file.name.equals('flying-saucer-core')
+			}
+		).first())
+	into 'classes'
+	include 'resources/**'
+}
+
+classes.dependsOn(extractResources)

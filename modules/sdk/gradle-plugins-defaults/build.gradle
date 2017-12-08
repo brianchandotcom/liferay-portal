@@ -10,15 +10,15 @@ configurations {
 
 dependencies {
 	compile group: "com.liferay", name: "com.github.jk1.gradle-license-report", version: "0.3.11"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins", version: "3.5.61"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins", version: "3.5.0"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.app.javadoc.builder", version: "1.2.0"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.baseline", version: "1.1.9"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.cache", version: "1.0.12"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.change.log.builder", version: "1.0.3"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.dependency.checker", version: "1.0.1"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.lang.merger", version: "1.0.3"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.patcher", version: "1.0.12"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.whip", version: "1.0.5"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.baseline", version: "1.1.0"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.cache", version: "1.0.0"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.change.log.builder", version: "1.0.0"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.dependency.checker", version: "1.0.0"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.lang.merger", version: "1.0.0"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.patcher", version: "1.0.0"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.whip", version: "1.0.0"
 	compile group: "com.netflix.nebula", name: "gradle-extra-configurations-plugin", version: "3.0.3"
 	compile group: "org.apache.aries.jmx", name: "org.apache.aries.jmx.api", version: "1.1.0"
 

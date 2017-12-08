@@ -11,7 +11,7 @@ configurations {
 }
 
 dependencies {
-	sourceFormatter group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.200"
+	sourceFormatter group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.0"
 }
 
 dependencyChecker {

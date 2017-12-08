@@ -11,6 +11,6 @@ dependencies {
 	provided group: "org.osgi", name: "org.osgi.service.http", version: "1.2.1"
 	provided group: "org.osgi", name: "org.osgi.service.http.whiteboard", version: "1.0.0"
 
-	testIntegrationCompile group: "com.liferay.arquillian", name: "com.liferay.arquillian.arquillian-container-liferay", version: "1.0.4"
-	testIntegrationCompile group: "com.liferay.arquillian", name: "com.liferay.arquillian.arquillian-deployment-generator-bnd", version: "1.0.4"
+	testIntegrationCompile group: "com.liferay.arquillian", name: "com.liferay.arquillian.arquillian-container-liferay", version: "1.0.0"
+	testIntegrationCompile group: "com.liferay.arquillian", name: "com.liferay.arquillian.arquillian-deployment-generator-bnd", version: "1.0.0"
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.util;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.model.Dimensions;
 import com.liferay.commerce.product.model.CPInstance;
@@ -23,6 +25,7 @@ import java.util.List;
 /**
  * @author Andrea Di Giorgi
  */
+@ProviderType
 public interface CommerceShippingHelper {
 
 	public Dimensions getDimensions(CPInstance cpInstance);

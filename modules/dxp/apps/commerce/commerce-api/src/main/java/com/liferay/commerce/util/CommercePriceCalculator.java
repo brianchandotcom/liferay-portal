@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.util;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.product.model.CPInstance;
@@ -21,6 +23,7 @@ import com.liferay.commerce.product.model.CPInstance;
 /**
  * @author Alessio Antonio Rendina
  */
+@ProviderType
 public interface CommercePriceCalculator {
 
 	public double getPrice(CommerceCartItem commerceCartItem);

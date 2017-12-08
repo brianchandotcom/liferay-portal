@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.util;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.commerce.model.CommercePaymentEngine;
 
 import java.util.Map;
@@ -21,6 +23,7 @@ import java.util.Map;
 /**
  * @author Andrea Di Giorgi
  */
+@ProviderType
 public interface CommercePaymentEngineRegistry {
 
 	public CommercePaymentEngine getCommercePaymentEngine(String key);

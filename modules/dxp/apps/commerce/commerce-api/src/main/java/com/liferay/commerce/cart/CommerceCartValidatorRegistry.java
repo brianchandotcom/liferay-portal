@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.cart;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.product.model.CPInstance;
@@ -25,6 +27,7 @@ import java.util.Map;
 /**
  * @author Alessio Antonio Rendina
  */
+@ProviderType
 public interface CommerceCartValidatorRegistry {
 
 	public CommerceCartValidator getCommerceCartValidator(String key);

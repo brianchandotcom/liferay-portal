@@ -49,13 +49,13 @@ boolean shipSeparately = BeanParamUtil.getBoolean(cpDefinition, request, "shipSe
 				<aui:input name="shippingExtraPrice" />
 			</div>
 
-			<aui:input name="width" suffix="<%= cpDefinitionShippingInfoDisplayContext.getCPMeasurementUnitName(CPConstants.MEASUREMENT_UNIT_TYPE_DIMENSION) %>" />
+			<aui:input name="width" suffix="<%= cpDefinitionShippingInfoDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_DIMENSION) %>" />
 
-			<aui:input name="height" suffix="<%= cpDefinitionShippingInfoDisplayContext.getCPMeasurementUnitName(CPConstants.MEASUREMENT_UNIT_TYPE_DIMENSION) %>" />
+			<aui:input name="height" suffix="<%= cpDefinitionShippingInfoDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_DIMENSION) %>" />
 
-			<aui:input name="depth" suffix="<%= cpDefinitionShippingInfoDisplayContext.getCPMeasurementUnitName(CPConstants.MEASUREMENT_UNIT_TYPE_DIMENSION) %>" />
+			<aui:input name="depth" suffix="<%= cpDefinitionShippingInfoDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_DIMENSION) %>" />
 
-			<aui:input name="weight" suffix="<%= cpDefinitionShippingInfoDisplayContext.getCPMeasurementUnitName(CPConstants.MEASUREMENT_UNIT_TYPE_WEIGHT) %>" />
+			<aui:input name="weight" suffix="<%= cpDefinitionShippingInfoDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_WEIGHT) %>" />
 		</aui:fieldset>
 	</aui:fieldset-group>
 

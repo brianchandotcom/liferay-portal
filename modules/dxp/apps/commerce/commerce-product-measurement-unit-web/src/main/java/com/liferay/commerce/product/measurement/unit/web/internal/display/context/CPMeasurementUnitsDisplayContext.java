@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.product.measurement.unit.web.internal.display.context;
 
-import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.measurement.unit.web.internal.util.CPMeasurementUnitAdminModule;
 import com.liferay.commerce.product.measurement.unit.web.internal.util.CPMeasurementUnitUtil;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
+import com.liferay.commerce.product.model.CPMeasurementUnitConstants;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
@@ -152,8 +152,7 @@ public class CPMeasurementUnitsDisplayContext {
 
 	public int getType() {
 		return ParamUtil.getInteger(
-			_renderRequest, "type",
-			CPConstants.MEASUREMENT_UNIT_TYPE_DIMENSION);
+			_renderRequest, "type", CPMeasurementUnitConstants.TYPE_DIMENSION);
 	}
 
 	protected RowChecker getRowChecker() {

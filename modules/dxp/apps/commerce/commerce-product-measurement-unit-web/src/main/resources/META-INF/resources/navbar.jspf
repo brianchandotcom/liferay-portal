@@ -20,7 +20,7 @@
 			<portlet:param name="toolbarItem" value="view-all-dimension-product-measurement-units" />
 			<portlet:param name="mvcPath" value="/view.jsp" />
 			<portlet:param name="commerceAdminModuleKey" value="<%= CPMeasurementUnitAdminModule.KEY %>" />
-			<portlet:param name="type" value="<%= String.valueOf(CPConstants.MEASUREMENT_UNIT_TYPE_DIMENSION) %>" />
+			<portlet:param name="type" value="<%= String.valueOf(CPMeasurementUnitConstants.TYPE_DIMENSION) %>" />
 		</portlet:renderURL>
 
 		<aui:nav-item
@@ -33,7 +33,7 @@
 			<portlet:param name="toolbarItem" value="view-all-weight-product-measurement-units" />
 			<portlet:param name="mvcPath" value="/view.jsp" />
 			<portlet:param name="commerceAdminModuleKey" value="<%= CPMeasurementUnitAdminModule.KEY %>" />
-			<portlet:param name="type" value="<%= String.valueOf(CPConstants.MEASUREMENT_UNIT_TYPE_WEIGHT) %>" />
+			<portlet:param name="type" value="<%= String.valueOf(CPMeasurementUnitConstants.TYPE_WEIGHT) %>" />
 		</portlet:renderURL>
 
 		<aui:nav-item

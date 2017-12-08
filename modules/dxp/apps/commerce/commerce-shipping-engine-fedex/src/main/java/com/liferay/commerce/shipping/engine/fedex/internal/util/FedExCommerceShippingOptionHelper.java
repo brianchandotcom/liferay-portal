@@ -58,9 +58,9 @@ import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.model.CommerceShippingOriginLocator;
 import com.liferay.commerce.model.Dimensions;
-import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
+import com.liferay.commerce.product.model.CPMeasurementUnitConstants;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.shipping.engine.fedex.internal.configuration.FedExCommerceShippingEngineGroupServiceConfiguration;
 import com.liferay.commerce.shipping.engine.fedex.internal.constants.FedExCommerceShippingEngineConstants;
@@ -126,10 +126,10 @@ public class FedExCommerceShippingOptionHelper {
 		}
 
 		_dimensionCPMeasurementUnit = _getCPMeasurementUnit(
-			CPConstants.MEASUREMENT_UNIT_TYPE_DIMENSION, LinearUnits._CM,
+			CPMeasurementUnitConstants.TYPE_DIMENSION, LinearUnits._CM,
 			LinearUnits._IN);
 		_weightCPMeasurementUnit = _getCPMeasurementUnit(
-			CPConstants.MEASUREMENT_UNIT_TYPE_WEIGHT, WeightUnits._KG,
+			CPMeasurementUnitConstants.TYPE_WEIGHT, WeightUnits._KG,
 			WeightUnits._LB);
 
 		_linearUnits = LinearUnits.fromValue(

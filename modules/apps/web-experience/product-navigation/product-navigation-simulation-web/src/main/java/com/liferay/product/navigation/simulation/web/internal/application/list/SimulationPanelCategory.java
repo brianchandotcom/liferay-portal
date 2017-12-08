@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.product.navigation.simulation.application.list;
+package com.liferay.product.navigation.simulation.web.internal.application.list;
 
 import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
@@ -33,12 +33,9 @@ import org.osgi.service.component.annotations.Component;
 		"panel.category.key=" + PanelCategoryKeys.HIDDEN,
 		"panel.category.order:Integer=500"
 	},
-	service = {PanelCategory.class, SimulationPanelCategory.class}
+	service = PanelCategory.class
 )
 public class SimulationPanelCategory extends BasePanelCategory {
-
-	public static final String SIMULATION =
-		ProductNavigationSimulationConstants.SIMULATION_PANEL_CATEGORY_KEY;
 
 	@Override
 	public String getKey() {

@@ -59,9 +59,7 @@
 
 		<execute function="SikuliUploadCommonFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${attachmentFileName}" />
 
-		<execute function="Click" locator1="Button#PUBLISH" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="addChildPagePG">
@@ -1006,6 +1004,22 @@
 		<execute function="Click" locator1="Comments#THUMBS_UP" />
 	</command>
 
+	<command name="removeAttachmentViaPageEdit">
+		<execute function="AssertClick" locator1="Link#EDIT" value1="Edit" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Attachments" />
+		</execute>
+
+		<var name="key_attachmentFileName" value="${attachmentFileName}" />
+
+		<execute function="AssertVisible" locator1="Wiki#ATTACHMENT_TABLE_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+
+		<execute function="Click" locator1="Wiki#ATTACHMENT_TABLE_MOVE_TO_THE_RECYCLE_BIN" />
+
+		<execute macro="PortletEntry#publish" />
+	</command>
+
 	<command name="removeRedirectWikiPagePG">
 		<execute function="AssertClick" locator1="Link#REDIRECT" value1="(Redirected from ${wikiPageTitle})" />
 
@@ -1045,6 +1059,21 @@
 		<execute function="AssertClick" locator1="Button#RENAME" value1="Rename" />
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+	</command>
+
+	<command name="renameWikiPageCP">
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Move" />
+			<var name="rowEntry" value="${wikiPageTitle}" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${wikiPageTitle}" />
+
+		<execute function="Type" locator1="TextInput#NEW_TITLE" value1="${wikiPageTitleRename}" />
+
+		<execute function="AssertClick" locator1="Button#RENAME" value1="Rename" />
+
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="renameWikiPagePG">
@@ -1424,6 +1453,19 @@
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute function="AssertElementNotPresent" locator1="WikiTable#ALL_PAGES_WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
+	</command>
+
+	<command name="viewPageNoAttachment">
+		<execute macro="WikiPage#viewPG">
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="WikiEntry#ATTACHMENTS_LABEL" />
+
+		<execute function="AssertElementNotPresent" locator1="WikiEntry#ATTACHMENT_FILE_NAME">
+			<var name="key_attachmentFileName" value="${attachmentFileName}" />
+		</execute>
 	</command>
 
 	<command name="viewPagePG">

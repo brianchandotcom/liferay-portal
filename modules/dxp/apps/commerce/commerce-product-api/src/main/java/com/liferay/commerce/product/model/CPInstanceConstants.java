@@ -12,17 +12,13 @@
  * details.
  */
 
-package com.liferay.commerce.product.constants;
+package com.liferay.commerce.product.model;
 
 /**
- * @author Marco Leo
+ * @author Andrea Di Giorgi
  */
-public class CPConstants {
+public class CPInstanceConstants {
 
-	public static final String SEPARATOR_ASSET_CATEGORY_URL = "/g/";
-
-	public static final String SEPARATOR_PRODUCT_URL = "/p/";
-
-	public static final String SERVICE_NAME = "com.liferay.commerce.product";
+	public static final String DEFAULT_SKU = "default";
 
 }

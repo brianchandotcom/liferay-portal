@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.product.test.util;
 
-import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -23,6 +22,7 @@ import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceConstants;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPOptionValue;
@@ -242,7 +242,7 @@ public class CPTestUtil {
 			SimpleCPTypeConstants.NAME, true, serviceContext);
 
 		return CPInstanceLocalServiceUtil.getCPInstance(
-			cpDefinition.getCPDefinitionId(), CPConstants.INSTANCE_DEFAULT_SKU);
+			cpDefinition.getCPDefinitionId(), CPInstanceConstants.DEFAULT_SKU);
 	}
 
 	public static CPInstance addCPInstance(

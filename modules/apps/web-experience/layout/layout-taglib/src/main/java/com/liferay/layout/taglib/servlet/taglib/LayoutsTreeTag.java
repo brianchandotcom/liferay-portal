@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -169,6 +170,10 @@ public class LayoutsTreeTag extends IncludeTag {
 			if (checkedLayout != null) {
 				checkedNodesJSONArray.put(
 					String.valueOf(checkedLayout.getPlid()));
+			}
+			else if (checkedLayoutId == LayoutConstants.DEFAULT_PLID) {
+				checkedNodesJSONArray.put(
+					String.valueOf(LayoutConstants.DEFAULT_PLID));
 			}
 		}
 

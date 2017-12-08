@@ -89,6 +89,7 @@ import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -454,12 +455,25 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		for (Map.Entry<Long, Boolean> entry : layoutIdMap.entrySet()) {
 			long plid = GetterUtil.getLong(String.valueOf(entry.getKey()));
-			boolean includeChildren = entry.getValue();
 
-			Layout layout = _layoutLocalService.getLayout(plid);
+			Layout layout = new LayoutImpl();
+
+			if (plid == 0) {
+				layout.setLayoutId(LayoutConstants.DEFAULT_PLID);
+				layout.setParentLayoutId(
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+				layout.setPlid(LayoutConstants.DEFAULT_PLID);
+			}
+			else {
+				layout = _layoutLocalService.getLayout(plid);
+			}
 
 			if (!layouts.contains(layout)) {
 				layouts.add(layout);
+			}
+
+			if (layout.getPlid() == LayoutConstants.DEFAULT_PLID) {
+				continue;
 			}
 
 			List<Layout> parentLayouts = Collections.emptyList();
@@ -473,6 +487,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 					layouts.add(parentLayout);
 				}
 			}
+
+			boolean includeChildren = entry.getValue();
 
 			if (includeChildren) {
 				for (Layout childLayout : layout.getAllChildren()) {
@@ -690,9 +706,19 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		List<Layout> layouts = _layoutLocalService.getLayouts(
 			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
+		long[] selectedPlids = StringUtil.split(selectedNodes, 0L);
+
 		for (Layout layout : layouts) {
-			populateLayoutsJSON(
-				jsonArray, layout, StringUtil.split(selectedNodes, 0L));
+			populateLayoutsJSON(jsonArray, layout, selectedPlids);
+		}
+
+		if (ArrayUtil.contains(selectedPlids, 0L)) {
+			JSONObject layoutJSONObject = JSONFactoryUtil.createJSONObject();
+
+			layoutJSONObject.put("includeChildren", true);
+			layoutJSONObject.put("plid", 0L);
+
+			jsonArray.put(layoutJSONObject);
 		}
 
 		return jsonArray.toString();

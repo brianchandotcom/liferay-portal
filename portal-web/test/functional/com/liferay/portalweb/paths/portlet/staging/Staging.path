@@ -61,7 +61,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>STAGING_COPY_FROM_LIVE_BUTTON</td>
+	<td>COPY_FROM_LIVE</td>
 	<td>//button[contains(.,'Copy from Live')]</td>
 	<td></td>
 </tr>

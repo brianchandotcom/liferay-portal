@@ -299,11 +299,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>COPY_FROM_LIVE</td>
-	<td>//button[contains(.,'Copy from Live')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CREATE_CERTIFICATE</td>
 	<td>//button[contains(.,'Create Certificate')]</td>
 	<td></td>
@@ -556,11 +551,6 @@
 <tr>
 	<td>PUBLISH_LOCALIZED</td>
 	<td>//button[contains(@id,'publishButton')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLISH_TO_LIVE</td>
-	<td>//button[contains(.,'Publish to Live')]</td>
 	<td></td>
 </tr>
 <tr>

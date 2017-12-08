@@ -280,7 +280,7 @@
 			<finder-column name="active" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="CommerceOrder" remote-service="true">
+	<entity local-service="true" name="CommerceOrder" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 

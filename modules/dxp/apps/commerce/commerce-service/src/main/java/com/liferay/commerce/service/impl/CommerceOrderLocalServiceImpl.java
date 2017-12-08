@@ -96,7 +96,7 @@ public class CommerceOrderLocalServiceImpl
 				commerceCart.getCommercePaymentMethodId(),
 				commerceCart.getCommerceShippingMethodId(),
 				commerceCart.getShippingOptionName(), subtotal, shippingPrice,
-				total, WorkflowConstants.STATUS_APPROVED, serviceContext);
+				total, WorkflowConstants.STATUS_PENDING, serviceContext);
 
 		// Commerce order items
 

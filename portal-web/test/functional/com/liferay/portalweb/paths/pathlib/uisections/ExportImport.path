@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EXPORT_VIA_TEMPLATE_FILE_NAME</td>
-	<td>//input[contains(@id,'ExportPortlet_name')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -73,6 +68,12 @@
 <tr>
 	<td></td>
 	<td></td>
+	<td></td>
+</tr>
+<!--LAYOUT-->
+<tr>
+	<td>PRIVATE_LAYOUT</td>
+	<td>//input[contains(@id,'privatePages')]</td>
 	<td></td>
 </tr>
 <!--CONTENT-->

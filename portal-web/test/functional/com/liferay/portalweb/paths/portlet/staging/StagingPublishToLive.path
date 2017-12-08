@@ -91,16 +91,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGES_CHANGE_PRIVATE_BUTTON</td>
-	<td>//div/button[contains(@id,'changeToPrivateLayoutsButton')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGES_CHANGE_PUBLIC_BUTTON</td>
-	<td>//div/button[contains(@id,'changeToPublicLayoutsButton')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -161,11 +151,6 @@
 <tr>
 	<td>PUBLISH_TEMPLATES_NAME_FIELD</td>
 	<td>//div[contains(@class,'form-group')]//input[contains(@id,'name')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLISH_TEMPLATES_DESCRIPTION_FIELD</td>
-	<td>//textarea[contains(@id,'description')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -3,7 +3,7 @@
 		<if>
 			<isset var="larFileName" />
 			<then>
-				<execute function="Type" locator1="ExportImport#EXPORT_VIA_TEMPLATE_FILE_NAME" value1="${larFileName}" />
+				<execute function="Type" locator1="SitePagesExport#EXPORT_PROCESS_NAME" value1="${larFileName}" />
 			</then>
 		</if>
 
@@ -282,7 +282,7 @@
 		<if>
 			<equals arg1="${privateLayout}" arg2="true" />
 			<then>
-				<execute function="Click" locator1="SitePagesImport#PRIVATE_LAYOUT" />
+				<execute function="Click" locator1="ExportImport#PRIVATE_LAYOUT" />
 			</then>
 		</if>
 
@@ -580,7 +580,7 @@
 		<if>
 			<isset var="larFileName" />
 			<then>
-				<execute function="Type" locator1="ExportImport#EXPORT_VIA_TEMPLATE_FILE_NAME" value1="${larFileName}" />
+				<execute function="Type" locator1="SitePagesExport#EXPORT_PROCESS_NAME" value1="${larFileName}" />
 			</then>
 		</if>
 
@@ -723,7 +723,7 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="Click" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_MOVE_TO_THE_RECYCLE_BIN_BUTTON" />
+		<execute function="Click" locator1="Link#MOVE_TO_THE_RECYCLING_BIN" />
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
@@ -758,7 +758,7 @@
 
 	<command name="searchTemplate">
 		<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${exportTemplateName}" />
-		<execute function="Click" locator1="SitePagesExport#EXPORT_TEMPLATES_SEARCH" />
+		<execute function="Click" locator1="Search#SEARCH_BUTTON" />
 
 		<var name="key_exportTemplateName" value="${exportTemplateName}" />
 

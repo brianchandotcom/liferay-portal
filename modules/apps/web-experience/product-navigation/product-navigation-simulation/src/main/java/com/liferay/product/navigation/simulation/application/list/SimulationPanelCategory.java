@@ -18,6 +18,7 @@ import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.product.navigation.simulation.constants.ProductNavigationSimulationConstants;
 
 import java.util.Locale;
 
@@ -36,11 +37,13 @@ import org.osgi.service.component.annotations.Component;
 )
 public class SimulationPanelCategory extends BasePanelCategory {
 
-	public static final String SIMULATION = "simulation";
+	public static final String SIMULATION =
+		ProductNavigationSimulationConstants.SIMULATION_PANEL_CATEGORY_KEY;
 
 	@Override
 	public String getKey() {
-		return SIMULATION;
+		return ProductNavigationSimulationConstants.
+			SIMULATION_PANEL_CATEGORY_KEY;
 	}
 
 	@Override

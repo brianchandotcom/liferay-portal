@@ -20,7 +20,11 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 
 /**
  * @author Preston Crary
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.portal.kernel.security.permission.checker.
+ *             PortletPermissionChecker}
  */
+@Deprecated
 public abstract class BaseResourcePermissionChecker
 	implements ResourcePermissionChecker {
 

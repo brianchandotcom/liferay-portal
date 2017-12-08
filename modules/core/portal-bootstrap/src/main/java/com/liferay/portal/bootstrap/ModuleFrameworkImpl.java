@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.module.framework.ThrowableCollector;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.spring.osgi.OSGIBean;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -74,6 +75,7 @@ import java.security.ProtectionDomain;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Dictionary;
@@ -785,11 +787,18 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		HashMapDictionary<String, Object> properties =
 			new HashMapDictionary<>();
 
-		Map<String, Object> osgiBeanProperties =
-			OSGiBeanProperties.Convert.fromObject(bean);
+		if (bean instanceof OSGIBean) {
+			OSGIBean osgiBean = (OSGIBean)bean;
 
-		if (osgiBeanProperties != null) {
-			properties.putAll(osgiBeanProperties);
+			properties.putAll(osgiBean.getProperties());
+		}
+		else {
+			Map<String, Object> osgiBeanProperties =
+				OSGiBeanProperties.Convert.fromObject(bean);
+
+			if (osgiBeanProperties != null) {
+				properties.putAll(osgiBeanProperties);
+			}
 		}
 
 		properties.put(ServicePropsKeys.BEAN_ID, beanName);
@@ -1091,9 +1100,24 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	private ServiceRegistration<?> _registerService(
 		BundleContext bundleContext, String beanName, Object bean) {
 
-		Set<Class<?>> interfaces = OSGiBeanProperties.Service.interfaces(bean);
+		Set<Class<?>> interfaces = null;
 
-		interfaces.add(bean.getClass());
+		if (bean instanceof OSGIBean) {
+			OSGIBean osgiBean = (OSGIBean)bean;
+
+			Collection<Class<?>> services = osgiBean.getServices();
+
+			for (Class<?> serviceClazz : services) {
+				serviceClazz.cast(bean);
+			}
+
+			interfaces = new HashSet<>(services);
+		}
+		else {
+			interfaces = OSGiBeanProperties.Service.interfaces(bean);
+
+			interfaces.add(bean.getClass());
+		}
 
 		List<String> names = new ArrayList<>(interfaces.size());
 

@@ -1,1 +1,1 @@
-create index IX_EAFFDD1C on HtmlPreview (groupId, classNameId, classPK);
+create index IX_B4B598A4 on HtmlPreviewEntry (groupId, classNameId, classPK);

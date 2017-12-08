@@ -1,5 +1,5 @@
-create table HtmlPreview (
-	htmlPreviewId LONG not null primary key,
+create table HtmlPreviewEntry (
+	htmlPreviewEntryId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,

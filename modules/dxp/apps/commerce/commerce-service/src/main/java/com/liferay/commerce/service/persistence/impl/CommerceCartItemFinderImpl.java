@@ -33,8 +33,6 @@ public class CommerceCartItemFinderImpl
 	public static final String GET_CP_INSTANCE_QUANTITY =
 		CommerceCartItemFinder.class.getName() + ".getCPInstanceQuantity";
 
-	public static final String SUM_VALUE = "SUM_VALUE";
-
 	@Override
 	public int getCPInstanceQuantity(long cpInstanceId) {
 		Session session = null;
@@ -47,7 +45,7 @@ public class CommerceCartItemFinderImpl
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
-			q.addScalar(SUM_VALUE, Type.LONG);
+			q.addScalar("SUM_VALUE", Type.LONG);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 

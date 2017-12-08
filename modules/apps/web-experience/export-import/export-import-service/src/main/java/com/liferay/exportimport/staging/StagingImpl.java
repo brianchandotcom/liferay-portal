@@ -1188,6 +1188,45 @@ public class StagingImpl implements Staging {
 	}
 
 	@Override
+	public Group getPermissionStagingGroup(Group group) {
+		if (group == null) {
+			return null;
+		}
+
+		Group stagingGroup = group;
+
+		if (!group.isStagedRemotely() && group.hasStagingGroup()) {
+			try {
+				PermissionChecker permissionChecker =
+					PermissionThreadLocal.getPermissionChecker();
+
+				long scopeGroupId = stagingGroup.getGroupId();
+
+				boolean hasManageStagingPermission =
+					GroupPermissionUtil.contains(
+						permissionChecker, scopeGroupId,
+						ActionKeys.MANAGE_STAGING);
+				boolean hasPublishStagingPermission =
+					GroupPermissionUtil.contains(
+						permissionChecker, scopeGroupId,
+						ActionKeys.PUBLISH_STAGING);
+				boolean hasViewStagingPermission = GroupPermissionUtil.contains(
+					permissionChecker, scopeGroupId, ActionKeys.VIEW_STAGING);
+
+				if (hasManageStagingPermission || hasPublishStagingPermission ||
+					hasViewStagingPermission) {
+
+					stagingGroup = group.getStagingGroup();
+				}
+			}
+			catch (Exception e) {
+			}
+		}
+
+		return stagingGroup;
+	}
+
+	@Override
 	public long getRecentLayoutRevisionId(
 			HttpServletRequest request, long layoutSetBranchId, long plid)
 		throws PortalException {

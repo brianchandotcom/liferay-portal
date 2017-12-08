@@ -288,6 +288,10 @@ public class StagingUtil {
 		return _staging.getMissingParentLayouts(layout, liveGroupId);
 	}
 
+	public static Group getPermissionStagingGroup(Group group) {
+		return _staging.getPermissionStagingGroup(group);
+	}
+
 	public static long getRecentLayoutRevisionId(
 			HttpServletRequest request, long layoutSetBranchId, long plid)
 		throws PortalException {

@@ -12,6 +12,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.wiki.engine.input.editor.common", version: "3.0.0"
 	provided group: "com.liferay", name: "org.freemarker", version: "2.3.23.LIFERAY-PATCHED-4"
 }
+
 updateFileVersions {
 	exactVersion = true
 }

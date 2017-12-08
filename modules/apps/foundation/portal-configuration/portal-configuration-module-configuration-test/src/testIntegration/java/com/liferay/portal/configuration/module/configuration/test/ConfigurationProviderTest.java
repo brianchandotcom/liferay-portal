@@ -18,6 +18,7 @@ import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.osgi.util.test.OSGiServiceUtil;
 
@@ -35,6 +36,7 @@ import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -59,6 +61,60 @@ public class ConfigurationProviderTest {
 		if (_configuration != null) {
 			_configuration.delete();
 		}
+	}
+
+	@Test
+	public void testDeleteCompanyConfiguration() throws Exception {
+		String scopedPid = _pid + "__COMPANY__12345";
+
+		_createConfiguration(scopedPid);
+
+		Assert.assertEquals(1, _getExistingConfigurationCount(scopedPid));
+
+		ConfigurationProviderUtil.deleteCompanyConfiguration(
+			TestConfiguration.class, 12345);
+
+		Assert.assertEquals(0, _getExistingConfigurationCount(scopedPid));
+	}
+
+	@Test
+	public void testDeleteGroupConfiguration() throws Exception {
+		String scopedPid = _pid + "__GROUP__12345";
+
+		_createConfiguration(scopedPid);
+
+		Assert.assertEquals(1, _getExistingConfigurationCount(scopedPid));
+
+		ConfigurationProviderUtil.deleteGroupConfiguration(
+			TestConfiguration.class, 12345);
+
+		Assert.assertEquals(0, _getExistingConfigurationCount(scopedPid));
+	}
+
+	@Test
+	public void testDeletePortletInstanceConfiguration() throws Exception {
+		String scopedPid = _pid + "__PORTLET_INSTANCE__12345";
+
+		_createConfiguration(scopedPid);
+
+		Assert.assertEquals(1, _getExistingConfigurationCount(scopedPid));
+
+		ConfigurationProviderUtil.deletePortletInstanceConfiguration(
+			TestConfiguration.class, "12345");
+
+		Assert.assertEquals(0, _getExistingConfigurationCount(scopedPid));
+	}
+
+	@Test
+	public void testDeleteSystemConfiguration() throws Exception {
+		_createConfiguration(_pid);
+
+		Assert.assertEquals(1, _getExistingConfigurationCount(_pid));
+
+		ConfigurationProviderUtil.deleteSystemConfiguration(
+			TestConfiguration.class);
+
+		Assert.assertEquals(0, _getExistingConfigurationCount(_pid));
 	}
 
 	@Test
@@ -119,6 +175,27 @@ public class ConfigurationProviderTest {
 		assertPropertyValues(_properties, _configuration.getProperties());
 	}
 
+	private int _getExistingConfigurationCount(String pid) throws Exception {
+		StringBundler pidFilter = new StringBundler(5);
+
+		pidFilter.append(StringPool.OPEN_PARENTHESIS);
+		pidFilter.append(Constants.SERVICE_PID);
+		pidFilter.append(StringPool.EQUAL);
+		pidFilter.append(pid);
+		pidFilter.append(StringPool.CLOSE_PARENTHESIS);
+
+		Configuration[] configurations = OSGiServiceUtil.callService(
+			_bundleContext, ConfigurationAdmin.class,
+			configurationAdmin -> configurationAdmin.listConfigurations(
+				pidFilter.toString()));
+
+		if (configurations == null) {
+			return 0;
+		}
+
+		return configurations.length;
+	}
+
 	protected void assertPropertyValues(
 		Dictionary<String, Object> properties,
 		Dictionary<String, Object> configurationProperties) {
@@ -140,6 +217,16 @@ public class ConfigurationProviderTest {
 			_bundleContext, ConfigurationAdmin.class,
 			configurationAdmin -> configurationAdmin.getConfiguration(
 				pid, location));
+	}
+
+	private void _createConfiguration(String pid) throws Exception {
+		_properties.put("key1", "value1");
+		_properties.put("key2", "value2");
+
+		Configuration configuration = _getConfiguration(
+			pid, StringPool.QUESTION);
+
+		configuration.update(_properties);
 	}
 
 	private Bundle _bundle;

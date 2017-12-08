@@ -16,11 +16,11 @@ package com.liferay.html.preview.messaging;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.html.preview.constants.HtmlPreviewConstants;
-import com.liferay.html.preview.exception.InvalidMimeTypeException;
-import com.liferay.html.preview.model.HtmlPreview;
+import com.liferay.html.preview.exception.InvalidHtmlPreviewEntryMimeTypeException;
+import com.liferay.html.preview.model.HtmlPreviewEntry;
 import com.liferay.html.preview.processor.HtmlPreviewProcessor;
 import com.liferay.html.preview.processor.HtmlPreviewProcessorTracker;
-import com.liferay.html.preview.service.HtmlPreviewLocalService;
+import com.liferay.html.preview.service.HtmlPreviewEntryLocalService;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
@@ -45,9 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"destination.name=" + HtmlPreviewConstants.HTML_PREVIEW_GENERATOR
-	},
+	property = {"destination.name=" + HtmlPreviewConstants.DESTINATION_NAME},
 	service = MessageListener.class
 )
 public class HtmlPreviewGeneratorMessageListener extends BaseMessageListener {
@@ -57,7 +55,7 @@ public class HtmlPreviewGeneratorMessageListener extends BaseMessageListener {
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(
 				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
-				HtmlPreviewConstants.HTML_PREVIEW_GENERATOR);
+				HtmlPreviewConstants.DESTINATION_NAME);
 
 		Destination destination = _destinationFactory.createDestination(
 			destinationConfiguration);
@@ -71,7 +69,8 @@ public class HtmlPreviewGeneratorMessageListener extends BaseMessageListener {
 
 		long userId = GetterUtil.getLong(payload.get("userId"));
 		long groupId = GetterUtil.getLong(payload.get("groupId"));
-		long htmlPreviewId = GetterUtil.getLong(payload.get("htmlPreviewId"));
+		long htmlPreviewEntryId = GetterUtil.getLong(
+			payload.get("htmlPreviewEntryId"));
 		String content = GetterUtil.getString(payload.get("content"));
 		String mimeType = GetterUtil.getString(payload.get("mimeType"));
 
@@ -79,7 +78,7 @@ public class HtmlPreviewGeneratorMessageListener extends BaseMessageListener {
 			_htmlPreviewProcessorTracker.getHtmlPreviewProcessor(mimeType);
 
 		if (htmlPreviewProcessor == null) {
-			throw new InvalidMimeTypeException(
+			throw new InvalidHtmlPreviewEntryMimeTypeException(
 				"No HTML preview processor available for MIME type " +
 					mimeType);
 		}
@@ -88,33 +87,34 @@ public class HtmlPreviewGeneratorMessageListener extends BaseMessageListener {
 
 		FileEntry fileEntry = PortletFileRepositoryUtil.fetchPortletFileEntry(
 			groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			String.valueOf(htmlPreviewId));
+			String.valueOf(htmlPreviewEntryId));
 
 		if (fileEntry != null) {
 			PortletFileRepositoryUtil.deletePortletFileEntry(
 				groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				String.valueOf(htmlPreviewId));
+				String.valueOf(htmlPreviewEntryId));
 		}
 
 		fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
-			groupId, userId, HtmlPreview.class.getName(), 0,
-			HtmlPreview.class.getName(),
+			groupId, userId, HtmlPreviewEntry.class.getName(), 0,
+			HtmlPreviewEntry.class.getName(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, file,
-			String.valueOf(htmlPreviewId), mimeType, false);
+			String.valueOf(htmlPreviewEntryId), mimeType, false);
 
-		HtmlPreview htmlPreview = _htmlPreviewLocalService.fetchHtmlPreview(
-			htmlPreviewId);
+		HtmlPreviewEntry htmlPreviewEntry =
+			_htmlPreviewEntryLocalService.fetchHtmlPreviewEntry(
+				htmlPreviewEntryId);
 
-		htmlPreview.setFileEntryId(fileEntry.getFileEntryId());
+		htmlPreviewEntry.setFileEntryId(fileEntry.getFileEntryId());
 
-		_htmlPreviewLocalService.updateHtmlPreview(htmlPreview);
+		_htmlPreviewEntryLocalService.updateHtmlPreviewEntry(htmlPreviewEntry);
 	}
 
 	@Reference
 	private DestinationFactory _destinationFactory;
 
 	@Reference
-	private HtmlPreviewLocalService _htmlPreviewLocalService;
+	private HtmlPreviewEntryLocalService _htmlPreviewEntryLocalService;
 
 	@Reference
 	private HtmlPreviewProcessorTracker _htmlPreviewProcessorTracker;

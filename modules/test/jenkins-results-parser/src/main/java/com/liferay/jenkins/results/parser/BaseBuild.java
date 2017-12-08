@@ -2267,6 +2267,7 @@ public abstract class BaseBuild implements Build {
 	protected String repositoryName;
 	protected List<SlaveOfflineRule> slaveOfflineRules =
 		SlaveOfflineRule.getSlaveOfflineRules();
+	protected long startTimestamp;
 	protected long statusModifiedTime;
 	protected Element upstreamJobFailureMessageElement;
 

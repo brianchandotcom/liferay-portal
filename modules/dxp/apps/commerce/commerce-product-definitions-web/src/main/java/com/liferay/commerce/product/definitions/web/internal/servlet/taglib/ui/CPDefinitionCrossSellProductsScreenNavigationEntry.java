@@ -14,11 +14,11 @@
 
 package com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui;
 
-import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionLinkDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionLinkConstants;
 import com.liferay.commerce.product.service.CPDefinitionLinkService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -98,7 +98,7 @@ public class CPDefinitionCrossSellProductsScreenNavigationEntry
 
 		try {
 			httpServletRequest.setAttribute(
-				"type", CPConstants.DEFINITION_LINK_TYPE_CROSS_SELL);
+				"type", CPDefinitionLinkConstants.TYPE_CROSS_SELL);
 
 			CPDefinitionLinkDisplayContext cpDefinitionLinkDisplayContext =
 				new CPDefinitionLinkDisplayContext(

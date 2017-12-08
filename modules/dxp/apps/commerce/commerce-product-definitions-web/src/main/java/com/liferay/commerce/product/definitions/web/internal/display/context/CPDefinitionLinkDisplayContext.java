@@ -14,13 +14,13 @@
 
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
-import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
 import com.liferay.commerce.product.definitions.web.internal.util.CPDefinitionsPortletUtil;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.item.selector.criterion.CPDefinitionItemSelectorCriterion;
 import com.liferay.commerce.product.model.CPDefinitionLink;
+import com.liferay.commerce.product.model.CPDefinitionLinkConstants;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.service.CPDefinitionLinkService;
 import com.liferay.item.selector.ItemSelector;
@@ -150,17 +150,17 @@ public class CPDefinitionLinkDisplayContext
 
 		int type = getType();
 
-		if (type == CPConstants.DEFINITION_LINK_TYPE_RELATED) {
+		if (type == CPDefinitionLinkConstants.TYPE_RELATED) {
 			screenNavigationEntryKey =
 				CPDefinitionScreenNavigationConstants.
 					ENTRY_KEY_RELATED_PRODUCTS;
 		}
-		else if (type == CPConstants.DEFINITION_LINK_TYPE_UP_SELL) {
+		else if (type == CPDefinitionLinkConstants.TYPE_UP_SELL) {
 			screenNavigationEntryKey =
 				CPDefinitionScreenNavigationConstants.
 					ENTRY_KEY_UP_SELL_PRODUCTS;
 		}
-		else if (type == CPConstants.DEFINITION_LINK_TYPE_CROSS_SELL) {
+		else if (type == CPDefinitionLinkConstants.TYPE_CROSS_SELL) {
 			screenNavigationEntryKey =
 				CPDefinitionScreenNavigationConstants.
 					ENTRY_KEY_CROSS_SELL_PRODUCTS;
@@ -215,7 +215,7 @@ public class CPDefinitionLinkDisplayContext
 		catch (Exception e) {
 			type = ParamUtil.getInteger(
 				httpServletRequest, "type",
-				CPConstants.DEFINITION_LINK_TYPE_RELATED);
+				CPDefinitionLinkConstants.TYPE_RELATED);
 		}
 
 		return type;
@@ -270,13 +270,13 @@ public class CPDefinitionLinkDisplayContext
 	protected String getEmptyResultMessage() {
 		int type = getType();
 
-		if (type == CPConstants.DEFINITION_LINK_TYPE_RELATED) {
+		if (type == CPDefinitionLinkConstants.TYPE_RELATED) {
 			return "no-related-products-were-found";
 		}
-		else if (type == CPConstants.DEFINITION_LINK_TYPE_UP_SELL) {
+		else if (type == CPDefinitionLinkConstants.TYPE_UP_SELL) {
 			return "no-up-sell-products-were-found";
 		}
-		else if (type == CPConstants.DEFINITION_LINK_TYPE_CROSS_SELL) {
+		else if (type == CPDefinitionLinkConstants.TYPE_CROSS_SELL) {
 			return "no-cross-sell-products-were-found";
 		}
 

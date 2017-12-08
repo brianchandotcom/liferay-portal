@@ -29,10 +29,10 @@ int type = cpDefinitionLinkDisplayContext.getType();
 
 String addMenuTitle = "add-related-product";
 
-if (type == CPConstants.DEFINITION_LINK_TYPE_UP_SELL) {
+if (type == CPDefinitionLinkConstants.TYPE_UP_SELL) {
 	addMenuTitle = "add-up-sell-product";
 }
-else if (type == CPConstants.DEFINITION_LINK_TYPE_CROSS_SELL) {
+else if (type == CPDefinitionLinkConstants.TYPE_CROSS_SELL) {
 	addMenuTitle = "add-cross-sell-product";
 }
 

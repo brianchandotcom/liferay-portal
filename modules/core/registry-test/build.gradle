@@ -25,7 +25,7 @@ dependencies {
 	provided project(":core:registry-api")
 	provided project(":core:registry-impl")
 
-	testIntegrationCompile group: "com.liferay.arquillian", name: "com.liferay.arquillian.arquillian-deployment-generator-bnd", version: "1.0.4"
+	testIntegrationCompile group: "com.liferay.arquillian", name: "com.liferay.arquillian.arquillian-deployment-generator-bnd", version: "1.0.0"
 	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.framework", version: "5.4.0"
 	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.main", version: "5.4.0"
 	testIntegrationCompile group: "org.jboss.arquillian.container", name: "arquillian-container-felix-embedded", version: "2.1.0.Final"

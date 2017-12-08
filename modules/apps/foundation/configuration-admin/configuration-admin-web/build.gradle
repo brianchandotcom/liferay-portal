@@ -46,7 +46,7 @@ dependencies {
 	testCompile group: "org.jodd", name: "jodd-json", version: "3.6.4"
 	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.2"
 
-	testIntegrationCompile group: "com.liferay.arquillian", name: "com.liferay.arquillian.arquillian-deployment-generator-bnd", version: "1.0.3"
+	testIntegrationCompile group: "com.liferay.arquillian", name: "com.liferay.arquillian.arquillian-deployment-generator-bnd", version: "1.0.0"
 	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.framework", version: "5.4.0"
 	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.main", version: "5.4.0"
 	testIntegrationCompile group: "org.jboss.arquillian.container", name: "arquillian-container-felix-embedded", version: "2.1.0.Final"

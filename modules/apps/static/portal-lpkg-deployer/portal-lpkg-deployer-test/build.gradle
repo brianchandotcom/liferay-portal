@@ -16,7 +16,7 @@ dependencies {
 	testCompile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	testCompile project(":apps:static:portal-lpkg-deployer:portal-lpkg-deployer-test-util")
 
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.8"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.0"
 }
 
 test {

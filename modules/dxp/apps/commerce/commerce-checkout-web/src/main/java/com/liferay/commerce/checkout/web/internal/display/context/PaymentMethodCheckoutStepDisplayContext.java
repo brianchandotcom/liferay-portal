@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.checkout.web.internal.display.context;
 
-import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.model.CommerceCartConstants;
 import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.commerce.service.CommercePaymentMethodService;
 import com.liferay.commerce.util.CommerceCartHelper;
@@ -47,7 +47,7 @@ public class PaymentMethodCheckoutStepDisplayContext {
 
 		_commerceCart = commerceCartHelper.getCurrentCommerceCart(
 			httpServletRequest, httpServletResponse,
-			CommerceConstants.COMMERCE_CART_TYPE_CART);
+			CommerceCartConstants.TYPE_CART);
 	}
 
 	public CommerceCart getCommerceCart() {

@@ -15,9 +15,9 @@
 package com.liferay.commerce.checkout.web.internal.display.context;
 
 import com.liferay.commerce.checkout.web.internal.util.ShippingMethodCommerceCheckoutStep;
-import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.exception.CommerceShippingEngineException;
 import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.model.CommerceCartConstants;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOption;
@@ -54,7 +54,7 @@ public class ShippingMethodCheckoutStepDisplayContext {
 
 		_commerceCart = commerceCartHelper.getCurrentCommerceCart(
 			httpServletRequest, httpServletResponse,
-			CommerceConstants.COMMERCE_CART_TYPE_CART);
+			CommerceCartConstants.TYPE_CART);
 		_commercePriceFormatter = commercePriceFormatter;
 		_commerceShippingEngineRegistry = commerceShippingEngineRegistry;
 		_commerceShippingMethodService = commerceShippingMethodService;

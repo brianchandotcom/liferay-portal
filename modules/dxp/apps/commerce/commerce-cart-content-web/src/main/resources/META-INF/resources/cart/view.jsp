@@ -139,7 +139,7 @@ Map<Long, List<CommerceCartValidatorResult>> commerceCartValidatorResultMap = co
 						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="commerceCartItemId" value="<%= String.valueOf(commerceCartItem.getCommerceCartItemId()) %>" />
-						<portlet:param name="type" value="<%= String.valueOf(CommerceConstants.COMMERCE_CART_TYPE_CART) %>" />
+						<portlet:param name="type" value="<%= String.valueOf(CommerceCartConstants.TYPE_CART) %>" />
 					</portlet:actionURL>
 
 					<liferay-ui:icon-delete

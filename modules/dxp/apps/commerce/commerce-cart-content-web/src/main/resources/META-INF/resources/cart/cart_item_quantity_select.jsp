@@ -29,7 +29,7 @@ CommerceCartItem commerceCartItem = (CommerceCartItem)row.getObject();
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="commerceCartItemId" type="hidden" value="<%= commerceCartItem.getCommerceCartItemId() %>" />
 	<aui:input name="quantity" type="hidden" value="<%= commerceCartItem.getQuantity() %>" />
-	<aui:input name="type" type="hidden" value="<%= CommerceConstants.COMMERCE_CART_TYPE_CART %>" />
+	<aui:input name="type" type="hidden" value="<%= CommerceCartConstants.TYPE_CART %>" />
 
 	<aui:model-context bean="<%= commerceCartItem %>" model="<%= CommerceCartItem.class %>" />
 

@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.internal.util;
 
-import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.model.CommerceCartConstants;
 import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.commerce.service.CommerceCartService;
 import com.liferay.commerce.util.CommerceCartHelper;
@@ -59,10 +59,10 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 
 		String portletId = "";
 
-		if (type == CommerceConstants.COMMERCE_CART_TYPE_CART) {
+		if (type == CommerceCartConstants.TYPE_CART) {
 			portletId = CommercePortletKeys.COMMERCE_CART_CONTENT;
 		}
-		else if (type == CommerceConstants.COMMERCE_CART_TYPE_WISH_LIST) {
+		else if (type == CommerceCartConstants.TYPE_WISH_LIST) {
 			portletId = CommercePortletKeys.COMMERCE_WISH_LIST_CONTENT;
 		}
 
@@ -114,8 +114,7 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 		throws PortalException {
 
 		int type = ParamUtil.getInteger(
-			httpServletRequest, "type",
-			CommerceConstants.COMMERCE_CART_TYPE_CART);
+			httpServletRequest, "type", CommerceCartConstants.TYPE_CART);
 
 		return getCurrentCommerceCart(
 			httpServletRequest, httpServletResponse, type);
@@ -278,7 +277,7 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 			CommerceCart commerceCart =
 				_commerceCartService.fetchDefaultCommerceCart(
 					groupId, user.getUserId(), type,
-					CommerceConstants.COMMERCE_CART_DEFAULT_TITLE);
+					CommerceCartConstants.DEFAULT_TITLE);
 
 			if (commerceCart != null) {
 				CommerceCartThreadLocal.setCommerceCartUuid(

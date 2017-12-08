@@ -15,10 +15,10 @@
 package com.liferay.commerce.cart.content.web.internal.portlet.action;
 
 import com.liferay.commerce.cart.CommerceCartValidatorResult;
-import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.CommerceCartValidatorException;
 import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.model.CommerceCartConstants;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.commerce.service.CommerceCartService;
@@ -79,13 +79,12 @@ public class AddCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 			_portal.getHttpServletResponse(actionResponse);
 
 		int type = ParamUtil.getInteger(
-			actionRequest, "type", CommerceConstants.COMMERCE_CART_TYPE_CART);
+			actionRequest, "type", CommerceCartConstants.TYPE_CART);
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
 		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
 		int quantity = ParamUtil.getInteger(
-			actionRequest, "quantity",
-			CommerceConstants.COMMERCE_CART_TYPE_CART);
+			actionRequest, "quantity", CommerceCartConstants.TYPE_CART);
 		String ddmFormValues = ParamUtil.getString(
 			actionRequest, "ddmFormValues");
 
@@ -100,8 +99,7 @@ public class AddCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 						CommerceCart.class.getName(), httpServletRequest);
 
 				commerceCart = _commerceCartService.addCommerceCart(
-					CommerceConstants.COMMERCE_CART_DEFAULT_TITLE, type,
-					serviceContext);
+					CommerceCartConstants.DEFAULT_TITLE, type, serviceContext);
 
 				if (!serviceContext.isSignedIn()) {
 					_commerceCartHelper.setGuestCommerceCart(

@@ -12,23 +12,17 @@
  * details.
  */
 
-package com.liferay.commerce.constants;
+package com.liferay.commerce.model;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Andrea Di Giorgi
  */
-public class CommerceConstants {
+public class CommerceCartConstants {
 
-	public static final int CP_DEFINITION_INVENTORY_DEFAULT_MAX_CART_QUANTITY =
-		10000;
+	public static final String DEFAULT_TITLE = "default";
 
-	public static final int CP_DEFINITION_INVENTORY_DEFAULT_MIN_CART_QUANTITY =
-		1;
+	public static final int TYPE_CART = 0;
 
-	public static final int
-		CP_DEFINITION_INVENTORY_DEFAULT_MULTIPLE_CART_QUANTITY = 1;
-
-	public static final String SHIPPING_SERVICE_NAME =
-		"com.liferay.commerce.shipping";
+	public static final int TYPE_WISH_LIST = 1;
 
 }

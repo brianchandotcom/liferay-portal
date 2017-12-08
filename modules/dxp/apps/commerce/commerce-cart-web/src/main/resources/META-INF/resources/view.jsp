@@ -19,7 +19,7 @@
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-carts");
 
-int type = ParamUtil.getInteger(request, "type", CommerceConstants.COMMERCE_CART_TYPE_CART);
+int type = ParamUtil.getInteger(request, "type", CommerceCartConstants.TYPE_CART);
 
 CommerceCartDisplayContext commerceCartDisplayContext = (CommerceCartDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 

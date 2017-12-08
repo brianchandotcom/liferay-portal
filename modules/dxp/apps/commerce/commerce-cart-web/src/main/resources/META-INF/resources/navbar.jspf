@@ -20,7 +20,7 @@
 	<aui:nav cssClass="navbar-nav">
 		<liferay-portlet:renderURL varImpl="viewCartsURL">
 			<portlet:param name="toolbarItem" value="view-all-carts" />
-			<portlet:param name="type" value="<%= String.valueOf(CommerceConstants.COMMERCE_CART_TYPE_CART) %>" />
+			<portlet:param name="type" value="<%= String.valueOf(CommerceCartConstants.TYPE_CART) %>" />
 		</liferay-portlet:renderURL>
 
 		<aui:nav-item
@@ -31,7 +31,7 @@
 
 		<liferay-portlet:renderURL varImpl="viewWishListsURL">
 			<portlet:param name="toolbarItem" value="view-all-wish-lists" />
-			<portlet:param name="type" value="<%= String.valueOf(CommerceConstants.COMMERCE_CART_TYPE_WISH_LIST) %>" />
+			<portlet:param name="type" value="<%= String.valueOf(CommerceCartConstants.TYPE_WISH_LIST) %>" />
 		</liferay-portlet:renderURL>
 
 		<aui:nav-item

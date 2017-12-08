@@ -16,8 +16,8 @@ package com.liferay.commerce.cart.web.internal.display.context;
 
 import com.liferay.commerce.cart.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.cart.web.internal.util.CommerceCartPortletUtil;
-import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.model.CommerceCartConstants;
 import com.liferay.commerce.service.CommerceCartService;
 import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommercePriceFormatter;
@@ -97,10 +97,10 @@ public class CommerceCartDisplayContext
 
 		int type = getCommerceCartType();
 
-		if (type == CommerceConstants.COMMERCE_CART_TYPE_CART) {
+		if (type == CommerceCartConstants.TYPE_CART) {
 			searchContainer.setEmptyResultsMessage("no-carts-were-found");
 		}
-		else if (type == CommerceConstants.COMMERCE_CART_TYPE_WISH_LIST) {
+		else if (type == CommerceCartConstants.TYPE_WISH_LIST) {
 			searchContainer.setEmptyResultsMessage("no-wish-lists-were-found");
 		}
 
@@ -129,8 +129,7 @@ public class CommerceCartDisplayContext
 
 	protected int getCommerceCartType() {
 		return ParamUtil.getInteger(
-			httpServletRequest, "type",
-			CommerceConstants.COMMERCE_CART_TYPE_CART);
+			httpServletRequest, "type", CommerceCartConstants.TYPE_CART);
 	}
 
 	private final CommerceCartService _commerceCartService;

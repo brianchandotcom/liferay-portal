@@ -15,7 +15,7 @@
 package com.liferay.commerce.cart.content.web.internal.display.context;
 
 import com.liferay.commerce.cart.CommerceCartValidatorRegistry;
-import com.liferay.commerce.constants.CommerceConstants;
+import com.liferay.commerce.model.CommerceCartConstants;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
@@ -57,8 +57,7 @@ public class CommerceWishListContentDisplayContext
 	@Override
 	public int getCommerceCartType() {
 		return ParamUtil.getInteger(
-			httpServletRequest, "type",
-			CommerceConstants.COMMERCE_CART_TYPE_WISH_LIST);
+			httpServletRequest, "type", CommerceCartConstants.TYPE_WISH_LIST);
 	}
 
 	public boolean isIgnoreSKUCombinations(CommerceCartItem commerceCartItem)

@@ -16,8 +16,8 @@ package com.liferay.commerce.cart.content.web.internal.display.context;
 
 import com.liferay.commerce.cart.CommerceCartValidatorRegistry;
 import com.liferay.commerce.cart.CommerceCartValidatorResult;
-import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.model.CommerceCartConstants;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
@@ -142,8 +142,7 @@ public class CommerceCartContentDisplayContext {
 
 	public int getCommerceCartType() {
 		return ParamUtil.getInteger(
-			httpServletRequest, "type",
-			CommerceConstants.COMMERCE_CART_TYPE_CART);
+			httpServletRequest, "type", CommerceCartConstants.TYPE_CART);
 	}
 
 	public Map<Long, List<CommerceCartValidatorResult>>

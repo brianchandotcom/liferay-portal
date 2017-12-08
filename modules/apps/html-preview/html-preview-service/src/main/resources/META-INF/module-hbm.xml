@@ -2,9 +2,9 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping auto-import="false" default-lazy="false">
-	<import class="com.liferay.html.preview.model.HtmlPreview" />
-	<class name="com.liferay.html.preview.model.impl.HtmlPreviewImpl" table="HtmlPreview">
-		<id name="htmlPreviewId" type="long">
+	<import class="com.liferay.html.preview.model.HtmlPreviewEntry" />
+	<class name="com.liferay.html.preview.model.impl.HtmlPreviewEntryImpl" table="HtmlPreviewEntry">
+		<id name="htmlPreviewEntryId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

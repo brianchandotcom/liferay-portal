@@ -12,13 +12,31 @@
  * details.
  */
 
-package com.liferay.html.preview.model.impl;
+package com.liferay.html.preview.exception;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.exception.NoSuchModelException;
+
 /**
- * @author Pavel Savinov
+ * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class HtmlPreviewImpl extends HtmlPreviewBaseImpl {
+public class NoSuchHtmlPreviewEntryException extends NoSuchModelException {
+
+	public NoSuchHtmlPreviewEntryException() {
+	}
+
+	public NoSuchHtmlPreviewEntryException(String msg) {
+		super(msg);
+	}
+
+	public NoSuchHtmlPreviewEntryException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public NoSuchHtmlPreviewEntryException(Throwable cause) {
+		super(cause);
+	}
+
 }

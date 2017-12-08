@@ -22,20 +22,22 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class InvalidMimeTypeException extends PortalException {
+public class InvalidHtmlPreviewEntryMimeTypeException extends PortalException {
 
-	public InvalidMimeTypeException() {
+	public InvalidHtmlPreviewEntryMimeTypeException() {
 	}
 
-	public InvalidMimeTypeException(String msg) {
+	public InvalidHtmlPreviewEntryMimeTypeException(String msg) {
 		super(msg);
 	}
 
-	public InvalidMimeTypeException(String msg, Throwable cause) {
+	public InvalidHtmlPreviewEntryMimeTypeException(
+		String msg, Throwable cause) {
+
 		super(msg, cause);
 	}
 
-	public InvalidMimeTypeException(Throwable cause) {
+	public InvalidHtmlPreviewEntryMimeTypeException(Throwable cause) {
 		super(cause);
 	}
 

@@ -28,6 +28,7 @@ CPDefinition cpDefinition = groupedCPTypeDisplayContext.getCPDefinition();
 CPInstance cpInstance = groupedCPTypeDisplayContext.getDefaultCPInstance();
 
 request.setAttribute("cpDefinition", cpDefinition);
+request.setAttribute("cpInstance", cpInstance);
 %>
 
 <liferay-ddm:template-renderer

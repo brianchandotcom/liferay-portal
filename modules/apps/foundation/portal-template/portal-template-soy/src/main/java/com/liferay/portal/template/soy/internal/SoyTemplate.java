@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -402,9 +401,7 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 				resourceBundleLoaders.toArray(
 					new ResourceBundleLoader[resourceBundleLoaders.size()]));
 
-		String languageId = LocaleUtil.toLanguageId(locale);
-
-		return aggregateResourceBundleLoader.loadResourceBundle(languageId);
+		return aggregateResourceBundleLoader.loadResourceBundle(locale);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(SoyTemplate.class);

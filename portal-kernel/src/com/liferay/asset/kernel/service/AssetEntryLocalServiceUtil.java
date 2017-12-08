@@ -473,6 +473,14 @@ public class AssetEntryLocalServiceUtil {
 		return getService().getEntry(className, classPK);
 	}
 
+	public static long getEntryPriority(long classNameId, long classPK) {
+		return getService().getEntryPriority(classNameId, classPK);
+	}
+
+	public static long getEntryPriority(java.lang.String className, long classPK) {
+		return getService().getEntryPriority(className, classPK);
+	}
+
 	public static java.util.List<com.liferay.asset.kernel.model.AssetEntry> getGroupEntries(
 		long groupId) {
 		return getService().getGroupEntries(groupId);

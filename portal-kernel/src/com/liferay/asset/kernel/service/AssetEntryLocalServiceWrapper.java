@@ -530,6 +530,16 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	}
 
 	@Override
+	public long getEntryPriority(long classNameId, long classPK) {
+		return _assetEntryLocalService.getEntryPriority(classNameId, classPK);
+	}
+
+	@Override
+	public long getEntryPriority(java.lang.String className, long classPK) {
+		return _assetEntryLocalService.getEntryPriority(className, classPK);
+	}
+
+	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetEntry> getGroupEntries(
 		long groupId) {
 		return _assetEntryLocalService.getGroupEntries(groupId);

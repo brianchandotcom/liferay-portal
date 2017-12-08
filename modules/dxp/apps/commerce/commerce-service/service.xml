@@ -299,6 +299,10 @@
 		<column name="orderUserId" type="long" />
 		<column name="billingAddressId" type="long" />
 		<column name="shippingAddressId" type="long" />
+		<column name="commercePaymentMethodId" type="long" />
+		<column name="commerceShippingMethodId" type="long" />
+		<column name="shippingOptionName" type="String" />
+		<column name="shippingPrice" type="double" />
 		<column name="total" type="double" />
 		<column name="status" type="int" />
 

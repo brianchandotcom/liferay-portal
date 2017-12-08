@@ -34,6 +34,7 @@ page import="com.liferay.commerce.product.exception.CPAttachmentFileEntryExpirat
 page import="com.liferay.commerce.product.exception.CPAttachmentFileEntryFileEntryIdException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPAttachmentFileEntryException" %><%@
 page import="com.liferay.commerce.product.model.CPAttachmentFileEntry" %><%@
+page import="com.liferay.commerce.product.model.CPAttachmentFileEntryConstants" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.commerce.product.service.CPAttachmentFileEntryService" %><%@
 page import="com.liferay.commerce.product.service.CPDefinitionService" %><%@

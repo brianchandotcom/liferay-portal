@@ -19,10 +19,6 @@ package com.liferay.commerce.product.constants;
  */
 public class CPConstants {
 
-	public static final int ATTACHMENT_FILE_ENTRY_TYPE_IMAGE = 0;
-
-	public static final int ATTACHMENT_FILE_ENTRY_TYPE_OTHER = 1;
-
 	public static final int DEFINITION_LINK_TYPE_CROSS_SELL = 2;
 
 	public static final int DEFINITION_LINK_TYPE_RELATED = 0;

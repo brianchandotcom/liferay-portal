@@ -62,6 +62,7 @@ page import="com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValu
 page import="com.liferay.commerce.product.exception.NoSuchCPInstanceException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException" %><%@
 page import="com.liferay.commerce.product.model.CPAttachmentFileEntry" %><%@
+page import="com.liferay.commerce.product.model.CPAttachmentFileEntryConstants" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.commerce.product.model.CPDefinitionLink" %><%@
 page import="com.liferay.commerce.product.model.CPDefinitionOptionRel" %><%@

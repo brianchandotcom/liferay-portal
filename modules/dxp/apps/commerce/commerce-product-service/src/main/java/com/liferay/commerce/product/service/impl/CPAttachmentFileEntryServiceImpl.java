@@ -15,8 +15,8 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.constants.CPActionKeys;
-import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.base.CPAttachmentFileEntryServiceBaseImpl;
 import com.liferay.commerce.product.service.permission.CPDefinitionPermission;
@@ -247,7 +247,7 @@ public class CPAttachmentFileEntryServiceImpl
 	}
 
 	protected String getActionKeyByCPAttachmentFileEntryType(int type) {
-		if (type == CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_OTHER) {
+		if (type == CPAttachmentFileEntryConstants.TYPE_OTHER) {
 			return CPActionKeys.MANAGE_COMMERCE_PRODUCT_ATTACHMENTS;
 		}
 

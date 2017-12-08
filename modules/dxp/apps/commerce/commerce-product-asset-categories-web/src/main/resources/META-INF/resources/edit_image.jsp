@@ -36,7 +36,7 @@ renderResponse.setTitle((cpAttachmentFileEntry == null) ? LanguageUtil.get(reque
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="assetCategoryId" type="hidden" value="<%= assetCategoryId %>" />
 	<aui:input name="cpAttachmentFileEntryId" type="hidden" value="<%= (cpAttachmentFileEntry == null) ? 0 : cpAttachmentFileEntry.getCPAttachmentFileEntryId() %>" />
-	<aui:input name="type" type="hidden" value="<%= CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE %>" />
+	<aui:input name="type" type="hidden" value="<%= CPAttachmentFileEntryConstants.TYPE_IMAGE %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
 	<div class="lfr-form-content">

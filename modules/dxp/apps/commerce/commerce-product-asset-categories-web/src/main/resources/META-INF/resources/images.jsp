@@ -27,9 +27,9 @@ portletURL.setParameter("historyKey", renderResponse.getNamespace() + "images");
 
 SearchContainer<CPAttachmentFileEntry> cpAttachmentFileEntrySearchContainer = new SearchContainer<>(liferayPortletRequest, portletURL, null, null);
 
-int cpAttachmentFileEntriesCount = cpAttachmentFileEntryService.getCPAttachmentFileEntriesCount(PortalUtil.getClassNameId(AssetCategory.class), assetCategory.getCategoryId(), CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE, WorkflowConstants.STATUS_ANY);
+int cpAttachmentFileEntriesCount = cpAttachmentFileEntryService.getCPAttachmentFileEntriesCount(PortalUtil.getClassNameId(AssetCategory.class), assetCategory.getCategoryId(), CPAttachmentFileEntryConstants.TYPE_IMAGE, WorkflowConstants.STATUS_ANY);
 
-List<CPAttachmentFileEntry> cpAttachmentFileEntries = cpAttachmentFileEntryService.getCPAttachmentFileEntries(PortalUtil.getClassNameId(AssetCategory.class), assetCategory.getCategoryId(), CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE, WorkflowConstants.STATUS_ANY, cpAttachmentFileEntrySearchContainer.getStart(), cpAttachmentFileEntrySearchContainer.getEnd());
+List<CPAttachmentFileEntry> cpAttachmentFileEntries = cpAttachmentFileEntryService.getCPAttachmentFileEntries(PortalUtil.getClassNameId(AssetCategory.class), assetCategory.getCategoryId(), CPAttachmentFileEntryConstants.TYPE_IMAGE, WorkflowConstants.STATUS_ANY, cpAttachmentFileEntrySearchContainer.getStart(), cpAttachmentFileEntrySearchContainer.getEnd());
 
 cpAttachmentFileEntrySearchContainer.setTotal(cpAttachmentFileEntriesCount);
 cpAttachmentFileEntrySearchContainer.setResults(cpAttachmentFileEntries);

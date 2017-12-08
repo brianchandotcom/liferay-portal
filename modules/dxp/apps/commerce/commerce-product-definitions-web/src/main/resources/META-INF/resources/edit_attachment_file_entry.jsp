@@ -27,13 +27,13 @@ CPAttachmentFileEntry cpAttachmentFileEntry = cpAttachmentFileEntriesDisplayCont
 
 long cpAttachmentFileEntryId = cpAttachmentFileEntriesDisplayContext.getCPAttachmentFileEntryId();
 
-int type = CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE;
+int type = CPAttachmentFileEntryConstants.TYPE_IMAGE;
 String addMenuTitle = LanguageUtil.get(request, "add-image");
 
 String screenNavigationCategoryKey = cpAttachmentFileEntriesDisplayContext.getScreenNavigationCategoryKey();
 
 if (screenNavigationCategoryKey.equals("attachments")) {
-	type = CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_OTHER;
+	type = CPAttachmentFileEntryConstants.TYPE_OTHER;
 	addMenuTitle = LanguageUtil.get(request, "add-attachment");
 }
 

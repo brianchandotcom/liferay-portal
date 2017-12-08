@@ -16,6 +16,7 @@ package com.liferay.commerce.product.test.util;
 
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
@@ -128,7 +129,7 @@ public class CPTestUtil {
 			expirationDateHour, expirationDateMinute, false,
 			RandomTestUtil.randomLocaleStringMap(), json,
 			RandomTestUtil.randomDouble(),
-			CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE, serviceContext);
+			CPAttachmentFileEntryConstants.TYPE_IMAGE, serviceContext);
 	}
 
 	public static CPDefinition addCPDefinition(long groupId) throws Exception {

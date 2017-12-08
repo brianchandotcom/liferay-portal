@@ -23,6 +23,7 @@ import com.liferay.commerce.product.exception.CPDefinitionExpirationDateExceptio
 import com.liferay.commerce.product.exception.CPDefinitionIgnoreSKUCombinationsException;
 import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalization;
 import com.liferay.commerce.product.model.CPDisplayLayout;
@@ -605,7 +606,7 @@ public class CPDefinitionLocalServiceImpl
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
 			cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
 				classNameId, cpDefinitionId,
-				CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE,
+				CPAttachmentFileEntryConstants.TYPE_IMAGE,
 				WorkflowConstants.STATUS_APPROVED, 0, 1);
 
 		if (cpAttachmentFileEntries.isEmpty()) {

@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.product.content.web.internal.portlet.action;
 
-import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -67,8 +67,7 @@ public class ViewCPAttachmentsMVCResourceCommand
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		int type = ParamUtil.getInteger(
-			resourceRequest, "type",
-			CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE);
+			resourceRequest, "type", CPAttachmentFileEntryConstants.TYPE_IMAGE);
 
 		String ddmFormValues = ParamUtil.getString(
 			resourceRequest, "ddmFormValues");

@@ -31,7 +31,7 @@ SearchContainer<CPAttachmentFileEntry> cpAttachmentFileEntrySearchContainer = cp
 
 String addMenuTitle = LanguageUtil.get(request, "add-image");
 
-if (type == CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_OTHER) {
+if (type == CPAttachmentFileEntryConstants.TYPE_OTHER) {
 	addMenuTitle = LanguageUtil.get(request, "add-attachment");
 }
 

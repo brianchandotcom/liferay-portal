@@ -14,13 +14,13 @@
 
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
-import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.definitions.web.configuration.AttachmentsConfiguration;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
 import com.liferay.commerce.product.definitions.web.internal.util.CPDefinitionsPortletUtil;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
@@ -256,11 +256,11 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		String screenNavigationCategoryKey =
 			super.getScreenNavigationCategoryKey();
 
-		if (_type == CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE) {
+		if (_type == CPAttachmentFileEntryConstants.TYPE_IMAGE) {
 			screenNavigationCategoryKey =
 				CPDefinitionScreenNavigationConstants.CATEGORY_KEY_IMAGES;
 		}
-		else if (_type == CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_OTHER) {
+		else if (_type == CPAttachmentFileEntryConstants.TYPE_OTHER) {
 			screenNavigationCategoryKey =
 				CPDefinitionScreenNavigationConstants.CATEGORY_KEY_ATTACHMENTS;
 		}
@@ -320,7 +320,7 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		catch (Exception e) {
 			type = ParamUtil.getInteger(
 				httpServletRequest, "type",
-				CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE);
+				CPAttachmentFileEntryConstants.TYPE_IMAGE);
 		}
 
 		return type;

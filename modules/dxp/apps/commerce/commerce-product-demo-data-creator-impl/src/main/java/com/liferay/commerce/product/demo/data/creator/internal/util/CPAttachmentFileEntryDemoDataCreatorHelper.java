@@ -17,6 +17,7 @@ package com.liferay.commerce.product.demo.data.creator.internal.util;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
@@ -84,7 +85,7 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 			createCPAttachmentFileEntry(
 				userId, groupId, classeNameId, categoryId,
 				fileEntry.getFileEntryId(), titleMap, null, 0,
-				CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE);
+				CPAttachmentFileEntryConstants.TYPE_IMAGE);
 		}
 	}
 
@@ -176,7 +177,7 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 			createCPAttachmentFileEntry(
 				userId, groupId, classeNameId, cpDefinitionId,
 				fileEntry.getFileEntryId(), titleMap, jsonArray.toString(),
-				priority, CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE);
+				priority, CPAttachmentFileEntryConstants.TYPE_IMAGE);
 		}
 	}
 

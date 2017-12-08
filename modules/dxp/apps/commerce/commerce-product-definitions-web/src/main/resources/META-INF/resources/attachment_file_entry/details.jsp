@@ -39,7 +39,7 @@ int type = cpAttachmentFileEntriesDisplayContext.getType();
 </portlet:actionURL>
 
 <c:choose>
-	<c:when test="<%= type == CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE %>">
+	<c:when test="<%= type == CPAttachmentFileEntryConstants.TYPE_IMAGE %>">
 		<div class="lfr-attachment-cover-image-selector">
 			<liferay-item-selector:image-selector
 				draggableImage="vertical"
@@ -53,7 +53,7 @@ int type = cpAttachmentFileEntriesDisplayContext.getType();
 			/>
 		</div>
 	</c:when>
-	<c:when test="<%= type == CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_OTHER %>">
+	<c:when test="<%= type == CPAttachmentFileEntryConstants.TYPE_OTHER %>">
 		<aui:input name="fileEntryId" type="hidden" />
 
 		<div id="<portlet:namespace />fileEntryContainer">

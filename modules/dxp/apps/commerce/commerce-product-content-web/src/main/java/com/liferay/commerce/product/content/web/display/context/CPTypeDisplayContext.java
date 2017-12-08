@@ -14,11 +14,11 @@
 
 package com.liferay.commerce.product.content.web.display.context;
 
-import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.content.web.configuration.CPContentConfigurationHelper;
 import com.liferay.commerce.product.content.web.configuration.CPContentPortletInstanceConfiguration;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPInstance;
@@ -95,12 +95,12 @@ public class CPTypeDisplayContext {
 		int total =
 			cpAttachmentFileEntryService.getCPAttachmentFileEntriesCount(
 				classNameId, cpDefinition.getCPDefinitionId(),
-				CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_OTHER,
+				CPAttachmentFileEntryConstants.TYPE_OTHER,
 				WorkflowConstants.STATUS_APPROVED);
 
 		return cpAttachmentFileEntryService.getCPAttachmentFileEntries(
 			classNameId, cpDefinition.getCPDefinitionId(),
-			CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_OTHER,
+			CPAttachmentFileEntryConstants.TYPE_OTHER,
 			WorkflowConstants.STATUS_APPROVED, 0, total);
 	}
 
@@ -142,7 +142,7 @@ public class CPTypeDisplayContext {
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
 			cpAttachmentFileEntryService.getCPAttachmentFileEntries(
 				classNameId, cpDefinition.getCPDefinitionId(),
-				CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE,
+				CPAttachmentFileEntryConstants.TYPE_IMAGE,
 				WorkflowConstants.STATUS_APPROVED, 0, 1);
 
 		if (cpAttachmentFileEntries.isEmpty()) {
@@ -183,7 +183,7 @@ public class CPTypeDisplayContext {
 
 		return cpAttachmentFileEntryService.getCPAttachmentFileEntries(
 			classNameId, cpDefinition.getCPDefinitionId(),
-			CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE,
+			CPAttachmentFileEntryConstants.TYPE_IMAGE,
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 	}

@@ -19,9 +19,9 @@ import com.liferay.commerce.cart.CommerceCartValidatorResult;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartConstants;
 import com.liferay.commerce.model.CommerceCartItem;
-import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
@@ -112,7 +112,7 @@ public class CommerceCartContentDisplayContext {
 			cpInstanceHelper.getCPAttachmentFileEntries(
 				commerceCartItem.getCPDefinitionId(),
 				commerceCartItem.getJson(),
-				CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE);
+				CPAttachmentFileEntryConstants.TYPE_IMAGE);
 
 		if (cpAttachmentFileEntries.isEmpty()) {
 			CPDefinition cpDefinition = commerceCartItem.getCPDefinition();

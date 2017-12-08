@@ -1890,10 +1890,8 @@ logExceptionsOnly=B&quot;false&quot;</echo>
 				<then>
 					<property name="selenium.ie.driver.zip" value="IEDriverServer_Win32_${selenium.ie.driver.version}.0.zip" />
 
-					<mirrors-get
-						dest="tools/selenium/${selenium.ie.driver.zip}"
-						src="http://selenium-release.storage.googleapis.com/${selenium.ie.driver.version}/${selenium.ie.driver.zip}"
-					/>
+					<mirrors-get dest="tools/selenium/${selenium.ie.driver.zip}"
+					src="http://selenium-release.storage.googleapis.com/${selenium.ie.driver.version}/${selenium.ie.driver.zip}" />
 
 					<stop-ie-driver />
 
@@ -1908,6 +1906,51 @@ logExceptionsOnly=B&quot;false&quot;</echo>
 					</if>
 				</else>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-jboss-module-file">
+		<sequential>
+
+			<var name="module-file" unset="true" />
+
+			<if>
+				<not>
+					<available file="${app.server.lib.global.dir}/module.xml" />
+				</not>
+				<then>
+					<var name="module-file" value="tools/servers/jboss/modules/module.xml" />
+				</then>
+				<else>
+					<var name="module-file" value="${app.server.lib.global.dir}/module.xml" />
+				</else>
+			</if>
+
+			<loadfile property="module-file-contents" srcFile="${module-file}">
+				<linecontains>
+					<contains name="resource-root" />
+					<contains name="petra" />
+				</linecontains>
+			</loadfile>
+
+			<antelope:stringutil property="petra.jar.list" string="${module-file-contents}">
+				<antelope:replace regex="&lt;resource-root path=&quot;" replacement="" />
+				<antelope:replace regex="&quot;\s/&gt;[\n\r]" replacement="," />
+			</antelope:stringutil>
+
+			<for list="${petra.jar.list}" param="petra.jar">
+				<sequential>
+					<if>
+						<not>
+							<available file="${app.server.portal.dir}/lib/ext/${petra.jar}" />
+						</not>
+						<then>
+							<replaceregexp file="${module-file}" match="\s*&lt;resource-root path=&quot;${petra.jar}&quot;\s/&gt;[\n\r]" replace="" />
+						</then>
+					</if>
+				</sequential>
+			</for>
+
 		</sequential>
 	</macrodef>
 
@@ -8520,7 +8563,6 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 			<else>
 				<if>
 					<and>
-						<equals arg1="${app.server.jboss.version}" arg2="6.1.0" />
 						<equals arg1="${app.server.type}" arg2="jboss" />
 					</and>
 					<then>
@@ -8565,6 +8607,8 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 				/>
 
 				<delete dir="dist" />
+
+				<prepare-jboss-module-file />
 
 				<ant antfile="build.xml" inheritAll="false" target="update-app-server-scripts" />
 

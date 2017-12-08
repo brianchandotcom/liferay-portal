@@ -2,6 +2,7 @@ dependencies {
 	compileInclude group: "org.ow2.asm", name: "asm", version: "4.1"
 	compileInclude group: "org.ow2.asm", name: "asm-util", version: "4.1"
 
+	provided group: "com.liferay", name: "com.liferay.petra.reflect", version: "1.1.0"
 	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.49.0"
 	provided group: "javax.portlet", name: "portlet-api", version: "2.0"

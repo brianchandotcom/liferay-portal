@@ -14,6 +14,7 @@ Main-Class: com.liferay.source.formatter.SourceFormatter
 -includeresource:\
 	@biz.aQute.bndlib-[0-9]*.jar!/aQute/bnd/osgi/Constants.class,\
 	@com.liferay.petra.content-[0-9]*.jar!/com/liferay/petra/content/ContentUtil.class,\
+	@com.liferay.petra.reflect-[0-9]*.jar!/com/liferay/petra/reflect/ReflectionUtil.class,\
 	@com.liferay.petra.string-[0-9]*.jar!/com/liferay/petra/string/CharPool.class,\
 	@com.liferay.petra.xml-[0-9]*.jar!/com/liferay/petra/xml/Dom4jUtil.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/deploy/dependencies/web.xml,\
@@ -76,7 +77,6 @@ Main-Class: com.liferay.source.formatter.SourceFormatter
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/PredicateFilter.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/PropertiesUtil.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/PropsKeys.class,\
-	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/ReflectionUtil.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/ReleaseInfo.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/SetUtil.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/StreamUtil*,\

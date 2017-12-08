@@ -80,6 +80,11 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 			{ "orderUserId", Types.BIGINT },
 			{ "billingAddressId", Types.BIGINT },
 			{ "shippingAddressId", Types.BIGINT },
+			{ "commercePaymentMethodId", Types.BIGINT },
+			{ "commerceShippingMethodId", Types.BIGINT },
+			{ "shippingOptionName", Types.VARCHAR },
+			{ "subtotal", Types.DOUBLE },
+			{ "shippingPrice", Types.DOUBLE },
 			{ "total", Types.DOUBLE },
 			{ "status", Types.INTEGER }
 		};
@@ -96,11 +101,16 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		TABLE_COLUMNS_MAP.put("orderUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("billingAddressId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("shippingAddressId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("commercePaymentMethodId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("commerceShippingMethodId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("shippingOptionName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("subtotal", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("shippingPrice", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("total", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceOrder (commerceOrderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,orderUserId LONG,billingAddressId LONG,shippingAddressId LONG,total DOUBLE,status INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceOrder (commerceOrderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,orderUserId LONG,billingAddressId LONG,shippingAddressId LONG,commercePaymentMethodId LONG,commerceShippingMethodId LONG,shippingOptionName VARCHAR(75) null,subtotal DOUBLE,shippingPrice DOUBLE,total DOUBLE,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrder";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceOrder.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceOrder.createDate ASC";
@@ -142,6 +152,11 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		model.setOrderUserId(soapModel.getOrderUserId());
 		model.setBillingAddressId(soapModel.getBillingAddressId());
 		model.setShippingAddressId(soapModel.getShippingAddressId());
+		model.setCommercePaymentMethodId(soapModel.getCommercePaymentMethodId());
+		model.setCommerceShippingMethodId(soapModel.getCommerceShippingMethodId());
+		model.setShippingOptionName(soapModel.getShippingOptionName());
+		model.setSubtotal(soapModel.getSubtotal());
+		model.setShippingPrice(soapModel.getShippingPrice());
 		model.setTotal(soapModel.getTotal());
 		model.setStatus(soapModel.getStatus());
 
@@ -218,6 +233,11 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		attributes.put("orderUserId", getOrderUserId());
 		attributes.put("billingAddressId", getBillingAddressId());
 		attributes.put("shippingAddressId", getShippingAddressId());
+		attributes.put("commercePaymentMethodId", getCommercePaymentMethodId());
+		attributes.put("commerceShippingMethodId", getCommerceShippingMethodId());
+		attributes.put("shippingOptionName", getShippingOptionName());
+		attributes.put("subtotal", getSubtotal());
+		attributes.put("shippingPrice", getShippingPrice());
 		attributes.put("total", getTotal());
 		attributes.put("status", getStatus());
 
@@ -287,6 +307,38 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 		if (shippingAddressId != null) {
 			setShippingAddressId(shippingAddressId);
+		}
+
+		Long commercePaymentMethodId = (Long)attributes.get(
+				"commercePaymentMethodId");
+
+		if (commercePaymentMethodId != null) {
+			setCommercePaymentMethodId(commercePaymentMethodId);
+		}
+
+		Long commerceShippingMethodId = (Long)attributes.get(
+				"commerceShippingMethodId");
+
+		if (commerceShippingMethodId != null) {
+			setCommerceShippingMethodId(commerceShippingMethodId);
+		}
+
+		String shippingOptionName = (String)attributes.get("shippingOptionName");
+
+		if (shippingOptionName != null) {
+			setShippingOptionName(shippingOptionName);
+		}
+
+		Double subtotal = (Double)attributes.get("subtotal");
+
+		if (subtotal != null) {
+			setSubtotal(subtotal);
+		}
+
+		Double shippingPrice = (Double)attributes.get("shippingPrice");
+
+		if (shippingPrice != null) {
+			setShippingPrice(shippingPrice);
 		}
 
 		Double total = (Double)attributes.get("total");
@@ -471,6 +523,66 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@JSON
 	@Override
+	public long getCommercePaymentMethodId() {
+		return _commercePaymentMethodId;
+	}
+
+	@Override
+	public void setCommercePaymentMethodId(long commercePaymentMethodId) {
+		_commercePaymentMethodId = commercePaymentMethodId;
+	}
+
+	@JSON
+	@Override
+	public long getCommerceShippingMethodId() {
+		return _commerceShippingMethodId;
+	}
+
+	@Override
+	public void setCommerceShippingMethodId(long commerceShippingMethodId) {
+		_commerceShippingMethodId = commerceShippingMethodId;
+	}
+
+	@JSON
+	@Override
+	public String getShippingOptionName() {
+		if (_shippingOptionName == null) {
+			return "";
+		}
+		else {
+			return _shippingOptionName;
+		}
+	}
+
+	@Override
+	public void setShippingOptionName(String shippingOptionName) {
+		_shippingOptionName = shippingOptionName;
+	}
+
+	@JSON
+	@Override
+	public double getSubtotal() {
+		return _subtotal;
+	}
+
+	@Override
+	public void setSubtotal(double subtotal) {
+		_subtotal = subtotal;
+	}
+
+	@JSON
+	@Override
+	public double getShippingPrice() {
+		return _shippingPrice;
+	}
+
+	@Override
+	public void setShippingPrice(double shippingPrice) {
+		_shippingPrice = shippingPrice;
+	}
+
+	@JSON
+	@Override
 	public double getTotal() {
 		return _total;
 	}
@@ -532,6 +644,11 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		commerceOrderImpl.setOrderUserId(getOrderUserId());
 		commerceOrderImpl.setBillingAddressId(getBillingAddressId());
 		commerceOrderImpl.setShippingAddressId(getShippingAddressId());
+		commerceOrderImpl.setCommercePaymentMethodId(getCommercePaymentMethodId());
+		commerceOrderImpl.setCommerceShippingMethodId(getCommerceShippingMethodId());
+		commerceOrderImpl.setShippingOptionName(getShippingOptionName());
+		commerceOrderImpl.setSubtotal(getSubtotal());
+		commerceOrderImpl.setShippingPrice(getShippingPrice());
 		commerceOrderImpl.setTotal(getTotal());
 		commerceOrderImpl.setStatus(getStatus());
 
@@ -648,6 +765,22 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 		commerceOrderCacheModel.shippingAddressId = getShippingAddressId();
 
+		commerceOrderCacheModel.commercePaymentMethodId = getCommercePaymentMethodId();
+
+		commerceOrderCacheModel.commerceShippingMethodId = getCommerceShippingMethodId();
+
+		commerceOrderCacheModel.shippingOptionName = getShippingOptionName();
+
+		String shippingOptionName = commerceOrderCacheModel.shippingOptionName;
+
+		if ((shippingOptionName != null) && (shippingOptionName.length() == 0)) {
+			commerceOrderCacheModel.shippingOptionName = null;
+		}
+
+		commerceOrderCacheModel.subtotal = getSubtotal();
+
+		commerceOrderCacheModel.shippingPrice = getShippingPrice();
+
 		commerceOrderCacheModel.total = getTotal();
 
 		commerceOrderCacheModel.status = getStatus();
@@ -657,7 +790,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{commerceOrderId=");
 		sb.append(getCommerceOrderId());
@@ -679,6 +812,16 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		sb.append(getBillingAddressId());
 		sb.append(", shippingAddressId=");
 		sb.append(getShippingAddressId());
+		sb.append(", commercePaymentMethodId=");
+		sb.append(getCommercePaymentMethodId());
+		sb.append(", commerceShippingMethodId=");
+		sb.append(getCommerceShippingMethodId());
+		sb.append(", shippingOptionName=");
+		sb.append(getShippingOptionName());
+		sb.append(", subtotal=");
+		sb.append(getSubtotal());
+		sb.append(", shippingPrice=");
+		sb.append(getShippingPrice());
 		sb.append(", total=");
 		sb.append(getTotal());
 		sb.append(", status=");
@@ -690,7 +833,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.model.CommerceOrder");
@@ -737,6 +880,26 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		sb.append(getShippingAddressId());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>commercePaymentMethodId</column-name><column-value><![CDATA[");
+		sb.append(getCommercePaymentMethodId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>commerceShippingMethodId</column-name><column-value><![CDATA[");
+		sb.append(getCommerceShippingMethodId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>shippingOptionName</column-name><column-value><![CDATA[");
+		sb.append(getShippingOptionName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>subtotal</column-name><column-value><![CDATA[");
+		sb.append(getSubtotal());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>shippingPrice</column-name><column-value><![CDATA[");
+		sb.append(getShippingPrice());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>total</column-name><column-value><![CDATA[");
 		sb.append(getTotal());
 		sb.append("]]></column-value></column>");
@@ -767,6 +930,11 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 	private long _orderUserId;
 	private long _billingAddressId;
 	private long _shippingAddressId;
+	private long _commercePaymentMethodId;
+	private long _commerceShippingMethodId;
+	private String _shippingOptionName;
+	private double _subtotal;
+	private double _shippingPrice;
 	private double _total;
 	private int _status;
 	private long _columnBitmask;

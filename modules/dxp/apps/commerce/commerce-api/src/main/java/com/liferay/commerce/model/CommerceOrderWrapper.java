@@ -68,6 +68,11 @@ public class CommerceOrderWrapper implements CommerceOrder,
 		attributes.put("orderUserId", getOrderUserId());
 		attributes.put("billingAddressId", getBillingAddressId());
 		attributes.put("shippingAddressId", getShippingAddressId());
+		attributes.put("commercePaymentMethodId", getCommercePaymentMethodId());
+		attributes.put("commerceShippingMethodId", getCommerceShippingMethodId());
+		attributes.put("shippingOptionName", getShippingOptionName());
+		attributes.put("subtotal", getSubtotal());
+		attributes.put("shippingPrice", getShippingPrice());
 		attributes.put("total", getTotal());
 		attributes.put("status", getStatus());
 
@@ -136,6 +141,38 @@ public class CommerceOrderWrapper implements CommerceOrder,
 			setShippingAddressId(shippingAddressId);
 		}
 
+		Long commercePaymentMethodId = (Long)attributes.get(
+				"commercePaymentMethodId");
+
+		if (commercePaymentMethodId != null) {
+			setCommercePaymentMethodId(commercePaymentMethodId);
+		}
+
+		Long commerceShippingMethodId = (Long)attributes.get(
+				"commerceShippingMethodId");
+
+		if (commerceShippingMethodId != null) {
+			setCommerceShippingMethodId(commerceShippingMethodId);
+		}
+
+		String shippingOptionName = (String)attributes.get("shippingOptionName");
+
+		if (shippingOptionName != null) {
+			setShippingOptionName(shippingOptionName);
+		}
+
+		Double subtotal = (Double)attributes.get("subtotal");
+
+		if (subtotal != null) {
+			setSubtotal(subtotal);
+		}
+
+		Double shippingPrice = (Double)attributes.get("shippingPrice");
+
+		if (shippingPrice != null) {
+			setShippingPrice(shippingPrice);
+		}
+
 		Double total = (Double)attributes.get("total");
 
 		if (total != null) {
@@ -182,6 +219,26 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public java.util.List<CommerceOrderItem> getCommerceOrderItems() {
 		return _commerceOrder.getCommerceOrderItems();
+	}
+
+	/**
+	* Returns the commerce payment method ID of this commerce order.
+	*
+	* @return the commerce payment method ID of this commerce order
+	*/
+	@Override
+	public long getCommercePaymentMethodId() {
+		return _commerceOrder.getCommercePaymentMethodId();
+	}
+
+	/**
+	* Returns the commerce shipping method ID of this commerce order.
+	*
+	* @return the commerce shipping method ID of this commerce order
+	*/
+	@Override
+	public long getCommerceShippingMethodId() {
+		return _commerceOrder.getCommerceShippingMethodId();
 	}
 
 	/**
@@ -275,6 +332,26 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	}
 
 	/**
+	* Returns the shipping option name of this commerce order.
+	*
+	* @return the shipping option name of this commerce order
+	*/
+	@Override
+	public java.lang.String getShippingOptionName() {
+		return _commerceOrder.getShippingOptionName();
+	}
+
+	/**
+	* Returns the shipping price of this commerce order.
+	*
+	* @return the shipping price of this commerce order
+	*/
+	@Override
+	public double getShippingPrice() {
+		return _commerceOrder.getShippingPrice();
+	}
+
+	/**
 	* Returns the status of this commerce order.
 	*
 	* @return the status of this commerce order
@@ -282,6 +359,16 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public int getStatus() {
 		return _commerceOrder.getStatus();
+	}
+
+	/**
+	* Returns the subtotal of this commerce order.
+	*
+	* @return the subtotal of this commerce order
+	*/
+	@Override
+	public double getSubtotal() {
+		return _commerceOrder.getSubtotal();
 	}
 
 	/**
@@ -372,6 +459,26 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public void setCommerceOrderId(long commerceOrderId) {
 		_commerceOrder.setCommerceOrderId(commerceOrderId);
+	}
+
+	/**
+	* Sets the commerce payment method ID of this commerce order.
+	*
+	* @param commercePaymentMethodId the commerce payment method ID of this commerce order
+	*/
+	@Override
+	public void setCommercePaymentMethodId(long commercePaymentMethodId) {
+		_commerceOrder.setCommercePaymentMethodId(commercePaymentMethodId);
+	}
+
+	/**
+	* Sets the commerce shipping method ID of this commerce order.
+	*
+	* @param commerceShippingMethodId the commerce shipping method ID of this commerce order
+	*/
+	@Override
+	public void setCommerceShippingMethodId(long commerceShippingMethodId) {
+		_commerceOrder.setCommerceShippingMethodId(commerceShippingMethodId);
 	}
 
 	/**
@@ -481,6 +588,26 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	}
 
 	/**
+	* Sets the shipping option name of this commerce order.
+	*
+	* @param shippingOptionName the shipping option name of this commerce order
+	*/
+	@Override
+	public void setShippingOptionName(java.lang.String shippingOptionName) {
+		_commerceOrder.setShippingOptionName(shippingOptionName);
+	}
+
+	/**
+	* Sets the shipping price of this commerce order.
+	*
+	* @param shippingPrice the shipping price of this commerce order
+	*/
+	@Override
+	public void setShippingPrice(double shippingPrice) {
+		_commerceOrder.setShippingPrice(shippingPrice);
+	}
+
+	/**
 	* Sets the status of this commerce order.
 	*
 	* @param status the status of this commerce order
@@ -488,6 +615,16 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public void setStatus(int status) {
 		_commerceOrder.setStatus(status);
+	}
+
+	/**
+	* Sets the subtotal of this commerce order.
+	*
+	* @param subtotal the subtotal of this commerce order
+	*/
+	@Override
+	public void setSubtotal(double subtotal) {
+		_commerceOrder.setSubtotal(subtotal);
 	}
 
 	/**

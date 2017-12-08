@@ -44,6 +44,11 @@ public class CommerceOrderSoap implements Serializable {
 		soapModel.setOrderUserId(model.getOrderUserId());
 		soapModel.setBillingAddressId(model.getBillingAddressId());
 		soapModel.setShippingAddressId(model.getShippingAddressId());
+		soapModel.setCommercePaymentMethodId(model.getCommercePaymentMethodId());
+		soapModel.setCommerceShippingMethodId(model.getCommerceShippingMethodId());
+		soapModel.setShippingOptionName(model.getShippingOptionName());
+		soapModel.setSubtotal(model.getSubtotal());
+		soapModel.setShippingPrice(model.getShippingPrice());
 		soapModel.setTotal(model.getTotal());
 		soapModel.setStatus(model.getStatus());
 
@@ -178,6 +183,46 @@ public class CommerceOrderSoap implements Serializable {
 		_shippingAddressId = shippingAddressId;
 	}
 
+	public long getCommercePaymentMethodId() {
+		return _commercePaymentMethodId;
+	}
+
+	public void setCommercePaymentMethodId(long commercePaymentMethodId) {
+		_commercePaymentMethodId = commercePaymentMethodId;
+	}
+
+	public long getCommerceShippingMethodId() {
+		return _commerceShippingMethodId;
+	}
+
+	public void setCommerceShippingMethodId(long commerceShippingMethodId) {
+		_commerceShippingMethodId = commerceShippingMethodId;
+	}
+
+	public String getShippingOptionName() {
+		return _shippingOptionName;
+	}
+
+	public void setShippingOptionName(String shippingOptionName) {
+		_shippingOptionName = shippingOptionName;
+	}
+
+	public double getSubtotal() {
+		return _subtotal;
+	}
+
+	public void setSubtotal(double subtotal) {
+		_subtotal = subtotal;
+	}
+
+	public double getShippingPrice() {
+		return _shippingPrice;
+	}
+
+	public void setShippingPrice(double shippingPrice) {
+		_shippingPrice = shippingPrice;
+	}
+
 	public double getTotal() {
 		return _total;
 	}
@@ -204,6 +249,11 @@ public class CommerceOrderSoap implements Serializable {
 	private long _orderUserId;
 	private long _billingAddressId;
 	private long _shippingAddressId;
+	private long _commercePaymentMethodId;
+	private long _commerceShippingMethodId;
+	private String _shippingOptionName;
+	private double _subtotal;
+	private double _shippingPrice;
 	private double _total;
 	private int _status;
 }

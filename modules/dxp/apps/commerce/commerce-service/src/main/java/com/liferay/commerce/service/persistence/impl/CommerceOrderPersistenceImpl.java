@@ -894,6 +894,11 @@ public class CommerceOrderPersistenceImpl extends BasePersistenceImpl<CommerceOr
 		commerceOrderImpl.setOrderUserId(commerceOrder.getOrderUserId());
 		commerceOrderImpl.setBillingAddressId(commerceOrder.getBillingAddressId());
 		commerceOrderImpl.setShippingAddressId(commerceOrder.getShippingAddressId());
+		commerceOrderImpl.setCommercePaymentMethodId(commerceOrder.getCommercePaymentMethodId());
+		commerceOrderImpl.setCommerceShippingMethodId(commerceOrder.getCommerceShippingMethodId());
+		commerceOrderImpl.setShippingOptionName(commerceOrder.getShippingOptionName());
+		commerceOrderImpl.setSubtotal(commerceOrder.getSubtotal());
+		commerceOrderImpl.setShippingPrice(commerceOrder.getShippingPrice());
 		commerceOrderImpl.setTotal(commerceOrder.getTotal());
 		commerceOrderImpl.setStatus(commerceOrder.getStatus());
 

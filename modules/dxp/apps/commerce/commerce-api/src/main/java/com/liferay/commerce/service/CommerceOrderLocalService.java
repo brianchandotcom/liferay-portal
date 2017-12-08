@@ -72,8 +72,11 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	public CommerceOrder addCommerceOrder(CommerceOrder commerceOrder);
 
 	public CommerceOrder addCommerceOrder(long orderUserId,
-		long billingAddressId, long shippingAddressId, double total,
-		int status, ServiceContext serviceContext) throws PortalException;
+		long billingAddressId, long shippingAddressId,
+		long commercePaymentMethodId, long commerceShippingMethodId,
+		java.lang.String shippingOptionName, double subtotal,
+		double shippingPrice, double total, int status,
+		ServiceContext serviceContext) throws PortalException;
 
 	public CommerceOrder addCommerceOrderFromCart(long commerceCartId,
 		ServiceContext serviceContext) throws PortalException;

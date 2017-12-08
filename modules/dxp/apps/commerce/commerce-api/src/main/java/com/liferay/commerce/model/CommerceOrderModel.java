@@ -249,6 +249,77 @@ public interface CommerceOrderModel extends BaseModel<CommerceOrder>,
 	public void setShippingAddressId(long shippingAddressId);
 
 	/**
+	 * Returns the commerce payment method ID of this commerce order.
+	 *
+	 * @return the commerce payment method ID of this commerce order
+	 */
+	public long getCommercePaymentMethodId();
+
+	/**
+	 * Sets the commerce payment method ID of this commerce order.
+	 *
+	 * @param commercePaymentMethodId the commerce payment method ID of this commerce order
+	 */
+	public void setCommercePaymentMethodId(long commercePaymentMethodId);
+
+	/**
+	 * Returns the commerce shipping method ID of this commerce order.
+	 *
+	 * @return the commerce shipping method ID of this commerce order
+	 */
+	public long getCommerceShippingMethodId();
+
+	/**
+	 * Sets the commerce shipping method ID of this commerce order.
+	 *
+	 * @param commerceShippingMethodId the commerce shipping method ID of this commerce order
+	 */
+	public void setCommerceShippingMethodId(long commerceShippingMethodId);
+
+	/**
+	 * Returns the shipping option name of this commerce order.
+	 *
+	 * @return the shipping option name of this commerce order
+	 */
+	@AutoEscape
+	public String getShippingOptionName();
+
+	/**
+	 * Sets the shipping option name of this commerce order.
+	 *
+	 * @param shippingOptionName the shipping option name of this commerce order
+	 */
+	public void setShippingOptionName(String shippingOptionName);
+
+	/**
+	 * Returns the subtotal of this commerce order.
+	 *
+	 * @return the subtotal of this commerce order
+	 */
+	public double getSubtotal();
+
+	/**
+	 * Sets the subtotal of this commerce order.
+	 *
+	 * @param subtotal the subtotal of this commerce order
+	 */
+	public void setSubtotal(double subtotal);
+
+	/**
+	 * Returns the shipping price of this commerce order.
+	 *
+	 * @return the shipping price of this commerce order
+	 */
+	public double getShippingPrice();
+
+	/**
+	 * Sets the shipping price of this commerce order.
+	 *
+	 * @param shippingPrice the shipping price of this commerce order
+	 */
+	public void setShippingPrice(double shippingPrice);
+
+	/**
 	 * Returns the total of this commerce order.
 	 *
 	 * @return the total of this commerce order

@@ -134,6 +134,11 @@
 		<property name="orderUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="billingAddressId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="shippingAddressId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="commercePaymentMethodId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="commerceShippingMethodId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="shippingOptionName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="subtotal" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="shippingPrice" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="total" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>

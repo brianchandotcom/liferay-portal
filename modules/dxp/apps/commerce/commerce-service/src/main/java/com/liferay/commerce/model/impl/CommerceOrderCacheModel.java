@@ -65,7 +65,7 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{commerceOrderId=");
 		sb.append(commerceOrderId);
@@ -87,6 +87,16 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		sb.append(billingAddressId);
 		sb.append(", shippingAddressId=");
 		sb.append(shippingAddressId);
+		sb.append(", commercePaymentMethodId=");
+		sb.append(commercePaymentMethodId);
+		sb.append(", commerceShippingMethodId=");
+		sb.append(commerceShippingMethodId);
+		sb.append(", shippingOptionName=");
+		sb.append(shippingOptionName);
+		sb.append(", subtotal=");
+		sb.append(subtotal);
+		sb.append(", shippingPrice=");
+		sb.append(shippingPrice);
 		sb.append(", total=");
 		sb.append(total);
 		sb.append(", status=");
@@ -129,6 +139,18 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		commerceOrderImpl.setOrderUserId(orderUserId);
 		commerceOrderImpl.setBillingAddressId(billingAddressId);
 		commerceOrderImpl.setShippingAddressId(shippingAddressId);
+		commerceOrderImpl.setCommercePaymentMethodId(commercePaymentMethodId);
+		commerceOrderImpl.setCommerceShippingMethodId(commerceShippingMethodId);
+
+		if (shippingOptionName == null) {
+			commerceOrderImpl.setShippingOptionName("");
+		}
+		else {
+			commerceOrderImpl.setShippingOptionName(shippingOptionName);
+		}
+
+		commerceOrderImpl.setSubtotal(subtotal);
+		commerceOrderImpl.setShippingPrice(shippingPrice);
 		commerceOrderImpl.setTotal(total);
 		commerceOrderImpl.setStatus(status);
 
@@ -155,6 +177,15 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		billingAddressId = objectInput.readLong();
 
 		shippingAddressId = objectInput.readLong();
+
+		commercePaymentMethodId = objectInput.readLong();
+
+		commerceShippingMethodId = objectInput.readLong();
+		shippingOptionName = objectInput.readUTF();
+
+		subtotal = objectInput.readDouble();
+
+		shippingPrice = objectInput.readDouble();
 
 		total = objectInput.readDouble();
 
@@ -188,6 +219,21 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 
 		objectOutput.writeLong(shippingAddressId);
 
+		objectOutput.writeLong(commercePaymentMethodId);
+
+		objectOutput.writeLong(commerceShippingMethodId);
+
+		if (shippingOptionName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(shippingOptionName);
+		}
+
+		objectOutput.writeDouble(subtotal);
+
+		objectOutput.writeDouble(shippingPrice);
+
 		objectOutput.writeDouble(total);
 
 		objectOutput.writeInt(status);
@@ -203,6 +249,11 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 	public long orderUserId;
 	public long billingAddressId;
 	public long shippingAddressId;
+	public long commercePaymentMethodId;
+	public long commerceShippingMethodId;
+	public String shippingOptionName;
+	public double subtotal;
+	public double shippingPrice;
 	public double total;
 	public int status;
 }

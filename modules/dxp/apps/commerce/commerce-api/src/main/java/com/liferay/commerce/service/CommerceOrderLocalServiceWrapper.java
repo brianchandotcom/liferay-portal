@@ -49,11 +49,15 @@ public class CommerceOrderLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.model.CommerceOrder addCommerceOrder(
 		long orderUserId, long billingAddressId, long shippingAddressId,
-		double total, int status,
+		long commercePaymentMethodId, long commerceShippingMethodId,
+		java.lang.String shippingOptionName, double subtotal,
+		double shippingPrice, double total, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderLocalService.addCommerceOrder(orderUserId,
-			billingAddressId, shippingAddressId, total, status, serviceContext);
+			billingAddressId, shippingAddressId, commercePaymentMethodId,
+			commerceShippingMethodId, shippingOptionName, subtotal,
+			shippingPrice, total, status, serviceContext);
 	}
 
 	@Override

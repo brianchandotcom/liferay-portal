@@ -45,7 +45,7 @@ public class ReflectionUtilAdvice {
 
 	@Around(
 		"execution(public static java.lang.reflect.Field " +
-			"com.liferay.portal.kernel.util.ReflectionUtil." +
+			"com.liferay.petra.reflect.ReflectionUtil." +
 				"getDeclaredField(Class, String))"
 	)
 	public Object getDeclaredField(ProceedingJoinPoint proceedingJoinPoint)
@@ -60,7 +60,7 @@ public class ReflectionUtilAdvice {
 
 	@Around(
 		"execution(public static java.lang.reflect.Method " +
-			"com.liferay.portal.kernel.util.ReflectionUtil." +
+			"com.liferay.petra.reflect.ReflectionUtil." +
 				"getDeclaredMethod(Class, String, Class...))"
 	)
 	public Object getDeclaredMethod(ProceedingJoinPoint proceedingJoinPoint)

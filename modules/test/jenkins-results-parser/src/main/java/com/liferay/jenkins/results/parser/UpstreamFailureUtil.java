@@ -163,7 +163,29 @@ public class UpstreamFailureUtil {
 	public static void loadUpstreamJobFailuresJSONObject(Build build) {
 		String jobName = build.getJobName();
 
-		loadUpstreamJobFailuresJSONObject(jobName);
+		try {
+			if (jobName.contains("pullrequest")) {
+				String upstreamJobName = jobName.replace(
+				"pullrequest", "upstream");
+
+				String url = JenkinsResultsParserUtil.getLocalURL(
+				_UPSTREAM_FAILURES_JOB_BASE_URL + upstreamJobName +
+				"/builds/latest/test.results.json");
+
+				_upstreamFailuresJobJSONObject =
+				JenkinsResultsParserUtil.toJSONObject(url);
+
+				System.out.println(
+				"Using upstream failures at: " +
+				getUpstreamJobFailuresSHA());
+			}
+		}
+		catch (IOException ioe) {
+			System.out.println(
+			"Unable to load upstream acceptance failure data from url.");
+
+			ioe.printStackTrace();
+		}
 	}
 
 	public static void loadUpstreamJobFailuresJSONObject(File file) {
@@ -185,32 +207,6 @@ public class UpstreamFailureUtil {
 
 			System.out.println(
 				"Using upstream failures at: " + getUpstreamJobFailuresSHA());
-		}
-	}
-
-	public static void loadUpstreamJobFailuresJSONObject(String jobName) {
-		try {
-			if (jobName.contains("pullrequest")) {
-				String upstreamJobName = jobName.replace(
-					"pullrequest", "upstream");
-
-				String url = JenkinsResultsParserUtil.getLocalURL(
-					_UPSTREAM_FAILURES_JOB_BASE_URL + upstreamJobName +
-						"/builds/latest/test.results.json");
-
-				_upstreamFailuresJobJSONObject =
-					JenkinsResultsParserUtil.toJSONObject(url);
-
-				System.out.println(
-					"Using upstream failures at: " +
-						getUpstreamJobFailuresSHA());
-			}
-		}
-		catch (IOException ioe) {
-			System.out.println(
-				"Unable to load upstream acceptance failure data from url.");
-
-			ioe.printStackTrace();
 		}
 	}
 

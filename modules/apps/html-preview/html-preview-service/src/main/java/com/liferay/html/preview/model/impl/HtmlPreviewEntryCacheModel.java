@@ -16,7 +16,7 @@ package com.liferay.html.preview.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.html.preview.model.HtmlPreview;
+import com.liferay.html.preview.model.HtmlPreviewEntry;
 
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
@@ -30,14 +30,14 @@ import java.io.ObjectOutput;
 import java.util.Date;
 
 /**
- * The cache model class for representing HtmlPreview in entity cache.
+ * The cache model class for representing HtmlPreviewEntry in entity cache.
  *
  * @author Brian Wing Shun Chan
- * @see HtmlPreview
+ * @see HtmlPreviewEntry
  * @generated
  */
 @ProviderType
-public class HtmlPreviewCacheModel implements CacheModel<HtmlPreview>,
+public class HtmlPreviewEntryCacheModel implements CacheModel<HtmlPreviewEntry>,
 	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
@@ -45,13 +45,13 @@ public class HtmlPreviewCacheModel implements CacheModel<HtmlPreview>,
 			return true;
 		}
 
-		if (!(obj instanceof HtmlPreviewCacheModel)) {
+		if (!(obj instanceof HtmlPreviewEntryCacheModel)) {
 			return false;
 		}
 
-		HtmlPreviewCacheModel htmlPreviewCacheModel = (HtmlPreviewCacheModel)obj;
+		HtmlPreviewEntryCacheModel htmlPreviewEntryCacheModel = (HtmlPreviewEntryCacheModel)obj;
 
-		if (htmlPreviewId == htmlPreviewCacheModel.htmlPreviewId) {
+		if (htmlPreviewEntryId == htmlPreviewEntryCacheModel.htmlPreviewEntryId) {
 			return true;
 		}
 
@@ -60,15 +60,15 @@ public class HtmlPreviewCacheModel implements CacheModel<HtmlPreview>,
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, htmlPreviewId);
+		return HashUtil.hash(0, htmlPreviewEntryId);
 	}
 
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(21);
 
-		sb.append("{htmlPreviewId=");
-		sb.append(htmlPreviewId);
+		sb.append("{htmlPreviewEntryId=");
+		sb.append(htmlPreviewEntryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -93,47 +93,47 @@ public class HtmlPreviewCacheModel implements CacheModel<HtmlPreview>,
 	}
 
 	@Override
-	public HtmlPreview toEntityModel() {
-		HtmlPreviewImpl htmlPreviewImpl = new HtmlPreviewImpl();
+	public HtmlPreviewEntry toEntityModel() {
+		HtmlPreviewEntryImpl htmlPreviewEntryImpl = new HtmlPreviewEntryImpl();
 
-		htmlPreviewImpl.setHtmlPreviewId(htmlPreviewId);
-		htmlPreviewImpl.setGroupId(groupId);
-		htmlPreviewImpl.setCompanyId(companyId);
-		htmlPreviewImpl.setUserId(userId);
+		htmlPreviewEntryImpl.setHtmlPreviewEntryId(htmlPreviewEntryId);
+		htmlPreviewEntryImpl.setGroupId(groupId);
+		htmlPreviewEntryImpl.setCompanyId(companyId);
+		htmlPreviewEntryImpl.setUserId(userId);
 
 		if (userName == null) {
-			htmlPreviewImpl.setUserName("");
+			htmlPreviewEntryImpl.setUserName("");
 		}
 		else {
-			htmlPreviewImpl.setUserName(userName);
+			htmlPreviewEntryImpl.setUserName(userName);
 		}
 
 		if (createDate == Long.MIN_VALUE) {
-			htmlPreviewImpl.setCreateDate(null);
+			htmlPreviewEntryImpl.setCreateDate(null);
 		}
 		else {
-			htmlPreviewImpl.setCreateDate(new Date(createDate));
+			htmlPreviewEntryImpl.setCreateDate(new Date(createDate));
 		}
 
 		if (modifiedDate == Long.MIN_VALUE) {
-			htmlPreviewImpl.setModifiedDate(null);
+			htmlPreviewEntryImpl.setModifiedDate(null);
 		}
 		else {
-			htmlPreviewImpl.setModifiedDate(new Date(modifiedDate));
+			htmlPreviewEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		htmlPreviewImpl.setClassNameId(classNameId);
-		htmlPreviewImpl.setClassPK(classPK);
-		htmlPreviewImpl.setFileEntryId(fileEntryId);
+		htmlPreviewEntryImpl.setClassNameId(classNameId);
+		htmlPreviewEntryImpl.setClassPK(classPK);
+		htmlPreviewEntryImpl.setFileEntryId(fileEntryId);
 
-		htmlPreviewImpl.resetOriginalValues();
+		htmlPreviewEntryImpl.resetOriginalValues();
 
-		return htmlPreviewImpl;
+		return htmlPreviewEntryImpl;
 	}
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		htmlPreviewId = objectInput.readLong();
+		htmlPreviewEntryId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
 
@@ -154,7 +154,7 @@ public class HtmlPreviewCacheModel implements CacheModel<HtmlPreview>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(htmlPreviewId);
+		objectOutput.writeLong(htmlPreviewEntryId);
 
 		objectOutput.writeLong(groupId);
 
@@ -179,7 +179,7 @@ public class HtmlPreviewCacheModel implements CacheModel<HtmlPreview>,
 		objectOutput.writeLong(fileEntryId);
 	}
 
-	public long htmlPreviewId;
+	public long htmlPreviewEntryId;
 	public long groupId;
 	public long companyId;
 	public long userId;

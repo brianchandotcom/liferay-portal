@@ -21,26 +21,27 @@ import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
 
 /**
- * The extended model interface for the HtmlPreview service. Represents a row in the &quot;HtmlPreview&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the HtmlPreviewEntry service. Represents a row in the &quot;HtmlPreviewEntry&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
- * @see HtmlPreviewModel
- * @see com.liferay.html.preview.model.impl.HtmlPreviewImpl
- * @see com.liferay.html.preview.model.impl.HtmlPreviewModelImpl
+ * @see HtmlPreviewEntryModel
+ * @see com.liferay.html.preview.model.impl.HtmlPreviewEntryImpl
+ * @see com.liferay.html.preview.model.impl.HtmlPreviewEntryModelImpl
  * @generated
  */
-@ImplementationClassName("com.liferay.html.preview.model.impl.HtmlPreviewImpl")
+@ImplementationClassName("com.liferay.html.preview.model.impl.HtmlPreviewEntryImpl")
 @ProviderType
-public interface HtmlPreview extends HtmlPreviewModel, PersistedModel {
+public interface HtmlPreviewEntry extends HtmlPreviewEntryModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.html.preview.model.impl.HtmlPreviewImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to {@link com.liferay.html.preview.model.impl.HtmlPreviewEntryImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<HtmlPreview, Long> HTML_PREVIEW_ID_ACCESSOR = new Accessor<HtmlPreview, Long>() {
+	public static final Accessor<HtmlPreviewEntry, Long> HTML_PREVIEW_ENTRY_ID_ACCESSOR =
+		new Accessor<HtmlPreviewEntry, Long>() {
 			@Override
-			public Long get(HtmlPreview htmlPreview) {
-				return htmlPreview.getHtmlPreviewId();
+			public Long get(HtmlPreviewEntry htmlPreviewEntry) {
+				return htmlPreviewEntry.getHtmlPreviewEntryId();
 			}
 
 			@Override
@@ -49,8 +50,8 @@ public interface HtmlPreview extends HtmlPreviewModel, PersistedModel {
 			}
 
 			@Override
-			public Class<HtmlPreview> getTypeClass() {
-				return HtmlPreview.class;
+			public Class<HtmlPreviewEntry> getTypeClass() {
+				return HtmlPreviewEntry.class;
 			}
 		};
 }

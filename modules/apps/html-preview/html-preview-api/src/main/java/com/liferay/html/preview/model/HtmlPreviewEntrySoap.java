@@ -29,11 +29,11 @@ import java.util.List;
  * @generated
  */
 @ProviderType
-public class HtmlPreviewSoap implements Serializable {
-	public static HtmlPreviewSoap toSoapModel(HtmlPreview model) {
-		HtmlPreviewSoap soapModel = new HtmlPreviewSoap();
+public class HtmlPreviewEntrySoap implements Serializable {
+	public static HtmlPreviewEntrySoap toSoapModel(HtmlPreviewEntry model) {
+		HtmlPreviewEntrySoap soapModel = new HtmlPreviewEntrySoap();
 
-		soapModel.setHtmlPreviewId(model.getHtmlPreviewId());
+		soapModel.setHtmlPreviewEntryId(model.getHtmlPreviewEntryId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -47,8 +47,8 @@ public class HtmlPreviewSoap implements Serializable {
 		return soapModel;
 	}
 
-	public static HtmlPreviewSoap[] toSoapModels(HtmlPreview[] models) {
-		HtmlPreviewSoap[] soapModels = new HtmlPreviewSoap[models.length];
+	public static HtmlPreviewEntrySoap[] toSoapModels(HtmlPreviewEntry[] models) {
+		HtmlPreviewEntrySoap[] soapModels = new HtmlPreviewEntrySoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -57,14 +57,15 @@ public class HtmlPreviewSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static HtmlPreviewSoap[][] toSoapModels(HtmlPreview[][] models) {
-		HtmlPreviewSoap[][] soapModels = null;
+	public static HtmlPreviewEntrySoap[][] toSoapModels(
+		HtmlPreviewEntry[][] models) {
+		HtmlPreviewEntrySoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new HtmlPreviewSoap[models.length][models[0].length];
+			soapModels = new HtmlPreviewEntrySoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new HtmlPreviewSoap[0][0];
+			soapModels = new HtmlPreviewEntrySoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -74,33 +75,34 @@ public class HtmlPreviewSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static HtmlPreviewSoap[] toSoapModels(List<HtmlPreview> models) {
-		List<HtmlPreviewSoap> soapModels = new ArrayList<HtmlPreviewSoap>(models.size());
+	public static HtmlPreviewEntrySoap[] toSoapModels(
+		List<HtmlPreviewEntry> models) {
+		List<HtmlPreviewEntrySoap> soapModels = new ArrayList<HtmlPreviewEntrySoap>(models.size());
 
-		for (HtmlPreview model : models) {
+		for (HtmlPreviewEntry model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new HtmlPreviewSoap[soapModels.size()]);
+		return soapModels.toArray(new HtmlPreviewEntrySoap[soapModels.size()]);
 	}
 
-	public HtmlPreviewSoap() {
+	public HtmlPreviewEntrySoap() {
 	}
 
 	public long getPrimaryKey() {
-		return _htmlPreviewId;
+		return _htmlPreviewEntryId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setHtmlPreviewId(pk);
+		setHtmlPreviewEntryId(pk);
 	}
 
-	public long getHtmlPreviewId() {
-		return _htmlPreviewId;
+	public long getHtmlPreviewEntryId() {
+		return _htmlPreviewEntryId;
 	}
 
-	public void setHtmlPreviewId(long htmlPreviewId) {
-		_htmlPreviewId = htmlPreviewId;
+	public void setHtmlPreviewEntryId(long htmlPreviewEntryId) {
+		_htmlPreviewEntryId = htmlPreviewEntryId;
 	}
 
 	public long getGroupId() {
@@ -175,7 +177,7 @@ public class HtmlPreviewSoap implements Serializable {
 		_fileEntryId = fileEntryId;
 	}
 
-	private long _htmlPreviewId;
+	private long _htmlPreviewEntryId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;

@@ -14,12 +14,12 @@
 
 package com.liferay.commerce.inventory.web.internal.display.context;
 
-import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.inventory.web.internal.portlet.action.CPDefinitionInventoryActionHelper;
 import com.liferay.commerce.model.CPDefinitionAvailabilityRange;
 import com.liferay.commerce.model.CPDefinitionInventory;
+import com.liferay.commerce.model.CPDefinitionInventoryConstants;
 import com.liferay.commerce.model.CommerceAvailabilityRange;
 import com.liferay.commerce.model.impl.CPDefinitionInventoryImpl;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
@@ -102,14 +102,11 @@ public class CPDefinitionInventoryDisplayContext
 			_cpDefinitionInventory = new CPDefinitionInventoryImpl();
 
 			_cpDefinitionInventory.setMinCartQuantity(
-				CommerceConstants.
-					CP_DEFINITION_INVENTORY_DEFAULT_MIN_CART_QUANTITY);
+				CPDefinitionInventoryConstants.DEFAULT_MIN_CART_QUANTITY);
 			_cpDefinitionInventory.setMaxCartQuantity(
-				CommerceConstants.
-					CP_DEFINITION_INVENTORY_DEFAULT_MAX_CART_QUANTITY);
+				CPDefinitionInventoryConstants.DEFAULT_MAX_CART_QUANTITY);
 			_cpDefinitionInventory.setMultipleCartQuantity(
-				CommerceConstants.
-					CP_DEFINITION_INVENTORY_DEFAULT_MULTIPLE_CART_QUANTITY);
+				CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_CART_QUANTITY);
 		}
 
 		return _cpDefinitionInventory;

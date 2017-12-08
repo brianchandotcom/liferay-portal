@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.taglib.servlet.taglib;
 
-import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CPDefinitionInventory;
+import com.liferay.commerce.model.CPDefinitionInventoryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionServiceUtil;
 import com.liferay.commerce.service.CPDefinitionInventoryServiceUtil;
@@ -40,14 +40,11 @@ public class QuantityInputTag extends IncludeTag {
 		try {
 			_allowedCartQuantity = StringPool.BLANK;
 			_maxCartQuantity =
-				CommerceConstants.
-					CP_DEFINITION_INVENTORY_DEFAULT_MAX_CART_QUANTITY;
+				CPDefinitionInventoryConstants.DEFAULT_MAX_CART_QUANTITY;
 			_minCartQuantity =
-				CommerceConstants.
-					CP_DEFINITION_INVENTORY_DEFAULT_MIN_CART_QUANTITY;
+				CPDefinitionInventoryConstants.DEFAULT_MIN_CART_QUANTITY;
 			_multipleCartQuantity =
-				CommerceConstants.
-					CP_DEFINITION_INVENTORY_DEFAULT_MULTIPLE_CART_QUANTITY;
+				CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_CART_QUANTITY;
 
 			CPDefinitionInventory cpDefinitionInventory =
 				CPDefinitionInventoryServiceUtil.

@@ -12,14 +12,17 @@
  * details.
  */
 
-package com.liferay.commerce.constants;
+package com.liferay.commerce.model;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class CommerceConstants {
+public class CPDefinitionInventoryConstants {
 
-	public static final String SHIPPING_SERVICE_NAME =
-		"com.liferay.commerce.shipping";
+	public static final int DEFAULT_MAX_CART_QUANTITY = 10000;
+
+	public static final int DEFAULT_MIN_CART_QUANTITY = 1;
+
+	public static final int DEFAULT_MULTIPLE_CART_QUANTITY = 1;
 
 }

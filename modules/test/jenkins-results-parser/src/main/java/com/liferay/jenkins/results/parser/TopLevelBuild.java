@@ -1235,7 +1235,7 @@ public class TopLevelBuild extends BaseBuild {
 						Dom4JUtil.getNewElement(
 							"strong", null, "Failures in common with ",
 							acceptanceUpstreamJobLinkElement, " at ",
-							UpstreamFailureUtil.getUpstreamJobFailuresSHA(),
+							UpstreamFailureUtil.getUpstreamJobFailuresSHA(this),
 							":")));
 
 				int remainingFailureCount =

@@ -30,11 +30,16 @@ import org.json.JSONObject;
  */
 public class UpstreamFailureUtil {
 
-	public static List<String> getUpstreamJobFailures(String type) {
+	public static List<String> getUpstreamJobFailures(
+		String type, TopLevelBuild topLevelBuild) {
+
 		List<String> upstreamFailures = new ArrayList<>();
 
+		JSONObject upstreamJobFailuresJSONObject =
+			getUpstreamJobFailuresJSONObject(topLevelBuild);
+
 		JSONArray failedBatchesJSONArray =
-			_upstreamFailuresJobJSONObject.getJSONArray("failedBatches");
+			upstreamJobFailuresJSONObject.getJSONArray("failedBatches");
 
 		for (int i = 0; i < failedBatchesJSONArray.length(); i++) {
 			JSONObject failedBatchJSONObject =
@@ -77,9 +82,14 @@ public class UpstreamFailureUtil {
 		return _upstreamFailuresJobJSONObject;
 	}
 
-	public static String getUpstreamJobFailuresSHA() {
+	public static String getUpstreamJobFailuresSHA(
+		TopLevelBuild topLevelBuild) {
+
 		try {
-			return _upstreamFailuresJobJSONObject.getString("SHA");
+			JSONObject upstreamJobFailuresJSONObject =
+				getUpstreamJobFailuresJSONObject(topLevelBuild);
+
+			return upstreamJobFailuresJSONObject.getString("SHA");
 		}
 		catch (JSONException jsone) {
 			System.out.println(
@@ -112,8 +122,10 @@ public class UpstreamFailureUtil {
 					jobVariant = jobVariant.substring(0, index);
 				}
 
+				TopLevelBuild topLevelBuild = build.getTopLevelBuild();
+
 				for (String upstreamJobFailure :
-						getUpstreamJobFailures("build")) {
+						getUpstreamJobFailures("build", topLevelBuild)) {
 
 					if (upstreamJobFailure.contains(jobVariant) &&
 						upstreamJobFailure.contains(result)) {
@@ -136,9 +148,13 @@ public class UpstreamFailureUtil {
 	}
 
 	public static boolean isTestFailingInUpstreamJob(TestResult testResult) {
+		Build build = testResult.getBuild();
+
+		TopLevelBuild topLevelBuild = build.getTopLevelBuild();
+
 		try {
-			for (String failure : getUpstreamJobFailures("test")) {
-				Build build = testResult.getBuild();
+			for (String failure :
+					getUpstreamJobFailures("test", topLevelBuild)) {
 
 				String jobVariant = build.getJobVariant();
 
@@ -193,7 +209,7 @@ public class UpstreamFailureUtil {
 
 					System.out.println(
 						"Using upstream failures at: " +
-							getUpstreamJobFailuresSHA());
+							getUpstreamJobFailuresSHA(topLevelBuild));
 
 					return;
 				}
@@ -210,7 +226,7 @@ public class UpstreamFailureUtil {
 
 				System.out.println(
 					"Using upstream failures at: " +
-						getUpstreamJobFailuresSHA());
+						getUpstreamJobFailuresSHA(topLevelBuild));
 			}
 		}
 		catch (IOException ioe) {

@@ -18,8 +18,10 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.service.CommerceAddressLocalServiceUtil;
 import com.liferay.commerce.service.CommerceOrderItemLocalServiceUtil;
+import com.liferay.commerce.service.CommerceShippingMethodLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -42,6 +44,19 @@ public class CommerceOrderImpl extends CommerceOrderBaseImpl {
 	}
 
 	@Override
+	public CommerceShippingMethod getCommerceShippingMethod()
+		throws PortalException {
+
+		long commerceShippingMethodId = getCommerceShippingMethodId();
+
+		if (commerceShippingMethodId > 0) {
+			return CommerceShippingMethodLocalServiceUtil.
+				getCommerceShippingMethod(commerceShippingMethodId);
+		}
+
+		return null;
+	}
+
 	@Override
 	public CommerceAddress getShippingAddress() throws PortalException {
 		long shippingAddressId = getShippingAddressId();

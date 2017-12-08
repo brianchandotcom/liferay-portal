@@ -108,7 +108,7 @@ renderResponse.setTitle(title);
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD_MULTIPLE %>" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="commerceWarehouseIds" type="hidden" />
-		<aui:input name="cpInstaceId" type="hidden" value="<%= cpInstance.getCPInstanceId() %>" />
+		<aui:input name="cpInstanceId" type="hidden" value="<%= cpInstance.getCPInstanceId() %>" />
 	</aui:form>
 
 	<liferay-frontend:add-menu>

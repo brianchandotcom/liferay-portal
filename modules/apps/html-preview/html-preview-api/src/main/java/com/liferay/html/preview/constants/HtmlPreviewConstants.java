@@ -19,7 +19,7 @@ package com.liferay.html.preview.constants;
  */
 public class HtmlPreviewConstants {
 
-	public static final String HTML_PREVIEW_GENERATOR =
+	public static final String DESTINATION_NAME =
 		"liferay/html_preview_generator";
 
 }

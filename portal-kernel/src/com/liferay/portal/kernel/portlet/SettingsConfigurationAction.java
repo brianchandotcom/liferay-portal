@@ -257,7 +257,7 @@ public abstract class SettingsConfigurationAction
 		else if (settingsScope.equals("group")) {
 			return SettingsFactoryUtil.getSettings(
 				new GroupServiceSettingsLocator(
-					themeDisplay.getSiteGroupId(), serviceName));
+					themeDisplay.getScopeGroupId(), serviceName));
 		}
 		else if (settingsScope.equals("portletInstance")) {
 			String portletResource = ParamUtil.getString(

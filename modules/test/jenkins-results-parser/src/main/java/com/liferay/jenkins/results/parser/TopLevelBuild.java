@@ -1124,34 +1124,6 @@ public class TopLevelBuild extends BaseBuild {
 		Dom4JUtil.addToElement(rootElement, getMoreDetailsElement());
 
 		if (!result.equals("SUCCESS")) {
-			if (isCompareToUpstream()) {
-				File upstreamJobFailuresJSONFile = null;
-
-				try {
-					Properties buildProperties =
-						JenkinsResultsParserUtil.getBuildProperties();
-
-					String jenkinsDir = buildProperties.getProperty(
-						"jenkins.dir[master]");
-
-					upstreamJobFailuresJSONFile = new File(
-						jenkinsDir, "upstream-failures.json");
-				}
-				catch (IOException ioe) {
-					ioe.printStackTrace();
-				}
-
-				if ((upstreamJobFailuresJSONFile != null) &&
-					upstreamJobFailuresJSONFile.exists()) {
-
-					UpstreamFailureUtil.loadUpstreamJobFailuresJSONObject(
-						upstreamJobFailuresJSONFile);
-				}
-				else {
-					UpstreamFailureUtil.loadUpstreamJobFailuresJSONObject(this);
-				}
-			}
-
 			Map<Build, Element> downstreamBuildFailureMessages =
 				getDownstreamBuildMessages("ABORTED", "FAILURE", "UNSTABLE");
 

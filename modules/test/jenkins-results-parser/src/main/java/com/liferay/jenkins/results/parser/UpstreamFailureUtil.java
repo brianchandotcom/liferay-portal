@@ -186,6 +186,13 @@ public class UpstreamFailureUtil {
 	public static void loadUpstreamJobFailuresJSONObject(
 		TopLevelBuild topLevelBuild) {
 
+		if (!topLevelBuild.isCompareToUpstream()) {
+			_upstreamFailuresJobJSONObject = new JSONObject(
+				"{\"SHA\":\"\",\"failedBatches\":[]}");
+
+			return;
+		}
+
 		String fileContent = null;
 		String jobName = topLevelBuild.getJobName();
 

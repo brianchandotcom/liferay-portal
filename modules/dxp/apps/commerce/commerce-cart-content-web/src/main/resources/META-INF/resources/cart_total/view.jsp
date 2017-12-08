@@ -40,7 +40,7 @@ SearchContainer<CommerceCartItem> commerceCartItemSearchContainer = commerceCart
 			</div>
 
 			<div class="col text-right">
-				<h3 class="h4"><%= HtmlUtil.escape(commerceCartContentTotalDisplayContext.getCommerceCartTotal()) %></h3>
+				<h3 class="h4"><%= HtmlUtil.escape(commerceCartContentTotalDisplayContext.getCommerceCartSubtotal()) %></h3>
 			</div>
 		</div>
 	</div>

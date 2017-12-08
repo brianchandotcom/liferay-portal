@@ -58,12 +58,12 @@ public class CommerceCartDisplayContext
 		_commercePriceFormatter = commercePriceFormatter;
 	}
 
-	public String getCommerceCartTotal(CommerceCart commerceCart)
+	public String getCommerceCartSubtotal(CommerceCart commerceCart)
 		throws PortalException {
 
-		double total = _commercePriceCalculator.getTotal(commerceCart);
+		double subtotal = _commercePriceCalculator.getSubtotal(commerceCart);
 
-		return _commercePriceFormatter.format(httpServletRequest, total);
+		return _commercePriceFormatter.format(httpServletRequest, subtotal);
 	}
 
 	@Override

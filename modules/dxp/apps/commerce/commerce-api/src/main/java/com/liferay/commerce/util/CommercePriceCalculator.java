@@ -27,6 +27,6 @@ public interface CommercePriceCalculator {
 
 	public double getPrice(CPInstance cpInstance, int quantity);
 
-	public double getTotal(CommerceCart commerceCart);
+	public double getSubtotal(CommerceCart commerceCart);
 
 }

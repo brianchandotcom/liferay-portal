@@ -40,8 +40,8 @@ public class CommerceOrderLocalServiceImpl
 	public CommerceOrder addCommerceOrder(
 			long orderUserId, long billingAddressId, long shippingAddressId,
 			long commercePaymentMethodId, long commerceShippingMethodId,
-			String shippingOptionName, double shippingPrice, double total,
-			int status, ServiceContext serviceContext)
+			String shippingOptionName, double subtotal, double shippingPrice,
+			double total, int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -62,6 +62,7 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setCommercePaymentMethodId(commercePaymentMethodId);
 		commerceOrder.setCommerceShippingMethodId(commerceShippingMethodId);
 		commerceOrder.setShippingOptionName(shippingOptionName);
+		commerceOrder.setSubtotal(subtotal);
 		commerceOrder.setShippingPrice(shippingPrice);
 		commerceOrder.setTotal(total);
 		commerceOrder.setStatus(status);
@@ -82,16 +83,19 @@ public class CommerceOrderLocalServiceImpl
 		CommerceCart commerceCart = commerceCartLocalService.getCommerceCart(
 			commerceCartId);
 
+		double subtotal = _commercePriceCalculator.getSubtotal(commerceCart);
+		double shippingPrice = commerceCart.getShippingPrice();
+
+		double total = subtotal + shippingPrice;
+
 		CommerceOrder commerceOrder =
 			commerceOrderLocalService.addCommerceOrder(
 				commerceCart.getUserId(), commerceCart.getBillingAddressId(),
 				commerceCart.getShippingAddressId(),
 				commerceCart.getCommercePaymentMethodId(),
 				commerceCart.getCommerceShippingMethodId(),
-				commerceCart.getShippingOptionName(),
-				commerceCart.getShippingPrice(),
-				_commercePriceCalculator.getTotal(commerceCart),
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
+				commerceCart.getShippingOptionName(), subtotal, shippingPrice,
+				total, WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		// Commerce order items
 

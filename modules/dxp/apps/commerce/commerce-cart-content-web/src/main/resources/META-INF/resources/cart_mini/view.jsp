@@ -40,7 +40,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	entries="<%= commerceCartItemSearchContainer.getResults() %>"
 >
 	<div class="commerce-cart-info">
-		<h4><strong><liferay-ui:message key="total" /> <%= HtmlUtil.escape(commerceCartContentMiniDisplayContext.getCommerceCartTotal()) %></strong></h4>
+		<h4><strong><liferay-ui:message key="total" /> <%= HtmlUtil.escape(commerceCartContentMiniDisplayContext.getCommerceCartSubtotal()) %></strong></h4>
 	</div>
 
 	<div class="commerce-cart-items-container" id="<portlet:namespace />entriesContainer">

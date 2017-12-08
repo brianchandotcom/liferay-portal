@@ -63,7 +63,7 @@ Map<Long, List<CommerceCartValidatorResult>> commerceCartValidatorResultMap = or
 				<div class="card-col-content card-col-gutters">
 					<h3>Order Total</h3>
 					<h3>
-						<%= HtmlUtil.escape(orderSummaryCheckoutStepDisplayContext.getCommerceCartTotal()) %>
+						<%= HtmlUtil.escape(orderSummaryCheckoutStepDisplayContext.getCommerceCartSubtotal()) %>
 					</h3>
 				</div>
 			</div>

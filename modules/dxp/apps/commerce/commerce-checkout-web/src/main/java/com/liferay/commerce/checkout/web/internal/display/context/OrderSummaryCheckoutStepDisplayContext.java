@@ -97,12 +97,11 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		return DLUtil.getThumbnailSrc(fileEntry, themeDisplay);
 	}
 
-	public String getCommerceCartTotal() throws PortalException {
-		CommerceCart commerceCart = getCommerceCart();
+	public String getCommerceCartSubtotal() throws PortalException {
+		double subtotal = _commercePriceCalculator.getSubtotal(
+			getCommerceCart());
 
-		double total = _commercePriceCalculator.getTotal(commerceCart);
-
-		return _commercePriceFormatter.format(_httpServletRequest, total);
+		return _commercePriceFormatter.format(_httpServletRequest, subtotal);
 	}
 
 	public Map<Long, List<CommerceCartValidatorResult>>

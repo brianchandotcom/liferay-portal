@@ -103,7 +103,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
 								name="total"
-								value="<%= commerceCartDisplayContext.getCommerceCartTotal(commerceCart) %>"
+								value="<%= commerceCartDisplayContext.getCommerceCartSubtotal(commerceCart) %>"
 							/>
 
 							<liferay-ui:search-container-column-date

@@ -302,6 +302,7 @@
 		<column name="commercePaymentMethodId" type="long" />
 		<column name="commerceShippingMethodId" type="long" />
 		<column name="shippingOptionName" type="String" />
+		<column name="subtotal" type="double" />
 		<column name="shippingPrice" type="double" />
 		<column name="total" type="double" />
 		<column name="status" type="int" />

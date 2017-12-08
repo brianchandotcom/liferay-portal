@@ -43,20 +43,20 @@ public class CommercePriceCalculatorImpl implements CommercePriceCalculator {
 	}
 
 	@Override
-	public double getTotal(CommerceCart commerceCart) {
-		double total = 0;
+	public double getSubtotal(CommerceCart commerceCart) {
+		double subtotal = 0;
 
 		if (commerceCart == null) {
-			return total;
+			return subtotal;
 		}
 
 		for (CommerceCartItem commerceCartItem :
 				commerceCart.getCommerceCartItems()) {
 
-			total += getPrice(commerceCartItem);
+			subtotal += getPrice(commerceCartItem);
 		}
 
-		return total;
+		return subtotal;
 	}
 
 }

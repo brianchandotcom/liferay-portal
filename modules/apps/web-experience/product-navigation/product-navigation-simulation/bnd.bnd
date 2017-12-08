@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Product Navigation Simulation
-Bundle-SymbolicName: com.liferay.product.navigation.simulation
-Bundle-Version: 2.0.2
-Export-Package: com.liferay.product.navigation.simulation.application.list
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:

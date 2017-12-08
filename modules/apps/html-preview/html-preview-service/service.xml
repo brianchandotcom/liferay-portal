@@ -3,11 +3,11 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.html.preview">
 	<namespace>Preview</namespace>
-	<entity local-service="true" name="HtmlPreview" remote-service="false">
+	<entity local-service="true" name="HtmlPreviewEntry" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="htmlPreviewId" primary="true" type="long" />
+		<column name="htmlPreviewEntryId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -40,6 +40,6 @@
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>
-		<exception>InvalidMimeType</exception>
+		<exception>InvalidHtmlPreviewEntryMimeType</exception>
 	</exceptions>
 </service-builder>

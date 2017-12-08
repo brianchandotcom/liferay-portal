@@ -16,14 +16,18 @@ package com.liferay.commerce.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.service.CommerceAddressLocalServiceUtil;
 import com.liferay.commerce.service.CommerceOrderItemLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Andrea Di Giorgi
  */
 @ProviderType
 public class CommerceOrderImpl extends CommerceOrderBaseImpl {
@@ -35,6 +39,19 @@ public class CommerceOrderImpl extends CommerceOrderBaseImpl {
 	public List<CommerceOrderItem> getCommerceOrderItems() {
 		return CommerceOrderItemLocalServiceUtil.getCommerceOrderItems(
 			getCommerceOrderId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	@Override
+	@Override
+	public CommerceAddress getShippingAddress() throws PortalException {
+		long shippingAddressId = getShippingAddressId();
+
+		if (shippingAddressId > 0) {
+			return CommerceAddressLocalServiceUtil.getCommerceAddress(
+				getShippingAddressId());
+		}
+
+		return null;
 	}
 
 }

@@ -20,14 +20,20 @@ import com.liferay.commerce.exception.CommerceCountryTwoLettersISOCodeException;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.service.base.CommerceCountryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -185,6 +191,43 @@ public class CommerceCountryLocalServiceImpl
 	@Override
 	public List<CommerceCountry> getWarehouseCommerceCountries(long groupId) {
 		return commerceCountryFinder.findByCommerceWarehouses(groupId);
+	}
+
+	@Override
+	public void importDefaultCountries(ServiceContext serviceContext)
+		throws Exception {
+
+		Class<?> clazz = getClass();
+
+		String layoutsPath = "com/liferay/commerce/internal/countries.json";
+
+		String countriesJSON = StringUtil.read(
+			clazz.getClassLoader(), layoutsPath, false);
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(countriesJSON);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			String name = jsonObject.getString("name");
+			int numericISOCode = jsonObject.getInt("numericISOCode");
+			double priority = jsonObject.getDouble("priority");
+			String threeLettersISOCode = jsonObject.getString(
+				"threeLettersISOCode");
+			String twoLettersISOCode = jsonObject.getString(
+				"twoLettersISOCode");
+
+			String localizedName = LanguageUtil.get(
+				serviceContext.getLocale(), "country." + name);
+
+			Map<Locale, String> nameMap = new HashMap<>();
+
+			nameMap.put(serviceContext.getLocale(), localizedName);
+
+			addCommerceCountry(
+				nameMap, true, true, twoLettersISOCode, threeLettersISOCode,
+				numericISOCode, false, priority, true, serviceContext);
+		}
 	}
 
 	@Override

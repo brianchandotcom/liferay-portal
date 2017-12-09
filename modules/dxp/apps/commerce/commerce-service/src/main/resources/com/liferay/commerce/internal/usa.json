@@ -1,265 +1,262 @@
-{
-	"commerceCountryId": 19,
-	"regions": [
-		{
-			"code": "AL",
-			"name": "Alabama",
-			"priority": 1
-		},
-		{
-			"code": "AK",
-			"name": "Alaska",
-			"priority": 2
-		},
-		{
-			"code": "AZ",
-			"name": "Arizona",
-			"priority": 3
-		},
-		{
-			"code": "AR",
-			"name": "Arkansas",
-			"priority": 4
-		},
-		{
-			"code": "CA",
-			"name": "California",
-			"priority": 5
-		},
-		{
-			"code": "CO",
-			"name": "Colorado",
-			"priority": 6
-		},
-		{
-			"code": "CT",
-			"name": "Connecticut",
-			"priority": 7
-		},
-		{
-			"code": "DC",
-			"name": "District of Columbia",
-			"priority": 8
-		},
-		{
-			"code": "DE",
-			"name": "Delaware",
-			"priority": 9
-		},
-		{
-			"code": "FL",
-			"name": "Florida",
-			"priority": 10
-		},
-		{
-			"code": "GA",
-			"name": "Georgia",
-			"priority": 11
-		},
-		{
-			"code": "HI",
-			"name": "Hawaii",
-			"priority": 12
-		},
-		{
-			"code": "ID",
-			"name": "Idaho",
-			"priority": 13
-		},
-		{
-			"code": "IL",
-			"name": "Illinois",
-			"priority": 14
-		},
-		{
-			"code": "IN",
-			"name": "Indiana",
-			"priority": 15
-		},
-		{
-			"code": "IA",
-			"name": "Iowa",
-			"priority": 16
-		},
-		{
-			"code": "KS",
-			"name": "Kansas",
-			"priority": 17
-		},
-		{
-			"code": "KY",
-			"name": "Kentucky",
-			"priority": 18
-		},
-		{
-			"code": "LA",
-			"name": "Louisiana",
-			"priority": 19
-		},
-		{
-			"code": "ME",
-			"name": "Maine",
-			"priority": 20
-		},
-		{
-			"code": "MD",
-			"name": "Maryland",
-			"priority": 21
-		},
-		{
-			"code": "MA",
-			"name": "Massachusetts",
-			"priority": 22
-		},
-		{
-			"code": "MI",
-			"name": "Michigan",
-			"priority": 23
-		},
-		{
-			"code": "MN",
-			"name": "Minnesota",
-			"priority": 24
-		},
-		{
-			"code": "MS",
-			"name": "Mississippi",
-			"priority": 25
-		},
-		{
-			"code": "MO",
-			"name": "Missouri",
-			"priority": 26
-		},
-		{
-			"code": "MT",
-			"name": "Montana",
-			"priority": 27
-		},
-		{
-			"code": "NE",
-			"name": "Nebraska",
-			"priority": 28
-		},
-		{
-			"code": "NV",
-			"name": "Nevada",
-			"priority": 29
-		},
-		{
-			"code": "NH",
-			"name": "New Hampshire",
-			"priority": 30
-		},
-		{
-			"code": "NJ",
-			"name": "New Jersey",
-			"priority": 31
-		},
-		{
-			"code": "NM",
-			"name": "New Mexico",
-			"priority": 32
-		},
-		{
-			"code": "NY",
-			"name": "New York",
-			"priority": 33
-		},
-		{
-			"code": "NC",
-			"name": "North Carolina",
-			"priority": 34
-		},
-		{
-			"code": "ND",
-			"name": "North Dakota",
-			"priority": 35
-		},
-		{
-			"code": "OH",
-			"name": "Ohio",
-			"priority": 36
-		},
-		{
-			"code": "OK",
-			"name": "Oklahoma",
-			"priority": 37
-		},
-		{
-			"code": "OR",
-			"name": "Oregon",
-			"priority": 38
-		},
-		{
-			"code": "PA",
-			"name": "Pennsylvania",
-			"priority": 39
-		},
-		{
-			"code": "PR",
-			"name": "Puerto Rico",
-			"priority": 40
-		},
-		{
-			"code": "RI",
-			"name": "Rhode Island",
-			"priority": 41
-		},
-		{
-			"code": "SC",
-			"name": "South Carolina",
-			"priority": 42
-		},
-		{
-			"code": "SD",
-			"name": "South Dakota",
-			"priority": 43
-		},
-		{
-			"code": "TN",
-			"name": "Tennessee",
-			"priority": 44
-		},
-		{
-			"code": "TX",
-			"name": "Texas",
-			"priority": 45
-		},
-		{
-			"code": "UT",
-			"name": "Utah",
-			"priority": 46
-		},
-		{
-			"code": "VT",
-			"name": "Vermont",
-			"priority": 47
-		},
-		{
-			"code": "VA",
-			"name": "Virginia",
-			"priority": 48
-		},
-		{
-			"code": "WA",
-			"name": "Washington",
-			"priority": 49
-		},
-		{
-			"code": "WV",
-			"name": "West Virginia",
-			"priority": 50
-		},
-		{
-			"code": "WI",
-			"name": "Wisconsin",
-			"priority": 51
-		},
-		{
-			"code": "WY",
-			"name": "Wyoming",
-			"priority": 52
-		}
-	]
-}
+[
+	{
+		"code": "AL",
+		"name": "Alabama",
+		"priority": 1
+	},
+	{
+		"code": "AK",
+		"name": "Alaska",
+		"priority": 2
+	},
+	{
+		"code": "AZ",
+		"name": "Arizona",
+		"priority": 3
+	},
+	{
+		"code": "AR",
+		"name": "Arkansas",
+		"priority": 4
+	},
+	{
+		"code": "CA",
+		"name": "California",
+		"priority": 5
+	},
+	{
+		"code": "CO",
+		"name": "Colorado",
+		"priority": 6
+	},
+	{
+		"code": "CT",
+		"name": "Connecticut",
+		"priority": 7
+	},
+	{
+		"code": "DC",
+		"name": "District of Columbia",
+		"priority": 8
+	},
+	{
+		"code": "DE",
+		"name": "Delaware",
+		"priority": 9
+	},
+	{
+		"code": "FL",
+		"name": "Florida",
+		"priority": 10
+	},
+	{
+		"code": "GA",
+		"name": "Georgia",
+		"priority": 11
+	},
+	{
+		"code": "HI",
+		"name": "Hawaii",
+		"priority": 12
+	},
+	{
+		"code": "ID",
+		"name": "Idaho",
+		"priority": 13
+	},
+	{
+		"code": "IL",
+		"name": "Illinois",
+		"priority": 14
+	},
+	{
+		"code": "IN",
+		"name": "Indiana",
+		"priority": 15
+	},
+	{
+		"code": "IA",
+		"name": "Iowa",
+		"priority": 16
+	},
+	{
+		"code": "KS",
+		"name": "Kansas",
+		"priority": 17
+	},
+	{
+		"code": "KY",
+		"name": "Kentucky",
+		"priority": 18
+	},
+	{
+		"code": "LA",
+		"name": "Louisiana",
+		"priority": 19
+	},
+	{
+		"code": "ME",
+		"name": "Maine",
+		"priority": 20
+	},
+	{
+		"code": "MD",
+		"name": "Maryland",
+		"priority": 21
+	},
+	{
+		"code": "MA",
+		"name": "Massachusetts",
+		"priority": 22
+	},
+	{
+		"code": "MI",
+		"name": "Michigan",
+		"priority": 23
+	},
+	{
+		"code": "MN",
+		"name": "Minnesota",
+		"priority": 24
+	},
+	{
+		"code": "MS",
+		"name": "Mississippi",
+		"priority": 25
+	},
+	{
+		"code": "MO",
+		"name": "Missouri",
+		"priority": 26
+	},
+	{
+		"code": "MT",
+		"name": "Montana",
+		"priority": 27
+	},
+	{
+		"code": "NE",
+		"name": "Nebraska",
+		"priority": 28
+	},
+	{
+		"code": "NV",
+		"name": "Nevada",
+		"priority": 29
+	},
+	{
+		"code": "NH",
+		"name": "New Hampshire",
+		"priority": 30
+	},
+	{
+		"code": "NJ",
+		"name": "New Jersey",
+		"priority": 31
+	},
+	{
+		"code": "NM",
+		"name": "New Mexico",
+		"priority": 32
+	},
+	{
+		"code": "NY",
+		"name": "New York",
+		"priority": 33
+	},
+	{
+		"code": "NC",
+		"name": "North Carolina",
+		"priority": 34
+	},
+	{
+		"code": "ND",
+		"name": "North Dakota",
+		"priority": 35
+	},
+	{
+		"code": "OH",
+		"name": "Ohio",
+		"priority": 36
+	},
+	{
+		"code": "OK",
+		"name": "Oklahoma",
+		"priority": 37
+	},
+	{
+		"code": "OR",
+		"name": "Oregon",
+		"priority": 38
+	},
+	{
+		"code": "PA",
+		"name": "Pennsylvania",
+		"priority": 39
+	},
+	{
+		"code": "PR",
+		"name": "Puerto Rico",
+		"priority": 40
+	},
+	{
+		"code": "RI",
+		"name": "Rhode Island",
+		"priority": 41
+	},
+	{
+		"code": "SC",
+		"name": "South Carolina",
+		"priority": 42
+	},
+	{
+		"code": "SD",
+		"name": "South Dakota",
+		"priority": 43
+	},
+	{
+		"code": "TN",
+		"name": "Tennessee",
+		"priority": 44
+	},
+	{
+		"code": "TX",
+		"name": "Texas",
+		"priority": 45
+	},
+	{
+		"code": "UT",
+		"name": "Utah",
+		"priority": 46
+	},
+	{
+		"code": "VT",
+		"name": "Vermont",
+		"priority": 47
+	},
+	{
+		"code": "VA",
+		"name": "Virginia",
+		"priority": 48
+	},
+	{
+		"code": "WA",
+		"name": "Washington",
+		"priority": 49
+	},
+	{
+		"code": "WV",
+		"name": "West Virginia",
+		"priority": 50
+	},
+	{
+		"code": "WI",
+		"name": "Wisconsin",
+		"priority": 51
+	},
+	{
+		"code": "WY",
+		"name": "Wyoming",
+		"priority": 52
+	}
+]

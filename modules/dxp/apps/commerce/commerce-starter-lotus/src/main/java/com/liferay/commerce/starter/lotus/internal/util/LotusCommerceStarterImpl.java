@@ -21,6 +21,8 @@ import com.liferay.commerce.product.importer.CPFileImporter;
 import com.liferay.commerce.product.service.CPGroupLocalService;
 import com.liferay.commerce.product.util.CommerceStarter;
 import com.liferay.commerce.product.util.CommerceStarterRegistry;
+import com.liferay.commerce.service.CommerceCountryLocalService;
+import com.liferay.commerce.service.CommerceRegionLocalService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -38,6 +40,7 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -110,6 +113,10 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 
 		createSampleData(serviceContext);
 
+		_commerceCountryLocalService.importDefaultCountries(serviceContext);
+
+		_commerceRegionLocalService.importCommerceRegions(serviceContext);
+
 		setThemePortletSettings(serviceContext);
 	}
 
@@ -145,18 +152,19 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		User user = _portal.getUser(httpServletRequest);
 
 		long groupId = _portal.getScopeGroupId(httpServletRequest);
 
-		ServiceContext serviceContext = new ServiceContext();
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			httpServletRequest);
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setCompanyId(user.getCompanyId());
-		serviceContext.setScopeGroupId(groupId);
-		serviceContext.setTimeZone(user.getTimeZone());
-		serviceContext.setUserId(user.getUserId());
 
 		return serviceContext;
 	}
@@ -380,6 +388,12 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Reference
+	private CommerceCountryLocalService _commerceCountryLocalService;
+
+	@Reference
+	private CommerceRegionLocalService _commerceRegionLocalService;
 
 	@Reference
 	private CommerceStarterRegistry _commerceStarterRegistry;

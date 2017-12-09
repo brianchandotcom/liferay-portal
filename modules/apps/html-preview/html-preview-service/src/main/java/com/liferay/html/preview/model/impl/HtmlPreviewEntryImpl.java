@@ -17,23 +17,8 @@ package com.liferay.html.preview.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * The extended model implementation for the HtmlPreviewEntry service. Represents a row in the &quot;HtmlPreviewEntry&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.html.preview.model.HtmlPreviewEntry} interface.
- * </p>
- *
- * @author Brian Wing Shun Chan
+ * @author Pavel Savinov
  */
 @ProviderType
 public class HtmlPreviewEntryImpl extends HtmlPreviewEntryBaseImpl {
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a html preview entry model instance should use the {@link com.liferay.html.preview.model.HtmlPreviewEntry} interface instead.
-	 */
-	public HtmlPreviewEntryImpl() {
-	}
-
 }

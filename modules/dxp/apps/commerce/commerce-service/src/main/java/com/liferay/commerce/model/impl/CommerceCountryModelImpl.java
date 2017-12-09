@@ -141,9 +141,10 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 	public static final long BILLINGALLOWED_COLUMN_BITMASK = 2L;
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
 	public static final long GROUPID_COLUMN_BITMASK = 8L;
-	public static final long SHIPPINGALLOWED_COLUMN_BITMASK = 16L;
-	public static final long UUID_COLUMN_BITMASK = 32L;
-	public static final long PRIORITY_COLUMN_BITMASK = 64L;
+	public static final long NUMERICISOCODE_COLUMN_BITMASK = 16L;
+	public static final long SHIPPINGALLOWED_COLUMN_BITMASK = 32L;
+	public static final long UUID_COLUMN_BITMASK = 64L;
+	public static final long PRIORITY_COLUMN_BITMASK = 128L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -727,7 +728,19 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 
 	@Override
 	public void setNumericISOCode(int numericISOCode) {
+		_columnBitmask |= NUMERICISOCODE_COLUMN_BITMASK;
+
+		if (!_setOriginalNumericISOCode) {
+			_setOriginalNumericISOCode = true;
+
+			_originalNumericISOCode = _numericISOCode;
+		}
+
 		_numericISOCode = numericISOCode;
+	}
+
+	public int getOriginalNumericISOCode() {
+		return _originalNumericISOCode;
 	}
 
 	@JSON
@@ -1004,6 +1017,10 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 
 		commerceCountryModelImpl._setOriginalShippingAllowed = false;
 
+		commerceCountryModelImpl._originalNumericISOCode = commerceCountryModelImpl._numericISOCode;
+
+		commerceCountryModelImpl._setOriginalNumericISOCode = false;
+
 		commerceCountryModelImpl._originalActive = commerceCountryModelImpl._active;
 
 		commerceCountryModelImpl._setOriginalActive = false;
@@ -1266,6 +1283,8 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 	private String _twoLettersISOCode;
 	private String _threeLettersISOCode;
 	private int _numericISOCode;
+	private int _originalNumericISOCode;
+	private boolean _setOriginalNumericISOCode;
 	private boolean _subjectToVAT;
 	private double _priority;
 	private boolean _active;

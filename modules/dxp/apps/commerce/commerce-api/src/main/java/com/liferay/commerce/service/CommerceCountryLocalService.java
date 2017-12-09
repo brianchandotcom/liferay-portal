@@ -187,6 +187,10 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceCountry fetchCommerceCountry(long commerceCountryId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCountry fetchCommerceCountry(long groupId, int numericISOCode)
+		throws PortalException;
+
 	/**
 	* Returns the commerce country matching the UUID and group.
 	*
@@ -320,6 +324,9 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceCountry> getWarehouseCommerceCountries(long groupId);
+
+	public void importDefaultCountries(ServiceContext serviceContext)
+		throws java.lang.Exception;
 
 	/**
 	* Updates the commerce country in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

@@ -1233,6 +1233,67 @@ public class CommerceCountryUtil {
 	}
 
 	/**
+	* Returns the commerce country where groupId = &#63; and numericISOCode = &#63; or throws a {@link NoSuchCountryException} if it could not be found.
+	*
+	* @param groupId the group ID
+	* @param numericISOCode the numeric iso code
+	* @return the matching commerce country
+	* @throws NoSuchCountryException if a matching commerce country could not be found
+	*/
+	public static CommerceCountry findByG_N(long groupId, int numericISOCode)
+		throws com.liferay.commerce.exception.NoSuchCountryException {
+		return getPersistence().findByG_N(groupId, numericISOCode);
+	}
+
+	/**
+	* Returns the commerce country where groupId = &#63; and numericISOCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param numericISOCode the numeric iso code
+	* @return the matching commerce country, or <code>null</code> if a matching commerce country could not be found
+	*/
+	public static CommerceCountry fetchByG_N(long groupId, int numericISOCode) {
+		return getPersistence().fetchByG_N(groupId, numericISOCode);
+	}
+
+	/**
+	* Returns the commerce country where groupId = &#63; and numericISOCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param numericISOCode the numeric iso code
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching commerce country, or <code>null</code> if a matching commerce country could not be found
+	*/
+	public static CommerceCountry fetchByG_N(long groupId, int numericISOCode,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByG_N(groupId, numericISOCode, retrieveFromCache);
+	}
+
+	/**
+	* Removes the commerce country where groupId = &#63; and numericISOCode = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param numericISOCode the numeric iso code
+	* @return the commerce country that was removed
+	*/
+	public static CommerceCountry removeByG_N(long groupId, int numericISOCode)
+		throws com.liferay.commerce.exception.NoSuchCountryException {
+		return getPersistence().removeByG_N(groupId, numericISOCode);
+	}
+
+	/**
+	* Returns the number of commerce countries where groupId = &#63; and numericISOCode = &#63;.
+	*
+	* @param groupId the group ID
+	* @param numericISOCode the numeric iso code
+	* @return the number of matching commerce countries
+	*/
+	public static int countByG_N(long groupId, int numericISOCode) {
+		return getPersistence().countByG_N(groupId, numericISOCode);
+	}
+
+	/**
 	* Caches the commerce country in the entity cache if it is enabled.
 	*
 	* @param commerceCountry the commerce country

@@ -30,6 +30,7 @@ create index IX_7B97EC1E on CommerceCartItem (commerceCartId, CPDefinitionId, CP
 
 create index IX_7BB13C80 on CommerceCountry (groupId, active_);
 create index IX_FEDECABF on CommerceCountry (groupId, billingAllowed, active_);
+create unique index IX_D84B0322 on CommerceCountry (groupId, numericISOCode);
 create index IX_158112E8 on CommerceCountry (groupId, shippingAllowed, active_);
 create index IX_91EA24D5 on CommerceCountry (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_7EFDC97 on CommerceCountry (uuid_[$COLUMN_LENGTH:75$], groupId);

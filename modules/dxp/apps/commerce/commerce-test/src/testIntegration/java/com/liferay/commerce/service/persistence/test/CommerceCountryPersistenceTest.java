@@ -265,6 +265,14 @@ public class CommerceCountryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_N() throws Exception {
+		_persistence.countByG_N(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByG_N(0L, 0);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CommerceCountry newCommerceCountry = addCommerceCountry();
 
@@ -505,6 +513,14 @@ public class CommerceCountryPersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingCommerceCountry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(existingCommerceCountry,
 				"getOriginalGroupId", new Class<?>[0]));
+
+		Assert.assertEquals(Long.valueOf(existingCommerceCountry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingCommerceCountry,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(Integer.valueOf(
+				existingCommerceCountry.getNumericISOCode()),
+			ReflectionTestUtil.<Integer>invoke(existingCommerceCountry,
+				"getOriginalNumericISOCode", new Class<?>[0]));
 	}
 
 	protected CommerceCountry addCommerceCountry() throws Exception {

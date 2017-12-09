@@ -373,6 +373,13 @@ public class CommerceRegionLocalServiceWrapper
 		return _commerceRegionLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public void importCommerceRegions(
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws java.lang.Exception {
+		_commerceRegionLocalService.importCommerceRegions(serviceContext);
+	}
+
 	/**
 	* Updates the commerce region in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

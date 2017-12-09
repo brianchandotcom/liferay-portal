@@ -1,0 +1,7 @@
+Bundle-Name: Liferay HTML Preview Service
+Bundle-SymbolicName: com.liferay.html.preview.service
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: HTML Preview
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true

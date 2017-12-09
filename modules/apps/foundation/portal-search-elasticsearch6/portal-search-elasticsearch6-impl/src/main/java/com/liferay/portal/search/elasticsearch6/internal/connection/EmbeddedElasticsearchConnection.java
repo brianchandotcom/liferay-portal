@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Props;
@@ -46,7 +45,6 @@ import org.apache.commons.lang.time.StopWatch;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.inject.Injector;
 import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.discovery.DiscoveryService;
 import org.elasticsearch.index.IndexService;
 import org.elasticsearch.index.settings.IndexSettingsService;
 import org.elasticsearch.indices.IndicesService;
@@ -436,9 +434,6 @@ public class EmbeddedElasticsearchConnection
 
 		settingsBuilder.put("node.client", false);
 		settingsBuilder.put("node.data", true);
-		settingsBuilder.put(
-			DiscoveryService.SETTING_DISCOVERY_SEED,
-			SecureRandomUtil.nextLong());
 
 		configurePaths();
 

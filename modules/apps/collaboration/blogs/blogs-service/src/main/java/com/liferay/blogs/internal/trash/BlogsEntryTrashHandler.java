@@ -16,13 +16,13 @@ package com.liferay.blogs.internal.trash;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
-import com.liferay.blogs.service.permission.BlogsEntryPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -142,7 +142,7 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		return BlogsEntryPermission.contains(
+		return _entryModelResourcePermission.contains(
 			permissionChecker, classPK, actionId);
 	}
 
@@ -154,6 +154,9 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 	}
 
 	private BlogsEntryLocalService _blogsEntryLocalService;
+
+	@Reference(target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)")
+	private ModelResourcePermission<BlogsEntry> _entryModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

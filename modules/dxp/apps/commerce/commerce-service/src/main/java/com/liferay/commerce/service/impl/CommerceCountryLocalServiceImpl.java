@@ -35,6 +35,7 @@ import java.util.Map;
 /**
  * @author Alessio Antonio Rendina
  * @author Andrea Di Giorgi
+ * @author Marco Leo
  */
 public class CommerceCountryLocalServiceImpl
 	extends CommerceCountryLocalServiceBaseImpl {
@@ -120,6 +121,14 @@ public class CommerceCountryLocalServiceImpl
 
 		return commerceCountryLocalService.deleteCommerceCountry(
 			commerceCountry);
+	}
+
+	@Override
+	public CommerceCountry fetchCommerceCountry(
+			long groupId, int numericISOCode)
+		throws PortalException {
+
+		return commerceCountryPersistence.fetchByG_N(groupId, numericISOCode);
 	}
 
 	@Override

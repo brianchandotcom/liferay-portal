@@ -18,6 +18,8 @@ import com.liferay.commerce.exception.CommerceRegionNameException;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.service.base.CommerceRegionLocalServiceBaseImpl;
+import com.liferay.commerce.starter.CommerceRegionsStarter;
+import com.liferay.commerce.starter.CommerceRegionsStarterRegistry;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -26,12 +28,14 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina
  * @author Andrea Di Giorgi
+ * @author Marco Leo
  */
 public class CommerceRegionLocalServiceImpl
 	extends CommerceRegionLocalServiceBaseImpl {
@@ -146,6 +150,20 @@ public class CommerceRegionLocalServiceImpl
 	}
 
 	@Override
+	public void importCommerceRegions(ServiceContext serviceContext)
+		throws Exception {
+
+		List<CommerceRegionsStarter> commerceRegionsStarters =
+			_commerceRegionsStarterRegistry.getCommerceRegionsStarters();
+
+		for (CommerceRegionsStarter commerceRegionsStarter :
+				commerceRegionsStarters) {
+
+			commerceRegionsStarter.start(serviceContext);
+		}
+	}
+
+	@Override
 	public CommerceRegion updateCommerceRegion(
 			long commerceRegionId, String name, String code, double priority,
 			boolean active, ServiceContext serviceContext)
@@ -171,5 +189,8 @@ public class CommerceRegionLocalServiceImpl
 			throw new CommerceRegionNameException();
 		}
 	}
+
+	@ServiceReference(type = CommerceRegionsStarterRegistry.class)
+	private CommerceRegionsStarterRegistry _commerceRegionsStarterRegistry;
 
 }

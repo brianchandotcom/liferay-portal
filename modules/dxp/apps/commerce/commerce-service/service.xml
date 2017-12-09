@@ -261,6 +261,10 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
+		<finder name="G_N" return-type="CommerceCountry" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="numericISOCode" />
+		</finder>
 		<finder name="G_A" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="active" />

@@ -16,7 +16,6 @@ package com.liferay.saml.opensaml.integration.internal.credential;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.runtime.configuration.SamlConfiguration;
 import com.liferay.saml.runtime.credential.KeyStoreManager;
@@ -127,45 +126,9 @@ public class FileSystemKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 
 	protected void doLoadKeyStore() throws Exception {
 		String samlKeyStorePassword = getSamlKeyStorePassword();
-		String samlKeyStorePath = getSamlKeyStorePath();
 
-		InputStream inputStream = null;
-
-		if (samlKeyStorePath.startsWith("classpath:")) {
-			Class<?> clazz = getClass();
-
-			inputStream = clazz.getResourceAsStream(
-				samlKeyStorePath.substring(10));
-		}
-		else {
-			File samlKeyStoreFile = new File(samlKeyStorePath);
-
-			samlKeyStoreFile = samlKeyStoreFile.getAbsoluteFile();
-
-			if (!samlKeyStoreFile.exists()) {
-				_keyStore.load(null, samlKeyStorePassword.toCharArray());
-
-				if (Validator.isNotNull(samlConfiguration.keyStorePath()) &&
-					!SamlConfiguration.KEYSTORE_PATH_DEFAULT.equals(
-						samlConfiguration.keyStorePath()) &&
-					_log.isWarnEnabled()) {
-
-					_log.warn("No SAML keystore exists at " + samlKeyStoreFile);
-				}
-
-				return;
-			}
-
-			monitorFile(samlKeyStoreFile);
-
-			inputStream = new FileInputStream(samlKeyStoreFile);
-		}
-
-		try {
+		try (InputStream inputStream = _getInputStream()) {
 			_keyStore.load(inputStream, samlKeyStorePassword.toCharArray());
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
 		}
 	}
 
@@ -186,6 +149,36 @@ public class FileSystemKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 
 		_samlKeyStoreFileWatcher = new FileWatcher(
 			ev -> loadKeyStore(), samlKeyStoreFile.toPath());
+	}
+
+	private InputStream _getInputStream() throws Exception {
+		String samlKeyStorePath = getSamlKeyStorePath();
+
+		if (samlKeyStorePath.startsWith("classpath:")) {
+			Class<?> clazz = getClass();
+
+			return clazz.getResourceAsStream(samlKeyStorePath.substring(10));
+		}
+
+		File samlKeyStoreFile = new File(samlKeyStorePath);
+
+		samlKeyStoreFile = samlKeyStoreFile.getAbsoluteFile();
+
+		if (!samlKeyStoreFile.exists()) {
+			if (Validator.isNotNull(samlConfiguration.keyStorePath()) &&
+				!SamlConfiguration.KEYSTORE_PATH_DEFAULT.equals(
+					samlConfiguration.keyStorePath()) &&
+				_log.isWarnEnabled()) {
+
+				_log.warn("No SAML keystore exists at " + samlKeyStoreFile);
+			}
+
+			return null;
+		}
+
+		monitorFile(samlKeyStoreFile);
+
+		return new FileInputStream(samlKeyStoreFile);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

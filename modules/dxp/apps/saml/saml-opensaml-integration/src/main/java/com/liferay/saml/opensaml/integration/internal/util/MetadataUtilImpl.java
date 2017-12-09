@@ -130,7 +130,7 @@ public class MetadataUtilImpl implements MetadataUtil {
 	public String parseMetadataXml(InputStream inputStream, String entityId)
 		throws Exception {
 
-		try {
+		try (InputStream is = inputStream) {
 			XMLObject xmlObject = XMLObjectHelper.unmarshallFromInputStream(
 				parserPool, inputStream);
 
@@ -146,11 +146,6 @@ public class MetadataUtilImpl implements MetadataUtil {
 			XMLObjectHelper.marshallToWriter(entityDescriptor, stringWriter);
 
 			return stringWriter.toString();
-		}
-		finally {
-			if (inputStream != null) {
-				StreamUtil.cleanUp(inputStream);
-			}
 		}
 	}
 

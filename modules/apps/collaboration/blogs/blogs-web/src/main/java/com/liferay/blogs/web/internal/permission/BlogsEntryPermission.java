@@ -12,12 +12,10 @@
  * details.
  */
 
-package com.liferay.blogs.service.permission;
+package com.liferay.blogs.web.internal.permission;
 
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
@@ -25,31 +23,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Brian Wing Shun Chan
- * @deprecated As of 1.2.0, with no direct replacement
+ * @author Preston Crary
  */
-@Component(
-	property = {"model.class.name=com.liferay.blogs.model.BlogsEntry"},
-	service = BaseModelPermissionChecker.class
-)
-@Deprecated
-public class BlogsEntryPermission implements BaseModelPermissionChecker {
-
-	public static void check(
-			PermissionChecker permissionChecker, BlogsEntry entry,
-			String actionId)
-		throws PortalException {
-
-		_entryModelResourcePermission.check(permissionChecker, entry, actionId);
-	}
-
-	public static void check(
-			PermissionChecker permissionChecker, long entryId, String actionId)
-		throws PortalException {
-
-		_entryModelResourcePermission.check(
-			permissionChecker, entryId, actionId);
-	}
+@Component(immediate = true)
+public class BlogsEntryPermission {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, BlogsEntry entry,
@@ -68,25 +45,11 @@ public class BlogsEntryPermission implements BaseModelPermissionChecker {
 			permissionChecker, entryId, actionId);
 	}
 
-	@Override
-	public void checkBaseModel(
-			PermissionChecker permissionChecker, long groupId, long primaryKey,
-			String actionId)
-		throws PortalException {
-
-		_entryModelResourcePermission.check(
-			permissionChecker, primaryKey, actionId);
-	}
-
-	protected void setBlogsEntryLocalService(
-		BlogsEntryLocalService blogsEntryLocalService) {
-	}
-
 	@Reference(
 		target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)",
 		unbind = "-"
 	)
-	protected void setModelResourcePermission(
+	protected void setEntryModelPermission(
 		ModelResourcePermission<BlogsEntry> modelResourcePermission) {
 
 		_entryModelResourcePermission = modelResourcePermission;

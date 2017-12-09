@@ -10,6 +10,7 @@ Export-Package:\
 	com.liferay.commerce.price,\
 	com.liferay.commerce.service,\
 	com.liferay.commerce.service.persistence,\
+	com.liferay.commerce.starter,\
 	com.liferay.commerce.stock.activity,\
 	com.liferay.commerce.util,\
 	com.liferay.commerce.util.comparator

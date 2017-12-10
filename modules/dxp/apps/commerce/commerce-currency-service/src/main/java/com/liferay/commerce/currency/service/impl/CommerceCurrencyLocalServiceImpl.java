@@ -18,6 +18,8 @@ import com.liferay.commerce.currency.exception.CommerceCurrencyCodeException;
 import com.liferay.commerce.currency.exception.CommerceCurrencyNameException;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.base.CommerceCurrencyLocalServiceBaseImpl;
+import com.liferay.commerce.currency.util.ExchangeRateProvider;
+import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
 import com.liferay.commerce.currency.util.comparator.CommerceCurrencyPriorityComparator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -27,6 +29,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 import java.util.Locale;
@@ -34,6 +37,7 @@ import java.util.Map;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Marco Leo
  */
 public class CommerceCurrencyLocalServiceImpl
 	extends CommerceCurrencyLocalServiceBaseImpl {
@@ -205,5 +209,32 @@ public class CommerceCurrencyLocalServiceImpl
 			}
 		}
 	}
+
+	private void _updateExchangeRates(
+			long groupId, ExchangeRateProvider exchangeRateProvider)
+		throws Exception {
+
+		if (exchangeRateProvider == null) {
+			return;
+		}
+
+		CommerceCurrency primaryCommerceCurrency = fetchPrimaryCommerceCurrency(
+			groupId);
+
+		List<CommerceCurrency> commerceCurrencies = getCommerceCurrencies(
+			groupId, true);
+
+		for (CommerceCurrency commerceCurrency : commerceCurrencies) {
+			double exchangeRate = exchangeRateProvider.getExchangeRate(
+				primaryCommerceCurrency, commerceCurrency);
+
+			commerceCurrency.setRate(exchangeRate);
+
+			updateCommerceCurrency(commerceCurrency);
+		}
+	}
+
+	@ServiceReference(type = ExchangeRateProviderRegistry.class)
+	private ExchangeRateProviderRegistry _exchangeRateProviderRegistry;
 
 }

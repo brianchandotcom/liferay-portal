@@ -199,10 +199,10 @@ public class CommerceCountryLocalServiceImpl
 
 		Class<?> clazz = getClass();
 
-		String layoutsPath = "com/liferay/commerce/internal/countries.json";
+		String countriesPath = "com/liferay/commerce/internal/countries.json";
 
 		String countriesJSON = StringUtil.read(
-			clazz.getClassLoader(), layoutsPath, false);
+			clazz.getClassLoader(), countriesPath, false);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(countriesJSON);
 

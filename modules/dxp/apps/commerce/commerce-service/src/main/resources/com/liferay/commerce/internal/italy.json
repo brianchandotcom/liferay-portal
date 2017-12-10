@@ -1,539 +1,537 @@
-{
-	"regions": [
-		{
-			"code": "AG",
-			"name": "Agrigento",
-			"priority": 1
-		},
-		{
-			"code": "AL",
-			"name": "Alessandria",
-			"priority": 2
-		},
-		{
-			"code": "AN",
-			"name": "Ancona",
-			"priority": 3
-		},
-		{
-			"code": "AO",
-			"name": "Aosta",
-			"priority": 4
-		},
-		{
-			"code": "AR",
-			"name": "Arezzo",
-			"priority": 5
-		},
-		{
-			"code": "AP",
-			"name": "Ascoli Piceno",
-			"priority": 6
-		},
-		{
-			"code": "AT",
-			"name": "Asti",
-			"priority": 7
-		},
-		{
-			"code": "AV",
-			"name": "Avellino",
-			"priority": 8
-		},
-		{
-			"code": "BA",
-			"name": "Bari",
-			"priority": 9
-		},
-		{
-			"code": "BT",
-			"name": "Barletta-Andria-Trani",
-			"priority": 10
-		},
-		{
-			"code": "BL",
-			"name": "Belluno",
-			"priority": 11
-		},
-		{
-			"code": "BN",
-			"name": "Benevento",
-			"priority": 12
-		},
-		{
-			"code": "BG",
-			"name": "Bergamo",
-			"priority": 13
-		},
-		{
-			"code": "BI",
-			"name": "Biella",
-			"priority": 14
-		},
-		{
-			"code": "BO",
-			"name": "Bologna",
-			"priority": 15
-		},
-		{
-			"code": "BZ",
-			"name": "Bolzano",
-			"priority": 16
-		},
-		{
-			"code": "BS",
-			"name": "Brescia",
-			"priority": 17
-		},
-		{
-			"code": "BR",
-			"name": "Brindisi",
-			"priority": 18
-		},
-		{
-			"code": "CA",
-			"name": "Cagliari",
-			"priority": 19
-		},
-		{
-			"code": "CL",
-			"name": "Caltanissetta",
-			"priority": 20
-		},
-		{
-			"code": "CB",
-			"name": "Campobasso",
-			"priority": 21
-		},
-		{
-			"code": "CE",
-			"name": "Caserta",
-			"priority": 22
-		},
-		{
-			"code": "CT",
-			"name": "Catania",
-			"priority": 23
-		},
-		{
-			"code": "CZ",
-			"name": "Catanzaro",
-			"priority": 24
-		},
-		{
-			"code": "CH",
-			"name": "Chieti",
-			"priority": 25
-		},
-		{
-			"code": "CO",
-			"name": "Como",
-			"priority": 26
-		},
-		{
-			"code": "CS",
-			"name": "Cosenza",
-			"priority": 27
-		},
-		{
-			"code": "CR",
-			"name": "Cremona",
-			"priority": 28
-		},
-		{
-			"code": "KR",
-			"name": "Crotone",
-			"priority": 29
-		},
-		{
-			"code": "CN",
-			"name": "Cuneo",
-			"priority": 30
-		},
-		{
-			"code": "EN",
-			"name": "Enna",
-			"priority": 31
-		},
-		{
-			"code": "FM",
-			"name": "Fermo",
-			"priority": 32
-		},
-		{
-			"code": "FE",
-			"name": "Ferrara",
-			"priority": 33
-		},
-		{
-			"code": "FI",
-			"name": "Firenze",
-			"priority": 34
-		},
-		{
-			"code": "FG",
-			"name": "Foggia",
-			"priority": 35
-		},
-		{
-			"code": "FC",
-			"name": "Forlì-Cesena",
-			"priority": 36
-		},
-		{
-			"code": "FR",
-			"name": "Frosinone",
-			"priority": 37
-		},
-		{
-			"code": "GE",
-			"name": "Genova",
-			"priority": 38
-		},
-		{
-			"code": "GO",
-			"name": "Gorizia",
-			"priority": 39
-		},
-		{
-			"code": "GR",
-			"name": "Grosseto",
-			"priority": 40
-		},
-		{
-			"code": "IM",
-			"name": "Imperia",
-			"priority": 41
-		},
-		{
-			"code": "IS",
-			"name": "Isernia",
-			"priority": 42
-		},
-		{
-			"code": "SP",
-			"name": "La Spezia",
-			"priority": 43
-		},
-		{
-			"code": "AQ",
-			"name": "L'Aquila",
-			"priority": 44
-		},
-		{
-			"code": "LT",
-			"name": "Latina",
-			"priority": 45
-		},
-		{
-			"code": "LE",
-			"name": "Lecce",
-			"priority": 46
-		},
-		{
-			"code": "LC",
-			"name": "Lecco",
-			"priority": 47
-		},
-		{
-			"code": "LI",
-			"name": "Livorno",
-			"priority": 48
-		},
-		{
-			"code": "LO",
-			"name": "Lodi",
-			"priority": 49
-		},
-		{
-			"code": "LU",
-			"name": "Lucca",
-			"priority": 50
-		},
-		{
-			"code": "MC",
-			"name": "Macerata",
-			"priority": 51
-		},
-		{
-			"code": "MN",
-			"name": "Mantova",
-			"priority": 52
-		},
-		{
-			"code": "MS",
-			"name": "Massa-Carrara",
-			"priority": 53
-		},
-		{
-			"code": "MT",
-			"name": "Matera",
-			"priority": 54
-		},
-		{
-			"code": "ME",
-			"name": "Messina",
-			"priority": 55
-		},
-		{
-			"code": "MI",
-			"name": "Milano",
-			"priority": 56
-		},
-		{
-			"code": "MO",
-			"name": "Modena",
-			"priority": 57
-		},
-		{
-			"code": "MB",
-			"name": "Monza e Brianza",
-			"priority": 58
-		},
-		{
-			"code": "NA",
-			"name": "Napoli",
-			"priority": 59
-		},
-		{
-			"code": "NO",
-			"name": "Novara",
-			"priority": 60
-		},
-		{
-			"code": "NU",
-			"name": "Nuoro",
-			"priority": 61
-		},
-		{
-			"code": "OR",
-			"name": "Oristano",
-			"priority": 62
-		},
-		{
-			"code": "PD",
-			"name": "Padova",
-			"priority": 63
-		},
-		{
-			"code": "PA",
-			"name": "Palermo",
-			"priority": 64
-		},
-		{
-			"code": "PR",
-			"name": "Parma",
-			"priority": 65
-		},
-		{
-			"code": "PV",
-			"name": "Pavia",
-			"priority": 66
-		},
-		{
-			"code": "PG",
-			"name": "Perugia",
-			"priority": 67
-		},
-		{
-			"code": "PU",
-			"name": "Pesaro e Urbino",
-			"priority": 68
-		},
-		{
-			"code": "PE",
-			"name": "Pescara",
-			"priority": 69
-		},
-		{
-			"code": "PC",
-			"name": "Piacenza",
-			"priority": 70
-		},
-		{
-			"code": "PI",
-			"name": "Pisa",
-			"priority": 71
-		},
-		{
-			"code": "PT",
-			"name": "Pistoia",
-			"priority": 72
-		},
-		{
-			"code": "PN",
-			"name": "Pordenone",
-			"priority": 73
-		},
-		{
-			"code": "PZ",
-			"name": "Potenza",
-			"priority": 74
-		},
-		{
-			"code": "PO",
-			"name": "Prato",
-			"priority": 75
-		},
-		{
-			"code": "RG",
-			"name": "Ragusa",
-			"priority": 76
-		},
-		{
-			"code": "RA",
-			"name": "Ravenna",
-			"priority": 77
-		},
-		{
-			"code": "RC",
-			"name": "Reggio Calabria",
-			"priority": 78
-		},
-		{
-			"code": "RE",
-			"name": "Reggio Emilia",
-			"priority": 79
-		},
-		{
-			"code": "RI",
-			"name": "Rieti",
-			"priority": 80
-		},
-		{
-			"code": "RN",
-			"name": "Rimini",
-			"priority": 81
-		},
-		{
-			"code": "RM",
-			"name": "Roma",
-			"priority": 82
-		},
-		{
-			"code": "RO",
-			"name": "Rovigo",
-			"priority": 83
-		},
-		{
-			"code": "SA",
-			"name": "Salerno",
-			"priority": 84
-		},
-		{
-			"code": "SS",
-			"name": "Sassari",
-			"priority": 85
-		},
-		{
-			"code": "SV",
-			"name": "Savona",
-			"priority": 86
-		},
-		{
-			"code": "SI",
-			"name": "Siena",
-			"priority": 87
-		},
-		{
-			"code": "SR",
-			"name": "Siracusa",
-			"priority": 88
-		},
-		{
-			"code": "SO",
-			"name": "Sondrio",
-			"priority": 89
-		},
-		{
-			"code": "SU",
-			"name": "Sud Sardegna",
-			"priority": 90
-		},
-		{
-			"code": "TA",
-			"name": "Taranto",
-			"priority": 91
-		},
-		{
-			"code": "TE",
-			"name": "Teramo",
-			"priority": 92
-		},
-		{
-			"code": "TR",
-			"name": "Terni",
-			"priority": 93
-		},
-		{
-			"code": "TO",
-			"name": "Torino",
-			"priority": 94
-		},
-		{
-			"code": "TP",
-			"name": "Trapani",
-			"priority": 95
-		},
-		{
-			"code": "TN",
-			"name": "Trento",
-			"priority": 96
-		},
-		{
-			"code": "TV",
-			"name": "Treviso",
-			"priority": 97
-		},
-		{
-			"code": "TS",
-			"name": "Trieste",
-			"priority": 98
-		},
-		{
-			"code": "UD",
-			"name": "Udine",
-			"priority": 99
-		},
-		{
-			"code": "VA",
-			"name": "Varese",
-			"priority": 100
-		},
-		{
-			"code": "VE",
-			"name": "Venezia",
-			"priority": 101
-		},
-		{
-			"code": "VB",
-			"name": "Verbano-Cusio-Ossola",
-			"priority": 102
-		},
-		{
-			"code": "VC",
-			"name": "Vercelli",
-			"priority": 103
-		},
-		{
-			"code": "VR",
-			"name": "Verona",
-			"priority": 104
-		},
-		{
-			"code": "VV",
-			"name": "Vibo Valentia",
-			"priority": 105
-		},
-		{
-			"code": "VI",
-			"name": "Vicenza",
-			"priority": 106
-		},
-		{
-			"code": "VT",
-			"name": "Viterbo",
-			"priority": 107
-		}
-	]
-}
+[
+	{
+		"code": "AG",
+		"name": "Agrigento",
+		"priority": 1
+	},
+	{
+		"code": "AL",
+		"name": "Alessandria",
+		"priority": 2
+	},
+	{
+		"code": "AN",
+		"name": "Ancona",
+		"priority": 3
+	},
+	{
+		"code": "AO",
+		"name": "Aosta",
+		"priority": 4
+	},
+	{
+		"code": "AR",
+		"name": "Arezzo",
+		"priority": 5
+	},
+	{
+		"code": "AP",
+		"name": "Ascoli Piceno",
+		"priority": 6
+	},
+	{
+		"code": "AT",
+		"name": "Asti",
+		"priority": 7
+	},
+	{
+		"code": "AV",
+		"name": "Avellino",
+		"priority": 8
+	},
+	{
+		"code": "BA",
+		"name": "Bari",
+		"priority": 9
+	},
+	{
+		"code": "BT",
+		"name": "Barletta-Andria-Trani",
+		"priority": 10
+	},
+	{
+		"code": "BL",
+		"name": "Belluno",
+		"priority": 11
+	},
+	{
+		"code": "BN",
+		"name": "Benevento",
+		"priority": 12
+	},
+	{
+		"code": "BG",
+		"name": "Bergamo",
+		"priority": 13
+	},
+	{
+		"code": "BI",
+		"name": "Biella",
+		"priority": 14
+	},
+	{
+		"code": "BO",
+		"name": "Bologna",
+		"priority": 15
+	},
+	{
+		"code": "BZ",
+		"name": "Bolzano",
+		"priority": 16
+	},
+	{
+		"code": "BS",
+		"name": "Brescia",
+		"priority": 17
+	},
+	{
+		"code": "BR",
+		"name": "Brindisi",
+		"priority": 18
+	},
+	{
+		"code": "CA",
+		"name": "Cagliari",
+		"priority": 19
+	},
+	{
+		"code": "CL",
+		"name": "Caltanissetta",
+		"priority": 20
+	},
+	{
+		"code": "CB",
+		"name": "Campobasso",
+		"priority": 21
+	},
+	{
+		"code": "CE",
+		"name": "Caserta",
+		"priority": 22
+	},
+	{
+		"code": "CT",
+		"name": "Catania",
+		"priority": 23
+	},
+	{
+		"code": "CZ",
+		"name": "Catanzaro",
+		"priority": 24
+	},
+	{
+		"code": "CH",
+		"name": "Chieti",
+		"priority": 25
+	},
+	{
+		"code": "CO",
+		"name": "Como",
+		"priority": 26
+	},
+	{
+		"code": "CS",
+		"name": "Cosenza",
+		"priority": 27
+	},
+	{
+		"code": "CR",
+		"name": "Cremona",
+		"priority": 28
+	},
+	{
+		"code": "KR",
+		"name": "Crotone",
+		"priority": 29
+	},
+	{
+		"code": "CN",
+		"name": "Cuneo",
+		"priority": 30
+	},
+	{
+		"code": "EN",
+		"name": "Enna",
+		"priority": 31
+	},
+	{
+		"code": "FM",
+		"name": "Fermo",
+		"priority": 32
+	},
+	{
+		"code": "FE",
+		"name": "Ferrara",
+		"priority": 33
+	},
+	{
+		"code": "FI",
+		"name": "Firenze",
+		"priority": 34
+	},
+	{
+		"code": "FG",
+		"name": "Foggia",
+		"priority": 35
+	},
+	{
+		"code": "FC",
+		"name": "Forlì-Cesena",
+		"priority": 36
+	},
+	{
+		"code": "FR",
+		"name": "Frosinone",
+		"priority": 37
+	},
+	{
+		"code": "GE",
+		"name": "Genova",
+		"priority": 38
+	},
+	{
+		"code": "GO",
+		"name": "Gorizia",
+		"priority": 39
+	},
+	{
+		"code": "GR",
+		"name": "Grosseto",
+		"priority": 40
+	},
+	{
+		"code": "IM",
+		"name": "Imperia",
+		"priority": 41
+	},
+	{
+		"code": "IS",
+		"name": "Isernia",
+		"priority": 42
+	},
+	{
+		"code": "SP",
+		"name": "La Spezia",
+		"priority": 43
+	},
+	{
+		"code": "AQ",
+		"name": "L'Aquila",
+		"priority": 44
+	},
+	{
+		"code": "LT",
+		"name": "Latina",
+		"priority": 45
+	},
+	{
+		"code": "LE",
+		"name": "Lecce",
+		"priority": 46
+	},
+	{
+		"code": "LC",
+		"name": "Lecco",
+		"priority": 47
+	},
+	{
+		"code": "LI",
+		"name": "Livorno",
+		"priority": 48
+	},
+	{
+		"code": "LO",
+		"name": "Lodi",
+		"priority": 49
+	},
+	{
+		"code": "LU",
+		"name": "Lucca",
+		"priority": 50
+	},
+	{
+		"code": "MC",
+		"name": "Macerata",
+		"priority": 51
+	},
+	{
+		"code": "MN",
+		"name": "Mantova",
+		"priority": 52
+	},
+	{
+		"code": "MS",
+		"name": "Massa-Carrara",
+		"priority": 53
+	},
+	{
+		"code": "MT",
+		"name": "Matera",
+		"priority": 54
+	},
+	{
+		"code": "ME",
+		"name": "Messina",
+		"priority": 55
+	},
+	{
+		"code": "MI",
+		"name": "Milano",
+		"priority": 56
+	},
+	{
+		"code": "MO",
+		"name": "Modena",
+		"priority": 57
+	},
+	{
+		"code": "MB",
+		"name": "Monza e Brianza",
+		"priority": 58
+	},
+	{
+		"code": "NA",
+		"name": "Napoli",
+		"priority": 59
+	},
+	{
+		"code": "NO",
+		"name": "Novara",
+		"priority": 60
+	},
+	{
+		"code": "NU",
+		"name": "Nuoro",
+		"priority": 61
+	},
+	{
+		"code": "OR",
+		"name": "Oristano",
+		"priority": 62
+	},
+	{
+		"code": "PD",
+		"name": "Padova",
+		"priority": 63
+	},
+	{
+		"code": "PA",
+		"name": "Palermo",
+		"priority": 64
+	},
+	{
+		"code": "PR",
+		"name": "Parma",
+		"priority": 65
+	},
+	{
+		"code": "PV",
+		"name": "Pavia",
+		"priority": 66
+	},
+	{
+		"code": "PG",
+		"name": "Perugia",
+		"priority": 67
+	},
+	{
+		"code": "PU",
+		"name": "Pesaro e Urbino",
+		"priority": 68
+	},
+	{
+		"code": "PE",
+		"name": "Pescara",
+		"priority": 69
+	},
+	{
+		"code": "PC",
+		"name": "Piacenza",
+		"priority": 70
+	},
+	{
+		"code": "PI",
+		"name": "Pisa",
+		"priority": 71
+	},
+	{
+		"code": "PT",
+		"name": "Pistoia",
+		"priority": 72
+	},
+	{
+		"code": "PN",
+		"name": "Pordenone",
+		"priority": 73
+	},
+	{
+		"code": "PZ",
+		"name": "Potenza",
+		"priority": 74
+	},
+	{
+		"code": "PO",
+		"name": "Prato",
+		"priority": 75
+	},
+	{
+		"code": "RG",
+		"name": "Ragusa",
+		"priority": 76
+	},
+	{
+		"code": "RA",
+		"name": "Ravenna",
+		"priority": 77
+	},
+	{
+		"code": "RC",
+		"name": "Reggio Calabria",
+		"priority": 78
+	},
+	{
+		"code": "RE",
+		"name": "Reggio Emilia",
+		"priority": 79
+	},
+	{
+		"code": "RI",
+		"name": "Rieti",
+		"priority": 80
+	},
+	{
+		"code": "RN",
+		"name": "Rimini",
+		"priority": 81
+	},
+	{
+		"code": "RM",
+		"name": "Roma",
+		"priority": 82
+	},
+	{
+		"code": "RO",
+		"name": "Rovigo",
+		"priority": 83
+	},
+	{
+		"code": "SA",
+		"name": "Salerno",
+		"priority": 84
+	},
+	{
+		"code": "SS",
+		"name": "Sassari",
+		"priority": 85
+	},
+	{
+		"code": "SV",
+		"name": "Savona",
+		"priority": 86
+	},
+	{
+		"code": "SI",
+		"name": "Siena",
+		"priority": 87
+	},
+	{
+		"code": "SR",
+		"name": "Siracusa",
+		"priority": 88
+	},
+	{
+		"code": "SO",
+		"name": "Sondrio",
+		"priority": 89
+	},
+	{
+		"code": "SU",
+		"name": "Sud Sardegna",
+		"priority": 90
+	},
+	{
+		"code": "TA",
+		"name": "Taranto",
+		"priority": 91
+	},
+	{
+		"code": "TE",
+		"name": "Teramo",
+		"priority": 92
+	},
+	{
+		"code": "TR",
+		"name": "Terni",
+		"priority": 93
+	},
+	{
+		"code": "TO",
+		"name": "Torino",
+		"priority": 94
+	},
+	{
+		"code": "TP",
+		"name": "Trapani",
+		"priority": 95
+	},
+	{
+		"code": "TN",
+		"name": "Trento",
+		"priority": 96
+	},
+	{
+		"code": "TV",
+		"name": "Treviso",
+		"priority": 97
+	},
+	{
+		"code": "TS",
+		"name": "Trieste",
+		"priority": 98
+	},
+	{
+		"code": "UD",
+		"name": "Udine",
+		"priority": 99
+	},
+	{
+		"code": "VA",
+		"name": "Varese",
+		"priority": 100
+	},
+	{
+		"code": "VE",
+		"name": "Venezia",
+		"priority": 101
+	},
+	{
+		"code": "VB",
+		"name": "Verbano-Cusio-Ossola",
+		"priority": 102
+	},
+	{
+		"code": "VC",
+		"name": "Vercelli",
+		"priority": 103
+	},
+	{
+		"code": "VR",
+		"name": "Verona",
+		"priority": 104
+	},
+	{
+		"code": "VV",
+		"name": "Vibo Valentia",
+		"priority": 105
+	},
+	{
+		"code": "VI",
+		"name": "Vicenza",
+		"priority": 106
+	},
+	{
+		"code": "VT",
+		"name": "Viterbo",
+		"priority": 107
+	}
+]

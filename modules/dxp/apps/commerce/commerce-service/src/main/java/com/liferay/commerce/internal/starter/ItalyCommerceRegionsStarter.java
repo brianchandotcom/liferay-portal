@@ -16,10 +16,13 @@ package com.liferay.commerce.internal.starter;
 
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.service.CommerceCountryLocalService;
+import com.liferay.commerce.service.CommerceRegionLocalService;
 import com.liferay.commerce.starter.CommerceRegionsStarter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import org.osgi.service.component.annotations.Component;
@@ -28,12 +31,15 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = CommerceRegionsStarter.class)
-public class ItalyCommerceRegionsStarter extends BaseCommerceRegionsStarter {
+@Component(
+	immediate = true,
+	property = {"commerce.region.starter.key=italyRegionsStarter"},
+	service = CommerceRegionsStarter.class
+)
+public class ItalyCommerceRegionsStarter implements CommerceRegionsStarter {
 
 	public static final int ITALY_NUMERIC_ISO_CODE = 380;
 
-	@Override
 	public CommerceCountry getCommerceCountry(long groupId)
 		throws PortalException {
 
@@ -41,7 +47,6 @@ public class ItalyCommerceRegionsStarter extends BaseCommerceRegionsStarter {
 			groupId, ITALY_NUMERIC_ISO_CODE);
 	}
 
-	@Override
 	public JSONArray getCommerceRegionsJSONArray() throws Exception {
 		Class<?> clazz = getClass();
 
@@ -53,7 +58,33 @@ public class ItalyCommerceRegionsStarter extends BaseCommerceRegionsStarter {
 		return JSONFactoryUtil.createJSONArray(regionsJSON);
 	}
 
+	public void start(ServiceContext serviceContext) throws Exception {
+		CommerceCountry commerceCountry = getCommerceCountry(
+			serviceContext.getScopeGroupId());
+
+		if (commerceCountry == null) {
+			return;
+		}
+
+		JSONArray jsonArray = getCommerceRegionsJSONArray();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			String code = jsonObject.getString("code");
+			String name = jsonObject.getString("name");
+			double priority = jsonObject.getDouble("priority");
+
+			_commerceRegionLocalService.addCommerceRegion(
+				commerceCountry.getCommerceCountryId(), name, code, priority,
+				true, serviceContext);
+		}
+	}
+
 	@Reference
 	private CommerceCountryLocalService _commerceCountryLocalService;
+
+	@Reference
+	private CommerceRegionLocalService _commerceRegionLocalService;
 
 }

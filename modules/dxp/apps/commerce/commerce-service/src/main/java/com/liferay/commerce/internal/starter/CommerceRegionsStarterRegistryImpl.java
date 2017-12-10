@@ -16,8 +16,8 @@ package com.liferay.commerce.internal.starter;
 
 import com.liferay.commerce.starter.CommerceRegionsStarter;
 import com.liferay.commerce.starter.CommerceRegionsStarterRegistry;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,10 +40,8 @@ public class CommerceRegionsStarterRegistryImpl
 		List<CommerceRegionsStarter> commerceRegionsStarters =
 			new ArrayList<>();
 
-		for (CommerceRegionsStarter commerceRegionsStarter :
-				_serviceTrackersList) {
-
-			commerceRegionsStarters.add(commerceRegionsStarter);
+		for (String key : _serviceTrackerMap.keySet()) {
+			commerceRegionsStarters.add(_serviceTrackerMap.getService(key));
 		}
 
 		return Collections.unmodifiableList(commerceRegionsStarters);
@@ -51,16 +49,17 @@ public class CommerceRegionsStarterRegistryImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackersList = ServiceTrackerListFactory.open(
-			bundleContext, CommerceRegionsStarter.class);
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, CommerceRegionsStarter.class,
+			"commerce.region.starter.key");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTrackersList.close();
+		_serviceTrackerMap.close();
 	}
 
-	private ServiceTrackerList<CommerceRegionsStarter, CommerceRegionsStarter>
-		_serviceTrackersList;
+	private ServiceTrackerMap<String, CommerceRegionsStarter>
+		_serviceTrackerMap;
 
 }

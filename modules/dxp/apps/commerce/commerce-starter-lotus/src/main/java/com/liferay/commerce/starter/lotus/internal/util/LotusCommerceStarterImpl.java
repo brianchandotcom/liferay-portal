@@ -16,9 +16,11 @@ package com.liferay.commerce.starter.lotus.internal.util;
 
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.product.demo.data.creator.CPDemoDataCreator;
 import com.liferay.commerce.product.importer.CPFileImporter;
 import com.liferay.commerce.product.service.CPGroupLocalService;
+import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.product.util.CommerceStarter;
 import com.liferay.commerce.product.util.CommerceStarterRegistry;
 import com.liferay.commerce.service.CommerceCountryLocalService;
@@ -34,7 +36,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Theme;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -117,6 +118,10 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 
 		_commerceRegionLocalService.importCommerceRegions(serviceContext);
 
+		_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
+
+		_commerceCurrencyLocalService.importDefaultValues(serviceContext);
+
 		setThemePortletSettings(serviceContext);
 	}
 
@@ -151,14 +156,6 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 	public ServiceContext getServiceContext(
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		User user = _portal.getUser(httpServletRequest);
-
-		long groupId = _portal.getScopeGroupId(httpServletRequest);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			httpServletRequest);
@@ -393,6 +390,9 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 	private CommerceCountryLocalService _commerceCountryLocalService;
 
 	@Reference
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
+
+	@Reference
 	private CommerceRegionLocalService _commerceRegionLocalService;
 
 	@Reference
@@ -406,6 +406,9 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 
 	@Reference
 	private CPGroupLocalService _cpGroupLocalService;
+
+	@Reference
+	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

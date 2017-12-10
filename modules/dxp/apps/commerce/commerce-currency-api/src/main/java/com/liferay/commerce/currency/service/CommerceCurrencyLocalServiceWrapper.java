@@ -48,15 +48,14 @@ public class CommerceCurrencyLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.currency.model.CommerceCurrency addCommerceCurrency(
-		java.util.Map<java.util.Locale, java.lang.String> codeMap,
+		java.lang.String code,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap, double rate,
 		java.lang.String roundingType, boolean primary, double priority,
 		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceCurrencyLocalService.addCommerceCurrency(codeMap,
-			nameMap, rate, roundingType, primary, priority, active,
-			serviceContext);
+		return _commerceCurrencyLocalService.addCommerceCurrency(code, nameMap,
+			rate, roundingType, primary, priority, active, serviceContext);
 	}
 
 	/**
@@ -380,6 +379,13 @@ public class CommerceCurrencyLocalServiceWrapper
 		return _commerceCurrencyLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public void importDefaultValues(
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws java.lang.Exception {
+		_commerceCurrencyLocalService.importDefaultValues(serviceContext);
+	}
+
 	/**
 	* Updates the commerce currency in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -394,15 +400,14 @@ public class CommerceCurrencyLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.currency.model.CommerceCurrency updateCommerceCurrency(
-		long commerceCurrencyId,
-		java.util.Map<java.util.Locale, java.lang.String> codeMap,
+		long commerceCurrencyId, java.lang.String code,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap, double rate,
 		java.lang.String roundingType, boolean primary, double priority,
 		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceCurrencyLocalService.updateCommerceCurrency(commerceCurrencyId,
-			codeMap, nameMap, rate, roundingType, primary, priority, active,
+			code, nameMap, rate, roundingType, primary, priority, active,
 			serviceContext);
 	}
 

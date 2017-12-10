@@ -7,7 +7,7 @@ create table CommerceCurrency (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	code_ STRING null,
+	code_ VARCHAR(75) null,
 	name STRING null,
 	rate DOUBLE,
 	roundingType VARCHAR(75) null,

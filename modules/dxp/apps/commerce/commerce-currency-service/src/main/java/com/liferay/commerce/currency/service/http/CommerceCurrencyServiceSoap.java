@@ -70,21 +70,17 @@ import java.util.Map;
 @ProviderType
 public class CommerceCurrencyServiceSoap {
 	public static com.liferay.commerce.currency.model.CommerceCurrencySoap addCommerceCurrency(
-		java.lang.String[] codeMapLanguageIds,
-		java.lang.String[] codeMapValues,
-		java.lang.String[] nameMapLanguageIds,
+		java.lang.String code, java.lang.String[] nameMapLanguageIds,
 		java.lang.String[] nameMapValues, double rate,
 		java.lang.String roundingType, boolean primary, double priority,
 		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			Map<Locale, String> codeMap = LocalizationUtil.getLocalizationMap(codeMapLanguageIds,
-					codeMapValues);
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
 					nameMapValues);
 
-			com.liferay.commerce.currency.model.CommerceCurrency returnValue = CommerceCurrencyServiceUtil.addCommerceCurrency(codeMap,
+			com.liferay.commerce.currency.model.CommerceCurrency returnValue = CommerceCurrencyServiceUtil.addCommerceCurrency(code,
 					nameMap, rate, roundingType, primary, priority, active,
 					serviceContext);
 
@@ -203,8 +199,7 @@ public class CommerceCurrencyServiceSoap {
 	}
 
 	public static com.liferay.commerce.currency.model.CommerceCurrencySoap updateCommerceCurrency(
-		long commerceCurrencyId, java.lang.String[] codeMapLanguageIds,
-		java.lang.String[] codeMapValues,
+		long commerceCurrencyId, java.lang.String code,
 		java.lang.String[] nameMapLanguageIds,
 		java.lang.String[] nameMapValues, double rate,
 		java.lang.String roundingType, boolean primary, double priority,
@@ -212,13 +207,11 @@ public class CommerceCurrencyServiceSoap {
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			Map<Locale, String> codeMap = LocalizationUtil.getLocalizationMap(codeMapLanguageIds,
-					codeMapValues);
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
 					nameMapValues);
 
 			com.liferay.commerce.currency.model.CommerceCurrency returnValue = CommerceCurrencyServiceUtil.updateCommerceCurrency(commerceCurrencyId,
-					codeMap, nameMap, rate, roundingType, primary, priority,
+					code, nameMap, rate, roundingType, primary, priority,
 					active, serviceContext);
 
 			return com.liferay.commerce.currency.model.CommerceCurrencySoap.toSoapModel(returnValue);

@@ -215,73 +215,6 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	}
 
 	/**
-	* Returns the localized code of this commerce currency in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized code of this commerce currency
-	*/
-	@Override
-	public java.lang.String getCode(java.util.Locale locale) {
-		return _commerceCurrency.getCode(locale);
-	}
-
-	/**
-	* Returns the localized code of this commerce currency in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized code of this commerce currency. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getCode(java.util.Locale locale, boolean useDefault) {
-		return _commerceCurrency.getCode(locale, useDefault);
-	}
-
-	/**
-	* Returns the localized code of this commerce currency in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @return the localized code of this commerce currency
-	*/
-	@Override
-	public java.lang.String getCode(java.lang.String languageId) {
-		return _commerceCurrency.getCode(languageId);
-	}
-
-	/**
-	* Returns the localized code of this commerce currency in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized code of this commerce currency
-	*/
-	@Override
-	public java.lang.String getCode(java.lang.String languageId,
-		boolean useDefault) {
-		return _commerceCurrency.getCode(languageId, useDefault);
-	}
-
-	@Override
-	public java.lang.String getCodeCurrentLanguageId() {
-		return _commerceCurrency.getCodeCurrentLanguageId();
-	}
-
-	@Override
-	public java.lang.String getCodeCurrentValue() {
-		return _commerceCurrency.getCodeCurrentValue();
-	}
-
-	/**
-	* Returns a map of the locales and localized codes of this commerce currency.
-	*
-	* @return the locales and localized codes of this commerce currency
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getCodeMap() {
-		return _commerceCurrency.getCodeMap();
-	}
-
-	/**
 	* Returns the commerce currency ID of this commerce currency.
 	*
 	* @return the commerce currency ID of this commerce currency
@@ -604,57 +537,6 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	@Override
 	public void setCode(java.lang.String code) {
 		_commerceCurrency.setCode(code);
-	}
-
-	/**
-	* Sets the localized code of this commerce currency in the language.
-	*
-	* @param code the localized code of this commerce currency
-	* @param locale the locale of the language
-	*/
-	@Override
-	public void setCode(java.lang.String code, java.util.Locale locale) {
-		_commerceCurrency.setCode(code, locale);
-	}
-
-	/**
-	* Sets the localized code of this commerce currency in the language, and sets the default locale.
-	*
-	* @param code the localized code of this commerce currency
-	* @param locale the locale of the language
-	* @param defaultLocale the default locale
-	*/
-	@Override
-	public void setCode(java.lang.String code, java.util.Locale locale,
-		java.util.Locale defaultLocale) {
-		_commerceCurrency.setCode(code, locale, defaultLocale);
-	}
-
-	@Override
-	public void setCodeCurrentLanguageId(java.lang.String languageId) {
-		_commerceCurrency.setCodeCurrentLanguageId(languageId);
-	}
-
-	/**
-	* Sets the localized codes of this commerce currency from the map of locales and localized codes.
-	*
-	* @param codeMap the locales and localized codes of this commerce currency
-	*/
-	@Override
-	public void setCodeMap(Map<java.util.Locale, java.lang.String> codeMap) {
-		_commerceCurrency.setCodeMap(codeMap);
-	}
-
-	/**
-	* Sets the localized codes of this commerce currency from the map of locales and localized codes, and sets the default locale.
-	*
-	* @param codeMap the locales and localized codes of this commerce currency
-	* @param defaultLocale the default locale
-	*/
-	@Override
-	public void setCodeMap(Map<java.util.Locale, java.lang.String> codeMap,
-		java.util.Locale defaultLocale) {
-		_commerceCurrency.setCodeMap(codeMap, defaultLocale);
 	}
 
 	/**

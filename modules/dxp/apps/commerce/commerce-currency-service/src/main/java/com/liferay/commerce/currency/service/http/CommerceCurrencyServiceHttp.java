@@ -56,8 +56,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class CommerceCurrencyServiceHttp {
 	public static com.liferay.commerce.currency.model.CommerceCurrency addCommerceCurrency(
-		HttpPrincipal httpPrincipal,
-		java.util.Map<java.util.Locale, java.lang.String> codeMap,
+		HttpPrincipal httpPrincipal, java.lang.String code,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap, double rate,
 		java.lang.String roundingType, boolean primary, double priority,
 		boolean active,
@@ -67,7 +66,7 @@ public class CommerceCurrencyServiceHttp {
 			MethodKey methodKey = new MethodKey(CommerceCurrencyServiceUtil.class,
 					"addCommerceCurrency", _addCommerceCurrencyParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, codeMap,
+			MethodHandler methodHandler = new MethodHandler(methodKey, code,
 					nameMap, rate, roundingType, primary, priority, active,
 					serviceContext);
 
@@ -297,7 +296,7 @@ public class CommerceCurrencyServiceHttp {
 
 	public static com.liferay.commerce.currency.model.CommerceCurrency updateCommerceCurrency(
 		HttpPrincipal httpPrincipal, long commerceCurrencyId,
-		java.util.Map<java.util.Locale, java.lang.String> codeMap,
+		java.lang.String code,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap, double rate,
 		java.lang.String roundingType, boolean primary, double priority,
 		boolean active,
@@ -309,7 +308,7 @@ public class CommerceCurrencyServiceHttp {
 					_updateCommerceCurrencyParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commerceCurrencyId, codeMap, nameMap, rate, roundingType,
+					commerceCurrencyId, code, nameMap, rate, roundingType,
 					primary, priority, active, serviceContext);
 
 			Object returnObj = null;
@@ -336,7 +335,7 @@ public class CommerceCurrencyServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CommerceCurrencyServiceHttp.class);
 	private static final Class<?>[] _addCommerceCurrencyParameterTypes0 = new Class[] {
-			java.util.Map.class, java.util.Map.class, double.class,
+			java.lang.String.class, java.util.Map.class, double.class,
 			java.lang.String.class, boolean.class, double.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
@@ -363,8 +362,9 @@ public class CommerceCurrencyServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _updateCommerceCurrencyParameterTypes8 = new Class[] {
-			long.class, java.util.Map.class, java.util.Map.class, double.class,
-			java.lang.String.class, boolean.class, double.class, boolean.class,
+			long.class, java.lang.String.class, java.util.Map.class,
+			double.class, java.lang.String.class, boolean.class, double.class,
+			boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

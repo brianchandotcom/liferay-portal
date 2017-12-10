@@ -117,7 +117,7 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceCurrency (uuid_ VARCHAR(75) null,commerceCurrencyId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,code_ STRING null,name STRING null,rate DOUBLE,roundingType VARCHAR(75) null,primary_ BOOLEAN,priority DOUBLE,active_ BOOLEAN,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceCurrency (uuid_ VARCHAR(75) null,commerceCurrencyId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,code_ VARCHAR(75) null,name STRING null,rate DOUBLE,roundingType VARCHAR(75) null,primary_ BOOLEAN,priority DOUBLE,active_ BOOLEAN,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceCurrency";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceCurrency.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceCurrency.priority ASC";
@@ -520,91 +520,8 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 	}
 
 	@Override
-	public String getCode(Locale locale) {
-		String languageId = LocaleUtil.toLanguageId(locale);
-
-		return getCode(languageId);
-	}
-
-	@Override
-	public String getCode(Locale locale, boolean useDefault) {
-		String languageId = LocaleUtil.toLanguageId(locale);
-
-		return getCode(languageId, useDefault);
-	}
-
-	@Override
-	public String getCode(String languageId) {
-		return LocalizationUtil.getLocalization(getCode(), languageId);
-	}
-
-	@Override
-	public String getCode(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(getCode(), languageId,
-			useDefault);
-	}
-
-	@Override
-	public String getCodeCurrentLanguageId() {
-		return _codeCurrentLanguageId;
-	}
-
-	@JSON
-	@Override
-	public String getCodeCurrentValue() {
-		Locale locale = getLocale(_codeCurrentLanguageId);
-
-		return getCode(locale);
-	}
-
-	@Override
-	public Map<Locale, String> getCodeMap() {
-		return LocalizationUtil.getLocalizationMap(getCode());
-	}
-
-	@Override
 	public void setCode(String code) {
 		_code = code;
-	}
-
-	@Override
-	public void setCode(String code, Locale locale) {
-		setCode(code, locale, LocaleUtil.getSiteDefault());
-	}
-
-	@Override
-	public void setCode(String code, Locale locale, Locale defaultLocale) {
-		String languageId = LocaleUtil.toLanguageId(locale);
-		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
-
-		if (Validator.isNotNull(code)) {
-			setCode(LocalizationUtil.updateLocalization(getCode(), "Code",
-					code, languageId, defaultLanguageId));
-		}
-		else {
-			setCode(LocalizationUtil.removeLocalization(getCode(), "Code",
-					languageId));
-		}
-	}
-
-	@Override
-	public void setCodeCurrentLanguageId(String languageId) {
-		_codeCurrentLanguageId = languageId;
-	}
-
-	@Override
-	public void setCodeMap(Map<Locale, String> codeMap) {
-		setCodeMap(codeMap, LocaleUtil.getSiteDefault());
-	}
-
-	@Override
-	public void setCodeMap(Map<Locale, String> codeMap, Locale defaultLocale) {
-		if (codeMap == null) {
-			return;
-		}
-
-		setCode(LocalizationUtil.updateLocalization(codeMap, getCode(), "Code",
-				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
 	@JSON
@@ -842,17 +759,6 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 	public String[] getAvailableLanguageIds() {
 		Set<String> availableLanguageIds = new TreeSet<String>();
 
-		Map<Locale, String> codeMap = getCodeMap();
-
-		for (Map.Entry<Locale, String> entry : codeMap.entrySet()) {
-			Locale locale = entry.getKey();
-			String value = entry.getValue();
-
-			if (Validator.isNotNull(value)) {
-				availableLanguageIds.add(LocaleUtil.toLanguageId(locale));
-			}
-		}
-
 		Map<Locale, String> nameMap = getNameMap();
 
 		for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
@@ -869,7 +775,7 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 
 	@Override
 	public String getDefaultLanguageId() {
-		String xml = getCode();
+		String xml = getName();
 
 		if (xml == null) {
 			return "";
@@ -899,15 +805,6 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		String modelDefaultLanguageId = getDefaultLanguageId();
-
-		String code = getCode(defaultLocale);
-
-		if (Validator.isNull(code)) {
-			setCode(getCode(modelDefaultLanguageId), defaultLocale);
-		}
-		else {
-			setCode(getCode(defaultLocale), defaultLocale, defaultLocale);
-		}
 
 		String name = getName(defaultLocale);
 
@@ -1268,7 +1165,6 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _code;
-	private String _codeCurrentLanguageId;
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private double _rate;

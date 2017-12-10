@@ -218,58 +218,8 @@ public interface CommerceCurrencyModel extends BaseModel<CommerceCurrency>,
 	 *
 	 * @return the code of this commerce currency
 	 */
+	@AutoEscape
 	public String getCode();
-
-	/**
-	 * Returns the localized code of this commerce currency in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the locale of the language
-	 * @return the localized code of this commerce currency
-	 */
-	@AutoEscape
-	public String getCode(Locale locale);
-
-	/**
-	 * Returns the localized code of this commerce currency in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the local of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized code of this commerce currency. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	 */
-	@AutoEscape
-	public String getCode(Locale locale, boolean useDefault);
-
-	/**
-	 * Returns the localized code of this commerce currency in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @return the localized code of this commerce currency
-	 */
-	@AutoEscape
-	public String getCode(String languageId);
-
-	/**
-	 * Returns the localized code of this commerce currency in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized code of this commerce currency
-	 */
-	@AutoEscape
-	public String getCode(String languageId, boolean useDefault);
-
-	@AutoEscape
-	public String getCodeCurrentLanguageId();
-
-	@AutoEscape
-	public String getCodeCurrentValue();
-
-	/**
-	 * Returns a map of the locales and localized codes of this commerce currency.
-	 *
-	 * @return the locales and localized codes of this commerce currency
-	 */
-	public Map<Locale, String> getCodeMap();
 
 	/**
 	 * Sets the code of this commerce currency.
@@ -277,40 +227,6 @@ public interface CommerceCurrencyModel extends BaseModel<CommerceCurrency>,
 	 * @param code the code of this commerce currency
 	 */
 	public void setCode(String code);
-
-	/**
-	 * Sets the localized code of this commerce currency in the language.
-	 *
-	 * @param code the localized code of this commerce currency
-	 * @param locale the locale of the language
-	 */
-	public void setCode(String code, Locale locale);
-
-	/**
-	 * Sets the localized code of this commerce currency in the language, and sets the default locale.
-	 *
-	 * @param code the localized code of this commerce currency
-	 * @param locale the locale of the language
-	 * @param defaultLocale the default locale
-	 */
-	public void setCode(String code, Locale locale, Locale defaultLocale);
-
-	public void setCodeCurrentLanguageId(String languageId);
-
-	/**
-	 * Sets the localized codes of this commerce currency from the map of locales and localized codes.
-	 *
-	 * @param codeMap the locales and localized codes of this commerce currency
-	 */
-	public void setCodeMap(Map<Locale, String> codeMap);
-
-	/**
-	 * Sets the localized codes of this commerce currency from the map of locales and localized codes, and sets the default locale.
-	 *
-	 * @param codeMap the locales and localized codes of this commerce currency
-	 * @param defaultLocale the default locale
-	 */
-	public void setCodeMap(Map<Locale, String> codeMap, Locale defaultLocale);
 
 	/**
 	 * Returns the name of this commerce currency.

@@ -79,8 +79,7 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 	public CommerceCurrency addCommerceCurrency(
 		CommerceCurrency commerceCurrency);
 
-	public CommerceCurrency addCommerceCurrency(
-		Map<Locale, java.lang.String> codeMap,
+	public CommerceCurrency addCommerceCurrency(java.lang.String code,
 		Map<Locale, java.lang.String> nameMap, double rate,
 		java.lang.String roundingType, boolean primary, double priority,
 		boolean active, ServiceContext serviceContext)
@@ -314,6 +313,9 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public void importDefaultValues(ServiceContext serviceContext)
+		throws java.lang.Exception;
+
 	/**
 	* Updates the commerce currency in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -325,9 +327,8 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 		CommerceCurrency commerceCurrency);
 
 	public CommerceCurrency updateCommerceCurrency(long commerceCurrencyId,
-		Map<Locale, java.lang.String> codeMap,
-		Map<Locale, java.lang.String> nameMap, double rate,
-		java.lang.String roundingType, boolean primary, double priority,
-		boolean active, ServiceContext serviceContext)
+		java.lang.String code, Map<Locale, java.lang.String> nameMap,
+		double rate, java.lang.String roundingType, boolean primary,
+		double priority, boolean active, ServiceContext serviceContext)
 		throws PortalException;
 }

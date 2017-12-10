@@ -42,14 +42,14 @@ public class CommerceCurrencyServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.currency.service.impl.CommerceCurrencyServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.currency.model.CommerceCurrency addCommerceCurrency(
-		java.util.Map<java.util.Locale, java.lang.String> codeMap,
+		java.lang.String code,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap, double rate,
 		java.lang.String roundingType, boolean primary, double priority,
 		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addCommerceCurrency(codeMap, nameMap, rate, roundingType,
+				   .addCommerceCurrency(code, nameMap, rate, roundingType,
 			primary, priority, active, serviceContext);
 	}
 
@@ -102,17 +102,15 @@ public class CommerceCurrencyServiceUtil {
 	}
 
 	public static com.liferay.commerce.currency.model.CommerceCurrency updateCommerceCurrency(
-		long commerceCurrencyId,
-		java.util.Map<java.util.Locale, java.lang.String> codeMap,
+		long commerceCurrencyId, java.lang.String code,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap, double rate,
 		java.lang.String roundingType, boolean primary, double priority,
 		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateCommerceCurrency(commerceCurrencyId, codeMap,
-			nameMap, rate, roundingType, primary, priority, active,
-			serviceContext);
+				   .updateCommerceCurrency(commerceCurrencyId, code, nameMap,
+			rate, roundingType, primary, priority, active, serviceContext);
 	}
 
 	public static CommerceCurrencyService getService() {

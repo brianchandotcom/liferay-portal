@@ -10,7 +10,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field localized="true" name="code" type="String">
+		<field name="code" type="String">
 			<validator name="required" />
 		</field>
 		<field localized="true" name="name" type="String">

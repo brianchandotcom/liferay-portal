@@ -340,6 +340,12 @@ public class CPMeasurementUnitLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static void importDefaultValues(
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().importDefaultValues(serviceContext);
+	}
+
 	/**
 	* Updates the cp measurement unit in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

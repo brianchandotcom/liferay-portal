@@ -22,15 +22,20 @@ import com.liferay.commerce.currency.util.ExchangeRateProvider;
 import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
 import com.liferay.commerce.currency.util.comparator.CommerceCurrencyPriorityComparator;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -144,6 +149,50 @@ public class CommerceCurrencyLocalServiceImpl
 	@Override
 	public int getCommerceCurrenciesCount(long groupId, boolean active) {
 		return commerceCurrencyPersistence.countByG_A(groupId, active);
+	}
+
+	@Override
+	public void importDefaultValues(ServiceContext serviceContext)
+		throws Exception {
+
+		Class<?> clazz = getClass();
+
+		String currenciesPath =
+			"com/liferay/commerce/currency/internal/currencies.json";
+
+		String countriesJSON = StringUtil.read(
+			clazz.getClassLoader(), currenciesPath, false);
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(countriesJSON);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			String code = jsonObject.getString("code");
+			String name = jsonObject.getString("name");
+			boolean primary = jsonObject.getBoolean("primary");
+			double priority = jsonObject.getDouble("priority");
+
+			Map<Locale, String> nameMap = new HashMap<>();
+
+			nameMap.put(serviceContext.getLocale(), name);
+
+			addCommerceCurrency(
+				code, nameMap, 1, "", primary, priority, true, serviceContext);
+		}
+
+		Map<String, ExchangeRateProvider> exchangeRateProviderMap =
+			_exchangeRateProviderRegistry.getExchangeRateProviderMap();
+
+		for (Map.Entry<String, ExchangeRateProvider> exchangeRateProviderEntry :
+				exchangeRateProviderMap.entrySet()) {
+
+			_updateExchangeRates(
+				serviceContext.getScopeGroupId(),
+				exchangeRateProviderEntry.getValue());
+
+			break;
+		}
 	}
 
 	@Override

@@ -1,0 +1,62 @@
+[
+	{
+		"code": "USD",
+		"name": "US Dollar",
+		"primary": true,
+		"priority": 1
+	},
+	{
+		"code": "AUD",
+		"name": "Australian Dollar",
+		"primary": false,
+		"priority": 2
+	},
+	{
+		"code": "GBP",
+		"name": "British Pound",
+		"primary": false,
+		"priority": 3
+	},
+	{
+		"code": "CAD",
+		"name": "Canadian Dollar",
+		"primary": false,
+		"priority": 4
+	},
+	{
+		"code": "CNY",
+		"name": "Chinese Yuan Renminbi",
+		"primary": false,
+		"priority": 5
+	},
+	{
+		"code": "EUR",
+		"name": "Euro",
+		"primary": false,
+		"priority": 6
+	},
+	{
+		"code": "HKD",
+		"name": "Hong Kong Dollar",
+		"primary": false,
+		"priority": 7
+	},
+	{
+		"code": "JPY",
+		"name": "Japanese Yen",
+		"primary": false,
+		"priority": 8
+	},
+	{
+		"code": "INR",
+		"name": "Indian Rupee",
+		"primary": false,
+		"priority": 9
+	},
+	{
+		"code": "BRL",
+		"name": "Brazilian real",
+		"primary": false,
+		"priority": 10
+	}
+]

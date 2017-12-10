@@ -40,8 +40,8 @@ public class CommerceCurrencyLocalServiceImpl
 
 	@Override
 	public CommerceCurrency addCommerceCurrency(
-			Map<Locale, String> codeMap, Map<Locale, String> nameMap,
-			double rate, String roundingType, boolean primary, double priority,
+			String code, Map<Locale, String> nameMap, double rate,
+			String roundingType, boolean primary, double priority,
 			boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -52,7 +52,7 @@ public class CommerceCurrencyLocalServiceImpl
 			rate = 1;
 		}
 
-		validate(0, groupId, codeMap, nameMap, primary);
+		validate(0, groupId, code, nameMap, primary);
 
 		long commerceCurrencyId = counterLocalService.increment();
 
@@ -64,7 +64,7 @@ public class CommerceCurrencyLocalServiceImpl
 		commerceCurrency.setCompanyId(user.getCompanyId());
 		commerceCurrency.setUserId(user.getUserId());
 		commerceCurrency.setUserName(user.getFullName());
-		commerceCurrency.setCodeMap(codeMap);
+		commerceCurrency.setCode(code);
 		commerceCurrency.setNameMap(nameMap);
 		commerceCurrency.setRate(rate);
 		commerceCurrency.setRoundingType(roundingType);
@@ -144,10 +144,9 @@ public class CommerceCurrencyLocalServiceImpl
 
 	@Override
 	public CommerceCurrency updateCommerceCurrency(
-			long commerceCurrencyId, Map<Locale, String> codeMap,
-			Map<Locale, String> nameMap, double rate, String roundingType,
-			boolean primary, double priority, boolean active,
-			ServiceContext serviceContext)
+			long commerceCurrencyId, String code, Map<Locale, String> nameMap,
+			double rate, String roundingType, boolean primary, double priority,
+			boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceCurrency commerceCurrency =
@@ -159,9 +158,9 @@ public class CommerceCurrencyLocalServiceImpl
 
 		validate(
 			commerceCurrency.getCommerceCurrencyId(),
-			commerceCurrency.getGroupId(), codeMap, nameMap, primary);
+			commerceCurrency.getGroupId(), code, nameMap, primary);
 
-		commerceCurrency.setCodeMap(codeMap);
+		commerceCurrency.setCode(code);
 		commerceCurrency.setNameMap(nameMap);
 		commerceCurrency.setRate(rate);
 		commerceCurrency.setRoundingType(roundingType);
@@ -175,13 +174,11 @@ public class CommerceCurrencyLocalServiceImpl
 	}
 
 	protected void validate(
-			long commerceCurrencyId, long groupId, Map<Locale, String> codeMap,
+			long commerceCurrencyId, long groupId, String code,
 			Map<Locale, String> nameMap, boolean primary)
 		throws PortalException {
 
 		Locale locale = LocaleUtil.getSiteDefault();
-
-		String code = codeMap.get(locale);
 
 		if (Validator.isNull(code)) {
 			throw new CommerceCurrencyCodeException();

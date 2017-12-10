@@ -58,7 +58,7 @@ public class CPInstancePricingInfoDisplayContext
 				themeDisplay.getScopeGroupId());
 
 		if (commerceCurrency != null) {
-			return commerceCurrency.getCode(themeDisplay.getLanguageId());
+			return commerceCurrency.getCode();
 		}
 
 		return StringPool.BLANK;

@@ -56,7 +56,7 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 		String code = StringPool.BLANK;
 
 		if (commerceCurrency != null) {
-			code = commerceCurrency.getCodeCurrentValue();
+			code = commerceCurrency.getCode();
 		}
 
 		NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);

@@ -48,7 +48,7 @@ List<CommercePriceListQualificationTypeRel> commercePriceListQualificationTypeRe
 		%>
 
 			<aui:option
-				label="<%= commerceCurrency.getCode(languageId) %>"
+				label="<%= commerceCurrency.getCode() %>"
 				selected="<%= (commercePriceList != null) && (commercePriceList.getCommerceCurrencyId() == commerceCurrency.getCommerceCurrencyId()) %>"
 				value="<%= commerceCurrency.getCommerceCurrencyId() %>"
 			/>

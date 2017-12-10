@@ -127,8 +127,7 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 		long commerceCurrencyId = ParamUtil.getLong(
 			actionRequest, "commerceCurrencyId");
 
-		Map<Locale, String> codeMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "code");
+		String code = ParamUtil.getString(actionRequest, "code");
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
 		double rate = ParamUtil.getDouble(actionRequest, "rate");
@@ -145,13 +144,13 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 
 		if (commerceCurrencyId <= 0) {
 			commerceCurrency = _commerceCurrencyService.addCommerceCurrency(
-				codeMap, nameMap, rate, roundingType, primary, priority, active,
+				code, nameMap, rate, roundingType, primary, priority, active,
 				serviceContext);
 		}
 		else {
 			commerceCurrency = _commerceCurrencyService.updateCommerceCurrency(
-				commerceCurrencyId, codeMap, nameMap, rate, roundingType,
-				primary, priority, active, serviceContext);
+				commerceCurrencyId, code, nameMap, rate, roundingType, primary,
+				priority, active, serviceContext);
 		}
 
 		return commerceCurrency;

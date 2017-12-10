@@ -24,7 +24,7 @@
 
 		<!-- Other fields -->
 
-		<column localized="true" name="code" type="String" />
+		<column name="code" type="String" />
 		<column localized="true" name="name" type="String" />
 		<column name="rate" type="double" />
 		<column name="roundingType" type="String" />

@@ -34,8 +34,8 @@ public class CommerceCurrencyServiceImpl
 
 	@Override
 	public CommerceCurrency addCommerceCurrency(
-			Map<Locale, String> codeMap, Map<Locale, String> nameMap,
-			double rate, String roundingType, boolean primary, double priority,
+			String code, Map<Locale, String> nameMap, double rate,
+			String roundingType, boolean primary, double priority,
 			boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -44,7 +44,7 @@ public class CommerceCurrencyServiceImpl
 			CommerceCurrencyActionKeys.MANAGE_COMMERCE_CURRENCIES);
 
 		return commerceCurrencyLocalService.addCommerceCurrency(
-			codeMap, nameMap, rate, roundingType, primary, priority, active,
+			code, nameMap, rate, roundingType, primary, priority, active,
 			serviceContext);
 	}
 
@@ -107,10 +107,9 @@ public class CommerceCurrencyServiceImpl
 
 	@Override
 	public CommerceCurrency updateCommerceCurrency(
-			long commerceCurrencyId, Map<Locale, String> codeMap,
-			Map<Locale, String> nameMap, double rate, String roundingType,
-			boolean primary, double priority, boolean active,
-			ServiceContext serviceContext)
+			long commerceCurrencyId, String code, Map<Locale, String> nameMap,
+			double rate, String roundingType, boolean primary, double priority,
+			boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceCurrency commerceCurrency =
@@ -121,7 +120,7 @@ public class CommerceCurrencyServiceImpl
 			CommerceCurrencyActionKeys.MANAGE_COMMERCE_CURRENCIES);
 
 		return commerceCurrencyLocalService.updateCommerceCurrency(
-			commerceCurrency.getCommerceCurrencyId(), codeMap, nameMap, rate,
+			commerceCurrency.getCommerceCurrencyId(), code, nameMap, rate,
 			roundingType, primary, priority, active, serviceContext);
 	}
 

@@ -55,7 +55,7 @@ public class CommerceCurrencyStagedModelRepository
 		}
 
 		return _commerceCurrencyLocalService.addCommerceCurrency(
-			commerceCurrency.getCodeMap(), commerceCurrency.getNameMap(),
+			commerceCurrency.getCode(), commerceCurrency.getNameMap(),
 			commerceCurrency.getRate(), commerceCurrency.getRoundingType(),
 			commerceCurrency.isPrimary(), commerceCurrency.getPriority(),
 			commerceCurrency.isActive(), serviceContext);
@@ -134,7 +134,7 @@ public class CommerceCurrencyStagedModelRepository
 
 		return _commerceCurrencyLocalService.updateCommerceCurrency(
 			commerceCurrency.getCommerceCurrencyId(),
-			commerceCurrency.getCodeMap(), commerceCurrency.getNameMap(),
+			commerceCurrency.getCode(), commerceCurrency.getNameMap(),
 			commerceCurrency.getRate(), commerceCurrency.getRoundingType(),
 			commerceCurrency.isPrimary(), commerceCurrency.getPriority(),
 			commerceCurrency.isActive(), serviceContext);

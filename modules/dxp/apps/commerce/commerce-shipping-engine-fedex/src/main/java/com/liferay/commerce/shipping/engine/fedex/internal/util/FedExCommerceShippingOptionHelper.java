@@ -361,9 +361,7 @@ public class FedExCommerceShippingOptionHelper {
 				_commerceCart.getGroupId(), true);
 
 		for (CommerceCurrency commerceCurrency : commerceCurrencies) {
-			if (StringUtil.equalsIgnoreCase(
-					code, commerceCurrency.getCode(LocaleUtil.US))) {
-
+			if (StringUtil.equalsIgnoreCase(code, commerceCurrency.getCode())) {
 				moneyCommerceCurrency = commerceCurrency;
 
 				break;
@@ -457,8 +455,7 @@ public class FedExCommerceShippingOptionHelper {
 
 	private Money _getMoney(double amount) {
 		return new Money(
-			_commerceCurrency.getCode(LocaleUtil.US),
-			BigDecimal.valueOf(amount));
+			_commerceCurrency.getCode(), BigDecimal.valueOf(amount));
 	}
 
 	private NonNegativeInteger _getNonNegativeInteger(int d) {

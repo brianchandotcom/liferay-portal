@@ -61,7 +61,7 @@ public class CommerceCurrencyStagedModelDataHandlerTest
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		return CommerceCurrencyLocalServiceUtil.addCommerceCurrency(
-			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomString(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomDouble(), null, false,
 			RandomTestUtil.randomDouble(), RandomTestUtil.randomBoolean(),
@@ -96,8 +96,7 @@ public class CommerceCurrencyStagedModelDataHandlerTest
 			(CommerceCurrency)importedStagedModel;
 
 		Assert.assertEquals(
-			commerceCurrency.getCodeMap(),
-			importedCommerceCurrency.getCodeMap());
+			commerceCurrency.getCode(), importedCommerceCurrency.getCode());
 		Assert.assertEquals(
 			commerceCurrency.getNameMap(),
 			importedCommerceCurrency.getNameMap());

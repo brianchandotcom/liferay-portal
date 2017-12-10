@@ -16,6 +16,7 @@ package com.liferay.commerce.currency.web.internal.display.context;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
 import com.liferay.commerce.currency.util.RoundingType;
 import com.liferay.commerce.currency.util.RoundingTypeServicesTracker;
 import com.liferay.commerce.currency.web.internal.util.CommerceCurrencyUtil;
@@ -38,15 +39,18 @@ import javax.portlet.RenderResponse;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Marco Leo
  */
 public class CommerceCurrenciesDisplayContext {
 
 	public CommerceCurrenciesDisplayContext(
 		CommerceCurrencyService commerceCurrencyService,
+		ExchangeRateProviderRegistry exchangeRateProviderRegistry,
 		RoundingTypeServicesTracker roundingTypeServicesTracker,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_commerceCurrencyService = commerceCurrencyService;
+		_exchangeRateProviderRegistry = exchangeRateProviderRegistry;
 		_roundingTypeServicesTracker = roundingTypeServicesTracker;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
@@ -186,6 +190,7 @@ public class CommerceCurrenciesDisplayContext {
 
 	private CommerceCurrency _commerceCurrency;
 	private final CommerceCurrencyService _commerceCurrencyService;
+	private final ExchangeRateProviderRegistry _exchangeRateProviderRegistry;
 	private CommerceCurrency _primaryCommerceCurrency;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

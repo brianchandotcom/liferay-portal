@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.exception.CPMeasurementUnitKeyException;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
+import com.liferay.commerce.product.model.CPMeasurementUnitConstants;
 import com.liferay.commerce.product.service.base.CPMeasurementUnitLocalServiceBaseImpl;
 import com.liferay.commerce.product.util.comparator.CPMeasurementUnitPriorityComparator;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -141,6 +143,43 @@ public class CPMeasurementUnitLocalServiceImpl
 	}
 
 	@Override
+	public void importDefaultValues(ServiceContext serviceContext)
+		throws PortalException {
+
+		_addCPMeasurementUnit(
+			"inch(es)", "inches", 1, true, 1,
+			CPMeasurementUnitConstants.TYPE_DIMENSION, serviceContext);
+
+		_addCPMeasurementUnit(
+			"feet", "feet", 0.08333333, false, 2,
+			CPMeasurementUnitConstants.TYPE_DIMENSION, serviceContext);
+
+		_addCPMeasurementUnit(
+			"meter(s)", "meters", 0.0254, false, 3,
+			CPMeasurementUnitConstants.TYPE_DIMENSION, serviceContext);
+
+		_addCPMeasurementUnit(
+			"millimeter(s)", "millimeters", 25.4, false, 1,
+			CPMeasurementUnitConstants.TYPE_DIMENSION, serviceContext);
+
+		_addCPMeasurementUnit(
+			"ounce(s)", "ounce", 16, false, 1,
+			CPMeasurementUnitConstants.TYPE_WEIGHT, serviceContext);
+
+		_addCPMeasurementUnit(
+			"lb(s)", "lb", 1, true, 2, CPMeasurementUnitConstants.TYPE_WEIGHT,
+			serviceContext);
+
+		_addCPMeasurementUnit(
+			"kg(s)", "kg", 0.45359237, false, 3,
+			CPMeasurementUnitConstants.TYPE_WEIGHT, serviceContext);
+
+		_addCPMeasurementUnit(
+			"gram(s)", "gram", 453.59237, false, 4,
+			CPMeasurementUnitConstants.TYPE_WEIGHT, serviceContext);
+	}
+
+	@Override
 	public CPMeasurementUnit updateCPMeasurementUnit(
 			long cpMeasurementUnitId, Map<Locale, String> nameMap, String key,
 			double rate, boolean primary, double priority, int type,
@@ -200,6 +239,19 @@ public class CPMeasurementUnitLocalServiceImpl
 				}
 			}
 		}
+	}
+
+	private void _addCPMeasurementUnit(
+			String name, String key, double rate, boolean primary,
+			double priority, int type, ServiceContext serviceContext)
+		throws PortalException {
+
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(serviceContext.getLocale(), name);
+
+		addCPMeasurementUnit(
+			nameMap, key, rate, primary, priority, type, serviceContext);
 	}
 
 }

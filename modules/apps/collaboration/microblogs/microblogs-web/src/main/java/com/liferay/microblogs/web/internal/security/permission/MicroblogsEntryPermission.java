@@ -33,7 +33,7 @@ public class MicroblogsEntryPermission {
 			String actionId)
 		throws PortalException {
 
-		return _entryModelResourcePermission.contains(
+		return _microblogsEntryModelResourcePermission.contains(
 			permissionChecker, microblogsEntryId, actionId);
 	}
 
@@ -42,7 +42,7 @@ public class MicroblogsEntryPermission {
 			MicroblogsEntry microblogsEntry, String actionId)
 		throws PortalException {
 
-		return _entryModelResourcePermission.contains(
+		return _microblogsEntryModelResourcePermission.contains(
 			permissionChecker, microblogsEntry, actionId);
 	}
 
@@ -53,10 +53,10 @@ public class MicroblogsEntryPermission {
 	protected void setModelResourcePermission(
 		ModelResourcePermission<MicroblogsEntry> modelResourcePermission) {
 
-		_entryModelResourcePermission = modelResourcePermission;
+		_microblogsEntryModelResourcePermission = modelResourcePermission;
 	}
 
 	private static ModelResourcePermission<MicroblogsEntry>
-		_entryModelResourcePermission;
+		_microblogsEntryModelResourcePermission;
 
 }

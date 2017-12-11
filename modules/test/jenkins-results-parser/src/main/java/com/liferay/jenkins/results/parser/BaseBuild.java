@@ -1698,7 +1698,8 @@ public abstract class BaseBuild implements Build {
 			Dom4JUtil.getNewElement(
 				cellElementTagName, null,
 				JenkinsResultsParserUtil.toDateString(
-					new Date(getStartTimestamp()))),
+					new Date(getStartTimestamp()),
+					getJenkinsReportTimeZoneName())),
 			Dom4JUtil.getNewElement(
 				cellElementTagName, null,
 				JenkinsResultsParserUtil.toDurationString(getDuration())));
@@ -1755,6 +1756,10 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return tableRowElements;
+	}
+
+	protected String getJenkinsReportTimeZoneName() {
+		return _jenkinsReportTimeZoneName;
 	}
 
 	protected Set<String> getJobParameterNames() {
@@ -2394,6 +2399,22 @@ public abstract class BaseBuild implements Build {
 
 	private static final String[] _HIGH_PRIORITY_CONTENT_FLAGS =
 		{"compileJSP", "SourceFormatter.format", "Unable to compile JSPs"};
+
+	private static final String _jenkinsReportTimeZoneName;
+
+	static {
+		Properties properties = null;
+
+		try {
+			properties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to get build properties", ioe);
+		}
+
+		_jenkinsReportTimeZoneName = properties.getProperty(
+			"jenkins.report.timezone");
+	};
 
 	private int _buildNumber = -1;
 	private String _consoleText;

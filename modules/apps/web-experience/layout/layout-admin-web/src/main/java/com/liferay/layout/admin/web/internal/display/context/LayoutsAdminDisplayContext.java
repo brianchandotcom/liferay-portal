@@ -629,6 +629,14 @@ public class LayoutsAdminDisplayContext {
 		return _millerColumnsEnabled;
 	}
 
+	public boolean isPageTemplates() {
+		if (Objects.equals(getTabs1(), "page-templates")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isPrivateLayout() {
 		if (_privateLayout != null) {
 			return _privateLayout;

@@ -29,7 +29,9 @@ public class XMLLog4jFileCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (fileName.endsWith("-log4j.xml")) {
+		if (fileName.endsWith("-log4j-ext.xml") ||
+			fileName.endsWith("-log4j.xml")) {
+
 			_checkLog4jXML(fileName, content);
 		}
 

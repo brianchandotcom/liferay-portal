@@ -144,6 +144,11 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrderItemLocalService.deleteCommerceOrderItems(
 			commerceOrder.getCommerceOrderId());
 
+		// Commerce order payments
+
+		commerceOrderPaymentLocalService.deleteCommerceOrderPayments(
+			commerceOrder.getCommerceOrderId());
+
 		// Expando
 
 		expandoRowLocalService.deleteRows(commerceOrder.getCommerceOrderId());

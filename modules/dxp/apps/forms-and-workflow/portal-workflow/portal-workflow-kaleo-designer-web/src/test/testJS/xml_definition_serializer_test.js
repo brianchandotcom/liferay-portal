@@ -217,7 +217,7 @@ describe(
 				);
 
 				it(
-					'should not serialize <assignment> if assignment object is empty.',
+					'should serialize <assignment> even when assignment object is empty.',
 					function(done) {
 						var jsonDefinition = {
 							nodes: [
@@ -236,8 +236,8 @@ describe(
 						);
 
 						assert(
-							definition.indexOf('<assignments') < 0,
-							'<assignments/> element serialized from empty object.'
+							definition.indexOf('<assignments') >= 0,
+							'<assignments/> element not serialized from empty object.'
 						);
 
 						done();

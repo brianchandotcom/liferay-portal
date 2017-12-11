@@ -79,7 +79,10 @@ AUI.add(
 							return instance._onSubmit;
 						}
 					},
-					validateOnBlur: {}
+					validateOnBlur: {
+						validator: A.Lang.isBoolean,
+						value: true
+					}
 				},
 
 				EXTENDS: A.Base,
@@ -99,7 +102,8 @@ AUI.add(
 						if (formNode) {
 							var formValidator = new A.FormValidator(
 								{
-									boundingBox: formNode
+									boundingBox: formNode,
+									validateOnBlur: instance.get('validateOnBlur')
 								}
 							);
 
@@ -176,8 +180,6 @@ AUI.add(
 
 						formValidator.on('submit', A.bind('_onValidatorSubmit', instance));
 						formValidator.on('submitError', A.bind('_onSubmitError', instance));
-
-						formValidator.set('validateOnBlur', formConfig.validateOnBlur == "true");
 
 						formNode.delegate(['blur', 'focus'], A.bind('_onFieldFocusChange', instance), 'button,input,select,textarea');
 						formNode.delegate(['blur', 'input'], A.bind('_onEditorBlur', instance), 'div[contenteditable="true"]');

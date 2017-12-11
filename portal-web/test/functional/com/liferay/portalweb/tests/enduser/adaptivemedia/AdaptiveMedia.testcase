@@ -85,6 +85,7 @@
 		</execute>
 
 		<execute macro="AdaptiveMedia#addImageResolution">
+			<var name="description" value="1234567890!@#$%^&amp;*()~`" />
 			<var name="imageName" value="abcdefghijklmnopqrstuvwxyz" />
 			<var name="maxHeight" value="25" />
 			<var name="maxWidth" value="25" />
@@ -104,6 +105,14 @@
 		<execute macro="AdaptiveMedia#editImageResolution">
 			<var name="imageName" value="1234567890!@#$%^&amp;*()~`" />
 			<var name="imageNameEdit" value="[]\{}|:&quot;;',./&gt;&lt;?" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#gotoImageVariantEntry">
+			<var name="imageName" value="ABCDEFGHIJKLMNOPQRSTUVWXYZ" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#viewImageVariantDescription">
+			<var name="description" value="1234567890!@#$%^&amp;*()~`" />
 		</execute>
 	</command>
 

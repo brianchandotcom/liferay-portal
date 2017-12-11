@@ -75,8 +75,8 @@ else {
 	String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
 	String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
-	repositoryEntries = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(themeDisplay.getScopeGroupId(), folderId, WorkflowConstants.STATUS_APPROVED, mimeTypes, false, start, end, DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType, true));
-	repositoryEntriesCount = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(themeDisplay.getScopeGroupId(), folderId, WorkflowConstants.STATUS_APPROVED, mimeTypes, false);
+	repositoryEntries = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(themeDisplay.getScopeGroupId(), folderId, WorkflowConstants.STATUS_APPROVED, mimeTypes, false, false, start, end, DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType, true));
+	repositoryEntriesCount = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(themeDisplay.getScopeGroupId(), folderId, WorkflowConstants.STATUS_APPROVED, mimeTypes, false, false);
 }
 %>
 

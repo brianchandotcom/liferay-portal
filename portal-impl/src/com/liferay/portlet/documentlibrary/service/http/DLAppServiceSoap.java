@@ -1216,6 +1216,24 @@ public class DLAppServiceSoap {
 		}
 	}
 
+	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
+		long repositoryId, long folderId, int status,
+		java.lang.String[] mimeTypes, boolean includeMountFolders,
+		boolean includeOwner) throws RemoteException {
+		try {
+			int returnValue = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId,
+					folderId, status, mimeTypes, includeMountFolders,
+					includeOwner);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Returns the number of immediate subfolders of the parent folder.
 	*

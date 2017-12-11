@@ -328,6 +328,18 @@ public class InitializedRepository
 	@Override
 	public List<RepositoryEntry> getFoldersAndFileEntriesAndFileShortcuts(
 			long folderId, int status, String[] mimetypes,
+			boolean includeMountFolders, boolean includeOwner, int start,
+			int end, OrderByComparator<?> obc)
+		throws PortalException {
+
+		return documentRepository.getFoldersAndFileEntriesAndFileShortcuts(
+			folderId, status, mimetypes, includeMountFolders, includeOwner,
+			start, end, obc);
+	}
+
+	@Override
+	public List<RepositoryEntry> getFoldersAndFileEntriesAndFileShortcuts(
+			long folderId, int status, String[] mimetypes,
 			boolean includeMountFolders, int start, int end,
 			OrderByComparator<?> obc)
 		throws PortalException {
@@ -359,6 +371,16 @@ public class InitializedRepository
 
 		return documentRepository.getFoldersAndFileEntriesAndFileShortcutsCount(
 			folderId, status, mimetypes, includeMountFolders);
+	}
+
+	@Override
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long folderId, int status, String[] mimetypes,
+			boolean includeMountFolders, boolean includeOwner)
+		throws PortalException {
+
+		return documentRepository.getFoldersAndFileEntriesAndFileShortcutsCount(
+			folderId, status, mimetypes, includeMountFolders, includeOwner);
 	}
 
 	@Override

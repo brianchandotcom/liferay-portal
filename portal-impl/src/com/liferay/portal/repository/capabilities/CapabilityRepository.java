@@ -619,6 +619,18 @@ public class CapabilityRepository
 	@Override
 	public List<RepositoryEntry> getFoldersAndFileEntriesAndFileShortcuts(
 			long folderId, int status, String[] mimetypes,
+			boolean includeMountFolders, boolean includeOwner, int start,
+			int end, OrderByComparator<?> obc)
+		throws PortalException {
+
+		return getRepository().getFoldersAndFileEntriesAndFileShortcuts(
+			folderId, status, mimetypes, includeMountFolders, includeOwner,
+			start, end, obc);
+	}
+
+	@Override
+	public List<RepositoryEntry> getFoldersAndFileEntriesAndFileShortcuts(
+			long folderId, int status, String[] mimetypes,
 			boolean includeMountFolders, int start, int end,
 			OrderByComparator<?> obc)
 		throws PortalException {
@@ -644,6 +656,16 @@ public class CapabilityRepository
 
 		return getRepository().getFoldersAndFileEntriesAndFileShortcutsCount(
 			folderId, status, mimetypes, includeMountFolders);
+	}
+
+	@Override
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long folderId, int status, String[] mimetypes,
+			boolean includeMountFolders, boolean includeOwner)
+		throws PortalException {
+
+		return getRepository().getFoldersAndFileEntriesAndFileShortcutsCount(
+			folderId, status, mimetypes, includeMountFolders, includeOwner);
 	}
 
 	@Override

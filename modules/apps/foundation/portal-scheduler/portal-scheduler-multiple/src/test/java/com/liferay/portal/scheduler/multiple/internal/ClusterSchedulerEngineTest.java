@@ -925,7 +925,7 @@ public class ClusterSchedulerEngineTest {
 		Assert.assertTrue(schedulerResponses.isEmpty());
 
 		Assert.assertEquals(
-			_memoryClusteredJobs.toString(), 1, _memoryClusteredJobs.size());
+			_memoryClusteredJobs.toString(), 2, _memoryClusteredJobs.size());
 
 		ClusterInvokeThreadLocal.setEnabled(false);
 

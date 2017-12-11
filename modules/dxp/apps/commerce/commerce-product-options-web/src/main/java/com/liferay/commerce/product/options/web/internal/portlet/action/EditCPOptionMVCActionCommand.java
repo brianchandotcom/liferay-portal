@@ -40,7 +40,6 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -117,7 +116,7 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 
 		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
-		writeJSON(actionRequest, actionResponse, jsonObject);
+		writeJSON(actionResponse, jsonObject);
 	}
 
 	protected CPOption updateCPOption(
@@ -161,9 +160,7 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 		return cpOption;
 	}
 
-	protected void writeJSON(
-			PortletRequest portletRequest, ActionResponse actionResponse,
-			Object jsonObj)
+	protected void writeJSON(ActionResponse actionResponse, Object jsonObj)
 		throws IOException {
 
 		HttpServletResponse httpServletResponse =

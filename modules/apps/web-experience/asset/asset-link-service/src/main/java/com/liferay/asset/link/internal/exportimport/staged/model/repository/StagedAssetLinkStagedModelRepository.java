@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.categories.admin.web.internal.exportimport.staged.model.repository;
+package com.liferay.asset.link.internal.exportimport.staged.model.repository;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLink;

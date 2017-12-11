@@ -38,8 +38,6 @@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <liferay-theme:defineObjects />
 
-<portlet:defineObjects />
-
 <%
 String redirect = ParamUtil.getString(request, "redirect", StringPool.BLANK);
 %>

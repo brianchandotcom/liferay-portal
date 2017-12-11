@@ -102,26 +102,28 @@ function openSimpleInputModal({
 		handleSimpleInputModalDisposal();
 	}
 
-	simpleInputModal = new SimpleInputModal({
-		checkboxFieldLabel,
-		checkboxFieldName,
-		checkboxFieldValue,
-		dialogTitle,
-		events: {
-			cancelButtonClicked: handleSimpleInputModalDisposal,
-			dialogHidden: handleSimpleInputModalDisposal,
-			formSuccess: handleSimpleInputModalSubmission,
-		},
-		formSubmitURL,
-		idFieldName,
-		idFieldValue,
-		mainFieldLabel,
-		mainFieldName,
-		mainFieldPlaceholder,
-		mainFieldValue,
-		namespace,
-		spritemap,
-	});
+	simpleInputModal = new SimpleInputModal(
+		{
+			checkboxFieldLabel,
+			checkboxFieldName,
+			checkboxFieldValue,
+			dialogTitle,
+			events: {
+				cancelButtonClicked: handleSimpleInputModalDisposal,
+				dialogHidden: handleSimpleInputModalDisposal,
+				formSuccess: handleSimpleInputModalSubmission,
+			},
+			formSubmitURL,
+			idFieldName,
+			idFieldValue,
+			mainFieldLabel,
+			mainFieldName,
+			mainFieldPlaceholder,
+			mainFieldValue,
+			namespace,
+			spritemap,
+		}
+	);
 
 	return simpleInputModal;
 }

@@ -1,6 +1,6 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import { Config } from 'metal-state';
+import {Config} from 'metal-state';
 
 import templates from './AceEditor.soy';
 
@@ -16,13 +16,16 @@ class AceEditor extends Component {
 		this._editorDocument = null;
 		this._handleDocumentChanged = this._handleDocumentChanged.bind(this);
 
-		AUI().use('aui-ace-editor', A => {
-			const editor = new A.AceEditor({
-				boundingBox: this.refs.wrapper,
-				mode: this.syntax,
-				tabSize: 2,
-				highlightActiveLine: false,
-			});
+		AUI().use(
+			'aui-ace-editor',
+			A => {
+				const editor = new A.AceEditor({
+					boundingBox: this.refs.wrapper,
+					mode: this.syntax,
+					tabSize: 2,
+					highlightActiveLine: false,
+				}
+			);
 
 			this._editorDocument = editor.getSession().getDocument();
 
@@ -50,9 +53,12 @@ class AceEditor extends Component {
 	 * @protected
 	 */
 	_handleDocumentChanged() {
-		this.emit('contentChanged', {
-			content: this._editorDocument.getValue(),
-		});
+		this.emit(
+			'contentChanged',
+			{
+				content: this._editorDocument.getValue(),
+			}
+		);
 	}
 }
 
@@ -83,5 +89,5 @@ AceEditor.STATE = {
 
 Soy.register(AceEditor, templates);
 
-export { AceEditor };
+export {AceEditor};
 export default AceEditor;

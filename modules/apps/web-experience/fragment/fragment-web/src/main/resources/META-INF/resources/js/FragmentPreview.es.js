@@ -1,7 +1,7 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import debounce from 'metal-debounce';
-import { Config } from 'metal-state';
+import {Config} from 'metal-state';
 
 import templates from './FragmentPreview.soy';
 
@@ -80,6 +80,7 @@ class FragmentPreview extends Component {
 	 */
 	_setPreviewSize(previewSize) {
 		this._updatePreviewSize();
+
 		return previewSize;
 	}
 
@@ -121,10 +122,12 @@ class FragmentPreview extends Component {
 
 				if (ratio && wrapper) {
 					const wrapperRect = wrapper.getBoundingClientRect();
+
 					const scale = Math.min(
 						wrapperRect.width * 0.9 / ratio.width,
 						wrapperRect.height * 0.8 / ratio.height,
 					);
+
 					preview.style.width = `${ratio.width * scale}px`;
 					preview.style.height = `${ratio.height * scale}px`;
 				}
@@ -216,5 +219,5 @@ FragmentPreview.STATE = {
 
 Soy.register(FragmentPreview, templates);
 
-export { FragmentPreview };
+export {FragmentPreview};
 export default FragmentPreview;

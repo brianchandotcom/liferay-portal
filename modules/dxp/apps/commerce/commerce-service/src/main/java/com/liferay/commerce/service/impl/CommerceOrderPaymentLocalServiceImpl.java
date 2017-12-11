@@ -14,11 +14,64 @@
 
 package com.liferay.commerce.service.impl;
 
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderPayment;
 import com.liferay.commerce.service.base.CommerceOrderPaymentLocalServiceBaseImpl;
+import com.liferay.commerce.util.comparator.CommerceOrderPaymentCreateDateComparator;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Andrea Di Giorgi
  */
 public class CommerceOrderPaymentLocalServiceImpl
 	extends CommerceOrderPaymentLocalServiceBaseImpl {
+
+	@Override
+	public CommerceOrderPayment addCommerceOrderPayment(
+			long commerceOrderId, int status, String content,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CommerceOrder commerceOrder =
+			commerceOrderLocalService.getCommerceOrder(commerceOrderId);
+		User user = userLocalService.getUser(serviceContext.getUserId());
+
+		long commerceOrderPaymentId = counterLocalService.increment();
+
+		CommerceOrderPayment commerceOrderPayment =
+			commerceOrderPaymentPersistence.create(commerceOrderPaymentId);
+
+		commerceOrderPayment.setGroupId(commerceOrder.getGroupId());
+		commerceOrderPayment.setCompanyId(user.getCompanyId());
+		commerceOrderPayment.setUserId(user.getUserId());
+		commerceOrderPayment.setUserName(user.getFullName());
+		commerceOrderPayment.setCommerceOrderId(
+			commerceOrder.getCommerceOrderId());
+		commerceOrderPayment.setCommercePaymentMethodId(
+			commerceOrder.getCommercePaymentMethodId());
+		commerceOrderPayment.setStatus(status);
+		commerceOrderPayment.setContent(content);
+
+		commerceOrderPaymentPersistence.update(commerceOrderPayment);
+
+		return commerceOrderPayment;
+	}
+
+	@Override
+	public void deleteCommerceOrderPayments(long commerceOrderId) {
+		commerceOrderPaymentPersistence.removeByCommerceOrderId(
+			commerceOrderId);
+	}
+
+	@Override
+	public CommerceOrderPayment getLatestCommerceOrderPayment(
+			long commerceOrderId)
+		throws PortalException {
+
+		return commerceOrderPaymentPersistence.findByCommerceOrderId_First(
+			commerceOrderId, new CommerceOrderPaymentCreateDateComparator());
+	}
+
 }

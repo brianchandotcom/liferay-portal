@@ -1073,6 +1073,14 @@ public class StringUtilTest {
 	}
 
 	@Test
+	public void testUnquote() {
+
+		// unquote shall not fail a string with single character of quote
+
+		Assert.assertEquals(StringUtil.unquote("\""), "\"");
+	}
+
+	@Test
 	public void testWildcardMatches() {
 
 		// Exact match in a case sensitive manner

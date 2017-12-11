@@ -62,9 +62,9 @@ FragmentEntry fragmentEntry = (FragmentEntry)row.getObject();
 		<%
 		Map<String, Object> updateFragmentEntryData = new HashMap<String, Object>();
 
-		updateFragmentEntryData.put("fragment-entry-id", fragmentEntry.getFragmentEntryId());
-		updateFragmentEntryData.put("fragment-entry-name", fragmentEntry.getName());
-		updateFragmentEntryData.put("update-url", updateFragmentEntryURL);
+		updateFragmentEntryData.put("form-submit-url", updateFragmentEntryURL.toString());
+		updateFragmentEntryData.put("id-field-value", fragmentEntry.getFragmentEntryId());
+		updateFragmentEntryData.put("main-field-value", fragmentEntry.getName());
 		%>
 
 		<liferay-ui:icon

@@ -10,8 +10,6 @@
 		"metal-uri": "^2.3.0"
 	},
 	"devDependencies": {
-		"eslint": "^3.17.1",
-		"eslint-config-liferay": "^1.0.2",
 		"liferay-module-config-generator": "^1.1.10",
 		"metal-cli": "^4.3.3"
 	},

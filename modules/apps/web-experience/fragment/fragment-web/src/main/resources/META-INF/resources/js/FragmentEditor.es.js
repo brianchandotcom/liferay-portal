@@ -1,10 +1,10 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import { Config } from 'metal-state';
+import {Config} from 'metal-state';
 
 import templates from './FragmentEditor.soy';
-import './FragmentPreview';
-import './SourceEditor';
+import './FragmentPreview.es';
+import './SourceEditor.es';
 
 /**
  * Component that allows editing an existing or new Fragment
@@ -24,11 +24,14 @@ class FragmentEditor extends Component {
 	 * @protected
 	 */
 	_handleContentChanged() {
-		this.emit('contentChanged', {
-			css: this._css,
-			html: this._html,
-			js: this._js,
-		});
+		this.emit(
+			'contentChanged',
+			{
+				css: this._css,
+				html: this._html,
+				js: this._js,
+			}
+		);
 	}
 
 	/**
@@ -151,5 +154,5 @@ FragmentEditor.STATE = {
 
 Soy.register(FragmentEditor, templates);
 
-export { FragmentEditor };
+export {FragmentEditor};
 export default FragmentEditor;

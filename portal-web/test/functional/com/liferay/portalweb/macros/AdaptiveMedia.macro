@@ -39,6 +39,13 @@
 			<var name="name" value="${imageName}" />
 		</execute>
 
+		<if>
+			<isset var="description" />
+			<then>
+				<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${description}" />
+			</then>
+		</if>
+
 		<execute function="Type" locator1="TextInput#MAX_WIDTH" value1="${maxWidth}" />
 
 		<execute function="Type" locator1="TextInput#MAX_HEIGHT" value1="${maxHeight}" />

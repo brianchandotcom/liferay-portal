@@ -32,6 +32,7 @@ import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.Lock;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
@@ -640,7 +641,7 @@ public class LiferayRepository
 			int end, OrderByComparator<?> obc)
 		throws PortalException {
 
-		long userId = 0;
+		long userId = UserConstants.USER_ID_DEFAULT;
 
 		if (includeOwner) {
 			userId = PrincipalThreadLocal.getUserId();
@@ -696,7 +697,7 @@ public class LiferayRepository
 			boolean includeMountFolders, boolean includeOwner)
 		throws PortalException {
 
-		long userId = 0;
+		long userId = UserConstants.USER_ID_DEFAULT;
 
 		if (includeOwner) {
 			userId = PrincipalThreadLocal.getUserId();

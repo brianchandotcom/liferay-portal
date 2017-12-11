@@ -1,9 +1,9 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import { Config } from 'metal-state';
+import {Config} from 'metal-state';
 
 import templates from './SourceEditor.soy';
-import './AceEditor';
+import './AceEditor.es';
 
 /**
  * Component that creates an instance of Ace editor
@@ -16,7 +16,12 @@ class SourceEditor extends Component {
 	 * @param {Event} event
 	 */
 	_handleContentChanged(event) {
-		this.emit('contentChanged', { content: event.content });
+		this.emit(
+			'contentChanged',
+			{
+				content: event.content
+			}
+		);
 	}
 }
 
@@ -46,5 +51,5 @@ SourceEditor.STATE = {
 
 Soy.register(SourceEditor, templates);
 
-export { SourceEditor };
+export {SourceEditor};
 export default SourceEditor;

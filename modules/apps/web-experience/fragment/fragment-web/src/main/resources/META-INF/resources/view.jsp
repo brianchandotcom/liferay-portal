@@ -131,12 +131,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 	</liferay-frontend:add-menu>
 </c:if>
 
-<aui:script sandbox="<%= true %>">
-	$('#<portlet:namespace />deleteSelectedFragmentCollections').on(
+<aui:script require="metal-dom/src/all/dom as dom">
+	dom.on(
+		'#<portlet:namespace />deleteSelectedFragmentCollections',
 		'click',
 		function() {
 			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				submitForm($(document.<portlet:namespace />fm));
+				submitForm(document.querySelector('#<portlet:namespace />fm'));
 			}
 		}
 	);

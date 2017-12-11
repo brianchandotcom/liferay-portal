@@ -342,9 +342,9 @@ public class VerifyPermission extends VerifyProcess {
 				StringBundler.concat(
 					"update ResourcePermission set roleId = ",
 					String.valueOf(userRole.getRoleId()),
-					" where resourcePermissionId ",
-					"in (select resourcePermissionId from ",
-					userPagePermissionsTableName, " where conflict = FALSE)"));
+					" where resourcePermissionId in (select ",
+					"resourcePermissionId from ", userPagePermissionsTableName,
+					" where conflict = FALSE)"));
 		}
 	}
 

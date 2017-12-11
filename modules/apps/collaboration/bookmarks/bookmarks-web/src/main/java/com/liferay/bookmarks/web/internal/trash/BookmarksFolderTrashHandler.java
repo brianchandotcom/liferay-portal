@@ -14,16 +14,17 @@
 
 package com.liferay.bookmarks.web.internal.trash;
 
-import com.liferay.bookmarks.asset.BookmarksFolderAssetRenderer;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
-import com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker;
 import com.liferay.bookmarks.util.BookmarksUtil;
+import com.liferay.bookmarks.web.internal.asset.BookmarksFolderAssetRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -117,7 +118,8 @@ public class BookmarksFolderTrashHandler extends BookmarksBaseTrashHandler {
 	public TrashRenderer getTrashRenderer(long classPK) throws PortalException {
 		BookmarksFolder folder = getBookmarksFolder(classPK);
 
-		return new BookmarksFolderAssetRenderer(folder, _trashHelper);
+		return new BookmarksFolderAssetRenderer(
+			folder, _trashHelper, _folderModelResourcePermission);
 	}
 
 	@Override
@@ -127,8 +129,9 @@ public class BookmarksFolderTrashHandler extends BookmarksBaseTrashHandler {
 		throws PortalException {
 
 		if (trashActionId.equals(TrashActionKeys.MOVE)) {
-			return BookmarksFolderPermissionChecker.contains(
-				permissionChecker, groupId, classPK, ActionKeys.ADD_FOLDER);
+			return ModelResourcePermissionHelper.contains(
+				_folderModelResourcePermission, permissionChecker, groupId,
+				classPK, ActionKeys.ADD_FOLDER);
 		}
 
 		return super.hasTrashPermission(
@@ -200,7 +203,7 @@ public class BookmarksFolderTrashHandler extends BookmarksBaseTrashHandler {
 
 		BookmarksFolder folder = getBookmarksFolder(classPK);
 
-		return BookmarksFolderPermissionChecker.contains(
+		return _folderModelResourcePermission.contains(
 			permissionChecker, folder, actionId);
 	}
 
@@ -212,6 +215,12 @@ public class BookmarksFolderTrashHandler extends BookmarksBaseTrashHandler {
 	}
 
 	private BookmarksFolderLocalService _bookmarksFolderLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)"
+	)
+	private ModelResourcePermission<BookmarksFolder>
+		_folderModelResourcePermission;
 
 	@Reference
 	private TrashHelper _trashHelper;

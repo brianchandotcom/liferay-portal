@@ -70,8 +70,8 @@ public class LanguageResources {
 			 */
 			@Deprecated
 			public ResourceBundle loadResourceBundle(String languageId) {
-				return loadResourceBundle(
-					LocaleUtil.fromLanguageId(languageId));
+				return ResourceBundleLoader.super.loadResourceBundle(
+					languageId);
 			}
 
 		};

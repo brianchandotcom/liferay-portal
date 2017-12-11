@@ -82,7 +82,7 @@ public class AggregateResourceBundleLoader implements ResourceBundleLoader {
 	@Deprecated
 	@Override
 	public ResourceBundle loadResourceBundle(String languageId) {
-		return loadResourceBundle(LocaleUtil.fromLanguageId(languageId));
+		return ResourceBundleLoader.super.loadResourceBundle(languageId);
 	}
 
 	private final ResourceBundleLoader[] _resourceBundleLoaders;

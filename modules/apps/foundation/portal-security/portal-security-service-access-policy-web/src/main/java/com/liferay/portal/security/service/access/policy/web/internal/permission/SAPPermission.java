@@ -12,11 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.security.service.access.policy.service.permission;
+package com.liferay.portal.security.service.access.policy.web.internal.permission;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.security.service.access.policy.constants.SAPConstants;
 
@@ -24,36 +22,13 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Tomas Polesovsky
- * @deprecated As of 2.1.0, with no direct replacement
+ * @author Preston Crary
  */
-@Component(
-	immediate = true,
-	property = {"resource.name=" + SAPConstants.RESOURCE_NAME},
-	service = ResourcePermissionChecker.class
-)
-@Deprecated
-public class SAPPermission implements ResourcePermissionChecker {
-
-	public static final String RESOURCE_NAME = SAPConstants.RESOURCE_NAME;
-
-	public static void check(
-			PermissionChecker permissionChecker, String actionId)
-		throws PortalException {
-
-		_portletResourcePermission.check(permissionChecker, null, actionId);
-	}
+@Component(immediate = true)
+public class SAPPermission {
 
 	public static boolean contains(
 		PermissionChecker permissionChecker, String actionId) {
-
-		return _portletResourcePermission.contains(
-			permissionChecker, null, actionId);
-	}
-
-	@Override
-	public Boolean checkResource(
-		PermissionChecker permissionChecker, long classPK, String actionId) {
 
 		return _portletResourcePermission.contains(
 			permissionChecker, null, actionId);

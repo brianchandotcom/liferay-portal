@@ -683,11 +683,9 @@ Error-Prone was automatically installed. Please rerun your task.
 	<macrodef name="jacoco-report">
 		<attribute name="exec.file" />
 		<element name="class.files" />
+		<element name="source.files" />
 
 		<sequential>
-			<delete dir="${jacoco.report.folder}" />
-			<mkdir dir="${jacoco.report.folder}" />
-
 			<jacoco:report>
 				<executiondata>
 					<file file="@{exec.file}" />
@@ -699,10 +697,7 @@ Error-Prone was automatically installed. Please rerun your task.
 					</classfiles>
 
 					<sourcefiles if:true="${jacoco.report.include.source.file}">
-						<dirset dir="${project.dir}">
-							<include name="**/src" />
-							<include name="**/src/main/java" />
-						</dirset>
+						<source.files/>
 					</sourcefiles>
 				</structure>
 
@@ -1661,8 +1656,28 @@ rerun your task.
 	</target>
 
 	<target name="generate-code-coverage-report">
-		<var name="exec.file" unset="true" />
+		<delete dir="${jacoco.report.folder}" />
+		<mkdir dir="${jacoco.report.folder}" />
 
+		<if>
+			<isset property="class.names" />
+			<then>
+				<taskdef classname="com.liferay.util.ant.GetFileSetTask" classpath="${project.dir}/util-java/util-java.jar" name="getFileSet" />
+				<getFileSet classNames="${class.names}" rootDir="${project.dir}" />
+			</then>
+			<else>
+				<fileset dir="${project.dir}" id="classSet">
+					<include name="**/classes/com/liferay/**/*.class" />
+				</fileset>
+
+				<dirset dir="${project.dir}" id="srcSet">
+					<include name="**/src" />
+					<include name="**/src/main/java" />
+				</dirset>
+			</else>
+		</if>
+
+		<var name="exec.file" unset="true" />
 		<if>
 			<available file="${jacoco.dump.file}" type="file" />
 			<then>
@@ -1692,6 +1707,9 @@ rerun your task.
 					<class.files>
 						<file file="${jacoco.merged.jar}" />
 					</class.files>
+					<source.files>
+						<dirset refid="srcSet" />
+					</source.files>
 				</jacoco-report>
 			</then>
 			<else>
@@ -1699,10 +1717,11 @@ rerun your task.
 					exec.file="${exec.file}"
 				>
 					<class.files>
-						<fileset dir="${project.dir}">
-							<include name="**/classes/com/liferay/**/*.class" />
-						</fileset>
+						<fileset refid="classSet" />
 					</class.files>
+					<source.files>
+						<dirset refid="srcSet" />
+					</source.files>
 				</jacoco-report>
 			</else>
 		</if>

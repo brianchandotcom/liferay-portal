@@ -257,6 +257,10 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="AdaptiveMediaTable#MAX_HEIGHT" value1="${maxHeight}" />
 	</command>
 
+	<command name="viewImageVariantDescription">
+		<execute function="AssertTextEquals" locator1="TextArea#DESCRIPTION" value1="${description}" />
+	</command>
+
 	<command name="viewImageVariantID">
 		<execute function="AssertTextEquals" locator1="TextInput#IMAGE_ID" value1="${imageVariantID}" />
 	</command>

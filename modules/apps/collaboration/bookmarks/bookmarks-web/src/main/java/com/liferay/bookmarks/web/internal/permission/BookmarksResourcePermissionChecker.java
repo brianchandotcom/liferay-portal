@@ -12,53 +12,36 @@
  * details.
  */
 
-package com.liferay.bookmarks.service.permission;
+package com.liferay.bookmarks.web.internal.permission;
 
 import com.liferay.bookmarks.constants.BookmarksConstants;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Jorge Ferrer
- * @deprecated As of 1.2.0, with no direct replacement
+ * @author Preston Crary
  */
-@Component(
-	immediate = true,
-	property = {"resource.name=" + BookmarksConstants.RESOURCE_NAME},
-	service = ResourcePermissionChecker.class
-)
-@Deprecated
-public class BookmarksResourcePermissionChecker
-	extends BaseResourcePermissionChecker {
-
-	public static final String RESOURCE_NAME = BookmarksConstants.RESOURCE_NAME;
+@Component(immediate = true)
+public class BookmarksResourcePermissionChecker {
 
 	public static void check(
-			PermissionChecker permissionChecker, long groupId, String actionId)
-		throws PortalException {
+			PermissionChecker permissionChecker, long scopeGroupId,
+			String actionId)
+		throws PrincipalException {
 
-		_portletResourcePermission.check(permissionChecker, groupId, actionId);
+		_portletResourcePermission.check(
+			permissionChecker, scopeGroupId, actionId);
 	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, long classPK, String actionId) {
+		PermissionChecker permissionChecker, long groupId, String actionId) {
 
 		return _portletResourcePermission.contains(
-			permissionChecker, classPK, actionId);
-	}
-
-	@Override
-	public Boolean checkResource(
-		PermissionChecker permissionChecker, long classPK, String actionId) {
-
-		return _portletResourcePermission.contains(
-			permissionChecker, classPK, actionId);
+			permissionChecker, groupId, actionId);
 	}
 
 	@Reference(

@@ -117,4 +117,73 @@ discoveryZenPingUnicastHostsPort=&quot;9300-9400&quot;" />
 			<var name="clusterStatus" value="&quot;cluster_name&quot; : &quot;LiferayElasticsearchCluster1&quot;" />
 		</execute>-->
 	</command>
+
+	<command name="ElasticsearchRemoteClusterSmokeTest" priority="5">
+		<property name="remote.elasticsearch.cluster.size" value="2" />
+		<property name="remote.elasticsearch.enabled" value="true" />
+		<property name="test.name.skip.portal.instance" value="ElasticsearchEE#ElasticsearchRemoteClusterSmokeTest" />
+
+		<execute macro="Elasticsearch#viewClusterStatusViaClusterHealthAPI">
+			<var name="numberOfNodes" value="2" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Message Boards" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addCP">
+			<var name="threadBody" value="Orange" />
+			<var name="threadSubject" value="Apple" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="Orange" />
+			<var name="dmDocumentFile" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Apple" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Apple" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultsPG">
+			<var name="searchAssetTitle" value="Apple" />
+			<var name="searchAssetType" value="Document" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultsPG">
+			<var name="searchAssetTitle" value="Apple" />
+			<var name="searchAssetType" value="Message Boards Message" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Orange" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultsPG">
+			<var name="searchAssetTitle" value="Apple" />
+			<var name="searchAssetType" value="Document" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultsPG">
+			<var name="searchAssetTitle" value="Apple" />
+			<var name="searchAssetType" value="Message Boards Message" />
+		</execute>
+	</command>
 </definition>

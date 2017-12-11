@@ -137,7 +137,7 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 			document.body,
 			'click',
 			'#<portlet:namespace />addFragmentEntryMenuItem',
-			function (event) {
+			function(event) {
 				event.preventDefault();
 
 				Liferay.Util.openSimpleInputModal({
@@ -156,7 +156,7 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 			document.body,
 			'click',
 			'.<portlet:namespace />update-fragment-action-option > a',
-			function (event) {
+			function(event) {
 				var data = event.delegateTarget.dataset;
 
 				event.preventDefault();

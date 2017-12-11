@@ -15,10 +15,13 @@
 package com.liferay.commerce.wizard.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.model.CPGroup;
+import com.liferay.commerce.product.service.CPGroupService;
 import com.liferay.commerce.product.util.CommerceStarterRegistry;
 import com.liferay.commerce.wizard.web.internal.display.context.CommerceStarterDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -53,6 +56,14 @@ public class ViewCommerceStarterDetailsMVCRenderCommand
 		throws PortletException {
 
 		try {
+			long groupId = _portal.getScopeGroupId(renderRequest);
+
+			CPGroup cpGroup = _cpGroupService.fetchCPGroupByGroupId(groupId);
+
+			if (cpGroup != null) {
+				return "/result.jsp";
+			}
+
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);
 			HttpServletResponse httpServletResponse =
@@ -60,8 +71,8 @@ public class ViewCommerceStarterDetailsMVCRenderCommand
 
 			CommerceStarterDisplayContext commerceStarterDisplayContext =
 				new CommerceStarterDisplayContext(
-					_commerceStarterRegistry, httpServletRequest,
-					httpServletResponse);
+					_commerceStarterRegistry, _layoutLocalService, _portal,
+					httpServletRequest, httpServletResponse);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, commerceStarterDisplayContext);
@@ -82,6 +93,12 @@ public class ViewCommerceStarterDetailsMVCRenderCommand
 
 	@Reference
 	private CommerceStarterRegistry _commerceStarterRegistry;
+
+	@Reference
+	private CPGroupService _cpGroupService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

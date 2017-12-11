@@ -15,7 +15,14 @@
 package com.liferay.commerce.wizard.web.internal.portlet;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.model.CPGroup;
+import com.liferay.commerce.product.service.CPGroupService;
+import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
 
@@ -24,7 +31,11 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -60,7 +71,39 @@ public class CommerceWizardPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		super.render(renderRequest, renderResponse);
+		try {
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(renderRequest);
+			HttpServletResponse httpServletResponse =
+				_portal.getHttpServletResponse(renderResponse);
+
+			long groupId = _portal.getScopeGroupId(renderRequest);
+
+			CPGroup cpGroup = _cpGroupService.fetchCPGroupByGroupId(groupId);
+
+			if (cpGroup != null) {
+				_jspRenderer.renderJSP(
+					httpServletRequest, httpServletResponse, "/result.jsp");
+			}
+			else {
+				super.render(renderRequest, renderResponse);
+			}
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommerceWizardPortlet.class);
+
+	@Reference
+	private CPGroupService _cpGroupService;
+
+	@Reference
+	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private Portal _portal;
 
 }

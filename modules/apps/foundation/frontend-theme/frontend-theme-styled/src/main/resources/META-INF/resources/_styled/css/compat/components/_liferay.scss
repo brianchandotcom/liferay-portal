@@ -43,6 +43,10 @@
 		.search-field {
 			display: inline-flex;
 
+			&:first-of-type {
+				width: 100%;
+			}
+
 			.btn {
 				margin: 0;
 			}

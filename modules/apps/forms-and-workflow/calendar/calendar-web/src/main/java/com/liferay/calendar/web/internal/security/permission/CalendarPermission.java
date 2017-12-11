@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.service.permission;
+package com.liferay.calendar.web.internal.security.permission;
 
 import com.liferay.calendar.model.Calendar;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -23,31 +23,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eduardo Lundgren
- * @author Fabio Pezzutto
- * @deprecated As of 3.0.0, with no direct replacement
+ * @author Preston Crary
  */
 @Component(immediate = true)
-@Deprecated
 public class CalendarPermission {
-
-	public static void check(
-			PermissionChecker permissionChecker, Calendar calendar,
-			String actionId)
-		throws PortalException {
-
-		_calendarModelResourcePermission.check(
-			permissionChecker, calendar, actionId);
-	}
-
-	public static void check(
-			PermissionChecker permissionChecker, long calendarId,
-			String actionId)
-		throws PortalException {
-
-		_calendarModelResourcePermission.check(
-			permissionChecker, calendarId, actionId);
-	}
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, Calendar calendar,

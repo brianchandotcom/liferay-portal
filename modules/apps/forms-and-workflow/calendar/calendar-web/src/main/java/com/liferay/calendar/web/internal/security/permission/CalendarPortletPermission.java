@@ -12,53 +12,26 @@
  * details.
  */
 
-package com.liferay.calendar.service.permission;
+package com.liferay.calendar.web.internal.security.permission;
 
 import com.liferay.calendar.constants.CalendarConstants;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eduardo Lundgren
- * @author Andrea Di Giorgi
- * @deprecated As of 3.0.0, with no direct replacement
+ * @author Preston Crary
  */
-@Component(
-	immediate = true,
-	property = {"resource.name=" + CalendarConstants.RESOURCE_NAME},
-	service = ResourcePermissionChecker.class
-)
-@Deprecated
-public class CalendarPortletPermission extends BaseResourcePermissionChecker {
-
-	public static final String RESOURCE_NAME = CalendarConstants.RESOURCE_NAME;
-
-	public static void check(
-			PermissionChecker permissionChecker, long groupId, String actionId)
-		throws PortalException {
-
-		_portletResourcePermission.check(permissionChecker, groupId, actionId);
-	}
+@Component(immediate = true)
+public class CalendarPortletPermission {
 
 	public static boolean contains(
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
 		return _portletResourcePermission.contains(
 			permissionChecker, groupId, actionId);
-	}
-
-	@Override
-	public Boolean checkResource(
-		PermissionChecker permissionChecker, long classPK, String actionId) {
-
-		return _portletResourcePermission.contains(
-			permissionChecker, classPK, actionId);
 	}
 
 	@Reference(

@@ -280,6 +280,22 @@ AUI.add(
 						);
 					},
 
+					syncAvailableLocales: function(locales) {
+						var instance = this;
+
+						var availableLocales = instance.get('availableLocales');
+
+						instance.set(
+							'availableLocales',
+							AArray.filter(
+								availableLocales,
+								function(item) {
+									return AArray.indexOf(locales, item) === -1;
+								}
+							)
+						);
+					},
+
 					toggleDefaultLocales: function() {
 						var instance = this;
 
@@ -402,6 +418,10 @@ AUI.add(
 						var instance = this;
 
 						var locales = A.Object.keys(val);
+
+						if (locales.length != 0) {
+							this.syncAvailableLocales(locales);
+						}
 
 						locales.sort();
 

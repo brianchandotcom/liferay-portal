@@ -16,13 +16,13 @@ package com.liferay.calendar.service.impl;
 
 import com.liferay.calendar.constants.CalendarActionKeys;
 import com.liferay.calendar.model.Calendar;
+import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.base.CalendarServiceBaseImpl;
-import com.liferay.calendar.service.permission.CalendarPermission;
-import com.liferay.calendar.service.permission.CalendarResourcePermission;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -47,7 +47,7 @@ public class CalendarServiceImpl extends CalendarServiceBaseImpl {
 			boolean enableRatings, ServiceContext serviceContext)
 		throws PortalException {
 
-		CalendarResourcePermission.check(
+		_calendarResourceModelResourcePermission.check(
 			getPermissionChecker(), calendarResourceId,
 			CalendarActionKeys.ADD_CALENDAR);
 
@@ -59,7 +59,7 @@ public class CalendarServiceImpl extends CalendarServiceBaseImpl {
 
 	@Override
 	public Calendar deleteCalendar(long calendarId) throws PortalException {
-		CalendarPermission.check(
+		_calendarModelResourcePermission.check(
 			getPermissionChecker(), calendarId, ActionKeys.DELETE);
 
 		return calendarLocalService.deleteCalendar(calendarId);
@@ -69,7 +69,7 @@ public class CalendarServiceImpl extends CalendarServiceBaseImpl {
 	public String exportCalendar(long calendarId, String type)
 		throws Exception {
 
-		CalendarPermission.check(
+		_calendarModelResourcePermission.check(
 			getPermissionChecker(), calendarId,
 			CalendarActionKeys.VIEW_BOOKING_DETAILS);
 
@@ -84,7 +84,7 @@ public class CalendarServiceImpl extends CalendarServiceBaseImpl {
 			return null;
 		}
 
-		CalendarPermission.check(
+		_calendarModelResourcePermission.check(
 			getPermissionChecker(), calendar, ActionKeys.VIEW);
 
 		return calendar;
@@ -92,7 +92,7 @@ public class CalendarServiceImpl extends CalendarServiceBaseImpl {
 
 	@Override
 	public Calendar getCalendar(long calendarId) throws PortalException {
-		CalendarPermission.check(
+		_calendarModelResourcePermission.check(
 			getPermissionChecker(), calendarId, ActionKeys.VIEW);
 
 		return calendarLocalService.getCalendar(calendarId);
@@ -103,7 +103,7 @@ public class CalendarServiceImpl extends CalendarServiceBaseImpl {
 			long groupId, long calendarResourceId)
 		throws PortalException {
 
-		CalendarResourcePermission.check(
+		_calendarResourceModelResourcePermission.check(
 			getPermissionChecker(), calendarResourceId, ActionKeys.VIEW);
 
 		return calendarLocalService.getCalendarResourceCalendars(
@@ -115,7 +115,7 @@ public class CalendarServiceImpl extends CalendarServiceBaseImpl {
 			long groupId, long calendarResourceId, boolean defaultCalendar)
 		throws PortalException {
 
-		CalendarResourcePermission.check(
+		_calendarResourceModelResourcePermission.check(
 			getPermissionChecker(), calendarResourceId, ActionKeys.VIEW);
 
 		return calendarLocalService.getCalendarResourceCalendars(
@@ -126,7 +126,7 @@ public class CalendarServiceImpl extends CalendarServiceBaseImpl {
 	public void importCalendar(long calendarId, String data, String type)
 		throws Exception {
 
-		CalendarPermission.check(
+		_calendarModelResourcePermission.check(
 			getPermissionChecker(), calendarId, ActionKeys.UPDATE);
 
 		calendarLocalService.importCalendar(calendarId, data, type);
@@ -136,7 +136,7 @@ public class CalendarServiceImpl extends CalendarServiceBaseImpl {
 	public boolean isManageableFromGroup(long calendarId, long groupId)
 		throws PortalException {
 
-		if (!CalendarPermission.contains(
+		if (!_calendarModelResourcePermission.contains(
 				getPermissionChecker(), calendarId,
 				CalendarActionKeys.MANAGE_BOOKINGS)) {
 
@@ -271,7 +271,7 @@ public class CalendarServiceImpl extends CalendarServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CalendarPermission.check(
+		_calendarModelResourcePermission.check(
 			getPermissionChecker(), calendarId, ActionKeys.UPDATE);
 
 		return calendarLocalService.updateCalendar(
@@ -286,7 +286,7 @@ public class CalendarServiceImpl extends CalendarServiceBaseImpl {
 			boolean enableRatings, ServiceContext serviceContext)
 		throws PortalException {
 
-		CalendarPermission.check(
+		_calendarModelResourcePermission.check(
 			getPermissionChecker(), calendarId, ActionKeys.UPDATE);
 
 		return calendarLocalService.updateCalendar(
@@ -299,7 +299,7 @@ public class CalendarServiceImpl extends CalendarServiceBaseImpl {
 			long calendarId, int color, ServiceContext serviceContext)
 		throws PortalException {
 
-		CalendarPermission.check(
+		_calendarModelResourcePermission.check(
 			getPermissionChecker(), calendarId, ActionKeys.UPDATE);
 
 		return calendarLocalService.updateColor(
@@ -308,7 +308,7 @@ public class CalendarServiceImpl extends CalendarServiceBaseImpl {
 
 	protected List<Calendar> filterCalendars(
 			List<Calendar> calendars, String actionId)
-		throws PrincipalException {
+		throws PortalException {
 
 		calendars = ListUtil.copy(calendars);
 
@@ -317,7 +317,7 @@ public class CalendarServiceImpl extends CalendarServiceBaseImpl {
 		while (itr.hasNext()) {
 			Calendar calendar = itr.next();
 
-			if (!CalendarPermission.contains(
+			if (!_calendarModelResourcePermission.contains(
 					getPermissionChecker(), calendar, actionId)) {
 
 				itr.remove();
@@ -326,5 +326,17 @@ public class CalendarServiceImpl extends CalendarServiceBaseImpl {
 
 		return calendars;
 	}
+
+	private static volatile ModelResourcePermission<Calendar>
+		_calendarModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				CalendarServiceImpl.class, "_calendarModelResourcePermission",
+				Calendar.class);
+	private static volatile ModelResourcePermission<CalendarResource>
+		_calendarResourceModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				CalendarServiceImpl.class,
+				"_calendarResourceModelResourcePermission",
+				CalendarResource.class);
 
 }

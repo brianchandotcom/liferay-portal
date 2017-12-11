@@ -23,7 +23,6 @@ import com.liferay.calendar.recurrence.RecurrenceSerializer;
 import com.liferay.calendar.service.CalendarBookingServiceUtil;
 import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
 import com.liferay.calendar.service.CalendarServiceUtil;
-import com.liferay.calendar.service.permission.CalendarPermission;
 import com.liferay.calendar.util.comparator.CalendarNameComparator;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -33,6 +32,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -52,11 +52,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Eduardo Lundgren
  * @author Peter Shin
  * @author Fabio Pezzutto
  */
+@Component(immediate = true)
 public class CalendarUtil {
 
 	public static TimeZone getCalendarBookingDisplayTimeZone(
@@ -446,6 +450,16 @@ public class CalendarUtil {
 		return jsonArray;
 	}
 
+	@Reference(
+		target = "(model.class.name=com.liferay.calendar.model.Calendar)",
+		unbind = "-"
+	)
+	protected void setModelResourcePermission(
+		ModelResourcePermission<Calendar> modelResourcePermission) {
+
+		_calendarModelResourcePermission = modelResourcePermission;
+	}
+
 	private static void _addTimeProperties(
 		JSONObject jsonObject, String prefix, java.util.Calendar jCalendar) {
 
@@ -462,45 +476,48 @@ public class CalendarUtil {
 	}
 
 	private static JSONObject _getPermissionsJSONObject(
-		PermissionChecker permissionChecker, Calendar calendar) {
+			PermissionChecker permissionChecker, Calendar calendar)
+		throws PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put(
 			ActionKeys.DELETE,
-			CalendarPermission.contains(
+			_calendarModelResourcePermission.contains(
 				permissionChecker, calendar, ActionKeys.DELETE));
 
 		jsonObject.put(
 			ActionKeys.PERMISSIONS,
-			CalendarPermission.contains(
+			_calendarModelResourcePermission.contains(
 				permissionChecker, calendar, ActionKeys.PERMISSIONS));
 
 		jsonObject.put(
 			ActionKeys.UPDATE,
-			CalendarPermission.contains(
+			_calendarModelResourcePermission.contains(
 				permissionChecker, calendar, ActionKeys.UPDATE));
 
 		jsonObject.put(
 			ActionKeys.VIEW,
-			CalendarPermission.contains(
+			_calendarModelResourcePermission.contains(
 				permissionChecker, calendar, ActionKeys.VIEW));
 
 		jsonObject.put(
 			CalendarActionKeys.MANAGE_BOOKINGS,
-			CalendarPermission.contains(
+			_calendarModelResourcePermission.contains(
 				permissionChecker, calendar,
 				CalendarActionKeys.MANAGE_BOOKINGS));
 
 		jsonObject.put(
 			CalendarActionKeys.VIEW_BOOKING_DETAILS,
-			CalendarPermission.contains(
+			_calendarModelResourcePermission.contains(
 				permissionChecker, calendar,
 				CalendarActionKeys.VIEW_BOOKING_DETAILS));
 
 		return jsonObject;
 	}
 
+	private static ModelResourcePermission<Calendar>
+		_calendarModelResourcePermission;
 	private static final TimeZone _utcTimeZone = TimeZone.getTimeZone(
 		StringPool.UTC);
 

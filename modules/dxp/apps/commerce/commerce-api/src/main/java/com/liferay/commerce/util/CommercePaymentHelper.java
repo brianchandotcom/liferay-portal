@@ -32,7 +32,7 @@ public interface CommercePaymentHelper {
 			CommerceOrder commerceOrder, Map<String, String[]> parameterMap)
 		throws PortalException;
 
-	public String getPaymentURL(
+	public String startPayment(
 			CommerceOrder commerceOrder, ServiceContext serviceContext)
 		throws PortalException;
 

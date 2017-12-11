@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -180,6 +181,23 @@ public class CommerceOrderLocalServiceImpl
 	@Override
 	public int getCommerceOrdersCount(long groupId) {
 		return commerceOrderPersistence.countByGroupId(groupId);
+	}
+
+	@Override
+	public CommerceOrder updatePaymentStatus(
+			long commerceOrderId, int paymentStatus, int status)
+		throws PortalException {
+
+		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
+			commerceOrderId);
+
+		commerceOrder.setModifiedDate(new Date());
+		commerceOrder.setPaymentStatus(paymentStatus);
+		commerceOrder.setStatus(status);
+
+		commerceOrderPersistence.update(commerceOrder);
+
+		return commerceOrder;
 	}
 
 	@ServiceReference(type = CommercePriceCalculator.class)

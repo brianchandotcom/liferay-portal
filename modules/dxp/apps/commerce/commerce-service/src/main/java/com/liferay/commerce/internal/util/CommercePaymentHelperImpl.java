@@ -17,8 +17,10 @@ package com.liferay.commerce.internal.util;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.exception.NoSuchPaymentMethodException;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderConstants;
 import com.liferay.commerce.model.CommercePaymentEngine;
 import com.liferay.commerce.model.CommercePaymentMethod;
+import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.util.CommercePaymentEngineRegistry;
 import com.liferay.commerce.util.CommercePaymentHelper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -55,10 +57,15 @@ public class CommercePaymentHelperImpl implements CommercePaymentHelper {
 		}
 
 		commercePaymentEngine.completePayment(commerceOrder, parameterMap);
+
+		_commerceOrderLocalService.updatePaymentStatus(
+			commerceOrder.getCommerceOrderId(),
+			CommerceOrderConstants.PAYMENT_STATUS_PAID,
+			CommerceOrderConstants.STATUS_PROCESSING);
 	}
 
 	@Override
-	public String getPaymentURL(
+	public String startPayment(
 			CommerceOrder commerceOrder, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -66,6 +73,11 @@ public class CommercePaymentHelperImpl implements CommercePaymentHelper {
 			commerceOrder);
 
 		if (commercePaymentEngine == null) {
+			_commerceOrderLocalService.updatePaymentStatus(
+				commerceOrder.getCommerceOrderId(),
+				CommerceOrderConstants.PAYMENT_STATUS_PAID,
+				CommerceOrderConstants.STATUS_PROCESSING);
+
 			return null;
 		}
 
@@ -95,7 +107,7 @@ public class CommercePaymentHelperImpl implements CommercePaymentHelper {
 
 		String cancelURL = sb.toString();
 
-		return commercePaymentEngine.getPaymentURL(
+		return commercePaymentEngine.startPayment(
 			commerceOrder, cancelURL, returnURL, serviceContext.getLocale());
 	}
 
@@ -118,6 +130,9 @@ public class CommercePaymentHelperImpl implements CommercePaymentHelper {
 		return _commercePaymentEngineRegistry.getCommercePaymentEngine(
 			commercePaymentMethod.getEngineKey());
 	}
+
+	@Reference
+	private CommerceOrderLocalService _commerceOrderLocalService;
 
 	@Reference
 	private CommercePaymentEngineRegistry _commercePaymentEngineRegistry;

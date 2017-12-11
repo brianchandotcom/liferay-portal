@@ -77,15 +77,6 @@ public class MoneyOrderCommercePaymentEngine implements CommercePaymentEngine {
 	}
 
 	@Override
-	public String getPaymentURL(
-			CommerceOrder commerceOrder, String cancelURL, String returnURL,
-			Locale locale)
-		throws CommercePaymentEngineException {
-
-		return null;
-	}
-
-	@Override
 	public void renderConfiguration(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception {
@@ -118,6 +109,15 @@ public class MoneyOrderCommercePaymentEngine implements CommercePaymentEngine {
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
 			"/configuration.jsp");
+	}
+
+	@Override
+	public String startPayment(
+			CommerceOrder commerceOrder, String cancelURL, String returnURL,
+			Locale locale)
+		throws CommercePaymentEngineException {
+
+		return null;
 	}
 
 	@Override

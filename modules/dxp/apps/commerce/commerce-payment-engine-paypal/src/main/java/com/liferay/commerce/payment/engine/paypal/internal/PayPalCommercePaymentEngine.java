@@ -117,23 +117,6 @@ public class PayPalCommercePaymentEngine implements CommercePaymentEngine {
 	}
 
 	@Override
-	public String getPaymentURL(
-			CommerceOrder commerceOrder, String cancelURL, String returnURL,
-			Locale locale)
-		throws CommercePaymentEngineException {
-
-		try {
-			return _getPaymentURL(commerceOrder, cancelURL, returnURL, locale);
-		}
-		catch (CommercePaymentEngineException cpee) {
-			throw cpee;
-		}
-		catch (Exception e) {
-			throw new CommercePaymentEngineException(e);
-		}
-	}
-
-	@Override
 	public void renderConfiguration(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception {
@@ -165,6 +148,23 @@ public class PayPalCommercePaymentEngine implements CommercePaymentEngine {
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
 			"/configuration.jsp");
+	}
+
+	@Override
+	public String startPayment(
+			CommerceOrder commerceOrder, String cancelURL, String returnURL,
+			Locale locale)
+		throws CommercePaymentEngineException {
+
+		try {
+			return _getPaymentURL(commerceOrder, cancelURL, returnURL, locale);
+		}
+		catch (CommercePaymentEngineException cpee) {
+			throw cpee;
+		}
+		catch (Exception e) {
+			throw new CommercePaymentEngineException(e);
+		}
 	}
 
 	@Override

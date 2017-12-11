@@ -125,7 +125,7 @@ public class OrderSummaryCommerceCheckoutStep implements CommerceCheckoutStep {
 
 		serviceContext.setAttribute("redirect", redirect);
 
-		String paymentURL = _commercePaymentHelper.getPaymentURL(
+		String paymentURL = _commercePaymentHelper.startPayment(
 			commerceOrder, serviceContext);
 
 		if (Validator.isNotNull(paymentURL)) {

@@ -39,14 +39,14 @@ public interface CommercePaymentEngine {
 
 	public String getName(Locale locale);
 
-	public String getPaymentURL(
-			CommerceOrder commerceOrder, String cancelURL, String returnURL,
-			Locale locale)
-		throws CommercePaymentEngineException;
-
 	public void renderConfiguration(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception;
+
+	public String startPayment(
+			CommerceOrder commerceOrder, String cancelURL, String returnURL,
+			Locale locale)
+		throws CommercePaymentEngineException;
 
 	public void updateConfiguration(
 			Map<String, String> parameterMap, ServiceContext serviceContext)

@@ -1,8 +1,6 @@
-sourceCompatibility = "1.6"
-targetCompatibility = "1.6"
-
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	provided group: "com.liferay", name: "com.liferay.petra.io", version: "1.1.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
 	provided group: "com.maxmind.geoip", name: "geoip-api", version: "1.2.14"
 	provided group: "log4j", name: "log4j", version: "1.2.17"

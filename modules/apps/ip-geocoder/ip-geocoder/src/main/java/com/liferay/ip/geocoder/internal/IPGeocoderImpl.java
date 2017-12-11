@@ -16,13 +16,12 @@ package com.liferay.ip.geocoder.internal;
 
 import com.liferay.ip.geocoder.IPGeocoder;
 import com.liferay.ip.geocoder.IPInfo;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
 import com.maxmind.geoip.Location;
 import com.maxmind.geoip.LookupService;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -141,12 +140,18 @@ public class IPGeocoderImpl implements IPGeocoder {
 			URLConnection urlConnection = url.openConnection();
 
 			File xzFile = new File(
-				System.getProperty("java.io.tmpdir") +
-					"/liferay/geoip/GeoIPCity.dat.xz");
+				System.getProperty("java.io.tmpdir"),
+				"/liferay/geoip/GeoIPCity.dat.xz");
 
-			write(xzFile, urlConnection.getInputStream());
+			try (InputStream inputStream = urlConnection.getInputStream()) {
+				write(xzFile, inputStream);
+			}
 
-			write(file, new XZInputStream(new FileInputStream(xzFile)));
+			try (InputStream inputStream =
+					new XZInputStream(new FileInputStream(xzFile))) {
+
+				write(file, inputStream);
+			}
 		}
 
 		return file;
@@ -173,21 +178,9 @@ public class IPGeocoderImpl implements IPGeocoder {
 
 		}
 
-		BufferedInputStream bufferedInputStream = new BufferedInputStream(
-			inputStream);
-
-		BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(
-			new FileOutputStream(file));
-
-		int i = 0;
-
-		while ((i = bufferedInputStream.read()) != -1) {
-			bufferedOutputStream.write(i);
+		try (FileOutputStream outputStream = new FileOutputStream(file)) {
+			StreamUtil.transfer(inputStream, outputStream);
 		}
-
-		bufferedOutputStream.flush();
-
-		bufferedInputStream.close();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

@@ -112,7 +112,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 						var instance = this;
 
 						<liferay-security:permissionsURL
-							modelResource="<%= CalendarPortletPermission.RESOURCE_NAME %>"
+							modelResource="<%= CalendarConstants.RESOURCE_NAME %>"
 							modelResourceDescription=""
 							resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
 							var="permissionsURL"

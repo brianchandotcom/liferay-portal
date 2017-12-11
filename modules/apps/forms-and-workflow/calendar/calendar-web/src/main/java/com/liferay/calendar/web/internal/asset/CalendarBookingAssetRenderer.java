@@ -21,7 +21,7 @@ import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.constants.CalendarWebKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
-import com.liferay.calendar.service.permission.CalendarPermission;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -53,8 +54,12 @@ import javax.servlet.http.HttpServletResponse;
 public class CalendarBookingAssetRenderer
 	extends BaseJSPAssetRenderer<CalendarBooking> implements TrashRenderer {
 
-	public CalendarBookingAssetRenderer(CalendarBooking calendarBooking) {
+	public CalendarBookingAssetRenderer(
+		CalendarBooking calendarBooking,
+		ModelResourcePermission<Calendar> calendarModelResourcePermission) {
+
 		_calendarBooking = calendarBooking;
+		_calendarModelResourcePermission = calendarModelResourcePermission;
 	}
 
 	@Override
@@ -185,33 +190,20 @@ public class CalendarBookingAssetRenderer
 	}
 
 	@Override
-	public boolean hasEditPermission(PermissionChecker permissionChecker) {
-		Calendar calendar = null;
+	public boolean hasEditPermission(PermissionChecker permissionChecker)
+		throws PortalException {
 
-		try {
-			calendar = _calendarBooking.getCalendar();
-		}
-		catch (Exception e) {
-			_log.error("Unable to get calendar", e);
-		}
-
-		return CalendarPermission.contains(
-			permissionChecker, calendar, CalendarActionKeys.MANAGE_BOOKINGS);
+		return _calendarModelResourcePermission.contains(
+			permissionChecker, _calendarBooking.getCalendar(),
+			CalendarActionKeys.MANAGE_BOOKINGS);
 	}
 
 	@Override
-	public boolean hasViewPermission(PermissionChecker permissionChecker) {
-		Calendar calendar = null;
+	public boolean hasViewPermission(PermissionChecker permissionChecker)
+		throws PortalException {
 
-		try {
-			calendar = _calendarBooking.getCalendar();
-		}
-		catch (Exception e) {
-			_log.error("Unable to get calendar", e);
-		}
-
-		return CalendarPermission.contains(
-			permissionChecker, calendar, ActionKeys.VIEW);
+		return _calendarModelResourcePermission.contains(
+			permissionChecker, _calendarBooking.getCalendar(), ActionKeys.VIEW);
 	}
 
 	@Override
@@ -263,5 +255,7 @@ public class CalendarBookingAssetRenderer
 		CalendarBookingAssetRenderer.class);
 
 	private final CalendarBooking _calendarBooking;
+	private final ModelResourcePermission<Calendar>
+		_calendarModelResourcePermission;
 
 }

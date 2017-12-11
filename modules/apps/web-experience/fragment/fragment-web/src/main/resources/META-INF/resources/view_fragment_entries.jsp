@@ -128,9 +128,7 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 		<liferay-frontend:add-menu-item id="addFragmentEntryMenuItem" title='<%= LanguageUtil.get(request, "add-fragment") %>' url="<%= addFragmentEntryURL.toString() %>" />
 	</liferay-frontend:add-menu>
 
-	<aui:script require="metal-dom/src/all/dom">
-		var dom = metalDomSrcAllDom.default;
-
+	<aui:script require="metal-dom/src/all/dom as dom">
 		var fieldName = '<%= LanguageUtil.get(request, "name") %>';
 		var namespace = '<%= renderResponse.getNamespace() %>';
 		var spritemap = '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg';
@@ -186,16 +184,15 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 		}
 
 		Liferay.on('destroyPortlet', handleDestroyPortlet);
+
+		dom.on(
+			'#<portlet:namespace />deleteSelectedFragmentEntries',
+			'click',
+			function() {
+				if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+					submitForm(document.querySelector('#<portlet:namespace />fm'));
+				}
+			}
+		);
 	</aui:script>
 </c:if>
-
-<aui:script sandbox="<%= true %>">
-	$('#<portlet:namespace />deleteSelectedFragmentEntries').on(
-		'click',
-		function() {
-			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				submitForm($(document.<portlet:namespace />fm));
-			}
-		}
-	);
-</aui:script>

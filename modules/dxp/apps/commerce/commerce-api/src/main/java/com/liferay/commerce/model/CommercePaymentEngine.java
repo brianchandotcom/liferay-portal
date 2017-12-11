@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.Locale;
@@ -25,6 +27,7 @@ import javax.portlet.RenderResponse;
 /**
  * @author Andrea Di Giorgi
  */
+@ProviderType
 public interface CommercePaymentEngine {
 
 	public String getDescription(Locale locale);

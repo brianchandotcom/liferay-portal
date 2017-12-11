@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
@@ -26,6 +28,7 @@ import javax.portlet.RenderResponse;
 /**
  * @author Andrea Di Giorgi
  */
+@ProviderType
 public interface CommerceShippingOriginLocator {
 
 	public String getDescription(Locale locale);

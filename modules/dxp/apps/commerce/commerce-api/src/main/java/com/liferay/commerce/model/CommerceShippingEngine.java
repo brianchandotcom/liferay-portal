@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.commerce.exception.CommerceShippingEngineException;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -27,6 +29,7 @@ import javax.portlet.RenderResponse;
 /**
  * @author Andrea Di Giorgi
  */
+@ProviderType
 public interface CommerceShippingEngine {
 
 	public List<CommerceShippingOption> getCommerceShippingOptions(

@@ -17,18 +17,19 @@ package com.liferay.bookmarks.web.internal.asset;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
+import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.BookmarksEntryLocalService;
-import com.liferay.bookmarks.service.permission.BookmarksEntryPermissionChecker;
-import com.liferay.bookmarks.service.permission.BookmarksResourcePermissionChecker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.PortletRequest;
@@ -72,7 +73,8 @@ public class BookmarksEntryAssetRendererFactory
 		BookmarksEntry entry = _bookmarksEntryLocalService.getEntry(classPK);
 
 		BookmarksEntryAssetRenderer bookmarksEntryAssetRenderer =
-			new BookmarksEntryAssetRenderer(entry);
+			new BookmarksEntryAssetRenderer(
+				entry, _entryModelResourcePermission);
 
 		bookmarksEntryAssetRenderer.setAssetRendererType(type);
 		bookmarksEntryAssetRenderer.setServletContext(_servletContext);
@@ -137,7 +139,7 @@ public class BookmarksEntryAssetRendererFactory
 			PermissionChecker permissionChecker, long groupId, long classTypeId)
 		throws Exception {
 
-		return BookmarksResourcePermissionChecker.contains(
+		return _portletResourcePermission.contains(
 			permissionChecker, groupId, ActionKeys.ADD_ENTRY);
 	}
 
@@ -146,7 +148,7 @@ public class BookmarksEntryAssetRendererFactory
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		return BookmarksEntryPermissionChecker.contains(
+		return _entryModelResourcePermission.contains(
 			permissionChecker, classPK, actionId);
 	}
 
@@ -167,8 +169,19 @@ public class BookmarksEntryAssetRendererFactory
 
 	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 
+	@Reference(
+		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksEntry)"
+	)
+	private ModelResourcePermission<BookmarksEntry>
+		_entryModelResourcePermission;
+
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(resource.name=" + BookmarksConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 	private ServletContext _servletContext;
 

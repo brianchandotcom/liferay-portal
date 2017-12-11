@@ -17,12 +17,12 @@ package com.liferay.bookmarks.web.internal.portlet.configuration.icon;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
-import com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker;
 import com.liferay.bookmarks.web.internal.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -104,7 +104,7 @@ public class EditFolderPortletConfigurationIcon
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			if (BookmarksFolderPermissionChecker.contains(
+			if (_folderModelResourcePermission.contains(
 					themeDisplay.getPermissionChecker(), folder,
 					ActionKeys.UPDATE)) {
 
@@ -116,6 +116,12 @@ public class EditFolderPortletConfigurationIcon
 
 		return false;
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)"
+	)
+	private ModelResourcePermission<BookmarksFolder>
+		_folderModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

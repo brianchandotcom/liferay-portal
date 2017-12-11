@@ -20,11 +20,11 @@ import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
-import com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.trash.TrashHelper;
 
 import javax.portlet.PortletRequest;
@@ -66,7 +66,8 @@ public class BookmarksFolderAssetRendererFactory
 			classPK);
 
 		BookmarksFolderAssetRenderer bookmarksFolderAssetRenderer =
-			new BookmarksFolderAssetRenderer(folder, _trashHelper);
+			new BookmarksFolderAssetRenderer(
+				folder, _trashHelper, _folderModelResourcePermission);
 
 		bookmarksFolderAssetRenderer.setAssetRendererType(type);
 		bookmarksFolderAssetRenderer.setServletContext(_servletContext);
@@ -112,11 +113,8 @@ public class BookmarksFolderAssetRendererFactory
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		BookmarksFolder folder = _bookmarksFolderLocalService.getFolder(
-			classPK);
-
-		return BookmarksFolderPermissionChecker.contains(
-			permissionChecker, folder, actionId);
+		return _folderModelResourcePermission.contains(
+			permissionChecker, classPK, actionId);
 	}
 
 	@Reference(
@@ -135,6 +133,13 @@ public class BookmarksFolderAssetRendererFactory
 	}
 
 	private BookmarksFolderLocalService _bookmarksFolderLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)"
+	)
+	private ModelResourcePermission<BookmarksFolder>
+		_folderModelResourcePermission;
+
 	private ServletContext _servletContext;
 
 	@Reference

@@ -12,47 +12,22 @@
  * details.
  */
 
-package com.liferay.mobile.device.rules.service.permission;
+package com.liferay.mobile.device.rules.web.internal.security.permission;
 
 import com.liferay.mobile.device.rules.constants.MDRConstants;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Edward Han
- * @author Daniel Kocsis
- * @deprecated As of 1.2.0, with no direct replacement
+ * @author Preston Crary
  */
-@Component(
-	immediate = true,
-	property = {"resource.name=" + MDRConstants.RESOURCE_NAME},
-	service = ResourcePermissionChecker.class
-)
-@Deprecated
-public class MDRPermission extends BaseResourcePermissionChecker {
-
-	public static void check(
-			PermissionChecker permissionChecker, long groupId, String actionId)
-		throws PortalException {
-
-		_portletResourcePermission.check(permissionChecker, groupId, actionId);
-	}
+@Component(immediate = true)
+public class MDRPermission {
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, long classPK, String actionId) {
-
-		return _portletResourcePermission.contains(
-			permissionChecker, classPK, actionId);
-	}
-
-	@Override
-	public Boolean checkResource(
 		PermissionChecker permissionChecker, long classPK, String actionId) {
 
 		return _portletResourcePermission.contains(

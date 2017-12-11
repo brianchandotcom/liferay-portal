@@ -12,12 +12,10 @@
  * details.
  */
 
-package com.liferay.mobile.device.rules.service.permission;
+package com.liferay.mobile.device.rules.web.internal.security.permission;
 
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
-import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
@@ -25,34 +23,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Michael C. Han
- * @deprecated As of 1.2.0, with no direct replacement
+ * @author Preston Crary
  */
-@Component(
-	property = {"model.class.name=com.liferay.mobile.device.rules.model.MDRRuleGroupInstance"},
-	service = BaseModelPermissionChecker.class
-)
-@Deprecated
-public class MDRRuleGroupInstancePermission
-	implements BaseModelPermissionChecker {
-
-	public static void check(
-			PermissionChecker permissionChecker, long ruleGroupInstanceId,
-			String actionId)
-		throws PortalException {
-
-		_mdrRuleGroupInstanceModelResourcePermission.check(
-			permissionChecker, ruleGroupInstanceId, actionId);
-	}
-
-	public static void check(
-			PermissionChecker permissionChecker,
-			MDRRuleGroupInstance ruleGroupInstance, String actionId)
-		throws PortalException {
-
-		_mdrRuleGroupInstanceModelResourcePermission.check(
-			permissionChecker, ruleGroupInstance, actionId);
-	}
+@Component(immediate = true)
+public class MDRRuleGroupInstancePermission {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, long ruleGroupInstanceId,
@@ -70,20 +44,6 @@ public class MDRRuleGroupInstancePermission
 
 		return _mdrRuleGroupInstanceModelResourcePermission.contains(
 			permissionChecker, ruleGroupInstance, actionId);
-	}
-
-	@Override
-	public void checkBaseModel(
-			PermissionChecker permissionChecker, long groupId, long primaryKey,
-			String actionId)
-		throws PortalException {
-
-		_mdrRuleGroupInstanceModelResourcePermission.check(
-			permissionChecker, primaryKey, actionId);
-	}
-
-	protected void setMDRRuleGroupInstanceLocalService(
-		MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService) {
 	}
 
 	@Reference(

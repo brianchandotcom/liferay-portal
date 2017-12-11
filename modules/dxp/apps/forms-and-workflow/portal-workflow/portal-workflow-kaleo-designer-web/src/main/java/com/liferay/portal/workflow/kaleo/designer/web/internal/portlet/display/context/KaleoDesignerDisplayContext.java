@@ -134,18 +134,6 @@ public class KaleoDesignerDisplayContext {
 		return user.getFullName();
 	}
 
-	public String getUserNameOrBlank(WorkflowDefinition workflowDefinition) {
-		User user = _userLocalService.fetchUser(workflowDefinition.getUserId());
-
-		if ((user == null) || user.isDefaultUser() ||
-			Validator.isNull(user.getFullName())) {
-
-			return StringPool.BLANK;
-		}
-
-		return user.getFullName();
-	}
-
 	public List<WorkflowDefinition> getWorkflowDefinitions(
 			KaleoDefinitionVersion kaleoDefinitionVersion)
 		throws PortalException {
@@ -161,6 +149,20 @@ public class KaleoDesignerDisplayContext {
 		Collections.reverse(workflowDefinitions);
 
 		return workflowDefinitions;
+	}
+
+	public String getWorkflowDefinitionVersionDisplayUserName(
+		WorkflowDefinition workflowDefinition) {
+
+		User user = _userLocalService.fetchUser(workflowDefinition.getUserId());
+
+		if ((user == null) || user.isDefaultUser() ||
+			Validator.isNull(user.getFullName())) {
+
+			return StringPool.BLANK;
+		}
+
+		return user.getFullName();
 	}
 
 	private static final String[] _DISPLAY_VIEWS = {"list"};

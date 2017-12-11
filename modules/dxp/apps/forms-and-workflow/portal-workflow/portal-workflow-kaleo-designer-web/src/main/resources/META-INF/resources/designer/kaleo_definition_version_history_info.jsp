@@ -21,7 +21,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 
-String userName = kaleoDesignerDisplayContext.getUserNameOrBlank(workflowDefinition);
+String userName = kaleoDesignerDisplayContext.getWorkflowDefinitionVersionDisplayUserName(workflowDefinition);
 %>
 
 <div class="flex-col flex-col-expand">

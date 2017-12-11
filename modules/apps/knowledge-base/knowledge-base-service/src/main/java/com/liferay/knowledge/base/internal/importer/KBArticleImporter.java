@@ -182,14 +182,18 @@ public class KBArticleImporter {
 		String leadingDigits = StringUtil.extractLeadingDigits(shortFileName);
 
 		try {
-			double priority = Double.parseDouble(leadingDigits);
-
-			return Math.max(1.0, priority);
+			return Math.max(
+				KBArticleConstants.DEFAULT_PRIORITY,
+				Double.parseDouble(leadingDigits));
 		}
 		catch (NumberFormatException nfe) {
-			throw new KBArticleImportException(
-				"Invalid numerical prefix: " + kbArchiveResourceName, nfe);
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Invalid numerical prefix: " + kbArchiveResourceName, nfe);
+			}
 		}
+
+		return KBArticleConstants.DEFAULT_PRIORITY;
 	}
 
 	protected Map<String, String> getMetadata(ZipReader zipReader)

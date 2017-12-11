@@ -11,14 +11,20 @@
 		margin-top: 81px;
 		padding: 0;
 		.commerce-starter {
-			.col-md-3 > img {
-				width:100%;
-			}
-
-			.col-md-9>a,
-			.col-md-9>a:hover,
-			.col-md-9>a:focus {
-				color: #272833;
+			padding-bottom: 20px;
+			.col-md-3 {
+				& > img {
+					width: 100%;
+				}
+				& > a, a:hover, a:focus {
+					left: 50%;
+					margin: 0;
+					position: absolute;
+					text-decoration: none;
+					top: 50%;
+					-ms-transform: translate(-50%, -50%);
+					transform: translate(-50%, -50%);
+				}
 			}
 		}
 		.commerce-wizard-header {
@@ -118,4 +124,8 @@
 			}
 		}
 	}
+}
+
+.loadingmask {
+	z-index: 100000!important;
 }

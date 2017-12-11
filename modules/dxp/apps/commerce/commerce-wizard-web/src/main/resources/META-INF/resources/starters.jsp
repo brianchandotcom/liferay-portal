@@ -45,18 +45,22 @@ List<CommerceStarter> commerceStarters = commerceStarterDisplayContext.getCommer
 							<img src="<%= thumbnailSrc %>" />
 						</div>
 
-						<div class="col-md-9">
+						<div class="col-md-6">
+							<h3><%= commerceStarter.getName(locale) %></h3>
+
+							<p><%= commerceStarter.getDescription(locale) %></p>
+						</div>
+
+						<div class="col-md-3">
 							<portlet:renderURL var="viewCommerceStarterDetailsURL">
 								<portlet:param name="mvcRenderCommandName" value="viewCommerceStarterDetails" />
 								<portlet:param name="redirect" value="<%= currentURL %>" />
 								<portlet:param name="commerceStarterKey" value="<%= commerceStarter.getKey() %>" />
 							</portlet:renderURL>
 
-							<a href="<%= viewCommerceStarterDetailsURL.toString() %>">
-								<h3><%= commerceStarter.getName(locale) %></h3>
+							<a class="btn-primary btn-sm" href="<%= viewCommerceStarterDetailsURL.toString() %>">
+								<liferay-ui:message key="view-details" />
 							</a>
-
-							<p><%= commerceStarter.getDescription(locale) %></p>
 						</div>
 					</div>
 

@@ -57,6 +57,12 @@ import org.osgi.service.component.annotations.Reference;
 public class MoneyOrderCommercePaymentEngine implements CommercePaymentEngine {
 
 	@Override
+	public void completePayment(
+			CommerceOrder commerceOrder, Map<String, String[]> parameterMap)
+		throws CommercePaymentEngineException {
+	}
+
+	@Override
 	public String getDescription(Locale locale) {
 		ResourceBundle resourceBundle = _getResourceBundle(locale);
 

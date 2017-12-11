@@ -31,6 +31,10 @@ import javax.portlet.RenderResponse;
 @ProviderType
 public interface CommercePaymentEngine {
 
+	public void completePayment(
+			CommerceOrder commerceOrder, Map<String, String[]> parameterMap)
+		throws CommercePaymentEngineException;
+
 	public String getDescription(Locale locale);
 
 	public String getName(Locale locale);

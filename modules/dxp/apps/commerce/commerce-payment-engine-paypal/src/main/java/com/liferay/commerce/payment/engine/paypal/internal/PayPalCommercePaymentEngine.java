@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -53,6 +54,7 @@ import com.paypal.api.payments.ItemList;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payer;
 import com.paypal.api.payments.Payment;
+import com.paypal.api.payments.PaymentExecution;
 import com.paypal.api.payments.RedirectUrls;
 import com.paypal.api.payments.ShippingAddress;
 import com.paypal.api.payments.Transaction;
@@ -83,6 +85,22 @@ import org.osgi.service.component.annotations.Reference;
 	service = CommercePaymentEngine.class
 )
 public class PayPalCommercePaymentEngine implements CommercePaymentEngine {
+
+	@Override
+	public void completePayment(
+			CommerceOrder commerceOrder, Map<String, String[]> parameterMap)
+		throws CommercePaymentEngineException {
+
+		try {
+			_completePayment(commerceOrder, parameterMap);
+		}
+		catch (CommercePaymentEngineException cpee) {
+			throw cpee;
+		}
+		catch (Exception e) {
+			throw new CommercePaymentEngineException(e);
+		}
+	}
 
 	@Override
 	public String getDescription(Locale locale) {
@@ -167,6 +185,26 @@ public class PayPalCommercePaymentEngine implements CommercePaymentEngine {
 		}
 
 		modifiableSettings.store();
+	}
+
+	private void _completePayment(
+			CommerceOrder commerceOrder, Map<String, String[]> parameterMap)
+		throws Exception {
+
+		String payerId = MapUtil.getString(parameterMap, "PayerID");
+		String paymentId = MapUtil.getString(parameterMap, "paymentId");
+
+		APIContext apiContext = _getAPIContext(commerceOrder);
+
+		Payment payment = new Payment();
+
+		payment.setId(paymentId);
+
+		PaymentExecution paymentExecution = new PaymentExecution();
+
+		paymentExecution.setPayerId(payerId);
+
+		payment.execute(apiContext, paymentExecution);
 	}
 
 	private Amount _getAmount(

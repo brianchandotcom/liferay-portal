@@ -17,6 +17,7 @@ package com.liferay.commerce.service.impl;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderConstants;
 import com.liferay.commerce.service.base.CommerceOrderLocalServiceBaseImpl;
 import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
@@ -41,7 +41,8 @@ public class CommerceOrderLocalServiceImpl
 			long orderUserId, long billingAddressId, long shippingAddressId,
 			long commercePaymentMethodId, long commerceShippingMethodId,
 			String shippingOptionName, double subtotal, double shippingPrice,
-			double total, int status, ServiceContext serviceContext)
+			double total, int paymentStatus, int shippingStatus, int status,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -66,6 +67,8 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setSubtotal(subtotal);
 		commerceOrder.setShippingPrice(shippingPrice);
 		commerceOrder.setTotal(total);
+		commerceOrder.setPaymentStatus(paymentStatus);
+		commerceOrder.setShippingStatus(shippingStatus);
 		commerceOrder.setStatus(status);
 		commerceOrder.setExpandoBridgeAttributes(serviceContext);
 
@@ -96,7 +99,9 @@ public class CommerceOrderLocalServiceImpl
 				commerceCart.getCommercePaymentMethodId(),
 				commerceCart.getCommerceShippingMethodId(),
 				commerceCart.getShippingOptionName(), subtotal, shippingPrice,
-				total, WorkflowConstants.STATUS_PENDING, serviceContext);
+				total, CommerceOrderConstants.PAYMENT_STATUS_PENDING,
+				CommerceOrderConstants.SHIPPING_STATUS_NOT_SHIPPED,
+				CommerceOrderConstants.STATUS_PENDING, serviceContext);
 
 		// Commerce order items
 

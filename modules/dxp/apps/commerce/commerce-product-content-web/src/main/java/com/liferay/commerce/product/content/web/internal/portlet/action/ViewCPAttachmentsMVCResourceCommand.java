@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
@@ -92,7 +93,8 @@ public class ViewCPAttachmentsMVCResourceCommand
 				FileEntry fileEntry = cpAttachmentFileEntry.getFileEntry();
 
 				String attachmentURL = DLUtil.getDownloadURL(
-					fileEntry, fileEntry.getFileVersion(), themeDisplay, "");
+					fileEntry, fileEntry.getFileVersion(), themeDisplay,
+					StringPool.BLANK);
 
 				jsonObject.put("url", attachmentURL);
 

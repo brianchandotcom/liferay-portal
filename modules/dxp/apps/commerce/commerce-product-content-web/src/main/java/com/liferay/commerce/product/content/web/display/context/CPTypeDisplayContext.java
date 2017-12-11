@@ -192,7 +192,8 @@ public class CPTypeDisplayContext {
 		throws Exception {
 
 		return DLUtil.getDownloadURL(
-			fileEntry, fileEntry.getFileVersion(), themeDisplay, "");
+			fileEntry, fileEntry.getFileVersion(), themeDisplay,
+			StringPool.BLANK);
 	}
 
 	public String getLabel(Locale locale, String key) {

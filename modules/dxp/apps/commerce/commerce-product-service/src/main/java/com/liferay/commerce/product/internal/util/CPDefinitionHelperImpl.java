@@ -122,7 +122,7 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 				String value = filterValuesArray[i];
 
 				if (key.startsWith("OPTION_")) {
-					key = key.replace("OPTION_", "");
+					key = key.replace("OPTION_", StringPool.BLANK);
 
 					key = _getIndexFieldName(key);
 

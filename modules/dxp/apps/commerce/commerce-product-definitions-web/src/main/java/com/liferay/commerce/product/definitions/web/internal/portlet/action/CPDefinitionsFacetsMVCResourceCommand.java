@@ -119,7 +119,7 @@ public class CPDefinitionsFacetsMVCResourceCommand
 		String currentOptionKey = StringPool.BLANK;
 
 		if (fieldName.startsWith("OPTION_")) {
-			currentOptionKey = fieldName.replace("OPTION_", "");
+			currentOptionKey = fieldName.replace("OPTION_", StringPool.BLANK);
 		}
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
@@ -230,7 +230,7 @@ public class CPDefinitionsFacetsMVCResourceCommand
 
 	private String _getIndexFieldName(String fieldName) {
 		if (fieldName.startsWith("OPTION_")) {
-			fieldName = fieldName.replace("OPTION_", "");
+			fieldName = fieldName.replace("OPTION_", StringPool.BLANK);
 
 			return "ATTRIBUTE_" + fieldName + "_VALUES_NAMES";
 		}
